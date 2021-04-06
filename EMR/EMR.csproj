@@ -1,0 +1,468 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
+    <UpgradeBackupLocation />
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{10708A84-6200-4868-AD2C-1F4915FADD84}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EMR</RootNamespace>
+    <AssemblyName>EMR</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.DirectoryServices.AccountManagement" />
+    <Reference Include="System.DirectoryServices.Protocols" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Telerik.Web.Design">
+      <HintPath>..\lib\RCAJAX\2021.1.330.45\Telerik.Web.Design.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Web.Spreadsheet">
+      <HintPath>..\lib\RCAJAX\2021.1.330.45\AdditionalLibraries\Bin45\Telerik.Web.Spreadsheet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Web.UI">
+      <HintPath>..\lib\RCAJAX\2021.1.330.45\Telerik.Web.UI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Web.UI.Skins">
+      <HintPath>..\lib\RCAJAX\2021.1.330.45\Telerik.Web.UI.Skins.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Core">
+      <HintPath>..\lib\RCAJAX\2021.1.330.45\AdditionalLibraries\Bin45\Telerik.Windows.Documents.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Flow">
+      <HintPath>..\lib\RCAJAX\2021.1.330.45\AdditionalLibraries\Bin45\Telerik.Windows.Documents.Flow.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet">
+      <HintPath>..\lib\RCAJAX\2021.1.330.45\AdditionalLibraries\Bin45\Telerik.Windows.Documents.Spreadsheet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml">
+      <HintPath>..\lib\RCAJAX\2021.1.330.45\AdditionalLibraries\Bin45\Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Zip">
+      <HintPath>..\lib\RCAJAX\2021.1.330.45\AdditionalLibraries\Bin45\Telerik.Windows.Zip.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\RadCaptcha\0.wav" />
+    <Content Include="App_Data\RadCaptcha\1.wav" />
+    <Content Include="App_Data\RadCaptcha\2.wav" />
+    <Content Include="App_Data\RadCaptcha\3.wav" />
+    <Content Include="App_Data\RadCaptcha\4.wav" />
+    <Content Include="App_Data\RadCaptcha\5.wav" />
+    <Content Include="App_Data\RadCaptcha\6.wav" />
+    <Content Include="App_Data\RadCaptcha\7.wav" />
+    <Content Include="App_Data\RadCaptcha\8.wav" />
+    <Content Include="App_Data\RadCaptcha\9.wav" />
+    <Content Include="App_Data\RadCaptcha\A.wav" />
+    <Content Include="App_Data\RadCaptcha\B.wav" />
+    <Content Include="App_Data\RadCaptcha\C.wav" />
+    <Content Include="App_Data\RadCaptcha\D.wav" />
+    <Content Include="App_Data\RadCaptcha\E.wav" />
+    <Content Include="App_Data\RadCaptcha\F.wav" />
+    <Content Include="App_Data\RadCaptcha\G.wav" />
+    <Content Include="App_Data\RadCaptcha\H.wav" />
+    <Content Include="App_Data\RadCaptcha\I.wav" />
+    <Content Include="App_Data\RadCaptcha\J.wav" />
+    <Content Include="App_Data\RadCaptcha\K.wav" />
+    <Content Include="App_Data\RadCaptcha\L.wav" />
+    <Content Include="App_Data\RadCaptcha\M.wav" />
+    <Content Include="App_Data\RadCaptcha\N.wav" />
+    <Content Include="App_Data\RadCaptcha\O.wav" />
+    <Content Include="App_Data\RadCaptcha\P.wav" />
+    <Content Include="App_Data\RadCaptcha\Q.wav" />
+    <Content Include="App_Data\RadCaptcha\R.wav" />
+    <Content Include="App_Data\RadCaptcha\S.wav" />
+    <Content Include="App_Data\RadCaptcha\T.wav" />
+    <Content Include="App_Data\RadCaptcha\U.wav" />
+    <Content Include="App_Data\RadCaptcha\V.wav" />
+    <Content Include="App_Data\RadCaptcha\W.wav" />
+    <Content Include="App_Data\RadCaptcha\X.wav" />
+    <Content Include="App_Data\RadCaptcha\Y.wav" />
+    <Content Include="App_Data\RadCaptcha\Z.wav" />
+    <Content Include="Dashboard.aspx" />
+    <Content Include="EMR.aspx" />
+    <Content Include="emr\emrinfor.aspx" />
+    <Content Include="emr\emrview.aspx" />
+    <Content Include="emr\labinfor.aspx" />
+    <Content Include="ER\EmergencyMedicalAssessment.aspx" />
+    <Content Include="ER\EmerTriaAndNurAssRec.aspx" />
+    <Content Include="IPD\DeliveryCertificate.aspx" />
+    <Content Include="IPD\DisCer.aspx" />
+    <Content Include="IPD\DischargeSummary.aspx" />
+    <Content Include="IPD\IniMedAssForNeoInp.aspx" />
+    <Content Include="IPD\InpIniMedAss.aspx" />
+    <Content Include="IPD\InpIniNurAss.aspx" />
+    <Content Include="IPD\InpatientMedicalRecord.aspx" />
+    <Content Include="IPD\ObsGynIniAss.aspx" />
+    <Content Include="IPD\ObsAtDeliRoom.aspx" />
+    <Content Include="IPD\SummaryOfMedRec.aspx" />
+    <Content Include="IPD\SurgicalCertificate.aspx" />
+    <Content Include="IPD\SurgicalReport.aspx" />
+    <Content Include="Login.aspx" />
+    <Content Include="OPD\MedicalCertificate.aspx" />
+    <Content Include="OPD\OutPatMedRec.aspx" />
+    <Content Include="OPD\OutPatMedRecPed.aspx" />
+    <Content Include="OPD\SumOfComOutpCase.aspx" />
+    <Content Include="OPD\UsUriSysReport.aspx" />
+    <Content Include="Other\PatientSummary.aspx" />
+    <Content Include="scripts\emrScript.js" />
+    <Content Include="styles\fontawesome-all.css" />
+    <Content Include="styles\login-register-lock.css" />
+    <Content Include="styles\myStyle.css" />
+    <Content Include="styles\style-custom.css" />
+    <Content Include="styles\style.css" />
+    <Content Include="styles\style.min.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="images\Chrysanthemum.jpg" />
+    <Content Include="images\Desert.jpg" />
+    <Content Include="images\Hydrangeas.jpg" />
+    <Content Include="images\Jellyfish.jpg" />
+    <Content Include="images\Koala.jpg" />
+    <Content Include="images\Lighthouse.jpg" />
+    <Content Include="images\logo.png" />
+    <Content Include="images\Penguins.jpg" />
+    <Content Include="images\Thumbnails\Chrysanthemum.jpg" />
+    <Content Include="images\Thumbnails\Desert.jpg" />
+    <Content Include="images\Thumbnails\Hydrangeas.jpg" />
+    <Content Include="images\Thumbnails\Jellyfish.jpg" />
+    <Content Include="images\Thumbnails\Koala.jpg" />
+    <Content Include="images\Thumbnails\Lighthouse.jpg" />
+    <Content Include="images\Thumbnails\Penguins.jpg" />
+    <Content Include="images\Thumbnails\Tulips.jpg" />
+    <Content Include="images\Tulips.jpg" />
+    <Content Include="OPD\OutPatIniNurAss.aspx" />
+    <Content Include="scripts\bootstrap.min.js" />
+    <Content Include="scripts\custom.js" />
+    <Content Include="scripts\custom.min.js" />
+    <Content Include="scripts\jquery-3.2.1.min.js" />
+    <Content Include="scripts\jquery.sparkline.min.js" />
+    <Content Include="scripts\myScript.js" />
+    <Content Include="scripts\perfect-scrollbar.jquery.min.js" />
+    <Content Include="scripts\popper.min.js" />
+    <Content Include="scripts\scripts.js" />
+    <Content Include="scripts\sidebarmenu.js" />
+    <Content Include="scripts\sticky-kit.min.js" />
+    <Content Include="scripts\waves.js" />
+    <Content Include="styles\base.css" />
+    <Content Include="styles\default.css" />
+    <Content Include="styles\grid.css" />
+    <Content Include="styles\listView.css" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\ConnClass.cs" />
+    <Compile Include="Classes\EMRClass.cs" />
+    <Compile Include="Classes\JavascriptHelpers.cs" />
+    <Compile Include="Classes\MISClass.cs" />
+    <Compile Include="Dashboard.aspx.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Dashboard.aspx.designer.cs">
+      <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\DataHelpers.cs" />
+    <Compile Include="EMR.aspx.cs">
+      <DependentUpon>EMR.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EMR.aspx.designer.cs">
+      <DependentUpon>EMR.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="emr\emrinfor.aspx.cs">
+      <DependentUpon>emrinfor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="emr\emrinfor.aspx.designer.cs">
+      <DependentUpon>emrinfor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="emr\emrview.aspx.cs">
+      <DependentUpon>emrview.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="emr\emrview.aspx.designer.cs">
+      <DependentUpon>emrview.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="emr\labinfor.aspx.cs">
+      <DependentUpon>labinfor.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="emr\labinfor.aspx.designer.cs">
+      <DependentUpon>labinfor.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ER\EmergencyMedicalAssessment.aspx.cs">
+      <DependentUpon>EmergencyMedicalAssessment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ER\EmergencyMedicalAssessment.aspx.designer.cs">
+      <DependentUpon>EmergencyMedicalAssessment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ER\EmerTriaAndNurAssRec.aspx.cs">
+      <DependentUpon>EmerTriaAndNurAssRec.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ER\EmerTriaAndNurAssRec.aspx.designer.cs">
+      <DependentUpon>EmerTriaAndNurAssRec.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IPD\DeliveryCertificate.aspx.cs">
+      <DependentUpon>DeliveryCertificate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IPD\DeliveryCertificate.aspx.designer.cs">
+      <DependentUpon>DeliveryCertificate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IPD\DisCer.aspx.cs">
+      <DependentUpon>DisCer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IPD\DisCer.aspx.designer.cs">
+      <DependentUpon>DisCer.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IPD\DischargeSummary.aspx.cs">
+      <DependentUpon>DischargeSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IPD\DischargeSummary.aspx.designer.cs">
+      <DependentUpon>DischargeSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IPD\IniMedAssForNeoInp.aspx.cs">
+      <DependentUpon>IniMedAssForNeoInp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IPD\IniMedAssForNeoInp.aspx.designer.cs">
+      <DependentUpon>IniMedAssForNeoInp.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IPD\InpIniMedAss.aspx.cs">
+      <DependentUpon>InpIniMedAss.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IPD\InpIniMedAss.aspx.designer.cs">
+      <DependentUpon>InpIniMedAss.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IPD\InpIniNurAss.aspx.cs">
+      <DependentUpon>InpIniNurAss.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IPD\InpIniNurAss.aspx.designer.cs">
+      <DependentUpon>InpIniNurAss.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IPD\InpatientMedicalRecord.aspx.cs">
+      <DependentUpon>InpatientMedicalRecord.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IPD\InpatientMedicalRecord.aspx.designer.cs">
+      <DependentUpon>InpatientMedicalRecord.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IPD\ObsGynIniAss.aspx.cs">
+      <DependentUpon>ObsGynIniAss.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IPD\ObsGynIniAss.aspx.designer.cs">
+      <DependentUpon>ObsGynIniAss.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IPD\ObsAtDeliRoom.aspx.cs">
+      <DependentUpon>ObsAtDeliRoom.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IPD\ObsAtDeliRoom.aspx.designer.cs">
+      <DependentUpon>ObsAtDeliRoom.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IPD\SummaryOfMedRec.aspx.cs">
+      <DependentUpon>SummaryOfMedRec.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IPD\SummaryOfMedRec.aspx.designer.cs">
+      <DependentUpon>SummaryOfMedRec.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IPD\SurgicalCertificate.aspx.cs">
+      <DependentUpon>SurgicalCertificate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IPD\SurgicalCertificate.aspx.designer.cs">
+      <DependentUpon>SurgicalCertificate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IPD\SurgicalReport.aspx.cs">
+      <DependentUpon>SurgicalReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IPD\SurgicalReport.aspx.designer.cs">
+      <DependentUpon>SurgicalReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPD\MedicalCertificate.aspx.cs">
+      <DependentUpon>MedicalCertificate.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPD\MedicalCertificate.aspx.designer.cs">
+      <DependentUpon>MedicalCertificate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPD\OutPatIniNurAss.aspx.cs">
+      <DependentUpon>OutPatIniNurAss.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPD\OutPatIniNurAss.aspx.designer.cs">
+      <DependentUpon>OutPatIniNurAss.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPD\OutPatMedRec.aspx.cs">
+      <DependentUpon>OutPatMedRec.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPD\OutPatMedRec.aspx.designer.cs">
+      <DependentUpon>OutPatMedRec.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPD\OutPatMedRecPed.aspx.cs">
+      <DependentUpon>OutPatMedRecPed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPD\OutPatMedRecPed.aspx.designer.cs">
+      <DependentUpon>OutPatMedRecPed.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPD\SumOfComOutpCase.aspx.cs">
+      <DependentUpon>SumOfComOutpCase.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPD\SumOfComOutpCase.aspx.designer.cs">
+      <DependentUpon>SumOfComOutpCase.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPD\UsUriSysReport.aspx.cs">
+      <DependentUpon>UsUriSysReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPD\UsUriSysReport.aspx.designer.cs">
+      <DependentUpon>UsUriSysReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Other\PatientSummary.aspx.cs">
+      <DependentUpon>PatientSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Other\PatientSummary.aspx.designer.cs">
+      <DependentUpon>PatientSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\RadSpell\de-DE.tdf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\RadSpell\en-US.tdf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\RadSpell\fr-FR.tdf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="web.config" />
+    <None Include="packages.config" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\licenses.licx" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Import Project="$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(VSToolsPath)\TypeScript\Microsoft.TypeScript.targets')" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>49573</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:4200/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

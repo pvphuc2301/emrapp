@@ -1,0 +1,8 @@
+﻿.telerik-custom .RadGrid_Bootstrap .rgHeader, .RadGrid_Bootstrap th.rgResizeCol {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.telerik-custom .RadGrid {
+    line-height: 32px !important;
+}

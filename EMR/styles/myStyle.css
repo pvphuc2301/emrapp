@@ -1,0 +1,173 @@
+.custom-radio .custom-control-input:checked ~ .custom-control-label::after {
+    background-color: #1976d2;
+    border-radius: 50%;
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
+    background-color: #1976d2;
+    border-radius: 4px;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+    border-color: #1976d2;
+    background-color: #1976d2;
+}
+
+.page-wrapper {
+    width: calc(100% - 110px);
+    height: inherit;
+}
+
+.mini-sidebar .footer, .mini-sidebar .page-wrapper {
+    width: calc(100% - 35px);
+}
+
+@media only screen and (min-width: 576px) {
+    .w-sm-6 {
+        width: 200px;
+    }
+
+    .w-sm-7 {
+        width: 250px;
+    }
+
+    .w-sm-8 {
+        width: 300px;
+    }
+
+    .w-sm-9 {
+        width: 450px;
+    }
+
+    .w-sm-10 {
+        width: 500px;
+    }
+}
+
+    @media only screen and (max-width: 768px) {
+        .mini-sidebar .footer, .mini-sidebar .page-wrapper {
+            width: 100%;
+        }
+
+        .w-md-8 {
+            width: 300px;
+        }
+    }
+
+    @media only screen and (min-width: 992px) {
+
+        .w-lg-6 {
+            width: 200px;
+        }
+
+        .w-lg-7 {
+            width: 250px;
+        }
+
+        .w-lg-8 {
+            width: 300px;
+        }
+
+        .w-lg-9 {
+            width: 450px;
+        }
+
+        .w-lg-10 {
+            width: 500px;
+        }
+    }
+
+    .divider {
+        border-bottom: 1px solid #e9ecef;
+    }
+
+    /* default */
+
+    html {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    body {
+        padding: 0;
+        margin: 0;
+        font-size: 0.8rem;
+    }
+
+    body, form, iframe {
+        height: inherit;
+        width: inherit;
+    }
+
+    iframe {
+        overflow: hidden;
+    }
+
+    form {
+        overflow: hidden;
+    }
+
+    input[type="date"], input[type="datetime-local"], input[type="month"], input[type="time"] {
+        /*width: 155px;*/
+    }
+
+    .w-max-content {
+        width: max-content;
+    }
+
+    .w-number {
+        text-align: right;
+        width: 155px !important;
+    }
+
+    .w-5 {
+        width: 155px;
+    }
+
+    /* custom */
+
+    .form-group {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    table thead th {
+        color: #495057 !important;
+        background-color: #e9ecef !important;
+        border-color: #dee2e6 !important;
+        border-style: solid !important;
+        border-top-width: 1px !important;
+        border-left-width: 0 !important;
+        border-right-width: 0 !important;
+        border-bottom-width: 2px !important;
+    }
+
+    .shadow {
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15) !important;
+    }
+
+    .btn-sidebar {
+        z-index: 998;
+        background-color: transparent;
+        color: rgb(119, 117, 152);
+        border: 0;
+    }
+
+        .btn-sidebar:hover {
+            background-color: #ddd;
+        }
+
+    .apply-grid-2 {
+        display: flex;
+    }
+
+        .apply-grid-2 .control-label {
+            width: 254px;
+            flex-shrink: 0;
+        }
+
+        .apply-grid-2 .RadInput {
+            flex-grow: 1;
+        }
+
