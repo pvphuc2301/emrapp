@@ -29,7 +29,7 @@ using System.Web;
         }
         return tbl;
     }
-    public static object BindingDatafield(DataTable tbl, object obj)
+    public static void BindingDatafield(DataTable tbl, object obj)
     {
         /* 1. Get API trả về 1 Datatable: tbl
            2.Từ tbl  gán giá trị cho 1 Object: obj thuộc Class Form XYZ 
@@ -48,7 +48,7 @@ using System.Web;
                 }
             }
         }
-        return obj;
+       // return obj;
 
     }
         internal static string GetAPI(object p)
