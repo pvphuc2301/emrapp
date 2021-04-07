@@ -19,7 +19,7 @@ namespace EMR
         {
             pid = ValueHiddenField.Value;
 
-            string _jsonData = JavascriptHelpers.GetAPI("api/emr/demographic/" + pid);
+            string _jsonData = WebHelpers.GetAPI("api/emr/demographic/" + pid);
 
             if (_jsonData != null)
             {

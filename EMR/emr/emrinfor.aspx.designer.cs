@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Emr_client.emr {
-    
-    
-    public partial class emrinfor {
-        
+namespace EMR
+{
+
+
+    public partial class emrinfor
+    {
+
         /// <summary>
         /// form1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace Emr_client.emr {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
+
         /// <summary>
         /// ScriptManager1 control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace Emr_client.emr {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.ScriptManager ScriptManager1;
-        
+
         /// <summary>
         /// ValueHiddenField control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace Emr_client.emr {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField ValueHiddenField;
-        
+
         /// <summary>
         /// RadSplitter1 control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace Emr_client.emr {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadSplitter RadSplitter1;
-        
+
         /// <summary>
         /// TopPane control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace Emr_client.emr {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadPane TopPane;
-        
+
         /// <summary>
         /// RadGrid1 control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace Emr_client.emr {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid RadGrid1;
-        
+
         /// <summary>
         /// RadGrid2 control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace Emr_client.emr {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid RadGrid2;
-        
+
         /// <summary>
         /// RadGrid3 control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace Emr_client.emr {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid RadGrid3;
-        
+
         /// <summary>
         /// RadSplitBar1 control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace Emr_client.emr {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadSplitBar RadSplitBar1;
-        
+
         /// <summary>
         /// MainContent control.
         /// </summary>

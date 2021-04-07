@@ -446,7 +446,7 @@
             iframe.src = formName;
         }
 
-        if (!"<%= this.pid %>") { document.getElementById("preLoadPage").click(); }
+      //  if (!"<%= this.pid %>") { document.getElementById("preLoadPage").click(); }
 
         let pid = localStorage.getItem('pid');
         let docList = document.getElementById("docList");

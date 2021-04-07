@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OutpatientMedicalRecord.aspx.cs" Inherits="Emr_client.emr.OutpatientMedicalRecord" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OutPatMedRec.aspx.cs" Inherits="EMR.OutpatientMedicalRecord" %>
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 
 <!DOCTYPE html>
@@ -41,11 +41,12 @@
                                 <div class="form-body">
                                     <div class="row">
                                         <div class="col-md-12 col-lg-6 mb-2 d-sm-flex">
-                                            <div class="w-sm-7">
+                         m                   <div class="w-sm-7">
                                                 <label class="control-label mb-1">Họ tên người bệnh /<span class="text-primary">Paitent's Name:</span></label>
                                             </div>
                                             <div class="form-group flex-grow-1">
-                                                <telerik:RadTextBox RenderMode="Lightweight" runat="server" ID="RadTextBox34" EmptyMessage="" TextMode="SingleLine" Width="100%" Resize="None" CssClass="form-control"></telerik:RadTextBox>
+                                                <%--<telerik:RadTextBox RenderMode="Lightweight" runat="server" ID="txtPatientName" EmptyMessage="" TextMode="SingleLine" Width="100%" Resize="None" CssClass="form-control"></telerik:RadTextBox>--%>
+                                                  <telerik:RadLabel RenderMode="Lightweight" runat="server" ID="lblPatientName" EmptyMessage="" TextMode="SingleLine" Width="100%" Resize="None" CssClass="form-control"></telerik:RadLabel>
                                             </div>
                                         </div>
 
@@ -94,7 +95,7 @@
                                         <div class="col-md-12"> 
                                             <label class="control-label mb-2 font-bold">I. Lý do đến khám/ <span class="text-primary">Chief complaint:</span></label>
                                                     
-                                            <telerik:RadTextBox RenderMode="Lightweight" Width="100%" runat="server" ID="RadTextBox3" EmptyMessage="" TextMode="MultiLine" Resize="None" CssClass="form-control"></telerik:RadTextBox>
+                                            <telerik:RadTextBox RenderMode="Lightweight" Width="100%" runat="server" ID="lbl_chief_complain" EmptyMessage="" TextMode="MultiLine" Resize="None" CssClass="form-control"></telerik:RadTextBox>
 
                                         </div>
                                     </div>

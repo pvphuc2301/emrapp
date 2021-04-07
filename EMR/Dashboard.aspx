@@ -174,7 +174,7 @@
                         HeaderStyle-Wrap="false" ItemStyle-Font-Bold="false" HeaderStyle-ForeColor="#457"
                         UniqueName="visible_patient_id" HeaderText="Patient ID" SortExpression="visible_patient_id" HeaderStyle-HorizontalAlign="Center">
                         <ItemTemplate> 
-                            <asp:HyperLink ID="LinkHD" runat="server" NavigateUrl='<%# string.Format("/emr/emrinfor.aspx?pid={0}&vbid={1}&action=view",
+                            <asp:HyperLink ID="LinkHD" runat="server" NavigateUrl='<%# string.Format("/emr/emrinfor.aspx?pid={0}&vbid={1}",
                                 Eval("patient_id"),Eval("visible_patient_id")) %>' Text='<%# Eval("visible_patient_id") %>'>  
                             </asp:HyperLink> 
                         </ItemTemplate>

@@ -10,14 +10,15 @@ using Telerik.Web.UI;
 using System.Data;
 using Newtonsoft.Json;
 
-namespace Emr_client.emr
+namespace EMR
 {    
     public partial class emrinfor : System.Web.UI.Page
     {
         public string ConnStringHIS = ""; public string ConnStringEMR = "";
 
         public PatientInfo patient = new PatientInfo();
-        public string varPID = ""; string varVisibleID = "";
+        public string varPID = ""; string varPVId = "";
+        //string varVisibleID = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             ConnClass ConnStr = new ConnClass();
@@ -25,17 +26,20 @@ namespace Emr_client.emr
             ConnStringEMR = ConnStr.SQL_EMRConnString;
 
             varPID = Request.QueryString["pid"];// "97052A99-0134-11EB-B34D-D89EF37D444C";//  "C248E0FC-39B6-493F-A197-6CF2A96B37AD";//
-            //varVisitID = "3afc144a-86ca-11eb-9dfe-dca2660bc0a2";// ValueHiddenField.Value;        
-            varVisibleID = Request.QueryString["vbid"]; //"900031267";
+            varPVId = Request.QueryString["pvid"]; //"3afc144a-86ca-11eb-9dfe-dca2660bc0a2";// ValueHiddenField.Value;        
+            //varVisibleID = Request.QueryString["vbid"]; //"900031267";
             LoadPatientInfomation();            
         }        
         protected void RadGrid1_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
-        {            
-            string _jsonData = JavascriptHelpers.GetAPI("api/emr/menu-visit/" + varPID);
+        {
+            if (!IsPostBack)
+            {
+                string _jsonData = WebHelpers.GetAPI("api/emr/menu-visit/" + varPID);
 
-            if (_jsonData != null)
-            {               
-                RadGrid1.DataSource = JavascriptHelpers.GetJSONToDataTable(_jsonData);
+                if (_jsonData != null)
+                {
+                    RadGrid1.DataSource = WebHelpers.GetJSONToDataTable(_jsonData);
+                }
             }
         }
         protected void RadGrid1_DetailTableDataBind(object source, Telerik.Web.UI.GridDetailTableDataBindEventArgs e)
@@ -47,39 +51,54 @@ namespace Emr_client.emr
                 case "F1":
                     {
                         string ParentID = Convert.ToString(dataItem.GetDataKeyValue("patient_visit_id"));
-                        string _jsonData = JavascriptHelpers.GetAPI("api/emr/menu-form/" + ParentID);
+                        string _jsonData = WebHelpers.GetAPI("api/emr/menu-form/" + ParentID);
                         if (!string.IsNullOrEmpty(_jsonData))
                         {                          
-                            e.DetailTableView.DataSource = JavascriptHelpers.GetJSONToDataTable(_jsonData);
+                            e.DetailTableView.DataSource = WebHelpers.GetJSONToDataTable(_jsonData);
                         }
                         break;
                     }
             }      
         }
+
+
+        //public static DataTable GetDataTableJS(string jsquery)
+        //{
+        //    dynamic jsonObject = Newtonsoft.Json.JsonConvert.DeserializeObject(jsquery);
+        //    DataTable dt = JsonConvert.DeserializeObject<DataTable>(Convert.ToString(jsonObject));
+        //    return dt;
+        //}
+
         public void LoadPatientInfomation()//object sender, EventArgs e
         {
-            string _jsonData = JavascriptHelpers.GetAPI("api/emr/demographic/" + varPID);
+            string _jsonData = WebHelpers.GetAPI("api/emr/demographic/" + varPID);
 
             if (_jsonData != null)
             {
                 dynamic data = JObject.Parse(_jsonData);
+                _jsonData = "[" + _jsonData + "]";
+                DataTable tbl = new DataTable();
+                tbl = WebHelpers.GetJSONToDataTable(_jsonData);
+                WebHelpers.BindingDatafield(tbl, patient);
 
+                /*
                 patient.Name = data.first_name_l + " " + data.last_name_l;
                 patient.Gender = data.gender_e;
                 patient.Title = data.title_l;
                 patient.PID = data.visible_patient_id;
                 patient.Age = DataHelpers.CalculateAge(DateTime.Parse(data.date_of_birth.ToString())).ToString();
                 patient.DOB = data.date_of_birth.ToString("dd-MM-yyyy");                
+                */
             }
         }
         public void LoadLeftMenu()//object sender, EventArgs e
         {
             string query = ""; 
-            string _jsonData = JavascriptHelpers.GetAPI("api/emr/menu-form/" + varPID);
+            string _jsonData = WebHelpers.GetAPI("api/emr/menu-form/" + varPID);
 
             if (_jsonData != null)
             {                
-                RadGrid1.DataSource = JavascriptHelpers.GetJSONToDataTable(query);
+                RadGrid1.DataSource = WebHelpers.GetJSONToDataTable(query);
             }        
         }
         public string ReturnVisit_Date(object varDate, object varVisitType, object varVisitNo)
@@ -99,17 +118,29 @@ namespace Emr_client.emr
             tmp = varStatus.ToString() + "_" + varFormName.ToString() + " " + varDr.ToString();                
             return tmp;
         }
-        public string Return_URL(object varModelID)
+        //public string Return_URL(object varModelID)
+        //{
+        //    string tmp = "";string apiURL = "api/emr/get-api/" + varModelID;
+        //    string _jsonData = WebHelpers.GetAPI(apiURL);
+
+        //    if (_jsonData != null)
+        //    {
+        //        dynamic data = JObject.Parse(_jsonData);                
+        //        tmp = "../" + data.url + "?pid=" + varVisibleID;//"../emr/"+ 
+        //    }                
+        //    return tmp;
+        //}
+       public string Return_Doc_URL(object varModelId, object varDocID)
         {
-            string tmp = "";string apiURL = "api/emr/get-api/" + varModelID;
-            string _jsonData = JavascriptHelpers.GetAPI(apiURL);
+            string tmp = ""; string apiURL = "api/emr/get-api/" + varModelId;
+            string _jsonData = WebHelpers.GetAPI(apiURL);
 
             if (_jsonData != null)
             {
-                dynamic data = JObject.Parse(_jsonData);                
-                tmp = "../" + data.url + "?pid=" + varVisibleID;//"../emr/"+ 
+                dynamic data = JObject.Parse(_jsonData);
+                tmp = "../" + data.url + "?modelId="+ varModelId + "&docID=" + varDocID+"&pId="+varPID + "&pvId=" + varPVId;//"../emr/"+ 
             }
-                
+
             return tmp;
         }
 
@@ -138,7 +169,7 @@ namespace Emr_client.emr
             string query = "SELECT document_type_rcd, description FROM  emr_document_type ";
             query += "WHERE (document_type_rcd = N'IMG' OR document_type_rcd = N'LAB') AND (active_flag = 1) ";
             query += "ORDER BY SORT";
-            if(!string.IsNullOrEmpty(varPID))
+            if(!string.IsNullOrEmpty(varPID) && !IsPostBack)
                 RadGrid2.DataSource = GetDataTable(query, ConnStringEMR); 
         }
         protected void RadGrid2_DetailTableDataBind(object source, Telerik.Web.UI.GridDetailTableDataBindEventArgs e)
@@ -154,22 +185,25 @@ namespace Emr_client.emr
                         string apiURL = "api/patient/menu-lab-visit/"+ ParentID;
                         if (ParentID1 == "IMG")
                             apiURL = "api/patient/menu-rad-visit/" + ParentID;
-                        string _jsonData = JavascriptHelpers.GetAPI(apiURL);
+                        string _jsonData = WebHelpers.GetAPI(apiURL);
                         if (!string.IsNullOrEmpty(_jsonData))
                         {                            
-                            e.DetailTableView.DataSource = JavascriptHelpers.GetJSONToDataTable(_jsonData);
+                            e.DetailTableView.DataSource = WebHelpers.GetJSONToDataTable(_jsonData);
                         }
                         break;
                     }
             }
         }
         protected void RadGrid3_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
-        {                    
-            string _jsonData = JavascriptHelpers.GetAPI("api/patient/document-type-list/" + varPID);
+        {
+            if (!IsPostBack)
+            {
+                string _jsonData = WebHelpers.GetAPI("api/patient/document-type-list/" + varPID);
 
-            if (_jsonData != null)
-            {                
-                RadGrid3.DataSource = JavascriptHelpers.GetJSONToDataTable(_jsonData);
+                if (_jsonData != null)
+                {
+                    RadGrid3.DataSource = WebHelpers.GetJSONToDataTable(_jsonData);
+                }
             }
         }
         protected void RadGrid3_DetailTableDataBind(object source, Telerik.Web.UI.GridDetailTableDataBindEventArgs e)
@@ -183,10 +217,10 @@ namespace Emr_client.emr
                         string ParentID1 = Convert.ToString(dataItem.GetDataKeyValue("patient_id")); 
                         string ParentID = Convert.ToString(dataItem.GetDataKeyValue("document_type_rcd"));
                         string apiURL = "api/patient/document-list/" + ParentID1 + "/" + ParentID;
-                        string _jsonData = JavascriptHelpers.GetAPI(apiURL);
+                        string _jsonData = WebHelpers.GetAPI(apiURL);
                         if (!string.IsNullOrEmpty(_jsonData))
                         {                            
-                            e.DetailTableView.DataSource = JavascriptHelpers.GetJSONToDataTable(_jsonData);
+                            e.DetailTableView.DataSource = WebHelpers.GetJSONToDataTable(_jsonData);
                         }
                         break;
                     }
@@ -197,6 +231,7 @@ namespace Emr_client.emr
         {
             string Get_query = ""; //string query_final = "";
 
+            /*
             string query = "SELECT scnd.visible_patient_id, scnd.person_name_e, scnd.person_name_l, scnd.document_type_rcd,";
             query += "scnd.doc_type_name_e, scnd.doc_type_name_l, scnd.document_type_rcd ";
             query += "FROM (SELECT DISTINCT patv.visible_patient_id, patv.display_patient_id AS patient_id, pfn.list_name_e AS person_name_e, ";
@@ -217,8 +252,8 @@ namespace Emr_client.emr
             query += "GROUP BY scnd.visible_patient_id, scnd.person_name_e, scnd.person_name_l, scnd.document_type_rcd, ";
             query += "scnd.doc_type_name_e, scnd.doc_type_name_l, scnd.document_type_rcd ";// --AND ecr.name_e LIKE N'Lab%'
             query += "ORDER BY scnd.doc_type_name_l";
-
-            Get_query = query;
+            */
+            //Get_query = query;
 
             return Get_query;
         }
@@ -226,23 +261,9 @@ namespace Emr_client.emr
         {
             string Get_query = "";
             
-            string query = "SELECT  dp.document_page_id , patv.visible_patient_id ,d.document_type_rcd ,dp.document_scan_info_id ,";
-            query += "dp.file_system_object_id ,dp.document_version_id ,dp.cust_barcode_key ,dp.page_number ,";
-            query += "dp.creation_date_time ,dp.lu_user_id ,dp.lu_updated ,dp.original_file_name AS original_file_name ,";
-            query += "dp.file_extension AS file_extension ,dv.document_id ,dp.signature ,";//fsop.xml_ref AS image_reference ,
-            query += "dp.signed_at,d.creation_date,ecr.name_e AS event_category_name_e, ecr.name_l AS event_category_name_l, ";            
-            query += "'..//emr/emrview.aspx?pf='+CONVERT(NVARCHAR(100), dp.file_system_object_id)+'";
-            query += "&dp='+CONVERT(NVARCHAR(100), dp.document_page_id) as urlink ";
-            query += "FROM document_nl_view AS d LEFT JOIN primary_patient_view AS patv ON patv.transaction_patient_id = d.person_id ";
-            query += "INNER JOIN document_version_nl_view AS dv ON dv.document_id = d.document_id AND dv.version_number = d.latest_version_number ";
-            query += "INNER JOIN document_page_nl_view AS dp ON dp.document_version_id = dv.document_version_id ";
-            query += "LEFT JOIN patient_event_nl_view AS pe ON pe.context_key_id = d.document_id ";
-            query += "LEFT JOIN event_category_ref_nl_view AS ecr ON ecr.event_category_rcd = pe.event_category_rcd ";            
-            query += "WHERE d.document_type_rcd = '" + varDocTypeID + "' AND visible_patient_id = '" + varVisibleID + "' ";
-            query += "ORDER BY dp.creation_date_time DESC, ecr.name_l ASC";
+            
 
-            Get_query = query;
-
+     
             return Get_query;
 
         }

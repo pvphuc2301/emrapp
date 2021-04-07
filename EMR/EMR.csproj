@@ -218,8 +218,12 @@
   <ItemGroup>
     <Compile Include="Classes\ConnClass.cs" />
     <Compile Include="Classes\EMRClass.cs" />
-    <Compile Include="Classes\JavascriptHelpers.cs" />
+    <Compile Include="Classes\TableEntities.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Classes\WebHelpers.cs" />
     <Compile Include="Classes\MISClass.cs" />
+    <Compile Include="Classes\TienIchWeb.cs" />
     <Compile Include="Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -431,7 +435,9 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DataEntities\" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
@@ -455,7 +461,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

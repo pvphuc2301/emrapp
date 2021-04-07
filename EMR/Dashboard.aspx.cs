@@ -21,11 +21,11 @@ namespace EMR
             //if (Request["__EVENTTARGET"] == "searchPID")
             if (!string.IsNullOrEmpty(txt_pid.Text))
             {
-                string _jsonData = JavascriptHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=4&keyword=" + txt_pid.Text);
+                string _jsonData = WebHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=4&keyword=" + txt_pid.Text);
 
                 if (_jsonData != null)
                 {
-                    RadGrid5.DataSource = JavascriptHelpers.GetJSONToDataTable(_jsonData);
+                    RadGrid5.DataSource = WebHelpers.GetJSONToDataTable(_jsonData);
                 }
             }
         }        
@@ -35,14 +35,14 @@ namespace EMR
 
             string patientID = item.GetDataKeyValue("patient_id").ToString();
 
-            string _jsonData = JavascriptHelpers.GetAPI("api/Patient/check-primary/" + patientID);
+            string _jsonData = WebHelpers.GetAPI("api/Patient/check-primary/" + patientID);
             dynamic data = JObject.Parse(_jsonData);
 
             string script;
 
             if (data.primary_visible_patient_id != null)
             {
-                _jsonData = JavascriptHelpers.GetAPI("api/Patient/select-patient-linked/" + patientID);
+                _jsonData = WebHelpers.GetAPI("api/Patient/select-patient-linked/" + patientID);
 
                 JavaScriptSerializer js = new JavaScriptSerializer();
             }
@@ -65,7 +65,7 @@ namespace EMR
 
         protected void RadGrid1_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            string _jsonData = JavascriptHelpers.GetAPI("api/Patient/outpatient-today-list?keyword=my.nguyen&pageIndex=1&pageSize=4");
+            string _jsonData = WebHelpers.GetAPI("api/Patient/outpatient-today-list?keyword=my.nguyen&pageIndex=1&pageSize=4");
 
             if (_jsonData != null)
             {
@@ -73,13 +73,13 @@ namespace EMR
                 string strJSON = "";
                 strJSON += json["items"];
 
-                (sender as RadGrid).DataSource = JavascriptHelpers.GetJSONToDataTable(strJSON);
+                (sender as RadGrid).DataSource = WebHelpers.GetJSONToDataTable(strJSON);
             }
         }
 
         protected void RadGrid2_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            string _jsonData = JavascriptHelpers.GetAPI("api/Patient/appoinment-today-list?keyword=my.nguyen&pageIndex=1&pageSize=4");
+            string _jsonData = WebHelpers.GetAPI("api/Patient/appoinment-today-list?keyword=my.nguyen&pageIndex=1&pageSize=4");
 
             if (_jsonData != null)
             {
@@ -87,7 +87,7 @@ namespace EMR
                 string strJSON = "";
                 strJSON += json["items"];
 
-                (sender as RadGrid).DataSource = JavascriptHelpers.GetJSONToDataTable(strJSON);
+                (sender as RadGrid).DataSource = WebHelpers.GetJSONToDataTable(strJSON);
             }
 
         }
@@ -101,14 +101,14 @@ namespace EMR
         {
             string pid = txt_pid.Text;
 
-            string _jsonData = JavascriptHelpers.GetAPI("api/Patient/demographic-search?keyword=" + pid + "&pageIndex=1&pageSize=4");
+            string _jsonData = WebHelpers.GetAPI("api/Patient/demographic-search?keyword=" + pid + "&pageIndex=1&pageSize=4");
 
             if (!String.IsNullOrEmpty(_jsonData))
             {
                 JObject json = JObject.Parse(_jsonData);
                 string strJSON = "";
                 strJSON += json["items"];
-                RadGrid5.DataSource = JavascriptHelpers.GetJSONToDataTable(strJSON);
+                RadGrid5.DataSource = WebHelpers.GetJSONToDataTable(strJSON);
                 RadGrid5.DataBind();
             }
         }

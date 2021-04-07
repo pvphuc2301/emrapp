@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="emrinfor.aspx.cs" Inherits="Emr_client.emr.emrinfor" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="emrinfor.aspx.cs" Inherits="EMR.emrinfor" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -208,9 +208,16 @@
                     </telerik:GridBoundColumn>
                     <telerik:GridTemplateColumn HeaderStyle-Width="99%" UniqueName="model_name">
                         <ItemTemplate>                                            
-                            <asp:HyperLink ID="lbURL" runat="server" NavigateUrl='<%# Return_URL(Eval("model_id")) %>' 
+                        
+                           <%-- <asp:HyperLink ID="lbURL" 
+                           NavigateUrl ="http://172.16.0.78:8082/api/omr/0d79db3e-ae3f-433e-a1d2-aa96107654e1"                           
+                          </asp:HyperLink>--%>
+
+                            <asp:HyperLink ID="lbURL" runat="server" NavigateUrl='<%# Return_Doc_URL(Eval("model_id"),Eval("document_id")) %>' 
                                 Text='<%# ReturnForm_Name(Eval("status"),Eval("model_name"),Eval("created_name_e")) %>' Target="MainContent">
+
                             </asp:HyperLink>
+
                         </ItemTemplate>
                     </telerik:GridTemplateColumn>
                 </Columns>

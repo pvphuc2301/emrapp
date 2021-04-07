@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 
-
+namespace EMR
+{
     public static class DataHelpers
     {
         public static int CalculateAge(DateTime dateOfBirth)
@@ -15,4 +17,7 @@ using System.Web;
 
             return age;
         }
+
+
     }
+}
