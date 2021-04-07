@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Emr_client.emr
+namespace EMR
 {
     public partial class InitialMedicalAssessmentForNeonatalInpatient : System.Web.UI.Page
     {

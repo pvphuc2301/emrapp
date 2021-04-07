@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Emr_client.emr
+namespace EMR
 {
 
 

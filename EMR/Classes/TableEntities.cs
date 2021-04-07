@@ -15,43 +15,6 @@ namespace EMR
 
         public void  OutpatientMedicalRecord_Delete() { }
 
-        public dynamic document_id   ,model_id
-      ,patient_visit_id
-      ,status
-      ,amend_reason
-      ,created_user_id
-      ,created_name_e
-      ,created_name_l
-      ,created_date_time
-      ,modified_user_id
-      ,modified_name_e
-      ,modified_name_l
-      ,modified_date_time
-      ,submited_user_id
-      ,submited_name_e
-      ,submited_name_l
-      ,submited_date_time
-      ,signed_user_id
-      ,signed_name_e
-      ,signed_name_l
-      ,signed_date_time
-      ,delete_user_id
-      ,delete_name_e
-      ,delete_name_l
-      ,delete_date_time
-      ,document_type_rcd
-      ,DOCUMENTID
-      ,chief_complain
-      ,history_present_illness
-      ,past_history
-      ,clinical_findings
-      ,para_clinical_investigations
-      ,diagnosis
-      ,treatment
-      ,treatment_period
-      ,recommendation
-      ,treatment_plan;
-        /*
         public dynamic document_id { get; set; }
 
         public dynamic model_id { get; set; }
@@ -153,7 +116,7 @@ namespace EMR
 
 
         public dynamic DOCUMENTID { get; set; }
-       */
+       
      }
 
 

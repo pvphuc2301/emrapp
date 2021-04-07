@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Emr_client.emr {
-    
-    
-    public partial class formview {
-        
+namespace EMR
+{
+
+
+    public partial class formview
+    {
+
         /// <summary>
         /// form1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace Emr_client.emr {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
+
         /// <summary>
         /// filescan control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace Emr_client.emr {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlIframe filescan;
-        
+
         /// <summary>
         /// Image1 control.
         /// </summary>

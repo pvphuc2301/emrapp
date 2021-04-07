@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DeliveryCertificate.aspx.cs" Inherits="Emr_client.emr.DeliveryCertificate" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DeliveryCertificate.aspx.cs" Inherits="EMR.DeliveryCertificate" %>
 
 
 <!DOCTYPE html>

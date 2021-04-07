@@ -8,7 +8,7 @@ using Telerik.Web.UI;
 using System.Data.SqlClient;
 using System.Net;
 
-namespace Emr_client.emr
+namespace EMR
 {
     public partial class formview : System.Web.UI.Page
     {

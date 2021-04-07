@@ -8,7 +8,7 @@
 //------------------------------------------------------------------------------
 
 
-namespace Emr_client.emr
+namespace EMR
 {
     public partial class USUrinarySystemReport
     {

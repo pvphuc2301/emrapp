@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace Emr_client.Emr
+namespace EMR
 {
     public partial class ObstetricAndGynecologicalInitialAssessment : System.Web.UI.Page
     {

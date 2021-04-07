@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ObsGynIniAss.aspx.cs" Inherits="Emr_client.Emr.ObstetricAndGynecologicalInitialAssessment" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ObsGynIniAss.aspx.cs" Inherits="EMR.ObstetricAndGynecologicalInitialAssessment" %>
 
 <!DOCTYPE html>
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="emrview.aspx.cs" Inherits="Emr_client.emr.formview" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="emrview.aspx.cs" Inherits="EMR.formview" %>
 
 <!DOCTYPE html>
 

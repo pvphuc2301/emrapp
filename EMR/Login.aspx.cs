@@ -13,7 +13,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.DirectoryServices;
 
-namespace Emr_client.Emr
+namespace EMR
 {
     public partial class Login : System.Web.UI.Page
     {

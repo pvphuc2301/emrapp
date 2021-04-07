@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Emr_client.Emr {
+namespace EMR {
     
     
     public partial class Login {

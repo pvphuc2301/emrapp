@@ -29,13 +29,16 @@ namespace EMR
 
             if (_jsonData != null)
             {
+
                 tbl = WebHelpers.GetJSONToDataTable(_jsonData);
                 // Fill data to object omr1:
                 WebHelpers.BindingDatafield(tbl, omr1);
+               
                 // Mapping omg1 to WebForm_controls
                 lblPatientName.Text = omr1.created_name_l;
             }
         }
+
           
 
     }

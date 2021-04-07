@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="InpIniMedAss.aspx.cs" Inherits="Emr_client.emr.InpatientInitialMedicalAssessment" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="InpIniMedAss.aspx.cs" Inherits="EMR.InpatientInitialMedicalAssessment" %>
 
 
 <!DOCTYPE html>

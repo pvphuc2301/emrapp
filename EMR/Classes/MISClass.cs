@@ -11,28 +11,30 @@ using System.Data.SqlClient;
 using Telerik.Web.UI;
 using System.Drawing;
 
+namespace EMR
+{
     public class MISClass
     {
-    public static string Left(string param, int length)
-    {
-        string result = "";
-        //start at the index based on the lenght of the sting minus
-        //the specified lenght and assign it a variable
-        if (!string.IsNullOrEmpty(param)) result = param.Substring(0, length);
-        //return the result of the operation
-        return result;
+        public static string Left(string param, int length)
+        {
+            string result = "";
+            //start at the index based on the lenght of the sting minus
+            //the specified lenght and assign it a variable
+            if (!string.IsNullOrEmpty(param)) result = param.Substring(0, length);
+            //return the result of the operation
+            return result;
+        }
+        public static string Right(string param, int length)
+        {
+            string result = "";
+            //start at the index based on the lenght of the sting minus
+            //the specified lenght and assign it a variable
+            if (!string.IsNullOrEmpty(param))
+                result = param.Substring(param.Length - length, length);
+            //return the result of the operation
+            return result;
+        }
     }
-    public static string Right(string param, int length)
-    {
-        string result = "";
-        //start at the index based on the lenght of the sting minus
-        //the specified lenght and assign it a variable
-        if (!string.IsNullOrEmpty(param))
-            result = param.Substring(param.Length - length, length);
-        //return the result of the operation
-        return result;
-    }
-}
     class SQLAppClass
     {
         public string GetDepRead(string query, string Field, String ConnString)
@@ -379,3 +381,4 @@ using System.Drawing;
             return NewMaxSoHD;
         }
     }
+}
