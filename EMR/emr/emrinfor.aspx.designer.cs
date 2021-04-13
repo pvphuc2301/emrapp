@@ -60,6 +60,15 @@ namespace EMR
         protected global::Telerik.Web.UI.RadPane TopPane;
 
         /// <summary>
+        /// btnPatientSummary control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnPatientSummary;
+
+        /// <summary>
         /// RadGrid1 control.
         /// </summary>
         /// <remarks>

@@ -306,7 +306,7 @@
                                         <div class="col-sm-6 mb-2">
                                             <label class="control-label mb-1">Cân Nặng/ <span class="text-primary">Weight:</span></label>
                                             <div class="form-group">
-                                                <telerik:RadTextBox RenderMode="Lightweight" Width="100%" runat="server" ID="txt_weight" EmptyMessage="" TextMode="SingleLine" Resize="None" CssClass="form-control"></telerik:RadTextBox>
+                                                <telerik:RadTextBox RenderMode="Lightweight" Width="100%" runat="server" ID="txtWeight" EmptyMessage="" TextMode="SingleLine" Resize="None" CssClass="form-control"></telerik:RadTextBox>
                                                 <span class="append">Kg</span>
                                             </div>
                                         </div>
@@ -314,7 +314,7 @@
                                         <div class="col-sm-6 mb-2">
                                             <label class="control-label mb-1">Nhịp thở/ <span class="text-primary">Respiratory rate:</span></label>
                                             <div class="form-group">
-                                                <telerik:RadTextBox RenderMode="Lightweight" Width="100%" runat="server" ID="txt_respiratory_rate" EmptyMessage="" TextMode="SingleLine" Resize="None" CssClass="form-control"></telerik:RadTextBox>
+                                                <telerik:RadTextBox RenderMode="Lightweight" Width="100%" runat="server" ID="txtRespiratoryRate" EmptyMessage="" TextMode="SingleLine" Resize="None" CssClass="form-control"></telerik:RadTextBox>
                                                 <span class="append">/phút (m)</span>
                                             </div>
                                         </div>
@@ -324,7 +324,7 @@
                                         <div class="col-sm-6 mb-2">
                                             <label class="control-label mb-1">Chiều cao/ <span class="text-primary">Height:</span></label>
                                             <div class="form-group">
-                                                <telerik:RadTextBox RenderMode="Lightweight" Width="100%" runat="server" ID="txt_height" EmptyMessage="" TextMode="SingleLine" Resize="None" CssClass="form-control"></telerik:RadTextBox>
+                                                <telerik:RadTextBox RenderMode="Lightweight" Width="100%" runat="server" ID="txtHeight" EmptyMessage="" TextMode="SingleLine" Resize="None" CssClass="form-control"></telerik:RadTextBox>
                                                 <span class="append">cm</span>
                                             </div>
                                         </div>
@@ -332,7 +332,7 @@
                                         <div class="col-sm-6 mb-2">
                                             <label class="control-label mb-1">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
                                             <div class="form-group">
-                                                <telerik:RadTextBox RenderMode="Lightweight" Width="100%" runat="server" ID="txt_blood_pressure" EmptyMessage="" TextMode="SingleLine" Resize="None" CssClass="form-control"></telerik:RadTextBox>
+                                                <telerik:RadTextBox RenderMode="Lightweight" Width="100%" runat="server" ID="txtBloodPressure" EmptyMessage="" TextMode="SingleLine" Resize="None" CssClass="form-control"></telerik:RadTextBox>
                                                 <span class="append">mmHg</span>
                                             </div>
                                         </div>
@@ -342,7 +342,7 @@
                                         <div class="col-sm-6 mb-2">
                                             <label class="control-label mb-1">Chỉ số khối cơ thể/ <span class="text-primary">BMI:</span></label>
                                             <div class="form-group">
-                                                <telerik:RadTextBox RenderMode="Lightweight" Width="100%" runat="server" ID="txt_bmi" EmptyMessage="" TextMode="SingleLine" Resize="None" CssClass="form-control"></telerik:RadTextBox>
+                                                <telerik:RadTextBox RenderMode="Lightweight" Width="100%" runat="server" ID="txtBmi" EmptyMessage="" TextMode="SingleLine" Resize="None" CssClass="form-control"></telerik:RadTextBox>
                                                 <span class="append">(Kg/m <sup>2</sup>)</span>
                                             </div>
                                         </div>
@@ -350,7 +350,7 @@
                                         <div class="col-sm-6 mb-2">
                                             <label class="control-label mb-1">Độ bão hòa Oxy/ <span class="text-primary">SpO2:</span></label>
                                             <div class="form-group">
-                                                <telerik:RadTextBox RenderMode="Lightweight" Width="100%" runat="server" ID="txt_spo2" EmptyMessage="" TextMode="SingleLine" Resize="None" CssClass="form-control"></telerik:RadTextBox>
+                                                <telerik:RadTextBox RenderMode="Lightweight" Width="100%" runat="server" ID="txtSpo2" EmptyMessage="" TextMode="SingleLine" Resize="None" CssClass="form-control"></telerik:RadTextBox>
                                                 <span class="append">%</span>
                                             </div>
                                         </div>

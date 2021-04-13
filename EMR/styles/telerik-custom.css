@@ -1,8 +1,16 @@
-﻿.telerik-custom .RadGrid_Bootstrap .rgHeader, .RadGrid_Bootstrap th.rgResizeCol {
+﻿.RadGrid_Bootstrap .rgHeader, .RadGrid_Bootstrap th.rgResizeCol {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
 }
 
-.telerik-custom .RadGrid {
-    line-height: 32px !important;
+.RadGrid {
+    line-height: 25px !important;
+}
+
+.RadInputDisabled a, .RadInputDisabled .riTextBox {
+    opacity: 1 !important;
+    border: none !important;
+}
+.RadGrid_Bootstrap .rgRow, .RadGrid_Bootstrap .rgAltRow, .RadGrid_Bootstrap .rgEditRow, .RadGrid_Bootstrap .rgFooter, .RadGrid_Bootstrap .rgGroupHeader {
+    height: 25px !important;
 }

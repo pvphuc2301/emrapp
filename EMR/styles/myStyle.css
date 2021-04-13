@@ -22,6 +22,34 @@
     width: calc(100% - 35px);
 }
 
+.w-4 {
+    width: 100px;
+}
+
+.w-5 {
+    width: 155px;
+}
+
+.w-6 {
+    width: 200px;
+}
+
+.w-7 {
+    width: 250px;
+}
+
+.w-8 {
+    width: 300px;
+}
+
+.w-9 {
+    width: 450px;
+}
+
+.w-10 {
+    width: 500px;
+}
+
 @media only screen and (min-width: 576px) {
     .w-sm-6 {
         width: 200px;
@@ -121,10 +149,6 @@
         width: 155px !important;
     }
 
-    .w-5 {
-        width: 155px;
-    }
-
     /* custom */
 
     .form-group {
@@ -158,16 +182,9 @@
             background-color: #ddd;
         }
 
-    .apply-grid-2 {
-        display: flex;
-    }
-
-        .apply-grid-2 .control-label {
-            width: 254px;
-            flex-shrink: 0;
-        }
-
-        .apply-grid-2 .RadInput {
-            flex-grow: 1;
-        }
-
+.contenteditable:focus {
+    box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%), 0 0 8px rgb(120 175 233 / 60%);
+    border-color: #3c87c8;
+    color: #000;
+    background-color: #fff;
+}

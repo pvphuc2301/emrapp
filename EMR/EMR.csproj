@@ -53,9 +53,13 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PopupControl, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\AdamsLair.WinForms.PopupControl.1.0.1\lib\net40\PopupControl.dll</HintPath>
+    </Reference>
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.DirectoryServices.Protocols" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -146,7 +150,6 @@
     <Content Include="App_Data\RadCaptcha\Y.wav" />
     <Content Include="App_Data\RadCaptcha\Z.wav" />
     <Content Include="Dashboard.aspx" />
-    <Content Include="EMR.aspx" />
     <Content Include="emr\emrinfor.aspx" />
     <Content Include="emr\emrview.aspx" />
     <Content Include="emr\labinfor.aspx" />
@@ -171,7 +174,19 @@
     <Content Include="OPD\SumOfComOutpCase.aspx" />
     <Content Include="OPD\UsUriSysReport.aspx" />
     <Content Include="Other\PatientSummary.aspx" />
+    <Content Include="scripts\contenteditable.min.js" />
+    <Content Include="scripts\dynamicModal.js" />
+    <Content Include="scripts\dynamicModal.min.js" />
     <Content Include="scripts\emrScript.js" />
+    <Content Include="scripts\jquery-2.2.1.js" />
+    <Content Include="scripts\jquery-2.2.1.min.js" />
+    <None Include="scripts\jquery.validate-vsdoc.js" />
+    <Content Include="scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="scripts\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="scripts\jquery.validate.js" />
+    <Content Include="scripts\jquery.validate.min.js" />
+    <Content Include="scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="styles\fontawesome-all.css" />
     <Content Include="styles\login-register-lock.css" />
     <Content Include="styles\myStyle.css" />
@@ -232,13 +247,6 @@
       <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Classes\DataHelpers.cs" />
-    <Compile Include="EMR.aspx.cs">
-      <DependentUpon>EMR.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="EMR.aspx.designer.cs">
-      <DependentUpon>EMR.aspx</DependentUpon>
-    </Compile>
     <Compile Include="emr\emrinfor.aspx.cs">
       <DependentUpon>emrinfor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -426,8 +434,10 @@
     <Content Include="App_Data\RadSpell\fr-FR.tdf" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="styles\telerik-custom.css" />
     <Content Include="web.config" />
     <None Include="packages.config" />
+    <Content Include="scripts\jquery-2.2.1.min.map" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

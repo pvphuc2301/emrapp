@@ -18,16 +18,16 @@ namespace EMR
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (Request["__EVENTTARGET"] == "searchPID")
-            if (!string.IsNullOrEmpty(txt_pid.Text))
-            {
-                string _jsonData = WebHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=4&keyword=" + txt_pid.Text);
+            //if (!string.IsNullOrEmpty(txt_pid.Text))
+            //{
+            //    string _jsonData = WebHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=4&keyword=" + txt_pid.Text);
 
-                if (_jsonData != null)
-                {
-                    RadGrid5.DataSource = WebHelpers.GetJSONToDataTable(_jsonData);
-                }
-            }
+            //    if (_jsonData != null)
+            //    {
+            //        RadGrid5.DataSource = WebHelpers.GetJSONToDataTable(_jsonData);
+            //        RadGrid5.DataBind();
+            //    }
+            //}
         }        
         protected void RadGrid1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -99,18 +99,27 @@ namespace EMR
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            string pid = txt_pid.Text;
 
-            string _jsonData = WebHelpers.GetAPI("api/Patient/demographic-search?keyword=" + pid + "&pageIndex=1&pageSize=4");
+            string _jsonData = WebHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=4&keyword=" + txt_pid.Text);
 
-            if (!String.IsNullOrEmpty(_jsonData))
+            if (_jsonData != null)
             {
-                JObject json = JObject.Parse(_jsonData);
-                string strJSON = "";
-                strJSON += json["items"];
-                RadGrid5.DataSource = WebHelpers.GetJSONToDataTable(strJSON);
+                RadGrid5.DataSource = WebHelpers.GetJSONToDataTable(_jsonData);
                 RadGrid5.DataBind();
             }
+
+            //string pid = txt_pid.Text;
+
+            //string _jsonData = WebHelpers.GetAPI("api/Patient/demographic-search?keyword=" + pid + "&pageIndex=1&pageSize=4");
+
+            //if (!String.IsNullOrEmpty(_jsonData))
+            //{
+            //    JObject json = JObject.Parse(_jsonData);
+            //    string strJSON = "";
+            //    strJSON += json["items"];
+            //    RadGrid5.DataSource = WebHelpers.GetJSONToDataTable(strJSON);
+            //    RadGrid5.DataBind();
+            //}
         }
 
         protected void RadGrid4_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -209,5 +218,16 @@ namespace EMR
         }
         #endregion
 
+        protected void RadGrid5_SelectedIndexChanged1(object sender, EventArgs e)
+        {
+            
+            GridDataItem item = (GridDataItem)(sender as RadGrid).SelectedItems[0];
+            string PID = item.GetDataKeyValue("patient_id").ToString();
+            string PVID = item.GetDataKeyValue("visible_patient_id").ToString();
+
+            string url = string.Format("/emr/emrinfor.aspx?pid={0}&vbid={1}", PID, PVID);
+
+            Response.Redirect(url);
+        }
     }
 }

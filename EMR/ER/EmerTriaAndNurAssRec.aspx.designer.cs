@@ -150,13 +150,13 @@ namespace EMR
         protected global::Telerik.Web.UI.RadTextBox RadTextBox1;
 
         /// <summary>
-        /// txt_blood_pressure control.
+        /// txtBloodPressure control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txt_blood_pressure;
+        protected global::Telerik.Web.UI.RadTextBox txtBloodPressure;
 
         /// <summary>
         /// txt_pulse control.
@@ -177,22 +177,22 @@ namespace EMR
         protected global::Telerik.Web.UI.RadTextBox txt_temperature;
 
         /// <summary>
-        /// txt_respiratory_rate control.
+        /// txtRespiratoryRate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txt_respiratory_rate;
+        protected global::Telerik.Web.UI.RadTextBox txtRespiratoryRate;
 
         /// <summary>
-        /// txt_spo2 control.
+        /// txtSpo2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txt_spo2;
+        protected global::Telerik.Web.UI.RadTextBox txtSpo2;
 
         /// <summary>
         /// RadTextBox11 control.
