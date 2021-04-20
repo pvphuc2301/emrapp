@@ -8,6 +8,7 @@ using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
+using Telerik.Windows.Documents.Flow.Model.Fields;
 
 namespace EMR
 {
@@ -15,52 +16,49 @@ namespace EMR
     {
         public string varPID = "";
         public bool showPopup = false;
+        public bool isDraft = false;
+        public string docId = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
             varPID = Request.QueryString["pid"];
-            LoadPatientInfomation(varPID);
 
+            if (!IsPostBack)
+            {
+                LoadPatientInfo(true);
+            }
         }
 
-        public void LoadPatientInfomation(string varPID)//object sender, EventArgs e
+        public void LoadPatientInfo(bool vi_laganue)
         {
-            string _jsonData = WebHelpers.GetAPI("api/emr/demographic/" + varPID);
-
-            if (_jsonData != null)
+            if (vi_laganue) //Language = Vietnamese ( Default)
             {
-                DataTable dtl = WebHelpers.GetJSONToDataTable(_jsonData);
-
-                PatientInfo patient = new PatientInfo();
-
-                WebHelpers.BindingDatafield(dtl, patient);
-
-                lblAddress.Text = patient.address_line_l + " " + patient.address_subregion_l + " " + patient.address_region_l + " " + patient.address_country_l;
-                lblName.Text = patient.first_name_l + " " + patient.last_name_l;
-                lblGender.Text = patient.gender_l;
-                lblAge.Text = patient.date_of_birth;
-
-                //lblPhone1
-
-                //patient.Name = data.first_name_l + " " + data.last_name_l;
-                //patient.Gender = data.gender_e;
-                //patient.Title = data.title_l;
-                //patient.PID = data.visible_patient_id;
-                //patient.Age = DataHelpers.CalculateAge(DateTime.Parse(data.date_of_birth.ToString())).ToString();
-                //patient.DOB = data.date_of_birth.ToString("dd-MM-yyyy");
+                lblGender.InnerText = DataHelpers.patient.gender_l;
+                lblAge.InnerText = DataHelpers.patient.date_of_birth;
+                lblAddress.InnerText = DataHelpers.patient.address_line_l + " " + DataHelpers.patient.address_subregion_l + " " + DataHelpers.patient.address_region_l + " " + DataHelpers.patient.address_country_l;
+                lblPhone.InnerText = DataHelpers.patient.contact_phone_number;
+                lblName.InnerText = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
+                lblRelationship.InnerText = DataHelpers.patient.relationship_type_rcd;
+                
             }
-            
+            else
+            {
+                lblGender.InnerText = DataHelpers.patient.gender_e;
+                lblAge.InnerText = DataHelpers.patient.date_of_birth;
+                lblAddress.InnerText = DataHelpers.patient.address_line_e + " " + DataHelpers.patient.address_subregion_e + " " + DataHelpers.patient.address_region_e + " " + DataHelpers.patient.address_country_e;
+                lblPhone.InnerText = DataHelpers.patient.contact_phone_number;
+                lblName.InnerText = DataHelpers.patient.first_name_e + " " + DataHelpers.patient.last_name_e;
+                lblRelationship.InnerText = DataHelpers.patient.relationship_type_rcd;
+
+            }
         }
 
         protected void RadGrid1_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
-
             string _jsonData = WebHelpers.GetAPI("api/patient/encounter-history/" + varPID + "?pageIndex=1&pageSize=4&keyword=my.nguyen");
-            //
-            //
+            
             if (_jsonData != null)
             {
-
                 JObject json = JObject.Parse(_jsonData);
                 string strJSON = "";
                 strJSON += json["items"];
@@ -108,6 +106,7 @@ namespace EMR
                 if (_jsonData != null)
                 {
                     DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+                    ddlDocList.Items.Clear();
 
                     foreach (DataRow row in db.Rows)
                     {
@@ -125,30 +124,14 @@ namespace EMR
         }
 
 
-        protected void RadGrid1_SelectedCellChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void RadGrid1_PageIndexChanged(object sender, GridPageChangedEventArgs e)
-        {
-
-        }
-
         protected void RadGrid1_ItemDataBound(object sender, GridItemEventArgs e)
         {
 
         }
 
-        protected void ddlDocList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            
-        }
-
         protected void btnSave_Click(object sender, EventArgs e)
         {
-
-           ListItem selectedItem = ddlDocList.SelectedItem;
+            ListItem selectedItem = ddlDocList.Items[ddlDocList.SelectedIndex];
 
             string[] _params = selectedItem.Value.Split('|');
 
@@ -158,57 +141,64 @@ namespace EMR
 
             string _jsonData = WebHelpers.GetAPI("api/emr/check-document-exists/" + PVID + "/" + modelID);
 
-            #region response
-            //{ "document_id":"4c71060a-e1bd-d180-07f8-b0baae73439d","model_id":"a90ce47a-4e06-485a-b205-8a67eb778407","patient_visit_id":"3afc144a-86ca-11eb-9dfe-dca2660bc0a2","status":"DRAFT","amend_reason":null,"created_user_id":"long.do","created_name_e":"Mr. Do Van Long","created_name_l":"Ông Đỗ Văn Long","created_date_time":"2021-04-06T20:38:43.567","modified_user_id":null,"modified_name_e":null,"modified_name_l":null,"modified_date_time":null,"submited_user_id":null,"submited_name_e":null,"submited_name_l":null,"submited_date_time":null,"signed_user_id":null,"signed_name_e":null,"signed_name_l":null,"signed_date_time":null,"delete_user_id":null,"delete_name_e":null,"delete_name_l":null,"delete_date_time":null,"document_type_rcd":"EMR","documentid":0}
-            //document_id
-            //model_id
-            //patient_visit_id
-            //status
-
-            #endregion
-
             if (_jsonData != null)
             {
                 DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
                 
                 _jsonData = WebHelpers.GetAPI("api/emr/get-api/" + modelID);
 
-                #region response
-                //"model_id": "a90ce47a-4e06-485a-b205-8a67eb778407",
-                //"model_name": "OUTPATIENT MEDICAL RECORD",
-                //"url": "OPD/OutPatMedRec.aspx",
-                //"api": "omr",
-                //"model_type_rcd": "OPD",
-                //"model_type_name": "OPD"
-                #endregion
-
                 dynamic data = JObject.Parse(_jsonData);
 
                 for (int i = 0; i <db.Rows.Count; i++)
                 {
-                    if(db.Rows[i].Field<string>("status") == "DRAFT")
+                    if(db.Rows[i].Field<string>("status") == DocumentStatus.DRAFT)
                     {
-                        string docID = db.Rows[i].Field<string>("document_id");
-                        Response.Redirect("../" + _params[1] + "?docId=" + docID);
+                        docId = db.Rows[i].Field<string>("document_id");
+
+                        //DataHelpers.varDocId = db.Rows[i].Field<string>("document_id");
+                        //DataHelpers.varModelId = db.Rows[i].Field<string>("model_id");
+                        //DataHelpers.varPVId = PVID;
+
+                        VAL_GLOBAL.docId = db.Rows[i].Field<string>("document_id");
+                        isDraft = true;
+                        break;
                     }
                 }
 
-                Guid docId = Guid.NewGuid();
+                if (!isDraft)
+                {
+                    string docId = Guid.NewGuid().ToString();
 
-                string jsonData = "{\"document_id\":" + "\"" + docId + "\", \"patient_visit_id\": \"" + PVID + "\", \"model_id\": \"" + modelID + "\", \"user_name\": \"" + userName + "\"}";
+                    var objTemp = new { document_id = docId, patient_visit_id = PVID, model_id = modelID, user_name = userName };
 
-                _jsonData = WebHelpers.PostAPI("api/" + data.api + "/add", jsonData);
-                
-                _jsonData = WebHelpers.PostAPI("api/" + data.api + "/log/" + docId);
+                    DataHelpers.varDocId = docId;
+                    DataHelpers.varModelId = modelID;
+                    DataHelpers.varPVId = PVID;
 
-                Response.Redirect("../" + _params[1]);
-
+                    string statusCode = WebHelpers.PostAPI("api/" + data.api + "/add", objTemp);
+                    
+                    if(statusCode == "OK")
+                    {
+                        statusCode = WebHelpers.PostAPI("api/" + data.api + "/log/" + docId);
+                        Response.Redirect("../" + _params[1]);
+                    }
+                }
             }
         }
 
-        protected void loadModalSource_Click(object sender, EventArgs e)
+        protected void btnOpen_ServerClick(object sender, EventArgs e)
         {
-
+            try
+            {
+                ListItem selectedItem = ddlDocList.Items[ddlDocList.SelectedIndex];
+                string[] _params = selectedItem.Value.Split('|');
+                
+                Response.Redirect("../" + _params[1] + "?docId=" + VAL_GLOBAL.docId, false);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

@@ -7,110 +7,92 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EMR
+namespace EMR.UserControls
 {
 
 
-    public partial class emrinfor
+    public partial class PatientInfo
     {
 
         /// <summary>
-        /// form1 control.
+        /// lblFirstName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblFirstName;
 
         /// <summary>
-        /// ScriptManager1 control.
+        /// lblLastName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblLastName;
 
         /// <summary>
-        /// ValueHiddenField control.
+        /// lblGender control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField ValueHiddenField;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblGender;
 
         /// <summary>
-        /// lblPatientInfo control.
+        /// lblDoB control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor lblPatientInfo;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblDoB;
 
         /// <summary>
-        /// RadSplitter1 control.
+        /// lblContactPerson control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadSplitter RadSplitter1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblContactPerson;
 
         /// <summary>
-        /// TopPane control.
+        /// lblRelationship control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadPane TopPane;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblRelationship;
 
         /// <summary>
-        /// RadGrid1 control.
+        /// lblPatientAddress control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid RadGrid1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblPatientAddress;
 
         /// <summary>
-        /// RadGrid2 control.
+        /// lblVisitCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid RadGrid2;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblVisitCode;
 
         /// <summary>
-        /// RadGrid3 control.
+        /// lblVisitDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid RadGrid3;
-
-        /// <summary>
-        /// RadSplitBar1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadSplitBar RadSplitBar1;
-
-        /// <summary>
-        /// MainContent control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadPane MainContent;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblVisitDate;
     }
 }

@@ -39,7 +39,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadLabel lblGender;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblGender;
 
         /// <summary>
         /// lblAge control.
@@ -48,7 +48,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadLabel lblAge;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblAge;
 
         /// <summary>
         /// lblAddress control.
@@ -57,16 +57,16 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadLabel lblAddress;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblAddress;
 
         /// <summary>
-        /// lblPhone1 control.
+        /// lblPhone control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadLabel lblPhone1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblPhone;
 
         /// <summary>
         /// lblName control.
@@ -75,7 +75,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadLabel lblName;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblName;
 
         /// <summary>
         /// lblRelationship control.
@@ -84,25 +84,16 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadLabel lblRelationship;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblRelationship;
 
         /// <summary>
-        /// lblPhone2 control.
+        /// lblPhoneRel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadLabel lblPhone2;
-
-        /// <summary>
-        /// RadLabel1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadLabel RadLabel1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblPhoneRel;
 
         /// <summary>
         /// RadGrid1 control.
@@ -120,16 +111,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlDocList;
-
-        /// <summary>
-        /// btnClose control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnClose;
+        protected global::System.Web.UI.HtmlControls.HtmlSelect ddlDocList;
 
         /// <summary>
         /// btnSave control.
@@ -138,6 +120,15 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSave;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnSave;
+
+        /// <summary>
+        /// btnOpen control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnOpen;
     }
 }

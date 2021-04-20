@@ -15,6 +15,42 @@ namespace EMR
     {
 
         /// <summary>
+        /// amendReasonBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl amendReasonBox;
+
+        /// <summary>
+        /// txtAmendReason control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtAmendReason;
+
+        /// <summary>
+        /// lblAmendReasonError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblAmendReasonError;
+
+        /// <summary>
+        /// PatientInfo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PatientInfo PatientInfo;
+
+        /// <summary>
         /// form1 control.
         /// </summary>
         /// <remarks>
@@ -129,7 +165,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden txtChiefComplaint;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtChiefComplaint;
 
         /// <summary>
         /// radAllergy1 control.
@@ -156,7 +192,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden txtAllergy;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtAllergy;
 
         /// <summary>
         /// radMentalStatus1 control.
@@ -183,7 +219,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden txtMentalStatus;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtMentalStatus;
 
         /// <summary>
         /// txtPainCore control.
@@ -219,70 +255,70 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden txtFrms;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txtFrms;
 
         /// <summary>
-        /// rad_nss1 control.
+        /// radNss1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rad_nss1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton radNss1;
 
         /// <summary>
-        /// rad_nss2 control.
+        /// radNss2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rad_nss2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton radNss2;
 
         /// <summary>
-        /// rad_nss3 control.
+        /// radNss3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rad_nss3;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton radNss3;
 
         /// <summary>
-        /// rad_housing1 control.
+        /// radHousing1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rad_housing1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton radHousing1;
 
         /// <summary>
-        /// rad_housing2 control.
+        /// radHousing2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rad_housing2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton radHousing2;
 
         /// <summary>
-        /// rad_prior1 control.
+        /// radPrior1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rad_prior1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton radPrior1;
 
         /// <summary>
-        /// rad_prior2 control.
+        /// radPrior2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButton rad_prior2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton radPrior2;
 
         /// <summary>
         /// btnComplete control.
@@ -291,7 +327,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnComplete;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnComplete;
 
         /// <summary>
         /// btnSave control.
@@ -300,7 +336,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSave;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnSave;
 
         /// <summary>
         /// btnDelete control.
@@ -309,7 +345,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDelete;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnDelete;
 
         /// <summary>
         /// btnAmend control.
@@ -318,7 +354,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAmend;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnAmend;
 
         /// <summary>
         /// btnPrint control.
@@ -327,7 +363,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPrint;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnPrint;
 
         /// <summary>
         /// btnCancel control.
@@ -336,6 +372,6 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancel;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnCancel;
     }
 }

@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OutPatIniNurAss.aspx.cs" Inherits="EMR.OutPathIniNurAss" ValidateRequest="false" %>
 
+<%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="uc1" TagName="PatientInfo" %>
 
 <!DOCTYPE html>
 
@@ -12,147 +13,45 @@
     <link href="../../styles/telerik-custom.css" rel="stylesheet" />
 </head>
 <body>
-    <form id="form1" runat="server" method="post">
-        <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
-        <!-- ============================================================== -->
-        <!-- Preloader - style you can find in spinners.css -->
-        <!-- ============================================================== -->
-        <div class="preloader">
-            <div class="loader">
-                <div class="loader__figure"></div>
-                <p class="loader__label">AIH Hospital</p>
-            </div>
+
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">AIH Hospital</p>
         </div>
-        <!-- ============================================================== -->
-        <!-- Main wrapper - style you can find in pages.scss -->
-        <!-- ============================================================== -->
-        <div class="scroll-sidebar h-100 w-100">
-            <!-- Row -->
-            <div class="row">
-                <div class="col-lg-12" id="accordionExample">
-                    <div class="card">
-                        <div class="card-header bg-primary">
-                            <a data-toggle="collapse" href="javascript:void(0)" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                <h4 class="m-b-0 text-white font-bold">Patient details</h4>
-                            </a>
+    </div>
+
+    <div class="scroll-sidebar h-100 w-100">
+
+        <div class="row" id="amendReasonBox" runat="server">
+            <div class="col-md-12">
+                <div class="card amend-box">
+                    <div class="card-header">
+                        <h5>Lý do thay đổi/ <span class="text-primary">amend reason: </span><span class="text-danger">*</span></h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <input id="txtAmendReason" class="contenteditable" runat="server" value="" />
                         </div>
-                        <div class="card-body collapse show" id="collapseOne" aria-labelledby="headingOne">
-                            <h4 class="box-title font-bold">Person Info</h4>
-                            <hr />
-                            <div class="row">
-                                <div class="col-sm-6" style="display: flex">
-                                    <div class="w-5 text-sm-right">
-                                        <label class="control-label text-sm-right mr-3">First Name:</label>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <label class="control-label text-sm-right">John</label>
-                                    </div>
-                                </div>
-
-                                <!--/span-->
-                                <div class="col-sm-6" style="display: flex">
-                                    <div class="w-5 text-sm-right">
-                                        <label class="control-label text-sm-right mr-3">Last Name:</label>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <label class="control-label text-sm-right">Doe</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <!--/row-->
-                            <div class="row">
-                                <div class="col-sm-6" style="display: flex">
-                                    <div class="w-5 text-sm-right">
-                                        <label class="control-label text-sm-right mr-3">Gender:</label>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <label class="control-label text-sm-right">Male</label>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6" style="display: flex">
-                                    <div class="w-5 text-sm-right">
-                                        <label class="control-label text-sm-right mr-3">Date of Birth:</label>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <label class="control-label text-sm-right">11/06/1987</label>
-                                    </div>
-                                </div>
-                                <!--/span-->
-                            </div>
-                            <!--/row-->
-                            <div class="row">
-                                <div class="col-sm-6" style="display: flex">
-                                    <div class="w-5 text-sm-right">
-                                        <label class="control-label text-sm-right mr-3">Contact Person:</label>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <label class="control-label text-sm-right">11/06/1987</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6" style="display: flex">
-                                    <div class="w-5 text-sm-right">
-                                        <label class="control-label text-sm-right mr-3">Relationship:</label>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <label class="control-label text-sm-right"></label>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <!--/row-->
-                            <div class="row">
-                                <div class="col-lg-6 d-sm-flex">
-                                    <div class="w-5 text-sm-right">
-                                        <label class="control-label text-sm-right mr-3">Address:</label>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <label class="control-label text-sm-right">19/1 Phan Tây Hồ,P.7, Quận Phú Nhuận, Tp. HCM, Việt Nam</label>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <!--/row-->
-                            <!--/row-->
-                            <h4 class="box-title font-bold">Visit Details</h4>
-                            <hr />
-
-                            <div class="row">
-                                <div class="col-sm-6" style="display: flex">
-                                    <div class="w-5 text-sm-right">
-                                        <label class="control-label text-sm-right mr-3">Encounter:</label>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <label class="control-label text-sm-right">OPD 8536</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-6" style="display: flex">
-                                    <div class="w-5 text-sm-right">
-                                        <label class="control-label text-sm-right mr-3">Admit Date:</label>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <label class="control-label text-sm-right">15-05-2019</label>
-                                    </div>
-                                </div>
-                                <!--/span-->
-                            </div>
-                        </div>
+                        <div id="lblAmendReasonError" class="text-danger" runat="server">Nội dung lý do thay đổi phải trên 3 ký tự</div>
                     </div>
                 </div>
             </div>
-            <!-- Row -->
+        </div>
 
-            <!-- Row -->
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header bg-primary">
-                            <a data-toggle="collapse" href="javascript:void(0)" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                <h4 class="m-b-0 text-white font-bold">Outpatient Initial Nursing Assessment</h4>
-                            </a>
-                        </div>
-                        <div class="card-body collapse show" id="collapseTwo">
+        <uc1:PatientInfo runat="server" ID="PatientInfo" />
+
+        <div class="row" style="margin-bottom: 50px;">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="text-primary">Outpatient Initial Nursing Assessment</h4>
+                        <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="arrowhead"></a>
+                    </div>
+
+                    <div class="card-body collapse show" id="collapseOne">
+                        <form id="form1" runat="server" method="post">
+                            <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
                             <div class="form-body mb-4">
 
                                 <div class="row">
@@ -165,14 +64,14 @@
                                     <div class="col-sm-6 mb-2 d-flex no-block">
                                         <label class="control-label w-6 mb-1">Nhiệt độ/ <span class="text-primary">Temperature:</span></label>
                                         <div class="form-group w-4">
-                                            <input id="txtTemperature" runat="server" class="form-control text-right"  />
+                                            <input id="txtTemperature" runat="server" class="form-control text-right" />
                                             <span class="append">°C</span>
                                         </div>
                                     </div>
                                     <div class="col-sm-6 mb-2 d-flex no-block">
                                         <label class="control-label w-6 mb-1">Nhịp tim/ <span class="text-primary">rate:</span></label>
                                         <div class="form-group w-5">
-                                            <input id="txtHeartRate" runat="server" class="form-control text-right"  />
+                                            <input id="txtHeartRate" runat="server" class="form-control text-right" />
                                             <span class="append">/phút (m)</span>
                                         </div>
                                     </div>
@@ -182,7 +81,7 @@
                                     <div class="col-sm-6 mb-2 d-flex no-block">
                                         <label class="control-label w-6 mb-1 ">Cân Nặng/ <span class="text-primary">Weight:</span></label>
                                         <div class="form-group w-4">
-                                            <input id="txtWeight" runat="server" class="form-control text-right"  />
+                                            <input id="txtWeight" runat="server" class="form-control text-right" />
                                             <span class="append">Kg</span>
                                         </div>
                                     </div>
@@ -199,7 +98,7 @@
                                     <div class="col-sm-6 mb-2 d-flex no-block">
                                         <label class="control-label w-6 mb-1 ">Chiều cao/ <span class="text-primary">Height:</span></label>
                                         <div class="form-group w-4">
-                                            <input id="txtHeight" maxlength="3" runat="server" class="form-control text-right"  />
+                                            <input id="txtHeight" maxlength="3" runat="server" class="form-control text-right" />
                                             <span class="append">cm</span>
                                         </div>
                                     </div>
@@ -217,7 +116,7 @@
                                         <div class="d-flex no-block">
                                             <label for="bmi" class="control-label w-6 mb-1">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
                                             <div class="form-group w-5">
-                                                <input id="txtBmi" runat="server" class="form-control text-right" disabled="disabled"/>
+                                                <input id="txtBmi" runat="server" class="form-control text-right" disabled="disabled" />
                                                 <span class="append">(Kg/m <sup>2</sup>)</span>
                                                 <telerik:RadScriptBlock ID="RadScriptBlock1" runat="server">
                                                     <script type="text/javascript">
@@ -234,23 +133,24 @@
                                                         });
 
                                                         function CalculateBmi() {
-                                                            console.log('bmi :' + txtWeight.value / (Math.pow(txtHeight.value, 2)));
                                                             if (txtHeight.value == "" || txtWeight.value == "") return "";
-                                                            else { return txtWeight.value / (Math.pow(txtHeight.value, 2)) };
+                                                            else { return (txtWeight.value / (Math.pow(txtHeight.value, 2))).toFixed(2) };
                                                         }
 
                                                     </script>
                                                 </telerik:RadScriptBlock>
                                             </div>
                                         </div>
-                                        <p class="mt-1">(Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not
-applicable for children and pregnant</span>)</p>
+                                        <p class="mt-1">
+                                            (Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not
+applicable for children and pregnant</span>)
+                                        </p>
                                     </div>
 
                                     <div class="col-sm-6 mb-2 d-flex no-block">
                                         <label for="spO2" class="control-label w-6 mb-1">Độ bão hòa Oxy/ <span class="text-primary">SpO2:</span></label>
                                         <div class="form-group w-4">
-                                            <input id="txtSpo2" runat="server" class="form-control text-right"/>
+                                            <input id="txtSpo2" runat="server" class="form-control text-right" />
                                             <span class="append">%</span>
                                         </div>
                                     </div>
@@ -260,7 +160,7 @@ applicable for children and pregnant</span>)</p>
                                     <div class="col-sm-6 mb-2 d-flex no-block">
                                         <label for="head-circumference" class="control-label w-6 mb-1">Vòng đầu (trẻ em < 2 tuổi)/ <span class="text-primary">Head Circumference (children < 2 year old) </span></label>
                                         <div class="form-group w-4">
-                                            <input id="txtHeadCircumference" runat="server" class="form-control text-right"/>
+                                            <input id="txtHeadCircumference" runat="server" class="form-control text-right" />
                                             <span class="append">cm</span>
                                         </div>
                                     </div>
@@ -278,7 +178,7 @@ applicable for children and pregnant</span>)</p>
                                     <div class="col-md-12">
                                         <label class="control-label mb-1 font-bold">1. Lý do đến khám/ <span class="text-primary">Chief complaint:</span></label>
                                         <div class="form-group">
-                                            <input type="hidden" id="txtChiefComplaint" class="contenteditable" runat="server" value="" />
+                                            <input id="txtChiefComplaint" class="contenteditable" runat="server" value="" />
                                         </div>
                                     </div>
                                 </div>
@@ -302,7 +202,7 @@ applicable for children and pregnant</span>)</p>
                                             <label class="custom-control-label" for="radAllergy2">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="hidden" id="txtAllergy" class="contenteditable" runat="server" value="" />
+                                            <input id="txtAllergy" class="contenteditable" runat="server" value="" />
                                         </div>
                                     </div>
                                 </div>
@@ -332,7 +232,7 @@ applicable for children and pregnant</span>)</p>
                                             <label class="custom-control-label" for="radMentalStatus2">Không, ghi rõ/ <span class="text-primary">No, specify:</span></label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="hidden" id="txtMentalStatus" class="contenteditable" runat="server" value="" />
+                                            <input id="txtMentalStatus" class="contenteditable" runat="server" value="" />
                                         </div>
                                     </div>
                                 </div>
@@ -343,7 +243,7 @@ applicable for children and pregnant</span>)</p>
                                         <label class="control-label mb-1 font-bold">4. Thang điểm đau/ <span class="text-primary">Pain score:</span></label>
                                     </div>
                                     <div class="col-md-8">
-                                        <input runat="server" class="form-control d-inline-block" id="txtPainCore"/>
+                                        <input runat="server" class="form-control d-inline-block w-4" id="txtPainCore" />
                                     </div>
                                 </div>
 
@@ -372,7 +272,7 @@ applicable for children and pregnant</span>)</p>
                                             <label class="custom-control-label" for="radFrms2">Nếu có, cung cấp phương tiện hỗ trợ/ <span class="text-primary">If yes, provide assistance</span></label>
                                         </div>
                                         <div class="form-group">
-                                            <input type="hidden" id="txtFrms" class="contenteditable" runat="server" value="" />
+                                            <input id="txtFrms" class="contenteditable" runat="server" value="" />
                                         </div>
                                     </div>
                                 </div>
@@ -385,19 +285,22 @@ applicable for children and pregnant</span>)</p>
 
                                     <div class="col-md-4">
                                         <div class="custom-control custom-radio">
-                                            <asp:RadioButton ID="rad_nss1" runat="server" Text="Bình thường/ Normal" GroupName="rad_nss" />
+                                            <input type="radio" runat="server" id="radNss1" name="radNss" class="custom-control-input" />
+                                            <label class="custom-control-label" for="radNss1">Bình thường/ <span class="text-primary">Normal</span></label>
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class="custom-control custom-radio">
-                                            <asp:RadioButton ID="rad_nss2" runat="server" Text="Suy dinh dưỡng/ Malnutrition" GroupName="rad_nss" />
+                                            <input type="radio" runat="server" id="radNss2" name="radNss" class="custom-control-input" />
+                                            <label class="custom-control-label" for="radNss2">Suy dinh dưỡng/ <span class="text-primary">Malnutrition</span></label>
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class="custom-control custom-radio">
-                                            <asp:RadioButton ID="rad_nss3" runat="server" Text="Thừa cân hoặc béo phì/ Overweight or obesity" GroupName="rad_nss" />
+                                            <input type="radio" runat="server" id="radNss3" name="radNss" class="custom-control-input" />
+                                            <label class="custom-control-label" for="radNss3">Thừa cân hoặc béo phì/ <span class="text-primary">Overweight or obesity</span></label>
                                         </div>
                                     </div>
                                 </div>
@@ -416,13 +319,15 @@ applicable for children and pregnant</span>)</p>
 
                                     <div class="col-md-4">
                                         <div class="custom-control custom-radio">
-                                            <asp:RadioButton ID="rad_housing1" runat="server" Text="Sống một mình/ Lives alone" GroupName="rad_housing" />
+                                            <input type="radio" runat="server" id="radHousing1" name="radHousing" class="custom-control-input" />
+                                            <label class="custom-control-label" for="radHousing1">Sống một mình/ <span class="text-primary">Lives alone</span></label>
                                         </div>
                                     </div>
 
                                     <div class="col-md-8">
                                         <div class="custom-control custom-radio">
-                                            <asp:RadioButton ID="rad_housing2" runat="server" Text="Sống với người thân/ With relatives" GroupName="rad_housing" />
+                                            <input type="radio" runat="server" id="radHousing2" name="radHousing" class="custom-control-input" />
+                                            <label class="custom-control-label" for="radHousing2">Sống với người thân/ <span class="text-primary">With relatives</span></label>
                                         </div>
                                     </div>
                                 </div>
@@ -435,39 +340,41 @@ applicable for children and pregnant</span>)</p>
 
                                     <div class="col-md-4">
                                         <div class="custom-control custom-radio">
-                                            <asp:RadioButton ID="rad_prior1" runat="server" Text="Cần được khám ngay/ Immediate consulting requirement" GroupName="rad_prior" />
+                                            <input type="radio" runat="server" id="radPrior1" name="radPrior" class="custom-control-input" />
+                                            <label class="custom-control-label" for="radPrior1">Cần được khám ngay/ <span class="text-primary">Immediate consulting requirement</span></label>
                                         </div>
                                     </div>
 
                                     <div class="col-md-8">
                                         <div class="custom-control custom-radio">
-                                            <asp:RadioButton ID="rad_prior2" runat="server" Text="Có thể chờ khám trong khoảng thời gian xác định/ Be able to wait for consultation at a specific time" GroupName="rad_prior" />
+                                            <input type="radio" runat="server" id="radPrior2" name="radPrior" class="custom-control-input" />
+                                            <label class="custom-control-label" for="radPrior2">Có thể chờ khám trong khoảng thời gian xác định/ <span class="text-primary">Be able to wait for consultation at a specific time</span></label>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="form-actions mb-3">
-                                    <asp:Button ID="btnComplete" OnClick="btnComplete_Click" CssClass="btn btn-primary" Text="Complete" runat="server" />
+                                    <button type="submit" id="btnComplete" onserverclick="btnComplete_Click" class="btn btn-primary" runat="server">Complete</button>
 
-                                    <asp:Button ID="btnSave" CssClass="btn btn-primary" Text="Save" runat="server" OnClick="btnSave_Click" />
+                                    <button type="submit" id="btnSave" onserverclick="btnSave_Click" class="btn btn-primary" runat="server">Save</button>
 
-                                    <asp:Button ID="btnDelete" CssClass="btn btn-secondary" Text="Delete" runat="server" />
+                                    <button type="submit" id="btnDelete" class="btn btn-secondary" onserverclick="btnDelete_ServerClick" runat="server">Delete</button>
 
-                                    <asp:Button ID="btnAmend"  CssClass="btn btn-secondary" Text="Amend" runat="server" OnClick="btnAmend_Click" UseSubmitBehavior="False" />
+                                    <button type="submit" id="btnAmend" onserverclick="btnAmend_Click" class="btn btn-secondary" runat="server">Amend</button>
 
-                                    <asp:Button ID="btnPrint" CssClass="btn btn-secondary" Text="Print" runat="server" />
-                                        
-                                    <asp:Button ID="btnCancel" CssClass="btn btn-secondary" Text="Cancel" runat="server" />
+                                    <button type="submit" id="btnPrint" onserverclick="btnComplete_Click" class="btn btn-secondary" runat="server">Print</button>
+
+                                    <button type="submit" id="btnCancel" onserverclick="btnCancel_Click" class="btn btn-secondary" runat="server">Cancel</button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
+            </div>
         </div>
+    </div>
 
-        </div>
-    </form>
-
+    <script src="../scripts/sticky-affect.js"></script>
     <script src="../../scripts/jquery-3.2.1.min.js"></script>
     <script src="../../scripts/bootstrap.min.js"></script>
     <script src="../../scripts/perfect-scrollbar.jquery.min.js"></script>

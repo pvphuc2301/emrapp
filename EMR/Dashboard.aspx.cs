@@ -100,7 +100,7 @@ namespace EMR
         protected void btnSearch_Click(object sender, EventArgs e)
         {
 
-            string _jsonData = WebHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=4&keyword=" + txt_pid.Text);
+            string _jsonData = WebHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=4&keyword=" + txt_pid.Value);
 
             if (_jsonData != null)
             {

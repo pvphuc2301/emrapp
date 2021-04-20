@@ -1,14 +1,3 @@
-//let customRadios = document.getElementsByClassName('custom-radio');
-
-//for (let i = 0; i < customRadios.length; i++) {
-    
-//    let input = customRadios[i].getElementsByTagName('input')[0];
-//    input.classList.add("custom-control-input");
-
-//    let lable = customRadios[i].getElementsByTagName('label')[0];
-//    lable.classList.add("custom-control-label");
-//}
-
 let formGroup = document.getElementsByClassName('form-group');
 
 for (let i = 0; i < formGroup.length; i++) {
@@ -43,122 +32,42 @@ var radiosUnique = radiosAttr.filter((v, i, a) => a.indexOf(v) === i);
 for (let i = 0; i < radiosUnique.length; i++) {
     let radiosEle = $(`input[name=${radiosUnique[i]}]`);
 
-    for (let i = 0; i < radiosEle.length; i++) {
+    for (let j = 0; j < radiosEle.length; j++) {
+        let disabledFor = radiosEle[j].getAttribute('disabled-for');
 
-        //let attr = radiosEle[i].getAttribute('visible-for');
+        if (disabledFor !== 'undefined' && disabledFor !== false && disabledFor !== null) {
+            let EleByClassName = document.getElementsByClassName(radiosEle[j].getAttribute('disabled-for'));
 
-        let disabledFor = radiosEle[i].getAttribute('disabled-for');
-
-        if (typeof disabledFor !== 'undefined' && disabledFor !== false) {
-
-            if (radiosEle[i].checked) {
-                let EleByClassName = document.getElementsByClassName(radiosEle[i].getAttribute('disabled-for'));
-
-                for (let i = 0; i < EleByClassName.length; i++) {
-
-                    //if (EleByClassName[i].classList.contains(disabledFor)) {
-                    EleByClassName[i].disabled = false;
-                    EleByClassName[i].contentEditable = true;
-                    EleByClassName[i].style.display = "inline-block";
-                    //} else {
-                    //EleByClassName[i].disabled = true;
-                    //EleByClassName[i].contentEditable = false;
-                    //EleByClassName[i].style.display = "none";
-                }
-            } else {
-                for (let i = 0; i < EleByClassName.length; i++) {
-                    EleByClassName[i].disabled = true;
-                    EleByClassName[i].contentEditable = false;
-                    EleByClassName[i].style.display = "none";
+            for (let k = 0; k < EleByClassName.length; k++) {
+                
+                if (radiosEle[j].getAttribute('checked')) {
+                    EleByClassName[k].style.display = "";
+                } else {
+                    EleByClassName[k].style.display = "none";
                 }
             }
         }
 
-        //for (let i = 0; i < radiosEle.length; i++) {
+        radiosEle[j].addEventListener('change', function () {
+            let disabledFor = radiosEle[j].getAttribute('disabled-for');
 
-        //    let EleByClassName = document.getElementsByClassName(radiosEle[i].getAttribute('disabled-for'));
+            if (disabledFor !== 'undefined' && disabledFor !== false) {
 
-        //    for (let i = 0; i < EleByClassName.length; i++) {
+                for (let k = 0; k < radiosEle.length; k++) {
 
-        //        if (EleByClassName[i].classList.contains(disabledFor)) {
-        //            EleByClassName[i].disabled = false;
-        //            EleByClassName[i].contentEditable = true;
-        //            EleByClassName[i].style.display = "inline-block";
-        //        } else {
-        //            EleByClassName[i].disabled = true;
-        //            EleByClassName[i].contentEditable = false;
-        //            EleByClassName[i].style.display = "none";
-        //        }
-        //    }
-        //}
-    }
-}
+                    let EleByClassName = document.getElementsByClassName(radiosEle[k].getAttribute('disabled-for'));
 
+                    for (let l = 0; l < EleByClassName.length; l++) {
 
-        if (typeof attr !== 'undefined' && attr !== false) {
-
-            for (let i = 0; i < radiosEle.length; i++) {
-
-                let EleByClassName = document.getElementsByClassName(radiosEle[i].getAttribute('visible-for'));
-
-                console.log(EleByClassName);
-
-                for (let i = 0; i < EleByClassName.length; i++) {
-                    if (EleByClassName[i].classList.contains(attr)) {
-                        EleByClassName[i].style.display = "flex";
-                        console.log(EleByClassName[i]);
-                    } else {
-                        EleByClassName[i].style.display = "none";
-                    }
-                }
-            }
-        }
-
-
-        radiosEle[i].addEventListener('change', function () {
-            let attr = radiosEle[i].getAttribute('visible-for');
-
-            let disabledFor = radiosEle[i].getAttribute('disabled-for');
-
-            if (typeof disabledFor !== 'undefined' && disabledFor !== false) {
-
-                for (let i = 0; i < radiosEle.length; i++) {
-
-                    let EleByClassName = document.getElementsByClassName(radiosEle[i].getAttribute('disabled-for'));
-
-                    for (let i = 0; i < EleByClassName.length; i++) {
-
-                        if (EleByClassName[i].classList.contains(disabledFor)) {
-                            EleByClassName[i].disabled = false;
-                            EleByClassName[i].contentEditable = true;
-                            EleByClassName[i].style.display = "inline-block";
+                        if (EleByClassName[l].classList.contains(disabledFor)) {
+                            EleByClassName[l].style.display = "";
                         } else {
-                            EleByClassName[i].disabled = true;
-                            EleByClassName[i].contentEditable = false;
-                            EleByClassName[i].style.display = "none";
+                            EleByClassName[l].style.display = "none";
                         }
                     }
                 }
             }
 
-            if (typeof attr !== 'undefined' && attr !== false) {
-
-                for (let i = 0; i < radiosEle.length; i++) {
-
-                    let EleByClassName = document.getElementsByClassName(radiosEle[i].getAttribute('visible-for'));
-
-                    console.log(EleByClassName);
-
-                    for (let i = 0; i < EleByClassName.length; i++) {
-                        if (EleByClassName[i].classList.contains(attr)) {
-                            EleByClassName[i].style.display = "flex";
-                            console.log(EleByClassName[i]);
-                        } else {
-                            EleByClassName[i].style.display = "none";
-                        }
-                    }
-                }
-            }
         })
     }
 }

@@ -8,6 +8,9 @@ using System.Net;
 using System.Reflection;
 using System.Web;
 using System.Web.Script.Serialization;
+using System.Web.UI;
+using System.Web.UI.HtmlControls;
+using Telerik.Web.UI;
 
 namespace EMR 
 {
@@ -16,7 +19,6 @@ namespace EMR
         public static string URL = "http://172.16.0.78:8082/";
         public static DataTable GetJSONToDataTable(string JSONData)
         {
-
             try
             {
                 dynamic jsonObject = Newtonsoft.Json.JsonConvert.DeserializeObject(JSONData);
@@ -44,6 +46,58 @@ namespace EMR
             }
             return tbl;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="form">
+        /// form control
+        /// </param>
+        /// <param name="disabled">
+        /// false: allow edit
+        /// true: do not allow edit
+        /// </param>
+        /// <param name="controls">
+        /// controls that not affected
+        /// </param>
+        public static void DisabledControl(HtmlForm form, bool disabled)
+        {
+            int i = 0;
+            foreach (Control c in form.Controls)
+            {
+                i++;
+                if(i >= 73)
+                {
+                    string name = c.GetType().Name;
+                }
+                if (c.GetType().Name == ControlType.HtmlInputText)
+                {
+                    if (((HtmlInputText)c).Attributes["class"].Contains("contenteditable"))
+                    {
+                        if (disabled)
+                        {
+                            ((HtmlInputText)c).Attributes["data-status"] = ControlStatus.View;
+                        }
+                        else
+                        {
+                            ((HtmlInputText)c).Attributes["data-status"] = ControlStatus.Edit;
+                        }
+                    }
+                    else
+                    {
+                        ((HtmlInputText)c).Disabled = disabled;
+                    }
+                }
+                else if (c.GetType().Name == ControlType.HtmlInputRadioButton)
+                {
+                    ((HtmlInputRadioButton)c).Disabled = disabled;
+                }
+                else if (c.GetType().Name == ControlType.RadDatePicker || c.GetType().Name == ControlType.RadTimePicker)
+                {
+                    ((RadDatePicker)c).Enabled = !disabled;
+                }
+            }
+        }
+
         public static void BindingDatafield(DataTable tbl, object obj)
         {
             /* 1. Get API trả về 1 Datatable: tbl
@@ -96,16 +150,14 @@ namespace EMR
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="jsonContent">
         /// { 
         ///     "parameter1": "value1",
         ///     "parameter2": "value2",
         ///     "...": "value",
-        ///     
         /// }
+        /// </summary>
+        /// <param name="url">a</param>
+        /// <param name="jsonContent">
         /// </param>
         /// <returns></returns>
         public static string PostAPI(string url, dynamic obj)
@@ -136,18 +188,20 @@ namespace EMR
                     StreamReader reader = new StreamReader(dataStream);
                     var responseFromServer = reader.ReadToEnd();
 
-                    //var res = response1;
                     reader.Close();
                     dataStream.Close();
                     response.Close();
-                    return responseFromServer;
 
+                    return response.StatusCode.ToString();
                 }
             }
-            catch (WebException ex)
+            catch (WebException e)
             {
-                //MessageBox.Show(ex.Message);
-                return null;
+                return e.Status.ToString();
+            }
+            catch (Exception e)
+            {
+                return e.Message;
             }
         }
 
@@ -180,78 +234,23 @@ namespace EMR
                     reader.Close();
                     dataStream.Close();
                     response.Close();
-                    return responseFromServer;
-
+                    return response.StatusCode.ToString();
                 }
             }
-            catch (WebException ex)
+            catch (WebException e)
             {
-                //MessageBox.Show(ex.Message);
-                return null;
+                return e.Status.ToString();
+            }
+            catch (Exception e)
+            {
+                return e.Message;
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="jsonContent">
-        /// { 
-        ///     "parameter1": "value1",
-        ///     "parameter2": "value2",
-        ///     "...": "value",
-        ///     
-        /// }
-        /// </param>
-        /// <returns></returns>
-        //public static string PostAPI(string url, dynamic obj)
-        //{
-        //    var jsonContent = new JavaScriptSerializer().Serialize(obj);
-
-        //    url = URL + url;
-        //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-        //    request.Method = WebRequestMethods.Http.Post;
-        //    // request.Headers.Add("Authentication", authToken);
-        //    System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-        //    Byte[] byteArray = encoding.GetBytes(jsonContent);
-        //    request.ContentLength = byteArray.Length;
-        //    request.ContentType = "application/json";
-        //    using (Stream dataStream = request.GetRequestStream())
-        //    {
-        //        dataStream.Write(byteArray, 0, byteArray.Length);
-        //    }
-
-        //    long length = 0;
-        //    try
-        //    {
-        //        using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-        //        {
-        //            length = response.ContentLength;
-        //            WebResponse response1 = request.GetResponse();
-        //            Stream dataStream = response1.GetResponseStream();
-        //            StreamReader reader = new StreamReader(dataStream);
-        //            var responseFromServer = reader.ReadToEnd();
-
-        //            //var res = response1;
-        //            reader.Close();
-        //            dataStream.Close();
-        //            response.Close();
-        //            return responseFromServer;
-
-        //        }
-        //    }
-        //    catch (WebException ex)
-        //    {
-        //        //MessageBox.Show(ex.Message);
-        //        return null;
-        //    }
-        //}
-
-        //public static string GetAPI(string url, string content)
-        //{
-        //    var data = new StringContent(json, Encoding.UTF8, "application/json");
-
-        //}
+        public static class ResponseStatus
+        {
+            public static string OK = "OK";
+        }
 
         /// <summary>
         /// test
@@ -284,8 +283,7 @@ namespace EMR
             }
             catch (WebException ex)
             {
-                //MessageBox.Show(ex.Message);
-                return null;
+                return ex.Status.ToString();
             }
         }
     }
