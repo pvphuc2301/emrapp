@@ -11,7 +11,7 @@ namespace EMR
 {
 
 
-    public partial class AmendReasonBox
+    public partial class AmendReason
     {
 
         /// <summary>

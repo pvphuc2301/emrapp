@@ -11,43 +11,34 @@ namespace EMR
 {
 
 
-    public partial class AmendReasonBox
+    public partial class Message
     {
 
         /// <summary>
-        /// amendReasonBox control.
+        /// alertBox control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl amendReasonBox;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl alertBox;
 
         /// <summary>
-        /// txtAmendReason control.
+        /// alertType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txtAmendReason;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl alertType;
 
         /// <summary>
-        /// lblAmendReasonError control.
+        /// messageContent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblAmendReasonError;
-
-        /// <summary>
-        /// close control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton close;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl messageContent;
     }
 }

@@ -9,7 +9,6 @@ using Telerik.Web.UI;
 
 namespace EMR
 {
-   
     public partial class OutPatMedRec : System.Web.UI.Page
     {
         string amendReason = "";
@@ -32,26 +31,6 @@ namespace EMR
 
             // Fill du lieu tu Object to Controls.
             loadDataToOMRControls(omr1);
-
-            btnCancel.Visible = false;
-            amendReasonBox.Visible = false;
-            if (omr1.status == DocumentStatus.FINAL)
-            {
-                btnComplete.Visible = false;
-                btnSave.Visible = false;
-                btnDelete.Visible = false;
-                btnCancel.Visible = false;
-
-                btnAmend.Visible = true;
-                btnPrint.Visible = true;
-                WebHelpers.DisabledControl(form1, true);
-
-            }
-            else if (omr1.status == DocumentStatus.DRAFT)
-            {
-                btnAmend.Visible = false;
-                btnPrint.Visible = false;
-            }
         }
 
         public void loadDataToOMRControls(OutpatientMedicalRecord omr1)
@@ -171,6 +150,26 @@ namespace EMR
 
             txt_specific_education_required.Value = omr1.specific_education_required;
             txt_next_appointment.Value = omr1.next_appointment;
+
+            btnCancel.Visible = false;
+            amendReasonBox.Visible = false;
+            if (omr1.status == DocumentStatus.FINAL)
+            {
+                btnComplete.Visible = false;
+                btnSave.Visible = false;
+                btnDelete.Visible = false;
+                btnCancel.Visible = false;
+
+                btnAmend.Visible = true;
+                btnPrint.Visible = true;
+                WebHelpers.DisabledControl(form1, true);
+
+            }
+            else if (omr1.status == DocumentStatus.DRAFT)
+            {
+                btnAmend.Visible = false;
+                btnPrint.Visible = false;
+            }
         }
    
       /// <summary>

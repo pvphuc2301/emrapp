@@ -1,5 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AmendReasonBox.ascx.cs" Inherits="EMR.AmendReasonBox" %>
-
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="AmendReason.ascx.cs" Inherits="EMR.AmendReason" %>
 <div class="row" id="amendReasonBox" runat="server" style="position: fixed; top: 0;">
     <div class="col-md-12">
         <div class="card amend-box">

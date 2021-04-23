@@ -429,6 +429,20 @@
       <DependentUpon>WebUserControl1.ascx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserControls\Alert.ascx.cs">
+      <DependentUpon>Alert.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\Alert.ascx.designer.cs">
+      <DependentUpon>Alert.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\AmendReason.ascx.cs">
+      <DependentUpon>AmendReason.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\AmendReason.ascx.designer.cs">
+      <DependentUpon>AmendReason.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\AmendReasonBox.ascx.cs">
       <DependentUpon>AmendReasonBox.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -436,12 +450,26 @@
     <Compile Include="UserControls\AmendReasonBox.ascx.designer.cs">
       <DependentUpon>AmendReasonBox.ascx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Message.ascx.cs">
+      <DependentUpon>Message.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\Message.ascx.designer.cs">
+      <DependentUpon>Message.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\PatientInfo.ascx.cs">
       <DependentUpon>PatientInfo.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UserControls\PatientInfo.ascx.designer.cs">
       <DependentUpon>PatientInfo.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\TextField.ascx.cs">
+      <DependentUpon>TextField.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\TextField.ascx.designer.cs">
+      <DependentUpon>TextField.ascx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -455,11 +483,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="styles\telerik-custom.css" />
+    <Content Include="UserControls\Alert.ascx" />
+    <Content Include="UserControls\AmendReason.ascx" />
     <Content Include="UserControls\AmendReasonBox.ascx" />
+    <Content Include="UserControls\Message.ascx" />
     <Content Include="UserControls\PatientInfo.ascx" />
+    <Content Include="UserControls\TextField.ascx" />
     <Content Include="web.config" />
     <None Include="packages.config" />
     <Content Include="scripts\jquery-2.2.1.min.map" />
+    <Content Include="UserControls\.editorconfig" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -493,7 +526,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

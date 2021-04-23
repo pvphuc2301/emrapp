@@ -748,6 +748,126 @@ namespace EMR
         }
     }
 
+    public partial class MC
+    {
+        #region Properties
+        public dynamic document_id { get; set; }
+
+        public dynamic user_name { get; set; }
+
+        public dynamic status { get; set; }
+
+        public dynamic amend_reason { get; set; }
+
+        public dynamic chief_complain { get; set; }
+        public dynamic history_present_illness { get; set; }
+        public dynamic past_history { get; set; }
+        public dynamic clinical_findings { get; set; }
+        public dynamic para_clinical_investigations { get; set; }
+
+        public dynamic diagnosis { get; set; }
+
+        public dynamic treatment { get; set; }
+
+        public dynamic treatment_period { get; set; }
+
+        public dynamic recommendation { get; set; }
+        public dynamic treatment_plan { get; set; }
+
+        #endregion
+
+        MC() { }
+        
+        // Constructor for API Update
+        /// <summary>
+        /// Get document by document_id
+        /// </summary>
+        /// <param name="document_id"></param>
+        public MC(dynamic document_id)
+        {
+            string _jsonData = WebHelpers.GetAPI("api/mc/" + document_id);
+
+            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+            
+            WebHelpers.BindingDatafield(db, this);
+        }
+        public MC(dynamic document_id, dynamic use_name)
+        {
+            this.document_id = document_id;
+            this.user_name = user_name;
+        }
+
+        // Constructor for API Inssert
+        /// <summary>
+        /// Constructor for Edit_API
+        /// </summary>
+        /// <param name="_document_id"></param>
+        /// <param name="_user_name"></param>
+        /// <param name="_status"></param>
+        /// <param name="_amend_reason"></param>
+        /// <param name="_chief_complain"></param>
+        /// <param name="_history_present_illness"></param>
+        /// <param name="_past_history"></param>
+        /// <param name="_clinical_findings"></param>
+        /// <param name="_para_clinical_investigations"></param>
+        /// <param name="_diagnosis"></param>
+        /// <param name="_treatment"></param>
+        /// <param name="_treatment_period"></param>
+        /// <param name="_recommendation"></param>
+        /// <param name="_treatment_plan"></param>
+        public MC(
+        dynamic _document_id
+        , dynamic _user_name
+        , dynamic _status
+        , dynamic _amend_reason
+
+        , dynamic _chief_complain
+        , dynamic _history_present_illness
+        , dynamic _past_history
+        , dynamic _clinical_findings
+        , dynamic _para_clinical_investigations
+        , dynamic _diagnosis
+        , dynamic _treatment
+        , dynamic _treatment_period
+        , dynamic _recommendation
+        , dynamic _treatment_plan
+        )
+
+        {
+
+            this.document_id = _document_id;
+            this.user_name = _user_name;
+            this.status = _status;
+            this.amend_reason = _amend_reason;
+            this.chief_complain = _chief_complain;
+            this.history_present_illness = _history_present_illness;
+            this.past_history = _past_history;
+            this.clinical_findings = _clinical_findings;
+            this.para_clinical_investigations = _para_clinical_investigations;
+            this.diagnosis = _diagnosis;
+            this.treatment = _treatment;
+            this.treatment_period = _treatment_period;
+            this.recommendation = _recommendation;
+            this.treatment_plan = _treatment_plan;
+        }
+
+        public string[] Update()
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI("api/mc/edit", this);
+            message[0] = responseStatus;
+
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI("api/mc/log/" + this.document_id);
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+    }
+
     #endregion
 
     #endregion
