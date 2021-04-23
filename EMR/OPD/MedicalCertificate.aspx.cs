@@ -11,7 +11,7 @@ namespace EMR
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            // String anh Chung test code
         }
     }
 }
