@@ -20,14 +20,27 @@ namespace EMR
             set
             {
                 InputControl.Value = value;
+                DisplayControl.InnerHtml = value;
+            }
+        }
+        /// <summary>
+        /// false -> edit
+        /// true -> not edit
+        /// </summary>
+        public bool Disabled {
+            get
+            {
+                return DisplayControl.Disabled;
+            }
+            set
+            {
+                DisplayControl.Disabled = value;
+                DisplayControl.Attributes["contenteditable"] = (!value).ToString().ToLower();
             }
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-            }
         }
     }
 }

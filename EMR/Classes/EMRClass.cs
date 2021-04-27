@@ -6,6 +6,27 @@ using System.Web;
 
 namespace EMR
 {
+
+    //class IUser
+    //{
+    //    private IUser() { }
+    //    private static IUser _instance;
+
+    //    public static IUser GetUser()
+    //    {
+    //        if (_instance == null)
+    //        {
+    //            _instance = new IUser();
+    //        }
+    //        return _instance;
+    //    }
+
+
+    //    public string user_name { get; set; }
+    //    public string password { get; set; }
+    //    public string full_name { get; set; }
+    //}
+
     public class EMRClass
     {
     }
@@ -37,6 +58,7 @@ namespace EMR
         public static string DRAFT = "DRAFT";
         public static string FINAL = "FINAL";
     }
+
 
 
     //public class PatientInfo
@@ -395,7 +417,6 @@ namespace EMR
             return message;
         }
     }
-
 
     #endregion
 
@@ -861,6 +882,22 @@ namespace EMR
             if (responseStatus == WebHelpers.ResponseStatus.OK)
             {
                 responseStatus = WebHelpers.PostAPI("api/mc/log/" + this.document_id);
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+
+        public static string[] Delete(string userName)
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI("api/emr/document-del/" + userName + "/" + DataHelpers.varDocId);
+
+            message[0] = responseStatus;
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI("api/oina/log/" + DataHelpers.varDocId);
                 message[1] = responseStatus;
             }
 

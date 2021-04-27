@@ -33,8 +33,6 @@ namespace EMR
             oina = new OutPatientInitialNursingAssement(DataHelpers.varDocId);
 
             loadDataToOMRControls(oina);
-
-            
         }
         public void loadDataToOMRControls(OutPatientInitialNursingAssement outPatientInitialNursingAssement)
         {

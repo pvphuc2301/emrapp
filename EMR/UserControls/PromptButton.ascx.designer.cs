@@ -11,34 +11,52 @@ namespace EMR
 {
 
 
-    public partial class Message
+    public partial class PromptButton
     {
 
         /// <summary>
-        /// messageBox control.
+        /// upd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl messageBox;
+        protected global::System.Web.UI.UpdatePanel upd;
 
         /// <summary>
-        /// alertType control.
+        /// myModal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl alertType;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl myModal;
 
         /// <summary>
-        /// messageContent control.
+        /// txtDeleteReason control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl messageContent;
+        protected global::EMR.TextField txtDeleteReason;
+
+        /// <summary>
+        /// lblDeleteReason control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblDeleteReason;
+
+        /// <summary>
+        /// btnDelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnDelete;
     }
 }

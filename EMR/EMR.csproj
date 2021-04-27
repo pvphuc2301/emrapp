@@ -173,8 +173,8 @@
     <Content Include="OPD\OutPatMedRecPed.aspx" />
     <Content Include="OPD\SumOfComOutpCase.aspx" />
     <Content Include="OPD\UsUriSysReport.aspx" />
+    <Content Include="Other\PageWidthAjax.aspx" />
     <Content Include="Other\PatientSummary.aspx" />
-    <Content Include="Other\WebUserControl1.ascx" />
     <Content Include="scripts\contenteditable.min.js" />
     <Content Include="scripts\dynamicModal.js" />
     <Content Include="scripts\dynamicModal.min.js" />
@@ -414,19 +414,19 @@
     <Compile Include="OPD\UsUriSysReport.aspx.designer.cs">
       <DependentUpon>UsUriSysReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Other\PageWidthAjax.aspx.cs">
+      <DependentUpon>PageWidthAjax.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Other\PageWidthAjax.aspx.designer.cs">
+      <DependentUpon>PageWidthAjax.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Other\PatientSummary.aspx.cs">
       <DependentUpon>PatientSummary.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Other\PatientSummary.aspx.designer.cs">
       <DependentUpon>PatientSummary.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Other\WebUserControl1.ascx.cs">
-      <DependentUpon>WebUserControl1.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Other\WebUserControl1.ascx.designer.cs">
-      <DependentUpon>WebUserControl1.ascx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserControls\Alert.ascx.cs">
@@ -464,6 +464,13 @@
     <Compile Include="UserControls\PatientInfo.ascx.designer.cs">
       <DependentUpon>PatientInfo.ascx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\PromptButton.ascx.cs">
+      <DependentUpon>PromptButton.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PromptButton.ascx.designer.cs">
+      <DependentUpon>PromptButton.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\TextField.ascx.cs">
       <DependentUpon>TextField.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -488,6 +495,7 @@
     <Content Include="UserControls\AmendReasonBox.ascx" />
     <Content Include="UserControls\Message.ascx" />
     <Content Include="UserControls\PatientInfo.ascx" />
+    <Content Include="UserControls\PromptButton.ascx" />
     <Content Include="UserControls\TextField.ascx" />
     <Content Include="web.config" />
     <None Include="packages.config" />
@@ -526,7 +534,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

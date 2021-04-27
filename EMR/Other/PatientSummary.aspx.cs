@@ -137,7 +137,7 @@ namespace EMR
 
             string PVID = _params[2];
             string modelID = _params[0];
-            string userName = "my.nguyen";
+            string userName = (string)Session["UserID"];
 
             string _jsonData = WebHelpers.GetAPI("api/emr/check-document-exists/" + PVID + "/" + modelID);
 
@@ -154,11 +154,6 @@ namespace EMR
                     if(db.Rows[i].Field<string>("status") == DocumentStatus.DRAFT)
                     {
                         docId = db.Rows[i].Field<string>("document_id");
-
-                        //DataHelpers.varDocId = db.Rows[i].Field<string>("document_id");
-                        //DataHelpers.varModelId = db.Rows[i].Field<string>("model_id");
-                        //DataHelpers.varPVId = PVID;
-
                         VAL_GLOBAL.docId = db.Rows[i].Field<string>("document_id");
                         isDraft = true;
                         break;
@@ -177,7 +172,7 @@ namespace EMR
 
                     string statusCode = WebHelpers.PostAPI("api/" + data.api + "/add", objTemp);
                     
-                    if(statusCode == "OK")
+                    if(statusCode == WebHelpers.ResponseStatus.OK)
                     {
                         statusCode = WebHelpers.PostAPI("api/" + data.api + "/log/" + docId);
                         Response.Redirect("../" + _params[1]);

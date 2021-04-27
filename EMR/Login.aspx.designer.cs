@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EMR {
-    
-    
-    public partial class Login {
-        
+namespace Emr_client.Emr
+{
+
+
+    public partial class Login
+    {
+
         /// <summary>
         /// form1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace EMR {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
+
         /// <summary>
         /// UserName control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace EMR {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText UserName;
-        
+
         /// <summary>
         /// Password control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace EMR {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputPassword Password;
-        
+
         /// <summary>
         /// lblInfo control.
         /// </summary>
@@ -47,14 +49,14 @@ namespace EMR {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblInfo;
-        
+
         /// <summary>
-        /// ButtonLogin control.
+        /// btnLogin control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ButtonLogin;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnLogin;
     }
 }

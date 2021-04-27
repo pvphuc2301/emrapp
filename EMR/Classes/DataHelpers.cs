@@ -41,8 +41,6 @@ namespace EMR
             return result;
         }
 
-
-
         /// <summary>
         /// Khai bao bien su dung toan Project EMR
         /// </summary>

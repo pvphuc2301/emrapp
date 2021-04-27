@@ -27,33 +27,14 @@ namespace EMR
 
             mc = new MC(DataHelpers.varDocId);
 
-            loadDataToOMRControls(mc);
-
-            btnCancel.Visible = false;
-
-            if (mc.status == DocumentStatus.FINAL)
-            {
-                btnComplete.Visible = false;
-                btnSave.Visible = false;
-                btnDelete.Visible = false;
-                btnCancel.Visible = false;
-
-                btnAmend.Visible = true;
-                btnPrint.Visible = true;
-                WebHelpers.DisabledControl(form1, true);
-
-            }
-            else if (mc.status == DocumentStatus.DRAFT)
-            {
-                btnAmend.Visible = false;
-                btnPrint.Visible = false;
-            }
+            loadDataToControls(mc);
         }
 
-        public void loadDataToOMRControls(MC mc)
+        public void loadDataToControls(MC mc)
         {
             // 2. Lý do đến khám
             txtChiefComplaint.Value = mc.chief_complain;
+            txtChiefComplaint.Disabled = false;
 
             // 3. Tóm tắt bệnh sử                          
             txtHistoryPresentIllness.Value = mc.history_present_illness;
@@ -62,18 +43,6 @@ namespace EMR
             txtPastHistory.Value = mc.past_history;
             // 5. Đặc điểm lâm sàng
             txtClinicalFindings.Value = mc.clinical_findings;
-
-            //string varspec_opinion_requested = omr1.spec_opinion_requested;
-            //if (varspec_opinion_requested.ToLower() == "true")
-            //{
-            //    radSpecOpinionRequested1.Checked = true;
-            //    txtSpecOpinionRequestedNote.Text = omr1.spec_opinion_requested_note;
-            //}
-            //else
-            //    radSpecOpinionRequested0.Checked = true;
-
-            //txtSpecificEducationRequired.Text = omr1.specific_education_required;
-            //txtNextAppointment.Text = omr1.next_appointment;
 
             //6. Cận lâm sàng được chỉ định
             txtParaClinicalInvestigations.Value = mc.para_clinical_investigations;
@@ -104,7 +73,8 @@ namespace EMR
 
                 btnAmend.Visible = true;
                 btnPrint.Visible = true;
-                WebHelpers.DisabledControl(form1, true);
+
+                DisabledControl(true);
             }
             else if (mc.status == DocumentStatus.DRAFT)
             {
@@ -113,16 +83,38 @@ namespace EMR
             }
         }
 
-        protected void btnComplete_ServerClick(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void btnSave_ServerClick(object sender, EventArgs e)
+        protected void btnComplete_Click(object sender, EventArgs e)
         {
             mc = new MC(DataHelpers.varDocId);
 
-            mc.user_name = "phut.phan";
+            mc.user_name = (string)Session["UserID"];
+
+            mc.status = DocumentStatus.FINAL;
+            mc.chief_complain = txtChiefComplaint.Value;
+            mc.history_present_illness = txtHistoryPresentIllness.Value;
+            mc.past_history = txtPastHistory.Value;
+            mc.clinical_findings = txtClinicalFindings.Value;
+            mc.para_clinical_investigations = txtParaClinicalInvestigations.Value;
+            mc.diagnosis = txtDiagnosis.Value;
+            mc.treatment = txtTreatment.Value;
+            mc.treatment_period = txtTreatmentPeriod.Value;
+            mc.recommendation = txtRecommendation.Value;
+            mc.treatment_plan = txtTreatmentPlan.Value;
+
+            if (mc.Update()[0] == WebHelpers.ResponseStatus.OK)
+            {
+                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
+                message.Load(Page, Message.CODE.MS001, Message.TYPE.SUCCESS);
+
+                Initial();
+            }
+        }
+
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+            mc = new MC(DataHelpers.varDocId);
+
+            mc.user_name = (string)Session["UserID"];
             mc.status = DocumentStatus.DRAFT;
             mc.chief_complain = txtChiefComplaint.Value;
             mc.history_present_illness = txtHistoryPresentIllness.Value;
@@ -133,44 +125,62 @@ namespace EMR
             mc.treatment = txtTreatment.Value;
             mc.treatment_period = txtTreatmentPeriod.Value;
             mc.recommendation = txtRecommendation.Value;
+            mc.treatment_plan = txtTreatmentPlan.Value;
 
-            if (mc.Update()[0] == "OK")
+            if (mc.Update()[0] == WebHelpers.ResponseStatus.OK)
             {
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                message.Load(Page, "Your changes have been saved", 2000, Message.TYPE.SUCCESS);
+                message.Load(Page, Message.CODE.MS001, Message.TYPE.SUCCESS);
 
                 Initial();
             }
-
         }
 
-        protected void btnDelete_ServerClick(object sender, EventArgs e)
+        protected void btnDelete_Click(object sender, EventArgs e)
         {
-
+            if (MC.Delete((string)Session["UserID"])[0] == WebHelpers.ResponseStatus.OK) { 
+                
+            }
         }
 
-        protected void btnAmend_ServerClick(object sender, EventArgs e)
+        protected void DisabledControl(bool disabled)
         {
-            AmendReason amendReason = (AmendReason)Page.LoadControl("~/UserControls/Prompt.ascx");
+            txtChiefComplaint.Disabled = disabled;
+            txtHistoryPresentIllness.Disabled = disabled;
+            txtPastHistory.Disabled = disabled;
+            txtClinicalFindings.Disabled = disabled;
+            txtParaClinicalInvestigations.Disabled = disabled;
+            txtDiagnosis.Disabled = disabled;
+            txtTreatment.Disabled = disabled;
+            txtTreatmentPeriod.Disabled = disabled;
+            txtRecommendation.Disabled = disabled;
+            txtTreatmentPlan.Disabled = disabled;
+        }
+
+        protected void btnAmend_Click(object sender, EventArgs e)
+        {
+            AmendReason amendReason = (AmendReason)Page.LoadControl("~/UserControls/AmendReason.ascx");
             amendReason.Load(AmendReasonPlaceHolder);
 
+            btnComplete.Visible = true;
+            btnComplete.Attributes["disabled"] = "disabled";
+            btnCancel.Visible = true;
+            btnAmend.Visible = false;
+            btnPrint.Visible = false;
 
+            DisabledControl(false);
         }
 
-        protected void btnPrint_ServerClick(object sender, EventArgs e)
+        protected void btnPrint_Click(object sender, EventArgs e)
         {
 
         }
 
-        protected void btnCancel_ServerClick(object sender, EventArgs e)
+        protected void btnCancel_Click(object sender, EventArgs e)
         {
+            
 
-        }
-
-        protected void btnGetValue_ServerClick(object sender, EventArgs e)
-        {
-            Console.WriteLine(txtChiefComplaint1.Value);
-            Console.WriteLine(txtPastHistory1.Value);
+            Initial();
         }
     }
 }

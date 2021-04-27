@@ -12,8 +12,9 @@ using Telerik.Web.UI;
 using System.Text;
 using System.Security.Cryptography;
 using System.DirectoryServices;
+using EMR;
 
-namespace EMR
+namespace Emr_client.Emr
 {
     public partial class Login : System.Web.UI.Page
     {
@@ -97,12 +98,12 @@ namespace EMR
             SQLAppClass SQL_Class = new SQLAppClass();
 
             string query = "SELECT top 1 user_name, site_rcd ";
-            query += "FROM emr_account ";
+            query += "FROM account WITH (NOLOCK) ";
             query += "WHERE (user_name = '" + varAccount + "') ";
 
             if (string.IsNullOrEmpty(SQL_Class.CheckAndGetItem(query, "user_name", ConnStringEMR)))
             {
-                string queryInsert = "INSERT INTO emr_account (user_name, site_rcd ) ";
+                string queryInsert = "INSERT INTO account (user_name, site_rcd ) ";
                 queryInsert += "VALUEs ('" + varAccount + "','AIH') ";
                 SQL_Class.RunQuery(queryInsert, ConnStringEMR);
             }

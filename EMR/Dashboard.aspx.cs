@@ -15,9 +15,19 @@ namespace EMR
     public partial class Dashboard : System.Web.UI.Page
     {
         public string ConnStringHIS = "";
+        public string UserID;
 
         protected void Page_Load(object sender, EventArgs e)
         {
+                UserID = (string)Session["UserID"];
+                string redirecturl = "./login.aspx?ReturnUrl=";
+                redirecturl += Request.ServerVariables["script_name"] + "?";
+                redirecturl += Server.UrlEncode(Request.QueryString.ToString());
+                if (string.IsNullOrEmpty(UserID))
+                    Response.Redirect(redirecturl);
+
+                lblUserName.InnerText = UserID;
+
             //if (!string.IsNullOrEmpty(txt_pid.Text))
             //{
             //    string _jsonData = WebHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=4&keyword=" + txt_pid.Text);
@@ -228,6 +238,12 @@ namespace EMR
             string url = string.Format("/emr/emrinfor.aspx?pid={0}&vbid={1}", PID, PVID);
 
             Response.Redirect(url);
+        }
+
+        protected void btnLogout_ServerClick(object sender, EventArgs e)
+        {
+            Session["UserID"] = "";
+            Response.Redirect("./login.aspx");
         }
     }
 }

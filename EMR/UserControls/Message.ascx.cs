@@ -23,15 +23,30 @@ namespace EMR
             public static string INFO = "alert-info";
             public static string LIGHT = "alert-light";
             public static string DARK = "alert-dark";
+            public static string NONE = "";
         }
+
+        public static class CODE
+        {
+            public static string MS001 = "Your changes have been saved";
+        }
+
         #endregion
 
-        public void Load(Page page, string text = "", int timeout = 1000, string type = "alert-primary")
+        public void Load(Page page, string text = "", string type = "alert-primary", int timeout = 3000)
         {
             this.text = text;
             this.timeout = timeout;
             this.type = type;
             page.Controls.Add(this);
+        }
+
+        public void Load(Control control, string text = "", string type = "alert-primary", int timeout = 3000)
+        {
+            this.text = text;
+            this.timeout = timeout;
+            this.type = type;
+            control.Controls.Add(this);
         }
 
         protected void Page_Load(object sender, EventArgs e)

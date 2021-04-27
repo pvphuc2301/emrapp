@@ -17,27 +17,38 @@ namespace EMR
         public string ConnStringHIS = ""; public string ConnStringEMR = "";
 
         public string varPID = ""; string varPVId = "";
-
+        public string UserID;
         protected void Page_Load(object sender, EventArgs e)
         {
-            ConnClass ConnStr = new ConnClass();
-            ConnStringHIS = ConnStr.SQL_HISConnString;
-            ConnStringEMR = ConnStr.SQL_EMRConnString;
-
             varPID = Request.QueryString["pid"]; // "97052A99-0134-11EB-B34D-D89EF37D444C";//  "C248E0FC-39B6-493F-A197-6CF2A96B37AD";//
             varPVId = Request.QueryString["pvid"]; //"3afc144a-86ca-11eb-9dfe-dca2660bc0a2";// ValueHiddenField.Value;        
             //varVisibleID = Request.QueryString["vbid"]; //"900031267";
             //LoadPatientInfomation();
 
-            if(!IsPostBack)
+            UserID = (string)Session["UserID"];
+            string redirecturl = "../login.aspx?ReturnUrl=";
+            redirecturl += Request.ServerVariables["script_name"] + "?";
+            redirecturl += Server.UrlEncode(Request.QueryString.ToString());
+            if (string.IsNullOrEmpty(UserID))
+                Response.Redirect(redirecturl);
+
+            lblUserName.InnerText = UserID;
+            //
+
+            if (!IsPostBack)
             {
                 DataHelpers.LoadPatientInfomation(varPID);
 
                 lblPatientInfo.InnerHtml = "<strong>" + DataHelpers.patient.first_name_e + " " + DataHelpers.patient.last_name_e + " (" + DataHelpers.patient.title_e + ")</strong>, <small>DOB</small> " + DateTime.Parse(DataHelpers.patient.date_of_birth).ToString("dd/MM/yyyy") + " (" + DataHelpers.CalculateAge(DateTime.Parse(DataHelpers.patient.date_of_birth)) + "y) <small>SEX</small> " + DataHelpers.patient.gender_l + " <small>PID</small> <strong>" + DataHelpers.patient.visible_patient_id + "</strong>";
 
                 MainContent.ContentUrl = "../other/patientsummary.aspx?pid=" + varPID;
-                
             }
+
+            //form ký sinh trùng
+
+            ConnClass ConnStr = new ConnClass();
+            ConnStringHIS = ConnStr.SQL_HISConnString;
+            ConnStringEMR = ConnStr.SQL_EMRConnString;
 
         }
 
@@ -296,6 +307,12 @@ namespace EMR
         protected void RadGrid1_SelectedIndexChanged(object sender, EventArgs e)
         {
             
+        }
+
+        protected void btnLogout_ServerClick(object sender, EventArgs e)
+        {
+            Session["UserID"] = "";
+            Response.Redirect("../login.aspx");
         }
     }
 }

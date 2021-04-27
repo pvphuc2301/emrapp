@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace EMR.Other
 {
-    public partial class WebUserControl1 : System.Web.UI.UserControl
+    public partial class PageWidthAjax : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

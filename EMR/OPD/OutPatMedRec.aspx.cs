@@ -152,7 +152,7 @@ namespace EMR
             txt_next_appointment.Value = omr1.next_appointment;
 
             btnCancel.Visible = false;
-            amendReasonBox.Visible = false;
+
             if (omr1.status == DocumentStatus.FINAL)
             {
                 btnComplete.Visible = false;
@@ -162,7 +162,8 @@ namespace EMR
 
                 btnAmend.Visible = true;
                 btnPrint.Visible = true;
-                WebHelpers.DisabledControl(form1, true);
+
+                DisabledControl(true);
 
             }
             else if (omr1.status == DocumentStatus.DRAFT)
@@ -171,20 +172,74 @@ namespace EMR
                 btnPrint.Visible = false;
             }
         }
-   
-      /// <summary>
-      /// Chi khi DocumentStatus = DRAFT thi Button nay moi thuc hien Action.
-      /// </summary>
-      /// <param name="sender"></param>
-      /// <param name="e"></param>
+
+        protected void DisabledControl(bool disabled)
+        {
+            txtChiefComplaint.Disabled = disabled;
+            txtCurrentMedication.Disabled = disabled;
+            txtMedicalHistory.Disabled = disabled;
+            txtPersonal.Disabled = disabled;
+            txt_habits_smoking_pack.Disabled = disabled;
+            txt_habits_alcohol_note.Disabled = disabled;
+            txtAllergyNote.Disabled = disabled;
+            txt_habits_drugs_note.Disabled = disabled;
+            txt_habits_phy_exer_note.Disabled = disabled;
+            txt_habits_other.Disabled = disabled;
+            txtAllergyNote.Disabled = disabled;
+            txtImmunization.Disabled = disabled;
+            txtFamily.Disabled = disabled;
+            txt_physical_examination.Disabled = disabled;
+            txt_laboratory_indications_results.Disabled = disabled;
+            txt_additional_investigation.Disabled = disabled;
+            txt_initial_diagnosis.Disabled = disabled;
+            txt_diagnosis.Disabled = disabled;
+            txtDiffesrentialDiagnosis.Disabled = disabled;
+            txt_associated_conditions.Disabled = disabled;
+            txtMedicine.Disabled = disabled;
+            txt_spec_opinion_requested_note.Disabled = disabled;
+            txt_specific_education_required.Disabled = disabled;
+            txt_next_appointment.Disabled = disabled;
+
+            rad_habits_smoking1.Disabled = disabled;
+            rad_habits_smoking2.Disabled = disabled;
+            rad_habits_alcohol1.Disabled = disabled;
+            rad_habits_alcohol2.Disabled = disabled;
+            rad_habits_drugs1.Disabled = disabled;
+            rad_habits_drugs2.Disabled = disabled;
+            rad_habits_physical_exercise1.Disabled = disabled;
+            rad_habits_physical_exercise2.Disabled = disabled;
+            radAllergy1.Disabled = disabled;
+            radAllergy2.Disabled = disabled;
+            rad_psy_consult_required1.Disabled = disabled;
+            rad_psy_consult_required2.Disabled = disabled;
+            radTreatment1.Disabled = disabled;
+            radTreatment2.Disabled = disabled;
+            radTreatment3.Disabled = disabled;
+            rad_spec_opinion_requested1.Disabled = disabled;
+            rad_spec_opinion_requested2.Disabled = disabled;
+
+            txtTemperature.Disabled = true;
+            txtWeight.Disabled = true;
+            txtHeight.Disabled = true;
+            txtHeartRate.Disabled = true;
+            txtRespiratoryRate.Disabled = true;
+            txtBloodPressure.Disabled = true;
+            txtSpo2.Disabled = true;
+            txt_pulse.Disabled = true;
+        }
+
+        /// <summary>
+        /// Chi khi DocumentStatus = DRAFT thi Button nay moi thuc hien Action.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void btnSave_Click(object sender, EventArgs e) 
         {
             //btnComplete.Enabled = btnSave.Enabled = btnDelete.Enabled = true;
             //btnAmend.Enabled = btnCancel.Enabled = false;
             amendReason = "";
             
-            DataHelpers.varDocumentStatus = "DRAFT";
-            UpdateData(DataHelpers.varDocId, DataHelpers.varUseName, DataHelpers.varDocumentStatus, amendReason);
+            UpdateData(DataHelpers.varDocId, DataHelpers.varUseName, DocumentStatus.DRAFT, amendReason);
             
         }
        /// <summary>
@@ -194,33 +249,21 @@ namespace EMR
        /// <param name="e"></param>
         protected void btnAmend_Click(object sender, EventArgs e)
         {
+            AmendReason amendReason = (AmendReason)Page.LoadControl("~/UserControls/AmendReason.ascx");
+            amendReason.Load(AmendReasonPlaceHolder);
+
             btnComplete.Visible = true;
-            btnComplete.Disabled = true;
+            btnComplete.Attributes["disabled"] = "disabled";
             btnCancel.Visible = true;
             btnAmend.Visible = false;
             btnPrint.Visible = false;
 
-            amendReasonBox.Visible = true;
-            
-            WebHelpers.DisabledControl(form1, false);
-
-            txtTemperature.Disabled = true;
-            txtHeartRate.Disabled = true;
-            txtWeight.Disabled = true;
-            txtRespiratoryRate.Disabled = true;
-            txtHeight.Disabled = true;
-            txtBloodPressure.Disabled = true;
-            txtBmi.Disabled = true;
-            txtSpo2.Disabled = true;
-            txt_pulse.Disabled = true;
+            DisabledControl(false);
         }
 
         protected void btnComplete_Click(object sender, EventArgs e)
         {
-            if (DataHelpers.varDocumentStatus.ToUpper() == "FINAL")
-                amendReason = txtAmendReason.Value;
-            DataHelpers.varDocumentStatus = "FINAL";
-            UpdateData(DataHelpers.varDocId, DataHelpers.varUseName, DataHelpers.varDocumentStatus, amendReason);
+            UpdateData(DataHelpers.varDocId, (string)Session["UserID"], DocumentStatus.FINAL, amendReason);
         }
         protected void UpdateData(string varDocID, string varUseName, string varStatus, string varAmendReason)
         {
@@ -235,7 +278,7 @@ namespace EMR
                 varDocID,
                 varUseName,
                 varStatus,
-                txtAmendReason.Value,
+                "",
                 txtChiefComplaint.Value,
                 txtMedicalHistory.Value,
                 txtPersonal.Value,
@@ -278,9 +321,10 @@ namespace EMR
                 txt_specific_education_required.Value,
                 txt_next_appointment.Value);
 
-            if (omr2.Update()[0] == "OK")
+            if (omr2.Update()[0] == WebHelpers.ResponseStatus.OK)
             {
-                Console.WriteLine("Save successful!");
+                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
+                message.Load(Page, Message.CODE.MS001, Message.TYPE.SUCCESS);
 
                 Initial();
             }
@@ -291,17 +335,19 @@ namespace EMR
 
         }
 
-     
-
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             btnComplete.Visible = false;
             btnCancel.Visible = false;
             btnAmend.Visible = true;
             btnPrint.Visible = true;
-            amendReasonBox.Visible = false;
 
-            WebHelpers.DisabledControl(form1, true);
+            DisabledControl(true);
+        }
+
+        protected void btnPrint_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
