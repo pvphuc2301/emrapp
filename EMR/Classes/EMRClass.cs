@@ -308,16 +308,16 @@ namespace EMR
             return message;
         }
 
-        public string[] Delete(string userName)
+        public static string[] Delete(string userName)
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI("api/emr/document-del/" + userName + "/" + document_id);
+            string responseStatus = WebHelpers.PostAPI("api/emr/document-del/" + userName + "/" + DataHelpers.varDocId);
 
             message[0] = responseStatus;
             if (responseStatus == WebHelpers.ResponseStatus.OK)
             {
-                responseStatus = WebHelpers.PostAPI("api/oina/log/" + document_id);
+                responseStatus = WebHelpers.PostAPI("api/oina/log/" + DataHelpers.varDocId);
                 message[1] = responseStatus;
             }
 

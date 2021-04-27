@@ -512,7 +512,7 @@ applicable for children and pregnant</span>)
 
                 </ContentTemplate>
                 <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="btnSave" EventName="Click" />
+                    <asp:PostBackTrigger ControlID="btnSave" />
                     <asp:PostBackTrigger ControlID="btnAmend" />
                     <asp:PostBackTrigger ControlID="btnCancel" />
                     <asp:PostBackTrigger ControlID="btnComplete" />

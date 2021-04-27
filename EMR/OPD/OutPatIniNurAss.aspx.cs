@@ -45,7 +45,7 @@ namespace EMR
             txtBmi.Value = outPatientInitialNursingAssement.vs_BMI;
             txtSpo2.Value = outPatientInitialNursingAssement.vs_spO2;
 
-            txtHeadCircumference.Value = outPatientInitialNursingAssement.pulse;
+            txtPluse.Value = outPatientInitialNursingAssement.pulse;
 
             txtChiefComplaint.Value = outPatientInitialNursingAssement.chief_complaint;
 
@@ -97,7 +97,6 @@ namespace EMR
             else if (outPatientInitialNursingAssement.prioritization_code == "WA") { radPrior2.Checked = true; }
 
             btnCancel.Visible = false;
-            amendReasonBox.Visible = false;
 
             if (oina.status == DocumentStatus.FINAL)
             {
@@ -108,7 +107,8 @@ namespace EMR
 
                 btnAmend.Visible = true;
                 btnPrint.Visible = true;
-                WebHelpers.DisabledControl(form1, true);
+
+                DisabledControl(true);
             }
 
             else if (oina.status == DocumentStatus.DRAFT)
@@ -118,19 +118,58 @@ namespace EMR
             }
 
         }
-        
+        protected void DisabledControl(bool disabled)
+        {
+            txtTemperature.Disabled = disabled;
+            txtWeight.Disabled = disabled;
+            txtHeight.Disabled = disabled;
+            txtHeartRate.Disabled = disabled;
+            txtRespiratoryRate.Disabled = disabled;
+            txtBloodPressure.Disabled = disabled;
+            txtSpo2.Disabled = disabled;
+            txtPluse.Disabled = disabled;
+            txtBmi.Disabled = true;
+
+            txtChiefComplaint.Disabled = disabled;
+
+            radAllergy1.Disabled = disabled;
+            radAllergy2.Disabled = disabled;
+            txtAllergy.Disabled = disabled;
+
+            radMentalStatus1.Disabled = disabled;
+            radMentalStatus2.Disabled = disabled;
+            txtMentalStatus.Disabled = disabled;
+
+            txtPainCore.Disabled = disabled;
+
+            radFrms1.Disabled = disabled;
+            radFrms2.Disabled = disabled;
+            txtFrms.Disabled = disabled;
+
+            radNss1.Disabled = disabled;
+            radNss2.Disabled = disabled;
+            radNss3.Disabled = disabled;
+
+            radHousing1.Disabled = disabled;
+            radHousing2.Disabled = disabled;
+
+            radPrior1.Disabled = disabled;
+            radPrior2.Disabled = disabled;
+
+        }
+
         protected void btnAmend_Click(object sender, EventArgs e)
         {
+            AmendReason amendReason = (AmendReason)Page.LoadControl("~/UserControls/AmendReason.ascx");
+            amendReason.Load(AmendReasonPlaceHolder);
+
             btnComplete.Visible = true;
-            btnComplete.Disabled = true;
+            btnComplete.Attributes["disabled"] = "disabled";
             btnCancel.Visible = true;
             btnAmend.Visible = false;
             btnPrint.Visible = false;
 
-            amendReasonBox.Visible = true;
-
-            WebHelpers.DisabledControl(form1, false);
-            txtBmi.Disabled = true;
+            DisabledControl(false);
         }
 
         protected void btnComplete_Click(object sender, EventArgs e)
@@ -146,7 +185,7 @@ namespace EMR
             oina.vs_blood_pressure = txtBloodPressure.Value;
             oina.vs_BMI = txtBmi.Value;
             oina.vs_spO2 = txtSpo2.Value;
-            oina.pulse = txtHeadCircumference.Value;
+            oina.pulse = txtPluse.Value;
             oina.chief_complaint = txtChiefComplaint.Value;
                 
             oina.allergy = radAllergy2.Checked;
@@ -156,7 +195,7 @@ namespace EMR
             if (radMentalStatus2.Checked) { oina.mental_status_note = txtMentalStatus.Value; }
 
             oina.paint_score_code = txtPainCore.Value;
-            oina.amend_reason = txtAmendReason.Value;
+            //oina.amend_reason = txtAmendReason.Value;
 
             oina.fall_risk = radFrms2.Checked; 
             if(radFrms2.Checked) { oina.fall_risk_assistance = txtFrms.Value; }
@@ -173,11 +212,12 @@ namespace EMR
 
             oina.assessment_date_time = DataHelpers.ConvertSQLDateTime(DateTime.Parse(oina.assessment_date_time));
 
-            oina.user_name = "my.nguyen";
+            oina.user_name = (string)Session["UserID"];
 
-            if (oina.Update()[0] == "OK")
+            if (oina.Update()[0] == WebHelpers.ResponseStatus.OK)
             {
-                Console.WriteLine("Save successful!");
+                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
+                message.Load(Page, Message.CODE.MS001, Message.TYPE.SUCCESS);
 
                 Initial();
             }
@@ -198,7 +238,7 @@ namespace EMR
             oina.vs_blood_pressure = txtBloodPressure.Value;
             oina.vs_BMI = txtBmi.Value;
             oina.vs_spO2 = txtSpo2.Value;
-            oina.pulse = txtHeadCircumference.Value;
+            oina.pulse = txtPluse.Value;
 
             oina.chief_complaint = txtChiefComplaint.Value;
             oina.allergy = radAllergy2.Checked;
@@ -227,11 +267,12 @@ namespace EMR
 
             oina.assessment_date_time = DataHelpers.ConvertSQLDateTime(DateTime.Parse(oina.assessment_date_time));
 
-            oina.user_name = "my.nguyen";
+            oina.user_name = (string)Session["UserID"];
 
-            if(oina.Update()[0] == "OK")
+            if(oina.Update()[0] == WebHelpers.ResponseStatus.OK)
             {
-                Console.WriteLine("Save successful!");
+                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
+                message.Load(Page, Message.CODE.MS001, Message.TYPE.SUCCESS);
 
                 Initial();
             }
@@ -239,22 +280,20 @@ namespace EMR
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            btnComplete.Visible = false;
-            btnCancel.Visible = false;
-            btnAmend.Visible = true;
-            btnPrint.Visible = true;
-            amendReasonBox.Visible = false;
-
-            WebHelpers.DisabledControl(form1, true);
+            Initial();
         }
 
         protected void btnDelete_ServerClick(object sender, EventArgs e)
         {
-            oina = new OutPatientInitialNursingAssement(DataHelpers.varDocId);
-            if (oina.Delete("phut.phan")[0] == WebHelpers.ResponseStatus.OK)
+            if (OutPatientInitialNursingAssement.Delete((string)Session["UserID"])[0] == WebHelpers.ResponseStatus.OK)
             {
-                Console.WriteLine("Success");
+
             }
+        }
+
+        protected void btnPrint_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
