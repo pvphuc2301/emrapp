@@ -155,6 +155,9 @@
     <Content Include="emr\labinfor.aspx" />
     <Content Include="ER\EmergencyMedicalAssessment.aspx" />
     <Content Include="ER\EmerTriaAndNurAssRec.aspx" />
+    <Content Include="icons\PlusCircle.ascx" />
+    <Content Include="icons\Trash.ascx" />
+    <Content Include="icons\XSquare.ascx" />
     <Content Include="IPD\DeliveryCertificate.aspx" />
     <Content Include="IPD\DisCer.aspx" />
     <Content Include="IPD\DischargeSummary.aspx" />
@@ -280,6 +283,27 @@
     </Compile>
     <Compile Include="ER\EmerTriaAndNurAssRec.aspx.designer.cs">
       <DependentUpon>EmerTriaAndNurAssRec.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="icons\PlusCircle.ascx.cs">
+      <DependentUpon>PlusCircle.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="icons\PlusCircle.ascx.designer.cs">
+      <DependentUpon>PlusCircle.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="icons\Trash.ascx.cs">
+      <DependentUpon>Trash.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="icons\Trash.ascx.designer.cs">
+      <DependentUpon>Trash.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="icons\XSquare.ascx.cs">
+      <DependentUpon>XSquare.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="icons\XSquare.ascx.designer.cs">
+      <DependentUpon>XSquare.ascx</DependentUpon>
     </Compile>
     <Compile Include="IPD\DeliveryCertificate.aspx.cs">
       <DependentUpon>DeliveryCertificate.aspx</DependentUpon>
@@ -534,7 +558,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

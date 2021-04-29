@@ -15,633 +15,975 @@ namespace EMR
     {
 
         /// <summary>
-        /// form1 control.
+        /// form2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form2;
 
         /// <summary>
-        /// RadScriptManager1 control.
+        /// RadScriptManager2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadScriptManager RadScriptManager1;
+        protected global::Telerik.Web.UI.RadScriptManager RadScriptManager2;
 
         /// <summary>
-        /// RadTextBox40 control.
+        /// Upd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox40;
+        protected global::System.Web.UI.UpdatePanel Upd;
 
         /// <summary>
-        /// RadDatePicker3 control.
+        /// AmendReasonPlaceHolder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker RadDatePicker3;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AmendReasonPlaceHolder;
 
         /// <summary>
-        /// RadTimePicker2 control.
+        /// PatientInfo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTimePicker RadTimePicker2;
+        protected global::EMR.UserControls.PatientInfo PatientInfo;
 
         /// <summary>
-        /// RadTextBox43 control.
+        /// TextField6 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox43;
+        protected global::EMR.TextField TextField6;
 
         /// <summary>
-        /// RadTextBox44 control.
+        /// TextField7 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox44;
+        protected global::EMR.TextField TextField7;
 
         /// <summary>
-        /// RadDatePicker4 control.
+        /// txt_chief_complaint control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker RadDatePicker4;
+        protected global::EMR.TextField txt_chief_complaint;
 
         /// <summary>
-        /// RadTextBox45 control.
+        /// rad_triage_code1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox45;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_triage_code1;
 
         /// <summary>
-        /// RadTextBox46 control.
+        /// rad_triage_code2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox46;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_triage_code2;
 
         /// <summary>
-        /// RadTextBox47 control.
+        /// rad_triage_code3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox47;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_triage_code3;
 
         /// <summary>
-        /// RadTextBox48 control.
+        /// rad_triage_code4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox48;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_triage_code4;
 
         /// <summary>
-        /// RadTextBox49 control.
+        /// rad_triage_code5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox49;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_triage_code5;
 
         /// <summary>
-        /// RadTextBox2 control.
+        /// rad_arrival_mode_code1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_arrival_mode_code1;
 
         /// <summary>
-        /// RadTextBox1 control.
+        /// rad_arrival_mode_code2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_arrival_mode_code2;
 
         /// <summary>
-        /// txtBloodPressure control.
+        /// rad_arrival_mode_code3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtBloodPressure;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_arrival_mode_code3;
 
         /// <summary>
-        /// txt_pulse control.
+        /// txt_past_medical_history control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txt_pulse;
+        protected global::EMR.TextField txt_past_medical_history;
 
         /// <summary>
-        /// txt_temperature control.
+        /// txt_vs_temperature control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txt_temperature;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_temperature;
 
         /// <summary>
-        /// txtRespiratoryRate control.
+        /// txt_vs_heart_rate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtRespiratoryRate;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_heart_rate;
 
         /// <summary>
-        /// txtSpo2 control.
+        /// txt_vs_weight control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtSpo2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_weight;
 
         /// <summary>
-        /// RadTextBox11 control.
+        /// txt_vs_respiratory_rate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox11;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_respiratory_rate;
 
         /// <summary>
-        /// RadTextBox12 control.
+        /// txt_vs_height control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox12;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_height;
 
         /// <summary>
-        /// RadTextBox13 control.
+        /// txt_vs_blood_pressure control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox13;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_blood_pressure;
 
         /// <summary>
-        /// RadTextBox14 control.
+        /// txt_vs_bmi control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox14;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_bmi;
 
         /// <summary>
-        /// RadTextBox15 control.
+        /// RadScriptBlock1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox15;
+        protected global::Telerik.Web.UI.RadScriptBlock RadScriptBlock1;
 
         /// <summary>
-        /// RadTextBox16 control.
+        /// txt_vs_spo2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox16;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_spo2;
 
         /// <summary>
-        /// RadTextBox17 control.
+        /// txt_vs_head_circum control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox17;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_head_circum;
 
         /// <summary>
-        /// RadTextBox19 control.
+        /// txt_pain_onset control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox19;
+        protected global::EMR.TextField txt_pain_onset;
 
         /// <summary>
-        /// RadTextBox18 control.
+        /// txt_pain_location control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox18;
+        protected global::EMR.TextField txt_pain_location;
 
         /// <summary>
-        /// RadTextBox20 control.
+        /// txt_pain_duration control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox20;
+        protected global::EMR.TextField txt_pain_duration;
 
         /// <summary>
-        /// RadTextBox21 control.
+        /// txt_pain_radiation control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox21;
+        protected global::EMR.TextField txt_pain_radiation;
 
         /// <summary>
-        /// RadTextBox22 control.
+        /// txt_pain_score control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox22;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_pain_score;
 
         /// <summary>
-        /// RadTextBox23 control.
+        /// txt_allergy control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox23;
+        protected global::EMR.TextField txt_allergy;
 
         /// <summary>
-        /// RadTextBox24 control.
+        /// txt_current_medication control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox24;
+        protected global::EMR.TextField txt_current_medication;
 
         /// <summary>
-        /// RadTextBox25 control.
+        /// cb_com_dis_src_f control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox25;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_com_dis_src_f;
 
         /// <summary>
-        /// RadTextBox26 control.
+        /// cb_com_dis_src_c control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox26;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_com_dis_src_c;
 
         /// <summary>
-        /// RadTextBox27 control.
+        /// cb_com_dis_src_r control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox27;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_com_dis_src_r;
 
         /// <summary>
-        /// RadDatePicker7 control.
+        /// cb_com_dis_src_s control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker RadDatePicker7;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_com_dis_src_s;
 
         /// <summary>
-        /// RadTimePicker10 control.
+        /// cb_com_dis_src_t control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTimePicker RadTimePicker10;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_com_dis_src_t;
 
         /// <summary>
-        /// RadTextBox29 control.
+        /// cb_cde_la control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox29;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_cde_la;
 
         /// <summary>
-        /// RadTextBox30 control.
+        /// cb_cde_ra control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox30;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_cde_ra;
 
         /// <summary>
-        /// RadTextBox31 control.
+        /// cb_cde_hf control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox31;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_cde_hf;
 
         /// <summary>
-        /// RadTextBox32 control.
+        /// rad_cde_after_discharge1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox32;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_cde_after_discharge1;
 
         /// <summary>
-        /// RadTextBox33 control.
+        /// rad_cde_after_discharge2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox33;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_cde_after_discharge2;
 
         /// <summary>
-        /// RadTextBox34 control.
+        /// XSquare control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox34;
+        protected global::EMR.icons.XSquare XSquare;
 
         /// <summary>
-        /// RadTextBox35 control.
+        /// txt_caregiver_after_discharge control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox35;
+        protected global::EMR.TextField txt_caregiver_after_discharge;
 
         /// <summary>
-        /// RadTextBox36 control.
+        /// rad_btc_language1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox36;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_language1;
 
         /// <summary>
-        /// RadTextBox37 control.
+        /// rad_btc_language2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox37;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_language2;
 
         /// <summary>
-        /// RadTextBox38 control.
+        /// txt_btc_language_note control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox38;
+        protected global::EMR.TextField txt_btc_language_note;
 
         /// <summary>
-        /// RadTextBox39 control.
+        /// rad_btc_cognitive1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox39;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_cognitive1;
 
         /// <summary>
-        /// RadDatePicker1 control.
+        /// rad_btc_cognitive2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker RadDatePicker1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_cognitive2;
 
         /// <summary>
-        /// RadTimePicker1 control.
+        /// txt_btc_cognitive_note control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTimePicker RadTimePicker1;
+        protected global::EMR.TextField txt_btc_cognitive_note;
 
         /// <summary>
-        /// RadDatePicker8 control.
+        /// rad_btc_sensory1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker RadDatePicker8;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_sensory1;
 
         /// <summary>
-        /// RadTimePicker12 control.
+        /// rad_btc_sensory2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTimePicker RadTimePicker12;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_sensory2;
 
         /// <summary>
-        /// RadDatePicker9 control.
+        /// txt_btc_sensory_note control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker RadDatePicker9;
+        protected global::EMR.TextField txt_btc_sensory_note;
 
         /// <summary>
-        /// RadTimePicker11 control.
+        /// rad_btc_religious1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTimePicker RadTimePicker11;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_religious1;
 
         /// <summary>
-        /// RadDatePicker10 control.
+        /// rad_btc_religious2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker RadDatePicker10;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_religious2;
 
         /// <summary>
-        /// RadTimePicker8 control.
+        /// txt_btc_religious_note control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTimePicker RadTimePicker8;
+        protected global::EMR.TextField txt_btc_religious_note;
 
         /// <summary>
-        /// RadDatePicker11 control.
+        /// rad_btc_cultural1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker RadDatePicker11;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_cultural1;
 
         /// <summary>
-        /// RadTimePicker9 control.
+        /// rad_btc_cultural2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTimePicker RadTimePicker9;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_cultural2;
 
         /// <summary>
-        /// RadDatePicker12 control.
+        /// txt_btc_cultural_note control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker RadDatePicker12;
+        protected global::EMR.TextField txt_btc_cultural_note;
 
         /// <summary>
-        /// RadTimePicker7 control.
+        /// cb_cde_p control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTimePicker RadTimePicker7;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_cde_p;
 
         /// <summary>
-        /// RadDatePicker2 control.
+        /// cb_cde_c control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker RadDatePicker2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_cde_c;
 
         /// <summary>
-        /// RadTimePicker3 control.
+        /// cb_cde_t control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTimePicker RadTimePicker3;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_cde_t;
 
         /// <summary>
-        /// RadDatePicker5 control.
+        /// txt_eye control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker RadDatePicker5;
+        protected global::EMR.TextField txt_eye;
 
         /// <summary>
-        /// RadTimePicker4 control.
+        /// txt_voice control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTimePicker RadTimePicker4;
+        protected global::EMR.TextField txt_voice;
 
         /// <summary>
-        /// RadDatePicker13 control.
+        /// txt_motion control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker RadDatePicker13;
+        protected global::EMR.TextField txt_motion;
 
         /// <summary>
-        /// RadTimePicker6 control.
+        /// rad_loc_avpu_a control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTimePicker RadTimePicker6;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox rad_loc_avpu_a;
 
         /// <summary>
-        /// RadDatePicker6 control.
+        /// txt_others control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker RadDatePicker6;
+        protected global::EMR.TextField txt_others;
 
         /// <summary>
-        /// RadTimePicker5 control.
+        /// cb_respiratory_reg control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTimePicker RadTimePicker5;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_respiratory_reg;
+
+        /// <summary>
+        /// cb_respiratory_nre control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_respiratory_nre;
+
+        /// <summary>
+        /// cb_respiratory_tac control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_respiratory_tac;
+
+        /// <summary>
+        /// cb_respiratory_sha control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_respiratory_sha;
+
+        /// <summary>
+        /// cb_respiratory_lab control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_respiratory_lab;
+
+        /// <summary>
+        /// cb_respiratory_cou control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_respiratory_cou;
+
+        /// <summary>
+        /// cb_respiratory_spu control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_respiratory_spu;
+
+        /// <summary>
+        /// txt_rhythm_str_others control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_rhythm_str_others;
+
+        /// <summary>
+        /// txt_rhythm_others control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_rhythm_others;
+
+        /// <summary>
+        /// txt_psychosocial_str_others control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_psychosocial_str_others;
+
+        /// <summary>
+        /// txt_others_systems_str control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_others_systems_str;
+
+        /// <summary>
+        /// TextField8 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField TextField8;
+
+        /// <summary>
+        /// TextField9 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField TextField9;
+
+        /// <summary>
+        /// TextField10 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField TextField10;
+
+        /// <summary>
+        /// Table1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table Table1;
+
+        /// <summary>
+        /// tb_assessment_system control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table tb_assessment_system;
+
+        /// <summary>
+        /// LinkButton2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkButton2;
+
+        /// <summary>
+        /// LinkButton3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkButton3;
+
+        /// <summary>
+        /// dpk_discharge_date_time control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker dpk_discharge_date_time;
+
+        /// <summary>
+        /// tpk_discharge_date_time control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTimePicker tpk_discharge_date_time;
+
+        /// <summary>
+        /// txt_discharge_by control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_discharge_by;
+
+        /// <summary>
+        /// dpk_admited_date_time control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker dpk_admited_date_time;
+
+        /// <summary>
+        /// tpk_admited_date_time control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTimePicker tpk_admited_date_time;
+
+        /// <summary>
+        /// txt_admited_by control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_admited_by;
+
+        /// <summary>
+        /// txt_receiving_unit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_receiving_unit;
+
+        /// <summary>
+        /// txt_transfer_to control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_transfer_to;
+
+        /// <summary>
+        /// txt_transfer_by control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_transfer_by;
+
+        /// <summary>
+        /// dpk_noticed_time control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker dpk_noticed_time;
+
+        /// <summary>
+        /// tpk_noticed_time control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTimePicker tpk_noticed_time;
+
+        /// <summary>
+        /// tb_nursing_note control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Table tb_nursing_note;
+
+        /// <summary>
+        /// btnComplete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnComplete;
+
+        /// <summary>
+        /// btnSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSave;
+
+        /// <summary>
+        /// btnDelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDelete;
+
+        /// <summary>
+        /// btnAmend control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAmend;
+
+        /// <summary>
+        /// btnPrint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnPrint;
+
+        /// <summary>
+        /// btnCancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancel;
+
+        /// <summary>
+        /// updatePanelDeleteReason control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel updatePanelDeleteReason;
+
+        /// <summary>
+        /// TextField1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField TextField1;
+
+        /// <summary>
+        /// Div1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
     }
 }

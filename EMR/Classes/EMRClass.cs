@@ -7,33 +7,8 @@ using System.Web;
 namespace EMR
 {
 
-    //class IUser
-    //{
-    //    private IUser() { }
-    //    private static IUser _instance;
-
-    //    public static IUser GetUser()
-    //    {
-    //        if (_instance == null)
-    //        {
-    //            _instance = new IUser();
-    //        }
-    //        return _instance;
-    //    }
-
-
-    //    public string user_name { get; set; }
-    //    public string password { get; set; }
-    //    public string full_name { get; set; }
-    //}
-
     public class EMRClass
     {
-    }
-
-    public static class VAL_GLOBAL
-    {
-        public static string docId { get; set; }
     }
 
     public static class ControlStatus
@@ -59,7 +34,22 @@ namespace EMR
         public static string FINAL = "FINAL";
     }
 
+    public static class DocumentCode
+    {
+        public class DischargePlan
+        {
+            public static string RA = "RA";
+            public static string LA = "LA";
+            public static string HF = "HF";
+        }
 
+        public class GeneralAppearance
+        {
+            public static string P = "P";
+            public static string C = "C";
+            public static string T = "T";
+        }
+    }
 
     //public class PatientInfo
     //{
@@ -117,6 +107,343 @@ namespace EMR
     //    //"contact_phone_number": null,
     //    //"lu_updated": "2021-01-20T09:00:23.563"
     //}
+
+    public partial class Ena
+    {
+        #region Properties
+        public dynamic document_id { get; set; }
+        public dynamic triage_time { get; set; }
+        public dynamic triage_area { get; set; }
+        public dynamic amend_reason { get; set; }
+        public dynamic chief_complaint { get; set; }
+        public dynamic triage_code { get; set; }
+        public dynamic triage_desc { get; set; }
+        public dynamic arrival_mode_code { get; set; }
+        public dynamic arrival_mode_desc { get; set; }
+        public dynamic arrival_mode_note { get; set; }
+        public dynamic past_medical_history { get; set; }
+        public dynamic narrative { get; set; }
+        public dynamic vs_temperature { get; set; }
+        public dynamic vs_weight { get; set; }
+        public dynamic vs_height { get; set; }
+        public dynamic vs_bmi { get; set; }
+        public dynamic vs_heart_rate { get; set; }
+        public dynamic vs_respiratory_rate { get; set; }
+        public dynamic vs_blood_pressure { get; set; }
+        public dynamic vs_spo2 { get; set; }
+        public dynamic vs_head_circum { get; set; }
+        public dynamic loc_avpu { get; set; }
+        public dynamic pain_score { get; set; }
+        public dynamic pain_onset { get; set; }
+        public dynamic pain_location { get; set; }
+        public dynamic pain_duration { get; set; }
+        public dynamic pain_radiation { get; set; }
+        public dynamic allergy { get; set; }
+        public dynamic current_medication { get; set; }
+        public dynamic skin_integrity { get; set; }
+        public dynamic com_dis_src { get; set; }
+        public dynamic discharge_plan { get; set; }
+        public dynamic dis_after_discharge_code { get; set; }
+        public dynamic dis_after_discharge_desc { get; set; }
+        public dynamic caregiver_after_discharge { get; set; }
+        public dynamic btc_language { get; set; }
+        public dynamic btc_language_note { get; set; }
+        public dynamic btc_cognitive { get; set; }
+        public dynamic btc_cognitive_note { get; set; }
+        public dynamic btc_sensory { get; set; }
+        public dynamic btc_sensory_note { get; set; }
+        public dynamic btc_religious { get; set; }
+        public dynamic btc_religious_note { get; set; }
+        public dynamic btc_cultural { get; set; }
+        public dynamic btc_cultural_note { get; set; }
+        public dynamic general_appearance { get; set; }
+        public dynamic eye { get; set; }
+        public dynamic voice { get; set; }
+        public dynamic motion { get; set; }
+        public dynamic alert { get; set; }
+        public dynamic coma { get; set; }
+        public dynamic others { get; set; }
+        public dynamic str_others { get; set; }
+        public dynamic respiratory { get; set; }
+        public dynamic rhythm_regular { get; set; }
+        public dynamic rhythm_inregular { get; set; }
+        public dynamic rhythm_others { get; set; }
+        public dynamic rhythm_str_others { get; set; }
+        public dynamic psychosocial { get; set; }
+        public dynamic psychosocial_others { get; set; }
+        public dynamic psychosocial_str_others { get; set; }
+        public dynamic other_systems_normal { get; set; }
+        public dynamic other_systems_abnormal { get; set; }
+        public dynamic others_systems_str { get; set; }
+        public dynamic lmp { get; set; }
+        public dynamic lmP_note { get; set; }
+        public dynamic para { get; set; }
+        public dynamic LMP { get; set; }
+        public dynamic LMP_note { get; set; }
+        public dynamic PARA { get; set; }
+        public dynamic abortions { get; set; }
+        public dynamic blood_glucose_date_time { get; set; }
+        public dynamic blood_glucose_note { get; set; }
+        public dynamic ecg_date_time { get; set; }
+        public dynamic ecg_note { get; set; }
+        public dynamic urine_cath_date_time { get; set; }
+        public dynamic urine_cath_note { get; set; }
+        public dynamic splint_cast_dressing_date_time { get; set; }
+        public dynamic splint_cast_dressing_note { get; set; }
+        public dynamic procedure_other_date_time { get; set; }
+        public dynamic procedure_other_note { get; set; }
+        public dynamic discharge_date_time { get; set; }
+        public dynamic discharge_by { get; set; }
+        public dynamic admited_date_time { get; set; }
+        public dynamic admited_by { get; set; }
+        public dynamic receiving_unit { get; set; }
+        public dynamic transfer_to { get; set; }
+        public dynamic transfer_by { get; set; }
+        public dynamic noticed_time { get; set; }
+        public dynamic direct_medication { get; set; }
+        public dynamic assessment_system { get; set; }
+        public dynamic nursing_note { get; set; }
+        public dynamic status { get; set; }
+        public dynamic user_name { get; set; }
+
+        #endregion
+
+        Ena() { }
+
+        public Ena(dynamic document_id)
+        {
+            string _jsonData = WebHelpers.GetAPI("api/ena/" + document_id);
+
+            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+
+            WebHelpers.BindingDatafield(db, this);
+        }
+        public Ena(dynamic document_id, dynamic user_name)
+        {
+            this.document_id = document_id;
+            this.user_name = user_name;
+        }
+
+        // Constructor for API Inssert
+        public Ena(
+  dynamic document_id,
+  dynamic user_name,
+  dynamic status,
+  dynamic amend_reason,
+  dynamic triage_time,
+  dynamic triage_area,
+  dynamic chief_complaint,
+  dynamic triage_code,
+  dynamic triage_desc,
+  dynamic arrival_mode_code,
+  dynamic arrival_mode_desc,
+  dynamic arrival_mode_note,
+  dynamic past_medical_history,
+  dynamic narrative,
+  dynamic vs_temperature,
+  dynamic vs_weight,
+  dynamic vs_height,
+  dynamic vs_bmi,
+  dynamic vs_heart_rate,
+  dynamic vs_respiratory_rate,
+  dynamic vs_blood_pressure,
+  dynamic vs_spo2,
+  dynamic vs_head_circum,
+  dynamic loc_avpu,
+  dynamic pain_score,
+  dynamic pain_onset,
+  dynamic pain_location,
+  dynamic pain_duration,
+  dynamic pain_radiation,
+  dynamic allergy,
+  dynamic current_medication,
+  dynamic skin_integrity,
+  dynamic com_dis_src,
+  dynamic discharge_plan,
+  dynamic dis_after_discharge_code,
+  dynamic dis_after_discharge_desc,
+  dynamic caregiver_after_discharge,
+  dynamic btc_language,
+  dynamic btc_language_note,
+  dynamic btc_cognitive,
+  dynamic btc_cognitive_note,
+  dynamic btc_sensory,
+  dynamic btc_sensory_note,
+  dynamic btc_religious,
+  dynamic btc_religious_note,
+  dynamic btc_cultural,
+  dynamic btc_cultural_note,
+  dynamic general_appearance,
+  dynamic eye,
+  dynamic voice,
+  dynamic motion,
+  dynamic alert,
+  dynamic coma,
+  dynamic others,
+  dynamic str_others,
+  dynamic respiratory,
+  dynamic rhythm_regular,
+  dynamic rhythm_inregular,
+  dynamic rhythm_others,
+  dynamic rhythm_str_others,
+  dynamic psychosocial,
+  dynamic psychosocial_others,
+  dynamic psychosocial_str_others,
+  dynamic other_systems_normal,
+  dynamic other_systems_abnormal,
+  dynamic others_systems_str,
+  dynamic lmp,
+  dynamic lmP_note,
+  dynamic para,
+  dynamic abortions,
+  dynamic blood_glucose_date_time,
+  dynamic blood_glucose_note,
+  dynamic ecg_date_time,
+  dynamic ecg_note,
+  dynamic urine_cath_date_time,
+  dynamic urine_cath_note,
+  dynamic splint_cast_dressing_date_time,
+  dynamic splint_cast_dressing_note,
+  dynamic procedure_other_date_time,
+  dynamic procedure_other_note,
+  dynamic discharge_date_time,
+  dynamic discharge_by,
+  dynamic admited_date_time,
+  dynamic admited_by,
+  dynamic receiving_unit,
+  dynamic transfer_to,
+  dynamic transfer_by,
+  dynamic noticed_time,
+  dynamic direct_medication,
+  dynamic assessment_system,
+  dynamic nursing_note
+        )
+        {
+            this.document_id = document_id;
+            this.user_name = user_name;
+            this.status = status;
+            this.amend_reason = amend_reason;
+            this.triage_time = triage_time;
+            this.triage_area = triage_area;
+            this.chief_complaint = chief_complaint;
+            this.triage_code = triage_code;
+            this.triage_desc = triage_desc;
+            this.arrival_mode_code = arrival_mode_code;
+            this.arrival_mode_desc = arrival_mode_desc;
+            this.arrival_mode_note = arrival_mode_note;
+            this.past_medical_history = past_medical_history;
+            this.narrative = narrative;
+            this.vs_temperature = vs_temperature;
+            this.vs_weight = vs_weight;
+            this.vs_height = vs_height;
+            this.vs_bmi = vs_bmi;
+            this.vs_heart_rate = vs_heart_rate;
+            this.vs_respiratory_rate = vs_respiratory_rate;
+            this.vs_blood_pressure = vs_blood_pressure;
+            this.vs_spo2 = vs_spo2;
+            this.vs_head_circum = vs_head_circum;
+            this.loc_avpu = loc_avpu;
+            this.pain_score = pain_score;
+            this.pain_onset = pain_onset;
+            this.pain_location = pain_location;
+            this.pain_duration = pain_duration;
+            this.pain_radiation = pain_radiation;
+            this.allergy = allergy;
+            this.current_medication = current_medication;
+            this.skin_integrity = skin_integrity;
+            this.com_dis_src = com_dis_src;
+            this.discharge_plan = discharge_plan;
+            this.dis_after_discharge_code = dis_after_discharge_code;
+            this.dis_after_discharge_desc = dis_after_discharge_desc;
+            this.caregiver_after_discharge = caregiver_after_discharge;
+            this.btc_language = btc_language;
+            this.btc_language_note = btc_language_note;
+            this.btc_cognitive = btc_cognitive;
+            this.btc_cognitive_note = btc_cognitive_note;
+            this.btc_sensory = btc_sensory;
+            this.btc_sensory_note = btc_sensory_note;
+            this.btc_religious = btc_religious;
+            this.btc_religious_note = btc_religious_note;
+            this.btc_cultural = btc_cultural;
+            this.btc_cultural_note = btc_cultural_note;
+            this.general_appearance = general_appearance;
+            this.eye = eye;
+            this.voice = voice;
+            this.motion = motion;
+            this.alert = alert;
+            this.coma = coma;
+            this.others = others;
+            this.str_others = str_others;
+            this.respiratory = respiratory;
+            this.rhythm_regular = rhythm_regular;
+            this.rhythm_inregular = rhythm_inregular;
+            this.rhythm_others = rhythm_others;
+            this.rhythm_str_others = rhythm_str_others;
+            this.psychosocial = psychosocial;
+            this.psychosocial_others = psychosocial_others;
+            this.psychosocial_str_others = psychosocial_str_others;
+            this.other_systems_normal = other_systems_normal;
+            this.other_systems_abnormal = other_systems_abnormal;
+            this.others_systems_str = others_systems_str;
+            this.lmp = lmp;
+            this.lmP_note = lmP_note;
+            this.para = para;
+            this.abortions = abortions;
+            this.blood_glucose_date_time = blood_glucose_date_time;
+            this.blood_glucose_note = blood_glucose_note;
+            this.ecg_date_time = ecg_date_time;
+            this.ecg_note = ecg_note;
+            this.urine_cath_date_time = urine_cath_date_time;
+            this.urine_cath_note = urine_cath_note;
+            this.splint_cast_dressing_date_time = splint_cast_dressing_date_time;
+            this.splint_cast_dressing_note = splint_cast_dressing_note;
+            this.procedure_other_date_time = procedure_other_date_time;
+            this.procedure_other_note = procedure_other_note;
+            this.discharge_date_time = discharge_date_time;
+            this.discharge_by = discharge_by;
+            this.admited_date_time = admited_date_time;
+            this.admited_by = admited_by;
+            this.receiving_unit = receiving_unit;
+            this.transfer_to = transfer_to;
+            this.transfer_by = transfer_by;
+            this.noticed_time = noticed_time;
+            this.direct_medication = direct_medication;
+            this.assessment_system = assessment_system;
+            this.nursing_note = nursing_note;
+    }
+
+        public string[] Update()
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI("api/ena/edit", this);
+            message[0] = responseStatus;
+
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI("api/ena/log/" + this.document_id);
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+
+        public static string[] Delete(string userName)
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI("api/emr/document-del/" + userName + "/" + DataHelpers.varDocId);
+
+            message[0] = responseStatus;
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI("api/ena/log/" + DataHelpers.varDocId);
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+    }
 
     public class OutPatientInitialNursingAssement
     {

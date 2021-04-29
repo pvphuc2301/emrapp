@@ -153,8 +153,7 @@ namespace EMR
                 {
                     if(db.Rows[i].Field<string>("status") == DocumentStatus.DRAFT)
                     {
-                        docId = db.Rows[i].Field<string>("document_id");
-                        VAL_GLOBAL.docId = db.Rows[i].Field<string>("document_id");
+                        DataHelpers.varDocId = db.Rows[i].Field<string>("document_id");
                         isDraft = true;
                         break;
                     }
@@ -188,7 +187,7 @@ namespace EMR
                 ListItem selectedItem = ddlDocList.Items[ddlDocList.SelectedIndex];
                 string[] _params = selectedItem.Value.Split('|');
                 
-                Response.Redirect("../" + _params[1] + "?docId=" + VAL_GLOBAL.docId, false);
+                Response.Redirect("../" + _params[1] + "?docId=" + DataHelpers.varDocId, false);
             }
             catch (Exception ex)
             {
