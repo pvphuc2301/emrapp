@@ -36,12 +36,6 @@ namespace EMR
 
     public static class DocumentCode
     {
-        public class DischargePlan
-        {
-            public static class RA { public static string code = "RA"; public static string desc = "Cần trợ  giúp sinh hoạt hàng ngày/ Require assistance with daily living"; }
-            public static class LA { public static string code = "LA"; public static string desc = "Sống một mình/ Live alone"; }
-            public static class HF { public static string code = "HF"; public static string desc = "Nguy cơ ngã cao/ High falling risk"; }
-        }
         public class LocAVPU
         {
             public static class A { public static string code = "A"; public static string desc = "Tỉnh/A-Alert"; }
@@ -49,33 +43,94 @@ namespace EMR
             public static class U { public static string code = "U"; public static string desc = "Không đáp ứng/U- Unresponsive"; }
             public static class V { public static string code = "V"; public static string desc = "Lời nói/V-Verbal"; }
         }
-        public class GeneralAppearance
+        public static Dictionary<string, string> GeneralAppearance = new Dictionary<string, string>()
         {
-            public static class P { public static string code = "P"; public static string desc = "Hồng hào/ Pink"; }
-            public static class T { public static string code = "T"; public static string desc = "Tái/ Pallor"; }
-            public static class C { public static string code = "C"; public static string desc = "Tím/ Cyanosis"; }
-        }
-        public class  ComDisSrc
+            { "P", "Hồng hào/ Pink" },
+            { "T", "Tái/ Pallor" },
+            { "C", "Tím/ Cyanosis" },
+        };
+        public static Dictionary<string, string> SkinIntegrity = new Dictionary<string, string>()
         {
-            public static class F { public static string code = "F"; public static string desc = "Sốt/Fever"; }
-            public static class R { public static string code = "R"; public static string desc = "Nổi mẩn/Rash"; }
-            public static class T { public static string code = "T"; public static string desc = "Đi khỏi Việt Nam trong vòng 15 ngày gần đây/Travel outside Vietnam in recent 15 days"; }
-            public static class S { public static string code = "S"; public static string desc = "Đau họng/ Sore throat"; }
-            public static class C { public static string code = "C"; public static string desc = "Ho/Cough"; }
-        }
+            { "A", "Trầy xước/Abrasion (A)" },
+            { "B", "Bỏng/Burn (B)" },
+            { "D", "Biến dạng/Deformity (D)" },
+            { "H", "Loét/ Ulceration (U)" },
+            { "L", "Rách da/Laceration (L)" },
+            { "S", "Bong gân Sprain/ Căng cơ Strain (S)" },
+        };
+        public static Dictionary<string, string> ComDisSrc = new Dictionary<string, string>()
+        {
+            { "F", "Sốt/Fever" },
+            { "R", "Nổi mẩn/Rash" },
+            { "T", "Đi khỏi Việt Nam trong vòng 15 ngày gần đây/Travel outside Vietnam in recent 15 days" },
+            { "S", "Đau họng/ Sore throat" },
+            { "C", "Ho/Cough" },
+        };
+        public static Dictionary<string, string> DischargePlan = new Dictionary<string, string>()
+        {
+            { "RA", "Cần trợ  giúp sinh hoạt hàng ngày/ Require assistance with daily living" },
+            { "LA", "Sống một mình/ Live alone" },
+            { "HF", "Nguy cơ ngã cao/ High falling risk" },
+        };
+        public static Dictionary<string, string> TriageCode = new Dictionary<string, string>()
+        {
+            { "1", "1-Hồi sức/ Resuscitation" },
+            { "2", "2-Cấp cứu/ Emergent" },
+            { "3", "3-Khẩn trương/ Urgent" },
+            { "4", "4- Trì hoãn/ Less urgent" },
+            { "5", "5- Không cấp cứu/ Nonurgent" },
+        };
+        public static Dictionary<string, string> Respiratory = new Dictionary<string, string>()
+        {
+            { "REG", "Thở đều/Regular" },
+            { "NRE", "Thở không đều/Regular" },
+            { "TAC", "Thở nhanh/Tachypneic" },
+            { "COU", "Ho/Cough" },
+            { "SPU", "Có đàm/Sputum" },
+            { "LAB", "Thở gắng sức/Labored" },
+            { "SHA", "Thở nông/Shallow" },
+            { "RET", "Co kéo/Retractions" },
+        };
+    }
 
-        public class Respiratory
+    public static class EMRTable
+    {
+        public static Dictionary<string, string> assessmentSystem = new Dictionary<string, string>()
         {
-            public static class REG { public static string code = "REG"; public static string desc = "Thở đều/Regular"; }
-            public static class NRE { public static string code = "NRE"; public static string desc = "Thở không đều/Regular"; }
-            public static class TAC { public static string code = "TAC"; public static string desc = "Thở nhanh/Tachypneic"; }
-            public static class COU { public static string code = "COU"; public static string desc = "Ho/Cough"; }
-            public static class SPU { public static string code = "SPU"; public static string desc = "Có đàm/Sputum"; }
-            public static class LAB { public static string code = "LAB"; public static string desc = "Thở gắng sức/Labored"; }
-            public static class SHA { public static string code = "SHA"; public static string desc = "Thở nông/Shallow"; }
-            public static class OTH { public static string code = "OTH"; }
-            public static class RET { public static string code = "RET"; public static string desc = "Co kéo/Retractions"; }
-        }
+            { "id", "" },
+            { "time", "" },
+            { "rrlp", "" },
+            { "o2sat", "" },
+            { "hr", "" },
+            { "bp", "" },
+            { "temp", "" },
+            { "gcs", "" },
+            { "pain", "" },
+            { "ats", "" },
+            { "intervention", "" },
+            { "initial", "" },
+        };
+        public static Dictionary<string, string> directMedication = new Dictionary<string, string>()
+        {
+            { "id", "" },
+            { "dir_med_time", "" },
+            { "dir_medication", "" },
+            { "dir_med_dose", "" },
+            { "dir_med_route", "" },
+            { "dir_med_rate", "" },
+            { "dir_med_doctor", "" },
+            { "dir_med_comment", "" },
+            { "dir_med_time2", "" },
+            { "dir_med_initial", "" },
+        };
+        public static Dictionary<string, string> nursingNote = new Dictionary<string, string>()
+        {
+            { "id", "" },
+            { "date_time", "" },
+            { "patient_condition", "" },
+            { "signature_name", "" },
+        };
+        
     }
 
     //public class PatientInfo
@@ -205,9 +260,6 @@ namespace EMR
         public dynamic lmp { get; set; }
         public dynamic lmP_note { get; set; }
         public dynamic para { get; set; }
-        public dynamic LMP { get; set; }
-        public dynamic LMP_note { get; set; }
-        public dynamic PARA { get; set; }
         public dynamic abortions { get; set; }
         public dynamic blood_glucose_date_time { get; set; }
         public dynamic blood_glucose_note { get; set; }

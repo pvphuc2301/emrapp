@@ -53,6 +53,9 @@
         <div class="scroll-sidebar h-100 w-100">
             <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
+
+                    <uc1:PatientInfo runat="server" ID="PatientInfo" />
+
                      <div class="row" style="margin-bottom: 50px;">
                         <div class="col-12">
                             <div class="card">
@@ -68,8 +71,7 @@
                                                     <span class="text-primary">Triage Date Time <span class="text-danger">*</span></span>
                                                 </label>
                                                 <div class="form-group">
-                                                    <telerik:RadDatePicker ID="dpk_triage_time" runat="server"></telerik:RadDatePicker>
-                                                    <telerik:RadTimePicker ID="tpk_triage_time" runat="server"></telerik:RadTimePicker>
+                                                    <telerik:RadDateTimePicker runat="server" ID="dtpk_triage_time" Width="200px" />
                                                 </div>
                                             </div>
                                         </div>
@@ -95,32 +97,32 @@
                                         <div class="row mb-2">
                                             <div class="col-md-2 col-sm-6">
                                                 <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_triage_code1" runat="server" name="rad_triage_code" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_triage_code1">1-Hồi sức/ <span class="text-primary">Resuscitation</span></label>
+                                                    <input type="radio" id="rad_triage_code_1" runat="server" name="rad_triage_code" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="rad_triage_code_1">1-Hồi sức/ <span class="text-primary">Resuscitation</span></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-2 col-sm-6">
                                                 <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_triage_code2" runat="server" name="rad_triage_code" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_triage_code2">Cấp cứu/ <span class="text-primary">Emergency</span></label>
+                                                    <input type="radio" id="rad_triage_code_2" runat="server" name="rad_triage_code" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="rad_triage_code_2">Cấp cứu/ <span class="text-primary">Emergency</span></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-2 col-sm-6">
                                                 <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_triage_code3" runat="server" name="rad_triage_code" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_triage_code3">Khẩn trương/ <span class="text-primary">Urgent</span></label>
+                                                    <input type="radio" id="rad_triage_code_3" runat="server" name="rad_triage_code" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="rad_triage_code_3">Khẩn trương/ <span class="text-primary">Urgent</span></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-2 col-sm-6">
                                                 <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_triage_code4" runat="server" name="rad_triage_code" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_triage_code4">Trì hoãn/ <span class="text-primary">Less Urgent</span></label>
+                                                    <input type="radio" id="rad_triage_code_4" runat="server" name="rad_triage_code" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="rad_triage_code_4">Trì hoãn/ <span class="text-primary">Less Urgent</span></label>
                                                 </div>
                                             </div>
                                             <div class="col-md-4 col-sm-6">
                                                 <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_triage_code5" runat="server" name="rad_triage_code" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_triage_code5">Không cấp cứu/ <span class="text-primary">Non-Urgent</span></label>
+                                                    <input type="radio" id="rad_triage_code_5" runat="server" name="rad_triage_code" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="rad_triage_code_5">Không cấp cứu/ <span class="text-primary">Non-Urgent</span></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -294,7 +296,7 @@
                                             </label>
                                             <label class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" runat="server" id="cb_loc_avpu_u" />
-                                                <span class="custom-control-label">Không đáp ứng/ <span class="text-primary">Sore throat</span></span>
+                                                <span class="custom-control-label">Không đáp ứng/ <span class="text-primary">U- Unresponsive</span></span>
                                             </label>
                                         </div>
 
@@ -453,15 +455,15 @@
 
                                             <div class="col-md-4">
                                                 <div class="custom-control custom-radio">
-                                                    <input type="radio" runat="server" id="rad_cde_after_discharge1" name="rad_cde_after_discharge" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_cde_after_discharge1">Nhà riêng/ <span class="text-primary">Private home</span></label>
+                                                    <input type="radio" runat="server" id="rad_dis_after_discharge_code_h" name="rad_dis_after_discharge_code" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="rad_dis_after_discharge_code_h">Nhà riêng/ <span class="text-primary">Private home</span></label>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-8">
                                                 <div class="custom-control custom-radio mb-1">
-                                                    <input type="radio" runat="server" id="rad_cde_after_discharge2" name="rad_cde_after_discharge" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_cde_after_discharge2">Cơ sở y tế khác/ <span class="text-primary">Other healthcare facility:</span></label>
+                                                    <input type="radio" runat="server" id="rad_dis_after_discharge_code_o" name="rad_dis_after_discharge_code" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="rad_dis_after_discharge_code_o">Cơ sở y tế khác/ <span class="text-primary">Other healthcare facility:</span></label>
                                                     <a href="javascript:void(0)" style="display: none;" data-clear="rad_cde_after_discharge" onclick="clear_radiobutton(this)">
                                                         <icon:xsquare runat="server" ID="XSquare" />
                                                     </a>
@@ -887,8 +889,7 @@
                                                             </td>
                                                             <td data-label="Thời gian/ Time">
                                                                 <div class="form-group">
-                                                                    <telerik:RadDatePicker ID="dpk_blood_glucose_date_time" runat="server"></telerik:RadDatePicker>
-                                                                    <telerik:RadTimePicker ID="tpk_blood_glucose_date_time" runat="server"></telerik:RadTimePicker>
+                                                                    <telerik:RadDateTimePicker runat="server" ID="dtpk_blood_glucose_date_time" Width="200px" />
                                                                 </div>
                                                             </td>
                                                             <td data-label="Ghi chú/ Notes">
@@ -900,8 +901,7 @@
                                                             </td>
                                                             <td data-label="Thời gian/ Time">
                                                                 <div class="form-group">
-                                                                    <telerik:RadDatePicker ID="dpk_ecg_date_time" runat="server"></telerik:RadDatePicker>
-                                                                    <telerik:RadTimePicker ID="tpk_ecg_date_time" runat="server"></telerik:RadTimePicker>
+                                                                    <telerik:RadDateTimePicker runat="server" ID="dtpk_ecg_date_time" Width="200px" />
                                                                 </div>
                                                             </td>
                                                             <td data-label="Ghi chú/ Notes">
@@ -913,8 +913,7 @@
                                                             </td>
                                                             <td data-label="Thời gian/ Time">
                                                                 <div class="form-group">
-                                                                    <telerik:RadDatePicker ID="dpk_urine_cath_date_time" runat="server"></telerik:RadDatePicker>
-                                                                    <telerik:RadTimePicker ID="tpk_urine_cath_date_time" runat="server"></telerik:RadTimePicker>
+                                                                    <telerik:RadDateTimePicker runat="server" ID="dtpk_urine_cath_date_time" Width="200px" />
                                                                 </div>
                                                             </td>
                                                             <td data-label="Ghi chú/ Notes">
@@ -926,8 +925,7 @@
                                                             </td>
                                                             <td data-label="Thời gian/ Time">
                                                                 <div class="form-group">
-                                                                    <telerik:RadDatePicker ID="dpk_splint_cast_dressing_date_time" runat="server"></telerik:RadDatePicker>
-                                                                    <telerik:RadTimePicker ID="tpk_splint_cast_dressing_date_time" runat="server"></telerik:RadTimePicker>
+                                                                    <telerik:RadDateTimePicker runat="server" ID="dtpk_splint_cast_dressing_date_time" Width="200px" />
                                                                 </div>
                                                             </td>
                                                             <td data-label="Ghi chú/ Notes">
@@ -939,8 +937,7 @@
                                                             </td>
                                                             <td data-label="Thời gian/ Time">
                                                                 <div class="form-group">
-                                                                    <telerik:RadDatePicker ID="dpk_procedure_other_date_time" runat="server"></telerik:RadDatePicker>
-                                                                    <telerik:RadTimePicker ID="tpk_procedure_other_date_time" runat="server"></telerik:RadTimePicker>
+                                                                    <telerik:RadDateTimePicker runat="server" ID="dtpk_procedure_other_date_time" Width="200px" />
                                                                 </div>
                                                             </td>
                                                             <td data-label="Ghi chú/ Notes">
@@ -954,24 +951,24 @@
 
                                         <div class="row mb-2">
                                             <div class="col-md-12">
-                                                <asp:UpdatePanel ID="UpdatePanelService" runat="server" UpdateMode="Always">
+                                                <asp:UpdatePanel ID="updatePanel_AssessmentSystem" runat="server" UpdateMode="Always">
                                                     <ContentTemplate>
                                                         <asp:GridView
-                                                            ID="gridAssessmentSystem"
+                                                            ShowHeaderWhenEmpty="true"
+                                                            ID="grid_AssessmentSystem"
                                                             runat="server"
-                                                            OnRowDeleting="gridAssessmentSystem_RowDeleting"
+                                                            OnRowDeleting="grid_AssessmentSystem_RowDeleting"
                                                             OnRowUpdating="gridAssessmentSystem_RowUpdating"
                                                             OnRowDataBound="gridAssessmentSystem_RowDataBound"
                                                             CssClass="tb-responsive"
-                                                            AutoGenerateColumns="false"
-                                                            ShowFooter="true">
+                                                            AutoGenerateColumns="false">
                                                             <Columns>
-                                                                <asp:TemplateField ItemStyle-Width="30px" HeaderText="SR.NO">
+                                                                <asp:TemplateField ItemStyle-Width="100px" HeaderText="SR.NO">
                                                                     <HeaderTemplate>
                                                                         <span class="text-primary">Time</span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField DataKey="time" Value='<%#Eval("time") %>' runat="server" />
+                                                                        <telerik:RadTimePicker Width="100px" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
@@ -1056,22 +1053,271 @@
 
                                                             </Columns>
                                                         </asp:GridView>
-                                                        <asp:UpdateProgress ID="UpdateProgress1" runat="server" AssociatedUpdatePanelID="UpdatePanelService">
+                                                        <asp:UpdateProgress ID="updateProgress_AssessmentSystem" runat="server" AssociatedUpdatePanelID="updatePanel_AssessmentSystem">
                                                             <ProgressTemplate>
                                                                 Please wait....
                                                             </ProgressTemplate>
                                                         </asp:UpdateProgress>
                                                         <div class="mt-2">
-                                                            <asp:Button ID="btnAddAssessmentSystem" runat="server" CssClass="btn btn-sm btn-outline-primary" OnClick="btnAssessmentSystemAddRow_Click" Text="Add row" />
+                                                            <asp:Button ID="btn_AddAssessmentSystem" runat="server" CssClass="btn btn-sm btn-outline-primary" OnClick="btn_AddAssessmentSystem_Click" Text="Add row" />
                                                         </div>
                                                     </ContentTemplate>
                                                     <Triggers>
-                                                        <asp:AsyncPostBackTrigger ControlID="btnAddAssessmentSystem" EventName="Click" />
+                                                        <asp:AsyncPostBackTrigger ControlID="btn_AddAssessmentSystem" EventName="Click" />
                                                     </Triggers>
                                                 </asp:UpdatePanel>
                                             </div>
                                         </div>
 
+                                        <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <label class="control-label mb-1 font-bold">Y lệnh thuốc & dịch truyền trực tiếp/ <span class="text-primary">Direct Medication & IV fluids Order</span></label>
+                                                <asp:UpdatePanel ID="UpdatePanelDirectMedication" runat="server" UpdateMode="Always">
+                                                    <ContentTemplate>
+                                                        <asp:GridView
+                                                            ShowHeaderWhenEmpty="true"
+                                                            ID="gridDirectMedication"
+                                                            runat="server"
+                                                            OnRowDeleting="gridDirectMedication_RowDeleting"
+                                                            OnRowUpdating="gridAssessmentSystem_RowUpdating"
+                                                            OnRowDataBound="gridAssessmentSystem_RowDataBound"
+                                                            CssClass="tb-responsive"
+                                                            AutoGenerateColumns="false"
+                                                            ShowFooter="true">
+                                                            <Columns>
+                                                                <asp:TemplateField ItemStyle-Width="30px" HeaderText="SR.NO">
+                                                                    <HeaderTemplate>
+                                                                        Thời gian/ <span class="text-primary">Time</span>
+                                                                    </HeaderTemplate>
+                                                                    <ItemTemplate>
+                                                                        <Input:TextField DataKey="dir_med_time" Value='<%#Eval("dir_med_time") %>' runat="server" />
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                    <HeaderTemplate>
+                                                                        Thuốc/ <span class="text-primary">Medication</span> - Dịch truyền/ <span class="text-primary">IV Fluids</span>
+                                                                    </HeaderTemplate>
+                                                                    <ItemTemplate>
+                                                                        <Input:TextField Value='<%#Eval("dir_medication") %>' DataKey="dir_medication" runat="server" />
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                    <HeaderTemplate>
+                                                                        Liều dùng/ <span class="text-primary">Dose</span>
+                                                                    </HeaderTemplate>
+                                                                    <ItemTemplate>
+                                                                        <Input:TextField Value='<%#Eval("dir_med_dose") %>' DataKey="dir_med_dose" runat="server" />
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                    <HeaderTemplate>
+                                                                        Đường dùng/ <span class="text-primary">Route</span>
+                                                                    </HeaderTemplate>
+                                                                    <ItemTemplate>
+                                                                        <Input:TextField Value='<%#Eval("dir_med_route") %>' DataKey="dir_med_route" runat="server" />
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                    <HeaderTemplate>
+                                                                        Tốc độ/ <span class="text-primary">Rate</span>
+                                                                    </HeaderTemplate>
+                                                                    <ItemTemplate>
+                                                                        <Input:TextField Value='<%#Eval("dir_med_rate") %>' DataKey="dir_med_rate" runat="server" />
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                    <HeaderTemplate>
+                                                                        Bác sĩ/ <span class="text-primary">Doctor</span>
+                                                                    </HeaderTemplate>
+                                                                    <ItemTemplate>
+                                                                        <Input:TextField Value='<%#Eval("dir_med_doctor") %>' DataKey="dir_med_doctor" runat="server" />
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                    <HeaderTemplate>
+                                                                        Ghi chú/ <span class="text-primary">Comment</span>
+                                                                    </HeaderTemplate>
+                                                                    <ItemTemplate>
+                                                                        <Input:TextField Value='<%#Eval("dir_med_comment") %>' DataKey="dir_med_comment" runat="server" />
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                    <HeaderTemplate>
+                                                                        Thời gian/ <span class="text-primary">Time</span>
+                                                                    </HeaderTemplate>
+                                                                    <ItemTemplate>
+                                                                        <Input:TextField Value='<%#Eval("dir_med_time2") %>' DataKey="dir_med_time2" runat="server" />
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                    <HeaderTemplate>
+                                                                        Điều dưỡng/ <span class="text-primary">RN's Initial</span>
+                                                                    </HeaderTemplate>
+                                                                    <ItemTemplate>
+                                                                        <Input:TextField Value='<%#Eval("dir_med_initial") %>' DataKey="dir_med_initial" runat="server" />
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+                                                                <asp:CommandField ShowDeleteButton="True" ButtonType="Button" />
+                                                            </Columns>
+                                                        </asp:GridView>
+                                                        <asp:UpdateProgress ID="UpdateProgressDirectMedication" runat="server" AssociatedUpdatePanelID="UpdatePanelDirectMedication">
+                                                            <ProgressTemplate>
+                                                                Please wait....
+                                                            </ProgressTemplate>
+                                                        </asp:UpdateProgress>
+                                                        <div class="mt-2">
+                                                            <asp:Button ID="btnAddDirectMedication" runat="server" CssClass="btn btn-sm btn-outline-primary" OnClick="btnAddDirectMedication_Click" Text="Add Row" />
+                                                        </div>
+                                                    </ContentTemplate>
+                                                    <Triggers>
+                                                        <asp:AsyncPostBackTrigger ControlID="btnAddDirectMedication" EventName="Click" />
+                                                    </Triggers>
+                                                </asp:UpdatePanel>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label mb-2 font-bold">Xuất viện/ <span class="text-primary">Discharged</span></label>
+                                                    <div class="form-group row">
+                                                        <div class="col-md-6">
+                                                            <div class="form-group">
+                                                                <telerik:RadDateTimePicker runat="server" ID="dtpk_discharge_date_time" Width="200px" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-group p-0 m-0 border-0">
+                                                                <label class="control-label mb-2 font-bold">bởi BS/ <span class="text-primary">by Dr.</span></label>
+                                                                <input type="text" runat="server" id="txt_discharge_by" placeholder="" class="form-control" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input type="checkbox" runat="server" id="cb_" class="custom-control-input" />
+                                                        <span class="custom-control-label">Về nhà/ <span class="text-primary">Home</span></span>
+                                                    </label>
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" />
+                                                        <span class="custom-control-label">Tự ý/ <span class="text-primary">Against Medical Advice/AMA</span></span>
+                                                    </label>
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input type="checkbox" class="custom-control-input" />
+                                                        <span class="custom-control-label">Tử vong/ <span class="text-primary">Dead</span></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                            <label class="control-label mb-2 font-bold">Nhập viện/ <span class="text-primary">Admited</span></label>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <telerik:RadDateTimePicker runat="server" ID="dtpk_admited_date_time" Width="200px" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-2 font-bold">bởi BS/ <span class="text-primary">by Dr.</span></label>
+                                                            <input type="text" runat="server" id="txt_admited_by" placeholder="" class="form-control" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12 mt-2">
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-2 font-bold">Khoa tiếp nhận/ <span class="text-primary">Receiving Unit</span></label>
+                                                            <input type="text" runat="server" id="txt_receiving_unit" placeholder="" class="form-control" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6 mt-2">
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-2 font-bold">Chuyển viện/ <span class="text-primary">Transfer to</span></label>
+                                                            <input type="text" id="txt_transfer_to" runat="server" placeholder="" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 mt-2">
+                                                        <div class="form-group">
+                                                            <label class="control-label mb-2 font-bold">bởi BS/ <span class="text-primary">by Dr.</span></label>
+                                                            <input type="text" id="txt_transfer_by" runat="server" placeholder="" class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-2">
+                                            <div class="col-12">
+                                                <label class="control-label mb-2 font-bold">Giờ thông báo Bác sĩ/ <span class="text-primary">Time notified to Doctor</span></label>
+                                                <div class="form-group">
+                                                    <telerik:RadDateTimePicker runat="server" ID="dtpk_noticed_time" Width="200px" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <label class="control-label mb-2 font-bold">PHIẾU GHI CHÚ ĐIỀU DƯỠNG/ <span class="text-primary">NURSING NOTES</span></label>
+
+                                                <asp:UpdatePanel ID="updatePanel_NursingNotes" runat="server" UpdateMode="Always">
+                                                    <ContentTemplate>
+                                                        <asp:GridView
+                                                            ShowHeaderWhenEmpty="true"
+                                                            ID="grid_NursingNotes"
+                                                            runat="server"
+                                                            OnRowDeleting="grid_NursingNotes_RowDeleting"
+                                                            OnRowUpdating="gridAssessmentSystem_RowUpdating"
+                                                            OnRowDataBound="gridAssessmentSystem_RowDataBound"
+                                                            CssClass="tb-responsive"
+                                                            AutoGenerateColumns="false"
+                                                            ShowFooter="true">
+                                                            <Columns>
+                                                                <asp:TemplateField ItemStyle-Width="30px" HeaderText="SR.NO">
+                                                                    <HeaderTemplate>
+                                                                        Ngày/ <span class="text-primary">Date</span> - Giờ/ <span class="text-primary">Time</span>
+                                                                    </HeaderTemplate>
+                                                                    <ItemTemplate>
+                                                                        <div class="form-group">
+                                                                            <telerik:RadDateTimePicker SelectedDate='<%#Eval("date_time") %>' Width="200px" runat="server" />
+                                                                        </div>
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                    <HeaderTemplate>
+                                                                        Theo dõi diễn tiến/ <span class="text-primary">Patient's condition</span>
+                                                                    </HeaderTemplate>
+                                                                    <ItemTemplate>
+                                                                        <Input:TextField Value='<%#Eval("patient_condition") %>' DataKey="patient_condition" runat="server" />
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                    <HeaderTemplate>
+                                                                        Ký/Ghi tên ĐD/ <span class="text-primary">Signature & RN's name</span>
+                                                                    </HeaderTemplate>
+                                                                    <ItemTemplate>
+                                                                        <Input:TextField Value='<%#Eval("signature_name") %>' DataKey="o2sat" runat="server" />
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+                                                                <asp:CommandField ShowDeleteButton="True" ButtonType="Button" />
+
+                                                            </Columns>
+                                                        </asp:GridView>
+                                                        <asp:UpdateProgress ID="updateProgress_NursingNotes" runat="server" AssociatedUpdatePanelID="updatePanel_NursingNotes">
+                                                            <ProgressTemplate>
+                                                                Please wait....
+                                                            </ProgressTemplate>
+                                                        </asp:UpdateProgress>
+                                                        <div class="mt-2">
+                                                            <asp:Button ID="btn_AddNursingNotes" runat="server" CssClass="btn btn-sm btn-outline-primary" OnClick="btn_AddNursingNotes_Click" Text="Add row" />
+                                                        </div>
+                                                    </ContentTemplate>
+                                                    <Triggers>
+                                                        <asp:AsyncPostBackTrigger ControlID="btn_AddNursingNotes" EventName="Click" />
+                                                    </Triggers>
+                                                </asp:UpdatePanel>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div class="form-actions mb-3">

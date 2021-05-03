@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web.UI;
@@ -25,7 +26,7 @@ namespace EMR
             if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
             if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
             if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
-
+            
             ena = new Ena(DataHelpers.varDocId);
 
             loadDataToControls(ena);
@@ -39,11 +40,8 @@ namespace EMR
         public void loadDataToControls(Ena ena)
         {
             //Triage Date Time
-            if(ena.triage_time != null)
-            {
-                dpk_triage_time.SelectedDate = DateTime.Parse(ena.triage_time);
-                tpk_triage_time.SelectedTime = TimeSpan.Parse(DateTime.Parse(ena.triage_time).ToString("HH:mm:ss"));
-            }
+            if (ena.triage_time != null)
+            { dtpk_triage_time.SelectedDate = DateTime.Parse(ena.triage_time); }
 
             //Triage Area #
             txt_triage_area.Value = ena.triage_area;
@@ -52,27 +50,17 @@ namespace EMR
             txt_chief_complaint.Value = ena.chief_complaint;
 
             //
+
             if (ena.triage_code != null)
             {
-                switch (int.Parse(ena.triage_code))
-                {
-                    case 1:
-                        rad_triage_code1.Checked = true;
-                        break;
-                    case 2:
-                        rad_triage_code2.Checked = true;
-                        break;
-                    case 3:
-                        rad_triage_code3.Checked = true;
-                        break;
-                    case 4:
-                        rad_triage_code4.Checked = true;
-                        break;
-                }
+                ((HtmlInputRadioButton)FindControl("rad_triage_code_" + ena.triage_code)).Checked = true;
             }
 
             #region Mode of arrival
-            ((HtmlInputRadioButton)FindControl("rad_arrival_mode_code_" + ena.arrival_mode_code)).Checked = true;
+            if(ena.arrival_mode_code != null)
+            {
+                ((HtmlInputRadioButton)FindControl("rad_arrival_mode_code_" + ena.arrival_mode_code)).Checked = true;
+            }
             #endregion
 
             ////Past Medical History
@@ -95,7 +83,7 @@ namespace EMR
             //
             foreach (DataRow row in WebHelpers.GetJSONToDataTable(ena.loc_avpu).Rows)
             {
-                   ((System.Web.UI.HtmlControls.HtmlInputCheckBox)FindControl("cb_loc_avpu_" + row.Field<dynamic>("cde").ToLower())).Checked = true;
+                ((System.Web.UI.HtmlControls.HtmlInputCheckBox)FindControl("cb_loc_avpu_" + row.Field<dynamic>("cde").ToLower())).Checked = true;
             }
 
             //Pain assess
@@ -113,7 +101,7 @@ namespace EMR
 
             //
             #region skin integrity
-            foreach(DataRow row in WebHelpers.GetJSONToDataTable(ena.skin_integrity).Rows)
+            foreach (DataRow row in WebHelpers.GetJSONToDataTable(ena.skin_integrity).Rows)
             {
                 ((System.Web.UI.HtmlControls.HtmlInputCheckBox)FindControl("cb_skin_integrity_" + row.Field<dynamic>("cde").ToLower())).Checked = true;
             }
@@ -133,6 +121,57 @@ namespace EMR
             }
             #endregion
 
+            #region Disposition after discharge
+            try
+            {
+                ((HtmlInputCheckBox)FindControl("rad_dis_after_discharge_code_" + ena.dis_after_discharge_code.ToLower())).Checked = true;
+            }
+            catch { }
+
+            txt_caregiver_after_discharge.Value = ena.caregiver_after_discharge;
+            #endregion
+
+            #region Language Barriers:
+            txt_btc_language_note.Value = ena.btc_language_note;
+            if(ena.btc_language != null)
+            {
+                rad_btc_language2.Checked = bool.Parse(ena.btc_language);
+            }
+            #endregion
+
+            #region Cognitive Barriers
+            txt_btc_cognitive_note.Value = ena.btc_cognitive_note;
+            if (ena.btc_cognitive != null)
+            {
+                rad_btc_cognitive2.Checked = bool.Parse(ena.btc_cognitive);
+            }
+            #endregion
+
+            #region Sensory Barriers
+            txt_btc_sensory_note.Value = ena.btc_sensory_note;
+            if (ena.btc_sensory != null)
+            {
+                rad_btc_sensory2.Checked = bool.Parse(ena.btc_sensory);
+            }
+            #endregion
+
+            #region Religious Barriers
+            txt_btc_religious_note.Value = ena.btc_religious_note;
+            if (ena.btc_religious != null)
+            {
+                rad_btc_religious2.Checked = bool.Parse(ena.btc_religious);
+            }
+            #endregion
+
+            #region Cultural Barriers
+            txt_btc_cultural_note.Value = ena.btc_cultural_note;
+            if (ena.btc_cultural != null)
+            {
+                rad_btc_cultural2.Checked = bool.Parse(ena.btc_cultural);
+            }
+
+            #endregion
+
             #region General appearance
             foreach (DataRow row in WebHelpers.GetJSONToDataTable(ena.general_appearance).Rows)
             {
@@ -140,10 +179,12 @@ namespace EMR
             }
             #endregion
 
+            #region neuro
             txt_eye.Value = ena.eye;
             txt_voice.Value = ena.voice;
             txt_motion.Value = ena.motion;
-
+            #endregion
+            
             //
             cb_alert.Checked = bool.Parse(ena.alert);
             cb_coma.Checked = bool.Parse(ena.coma);
@@ -179,309 +220,120 @@ namespace EMR
 
             #region Intervention Procedure
 
-            if(ena.blood_glucose_date_time != null)
+            if (ena.blood_glucose_date_time != null)
             {
-                dpk_blood_glucose_date_time.SelectedDate = DateTime.Parse(ena.blood_glucose_date_time);
-                tpk_blood_glucose_date_time.SelectedTime = TimeSpan.Parse(DateTime.Parse(ena.blood_glucose_date_time).ToString("HH:mm:ss"));
+                dtpk_blood_glucose_date_time.SelectedDate = DateTime.Parse(ena.blood_glucose_date_time);
             }
             txt_blood_glucose_note.Value = ena.blood_glucose_note;
 
-            if(ena.ecg_date_time != null)
+            if (ena.ecg_date_time != null)
             {
-                dpk_ecg_date_time.SelectedDate = DateTime.Parse(ena.ecg_date_time);
-                tpk_ecg_date_time.SelectedTime = TimeSpan.Parse(DateTime.Parse(ena.ecg_date_time).ToString("HH:mm:ss"));
+                dtpk_ecg_date_time.SelectedDate = DateTime.Parse(ena.ecg_date_time);
+                
             }
             txt_ecg_note.Value = ena.ecg_note;
 
-            if(ena.urine_cath_date_time != null)
+            if (ena.urine_cath_date_time != null)
             {
-                dpk_urine_cath_date_time.SelectedDate = DateTime.Parse(ena.urine_cath_date_time);
-                tpk_urine_cath_date_time.SelectedTime = TimeSpan.Parse(DateTime.Parse(ena.urine_cath_date_time).ToString("HH:mm:ss"));
+                dtpk_urine_cath_date_time.SelectedDate = DateTime.Parse(ena.urine_cath_date_time);
             }
             txt_urine_cath_note.Value = ena.urine_cath_note;
 
             if (ena.splint_cast_dressing_date_time != null)
             {
-                dpk_splint_cast_dressing_date_time.SelectedDate = DateTime.Parse(ena.splint_cast_dressing_date_time);
-                tpk_splint_cast_dressing_date_time.SelectedTime = TimeSpan.Parse(DateTime.Parse(ena.splint_cast_dressing_date_time).ToString("HH:mm:ss"));
+                dtpk_splint_cast_dressing_date_time.SelectedDate = DateTime.Parse(ena.splint_cast_dressing_date_time);
             }
             txt_splint_cast_dressing_note.Value = ena.splint_cast_dressing_note;
 
             if (ena.procedure_other_date_time != null)
             {
-                dpk_procedure_other_date_time.SelectedDate = DateTime.Parse(ena.procedure_other_date_time);
-                tpk_procedure_other_date_time.SelectedTime = TimeSpan.Parse(DateTime.Parse(ena.procedure_other_date_time).ToString("HH:mm:ss"));
+                dtpk_procedure_other_date_time.SelectedDate = DateTime.Parse(ena.procedure_other_date_time);
             }
             txt_procedure_other_note.Value = ena.procedure_other_note;
 
             #endregion
 
-            #region assessment_system
-
-            ViewState["AssessmentSystem"] = WebHelpers.GetJSONToDataTable(ena.assessment_system);
-            _BindAssessmentSystem();
-
-            #endregion
-
-            //Disposition after discharge
-            if (ena.dis_after_discharge_code == "H")
-            {
-                rad_cde_after_discharge1.Checked = true;
-            }
-            else if (ena.dis_after_discharge_code == "O")
-            {
-                rad_cde_after_discharge2.Checked = true;
-            }
-
-            //People will look after patient after discharge
-            txt_caregiver_after_discharge.Value = ena.caregiver_after_discharge;
-
-            //Language Barriers:
-            txt_btc_language_note.Value = ena.btc_language_note;
-            if (bool.Parse(ena.btc_language))
-            {
-                rad_btc_language2.Checked = true;
-            }
-            else { rad_btc_language1.Checked = true; }
-
-            //Cognitive Barriers
-            txt_btc_cognitive_note.Value = ena.btc_cognitive_note;
-            if (bool.Parse(ena.btc_cognitive))
-            {
-                rad_btc_cognitive2.Checked = true;
-            }
-            else { rad_btc_cognitive1.Checked = true; }
-
-            //Sensory Barriers
-            txt_btc_sensory_note.Value = ena.btc_sensory_note;
-            if (bool.Parse(ena.btc_cognitive))
-            {
-                rad_btc_sensory2.Checked = true;
-            }
-            else { rad_btc_sensory1.Checked = true; }
-
-            //Religious Barriers
-            txt_btc_religious_note.Value = ena.btc_religious_note;
-            if (bool.Parse(ena.btc_religious))
-            {
-                rad_btc_religious2.Checked = true;
-            }
-            else { rad_btc_religious1.Checked = true; }
-
-            //Cultural Barriers
-            txt_btc_cultural_note.Value = ena.btc_cultural_note;
-            if (bool.Parse(ena.btc_cultural))
-            {
-                rad_btc_cultural2.Checked = true;
-            }
-            else { rad_btc_cultural1.Checked = true; }
 
 
-            
+            //Assessment System
 
-            //#region Direct Medication &IV fluids Order
-
-            //DataTable direct_medication = WebHelpers.GetJSONToDataTable(ena.direct_medication);
-
-            //for (int i = 0; i < direct_medication.Rows.Count; i++)
+            //DataTable assessment_system;
+            //if (ena.assessment_system != null)
             //{
-            //    row = new TableRow();
-
-            //    //Time
-            //    RadTimePicker radTime = new RadTimePicker();
-            //    radTime.SelectedTime = TimeSpan.Parse(direct_medication.Rows[i].Field<dynamic>("dir_med_time"));
-            //    radTime.Width = 110;
-            //    cell = new TableCell();
-            //    cell.Controls.Add(radTime);
-            //    row.Cells.Add(cell);
-
-            //    //IV Fluids
-            //    TextField dir_medication = (TextField)Page.LoadControl("~/UserControls/TextField.ascx");
-            //    dir_medication.Value = direct_medication.Rows[i].Field<dynamic>("dir_medication");
-            //    cell = new TableCell();
-            //    cell.Controls.Add(dir_medication);
-            //    row.Cells.Add(cell);
-
-            //    //Dose
-            //    TextField dir_med_dose = (TextField)Page.LoadControl("~/UserControls/TextField.ascx");
-            //    dir_med_dose.Value = direct_medication.Rows[i].Field<dynamic>("dir_med_dose");
-            //    cell = new TableCell();
-            //    cell.Controls.Add(dir_med_dose);
-            //    row.Cells.Add(cell);
-
-            //    //Route
-            //    TextField dir_med_route = (TextField)Page.LoadControl("~/UserControls/TextField.ascx");
-            //    dir_med_route.Value = direct_medication.Rows[i].Field<dynamic>("dir_med_route");
-            //    cell = new TableCell();
-            //    cell.Controls.Add(dir_med_route);
-            //    row.Cells.Add(cell);
-
-            //    //Rate
-            //    TextField rate = (TextField)Page.LoadControl("~/UserControls/TextField.ascx");
-            //    //bp.Value = assessment_system.Rows[i].Field<dynamic>("bp");
-            //    cell = new TableCell();
-            //    cell.Controls.Add(rate);
-            //    row.Cells.Add(cell);
-
-            //    //Doctor
-            //    TextField dir_med_doctor = (TextField)Page.LoadControl("~/UserControls/TextField.ascx");
-            //    dir_med_doctor.Value = direct_medication.Rows[i].Field<dynamic>("dir_med_doctor");
-            //    cell = new TableCell();
-            //    cell.Controls.Add(dir_med_doctor);
-            //    row.Cells.Add(cell);
-
-            //    //Commend
-            //    TextField comment = (TextField)Page.LoadControl("~/UserControls/TextField.ascx");
-            //    //gcs.Value = assessment_system.Rows[i].Field<dynamic>("gcs");
-            //    cell = new TableCell();
-            //    cell.Controls.Add(comment);
-            //    row.Cells.Add(cell);
-
-            //    //Time
-            //    TextField dir_med_time2 = (TextField)Page.LoadControl("~/UserControls/TextField.ascx");
-            //    dir_med_time2.Value = direct_medication.Rows[i].Field<dynamic>("dir_med_time2");
-            //    cell = new TableCell();
-            //    cell.Controls.Add(dir_med_time2);
-            //    row.Cells.Add(cell);
-
-            //    //RN's Initial
-            //    TextField dir_med_initial = (TextField)Page.LoadControl("~/UserControls/TextField.ascx");
-            //    dir_med_initial.Value = direct_medication.Rows[i].Field<dynamic>("dir_med_initial");
-            //    cell = new TableCell();
-            //    cell.Controls.Add(dir_med_initial);
-            //    row.Cells.Add(cell);
-
-            //    Trash trash = (Trash)Page.LoadControl("~/icons/Trash.ascx");
-            //    cell = new TableCell();
-            //    cell.Controls.Add(trash);
-            //    row.Cells.Add(cell);
-
-            //    tb_direct_medication.Rows.Add(row);
+            //    assessment_system = WebHelpers.GetJSONToDataTable(ena.assessment_system);
+            //}
+            //else
+            //{
+            //    assessment_system = WebHelpers.InitialDataTable(EMRTable.assessmentSystem);
             //}
 
-            //row = new TableRow();
-            //cell = new TableCell();
+            _BindGridView(grid_AssessmentSystem, WebHelpers.GetJSONToDataTable(ena.assessment_system));
 
-            //LinkButton linkButton = new LinkButton();
-
-            ////plusCircle = (PlusCircle)Page.LoadControl("~/icons/PlusCircle.ascx");
-            //linkButton.Text = "Add row";
-            //linkButton.CssClass = "btn btn-sm btn-outline-primary";
-            ////linkButton.Controls.Add(plusCircle);
-
-            //cell.ColumnSpan = 4;
-            //cell.Controls.Add(linkButton);
-            //row.Cells.Add(cell);
-            //tb_direct_medication.Rows.Add(row);
-
-            //#endregion
-
-            ////Discharged
-            //if (ena.discharge_date_time != null)
+            //Direct Medication
+            //DataTable direct_medication;
+            //if (ena.direct_medication != null)
             //{
-            //    dpk_discharge_date_time.SelectedDate = DateTime.Parse(ena.discharge_date_time);
-            //    //tpk_discharge_date_time.SelectedTime = TimeSpan.Parse(ena.discharge_date_time.ToString("HH:mm:ss"));
-            //    txt_discharge_by.Value = ena.discharge_by;
+            //    direct_medication = WebHelpers.GetJSONToDataTable(ena.direct_medication);
             //}
-            ////missing  Home - Against Medical Advice/AMA - Dead
-
-            ////Admited
-            //if (ena.admited_date_time != null)
+            //else
             //{
-            //    dpk_admited_date_time.SelectedDate = DateTime.Parse(ena.admited_date_time);
-            //    tpk_admited_date_time.SelectedTime = TimeSpan.Parse(ena.admited_date_time.ToString("HH:mm:ss"));
-            //    txt_admited_by.Value = ena.admited_by;
-            //    txt_receiving_unit.Value = ena.receiving_unit;
+            //    direct_medication = WebHelpers.InitialDataTable(EMRTable.directMedication);
             //}
 
-            //// Transfer to
-            //txt_transfer_to.Value = ena.transfer_to;
-            //txt_transfer_by.Value = ena.transfer_by;
+            _BindGridView(gridDirectMedication , WebHelpers.GetJSONToDataTable(ena.direct_medication));
 
-            //// Time notified to Doctor
-            //if(ena.noticed_time != null)
+            //Discharged
+            if (ena.discharge_date_time != null)
+            { dtpk_discharge_date_time.SelectedDate = DateTime.Parse(ena.discharge_date_time); }
+            txt_discharge_by.Value = ena.discharge_by;
+
+            //Admited
+            if (ena.admited_date_time != null)
+            { dtpk_admited_date_time.SelectedDate = DateTime.Parse(ena.admited_date_time); }
+            txt_admited_by.Value = ena.admited_by;
+            txt_receiving_unit.Value = ena.receiving_unit;
+
+            //Transfer to
+            txt_transfer_to.Value = ena.transfer_to;
+            txt_transfer_by.Value = ena.transfer_by;
+
+            //noticed time
+            if (ena.noticed_time != null)
+            { dtpk_noticed_time.SelectedDate = DateTime.Parse(ena.noticed_time); }
+
+            //Nursing notes
+            //DataTable nursing_note;
+            //if (ena.nursing_note != null)
             //{
-            //    dpk_noticed_time.SelectedDate = DateTime.Parse(ena.noticed_time);
-            //    //tpk_noticed_time.SelectedTime = TimeSpan.Parse(ena.noticed_time.ToString("HH:mm:ss"));
+            //    nursing_note = WebHelpers.GetJSONToDataTable(ena.nursing_note);
+            //}
+            //else
+            //{
+            //    nursing_note = WebHelpers.InitialDataTable(EMRTable.nursingNote);
             //}
 
-            //#region NURSING NOTES
-            //DataTable nursing_note = WebHelpers.GetJSONToDataTable(ena.nursing_note);
+            _BindGridView(grid_NursingNotes, WebHelpers.GetJSONToDataTable(ena.nursing_note));
 
-            //for (int i = 0; i < nursing_note.Rows.Count; i++)
-            //{
-            //    row = new TableRow();
+            btnCancel.Visible = false;
+            //amendReasonBox.Visible = false;
+            if (ena.status == DocumentStatus.FINAL)
+            {
+                btnComplete.Visible = false;
+                btnSave.Visible = false;
+                btnDelete.Visible = false;
+                btnCancel.Visible = false;
 
-            //    RadDatePicker radDate = new RadDatePicker();
-            //    RadTimePicker radTime =  new RadTimePicker();
-            //    TextField patient_condition = (TextField)Page.LoadControl("~/UserControls/TextField.ascx");
-            //    TextField signature_name = (TextField)Page.LoadControl("~/UserControls/TextField.ascx");
+                btnAmend.Visible = true;
+                btnPrint.Visible = true;
 
-            //    radDate.SelectedDate = nursing_note.Rows[i].Field<dynamic>("date_time");
-            //    radTime.SelectedTime = TimeSpan.Parse(nursing_note.Rows[i].Field<dynamic>("date_time").ToString("HH:mm:ss"));
-            //    patient_condition.Value = nursing_note.Rows[i].Field<dynamic>("patient_condition");
-            //    signature_name.Value = nursing_note.Rows[i].Field<dynamic>("signature_name");
+                DisabledControl(true);
+            }
+            else if (ena.status == DocumentStatus.DRAFT)
+            {
 
-            //    radDate.Width = 120;
-            //    radTime.Width = 110;
-
-            //    cell = new TableCell();
-            //    cell.Controls.Add(radDate);
-            //    cell.Controls.Add(radTime);
-            //    row.Cells.Add(cell);
-
-            //    cell = new TableCell();
-            //    cell.Controls.Add(patient_condition);
-            //    row.Cells.Add(cell);
-
-            //    cell = new TableCell();
-            //    cell.Controls.Add(signature_name);
-            //    row.Cells.Add(cell);
-
-            //    Trash trash = (Trash)Page.LoadControl("~/icons/Trash.ascx");
-            //    cell = new TableCell();
-            //    cell.Controls.Add(trash);
-            //    row.Cells.Add(cell);
-            //    tb_nursing_note.Rows.Add(row);
-            //}
-
-            //row = new TableRow();
-            //cell = new TableCell();
-
-            //linkButton = new LinkButton();
-
-            ////plusCircle = (PlusCircle)Page.LoadControl("~/icons/PlusCircle.ascx");
-            //linkButton.Text = "Add row";
-            //linkButton.CssClass = "btn btn-sm btn-outline-primary";
-            ////linkButton.Controls.Add(plusCircle);
-
-            //cell.ColumnSpan = 4;
-            //cell.Controls.Add(linkButton);
-            //row.Cells.Add(cell);
-            //tb_nursing_note.Rows.Add(row);
-
-            //#endregion
-
-            //btnCancel.Visible = false;
-            //    //amendReasonBox.Visible = false;
-            //    if (ena.status == DocumentStatus.FINAL)
-            //    {
-            //        btnComplete.Visible = false;
-            //        btnSave.Visible = false;
-            //        btnDelete.Visible = false;
-            //        btnCancel.Visible = false;
-
-            //        btnAmend.Visible = true;
-            //        btnPrint.Visible = true;
-
-            //        DisabledControl(true);
-            //    }
-            //    else if (ena.status == DocumentStatus.DRAFT)
-            //    {
-
-            //        btnAmend.Visible = false;
-            //        btnPrint.Visible = false;
-            //    }
+                btnAmend.Visible = false;
+                btnPrint.Visible = false;
+            }
 
         }
 
@@ -632,7 +484,7 @@ namespace EMR
             //txt_abortions.Disabled = disabled;
 
             //Direct Medication & IV fluids Order
-            
+
 
 
         }
@@ -651,34 +503,40 @@ namespace EMR
                 ena.user_name = (string)Session["UserID"];
                 ena.status = DocumentStatus.DRAFT;
 
-                if (dpk_triage_time.SelectedDate != null && tpk_triage_time.SelectedTime != null)
+                if (dtpk_triage_time.SelectedDate != null)
                 {
-                    string date = DateTime.Parse(dpk_triage_time.SelectedDate.ToString()).ToString("dd/MM/yyyy");
-                    string time = DateTime.Parse(tpk_triage_time.SelectedTime.ToString()).ToString("HH:mm:ss");
-
-                    ena.admited_date_time = DataHelpers.ConvertSQLDateTime(DateTime.Parse(date + " " + time));
+                    ena.triage_time = DataHelpers.ConvertSQLDateTime(dtpk_triage_time.SelectedDate);
                 }
 
                 ena.triage_area = txt_triage_area.Value;
 
                 ena.chief_complaint = txt_chief_complaint.Value;
 
-                if (rad_triage_code1.Checked)
+                foreach (KeyValuePair<string, string> code in DocumentCode.TriageCode)
                 {
-                    ena.triage_code = "1";
+                    if (((HtmlInputRadioButton)FindControl("rad_triage_code_" + code.Key.ToLower())).Checked)
+                    {
+                        ena.triage_code = code.Key;
+                        ena.triage_desc = code.Value;
+                    }
                 }
-                else if (rad_triage_code2.Checked)
-                {
-                    ena.triage_code = "2";
-                }
-                else if (rad_triage_code3.Checked)
-                {
-                    ena.triage_code = "3";
-                }
-                else if (rad_triage_code4.Checked)
-                {
-                    ena.triage_code = "4";
-                }
+
+                //if (rad_triage_code1.Checked)
+                //{
+                //    ena.triage_code = "1";
+                //}
+                //else if (rad_triage_code2.Checked)
+                //{
+                //    ena.triage_code = "2";
+                //}
+                //else if (rad_triage_code3.Checked)
+                //{
+                //    ena.triage_code = "3";
+                //}
+                //else if (rad_triage_code4.Checked)
+                //{
+                //    ena.triage_code = "4";
+                //}
 
                 if (rad_arrival_mode_code_WAL.Checked)
                 {
@@ -692,7 +550,7 @@ namespace EMR
                 {
                     ena.arrival_mode_code = "AMB";
                 }
-
+                
                 //
                 ////Past Medical History
                 ena.past_medical_history = txt_past_medical_history.Value;
@@ -763,160 +621,102 @@ namespace EMR
                 skin_integrity.Columns.Add("desc");
                 DataRow skin_integrity_row;
 
-                if (cb_skin_integrity_a.Checked)
+                foreach(KeyValuePair<string, string> code in DocumentCode.SkinIntegrity)
                 {
-                    skin_integrity_row = skin_integrity.NewRow();
-                    skin_integrity_row["cde"] = "A";
-                    skin_integrity_row["desc"] = "Trầy xước/Abrasion (A)";
-                    skin_integrity.Rows.Add(skin_integrity_row);
+                    if(((HtmlInputCheckBox)FindControl("cb_skin_integrity_" + code.Key.ToLower())).Checked)
+                    {
+                        skin_integrity_row = skin_integrity.NewRow();
+                        skin_integrity_row["cde"] = code.Key;
+                        skin_integrity_row["desc"] = code.Value;
+                        skin_integrity.Rows.Add(skin_integrity_row);
+                    }
                 }
-
-                if (cb_skin_integrity_b.Checked)
-                {
-                    skin_integrity_row = skin_integrity.NewRow();
-                    skin_integrity_row["cde"] = "B";
-                    skin_integrity_row["desc"] = "Bỏng/Burn (B)";
-                    skin_integrity.Rows.Add(skin_integrity_row);
-                }
-
-                if (cb_skin_integrity_b.Checked)
-                {
-                    skin_integrity_row = skin_integrity.NewRow();
-                    skin_integrity_row["cde"] = "D";
-                    skin_integrity_row["desc"] = "Biến dạng/Deformity (D)";
-                    skin_integrity.Rows.Add(skin_integrity_row);
-                }
-
-                if (cb_skin_integrity_h.Checked)
-                {
-                    skin_integrity_row = skin_integrity.NewRow();
-                    skin_integrity_row["cde"] = "D";
-                    skin_integrity_row["desc"] = "Loét/ Ulceration (U)";
-                    skin_integrity.Rows.Add(skin_integrity_row);
-                }
-
-                if (cb_skin_integrity_l.Checked)
-                {
-                    skin_integrity_row = skin_integrity.NewRow();
-                    skin_integrity_row["cde"] = "D";
-                    skin_integrity_row["desc"] = "Rách da/Laceration (L)";
-                    skin_integrity.Rows.Add(skin_integrity_row);
-                }
-
-                if (cb_skin_integrity_s.Checked)
-                {
-                    skin_integrity_row = skin_integrity.NewRow();
-                    skin_integrity_row["cde"] = "D";
-                    skin_integrity_row["desc"] = "Bong gân Sprain/ Căng cơ Strain (S)";
-                    skin_integrity.Rows.Add(skin_integrity_row);
-                }
+                ena.skin_integrity = WebHelpers.GetDataTableToJSON(skin_integrity);
 
                 #endregion
 
+
                 #region Communicable disease screening
+
                 DataTable com_dis_src = new DataTable();
                 com_dis_src.Columns.Add("cde");
                 com_dis_src.Columns.Add("desc");
                 DataRow com_dis_src_row;
 
-                if (cb_com_dis_src_f.Checked)
+                foreach (KeyValuePair<string, string> code in DocumentCode.ComDisSrc)
                 {
-                    com_dis_src_row = com_dis_src.NewRow();
-                    com_dis_src_row["cde"] = DocumentCode.ComDisSrc.F.code;
-                    com_dis_src_row["desc"] = DocumentCode.ComDisSrc.F.desc;
-                    com_dis_src.Rows.Add(com_dis_src);
+                    if (((HtmlInputCheckBox)FindControl("cb_com_dis_src_" + code.Key.ToLower())).Checked)
+                    {
+                        com_dis_src_row = com_dis_src.NewRow();
+                        com_dis_src_row["cde"] = code.Key;
+                        com_dis_src_row["desc"] = code.Value;
+                        com_dis_src.Rows.Add(com_dis_src_row);
+                    }
                 }
-                if (cb_com_dis_src_r.Checked)
-                {
-                    com_dis_src_row = com_dis_src.NewRow();
-                    com_dis_src_row["cde"] = DocumentCode.ComDisSrc.R.code;
-                    com_dis_src_row["desc"] = DocumentCode.ComDisSrc.R.desc;
-                    com_dis_src.Rows.Add(com_dis_src);
-                }
-                if (cb_com_dis_src_t.Checked)
-                {
-                    com_dis_src_row = com_dis_src.NewRow();
-                    com_dis_src_row["cde"] = DocumentCode.ComDisSrc.T.code;
-                    com_dis_src_row["desc"] = DocumentCode.ComDisSrc.T.desc;
-                    com_dis_src.Rows.Add(com_dis_src);
-                }
-                if (cb_com_dis_src_s.Checked)
-                {
-                    com_dis_src_row = com_dis_src.NewRow();
-                    com_dis_src_row["cde"] = DocumentCode.ComDisSrc.S.code;
-                    com_dis_src_row["desc"] = DocumentCode.ComDisSrc.S.desc;
-                    com_dis_src.Rows.Add(com_dis_src);
-                }
-                if (cb_com_dis_src_c.Checked)
-                {
-                    com_dis_src_row = com_dis_src.NewRow();
-                    com_dis_src_row["cde"] = DocumentCode.ComDisSrc.C.code;
-                    com_dis_src_row["desc"] = DocumentCode.ComDisSrc.C.desc;
-                    com_dis_src.Rows.Add(com_dis_src);
-                }
+                ena.com_dis_src = WebHelpers.GetDataTableToJSON(com_dis_src);
+
                 #endregion
 
                 #region Discharge Planning
+
                 DataTable discharge_plan = new DataTable();
                 discharge_plan.Columns.Add("cde");
                 discharge_plan.Columns.Add("desc");
                 DataRow discharge_plan_row;
 
-                if (cb_discharge_plan_hf.Checked)
+                foreach (KeyValuePair<string, string> code in DocumentCode.DischargePlan)
                 {
-                    discharge_plan_row = discharge_plan.NewRow();
-                    discharge_plan_row["cde"] = DocumentCode.DischargePlan.HF.code;
-                    discharge_plan_row["desc"] = DocumentCode.DischargePlan.HF.desc;
-                    discharge_plan.Rows.Add(discharge_plan_row);
+                    if (((HtmlInputCheckBox)FindControl("cb_discharge_plan_" + code.Key.ToLower())).Checked)
+                    {
+                        discharge_plan_row = discharge_plan.NewRow();
+                        discharge_plan_row["cde"] = code.Key;
+                        discharge_plan_row["desc"] = code.Value;
+                        discharge_plan.Rows.Add(discharge_plan_row);
+                    }
                 }
+                ena.discharge_plan = WebHelpers.GetDataTableToJSON(discharge_plan);
 
-                if (cb_discharge_plan_ra.Checked)
-                {
-                    discharge_plan_row = discharge_plan.NewRow();
-                    discharge_plan_row["cde"] = DocumentCode.DischargePlan.RA.code;
-                    discharge_plan_row["desc"] = DocumentCode.DischargePlan.RA.desc;
-                    discharge_plan.Rows.Add(discharge_plan_row);
-                }
+                #endregion
 
-                if (cb_discharge_plan_la.Checked)
-                {
-                    discharge_plan_row = discharge_plan.NewRow();
-                    discharge_plan_row["cde"] = DocumentCode.DischargePlan.LA.code;
-                    discharge_plan_row["desc"] = DocumentCode.DischargePlan.LA.desc;
-                    discharge_plan.Rows.Add(discharge_plan_row);
-                }
+                // Disposition after discharge
+
+                #region barrier to care
+
+                if (rad_btc_language2.Checked) { ena.btc_language = true; ena.btc_language_note = txt_btc_language_note.Value; }
+                else { ena.btc_language = false; }
+
+                if (rad_btc_cognitive2.Checked) { ena.btc_cognitive = true; ena.btc_cognitive_note = txt_btc_cognitive_note.Value; }
+                else { ena.btc_cognitive = false; }
+
+                if (rad_btc_sensory2.Checked) { ena.btc_sensory = true; ena.btc_sensory_note = txt_btc_sensory_note.Value; }
+                else { ena.btc_sensory = false; }
+
+                if (rad_btc_religious2.Checked) { ena.btc_religious = true; ena.btc_religious_note = txt_btc_religious_note.Value; }
+                else { ena.btc_religious = false; }
+
+                if (rad_btc_cultural2.Checked) { ena.btc_cultural = true; ena.btc_cultural_note = txt_btc_cultural_note.Value; }
+                else { ena.btc_cultural = false; }
 
                 #endregion
 
                 #region General Appearance
+
                 DataTable general_appearance = new DataTable();
                 general_appearance.Columns.Add("cde");
                 general_appearance.Columns.Add("desc");
                 DataRow general_appearance_row;
 
-                if (cb_general_appearance_p.Checked)
+                foreach (KeyValuePair<string, string> code in DocumentCode.GeneralAppearance)
                 {
-                    general_appearance_row = general_appearance.NewRow();
-                    general_appearance_row["cde"] = DocumentCode.GeneralAppearance.P.code;
-                    general_appearance_row["desc"] = DocumentCode.GeneralAppearance.P.desc;
-                    general_appearance.Rows.Add(general_appearance_row);
+                    if (((HtmlInputCheckBox)FindControl("cb_general_appearance_" + code.Key.ToLower())).Checked)
+                    {
+                        general_appearance_row = general_appearance.NewRow();
+                        general_appearance_row["cde"] = code.Key;
+                        general_appearance_row["desc"] = code.Value;
+                        general_appearance.Rows.Add(general_appearance_row);
+                    }
                 }
-
-                if (cb_general_appearance_t.Checked)
-                {
-                    general_appearance_row = general_appearance.NewRow();
-                    general_appearance_row["cde"] = DocumentCode.GeneralAppearance.T.code;
-                    general_appearance_row["desc"] = DocumentCode.GeneralAppearance.T.desc;
-                    general_appearance.Rows.Add(general_appearance_row);
-                }
-
-                if (cb_general_appearance_c.Checked)
-                {
-                    general_appearance_row = general_appearance.NewRow();
-                    general_appearance_row["cde"] = DocumentCode.GeneralAppearance.C.code;
-                    general_appearance_row["desc"] = DocumentCode.GeneralAppearance.C.desc;
-                    general_appearance.Rows.Add(general_appearance_row);
-                }
+                ena.general_appearance = WebHelpers.GetDataTableToJSON(general_appearance);
 
                 #endregion
 
@@ -926,67 +726,32 @@ namespace EMR
                 ena.str_others = txt_str_others.Value;
 
                 #region respiratory
+
                 DataTable respiratory = new DataTable();
                 respiratory.Columns.Add("code");
                 respiratory.Columns.Add("desc");
                 DataRow respiratory_row;
 
-                if (cb_respiratory_reg.Checked)
+                foreach (KeyValuePair<string, string> code in DocumentCode.Respiratory)
                 {
-                    respiratory_row = respiratory.NewRow();
-                    respiratory_row["code"] = DocumentCode.Respiratory.REG.code;
-                    respiratory_row["desc"] = DocumentCode.Respiratory.REG.desc;
-                    respiratory.Rows.Add(respiratory_row);
+                    if (((HtmlInputCheckBox)FindControl("cb_respiratory_" + code.Key.ToLower())).Checked)
+                    {
+                        respiratory_row = respiratory.NewRow();
+                        respiratory_row["cde"] = code.Key;
+                        respiratory_row["desc"] = code.Value;
+                        respiratory.Rows.Add(respiratory_row);
+                    }
                 }
-                if (cb_respiratory_nre.Checked)
-                {
-                    respiratory_row = respiratory.NewRow();
-                    respiratory_row["code"] = DocumentCode.Respiratory.NRE.code;
-                    respiratory_row["desc"] = DocumentCode.Respiratory.NRE.desc;
-                    respiratory.Rows.Add(respiratory_row);
-                }
-                if (cb_respiratory_tac.Checked)
-                {
-                    respiratory_row = respiratory.NewRow();
-                    respiratory_row["code"] = DocumentCode.Respiratory.TAC.code;
-                    respiratory_row["desc"] = DocumentCode.Respiratory.TAC.desc;
-                    respiratory.Rows.Add(respiratory_row);
-                }
-                if (cb_respiratory_spu.Checked)
-                {
-                    respiratory_row = respiratory.NewRow();
-                    respiratory_row["code"] = DocumentCode.Respiratory.SPU.code;
-                    respiratory_row["desc"] = DocumentCode.Respiratory.SPU.desc;
-                    respiratory.Rows.Add(respiratory_row);
-                }
-                if (cb_respiratory_cou.Checked)
-                {
-                    respiratory_row = respiratory.NewRow();
-                    respiratory_row["code"] = DocumentCode.Respiratory.COU.code;
-                    respiratory_row["desc"] = DocumentCode.Respiratory.COU.desc;
-                    respiratory.Rows.Add(respiratory_row);
-                }
-                if (cb_respiratory_sha.Checked)
-                {
-                    respiratory_row = respiratory.NewRow();
-                    respiratory_row["code"] = DocumentCode.Respiratory.SHA.code;
-                    respiratory_row["desc"] = DocumentCode.Respiratory.SHA.desc;
-                    respiratory.Rows.Add(respiratory_row);
-                }
-                if (cb_respiratory_ret.Checked)
-                {
-                    respiratory_row = respiratory.NewRow();
-                    respiratory_row["code"] = DocumentCode.Respiratory.RET.code;
-                    respiratory_row["desc"] = DocumentCode.Respiratory.RET.desc;
-                    respiratory.Rows.Add(respiratory_row);
-                }
+
                 if (cb_respiratory_oth.Checked)
                 {
                     respiratory_row = respiratory.NewRow();
-                    respiratory_row["code"] = DocumentCode.Respiratory.LAB.code;
-                    respiratory_row["desc"] = DocumentCode.Respiratory.LAB.desc;
+                    respiratory_row["cde"] = "OTH";
+                    respiratory_row["desc"] = txt_respiratory_oth.Value;
                     respiratory.Rows.Add(respiratory_row);
                 }
+                ena.respiratory = WebHelpers.GetDataTableToJSON(respiratory);
+
                 #endregion
 
                 #region rhythm
@@ -1002,6 +767,12 @@ namespace EMR
                 ena.psychosocial_str_others = txt_psychosocial_str_others.Value;
                 #endregion
 
+                #region other systems
+                ena.other_systems_normal = cb_other_systems_normal.Checked;
+                ena.other_systems_abnormal = cb_other_systems_abnormal.Checked;
+                ena.others_systems_str = txt_others_systems_str.Value;
+                #endregion
+
                 #region lmp
                 ena.lmp = cb_lmp.Checked;
                 ena.lmP_note = txt_lmP_note.Value;
@@ -1010,51 +781,69 @@ namespace EMR
                 #endregion
 
                 #region Intervention Procedure
-                if (dpk_blood_glucose_date_time.SelectedDate != null && tpk_blood_glucose_date_time.SelectedTime != null)
+                if (dtpk_blood_glucose_date_time.SelectedDate != null)
                 {
-                    string date = DateTime.Parse(dpk_blood_glucose_date_time.SelectedDate.ToString()).ToString("dd/MM/yyyy");
-                    string time = DateTime.Parse(tpk_blood_glucose_date_time.SelectedTime.ToString()).ToString("HH:mm:ss");
-                    ena.blood_glucose_date_time = DataHelpers.ConvertSQLDateTime(DateTime.Parse(date + " " + time));
+                    ena.blood_glucose_date_time = DataHelpers.ConvertSQLDateTime(dtpk_blood_glucose_date_time.SelectedDate);
                 }
                 ena.blood_glucose_note = txt_blood_glucose_note.Value;
 
-                if (dpk_ecg_date_time.SelectedDate != null && tpk_ecg_date_time.SelectedTime != null)
+                if (dtpk_ecg_date_time.SelectedDate != null)
                 {
-                    string date = DateTime.Parse(dpk_ecg_date_time.SelectedDate.ToString()).ToString("dd/MM/yyyy");
-                    string time = DateTime.Parse(tpk_ecg_date_time.SelectedTime.ToString()).ToString("HH:mm:ss");
-                    ena.ecg_date_time = DataHelpers.ConvertSQLDateTime(DateTime.Parse(date + " " + time));
+                    ena.ecg_date_time = DataHelpers.ConvertSQLDateTime(dtpk_ecg_date_time.SelectedDate);
                 }
                 ena.ecg_note = txt_ecg_note.Value;
 
-                if (dpk_urine_cath_date_time.SelectedDate != null && tpk_urine_cath_date_time.SelectedTime != null)
+                if (dtpk_urine_cath_date_time.SelectedDate != null)
                 {
-                    string date = DateTime.Parse(dpk_urine_cath_date_time.SelectedDate.ToString()).ToString("dd/MM/yyyy");
-                    string time = DateTime.Parse(tpk_urine_cath_date_time.SelectedTime.ToString()).ToString("HH:mm:ss");
-
-                    ena.urine_cath_date_time = DataHelpers.ConvertSQLDateTime(DateTime.Parse(date + " " + time));
+                    ena.urine_cath_date_time = DataHelpers.ConvertSQLDateTime(dtpk_urine_cath_date_time.SelectedDate);
                 }
                 ena.urine_cath_note = txt_urine_cath_note.Value;
 
-                if (dpk_splint_cast_dressing_date_time.SelectedDate != null && tpk_splint_cast_dressing_date_time.SelectedTime != null)
+                if (dtpk_splint_cast_dressing_date_time.SelectedDate != null)
                 {
-                    string date = DateTime.Parse(dpk_splint_cast_dressing_date_time.SelectedDate.ToString()).ToString("dd/MM/yyyy");
-                    string time = DateTime.Parse(tpk_splint_cast_dressing_date_time.SelectedTime.ToString()).ToString("HH:mm:ss");
-
-                    ena.splint_cast_dressing_date_time = DataHelpers.ConvertSQLDateTime(DateTime.Parse(date + " " + time));
+                    ena.splint_cast_dressing_date_time = DataHelpers.ConvertSQLDateTime(dtpk_splint_cast_dressing_date_time.SelectedDate);
                 }
                 ena.splint_cast_dressing_note = txt_splint_cast_dressing_note.Value;
 
-                if (dpk_procedure_other_date_time.SelectedDate != null && tpk_procedure_other_date_time.SelectedTime != null)
+                if (dtpk_procedure_other_date_time.SelectedDate != null)
                 {
-                    string date = DateTime.Parse(dpk_procedure_other_date_time.SelectedDate.ToString()).ToString("dd/MM/yyyy");
-                    string time = DateTime.Parse(tpk_triage_time.SelectedTime.ToString()).ToString("HH:mm:ss");
-
-                    ena.procedure_other_date_time = DataHelpers.ConvertSQLDateTime(DateTime.Parse(date + " " + time));
+                    ena.procedure_other_date_time = DataHelpers.ConvertSQLDateTime(dtpk_procedure_other_date_time.SelectedDate);
                 }
                 ena.procedure_other_note = txt_procedure_other_note.Value;
 
                 #endregion
 
+                // Assessment System
+                ena.assessment_system = WebHelpers.GetJSONFromTable(grid_AssessmentSystem, WebHelpers.GetJSONToDataTable(ena.assessment_system));
+
+                // Direct Medication
+                ena.direct_medication = WebHelpers.GetJSONFromTable(gridDirectMedication, WebHelpers.GetJSONToDataTable(ena.direct_medication));
+
+                // Discharged
+                ena.discharge_date_time = DataHelpers.ConvertSQLDateTime(dtpk_discharge_date_time.SelectedDate);
+                ena.discharge_by = txt_discharge_by.Value;
+
+                // Admited
+                ena.admited_date_time = DataHelpers.ConvertSQLDateTime(dtpk_admited_date_time.SelectedDate);
+                ena.admited_by = txt_admited_by.Value;
+                ena.receiving_unit = txt_receiving_unit.Value;
+
+                // transfer
+                ena.transfer_to = txt_transfer_to.Value;
+                ena.transfer_by = txt_transfer_by.Value;
+
+                //
+                ena.noticed_time = DataHelpers.ConvertSQLDateTime(dtpk_noticed_time.SelectedDate);
+
+                // nursing notes
+                ena.nursing_note = WebHelpers.GetJSONFromTable(grid_NursingNotes, WebHelpers.GetJSONToDataTable(ena.nursing_note));
+
+                if (ena.Update()[0] == "OK")
+                {
+                    Console.WriteLine("Save successful!");
+
+                    Initial();
+                }
             }
             catch (Exception ex)
             {
@@ -1081,50 +870,24 @@ namespace EMR
         {
         }
 
-        protected void btnAssessmentSystemAddRow_Click(object sender, EventArgs e)
+        //private void _BindDateTimePicker(string field, dynamic datetime)
+        //{
+
+        //    DateTime dateTime = DateTime.Parse(datetime);
+
+        //    ((RadDatePicker)FindControl("dpk_" + field)).SelectedDate = dateTime;
+        //    ((RadTimePicker)FindControl("tpk_" + field)).SelectedTime = TimeSpan.Parse(dateTime.ToString("HH:mm:ss"));
+        //}
+
+        private void _BindGridView(GridView gridView, DataTable dataSource)
         {
             try
             {
-                DataTable table = (DataTable)ViewState["AssessmentSystem"];
-                DataRow dtRow = table.NewRow();
-                
-                //for(int r = 0; r < gridAssessmentSystem.Rows.Count; r++)
-                //{
-                //    for (int i = 0; i < gridAssessmentSystem.Rows[r].Cells.Count; i++)
-                //    {
-                //        try
-                //        {
-                //            TextField text2 = gridAssessmentSystem.Rows[r].Cells[i].Controls[1] as TextField;
-                //            //dtRow[text2.DataKey] = text2.Value;
-
-                //            table.Rows[r][text2.DataKey] = text2.Value;
-                //        }
-                //        catch { }
-                //    }
-                //}
-
-                dtRow = table.NewRow();
-                table.Rows.Add(dtRow);
-
-                ViewState["AssessmentSystem"] = table;
-
-                _BindAssessmentSystem();
-
+                ViewState[gridView.ID] = dataSource;
+                gridView.DataSource = (DataTable)ViewState[gridView.ID];
+                gridView.DataBind();
             }
-            catch
-            {
-
-            }
-        }
-
-        private void _BindAssessmentSystem()
-        {
-            try
-            {
-                gridAssessmentSystem.DataSource = (DataTable)ViewState["AssessmentSystem"];
-                gridAssessmentSystem.DataBind();
-            }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
@@ -1147,7 +910,6 @@ namespace EMR
                 //}
                 //((FileUpload)gridAssessmentSystem.FooterRow.FindControl("fuService")).SaveAs(Server.MapPath("~/images/service/" + filePath));
                 //dALService.SetService(bOService);
-                _BindAssessmentSystem();
             }
             catch (Exception)
             {
@@ -1160,7 +922,7 @@ namespace EMR
             //try
             //{
             //    gridService.EditIndex = e.NewEditIndex;
-            _BindAssessmentSystem();
+            //_BindAssessmentSystem();
             //}
             //catch (Exception)
             //{
@@ -1175,7 +937,7 @@ namespace EMR
                 //string servicename = ((TextBox)gridAssessmentSystem.Rows[e.RowIndex].FindControl("txtService")).Text;
                 //string filePath = ((FileUpload)gridAssessmentSystem.Rows[e.RowIndex].FindControl("fuService")).FileName;
 
-                _BindAssessmentSystem();
+                //_BindAssessmentSystem();
             }
             catch (Exception)
             {
@@ -1185,15 +947,6 @@ namespace EMR
 
         protected void btnAdd_Click1(object sender, EventArgs e)
         {
-        }
-
-        protected void gridAssessmentSystem_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-            int index = Convert.ToInt32(e.RowIndex);
-            DataTable dt = ViewState["AssessmentSystem"] as DataTable;
-            dt.Rows[index].Delete();
-            ViewState["AssessmentSystem"] = dt;
-            _BindAssessmentSystem();
         }
 
         protected void gridAssessmentSystem_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -1224,6 +977,106 @@ namespace EMR
 
             ////Reset the edit index.
             //gridAssessmentSystem.EditIndex = -1;
+        }
+
+        protected void btnAddDirectMedication_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataTable table = (DataTable)ViewState[gridDirectMedication.ID];
+                DataRow dtRow = table.NewRow();
+
+                dtRow = table.NewRow();
+                table.Rows.Add(dtRow);
+
+                _BindGridView(gridDirectMedication, table);
+            }
+            catch(Exception ex)
+            {
+
+            }
+        }
+
+        protected void gridDirectMedication_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            DeleteGridViewRow((GridView)sender, e.RowIndex);
+        }
+
+        protected void btn_AddNursingNotes_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataTable table = (DataTable)ViewState[grid_NursingNotes.ID];
+                DataRow dtRow = table.NewRow();
+
+                dtRow = table.NewRow();
+                dtRow["date_time"] = DateTime.Now;
+                table.Rows.Add(dtRow);
+
+                _BindGridView(grid_NursingNotes, table);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        protected void grid_NursingNotes_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            DeleteGridViewRow((GridView)sender, e.RowIndex);
+        }
+
+        private void DeleteGridViewRow(GridView gridView, int rowIndex)
+        {
+            DataTable dt = ViewState[gridView.ID] as DataTable;
+            dt.Rows[rowIndex].Delete();
+
+            _BindGridView(gridView, dt);
+        }
+
+        protected void btn_AddAssessmentSystem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataTable table = (DataTable)ViewState[grid_AssessmentSystem.ID];
+                DataRow dtRow = table.NewRow();
+
+                if(grid_AssessmentSystem.Rows.Count <= 0)
+                {
+                    foreach (KeyValuePair<string, string> col in EMRTable.assessmentSystem)
+                    {
+                        table.Columns.Add(col.Key);
+                    }
+                }
+
+                for (int r = 0; r < grid_AssessmentSystem.Rows.Count; r++)
+                {
+                    for (int i = 0; i < grid_AssessmentSystem.Rows[r].Cells.Count; i++)
+                    {
+                        try
+                        {
+                            TextField text2 = grid_AssessmentSystem.Rows[r].Cells[i].Controls[1] as TextField;
+                            
+                            table.Rows[r][text2.DataKey] = text2.Value;
+                        }
+                        catch { }
+                    }
+                }
+
+                dtRow = table.NewRow();
+                table.Rows.Add(dtRow);
+
+                _BindGridView(grid_AssessmentSystem, table);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        protected void grid_AssessmentSystem_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            DeleteGridViewRow((GridView)sender, e.RowIndex);
         }
     }
 }

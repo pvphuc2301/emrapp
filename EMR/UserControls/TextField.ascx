@@ -2,9 +2,3 @@
 
 <asp:HiddenField ID="InputControl" runat="server" />
 <div spellcheck="false" style="height: auto; text-align: left; display: block;" class="form-control" id="DisplayControl"  contenteditable='true' runat="server"></div>
-
-<%--<script>
-    document.getElementById('<%= DisplayControl.ClientID %>').addEventListener('blur', function (e) {
-        document.getElementById('<%= InputControl.ClientID %>').value = this.innerHTML;
-    });
-</script>--%>

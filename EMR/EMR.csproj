@@ -154,6 +154,7 @@
     <Content Include="emr\emrview.aspx" />
     <Content Include="emr\labinfor.aspx" />
     <Content Include="ER\EmergencyMedicalAssessment.aspx" />
+    <Content Include="ER\EmerMedRec.aspx" />
     <Content Include="ER\EmerTriaAndNurAssRec.aspx" />
     <Content Include="icons\PlusCircle.ascx" />
     <Content Include="icons\Trash.ascx" />
@@ -277,6 +278,13 @@
     </Compile>
     <Compile Include="ER\EmergencyMedicalAssessment.aspx.designer.cs">
       <DependentUpon>EmergencyMedicalAssessment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ER\EmerMedRec.aspx.cs">
+      <DependentUpon>EmerMedRec.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ER\EmerMedRec.aspx.designer.cs">
+      <DependentUpon>EmerMedRec.aspx</DependentUpon>
     </Compile>
     <Compile Include="ER\EmerTriaAndNurAssRec.aspx.cs">
       <DependentUpon>EmerTriaAndNurAssRec.aspx</DependentUpon>
@@ -542,7 +550,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataEntities\" />
-    <Folder Include="ServerControls\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
@@ -567,7 +574,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

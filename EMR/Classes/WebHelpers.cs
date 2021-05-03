@@ -10,6 +10,7 @@ using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
+using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 
 namespace EMR 
@@ -35,6 +36,36 @@ namespace EMR
 
         }
 
+        public static string GetJSONFromTable(GridView gridView, DataTable table)
+        {
+            DataTable dataTable = table;
+            dataTable.Clear();
+            DataRow dataRow;
+            try
+            {
+                for (int r = 0; r < gridView.Rows.Count; r++)
+                {
+                    dataRow = dataTable.NewRow();
+
+                    for (int i = 0; i < gridView.Rows[r].Cells.Count; i++)
+                    {
+                        try
+                        {
+                            TextField text2 = gridView.Rows[r].Cells[i].Controls[1] as TextField;
+                            dataRow[text2.DataKey] = text2.Value;
+                        }
+                        catch { }
+                    }
+                    dataTable.Rows.Add(dataRow);
+                }
+                return GetDataTableToJSON(dataTable);
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+        }
+
         public static string GetDataTableToJSON(DataTable dataTable)
         {
             try { return JsonConvert.SerializeObject(dataTable); }catch(Exception ex) { return ex.Message; }
@@ -52,6 +83,18 @@ namespace EMR
             }
             return tbl;
         }
+
+        public static DataTable InitialDataTable(Dictionary<string, string> dt)
+        {
+            DataTable tbl = new DataTable();
+            foreach (KeyValuePair<string, string> col in dt)
+            {
+                tbl.Columns.Add(col.Key);
+            }
+            tbl.Rows.Add(tbl.NewRow());
+            return tbl;
+        }
+        
         /// <summary>
         /// 
         /// </summary>
