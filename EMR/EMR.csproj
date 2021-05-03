@@ -153,7 +153,6 @@
     <Content Include="emr\emrinfor.aspx" />
     <Content Include="emr\emrview.aspx" />
     <Content Include="emr\labinfor.aspx" />
-    <Content Include="ER\EmergencyMedicalAssessment.aspx" />
     <Content Include="ER\EmerMedRec.aspx" />
     <Content Include="ER\EmerTriaAndNurAssRec.aspx" />
     <Content Include="icons\PlusCircle.ascx" />
@@ -271,13 +270,6 @@
     </Compile>
     <Compile Include="emr\labinfor.aspx.designer.cs">
       <DependentUpon>labinfor.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ER\EmergencyMedicalAssessment.aspx.cs">
-      <DependentUpon>EmergencyMedicalAssessment.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ER\EmergencyMedicalAssessment.aspx.designer.cs">
-      <DependentUpon>EmergencyMedicalAssessment.aspx</DependentUpon>
     </Compile>
     <Compile Include="ER\EmerMedRec.aspx.cs">
       <DependentUpon>EmerMedRec.aspx</DependentUpon>
