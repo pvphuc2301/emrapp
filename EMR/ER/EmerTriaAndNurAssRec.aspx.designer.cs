@@ -42,40 +42,31 @@ namespace EMR
         protected global::System.Web.UI.UpdatePanel Upd;
 
         /// <summary>
-        /// AmendReasonPlaceHolder control.
+        /// dpk_triage_time control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AmendReasonPlaceHolder;
+        protected global::Telerik.Web.UI.RadDatePicker dpk_triage_time;
 
         /// <summary>
-        /// PatientInfo control.
+        /// tpk_triage_time control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.PatientInfo PatientInfo;
+        protected global::Telerik.Web.UI.RadTimePicker tpk_triage_time;
 
         /// <summary>
-        /// TextField6 control.
+        /// txt_triage_area control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField6;
-
-        /// <summary>
-        /// TextField7 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField TextField7;
+        protected global::EMR.TextField txt_triage_area;
 
         /// <summary>
         /// txt_chief_complaint control.
@@ -132,31 +123,31 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_triage_code5;
 
         /// <summary>
-        /// rad_arrival_mode_code1 control.
+        /// rad_arrival_mode_code_WAL control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_arrival_mode_code1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_arrival_mode_code_WAL;
 
         /// <summary>
-        /// rad_arrival_mode_code2 control.
+        /// rad_arrival_mode_code_WHE control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_arrival_mode_code2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_arrival_mode_code_WHE;
 
         /// <summary>
-        /// rad_arrival_mode_code3 control.
+        /// rad_arrival_mode_code_AMB control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_arrival_mode_code3;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_arrival_mode_code_AMB;
 
         /// <summary>
         /// txt_past_medical_history control.
@@ -166,6 +157,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.TextField txt_past_medical_history;
+
+        /// <summary>
+        /// txt_narrative control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_narrative;
 
         /// <summary>
         /// txt_vs_temperature control.
@@ -258,6 +258,42 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_head_circum;
 
         /// <summary>
+        /// cb_loc_avpu_a control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_loc_avpu_a;
+
+        /// <summary>
+        /// cb_loc_avpu_v control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_loc_avpu_v;
+
+        /// <summary>
+        /// cb_loc_avpu_p control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_loc_avpu_p;
+
+        /// <summary>
+        /// cb_loc_avpu_u control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_loc_avpu_u;
+
+        /// <summary>
         /// txt_pain_onset control.
         /// </summary>
         /// <remarks>
@@ -321,6 +357,60 @@ namespace EMR
         protected global::EMR.TextField txt_current_medication;
 
         /// <summary>
+        /// cb_skin_integrity_l control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_skin_integrity_l;
+
+        /// <summary>
+        /// cb_skin_integrity_a control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_skin_integrity_a;
+
+        /// <summary>
+        /// cb_skin_integrity_s control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_skin_integrity_s;
+
+        /// <summary>
+        /// cb_skin_integrity_b control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_skin_integrity_b;
+
+        /// <summary>
+        /// cb_skin_integrity_d control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_skin_integrity_d;
+
+        /// <summary>
+        /// cb_skin_integrity_h control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_skin_integrity_h;
+
+        /// <summary>
         /// cb_com_dis_src_f control.
         /// </summary>
         /// <remarks>
@@ -366,31 +456,31 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_com_dis_src_t;
 
         /// <summary>
-        /// cb_cde_la control.
+        /// cb_discharge_plan_la control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_cde_la;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_discharge_plan_la;
 
         /// <summary>
-        /// cb_cde_ra control.
+        /// cb_discharge_plan_ra control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_cde_ra;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_discharge_plan_ra;
 
         /// <summary>
-        /// cb_cde_hf control.
+        /// cb_discharge_plan_hf control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_cde_hf;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_discharge_plan_hf;
 
         /// <summary>
         /// rad_cde_after_discharge1 control.
@@ -564,31 +654,31 @@ namespace EMR
         protected global::EMR.TextField txt_btc_cultural_note;
 
         /// <summary>
-        /// cb_cde_p control.
+        /// cb_general_appearance_p control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_cde_p;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_general_appearance_p;
 
         /// <summary>
-        /// cb_cde_c control.
+        /// cb_general_appearance_c control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_cde_c;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_general_appearance_c;
 
         /// <summary>
-        /// cb_cde_t control.
+        /// cb_general_appearance_t control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_cde_t;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_general_appearance_t;
 
         /// <summary>
         /// txt_eye control.
@@ -618,22 +708,40 @@ namespace EMR
         protected global::EMR.TextField txt_motion;
 
         /// <summary>
-        /// rad_loc_avpu_a control.
+        /// cb_alert control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox rad_loc_avpu_a;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_alert;
 
         /// <summary>
-        /// txt_others control.
+        /// cb_coma control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_others;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_coma;
+
+        /// <summary>
+        /// cb_others control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_others;
+
+        /// <summary>
+        /// txt_str_others control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_str_others;
 
         /// <summary>
         /// cb_respiratory_reg control.
@@ -681,6 +789,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_respiratory_lab;
 
         /// <summary>
+        /// cb_respiratory_ret control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_respiratory_ret;
+
+        /// <summary>
         /// cb_respiratory_cou control.
         /// </summary>
         /// <remarks>
@@ -699,6 +816,51 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_respiratory_spu;
 
         /// <summary>
+        /// cb_respiratory_oth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_respiratory_oth;
+
+        /// <summary>
+        /// txt_respiratory_oth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_respiratory_oth;
+
+        /// <summary>
+        /// cb_rhythm_regular control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_rhythm_regular;
+
+        /// <summary>
+        /// cb_rhythm_inregular control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_rhythm_inregular;
+
+        /// <summary>
+        /// cb_rhythm_others control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_rhythm_others;
+
+        /// <summary>
         /// txt_rhythm_str_others control.
         /// </summary>
         /// <remarks>
@@ -708,13 +870,22 @@ namespace EMR
         protected global::EMR.TextField txt_rhythm_str_others;
 
         /// <summary>
-        /// txt_rhythm_others control.
+        /// cb_psychosocial control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_rhythm_others;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_psychosocial;
+
+        /// <summary>
+        /// cb_psychosocial_others control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_psychosocial_others;
 
         /// <summary>
         /// txt_psychosocial_str_others control.
@@ -726,6 +897,24 @@ namespace EMR
         protected global::EMR.TextField txt_psychosocial_str_others;
 
         /// <summary>
+        /// cb_other_systems_normal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_other_systems_normal;
+
+        /// <summary>
+        /// cb_other_systems_abnormal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_other_systems_abnormal;
+
+        /// <summary>
         /// txt_others_systems_str control.
         /// </summary>
         /// <remarks>
@@ -735,175 +924,211 @@ namespace EMR
         protected global::EMR.TextField txt_others_systems_str;
 
         /// <summary>
-        /// TextField8 control.
+        /// cb_lmp control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField8;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_lmp;
 
         /// <summary>
-        /// TextField9 control.
+        /// txt_lmP_note control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField9;
+        protected global::EMR.TextField txt_lmP_note;
 
         /// <summary>
-        /// TextField10 control.
+        /// txt_para control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField10;
+        protected global::EMR.TextField txt_para;
 
         /// <summary>
-        /// Table1 control.
+        /// txt_abortions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table Table1;
+        protected global::EMR.TextField txt_abortions;
 
         /// <summary>
-        /// tb_assessment_system control.
+        /// dpk_blood_glucose_date_time control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table tb_assessment_system;
+        protected global::Telerik.Web.UI.RadDatePicker dpk_blood_glucose_date_time;
 
         /// <summary>
-        /// LinkButton2 control.
+        /// tpk_blood_glucose_date_time control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton2;
+        protected global::Telerik.Web.UI.RadTimePicker tpk_blood_glucose_date_time;
 
         /// <summary>
-        /// LinkButton3 control.
+        /// txt_blood_glucose_note control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton3;
+        protected global::EMR.TextField txt_blood_glucose_note;
 
         /// <summary>
-        /// dpk_discharge_date_time control.
+        /// dpk_ecg_date_time control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dpk_discharge_date_time;
+        protected global::Telerik.Web.UI.RadDatePicker dpk_ecg_date_time;
 
         /// <summary>
-        /// tpk_discharge_date_time control.
+        /// tpk_ecg_date_time control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTimePicker tpk_discharge_date_time;
+        protected global::Telerik.Web.UI.RadTimePicker tpk_ecg_date_time;
 
         /// <summary>
-        /// txt_discharge_by control.
+        /// txt_ecg_note control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_discharge_by;
+        protected global::EMR.TextField txt_ecg_note;
 
         /// <summary>
-        /// dpk_admited_date_time control.
+        /// dpk_urine_cath_date_time control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dpk_admited_date_time;
+        protected global::Telerik.Web.UI.RadDatePicker dpk_urine_cath_date_time;
 
         /// <summary>
-        /// tpk_admited_date_time control.
+        /// tpk_urine_cath_date_time control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTimePicker tpk_admited_date_time;
+        protected global::Telerik.Web.UI.RadTimePicker tpk_urine_cath_date_time;
 
         /// <summary>
-        /// txt_admited_by control.
+        /// txt_urine_cath_note control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_admited_by;
+        protected global::EMR.TextField txt_urine_cath_note;
 
         /// <summary>
-        /// txt_receiving_unit control.
+        /// dpk_splint_cast_dressing_date_time control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_receiving_unit;
+        protected global::Telerik.Web.UI.RadDatePicker dpk_splint_cast_dressing_date_time;
 
         /// <summary>
-        /// txt_transfer_to control.
+        /// tpk_splint_cast_dressing_date_time control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_transfer_to;
+        protected global::Telerik.Web.UI.RadTimePicker tpk_splint_cast_dressing_date_time;
 
         /// <summary>
-        /// txt_transfer_by control.
+        /// txt_splint_cast_dressing_note control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_transfer_by;
+        protected global::EMR.TextField txt_splint_cast_dressing_note;
 
         /// <summary>
-        /// dpk_noticed_time control.
+        /// dpk_procedure_other_date_time control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dpk_noticed_time;
+        protected global::Telerik.Web.UI.RadDatePicker dpk_procedure_other_date_time;
 
         /// <summary>
-        /// tpk_noticed_time control.
+        /// tpk_procedure_other_date_time control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTimePicker tpk_noticed_time;
+        protected global::Telerik.Web.UI.RadTimePicker tpk_procedure_other_date_time;
 
         /// <summary>
-        /// tb_nursing_note control.
+        /// txt_procedure_other_note control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Table tb_nursing_note;
+        protected global::EMR.TextField txt_procedure_other_note;
+
+        /// <summary>
+        /// UpdatePanelService control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanelService;
+
+        /// <summary>
+        /// gridAssessmentSystem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gridAssessmentSystem;
+
+        /// <summary>
+        /// UpdateProgress1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress UpdateProgress1;
+
+        /// <summary>
+        /// btnAddAssessmentSystem control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAddAssessmentSystem;
 
         /// <summary>
         /// btnComplete control.
@@ -958,32 +1183,5 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCancel;
-
-        /// <summary>
-        /// updatePanelDeleteReason control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel updatePanelDeleteReason;
-
-        /// <summary>
-        /// TextField1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField TextField1;
-
-        /// <summary>
-        /// Div1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
     }
 }

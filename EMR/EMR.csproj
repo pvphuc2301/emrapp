@@ -176,6 +176,7 @@
     <Content Include="OPD\OutPatMedRecPed.aspx" />
     <Content Include="OPD\SumOfComOutpCase.aspx" />
     <Content Include="OPD\UsUriSysReport.aspx" />
+    <Content Include="Other\GridView.aspx" />
     <Content Include="Other\PageWidthAjax.aspx" />
     <Content Include="Other\PatientSummary.aspx" />
     <Content Include="scripts\contenteditable.min.js" />
@@ -438,6 +439,13 @@
     <Compile Include="OPD\UsUriSysReport.aspx.designer.cs">
       <DependentUpon>UsUriSysReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Other\GridView.aspx.cs">
+      <DependentUpon>GridView.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Other\GridView.aspx.designer.cs">
+      <DependentUpon>GridView.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Other\PageWidthAjax.aspx.cs">
       <DependentUpon>PageWidthAjax.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -534,6 +542,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataEntities\" />
+    <Folder Include="ServerControls\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
@@ -558,7 +567,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

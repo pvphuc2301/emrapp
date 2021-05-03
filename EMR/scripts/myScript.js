@@ -47,28 +47,33 @@ for (let i = 0; i < radiosAttr.length; i++) {
         }
 
         radiosEle[j].addEventListener('change', function () {
+            try {
 
-            document.querySelector(`[data-clear="${radiosEle[j].getAttribute('name')}"]`).style.display = "";
+                if (document.querySelector(`[data-clear="${radiosEle[j].getAttribute('name')}"]`)) {
+                    document.querySelector(`[data-clear="${radiosEle[j].getAttribute('name')}"]`).style.display = "";
+                }
 
-            let disabledFor = radiosEle[j].getAttribute('disabled-for');
+                let disabledFor = radiosEle[j].getAttribute('disabled-for');
 
-            if (disabledFor !== 'undefined' && disabledFor !== false) {
+                if (disabledFor !== 'undefined' && disabledFor !== false) {
 
-                for (let k = 0; k < radiosEle.length; k++) {
+                    for (let k = 0; k < radiosEle.length; k++) {
 
-                    let EleByClassName = document.getElementsByClassName(radiosEle[k].getAttribute('disabled-for'));
+                        let EleByClassName = document.getElementsByClassName(radiosEle[k].getAttribute('disabled-for'));
 
-                    for (let l = 0; l < EleByClassName.length; l++) {
+                        for (let l = 0; l < EleByClassName.length; l++) {
 
-                        if (EleByClassName[l].classList.contains(disabledFor)) {
-                            EleByClassName[l].style.display = "";
-                        } else {
-                            EleByClassName[l].style.display = "none";
+                            if (EleByClassName[l].classList.contains(disabledFor)) {
+                                EleByClassName[l].style.display = "";
+                            } else {
+                                EleByClassName[l].style.display = "none";
+                            }
                         }
                     }
                 }
+            } catch (ex) {
+                console.error(ex);
             }
-
         })
     }
 
@@ -104,6 +109,25 @@ cbs.forEach((cb) => {
 })
 
 function clear_radiobutton(el) {
-    document.querySelector('input[name="rad_cde_after_discharge"]:checked').checked = false;
-    el.style.display = 'none';
+    try {
+
+        let radioButton =  document.querySelector(`input[name="${el.getAttribute("data-clear")}"]:checked`);
+
+        radioButton.checked = false;
+
+
+        let disabledFor = radioButton.getAttribute('disabled-for');
+
+        if (disabledFor !== 'undefined' && disabledFor !== false && disabledFor !== null) {
+            let EleByClassName = document.getElementsByClassName(disabledFor);
+
+            for (let k = 0; k < EleByClassName.length; k++) {
+                EleByClassName[k].style.display = "none";
+            }
+        }
+
+        el.style.display = 'none';
+    } catch (ex) {
+        console.error(ex);
+    }
 }

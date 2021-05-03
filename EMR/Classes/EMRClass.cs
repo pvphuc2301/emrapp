@@ -38,16 +38,43 @@ namespace EMR
     {
         public class DischargePlan
         {
-            public static string RA = "RA";
-            public static string LA = "LA";
-            public static string HF = "HF";
+            public static class RA { public static string code = "RA"; public static string desc = "Cần trợ  giúp sinh hoạt hàng ngày/ Require assistance with daily living"; }
+            public static class LA { public static string code = "LA"; public static string desc = "Sống một mình/ Live alone"; }
+            public static class HF { public static string code = "HF"; public static string desc = "Nguy cơ ngã cao/ High falling risk"; }
         }
-
+        public class LocAVPU
+        {
+            public static class A { public static string code = "A"; public static string desc = "Tỉnh/A-Alert"; }
+            public static class P { public static string code = "P"; public static string desc = "Đau/P-Pain"; }
+            public static class U { public static string code = "U"; public static string desc = "Không đáp ứng/U- Unresponsive"; }
+            public static class V { public static string code = "V"; public static string desc = "Lời nói/V-Verbal"; }
+        }
         public class GeneralAppearance
         {
-            public static string P = "P";
-            public static string C = "C";
-            public static string T = "T";
+            public static class P { public static string code = "P"; public static string desc = "Hồng hào/ Pink"; }
+            public static class T { public static string code = "T"; public static string desc = "Tái/ Pallor"; }
+            public static class C { public static string code = "C"; public static string desc = "Tím/ Cyanosis"; }
+        }
+        public class  ComDisSrc
+        {
+            public static class F { public static string code = "F"; public static string desc = "Sốt/Fever"; }
+            public static class R { public static string code = "R"; public static string desc = "Nổi mẩn/Rash"; }
+            public static class T { public static string code = "T"; public static string desc = "Đi khỏi Việt Nam trong vòng 15 ngày gần đây/Travel outside Vietnam in recent 15 days"; }
+            public static class S { public static string code = "S"; public static string desc = "Đau họng/ Sore throat"; }
+            public static class C { public static string code = "C"; public static string desc = "Ho/Cough"; }
+        }
+
+        public class Respiratory
+        {
+            public static class REG { public static string code = "REG"; public static string desc = "Thở đều/Regular"; }
+            public static class NRE { public static string code = "NRE"; public static string desc = "Thở không đều/Regular"; }
+            public static class TAC { public static string code = "TAC"; public static string desc = "Thở nhanh/Tachypneic"; }
+            public static class COU { public static string code = "COU"; public static string desc = "Ho/Cough"; }
+            public static class SPU { public static string code = "SPU"; public static string desc = "Có đàm/Sputum"; }
+            public static class LAB { public static string code = "LAB"; public static string desc = "Thở gắng sức/Labored"; }
+            public static class SHA { public static string code = "SHA"; public static string desc = "Thở nông/Shallow"; }
+            public static class OTH { public static string code = "OTH"; }
+            public static class RET { public static string code = "RET"; public static string desc = "Co kéo/Retractions"; }
         }
     }
 

@@ -11,6 +11,7 @@ namespace EMR
 {
     public partial class TextField : System.Web.UI.UserControl
     {
+        
         public string Value
         {
             get
@@ -23,6 +24,37 @@ namespace EMR
                 DisplayControl.InnerHtml = value;
             }
         }
+        public string Title
+        {
+            get
+            {
+                return DisplayControl.Attributes["title"];
+            }
+            set
+            {
+                DisplayControl.Attributes["title"] = value;
+            }
+        }
+        public string ID
+        {
+            get
+            {
+                return InputControl.ID;
+            }
+        }
+
+        public string DataKey
+        {
+            get
+            {
+                return DisplayControl.Attributes["data-key"];
+            }
+            set
+            {
+                DisplayControl.Attributes["data-key"] = value;
+            }
+        }
+
         /// <summary>
         /// false -> edit
         /// true -> not edit
@@ -41,6 +73,8 @@ namespace EMR
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            DisplayControl.InnerHtml = InputControl.Value;
+            DisplayControl.Attributes.Add("onblur", string.Format("changeValue('{0}', '{1}')", DisplayControl.ClientID, InputControl.ClientID));
         }
     }
 }

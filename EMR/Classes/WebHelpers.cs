@@ -34,6 +34,12 @@ namespace EMR
             }
 
         }
+
+        public static string GetDataTableToJSON(DataTable dataTable)
+        {
+            try { return JsonConvert.SerializeObject(dataTable); }catch(Exception ex) { return ex.Message; }
+        }
+
         public static DataTable GetDataTable(string api_direction, string para)
         {
             DataTable tbl = new DataTable();
