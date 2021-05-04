@@ -115,6 +115,9 @@
                                                 <div class="custom-control custom-radio">
                                                     <input type="radio" id="rad_triage_code_5" runat="server" name="rad_triage_code" class="custom-control-input" />
                                                     <label class="custom-control-label" for="rad_triage_code_5">Không cấp cứu/ <span class="text-primary">Non-Urgent</span></label>
+                                                    <a href="javascript:void(0)" style="display: none;" data-clear="rad_triage_code" onclick="clear_radiobutton(this)">
+                                                        <icon:xsquare runat="server" ID="XSquare" />
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -247,6 +250,9 @@
                                                 <div class="custom-control custom-radio mb-1">
                                                     <input disabled-for="par" type="radio" id="rad_par2" name="rad_par" class="custom-control-input" />
                                                     <label class="custom-control-label" for="rad_par2">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
+                                                    <a href="javascript:void(0)" style="display: none;" data-clear="rad_par" onclick="clear_radiobutton(this)">
+                                                        <icon:xsquare runat="server" ID="XSquare1" />
+                                                    </a>
                                                 </div>
                                                 <div class="form-group par">
                                                     <Input:TextField runat="server" />
@@ -313,6 +319,9 @@
                                                 <div class="custom-control custom-radio">
                                                     <input disabled-for="specialist_opinion_field" type="radio" id="rad_specialist_opinion2" name="rad_specialist_opinion" class="custom-control-input" />
                                                     <label class="custom-control-label" for="rad_specialist_opinion2">Có/ <span class="text-primary">Yes</span></label>
+                                                    <a href="javascript:void(0)" style="display: none;" data-clear="rad_specialist_opinion" onclick="clear_radiobutton(this)">
+                                                        <icon:xsquare runat="server" ID="XSquare2" />
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -325,7 +334,7 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                         
                                         <div class="row specialist_opinion_field">
                                             <div class="col-sm-6 col-md-6 col-lg-6 mb-2 d-lg-flex">
                                                 <div class="w-sm-7">
@@ -407,6 +416,9 @@
                                                 <div class="custom-control custom-radio">
                                                     <input disabled-for="discharge_field" type="radio" id="rad_discharge2" name="rad_discharge" class="custom-control-input" />
                                                     <label class="custom-control-label" for="rad_discharge2">Có/ <span class="text-primary">Yes</span></label>
+                                                    <a href="javascript:void(0)" style="display: none;" data-clear="rad_discharge" onclick="clear_radiobutton(this)">
+                                                        <icon:xsquare runat="server" ID="XSquare3" />
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -454,6 +466,9 @@
                                                 <div class="custom-control custom-radio mb-2">
                                                     <input disabled-for="referred_opd_field" type="radio" id="rad_referred_opd2" name="rad_referred_opd" class="custom-control-input" />
                                                     <label class="custom-control-label" for="rad_referred_opd2">Có, Giải thích/ <span class="text-primary">Yes, Explain</span></label>
+                                                    <a href="javascript:void(0)" style="display: none;" data-clear="rad_referred_opd" onclick="clear_radiobutton(this)">
+                                                        <icon:xsquare runat="server" ID="XSquare4" />
+                                                    </a>
                                                 </div>
                                                 <div class="form-group referred_opd_field">
                                                     <Input:TextField runat="server" />
@@ -476,6 +491,9 @@
                                                     <div class="custom-control custom-radio mb-2">
                                                         <input disabled-for="hos_req_field" type="radio" id="rad_hos_req2" name="rad_hos_req" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_hos_req2">Có, Giải thích/ <span class="text-primary">Yes, Explain</span></label>
+                                                        <a href="javascript:void(0)" style="display: none;" data-clear="rad_hos_req" onclick="clear_radiobutton(this)">
+                                                            <icon:xsquare runat="server" ID="XSquare5" />
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -529,6 +547,9 @@
                                                     <div class="custom-control custom-radio mb-2">
                                                         <input disabled-for="emr_sur_field" type="radio" id="rad_emr_sur2" name="rad_emr_sur" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_emr_sur2">Có, Giải thích/ <span class="text-primary">Yes, Explain</span></label>
+                                                        <a href="javascript:void(0)" style="display: none;" data-clear="rad_emr_sur" onclick="clear_radiobutton(this)">
+                                                            <icon:xsquare runat="server" ID="XSquare6" />
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -578,6 +599,9 @@
                                                     <div class="custom-control custom-radio mb-2">
                                                         <input disabled-for="transfer_hos_field" type="radio" id="rad_transfer_hos2" name="rad_transfer_hos" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_transfer_hos2">Có, Giải thích/ <span class="text-primary">Yes, Explain</span></label>
+                                                        <a href="javascript:void(0)" style="display: none;" data-clear="rad_transfer_hos" onclick="clear_radiobutton(this)">
+                                                            <icon:xsquare runat="server" ID="XSquare7" />
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
