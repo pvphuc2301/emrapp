@@ -42,6 +42,33 @@ namespace EMR
         protected global::System.Web.UI.UpdatePanel Upd;
 
         /// <summary>
+        /// amendReasonBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl amendReasonBox;
+
+        /// <summary>
+        /// txtAmendReason control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txtAmendReason;
+
+        /// <summary>
+        /// lblAmendReasonError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblAmendReasonError;
+
+        /// <summary>
         /// PatientInfo control.
         /// </summary>
         /// <remarks>
@@ -123,6 +150,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_triage_code_5;
 
         /// <summary>
+        /// XSquare1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare1;
+
+        /// <summary>
         /// rad_arrival_mode_code_WAL control.
         /// </summary>
         /// <remarks>
@@ -148,6 +184,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_arrival_mode_code_AMB;
+
+        /// <summary>
+        /// XSquare2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare2;
 
         /// <summary>
         /// txt_past_medical_history control.
@@ -1077,13 +1122,13 @@ namespace EMR
         protected global::System.Web.UI.UpdateProgress updateProgress_AssessmentSystem;
 
         /// <summary>
-        /// btn_AddAssessmentSystem control.
+        /// btn_grid_AssessmentSystem_add control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_AddAssessmentSystem;
+        protected global::System.Web.UI.WebControls.Button btn_grid_AssessmentSystem_add;
 
         /// <summary>
         /// UpdatePanelDirectMedication control.
@@ -1113,13 +1158,13 @@ namespace EMR
         protected global::System.Web.UI.UpdateProgress UpdateProgressDirectMedication;
 
         /// <summary>
-        /// btnAddDirectMedication control.
+        /// btn_gridDirectMedication_add control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAddDirectMedication;
+        protected global::System.Web.UI.WebControls.Button btn_gridDirectMedication_add;
 
         /// <summary>
         /// dtpk_discharge_date_time control.
@@ -1137,16 +1182,34 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_discharge_by;
+        protected global::EMR.TextField txt_discharge_by;
 
         /// <summary>
-        /// cb_ control.
+        /// cb_discharge_option_h control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_discharge_option_h;
+
+        /// <summary>
+        /// cb_discharge_option_a control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_discharge_option_a;
+
+        /// <summary>
+        /// cb_discharge_option_d control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_discharge_option_d;
 
         /// <summary>
         /// dtpk_admited_date_time control.
@@ -1164,7 +1227,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_admited_by;
+        protected global::EMR.TextField txt_admited_by;
 
         /// <summary>
         /// txt_receiving_unit control.
@@ -1173,7 +1236,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_receiving_unit;
+        protected global::EMR.TextField txt_receiving_unit;
 
         /// <summary>
         /// txt_transfer_to control.
@@ -1182,7 +1245,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_transfer_to;
+        protected global::EMR.TextField txt_transfer_to;
 
         /// <summary>
         /// txt_transfer_by control.
@@ -1191,7 +1254,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_transfer_by;
+        protected global::EMR.TextField txt_transfer_by;
 
         /// <summary>
         /// dtpk_noticed_time control.
@@ -1230,13 +1293,13 @@ namespace EMR
         protected global::System.Web.UI.UpdateProgress updateProgress_NursingNotes;
 
         /// <summary>
-        /// btn_AddNursingNotes control.
+        /// btn_grid_NursingNotes_add control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_AddNursingNotes;
+        protected global::System.Web.UI.WebControls.Button btn_grid_NursingNotes_add;
 
         /// <summary>
         /// btnComplete control.

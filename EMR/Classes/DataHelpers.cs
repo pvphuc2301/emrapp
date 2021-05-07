@@ -24,12 +24,7 @@ namespace EMR
             try
             {
                 return ((DateTime)_datetime).ToString("yyyy-MM-ddTHH:mm:ss");
-            } catch (Exception ex) { return ""; }
-
-            //DateTime dateTime = (DateTime)_datetime;
-            //var utc = datetime.ToUniversalTime();
-            //var localRendered = datetime.ToString("o");
-            //return utc.ToString("o").PadRight(localRendered.Length, ' ');
+            } catch (Exception ex) { return null; }
         }
 
         public static string FormatPhysicalExamination(string value)

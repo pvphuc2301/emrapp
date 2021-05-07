@@ -24,6 +24,14 @@ namespace EMR
                 DisplayControl.InnerHtml = value;
             }
         }
+        public string Width
+        {
+            get { return Width; }
+            set
+            {
+                DisplayControl.Style.Add("width", value);
+            }
+        }
         public string Title
         {
             get
@@ -55,10 +63,6 @@ namespace EMR
             }
         }
 
-        /// <summary>
-        /// false -> edit
-        /// true -> not edit
-        /// </summary>
         public bool Disabled {
             get
             {
@@ -75,6 +79,7 @@ namespace EMR
         {
             DisplayControl.InnerHtml = InputControl.Value;
             DisplayControl.Attributes.Add("onblur", string.Format("changeValue('{0}', '{1}')", DisplayControl.ClientID, InputControl.ClientID));
+
         }
     }
 }

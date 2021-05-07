@@ -15,6 +15,33 @@ namespace EMR
     {
 
         /// <summary>
+        /// form2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlForm form2;
+
+        /// <summary>
+        /// RadScriptManager2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadScriptManager RadScriptManager2;
+
+        /// <summary>
+        /// Upd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel Upd;
+
+        /// <summary>
         /// lblUserName control.
         /// </summary>
         /// <remarks>
@@ -33,13 +60,13 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlAnchor btnLogout;
 
         /// <summary>
-        /// form1 control.
+        /// updatePanel_demographicSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.UpdatePanel updatePanel_demographicSearch;
 
         /// <summary>
         /// txt_pid control.
@@ -60,15 +87,6 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Button btnSearch;
 
         /// <summary>
-        /// upd control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upd;
-
-        /// <summary>
         /// RadGrid5 control.
         /// </summary>
         /// <remarks>
@@ -78,39 +96,12 @@ namespace EMR
         protected global::Telerik.Web.UI.RadGrid RadGrid5;
 
         /// <summary>
-        /// RadGrid1 control.
+        /// updateProgress_demographicSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid RadGrid1;
-
-        /// <summary>
-        /// RadGrid2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid RadGrid2;
-
-        /// <summary>
-        /// RadGrid3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid RadGrid3;
-
-        /// <summary>
-        /// RadGrid4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid RadGrid4;
+        protected global::System.Web.UI.UpdateProgress updateProgress_demographicSearch;
     }
 }

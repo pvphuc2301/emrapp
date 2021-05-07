@@ -156,15 +156,19 @@ input[type="date"], input[type="datetime-local"], input[type="month"], input[typ
     padding-bottom: 0 !important;
 }
 
+table {
+    border: none;
+}
+
 table thead th {
     color: #495057 !important;
     background-color: #e9ecef !important;
-    border-color: #dee2e6 !important;
+    /*border-color: #dee2e6 !important;
     border-style: solid !important;
     border-top-width: 1px !important;
     border-left-width: 0 !important;
     border-right-width: 0 !important;
-    border-bottom-width: 2px !important;
+    border-bottom-width: 2px !important;*/
 }
 
 .shadow {
@@ -290,7 +294,7 @@ div[contenteditable="false"] {
     left: 20px; /* changed */
 }
 
-.tb-responsive {
+/*.tb-responsive {
     border: 1px solid #ccc;
     border-collapse: collapse;
     margin: 0;
@@ -337,10 +341,7 @@ div[contenteditable="false"] {
             }
 
                 .tb-responsive > tbody > tr > td::before {
-                    /*
-    * aria-label has no advantage, it won't be read inside a table
-    content: attr(aria-label);
-    */
+                    
                     content: attr(data-label);
                     float: left;
                 }
@@ -348,4 +349,4 @@ div[contenteditable="false"] {
                 .tb-responsive > tbody > tr > td:last-child {
                     border-bottom: 0;
                 }
-}
+}*/

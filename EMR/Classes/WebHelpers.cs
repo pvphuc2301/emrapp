@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -38,32 +39,69 @@ namespace EMR
 
         public static string GetJSONFromTable(GridView gridView, DataTable table)
         {
-            DataTable dataTable = table;
-            dataTable.Clear();
-            DataRow dataRow;
+            DataRow row;
             try
             {
                 for (int r = 0; r < gridView.Rows.Count; r++)
                 {
-                    dataRow = dataTable.NewRow();
-
+                    row = table.NewRow();
+                    row["id"] = (r + 1);
                     for (int i = 0; i < gridView.Rows[r].Cells.Count; i++)
                     {
                         try
                         {
-                            TextField text2 = gridView.Rows[r].Cells[i].Controls[1] as TextField;
-                            dataRow[text2.DataKey] = text2.Value;
+                            if (gridView.Rows[r].Cells[i].Controls[1] is TextField)
+                            {
+                                TextField text2 = gridView.Rows[r].Cells[i].Controls[1] as TextField;
+                                row[text2.DataKey] = text2.Value;
+                            }
+                            else if (gridView.Rows[r].Cells[i].Controls[1] is RadTimePicker)
+                            {
+                                RadTimePicker text2 = gridView.Rows[r].Cells[i].Controls[1] as RadTimePicker;
+                                row[text2.ID] = DateTime.Parse(text2.SelectedTime.ToString()).ToString("HH:mm");
+                            }
+                            else if (gridView.Rows[r].Cells[i].Controls[1] is RadDateTimePicker)
+                            {
+                                RadDateTimePicker text2 = gridView.Rows[r].Cells[i].Controls[1] as RadDateTimePicker;
+                                row[text2.ID] = DataHelpers.ConvertSQLDateTime(DateTime.Parse(text2.SelectedDate.ToString()));
+                            }
                         }
-                        catch { }
+                        catch (Exception ex) { }
                     }
-                    dataTable.Rows.Add(dataRow);
+
+                    table.Rows.Add(row);
                 }
-                return GetDataTableToJSON(dataTable);
-            }
-            catch(Exception ex)
-            {
-                return null;
-            }
+            } catch (Exception ex) { }
+
+            return GetDataTableToJSON(table);
+
+            ////
+            //DataTable dataTable = table;
+            //dataTable.Clear();
+            //DataRow dataRow;
+            //try
+            //{
+            //    for (int r = 0; r < gridView.Rows.Count; r++)
+            //    {
+            //        dataRow = dataTable.NewRow();
+
+            //        for (int i = 0; i < gridView.Rows[r].Cells.Count; i++)
+            //        {
+            //            try
+            //            {
+            //                TextField text2 = gridView.Rows[r].Cells[i].Controls[1] as TextField;
+            //                dataRow[text2.DataKey] = text2.Value;
+            //            }
+            //            catch { }
+            //        }
+            //        dataTable.Rows.Add(dataRow);
+            //    }
+            //    return GetDataTableToJSON(dataTable);
+            //}
+            //catch(Exception ex)
+            //{
+            //    return null;
+            //}
         }
 
         public static string GetDataTableToJSON(DataTable dataTable)
@@ -94,7 +132,23 @@ namespace EMR
             tbl.Rows.Add(tbl.NewRow());
             return tbl;
         }
-        
+        public static Bitmap ConvertBase64ToImage(string ImageStr)
+        {
+            try
+            {
+                System.Text.StringBuilder sbText = new System.Text.StringBuilder(ImageStr, ImageStr.Length);
+                sbText = sbText.Replace("\r\n", String.Empty); sbText.Replace(" ", String.Empty);
+
+                Byte[] bitmapData = Convert.FromBase64String(sbText.ToString());
+                System.IO.MemoryStream streamBitmap = new System.IO.MemoryStream(bitmapData);
+                Bitmap bitImage = new Bitmap((Bitmap)System.Drawing.Image.FromStream(streamBitmap));
+                return bitImage;
+            }catch(Exception ex)
+            {
+                return null;
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -110,41 +164,41 @@ namespace EMR
         /// </param>
         public static void DisabledControl(HtmlForm form, bool disabled)
         {
-            int i = 0;
-            foreach (Control c in form.Controls)
-            {
-                i++;
-                if(i >= 73)
-                {
-                    string name = c.GetType().Name;
-                }
-                if (c.GetType().Name == ControlType.HtmlInputText)
-                {
-                    if (((HtmlInputText)c).Attributes["class"].Contains("contenteditable"))
-                    {
-                        if (disabled)
-                        {
-                            ((HtmlInputText)c).Attributes["data-status"] = ControlStatus.View;
-                        }
-                        else
-                        {
-                            ((HtmlInputText)c).Attributes["data-status"] = ControlStatus.Edit;
-                        }
-                    }
-                    else
-                    {
-                        ((HtmlInputText)c).Disabled = disabled;
-                    }
-                }
-                else if (c.GetType().Name == ControlType.HtmlInputRadioButton)
-                {
-                    ((HtmlInputRadioButton)c).Disabled = disabled;
-                }
-                else if (c.GetType().Name == ControlType.RadDatePicker || c.GetType().Name == ControlType.RadTimePicker)
-                {
-                    ((RadDatePicker)c).Enabled = !disabled;
-                }
-            }
+            //int i = 0;
+            //foreach (Control c in form.Controls)
+            //{
+            //    i++;
+            //    if(i >= 73)
+            //    {
+            //        string name = c.GetType().Name;
+            //    }
+            //    if (c.GetType().Name == ControlType.HtmlInputText)
+            //    {
+            //        if (((HtmlInputText)c).Attributes["class"].Contains("contenteditable"))
+            //        {
+            //            if (disabled)
+            //            {
+            //                ((HtmlInputText)c).Attributes["data-status"] = ControlStatus.View;
+            //            }
+            //            else
+            //            {
+            //                ((HtmlInputText)c).Attributes["data-status"] = ControlStatus.Edit;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            ((HtmlInputText)c).Disabled = disabled;
+            //        }
+            //    }
+            //    else if (c.GetType().Name == ControlType.HtmlInputRadioButton)
+            //    {
+            //        ((HtmlInputRadioButton)c).Disabled = disabled;
+            //    }
+            //    else if (c.GetType().Name == ControlType.RadDatePicker || c.GetType().Name == ControlType.RadTimePicker)
+            //    {
+            //        ((RadDatePicker)c).Enabled = !disabled;
+            //    }
+            //}
         }
 
         public static void BindingDatafield(DataTable tbl, object obj)
@@ -169,7 +223,6 @@ namespace EMR
             // return obj;
 
         }
-
         public static void CopyProperties(object source, object destination)
         {
             foreach (PropertyInfo prop in destination.GetType().GetProperties())
@@ -334,6 +387,60 @@ namespace EMR
             {
                 return ex.Status.ToString();
             }
+        }
+
+        public static void DisabledDatimePicker(RadDateTimePicker radDateTimePicker, bool disabled)
+        {
+            radDateTimePicker.DatePopupButton.Visible = !disabled;
+            radDateTimePicker.TimePopupButton.Visible = !disabled;
+            radDateTimePicker.EnableTyping = !disabled;
+        }
+        public static void DisabledGridView(GridView gridView, bool disabled)
+        {
+            try
+            {
+                for (int r = 0; r < gridView.Rows.Count; r++)
+                {
+                    for (int i = 0; i < gridView.Rows[r].Cells.Count; i++)
+                    {
+                        try
+                        {
+                            if (gridView.Rows[r].Cells[i].Controls[1] is TextField)
+                            {
+                                TextField text2 = gridView.Rows[r].Cells[i].Controls[1] as TextField;
+                                text2.Disabled = disabled;
+                            }
+                            else if (gridView.Rows[r].Cells[i].Controls[1] is RadTimePicker)
+                            {
+                                RadTimePicker text2 = gridView.Rows[r].Cells[i].Controls[1] as RadTimePicker;
+                                text2.TimePopupButton.Visible = !disabled;
+                                text2.EnableTyping = !disabled;
+                            }
+                            else if (gridView.Rows[r].Cells[i].Controls[1] is RadDateTimePicker)
+                            {
+                                RadDateTimePicker text2 = gridView.Rows[r].Cells[i].Controls[1] as RadDateTimePicker;
+                                text2.DatePopupButton.Visible = !disabled;
+                                text2.TimePopupButton.Visible = !disabled;
+                                text2.EnableTyping = !disabled;
+                            }
+                        }
+                        catch (Exception ex) { }
+                    }
+                }
+            }
+            catch (Exception ex) { }
+
+        }
+        public static void BindDateTimePicker(RadDateTimePicker radDateTimePicker, dynamic datetime)
+        {
+            try
+            {
+                if (datetime != null)
+                {
+                    radDateTimePicker.SelectedDate = DateTime.Parse(datetime);
+                }
+            }
+            catch (Exception ex) { }
         }
     }
 }

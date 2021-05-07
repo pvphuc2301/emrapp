@@ -91,7 +91,24 @@ namespace EMR
             { "SHA", "Thở nông/Shallow" },
             { "RET", "Co kéo/Retractions" },
         };
-    }
+        public static Dictionary<string, string> disAfterDischarge = new Dictionary<string, string>()
+        {
+            { "H", "Nhà riêng/ Private home" },
+            { "O", "Cơ sở y tế khác/Other healthcare facility" },
+        };
+        public static Dictionary<string, string> ArrivalMode = new Dictionary<string, string>()
+        {
+            { "WHE", "Xe lăn/Wheel chair" },
+            { "WAL", "Tự đến/Walk-in" },
+            { "AMB", "Xe cấp cứu/Ambulance" },
+        };
+        public static Dictionary<string, string> DischargeOption = new Dictionary<string, string>()
+        {
+            { "H", "Về nhà/ Home" },
+            { "A", "Tự ý/ AMA" },
+            { "D", "Tử vong/ Dead" },
+        };
+}
 
     public static class EMRTable
     {
@@ -133,66 +150,10 @@ namespace EMR
         
     }
 
-    //public class PatientInfo
-    //{
-    //    public dynamic patient_id { get; set; }
-    //    public dynamic visible_patient_id { get; set; }
-    //    public dynamic first_name_l { get; set; }
-    //    public dynamic last_name_l { get; set; }
-    //    public dynamic date_of_birth { get; set; }
-    //    public dynamic gender_l { get; set; }
-    //    public dynamic address_line_l { get; set; }
-    //    public dynamic address_subregion_l { get; set; }
-    //    public dynamic address_region_l { get; set; }
-    //    public dynamic address_country_l { get; set; }
-    //    public dynamic contact_name_l { get; set; }
-    //    public dynamic relationship_type_rcd { get; set; }
-    //    public dynamic contact_phone_number { get; set; }
-    //    public dynamic title_l { get; set; }
-
-    //    //      "patient_id": "c248e0fc-39b6-493f-a197-6cf2a96b37ad",
-    //    //"hospital_code": "AIH",
-    //    //"visible_patient_id": "900005754",
-    //    //"primary_patient_id": "c248e0fc-39b6-493f-a197-6cf2a96b37ad",
-    //    //"primary_hospital_code": "AIH",
-    //    //"primary_visible_patient_id": "900005754",
-    //    //"title_e": "Ms.",
-    //    //"title_l": "Bà",
-    //    //"first_name_e": "Patient for",
-    //    //"first_name_l": "Patient for",
-    //    //"last_name_e": "Test",
-    //    //"last_name_l": "Test",
-    //    //"date_of_birth": "2017-10-18T00:00:00",
-    //    //"gender_e": "Female",
-    //    //"gender_l": "Nữ",
-    //    //"national_id": "079187006681 ( m? )",
-    //    //"passport": null,
-    //    //"home_email": null,
-    //    //"business_email": "",
-    //    //"occupation_e": "White-collar worker",
-    //    //"occupation_l": "Nhân viên văn phòng",
-    //    //"nationality_e": "Atlantic Ocean (East)",
-    //    //"nationality_l": "Atlantic Ocean (East)",
-    //    //"religion_e": "Unknown",
-    //    //"religion_l": "Không có thông tin",
-    //    //"address_line_e": "19/1 Phan Tây Hồ,P.7",
-    //    //"address_line_l": "19/1 Phan Tây Hồ,P.7",
-    //    //"address_subregion_e": "Phu Nhuan District",
-    //    //"address_subregion_l": "Quận Phú Nhuận",
-    //    //"address_region_e": "Ho Chi Minh",
-    //    //"address_region_l": "Tp. HCM",
-    //    //"address_country_e": "Vietnam",
-    //    //"address_country_l": "Việt Nam",
-    //    //"contact_name_e": "Ms. Le Hoang Thao",
-    //    //"contact_name_l": "Bà Lê Hoàng Thảo",
-    //    //"relationship_type_rcd": "Mẹ",
-    //    //"contact_phone_number": null,
-    //    //"lu_updated": "2021-01-20T09:00:23.563"
-    //}
-
     public partial class Ena
     {
         #region Properties
+        private string api = "api/ena/";
         public dynamic document_id { get; set; }
         public dynamic triage_time { get; set; }
         public dynamic triage_area { get; set; }
@@ -273,6 +234,7 @@ namespace EMR
         public dynamic procedure_other_note { get; set; }
         public dynamic discharge_date_time { get; set; }
         public dynamic discharge_by { get; set; }
+        public dynamic discharge_option { get; set; }
         public dynamic admited_date_time { get; set; }
         public dynamic admited_by { get; set; }
         public dynamic receiving_unit { get; set; }
@@ -284,6 +246,8 @@ namespace EMR
         public dynamic nursing_note { get; set; }
         public dynamic status { get; set; }
         public dynamic user_name { get; set; }
+        public dynamic skin_anno_data { get; set; }
+        
 
         #endregion
 
@@ -291,7 +255,7 @@ namespace EMR
 
         public Ena(dynamic document_id)
         {
-            string _jsonData = WebHelpers.GetAPI("api/ena/" + document_id);
+            string _jsonData = WebHelpers.GetAPI(api + document_id);
 
             DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
 
@@ -387,6 +351,7 @@ namespace EMR
   dynamic procedure_other_note,
   dynamic discharge_date_time,
   dynamic discharge_by,
+  dynamic discharge_option,
   dynamic admited_date_time,
   dynamic admited_by,
   dynamic receiving_unit,
@@ -395,7 +360,8 @@ namespace EMR
   dynamic noticed_time,
   dynamic direct_medication,
   dynamic assessment_system,
-  dynamic nursing_note
+  dynamic nursing_note,
+  dynamic skin_anno_data
         )
         {
             this.document_id = document_id;
@@ -480,6 +446,7 @@ namespace EMR
             this.procedure_other_note = procedure_other_note;
             this.discharge_date_time = discharge_date_time;
             this.discharge_by = discharge_by;
+            this.discharge_option = discharge_option;
             this.admited_date_time = admited_date_time;
             this.admited_by = admited_by;
             this.receiving_unit = receiving_unit;
@@ -489,18 +456,19 @@ namespace EMR
             this.direct_medication = direct_medication;
             this.assessment_system = assessment_system;
             this.nursing_note = nursing_note;
+            this.skin_anno_data = skin_anno_data;
     }
 
         public string[] Update()
-        {
+        {   
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI("api/ena/edit", this);
+            string responseStatus = WebHelpers.PostAPI(api + "/edit", this);
             message[0] = responseStatus;
 
             if (responseStatus == WebHelpers.ResponseStatus.OK)
             {
-                responseStatus = WebHelpers.PostAPI("api/ena/log/" + this.document_id);
+                responseStatus = WebHelpers.PostAPI(api + "/log/" + this.document_id);
                 message[1] = responseStatus;
             }
 
@@ -510,18 +478,287 @@ namespace EMR
         public static string[] Delete(string userName)
         {
             string[] message = new string[2];
+            try
+            {
 
-            string responseStatus = WebHelpers.PostAPI("api/emr/document-del/" + userName + "/" + DataHelpers.varDocId);
+                string responseStatus = WebHelpers.PostAPI("api/emr/document-del/" + userName + "/" + DataHelpers.varDocId);
 
+                message[0] = responseStatus;
+                if (responseStatus == WebHelpers.ResponseStatus.OK)
+                {
+                    responseStatus = WebHelpers.PostAPI("api/ena/log/" + DataHelpers.varDocId);
+                    message[1] = responseStatus;
+                }
+
+                return message;
+            } catch (Exception ex)
+            {
+                message[0] = ex.Message;
+                return message;
+            }
+            
+        }
+    }
+
+    public class Oadr
+    {
+        #region properties
+        private string api = "api/oadr";
+        public dynamic document_id { get; set; }
+        public dynamic user_name { get; set; }
+        public dynamic status { get; set; }
+        public dynamic amend_reason { get; set; }
+        public dynamic admis_delivery { get; set; }
+        public dynamic obs_name { get; set; }
+        public dynamic obs_initial { get; set; }
+        public dynamic delivery_at { get; set; }
+        public dynamic apgar_score_1 { get; set; }
+        public dynamic apgar_score_5 { get; set; }
+        public dynamic apgar_score_10 { get; set; }
+        public dynamic weight_of_birth { get; set; }
+        public dynamic length_of_birth { get; set; }
+        public dynamic head_circum { get; set; }
+        public dynamic singleton_sex_code { get; set; }
+        public dynamic singleton_sex_desc { get; set; }
+        public dynamic multiple_sex { get; set; }
+        public dynamic birth_defect { get; set; }
+        public dynamic birth_defect_note { get; set; }
+        public dynamic neonatal_status { get; set; }
+        public dynamic intervention { get; set; }
+        public dynamic intervention_note { get; set; }
+        public dynamic placenta_deli { get; set; }
+        public dynamic pacental_deli_dt { get; set; }
+        public dynamic placenta_deli_mode { get; set; }
+        public dynamic placenta_weight { get; set; }
+        public dynamic umbilical_coil { get; set; }
+        public dynamic umbilical_length { get; set; }
+        public dynamic blood_loss { get; set; }
+        public dynamic p_intervention { get; set; }
+        public dynamic p_intervention_note { get; set; }
+        public dynamic spO2 { get; set; }
+        public dynamic temp { get; set; }
+        public dynamic bp { get; set; }
+        public dynamic hr { get; set; }
+        public dynamic rr { get; set; }
+        public dynamic delivery_mode_code { get; set; }
+        public dynamic delivery_mode_desc { get; set; }
+        public dynamic vaginal_deli_code { get; set; }
+        public dynamic vaginal_deli_desc { get; set; }
+        public dynamic section_code { get; set; }
+        public dynamic section_desc { get; set; }
+        public dynamic interven_reason { get; set; }
+        public dynamic pre_intact { get; set; }
+        public dynamic pre_lacera { get; set; }
+        public dynamic pre_lacera_degree { get; set; }
+        public dynamic pre_episiotomy { get; set; }
+        public dynamic pre_episiotomy_st { get; set; }
+        public dynamic cervix_intact { get; set; }
+        public dynamic preo_diagnosis { get; set; }
+        public dynamic post_diagnosis { get; set; }
+        public dynamic operations { get; set; }
+        public dynamic sur_incident { get; set; }
+        public dynamic sur_incident_note { get; set; }
+        public dynamic sur_complication { get; set; }
+        public dynamic sur_complication_note { get; set; }
+        public dynamic treatment_plan { get; set; }
+        #endregion
+
+        public static Dictionary<string, string> DELIVERY_MODE_CODE = new Dictionary<string, string>()
+        {
+            { "S", "Sanh mổ/ C-Section" },
+            { "V", "Vaginal delivery" },
+        };
+
+        public static Dictionary<string, string> SECTION_CODE = new Dictionary<string, string>()
+        {
+            { "EM", "Mổ cấp cứu/ Emergency" },
+            { "EL", "Mổ chương trình/ Elective" },
+        };
+
+        public static Dictionary<string, string> VAGINAL_DELI_CODE = new Dictionary<string, string>()
+        {
+            { "S", "Sanh tự nhiên/ Spontaneous" },
+            { "F", "Sanh kềm/ Forceps-assisted" },
+            { "V", "Sanh hút/ Vacuum-assisted" },
+        };
+
+        public static Dictionary<string, string> SEX_CODE = new Dictionary<string, string>()
+        {
+            { "F", "Nữ/ Femal" },
+            { "M", "Nam/ Male" },
+        };
+
+
+
+        public static class MULTIPLE_SEX
+        {
+            public static class F {
+                public static string code = "F";
+                public static string desc = "Nữ/ Femal";
+            }
+            public static class M
+            {
+                public static string code = "M";
+                public static string desc = "Nam/ Male";
+            }
+        };
+
+        public static class TABLE {
+            public static Dictionary<string, string> OPERATION = new Dictionary<string, string>()
+            {
+                { "id", "" },
+                { "date_time", "" },
+                { "surgical_anesthesia", "" },
+                { "surgeon", "" },
+                { "anesthesiologist", "" },
+            };
+        }
+
+        public Oadr(
+            dynamic document_id ,
+            dynamic user_name ,
+            dynamic status ,
+            dynamic amend_reason ,
+            dynamic admis_delivery ,
+            dynamic obs_name ,
+            dynamic obs_initial ,
+            dynamic delivery_at ,
+            dynamic apgar_score_1 ,
+            dynamic apgar_score_5 ,
+            dynamic apgar_score_10 ,
+            dynamic weight_of_birth,
+            dynamic length_of_birth,
+            dynamic head_circum ,
+            dynamic singleton_sex_code ,
+            dynamic singleton_sex_desc ,
+            dynamic multiple_sex ,
+            dynamic birth_defect ,
+            dynamic birth_defect_note ,
+            dynamic neonatal_status,
+            dynamic intervention ,
+            dynamic intervention_note,
+            dynamic placenta_deli ,
+            dynamic pacental_deli_dt ,
+            dynamic placenta_deli_mode  ,
+            dynamic placenta_weight,
+            dynamic umbilical_coil ,
+            dynamic umbilical_length,
+            dynamic blood_loss  ,
+            dynamic p_intervention,
+            dynamic p_intervention_note,
+            dynamic spO2  ,
+            dynamic temp  ,
+            dynamic bp  ,
+            dynamic hr  ,
+            dynamic rr  ,
+            dynamic delivery_mode_code,
+            dynamic delivery_mode_desc ,
+            dynamic vaginal_deli_code ,
+            dynamic vaginal_deli_desc ,
+            dynamic section_code  ,
+            dynamic section_desc  ,
+            dynamic interven_reason ,
+            dynamic pre_intact  ,
+            dynamic pre_lacera  ,
+            dynamic pre_lacera_degree ,
+            dynamic pre_episiotomy , 
+            dynamic pre_episiotomy_st  ,
+            dynamic cervix_intact ,
+            dynamic preo_diagnosis ,
+            dynamic post_diagnosis ,
+            dynamic operations ,
+            dynamic sur_incident ,
+            dynamic sur_incident_note ,
+            dynamic sur_complication ,
+            dynamic sur_complication_note ,
+            dynamic treatment_plan
+            )
+        {
+            this.document_id = document_id;
+            this.user_name = user_name;
+            this.status = status;
+            this.amend_reason = amend_reason;
+            this.admis_delivery = admis_delivery;
+            this.obs_name = obs_name;
+            this.obs_initial = obs_initial;
+            this.delivery_at = delivery_at;
+            this.apgar_score_1 = apgar_score_1;
+            this.apgar_score_5 = apgar_score_5;
+            this.apgar_score_10 = apgar_score_10;
+            this.weight_of_birth = weight_of_birth;
+            this.length_of_birth = length_of_birth;
+            this.head_circum = head_circum;
+            this.singleton_sex_code = singleton_sex_code;
+            this.singleton_sex_desc = singleton_sex_desc;
+            this.multiple_sex = multiple_sex;
+            this.birth_defect = birth_defect;
+            this.birth_defect_note = birth_defect_note;
+            this.neonatal_status = neonatal_status;
+            this.intervention = intervention;
+            this.intervention_note = intervention_note;
+            this.placenta_deli = placenta_deli;
+            this.pacental_deli_dt = pacental_deli_dt;
+            this.placenta_deli_mode = placenta_deli_mode;
+            this.placenta_weight = placenta_weight;
+            this.umbilical_coil = umbilical_coil;
+            this.umbilical_length = umbilical_length;
+            this.blood_loss = blood_loss;
+            this.p_intervention = p_intervention;
+            this.p_intervention_note = p_intervention_note;
+            this.spO2 = spO2;
+            this.temp = temp;
+            this.bp = bp;
+            this.hr = hr;
+            this.rr = rr;
+            this.delivery_mode_code = delivery_mode_code;
+            this.delivery_mode_desc = delivery_mode_desc;
+            this.vaginal_deli_code = vaginal_deli_code;
+            this.vaginal_deli_desc = vaginal_deli_desc;
+            this.section_code = section_code;
+            this.section_desc = section_desc;
+            this.interven_reason = interven_reason;
+            this.pre_intact = pre_intact;
+            this.pre_lacera = pre_lacera;
+            this.pre_lacera_degree = pre_lacera_degree;
+            this.pre_episiotomy = pre_episiotomy;
+            this.pre_episiotomy_st = pre_episiotomy_st;
+            this.cervix_intact = cervix_intact;
+            this.preo_diagnosis = preo_diagnosis;
+            this.post_diagnosis = post_diagnosis;
+            this.operations = operations;
+            this.sur_incident = sur_incident;
+            this.sur_incident_note = sur_incident_note;
+            this.sur_complication = sur_complication;
+            this.sur_complication_note = sur_complication_note;
+            this.treatment_plan = treatment_plan;
+        }
+
+        public Oadr(string document_id)
+        {
+            string _jsonData = WebHelpers.GetAPI("api/oadr/" + document_id);
+
+            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+
+            WebHelpers.BindingDatafield(db, this);
+        }
+
+        #region METHODS
+        public string[] Update()
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(api + "/edit", this);
             message[0] = responseStatus;
+
             if (responseStatus == WebHelpers.ResponseStatus.OK)
             {
-                responseStatus = WebHelpers.PostAPI("api/ena/log/" + DataHelpers.varDocId);
+                responseStatus = WebHelpers.PostAPI(api + "/log/" + this.document_id);
                 message[1] = responseStatus;
             }
 
             return message;
         }
+        #endregion
     }
 
     public class OutPatientInitialNursingAssement
@@ -795,6 +1032,12 @@ namespace EMR
         public dynamic document_type_rcd { get; set; }
         public dynamic documentid { get; set; }
         #endregion
+        public static Dictionary<string, string> TREATMENT_CODE = new Dictionary<string, string>()
+        {
+            { "OPD", "Ngoại trú/Ambulatory care" },
+            { "IPD", "Nhập viện/Admission" },
+            { "TRF", "Chuyển viện/Transfer" },
+        };
         public POMR() { }
         public POMR(string document_id)
         {

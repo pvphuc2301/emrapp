@@ -131,3 +131,7 @@ function clear_radiobutton(el) {
         console.error(ex);
     }
 }
+
+function changeValue(a, b) {
+    document.getElementById(b).value = document.getElementById(a).innerHTML;
+}

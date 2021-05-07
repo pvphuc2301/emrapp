@@ -10,16 +10,18 @@ namespace EMR
     public partial class AmendReason : System.Web.UI.UserControl
     {
         #region Properties
-        public string value { get; set; }
-        #endregion
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!IsPostBack)
+        public string Value {
+            get
+            {
+                return txtAmendReason.Value;
+            }
+            set
             {
                 txtAmendReason.Value = value;
             }
         }
 
+        #endregion
         public void Load(ControlCollection controls)
         {
             controls.Add(this);

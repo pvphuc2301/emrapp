@@ -33,15 +33,6 @@ namespace EMR
         protected global::System.Web.UI.ScriptManager ScriptManager1;
 
         /// <summary>
-        /// ValueHiddenField control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField ValueHiddenField;
-
-        /// <summary>
         /// lblPatientInfo control.
         /// </summary>
         /// <remarks>
@@ -87,6 +78,15 @@ namespace EMR
         protected global::Telerik.Web.UI.RadPane TopPane;
 
         /// <summary>
+        /// updatePanel_main control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel updatePanel_main;
+
+        /// <summary>
         /// RadGrid1 control.
         /// </summary>
         /// <remarks>
@@ -112,6 +112,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid RadGrid3;
+
+        /// <summary>
+        /// updateProgress_main control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress updateProgress_main;
 
         /// <summary>
         /// RadSplitBar1 control.

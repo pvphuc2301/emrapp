@@ -27,11 +27,6 @@
             right: 0;
         }
     </style>
-    <script>
-        function changeValue(a, b) {
-            document.getElementById(b).value = document.getElementById(a).innerHTML;
-        }
-    </script>
 </head>
 <body>
 
@@ -53,7 +48,21 @@
         <div class="scroll-sidebar h-100 w-100">
             <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-
+                    <div class="row" id="amendReasonBox" runat="server">
+                        <div class="col-md-12">
+                            <div class="card amend-box">
+                                <div class="card-header">
+                                    <h5>Lý do thay đổi/ <span class="text-primary">amend reason: </span><span class="text-danger">*</span></h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <Input:TextField runat="server" ID="txtAmendReason" />
+                                    </div>
+                                    <div id="lblAmendReasonError" class="text-danger" runat="server">Nội dung lý do thay đổi phải trên 3 ký tự</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <uc1:PatientInfo runat="server" ID="PatientInfo" />
 
                      <div class="row" style="margin-bottom: 50px;">
@@ -123,6 +132,9 @@
                                                 <div class="custom-control custom-radio">
                                                     <input type="radio" id="rad_triage_code_5" runat="server" name="rad_triage_code" class="custom-control-input" />
                                                     <label class="custom-control-label" for="rad_triage_code_5">Không cấp cứu/ <span class="text-primary">Non-Urgent</span></label>
+                                                    <a href="javascript:void(0)" style="display: none;" data-clear="rad_triage_code" onclick="clear_radiobutton(this)">
+                                                        <icon:xsquare runat="server" ID="XSquare1" />
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -150,6 +162,9 @@
                                                 <div class="custom-control custom-radio">
                                                     <input type="radio" id="rad_arrival_mode_code_AMB" runat="server" name="rad_arrival_mode_code" class="custom-control-input" />
                                                     <label class="custom-control-label" for="rad_arrival_mode_code_AMB">Xe cấp cứu/ <span class="text-primary">Ambulance</span></label>
+                                                    <a href="javascript:void(0)" style="display: none;" data-clear="rad_arrival_mode_code" onclick="clear_radiobutton(this)">
+                                                        <icon:xsquare runat="server" ID="XSquare2" />
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -464,7 +479,7 @@
                                                 <div class="custom-control custom-radio mb-1">
                                                     <input type="radio" runat="server" id="rad_dis_after_discharge_code_o" name="rad_dis_after_discharge_code" class="custom-control-input" />
                                                     <label class="custom-control-label" for="rad_dis_after_discharge_code_o">Cơ sở y tế khác/ <span class="text-primary">Other healthcare facility:</span></label>
-                                                    <a href="javascript:void(0)" style="display: none;" data-clear="rad_cde_after_discharge" onclick="clear_radiobutton(this)">
+                                                    <a href="javascript:void(0)" style="display: none;" data-clear="rad_dis_after_discharge_code" onclick="clear_radiobutton(this)">
                                                         <icon:xsquare runat="server" ID="XSquare" />
                                                     </a>
                                                 </div>
@@ -828,7 +843,7 @@
 
                                             <div class="col-md-4">
                                                 <label class="custom-control mb-1 custom-checkbox">
-                                                    <input disabled-for="other_systems_field" type="checkbox" class="custom-control-input" runat="server" id="cb_other_systems_normal" />
+                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_other_systems_normal" />
                                                     <span class="custom-control-label">Bình thường/ <span class="text-primary">Normal</span></span>
                                                 </label>
                                             </div>
@@ -875,31 +890,36 @@
 
                                         <div class="row mb-2">
                                             <div class="col-md-12">
-                                                <table class="tb-responsive">
+                                                <table class="table-responsive">
                                                     <thead>
                                                         <tr>
-                                                            <th scope="col">Thủ thuật can thiệp/ <span class="text-primary">Intervention Procedure</span></th>
-                                                            <th scope="col">Thời gian/ <span class="text-primary">Time</span></th>
-                                                            <th style="width: 100px;" scope="col">Ghi chú/ <span class="text-primary">Notes</span></th>
+                                                            <th scope="col">
+                                                                <div class="p-2" style="width: 300px;">Thủ thuật can thiệp/ <span class="text-primary">Intervention Procedure</span></div>
+                                                            </th>
+                                                            <th scope="col">
+                                                                <div class="p-2">Thời gian/ <span class="text-primary">Time</span></div>
+                                                            </th>
+                                                            <th scope="col">
+                                                                <div class="p-2" style="width: 300px;">Ghi chú/ <span class="text-primary">Notes</span></div>
+                                                            </th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr>
-                                                            <td data-label="ĐHMM/Capillary Blood glucose">ĐHMM/Capillary Blood glucose
-                                                            </td>
-                                                            <td data-label="Thời gian/ Time">
+                                                            <td><div>ĐHMM/Capillary Blood glucose </div></td>
+                                                            <td>
                                                                 <div class="form-group">
                                                                     <telerik:RadDateTimePicker runat="server" ID="dtpk_blood_glucose_date_time" Width="200px" />
                                                                 </div>
                                                             </td>
-                                                            <td data-label="Ghi chú/ Notes">
+                                                            <td>
                                                                 <Input:TextField runat="server" ID="txt_blood_glucose_note" />
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td data-label="Điện tim/ECG">Điện tim/ECG
+                                                            <td>Điện tim/ECG
                                                             </td>
-                                                            <td data-label="Thời gian/ Time">
+                                                            <td>
                                                                 <div class="form-group">
                                                                     <telerik:RadDateTimePicker runat="server" ID="dtpk_ecg_date_time" Width="200px" />
                                                                 </div>
@@ -909,38 +929,38 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td data-label="Thông tiểu/Urine cath">Thông tiểu/Urine cath
+                                                            <td>Thông tiểu/Urine cath
                                                             </td>
-                                                            <td data-label="Thời gian/ Time">
+                                                            <td>
                                                                 <div class="form-group">
                                                                     <telerik:RadDateTimePicker runat="server" ID="dtpk_urine_cath_date_time" Width="200px" />
                                                                 </div>
                                                             </td>
-                                                            <td data-label="Ghi chú/ Notes">
+                                                            <td>
                                                                 <Input:TextField runat="server" ID="txt_urine_cath_note" />
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td data-label="Nẹp/Bó bột/Thay băng Splint/Cast/Dressing">Nẹp/Bó bột/Thay băng Splint/Cast/Dressing
+                                                            <td>Nẹp/Bó bột/Thay băng Splint/Cast/Dressing
                                                             </td>
-                                                            <td data-label="Thời gian/ Time">
+                                                            <td>
                                                                 <div class="form-group">
                                                                     <telerik:RadDateTimePicker runat="server" ID="dtpk_splint_cast_dressing_date_time" Width="200px" />
                                                                 </div>
                                                             </td>
-                                                            <td data-label="Ghi chú/ Notes">
+                                                            <td>
                                                                 <Input:TextField runat="server" ID="txt_splint_cast_dressing_note" />
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td data-label="Khác/Others">Khác/Others
+                                                            <td>Khác/Others
                                                             </td>
                                                             <td data-label="Thời gian/ Time">
                                                                 <div class="form-group">
                                                                     <telerik:RadDateTimePicker runat="server" ID="dtpk_procedure_other_date_time" Width="200px" />
                                                                 </div>
                                                             </td>
-                                                            <td data-label="Ghi chú/ Notes">
+                                                            <td>
                                                                 <Input:TextField runat="server" ID="txt_procedure_other_note" />
                                                             </td>
                                                         </tr>
@@ -960,97 +980,100 @@
                                                             OnRowDeleting="grid_AssessmentSystem_RowDeleting"
                                                             OnRowUpdating="gridAssessmentSystem_RowUpdating"
                                                             OnRowDataBound="gridAssessmentSystem_RowDataBound"
-                                                            CssClass="tb-responsive"
+                                                            CssClass="table-responsive"
                                                             AutoGenerateColumns="false">
                                                             <Columns>
-                                                                <asp:TemplateField ItemStyle-Width="100px" HeaderText="SR.NO">
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <span class="text-primary">Time</span>
+                                                                        <div style="width: 105px" class="text-primary pt-2 pb-2">Time</div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <telerik:RadTimePicker Width="100px" runat="server" />
+                                                                        <telerik:RadTimePicker Width="105px"  ID="time" SelectedTime='<%# TimeSpan.Parse(Eval("time").ToString()) %>' runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <span class="text-primary">RR (l/p)</span>
+                                                                        <div style="width: 80px" class="text-primary">RR (l/p)</div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <Input:TextField Value='<%#Eval("rrlp") %>' DataKey="rrlp" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                <asp:TemplateField >
                                                                     <HeaderTemplate>
-                                                                        <span class="text-primary">O2Sat (%)</span>
+                                                                        <div style="width: 80px" class="text-primary">O2Sat (%)</span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <Input:TextField Value='<%#Eval("o2sat") %>' DataKey="o2sat" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <span class="text-primary">HR (bpm)</span>
+                                                                        <div style="width: 80px" class="text-primary">HR (bpm)</span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <Input:TextField Value='<%#Eval("hr") %>' DataKey="hr" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <span class="text-primary">BP (mmhg)</span>
+                                                                        <div style="width: 80px" class="text-primary">BP (mmhg)</span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <Input:TextField Value='<%#Eval("bp") %>' DataKey="bp" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <span class="text-primary">Temp (0C)</span>
+                                                                        <div style="width: 80px" class="text-primary">Temp (0C)</span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <Input:TextField Value='<%#Eval("temp") %>' DataKey="temp" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <span class="text-primary">GCS</span>
+                                                                        <div style="width: 80px" class="text-primary">GCS</span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <Input:TextField Value='<%#Eval("gcs") %>' DataKey="gcs" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <span class="text-primary">Pain/ 10</span>
+                                                                        <div style="width: 80px" class="text-primary">Pain/ 10</span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <Input:TextField Value='<%#Eval("pain") %>' DataKey="pain" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <span class="text-primary">ATS scale</span>
+                                                                        <div style="width: 80px" class="text-primary">ATS scale</span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <Input:TextField Value='<%#Eval("ats") %>' DataKey="ats" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
-                                                                    <HeaderTemplate>Tái đánh giá & Can thiệp/ <span class="text-primary">Re-Assessment & Intervention</span> </HeaderTemplate>
+                                                                <asp:TemplateField>
+                                                                    <HeaderTemplate>
+                                                                        <div style="width: 200px">
+                                                                            Tái đánh giá & Can thiệp/ <span class="text-primary"><br />Re-Assessment & Intervention</span>
+                                                                        </div>
+                                                                    </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <Input:TextField Title='<%#Eval("intervention") %>' DataKey="intervention" Value='<%#Eval("intervention") %>' runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <span class="text-primary">RN's Initial</span>
+                                                                        <div style="width: 200px" class="text-primary">RN's Initial</div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <Input:TextField Value='<%#Eval("initial") %>' DataKey="initial" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:CommandField ShowDeleteButton="True" ButtonType="Button" />
-
                                                             </Columns>
                                                         </asp:GridView>
                                                         <asp:UpdateProgress ID="updateProgress_AssessmentSystem" runat="server" AssociatedUpdatePanelID="updatePanel_AssessmentSystem">
@@ -1059,11 +1082,11 @@
                                                             </ProgressTemplate>
                                                         </asp:UpdateProgress>
                                                         <div class="mt-2">
-                                                            <asp:Button ID="btn_AddAssessmentSystem" runat="server" CssClass="btn btn-sm btn-outline-primary" OnClick="btn_AddAssessmentSystem_Click" Text="Add row" />
+                                                            <asp:Button ID="btn_grid_AssessmentSystem_add" runat="server" CssClass="btn btn-sm btn-outline-primary" OnClick="btn_grid_AssessmentSystem_add_Click" Text="Add row" />
                                                         </div>
                                                     </ContentTemplate>
                                                     <Triggers>
-                                                        <asp:AsyncPostBackTrigger ControlID="btn_AddAssessmentSystem" EventName="Click" />
+                                                        <asp:AsyncPostBackTrigger ControlID="btn_grid_AssessmentSystem_add" EventName="Click" />
                                                     </Triggers>
                                                 </asp:UpdatePanel>
                                             </div>
@@ -1081,77 +1104,76 @@
                                                             OnRowDeleting="gridDirectMedication_RowDeleting"
                                                             OnRowUpdating="gridAssessmentSystem_RowUpdating"
                                                             OnRowDataBound="gridAssessmentSystem_RowDataBound"
-                                                            CssClass="tb-responsive"
-                                                            AutoGenerateColumns="false"
-                                                            ShowFooter="true">
+                                                            CssClass="table-responsive"
+                                                            AutoGenerateColumns="false">
                                                             <Columns>
-                                                                <asp:TemplateField ItemStyle-Width="30px" HeaderText="SR.NO">
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        Thời gian/ <span class="text-primary">Time</span>
+                                                                        <div style="width: 105px" class="pt-2 pb-2">Thời gian/ <span class="text-primary">Time</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField DataKey="dir_med_time" Value='<%#Eval("dir_med_time") %>' runat="server" />
+                                                                        <telerik:RadTimePicker ID="dir_med_time" SelectedTime='<%# TimeSpan.Parse(Eval("dir_med_time").ToString()) %>' Width="105px" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        Thuốc/ <span class="text-primary">Medication</span> - Dịch truyền/ <span class="text-primary">IV Fluids</span>
+                                                                        <div style="width: 238px">Thuốc/ <span class="text-primary">Medication</span> - Dịch truyền/ <span class="text-primary">IV Fluids</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <Input:TextField Value='<%#Eval("dir_medication") %>' DataKey="dir_medication" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                <asp:TemplateField >
                                                                     <HeaderTemplate>
-                                                                        Liều dùng/ <span class="text-primary">Dose</span>
+                                                                        <div style="width: 100px">Liều dùng/ <span class="text-primary">Dose</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <Input:TextField Value='<%#Eval("dir_med_dose") %>' DataKey="dir_med_dose" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        Đường dùng/ <span class="text-primary">Route</span>
+                                                                        <div style="width: 114px">Đường dùng/ <span class="text-primary">Route</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <Input:TextField Value='<%#Eval("dir_med_route") %>' DataKey="dir_med_route" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        Tốc độ/ <span class="text-primary">Rate</span>
+                                                                        <div style="width: 100px">Tốc độ/ <span class="text-primary">Rate</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <Input:TextField Value='<%#Eval("dir_med_rate") %>' DataKey="dir_med_rate" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        Bác sĩ/ <span class="text-primary">Doctor</span>
+                                                                        <div style="width: 150px">Bác sĩ/ <span class="text-primary">Doctor</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <Input:TextField Value='<%#Eval("dir_med_doctor") %>' DataKey="dir_med_doctor" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        Ghi chú/ <span class="text-primary">Comment</span>
+                                                                        <div style="width: 150px">Ghi chú/ <span class="text-primary">Comment</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <Input:TextField Value='<%#Eval("dir_med_comment") %>' DataKey="dir_med_comment" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        Thời gian/ <span class="text-primary">Time</span>
+                                                                        <div>Thời gian/ <span class="text-primary">Time</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField Value='<%#Eval("dir_med_time2") %>' DataKey="dir_med_time2" runat="server" />
+                                                                        <telerik:RadTimePicker ID="dir_med_time2" SelectedTime='<%# TimeSpan.Parse(Eval("dir_med_time2").ToString()) %>' Width="105px" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        Điều dưỡng/ <span class="text-primary">RN's Initial</span>
+                                                                        <div style="width: 150px">Điều dưỡng/ <span class="text-primary">RN's Initial</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <Input:TextField Value='<%#Eval("dir_med_initial") %>' DataKey="dir_med_initial" runat="server" />
@@ -1166,11 +1188,11 @@
                                                             </ProgressTemplate>
                                                         </asp:UpdateProgress>
                                                         <div class="mt-2">
-                                                            <asp:Button ID="btnAddDirectMedication" runat="server" CssClass="btn btn-sm btn-outline-primary" OnClick="btnAddDirectMedication_Click" Text="Add Row" />
+                                                            <asp:Button ID="btn_gridDirectMedication_add" runat="server" CssClass="btn btn-sm btn-outline-primary" OnClick="btn_gridDirectMedication_add_Click" Text="Add Row" />
                                                         </div>
                                                     </ContentTemplate>
                                                     <Triggers>
-                                                        <asp:AsyncPostBackTrigger ControlID="btnAddDirectMedication" EventName="Click" />
+                                                        <asp:AsyncPostBackTrigger ControlID="btn_gridDirectMedication_add" EventName="Click" />
                                                     </Triggers>
                                                 </asp:UpdatePanel>
                                             </div>
@@ -1187,22 +1209,22 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
-                                                            <div class="form-group p-0 m-0 border-0">
-                                                                <label class="control-label mb-2 font-bold">bởi BS/ <span class="text-primary">by Dr.</span></label>
-                                                                <input type="text" runat="server" id="txt_discharge_by" placeholder="" class="form-control" />
+                                                            <label class="control-label mb-2 font-bold">bởi BS/ <span class="text-primary">by Dr.</span></label>
+                                                            <div class="form-group">
+                                                                <Input:TextField runat="server" ID="txt_discharge_by" />
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <label class="custom-control custom-checkbox">
-                                                        <input type="checkbox" runat="server" id="cb_" class="custom-control-input" />
+                                                        <input type="checkbox" runat="server" id="cb_discharge_option_h" class="custom-control-input" />
                                                         <span class="custom-control-label">Về nhà/ <span class="text-primary">Home</span></span>
                                                     </label>
                                                     <label class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" />
+                                                        <input type="checkbox" runat="server" id="cb_discharge_option_a" class="custom-control-input" />
                                                         <span class="custom-control-label">Tự ý/ <span class="text-primary">Against Medical Advice/AMA</span></span>
                                                     </label>
                                                     <label class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" />
+                                                        <input type="checkbox" runat="server" id="cb_discharge_option_d" class="custom-control-input" />
                                                         <span class="custom-control-label">Tử vong/ <span class="text-primary">Dead</span></span>
                                                     </label>
                                                 </div>
@@ -1218,29 +1240,29 @@
                                                     </div>
 
                                                     <div class="col-md-6">
+                                                        <label class="control-label mb-2 font-bold">bởi BS/ <span class="text-primary">by Dr.</span></label>
                                                         <div class="form-group">
-                                                            <label class="control-label mb-2 font-bold">bởi BS/ <span class="text-primary">by Dr.</span></label>
-                                                            <input type="text" runat="server" id="txt_admited_by" placeholder="" class="form-control" />
+                                                            <Input:TextField runat="server" ID="txt_admited_by" />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-12 mt-2">
+                                                        <label class="control-label mb-2 font-bold">Khoa tiếp nhận/ <span class="text-primary">Receiving Unit</span></label>
                                                         <div class="form-group">
-                                                            <label class="control-label mb-2 font-bold">Khoa tiếp nhận/ <span class="text-primary">Receiving Unit</span></label>
-                                                            <input type="text" runat="server" id="txt_receiving_unit" placeholder="" class="form-control" />
+                                                            <Input:TextField runat="server" ID="txt_receiving_unit" />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6 mt-2">
+                                                        <label class="control-label mb-2 font-bold">Chuyển viện/ <span class="text-primary">Transfer to</span></label>
                                                         <div class="form-group">
-                                                            <label class="control-label mb-2 font-bold">Chuyển viện/ <span class="text-primary">Transfer to</span></label>
-                                                            <input type="text" id="txt_transfer_to" runat="server" placeholder="" class="form-control" />
+                                                            <Input:TextField runat="server" ID="txt_transfer_to" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 mt-2">
+                                                        <label class="control-label mb-2 font-bold">bởi BS/ <span class="text-primary">by Dr.</span></label>
                                                         <div class="form-group">
-                                                            <label class="control-label mb-2 font-bold">bởi BS/ <span class="text-primary">by Dr.</span></label>
-                                                            <input type="text" id="txt_transfer_by" runat="server" placeholder="" class="form-control" />
+                                                            <Input:TextField runat="server" ID="txt_transfer_by" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1270,33 +1292,32 @@
                                                             OnRowUpdating="gridAssessmentSystem_RowUpdating"
                                                             OnRowDataBound="gridAssessmentSystem_RowDataBound"
                                                             CssClass="tb-responsive"
-                                                            AutoGenerateColumns="false"
-                                                            ShowFooter="true">
+                                                            AutoGenerateColumns="false">
                                                             <Columns>
-                                                                <asp:TemplateField ItemStyle-Width="30px" HeaderText="SR.NO">
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        Ngày/ <span class="text-primary">Date</span> - Giờ/ <span class="text-primary">Time</span>
+                                                                        <div style="width: 105px" class="pt-2 pb-2">Ngày/ <span class="text-primary">Date</span> - Giờ/ <span class="text-primary">Time</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <div class="form-group">
-                                                                            <telerik:RadDateTimePicker SelectedDate='<%#Eval("date_time") %>' Width="200px" runat="server" />
+                                                                            <telerik:RadDateTimePicker ID="date_time" SelectedDate='<%#Eval("date_time") %>' Width="200px" runat="server" />
                                                                         </div>
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        Theo dõi diễn tiến/ <span class="text-primary">Patient's condition</span>
+                                                                        <div style="width: 300px">Theo dõi diễn tiến/ <span class="text-primary">Patient's condition</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <Input:TextField Value='<%#Eval("patient_condition") %>' DataKey="patient_condition" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField ItemStyle-Width="600px" HeaderText="Service">
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        Ký/Ghi tên ĐD/ <span class="text-primary">Signature & RN's name</span>
+                                                                        <div style="width: 300px">Ký/Ghi tên ĐD/ <span class="text-primary">Signature & RN's name</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField Value='<%#Eval("signature_name") %>' DataKey="o2sat" runat="server" />
+                                                                        <Input:TextField Value='<%#Eval("signature_name") %>' DataKey="signature_name" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:CommandField ShowDeleteButton="True" ButtonType="Button" />
@@ -1309,11 +1330,11 @@
                                                             </ProgressTemplate>
                                                         </asp:UpdateProgress>
                                                         <div class="mt-2">
-                                                            <asp:Button ID="btn_AddNursingNotes" runat="server" CssClass="btn btn-sm btn-outline-primary" OnClick="btn_AddNursingNotes_Click" Text="Add row" />
+                                                            <asp:Button ID="btn_grid_NursingNotes_add" runat="server" CssClass="btn btn-sm btn-outline-primary" OnClick="btn_grid_NursingNotes_add_Click" Text="Add row" />
                                                         </div>
                                                     </ContentTemplate>
                                                     <Triggers>
-                                                        <asp:AsyncPostBackTrigger ControlID="btn_AddNursingNotes" EventName="Click" />
+                                                        <asp:AsyncPostBackTrigger ControlID="btn_grid_NursingNotes_add" EventName="Click" />
                                                     </Triggers>
                                                 </asp:UpdatePanel>
                                             </div>
@@ -1339,9 +1360,9 @@
                     </div>
                 </ContentTemplate>
                 <Triggers>
-                    <%--<asp:PostBackTrigger ControlID="btnSave" />
                     <asp:PostBackTrigger ControlID="btnAmend" />
                     <asp:PostBackTrigger ControlID="btnCancel" />
+                    <%--<asp:PostBackTrigger ControlID="btnSave" />
                     <asp:PostBackTrigger ControlID="btnComplete" />--%>
                 </Triggers>
             </asp:UpdatePanel>
