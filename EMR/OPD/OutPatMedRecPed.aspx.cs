@@ -176,7 +176,7 @@ namespace EMR
             txt_specific_education_required.Disabled = disabled;
 
             rad_next_appointment1.Disabled = disabled;
-            WebHelpers.DisabledDatimePicker(dtpk_date_next_appointment, disabled);
+            WebHelpers.DisabledDateTimePicker(dtpk_date_next_appointment, disabled);
 
             rad_next_appointment2.Disabled = disabled;
             txt_next_appointment.Disabled = disabled;

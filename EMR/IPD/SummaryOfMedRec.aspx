@@ -1,304 +1,171 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SummaryOfMedRec.aspx.cs" Inherits="EMR.SummaryOfMedicalReport" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SummaryOfMedRec.aspx.cs" Inherits="EMR.SummaryOfMedicalReport"  ValidateRequest="false"  %>
 
+<%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="uc1" TagName="PatientInfo" %>
+<%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="aih" TagName="TextField" %>
+<%@ Register Src="~/UserControls/AmendReason.ascx" TagPrefix="aih" TagName="AmendReason" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <link href="../styles/base.css" rel="stylesheet" />
-    <link href="../styles/default.css" rel="stylesheet" />
-    <link href="../styles/style.css" rel="stylesheet" />
-    <link href="../styles/myStyle.css" rel="stylesheet" />
-    <link href="../style/style-custom.css" rel="stylesheet" />
-    <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
+    <link href="../../styles/style.css" rel="stylesheet" />
+    <link href="../../styles/myStyle.css" rel="stylesheet" />
+    <link href="../../style/style-custom.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 </head>
 <body>
-    <form id="form1" runat="server">
-        <!-- ============================================================== -->
-        <!-- Preloader - style you can find in spinners.css -->
-        <!-- ============================================================== -->
-        <div class="preloader">
-            <div class="loader">
-                <div class="loader__figure"></div>
-                <p class="loader__label">AIH Hospital</p>
-            </div>
-        </div>
-        <!-- ============================================================== -->
-        <!-- Main wrapper - style you can find in pages.scss -->
-        <!-- ============================================================== -->
+    <form method="post" action="#" id="form2" runat="server">
+        <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
         <div class="scroll-sidebar h-100 w-100">
-            <div class="container-fluid pb-5">
+            <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
+                <ContentTemplate>
+                    <aih:AmendReason runat="server" ID="txt_amendReason" />
 
-                <!-- Row -->
-                <div class="row">
-                    <div class="col-lg-12" id="accordionExample">
-                        <div class="card">
-                            <div class="card-header bg-primary">
-                                <a data-toggle="collapse" href="javascript:void(0)" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    <h4 class="m-b-0 text-white font-bold">Patient details</h4>
-                                </a>
-                            </div>
-                            <div class="card-body collapse show" id="collapseOne" aria-labelledby="headingOne">
-                                <form class="form-horizontal" role="form">
+                    <uc1:PatientInfo runat="server" ID="PatientInfo1" />
+
+                    <div class="row" style="margin-bottom: 50px;">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h4 class="text-primary">SUMMARY OF MEDICAL REPORT</h4>
+                                    <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="arrowhead"></a>
+                                </div>
+                                <div class="card-body collapse show" id="collapseOne">
                                     <div class="form-body">
-                                        <h4 class="box-title font-bold">Person Info</h4>
-                                        <hr class="m-t-0 m-b-40">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <label class="control-label text-right col-md-3">First Name:</label>
-                                                    <div class="col-md-9">
-                                                        <p class="form-control-static">John </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <label class="control-label text-right col-md-3">Last Name:</label>
-                                                    <div class="col-md-9">
-                                                        <p class="form-control-static">Doe </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                        </div>
-                                        <!--/row-->
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <label class="control-label text-right col-md-3">Gender:</label>
-                                                    <div class="col-md-9">
-                                                        <p class="form-control-static">Male </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <label class="control-label text-right col-md-3">Date of Birth:</label>
-                                                    <div class="col-md-9">
-                                                        <p class="form-control-static">11/06/1987 </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                        </div>
-                                        <!--/row-->
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <label class="control-label text-right col-md-3">Contact Person:</label>
-                                                    <div class="col-md-9">
-                                                        <p class="form-control-static"></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <label class="control-label text-right col-md-3">Relationship:</label>
-                                                    <div class="col-md-9">
-                                                        <p class="form-control-static"></p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--/span-->
-                                        </div>
-                                        <!--/row-->
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <label class="control-label text-right col-md-3">Address:</label>
-                                                    <div class="col-md-9">
-                                                        <p class="form-control-static">19/1 Phan Tây Hồ,P.7, Quận Phú Nhuận, Tp. HCM, Việt Nam </p>
-                                                    </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <label class="control-label mb-2">Từ ngày/ <span class="text-primary">From</span><span class="text-danger">*</span></label>
+                                                <div class="form-group">
+                                                    <telerik:RadDatePicker RenderMode="Classic" ID="dpk_form_date" runat="server"></telerik:RadDatePicker>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--/row-->
-                                        <!--/row-->
-                                        <h4 class="box-title font-bold">Visit Details</h4>
-                                        <hr class="m-t-0 m-b-40">
+                                        <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <label class="control-label mb-2">Đến ngày/ <span class="text-primary">To:</span></span>*<span class="text-danger"></span></label>
+                                                <div class="form-group">
+                                                    <telerik:RadDatePicker RenderMode="Classic" ID="dpk_to_date" runat="server"></telerik:RadDatePicker>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <label class="control-label mb-2">Lý do nhập viện/ <span class="text-primary">Chief complaint:</span></label>
+                                                <div class="form-group">
+                                                    <aih:TextField runat="server" ID="txt_chief_complaint" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <label class="control-label mb-2">Chẩn đoán/ <span class="text-primary">Diagnosis:</span></label>
+                                                <div class="form-group">
+                                                    <aih:TextField runat="server" ID="txt_diagnosis" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <label class="control-label mb-2">1. Diễn biến lâm sàng trong đợt điều trị/ <span class="text-primary">Clinical Evolution:</span></label>
+                                                <div class="form-group">
+                                                    <aih:TextField runat="server" ID="txt_clinical_evolution" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <label class="control-label mb-2">2. KQ xét nghiệm cận lâm sàng/ <span class="text-primary">Results of para clinical tests:</span></label>
+                                                <div class="form-group">
+                                                    <aih:TextField runat="server" ID="txt_result_para_clinical" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <label class="control-label mb-2">3. Quá trình điều trị/ <span class="text-primary">Treatment:</span></label>
+                                                <div class="form-group">
+                                                    <aih:TextField runat="server" ID="txt_treatment" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <label class="control-label mb-2">4. Đánh giá kết quả/ <span class="text-primary">Evaluation of treatment:</span></label>
+                                                <div class="form-group">
+                                                    <aih:TextField runat="server" ID="txt_eval_treatment" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <label class="control-label mb-2">5. Hướng dẫn điều trị tiếp và tiên lượng/ <span class="text-primary">Continuous treatment and prognosis:</span></label>
+                                                <div class="form-group">
+                                                    <aih:TextField runat="server" ID="txt_treatment_prognosis" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-actions mb-3">
+                                            <asp:Button ID="btnComplete" OnClick="btnComplete_Click" class="btn btn-primary" runat="server" Text="Complete" />
 
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <label class="control-label text-right col-md-3">Encounter:</label>
-                                                    <div class="col-md-9">
-                                                        <p class="form-control-static">OPD 8536 </p>
+                                            <asp:Button ID="btnSave" OnClick="btnSave_Click" class="btn btn-primary" runat="server" Text="Save" />
+
+                                            <button type="button" id="btnDeleteModal" runat="server" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
+
+                                            <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
+
+                                            <asp:Button ID="btnPrint" CssClass="btn btn-secondary" runat="server" Text="Print" />
+
+                                            <asp:Button ID="btnCancel" OnClick="btnCancel_Click" CssClass="btn btn-secondary" runat="server" Text="Cancel" />
+
+                                            <div runat="server" id="messagePlaceHolder"></div>
+                                        </div>
+
+                                        <div id="myModal" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Delete document</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p runat="server">Please provide reason for deletion</p>
+                                                        <div class="form-group mb-2">
+                                                            <aih:TextField runat="server" ID="TextField1" />
+                                                        </div>
+                                                        <div class="text-danger" runat="server">Nội dung lý do xóa phải trên 3 ký tự</div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <asp:Button runat="server" Text="Delete" OnClick="btnDelete_Click" ID="btnDelete" class="btn btn-danger" />
                                                     </div>
                                                 </div>
+
                                             </div>
-                                            <!--/span-->
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <label class="control-label text-right col-md-3">Admit Date:</label>
-                                                    <div class="col-md-9">
-                                                        <p class="form-control-static">15-05-2019 </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--/span-->
                                         </div>
 
                                     </div>
-                                </form>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Row -->
-
-                <!-- Row -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header bg-primary">
-                                <a data-toggle="collapse" href="javascript:void(0)" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                                    <h4 class="m-b-0 text-white font-bold">SUMMARY OF MEDICAL REPORT</h4>
-                                </a>
-                            </div>
-                            <div class="card-body collapse show" id="collapseTwo">
-                                <form action="#" class="form-horizontal form-bordered">
-                                    <div class="form-body mb-4">
-
-                                        <div class="row">
-                                            <div class="col-sm-6 mb-2">
-                                                <div class="position-relative">
-                                                    <span class="prepend-text">từ ngày/ <span class="text-primary">from</span></span><input style="padding-left: 70px" type="date" class="form-control text-right">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-6 mb-2">
-                                                <div class="position-relative">
-                                                    <span class="prepend-text">đến ngày/ <span class="text-primary">to</span></span><input style="padding-left: 70px" type="date" class="form-control text-right">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-6 mb-2">
-                                                <div class="position-relative">
-                                                    <span class="prepend-text">Khoa/ <span class="text-primary">Department</span></span><input style="padding-left: 70px" type="text" class="form-control text-right">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-6 mb-2">
-                                                <div class="position-relative">
-                                                    <span class="prepend-text">Phòng số/ <span class="text-primary">Room no</span></span><input style="padding-left: 70px" type="text" class="form-control text-right">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label class="control-label mb-1">Lý do nhập viện/<span class="text-primary">Chief complaint:</span></label>
-                                                    <textarea class="form-control" rows="1"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label class="control-label mb-1">Chẩn đoán/<span class="text-primary">Diagnosis:</span></label>
-                                                    <textarea class="form-control" rows="1"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label class="control-label mb-1 font-bold">1. Diễn biến lâm sàng trong đợt điều trị/<span class="text-primary">Clinical Evolution:</span></label>
-                                                    <textarea class="form-control" rows="1"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                         <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label class="control-label mb-1 font-bold">2. KQ xét nghiệm cận lâm sàng/<span class="text-primary">Results of para clinical tests:</span></label>
-                                                    <textarea class="form-control" rows="1"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label class="control-label mb-1 font-bold">3. Quá trình điều trị/<span class="text-primary">Treatment:</span></label>
-                                                    <textarea class="form-control" rows="1"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label class="control-label mb-1 font-bold">4. Đánh giá kết quả/<span class="text-primary">Evaluation of treatment:</span></label>
-                                                    <textarea class="form-control" rows="1"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label class="control-label mb-1 font-bold">5. Hướng dẫn điều trị tiếp và tiên lượng/<span class="text-primary">Continuous treatment and prognosis:</span></label>
-                                                    <textarea class="form-control" rows="1"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-actions">
-                                            <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>Complete</button>
-                                            <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i>Save</button>
-                                            <button type="button" class="btn btn-secondary">Revert</button>
-                                            <button type="button" class="btn btn-secondary">Delete</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Row -->
-
-                </div>
-            </div>
-
-            <!-- ============================================================== -->
-            <!-- Container fluid  -->
-            <!-- ============================================================== -->
-
-            <!-- ============================================================== -->
-            <!-- End Container fluid  -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- End Wrapper -->
-            <!-- ============================================================== -->
-            <!-- ============================================================== -->
-            <!-- All Jquery -->
-            <!-- ============================================================== -->
+                </ContentTemplate>
+                <Triggers>
+                    <asp:PostBackTrigger ControlID="btnAmend" />
+                    <asp:PostBackTrigger ControlID="btnCancel" />
+                    <%--<asp:PostBackTrigger ControlID="btnSave" />
+                    <asp:PostBackTrigger ControlID="btnComplete" />--%>
+                </Triggers>
+            </asp:UpdatePanel>
+        </div>
     </form>
 
-    <script src="../scripts/jquery-3.2.1.min.js"></script>
-    <script src="../scripts/bootstrap.min.js"></script>
-    <script src="../scripts/perfect-scrollbar.jquery.min.js"></script>
-    <!--Wave Effects -->
-    <script src="../scripts/waves.js"></script>
-    <!--Menu sidebar -->
-    <script src="../scripts/sidebarmenu.js"></script>
-    <!--stickey kit -->
-    <script src="../scripts/sticky-kit.min.js"></script>
-    <script src="../scripts/jquery.sparkline.min.js"></script>
-    <!--Custom JavaScript -->
-    <script src="../scripts/custom.min.js"></script>
-    <script src="../scripts/myScript.js"></script>
+    <script src="../../scripts/jquery-3.2.1.min.js"></script>
+    <script src="../../scripts/bootstrap.min.js"></script>
+    <script src="../../scripts/perfect-scrollbar.jquery.min.js"></script>
+    <script src="../../scripts/custom.min.js"></script>
+    <script src="../../scripts/myScript.js"></script>
+    <script src="../../scripts/contenteditable.min.js"></script>
+
 </body>
 </html>
 

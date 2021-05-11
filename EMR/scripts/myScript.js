@@ -22,7 +22,7 @@ let radiosAttr = [];
 
 document.querySelectorAll('input[type=radio]').forEach(e => {
     if (!radiosAttr.includes(e.name)) radiosAttr.push(e.name);
-})
+});
 
 for (let i = 0; i < radiosAttr.length; i++) {
     let radiosEle = $(`input[name=${radiosAttr[i]}]`);
@@ -32,16 +32,13 @@ for (let i = 0; i < radiosAttr.length; i++) {
     for (let j = 0; j < radiosEle.length; j++) {
         let disabledFor = radiosEle[j].getAttribute('disabled-for');
 
-        if (disabledFor !== 'undefined' && disabledFor !== false && disabledFor !== null) {
-            let EleByClassName = document.getElementsByClassName(radiosEle[j].getAttribute('disabled-for'));
+        if (disabledFor != 'undefined' && disabledFor != false) {
 
-            for (let k = 0; k < EleByClassName.length; k++) {
+            if (!radiosEle[j].checked) {
+                let EleByClassName = document.getElementsByClassName(disabledFor);
 
-                if (radiosEle[j].getAttribute('checked')) {
-                    isChecked = true;
-                    EleByClassName[k].style.display = "";
-                } else {
-                    EleByClassName[k].style.display = "none";
+                for (let l = 0; l < EleByClassName.length; l++) {
+                    EleByClassName[l].style.display = "none";
                 }
             }
         }
@@ -55,7 +52,7 @@ for (let i = 0; i < radiosAttr.length; i++) {
 
                 let disabledFor = radiosEle[j].getAttribute('disabled-for');
 
-                if (disabledFor !== 'undefined' && disabledFor !== false) {
+                if (disabledFor != 'undefined' && disabledFor != false) {
 
                     for (let k = 0; k < radiosEle.length; k++) {
 
@@ -75,10 +72,6 @@ for (let i = 0; i < radiosAttr.length; i++) {
                 console.error(ex);
             }
         })
-    }
-
-    if (isChecked) {
-        console.log(radiosEle[radiosEle.length - 1]);
     }
 }
 
@@ -114,7 +107,6 @@ function clear_radiobutton(el) {
         let radioButton =  document.querySelector(`input[name="${el.getAttribute("data-clear")}"]:checked`);
 
         radioButton.checked = false;
-
 
         let disabledFor = radioButton.getAttribute('disabled-for');
 

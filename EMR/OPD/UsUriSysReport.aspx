@@ -1,309 +1,165 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UsUriSysReport.aspx.cs" Inherits="EMR.USUrinarySystemReport" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="UsUriSysReport.aspx.cs" Inherits="EMR.USUrinarySystemReport" ValidateRequest="false" %>
 
+
+<%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="uc1" TagName="PatientInfo" %>
+<%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="aih" TagName="TextField" %>
+<%@ Register Src="~/UserControls/AmendReason.ascx" TagPrefix="aih" TagName="AmendReason" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <link href="../styles/base.css" rel="stylesheet" />
-    <link href="../styles/default.css" rel="stylesheet" />
-    <link href="../styles/style.css" rel="stylesheet" />
-    <link href="../styles/myStyle.css" rel="stylesheet" />
-    <link href="../style/style-custom.css" rel="stylesheet" />
-    <script src="https://rawgit.com/jackmoore/autosize/master/dist/autosize.min.js"></script>
-
-    <style>
-        .form-group {
-            margin-bottom: 0;
-        }
-        input[type="radio"] ~ textarea,
-        input[type="radio"] ~ input,
-        input[type="radio"] ~ div > input
-         {
-            pointer-events: none;
-            background-color: #f6f6f6;
-        }
-
-        input[type="radio"]:checked ~ textarea,
-        input[type="radio"]:checked ~ input,
-        input[type="radio"]:checked ~ input,
-        input[type="radio"]:checked ~ div > input
-        {
-            pointer-events: auto;
-            background-color: transparent;
-        }
-    </style>
+    <link href="../../styles/style.css" rel="stylesheet" />
+    <link href="../../styles/myStyle.css" rel="stylesheet" />
+    <link href="../../style/style-custom.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 </head>
 <body>
-    <form id="form1" runat="server">
-        <!-- ============================================================== -->
-        <!-- Preloader - style you can find in spinners.css -->
-        <!-- ============================================================== -->
-        <div class="preloader">
-            <div class="loader">
-                <div class="loader__figure"></div>
-                <p class="loader__label">AIH Hospital</p>
-            </div>
-        </div>
-        <!-- ============================================================== -->
-        <!-- Main wrapper - style you can find in pages.scss -->
-        <!-- ============================================================== -->
+    <form method="post" action="#" id="form2" runat="server">
+        <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
         <div class="scroll-sidebar h-100 w-100">
-            <div class="container-fluid pb-5">
-                <div class="row">
-                        <div class="col-lg-12" id="accordionExample">
+            <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
+                <ContentTemplate>
+                    <aih:AmendReason runat="server" ID="txt_amendReason" />
+
+                    <uc1:PatientInfo runat="server" ID="PatientInfo1" />
+
+                    <div class="row" style="margin-bottom: 50px;">
+                        <div class="col-12">
                             <div class="card">
-                                <div class="card-header bg-primary">
-                                    <a data-toggle="collapse" href="javascript:void(0)" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        <h4 class="m-b-0 text-white font-bold">Patient details</h4>
-                                    </a>
+                                <div class="card-header">
+                                    <h4 class="text-primary">ULTRASOUND OF URINARY SYSTEM REPORT</h4>
+                                    <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="arrowhead"></a>
                                 </div>
-                                <div class="card-body collapse show" id="collapseOne" aria-labelledby="headingOne">
-                                    <form class="form-horizontal" role="form">
-                                        <div class="form-body">
-                                            <h4 class="box-title font-bold">Person Info</h4>
-                                            <hr class="m-t-0 m-b-40" />
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <label class="control-label text-right col-md-3">First Name:</label>
-                                                        <div class="col-md-9">
-                                                            <p class="form-control-static">John</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--/span-->
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <label class="control-label text-right col-md-3">Last Name:</label>
-                                                        <div class="col-md-9">
-                                                            <p class="form-control-static">Doe</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--/span-->
-                                            </div>
-                                            <!--/row-->
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <label class="control-label text-right col-md-3">Gender:</label>
-                                                        <div class="col-md-9">
-                                                            <p class="form-control-static">Male</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--/span-->
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <label class="control-label text-right col-md-3">Date of Birth:</label>
-                                                        <div class="col-md-9">
-                                                            <p class="form-control-static">11/06/1987</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--/span-->
-                                            </div>
-                                            <!--/row-->
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <label class="control-label text-right col-md-3">Contact Person:</label>
-                                                        <div class="col-md-9">
-                                                            <p class="form-control-static"></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--/span-->
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <label class="control-label text-right col-md-3">Relationship:</label>
-                                                        <div class="col-md-9">
-                                                            <p class="form-control-static"></p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--/span-->
-                                            </div>
-                                            <!--/row-->
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <label class="control-label text-right col-md-3">Address:</label>
-                                                        <div class="col-md-9">
-                                                            <p class="form-control-static">19/1 Phan Tây Hồ,P.7, Quận Phú Nhuận, Tp. HCM, Việt Nam</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!--/row-->
-                                            <!--/row-->
-                                            <h4 class="box-title font-bold">Visit Details</h4>
-                                            <hr class="m-t-0 m-b-40" />
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <label class="control-label text-right col-md-3">Encounter:</label>
-                                                        <div class="col-md-9">
-                                                            <p class="form-control-static">OPD 8536</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--/span-->
-                                                <div class="col-md-6">
-                                                    <div class="form-group row">
-                                                        <label class="control-label text-right col-md-3">Admit Date:</label>
-                                                        <div class="col-md-9">
-                                                            <p class="form-control-static">15-05-2019</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!--/span-->
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Row -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-header bg-info">
-                                <h4 class="mb2 text-white font-bold"><a>ULTRASOUND OF URINARY SYSTEM REPORT</a></h4>
-                            </div>
-                            <div class="card-body">
-                                <form action="#" class="form-horizontal form-bordered">
+                                <div class="card-body collapse show" id="collapseOne">
                                     <div class="form-body">
-                                        <!-- Chief complaint -->
-                                        <div class="row">
-                                            <div class="col-md-6">
+                                        <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <label class="control-label mb-2">Chẩn đoán/ <span class="text-primary">Diagnosis:</span></label>
                                                 <div class="form-group">
-                                                    <label class="control-label mb-2 font-bold">Họ và tên người bệnh/ <span class="text-info">Patient’s Full Name:</span></label>
-                                                    <input type="text" class="form-control" />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label mb-2 font-bold">Mã bệnh/ <span class="text-info">PID:</span></label>
-                                                    <input type="text" class="form-control" />
+                                                    <aih:TextField runat="server" ID="txt_diagnosis" />
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="row">
+                                        <div class="row mb-2">
                                             <div class="col-md-12">
+                                                <label class="control-label mb-2">Thận trái/ <span class="text-primary">Left kidney:</span></label>
                                                 <div class="form-group">
-                                                    <label class="control-label mb-2 font-bold">Chẩn đoán/ <span class="text-info">Diagnosis:</span></label>
-                                                    <!-- <input type="date" class="form-control" /> -->
+                                                    <aih:TextField runat="server" ID="txt_left_kidney" />
                                                 </div>
                                             </div>
 
                                         </div>
-                                        <div class="row">
+                                        <div class="row mb-2">
                                             <div class="col-md-12">
+                                                <label class="control-label mb-2">Thận phải/ <span class="text-primary">Right kidney:</span></label>
                                                 <div class="form-group">
-                                                    <label class="control-label mb-2 font-bold">&#9734 Thận trái/ <span class="text-info">Left kidney:</span></label>
-                                                    <input type="text" class="form-control" />
+                                                    <aih:TextField runat="server" ID="txt_right_kidney" />
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row mb-2">
                                             <div class="col-md-12">
+                                                <label class="control-label mb-2">Bàng quang/ <span class="text-primary">Urinary bladder:</span></label>
                                                 <div class="form-group">
-                                                    <label class="control-label mb-2 font-bold">&#9734 Thận phải/ <span class="text-info">Right kidney:</span></label>
-                                                    <input type="text" class="form-control" />
+                                                    <aih:TextField runat="server" ID="txt_urinary_bladder" />
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row mb-2">
                                             <div class="col-md-12">
+                                                <label class="control-label mb-2">Tuyến tiền liệt/ <span class="text-primary">Prostate:</span></label>
                                                 <div class="form-group">
-                                                    <label class="control-label mb-2 font-bold">&#9734 Bàng quang/ <span class="text-info">Urinary kidney:</span></label>
-                                                    <input type="text" class="form-control" />
+                                                    <aih:TextField runat="server" ID="txt_prostate" />
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row mb-2">
                                             <div class="col-md-12">
+                                                <label class="control-label mb-2">Nước tiểu tồn lưu/ <span class="text-primary">Post void residual volume:</span></label>
                                                 <div class="form-group">
-                                                    <label class="control-label mb-2 font-bold">&#9734 Tuyến tiền liệt/ <span class="text-info">Prostate:</span></label>
-                                                    <input type="text" class="form-control" />
+                                                    <aih:TextField runat="server" ID="txt_post_void_resi_volume" />
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row mb-2">
                                             <div class="col-md-12">
+                                                <label class="control-label mb-2">Kết luận/ <span class="text-primary">Conclusion:</span></label>
                                                 <div class="form-group">
-                                                    <label class="control-label mb-2 font-bold">&#9734 Nước tiểu tồn lưu/ <span class="text-info">Post void residual volume:</span></label>
-                                                    <input type="text" class="form-control" />
+                                                    <aih:TextField runat="server" ID="txt_conclusion" />
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row mb-2">
                                             <div class="col-md-12">
+                                                <label class="control-label mb-2">Đề nghị/ <span class="text-primary">Recommendation:</span></label>
                                                 <div class="form-group">
-                                                    <label class="control-label mb-2 font-bold">KẾT LUẬN/ <span class="text-info">CONCLUSION:</span></label>
-                                                    <input type="text" class="form-control" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label class="control-label mb-2 font-bold">ĐỀ NGHỊ/ <span class="text-info">RECOMMENDATION:</span></label>
-                                                    <input type="text" class="form-control" />
+                                                    <aih:TextField runat="server" ID="txt_recommendation" />
                                                 </div>
                                             </div>
                                         </div>
 
+                                        <div class="form-actions mb-3">
+                                            <asp:Button ID="btnComplete" OnClick="btnComplete_Click" class="btn btn-primary" runat="server" Text="Complete" />
 
-                                        <!-- End Hospitalisation required -->
+                                            <asp:Button ID="btnSave" OnClick="btnSave_Click" class="btn btn-primary" runat="server" Text="Save" />
 
-                                        <div class="form-actions">
-                                            <button type="submit" class="btn btn-info"><i class="fa fa-check"></i> Complete</button>
-                                            <button type="submit" class="btn btn-success"><i class="fa fa-check"></i> Save</button>
-                                            <button type="button" class="btn waves-effect waves-light btn-warning">Revert</button>
-                                            <button type="button" class="btn waves-effect waves-light btn-danger">Delete</button>
+                                            <asp:Button ID="btnDeleteModal" data-toggle="modal" data-target="#deleteDocumentModal" class="btn btn-danger" runat="server" Text="Delete" />
+
+                                            <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
+
+                                            <asp:Button ID="btnPrint" CssClass="btn btn-secondary" runat="server" Text="Print" />
+
+                                            <asp:Button ID="btnCancel" OnClick="btnCancel_Click" CssClass="btn btn-secondary" runat="server" Text="Cancel" />
+
+                                            <div runat="server" id="messagePlaceHolder"></div>
+                                        </div>
+
+                                        <div class="modal fade" id="deleteDocumentModal" tabindex="-1" role="dialog" aria-labelledby="deleteDocumentModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="deleteDocumentModalLabel">Delete document</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p runat="server">Please provide reason for deletion</p>
+                                                        <div class="form-group mb-2">
+                                                            <aih:TextField runat="server" ID="TextField1" />
+                                                        </div>
+                                                        <div class="text-danger" runat="server">Nội dung lý do xóa phải trên 3 ký tự</div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                        <asp:Button runat="server" Text="Delete" ID="btnDelete" class="btn btn-danger" />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                </ContentTemplate>
+                <Triggers>
+                    <asp:PostBackTrigger ControlID="btnAmend" />
+                    <asp:PostBackTrigger ControlID="btnCancel" />
+                    <%--<asp:PostBackTrigger ControlID="btnSave" />
+                    <asp:PostBackTrigger ControlID="btnComplete" />--%>
+                </Triggers>
+            </asp:UpdatePanel>
         </div>
-
-        <!-- ============================================================== -->
-        <!-- Container fluid  -->
-        <!-- ============================================================== -->
-
-        <!-- ============================================================== -->
-        <!-- End Container fluid  -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- End Wrapper -->
-        <!-- ============================================================== -->
-        <!-- ============================================================== -->
-        <!-- All Jquery -->
-        <!-- ============================================================== -->
-
     </form>
 
-    <script src="../scripts/jquery-3.2.1.min.js"></script>
-    <script src="../scripts/bootstrap.min.js"></script>
-    <script src="../scripts/perfect-scrollbar.jquery.min.js"></script>
-    <!--Wave Effects -->
-    <script src="../scripts/waves.js"></script>
-    <!--Menu sidebar -->
-    <script src="../scripts/sidebarmenu.js"></script>
-    <!--stickey kit -->
-    <script src="../scripts/sticky-kit.min.js"></script>
-    <script src="../scripts/jquery.sparkline.min.js"></script>
-    <!--Custom JavaScript -->
-    <script src="../scripts/custom.min.js"></script>
+    <script src="../../scripts/jquery-3.2.1.min.js"></script>
+    <script src="../../scripts/bootstrap.min.js"></script>
+    <script src="../../scripts/perfect-scrollbar.jquery.min.js"></script>
+    <script src="../../scripts/custom.min.js"></script>
+    <script src="../../scripts/myScript.js"></script>
+    <script src="../../scripts/contenteditable.min.js"></script>
+
 </body>
 </html>
+

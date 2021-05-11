@@ -389,11 +389,16 @@ namespace EMR
             }
         }
 
-        public static void DisabledDatimePicker(RadDateTimePicker radDateTimePicker, bool disabled)
+        public static void DisabledDateTimePicker(RadDateTimePicker radDateTimePicker, bool disabled)
         {
             radDateTimePicker.DatePopupButton.Visible = !disabled;
             radDateTimePicker.TimePopupButton.Visible = !disabled;
             radDateTimePicker.EnableTyping = !disabled;
+        }
+        public static void DisabledDateTimePicker(RadDatePicker radDatePicker, bool disabled)
+        {
+            radDatePicker.DatePopupButton.Visible = !disabled;
+            radDatePicker.EnableTyping = !disabled;
         }
         public static void DisabledGridView(GridView gridView, bool disabled)
         {
@@ -438,6 +443,17 @@ namespace EMR
                 if (datetime != null)
                 {
                     radDateTimePicker.SelectedDate = DateTime.Parse(datetime);
+                }
+            }
+            catch (Exception ex) { }
+        }
+        public static void BindDateTimePicker(RadDatePicker radDatePicker, dynamic datetime)
+        {
+            try
+            {
+                if (datetime != null)
+                {
+                    radDatePicker.SelectedDate = DateTime.Parse(datetime);
                 }
             }
             catch (Exception ex) { }

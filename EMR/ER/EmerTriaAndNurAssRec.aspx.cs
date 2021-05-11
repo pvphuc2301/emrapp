@@ -357,7 +357,7 @@ namespace EMR
 
         protected void DisabledControl(bool disabled)
         {
-            WebHelpers.DisabledDatimePicker(dtpk_triage_time, disabled);
+            WebHelpers.DisabledDateTimePicker(dtpk_triage_time, disabled);
             
             txt_triage_area.Disabled = disabled;
             txt_chief_complaint.Disabled = disabled;
@@ -535,15 +535,15 @@ namespace EMR
 
             //Direct Medication & IV fluids Order
 
-            WebHelpers.DisabledDatimePicker(dtpk_blood_glucose_date_time, disabled);
+            WebHelpers.DisabledDateTimePicker(dtpk_blood_glucose_date_time, disabled);
             txt_blood_glucose_note.Disabled = disabled;
-            WebHelpers.DisabledDatimePicker(dtpk_ecg_date_time, disabled);
+            WebHelpers.DisabledDateTimePicker(dtpk_ecg_date_time, disabled);
             txt_ecg_note.Disabled = disabled;
-            WebHelpers.DisabledDatimePicker(dtpk_urine_cath_date_time, disabled);
+            WebHelpers.DisabledDateTimePicker(dtpk_urine_cath_date_time, disabled);
             txt_urine_cath_note.Disabled = disabled;
-            WebHelpers.DisabledDatimePicker(dtpk_splint_cast_dressing_date_time, disabled);
+            WebHelpers.DisabledDateTimePicker(dtpk_splint_cast_dressing_date_time, disabled);
             txt_splint_cast_dressing_note.Disabled = disabled;
-            WebHelpers.DisabledDatimePicker(dtpk_procedure_other_date_time, disabled);
+            WebHelpers.DisabledDateTimePicker(dtpk_procedure_other_date_time, disabled);
             txt_procedure_other_note.Disabled = disabled;
 
             //
@@ -552,7 +552,7 @@ namespace EMR
             DisabledGridView(gridDirectMedication, disabled);
 
             // Discharged
-            WebHelpers.DisabledDatimePicker(dtpk_discharge_date_time, disabled);
+            WebHelpers.DisabledDateTimePicker(dtpk_discharge_date_time, disabled);
             txt_discharge_by.Disabled = disabled;
             foreach (KeyValuePair<string, string> code in DocumentCode.DischargeOption)
             {
@@ -564,14 +564,14 @@ namespace EMR
             }
 
             // Admited
-            WebHelpers.DisabledDatimePicker(dtpk_admited_date_time, disabled);
+            WebHelpers.DisabledDateTimePicker(dtpk_admited_date_time, disabled);
             txt_admited_by.Disabled = disabled;
             txt_receiving_unit.Disabled = disabled;
             txt_transfer_to.Disabled = disabled;
             txt_transfer_by.Disabled = disabled;
 
             //
-            WebHelpers.DisabledDatimePicker(dtpk_noticed_time, disabled);
+            WebHelpers.DisabledDateTimePicker(dtpk_noticed_time, disabled);
 
 
             // Nursing notes

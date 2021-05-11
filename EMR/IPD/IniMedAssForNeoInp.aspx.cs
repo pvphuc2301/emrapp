@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace EMR
 {
-    public partial class InitialMedicalAssessmentForNeonatalInpatient : System.Web.UI.Page
+    public partial class IniMedAssForNeoInp : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {

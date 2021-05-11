@@ -239,11 +239,12 @@ namespace EMR
 
                 btnCancel.Visible = false;
                 txt_amendReason.Visible = false;
+                
                 if (oadr.status == DocumentStatus.FINAL)
                 {
                     btnComplete.Visible = false;
                     btnSave.Visible = false;
-                    btnDelete.Visible = false;
+                    btnDeleteModal.Visible = false;
                     btnCancel.Visible = false;
 
                     btnAmend.Visible = true;
@@ -266,10 +267,10 @@ namespace EMR
 
         protected void DisabledControl(bool disabled)
         {
-            WebHelpers.DisabledDatimePicker(dtpk_admis_delivery, disabled);
+            WebHelpers.DisabledDateTimePicker(dtpk_admis_delivery, disabled);
             txt_obs_name.Disabled = disabled;
             txt_obs_initial.Disabled = disabled;
-            WebHelpers.DisabledDatimePicker(dtpk_delivery_at, disabled);
+            WebHelpers.DisabledDateTimePicker(dtpk_delivery_at, disabled);
             txt_apgar_score_1.Disabled = disabled;
             txt_apgar_score_5.Disabled = disabled;
             txt_apgar_score_10.Disabled = disabled;
@@ -287,9 +288,10 @@ namespace EMR
             rad_intervention1.Disabled = disabled;
             rad_intervention2.Disabled = disabled;
             txt_intervention_note.Disabled = disabled;
+            txt_p_intervention_note.Disabled = disabled;
             rad_placenta_deli1.Disabled = disabled;
             rad_placenta_deli2.Disabled = disabled;
-            WebHelpers.DisabledDatimePicker(dtpk_pacental_deli_dt, disabled);
+            WebHelpers.DisabledDateTimePicker(dtpk_pacental_deli_dt, disabled);
             txt_placenta_deli_mode.Disabled = disabled;
             txt_placenta_weight.Disabled = disabled;
             rad_umbilical_coil1.Disabled = disabled;
@@ -697,6 +699,14 @@ namespace EMR
                 _BindGridView(grid_operations, table);
             }
             catch (Exception ex)
+            {
+
+            }
+        }
+
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (Oadr.Delete((string)Session["UserID"])[0] == WebHelpers.ResponseStatus.OK)
             {
 
             }

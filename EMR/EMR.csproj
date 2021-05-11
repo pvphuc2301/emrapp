@@ -192,7 +192,6 @@
     <Content Include="scripts\jquery.validate.min.js" />
     <Content Include="scripts\jquery.validate.unobtrusive.js" />
     <Content Include="scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="scripts\sticky-affect.js" />
     <Content Include="styles\fontawesome-all.css" />
     <Content Include="styles\login-register-lock.css" />
     <Content Include="styles\myStyle.css" />
@@ -475,13 +474,6 @@
     <Compile Include="UserControls\AmendReason.ascx.designer.cs">
       <DependentUpon>AmendReason.ascx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\AmendReasonBox.ascx.cs">
-      <DependentUpon>AmendReasonBox.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\AmendReasonBox.ascx.designer.cs">
-      <DependentUpon>AmendReasonBox.ascx</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\Message.ascx.cs">
       <DependentUpon>Message.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -524,7 +516,6 @@
     <Content Include="styles\telerik-custom.css" />
     <Content Include="UserControls\Alert.ascx" />
     <Content Include="UserControls\AmendReason.ascx" />
-    <Content Include="UserControls\AmendReasonBox.ascx" />
     <Content Include="UserControls\Message.ascx" />
     <Content Include="UserControls\PatientInfo.ascx" />
     <Content Include="UserControls\PromptButton.ascx" />

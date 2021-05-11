@@ -1,6 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ObsAtDeliRoom.aspx.cs" Inherits="EMR.ObstetricObservationAtDeliveryRoom" ValidateRequest="false" %>
 
-
 <%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="uc1" TagName="PatientInfo" %>
 <%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="aih" TagName="TextField" %>
 <%@ Register Src="~/UserControls/AmendReason.ascx" TagPrefix="aih" TagName="AmendReason" %>
@@ -33,9 +32,8 @@
                                 </div>
                                 <div class="card-body collapse show" id="collapseOne">
                                     <div class="form-body">
-                                        
                                         <div class="row mb-2">
-                                            <label class="control-label mb-2">Nhập phòng sinh lúc<span class="text-primary">Admission to Delivery room at:</span></label>
+                                            <label class="control-label mb-2">Nhập phòng sinh lúc/ <span class="text-primary">Admission to Delivery room at:</span></label>
                                             <div class="col-md-12">
                                                 <div class="form-group">
                                                     <telerik:RadDateTimePicker runat="server" ID="dtpk_admis_delivery" Width="200px" />
@@ -46,7 +44,7 @@
                                                     <label class="control-label mb-1">Người theo dõi/ <span class="text-primary">Observer’s name:</span></label>
                                                 </div>
                                                 <div class="form-group flex-grow-1">
-                                                   <aih:TextField runat="server" id="txt_obs_name" />
+                                                    <aih:TextField runat="server" id="txt_obs_name" />
                                                 </div>
                                             </div>
 
@@ -55,7 +53,7 @@
                                                     <label class="control-label mb-1">Chức danh/ <span class="text-primary">Initial:</span></label>
                                                 </div>
                                                 <div class="form-group flex-grow-1">
-                                                   <aih:TextField runat="server" id="txt_obs_initial" />
+                                                    <aih:TextField runat="server" id="txt_obs_initial" />
                                                 </div>
                                             </div>
                                         </div>
@@ -195,7 +193,7 @@
                                                     <label class="custom-control-label" for="rad_birth_defect2">Có, chi tiết/ <span class="text-primary">Yes, specify:</span></label>
                                                 </div>
 
-                                                <div class="form-group">
+                                                <div class="form-group txt_birth_defect_note">
                                                     <aih:TextField runat="server" id="txt_birth_defect_note" />
                                                 </div>
                                             </div>
@@ -274,7 +272,7 @@
                                                     <aih:TextField runat="server" ID="txt_placenta_deli_mode" />
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-md-6 mb-2 d-lg-flex">
                                                 <div class="w-sm-8">
                                                     <label class="control-label mb-1">Cân nặng/ <span class="text-primary">Weight:</span></label>
@@ -481,7 +479,7 @@
                                             <div class="col-sm-8 mb-2 d-sm-flex">
                                                 <div class="w-sm-7">
                                                     <label class="custom-control custom-checkbox">
-                                                        <input  type="checkbox" class="custom-control-input" runat="server" id="cb_pre_lacera" disabled-for="pre_lacera_degree" />
+                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_pre_lacera" disabled-for="pre_lacera_degree" />
                                                         <span class="custom-control-label">Rách, độ/ <span class="text-primary">Laceration, degree:</span></span>
                                                     </label>
                                                 </div>
@@ -493,7 +491,7 @@
 
                                             <div class="col-md-12 mb-2">
                                                 <label class="custom-control custom-checkbox">
-                                                    <input  type="checkbox" class="custom-control-input" runat="server" id="cb_pre_episiotomy" disabled-for="pre_episiotomy_st_field" />
+                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_pre_episiotomy" disabled-for="pre_episiotomy_st_field" />
                                                     <span class="custom-control-label">Cắt/ <span class="text-primary">Episiotomy. Nếu có, cách khâu và loại chỉ/ If yes, suture and silk type:</span></span>
                                                 </label>
 
@@ -559,8 +557,6 @@
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
                                                                         <div style="width: 105px" class="pt-2 pb-2">Ngày/ <span class="text-primary">Date</span> - Giờ/ <span class="text-primary">hour</span></div>
-                                                                        thu ngan
-
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <div class="form-group">
@@ -669,7 +665,7 @@
 
                                             <asp:Button ID="btnSave" OnClick="btnSave_Click" class="btn btn-primary" runat="server" Text="Save" />
 
-                                            <asp:Button ID="btnDelete" data-target="#exampleModalCenter" data-toggle="modal" data-backdrop="static" data-keyboard="false" class="btn btn-danger" runat="server" Text="Delete" />
+                                            <asp:Button ID="btnDeleteModal" data-toggle="modal" data-target="#deleteDocumentModal" OnClick="btnAmend_Click" class="btn btn-danger" runat="server" Text="Delete" />
 
                                             <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
 
@@ -677,10 +673,34 @@
 
                                             <asp:Button ID="btnCancel" CssClass="btn btn-secondary" runat="server" OnClick="btnCancel_Click" Text="Cancel" />
                                         </div>
+
+                                        <div class="modal fade" id="deleteDocumentModal" tabindex="-1" role="dialog" aria-labelledby="deleteDocumentModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="deleteDocumentModalLabel">Delete document</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p runat="server">Please provide reason for deletion</p>
+                                                        <div class="form-group mb-2">
+                                                            <aih:TextField runat="server" ID="TextField1" />
+                                                        </div>
+                                                        <div class="text-danger" runat="server">Nội dung lý do xóa phải trên 3 ký tự</div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                        <asp:Button runat="server" Text="Delete" ID="btnDelete" class="btn btn-danger" OnClick="btnDelete_Click" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                 </ContentTemplate>
                 <Triggers>
                     <asp:PostBackTrigger ControlID="btnAmend" />

@@ -481,7 +481,7 @@ namespace EMR
             try
             {
 
-                string responseStatus = WebHelpers.PostAPI("api/emr/document-del/" + userName + "/" + DataHelpers.varDocId);
+                string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
 
                 message[0] = responseStatus;
                 if (responseStatus == WebHelpers.ResponseStatus.OK)
@@ -587,8 +587,6 @@ namespace EMR
             { "F", "Nữ/ Femal" },
             { "M", "Nam/ Male" },
         };
-
-
 
         public static class MULTIPLE_SEX
         {
@@ -758,9 +756,552 @@ namespace EMR
 
             return message;
         }
+        public static string[] Delete(string userName)
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
+
+            message[0] = responseStatus;
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI("api/oadr/log/" + DataHelpers.varDocId);
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
         #endregion
     }
 
+    public class Disc
+    {
+
+        #region Properties
+        public static string api = "api/disc";
+        public dynamic document_id { get; set; }
+        public dynamic user_name { get; set; }
+        public dynamic status { get; set; }
+        public dynamic amend_reason { get; set; }
+        public dynamic no_discharge { get; set; }
+        public dynamic disc_ward_code { get; set; }
+        public dynamic disc_ward_desc { get; set; }
+        public dynamic no_health_insurance { get; set; }
+        public dynamic valid_from { get; set; }
+        public dynamic disc_date_time { get; set; }
+        public dynamic diagnosis { get; set; }
+        public dynamic disc_medication { get; set; }
+        public dynamic followup_instruc { get; set; }
+        public dynamic notes { get; set; }
+        public dynamic signature_date { get; set; }
+        #endregion
+
+        public static Dictionary<string, string> DISC_WARD_CODE = new Dictionary<string, string>()
+        {
+            { "", "" },
+            { "K18", "Khoa Nhi – Săn sóc đặc biệt sơ sinh" },
+            { "K03", "Khoa Nội Tổng Hợp" },
+            { "K26", "Khoa Gây mê – Hồi sức" },
+            { "K19", "Khoa Ngoại Tổng Hợp" },
+            { "K02", "Khoa Cấp cứu" },
+            { "K27", "Khoa Sản – Phụ khoa" },
+            { "K48", "Khoa Hồi sức tích cực – Chống độc" },
+        };
+
+        public Disc(dynamic document_id, dynamic user_name, dynamic status, dynamic amend_reason,
+            dynamic no_discharge, dynamic disc_ward_code, dynamic disc_ward_desc, dynamic no_health_insurance,
+            dynamic valid_from, dynamic disc_date_time, dynamic diagnosis, dynamic disc_medication, dynamic followup_instruc, dynamic notes, dynamic signature_date )
+        {
+            this.document_id = document_id;
+            this.user_name = user_name;
+            this.status = status;
+            this.amend_reason = amend_reason;
+            this.no_discharge = no_discharge;
+            this.disc_ward_code = disc_ward_code;
+            this.disc_ward_desc = disc_ward_desc;
+            this.no_health_insurance = no_health_insurance;
+            this.valid_from = valid_from;
+            this.disc_date_time = disc_date_time;
+            this.diagnosis = diagnosis;
+            this.disc_medication = disc_medication;
+            this.followup_instruc = followup_instruc;
+            this.notes = notes;
+            this.signature_date = signature_date;
+        }
+        public Disc(dynamic document_id)
+        {
+            string _jsonData = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
+
+            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+
+            WebHelpers.BindingDatafield(db, this);
+        }
+
+        #region METHODS
+        public string[] Update()
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(string.Format("{0}/edit", api), this);
+            message[0] = responseStatus;
+
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, document_id));
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        public static string[] Delete(string userName)
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
+
+            message[0] = responseStatus;
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, DataHelpers.varDocId));
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        #endregion
+    }
+
+    public class Diss
+    {
+
+        #region Properties
+        public static string api = "api/diss";
+
+        public dynamic document_id { get; set; }
+        public dynamic user_name { get; set; }
+        public dynamic status { get; set; }
+        public dynamic amend_reason { get; set; }
+        public dynamic disc_reason_code { get; set; }
+        public dynamic disc_reason_desc { get; set; }
+        public dynamic date_of_hospital { get; set; }
+        public dynamic date_of_discharge { get; set; }
+        public dynamic admission_reason { get; set; }
+        public dynamic icd10_diagnosis { get; set; }
+        public dynamic associated_diagnosis { get; set; }
+        public dynamic cur_med_history { get; set; }
+        public dynamic ant_med_history { get; set; }
+        public dynamic physical_finding { get; set; }
+        public dynamic lab_result { get; set; }
+        public dynamic patho_result_code { get; set; }
+        public dynamic patho_result_desc { get; set; }
+        public dynamic proce_performed { get; set; }
+        public dynamic treatment { get; set; }
+        public dynamic evolution { get; set; }
+        public dynamic disc_condition { get; set; }
+        public dynamic follow_up_instruc { get; set; }
+        public dynamic special_diet { get; set; }
+        public dynamic next_consult_date { get; set; }
+        public dynamic next_consult_doctor { get; set; }
+        public dynamic disc_medication { get; set; }
+        public dynamic dama { get; set; }
+        public dynamic dama_note { get; set; }
+        public dynamic trans_to_hospital { get; set; }
+        public dynamic transfer_reason { get; set; }
+        public dynamic signed_date { get; set; }
+        public dynamic signed_doctor { get; set; }
+        #endregion
+
+        public static Dictionary<string, string> DISC_REASON_CODE = new Dictionary<string, string>()
+        {
+            { "DAMA", "DAMA" },
+            { "AMA", "Normal" },
+            { "TRANSFER", "Transfer" },
+        };
+
+        public static Dictionary<string, string> PATHO_RESULT_CODE = new Dictionary<string, string>()
+        {
+            { "UC", "Chưa xác định/ Unconfirmed" },
+            { "BE", "Lành tính/ Benign" },
+            { "MA", "Ác tính/ Malignant" },
+        };
+
+        public Diss(
+            dynamic document_id,
+            dynamic user_name,
+            dynamic status,
+            dynamic amend_reason,
+            dynamic disc_reason_code,
+            dynamic disc_reason_desc,
+            dynamic date_of_hospital,
+            dynamic date_of_discharge,
+            dynamic admission_reason,
+            dynamic icd10_diagnosis,
+            dynamic associated_diagnosis,
+            dynamic cur_med_history,
+            dynamic ant_med_history,
+            dynamic physical_finding,
+            dynamic lab_result,
+            dynamic patho_result_code,
+            dynamic patho_result_desc,
+            dynamic proce_performed,
+            dynamic treatment,
+            dynamic evolution,
+            dynamic disc_condition,
+            dynamic follow_up_instruc,
+            dynamic special_diet,
+            dynamic next_consult_date,
+            dynamic next_consult_doctor,
+            dynamic disc_medication,
+            dynamic dama,
+            dynamic dama_note,
+            dynamic trans_to_hospital,
+            dynamic transfer_reason,
+            dynamic signed_date,
+            dynamic signed_doctor
+            )
+        {
+            this.document_id = document_id;
+            this.user_name = user_name;
+            this.status = status;
+            this.amend_reason = amend_reason;
+            this.disc_reason_code = disc_reason_code;
+            this.disc_reason_desc = disc_reason_desc;
+            this.date_of_hospital = date_of_hospital;
+            this.date_of_discharge = date_of_discharge;
+            this.admission_reason = admission_reason;
+            this.icd10_diagnosis = icd10_diagnosis;
+            this.associated_diagnosis = associated_diagnosis;
+            this.cur_med_history = cur_med_history;
+            this.ant_med_history = ant_med_history;
+            this.physical_finding = physical_finding;
+            this.lab_result = lab_result;
+            this.patho_result_code = patho_result_code;
+            this.patho_result_desc = patho_result_desc;
+            this.proce_performed = proce_performed;
+            this.treatment = treatment;
+            this.evolution = evolution;
+            this.disc_condition = disc_condition;
+            this.follow_up_instruc = follow_up_instruc;
+            this.special_diet = special_diet;
+            this.next_consult_date = next_consult_date;
+            this.next_consult_doctor = next_consult_doctor;
+            this.disc_medication = disc_medication;
+            this.dama = dama;
+            this.dama_note = dama_note;
+            this.trans_to_hospital = trans_to_hospital;
+            this.transfer_reason = transfer_reason;
+            this.signed_date = signed_date;
+            this.signed_doctor = signed_doctor;
+        }
+        public Diss(dynamic document_id)
+        {
+            string _jsonData = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
+
+            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+
+            WebHelpers.BindingDatafield(db, this);
+        }
+
+        #region METHODS
+        public string[] Update()
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(string.Format("{0}/edit", api), this);
+            message[0] = responseStatus;
+
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, document_id));
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        public static string[] Delete(string userName)
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
+
+            message[0] = responseStatus;
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, DataHelpers.varDocId));
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        #endregion
+    }
+    public class Uusr
+    {
+
+        #region Properties
+        public static string api = "api/uusr";
+        public dynamic document_id { get; set; }
+        public dynamic user_name { get; set; }
+        public dynamic status { get; set; }
+        public dynamic amend_reason { get; set; }
+        public dynamic diagnosis { get; set; }
+        public dynamic left_kidney { get; set; }
+        public dynamic right_kidney { get; set; }
+        public dynamic urinary_bladder { get; set; }
+        public dynamic prostate { get; set; }
+        public dynamic post_void_resi_volume { get; set; }
+        public dynamic conclusion { get; set; }
+        public dynamic recommendation { get; set; }
+        #endregion
+
+        public Uusr(
+            dynamic document_id,
+            dynamic user_name,
+            dynamic status,
+            dynamic amend_reason,
+            dynamic diagnosis,
+            dynamic left_kidney,
+            dynamic right_kidney,
+            dynamic urinary_bladder,
+            dynamic prostate,
+            dynamic post_void_resi_volume,
+            dynamic conclusion,
+            dynamic recommendation)
+        {
+            this.document_id = document_id;
+            this.user_name = user_name;
+            this.status = status;
+            this.amend_reason = amend_reason;
+            this.diagnosis = diagnosis;
+            this.left_kidney = left_kidney;
+            this.right_kidney = right_kidney;
+            this.urinary_bladder = urinary_bladder;
+            this.prostate = prostate;
+            this.post_void_resi_volume = post_void_resi_volume;
+            this.conclusion = conclusion;
+            this.recommendation = recommendation;
+        }
+      
+        public Uusr(dynamic document_id)
+        {
+            string _jsonData = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
+
+            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+
+            WebHelpers.BindingDatafield(db, this);
+        }
+
+        #region METHODS
+        public string[] Update()
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(string.Format("{0}/edit", api), this);
+            message[0] = responseStatus;
+
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, document_id));
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        public static string[] Delete(string userName)
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
+            message[0] = responseStatus;
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, DataHelpers.varDocId));
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        #endregion
+    }
+    public class Surc
+    {
+
+        #region Properties
+        public static string api = "api/surc";
+        public dynamic document_id { get; set; }
+        public dynamic user_name { get; set; }
+        public dynamic status { get; set; }
+        public dynamic amend_reason { get; set; }
+        public dynamic admission_date { get; set; }
+        public dynamic procedure_date { get; set; }
+        public dynamic discharge_date { get; set; }
+        public dynamic preo_diagnosis { get; set; }
+        public dynamic name_of_procedure { get; set; }
+        public dynamic proce_narrative { get; set; }
+        public dynamic blood_type { get; set; }
+        public dynamic rh { get; set; }
+        #endregion
+
+        public Surc(
+            dynamic document_id,
+            dynamic user_name,
+            dynamic status,
+            dynamic amend_reason,
+            dynamic admission_date,
+            dynamic procedure_date,
+            dynamic discharge_date,
+            dynamic preo_diagnosis,
+            dynamic name_of_procedure,
+            dynamic proce_narrative,
+            dynamic blood_type,
+            dynamic rh)
+        {
+            this.document_id = document_id;
+            this.user_name = user_name;
+            this.status = status;
+            this.amend_reason = amend_reason;
+            this.admission_date = admission_date;
+            this.procedure_date = procedure_date;
+            this.discharge_date = discharge_date;
+            this.preo_diagnosis = preo_diagnosis;
+            this.name_of_procedure = name_of_procedure;
+            this.proce_narrative = proce_narrative;
+            this.blood_type = blood_type;
+            this.rh = rh;
+        }
+
+        public Surc(dynamic document_id)
+        {
+            string _jsonData = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
+
+            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+
+            WebHelpers.BindingDatafield(db, this);
+        }
+
+        #region METHODS
+        public string[] Update()
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(string.Format("{0}/edit", api), this);
+            message[0] = responseStatus;
+
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, document_id));
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        public static string[] Delete(string userName)
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
+            message[0] = responseStatus;
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, DataHelpers.varDocId));
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        #endregion
+    }
+    public class Somr
+    {
+
+        #region Properties
+        public static string api = "api/somr";
+        public dynamic document_id { get; set; }
+        public dynamic user_name { get; set; }
+        public dynamic status { get; set; }
+        public dynamic amend_reason { get; set; }
+        public dynamic form_date { get; set; }
+        public dynamic to_date { get; set; }
+        public dynamic chief_complaint { get; set; }
+        public dynamic diagnosis { get; set; }
+        public dynamic clinical_evolution { get; set; }
+        public dynamic result_para_clinical { get; set; }
+        public dynamic treatment { get; set; }
+        public dynamic eval_treatment { get; set; }
+        public dynamic treatment_prognosis { get; set; }
+        #endregion
+
+        public Somr(
+            dynamic document_id,
+            dynamic user_name,
+            dynamic status,
+            dynamic amend_reason,
+            dynamic form_date,
+            dynamic to_date,
+            dynamic chief_complaint,
+            dynamic diagnosis,
+            dynamic clinical_evolution,
+            dynamic result_para_clinical,
+            dynamic treatment,
+            dynamic eval_treatment,
+            dynamic treatment_prognosis)
+        {
+            this.document_id = document_id;
+            this.user_name = user_name;
+            this.status = status;
+            this.amend_reason = amend_reason;
+            this.form_date = form_date;
+            this.to_date = to_date;
+            this.chief_complaint = chief_complaint;
+            this.diagnosis = diagnosis;
+            this.clinical_evolution = clinical_evolution;
+            this.result_para_clinical = result_para_clinical;
+            this.treatment = treatment;
+            this.eval_treatment = eval_treatment;
+            this.treatment_prognosis = treatment_prognosis;
+        }
+
+        public Somr(dynamic document_id)
+        {
+            string _jsonData = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
+
+            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+
+            WebHelpers.BindingDatafield(db, this);
+        }
+
+        #region METHODS
+        public string[] Update()
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(string.Format("{0}/edit", api), this);
+            message[0] = responseStatus;
+
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, document_id));
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        public static string[] Delete(string userName)
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
+            message[0] = responseStatus;
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, DataHelpers.varDocId));
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        #endregion
+    }
     public class OutPatientInitialNursingAssement
     {
         #region Properties
@@ -955,7 +1496,7 @@ namespace EMR
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI("api/emr/document-del/" + userName + "/" + DataHelpers.varDocId);
+            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
 
             message[0] = responseStatus;
             if (responseStatus == WebHelpers.ResponseStatus.OK)
@@ -1541,7 +2082,7 @@ namespace EMR
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI("api/emr/document-del/" + userName + "/" + DataHelpers.varDocId);
+            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
 
             message[0] = responseStatus;
             if (responseStatus == WebHelpers.ResponseStatus.OK)
