@@ -2098,4 +2098,342 @@ namespace EMR
     #endregion
 
     #endregion
+
+    #region Trai
+    public partial class EmergencyMedicalRecord
+    {
+        #region Properties
+        public dynamic document_id { get; set; }
+        public dynamic user_name { get; set; }
+        public dynamic status { get; set; }
+        public dynamic amend_reason { get; set; }
+        public dynamic evaluation_time { get; set; }
+        public dynamic chief_complaint { get; set; }
+        public dynamic chief_complaint_code { get; set; }
+        public dynamic chief_complaint_desc { get; set; }
+        public dynamic history_of_present { get; set; }
+        public dynamic past_med_his_meds { get; set; }
+        public dynamic past_med_his_surs { get; set; }
+        public dynamic habits { get; set; }
+        public dynamic habits_other { get; set; }
+        public dynamic home_medications { get; set; }
+        public dynamic allergies { get; set; }
+        public dynamic relevant_family_history { get; set; }
+        public dynamic finding { get; set; }
+        public dynamic required_code { get; set; }
+        public dynamic required_text { get; set; }
+        public dynamic investigations_results { get; set; }
+        public dynamic initial_diagnosis { get; set; }
+        public dynamic diferential_diagnosis { get; set; }
+        public dynamic associated_conditions { get; set; }
+        public dynamic comfirmed_diagnosis { get; set; }
+        public dynamic specialist_opinion { get; set; }
+        public dynamic name_of_specialist { get; set; }
+        public dynamic time_contaced { get; set; }
+        public dynamic time_provided { get; set; }
+        public dynamic spec_opinion_summarised { get; set; }
+        public dynamic treatment { get; set; }
+        public dynamic progress_note { get; set; }
+        public dynamic conclusions { get; set; }
+        public dynamic discharge { get; set; }
+        public dynamic prescription { get; set; }
+        public dynamic specify_care_instructions { get; set; }
+        public dynamic discharge_time { get; set; }
+        public dynamic referred_to_OPD { get; set; }
+        public dynamic referred_to_OPD_text { get; set; }
+        public dynamic hospitalisation_required { get; set; }
+        public dynamic reason { get; set; }
+        public dynamic ward { get; set; }
+        public dynamic time_of_leaving_emergency { get; set; }
+        public dynamic emergency_surgery { get; set; }
+        public dynamic pre_operative_diagnosis { get; set; }
+        public dynamic brief_summary { get; set; }
+        public dynamic time_of_leaving_emer_e { get; set; }
+        public dynamic transfer_hospital { get; set; }
+        public dynamic reason_for_transfer { get; set; }
+        public dynamic status_before_transfer { get; set; }
+        public dynamic time_of_leaving_emer_a { get; set; }
+        public dynamic patient_discharge { get; set; }
+        public dynamic txt_patient_discharge { get; set; }
+        public dynamic icd_10 { get; set; }
+        public dynamic model_id { get; set; }
+        public dynamic patient_visit_id { get; set; }
+        public dynamic created_user_id { get; set; }
+        public dynamic created_name_e { get; set; }
+        public dynamic created_name_l { get; set; }
+        public dynamic created_date_time { get; set; }
+        public dynamic modified_user_id { get; set; }
+        public dynamic modified_name_e { get; set; }
+        public dynamic modified_name_l { get; set; }
+        public dynamic modified_date_time { get; set; }
+        public dynamic submited_user_id { get; set; }
+        public dynamic submited_name_e { get; set; }
+        public dynamic submited_name_l { get; set; }
+        public dynamic submited_date_time { get; set; }
+        public dynamic signed_user_id { get; set; }
+        public dynamic signed_name_e { get; set; }
+        public dynamic signed_name_l { get; set; }
+        public dynamic signed_date_time { get; set; }
+        public dynamic delete_user_id { get; set; }
+        public dynamic delete_name_e { get; set; }
+        public dynamic delete_name_l { get; set; }
+        public dynamic delete_date_time { get; set; }
+        public dynamic document_type_rcd { get; set; }
+        public dynamic documentid { get; set; }
+        #endregion
+        public static Dictionary<string, string> ChiefComplaintCode = new Dictionary<string, string>()
+        {
+            { "R", "Resuscitation/ Hồi sức" },
+            { "E", "Emergency/ Cấp cứu" },
+            { "U", "Urgent/ Khẩn trương" },
+            { "L", "Less urgent/ Trì hoãn" },
+            { "N", "Non-Urgent/ Không cấp cứu" },
+        };
+        //public class PatientPischarge
+        public static Dictionary<string, string> PatientPischarge = new Dictionary<string, string>()
+        {
+            { "IMP", "Improved/ Có cải thiện" },
+            { "UNC", "Unchanged/ Không thay đổi" },
+            { "UNS", "Unstable/ Không ổn định" }
+        };
+        //public class Habits
+        public static Dictionary<string, string> Habits = new Dictionary<string, string>()
+        {
+            { "A", "Alcohol/ Rượu" },
+            { "S", "Smoking/ Thuốc lá" },
+            { "D", "Drugs/ Chất gây nghiện" },
+            { "0", "Other, specify/ Khác ghi rõ" }
+        };
+        public static Dictionary<string, string> Treatment = new Dictionary<string, string>()
+        {
+            { "id", "" },
+            { "time", "" },
+            { "medication", "" },
+            { "dose", "" },
+            { "route", "" },
+            { "comment", "" },
+        };
+        public static Dictionary<string, string> ProgressNote = new Dictionary<string, string>()
+        {
+            { "id", "" },
+            { "time", "" },
+            { "progress", "" },
+            { "appropriate_order", "" },
+        };
+        EmergencyMedicalRecord() { }
+
+        // Constructor for API Update
+        /// <summary>
+        /// Get document by document_id
+        /// </summary>
+        /// <param name="document_id"></param>
+        public EmergencyMedicalRecord(dynamic document_id)
+        {
+            DataTable tbl = new DataTable();
+            string _jsonData = WebHelpers.GetAPI("api/emr/" + document_id);
+
+            if (_jsonData != null)
+            {
+                // this = new OutpatientMedicalRecord();
+                tbl = WebHelpers.GetJSONToDataTable(_jsonData);
+                WebHelpers.BindingDatafield(tbl, this);
+                DataHelpers.varDocumentStatus = this.status;
+            }
+        }
+        public EmergencyMedicalRecord(dynamic document_id, dynamic use_name)
+        {
+            this.document_id = document_id;
+            this.user_name = user_name;
+        }
+        public EmergencyMedicalRecord(
+        dynamic _document_id
+        , dynamic _user_name
+        , dynamic _status
+        , dynamic _evaluation_time
+        , dynamic _chief_complaint
+        , dynamic _chief_complaint_code
+        , dynamic _chief_complaint_desc
+        , dynamic _history_of_present
+        , dynamic _past_med_his_meds
+        , dynamic _past_med_his_surs
+        , dynamic _habits
+        , dynamic _habits_other
+        , dynamic _home_medications
+        , dynamic _allergies
+        , dynamic _relevant_family_history
+        , dynamic _finding
+        , dynamic _required_code
+        , dynamic _required_text
+        , dynamic _investigations_results
+        , dynamic _initial_diagnosis
+        , dynamic _diferential_diagnosis
+        , dynamic _associated_conditions
+        , dynamic _comfirmed_diagnosis
+        , dynamic _specialist_opinion
+        , dynamic _name_of_specialist
+        , dynamic _time_contaced
+        , dynamic _time_provided
+        , dynamic _spec_opinion_summarised
+        , dynamic _treatment
+        , dynamic _progress_note
+        , dynamic _conclusions
+        , dynamic _discharge
+        , dynamic _prescription
+        , dynamic _specify_care_instructions
+        , dynamic _discharge_time
+        , dynamic _referred_to_OPD
+        , dynamic _referred_to_OPD_text
+        , dynamic _hospitalisation_required
+        , dynamic _reason
+        , dynamic _ward
+        , dynamic _time_of_leaving_emergency
+        , dynamic _emergency_surgery
+        , dynamic _pre_operative_diagnosis
+        , dynamic _brief_summary
+        , dynamic _time_of_leaving_emer_e
+        , dynamic _transfer_hospital
+        , dynamic _reason_for_transfer
+        , dynamic _status_before_transfer
+        , dynamic _time_of_leaving_emer_a
+        , dynamic _patient_discharge
+        , dynamic _txt_patient_discharge
+        , dynamic _icd_10
+        , dynamic _model_id
+        , dynamic _patient_visit_id
+        , dynamic _amend_reason
+        , dynamic _created_user_id
+        , dynamic _created_name_e
+        , dynamic _created_name_l
+        , dynamic _created_date_time
+        , dynamic _modified_user_id
+        , dynamic _modified_name_e
+        , dynamic _modified_name_l
+        , dynamic _modified_date_time
+        , dynamic _submited_user_id
+        , dynamic _submited_name_e
+        , dynamic _submited_name_l
+        , dynamic _submited_date_time
+        , dynamic _signed_user_id
+        , dynamic _signed_name_e
+        , dynamic _signed_name_l
+        , dynamic _signed_date_time
+        , dynamic _delete_user_id
+        , dynamic _delete_name_e
+        , dynamic _delete_name_l
+        , dynamic _delete_date_time
+        , dynamic _document_type_rcd
+        )
+        {
+
+            this.document_id = _document_id;
+            this.user_name = _user_name;
+            this.status = _status;
+            this.evaluation_time = _evaluation_time;
+            this.chief_complaint = _chief_complaint;
+            this.chief_complaint_code = _chief_complaint_code;
+            this.chief_complaint_desc = _chief_complaint_desc;
+            this.history_of_present = _history_of_present;
+            this.past_med_his_meds = _past_med_his_meds;
+            this.past_med_his_surs = _past_med_his_surs;
+            this.habits = _habits;
+            this.habits_other = _habits_other;
+            this.home_medications = _home_medications;
+            this.allergies = _allergies;
+            this.relevant_family_history = _relevant_family_history;
+            this.finding = _finding;
+            this.required_code = _required_code;
+            this.required_text = _required_text;
+            this.investigations_results = _investigations_results;
+            this.initial_diagnosis = _initial_diagnosis;
+            this.diferential_diagnosis = _diferential_diagnosis;
+            this.associated_conditions = _associated_conditions;
+            this.comfirmed_diagnosis = _comfirmed_diagnosis;
+            this.specialist_opinion = _specialist_opinion;
+            this.name_of_specialist = _name_of_specialist;
+            this.time_contaced = _time_contaced;
+            this.time_provided = _time_provided;
+            this.spec_opinion_summarised = _spec_opinion_summarised;
+            this.treatment = _treatment;
+            this.progress_note = _progress_note;
+            this.conclusions = _conclusions;
+            this.discharge = _discharge;
+            this.prescription = _prescription;
+            this.specify_care_instructions = _specify_care_instructions;
+            this.discharge_time = _discharge_time;
+            this.referred_to_OPD = _referred_to_OPD;
+            this.referred_to_OPD_text = _referred_to_OPD_text;
+            this.hospitalisation_required = _hospitalisation_required;
+            this.reason = _reason;
+            this.ward = _ward;
+            this.time_of_leaving_emergency = _time_of_leaving_emergency;
+            this.emergency_surgery = _emergency_surgery;
+            this.pre_operative_diagnosis = _pre_operative_diagnosis;
+            this.brief_summary = _brief_summary;
+            this.time_of_leaving_emer_e = _time_of_leaving_emer_e;
+            this.transfer_hospital = _transfer_hospital;
+            this.reason_for_transfer = _reason_for_transfer;
+            this.status_before_transfer = _status_before_transfer;
+            this.time_of_leaving_emer_a = _time_of_leaving_emer_a;
+            this.patient_discharge = _patient_discharge;
+            this.txt_patient_discharge = _txt_patient_discharge;
+            this.icd_10 = _icd_10;
+            this.model_id = _model_id;
+            this.patient_visit_id = _patient_visit_id;
+            this.amend_reason = _amend_reason;
+            this.created_user_id = _created_user_id;
+            this.created_name_e = _created_name_e;
+            this.created_name_l = _created_name_l;
+            this.created_date_time = _created_date_time;
+            this.modified_user_id = _modified_user_id;
+            this.modified_name_e = _modified_name_e;
+            this.modified_name_l = _modified_name_l;
+            this.modified_date_time = _modified_date_time;
+            this.submited_user_id = _submited_user_id;
+            this.submited_name_e = _submited_name_e;
+            this.submited_name_l = _submited_name_l;
+            this.submited_date_time = _submited_date_time;
+            this.signed_user_id = _signed_user_id;
+            this.signed_name_e = _signed_name_e;
+            this.signed_name_l = _signed_name_l;
+            this.signed_date_time = _signed_date_time;
+            this.delete_user_id = _delete_user_id;
+            this.delete_name_e = _delete_name_e;
+            this.delete_name_l = _delete_name_l;
+            this.delete_date_time = _delete_date_time;
+            this.document_type_rcd = _document_type_rcd;
+        }
+
+        public string[] Update()
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI("api/emr/edit", this);
+            message[0] = responseStatus;
+
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI("api/emr/log/" + this.document_id);
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+
+        public static string[] Delete(string userName)
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI("api/emr/document-del/" + userName + "/" + DataHelpers.varDocId);
+
+            message[0] = responseStatus;
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI("api/emr/log/" + DataHelpers.varDocId);
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+    }
+    #endregion
 }

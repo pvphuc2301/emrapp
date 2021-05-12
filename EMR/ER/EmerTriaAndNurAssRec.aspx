@@ -2,11 +2,12 @@
 
 <%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="uc1" TagName="PatientInfo" %>
 <%@ Register Src="~/UserControls/Alert.ascx" TagPrefix="uc1" TagName="Alert" %>
-<%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="Input" TagName="TextField" %>
+<%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="aih" TagName="TextField" %>
 <%@ Register Src="~/UserControls/PromptButton.ascx" TagPrefix="Button" TagName="Prompt" %>
 <%@ Register Src="~/icons/PlusCircle.ascx" TagPrefix="Icon" TagName="PlusCircle" %>
 <%@ Register Src="~/icons/Trash.ascx" TagPrefix="icon" TagName="trash" %>
 <%@ Register Src="~/icons/XSquare.ascx" TagPrefix="icon" TagName="xsquare" %>
+<%@ Register Src="~/UserControls/AmendReason.ascx" TagPrefix="aih" TagName="AmendReason" %>
 
 <!DOCTYPE html>
 
@@ -48,24 +49,11 @@
         <div class="scroll-sidebar h-100 w-100">
             <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                    <div class="row" id="amendReasonBox" runat="server">
-                        <div class="col-md-12">
-                            <div class="card amend-box">
-                                <div class="card-header">
-                                    <h5>Lý do thay đổi/ <span class="text-primary">amend reason: </span><span class="text-danger">*</span></h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <Input:TextField runat="server" ID="txtAmendReason" />
-                                    </div>
-                                    <div id="lblAmendReasonError" class="text-danger" runat="server">Nội dung lý do thay đổi phải trên 3 ký tự</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+                    <aih:AmendReason runat="server" ID="txt_amendReason" />
                     <uc1:PatientInfo runat="server" ID="PatientInfo" />
 
-                     <div class="row" style="margin-bottom: 50px;">
+                    <div class="row" style="margin-bottom: 50px;">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
@@ -73,7 +61,7 @@
                                     <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="arrowhead"></a>
                                 </div>
                                 <div class="card-body collapse show" id="collapseOne">
-                                    <div class="form-body" >
+                                    <div class="form-body">
                                         <div class="row mb-2">
                                             <div class="col-md-12">
                                                 <label class="control-label mb-1">
@@ -89,7 +77,7 @@
                                             <div class="col-md-12">
                                                 <label class="control-label mb-1">Khu vực/ <span class="text-primary">Triage Area #:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txt_triage_area" />
+                                                    <aih:TextField runat="server" ID="txt_triage_area" />
                                                 </div>
                                             </div>
                                         </div>
@@ -98,11 +86,11 @@
                                             <div class="col-md-12">
                                                 <label class="control-label mb-1">Than phiền chính/ <span class="text-primary">Chief complaint:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txt_chief_complaint" />
+                                                    <aih:TextField runat="server" ID="txt_chief_complaint" />
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="row mb-2">
                                             <div class="col-md-2 col-sm-6">
                                                 <div class="custom-control custom-radio">
@@ -173,7 +161,7 @@
                                             <div class="col-md-12">
                                                 <label class="control-label mb-1">Tiền căn/ <span class="text-primary">Past Medical History:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txt_past_medical_history" />
+                                                    <aih:TextField runat="server" ID="txt_past_medical_history" />
                                                 </div>
                                             </div>
                                         </div>
@@ -182,7 +170,7 @@
                                             <div class="col-md-12">
                                                 <label class="control-label mb-1">Quá trình bệnh lý/ <span class="text-primary">Narrative:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txt_narrative" />
+                                                    <aih:TextField runat="server" ID="txt_narrative" />
                                                 </div>
                                             </div>
                                         </div>
@@ -325,28 +313,28 @@
                                             <div class="col-md-6 mb-2">
                                                 <label class="control-label mb-1">Khởi phát/ <span class="text-primary">Onset:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txt_pain_onset" />
+                                                    <aih:TextField runat="server" ID="txt_pain_onset" />
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6 mb-2">
                                                 <label class="control-label mb-1">Vị trí/ <span class="text-primary">Location:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txt_pain_location" />
+                                                    <aih:TextField runat="server" ID="txt_pain_location" />
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6 mb-2">
                                                 <label class="control-label mb-1">Kéo dài/ <span class="text-primary">Duration:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txt_pain_duration" />
+                                                    <aih:TextField runat="server" ID="txt_pain_duration" />
                                                 </div>
                                             </div>
 
                                             <div class="col-md-6 mb-2">
                                                 <label class="control-label mb-1">Hướng lan/ <span class="text-primary">Radiation:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txt_pain_radiation" />
+                                                    <aih:TextField runat="server" ID="txt_pain_radiation" />
                                                 </div>
                                             </div>
                                         </div>
@@ -370,7 +358,7 @@
                                             <div class="col-md-12 mb-2">
                                                 <label for="pain-scale" class="control-label mb-1">Dị ứng/ <span class="text-primary">Allergy:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txt_allergy" />
+                                                    <aih:TextField runat="server" ID="txt_allergy" />
                                                 </div>
                                             </div>
                                         </div>
@@ -379,7 +367,7 @@
                                             <div class="col-12">
                                                 <label class="control-label mb-1">Thuốc đã dùng/ <span class="text-primary">Medications used:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txt_current_medication" />
+                                                    <aih:TextField runat="server" ID="txt_current_medication" />
                                                 </div>
                                             </div>
                                         </div>
@@ -416,6 +404,23 @@
                                                     <input type="checkbox" class="custom-control-input" runat="server" id="cb_skin_integrity_h" />
                                                     <span class="custom-control-label">Loét/ <span class="text-primary">Ulceration (U)</span></span>
                                                 </label>
+                                            </div>
+
+                                            <div class="col-md-12 mb-2">
+                                                <telerik:RadAjaxPanel runat="server">
+                                                    <telerik:RadImageEditor  OnImageLoading="RadImageEditor1_ImageLoading" OnImageChanged="RadImageEditor1_ImageChanged" EnableResize="false" RenderMode="Lightweight" ID="RadImageEditor1" runat="server" Width="513px" Height="565px">
+                                                        <Tools>
+                                                            <telerik:ImageEditorToolGroup>
+                                                                <telerik:ImageEditorTool  CommandName="Save"></telerik:ImageEditorTool>
+                                                                <telerik:ImageEditorToolStrip CommandName="Undo">
+                                                                </telerik:ImageEditorToolStrip>
+                                                                <telerik:ImageEditorToolStrip CommandName="Redo">
+                                                                </telerik:ImageEditorToolStrip>
+                                                                <telerik:ImageEditorTool CommandName="Pencil"></telerik:ImageEditorTool>
+                                                            </telerik:ImageEditorToolGroup>
+                                                        </Tools>
+                                                    </telerik:RadImageEditor>
+                                                </telerik:RadAjaxPanel>
                                             </div>
 
                                             <div class="col-md-6 mb-2">
@@ -488,7 +493,7 @@
                                             <div class="col-md-12 mb-2">
                                                 <label class="control-label mb-1 mt-2">Người chăm sóc sau khi xuất viện <span class="text-primary">People who will look after patient after discharge:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txt_caregiver_after_discharge" />
+                                                    <aih:TextField runat="server" ID="txt_caregiver_after_discharge" />
                                                 </div>
                                             </div>
                                         </div>
@@ -520,7 +525,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="form-group btc_language_note_field">
-                                                    <Input:TextField runat="server" ID="txt_btc_language_note" />
+                                                    <aih:TextField runat="server" ID="txt_btc_language_note" />
                                                 </div>
                                             </div>
                                         </div>
@@ -545,7 +550,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="form-group btc_cognitive_field">
-                                                    <Input:TextField runat="server" ID="txt_btc_cognitive_note" />
+                                                    <aih:TextField runat="server" ID="txt_btc_cognitive_note" />
                                                 </div>
                                             </div>
                                         </div>
@@ -569,7 +574,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="form-group btc_sensory_field">
-                                                    <Input:TextField runat="server" ID="txt_btc_sensory_note" />
+                                                    <aih:TextField runat="server" ID="txt_btc_sensory_note" />
                                                 </div>
                                             </div>
                                         </div>
@@ -593,7 +598,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="form-group btc_religious_field">
-                                                    <Input:TextField runat="server" ID="txt_btc_religious_note" />
+                                                    <aih:TextField runat="server" ID="txt_btc_religious_note" />
                                                 </div>
                                             </div>
                                         </div>
@@ -617,7 +622,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="form-group btc_cultural_field">
-                                                    <Input:TextField runat="server" ID="txt_btc_cultural_note" />
+                                                    <aih:TextField runat="server" ID="txt_btc_cultural_note" />
                                                 </div>
                                             </div>
                                         </div>
@@ -662,19 +667,19 @@
                                             <div class="col-md-4">
                                                 <label class="control-label mb-2">Mắt/ <span class="text-primary">E</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txt_eye" />
+                                                    <aih:TextField runat="server" ID="txt_eye" />
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="control-label mb-2">Lời nói/ <span class="text-primary">V</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txt_voice" />
+                                                    <aih:TextField runat="server" ID="txt_voice" />
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="control-label mb-2">Vận động/ <span class="text-primary">M</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txt_motion" />
+                                                    <aih:TextField runat="server" ID="txt_motion" />
                                                 </div>
                                             </div>
                                         </div>
@@ -700,7 +705,7 @@
                                                     <span class="custom-control-label">Khác/ <span class="text-primary">Others:</span></span>
                                                 </label>
                                                 <div class="form-group str_others_field">
-                                                    <Input:TextField runat="server" ID="txt_str_others" />
+                                                    <aih:TextField runat="server" ID="txt_str_others" />
                                                 </div>
                                             </div>
                                         </div>
@@ -773,7 +778,7 @@
                                                 </label>
 
                                                 <div class="form-group respiratory_oth_field">
-                                                    <Input:TextField runat="server" ID="txt_respiratory_oth" />
+                                                    <aih:TextField runat="server" ID="txt_respiratory_oth" />
                                                 </div>
                                             </div>
                                         </div>
@@ -808,7 +813,7 @@
                                                 </label>
 
                                                 <div class="form-group rhythm_field">
-                                                    <Input:TextField runat="server" ID="txt_rhythm_str_others" />
+                                                    <aih:TextField runat="server" ID="txt_rhythm_str_others" />
                                                 </div>
                                             </div>
                                         </div>
@@ -831,7 +836,7 @@
                                                 </label>
 
                                                 <div class="form-group psychosocial_str_others_field">
-                                                    <Input:TextField runat="server" ID="txt_psychosocial_str_others" />
+                                                    <aih:TextField runat="server" ID="txt_psychosocial_str_others" />
                                                 </div>
                                             </div>
                                         </div>
@@ -855,7 +860,7 @@
                                                 </label>
 
                                                 <div class="form-group other_systems_field">
-                                                    <Input:TextField runat="server" ID="txt_others_systems_str" />
+                                                    <aih:TextField runat="server" ID="txt_others_systems_str" />
                                                 </div>
                                             </div>
                                         </div>
@@ -871,19 +876,19 @@
                                                 </label>
 
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txt_lmP_note" />
+                                                    <aih:TextField runat="server" ID="txt_lmP_note" />
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="control-label mb-1">Tiền sử thai nghén/ <span class="text-primary">Gravida/PARA:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txt_para" />
+                                                    <aih:TextField runat="server" ID="txt_para" />
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
                                                 <label class="control-label mb-1">Sẩy/ <span class="text-primary">Abortions:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txt_abortions" />
+                                                    <aih:TextField runat="server" ID="txt_abortions" />
                                                 </div>
                                             </div>
                                         </div>
@@ -906,14 +911,16 @@
                                                     </thead>
                                                     <tbody>
                                                         <tr>
-                                                            <td><div>ĐHMM/Capillary Blood glucose </div></td>
+                                                            <td>
+                                                                <div>ĐHMM/Capillary Blood glucose </div>
+                                                            </td>
                                                             <td>
                                                                 <div class="form-group">
                                                                     <telerik:RadDateTimePicker runat="server" ID="dtpk_blood_glucose_date_time" Width="200px" />
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <Input:TextField runat="server" ID="txt_blood_glucose_note" />
+                                                                <aih:TextField runat="server" ID="txt_blood_glucose_note" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -925,7 +932,7 @@
                                                                 </div>
                                                             </td>
                                                             <td data-label="Ghi chú/ Notes">
-                                                                <Input:TextField runat="server" ID="txt_ecg_note" />
+                                                                <aih:TextField runat="server" ID="txt_ecg_note" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -937,7 +944,7 @@
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <Input:TextField runat="server" ID="txt_urine_cath_note" />
+                                                                <aih:TextField runat="server" ID="txt_urine_cath_note" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -949,7 +956,7 @@
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <Input:TextField runat="server" ID="txt_splint_cast_dressing_note" />
+                                                                <aih:TextField runat="server" ID="txt_splint_cast_dressing_note" />
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -961,7 +968,7 @@
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <Input:TextField runat="server" ID="txt_procedure_other_note" />
+                                                                <aih:TextField runat="server" ID="txt_procedure_other_note" />
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -988,7 +995,7 @@
                                                                         <div style="width: 105px" class="text-primary pt-2 pb-2">Time</div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <telerik:RadTimePicker Width="105px"  ID="time" SelectedTime='<%# TimeSpan.Parse(Eval("time").ToString()) %>' runat="server" />
+                                                                        <telerik:RadTimePicker Width="105px" ID="time" SelectedTime='<%# TimeSpan.Parse(Eval("time").ToString()) %>' runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -996,73 +1003,82 @@
                                                                         <div style="width: 80px" class="text-primary">RR (l/p)</div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField Value='<%#Eval("rrlp") %>' DataKey="rrlp" runat="server" />
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField >
-                                                                    <HeaderTemplate>
-                                                                        <div style="width: 80px" class="text-primary">O2Sat (%)</span>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <Input:TextField Value='<%#Eval("o2sat") %>' DataKey="o2sat" runat="server" />
+                                                                        <aih:TextField Value='<%#Eval("rrlp") %>' DataKey="rrlp" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <div style="width: 80px" class="text-primary">HR (bpm)</span>
+                                                                        <div style="width: 80px" class="text-primary">
+                                                                        O2Sat (%)</span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField Value='<%#Eval("hr") %>' DataKey="hr" runat="server" />
+                                                                        <aih:TextField Value='<%#Eval("o2sat") %>' DataKey="o2sat" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <div style="width: 80px" class="text-primary">BP (mmhg)</span>
+                                                                        <div style="width: 80px" class="text-primary">
+                                                                        HR (bpm)</span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField Value='<%#Eval("bp") %>' DataKey="bp" runat="server" />
+                                                                        <aih:TextField Value='<%#Eval("hr") %>' DataKey="hr" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <div style="width: 80px" class="text-primary">Temp (0C)</span>
+                                                                        <div style="width: 80px" class="text-primary">
+                                                                        BP (mmhg)</span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField Value='<%#Eval("temp") %>' DataKey="temp" runat="server" />
+                                                                        <aih:TextField Value='<%#Eval("bp") %>' DataKey="bp" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <div style="width: 80px" class="text-primary">GCS</span>
+                                                                        <div style="width: 80px" class="text-primary">
+                                                                        Temp (0C)</span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField Value='<%#Eval("gcs") %>' DataKey="gcs" runat="server" />
+                                                                        <aih:TextField Value='<%#Eval("temp") %>' DataKey="temp" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <div style="width: 80px" class="text-primary">Pain/ 10</span>
+                                                                        <div style="width: 80px" class="text-primary">
+                                                                        GCS</span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField Value='<%#Eval("pain") %>' DataKey="pain" runat="server" />
+                                                                        <aih:TextField Value='<%#Eval("gcs") %>' DataKey="gcs" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <div style="width: 80px" class="text-primary">ATS scale</span>
+                                                                        <div style="width: 80px" class="text-primary">
+                                                                        Pain/ 10</span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField Value='<%#Eval("ats") %>' DataKey="ats" runat="server" />
+                                                                        <aih:TextField Value='<%#Eval("pain") %>' DataKey="pain" runat="server" />
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+                                                                <asp:TemplateField>
+                                                                    <HeaderTemplate>
+                                                                        <div style="width: 80px" class="text-primary">
+                                                                        ATS scale</span>
+                                                                    </HeaderTemplate>
+                                                                    <ItemTemplate>
+                                                                        <aih:TextField Value='<%#Eval("ats") %>' DataKey="ats" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
                                                                         <div style="width: 200px">
-                                                                            Tái đánh giá & Can thiệp/ <span class="text-primary"><br />Re-Assessment & Intervention</span>
+                                                                            Tái đánh giá & Can thiệp/ <span class="text-primary">
+                                                                                <br />
+                                                                                Re-Assessment & Intervention</span>
                                                                         </div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField Title='<%#Eval("intervention") %>' DataKey="intervention" Value='<%#Eval("intervention") %>' runat="server" />
+                                                                        <aih:TextField Title='<%#Eval("intervention") %>' DataKey="intervention" Value='<%#Eval("intervention") %>' runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -1070,7 +1086,7 @@
                                                                         <div style="width: 200px" class="text-primary">RN's Initial</div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField Value='<%#Eval("initial") %>' DataKey="initial" runat="server" />
+                                                                        <aih:TextField Value='<%#Eval("initial") %>' DataKey="initial" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:CommandField ShowDeleteButton="True" ButtonType="Button" />
@@ -1120,15 +1136,15 @@
                                                                         <div style="width: 238px">Thuốc/ <span class="text-primary">Medication</span> - Dịch truyền/ <span class="text-primary">IV Fluids</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField Value='<%#Eval("dir_medication") %>' DataKey="dir_medication" runat="server" />
+                                                                        <aih:TextField Value='<%#Eval("dir_medication") %>' DataKey="dir_medication" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:TemplateField >
+                                                                <asp:TemplateField>
                                                                     <HeaderTemplate>
                                                                         <div style="width: 100px">Liều dùng/ <span class="text-primary">Dose</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField Value='<%#Eval("dir_med_dose") %>' DataKey="dir_med_dose" runat="server" />
+                                                                        <aih:TextField Value='<%#Eval("dir_med_dose") %>' DataKey="dir_med_dose" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -1136,7 +1152,7 @@
                                                                         <div style="width: 114px">Đường dùng/ <span class="text-primary">Route</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField Value='<%#Eval("dir_med_route") %>' DataKey="dir_med_route" runat="server" />
+                                                                        <aih:TextField Value='<%#Eval("dir_med_route") %>' DataKey="dir_med_route" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -1144,7 +1160,7 @@
                                                                         <div style="width: 100px">Tốc độ/ <span class="text-primary">Rate</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField Value='<%#Eval("dir_med_rate") %>' DataKey="dir_med_rate" runat="server" />
+                                                                        <aih:TextField Value='<%#Eval("dir_med_rate") %>' DataKey="dir_med_rate" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -1152,7 +1168,7 @@
                                                                         <div style="width: 150px">Bác sĩ/ <span class="text-primary">Doctor</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField Value='<%#Eval("dir_med_doctor") %>' DataKey="dir_med_doctor" runat="server" />
+                                                                        <aih:TextField Value='<%#Eval("dir_med_doctor") %>' DataKey="dir_med_doctor" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -1160,7 +1176,7 @@
                                                                         <div style="width: 150px">Ghi chú/ <span class="text-primary">Comment</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField Value='<%#Eval("dir_med_comment") %>' DataKey="dir_med_comment" runat="server" />
+                                                                        <aih:TextField Value='<%#Eval("dir_med_comment") %>' DataKey="dir_med_comment" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -1176,7 +1192,7 @@
                                                                         <div style="width: 150px">Điều dưỡng/ <span class="text-primary">RN's Initial</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField Value='<%#Eval("dir_med_initial") %>' DataKey="dir_med_initial" runat="server" />
+                                                                        <aih:TextField Value='<%#Eval("dir_med_initial") %>' DataKey="dir_med_initial" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:CommandField ShowDeleteButton="True" ButtonType="Button" />
@@ -1211,7 +1227,7 @@
                                                         <div class="col-md-6">
                                                             <label class="control-label mb-2 font-bold">bởi BS/ <span class="text-primary">by Dr.</span></label>
                                                             <div class="form-group">
-                                                                <Input:TextField runat="server" ID="txt_discharge_by" />
+                                                                <aih:TextField runat="server" ID="txt_discharge_by" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1232,7 +1248,7 @@
 
                                             <div class="col-md-6">
                                                 <div class="form-group row">
-                                                            <label class="control-label mb-2 font-bold">Nhập viện/ <span class="text-primary">Admited</span></label>
+                                                    <label class="control-label mb-2 font-bold">Nhập viện/ <span class="text-primary">Admited</span></label>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
                                                             <telerik:RadDateTimePicker runat="server" ID="dtpk_admited_date_time" Width="200px" />
@@ -1242,27 +1258,27 @@
                                                     <div class="col-md-6">
                                                         <label class="control-label mb-2 font-bold">bởi BS/ <span class="text-primary">by Dr.</span></label>
                                                         <div class="form-group">
-                                                            <Input:TextField runat="server" ID="txt_admited_by" />
+                                                            <aih:TextField runat="server" ID="txt_admited_by" />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-12 mt-2">
                                                         <label class="control-label mb-2 font-bold">Khoa tiếp nhận/ <span class="text-primary">Receiving Unit</span></label>
                                                         <div class="form-group">
-                                                            <Input:TextField runat="server" ID="txt_receiving_unit" />
+                                                            <aih:TextField runat="server" ID="txt_receiving_unit" />
                                                         </div>
                                                     </div>
 
                                                     <div class="col-md-6 mt-2">
                                                         <label class="control-label mb-2 font-bold">Chuyển viện/ <span class="text-primary">Transfer to</span></label>
                                                         <div class="form-group">
-                                                            <Input:TextField runat="server" ID="txt_transfer_to" />
+                                                            <aih:TextField runat="server" ID="txt_transfer_to" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 mt-2">
                                                         <label class="control-label mb-2 font-bold">bởi BS/ <span class="text-primary">by Dr.</span></label>
                                                         <div class="form-group">
-                                                            <Input:TextField runat="server" ID="txt_transfer_by" />
+                                                            <aih:TextField runat="server" ID="txt_transfer_by" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1309,7 +1325,7 @@
                                                                         <div style="width: 300px">Theo dõi diễn tiến/ <span class="text-primary">Patient's condition</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField Value='<%#Eval("patient_condition") %>' DataKey="patient_condition" runat="server" />
+                                                                        <aih:TextField Value='<%#Eval("patient_condition") %>' DataKey="patient_condition" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -1317,7 +1333,7 @@
                                                                         <div style="width: 300px">Ký/Ghi tên ĐD/ <span class="text-primary">Signature & RN's name</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField Value='<%#Eval("signature_name") %>' DataKey="signature_name" runat="server" />
+                                                                        <aih:TextField Value='<%#Eval("signature_name") %>' DataKey="signature_name" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:CommandField ShowDeleteButton="True" ButtonType="Button" />
@@ -1342,17 +1358,36 @@
                                     </div>
 
                                     <div class="form-actions mb-3">
-                                        <asp:Button ID="btnComplete" OnClick="btnComplete_Click" class="btn btn-primary" runat="server" Text="Complete" />
+                                        <asp:Button ID="btnComplete" class="btn btn-primary" runat="server" Text="Complete" />
+                                        <asp:Button ID="btnSave" class="btn btn-primary" runat="server" Text="Save" />
+                                        <button type="button" id="btnDeleteModal" runat="server" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
+                                        <asp:Button ID="btnAmend" class="btn btn-secondary" runat="server" Text="Amend" />
+                                        <asp:Button ID="btnPrint" CssClass="btn btn-secondary" runat="server" Text="Print" />
+                                        <asp:Button ID="btnCancel" CssClass="btn btn-secondary" runat="server" Text="Cancel" />
+                                        <div runat="server" id="messagePlaceHolder"></div>
+                                    </div>
 
-                                        <asp:Button ID="btnSave" OnClick="btnSave_Click" class="btn btn-primary" runat="server" Text="Save" />
-
-                                        <asp:Button ID="btnDelete" data-target="#exampleModalCenter" data-toggle="modal" data-backdrop="static" data-keyboard="false" class="btn btn-danger" runat="server" Text="Delete" />
-
-                                        <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
-
-                                        <asp:Button ID="btnPrint" CssClass="btn btn-secondary" runat="server" OnClick="btnPrint_Click" Text="Print" />
-
-                                        <asp:Button ID="btnCancel" CssClass="btn btn-secondary" runat="server" OnClick="btnCancel_Click" Text="Cancel" />
+                                        <div id="myModal" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Delete document</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p runat="server">Please provide reason for deletion</p>
+                                                        <div class="form-group mb-2">
+                                                            <aih:TextField runat="server" ID="TextField17" />
+                                                        </div>
+                                                        <div class="text-danger" runat="server">Nội dung lý do xóa phải trên 3 ký tự</div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <asp:Button runat="server" Text="Delete" ID="btnDelete" class="btn btn-danger" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

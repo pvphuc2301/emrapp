@@ -1,24 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
+using Telerik.Web.UI.ImageEditor;
+using System.Web.Script.Serialization;
 
 namespace EMR
 {
     public partial class EmergencyTriageAndNursingAssessmentRecord : System.Web.UI.Page
     {
         Ena ena;
-
+        MemoryStream ms;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
                 Initial();
             }
+        }
+
+        private void UploadFile(string base64String)
+        {
+            //Clear changes and remove uploaded image from Cache
+            RadImageEditor1.ResetChanges();
+
+            byte[] bytes = Convert.FromBase64String(base64String);
+
+            ms = new MemoryStream(bytes);
+
+            ViewState[RadImageEditor1.ID] = ms;
+
+            //using (ms = new MemoryStream(bytes))
+            //{
+
+            //    ms.Write(bytes, 0, bytes.Length);
+            //    Context.Cache.Insert(Session.SessionID + "UploadedFile", ms, null, DateTime.Now.AddMinutes(20), TimeSpan.Zero);
+
+            //    //image = Image.FromStream(ms);
+            //}
         }
 
         public void Initial()
@@ -30,6 +54,12 @@ namespace EMR
             ena = new Ena(DataHelpers.varDocId);
 
             loadDataToControls(ena);
+
+            dynamic jsonObject = Newtonsoft.Json.JsonConvert.DeserializeObject(ena.skin_anno_data);
+            string test = jsonObject.dataURI;
+            test = test.Replace("data:image/png;base64,", "");
+
+            UploadFile(test);
         }
 
         public void loadDataToControls(Ena ena)
@@ -333,7 +363,7 @@ namespace EMR
             _BindGridView(grid_NursingNotes, WebHelpers.GetJSONToDataTable(ena.nursing_note));
 
             btnCancel.Visible = false;
-            amendReasonBox.Visible = false;
+            txt_amendReason.Visible = false;
             if (ena.status == DocumentStatus.FINAL)
             {
                 btnComplete.Visible = false;
@@ -617,398 +647,25 @@ namespace EMR
         }
         protected void btnComplete_Click(object sender, EventArgs e)
         {
+            byte[] imageBytes = ((MemoryStream)ViewState[RadImageEditor1.ID]).ToArray();
 
+            string base64String = Convert.ToBase64String(imageBytes);
+
+        }
+
+        private void RadImageEditor1_ImageEditing1(object sender, ImageEditorEditingEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            try
-            {
-                ena = new Ena(DataHelpers.varDocId);
+            ena = new Ena(DataHelpers.varDocId);
 
-                ena.user_name = (string)Session["UserID"];
-                ena.status = DocumentStatus.DRAFT;
+            ena.user_name = (string)Session["UserID"];
+            ena.status = DocumentStatus.DRAFT;
 
-                if (dtpk_triage_time.SelectedDate != null)
-                {
-                    ena.triage_time = DataHelpers.ConvertSQLDateTime(dtpk_triage_time.SelectedDate);
-                }
-
-                ena.triage_area = txt_triage_area.Value;
-
-                ena.chief_complaint = txt_chief_complaint.Value;
-
-                foreach (KeyValuePair<string, string> code in DocumentCode.TriageCode)
-                {
-                    if (((HtmlInputRadioButton)FindControl("rad_triage_code_" + code.Key.ToLower())).Checked)
-                    {
-                        ena.triage_code = code.Key;
-                        ena.triage_desc = code.Value;
-                    }
-                }
-
-                foreach (KeyValuePair<string, string> code in DocumentCode.ArrivalMode)
-                {
-                    if (((HtmlInputRadioButton)FindControl("rad_arrival_mode_code_" + code.Key.ToLower())).Checked)
-                    {
-                        ena.arrival_mode_code = code.Key;
-                        ena.arrival_mode_desc = code.Value;
-                    }
-                }
-                //ena.arrival_mode_note = ?
-                
-                //
-                ////Past Medical History
-                ena.past_medical_history = txt_past_medical_history.Value;
-
-                ////Narrative
-                ena.narrative = txt_narrative.Value;
-
-                ////Vital signs
-                ena.vs_temperature = txt_vs_temperature.Value;
-                ena.vs_heart_rate = txt_vs_heart_rate.Value;
-                ena.vs_weight = txt_vs_weight.Value;
-                ena.vs_respiratory_rate = txt_vs_respiratory_rate.Value;
-                ena.vs_height = txt_vs_height.Value;
-                ena.vs_blood_pressure = txt_vs_blood_pressure.Value;
-                ena.vs_bmi = txt_vs_bmi.Value;
-                ena.vs_spo2 = txt_vs_spo2.Value;
-                ena.vs_head_circum = txt_vs_head_circum.Value;
-
-                #region loc avpu
-                DataTable loc_avpu = new DataTable();
-                loc_avpu.Columns.Add("cde");
-                loc_avpu.Columns.Add("desc");
-                DataRow dataRow;
-
-                if (cb_loc_avpu_a.Checked)
-                {
-                    dataRow = loc_avpu.NewRow();
-                    dataRow["cde"] = DocumentCode.LocAVPU.A.code;
-                    dataRow["desc"] = DocumentCode.LocAVPU.A.desc;
-                    loc_avpu.Rows.Add(dataRow);
-                }
-                if (cb_loc_avpu_p.Checked)
-                {
-                    dataRow = loc_avpu.NewRow();
-                    dataRow["cde"] = DocumentCode.LocAVPU.P.code;
-                    dataRow["desc"] = DocumentCode.LocAVPU.P.desc;
-                    loc_avpu.Rows.Add(dataRow);
-                }
-                if (cb_loc_avpu_p.Checked)
-                {
-                    dataRow = loc_avpu.NewRow();
-                    dataRow["cde"] = DocumentCode.LocAVPU.U.code;
-                    dataRow["desc"] = DocumentCode.LocAVPU.U.desc;
-                    loc_avpu.Rows.Add(dataRow);
-                }
-                if (cb_loc_avpu_p.Checked)
-                {
-                    dataRow = loc_avpu.NewRow();
-                    dataRow["cde"] = DocumentCode.LocAVPU.V.code;
-                    dataRow["desc"] = DocumentCode.LocAVPU.V.desc;
-                    loc_avpu.Rows.Add(dataRow);
-                }
-                ena.loc_avpu = WebHelpers.GetDataTableToJSON(loc_avpu);
-                #endregion
-
-                #region Pain assess
-                ena.pain_onset = txt_pain_onset.Value;
-                ena.pain_location = txt_pain_location.Value;
-                ena.pain_duration = txt_pain_duration.Value;
-                ena.pain_radiation = txt_pain_radiation.Value;
-                ena.pain_score = txt_pain_score.Value;
-                #endregion
-
-                ena.allergy = txt_allergy.Value;
-                ena.current_medication = txt_current_medication.Value;
-
-                #region skin integrity
-
-                DataTable skin_integrity = new DataTable();
-                skin_integrity.Columns.Add("cde");
-                skin_integrity.Columns.Add("desc");
-                DataRow skin_integrity_row;
-
-                foreach(KeyValuePair<string, string> code in DocumentCode.SkinIntegrity)
-                {
-                    if(((HtmlInputCheckBox)FindControl("cb_skin_integrity_" + code.Key.ToLower())).Checked)
-                    {
-                        skin_integrity_row = skin_integrity.NewRow();
-                        skin_integrity_row["cde"] = code.Key;
-                        skin_integrity_row["desc"] = code.Value;
-                        skin_integrity.Rows.Add(skin_integrity_row);
-                    }
-                }
-                ena.skin_integrity = WebHelpers.GetDataTableToJSON(skin_integrity);
-
-                #endregion
-
-                #region Communicable disease screening
-
-                DataTable com_dis_src = new DataTable();
-                com_dis_src.Columns.Add("cde");
-                com_dis_src.Columns.Add("desc");
-                DataRow com_dis_src_row;
-
-                foreach (KeyValuePair<string, string> code in DocumentCode.ComDisSrc)
-                {
-                    if (((HtmlInputCheckBox)FindControl("cb_com_dis_src_" + code.Key.ToLower())).Checked)
-                    {
-                        com_dis_src_row = com_dis_src.NewRow();
-                        com_dis_src_row["cde"] = code.Key;
-                        com_dis_src_row["desc"] = code.Value;
-                        com_dis_src.Rows.Add(com_dis_src_row);
-                    }
-                }
-                ena.com_dis_src = WebHelpers.GetDataTableToJSON(com_dis_src);
-
-                #endregion
-
-                #region Discharge Planning
-
-                DataTable discharge_plan = new DataTable();
-                discharge_plan.Columns.Add("cde");
-                discharge_plan.Columns.Add("desc");
-                DataRow discharge_plan_row;
-
-                foreach (KeyValuePair<string, string> code in DocumentCode.DischargePlan)
-                {
-                    if (((HtmlInputCheckBox)FindControl("cb_discharge_plan_" + code.Key.ToLower())).Checked)
-                    {
-                        discharge_plan_row = discharge_plan.NewRow();
-                        discharge_plan_row["cde"] = code.Key;
-                        discharge_plan_row["desc"] = code.Value;
-                        discharge_plan.Rows.Add(discharge_plan_row);
-                    }
-                }
-                ena.discharge_plan = WebHelpers.GetDataTableToJSON(discharge_plan);
-
-                #endregion
-
-                // Disposition after discharge
-
-                foreach (KeyValuePair<string, string> code in DocumentCode.disAfterDischarge)
-                {
-                    if (((HtmlInputRadioButton)FindControl("rad_dis_after_discharge_code_" + code.Key.ToLower())).Checked)
-                    {
-                        ena.dis_after_discharge_code = code.Key;
-                        ena.dis_after_discharge_desc = code.Value;
-                    }
-                }
-
-                ena.caregiver_after_discharge = txt_caregiver_after_discharge.Value;
-
-                #region barrier to care
-
-                if (rad_btc_language2.Checked) { ena.btc_language = true; ena.btc_language_note = txt_btc_language_note.Value; }
-                else { ena.btc_language = false; }
-
-                if (rad_btc_cognitive2.Checked) { ena.btc_cognitive = true; ena.btc_cognitive_note = txt_btc_cognitive_note.Value; }
-                else { ena.btc_cognitive = false; }
-
-                if (rad_btc_sensory2.Checked) { ena.btc_sensory = true; ena.btc_sensory_note = txt_btc_sensory_note.Value; }
-                else { ena.btc_sensory = false; }
-
-                if (rad_btc_religious2.Checked) { ena.btc_religious = true; ena.btc_religious_note = txt_btc_religious_note.Value; }
-                else { ena.btc_religious = false; }
-
-                if (rad_btc_cultural2.Checked) { ena.btc_cultural = true; ena.btc_cultural_note = txt_btc_cultural_note.Value; }
-                else { ena.btc_cultural = false; }
-
-                #endregion
-
-                #region General Appearance
-
-                DataTable general_appearance = new DataTable();
-                general_appearance.Columns.Add("cde");
-                general_appearance.Columns.Add("desc");
-                DataRow general_appearance_row;
-
-                foreach (KeyValuePair<string, string> code in DocumentCode.GeneralAppearance)
-                {
-                    if (((HtmlInputCheckBox)FindControl("cb_general_appearance_" + code.Key.ToLower())).Checked)
-                    {
-                        general_appearance_row = general_appearance.NewRow();
-                        general_appearance_row["cde"] = code.Key;
-                        general_appearance_row["desc"] = code.Value;
-                        general_appearance.Rows.Add(general_appearance_row);
-                    }
-                }
-                ena.general_appearance = WebHelpers.GetDataTableToJSON(general_appearance);
-
-                #endregion
-
-                ena.eye = txt_eye.Value;
-                ena.voice = txt_voice.Value;
-                ena.motion = txt_motion.Value;
-
-                ena.alert = cb_alert.Checked;
-                ena.coma = cb_coma.Checked;
-                ena.others = cb_others.Checked;
-                ena.str_others = txt_str_others.Value;
-
-                #region respiratory
-
-                DataTable respiratory = new DataTable();
-                respiratory.Columns.Add("code");
-                respiratory.Columns.Add("desc");
-                DataRow respiratory_row;
-
-                foreach (KeyValuePair<string, string> code in DocumentCode.Respiratory)
-                {
-                    if (((HtmlInputCheckBox)FindControl("cb_respiratory_" + code.Key.ToLower())).Checked)
-                    {
-                        respiratory_row = respiratory.NewRow();
-                        respiratory_row["code"] = code.Key;
-                        respiratory_row["desc"] = code.Value;
-                        respiratory.Rows.Add(respiratory_row);
-                    }
-                }
-
-                if (cb_respiratory_oth.Checked)
-                {
-                    respiratory_row = respiratory.NewRow();
-                    respiratory_row["code"] = "OTH";
-                    respiratory_row["desc"] = txt_respiratory_oth.Value;
-                    respiratory.Rows.Add(respiratory_row);
-                }
-                ena.respiratory = WebHelpers.GetDataTableToJSON(respiratory);
-
-                #endregion
-
-                #region rhythm
-                ena.rhythm_regular = cb_rhythm_regular.Checked;
-                ena.rhythm_inregular = cb_rhythm_inregular.Checked;
-                ena.rhythm_others = cb_rhythm_others.Checked;
-                ena.rhythm_str_others = txt_rhythm_str_others.Value;
-                #endregion
-
-                #region psychosocial
-                ena.psychosocial = cb_psychosocial.Checked;
-                ena.psychosocial_others = cb_psychosocial_others.Checked;
-                ena.psychosocial_str_others = txt_psychosocial_str_others.Value;
-                #endregion
-
-                #region other systems
-                ena.other_systems_normal = cb_other_systems_normal.Checked;
-                ena.other_systems_abnormal = cb_other_systems_abnormal.Checked;
-                ena.others_systems_str = txt_others_systems_str.Value;
-                #endregion
-
-                #region lmp
-                ena.lmp = cb_lmp.Checked;
-                ena.lmP_note = txt_lmP_note.Value;
-                ena.para = txt_para.Value;
-                ena.abortions = txt_abortions.Value;
-                #endregion
-
-                #region Intervention Procedure
-                if (dtpk_blood_glucose_date_time.SelectedDate != null)
-                {
-                    ena.blood_glucose_date_time = DataHelpers.ConvertSQLDateTime(dtpk_blood_glucose_date_time.SelectedDate);
-                }
-                ena.blood_glucose_note = txt_blood_glucose_note.Value;
-                
-                if (dtpk_ecg_date_time.SelectedDate != null)
-                {
-                    ena.ecg_date_time = DataHelpers.ConvertSQLDateTime(dtpk_ecg_date_time.SelectedDate);
-                }
-                ena.ecg_note = txt_ecg_note.Value;
-
-                if (dtpk_urine_cath_date_time.SelectedDate != null)
-                {
-                    ena.urine_cath_date_time = DataHelpers.ConvertSQLDateTime(dtpk_urine_cath_date_time.SelectedDate);
-                }
-                ena.urine_cath_note = txt_urine_cath_note.Value;
-
-                if (dtpk_splint_cast_dressing_date_time.SelectedDate != null)
-                {
-                    ena.splint_cast_dressing_date_time = DataHelpers.ConvertSQLDateTime(dtpk_splint_cast_dressing_date_time.SelectedDate);
-                }
-                ena.splint_cast_dressing_note = txt_splint_cast_dressing_note.Value;
-
-                if (dtpk_procedure_other_date_time.SelectedDate != null)
-                {
-                    ena.procedure_other_date_time = DataHelpers.ConvertSQLDateTime(dtpk_procedure_other_date_time.SelectedDate);
-                }
-                ena.procedure_other_note = txt_procedure_other_note.Value;
-
-                #endregion
-
-                // Assessment System
-                DataTable assessment_system_tb = new DataTable();
-                foreach (KeyValuePair<string, string> col in EMRTable.assessmentSystem)
-                {
-                    assessment_system_tb.Columns.Add(col.Key);
-                }
-
-                ena.assessment_system = WebHelpers.GetJSONFromTable(grid_AssessmentSystem, assessment_system_tb);
-
-                // Direct Medication
-                DataTable direct_medication_tb = new DataTable();
-                foreach (KeyValuePair<string, string> col in EMRTable.directMedication)
-                {
-                    direct_medication_tb.Columns.Add(col.Key);
-                }
-
-                ena.direct_medication = WebHelpers.GetJSONFromTable(gridDirectMedication, direct_medication_tb);
-
-                // Discharged
-                ena.discharge_date_time = DataHelpers.ConvertSQLDateTime(dtpk_discharge_date_time.SelectedDate);
-                ena.discharge_by = txt_discharge_by.Value;
-
-                DataTable discharge_option = new DataTable();
-                discharge_option.Columns.Add("code");
-                discharge_option.Columns.Add("desc");
-                DataRow discharge_option_row;
-
-                foreach (KeyValuePair<string, string> code in DocumentCode.DischargeOption)
-                {
-                    if (((HtmlInputCheckBox)FindControl("cb_discharge_option_" + code.Key.ToLower())).Checked)
-                    {
-                        discharge_option_row = discharge_option.NewRow();
-                        discharge_option_row["code"] = code.Key;
-                        discharge_option_row["desc"] = code.Value;
-                        discharge_option.Rows.Add(discharge_option_row);
-                    }
-                }
-                ena.discharge_option = discharge_option;
-
-                // Admited
-                ena.admited_date_time = DataHelpers.ConvertSQLDateTime(dtpk_admited_date_time.SelectedDate);
-                ena.admited_by = txt_admited_by.Value;
-                ena.receiving_unit = txt_receiving_unit.Value;
-
-                // transfer
-                ena.transfer_to = txt_transfer_to.Value;
-                ena.transfer_by = txt_transfer_by.Value;
-
-                //
-                ena.noticed_time = DataHelpers.ConvertSQLDateTime(dtpk_noticed_time.SelectedDate);
-
-                // nursing notes
-                DataTable nursing_note_tb = new DataTable();
-                foreach (KeyValuePair<string, string> col in EMRTable.nursingNote)
-                {
-                    nursing_note_tb.Columns.Add(col.Key);
-                }
-
-                ena.nursing_note = WebHelpers.GetJSONFromTable(grid_NursingNotes, nursing_note_tb);
-
-                if (ena.Update()[0] == "OK")
-                {
-                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                    message.Load(Page, Message.CODE.MS001, Message.TYPE.SUCCESS);
-
-                    Initial();
-                }
-            }
-            catch (Exception ex)
-            {
-                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                message.Load(Page, ex.Message, Message.TYPE.SUCCESS);
-            }
+            UpdateData(ena);
         }
 
         protected void btnAmend_Click(object sender, EventArgs e)
@@ -1019,7 +676,7 @@ namespace EMR
             btnAmend.Visible = false;
             btnPrint.Visible = false;
 
-            amendReasonBox.Visible = true;
+            txt_amendReason.Visible = true;
 
             DisabledControl(false);
         }
@@ -1035,7 +692,7 @@ namespace EMR
             btnCancel.Visible = false;
             btnAmend.Visible = true;
             btnPrint.Visible = true;
-            amendReasonBox.Visible = false;
+            txt_amendReason.Visible = false;
 
             DisabledControl(true);
         }
@@ -1044,14 +701,6 @@ namespace EMR
         {
         }
 
-        //private void _BindDateTimePicker(string field, dynamic datetime)
-        //{
-
-        //    DateTime dateTime = DateTime.Parse(datetime);
-
-        //    ((RadDatePicker)FindControl("dpk_" + field)).SelectedDate = dateTime;
-        //    ((RadTimePicker)FindControl("tpk_" + field)).SelectedTime = TimeSpan.Parse(dateTime.ToString("HH:mm:ss"));
-        //}
         private void _BindGridView(GridView gridView, DataTable dataSource)
         {
             try
@@ -1330,6 +979,420 @@ namespace EMR
             catch (Exception ex)
             {
 
+            }
+        }
+
+        protected void RadImageEditor1_ImageLoading(object sender, ImageEditorLoadingEventArgs args)
+        {
+            //Handle Uploaded images
+           
+            using (EditableImage image = new EditableImage((MemoryStream)ViewState[RadImageEditor1.ID]))
+            {
+                args.Image = image.Clone();
+                args.Cancel = true;
+            }
+        }
+
+        protected void RadImageEditor1_ImageChanged(object sender, ImageEditorEventArgs args)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                args.Image.Image.Save(ms, args.Image.Image.RawFormat);
+                
+                ViewState[RadImageEditor1.ID] = ms;
+            }
+        }
+
+        protected void UpdateData(Ena ena)
+        {
+            try
+            {
+                
+                if (dtpk_triage_time.SelectedDate != null)
+                {
+                    ena.triage_time = DataHelpers.ConvertSQLDateTime(dtpk_triage_time.SelectedDate);
+                }
+
+                ena.triage_area = txt_triage_area.Value;
+
+                ena.chief_complaint = txt_chief_complaint.Value;
+
+                foreach (KeyValuePair<string, string> code in DocumentCode.TriageCode)
+                {
+                    if (((HtmlInputRadioButton)FindControl("rad_triage_code_" + code.Key.ToLower())).Checked)
+                    {
+                        ena.triage_code = code.Key;
+                        ena.triage_desc = code.Value;
+                    }
+                }
+
+                foreach (KeyValuePair<string, string> code in DocumentCode.ArrivalMode)
+                {
+                    if (((HtmlInputRadioButton)FindControl("rad_arrival_mode_code_" + code.Key.ToLower())).Checked)
+                    {
+                        ena.arrival_mode_code = code.Key;
+                        ena.arrival_mode_desc = code.Value;
+                    }
+                }
+                //ena.arrival_mode_note = ?
+
+                //
+                ////Past Medical History
+                ena.past_medical_history = txt_past_medical_history.Value;
+
+                ////Narrative
+                ena.narrative = txt_narrative.Value;
+
+                ////Vital signs
+                ena.vs_temperature = txt_vs_temperature.Value;
+                ena.vs_heart_rate = txt_vs_heart_rate.Value;
+                ena.vs_weight = txt_vs_weight.Value;
+                ena.vs_respiratory_rate = txt_vs_respiratory_rate.Value;
+                ena.vs_height = txt_vs_height.Value;
+                ena.vs_blood_pressure = txt_vs_blood_pressure.Value;
+                ena.vs_bmi = txt_vs_bmi.Value;
+                ena.vs_spo2 = txt_vs_spo2.Value;
+                ena.vs_head_circum = txt_vs_head_circum.Value;
+
+                #region loc avpu
+                DataTable loc_avpu = new DataTable();
+                loc_avpu.Columns.Add("cde");
+                loc_avpu.Columns.Add("desc");
+                DataRow dataRow;
+
+                if (cb_loc_avpu_a.Checked)
+                {
+                    dataRow = loc_avpu.NewRow();
+                    dataRow["cde"] = DocumentCode.LocAVPU.A.code;
+                    dataRow["desc"] = DocumentCode.LocAVPU.A.desc;
+                    loc_avpu.Rows.Add(dataRow);
+                }
+                if (cb_loc_avpu_p.Checked)
+                {
+                    dataRow = loc_avpu.NewRow();
+                    dataRow["cde"] = DocumentCode.LocAVPU.P.code;
+                    dataRow["desc"] = DocumentCode.LocAVPU.P.desc;
+                    loc_avpu.Rows.Add(dataRow);
+                }
+                if (cb_loc_avpu_p.Checked)
+                {
+                    dataRow = loc_avpu.NewRow();
+                    dataRow["cde"] = DocumentCode.LocAVPU.U.code;
+                    dataRow["desc"] = DocumentCode.LocAVPU.U.desc;
+                    loc_avpu.Rows.Add(dataRow);
+                }
+                if (cb_loc_avpu_p.Checked)
+                {
+                    dataRow = loc_avpu.NewRow();
+                    dataRow["cde"] = DocumentCode.LocAVPU.V.code;
+                    dataRow["desc"] = DocumentCode.LocAVPU.V.desc;
+                    loc_avpu.Rows.Add(dataRow);
+                }
+                ena.loc_avpu = WebHelpers.GetDataTableToJSON(loc_avpu);
+                #endregion
+
+                #region Pain assess
+                ena.pain_onset = txt_pain_onset.Value;
+                ena.pain_location = txt_pain_location.Value;
+                ena.pain_duration = txt_pain_duration.Value;
+                ena.pain_radiation = txt_pain_radiation.Value;
+                ena.pain_score = txt_pain_score.Value;
+                #endregion
+
+                ena.allergy = txt_allergy.Value;
+                ena.current_medication = txt_current_medication.Value;
+
+                #region skin integrity
+
+                DataTable skin_integrity = new DataTable();
+                skin_integrity.Columns.Add("cde");
+                skin_integrity.Columns.Add("desc");
+                DataRow skin_integrity_row;
+
+                foreach (KeyValuePair<string, string> code in DocumentCode.SkinIntegrity)
+                {
+                    if (((HtmlInputCheckBox)FindControl("cb_skin_integrity_" + code.Key.ToLower())).Checked)
+                    {
+                        skin_integrity_row = skin_integrity.NewRow();
+                        skin_integrity_row["cde"] = code.Key;
+                        skin_integrity_row["desc"] = code.Value;
+                        skin_integrity.Rows.Add(skin_integrity_row);
+                    }
+                }
+                ena.skin_integrity = WebHelpers.GetDataTableToJSON(skin_integrity);
+
+                //
+                dynamic jsonObject = Newtonsoft.Json.JsonConvert.DeserializeObject(ena.skin_anno_data);
+                jsonObject.dataURI = string.Format("{0}", "data:image/png;base64,", ViewState[RadImageEditor1.ID]);
+
+                ena.skin_anno_data = new JavaScriptSerializer().Serialize(jsonObject);
+
+                #endregion
+
+                #region Communicable disease screening
+
+                DataTable com_dis_src = new DataTable();
+                com_dis_src.Columns.Add("cde");
+                com_dis_src.Columns.Add("desc");
+                DataRow com_dis_src_row;
+
+                foreach (KeyValuePair<string, string> code in DocumentCode.ComDisSrc)
+                {
+                    if (((HtmlInputCheckBox)FindControl("cb_com_dis_src_" + code.Key.ToLower())).Checked)
+                    {
+                        com_dis_src_row = com_dis_src.NewRow();
+                        com_dis_src_row["cde"] = code.Key;
+                        com_dis_src_row["desc"] = code.Value;
+                        com_dis_src.Rows.Add(com_dis_src_row);
+                    }
+                }
+                ena.com_dis_src = WebHelpers.GetDataTableToJSON(com_dis_src);
+
+                #endregion
+
+                #region Discharge Planning
+
+                DataTable discharge_plan = new DataTable();
+                discharge_plan.Columns.Add("cde");
+                discharge_plan.Columns.Add("desc");
+                DataRow discharge_plan_row;
+
+                foreach (KeyValuePair<string, string> code in DocumentCode.DischargePlan)
+                {
+                    if (((HtmlInputCheckBox)FindControl("cb_discharge_plan_" + code.Key.ToLower())).Checked)
+                    {
+                        discharge_plan_row = discharge_plan.NewRow();
+                        discharge_plan_row["cde"] = code.Key;
+                        discharge_plan_row["desc"] = code.Value;
+                        discharge_plan.Rows.Add(discharge_plan_row);
+                    }
+                }
+                ena.discharge_plan = WebHelpers.GetDataTableToJSON(discharge_plan);
+
+                #endregion
+
+                // Disposition after discharge
+
+                foreach (KeyValuePair<string, string> code in DocumentCode.disAfterDischarge)
+                {
+                    if (((HtmlInputRadioButton)FindControl("rad_dis_after_discharge_code_" + code.Key.ToLower())).Checked)
+                    {
+                        ena.dis_after_discharge_code = code.Key;
+                        ena.dis_after_discharge_desc = code.Value;
+                    }
+                }
+
+                ena.caregiver_after_discharge = txt_caregiver_after_discharge.Value;
+
+                #region barrier to care
+
+                if (rad_btc_language2.Checked) { ena.btc_language = true; ena.btc_language_note = txt_btc_language_note.Value; }
+                else { ena.btc_language = false; }
+
+                if (rad_btc_cognitive2.Checked) { ena.btc_cognitive = true; ena.btc_cognitive_note = txt_btc_cognitive_note.Value; }
+                else { ena.btc_cognitive = false; }
+
+                if (rad_btc_sensory2.Checked) { ena.btc_sensory = true; ena.btc_sensory_note = txt_btc_sensory_note.Value; }
+                else { ena.btc_sensory = false; }
+
+                if (rad_btc_religious2.Checked) { ena.btc_religious = true; ena.btc_religious_note = txt_btc_religious_note.Value; }
+                else { ena.btc_religious = false; }
+
+                if (rad_btc_cultural2.Checked) { ena.btc_cultural = true; ena.btc_cultural_note = txt_btc_cultural_note.Value; }
+                else { ena.btc_cultural = false; }
+
+                #endregion
+
+                #region General Appearance
+
+                DataTable general_appearance = new DataTable();
+                general_appearance.Columns.Add("cde");
+                general_appearance.Columns.Add("desc");
+                DataRow general_appearance_row;
+
+                foreach (KeyValuePair<string, string> code in DocumentCode.GeneralAppearance)
+                {
+                    if (((HtmlInputCheckBox)FindControl("cb_general_appearance_" + code.Key.ToLower())).Checked)
+                    {
+                        general_appearance_row = general_appearance.NewRow();
+                        general_appearance_row["cde"] = code.Key;
+                        general_appearance_row["desc"] = code.Value;
+                        general_appearance.Rows.Add(general_appearance_row);
+                    }
+                }
+                ena.general_appearance = WebHelpers.GetDataTableToJSON(general_appearance);
+
+                #endregion
+
+                ena.eye = txt_eye.Value;
+                ena.voice = txt_voice.Value;
+                ena.motion = txt_motion.Value;
+
+                ena.alert = cb_alert.Checked;
+                ena.coma = cb_coma.Checked;
+                ena.others = cb_others.Checked;
+                ena.str_others = txt_str_others.Value;
+
+                #region respiratory
+
+                DataTable respiratory = new DataTable();
+                respiratory.Columns.Add("code");
+                respiratory.Columns.Add("desc");
+                DataRow respiratory_row;
+
+                foreach (KeyValuePair<string, string> code in DocumentCode.Respiratory)
+                {
+                    if (((HtmlInputCheckBox)FindControl("cb_respiratory_" + code.Key.ToLower())).Checked)
+                    {
+                        respiratory_row = respiratory.NewRow();
+                        respiratory_row["code"] = code.Key;
+                        respiratory_row["desc"] = code.Value;
+                        respiratory.Rows.Add(respiratory_row);
+                    }
+                }
+
+                if (cb_respiratory_oth.Checked)
+                {
+                    respiratory_row = respiratory.NewRow();
+                    respiratory_row["code"] = "OTH";
+                    respiratory_row["desc"] = txt_respiratory_oth.Value;
+                    respiratory.Rows.Add(respiratory_row);
+                }
+                ena.respiratory = WebHelpers.GetDataTableToJSON(respiratory);
+
+                #endregion
+
+                #region rhythm
+                ena.rhythm_regular = cb_rhythm_regular.Checked;
+                ena.rhythm_inregular = cb_rhythm_inregular.Checked;
+                ena.rhythm_others = cb_rhythm_others.Checked;
+                ena.rhythm_str_others = txt_rhythm_str_others.Value;
+                #endregion
+
+                #region psychosocial
+                ena.psychosocial = cb_psychosocial.Checked;
+                ena.psychosocial_others = cb_psychosocial_others.Checked;
+                ena.psychosocial_str_others = txt_psychosocial_str_others.Value;
+                #endregion
+
+                #region other systems
+                ena.other_systems_normal = cb_other_systems_normal.Checked;
+                ena.other_systems_abnormal = cb_other_systems_abnormal.Checked;
+                ena.others_systems_str = txt_others_systems_str.Value;
+                #endregion
+
+                #region lmp
+                ena.lmp = cb_lmp.Checked;
+                ena.lmP_note = txt_lmP_note.Value;
+                ena.para = txt_para.Value;
+                ena.abortions = txt_abortions.Value;
+                #endregion
+
+                #region Intervention Procedure
+                if (dtpk_blood_glucose_date_time.SelectedDate != null)
+                {
+                    ena.blood_glucose_date_time = DataHelpers.ConvertSQLDateTime(dtpk_blood_glucose_date_time.SelectedDate);
+                }
+                ena.blood_glucose_note = txt_blood_glucose_note.Value;
+
+                if (dtpk_ecg_date_time.SelectedDate != null)
+                {
+                    ena.ecg_date_time = DataHelpers.ConvertSQLDateTime(dtpk_ecg_date_time.SelectedDate);
+                }
+                ena.ecg_note = txt_ecg_note.Value;
+
+                if (dtpk_urine_cath_date_time.SelectedDate != null)
+                {
+                    ena.urine_cath_date_time = DataHelpers.ConvertSQLDateTime(dtpk_urine_cath_date_time.SelectedDate);
+                }
+                ena.urine_cath_note = txt_urine_cath_note.Value;
+
+                if (dtpk_splint_cast_dressing_date_time.SelectedDate != null)
+                {
+                    ena.splint_cast_dressing_date_time = DataHelpers.ConvertSQLDateTime(dtpk_splint_cast_dressing_date_time.SelectedDate);
+                }
+                ena.splint_cast_dressing_note = txt_splint_cast_dressing_note.Value;
+
+                if (dtpk_procedure_other_date_time.SelectedDate != null)
+                {
+                    ena.procedure_other_date_time = DataHelpers.ConvertSQLDateTime(dtpk_procedure_other_date_time.SelectedDate);
+                }
+                ena.procedure_other_note = txt_procedure_other_note.Value;
+
+                #endregion
+
+                // Assessment System
+                DataTable assessment_system_tb = new DataTable();
+                foreach (KeyValuePair<string, string> col in EMRTable.assessmentSystem)
+                {
+                    assessment_system_tb.Columns.Add(col.Key);
+                }
+
+                ena.assessment_system = WebHelpers.GetJSONFromTable(grid_AssessmentSystem, assessment_system_tb);
+
+                // Direct Medication
+                DataTable direct_medication_tb = new DataTable();
+                foreach (KeyValuePair<string, string> col in EMRTable.directMedication)
+                {
+                    direct_medication_tb.Columns.Add(col.Key);
+                }
+
+                ena.direct_medication = WebHelpers.GetJSONFromTable(gridDirectMedication, direct_medication_tb);
+
+                // Discharged
+                ena.discharge_date_time = DataHelpers.ConvertSQLDateTime(dtpk_discharge_date_time.SelectedDate);
+                ena.discharge_by = txt_discharge_by.Value;
+
+                DataTable discharge_option = new DataTable();
+                discharge_option.Columns.Add("code");
+                discharge_option.Columns.Add("desc");
+                DataRow discharge_option_row;
+
+                foreach (KeyValuePair<string, string> code in DocumentCode.DischargeOption)
+                {
+                    if (((HtmlInputCheckBox)FindControl("cb_discharge_option_" + code.Key.ToLower())).Checked)
+                    {
+                        discharge_option_row = discharge_option.NewRow();
+                        discharge_option_row["code"] = code.Key;
+                        discharge_option_row["desc"] = code.Value;
+                        discharge_option.Rows.Add(discharge_option_row);
+                    }
+                }
+                ena.discharge_option = discharge_option;
+
+                // Admited
+                ena.admited_date_time = DataHelpers.ConvertSQLDateTime(dtpk_admited_date_time.SelectedDate);
+                ena.admited_by = txt_admited_by.Value;
+                ena.receiving_unit = txt_receiving_unit.Value;
+
+                // transfer
+                ena.transfer_to = txt_transfer_to.Value;
+                ena.transfer_by = txt_transfer_by.Value;
+
+                //
+                ena.noticed_time = DataHelpers.ConvertSQLDateTime(dtpk_noticed_time.SelectedDate);
+
+                // nursing notes
+                DataTable nursing_note_tb = new DataTable();
+                foreach (KeyValuePair<string, string> col in EMRTable.nursingNote)
+                {
+                    nursing_note_tb.Columns.Add(col.Key);
+                }
+
+                ena.nursing_note = WebHelpers.GetJSONFromTable(grid_NursingNotes, nursing_note_tb);
+
+                if (ena.Update()[0] == "OK")
+                {
+                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
+                    message.Load(Page, Message.CODE.MS001, Message.TYPE.SUCCESS);
+
+                    Initial();
+                }
+            }
+            catch (Exception ex)
+            {
+                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
+                message.Load(Page, ex.Message, Message.TYPE.SUCCESS);
             }
         }
     }
