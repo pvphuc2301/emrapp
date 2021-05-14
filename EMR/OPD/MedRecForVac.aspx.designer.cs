@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EMR
+namespace EMR.OPD
 {
 
 
-    public partial class InpIniMedAss
+    public partial class MedRecForVac
     {
 
         /// <summary>
@@ -96,157 +96,13 @@ namespace EMR
         protected global::EMR.TextField txt_personal;
 
         /// <summary>
-        /// rad_habits_smoking1 control.
+        /// txt_family control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_habits_smoking1;
-
-        /// <summary>
-        /// rad_habits_smoking2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_habits_smoking2;
-
-        /// <summary>
-        /// XSquare3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.icons.XSquare XSquare3;
-
-        /// <summary>
-        /// txt_habits_smoking_pack control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField txt_habits_smoking_pack;
-
-        /// <summary>
-        /// rad_habits_alcohol1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_habits_alcohol1;
-
-        /// <summary>
-        /// rad_habits_alcohol2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_habits_alcohol2;
-
-        /// <summary>
-        /// XSquare4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.icons.XSquare XSquare4;
-
-        /// <summary>
-        /// txt_habits_alcohol_note control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField txt_habits_alcohol_note;
-
-        /// <summary>
-        /// rad_habits_drugs1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_habits_drugs1;
-
-        /// <summary>
-        /// rad_habits_drugs2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_habits_drugs2;
-
-        /// <summary>
-        /// XSquare5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.icons.XSquare XSquare5;
-
-        /// <summary>
-        /// txt_habits_drugs_note control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField txt_habits_drugs_note;
-
-        /// <summary>
-        /// rad_habits_physical_exercise1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_habits_physical_exercise1;
-
-        /// <summary>
-        /// rad_habits_physical_exercise2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_habits_physical_exercise2;
-
-        /// <summary>
-        /// XSquare6 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.icons.XSquare XSquare6;
-
-        /// <summary>
-        /// txt_habits_phy_exer_note control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField txt_habits_phy_exer_note;
-
-        /// <summary>
-        /// txt_habits_other control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField txt_habits_other;
+        protected global::EMR.TextField txt_family;
 
         /// <summary>
         /// rad_allergy1 control.
@@ -283,24 +139,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.TextField txt_allergy_note;
-
-        /// <summary>
-        /// txt_family control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField txt_family;
-
-        /// <summary>
-        /// txt_immunization control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField txt_immunization;
 
         /// <summary>
         /// txt_vs_temperature control.
@@ -384,58 +222,121 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_pulse;
 
         /// <summary>
-        /// txt_physical_exam control.
+        /// txt_scr_before_vacc_1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_physical_exam;
+        protected global::EMR.TextField txt_scr_before_vacc_1;
 
         /// <summary>
-        /// rad_psy_consult_required1 control.
+        /// txt_scr_before_vacc_2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_psy_consult_required1;
+        protected global::EMR.TextField txt_scr_before_vacc_2;
 
         /// <summary>
-        /// rad_psy_consult_required2 control.
+        /// txt_scr_before_vacc_3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_psy_consult_required2;
+        protected global::EMR.TextField txt_scr_before_vacc_3;
 
         /// <summary>
-        /// XSquare1 control.
+        /// txt_scr_before_vacc_4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare1;
+        protected global::EMR.TextField txt_scr_before_vacc_4;
 
         /// <summary>
-        /// txt_laboratory_result control.
+        /// txt_scr_before_vacc_5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_laboratory_result;
+        protected global::EMR.TextField txt_scr_before_vacc_5;
 
         /// <summary>
-        /// txt_add_investigation control.
+        /// txt_scr_before_vacc_6 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_add_investigation;
+        protected global::EMR.TextField txt_scr_before_vacc_6;
+
+        /// <summary>
+        /// txt_scr_before_vacc_7 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_scr_before_vacc_7;
+
+        /// <summary>
+        /// txt_scr_before_vacc_8 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_scr_before_vacc_8;
+
+        /// <summary>
+        /// updatePanel_appointedVaccine control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel updatePanel_appointedVaccine;
+
+        /// <summary>
+        /// grid_appointedVaccine control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView grid_appointedVaccine;
+
+        /// <summary>
+        /// updateProgress_appointedVaccine control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdateProgress updateProgress_appointedVaccine;
+
+        /// <summary>
+        /// btn_grid_appointedVaccine_add control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btn_grid_appointedVaccine_add;
+
+        /// <summary>
+        /// txt_additional_investigations control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_additional_investigations;
 
         /// <summary>
         /// txt_initial_diagnosis control.
@@ -447,22 +348,13 @@ namespace EMR
         protected global::EMR.TextField txt_initial_diagnosis;
 
         /// <summary>
-        /// txt_diagnosis control.
+        /// txt_differential_diagnosis control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_diagnosis;
-
-        /// <summary>
-        /// txt_diff_diagnosis control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField txt_diff_diagnosis;
+        protected global::EMR.TextField txt_differential_diagnosis;
 
         /// <summary>
         /// txt_associated_conditions control.
@@ -474,22 +366,94 @@ namespace EMR
         protected global::EMR.TextField txt_associated_conditions;
 
         /// <summary>
-        /// txt_treatment_plan control.
+        /// rad_treatment_code_opd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_treatment_plan;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_treatment_code_opd;
 
         /// <summary>
-        /// txt_discharge_plan control.
+        /// rad_treatment_code_ipd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_discharge_plan;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_treatment_code_ipd;
+
+        /// <summary>
+        /// rad_treatment_code_trf control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_treatment_code_trf;
+
+        /// <summary>
+        /// XSquare3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare3;
+
+        /// <summary>
+        /// rad_spec_opinion_req1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_spec_opinion_req1;
+
+        /// <summary>
+        /// rad_spec_opinion_req2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_spec_opinion_req2;
+
+        /// <summary>
+        /// XSquare1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare1;
+
+        /// <summary>
+        /// TextField2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField TextField2;
+
+        /// <summary>
+        /// TextField1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField TextField1;
+
+        /// <summary>
+        /// TextField3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField TextField3;
 
         /// <summary>
         /// btnComplete control.

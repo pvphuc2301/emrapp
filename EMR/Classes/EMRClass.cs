@@ -1302,6 +1302,360 @@ namespace EMR
         }
         #endregion
     }
+
+    public class Iima
+    {
+
+        #region Properties
+        public static string api = "api/iima";
+        public dynamic document_id { get; set; }
+        public dynamic user_name { get; set; }
+        public dynamic status { get; set; }
+        public dynamic amend_reason { get; set; }
+          public dynamic chief_complaint { get; set; }
+          public dynamic cur_med_history { get; set; }
+          public dynamic cur_medication { get; set; }
+          public dynamic personal { get; set; }
+        public dynamic habits_smoking { get; set; }
+        public dynamic habits_smoking_pack { get; set; }
+        public dynamic habits_alcohol { get; set; }
+        public dynamic habits_alcohol_note { get; set; }
+        public dynamic habits_drugs { get; set; }
+        public dynamic habits_drugs_note { get; set; }
+        public dynamic habits_physical_exercise { get; set; }
+        public dynamic habits_phy_exer_note { get; set; }
+        public dynamic habits_other { get; set; }
+        public dynamic allergy { get; set; }
+        public dynamic allergy_note { get; set; }
+        public dynamic family { get; set; }
+          public dynamic immunization { get; set; }
+          public dynamic vs_temperature { get; set; }
+          public dynamic vs_heart_rate { get; set; }
+          public dynamic vs_weight { get; set; }
+          public dynamic vs_height { get; set; }
+          public dynamic vs_respiratory_rate { get; set; }
+          public dynamic vs_BMI { get; set; }
+          public dynamic vs_blood_pressure { get; set; }
+          public dynamic vs_spO2 { get; set; }
+          public dynamic vs_pulse { get; set; }
+          public dynamic physical_exam { get; set; }
+          public dynamic psy_consul_required { get; set; }
+          public dynamic laboratory_result { get; set; }
+          public dynamic add_investigation { get; set; }
+          public dynamic initial_diagnosis { get; set; }
+          public dynamic diagnosis { get; set; }
+          public dynamic diff_diagnosis { get; set; }
+          public dynamic associated_conditions { get; set; }
+          public dynamic treatment_plan { get; set; }
+        public dynamic discharge_plan { get; set; }
+        #endregion
+
+        public Iima(
+            dynamic document_id,
+            dynamic user_name,
+            dynamic status,
+            dynamic amend_reason,
+              dynamic chief_complaint,
+              dynamic cur_med_history,
+              dynamic cur_medication,
+              dynamic personal,
+              dynamic habits_smoking,
+              dynamic habits_smoking_pack,
+              dynamic habits_alcohol,
+              dynamic habits_alcohol_note,
+              dynamic habits_drugs,
+              dynamic habits_drugs_note,
+              dynamic habits_physical_exercise,
+              dynamic habits_phy_exer_note,
+              dynamic habits_other,
+              dynamic allergy,
+              dynamic allergy_note,
+              dynamic family,
+              dynamic immunization,
+              dynamic vs_temperature,
+              dynamic vs_heart_rate,
+              dynamic vs_weight,
+              dynamic vs_height,
+              dynamic vs_respiratory_rate,
+              dynamic vs_BMI,
+              dynamic vs_blood_pressure,
+              dynamic vs_spO2,
+              dynamic vs_pulse,
+              dynamic physical_exam,
+              dynamic psy_consul_required,
+              dynamic laboratory_result,
+              dynamic add_investigation,
+              dynamic initial_diagnosis,
+              dynamic diagnosis,
+              dynamic diff_diagnosis,
+              dynamic associated_conditions,
+              dynamic treatment_plan,
+              dynamic discharge_plan
+            )
+        {
+            this.document_id = document_id;
+            this.user_name = user_name;
+            this.status = status;
+            this.amend_reason = amend_reason;
+            this.chief_complaint = chief_complaint;
+            this.cur_med_history = cur_med_history;
+            this.cur_medication = cur_medication;
+            this.personal = personal;
+            this.habits_smoking = habits_smoking;
+            this.habits_smoking_pack = habits_smoking_pack;
+            this.habits_alcohol = habits_alcohol;
+            this.habits_alcohol_note = habits_alcohol_note;
+            this.habits_drugs = habits_drugs;
+            this.habits_drugs_note = habits_drugs_note;
+            this.habits_physical_exercise = habits_physical_exercise;
+            this.habits_phy_exer_note = habits_phy_exer_note;
+            this.habits_other = habits_other;
+            this.allergy = allergy;
+            this.allergy_note = allergy_note;
+            this.family = family;
+            this.immunization = immunization;
+            this.vs_temperature = vs_temperature;
+            this.vs_heart_rate = vs_heart_rate;
+            this.vs_weight = vs_weight;
+            this.vs_height = vs_height;
+            this.vs_respiratory_rate = vs_respiratory_rate;
+            this.vs_BMI = vs_BMI;
+            this.vs_blood_pressure = vs_blood_pressure;
+            this.vs_spO2 = vs_spO2;
+            this.vs_pulse = vs_pulse;
+            this.physical_exam = physical_exam;
+            this.psy_consul_required = psy_consul_required;
+            this.laboratory_result = laboratory_result;
+            this.add_investigation = add_investigation;
+            this.initial_diagnosis = initial_diagnosis;
+            this.diagnosis = diagnosis;
+            this.diff_diagnosis = diff_diagnosis;
+            this.associated_conditions = associated_conditions;
+            this.treatment_plan = treatment_plan;
+            this.discharge_plan = discharge_plan;
+        }
+
+        public Iima(dynamic document_id)
+        {
+            string _jsonData = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
+
+            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+
+            WebHelpers.BindingDatafield(db, this);
+        }
+
+        #region METHODS
+        public string[] Update()
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(string.Format("{0}/edit", api), this);
+            message[0] = responseStatus;
+
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, document_id));
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        public static string[] Delete(string userName)
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
+            message[0] = responseStatus;
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, DataHelpers.varDocId));
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        #endregion
+    }
+
+    public class Mrfv
+    {
+
+        #region Properties
+        public static string api = "api/mrfv";
+        public dynamic document_id { get; set; }
+        public dynamic user_name { get; set; }
+        public dynamic status { get; set; }
+        public dynamic amend_reason { get; set; }
+        public dynamic chief_complaint { get; set; }
+        public dynamic cur_med_history { get; set; }
+        public dynamic cur_medication { get; set; }
+        public dynamic personal { get; set; }
+        public dynamic family { get; set; }
+        public dynamic allergy { get; set; }
+        public dynamic allergy_text { get; set; }
+        public dynamic vs_temperature { get; set; }
+        public dynamic vs_heart_rate { get; set; }
+        public dynamic vs_weight { get; set; }
+        public dynamic vs_height { get; set; }
+        public dynamic vs_respiratory_rate { get; set; }
+        public dynamic vs_BMI { get; set; }
+        public dynamic vs_blood_pressure { get; set; }
+        public dynamic vs_spO2 { get; set; }
+        public dynamic vs_pulse { get; set; }
+        public dynamic scr_before_vacc_1 { get; set; }
+        public dynamic scr_before_vacc_2 { get; set; }
+        public dynamic scr_before_vacc_3 { get; set; }
+        public dynamic scr_before_vacc_4 { get; set; }
+        public dynamic scr_before_vacc_5 { get; set; }
+        public dynamic scr_before_vacc_6 { get; set; }
+        public dynamic scr_before_vacc_7 { get; set; }
+        public dynamic scr_before_vacc_8 { get; set; }
+        public dynamic appointed_vaccine { get; set; }
+        public dynamic additional_investigations { get; set; }
+        public dynamic initial_diagnosis { get; set; }
+        public dynamic differential_diagnosis { get; set; }
+        public dynamic associated_conditions { get; set; }
+        public dynamic treatment_code { get; set; }
+        public dynamic treatment_desc { get; set; }
+        public dynamic spec_opinion_req { get; set; }
+        public dynamic spec_opinion_req_text { get; set; }
+        public dynamic pecific_edu_req { get; set; }
+        public dynamic next_appointment { get; set; }
+        #endregion
+
+        public Mrfv(
+            dynamic document_id,
+            dynamic user_name,
+            dynamic status,
+            dynamic amend_reason,
+             dynamic chief_complaint,
+             dynamic cur_med_history,
+             dynamic cur_medication,
+             dynamic personal,
+             dynamic family,
+             dynamic allergy,
+             dynamic allergy_text,
+             dynamic vs_temperature,
+             dynamic vs_heart_rate,
+             dynamic vs_weight,
+             dynamic vs_height,
+             dynamic vs_respiratory_rate,
+             dynamic vs_BMI,
+             dynamic vs_blood_pressure,
+             dynamic vs_spO2,
+             dynamic vs_pulse,
+             dynamic scr_before_vacc_1,
+             dynamic scr_before_vacc_2,
+             dynamic scr_before_vacc_3,
+             dynamic scr_before_vacc_4,
+             dynamic scr_before_vacc_5,
+             dynamic scr_before_vacc_6,
+             dynamic scr_before_vacc_7,
+             dynamic scr_before_vacc_8,
+             dynamic appointed_vaccine,
+             dynamic additional_investigations,
+             dynamic initial_diagnosis,
+             dynamic differential_diagnosis,
+             dynamic associated_conditions,
+             dynamic treatment_code,
+             dynamic treatment_desc,
+             dynamic spec_opinion_req,
+             dynamic spec_opinion_req_text,
+             dynamic pecific_edu_req,
+             dynamic next_appointment
+            )
+        {
+            this.document_id = document_id;
+            this.user_name = user_name;
+            this.status = status;
+            this.amend_reason = amend_reason;
+            this.chief_complaint = chief_complaint;
+            this.cur_med_history = cur_med_history;
+            this.cur_medication = cur_medication;
+            this.personal = personal;
+            this.family = family;
+            this.allergy = allergy;
+            this.allergy_text = allergy_text;
+            this.vs_temperature = vs_temperature;
+            this.vs_heart_rate = vs_heart_rate;
+            this.vs_weight = vs_weight;
+            this.vs_height = vs_height;
+            this.vs_respiratory_rate = vs_respiratory_rate;
+            this.vs_BMI = vs_BMI;
+            this.vs_blood_pressure = vs_blood_pressure;
+            this.vs_spO2 = vs_spO2;
+            this.vs_pulse = vs_pulse;
+            this.scr_before_vacc_1 = scr_before_vacc_1;
+            this.scr_before_vacc_2 = scr_before_vacc_2;
+            this.scr_before_vacc_3 = scr_before_vacc_3;
+            this.scr_before_vacc_4 = scr_before_vacc_4;
+            this.scr_before_vacc_5 = scr_before_vacc_5;
+            this.scr_before_vacc_6 = scr_before_vacc_6;
+            this.scr_before_vacc_7 = scr_before_vacc_7;
+            this.scr_before_vacc_8 = scr_before_vacc_8;
+            this.appointed_vaccine = appointed_vaccine;
+            this.additional_investigations = additional_investigations;
+            this.initial_diagnosis = initial_diagnosis;
+            this.differential_diagnosis = differential_diagnosis;
+            this.associated_conditions = associated_conditions;
+            this.treatment_code = treatment_code;
+            this.treatment_desc = treatment_desc;
+            this.spec_opinion_req = spec_opinion_req;
+            this.spec_opinion_req_text = spec_opinion_req_text;
+            this.pecific_edu_req = pecific_edu_req;
+            this.next_appointment = next_appointment;
+
+        }
+
+        public static Dictionary<string, string> TREATMENT_CODE = new Dictionary<string, string>()
+        {
+            { "OPD", "Ngoại trú/Ambulatory care" },
+            { "IPD", "Nhập viện/Admission" },
+            { "TRF", "Chuyển viện/Transfer" },
+        };
+
+        public Mrfv(dynamic document_id)
+        {
+            string _jsonData = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
+
+            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+
+            WebHelpers.BindingDatafield(db, this);
+        }
+
+        #region METHODS
+        public string[] Update()
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(string.Format("{0}/edit", api), this);
+            message[0] = responseStatus;
+
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, document_id));
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        public static string[] Delete(string userName)
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
+            message[0] = responseStatus;
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, DataHelpers.varDocId));
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        #endregion
+    }
+
     public class OutPatientInitialNursingAssement
     {
         #region Properties
@@ -1958,7 +2312,358 @@ namespace EMR
             this.next_appointment = next_appointment;
         }
     }
+    public partial class OGIA
+    {
+        #region OGIA_Properties
+        private dynamic api = "api/ogia/";
+        public dynamic document_id { get; set; }
+        public dynamic user_name { get; set; }
+        public dynamic status { get; set; }
+        public dynamic amend_reason { get; set; }
 
+        //public Guid document_id { get; set; }
+        public dynamic reason_admission { get; set; }
+        public dynamic is_obs_gyn { get; set; }
+        public dynamic lmp_from { get; set; }
+        public dynamic lmp_to { get; set; }
+        public dynamic ges_age_weeks { get; set; }
+        public dynamic ges_age_days { get; set; }
+        public dynamic prenatal_visit { get; set; }
+        public dynamic tetanus_vaccination { get; set; }
+        public dynamic tetanus_vaccin_time { get; set; }
+        public dynamic gbs_disease { get; set; }
+        public dynamic gbs_bacteriuria { get; set; }
+        public dynamic gbs_vaginal { get; set; }
+        public dynamic ges_diabetes { get; set; }
+        public dynamic other_ges_abnormal { get; set; }
+        public dynamic other_ges_abnormal_note { get; set; }
+        public dynamic labor_trig_at_time { get; set; }
+        public dynamic preliminary_signs { get; set; }
+        public dynamic progression { get; set; }
+        public dynamic obs_cur_medication { get; set; }
+        public dynamic gyn_med_history { get; set; }
+        public dynamic gyn_cur_medication { get; set; }
+        public dynamic personal { get; set; }
+        public dynamic family { get; set; }
+        public dynamic age_of_menarhce { get; set; }
+        public dynamic menstrual_cycle { get; set; }
+        public dynamic length_of_period { get; set; }
+        public dynamic amount_mens_blood { get; set; }
+        public dynamic marriage_age { get; set; }
+        public dynamic age_menopause { get; set; }
+        public dynamic previous_gyn_diseases { get; set; }
+        public dynamic obs_history { get; set; }
+        public dynamic general_appearance { get; set; }
+        public dynamic edema { get; set; }
+        public dynamic edema_note { get; set; }
+        public dynamic cardio_system { get; set; }
+        public dynamic digestive_system { get; set; }
+        public dynamic nervous_system { get; set; }
+        public dynamic uro_system { get; set; }
+        public dynamic mus_system { get; set; }
+        public dynamic otorhinolaryngology { get; set; }
+
+        public dynamic integumentary_system { get; set; }
+        public dynamic ophthalmology { get; set; }
+        public dynamic other_findings { get; set; }
+        public dynamic psy_consul_required { get; set; }
+        public dynamic obs_pre_cicatrice { get; set; }
+        public dynamic obs_uterine_shape { get; set; }
+        public dynamic obs_posture { get; set; }
+        public dynamic obs_fundal_height { get; set; }
+        public dynamic obs_abdominal_circum { get; set; }
+        public dynamic obs_uterine_con { get; set; }
+        public dynamic obs_fetal_heart_rate { get; set; }
+        public dynamic obs_breasts { get; set; }
+        public dynamic obs_vulva { get; set; }
+        public dynamic obs_vagina { get; set; }
+        public dynamic obs_perineum { get; set; }
+        public dynamic obs_cervix { get; set; }
+        public dynamic obs_adnexa { get; set; }
+        public dynamic obs_mem_condition_code { get; set; }
+        public dynamic obs_mem_condition_desc { get; set; }
+        public dynamic obs_feat_amniotic { get; set; }
+        public dynamic obs_color_amniotic { get; set; }
+        public dynamic obs_presentation_code { get; set; }
+        public dynamic obs_presentation_desc { get; set; }
+        public dynamic obs_presentation_other { get; set; }
+        public dynamic obs_fetal_position { get; set; }
+        public dynamic obs_pelvic_exam { get; set; }
+        public dynamic obs_bishop_score { get; set; }
+        public dynamic gyn_abdo_sur_scars { get; set; }
+        public dynamic gyn_reason { get; set; }
+        public dynamic gyn_uterine_height { get; set; }
+        public dynamic gyn_vulva { get; set; }
+        public dynamic gyn_perineum { get; set; }
+        public dynamic gyn_vagina { get; set; }
+        public dynamic gyn_discharge { get; set; }
+        public dynamic gyn_cervix { get; set; }
+        public dynamic gyn_uterus { get; set; }
+        public dynamic gyn_adnexa { get; set; }
+        public dynamic gyn_douglas_pouchs { get; set; }
+        public dynamic lab_result { get; set; }
+        public dynamic add_investigations { get; set; }
+        public dynamic initial_diagnosis { get; set; }
+        public dynamic diagnosis { get; set; }
+        public dynamic diff_diagnosis { get; set; }
+        public dynamic associated_conditions { get; set; }
+        public dynamic treatment_plan { get; set; }
+        public dynamic discharge_plan { get; set; }
+
+
+        #endregion
+
+        OGIA() { }
+
+        public OGIA(dynamic document_id)
+        {
+            string _jsonData = WebHelpers.GetAPI(api + document_id);
+
+            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+
+            WebHelpers.BindingDatafield(db, this);
+        }
+        public OGIA(dynamic document_id, dynamic user_name)
+        {
+            this.document_id = document_id;
+            this.user_name = user_name;
+        }
+
+        // Constructor for API Inssert
+        public OGIA(
+  dynamic document_id,
+  dynamic user_name,
+  dynamic status,
+  dynamic amend_reason,
+
+        dynamic document_id_,
+          dynamic user_name_,
+          dynamic status_,
+          dynamic amend_reason_,
+
+        //  Guid document_id_ ,
+          dynamic reason_admission_,
+          dynamic is_obs_gyn_,
+          dynamic lmp_from_,
+          dynamic lmp_to_,
+          dynamic ges_age_weeks_,
+          dynamic ges_age_days_,
+          dynamic prenatal_visit_,
+          dynamic tetanus_vaccination_,
+          dynamic tetanus_vaccin_time_,
+          dynamic gbs_disease_,
+          dynamic gbs_bacteriuria_,
+          dynamic gbs_vaginal_,
+          dynamic ges_diabetes_,
+          dynamic other_ges_abnormal_,
+          dynamic other_ges_abnormal_note_,
+          dynamic labor_trig_at_time_,
+          dynamic preliminary_signs_,
+          dynamic progression_,
+          dynamic obs_cur_medication_,
+          dynamic gyn_med_history_,
+          dynamic gyn_cur_medication_,
+          dynamic personal_,
+          dynamic family_,
+          dynamic age_of_menarhce_,
+          dynamic menstrual_cycle_,
+          dynamic length_of_period_,
+          dynamic amount_mens_blood_,
+          dynamic marriage_age_,
+          dynamic age_menopause_,
+          dynamic previous_gyn_diseases_,
+          dynamic obs_history_,
+          dynamic general_appearance_,
+          dynamic edema_,
+          dynamic edema_note_,
+          dynamic cardio_system_,
+          dynamic digestive_system_,
+          dynamic nervous_system_,
+          dynamic uro_system_,
+          dynamic mus_system_,
+          dynamic otorhinolaryngology_,
+          dynamic integumentary_system_,
+          dynamic ophthalmology_,
+          dynamic other_findings_,
+          dynamic psy_consul_required_,
+          dynamic obs_pre_cicatrice_,
+          dynamic obs_uterine_shape_,
+          dynamic obs_posture_,
+          dynamic obs_fundal_height_,
+          dynamic obs_abdominal_circum_,
+          dynamic obs_uterine_con_,
+          dynamic obs_fetal_heart_rate_,
+          dynamic obs_breasts_,
+          dynamic obs_vulva_,
+          dynamic obs_vagina_,
+          dynamic obs_perineum_,
+          dynamic obs_cervix_,
+          dynamic obs_adnexa_,
+          dynamic obs_mem_condition_code_,
+          dynamic obs_mem_condition_desc_,
+          dynamic obs_feat_amniotic_,
+          dynamic obs_color_amniotic_,
+          dynamic obs_presentation_code_,
+          dynamic obs_presentation_desc_,
+          dynamic obs_presentation_other_,
+          dynamic obs_fetal_position_,
+          dynamic obs_pelvic_exam_,
+          dynamic obs_bishop_score_,
+          dynamic gyn_abdo_sur_scars_,
+          dynamic gyn_reason_,
+          dynamic gyn_uterine_height_,
+          dynamic gyn_vulva_,
+          dynamic gyn_perineum_,
+          dynamic gyn_vagina_,
+          dynamic gyn_discharge_,
+          dynamic gyn_cervix_,
+          dynamic gyn_uterus_,
+          dynamic gyn_adnexa_,
+          dynamic gyn_douglas_pouchs_,
+          dynamic lab_result_,
+          dynamic add_investigations_,
+          dynamic initial_diagnosis_,
+          dynamic diagnosis_,
+          dynamic diff_diagnosis_,
+          dynamic associated_conditions_,
+          dynamic treatment_plan_,
+          dynamic discharge_plan_
+        )
+        {
+            this.document_id = document_id;
+            this.user_name = user_name;
+            this.status = status;
+            this.amend_reason = amend_reason;
+
+            this.reason_admission = reason_admission_;
+            this.is_obs_gyn = is_obs_gyn_;
+            this.lmp_from = lmp_from_;
+            this.lmp_to = lmp_to_;
+            this.ges_age_weeks = ges_age_weeks_;
+            this.ges_age_days = ges_age_days_;
+            this.prenatal_visit = prenatal_visit_;
+            this.tetanus_vaccination = tetanus_vaccination_;
+            this.tetanus_vaccin_time = tetanus_vaccin_time_;
+            this.gbs_disease = gbs_disease_;
+            this.gbs_bacteriuria = gbs_bacteriuria_;
+            this.gbs_vaginal = gbs_vaginal_;
+            this.ges_diabetes = ges_diabetes_;
+            this.other_ges_abnormal = other_ges_abnormal_;
+            this.other_ges_abnormal_note = other_ges_abnormal_note_;
+            this.labor_trig_at_time = labor_trig_at_time_;
+            this.preliminary_signs = preliminary_signs_;
+            this.progression = progression_;
+            this.obs_cur_medication = obs_cur_medication_;
+            this.gyn_med_history = gyn_med_history_;
+            this.gyn_cur_medication = gyn_cur_medication_;
+            this.personal = personal_;
+            this.family = family_;
+            this.age_of_menarhce = age_of_menarhce_;
+            this.menstrual_cycle = menstrual_cycle_;
+            this.length_of_period = length_of_period_;
+            this.amount_mens_blood = amount_mens_blood_;
+            this.marriage_age = marriage_age_;
+            this.age_menopause = age_menopause_;
+            this.previous_gyn_diseases = previous_gyn_diseases_;
+            this.obs_history = obs_history_;
+            this.general_appearance = general_appearance_;
+            this.edema = edema_;
+            this.edema_note = edema_note_;
+            this.cardio_system = cardio_system_;
+            this.digestive_system = digestive_system_;
+            this.nervous_system = nervous_system_;
+            this.uro_system = uro_system_;
+            this.mus_system = mus_system_;
+            this.otorhinolaryngology = otorhinolaryngology_;
+            this.integumentary_system = integumentary_system_;
+            this.ophthalmology = ophthalmology_;
+            this.other_findings = other_findings_;
+            this.psy_consul_required = psy_consul_required_;
+            this.obs_pre_cicatrice = obs_pre_cicatrice_;
+            this.obs_uterine_shape = obs_uterine_shape_;
+            this.obs_posture = obs_posture_;
+            this.obs_fundal_height = obs_fundal_height_;
+            this.obs_abdominal_circum = obs_abdominal_circum_;
+            this.obs_uterine_con = obs_uterine_con_;
+            this.obs_fetal_heart_rate = obs_fetal_heart_rate_;
+            this.obs_breasts = obs_breasts_;
+            this.obs_vulva = obs_vulva_;
+            this.obs_vagina = obs_vagina_;
+            this.obs_perineum = obs_perineum_;
+            this.obs_cervix = obs_cervix_;
+            this.obs_adnexa = obs_adnexa_;
+            this.obs_mem_condition_code = obs_mem_condition_code_;
+            this.obs_mem_condition_desc = obs_mem_condition_desc_;
+            this.obs_feat_amniotic = obs_feat_amniotic_;
+            this.obs_color_amniotic = obs_color_amniotic_;
+            this.obs_presentation_code = obs_presentation_code_;
+            this.obs_presentation_desc = obs_presentation_desc_;
+            this.obs_presentation_other = obs_presentation_other_;
+            this.obs_fetal_position = obs_fetal_position_;
+            this.obs_pelvic_exam = obs_pelvic_exam_;
+            this.obs_bishop_score = obs_bishop_score_;
+            this.gyn_abdo_sur_scars = gyn_abdo_sur_scars_;
+            this.gyn_reason = gyn_reason_;
+            this.gyn_uterine_height = gyn_uterine_height_;
+            this.gyn_vulva = gyn_vulva_;
+            this.gyn_perineum = gyn_perineum_;
+            this.gyn_vagina = gyn_vagina_;
+            this.gyn_discharge = gyn_discharge_;
+            this.gyn_cervix = gyn_cervix_;
+            this.gyn_uterus = gyn_uterus_;
+            this.gyn_adnexa = gyn_adnexa_;
+            this.gyn_douglas_pouchs = gyn_douglas_pouchs_;
+            this.lab_result = lab_result_;
+            this.add_investigations = add_investigations_;
+            this.initial_diagnosis = initial_diagnosis_;
+            this.diagnosis = diagnosis_;
+            this.diff_diagnosis = diff_diagnosis_;
+            this.associated_conditions = associated_conditions_;
+            this.treatment_plan = treatment_plan_;
+            this.discharge_plan = discharge_plan_;
+        }
+
+        public string[] Update()
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(api + "/edit", this);
+            message[0] = responseStatus;
+
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI(api + "/log/" + this.document_id);
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+
+        public static string[] Delete(string userName)
+        {
+            string[] message = new string[2];
+            try
+            {
+
+                string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
+
+                message[0] = responseStatus;
+                if (responseStatus == WebHelpers.ResponseStatus.OK)
+                {
+                    responseStatus = WebHelpers.PostAPI("api/OGIA/log/" + DataHelpers.varDocId);
+                    message[1] = responseStatus;
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                message[0] = ex.Message;
+                return message;
+            }
+
+        }
+    }
     public partial class MC
     {
         #region Properties
@@ -2190,7 +2895,7 @@ namespace EMR
             { "N", "Non-Urgent/ Không cấp cứu" },
         };
         //public class PatientPischarge
-        public static Dictionary<string, string> PatientPischarge = new Dictionary<string, string>()
+        public static Dictionary<string, string> PatientDischarge = new Dictionary<string, string>()
         {
             { "IMP", "Improved/ Có cải thiện" },
             { "UNC", "Unchanged/ Không thay đổi" },
@@ -2202,7 +2907,7 @@ namespace EMR
             { "A", "Alcohol/ Rượu" },
             { "S", "Smoking/ Thuốc lá" },
             { "D", "Drugs/ Chất gây nghiện" },
-            { "0", "Other, specify/ Khác ghi rõ" }
+            { "O", "Other, specify/ Khác ghi rõ" }
         };
         public static Dictionary<string, string> Treatment = new Dictionary<string, string>()
         {
@@ -2434,6 +3139,399 @@ namespace EMR
 
             return message;
         }
+    }
+    #endregion
+    #region Trai
+    public partial class IniMedAssForNeoInpatient
+    {
+        #region Properties
+        public dynamic document_id { get; set; }
+        public dynamic user_name { get; set; }
+        public dynamic status { get; set; }
+        public dynamic amend_reason { get; set; }
+        public dynamic admission_reason { get; set; }
+        public dynamic cur_med_history { get; set; }
+        public dynamic cur_medication { get; set; }
+        public dynamic delivery { get; set; }
+        public dynamic post_nutrition { get; set; }
+        public dynamic mater_med_history { get; set; }
+        public dynamic exam_weight { get; set; }
+        public dynamic exam_length { get; set; }
+        public dynamic exam_head_circum { get; set; }
+        public dynamic exam_hr { get; set; }
+        public dynamic exam_rr { get; set; }
+        public dynamic physical_exam { get; set; }
+        public dynamic laboratory { get; set; }
+        public dynamic initial_diagnosis { get; set; }
+        public dynamic diff_diagnosis { get; set; }
+        public dynamic associated_conditions { get; set; }
+        public dynamic treatment_plan { get; set; }
+        public dynamic discharge_plan { get; set; }
+        public dynamic model_id { get; set; }
+        public dynamic patient_visit_id { get; set; }
+        public dynamic created_user_id { get; set; }
+        public dynamic created_name_e { get; set; }
+        public dynamic created_name_l { get; set; }
+        public dynamic created_date_time { get; set; }
+        public dynamic modified_user_id { get; set; }
+        public dynamic modified_name_e { get; set; }
+        public dynamic modified_name_l { get; set; }
+        public dynamic modified_date_time { get; set; }
+        public dynamic submited_user_id { get; set; }
+        public dynamic submited_name_e { get; set; }
+        public dynamic submited_name_l { get; set; }
+        public dynamic submited_date_time { get; set; }
+        public dynamic signed_user_id { get; set; }
+        public dynamic signed_name_e { get; set; }
+        public dynamic signed_name_l { get; set; }
+        public dynamic signed_date_time { get; set; }
+        public dynamic delete_user_id { get; set; }
+        public dynamic delete_name_e { get; set; }
+        public dynamic delete_name_l { get; set; }
+        public dynamic delete_date_time { get; set; }
+        public dynamic document_type_rcd { get; set; }
+
+        public IniMedAssForNeoInpatient(
+        dynamic document_id
+        , dynamic user_name
+        , dynamic status
+        , dynamic amend_reason
+        , dynamic admission_reason
+        , dynamic cur_med_history
+        , dynamic cur_medication
+        , dynamic delivery
+        , dynamic post_nutrition
+        , dynamic mater_med_history
+        , dynamic exam_weight
+        , dynamic exam_length
+        , dynamic exam_head_circum
+        , dynamic exam_hr
+        , dynamic exam_rr
+        , dynamic physical_exam
+        , dynamic laboratory
+        , dynamic initial_diagnosis
+        , dynamic diff_diagnosis
+        , dynamic associated_conditions
+        , dynamic treatment_plan
+        , dynamic discharge_plan
+        , dynamic model_id
+        , dynamic patient_visit_id
+        , dynamic created_user_id
+        , dynamic created_name_e
+        , dynamic created_name_l
+        , dynamic created_date_time
+        , dynamic modified_user_id
+        , dynamic modified_name_e
+        , dynamic modified_name_l
+        , dynamic modified_date_time
+        , dynamic submited_user_id
+        , dynamic submited_name_e
+        , dynamic submited_name_l
+        , dynamic submited_date_time
+        , dynamic signed_user_id
+        , dynamic signed_name_e
+        , dynamic signed_name_l
+        , dynamic signed_date_time
+        , dynamic delete_user_id
+        , dynamic delete_name_e
+        , dynamic delete_name_l
+        , dynamic delete_date_time
+        , dynamic document_type_rcd
+        )
+        {
+
+            this.document_id = document_id;
+            this.user_name = user_name;
+            this.status = status;
+            this.amend_reason = amend_reason;
+            this.admission_reason = admission_reason;
+            this.cur_med_history = cur_med_history;
+            this.cur_medication = cur_medication;
+            this.delivery = delivery;
+            this.post_nutrition = post_nutrition;
+            this.mater_med_history = mater_med_history;
+            this.exam_weight = exam_weight;
+            this.exam_length = exam_length;
+            this.exam_head_circum = exam_head_circum;
+            this.exam_hr = exam_hr;
+            this.exam_rr = exam_rr;
+            this.physical_exam = physical_exam;
+            this.laboratory = laboratory;
+            this.initial_diagnosis = initial_diagnosis;
+            this.diff_diagnosis = diff_diagnosis;
+            this.associated_conditions = associated_conditions;
+            this.treatment_plan = treatment_plan;
+            this.discharge_plan = discharge_plan;
+            this.model_id = model_id;
+            this.patient_visit_id = patient_visit_id;
+            this.created_user_id = created_user_id;
+            this.created_name_e = created_name_e;
+            this.created_name_l = created_name_l;
+            this.created_date_time = created_date_time;
+            this.modified_user_id = modified_user_id;
+            this.modified_name_e = modified_name_e;
+            this.modified_name_l = modified_name_l;
+            this.modified_date_time = modified_date_time;
+            this.submited_user_id = submited_user_id;
+            this.submited_name_e = submited_name_e;
+            this.submited_name_l = submited_name_l;
+            this.submited_date_time = submited_date_time;
+            this.signed_user_id = signed_user_id;
+            this.signed_name_e = signed_name_e;
+            this.signed_name_l = signed_name_l;
+            this.signed_date_time = signed_date_time;
+            this.delete_user_id = delete_user_id;
+            this.delete_name_e = delete_name_e;
+            this.delete_name_l = delete_name_l;
+            this.delete_date_time = delete_date_time;
+            this.document_type_rcd = document_type_rcd;
+        }
+
+
+        IniMedAssForNeoInpatient() { }
+        public IniMedAssForNeoInpatient(dynamic document_id)
+        {
+            DataTable tbl = new DataTable();
+            string _jsonData = WebHelpers.GetAPI("api/imani/" + document_id);
+
+            if (_jsonData != null)
+            {
+                // this = new OutpatientMedicalRecord();
+                tbl = WebHelpers.GetJSONToDataTable(_jsonData);
+                WebHelpers.BindingDatafield(tbl, this);
+                DataHelpers.varDocumentStatus = this.status;
+            }
+        }
+        public IniMedAssForNeoInpatient(dynamic document_id, dynamic use_name)
+        {
+            this.document_id = document_id;
+            this.user_name = user_name;
+        }
+
+
+        public string[] Update()
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI("api/imani/edit", this);
+            message[0] = responseStatus;
+
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI("api/imani/log/" + this.document_id);
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+
+        public static string[] Delete(string userName)
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI("api/imani/document-del/" + userName + "/" + DataHelpers.varDocId);
+
+            message[0] = responseStatus;
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI("api/imani/log/" + DataHelpers.varDocId);
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        #endregion
+
+
+
+    }
+    
+    public class Surr
+    {
+        #region properties
+        private string api = "api/surr";
+        public dynamic document_id { get; set; }
+        public dynamic user_name { get; set; }
+        public dynamic status { get; set; }
+        public dynamic amend_reason { get; set; }
+        public dynamic procedure_date { get; set; }
+        public dynamic start_time { get; set; }
+        public dynamic finish_time { get; set; }
+        public dynamic preo_diagnosis { get; set; }
+        public dynamic post_diagnosis { get; set; }
+        public dynamic name_procedure { get; set; }
+        public dynamic anesthesia { get; set; }
+        public dynamic surgeon { get; set; }
+        public dynamic assistant_surgeon { get; set; }
+        public dynamic anesthesiologist { get; set; }
+        public dynamic anesthetic_nurse { get; set; }
+        public dynamic scrub_nurse { get; set; }
+        public dynamic circulating_nurse { get; set; }
+        public dynamic estimated_bloodloss { get; set; }
+        public dynamic biopsy_pathology { get; set; }
+        public dynamic complications { get; set; }
+        public dynamic procedure_chart { get; set; }
+        public dynamic procedure_narrative { get; set; }
+        public dynamic model_id { get; set; }
+        public dynamic patient_visit_id { get; set; }
+        public dynamic created_user_id { get; set; }
+        public dynamic created_name_e { get; set; }
+        public dynamic created_name_l { get; set; }
+        public dynamic created_date_time { get; set; }
+        public dynamic modified_user_id { get; set; }
+        public dynamic modified_name_e { get; set; }
+        public dynamic modified_name_l { get; set; }
+        public dynamic modified_date_time { get; set; }
+        public dynamic submited_user_id { get; set; }
+        public dynamic submited_name_e { get; set; }
+        public dynamic submited_name_l { get; set; }
+        public dynamic submited_date_time { get; set; }
+        public dynamic signed_user_id { get; set; }
+        public dynamic signed_name_e { get; set; }
+        public dynamic signed_name_l { get; set; }
+        public dynamic signed_date_time { get; set; }
+        public dynamic delete_user_id { get; set; }
+        public dynamic delete_name_e { get; set; }
+        public dynamic delete_name_l { get; set; }
+        public dynamic delete_date_time { get; set; }
+        public dynamic document_type_rcd { get; set; }
+        #endregion
+        public Surr(dynamic document_id
+        , dynamic user_name
+        , dynamic status
+        , dynamic amend_reason
+        , dynamic procedure_date
+        , dynamic start_time
+        , dynamic finish_time
+        , dynamic preo_diagnosis
+        , dynamic post_diagnosis
+        , dynamic name_procedure
+        , dynamic anesthesia
+        , dynamic surgeon
+        , dynamic assistant_surgeon
+        , dynamic anesthesiologist
+        , dynamic anesthetic_nurse
+        , dynamic scrub_nurse
+        , dynamic circulating_nurse
+        , dynamic estimated_bloodloss
+        , dynamic biopsy_pathology
+        , dynamic complications
+        , dynamic procedure_chart
+        , dynamic procedure_narrative
+        , dynamic model_id
+        , dynamic patient_visit_id
+        , dynamic created_user_id
+        , dynamic created_name_e
+        , dynamic created_name_l
+        , dynamic created_date_time
+        , dynamic modified_user_id
+        , dynamic modified_name_e
+        , dynamic modified_name_l
+        , dynamic modified_date_time
+        , dynamic submited_user_id
+        , dynamic submited_name_e
+        , dynamic submited_name_l
+        , dynamic submited_date_time
+        , dynamic signed_user_id
+        , dynamic signed_name_e
+        , dynamic signed_name_l
+        , dynamic signed_date_time
+        , dynamic delete_user_id
+        , dynamic delete_name_e
+        , dynamic delete_name_l
+        , dynamic delete_date_time
+        , dynamic document_type_rcd
+        )
+        {
+
+            this.document_id = document_id;
+            this.user_name = user_name;
+            this.status = status;
+            this.amend_reason = amend_reason;
+            this.procedure_date = procedure_date;
+            this.start_time = start_time;
+            this.finish_time = finish_time;
+            this.preo_diagnosis = preo_diagnosis;
+            this.post_diagnosis = post_diagnosis;
+            this.name_procedure = name_procedure;
+            this.anesthesia = anesthesia;
+            this.surgeon = surgeon;
+            this.assistant_surgeon = assistant_surgeon;
+            this.anesthesiologist = anesthesiologist;
+            this.anesthetic_nurse = anesthetic_nurse;
+            this.scrub_nurse = scrub_nurse;
+            this.circulating_nurse = circulating_nurse;
+            this.estimated_bloodloss = estimated_bloodloss;
+            this.biopsy_pathology = biopsy_pathology;
+            this.complications = complications;
+            this.procedure_chart = procedure_chart;
+            this.procedure_narrative = procedure_narrative;
+            this.model_id = model_id;
+            this.patient_visit_id = patient_visit_id;
+            this.created_user_id = created_user_id;
+            this.created_name_e = created_name_e;
+            this.created_name_l = created_name_l;
+            this.created_date_time = created_date_time;
+            this.modified_user_id = modified_user_id;
+            this.modified_name_e = modified_name_e;
+            this.modified_name_l = modified_name_l;
+            this.modified_date_time = modified_date_time;
+            this.submited_user_id = submited_user_id;
+            this.submited_name_e = submited_name_e;
+            this.submited_name_l = submited_name_l;
+            this.submited_date_time = submited_date_time;
+            this.signed_user_id = signed_user_id;
+            this.signed_name_e = signed_name_e;
+            this.signed_name_l = signed_name_l;
+            this.signed_date_time = signed_date_time;
+            this.delete_user_id = delete_user_id;
+            this.delete_name_e = delete_name_e;
+            this.delete_name_l = delete_name_l;
+            this.delete_date_time = delete_date_time;
+            this.document_type_rcd = document_type_rcd;
+        }
+
+        public Surr(string document_id)
+        {
+            string _jsonData = WebHelpers.GetAPI("api/surr/" + document_id);
+
+            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+
+            WebHelpers.BindingDatafield(db, this);
+        }
+
+        #region METHODS
+        public string[] Update()
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(api + "/edit", this);
+            message[0] = responseStatus;
+
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI(api + "/log/" + this.document_id);
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        public static string[] Delete(string userName)
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(string.Format("api/surr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
+
+            message[0] = responseStatus;
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI("api/surr/log/" + DataHelpers.varDocId);
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        #endregion
     }
     #endregion
 }

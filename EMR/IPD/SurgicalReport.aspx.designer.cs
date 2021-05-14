@@ -15,174 +15,291 @@ namespace EMR
     {
 
         /// <summary>
-        /// form1 control.
+        /// form2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form2;
 
         /// <summary>
-        /// RadScriptManager1 control.
+        /// RadScriptManager2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadScriptManager RadScriptManager1;
+        protected global::Telerik.Web.UI.RadScriptManager RadScriptManager2;
 
         /// <summary>
-        /// RadDatePicker4 control.
+        /// Upd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker RadDatePicker4;
+        protected global::System.Web.UI.UpdatePanel Upd;
 
         /// <summary>
-        /// RadTimePicker2 control.
+        /// AmendReasonPlaceHolder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTimePicker RadTimePicker2;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AmendReasonPlaceHolder;
 
         /// <summary>
-        /// RadTimePicker1 control.
+        /// txt_amendReason control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTimePicker RadTimePicker1;
+        protected global::EMR.AmendReason txt_amendReason;
 
         /// <summary>
-        /// RadTextBox7 control.
+        /// PatientInfo1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox7;
+        protected global::EMR.UserControls.PatientInfo PatientInfo1;
 
         /// <summary>
-        /// RadTextBox1 control.
+        /// rad_procedure_date control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox1;
+        protected global::Telerik.Web.UI.RadDatePicker rad_procedure_date;
 
         /// <summary>
-        /// RadTextBox2 control.
+        /// rad_start_time control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox2;
+        protected global::Telerik.Web.UI.RadTimePicker rad_start_time;
 
         /// <summary>
-        /// RadTextBox3 control.
+        /// rad_finish_time control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox3;
+        protected global::Telerik.Web.UI.RadTimePicker rad_finish_time;
 
         /// <summary>
-        /// RadTextBox4 control.
+        /// txt_preo_diagnosis control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox4;
+        protected global::EMR.TextField txt_preo_diagnosis;
 
         /// <summary>
-        /// RadTextBox5 control.
+        /// txt_post_diagnosis control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox5;
+        protected global::EMR.TextField txt_post_diagnosis;
 
         /// <summary>
-        /// RadTextBox6 control.
+        /// txt_name_procedure control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox6;
+        protected global::EMR.TextField txt_name_procedure;
 
         /// <summary>
-        /// RadTextBox8 control.
+        /// txt_anesthesia control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox8;
+        protected global::EMR.TextField txt_anesthesia;
 
         /// <summary>
-        /// RadTextBox9 control.
+        /// txt_surgeon control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox9;
+        protected global::EMR.TextField txt_surgeon;
 
         /// <summary>
-        /// RadTextBox10 control.
+        /// txt_assistant_surgeon control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox10;
+        protected global::EMR.TextField txt_assistant_surgeon;
 
         /// <summary>
-        /// RadTextBox11 control.
+        /// txt_anesthesiologist control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox11;
+        protected global::EMR.TextField txt_anesthesiologist;
 
         /// <summary>
-        /// RadTextBox12 control.
+        /// txt_anesthetic_nurse control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox12;
+        protected global::EMR.TextField txt_anesthetic_nurse;
 
         /// <summary>
-        /// RadTextBox13 control.
+        /// txt_scrub_nurse control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox13;
+        protected global::EMR.TextField txt_scrub_nurse;
 
         /// <summary>
-        /// RadTextBox14 control.
+        /// txt_circulating_nurse control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox RadTextBox14;
+        protected global::EMR.TextField txt_circulating_nurse;
+
+        /// <summary>
+        /// txt_estimated_bloodloss control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_estimated_bloodloss;
+
+        /// <summary>
+        /// txt_biopsy_pathology control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_biopsy_pathology;
+
+        /// <summary>
+        /// txt_complications control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_complications;
+
+        /// <summary>
+        /// txt_procedure_chart control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_procedure_chart;
+
+        /// <summary>
+        /// txt_procedure_narrative control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_procedure_narrative;
+
+        /// <summary>
+        /// btnComplete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnComplete;
+
+        /// <summary>
+        /// btnSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSave;
+
+        /// <summary>
+        /// btnDeleteModal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDeleteModal;
+
+        /// <summary>
+        /// btnAmend control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAmend;
+
+        /// <summary>
+        /// btnPrint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnPrint;
+
+        /// <summary>
+        /// btnCancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancel;
+
+        /// <summary>
+        /// TextField1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField TextField1;
+
+        /// <summary>
+        /// btnDelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDelete;
     }
 }

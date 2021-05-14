@@ -1216,10 +1216,10 @@
 
                                         <div class="form-group row">
                                             <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label class="control-label mb-2 font-bold">Xuất viện/ <span class="text-primary">Discharged</span></label>
-                                                    <div class="form-group row">
+                                                    <div class="row">
                                                         <div class="col-md-6">
+                                                            <label class="control-label mb-2 font-bold">Xuất viện/ <span class="text-primary">Discharged</span></label>
+
                                                             <div class="form-group">
                                                                 <telerik:RadDateTimePicker runat="server" ID="dtpk_discharge_date_time" Width="200px" />
                                                             </div>
@@ -1243,25 +1243,26 @@
                                                         <input type="checkbox" runat="server" id="cb_discharge_option_d" class="custom-control-input" />
                                                         <span class="custom-control-label">Tử vong/ <span class="text-primary">Dead</span></span>
                                                     </label>
-                                                </div>
                                             </div>
 
                                             <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <label class="control-label mb-2 font-bold">Nhập viện/ <span class="text-primary">Admited</span></label>
-                                                    <div class="col-md-6">
-                                                        <div class="form-group">
-                                                            <telerik:RadDateTimePicker runat="server" ID="dtpk_admited_date_time" Width="200px" />
+                                                <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label class="control-label mb-2 font-bold">Nhập viện/ <span class="text-primary">Admited</span></label>
+                                                            <div class="form-group">
+                                                                <telerik:RadDateTimePicker runat="server" ID="dtpk_admited_date_time" Width="200px" />
+                                                            </div>
                                                         </div>
-                                                    </div>
-
-                                                    <div class="col-md-6">
-                                                        <label class="control-label mb-2 font-bold">bởi BS/ <span class="text-primary">by Dr.</span></label>
+                                                        <div class="col-md-6">
+                                                            <label class="control-label mb-2 font-bold">bởi BS/ <span class="text-primary">by Dr.</span></label>
                                                         <div class="form-group">
                                                             <aih:TextField runat="server" ID="txt_admited_by" />
                                                         </div>
+                                                        </div>
                                                     </div>
 
+                                                <div class="form-group row">
+                                                    
                                                     <div class="col-md-12 mt-2">
                                                         <label class="control-label mb-2 font-bold">Khoa tiếp nhận/ <span class="text-primary">Receiving Unit</span></label>
                                                         <div class="form-group">

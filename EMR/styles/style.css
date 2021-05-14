@@ -2826,12 +2826,17 @@ pre {
 }
 
 .form-control:focus {
-    color: #4F5467;
+    /*color: #4F5467;
     background-color: #fff;
     border-color: rgba(0, 0, 0, 0.1);
     outline: 0;
     -webkit-box-shadow: transparent;
-    box-shadow: transparent
+    box-shadow: transparent*/
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgb(0 123 255 / 25%);
 }
 
 .form-control::-webkit-input-placeholder {
@@ -4867,9 +4872,17 @@ input[type=submit].btn-block {
         background-color: rgb(17, 82, 147)
     }
 
-    .custom-control-input:focus ~ .custom-control-label:before {
+    /*.custom-control-input:focus ~ .custom-control-label:before {
         -webkit-box-shadow: 0 0 0 1px #edf1f5, transparent;
         box-shadow: 0 0 0 1px #edf1f5, transparent
+    }*/
+
+    .custom-control-input:focus ~ .custom-control-label::before {
+        box-shadow: 0 0 0 .2rem rgba(0,123,255,.25)
+    }
+
+    .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
+        border-color: #80bdff
     }
 
     .custom-control-input:active ~ .custom-control-label:before {

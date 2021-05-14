@@ -172,12 +172,14 @@
     <Content Include="IPD\SurgicalReport.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="OPD\MedicalCertificate.aspx" />
+    <Content Include="OPD\MedRecForVac.aspx" />
     <Content Include="OPD\OutPatMedRec.aspx" />
     <Content Include="OPD\OutPatMedRecPed.aspx" />
     <Content Include="OPD\SumOfComOutpCase.aspx" />
     <Content Include="OPD\UsUriSysReport.aspx" />
     <Content Include="Other\GridView.aspx" />
     <Content Include="Other\PageWidthAjax.aspx" />
+    <Content Include="Other\Paint.aspx" />
     <Content Include="Other\PatientSummary.aspx" />
     <Content Include="scripts\contenteditable.min.js" />
     <Content Include="scripts\dynamicModal.js" />
@@ -403,6 +405,13 @@
     <Compile Include="OPD\MedicalCertificate.aspx.designer.cs">
       <DependentUpon>MedicalCertificate.aspx</DependentUpon>
     </Compile>
+    <Compile Include="OPD\MedRecForVac.aspx.cs">
+      <DependentUpon>MedRecForVac.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPD\MedRecForVac.aspx.designer.cs">
+      <DependentUpon>MedRecForVac.aspx</DependentUpon>
+    </Compile>
     <Compile Include="OPD\OutPatIniNurAss.aspx.cs">
       <DependentUpon>OutPatIniNurAss.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -451,6 +460,13 @@
     </Compile>
     <Compile Include="Other\PageWidthAjax.aspx.designer.cs">
       <DependentUpon>PageWidthAjax.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Other\Paint.aspx.cs">
+      <DependentUpon>Paint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Other\Paint.aspx.designer.cs">
+      <DependentUpon>Paint.aspx</DependentUpon>
     </Compile>
     <Compile Include="Other\PatientSummary.aspx.cs">
       <DependentUpon>PatientSummary.aspx</DependentUpon>

@@ -42,6 +42,15 @@ namespace EMR
         protected global::System.Web.UI.UpdatePanel Upd;
 
         /// <summary>
+        /// AmendReasonPlaceHolder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AmendReasonPlaceHolder;
+
+        /// <summary>
         /// txt_amendReason control.
         /// </summary>
         /// <remarks>
@@ -60,184 +69,166 @@ namespace EMR
         protected global::EMR.UserControls.PatientInfo PatientInfo1;
 
         /// <summary>
-        /// TextField1 control.
+        /// txt_admission_reason control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField1;
+        protected global::EMR.TextField txt_admission_reason;
 
         /// <summary>
-        /// TextField2 control.
+        /// txt_cur_med_history control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField2;
+        protected global::EMR.TextField txt_cur_med_history;
 
         /// <summary>
-        /// TextField3 control.
+        /// txt_cur_medication control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField3;
+        protected global::EMR.TextField txt_cur_medication;
 
         /// <summary>
-        /// TextField4 control.
+        /// txt_delivery control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField4;
+        protected global::EMR.TextField txt_delivery;
 
         /// <summary>
-        /// TextField5 control.
+        /// txt_post_nutrition control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField5;
+        protected global::EMR.TextField txt_post_nutrition;
 
         /// <summary>
-        /// TextField6 control.
+        /// txt_mater_med_history control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField6;
+        protected global::EMR.TextField txt_mater_med_history;
 
         /// <summary>
-        /// TextField7 control.
+        /// txt_exam_weight control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField7;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_exam_weight;
 
         /// <summary>
-        /// Text1 control.
+        /// txt_exam_length control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Text1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_exam_length;
 
         /// <summary>
-        /// Text2 control.
+        /// txt_exam_head_circum control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Text2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_exam_head_circum;
 
         /// <summary>
-        /// txt_vs_weight control.
+        /// txt_exam_hr control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_weight;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_exam_hr;
 
         /// <summary>
-        /// Text4 control.
+        /// txt_exam_rr control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Text4;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_exam_rr;
 
         /// <summary>
-        /// Text5 control.
+        /// txt_physical_exam control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Text5;
+        protected global::EMR.TextField txt_physical_exam;
 
         /// <summary>
-        /// TextField8 control.
+        /// txt_laboratory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField8;
+        protected global::EMR.TextField txt_laboratory;
 
         /// <summary>
-        /// TextField9 control.
+        /// txt_initial_diagnosis control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField9;
+        protected global::EMR.TextField txt_initial_diagnosis;
 
         /// <summary>
-        /// TextField11 control.
+        /// txt_diff_diagnosis control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField11;
+        protected global::EMR.TextField txt_diff_diagnosis;
 
         /// <summary>
-        /// TextField12 control.
+        /// txt_associated_conditions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField12;
+        protected global::EMR.TextField txt_associated_conditions;
 
         /// <summary>
-        /// TextField13 control.
+        /// txt_treatment_plan control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField13;
+        protected global::EMR.TextField txt_treatment_plan;
 
         /// <summary>
-        /// TextField14 control.
+        /// txt_discharge_plan control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField14;
-
-        /// <summary>
-        /// TextField15 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField TextField15;
-
-        /// <summary>
-        /// TextField16 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField TextField16;
+        protected global::EMR.TextField txt_discharge_plan;
 
         /// <summary>
         /// btnComplete control.
@@ -264,7 +255,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnDeleteModal;
+        protected global::System.Web.UI.WebControls.Button btnDeleteModal;
 
         /// <summary>
         /// btnAmend control.
@@ -294,22 +285,13 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Button btnCancel;
 
         /// <summary>
-        /// messagePlaceHolder control.
+        /// TextField1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl messagePlaceHolder;
-
-        /// <summary>
-        /// TextField17 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField TextField17;
+        protected global::EMR.TextField TextField1;
 
         /// <summary>
         /// btnDelete control.

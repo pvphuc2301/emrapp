@@ -349,3 +349,16 @@ div[contenteditable="false"] {
                     border-bottom: 0;
                 }
 }*/
+
+.box-group {
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+    .box-group .box-default {
+        background-color: #9b9b9b0d;
+        border-color: #ddd;
+    }
