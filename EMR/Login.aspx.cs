@@ -26,7 +26,7 @@ namespace Emr_client.Emr
         }        
         protected void cmdLogin_Click(object sender, System.EventArgs e)
         {
-            bool isLogin = false;
+            bool isLogin = false;// string current_session = "";
 
             isLogin = IsAuthenticated(UserName.Value, Password.Value);
 
@@ -38,6 +38,8 @@ namespace Emr_client.Emr
             if (isLogin)
             {
                 Session["UserID"] = UserName.Value;
+                HttpContext current_ss = HttpContext.Current;
+                Session["current_session"] = current_ss.Session.SessionID;
                 Insert_EMR_Account(UserName.Value);
                 if (string.IsNullOrEmpty(Request.QueryString["ReturnUrl"]))
                     Response.Redirect("dashboard.aspx");

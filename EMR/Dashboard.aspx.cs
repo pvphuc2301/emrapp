@@ -16,6 +16,7 @@ namespace EMR
     {
         public string ConnStringHIS = "";
         public string UserID;
+        public string current_session = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -27,7 +28,7 @@ namespace EMR
                     Response.Redirect(redirecturl);
 
                 lblUserName.InnerText = UserID;
-
+            // TheSessionId();
             //if (!string.IsNullOrEmpty(txt_pid.Text))
             //{
             //    string _jsonData = WebHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=4&keyword=" + txt_pid.Text);
@@ -38,7 +39,23 @@ namespace EMR
             //        RadGrid5.DataBind();
             //    }
             //}
-        }        
+        }
+        public void TheSessionId()
+        {
+            HttpContext current_ss = HttpContext.Current;
+            current_session = current_ss.Session.SessionID;
+            if (!string.IsNullOrEmpty(current_ss.Session.SessionID))
+                HttpContext.Current.Response.Redirect("InvalidAccess.aspx");
+           /* current_ss.Session["UserID"] = firstName;
+            firstName = (string)(context.Session["FirstName"]);
+
+            HttpContext ss = HttpContext.Current.Session;
+            if (!HttpContext.Current.Session("id") == null)
+                HttpContext.Current.Response.Redirect("InvalidAccess.aspx");
+            else
+                HttpContext.Current.Session("id") = ss.SessionID;*/
+        }
+
         protected void RadGrid1_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridDataItem item = (GridDataItem)(sender as RadGrid).SelectedItems[0];
