@@ -20,10 +20,15 @@ namespace EMR
         public bool showPopup = false;
         public bool isDraft = false;
         public string docId = "";
+        string varVbID = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
             varPID = Request.QueryString["pid"];
+            varVbID = Request.QueryString["vbid"];
+
+            RadPageView1.ContentUrl = "~/phar/orderlist.aspx?pid=" + varPID + "&vbid=" + varVbID;
+            RadPageView3.ContentUrl = "~/phar/opdpreslist.aspx?pid=" + varPID;
 
             if (!IsPostBack)
             {
