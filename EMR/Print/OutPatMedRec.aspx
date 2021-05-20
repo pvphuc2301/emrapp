@@ -6,10 +6,11 @@
 <head runat="server">
     <title></title>
     <link href="../../styles/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
     <style>
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 13.3333px;
+            font-family: Tahoma, Helvetica, sans-serif;
+            font-size: 10.5px;
             margin: 0;
             padding: 0;
         }
@@ -62,10 +63,9 @@
 
 
         @media print {
-            .report-footer {
+            .report-footer .report-footer-cell {
                 display: inline-block;
                 position: fixed;
-
                 bottom: 0;
             }
 
@@ -105,9 +105,9 @@
                                 <div>900000488</div>
                             </div>
                         </div>
-                        <div>
+                        <div style="margin-bottom: 80px;">
                             <span style="width: 190px; border-bottom-style: solid; border-bottom-color: #e20e5a; border-bottom-width: 5px; display: inline-block; font-size: 26.6667px;"></span>
-                            <span style="display: inline-block; border-bottom-style: solid; border-bottom-color: #007297; border-bottom-width: 5px; width: calc(100% - 191px); margin-left: -4px;"></span>
+                            <span style="display: inline-block; border-bottom-style: solid; border-bottom-color: #007297; border-bottom-width: 5px; width: calc(100% - 191px); margin-left: -5px;"></span>
                         </div>
                     </th>
                 </tr>
@@ -383,7 +383,8 @@
                             <div style="flex-grow: 1; text-align: center;">Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>
                             <div>Tel: 028 3910 9999 www.aih.com.vn</div>
                         </div>
-                        <div class="footer-space">&nbsp;</div>
+                    </td>
+                    <td class="report-footer-space" style="height: 100px;">
                     </td>
                 </tr>
             </tfoot>
