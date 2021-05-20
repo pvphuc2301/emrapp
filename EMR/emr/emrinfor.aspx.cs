@@ -163,14 +163,14 @@ namespace EMR
         }
         protected void RadGrid2_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
-            //string query = "SELECT document_type_rcd, description FROM  emr_document_type ";
-            //query += "WHERE (document_type_rcd = N'IMG' OR document_type_rcd = N'LAB') AND (active_flag = 1) ";
-            //query += "ORDER BY SORT";
-            //if(!string.IsNullOrEmpty(varPID) && !IsPostBack)
-            //    RadGrid2.DataSource = GetDataTable(query, ConnStringEMR); 
+            string query = "SELECT document_type_rcd, document_type_name description FROM document_type ";
+            query += "WHERE (document_type_rcd = N'RAD' OR document_type_rcd = N'LAB') ";// AND (active_flag = 1) ";
+            query += "ORDER BY document_type_rcd";
+            if (!string.IsNullOrEmpty(varPID) && !IsPostBack)
+                RadGrid2.DataSource = GetDataTable(query, ConnStringEMR);
         }
         protected void RadGrid2_DetailTableDataBind(object source, Telerik.Web.UI.GridDetailTableDataBindEventArgs e)
-        {       
+        {
             GridDataItem dataItem = (GridDataItem)e.DetailTableView.ParentItem;
 
             switch (e.DetailTableView.Name)
@@ -179,12 +179,12 @@ namespace EMR
                     {
                         string ParentID = varPID;// Convert.ToString(dataItem.GetDataKeyValue("patient_id"));
                         string ParentID1 = Convert.ToString(dataItem.GetDataKeyValue("document_type_rcd"));
-                        string apiURL = "api/patient/menu-lab-visit/"+ ParentID;
-                        if (ParentID1 == "IMG")
+                        string apiURL = "api/patient/menu-lab-visit/" + ParentID;
+                        if (ParentID1 == "RAD")
                             apiURL = "api/patient/menu-rad-visit/" + ParentID;
                         string _jsonData = WebHelpers.GetAPI(apiURL);
                         if (!string.IsNullOrEmpty(_jsonData))
-                        {                            
+                        {
                             e.DetailTableView.DataSource = WebHelpers.GetJSONToDataTable(_jsonData);
                         }
                         break;
