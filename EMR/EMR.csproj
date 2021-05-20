@@ -183,6 +183,14 @@
     <Content Include="Other\PageWidthAjax.aspx" />
     <Content Include="Other\Paint.aspx" />
     <Content Include="Other\PatientSummary.aspx" />
+    <Content Include="Phar\marprinting.aspx" />
+    <Content Include="Phar\opdprescription.aspx" />
+    <Content Include="Phar\opdpreslist.aspx" />
+    <Content Include="Phar\order.css" />
+    <Content Include="Phar\orderlist.aspx" />
+    <Content Include="Phar\orderprint.aspx" />
+    <Content Include="Phar\ordertab.aspx" />
+    <Content Include="Phar\phar.css" />
     <Content Include="Print\OutPatMedRec.aspx" />
     <Content Include="Report\ImagingDiagnosticReporting.aspx" />
     <Content Include="scripts\contenteditable.min.js" />
@@ -479,6 +487,48 @@
     <Compile Include="Other\PatientSummary.aspx.designer.cs">
       <DependentUpon>PatientSummary.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Phar\marprinting.aspx.cs">
+      <DependentUpon>marprinting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Phar\marprinting.aspx.designer.cs">
+      <DependentUpon>marprinting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Phar\opdprescription.aspx.cs">
+      <DependentUpon>opdprescription.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Phar\opdprescription.aspx.designer.cs">
+      <DependentUpon>opdprescription.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Phar\opdpreslist.aspx.cs">
+      <DependentUpon>opdpreslist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Phar\opdpreslist.aspx.designer.cs">
+      <DependentUpon>opdpreslist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Phar\orderlist.aspx.cs">
+      <DependentUpon>orderlist.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Phar\orderlist.aspx.designer.cs">
+      <DependentUpon>orderlist.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Phar\orderprint.aspx.cs">
+      <DependentUpon>orderprint.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Phar\orderprint.aspx.designer.cs">
+      <DependentUpon>orderprint.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Phar\ordertab.aspx.cs">
+      <DependentUpon>ordertab.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Phar\ordertab.aspx.designer.cs">
+      <DependentUpon>ordertab.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Print\OutPatMedRec.aspx.cs">
       <DependentUpon>OutPatMedRec.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -567,7 +617,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataEntities\" />
-    <Folder Include="Phar\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
@@ -592,7 +641,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
