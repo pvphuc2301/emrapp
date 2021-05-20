@@ -34,6 +34,36 @@ namespace EMR
             //return the result of the operation
             return result;
         }
+        public static bool In_Array(string[] MyArray, string ItemName)
+        {
+            bool InArray = false;
+            foreach (string str in MyArray)
+            {
+                if (ItemName == str)
+                    InArray = true;
+            }
+            return InArray;
+        }
+        public static string Return_Age(object frdate, object ptAge)
+        {
+            string ageString = "";
+            DateTime startDate; DateTime endDate = DateTime.Now.Date;
+            if (!string.IsNullOrEmpty(Convert.ToString(frdate)))
+            {
+                startDate = Convert.ToDateTime(frdate);
+                TimeSpan diff = endDate - startDate;
+                int TotalDays = diff.Days;
+                double TotalMonth = TotalDays / 365 * 12;
+
+                if (TotalDays <= 31)
+                    ageString = TotalDays + " ngày";
+                else if (TotalMonth < 60)
+                    ageString = Math.Round(TotalMonth, 0) + " tháng";
+                else
+                    ageString = ptAge + " tuổi";
+            }
+            return ageString;
+        }
     }
     class SQLAppClass
     {
