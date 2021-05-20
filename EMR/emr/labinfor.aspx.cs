@@ -35,7 +35,7 @@ namespace EMR.emr
             //  status = "Pending";
             if (!string.IsNullOrEmpty(UserID))
             {
-                PersonID = (Guid)Session["PersonID"];//PersonID = Guid.Parse("15b5b2f0-cf23-466a-9a9a-01f06e858052");
+                //PersonID = (Guid)Session["PersonID"];//PersonID = Guid.Parse("15b5b2f0-cf23-466a-9a9a-01f06e858052");
                 lng = Request.QueryString["lg"];
                 lng = "eng";
                 Get_Patient_Infor(PatientID);
@@ -67,14 +67,14 @@ namespace EMR.emr
 
             string Get_Cus_Name = "SELECT top 1 cus.customer_id, cus.person_id, pt.visible_patient_id AS visible_customer_id, pt.sex_rcd, ";
             if (lng == "eng")
-                Get_Cus_Name = Get_Cus_Name + "pt.first_name_e + N' ' + pt.last_name_e AS customer_name, ";
+                Get_Cus_Name +="pt.first_name_e + N' ' + pt.last_name_e AS customer_name, ";
             else
-                Get_Cus_Name = Get_Cus_Name + "pt.first_name_l + N' ' + pt.last_name_l AS customer_name, ";
-            Get_Cus_Name = Get_Cus_Name + "CONVERT(VARCHAR(10), pt.date_of_birth, 111) as date_of_birth ";
-            Get_Cus_Name = Get_Cus_Name + "FROM dbo.customer_nl_view AS cus RIGHT OUTER JOIN ";
-            Get_Cus_Name = Get_Cus_Name + "dbo.patient_info_view AS pt ON cus.person_id = pt.person_id ";
-            Get_Cus_Name = Get_Cus_Name + "WHERE (cus.customer_id = '" + varPID + "') OR (pt.person_id = '" + varPID + "') ";
-            //Get_Cus_Name = Get_Cus_Name + "OR (cus.customer_id = '" + varPID + "')";
+                Get_Cus_Name +="pt.first_name_l + N' ' + pt.last_name_l AS customer_name, ";
+            Get_Cus_Name +="CONVERT(VARCHAR(10), pt.date_of_birth, 111) as date_of_birth ";
+            Get_Cus_Name +="FROM dbo.customer_nl_view AS cus RIGHT OUTER JOIN ";
+            Get_Cus_Name +="dbo.patient_info_view AS pt ON cus.person_id = pt.person_id ";
+            Get_Cus_Name +="WHERE (cus.customer_id = '" + varPID + "') OR (pt.person_id = '" + varPID + "') ";
+            //Get_Cus_Name +="OR (cus.customer_id = '" + varPID + "')";
 
             try
             {
@@ -223,11 +223,6 @@ namespace EMR.emr
                 query += "dbo.fn_NonNumericNormalRanges(lo.lab_observation_id, 'OR', 1, COALESCE(lpa.lab_observation_observed_value_decimal_places, 0)) AS OR_normal_range,";
                 query += "flags.[NN] AS NN_rcd, NN_lofr.bkground_colour_code AS NN_bkground_colour_code, NN_lofr.icon_image AS NN_icon_image, ";
                 query += "dbo.fn_NonNumericNormalRanges(lo.lab_observation_id, 'NN', 1, 0) AS NN_normal_range, lo.public_notes ";
-                //query += "cancelled_flag = (CASE WHEN lwo.cpoe_placer_order_status_rcd = 'CANCL' THEN CONVERT(BIT,'1') ";
-                // query += "ELSE CONVERT(BIT,'0') END), ";
-                //  query += "cancelled_suppress_flag = (CASE WHEN lwo.cpoe_placer_order_status_rcd = 'CANCL' ";
-                //  query += "AND lwo.cancel_reason_suppress_result_flag = 1 AND lo.inactivated_by_employee_id IS NOT NULL THEN CONVERT(BIT,'1') ";
-                //  query += "ELSE CONVERT(BIT,'0') END) ";
             }
             query += "FROM lab_service_request_observation_current_view AS lsro ";
             query += "INNER JOIN lab_observation_current_view AS lo ON lo.lab_service_request_observation_id = lsro.lab_service_request_observation_id ";
@@ -273,68 +268,7 @@ namespace EMR.emr
 
             return query_final;
 
-        }
-        public string GetQuery_Old(bool showDetail, Guid varID, string varService, string varGroup)
-        {
-            string query_final = "";
-
-            string query = "SELECT lpro.lab_order_name_e as lab_orderable_name_e,lsr.patient_id,lsr.patient_visit_id,lsr.placer_order_group_number ";
-            if (!showDetail)
-            {
-                query += ", '' as OR_rcd, '' as observed_value, '' as lab_observation_verify_status_rcd,'' as name_e, ";
-                query += "ROW_NUMBER() OVER(ORDER BY lpro.lab_order_name_e ASC) AS No ";
-            }
-            if (showDetail)
-            {
-                query += ",lsro.published_event_indicator_rcd, lo.lab_observation_operator_rcd,uom.name_e AS uom_name_e,lo.lab_observation_verify_status_rcd, ";
-                query += "dbo.fn_NonNumericNormalRanges(lo.lab_observation_id, 'OR', 1, COALESCE(lpa.lab_observation_observed_value_decimal_places, 0)) ";
-                query += "AS OR_normal_range,flags.[OR] AS OR_rcd,lp.name_e, lp.name_l,lo.observed_result_date_time, ";
-                query += "observed_value =(CASE lo.observation_result_type_rcd WHEN 'COM' THEN orr.name_e ";
-                query += "ELSE lo.observed_value END), ";
-                query += "ROW_NUMBER() OVER(ORDER BY lo.observed_result_date_time ASC) AS No ";
-            }
-            query += "FROM  dbo.lab_service_request_observation_nl_view AS lsro INNER JOIN ";
-            query += "dbo.lab_observation_nl_view AS lo ON lsro.lab_service_request_observation_id = lo.lab_service_request_observation_id INNER JOIN ";
-            query += "dbo.lab_service_request_nl_view AS lsr ON lsr.lab_service_request_id = lsro.lab_service_request_id INNER JOIN ";
-            query += "(SELECT lpr.lab_orderable_rid, lpr.lab_process_id, lor.name_e as lab_order_name_e ";
-            query += "FROM  dbo.lab_orderable_process_nl_view as lpr ";
-            query += "INNER JOIN lab_orderable_ref_nl_view AS lor ON lor.lab_orderable_rid = lpr.lab_orderable_rid ";
-            query += "WHERE (lpr.effective_until_date_time IS NULL)) AS lpro ON lpro.lab_process_id = lo.lab_process_id ";
-            query += "INNER JOIN lab_process_nl_view AS lp ON lp.lab_process_id = lo.lab_process_id AND lp.lab_process_type_rcd NOT IN('LOOVR') ";
-            query += "LEFT OUTER JOIN ";
-            query += "dbo.lab_process_analytic_nl_view AS lpa ON lpa.lab_process_id = lo.lab_process_id LEFT OUTER JOIN ";
-            query += "lab_process_analytic_uom_nl_view AS lpau ON lpau.lab_process_id = lo.lab_process_id AND ";
-            query += "ISNULL(lo.observed_result_date_time, GETDATE()) BETWEEN valid_from_date_time AND ";
-            query += "ISNULL(lpau.inactivated_date_time, GETDATE()) LEFT JOIN ";
-            query += "lab_process_code_element_nl_view AS lpc ON lpc.lab_process_id = lp.lab_process_id AND ";
-            query += "lpc.coding_system_rcd = 'LOINC' LEFT JOIN  uom_ref_nl_view AS uom ON uom.uom_rcd = lpau.uom_rcd LEFT JOIN ";
-            query += "observation_response_ref_nl_view AS orr ON orr.observation_response_rcd = lo.observation_response_rcd ";
-            query += "LEFT OUTER JOIN ";
-            query += "(SELECT lab_observation_id, MAX(CASE lof.lab_observation_flagging_type_rcd WHEN 'OR' THEN lof.lab_observation_flagging_rcd ";
-            query += "ELSE NULL END) AS[OR], MAX(CASE lof.lab_observation_flagging_type_rcd WHEN 'NN' THEN lof.lab_observation_flagging_rcd ";
-            query += "ELSE NULL END) AS NN ";
-            query += "FROM dbo.lab_observation_flagging_nl_view AS lof ";
-            query += "GROUP BY lab_observation_id) AS flags ON flags.lab_observation_id = lo.lab_observation_id ";
-            query += "WHERE (lsr.patient_visit_id = '" + varID + "') AND(lo.current_revision_flag = 1) ";
-            //query += "AND (lo.lab_observation_verify_status_rcd = 'VER') ";
-            //query += "AND lo.observed_result_date_time BETWEEN CONVERT(DATETIME, DateAdd(mi,-1, lo.observed_result_date_time), 102) ";
-            //query += "AND CONVERT(DATETIME, DateAdd(mi,1, lo.observed_result_date_time), 102) ";           
-            query += "AND (lo.lab_process_id NOT IN ('24f5a2ee-bec6-449c-96bb-00c313b0f776', 'f3d2a1ab-08ad-11e9-9d8c-fc017cb01c40', ";
-            query += "'47a59e6c-08ae-11e9-9d8c-fc017cb01c40', 'ab37f6f7-08ad-11e9-9d8c-fc017cb01c40','ea3d1fc6-08ac-11e9-9d8c-fc017cb01c40', ";
-            query += "'96830395-08ac-11e9-9d8c-fc017cb01c40', '0f789015-08aa-11e9-9d8c-fc017cb01c40', '343d998c-d034-11e8-9bc9-34de1a146021', ";
-            query += "'66267c5a-c883-11e8-9bc7-34de1a146021','7bc3f84d-c885-11e8-9bc7-34de1a146021', '7df8b6fa-100d-11e9-88e4-b4b686db75e6')) ";
-            if (showDetail)
-            {
-                query += "AND lpro.lab_order_name_e='" + varService + "' ";
-                //query += "AND lsr.placer_order_group_number='" + varGroup + "' ";
-            }
-            if (!showDetail)
-                query += "GROUP BY lpro.lab_order_name_e,lsr.patient_id,lsr.patient_visit_id,lsr.placer_order_group_number";
-
-            query_final = query;
-
-            return query_final;
-        }
+        }        
         public bool BoolToYesNo(object pBool)
         {
             //  pBool = true;
