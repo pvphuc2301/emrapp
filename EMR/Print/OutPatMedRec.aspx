@@ -67,6 +67,8 @@
                 display: inline-block;
                 position: fixed;
                 bottom: 0;
+                left: 0;
+                right: 0;
             }
 
             .printToolBar {
@@ -378,10 +380,11 @@
                 <tr>
                     <td class="report-footer-cell">
                         <img style="width: 100%" src="../images/bottomline.png" />
-                        <div class="footer-info" style="display: flex; width: 100%;">
-                            <div style="font-weight: bold; font-size: 12px">BỆNH VIỆN QUỐC TẾ MỸ</div>
-                            <div style="flex-grow: 1; text-align: center;">Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>
-                            <div>Tel: 028 3910 9999 www.aih.com.vn</div>
+                        <div class="footer-info" style="display: flex; justify-content: space-between; width: 100%;">
+                            <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
+                            <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>
+                            <div>Tel: 028 3910 9999</div>
+                            <div>www.aih.com.vn</div>
                         </div>
                     </td>
                     <td class="report-footer-space" style="height: 100px;">
