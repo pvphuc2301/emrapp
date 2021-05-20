@@ -98,6 +98,31 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="card">
+                    <%--<div class="card-body">--%>
+                            <div class="row col-12">                                
+                                    <div class="demo-container no-bg">
+                                        <telerik:RadTabStrip RenderMode="Lightweight" runat="server" ID="RadTabStrip1"  MultiPageID="RadMultiPage1" SelectedIndex="0" Skin="Silk" 
+                                            Width="100%">
+                                            <Tabs>
+                                                <telerik:RadTab Text="Order Printing" Width="180px"></telerik:RadTab>
+                                                <telerik:RadTab Text="MAR Printing" Width="180px"></telerik:RadTab>
+                                                <telerik:RadTab Text="OPD Prescription" Width="180px"></telerik:RadTab>
+                                            </Tabs>
+                                        </telerik:RadTabStrip>
+                                        <telerik:RadMultiPage runat="server" ID="RadMultiPage1"  SelectedIndex="0" CssClass="outerMultiPage" Width="620px">
+                                            <telerik:RadPageView runat="server" ID="RadPageView1">
+                                            </telerik:RadPageView>
+                                            <telerik:RadPageView runat="server" ID="RadPageView2" ContentUrl="~/phar/marprinting.aspx">
+                                            </telerik:RadPageView>
+                                            <telerik:RadPageView runat="server" ID="RadPageView3" >
+                                            </telerik:RadPageView>
+                                        </telerik:RadMultiPage>
+                                    </div>                             
+                                                            </div>
+                                                       <%--</div>--%>
+                                                    </div>
                     </div>
 
                     <div class="row">
