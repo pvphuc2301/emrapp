@@ -429,31 +429,31 @@ namespace EMR.OPD
         protected global::EMR.icons.XSquare XSquare1;
 
         /// <summary>
-        /// TextField2 control.
+        /// txt_spec_opinion_req_text control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField2;
+        protected global::EMR.TextField txt_spec_opinion_req_text;
 
         /// <summary>
-        /// TextField1 control.
+        /// txt_pecific_edu_req control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField1;
+        protected global::EMR.TextField txt_pecific_edu_req;
 
         /// <summary>
-        /// TextField3 control.
+        /// txt_next_appointment control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField3;
+        protected global::EMR.TextField txt_next_appointment;
 
         /// <summary>
         /// btnComplete control.

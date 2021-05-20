@@ -209,7 +209,6 @@
                                         </telerik:RadGrid>
                                         <%--End Load LAB and IMG Document--%>
 
-
                                         <%--Load Scan Document--%>
                                         <a href="javascript:void(0)" class="waves-effect waves-primary btn-link" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
                                             <span>Scan Document</span>

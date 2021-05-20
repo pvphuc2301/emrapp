@@ -81,10 +81,51 @@ namespace EMR.OPD
                     catch (Exception ex) { }
                 }
 
+                if(mrfv.spec_opinion_req != null)
+                {
+                    if (bool.Parse(mrfv.spec_opinion_req))
+                    {
+                        rad_spec_opinion_req2.Checked = true;
+                        txt_spec_opinion_req_text.Value = mrfv.spec_opinion_req_text;
+                    }
+                    else
+                    {
+                        rad_spec_opinion_req1.Checked = true;
+                    }
+                }
+
+                txt_pecific_edu_req.Value = mrfv.pecific_edu_req;
+                txt_next_appointment.Value = mrfv.next_appointment;
+
+                btnCancel.Visible = false;
+
+                if (mrfv.status == DocumentStatus.FINAL)
+                {
+                    btnComplete.Visible = false;
+                    btnSave.Visible = false;
+                    btnDeleteModal.Visible = false;
+
+                    btnAmend.Visible = true;
+                    btnPrint.Visible = true;
+
+                    DisabledControl(true);
+                }
+
+                else if (mrfv.status == DocumentStatus.DRAFT)
+                {
+                    btnAmend.Visible = false;
+                    btnPrint.Visible = false;
+                }
+
             } catch (Exception ex)
             {
 
             }
+        }
+
+        protected void DisabledControl(bool disabled)
+        {
+
         }
 
         private void _BindGridView(GridView gridView, DataTable dataSource)

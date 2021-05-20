@@ -147,8 +147,6 @@
                             </nav>
 
                             <div class="scroll-sidebar h-100 w-100" style="border-left: 2px solid #E8E9F0;">
-
-
                                 <asp:UpdatePanel ID="updatePanel_demographicSearch" runat="server" UpdateMode="Always">
                                     <ContentTemplate>
                                         <div class="card">

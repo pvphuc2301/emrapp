@@ -11,6 +11,14 @@ namespace EMR
     {
     }
 
+    public class PageInfo
+    {
+        public int pageIndex { get; set; }
+        public int pageSize { get; set; }
+        public int totalRows { get; set; }
+        public int totalPages { get; set; }
+    }
+
     public static class ControlStatus
     {
         public static string Hidden = "hidden";

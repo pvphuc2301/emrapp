@@ -158,6 +158,8 @@
     <Content Include="icons\PlusCircle.ascx" />
     <Content Include="icons\Trash.ascx" />
     <Content Include="icons\XSquare.ascx" />
+    <Content Include="images\AIH_PI_FULL.png" />
+    <Content Include="images\bottomline.png" />
     <Content Include="IPD\DeliveryCertificate.aspx" />
     <Content Include="IPD\DisCer.aspx" />
     <Content Include="IPD\DischargeSummary.aspx" />
@@ -181,6 +183,8 @@
     <Content Include="Other\PageWidthAjax.aspx" />
     <Content Include="Other\Paint.aspx" />
     <Content Include="Other\PatientSummary.aspx" />
+    <Content Include="Print\OutPatMedRec.aspx" />
+    <Content Include="Report\ImagingDiagnosticReporting.aspx" />
     <Content Include="scripts\contenteditable.min.js" />
     <Content Include="scripts\dynamicModal.js" />
     <Content Include="scripts\dynamicModal.min.js" />
@@ -475,7 +479,21 @@
     <Compile Include="Other\PatientSummary.aspx.designer.cs">
       <DependentUpon>PatientSummary.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Print\OutPatMedRec.aspx.cs">
+      <DependentUpon>OutPatMedRec.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Print\OutPatMedRec.aspx.designer.cs">
+      <DependentUpon>OutPatMedRec.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\ImagingDiagnosticReporting.aspx.cs">
+      <DependentUpon>ImagingDiagnosticReporting.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\ImagingDiagnosticReporting.aspx.designer.cs">
+      <DependentUpon>ImagingDiagnosticReporting.aspx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Alert.ascx.cs">
       <DependentUpon>Alert.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -573,7 +591,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

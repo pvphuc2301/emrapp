@@ -428,7 +428,7 @@ applicable for children and pregnant</span>)
                                                     </a>
                                                 </div>
                                                 <div class="form-group spec_opinion_req_text_field">
-                                                    <aih:TextField runat="server" id="TextField2" />
+                                                    <aih:TextField runat="server" id="txt_spec_opinion_req_text" />
                                                 </div>
                                             </div>
                                         </div>
@@ -437,7 +437,7 @@ applicable for children and pregnant</span>)
                                             <div class="col-md-12">
                                                 <label class="control-label mb-1">• Hướng dẫn cụ thể dành cho bệnh nhân/ <span class="text-primary">Specific education required:</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="TextField1" />
+                                                    <aih:TextField runat="server" ID="txt_pecific_edu_req" />
                                                 </div>
                                             </div>
                                         </div>
@@ -445,7 +445,7 @@ applicable for children and pregnant</span>)
                                         <div class="row mb-2">
                                             <div class="col-md-12">
                                                 <label class="control-label mb-1">• Hẹn lần khám tới/ <span class="text-primary">Next Appointment:</span></label>
-                                                <aih:TextField runat="server" ID="TextField3" />
+                                                <aih:TextField runat="server" ID="txt_next_appointment" />
                                             </div>
                                         </div>
 

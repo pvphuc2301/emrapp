@@ -38,7 +38,7 @@ for (let i = 0; i < radiosAttr.length; i++) {
                 let EleByClassName = document.getElementsByClassName(disabledFor);
 
                 for (let l = 0; l < EleByClassName.length; l++) {
-                    EleByClassName[l].style.display = "none";
+                    EleByClassName[l].classList.add("el-hide");
                 }
             }
         }
@@ -47,7 +47,7 @@ for (let i = 0; i < radiosAttr.length; i++) {
             try {
 
                 if (document.querySelector(`[data-clear="${radiosEle[j].getAttribute('name')}"]`)) {
-                    document.querySelector(`[data-clear="${radiosEle[j].getAttribute('name')}"]`).style.display = "";
+                    document.querySelector(`[data-clear="${radiosEle[j].getAttribute('name')}"]`).classList.remove("el-hide");
                 }
 
                 let disabledFor = radiosEle[j].getAttribute('disabled-for');
@@ -61,9 +61,11 @@ for (let i = 0; i < radiosAttr.length; i++) {
                         for (let l = 0; l < EleByClassName.length; l++) {
 
                             if (EleByClassName[l].classList.contains(disabledFor)) {
-                                EleByClassName[l].style.display = "";
+                                EleByClassName[l].classList.remove("el-hide");
+                                EleByClassName[l].classList.add("el-show");
                             } else {
-                                EleByClassName[l].style.display = "none";
+                                EleByClassName[l].classList.remove("el-show");
+                                EleByClassName[l].classList.add("el-hide");
                             }
                         }
                     }
@@ -114,11 +116,12 @@ function clear_radiobutton(el) {
             let EleByClassName = document.getElementsByClassName(disabledFor);
 
             for (let k = 0; k < EleByClassName.length; k++) {
-                EleByClassName[k].style.display = "none";
+                EleByClassName[k].classList.remove("el-show");
+                EleByClassName[k].classList.add("el-hide");
             }
         }
 
-        el.style.display = 'none';
+        el.classList.add("el-hide");
     } catch (ex) {
         console.error(ex);
     }

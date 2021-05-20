@@ -545,10 +545,20 @@
                 canvas.width = 500;
                 ctx.strokeStyle = "red";
 
+                
+
                 let img1 = new Image();
 
                 img1.onload = function () {
                     ctx.drawImage(img1, 0, 0);
+
+                    ctx.beginPath();
+                    ctx.moveTo(119, 220);
+                    ctx.lineTo(119, 220);
+                    ctx.lineWidth = 3;
+                    ctx.strokeStyle = '#ff0000';
+                    ctx.lineCap = 'round';
+                    ctx.stroke();
                 }
 
                 img1.src = document.getElementById("image1").src;
@@ -720,6 +730,32 @@
 
         <script>
             let notes = [{ type: "OHFootnoteV1", ohFootnoteLabel: "16", ohFootnoteDetails: "note 2", left: 119.88333129882812, top: 200.26666259765625 }];
+
+            //const canvas = document.querySelector('#canvas');
+            //const histories = document.querySelector('#histories');
+            //const ctx = canvas.getContext("2d");
+
+            //notes.forEach((note) => {
+                
+            //    let newNote = document.createElement("div");
+            //    newNote.style.display = "flex";
+            //    newNote.style.alignItems = "center";
+            //    newNote.innerHTML = note.ohFootnoteLabel;
+
+            //    ctx.beginPath();
+
+            //    console.log(note.left, note.top);
+
+            //    ctx.moveTo(note.left, note.top);
+            //    ctx.lineTo(note.left, note.top + 10);
+            //    ctx.lineWidth = 3;
+            //    ctx.strokeStyle = '#ff0000';
+            //    ctx.lineCap = 'round';
+            //    ctx.stroke();
+
+
+            //    histories.append(newNote);
+            //});
 
             let nextFootnoteIndex = 17;
 

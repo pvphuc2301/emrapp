@@ -23,14 +23,14 @@ namespace EMR
         {
             try
             {
-                dynamic jsonObject = Newtonsoft.Json.JsonConvert.DeserializeObject(JSONData);
+                dynamic jsonObject = JsonConvert.DeserializeObject(JSONData);
                 DataTable dt = JsonConvert.DeserializeObject<DataTable>(Convert.ToString(jsonObject));
                 return dt;
             }
             catch (Exception)
             {
                 JSONData = "[" + JSONData + "]";
-                dynamic jsonObject = Newtonsoft.Json.JsonConvert.DeserializeObject(JSONData);
+                dynamic jsonObject = JsonConvert.DeserializeObject(JSONData);
                 DataTable dt = JsonConvert.DeserializeObject<DataTable>(Convert.ToString(jsonObject));
                 return dt;
             }

@@ -24,22 +24,34 @@ namespace EMR
             try
             {
                 return ((DateTime)_datetime).ToString("yyyy-MM-ddTHH:mm:ss");
-            } catch (Exception ex) { return null; }
+            } 
+            catch (Exception ex) 
+            { 
+                return null; 
+            }
         }
 
         public static string FormatPhysicalExamination(string value)
         {
-            string[] temp = value.ToString().Split('•');
-
-            string result = "";
-
-            for (int i = 1; i < temp.Length; i++)
+            try
             {
-                result += "•" + temp[i];
-                if (temp[i].Substring(temp[i].Length - 4, 4) != "<br>")
-                    result += "<br>";
+                string[] temp = value.ToString().Split('•');
+
+                string result = "";
+
+                for (int i = 1; i < temp.Length; i++)
+                {
+                    result += "•" + temp[i];
+                    if (temp[i].Substring(temp[i].Length - 4, 4) != "<br>")
+                        result += "<br>";
+                }
+
+                return result;
             }
-            return result;
+            catch(Exception ex)
+            {
+                return ex.Message;
+            }
         }
 
         /// <summary>
@@ -56,20 +68,29 @@ namespace EMR
         public static PatientInfo patient;
         public static PatientInfo LoadPatientInfomation(string varPID)//object sender, EventArgs e
         {
-            string _jsonData = WebHelpers.GetAPI("api/emr/demographic/" + varPID);
-
-            if (_jsonData != null)
+            try
             {
-                patient = new PatientInfo();
-                dynamic data = JObject.Parse(_jsonData);
-                _jsonData = "[" + _jsonData + "]";
-                DataTable tbl = new DataTable();
-                tbl = WebHelpers.GetJSONToDataTable(_jsonData);
-                WebHelpers.BindingDatafield(tbl, patient);
-                // Gan bien trung gian ( Global)
-                // DataHelpers.patient = this.patient;               
+                string _jsonData = WebHelpers.GetAPI("api/emr/demographic/" + varPID);
+
+                if (_jsonData != null)
+                {
+                    patient = new PatientInfo();
+                    dynamic data = JObject.Parse(_jsonData);
+                    _jsonData = "[" + _jsonData + "]";
+                    DataTable tbl = new DataTable();
+                    tbl = WebHelpers.GetJSONToDataTable(_jsonData);
+                    WebHelpers.BindingDatafield(tbl, patient);
+                    // Gan bien trung gian ( Global)
+                    // DataHelpers.patient = this.patient;
+                }
+
+                return patient;
             }
-            return patient;
+            catch(Exception ex)
+            {
+                return null;
+            }
+            
         }
 
         public static PatientVisitInfo patientVisit;

@@ -171,60 +171,60 @@
                                             </div>
                                             <div class="col-sm-6 mb-2">
                                                 <label class="control-label mb-1">Ngày sinh/ <span class="text-primary">DOB:</span></label>
-                                                <input type="text" class="form-control append-text"/>
+                                                <input type="text" class="form-control append-text" />
                                             </div>
                                         </div>
 
                                         <div class="row mb-2">
-        <div class="col-md-12">
-            <label class="control-label font-bold mb-1">Giới tính/ <span class="text-primary">Gender:</span></label>
-        </div>
-        <div class="col-sm-4 col-6">
-            <div class="custom-control custom-radio">
-                <input type="radio" id="rad_gender1" name="rad_gender" class="custom-control-input"/>
-                <label class="custom-control-label" for="rad_gender1">Nam/ <span class="text-primary">Male</span></label>
-            </div>
-        </div>
-        <div class="col-sm-4 col-6">
-            <div class="custom-control custom-radio">
-                <input type="radio" id="rad_gender2" name="rad_gender" class="custom-control-input"/>
-                <label class="custom-control-label" for="rad_gender2">Nữ/ <span class="text-primary">Female</span></label>
-            </div>
-        </div>
-    </div>
+                                            <div class="col-md-12">
+                                                <label class="control-label font-bold mb-1">Giới tính/ <span class="text-primary">Gender:</span></label>
+                                            </div>
+                                            <div class="col-sm-4 col-6">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="rad_gender1" name="rad_gender" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="rad_gender1">Nam/ <span class="text-primary">Male</span></label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 col-6">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="rad_gender2" name="rad_gender" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="rad_gender2">Nữ/ <span class="text-primary">Female</span></label>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="row">
-        <div class="col-md-12 mb-2">
-            <label class="control-label mb-1">Mã BN/ <span class="text-primary">Patient ID:</span></label>
-            <input class="form-control" type="text" />
-        </div>
-    </div>
+                                            <div class="col-md-12 mb-2">
+                                                <label class="control-label mb-1">Mã BN/ <span class="text-primary">Patient ID:</span></label>
+                                                <input class="form-control" type="text" />
+                                            </div>
+                                        </div>
 
                                         <div class="row">
-        <div class="col-md-12">
-            <label class="control-label mb-2">Tình trạng dị ứng/ <span class="text-primary">Allergy profile:</span></label>
-        </div>
+                                            <div class="col-md-12">
+                                                <label class="control-label mb-2">Tình trạng dị ứng/ <span class="text-primary">Allergy profile:</span></label>
+                                            </div>
 
-        <div class="col-md-4">
-            <div class="custom-control custom-radio">
-                <input type="radio" id="rad_allergy1" name="rad_allergy" class="custom-control-input" />
-                <label class="custom-control-label" for="rad_allergy1">Không/ <span class="text-primary">No</span></label>
-            </div>
-        </div>
+                                            <div class="col-md-4">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" id="rad_allergy1" name="rad_allergy" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="rad_allergy1">Không/ <span class="text-primary">No</span></label>
+                                                </div>
+                                            </div>
 
-                        <div class="col-md-8">
-                            <div class="custom-control custom-radio mb-2">
-                                <input disabled-for="allergy" type="radio" id="rad_allergy2" name="rad_allergy" class="custom-control-input" />
-                                <label class="custom-control-label" for="rad_allergy2">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
-                            </div>
-                            <div class="form-group has-error mt-1">
-                                <textarea class="form-control allergy" rows="1" disabled="disabled"></textarea>
-                            </div>
-                        </div>
-                    </div>
+                                            <div class="col-md-8">
+                                                <div class="custom-control custom-radio mb-2">
+                                                    <input disabled-for="allergy" type="radio" id="rad_allergy2" name="rad_allergy" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="rad_allergy2">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
+                                                </div>
+                                                <div class="form-group has-error mt-1">
+                                                    <textarea class="form-control allergy" rows="1" disabled="disabled"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="row">
                                             <div class="col-md-12 mb-2">
                                                 <label class="control-label mb-1">Ngày làm tóm tắt/ <span class="text-primary">Date of summary report:</span></label>
-                                                <input type="date" class="form-control"/>
+                                                <input type="date" class="form-control" />
                                             </div>
                                         </div>
 

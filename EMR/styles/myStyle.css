@@ -22,6 +22,15 @@
     width: calc(100% - 35px);
 }
 
+.w-n {
+    width: 320px;
+}
+
+.w-s {
+    width: 82px;
+}
+
+
 .w-4 {
     width: 100px;
 }
@@ -362,3 +371,23 @@ div[contenteditable="false"] {
         background-color: #9b9b9b0d;
         border-color: #ddd;
     }
+
+fieldset {
+    border: 1px solid #dadde4;
+    padding: 9px;
+    border-radius: 4px;
+}
+
+fieldset legend {
+    margin-left: -3px;
+    padding: 0 3px;
+    font-size: 14px;
+    font-weight: normal;
+    width: unset;
+    margin-bottom: 0;
+}
+
+.el-hide {
+    display: none !important;
+}
+

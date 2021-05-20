@@ -347,7 +347,7 @@ namespace EMR
 
         protected void btnPrint_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("../Print/OutPatMedRec.aspx");
         }
     }
 }
