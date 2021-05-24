@@ -39,6 +39,15 @@ namespace EMR
             //        RadGrid5.DataBind();
             //    }
             //}
+            //if (!IsPostBack)
+            //{
+            //    if (Session["PageOpened"] != null)
+            //    {
+            //        HttpContext current_ss = HttpContext.Current;
+            //        HttpContext.Current.Response.Redirect("InvalidAccess.aspx");
+            //    }
+            //    else { Session["PageOpened"] = true; }
+            //}
         }
         public void TheSessionId()
         {
@@ -252,7 +261,7 @@ namespace EMR
             string PID = item.GetDataKeyValue("patient_id").ToString();
             string PVID = item.GetDataKeyValue("visible_patient_id").ToString();
 
-            string url = string.Format("/emr/emrinfor.aspx?pid={0}&vbid={1}", PID, PVID);
+            string url = string.Format("/emr/emrinfor.aspx?pid={0}&vpid={1}", PID, PVID);
 
             Response.Redirect(url);
         }

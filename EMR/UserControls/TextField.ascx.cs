@@ -43,12 +43,20 @@ namespace EMR
                 DisplayControl.Attributes["title"] = value;
             }
         }
-        public string ID
+        public override string ID
         {
             get
             {
                 return InputControl.ID;
             }
+        }
+
+        public string Type { 
+            get { 
+                return DisplayControl.Attributes["type"]; 
+            } set {
+                DisplayControl.Attributes["type"] = value;
+            } 
         }
 
         public string DataKey
@@ -75,11 +83,25 @@ namespace EMR
             }
         }
 
+        public string Tooltip {
+            get
+            {
+                return DisplayControl.Attributes["type"];
+            }
+            set
+            {
+                DisplayControl.Attributes["rel"] = "tooltip";
+                DisplayControl.Attributes["data-original-title"] = value;
+
+            }
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             DisplayControl.InnerHtml = InputControl.Value;
             DisplayControl.Attributes.Add("onblur", string.Format("changeValue('{0}', '{1}')", DisplayControl.ClientID, InputControl.ClientID));
 
+            
         }
     }
 }

@@ -91,7 +91,7 @@
         });
     </script>
     <script src="../click_hover.js" type="text/javascript"></script>      
-<body onload="clickMenu('menu')" >
+<body>
     <form id="form1" runat="server">        
     <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
 		<Scripts></Scripts>

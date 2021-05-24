@@ -9,6 +9,7 @@ using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 using Telerik.Web.UI.ImageEditor;
 using System.Web.Script.Serialization;
+using Newtonsoft.Json;
 
 namespace EMR
 {
@@ -647,9 +648,23 @@ namespace EMR
         }
         protected void btnComplete_Click(object sender, EventArgs e)
         {
-            byte[] imageBytes = ((MemoryStream)ViewState[RadImageEditor1.ID]).ToArray();
+            var errors = new List<string>();
 
-            string base64String = Convert.ToBase64String(imageBytes);
+            checkValidField(errors);
+
+            if (errors.Count <= 0)
+            {
+                ena = new Ena(DataHelpers.varDocId);
+
+                ena.user_name = (string)Session["UserID"];
+                ena.status = DocumentStatus.FINAL;
+
+                UpdateData(ena);
+            }
+            else
+            {
+                RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
+            }
 
         }
 
@@ -660,12 +675,35 @@ namespace EMR
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            ena = new Ena(DataHelpers.varDocId);
+            var errors = new List<string>();
 
-            ena.user_name = (string)Session["UserID"];
-            ena.status = DocumentStatus.DRAFT;
+            checkValidField(errors);
 
-            UpdateData(ena);
+            if(errors.Count <= 0)
+            {
+                ena = new Ena(DataHelpers.varDocId);
+
+                ena.user_name = (string)Session["UserID"];
+                ena.status = DocumentStatus.DRAFT;
+
+                UpdateData(ena);
+            }
+            else
+            {
+                RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
+            }
+        }
+
+        private void checkValidField(List<string> errors)
+        {
+            if (dtpk_triage_time.SelectedDate == null)
+            {
+                errors.Add("dtpk_triage_time");
+            }
+            if (String.IsNullOrWhiteSpace(txt_triage_area.Value))
+            {
+                errors.Add("txt_triage_area");
+            }
         }
 
         protected void btnAmend_Click(object sender, EventArgs e)
@@ -699,6 +737,13 @@ namespace EMR
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
+            if (Ena.Delete((string)Session["UserId"])[0] == WebHelpers.ResponseStatus.OK)
+            {
+                string pid = Request["pid"];
+                string vpid = Request["vpid"];
+
+                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+            }
         }
 
         private void _BindGridView(GridView gridView, DataTable dataSource)

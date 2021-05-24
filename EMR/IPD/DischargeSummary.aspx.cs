@@ -23,8 +23,8 @@ namespace EMR
         {
             if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
             if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
-            if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
-
+            if (Request.QueryString["vpid"] != null) DataHelpers.varPVId = Request.QueryString["vpid"];
+            
             diss = new Diss(DataHelpers.varDocId);
             loadDataToOMRControls(diss);
         }
@@ -124,6 +124,15 @@ namespace EMR
             }
         }
 
+        private bool CheckFieldsValid()
+        {
+            if (!rad_disc_reason_code_ama.Checked || !rad_disc_reason_code_dama.Checked || rad_disc_reason_code_transfer.Checked)
+            {
+                return false;
+            }
+            return true;
+        }
+
         protected void DisabledControl(bool disabled)
         {
             foreach (KeyValuePair<string, string> code in Diss.DISC_REASON_CODE)
@@ -162,6 +171,10 @@ namespace EMR
             //10
             txt_disc_medication.Disabled = disabled;
             //11
+            txt_follow_up_instruc.Disabled = disabled;
+            txt_special_diet.Disabled = disabled;
+            WebHelpers.DisabledDateTimePicker(dpk_next_consult_date, disabled);
+            txt_next_consult_doctor.Disabled = disabled;
             txt_trans_to_hospital.Disabled = disabled;
             txt_transfer_reason.Disabled = disabled;
             //
@@ -193,11 +206,21 @@ namespace EMR
 
         protected void btnComplete_Click(object sender, EventArgs e)
         {
-            diss = new Diss(DataHelpers.varDocId);
-            diss.status = DocumentStatus.FINAL;
-            diss.user_name = (string)Session["UserID"];
+            if (CheckFieldsValid())
+            {
 
-            UpdateData(diss);
+                diss = new Diss(DataHelpers.varDocId);
+                diss.status = DocumentStatus.FINAL;
+                diss.user_name = (string)Session["UserID"];
+
+                UpdateData(diss);
+            }
+            else
+            {
+                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
+                message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
+                RequiredFieldValidator.Value = "true";
+            }
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
@@ -282,7 +305,9 @@ namespace EMR
                 //
                 diss.next_consult_date = null;
                 diss.next_consult_doctor = null;
-                
+                diss.dama = null;
+                diss.dama_note = null;
+
             }
             else if (diss.disc_reason_code == "AMA") 
             {
@@ -318,6 +343,22 @@ namespace EMR
 
                 Initial();
             }
+        }
+
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (Diss.Delete((string)Session["UserId"])[0] == WebHelpers.ResponseStatus.OK)
+            {
+                string pid = Request["pid"];
+                string vpid = Request["vpid"];
+
+                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+            }
+        }
+
+        protected void btnPrint_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

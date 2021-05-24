@@ -21,7 +21,7 @@ namespace EMR
         {
             if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
             if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
-            if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
+            if (Request.QueryString["vpId"] != null) DataHelpers.varPVId = Request.QueryString["vpId"];
 
             somr = new Somr(DataHelpers.varDocId);
             loadDataToOMRControls(somr);
@@ -80,11 +80,28 @@ namespace EMR
         }
         protected void btnComplete_Click(object sender, EventArgs e)
         {
-            somr = new Somr(DataHelpers.varDocId);
-            somr.status = DocumentStatus.FINAL;
-            somr.user_name = (string)Session["UserID"];
+            if (CheckFieldsValid())
+            {
+                somr = new Somr(DataHelpers.varDocId);
+                somr.status = DocumentStatus.FINAL;
+                somr.user_name = (string)Session["UserID"];
 
-            UpdateData(somr);
+                UpdateData(somr);
+            }
+            else
+            {
+                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
+                message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
+            }
+        }
+
+        private bool CheckFieldsValid()
+        {
+            if(dpk_form_date.SelectedDate == null || dpk_to_date.SelectedDate == null)
+            {
+                return false;
+            }
+            return true;
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
@@ -93,7 +110,11 @@ namespace EMR
             somr.status = DocumentStatus.DRAFT;
             somr.user_name = (string)Session["UserID"];
 
-            UpdateData(somr);
+            if(UpdateData(somr) == WebHelpers.ResponseStatus.OK)
+            {
+                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
+                message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
+            }
         }
 
         protected void btnAmend_Click(object sender, EventArgs e)
@@ -113,7 +134,7 @@ namespace EMR
         {
             Initial();
         }
-        public void UpdateData(Somr somr)
+        public string UpdateData(Somr somr)
         {
             somr.amend_reason = txt_amendReason.Value;
             somr.form_date = DataHelpers.ConvertSQLDateTime(dpk_form_date.SelectedDate);
@@ -126,18 +147,18 @@ namespace EMR
             somr.eval_treatment = txt_eval_treatment.Value;
             somr.treatment_prognosis = txt_treatment_prognosis.Value;
 
-            if (somr.Update()[0] == WebHelpers.ResponseStatus.OK)
-            {
-                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS);
-
-                Initial();
-            }
+            return somr.Update()[0];
         }
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            Somr.Delete((string)Session["UserID"]);
+            if (Somr.Delete((string)Session["UserID"])[0] == WebHelpers.ResponseStatus.OK)
+            {
+                string pid = Request["pid"];
+                string vpid = Request["vpid"];
+
+                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+            }
         }
     }
 }

@@ -33,7 +33,7 @@ namespace EMR
 
         #endregion
 
-        public void Load(Page page, string text = "", string type = "alert-primary", int timeout = 3000)
+        public void Load(Page page, string text = "", string type = "alert-primary", int timeout = 0)
         {
             this.text = text;
             this.timeout = timeout;
@@ -41,7 +41,7 @@ namespace EMR
             page.Controls.Add(this);
         }
 
-        public void Load(Control control, string text = "", string type = "alert-primary", int timeout = 3000)
+        public void Load(Control control, string text = "", string type = "alert-primary", int timeout = 0)
         {
             this.text = text;
             this.timeout = timeout;

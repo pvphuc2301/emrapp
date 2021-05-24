@@ -2944,7 +2944,7 @@ textarea.form-control {
 }
 
 .form-group {
-    margin-bottom: 1rem
+    /*margin-bottom: 1rem*/
 }
 
 .form-text {
@@ -16574,7 +16574,7 @@ form label {
 }
 
 .form-group {
-    margin-bottom: 25px
+    /*margin-bottom: 25px*/
 }
 
 .form-horizontal label {
@@ -16587,7 +16587,7 @@ form label {
 
 .custom-control-label:after,
 .custom-control-label:before {
-    top: 0.15rem
+    top: 0
 }
 
 .form-bordered .form-group {

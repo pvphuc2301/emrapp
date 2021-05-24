@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using Telerik.Web.UI;
 using System.Data;
 using Newtonsoft.Json;
+using System.Web.UI.HtmlControls;
 
 namespace EMR
 {
@@ -16,12 +17,20 @@ namespace EMR
     {
         public string ConnStringHIS = ""; public string ConnStringEMR = "";
 
-        public string varPID = ""; string varPVId = "";
+        public string varPID = ""; public string varVPID = "";
         public string UserID;
         protected void Page_Load(object sender, EventArgs e)
         {
+            //if (Session["PageOpenEMR"] != null)
+            //{
+            //    HttpContext current_ss = HttpContext.Current;
+            //    HttpContext.Current.Response.Redirect("InvalidAccess.aspx");
+            //    // The page is already opened in another tab.
+            //}
+            //else { Session["PageOpenEMR"] = true; }
+
             varPID = Request.QueryString["pid"]; // "97052A99-0134-11EB-B34D-D89EF37D444C";//  "C248E0FC-39B6-493F-A197-6CF2A96B37AD";//
-            varPVId = Request.QueryString["pvid"]; //"3afc144a-86ca-11eb-9dfe-dca2660bc0a2";// ValueHiddenField.Value;        
+            varVPID = Request.QueryString["vpid"]; //"3afc144a-86ca-11eb-9dfe-dca2660bc0a2";// ValueHiddenField.Value;        
             //varVisibleID = Request.QueryString["vbid"]; //"900031267";
             //LoadPatientInfomation();
 
@@ -41,7 +50,7 @@ namespace EMR
 
                 lblPatientInfo.InnerHtml = "<strong>" + DataHelpers.patient.first_name_e + " " + DataHelpers.patient.last_name_e + " (" + DataHelpers.patient.title_e + ")</strong>, <small>DOB</small> " + DateTime.Parse(DataHelpers.patient.date_of_birth).ToString("dd/MM/yyyy") + " (" + DataHelpers.CalculateAge(DateTime.Parse(DataHelpers.patient.date_of_birth)) + "y) <small>SEX</small> " + DataHelpers.patient.gender_l + " <small>PID</small> <strong>" + DataHelpers.patient.visible_patient_id + "</strong>";
 
-                MainContent.ContentUrl = "../other/patientsummary.aspx?pid=" + varPID;
+                MainContent.ContentUrl = string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}",varPID, varVPID);
             }
 
             //form ký sinh trùng
@@ -134,8 +143,8 @@ namespace EMR
 
             if (_jsonData != null)
             {
-                dynamic data = JObject.Parse(_jsonData);
-                tmp = "../" + data.url + "?modelId="+ varModelId + "&docID=" + varDocID + "&pId=" + varPID + "&pvId=" + varPVId;//"../emr/"+ 
+                   dynamic data = JObject.Parse(_jsonData);
+                tmp = string.Format("../{0}?modelId={1}&docId={2}&pId={3}&vpId={4}", data.url, varModelId, varDocID, varPID, varVPID);
             }
 
             return tmp;
@@ -314,5 +323,21 @@ namespace EMR
             Session["UserID"] = "";
             Response.Redirect("../login.aspx");
         }
+
+        [System.Web.Services.WebMethod]
+        public static string lblURL_Click(string varModelId, string varDocID, string varPID, string varVPID)
+        {
+            string apiURL = "api/emr/get-api/" + varModelId;
+            string _jsonData = WebHelpers.GetAPI(apiURL);
+
+            if (_jsonData != null)
+            {
+                dynamic data = JObject.Parse(_jsonData);
+                return string.Format("/{0}?modelId={1}&docId={2}&pId={3}&vpId={4}", data.url, varModelId, varDocID, varPID, varVPID);
+            }
+
+            return null;
+        }
+
     }
 }

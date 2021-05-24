@@ -152,20 +152,20 @@ namespace EMR
             txt_next_appointment.Value = omr1.next_appointment;
 
             btnCancel.Visible = false;
+            txt_amendReason.Visible = false;
 
             if (omr1.status == DocumentStatus.FINAL)
             {
                 btnComplete.Visible = false;
                 btnSave.Visible = false;
-                btnDelete.Visible = false;
-                btnCancel.Visible = false;
+                btnDeleteModal.Visible = false;
 
                 btnAmend.Visible = true;
                 btnPrint.Visible = true;
 
                 DisabledControl(true);
-
             }
+
             else if (omr1.status == DocumentStatus.DRAFT)
             {
                 btnAmend.Visible = false;
@@ -249,11 +249,10 @@ namespace EMR
        /// <param name="e"></param>
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            AmendReason amendReason = (AmendReason)Page.LoadControl("~/UserControls/AmendReason.ascx");
-            amendReason.Load(AmendReasonPlaceHolder);
+            txt_amendReason.Visible = true;
 
             btnComplete.Visible = true;
-            btnComplete.Attributes["disabled"] = "disabled";
+            btnComplete.Attributes["Disabled"] = "disabled";
             btnCancel.Visible = true;
             btnAmend.Visible = false;
             btnPrint.Visible = false;
@@ -345,9 +344,5 @@ namespace EMR
             DisabledControl(true);
         }
 
-        protected void btnPrint_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("../Print/OutPatMedRec.aspx");
-        }
     }
 }

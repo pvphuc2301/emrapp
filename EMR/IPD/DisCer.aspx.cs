@@ -114,11 +114,20 @@ namespace EMR
 
         protected void btnComplete_Click(object sender, EventArgs e)
         {
-            disc = new Disc(DataHelpers.varDocId);
-            disc.status = DocumentStatus.FINAL;
-            disc.user_name = (string)Session["UserID"];
+            if (CheckFieldsValid())
+            {
+                disc = new Disc(DataHelpers.varDocId);
+                disc.status = DocumentStatus.FINAL;
+                disc.user_name = (string)Session["UserID"];
 
-            UpdateData(disc);
+                UpdateData(disc);
+            }
+            else
+            {
+                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
+                message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
+                RequiredFieldValidator.Value = "true";
+            }
         }
 
         public void UpdateData(Disc disc)
@@ -154,18 +163,35 @@ namespace EMR
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            disc = new Disc(DataHelpers.varDocId);
+            if (CheckFieldsValid())
+            {
+                disc = new Disc(DataHelpers.varDocId);
 
-            disc.user_name = (string)Session["UserID"];
-            disc.status = DocumentStatus.DRAFT;
+                disc.user_name = (string)Session["UserID"];
+                disc.status = DocumentStatus.DRAFT;
 
-            UpdateData(disc);
-
+                UpdateData(disc);
+            }
+            else
+            {
+                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
+                message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
+                RequiredFieldValidator.Value = "true";
+            }
         }
-
+        private bool CheckFieldsValid()
+        {
+            return true;
+        }
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            Disc.Delete((string)Session["UserID"]);
+            if (Disc.Delete((string)Session["UserID"])[0] == WebHelpers.ResponseStatus.OK)
+            {
+                string pid = Request["pid"];
+                string vpid = Request["vpid"];
+
+                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+            }
         }
     }
 }

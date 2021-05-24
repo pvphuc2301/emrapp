@@ -4,6 +4,11 @@
 <%@ Register Src="~/UserControls/Alert.ascx" TagPrefix="uc1" TagName="Alert" %>
 <%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="Input" TagName="TextField" %>
 <%@ Register Src="~/UserControls/PromptButton.ascx" TagPrefix="Button" TagName="Prompt" %>
+<%@ Register Src="~/UserControls/PrintTemplate/PrintWindow.ascx" TagPrefix="webUI" TagName="PrintWindow" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Label.ascx" TagPrefix="webUI" TagName="Label" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Signature.ascx" TagPrefix="webUI" TagName="Signature" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Date.ascx" TagPrefix="webUI" TagName="Date" %>
+
 
 <!DOCTYPE html>
 
@@ -13,30 +18,148 @@
     <link href="../../styles/style.css" rel="stylesheet" />
     <link href="../../styles/myStyle.css" rel="stylesheet" />
     <link href="../../style/style-custom.css" rel="stylesheet" />
-    <style>
-        .alert {
-            display: flex;
-            align-items: center;
-        }
 
-        #MessagePlaceHolder {
-            left: 0;
-            right: 0;
-        }
-    </style>
 </head>
 <body>
+    <webUI:PrintWindow runat="server" ID="PrintWindow">
+        <PrintTitle>
+            <div style="color: #007297; font-size: 26.6667px;">GIẤY CHỨNG NHẬN ĐIỀU TRỊ</div>
+            <div style="color: #e20e5a; font-size: 16.6667px;">MEDICAL CERTIFICATE</div>
+        </PrintTitle>
+        <PrintContent>
 
-    <!-- ============================================================== -->
-    <!-- Preloader - style you can find in spinners.css -->
-    <!-- ============================================================== -->
-    <div class="preloader">
-        <div class="loader">
-            <div class="loader__figure"></div>
-            <p class="loader__label">AIH Hospital</p>
-        </div>
-    </div>
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="BỆNH VIỆN QUỐC TẾ MỸ CHỨNG NHẬN:" SubTitle="AMERICAN INTERNATIONAL HOSPITAL CERTIFIES THAT" />
+                </div>
+            </div>
 
+            <div class="row mb-2">
+                <div class="col-6">
+                   <webUI:Label runat="server" Title="Họ tên bệnh nhân:" SubTitle="Patient's name" />
+                    <div class="d-inline-block ml-2 align-top">MAI MAI MÃI1</div>
+                </div>
+                <div class="col-6">
+                   <webUI:Label runat="server" Title="Ngày sinh:" SubTitle="DOB" />
+                    <div class="d-inline-block ml-2 align-top">05-10-1960</div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="Giới tính:" SubTitle="Gender" />
+                    <webUI:Label runat="server" Title="Nam" SubTitle="Male" />
+                    <webUI:Label runat="server" Title="Nữ " SubTitle="Female" />
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-6">
+                    <webUI:Label runat="server" Title="Khoa:" SubTitle="Dept" />
+                    <div class="d-inline-block ml-2 align-top">Khoa khám bệnh</div>
+                </div>
+                <div class="col-6">
+                    <webUI:Label runat="server" Title="Mã BN:" SubTitle="Patient ID" />
+                    <div class="d-inline-block ml-2 align-top">900000488</div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="Đã đến khám và điều trị tại bệnh viện của chúng tôi, với những thông tin như sau:" SubTitle="Visited and received treatment at our hospital, with the following information" />
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="Ngày khám bệnh:" SubTitle="Date of visit" />
+                    <div class="d-inline-block ml-2 align-top">05-03-2021</div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="Lý do đến khám:" SubTitle="Chief complaint" />
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="Tóm tắt bệnh sử:" SubTitle="History of present illness" />
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="Tiền sử bệnh:" SubTitle="Past history" />
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="Đặc điểm lâm sàng:" SubTitle="Clinical findings" />
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="Cận lâm sàng được chỉ định:" SubTitle="Para-clinical investigations" />
+                    <div class="d-inline-block ml-2 align-top">None;</div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="Chẩn đoán:" SubTitle="Diagnosis" />
+                    <div class="d-inline-block ml-2 align-top">J01.0: Acute maxillary sinusitis/ Viêm xoang hàm cấp;;</div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="Phương pháp và thuốc điều trị:" SubTitle="Treatment and medications" />
+                    <div class="d-inline-block ml-2 align-top">Paracetamol (Perfalgan) 10mg/ml;;</div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="Thời gian điều trị:" SubTitle="Treatment period" />
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="Lời khuyên và theo dõi:" SubTitle="Recommendation and Follow-up" />
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-6">
+
+                </div>
+                <div class="col-6 mb-2">
+                    <div>
+                        <webUI:Signature runat="server" Title="BÁC SĨ ĐIỀU TRỊ" SubTitle="ATTENDING DOCTOR" FullName="Dr. Nguyen Dinh My">
+                            <ItemTemplate>
+                                <webUI:Date runat="server" Day="23" Month="5" Year="2021" />
+                            </ItemTemplate>
+                        </webUI:Signature>
+                    </div>
+                </div>
+            </div>
+
+        </PrintContent>
+    </webUI:PrintWindow>
+
+    <div class="cssclsNoPrint">
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
@@ -164,7 +287,7 @@
 
                                         <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
 
-                                        <asp:Button ID="btnPrint" CssClass="btn btn-secondary" runat="server" OnClick="btnPrint_Click" Text="Print" />
+                                        <asp:Button ID="btnPrint" CssClass="btn btn-secondary" runat="server" OnClientClick="window.print()" Text="Print" />
 
                                         <asp:Button ID="btnCancel" CssClass="btn btn-secondary" runat="server" OnClick="btnCancel_Click" Text="Cancel" />
                                     </div>
@@ -214,19 +337,8 @@
         </div>
     </form>
 
+    </div>
 
-    <script>
-        let alertBox = document.getElementById("MessagePlaceHolder");
-
-        setTimeout(function () {
-            alertBox.style.top = "0";
-        }, 2000);
-
-        //setTimeout(function () {
-        //    alertBox.innerHTML = "";
-        //}, 3000);
-
-    </script>
     <script src="../../scripts/jquery-3.2.1.min.js"></script>
     <script src="../../scripts/bootstrap.min.js"></script>
     <script src="../../scripts/perfect-scrollbar.jquery.min.js"></script>

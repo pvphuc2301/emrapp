@@ -25,7 +25,7 @@ namespace EMR
         protected void Page_Load(object sender, EventArgs e)
         {
             varPID = Request.QueryString["pid"];
-            varVbID = Request.QueryString["vbid"];
+            varVbID = Request.QueryString["vpid"];
 
             RadPageView1.ContentUrl = "~/phar/orderlist.aspx?pid=" + varPID + "&vbid=" + varVbID;
             RadPageView3.ContentUrl = "~/phar/opdpreslist.aspx?pid=" + varPID;
@@ -182,15 +182,15 @@ namespace EMR
 
                 dynamic data = JObject.Parse(_jsonData);
 
-                for (int i = 0; i <db.Rows.Count; i++)
-                {
-                    if(db.Rows[i].Field<string>("status") == DocumentStatus.DRAFT)
-                    {
-                        DataHelpers.varDocId = db.Rows[i].Field<string>("document_id");
-                        isDraft = true;
-                        break;
-                    }
-                }
+                //for (int i = 0; i <db.Rows.Count; i++)
+                //{
+                //    if(db.Rows[i].Field<string>("status") == DocumentStatus.DRAFT)
+                //    {
+                //        DataHelpers.varDocId = db.Rows[i].Field<string>("document_id");
+                //        isDraft = true;
+                //        break;
+                //    }
+                //}
 
                 if (!isDraft)
                 {

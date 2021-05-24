@@ -97,13 +97,13 @@ namespace EMR
             else if (outPatientInitialNursingAssement.prioritization_code == "WA") { radPrior2.Checked = true; }
 
             btnCancel.Visible = false;
+            txt_amendReason.Visible = false;
 
             if (oina.status == DocumentStatus.FINAL)
             {
                 btnComplete.Visible = false;
                 btnSave.Visible = false;
-                btnDelete.Visible = false;
-                btnCancel.Visible = false;
+                btnDeleteModal.Visible = false;
 
                 btnAmend.Visible = true;
                 btnPrint.Visible = true;
@@ -160,11 +160,10 @@ namespace EMR
 
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            AmendReason amendReason = (AmendReason)Page.LoadControl("~/UserControls/AmendReason.ascx");
-            amendReason.Load(AmendReasonPlaceHolder);
+            txt_amendReason.Visible = true;
 
             btnComplete.Visible = true;
-            btnComplete.Attributes["disabled"] = "disabled";
+            btnComplete.Attributes["Disabled"] = "disabled";
             btnCancel.Visible = true;
             btnAmend.Visible = false;
             btnPrint.Visible = false;

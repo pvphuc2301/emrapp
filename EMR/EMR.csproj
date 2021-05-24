@@ -49,9 +49,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Asp.Net.Web.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Asp.Net.Web.UI\bin\Asp.Net.Web.UI.dll</HintPath>
+    </Reference>
     <Reference Include="BarcodeLib, Version=1.0.0.19, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\BarcodeLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Bootstrap.Icons, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Bootstrap.Icons\bin\Bootstrap.Icons.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -167,6 +175,7 @@
     <Content Include="emr\labinfor.aspx" />
     <Content Include="ER\EmerMedRec.aspx" />
     <Content Include="ER\EmerTriaAndNurAssRec.aspx" />
+    <Content Include="icons\ExclamationTriangle.ascx" />
     <Content Include="icons\PlusCircle.ascx" />
     <Content Include="icons\Trash.ascx" />
     <Content Include="icons\XSquare.ascx" />
@@ -203,6 +212,7 @@
     <Content Include="Phar\orderprint.aspx" />
     <Content Include="Phar\ordertab.aspx" />
     <Content Include="Phar\phar.css" />
+    <Content Include="Print\IPD\PrtDisCer.aspx" />
     <Content Include="Print\OutPatMedRec.aspx" />
     <Content Include="Report\ImagingDiagnosticReporting.aspx" />
     <Content Include="scripts\contenteditable.min.js" />
@@ -541,6 +551,13 @@
     <Compile Include="Phar\ordertab.aspx.designer.cs">
       <DependentUpon>ordertab.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Print\IPD\PrtDisCer.aspx.cs">
+      <DependentUpon>PrtDisCer.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Print\IPD\PrtDisCer.aspx.designer.cs">
+      <DependentUpon>PrtDisCer.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Print\OutPatMedRec.aspx.cs">
       <DependentUpon>OutPatMedRec.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -570,6 +587,20 @@
     <Compile Include="UserControls\AmendReason.ascx.designer.cs">
       <DependentUpon>AmendReason.ascx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Barcode.ascx.cs">
+      <DependentUpon>Barcode.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\Barcode.ascx.designer.cs">
+      <DependentUpon>Barcode.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Checkbox\Checkbox.ascx.cs">
+      <DependentUpon>Checkbox.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\Checkbox\Checkbox.ascx.designer.cs">
+      <DependentUpon>Checkbox.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Message.ascx.cs">
       <DependentUpon>Message.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -583,6 +614,40 @@
     </Compile>
     <Compile Include="UserControls\PatientInfo.ascx.designer.cs">
       <DependentUpon>PatientInfo.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PopupModal.ascx.designer.cs">
+      <DependentUpon>PopupModal.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Date.ascx.designer.cs">
+      <DependentUpon>Date.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\DateTime.ascx.cs">
+      <DependentUpon>DateTime.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\DateTime.ascx.designer.cs">
+      <DependentUpon>DateTime.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Label.ascx.cs">
+      <DependentUpon>Label.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Label.ascx.designer.cs">
+      <DependentUpon>Label.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Row.ascx.cs">
+      <DependentUpon>Row.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Row.ascx.designer.cs">
+      <DependentUpon>Row.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Signature.ascx.cs">
+      <DependentUpon>Signature.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Signature.ascx.designer.cs">
+      <DependentUpon>Signature.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\PromptButton.ascx.cs">
       <DependentUpon>PromptButton.ascx</DependentUpon>
@@ -612,8 +677,17 @@
     <Content Include="styles\telerik-custom.css" />
     <Content Include="UserControls\Alert.ascx" />
     <Content Include="UserControls\AmendReason.ascx" />
+    <Content Include="UserControls\Barcode.ascx" />
+    <Content Include="UserControls\Checkbox\Checkbox.ascx" />
     <Content Include="UserControls\Message.ascx" />
     <Content Include="UserControls\PatientInfo.ascx" />
+    <Content Include="UserControls\PopupModal.ascx" />
+    <Content Include="UserControls\PrintTemplate\Date.ascx" />
+    <Content Include="UserControls\PrintTemplate\DateTime.ascx" />
+    <Content Include="UserControls\PrintTemplate\Label.ascx" />
+    <Content Include="UserControls\PrintTemplate\Row.ascx" />
+    <Content Include="UserControls\PrintTemplate\Signature.ascx" />
+    <Content Include="UserControls\PrintTemplate\PrintWindow.ascx" />
     <Content Include="UserControls\PromptButton.ascx" />
     <Content Include="UserControls\TextField.ascx" />
     <Content Include="web.config" />
@@ -629,12 +703,19 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataEntities\" />
+    <Folder Include="Print\OPD\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CustomControls\CustomControls.csproj">
+      <Project>{f048a140-483f-41ab-b729-8636e67b5968}</Project>
+      <Name>CustomControls</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
