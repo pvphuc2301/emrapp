@@ -8,6 +8,8 @@
 <%@ Register Src="~/UserControls/PrintTemplate/Label.ascx" TagPrefix="webUI" TagName="Label" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Signature.ascx" TagPrefix="webUI" TagName="Signature" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Date.ascx" TagPrefix="webUI" TagName="Date" %>
+<%@ Register Src="~/UserControls/Barcode.ascx" TagPrefix="webUI" TagName="Barcode" %>
+
 
 
 <!DOCTYPE html>
@@ -22,10 +24,19 @@
 </head>
 <body>
     <webUI:PrintWindow runat="server" ID="PrintWindow">
-        <PrintTitle>
-            <div style="color: #007297; font-size: 26.6667px;">GIẤY CHỨNG NHẬN ĐIỀU TRỊ</div>
+        <PrintHeader>
+            <img style="width: 200px" src="../images/AIH_PI_FULL.png" />
+            <div style="flex-grow: 1; text-align: center;">
+                <div style="color: #007297; font-size: 26.6667px;">GIẤY CHỨNG NHẬN ĐIỀU TRỊ</div>
             <div style="color: #e20e5a; font-size: 16.6667px;">MEDICAL CERTIFICATE</div>
-        </PrintTitle>
+            </div>
+            <div style="width: 200px; text-align: center">
+                <div>MAI MAI MÃI1</div>
+                <div>05-10-1960 | Nữ</div>
+                <webUI:Barcode runat="server" id="Barcode" Text="900000488" Width="200" Height="40" />
+                <div>900000488</div>
+            </div>
+        </PrintHeader>
         <PrintContent>
 
             <div class="row mb-2">
