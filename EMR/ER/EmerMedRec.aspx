@@ -2,11 +2,15 @@
 
 <%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="uc1" TagName="PatientInfo" %>
 <%@ Register Src="~/UserControls/Alert.ascx" TagPrefix="uc1" TagName="Alert" %>
-<%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="Input" TagName="TextField" %>
+<%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="aih" TagName="TextField" %>
 <%@ Register Src="~/UserControls/PromptButton.ascx" TagPrefix="Button" TagName="Prompt" %>
 <%@ Register Src="~/icons/PlusCircle.ascx" TagPrefix="Icon" TagName="PlusCircle" %>
 <%@ Register Src="~/icons/Trash.ascx" TagPrefix="icon" TagName="trash" %>
 <%@ Register Src="~/icons/XSquare.ascx" TagPrefix="icon" TagName="xsquare" %>
+<%@ Register Src="~/UserControls/AmendReason.ascx" TagPrefix="aih" TagName="AmendReason" %>
+
+
+
 
 <!DOCTYPE html>
 
@@ -55,7 +59,8 @@
         <div class="scroll-sidebar h-100 w-100">
             <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                    <div id="AmendReasonPlaceHolder" runat="server"></div>
+                    <aih:AmendReason runat="server" ID="txt_amendReason" />
+                    <%--<div id="AmendReasonPlaceHolder" runat="server"></div>--%>
 
                     <uc1:PatientInfo runat="server" ID="PatientInfo" />
 
@@ -88,7 +93,7 @@
                                                 <label class="control-label mb-1">
                                                     Lý do đến khám/ <span class="text-primary">Chief complaint:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtChiefComplaint" />
+                                                    <aih:TextField runat="server" ID="txtChiefComplaint" />
                                                 </div>
                                             </div>
                                         </div>
@@ -141,7 +146,7 @@
                                                 <label class="control-label mb-1">
                                                     Bệnh Sử/ <span class="text-primary">History of present illness(HPI):</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtHistoryofPresent" />
+                                                    <aih:TextField runat="server" ID="txtHistoryofPresent" />
                                                 </div>
                                             </div>
                                         </div>
@@ -161,7 +166,7 @@
                                                                                     <span
                                                                                         class="text-danger">*</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtpastmedhismeds" />
+                                                    <aih:TextField runat="server" ID="txtpastmedhismeds" />
                                                 </div>
                                             </div>
                                         </div>
@@ -173,7 +178,7 @@
                                                                                     <span
                                                                                         class="text-danger">*</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtpastmedhissurs" />
+                                                    <aih:TextField runat="server" ID="txtpastmedhissurs" />
                                                 </div>
                                             </div>
                                         </div>
@@ -233,7 +238,7 @@
                                                 </label>
 
                                                 <div class="form-group habit_other_field">
-                                                    <Input:TextField runat="server" ID="txthabitsother" />
+                                                    <aih:TextField runat="server" ID="txthabitsother" />
                                                 </div>
                                             </div>
                                         </div>
@@ -247,7 +252,7 @@
                                                                                         class="text-primary">Home
                                                                                         medications:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txthomemedications" />
+                                                    <aih:TextField runat="server" ID="txthomemedications" />
                                                 </div>
                                             </div>
                                         </div>
@@ -259,7 +264,7 @@
                                                                                     sử dị ứng/ <span
                                                                                         class="text-primary">Allergies:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtallergies" />
+                                                    <aih:TextField runat="server" ID="txtallergies" />
                                                 </div>
                                             </div>
                                         </div>
@@ -272,7 +277,7 @@
                                                                                         class="text-primary">Relevant
                                                                                         family history:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtrelevantfamilyhistory" />
+                                                    <aih:TextField runat="server" ID="txtrelevantfamilyhistory" />
                                                 </div>
                                             </div>
                                         </div>
@@ -297,7 +302,7 @@
                                                                                         (General and Diagnostic
                                                                                         support):</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtfinding" />
+                                                    <aih:TextField runat="server" ID="txtfinding" />
                                                 </div>
                                             </div>
                                         </div>
@@ -333,7 +338,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="row par required_code_field">
-                                                    <Input:TextField runat="server" ID="txtrequiredtext" />
+                                                    <aih:TextField runat="server" ID="txtrequiredtext" />
                                                 </div>
                                             </div>
                                         </div>
@@ -347,7 +352,7 @@
                                                                                         Results (Labs,
                                                                                         Imaging...):</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtinvestigationsresults" />
+                                                    <aih:TextField runat="server" ID="txtinvestigationsresults" />
                                                 </div>
                                             </div>
                                         </div>
@@ -360,7 +365,7 @@
                                                                                         class="text-primary">Initial
                                                                                         diagnosis:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtinitialdiagnosis" />
+                                                    <aih:TextField runat="server" ID="txtinitialdiagnosis" />
                                                 </div>
                                             </div>
                                         </div>
@@ -373,7 +378,7 @@
                                                                                         class="text-primary">Differential
                                                                                         diagnosis:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtdiferentialdiagnosis" />
+                                                    <aih:TextField runat="server" ID="txtdiferentialdiagnosis" />
                                                 </div>
                                             </div>
                                         </div>
@@ -386,7 +391,7 @@
                                                                                         class="text-primary">Associated
                                                                                         conditions:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtassociatedconditions" />
+                                                    <aih:TextField runat="server" ID="txtassociatedconditions" />
                                                 </div>
                                             </div>
                                         </div>
@@ -399,7 +404,7 @@
                                                                                         class="text-primary">Confirmed
                                                                                         Diagnosis:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtcomfirmeddiagnosis" />
+                                                    <aih:TextField runat="server" ID="txtcomfirmeddiagnosis" />
                                                 </div>
                                             </div>
                                         </div>
@@ -444,7 +449,7 @@
                                                                                         specialist/
                                                                                         Department:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtnameofspecialist" />
+                                                    <aih:TextField runat="server" ID="txtnameofspecialist" />
                                                 </div>
                                             </div>
                                         </div>
@@ -488,7 +493,7 @@
                                                                                         opinion
                                                                                         summarised:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtspecopinionsummarised" />
+                                                    <aih:TextField runat="server" ID="txtspecopinionsummarised" />
                                                 </div>
                                             </div>
                                         </div>
@@ -533,7 +538,7 @@
                                                                         </div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField runat="server" Value='<%#Eval("medication") %>' DataKey="medication" />
+                                                                        <aih:TextField runat="server" Value='<%#Eval("medication") %>' DataKey="medication" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -542,7 +547,7 @@
                                                                         Dose</span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField runat="server" Value='<%#Eval("dose") %>' DataKey="dose" />
+                                                                        <aih:TextField runat="server" Value='<%#Eval("dose") %>' DataKey="dose" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -551,7 +556,7 @@
                                                                         Route</span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField runat="server" Value='<%#Eval("route") %>' DataKey="route" />
+                                                                        <aih:TextField runat="server" Value='<%#Eval("route") %>' DataKey="route" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -560,7 +565,7 @@
                                                                         Comment</span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField runat="server" Value='<%#Eval("comment") %>' DataKey="comment" />
+                                                                        <aih:TextField runat="server" Value='<%#Eval("comment") %>' DataKey="comment" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:CommandField ShowDeleteButton="True" ButtonType="Button" />
@@ -610,7 +615,7 @@
                                                                         </div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField runat="server" Value='<%#Eval("progress") %>' DataKey="progress" />
+                                                                        <aih:TextField runat="server" Value='<%#Eval("progress") %>' DataKey="progress" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -620,7 +625,7 @@
                                                                                                                     </span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <Input:TextField runat="server" Value='<%#Eval("appropriate_order") %>' DataKey="appropriate_order" />
+                                                                        <aih:TextField runat="server" Value='<%#Eval("appropriate_order") %>' DataKey="appropriate_order" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:CommandField ShowDeleteButton="True" ButtonType="Button" />
@@ -653,7 +658,7 @@
                                                                                         at termination of
                                                                                         treatmen:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtconclusions" />
+                                                    <aih:TextField runat="server" ID="txtconclusions" />
                                                 </div>
                                             </div>
                                         </div>
@@ -698,7 +703,7 @@
                                                                                     thuốc/ <span
                                                                                         class="text-primary">Prescription:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtprescription" />
+                                                    <aih:TextField runat="server" ID="txtprescription" />
                                                 </div>
                                             </div>
                                         </div>
@@ -712,7 +717,7 @@
                                                                                         follow-up care
                                                                                         instructions:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtspecifycareinstructions" />
+                                                    <aih:TextField runat="server" ID="txtspecifycareinstructions" />
                                                 </div>
                                             </div>
                                         </div>
@@ -762,7 +767,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="form-group referred_opd_field">
-                                                    <Input:TextField runat="server" ID="txtreferredtoOPDtext" />
+                                                    <aih:TextField runat="server" ID="txtreferredtoOPDtext" />
                                                 </div>
                                             </div>
                                         </div>
@@ -808,7 +813,7 @@
                                                                                     <span
                                                                                         class="text-primary">Reason:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtreason" />
+                                                    <aih:TextField runat="server" ID="txtreason" />
                                                 </div>
                                             </div>
                                         </div>
@@ -820,7 +825,7 @@
                                                                                     khoa/ <span
                                                                                         class="text-primary">Ward:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtward" />
+                                                    <aih:TextField runat="server" ID="txtward" />
                                                 </div>
                                             </div>
                                         </div>
@@ -894,7 +899,7 @@
                                                                                         class="text-primary">Pre-operative
                                                                                         diagnosis:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtpreoperative_diagnosis" />
+                                                    <aih:TextField runat="server" ID="txtpreoperative_diagnosis" />
                                                 </div>
                                             </div>
                                         </div>
@@ -907,7 +912,7 @@
                                                                                         class="text-primary">Brief
                                                                                         summary:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtprebrief_summary" />
+                                                    <aih:TextField runat="server" ID="txtprebrief_summary" />
                                                 </div>
                                             </div>
                                         </div>
@@ -971,7 +976,7 @@
                                                                                         class="text-primary">Reason for
                                                                                         transfer:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" id="txtreasonfor_transfer" />
+                                                    <aih:TextField runat="server" id="txtreasonfor_transfer" />
                                                 </div>
                                             </div>
                                         </div>
@@ -984,7 +989,7 @@
                                                                                         class="text-primary">Status
                                                                                         before transfer:</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txtstatus_before_transfer" />
+                                                    <aih:TextField runat="server" ID="txtstatus_before_transfer" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1060,7 +1065,7 @@
                                                                                         class="text-primary">ICD-10
                                                                                         Code(S):</span></label>
                                                 <div class="form-group">
-                                                    <Input:TextField runat="server" ID="txticd_10" />
+                                                    <aih:TextField runat="server" ID="txticd_10" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1068,71 +1073,58 @@
 
                                     <div class="form-actions mb-3">
                                         <asp:Button ID="btnComplete" OnClick="btnComplete_Click" class="btn btn-primary" runat="server" Text="Complete" />
-
                                         <asp:Button ID="btnSave" OnClick="btnSave_Click" class="btn btn-primary" runat="server" Text="Save" />
-
-                                        <asp:Button ID="btnDelete" data-target="#exampleModalCenter" data-toggle="modal" data-backdrop="static" data-keyboard="false" class="btn btn-danger" runat="server" Text="Delete" />
-
+                                        <button type="button" id="btnDeleteModal" runat="server" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
                                         <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
-
-                                        <asp:Button ID="btnPrint" CssClass="btn btn-secondary" runat="server" OnClick="btnPrint_Click" Text="Print" />
-
-                                        <asp:Button ID="btnCancel" CssClass="btn btn-secondary" runat="server" OnClick="btnCancel_Click" Text="Cancel" />
+                                        <asp:Button ID="btnPrint" OnClick="btnPrint_Click" CssClass="btn btn-secondary" runat="server" Text="Print" />
+                                        <asp:Button ID="btnCancel" OnClick="btnCancel_Click" CssClass="btn btn-secondary" runat="server" Text="Cancel" />
+                                        <div runat="server" id="messagePlaceHolder"></div>
                                     </div>
 
-                                    <asp:UpdatePanel ID="updatePanelDeleteReason" runat="server" UpdateMode="Always">
-                                        <ContentTemplate>
-                                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLongTitle">Delete document</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span
-                                                                    aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <p runat="server">
-                                                                Please provide reason for deletion
-                                                            </p>
-                                                            <div class="form-group mb-2">
-                                                                <Input:TextField runat="server" ID="TextField1" />
-                                                            </div>
-                                                            <div id="Div1" class="text-danger" runat="server">
-                                                                Nội dung lý do xóa phải trên 3 ký tự
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button onserverclick="btnDelete_Click" class="btn btn-danger" runat="server">Delete</button>
-                                                            <button id="btnClose" data-dismiss="modal" class="btn btn-secondary">Close</button>
-                                                        </div>
+                                    <div id="myModal" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Delete document</h4>
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p runat="server">Please provide reason for deletion</p>
+                                                    <div class="form-group mb-2">
+                                                        <aih:TextField runat="server" ID="TextField17" />
                                                     </div>
+                                                    <div class="text-danger" runat="server">Nội dung lý do xóa phải trên 3 ký tự</div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <asp:Button runat="server" OnClick="btnDelete_Click" Text="Delete" ID="btnDelete" class="btn btn-danger" />
                                                 </div>
                                             </div>
-                                        </ContentTemplate>
-                                    </asp:UpdatePanel>
+                                        </div>
+                                    </div>
+
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </ContentTemplate>
                 <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="btnSave" EventName="Click" />
+                    <%--<asp:AsyncPostBackTrigger ControlID="btnSave" EventName="Click" />--%>
                     <asp:PostBackTrigger ControlID="btnAmend" />
                     <asp:PostBackTrigger ControlID="btnCancel" />
-                    <asp:PostBackTrigger ControlID="btnComplete" />
+                    <%--<asp:PostBackTrigger ControlID="btnComplete" />--%>
                 </Triggers>
             </asp:UpdatePanel>
         </div>
     </form>
-    <script>
+    <%--<script>
         let alertBox = document.getElementById("MessagePlaceHolder");
 
         setTimeout(function () {
             alertBox.style.top = "0";
         }, 2000);
-    </script>
+    </script>--%>
     <script src="../../scripts/jquery-3.2.1.min.js"></script>
     <script src="../../scripts/bootstrap.min.js"></script>
     <script src="../../scripts/perfect-scrollbar.jquery.min.js"></script>

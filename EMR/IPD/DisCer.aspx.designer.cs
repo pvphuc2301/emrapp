@@ -24,24 +24,6 @@ namespace EMR
         protected global::System.Web.UI.UserControl PrintWindow;
 
         /// <summary>
-        /// Date control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UserControl Date;
-
-        /// <summary>
-        /// Date1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UserControl Date1;
-
-        /// <summary>
         /// form2 control.
         /// </summary>
         /// <remarks>

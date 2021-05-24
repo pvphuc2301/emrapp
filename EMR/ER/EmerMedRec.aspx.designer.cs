@@ -42,13 +42,13 @@ namespace EMR.ER
         protected global::System.Web.UI.UpdatePanel Upd;
 
         /// <summary>
-        /// AmendReasonPlaceHolder control.
+        /// txt_amendReason control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AmendReasonPlaceHolder;
+        protected global::EMR.AmendReason txt_amendReason;
 
         /// <summary>
         /// PatientInfo control.
@@ -762,13 +762,13 @@ namespace EMR.ER
         protected global::System.Web.UI.WebControls.Button btnSave;
 
         /// <summary>
-        /// btnDelete control.
+        /// btnDeleteModal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDelete;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnDeleteModal;
 
         /// <summary>
         /// btnAmend control.
@@ -798,30 +798,30 @@ namespace EMR.ER
         protected global::System.Web.UI.WebControls.Button btnCancel;
 
         /// <summary>
-        /// updatePanelDeleteReason control.
+        /// messagePlaceHolder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel updatePanelDeleteReason;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl messagePlaceHolder;
 
         /// <summary>
-        /// TextField1 control.
+        /// TextField17 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField1;
+        protected global::EMR.TextField TextField17;
 
         /// <summary>
-        /// Div1 control.
+        /// btnDelete control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
+        protected global::System.Web.UI.WebControls.Button btnDelete;
     }
 }

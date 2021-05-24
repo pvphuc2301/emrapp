@@ -11,7 +11,6 @@ namespace EMR.ER
 {
     public partial class EmerMedRec : System.Web.UI.Page
     {
-        string amendReason = "";
         EmergencyMedicalRecord emr;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -32,6 +31,7 @@ namespace EMR.ER
         }
         public void loadDataToControls(EmergencyMedicalRecord emr)
         {
+            txt_amendReason.Visible = false;
             if (emr.evaluation_time != null)
             {
                 rad_evaluation_time.SelectedDate = DateTime.Parse(emr.evaluation_time);
@@ -144,9 +144,9 @@ namespace EMR.ER
             {
                 btnComplete.Visible = false;
                 btnSave.Visible = false;
-                btnDelete.Visible = false;
+                btnDeleteModal.Visible = false;
                 btnCancel.Visible = false;
-
+                btnDelete.Visible = false;
                 btnAmend.Visible = true;
                 btnPrint.Visible = true;
 
@@ -533,7 +533,6 @@ namespace EMR.ER
                 dtRow = table.NewRow();
                 dtRow["time"] = DateTime.Now.ToString("HH:mm");
                 table.Rows.Add(dtRow);
-
                 _BindGridView(grid_Treatment, table);
             }
             catch (Exception ex)
@@ -607,8 +606,8 @@ namespace EMR.ER
         }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            AmendReason amendReason = (AmendReason)Page.LoadControl("~/UserControls/AmendReason.ascx");
-            amendReason.Load(AmendReasonPlaceHolder);
+            
+            txt_amendReason.Visible = true;
 
             btnComplete.Visible = true;
             btnComplete.Attributes["disabled"] = "disabled";
@@ -623,6 +622,7 @@ namespace EMR.ER
             emr = new EmergencyMedicalRecord(DataHelpers.varDocId);
             emr.user_name = (string)Session["UserID"];
             emr.status = DocumentStatus.FINAL;
+            emr.amend_reason = txt_amendReason.Value;
             if (rad_evaluation_time.SelectedDate != null)
             {
                 emr.evaluation_time = DataHelpers.ConvertSQLDateTime(rad_evaluation_time.SelectedDate);

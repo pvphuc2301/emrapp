@@ -1664,6 +1664,196 @@ namespace EMR
         #endregion
     }
 
+    public class Mrnv
+    {
+        public static Dictionary<string, string> AppointedVaccine = new Dictionary<string, string>()
+        {
+            { "id", "" },
+            { "drug_name", "" },
+            { "strength", "" },
+            { "router", "" },
+            { "reason", "" },
+        };
+        #region Properties
+        public static string api = "api/mrnv";
+        public dynamic document_id { get; set; }
+        public dynamic user_name { get; set; }
+        public dynamic status { get; set; }
+        public dynamic amend_reason { get; set; }
+        public dynamic chief_complaint { get; set; }
+        public dynamic cur_med_history { get; set; }
+        public dynamic cur_medications { get; set; }
+        public dynamic personal { get; set; }
+        public dynamic family { get; set; }
+        public dynamic allergy { get; set; }
+        public dynamic allergy_text { get; set; }
+        public dynamic vs_temperature { get; set; }
+        public dynamic vs_heart_rate { get; set; }
+        public dynamic vs_weight { get; set; }
+        public dynamic vs_height { get; set; }
+        public dynamic vs_respiratory_rate { get; set; }
+        public dynamic vs_BMI { get; set; }
+        public dynamic vs_blood_pressure { get; set; }
+        public dynamic vs_SpO2 { get; set; }
+        public dynamic vs_pulse { get; set; }
+        public dynamic scr_before_vacc_1 { get; set; }
+        public dynamic scr_before_vacc_2 { get; set; }
+        public dynamic scr_before_vacc_3 { get; set; }
+        public dynamic scr_before_vacc_4 { get; set; }
+        public dynamic scr_before_vacc_5 { get; set; }
+        public dynamic scr_before_vacc_6 { get; set; }
+        public dynamic scr_before_vacc_7 { get; set; }
+        public dynamic scr_before_vacc_8 { get; set; }
+        public dynamic scr_before_vacc_9 { get; set; }
+        public dynamic appointed_vaccine { get; set; }
+        public dynamic additional_investigations { get; set; }
+        public dynamic initial_diagnosis { get; set; }
+        public dynamic differential_diagnosis { get; set; }
+        public dynamic associated_conditions { get; set; }
+        public dynamic treatment_code { get; set; }
+        public dynamic treatment_desc { get; set; }
+        public dynamic spec_opinion_req { get; set; }
+        public dynamic spec_opinion_req_text { get; set; }
+        public dynamic pecific_edu_req { get; set; }
+        public dynamic next_appointment { get; set; }
+        #endregion
+
+        public Mrnv(
+            dynamic document_id,
+            dynamic user_name,
+            dynamic status,
+            dynamic amend_reason,
+             dynamic chief_complaint,
+             dynamic cur_med_history,
+             dynamic cur_medication,
+             dynamic personal,
+             dynamic family,
+             dynamic allergy,
+             dynamic allergy_text,
+             dynamic vs_temperature,
+             dynamic vs_heart_rate,
+             dynamic vs_weight,
+             dynamic vs_height,
+             dynamic vs_respiratory_rate,
+             dynamic vs_BMI,
+             dynamic vs_blood_pressure,
+             dynamic vs_SpO2,
+             dynamic vs_pulse,
+             dynamic scr_before_vacc_1,
+             dynamic scr_before_vacc_2,
+             dynamic scr_before_vacc_3,
+             dynamic scr_before_vacc_4,
+             dynamic scr_before_vacc_5,
+             dynamic scr_before_vacc_6,
+             dynamic scr_before_vacc_7,
+             dynamic scr_before_vacc_8,
+             dynamic scr_before_vacc_9,
+             dynamic appointed_vaccine,
+             dynamic additional_investigations,
+             dynamic initial_diagnosis,
+             dynamic differential_diagnosis,
+             dynamic associated_conditions,
+             dynamic treatment_code,
+             dynamic treatment_desc,
+             dynamic spec_opinion_req,
+             dynamic spec_opinion_req_text,
+             dynamic pecific_edu_req,
+             dynamic next_appointment
+            )
+        {
+            this.document_id = document_id;
+            this.user_name = user_name;
+            this.status = status;
+            this.amend_reason = amend_reason;
+            this.chief_complaint = chief_complaint;
+            this.cur_med_history = cur_med_history;
+            this.cur_medications = cur_medications;
+            this.personal = personal;
+            this.family = family;
+            this.allergy = allergy;
+            this.allergy_text = allergy_text;
+            this.vs_temperature = vs_temperature;
+            this.vs_heart_rate = vs_heart_rate;
+            this.vs_weight = vs_weight;
+            this.vs_height = vs_height;
+            this.vs_respiratory_rate = vs_respiratory_rate;
+            this.vs_BMI = vs_BMI;
+            this.vs_blood_pressure = vs_blood_pressure;
+            this.vs_SpO2 = vs_SpO2;
+            this.vs_pulse = vs_pulse;
+            this.scr_before_vacc_1 = scr_before_vacc_1;
+            this.scr_before_vacc_2 = scr_before_vacc_2;
+            this.scr_before_vacc_3 = scr_before_vacc_3;
+            this.scr_before_vacc_4 = scr_before_vacc_4;
+            this.scr_before_vacc_5 = scr_before_vacc_5;
+            this.scr_before_vacc_6 = scr_before_vacc_6;
+            this.scr_before_vacc_7 = scr_before_vacc_7;
+            this.scr_before_vacc_8 = scr_before_vacc_8;
+            this.scr_before_vacc_9 = scr_before_vacc_9;
+            this.appointed_vaccine = appointed_vaccine;
+            this.additional_investigations = additional_investigations;
+            this.initial_diagnosis = initial_diagnosis;
+            this.differential_diagnosis = differential_diagnosis;
+            this.associated_conditions = associated_conditions;
+            this.treatment_code = treatment_code;
+            this.treatment_desc = treatment_desc;
+            this.spec_opinion_req = spec_opinion_req;
+            this.spec_opinion_req_text = spec_opinion_req_text;
+            this.pecific_edu_req = pecific_edu_req;
+            this.next_appointment = next_appointment;
+
+        }
+
+        public static Dictionary<string, string> TREATMENT_CODE = new Dictionary<string, string>()
+        {
+            { "OPD", "Ngoại trú/Ambulatory care" },
+            { "IPD", "Nhập viện/Admission" },
+            { "TRF", "Chuyển viện/Transfer" },
+        };
+
+
+        public Mrnv(dynamic document_id)
+        {
+            string _jsonData = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
+
+            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+
+            WebHelpers.BindingDatafield(db, this);
+        }
+
+        #region METHODS
+        public string[] Update()
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(string.Format("{0}/edit", api), this);
+            message[0] = responseStatus;
+
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, document_id));
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        public static string[] Delete(string userName)
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
+            message[0] = responseStatus;
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, DataHelpers.varDocId));
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        #endregion
+    }
+
     public class OutPatientInitialNursingAssement
     {
         #region Properties

@@ -6,10 +6,11 @@
 <%@ Register Src="~/UserControls/PopupModal.ascx" TagPrefix="webUI" TagName="PopupModal" %>
 <%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="icon" TagName="ExclamationTriangle" %>
 
-<%@ Register Src="~/UserControls/PrintWindow.ascx" TagPrefix="webUI" TagName="PrintWindow" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Label.ascx" TagPrefix="aih" TagName="Label" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Date.ascx" TagPrefix="aih" TagName="Date" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Signature.ascx" TagPrefix="aih" TagName="Signature" %>
+<%@ Register Src="~/UserControls/PrintTemplate/PrintWindow.ascx" TagPrefix="webUI" TagName="PrintWindow" %>
+<%@ Register Src="~/UserControls/Barcode.ascx" TagPrefix="webUI" TagName="Barcode" %>
 
 
 <!DOCTYPE html>
@@ -23,10 +24,19 @@
 </head>
 <body>
     <webUI:PrintWindow runat="server" ID="PrintWindow">
-        <PrintTitle>
-            <div style="color: #007297; font-size: 26.6667px;">TÓM TẮT BỆNH ÁN</div>
-            <div style="color: #e20e5a; font-size: 16.6667px;">SUMMARY OF MEDICAL REPORT</div>
-        </PrintTitle>
+        <PrintHeader>
+            <img style="width: 200px" src="../images/AIH_PI_FULL.png" />
+            <div style="flex-grow: 1; text-align: center;">
+                <div style="color: #007297; font-size: 26.6667px;">TÓM TẮT BỆNH ÁN</div>
+                <div style="color: #e20e5a; font-size: 16.6667px;">SUMMARY OF MEDICAL REPORT</div>
+            </div>
+            <div style="width: 200px; text-align: center">
+                <div>MAI MAI MÃI1</div>
+                <div>05-10-1960 | Nữ</div>
+                <webUI:Barcode runat="server" id="Barcode" Text="900000488" Width="200" Height="40" />
+                <div>900000488</div>
+            </div>
+        </PrintHeader>
         <PrintContent>
 
             <div class="row mb-2">

@@ -195,6 +195,7 @@
     <Content Include="IPD\SurgicalReport.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="OPD\MedicalCertificate.aspx" />
+    <Content Include="OPD\MedRecForNeoVaccin.aspx" />
     <Content Include="OPD\MedRecForVac.aspx" />
     <Content Include="OPD\OutPatMedRec.aspx" />
     <Content Include="OPD\OutPatMedRecPed.aspx" />
@@ -438,6 +439,13 @@
     </Compile>
     <Compile Include="OPD\MedicalCertificate.aspx.designer.cs">
       <DependentUpon>MedicalCertificate.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPD\MedRecForNeoVaccin.aspx.cs">
+      <DependentUpon>MedRecForNeoVaccin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPD\MedRecForNeoVaccin.aspx.designer.cs">
+      <DependentUpon>MedRecForNeoVaccin.aspx</DependentUpon>
     </Compile>
     <Compile Include="OPD\MedRecForVac.aspx.cs">
       <DependentUpon>MedRecForVac.aspx</DependentUpon>
@@ -737,7 +745,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

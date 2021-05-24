@@ -10,6 +10,7 @@
 <%@ Register Src="~/UserControls/PopupModal.ascx" TagPrefix="webUI" TagName="PopupModal" %>
 <%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="icon" TagName="ExclamationTriangle" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Signature.ascx" TagPrefix="webUI" TagName="Signature" %>
+<%@ Register Src="~/UserControls/Barcode.ascx" TagPrefix="webUI" TagName="Barcode" %>
 
 
 <!DOCTYPE html>
@@ -23,10 +24,19 @@
 </head>
 <body>
     <webUI:PrintWindow runat="server" ID="PrintWindow">
-        <PrintTitle>
-            <div style="color: #007297; font-size: 26.6667px;">KẾT QUẢ SIÊU ÂM HỆ TIẾT NIỆU</div>
-            <div style="color: #e20e5a; font-size: 16.6667px;">ULTRASOUND OF URINARY SYSTEM REPORT</div>
-        </PrintTitle>
+        <PrintHeader>
+            <img style="width: 200px" src="../images/AIH_PI_FULL.png" />
+            <div style="flex-grow: 1; text-align: center;">
+                <div style="color: #007297; font-size: 26.6667px;">KẾT QUẢ SIÊU ÂM HỆ TIẾT NIỆU</div>
+                <div style="color: #e20e5a; font-size: 16.6667px;">ULTRASOUND OF URINARY SYSTEM REPORT</div>
+            </div>
+            <div style="width: 200px; text-align: center">
+                <div>MAI MAI MÃI1</div>
+                <div>05-10-1960 | Nữ</div>
+                <webUI:Barcode runat="server" id="Barcode" Text="900000488" Width="200" Height="40" />
+                <div>900000488</div>
+            </div>
+        </PrintHeader>
         <PrintContent>
 
             <div class="row mb-2">
