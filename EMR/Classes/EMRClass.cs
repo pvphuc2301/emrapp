@@ -2165,7 +2165,10 @@ namespace EMR
     #region OUTPATIENT MEDICAL RECORD - Mr. Chung
     public partial class PatientInfo
     {
-        //public  PatientInfo() { }
+        public  PatientInfo() { }
+        public PatientInfo(string _patient_id) {
+            this.patient_id = _patient_id;
+        }
         public string p_info;
         public int p_age;
 

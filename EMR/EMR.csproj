@@ -55,7 +55,7 @@
     </Reference>
     <Reference Include="BarcodeLib, Version=1.0.0.19, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\BarcodeLib.dll</HintPath>
+      <HintPath>Q:\HIS OPERATION\4.EMR\Tmp\BarcodeLib.dll</HintPath>
     </Reference>
     <Reference Include="Bootstrap.Icons, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -67,7 +67,7 @@
     </Reference>
     <Reference Include="OnBarcode.Barcode.BarcodeScanner, Version=4.2.0.0, Culture=neutral, PublicKeyToken=7fbb339ece197812, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\OnBarcode.Barcode.BarcodeScanner.dll</HintPath>
+      <HintPath>Q:\HIS OPERATION\4.EMR\Tmp\OnBarcode.Barcode.BarcodeScanner.dll</HintPath>
     </Reference>
     <Reference Include="PopupControl, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AdamsLair.WinForms.PopupControl.1.0.1\lib\net40\PopupControl.dll</HintPath>
@@ -91,45 +91,54 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="Telerik.Web.Design">
-      <HintPath>..\lib\RCAJAX\2021.1.330.45\Telerik.Web.Design.dll</HintPath>
+    <Reference Include="Telerik.Web.Design, Version=2021.2.511.45, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCAJAX\2021.2.511.45\Telerik.Web.Design.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Telerik.Web.Spreadsheet">
-      <HintPath>..\lib\RCAJAX\2021.1.330.45\AdditionalLibraries\Bin45\Telerik.Web.Spreadsheet.dll</HintPath>
+    <Reference Include="Telerik.Web.Spreadsheet, Version=2021.2.511.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCAJAX\2021.2.511.45\AdditionalLibraries\Bin45\Telerik.Web.Spreadsheet.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Telerik.Web.UI">
-      <HintPath>..\lib\RCAJAX\2021.1.330.45\Telerik.Web.UI.dll</HintPath>
+    <Reference Include="Telerik.Web.UI, Version=2021.2.511.45, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCAJAX\2021.2.511.45\Telerik.Web.UI.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Telerik.Web.UI.Skins">
-      <HintPath>..\lib\RCAJAX\2021.1.330.45\Telerik.Web.UI.Skins.dll</HintPath>
+    <Reference Include="Telerik.Web.UI.Skins, Version=2021.2.511.45, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCAJAX\2021.2.511.45\Telerik.Web.UI.Skins.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Telerik.Windows.Documents.Core">
-      <HintPath>..\lib\RCAJAX\2021.1.330.45\AdditionalLibraries\Bin45\Telerik.Windows.Documents.Core.dll</HintPath>
+    <Reference Include="Telerik.Windows.Documents.Core, Version=2021.2.507.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCAJAX\2021.2.511.45\AdditionalLibraries\Bin45\Telerik.Windows.Documents.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Telerik.Windows.Documents.Flow">
-      <HintPath>..\lib\RCAJAX\2021.1.330.45\AdditionalLibraries\Bin45\Telerik.Windows.Documents.Flow.dll</HintPath>
+    <Reference Include="Telerik.Windows.Documents.Flow, Version=2021.2.507.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCAJAX\2021.2.511.45\AdditionalLibraries\Bin45\Telerik.Windows.Documents.Flow.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Telerik.Windows.Documents.Spreadsheet">
-      <HintPath>..\lib\RCAJAX\2021.1.330.45\AdditionalLibraries\Bin45\Telerik.Windows.Documents.Spreadsheet.dll</HintPath>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet, Version=2021.2.507.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCAJAX\2021.2.511.45\AdditionalLibraries\Bin45\Telerik.Windows.Documents.Spreadsheet.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml">
-      <HintPath>..\lib\RCAJAX\2021.1.330.45\AdditionalLibraries\Bin45\Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml.dll</HintPath>
+    <Reference Include="Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml, Version=2021.2.507.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCAJAX\2021.2.511.45\AdditionalLibraries\Bin45\Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Telerik.Windows.Zip">
-      <HintPath>..\lib\RCAJAX\2021.1.330.45\AdditionalLibraries\Bin45\Telerik.Windows.Zip.dll</HintPath>
+    <Reference Include="Telerik.Windows.Zip, Version=2021.2.507.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\lib\RCAJAX\2021.2.511.45\AdditionalLibraries\Bin45\Telerik.Windows.Zip.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="zxing, Version=0.14.0.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\zxing.dll</HintPath>
+      <HintPath>Q:\HIS OPERATION\4.EMR\Tmp\zxing.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

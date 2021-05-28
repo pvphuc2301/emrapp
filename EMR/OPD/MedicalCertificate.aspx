@@ -29,10 +29,8 @@
             <div style="color: #e20e5a; font-size: 16.6667px;">MEDICAL CERTIFICATE</div>
             </div>
             <div style="width: 200px; text-align: center">
-                <div>MAI MAI MÃI1</div>
-                <div>05-10-1960 | Nữ</div>
-                <webUI:Barcode runat="server" id="Barcode" Text="900000488" Width="200" Height="40" />
-                <div>900000488</div>
+               
+               
             </div>
         </PrintHeader>
         <PrintContent>
@@ -156,11 +154,7 @@
                 </div>
                 <div class="col-6 mb-2">
                     <div>
-                        <webUI:Signature runat="server" Title="BÁC SĨ ĐIỀU TRỊ" SubTitle="ATTENDING DOCTOR" FullName="Dr. Nguyen Dinh My">
-                            <ItemTemplate>
-                                <webUI:Date runat="server" Day="23" Month="5" Year="2021" />
-                            </ItemTemplate>
-                        </webUI:Signature>
+                        <webUI:Signature runat="server"  Title="BÁC SĨ ĐIỀU TRỊ" SubTitle="ATTENDING DOCTOR" FullName=""/>
                     </div>
                 </div>
             </div>
@@ -168,11 +162,14 @@
         </PrintContent>
     </webUI:PrintWindow>
 
+
     <div class="cssclsNoPrint">
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
-    <form method="post" action="#" id="form1" runat="server">
+    
+
+        <form method="post" action="#" id="form1" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
         <div class="scroll-sidebar h-100 w-100">
             <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
