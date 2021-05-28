@@ -11,7 +11,8 @@ namespace EMR
 {
     public partial class TextField : System.Web.UI.UserControl
     {
-        
+        internal string Text;
+
         public string Value
         {
             get

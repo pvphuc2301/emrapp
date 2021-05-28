@@ -169,6 +169,7 @@
     <Content Include="App_Data\RadCaptcha\X.wav" />
     <Content Include="App_Data\RadCaptcha\Y.wav" />
     <Content Include="App_Data\RadCaptcha\Z.wav" />
+    <Content Include="BarcodeLib.dll" />
     <Content Include="Dashboard.aspx" />
     <Content Include="emr\emrinfor.aspx" />
     <Content Include="emr\emrview.aspx" />
@@ -194,6 +195,7 @@
     <Content Include="IPD\SurgicalCertificate.aspx" />
     <Content Include="IPD\SurgicalReport.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="OnBarcode.Barcode.BarcodeScanner.dll" />
     <Content Include="OPD\MedicalCertificate.aspx" />
     <Content Include="OPD\MedRecForNeoVaccin.aspx" />
     <Content Include="OPD\MedRecForVac.aspx" />
@@ -222,6 +224,7 @@
     <Content Include="scripts\emrScript.js" />
     <Content Include="scripts\jquery-2.2.1.js" />
     <Content Include="scripts\jquery-2.2.1.min.js" />
+    <Content Include="zxing.dll" />
     <None Include="scripts\jquery.validate-vsdoc.js" />
     <Content Include="scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="scripts\jquery.unobtrusive-ajax.min.js" />

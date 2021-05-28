@@ -25,7 +25,327 @@
 
 </head>
 <body>
+    <webui:printwindow runat="server" id="PrintWindow">
+        <PrintHeader>
+            <img style="width: 200px" src="../images/AIH_PI_FULL.png" />
+            <div style="flex-grow: 1; text-align: center;">
+                <div style="color: #007297; font-size: 26.6667px;">BỆNH ÁN TIÊM CHỦNG SƠ SINH</div>
+            <div style="color: #e20e5a; font-size: 16.6667px;">MEDICAL RECORD FOR NEONATAL VACCINATION</div>
+            </div>
+            <div style="width: 200px; text-align: center">
+                <div>MAI MAI MÃI1</div>
+                <div>05-10-1960 | Nữ</div>
+                <webUI:Barcode runat="server" id="Barcode" Text="900000488" Width="200" Height="40" />
+                <div>900000488</div>
+            </div>
+        </PrintHeader>
+        <PrintContent>
 
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="BỆNH VIỆN QUỐC TẾ MỸ CHỨNG NHẬN:" SubTitle="AMERICAN INTERNATIONAL HOSPITAL CERTIFIES THAT" />
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-6">
+                   <webUI:Label runat="server" Title="Họ tên bệnh nhân:" SubTitle="Patient's name" />
+                    <div class="d-inline-block ml-2 align-top">MAI MAI MÃI1</div>
+                </div>
+                <div class="col-6">
+                   <webUI:Label runat="server" Title="Ngày sinh:" SubTitle="DOB" />
+                    <div class="d-inline-block ml-2 align-top">05-10-1960</div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="Giới tính:" SubTitle="Gender" />
+                    <webUI:Label runat="server" Title="Nam" SubTitle="Male" />
+                    <webUI:Label runat="server" Title="Nữ " SubTitle="Female" />
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-6">
+                    <webUI:Label runat="server" Title="Khoa:" SubTitle="Dept" />
+                    <div class="d-inline-block ml-2 align-top">Khoa khám bệnh</div>
+                </div>
+                <div class="col-6">
+                    <webUI:Label runat="server" Title="Mã BN:" SubTitle="Patient ID" />
+                    <div class="d-inline-block ml-2 align-top">900000488</div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="Đã đến khám và điều trị tại bệnh viện của chúng tôi, với những thông tin như sau:" SubTitle="Visited and received treatment at our hospital, with the following information" />
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="I. Lý do đến khám/ " /><webUI:Label runat="server" Title="Chief complaint:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="II. Bệnh sử/"  /><webUI:Label runat="server" Title="Medical history:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="1. Bệnh sử hiện tại/ "/><webUI:Label runat="server" Title="Current medical history:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12" style ="margin-left:5px">
+                   * <webUI:Label runat="server" Title="Thuốc đang sử dụng/ "/><webUI:Label runat="server" Title="Current medications:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12" style ="margin-left:5px">
+                   <webUI:Label runat="server" Title="2. Tiền sử bệnh/" /><webUI:Label runat="server" Title="Antecedent medical history:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12" style ="margin-left:5px">
+                    * <webUI:Label runat="server" Title="Bản thân/ " /><webUI:Label runat="server" Title="Personal:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12" style ="margin-left:5px">
+                   <webUI:Label runat="server" Title=" Gia đình/ " /><webUI:Label runat="server" Title="Family:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12" style ="margin-left:5px">
+                   <webUI:Label runat="server" Title="Dị ứng/ " /><webUI:Label runat="server" Title="Allergy:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12" style ="margin-left:10px">
+                   <webUI:Label runat="server" Title="• Nếu có, nêu rõ/ " /><webUI:Label runat="server" Title="If yes, specify:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="III. Khám bệnh/ " /><webUI:Label runat="server" Title="Physical examination:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="• Dấu hiệu sinh tồn/ "/><webUI:Label runat="server" Title="Vital signs:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12">
+                   table
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="• Khám sàng lọc trước tiêm chủng/" /><webUI:Label runat="server" Title="Screening before vaccination:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12" style="margin-left: 5px">
+                   <webUI:Label runat="server" Title="1. Tình trạng sức khỏe chưa ổn định/ " /><webUI:Label runat="server" Title="Unstable health condition:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12"style="margin-left: 5px">
+                    <webUI:Label runat="server" Title="2. Sốt/Hạ thân nhiệt (Sốt: nhiệt độ ≥ 37,5°C; Hạ thân nhiệt: nhiệt độ ≤ 35,5°C)/ " /><webUI:Label runat="server" Title="Fever / Hypothermia (Fever:temperature ≥ 37.5 ° C; Hypothermia: temperature ≤ 35.5 ° C):"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12"style="margin-left: 5px">
+                   <webUI:Label runat="server" Title="3. Khóc bé hoặc không khóc/ " /><webUI:Label runat="server" Title="Cry or unable to cry:"/>
+                    <div class="d-inline-block ml-2 align-top">
+                    </div>
+                </div>
+            </div>
+             <div class="row mb-2">
+                <div class="col-12"style="margin-left: 5px">
+                   <webUI:Label runat="server" Title="4. Da, môi không hồng/ Fever/ "/><webUI:Label runat="server" Title="Skin and lips are not pink:"/>
+                    <div class="d-inline-block ml-2 align-top">
+                    </div>
+                </div>
+            </div>
+             <div class="row mb-2">
+                <div class="col-12"style="margin-left: 5px">
+                   <webUI:Label runat="server" Title="5. Bú kém hoặc bỏ bú/ "/><webUI:Label runat="server" Title="Poor breastfeeding or breastfeeding refusal:"/>
+                    <div class="d-inline-block ml-2 align-top">
+                    </div>
+                </div>
+            </div>
+             <div class="row mb-2">
+                <div class="col-12"style="margin-left: 5px">
+                   <webUI:Label runat="server" Title="6. Tuổi thai < 28 tuần/ " /><webUI:Label runat="server" Title="Gestational age < 28 weeks:"/>
+                    <div class="d-inline-block ml-2 align-top">
+                    </div>
+                </div>
+            </div>
+             <div class="row mb-2">
+                <div class="col-12"style="margin-left: 5px">
+                   <webUI:Label runat="server" Title="7. Trẻ < 34 tuần tuổi/ "/><webUI:Label runat="server" Title="Children < 34 weeks old:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+             <div class="row mb-2">
+                <div class="col-12"style="margin-left: 5px">
+                   <webUI:Label runat="server" Title="8. Cân nặng của trẻ < 2000 g, mẹ có HBsAg (-) / "/><webUI:Label runat="server" Title="Child's weight < 2000g, his/her morther HbsAg (-):"/>
+                    <div class="d-inline-block ml-2 align-top">abc</div>
+                </div>
+            </div>
+             <div class="row mb-2">
+                <div class="col-12"style="margin-left: 5px">
+                   <webUI:Label runat="server" Title="9. Các chống chỉ định khác, nếu có ghi rõ/ "/><webUI:Label runat="server" Title="Other contraindications, if yes specified:"/>
+                    <div class="d-inline-block ml-2 align-top">
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="IV. Chỉ định và kết quả xét nghiệm/ "/><webUI:Label runat="server" Title="Laboratory indications and results:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12" style="margin-left:5px">
+                   <webUI:Label runat="server" Title="• Loại vắc xin tiêm chủng lần này/ "/><webUI:Label runat="server" Title="Appointed vaccine:"/>
+                    <div class="d-inline-block ml-2 align-top">table</div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12" style="margin-left:5px">
+                   <webUI:Label runat="server" Title="• Khảo sát bổ sung khác/ " /><webUI:Label runat="server" Title="Additional investigations:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="V. Kết luận/ "/><webUI:Label runat="server" Title="Conclusion:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12" style="margin-left:5px">
+                   <webUI:Label runat="server" Title="• Chẩn đoán ban đầu/ " /><webUI:Label runat="server" Title="Initial diagnosis:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12" style="margin-left:5px">
+                   <webUI:Label runat="server" Title="• Chẩn đoán phân biệt/ "/><webUI:Label runat="server" Title="Differential diagnosis:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12" style="margin-left:5px">
+                   <webUI:Label runat="server" Title="• Bệnh kèm theo/ "/><webUI:Label runat="server" Title="Associated conditions:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12" style="margin-left:5px">
+                   <webUI:Label runat="server" Title="• Điều trị/ " /><webUI:Label runat="server" Title="Treatment:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="* Yêu cầu ý kiến chuyên khoa/ "/><webUI:Label runat="server" Title="Specialized opinion requested:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12"style="margin-left:5px">
+                   <webUI:Label runat="server" Title="• Nếu có, nêu rõ/ "/><webUI:Label runat="server" Title="If yes, specify:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12"style="margin-left:5px">
+                   <webUI:Label runat="server" Title="• Hướng dẫn cụ thể dành cho bệnh nhân/ " /><webUI:Label runat="server" Title="Specific education required:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12"style="margin-left:5px">
+                   <webUI:Label runat="server" Title="• Hẹn lần khám tới/ " /><webUI:Label runat="server" Title="Next appointment:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12">
+                   <webUI:Label runat="server" Title="VI. Xác nhận của người tiêm chủng/người giám hộ hợp pháp / "/><webUI:Label runat="server" Title="Confirmation of patient/legal guardian:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12" style="margin-left:2px">
+                   <webUI:Label runat="server" Title="• Tôi đã được nghe bác sĩ tư vấn và đồng ý tiêm chủng cho tôi/người mà tôi làm giám hộ hợp pháp.Tôi đãkiểm tra đúng thuốc tiêm và thuốc còn thời hạn dùng." 
+                       SubTitle="I have been consulted and agree on vaccination. I checked right medication and medication has still notexpired." />
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12" style="margin-left:2px">
+                   <webUI:Label runat="server" Title="• Họ tên người tiêm chủng/người giám hộ/ "/><webUI:Label runat="server" Title="Full name of patient/ guardian:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+            <div class="row mb-2">
+                <div class="col-12" style="margin-left:2px">
+                   <webUI:Label runat="server" Title="• Chữ ký người tiêm chủng/người giám hộ/ "/><webUI:Label runat="server" Title="Signature of patient / guardian:"/>
+                    <div class="d-inline-block ml-2 align-top"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+
+                </div>
+                <div class="col-6 mb-2">
+                    <div>
+                        <webUI:Signature runat="server" Title="BÁC SĨ ĐIỀU TRỊ" SubTitle="ATTENDING DOCTOR" FullName="Dr. Nguyen Dinh My">
+                            <ItemTemplate>
+                                <webUI:Date runat="server" Day="23" Month="5" Year="2021" />
+                            </ItemTemplate>
+                        </webUI:Signature>
+                    </div>
+                </div>
+            </div>
+
+        </PrintContent>
+    </webui:printwindow>
+    <div class="cssclsNoPrint">
     <form method="post" action="#" id="form1" runat="server">
             <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
             <div class="scroll-sidebar h-100 w-100">
@@ -540,15 +860,11 @@
 
                                         <fieldset class="row mb-2">
                                             <div class="form-actions">
-                                                <asp:Button ID="btnComplete" OnClick="btnComplete_Click" class="btn btn-primary" runat="server" Text="Complete" />
-
+                                                <asp:Button ID="btnComplete" OnClick="btnComplete_Click" class="btn btn-primary" runat="server" Text="Complete" /> 
                                                 <asp:Button ID="btnSave" OnClick="btnSave_Click" class="btn btn-primary" runat="server" Text="Save" />
-
                                                 <button type="button" id="btnDeleteModal" runat="server" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
-
-                                                <asp:Button ID="btnAmend" class="btn btn-secondary" runat="server" Text="Amend" />
+                                                <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
                                                 <asp:Button OnClientClick="window.print()" ID="btnPrint" CssClass="btn btn-secondary" runat="server" Text="Print" />
-
                                                 <asp:Button ID="btnCancel" OnClick="btnCancel_Click" CssClass="btn btn-secondary" runat="server" Text="Cancel" />
                                             </div>
                                         </fieldset>
@@ -583,7 +899,7 @@
             </div>
         </form>
 
-
+    </div>
     <script src="../../scripts/jquery-3.2.1.min.js"></script>
     <script src="../../scripts/bootstrap.min.js"></script>
     <script src="../../scripts/perfect-scrollbar.jquery.min.js"></script>
