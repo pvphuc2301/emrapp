@@ -46,9 +46,7 @@ namespace EMR
             lbDoB.Text = DataHelpers.patient.date_of_birth + "| " + DataHelpers.patient.gender_l;
             lbPID.Text = DataHelpers.patient.visible_patient_id;
 
-
             lbNgayKhamBenh.Text = DataHelpers.patientVisit.actual_visit_date_time;
-
             lbChiefComplaint.Text = omr1.chief_complain;
 
             // II. Bệnh sử/ Medical History:
@@ -142,7 +140,7 @@ namespace EMR
             lb_diagnosis.Text = omr1.diagnosis;
             lb_diffesrentialDiagnosis.Text = omr1.differential_diagnosis;
             lb_associated_conditions.Text = omr1.associated_conditions;
-            string _varTreatmentCode = omr1.treatment_code;
+            //string _varTreatmentCode = omr1.treatment_code;
             //if (_varTreatmentCode == "OPD")
             //    radTreatment1.Checked = true;
             //else if (_varTreatmentCode == "IPD")
