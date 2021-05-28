@@ -11,6 +11,7 @@ namespace EMR
 {
     public partial class OutPatMedRec : System.Web.UI.Page
     {
+
         string amendReason = "";
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -32,15 +33,148 @@ namespace EMR
             // Fill du lieu tu Object to Controls.
             loadDataToOMRControls(omr1);
         }
+      
+        public string _PatientName = "";
+        public string _DoB = "";
+        public string _PID = "";
+
 
         public void loadDataToOMRControls(OutpatientMedicalRecord omr1)
         {
+            /*Form in*/
+            lbPatientName.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
+            lbDoB.Text = DataHelpers.patient.date_of_birth + "| " + DataHelpers.patient.gender_l;
+            lbPID.Text = DataHelpers.patient.visible_patient_id;
+
+
+            lbNgayKhamBenh.Text = DataHelpers.patientVisit.actual_visit_date_time;
+
+            lbChiefComplaint.Text = omr1.chief_complain;
+
+            // II. Bệnh sử/ Medical History:
+            // 1.Bệnh sử hiện tại / Current Medical History:
+            lbMedicalHistory.Text = omr1.medical_history;
+            lbCurrentMedication.Text = omr1.current_medication;
+            // 2.Tiền sử bệnh/ Antecedent Medical History:
+            lbPersonal.Text = omr1.personal;
+            //if (bool.Parse(omr1.habits_smoking))
+            //{
+            //    rad_habits_smoking2.Checked = true;
+            //    lb_habits_smoking_pack.Text = omr1.habits_smoking_pack;
+            //}
+            //else
+            //{
+            //    rad_habits_smoking1.Checked = true;
+            //}
+
+            //if (bool.Parse(omr1.habits_alcohol))
+            //{
+            //    rad_habits_alcohol2.Checked = true;
+            //    lb_habits_alcohol_note.Text = omr1.habits_alcohol_note;
+            //}
+            //else
+            //{
+            //    rad_habits_alcohol1.Checked = true;
+            //}
+
+            //if (bool.Parse(omr1.habits_drugs))
+            //{
+            //    rad_habits_drugs2.Checked = true;
+            //    lb_habits_drugs_note.Text = omr1.habits_drugs_note;
+            //}
+            //else
+            //{
+            //    rad_habits_drugs1.Checked = true;
+            //}
+
+            //if (bool.Parse(omr1.habits_physical_exercise))
+            //{
+            //    rad_habits_physical_exercise2.Checked = true;
+            //    lb_habits_phy_exer_note.Text = omr1.habits_phy_exer_note;
+            //}
+            //else
+            //{
+            //    rad_habits_physical_exercise1.Checked = true;
+            //}
+
+            //lb_habits_other.Text = omr1.habits_other;
+            //if (bool.Parse(omr1.allergy))
+            //{
+            //    radAllergy2.Checked = true;
+            //    lbAllergyNote.Text = omr1.allergy_note;
+            //}
+            //else
+            //{
+            //    radAllergy1.Checked = true;
+            //}
+
+            lbFamily.Text = omr1.family;
+            lbImmunization.Text = omr1.immunization;
+
+            // III.Khám bệnh/ Physical Examination:
+            // DẤU HIỆU SINH TỒN/ VITAL SIGNS:
+            lbTemperature.Text = omr1.vs_temperature;
+            lbHeartRate.Text = omr1.vs_heart_rate;
+            lbWeight.Text = omr1.vs_weight;
+            
+            lbRespiratoryRate.Text = omr1.vs_respiratory_rate;
+           
+            lbHeight.Text = omr1.vs_height;
+            lbBloodPressure.Text = omr1.vs_blood_pressure;
+            lbBmi.Text = omr1.vs_BMI;
+            lbSpo2.Text = omr1.vs_spO2;
+            //lb_pulse.Text = omr1.vs_pulse;
+
+            //lb_physical_examination.Text = DataHelpers.FormatPhysicalExamination(omr1.physical_examination);
+            //if (bool.Parse(omr1.psy_consult_required))
+            //{
+            //    rad_psy_consult_required2.Checked = true;
+            //}
+            //else
+            //{
+            //    rad_psy_consult_required1.Checked = true;
+            //}
+            //lb_laboratory_indications_results.Text = omr1.laboratory_indications_results;
+            //lb_additional_investigation.Text = omr1.additional_investigation;
+            //// V.Kết luận/ Conclusion:
+            //lbDiagnosis.Text = omr1.diagnosis;
+            lb_initial_diagnosis.Text = omr1.initial_diagnosis;
+            lb_diagnosis.Text = omr1.diagnosis;
+            lb_diffesrentialDiagnosis.Text = omr1.differential_diagnosis;
+            lb_associated_conditions.Text = omr1.associated_conditions;
+            string _varTreatmentCode = omr1.treatment_code;
+            //if (_varTreatmentCode == "OPD")
+            //    radTreatment1.Checked = true;
+            //else if (_varTreatmentCode == "IPD")
+            //    radTreatment2.Checked = true;
+            //else if (_varTreatmentCode == "TRF")
+            //    radTreatment3.Checked = true;
+
+            //// 5.Current medications
+            //lbMedicine.Text = omr1.medicine;
+
+            //if (bool.Parse(omr1.spec_opinion_requested))
+            //{
+            //    rad_spec_opinion_requested2.Checked = true;
+            //    lb_spec_opinion_requested_note.Text = omr1.spec_opinion_requested_note;
+            //}
+            //else
+            //{ rad_spec_opinion_requested1.Checked = true; }
+
+            lb_specific_education_required.Text = omr1.specific_education_required;
+            lb_next_appointment.Text = omr1.next_appointment;
+
+
+
+            /*Hết phần in*/
+
             // I. Lý do đến khám/ Chief complaint:
             txtChiefComplaint.Value = omr1.chief_complain;
 
             // II. Bệnh sử/ Medical History:
             // 1.Bệnh sử hiện tại / Current Medical History:
-            txtMedicalHistory.Value = omr1.medical_history;
+            lbMedicalHistory.Text =  txtMedicalHistory.Value = omr1.medical_history;
+            
             txtCurrentMedication.Value = omr1.current_medication;
 
             // 2.Tiền sử bệnh/ Antecedent Medical History:
@@ -343,6 +477,20 @@ namespace EMR
 
             DisabledControl(true);
         }
+        public void LoadPrintInfo(bool tmp)
+        {
+            try
+            {
+            //    lbl_FullName.InnerText = DataHelpers.patient.first_name_l + DataHelpers.patient.last_name_l;
+            //    lbl_admission_date.InnerText = DateTime.Parse(DataHelpers.patientVisit.actual_visit_date_time).ToString("dd/MM/yyyy");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+            }
+
+        }
+
 
     }
 }
