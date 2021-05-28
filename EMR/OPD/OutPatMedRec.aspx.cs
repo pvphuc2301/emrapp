@@ -261,7 +261,7 @@ namespace EMR
             txt_diagnosis.Value = omr1.diagnosis;
             txtDiffesrentialDiagnosis.Value = omr1.differential_diagnosis;
             txt_associated_conditions.Value = omr1.associated_conditions;
-            //string _varTreatmentCode = omr1.treatment_code;
+            string _varTreatmentCode = omr1.treatment_code;
             if (_varTreatmentCode == "OPD")
                 radTreatment1.Checked = true;
             else if (_varTreatmentCode == "IPD")
