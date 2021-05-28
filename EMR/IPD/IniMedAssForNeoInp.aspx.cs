@@ -29,24 +29,27 @@ namespace EMR
         }
         public void loadDataToControls(IniMedAssForNeoInpatient imani)
         {
-            txt_admission_reason.Value = imani.admission_reason;
-            txt_cur_med_history.Value = imani.cur_med_history;
-            txt_cur_medication.Value = imani.cur_medication;
-            txt_delivery.Value = imani.delivery;
-            txt_post_nutrition.Value = imani.post_nutrition;
-            txt_mater_med_history.Value = imani.mater_med_history;
-            txt_exam_weight.Value = imani.exam_weight;
-            txt_exam_length.Value = imani.exam_length;
-            txt_exam_head_circum.Value = imani.exam_head_circum;
-            txt_exam_hr.Value = imani.exam_hr;
-            txt_exam_rr.Value = imani.exam_rr;
-            txt_physical_exam.Value = imani.physical_exam;
-            txt_laboratory.Value = imani.laboratory;
-            txt_initial_diagnosis.Value = imani.initial_diagnosis;
-            txt_diff_diagnosis.Value = imani.diff_diagnosis;
-            txt_associated_conditions.Value = imani.associated_conditions;
-            txt_treatment_plan.Value = imani.treatment_plan;
-            txt_discharge_plan.Value = imani.discharge_plan;
+            lbPatientName.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
+            lbDoB.Text = DateTime.Parse(DataHelpers.patient.date_of_birth).ToString("dd/MM/yyyy") + "| " + DataHelpers.patient.gender_l;
+            lbPID.Text = DataHelpers.patient.visible_patient_id;
+            lbl_admission_reason.Text=txt_admission_reason.Value = imani.admission_reason;
+            lbl_cur_med_history.Text=txt_cur_med_history.Value = imani.cur_med_history;
+            lbl_cur_medication.Text=txt_cur_medication.Value = imani.cur_medication;
+            lbl_delivery.Text=txt_delivery.Value = imani.delivery;
+            lbl_post_nutrition.Text=txt_post_nutrition.Value = imani.post_nutrition;
+            lbl_mater_med_history.Text=txt_mater_med_history.Value = imani.mater_med_history;
+            lbl_exam_weight.Text=txt_exam_weight.Value = imani.exam_weight;
+            lbl_exam_length.Text=txt_exam_length.Value = imani.exam_length;
+            lbl_exam_head_circum.Text=txt_exam_head_circum.Value = imani.exam_head_circum;
+            lbl_exam_hr.Text=txt_exam_hr.Value = imani.exam_hr;
+            lbl_exam_rr.Text=txt_exam_rr.Value = imani.exam_rr;
+            lbl_physical_exam.Text=txt_physical_exam.Value = imani.physical_exam;
+            lbl_laboratory.Text=txt_laboratory.Value = imani.laboratory;
+            lbl_initial_diagnosis.Text=txt_initial_diagnosis.Value = imani.initial_diagnosis;
+            lbl_diff_diagnosis.Text=txt_diff_diagnosis.Value = imani.diff_diagnosis;
+            lbl_associated_conditions.Text=txt_associated_conditions.Value = imani.associated_conditions;
+            lbl_treatment_plan.Text=txt_treatment_plan.Value = imani.treatment_plan;
+            lbl_discharge_plan.Text = txt_discharge_plan.Value = imani.discharge_plan;
             btnCancel.Visible = false;
             txt_amendReason.Visible = false;
             if (imani.status == DocumentStatus.FINAL)

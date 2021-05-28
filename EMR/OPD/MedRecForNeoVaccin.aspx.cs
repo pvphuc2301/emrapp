@@ -84,8 +84,6 @@ namespace EMR.OPD
                 txt_pecific_edu_req.Value = mrnv.pecific_edu_req;
                 txt_next_appointment.Value = mrnv.next_appointment;
 
-                btnCancel.Visible = false;
-                txt_amendReason.Visible = false;
 
                 if (mrnv.status == DocumentStatus.FINAL)
                 {
@@ -93,15 +91,15 @@ namespace EMR.OPD
                     btnSave.Visible = false;
                     btnDeleteModal.Visible = false;
                     btnCancel.Visible = false;
-
+                    btnDeleteModal.Visible = false;
                     btnAmend.Visible = true;
                     btnPrint.Visible = true;
 
                     DisabledControl(true);
                 }
+
                 else if (mrnv.status == DocumentStatus.DRAFT)
                 {
-
                     btnAmend.Visible = false;
                     btnPrint.Visible = false;
                 }
@@ -264,12 +262,13 @@ namespace EMR.OPD
 
         protected void btnAmend_Click(object sender, EventArgs e)
         {
+            txt_amendReason.Visible = true;
+
             btnComplete.Visible = true;
-            btnComplete.Attributes["Disabled"] = "Disabled";
+            btnComplete.Attributes["disabled"] = "disabled";
             btnCancel.Visible = true;
             btnAmend.Visible = false;
             btnPrint.Visible = false;
-            txt_amendReason.Visible = true;
 
             DisabledControl(false);
         }
@@ -283,11 +282,13 @@ namespace EMR.OPD
         }
         protected void btnComplete_Click(object sender, EventArgs e)
         {
+
             mrnv = new Mrnv(DataHelpers.varDocId);
             mrnv.status = DocumentStatus.FINAL;
             mrnv.user_name = (string)Session["UserID"];
-
             UpdateData(mrnv);
+
+
         }
 
         protected void btnDelete_Click(object sender, EventArgs e)
@@ -366,7 +367,6 @@ namespace EMR.OPD
                 DataRow dtRow = table.NewRow();
 
                 dtRow = table.NewRow();
-                //dtRow["time"] = DateTime.Now.ToString("HH:mm");
                 table.Rows.Add(dtRow);
 
                 _BindGridView(grid_appointed_vaccine, table);

@@ -31,16 +31,21 @@ namespace EMR.ER
         }
         public void loadDataToControls(EmergencyMedicalRecord emr)
         {
+            lbPatientName.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
+            lbDoB.Text = DateTime.Parse(DataHelpers.patient.date_of_birth).ToString("dd/MM/yyyy") + "| " + DataHelpers.patient.gender_l;
+            lbPID.Text = DataHelpers.patient.visible_patient_id;
+            lbl_evaluation_time.Text = DateTime.Parse(emr.evaluation_time).ToString("HH:mm");
             txt_amendReason.Visible = false;
             if (emr.evaluation_time != null)
             {
-                rad_evaluation_time.SelectedDate = DateTime.Parse(emr.evaluation_time);
+                 rad_evaluation_time.SelectedDate = DateTime.Parse(emr.evaluation_time);
             }
 
-            txtChiefComplaint.Value = emr.chief_complaint;
+            lbl_chief_complaint.Text=txtChiefComplaint.Value = emr.chief_complaint;
             if (emr.chief_complaint_code != null)
             {
                 ((HtmlInputRadioButton)FindControl("rad_chief_complaint_code_" + emr.chief_complaint_code)).Checked = true;
+                //((HtmlInputRadioButton)FindControl("lbl_chief_complaint_code_" + emr.chief_complaint_code)).Checked = true;
             }
             txtHistoryofPresent.Value = emr.history_of_present;
             //Meds
