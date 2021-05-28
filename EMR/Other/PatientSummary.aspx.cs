@@ -172,15 +172,37 @@ namespace EMR
             string modelID = _params[0];
             string userName = (string)Session["UserID"];
 
-            string _jsonData = WebHelpers.GetAPI("api/emr/check-document-exists/" + PVID + "/" + modelID);
+            dynamic response = WebHelpers.GetAPI("api/emr/check-document-exists/" + PVID + "/" + modelID);
 
-            if (_jsonData != null)
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
-                
-                _jsonData = WebHelpers.GetAPI("api/emr/get-api/" + modelID);
+                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
 
-                dynamic data = JObject.Parse(_jsonData);
+                dynamic response2 = WebHelpers.GetAPI("api/emr/get-api/" + modelID);
+
+                if(response2.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic data = JObject.Parse(response2.Data);
+
+                    string docId = Guid.NewGuid().ToString();
+
+                    var objTemp = new { document_id = docId, patient_visit_id = PVID, model_id = modelID, user_name = userName };
+
+                    DataHelpers.varDocId = docId;
+                    DataHelpers.varModelId = modelID;
+                    DataHelpers.varPVId = PVID;
+
+                    dynamic response3 = WebHelpers.PostAPI("api/" + data.api + "/add", objTemp);
+
+                    if (response3.Status == System.Net.HttpStatusCode.OK)
+                    {
+                        dynamic response4 = WebHelpers.PostAPI("api/" + data.api + "/log/" + docId);
+                        if(response4.Status == System.Net.HttpStatusCode.OK)
+                        {
+                            Response.Redirect("../" + _params[1]);
+                        }
+                    }
+                }
 
                 //for (int i = 0; i <db.Rows.Count; i++)
                 //{
@@ -192,24 +214,10 @@ namespace EMR
                 //    }
                 //}
 
-                if (!isDraft)
-                {
-                    string docId = Guid.NewGuid().ToString();
-
-                    var objTemp = new { document_id = docId, patient_visit_id = PVID, model_id = modelID, user_name = userName };
-
-                    DataHelpers.varDocId = docId;
-                    DataHelpers.varModelId = modelID;
-                    DataHelpers.varPVId = PVID;
-
-                    string statusCode = WebHelpers.PostAPI("api/" + data.api + "/add", objTemp);
+                //if (!isDraft)
+                //{
                     
-                    if(statusCode == WebHelpers.ResponseStatus.OK)
-                    {
-                        statusCode = WebHelpers.PostAPI("api/" + data.api + "/log/" + docId);
-                        Response.Redirect("../" + _params[1]);
-                    }
-                }
+                //}
             }
         }
 
@@ -246,11 +254,11 @@ namespace EMR
         {
             string apiStr = "api/emr/list-form/" + pvid + "/" + visitType;
 
-            string _jsonData = WebHelpers.GetAPI(apiStr);
+            dynamic response = WebHelpers.GetAPI(apiStr);
             
-            if (_jsonData != null)
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
                 ddlDocList.Items.Clear();
 
                 foreach (DataRow row in db.Rows)
@@ -268,11 +276,11 @@ namespace EMR
 
         private void UpdateRadGrid(RadGrid radGrid, string apiString, dynamic args)
         {
-            string _jsonData = WebHelpers.GetAPI(apiString);
+            dynamic response = WebHelpers.GetAPI(apiString);
 
-            if (_jsonData != null)
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                JObject json = JObject.Parse(_jsonData);
+                JObject json = JObject.Parse(response.Data);
                 string strJSON = "";
                 strJSON += json["items"];
 

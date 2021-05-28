@@ -73,6 +73,7 @@ namespace EMR
             int i = 0;
             string Get_FormRead = "";
             string DepID = "";
+
             SqlConnection conn = new SqlConnection(ConnString);
             SqlCommand com = new SqlCommand();//(query, conn);
             com.CommandText = query;
@@ -99,12 +100,13 @@ namespace EMR
             {
                 conn.Close();
             }
+
             return Get_FormRead;
         }
         public string CheckAndGetItem(string query, string Item, String ConnString)
         {
-            //String ConnString = ConfigurationManager.ConnectionStrings["QLHDConnectionString"].ConnectionString;
             string ID = "";
+                //String ConnString = ConfigurationManager.ConnectionStrings["QLHDConnectionString"].ConnectionString;
             SqlConnection conn = new SqlConnection(ConnString);
             SqlCommand com = new SqlCommand(query, conn);
             conn.Open();
@@ -125,6 +127,7 @@ namespace EMR
             {
                 conn.Close();
             }
+            
             return ID;
         }
         public bool RunQuery(string query, String ConnString)

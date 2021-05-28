@@ -15,31 +15,58 @@ namespace EMR.OPD
     {
 
         /// <summary>
-        /// form2 control.
+        /// PrintWindow control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form2;
+        protected global::System.Web.UI.UserControl PrintWindow;
 
         /// <summary>
-        /// RadScriptManager2 control.
+        /// Barcode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadScriptManager RadScriptManager2;
+        protected global::System.Web.UI.UserControl Barcode;
 
         /// <summary>
-        /// Upd control.
+        /// form1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel Upd;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+
+        /// <summary>
+        /// RadScriptManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadScriptManager RadScriptManager1;
+
+        /// <summary>
+        /// RequiredFieldValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField RequiredFieldValidator;
+
+        /// <summary>
+        /// messagePlaceHolder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel messagePlaceHolder;
 
         /// <summary>
         /// txt_amendReason control.
@@ -51,13 +78,13 @@ namespace EMR.OPD
         protected global::EMR.AmendReason txt_amendReason;
 
         /// <summary>
-        /// PatientInfo1 control.
+        /// PatientInfo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.PatientInfo PatientInfo1;
+        protected global::EMR.UserControls.PatientInfo PatientInfo;
 
         /// <summary>
         /// txt_chief_complaint control.
@@ -78,13 +105,13 @@ namespace EMR.OPD
         protected global::EMR.TextField txt_cur_med_history;
 
         /// <summary>
-        /// txt_cur_medication control.
+        /// txt_cur_medications control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_cur_medication;
+        protected global::EMR.TextField txt_cur_medications;
 
         /// <summary>
         /// txt_personal control.
@@ -294,40 +321,40 @@ namespace EMR.OPD
         protected global::EMR.TextField txt_scr_before_vacc_8;
 
         /// <summary>
-        /// updatePanel_appointedVaccine control.
+        /// updatePanel_appointed_vaccine control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel updatePanel_appointedVaccine;
+        protected global::System.Web.UI.UpdatePanel updatePanel_appointed_vaccine;
 
         /// <summary>
-        /// grid_appointedVaccine control.
+        /// grid_appointed_vaccine control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView grid_appointedVaccine;
+        protected global::System.Web.UI.WebControls.GridView grid_appointed_vaccine;
 
         /// <summary>
-        /// updateProgress_appointedVaccine control.
+        /// updateProgress_appointed_vaccine control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdateProgress updateProgress_appointedVaccine;
+        protected global::System.Web.UI.UpdateProgress updateProgress_appointed_vaccine;
 
         /// <summary>
-        /// btn_grid_appointedVaccine_add control.
+        /// btn_grid_appointed_vaccine_add control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_grid_appointedVaccine_add;
+        protected global::System.Web.UI.WebControls.Button btn_grid_appointed_vaccine_add;
 
         /// <summary>
         /// txt_additional_investigations control.
@@ -366,40 +393,40 @@ namespace EMR.OPD
         protected global::EMR.TextField txt_associated_conditions;
 
         /// <summary>
-        /// rad_treatment_code_opd control.
+        /// rad_treatment_code_OPD control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_treatment_code_opd;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_treatment_code_OPD;
 
         /// <summary>
-        /// rad_treatment_code_ipd control.
+        /// rad_treatment_code_IPD control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_treatment_code_ipd;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_treatment_code_IPD;
 
         /// <summary>
-        /// rad_treatment_code_trf control.
+        /// rad_treatment_code_TRF control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_treatment_code_trf;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_treatment_code_TRF;
 
         /// <summary>
-        /// XSquare3 control.
+        /// XSquare1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare3;
+        protected global::EMR.icons.XSquare XSquare1;
 
         /// <summary>
         /// rad_spec_opinion_req1 control.
@@ -420,13 +447,13 @@ namespace EMR.OPD
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_spec_opinion_req2;
 
         /// <summary>
-        /// XSquare1 control.
+        /// XSquare3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare1;
+        protected global::EMR.icons.XSquare XSquare3;
 
         /// <summary>
         /// txt_spec_opinion_req_text control.
@@ -510,22 +537,13 @@ namespace EMR.OPD
         protected global::System.Web.UI.WebControls.Button btnCancel;
 
         /// <summary>
-        /// messagePlaceHolder control.
+        /// myModal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl messagePlaceHolder;
-
-        /// <summary>
-        /// TextField17 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField TextField17;
+        protected global::System.Web.UI.UserControl myModal;
 
         /// <summary>
         /// btnDelete control.

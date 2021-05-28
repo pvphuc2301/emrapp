@@ -70,15 +70,13 @@ namespace EMR
         {
             try
             {
-                string _jsonData = WebHelpers.GetAPI("api/emr/demographic/" + varPID);
+                dynamic response = WebHelpers.GetAPI("api/emr/demographic/" + varPID);
 
-                if (_jsonData != null)
+                if (response.Status == System.Net.HttpStatusCode.OK)
                 {
                     patient = new PatientInfo();
-                    dynamic data = JObject.Parse(_jsonData);
-                    _jsonData = "[" + _jsonData + "]";
-                    DataTable tbl = new DataTable();
-                    tbl = WebHelpers.GetJSONToDataTable(_jsonData);
+                    dynamic data = JObject.Parse(response.Data);
+                    DataTable tbl = WebHelpers.GetJSONToDataTable(response.Data);
                     WebHelpers.BindingDatafield(tbl, patient);
                     // Gan bien trung gian ( Global)
                     // DataHelpers.patient = this.patient;
@@ -97,20 +95,17 @@ namespace EMR
 
         public static void LoadPatientVisitInfomation(string varPVId)
         {
-            string _jsonData = WebHelpers.GetAPI("api/emr/patient-visit/" + varPVId);
+            dynamic response = WebHelpers.GetAPI("api/emr/patient-visit/" + varPVId);
 
-            if (_jsonData != null)
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 patientVisit = new PatientVisitInfo();
-                dynamic data = JObject.Parse(_jsonData);
-                _jsonData = "[" + _jsonData + "]";
-                DataTable tbl = new DataTable();
-                tbl = WebHelpers.GetJSONToDataTable(_jsonData);
+                dynamic data = JObject.Parse(response.Data);
+                DataTable tbl = WebHelpers.GetJSONToDataTable(response.Data);
                 WebHelpers.BindingDatafield(tbl, patientVisit);
 
                 // Gan bien trung gian ( Global)
                 // DataHelpers.patientVisit = this.patientVisit;
-
             }
         }
     }

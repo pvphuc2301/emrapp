@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -21,20 +22,22 @@ namespace EMR
         public static string URL = "http://172.16.0.78:8082/";
         public static DataTable GetJSONToDataTable(string JSONData)
         {
-            try
+            if (JSONData == null) { return null; }
+            DataTable dt;
+            dynamic jsonObject = null;
+            
+            if(JSONData.Substring(0,1) == "[")
             {
-                dynamic jsonObject = JsonConvert.DeserializeObject(JSONData);
-                DataTable dt = JsonConvert.DeserializeObject<DataTable>(Convert.ToString(jsonObject));
-                return dt;
+                jsonObject = JsonConvert.DeserializeObject(JSONData);
             }
-            catch (Exception)
+            else if(JSONData.Substring(0, 1) == "{")
             {
                 JSONData = "[" + JSONData + "]";
-                dynamic jsonObject = JsonConvert.DeserializeObject(JSONData);
-                DataTable dt = JsonConvert.DeserializeObject<DataTable>(Convert.ToString(jsonObject));
-                return dt;
+                jsonObject = JsonConvert.DeserializeObject(JSONData);
             }
 
+            dt = JsonConvert.DeserializeObject<DataTable>(Convert.ToString(jsonObject));
+            return dt;
         }
 
         public static string GetJSONFromTable(GridView gridView, DataTable table)
@@ -72,6 +75,80 @@ namespace EMR
                     table.Rows.Add(row);
                 }
             } catch (Exception ex) { }
+
+            return GetDataTableToJSON(table);
+
+            ////
+            //DataTable dataTable = table;
+            //dataTable.Clear();
+            //DataRow dataRow;
+            //try
+            //{
+            //    for (int r = 0; r < gridView.Rows.Count; r++)
+            //    {
+            //        dataRow = dataTable.NewRow();
+
+            //        for (int i = 0; i < gridView.Rows[r].Cells.Count; i++)
+            //        {
+            //            try
+            //            {
+            //                TextField text2 = gridView.Rows[r].Cells[i].Controls[1] as TextField;
+            //                dataRow[text2.DataKey] = text2.Value;
+            //            }
+            //            catch { }
+            //        }
+            //        dataTable.Rows.Add(dataRow);
+            //    }
+            //    return GetDataTableToJSON(dataTable);
+            //}
+            //catch(Exception ex)
+            //{
+            //    return null;
+            //}
+        }
+
+        public static string GetJSONFromTable(GridView gridView, Dictionary<string, string> cols)
+        {
+            DataTable table = new DataTable();
+            foreach (KeyValuePair<string, string> col in cols)
+            {
+                table.Columns.Add(col.Key);
+            }
+
+            DataRow row;
+            try
+            {
+                for (int r = 0; r < gridView.Rows.Count; r++)
+                {
+                    row = table.NewRow();
+                    row["id"] = (r + 1);
+                    for (int i = 0; i < gridView.Rows[r].Cells.Count; i++)
+                    {
+                        try
+                        {
+                            if (gridView.Rows[r].Cells[i].Controls[1] is TextField)
+                            {
+                                TextField text2 = gridView.Rows[r].Cells[i].Controls[1] as TextField;
+                                row[text2.DataKey] = text2.Value;
+                            }
+                            else if (gridView.Rows[r].Cells[i].Controls[1] is RadTimePicker)
+                            {
+                                RadTimePicker text2 = gridView.Rows[r].Cells[i].Controls[1] as RadTimePicker;
+                                row[text2.ID] = DateTime.Parse(text2.SelectedTime.ToString()).ToString("HH:mm");
+                            }
+                            else if (gridView.Rows[r].Cells[i].Controls[1] is RadDateTimePicker)
+                            {
+                                RadDateTimePicker text2 = gridView.Rows[r].Cells[i].Controls[1] as RadDateTimePicker;
+                                row[text2.ID] = DataHelpers.ConvertSQLDateTime(DateTime.Parse(text2.SelectedDate.ToString()));
+                            }
+                        }
+                        catch (Exception ex) { }
+                    }
+
+                    table.Rows.Add(row);
+                }
+            }
+            catch (Exception ex) { }
 
             return GetDataTableToJSON(table);
 
@@ -262,8 +339,10 @@ namespace EMR
         /// <param name="jsonContent">
         /// </param>
         /// <returns></returns>
-        public static string PostAPI(string url, dynamic obj)
+        public static dynamic PostAPI(string url, dynamic obj)
         {
+            dynamic result = new System.Dynamic.ExpandoObject();
+
             var jsonContent = new JavaScriptSerializer().Serialize(obj);
 
             url = URL + url;
@@ -294,21 +373,27 @@ namespace EMR
                     dataStream.Close();
                     response.Close();
 
-                    return response.StatusCode.ToString();
+                    result.Status = response.StatusCode;
+                    return result;
                 }
             }
             catch (WebException e)
             {
-                return e.Status.ToString();
+                result.Status = e.Status;
+                return result;
             }
             catch (Exception e)
             {
-                return e.Message;
+                result.Data = e.Message;
+                result.Status = "Error";
+                return result;
             }
         }
 
-        public static string PostAPI(string url)
+        public static dynamic PostAPI(string url)
         {
+            dynamic result = new System.Dynamic.ExpandoObject();
+
             url = URL + url;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = WebRequestMethods.Http.Post;
@@ -336,16 +421,20 @@ namespace EMR
                     reader.Close();
                     dataStream.Close();
                     response.Close();
-                    return response.StatusCode.ToString();
+                    result.Status = response.StatusCode;
+                    return result;
                 }
             }
             catch (WebException e)
             {
-                return e.Status.ToString();
+                result.Status = e.Status;
+                return result;
             }
             catch (Exception e)
             {
-                return e.Message;
+                result.Data = e.Message;
+                result.Status = "Error";
+                return result;
             }
         }
 
@@ -359,10 +448,11 @@ namespace EMR
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static string GetAPI(string url)
+        public static dynamic GetAPI(string url)
         {
+            dynamic result = new System.Dynamic.ExpandoObject();
+            
             url = URL + url;
-
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "GET";
             request.ContentType = "application/json";
@@ -380,12 +470,19 @@ namespace EMR
                     reader.Close();
                     dataStream.Close();
                     response.Close();
-                    return responseFromServer;
+
+                    result.Status = response.StatusCode;
+                    result.Data = responseFromServer;
+                    return result;
                 }
             }
             catch (WebException ex)
             {
-                return ex.Status.ToString();
+                result.Status = ((dynamic)ex.Response).StatusCode;
+
+                result.Data = ex.Message;
+
+                return result;
             }
         }
 

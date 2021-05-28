@@ -136,11 +136,11 @@ namespace EMR
         protected void btnSearch_Click(object sender, EventArgs e)
         {
 
-            string _jsonData = WebHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=4&keyword=" + txt_pid.Value);
+            dynamic response = WebHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=4&keyword=" + txt_pid.Value);
 
-            if (_jsonData != null)
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                RadGrid5.DataSource = WebHelpers.GetJSONToDataTable(_jsonData);
+                RadGrid5.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
                 RadGrid5.DataBind();
             }
 

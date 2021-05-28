@@ -179,6 +179,7 @@
     <Content Include="icons\PlusCircle.ascx" />
     <Content Include="icons\Trash.ascx" />
     <Content Include="icons\XSquare.ascx" />
+    <Content Include="images\2021-05-25_21-54-42.png" />
     <Content Include="images\AIH_PI_FULL.png" />
     <Content Include="images\bottomline.png" />
     <Content Include="IPD\DeliveryCertificate.aspx" />
@@ -745,7 +746,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

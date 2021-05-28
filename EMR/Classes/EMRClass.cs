@@ -1003,11 +1003,15 @@ namespace EMR
         }
         public Diss(dynamic document_id)
         {
-            string _jsonData = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
+            dynamic response = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
 
-            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
 
-            WebHelpers.BindingDatafield(db, this);
+                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
+
+                WebHelpers.BindingDatafield(db, this);
+            }
         }
 
         #region METHODS
@@ -1311,6 +1315,1176 @@ namespace EMR
         #endregion
     }
 
+    public class Iina
+    {
+        #region Properties
+        public static string api = "api/iina";
+        public dynamic document_id { get; set; }
+        public dynamic user_name { get; set; }
+        public dynamic status { get; set; }
+        public dynamic amend_reason { get; set; }
+        public dynamic residence_code { get; set; }
+        public dynamic residence_desc { get; set; }
+        public dynamic residence_other { get; set; }
+        public dynamic language_code { get; set; }
+        public dynamic language_desc { get; set; }
+        public dynamic language_other { get; set; }
+        public dynamic req_interpreter { get; set; }
+        public dynamic religion_code { get; set; }
+        public dynamic religion_desc { get; set; }
+        public dynamic religion_other { get; set; }
+        public dynamic spiritual_couns { get; set; }
+        public dynamic occupation { get; set; }
+        public dynamic living_status_code { get; set; }
+        public dynamic living_status_desc { get; set; }
+        public dynamic living_status_note { get; set; }
+        public dynamic hospital_concern_code { get; set; }
+        public dynamic hospital_concern_desc { get; set; }
+        public dynamic hospital_concern_other { get; set; }
+        public dynamic accompanied { get; set; }
+        public dynamic relationship { get; set; }
+        public dynamic admit_from_code { get; set; }
+        public dynamic admit_from_desc { get; set; }
+        public dynamic admit_from_other { get; set; }
+        public dynamic arrived { get; set; }
+        public dynamic admission_reason { get; set; }
+        public dynamic previous_admission { get; set; }
+        public dynamic past_med_history { get; set; }
+        public dynamic past_med_history_note { get; set; }
+        public dynamic past_sur_history { get; set; }
+        public dynamic past_sur_history_note { get; set; }
+        public dynamic substance_abuse { get; set; }
+        public dynamic substance_abuse_other { get; set; }
+        public dynamic previous_document { get; set; }
+        public dynamic previous_document_note { get; set; }
+        public dynamic cur_home_medication { get; set; }
+        public dynamic allergy { get; set; }
+        public dynamic allergy_note { get; set; }
+        public dynamic high_risk_patient { get; set; }
+        public dynamic vs_temperature { get; set; }
+        public dynamic vs_heart_rate { get; set; }
+        public dynamic vs_weight { get; set; }
+        public dynamic vs_height { get; set; }
+        public dynamic vs_respiratory_rate { get; set; }
+        public dynamic vs_BMI { get; set; }
+        public dynamic vs_blood_pressure { get; set; }
+        public dynamic vs_spO2 { get; set; }
+        public dynamic vs_pulse { get; set; }
+        public dynamic respiratory_system { get; set; }
+        public dynamic cough { get; set; }
+        public dynamic pro_cough { get; set; }
+        public dynamic pro_cough_note { get; set; }
+        public dynamic pulse_code { get; set; }
+        public dynamic pulse_desc { get; set; }
+        public dynamic presence { get; set; }
+        public dynamic extremities { get; set; }
+        public dynamic oriented { get; set; }
+        public dynamic mental_status { get; set; }
+        public dynamic mental_status_other { get; set; }
+        public dynamic hearing_code { get; set; }
+        public dynamic hearing_desc { get; set; }
+        public dynamic vision_code { get; set; }
+        public dynamic vision_desc { get; set; }
+        public dynamic vision_other { get; set; }
+        public dynamic speech_code { get; set; }
+        public dynamic speech_desc { get; set; }
+        public dynamic diet_code { get; set; }
+        public dynamic diet_desc { get; set; }
+        public dynamic diet_other { get; set; }
+        public dynamic diet_pre_code { get; set; }
+        public dynamic diet_pre_desc { get; set; }
+        public dynamic ng_tube { get; set; }
+        public dynamic gastrostomy { get; set; }
+        public dynamic size { get; set; }
+        public dynamic size_note { get; set; }
+        public dynamic last_date_changed { get; set; }
+        public dynamic food_dislike { get; set; }
+        public dynamic bowel_elimination_code { get; set; }
+        public dynamic bowel_elimination_desc { get; set; }
+        public dynamic stool_consistency_code { get; set; }
+        public dynamic stool_consistency_desc { get; set; }
+        public dynamic gas_presence_code { get; set; }
+        public dynamic gas_presence_desc { get; set; }
+        public dynamic bmi_out_range { get; set; }
+        public dynamic loss_weight { get; set; }
+        public dynamic reduce_dietary { get; set; }
+        public dynamic severely_ill { get; set; }
+        public dynamic nutrition_normal { get; set; }
+        public dynamic nutrition_score1 { get; set; }
+        public dynamic nutrition_score2 { get; set; }
+        public dynamic nutrition_score3 { get; set; }
+        public dynamic nutrition_score { get; set; }
+        public dynamic normal_nutrition_req { get; set; }
+        public dynamic severity_score1 { get; set; }
+        public dynamic severity_score2 { get; set; }
+        public dynamic severity_score3 { get; set; }
+        public dynamic severity_score { get; set; }
+        public dynamic younger_70 { get; set; }
+        public dynamic older_70 { get; set; }
+        public dynamic age_score { get; set; }
+        public dynamic total_nutri_score { get; set; }
+        public dynamic urination { get; set; }
+        public dynamic inter_catheter { get; set; }
+        public dynamic inter_catheter_note { get; set; }
+        public dynamic ind_catheter { get; set; }
+        public dynamic ind_catheter_size { get; set; }
+        public dynamic ind_catheter_date { get; set; }
+        public dynamic sup_catheter { get; set; }
+        public dynamic sup_catheter_size { get; set; }
+        public dynamic last_sup_catheter_date { get; set; }
+        public dynamic menstruation_code { get; set; }
+        public dynamic menstruation_desc { get; set; }
+        public dynamic cycle_day { get; set; }
+        public dynamic last_mens_period { get; set; }
+        public dynamic not_pregnancy { get; set; }
+        public dynamic pre_pregnancy { get; set; }
+        public dynamic para { get; set; }
+        public dynamic cur_pregnancy { get; set; }
+        public dynamic pregnancy_week { get; set; }
+        public dynamic contraception_code { get; set; }
+        public dynamic contraception_desc { get; set; }
+        public dynamic contraception_other { get; set; }
+        public dynamic mus_history { get; set; }
+        public dynamic paralysis { get; set; }
+        public dynamic paralysis_note { get; set; }
+        public dynamic amputation { get; set; }
+        public dynamic amputation_note { get; set; }
+        public dynamic contracture { get; set; }
+        public dynamic contracture_note { get; set; }
+        public dynamic prosthesis { get; set; }
+        public dynamic prosthesis_note { get; set; }
+        public dynamic cur_in_pain { get; set; }
+        public dynamic p_location_1 { get; set; }
+        public dynamic p_location_2 { get; set; }
+        public dynamic p_location_3 { get; set; }
+        public dynamic q_location_1 { get; set; }
+        public dynamic q_location_2 { get; set; }
+        public dynamic q_location_3 { get; set; }
+        public dynamic r_location_1 { get; set; }
+        public dynamic r_location_2 { get; set; }
+        public dynamic r_location_3 { get; set; }
+        public dynamic s_location_1 { get; set; }
+        public dynamic s_location_2 { get; set; }
+        public dynamic s_location_3 { get; set; }
+        public dynamic t_location_1 { get; set; }
+        public dynamic t_location_2 { get; set; }
+        public dynamic t_location_3 { get; set; }
+        public dynamic pain_annotation { get; set; }
+        public dynamic using_pain_killer { get; set; }
+        public dynamic pain_killer_name { get; set; }
+        public dynamic pa_comment { get; set; }
+        public dynamic condition { get; set; }
+        public dynamic wounds { get; set; }
+        public dynamic skin_anno { get; set; }
+        public dynamic skin_anno_data { get; set; }
+        public dynamic sensory_code { get; set; }
+        public dynamic sensory_desc { get; set; }
+        public dynamic moisture_code { get; set; }
+        public dynamic moisture_desc { get; set; }
+        public dynamic activity_code { get; set; }
+        public dynamic activity_desc { get; set; }
+        public dynamic mobility_code { get; set; }
+        public dynamic mobility_desc { get; set; }
+        public dynamic nutrition_code { get; set; }
+        public dynamic nutrition_desc { get; set; }
+        public dynamic friction_code { get; set; }
+        public dynamic friction_desc { get; set; }
+        public dynamic total_score { get; set; }
+        public dynamic pres_sore_risk_code { get; set; }
+        public dynamic pres_sore_risk_desc { get; set; }
+        public dynamic preven_action { get; set; }
+        public dynamic bathing_code { get; set; }
+        public dynamic bathing_desc { get; set; }
+        public dynamic oral_care_code { get; set; }
+        public dynamic oral_care_desc { get; set; }
+        public dynamic oral_care_note { get; set; }
+        public dynamic dentures_code { get; set; }
+        public dynamic dentures_desc { get; set; }
+        public dynamic toilet_use_code { get; set; }
+        public dynamic toilet_use_desc { get; set; }
+        public dynamic dressing_code { get; set; }
+        public dynamic dressing_desc { get; set; }
+        public dynamic eating_code { get; set; }
+        public dynamic eating_desc { get; set; }
+        public dynamic turning_bed_code { get; set; }
+        public dynamic turning_bed_desc { get; set; }
+        public dynamic ambulation_code { get; set; }
+        public dynamic ambulation_desc { get; set; }
+        public dynamic ambulation_note { get; set; }
+        public dynamic sleep_code { get; set; }
+        public dynamic sleep_desc { get; set; }
+        public dynamic medication_used { get; set; }
+        public dynamic fall_history_code { get; set; }
+        public dynamic fall_history_desc { get; set; }
+        public dynamic secon_diagnosis_code { get; set; }
+        public dynamic secon_diagnosis_desc { get; set; }
+        public dynamic ambula_aids_code { get; set; }
+        public dynamic ambula_aids_desc { get; set; }
+        public dynamic intra_therapy_code { get; set; }
+        public dynamic intra_therapy_desc { get; set; }
+        public dynamic gait_trans_code { get; set; }
+        public dynamic gait_trans_desc { get; set; }
+        public dynamic fr_mental_status_code { get; set; }
+        public dynamic fr_mental_status_desc { get; set; }
+        public dynamic fr_total_score { get; set; }
+        public dynamic involvement { get; set; }
+        public dynamic req_med_equipment { get; set; }
+        public dynamic req_foll_care { get; set; }
+        public dynamic suicidal_referral { get; set; }
+        public dynamic alone_reduce_functional { get; set; }
+        public dynamic ref_physiotherapist { get; set; }
+        public dynamic ref_speech_therapist { get; set; }
+        public dynamic ref_dietician { get; set; }
+        public dynamic ref_psychologist { get; set; }
+        public dynamic ref_other_hospital { get; set; }
+        public dynamic support_at_home { get; set; }
+        public dynamic req_transportation { get; set; }
+        public dynamic stairs_climb_home { get; set; }
+        public dynamic dis_planning { get; set; }
+        public dynamic dis_management { get; set; }
+        public dynamic assess_date_time { get; set; }
+        #endregion
+
+        public Iina(
+            dynamic document_id,
+            dynamic user_name,
+            dynamic status,
+            dynamic amend_reason,
+             dynamic residence_code,
+  dynamic residence_desc,
+  dynamic residence_other,
+  dynamic language_code,
+  dynamic language_desc,
+  dynamic language_other,
+  dynamic req_interpreter,
+  dynamic religion_code,
+  dynamic religion_desc,
+  dynamic religion_other,
+  dynamic spiritual_couns,
+  dynamic occupation,
+  dynamic living_status_code,
+  dynamic living_status_desc,
+  dynamic living_status_note,
+  dynamic hospital_concern_code,
+  dynamic hospital_concern_desc,
+  dynamic hospital_concern_other,
+  dynamic accompanied,
+  dynamic relationship,
+  dynamic admit_from_code,
+  dynamic admit_from_desc,
+  dynamic admit_from_other,
+  dynamic arrived,
+  dynamic admission_reason,
+  dynamic previous_admission,
+  dynamic past_med_history,
+  dynamic past_med_history_note,
+  dynamic past_sur_history,
+  dynamic past_sur_history_note,
+  dynamic substance_abuse,
+  dynamic substance_abuse_other,
+  dynamic previous_document,
+  dynamic previous_document_note,
+  dynamic cur_home_medication,
+  dynamic allergy,
+  dynamic allergy_note,
+  dynamic high_risk_patient,
+  dynamic vs_temperature,
+  dynamic vs_heart_rate,
+  dynamic vs_weight,
+  dynamic vs_height,
+  dynamic vs_respiratory_rate,
+  dynamic vs_BMI,
+  dynamic vs_blood_pressure,
+  dynamic vs_spO2,
+  dynamic vs_pulse,
+  dynamic respiratory_system,
+  dynamic cough,
+  dynamic pro_cough,
+  dynamic pro_cough_note,
+  dynamic pulse_code,
+  dynamic pulse_desc,
+  dynamic presence,
+  dynamic extremities,
+  dynamic oriented,
+  dynamic mental_status,
+  dynamic mental_status_other,
+  dynamic hearing_code,
+  dynamic hearing_desc,
+  dynamic vision_code,
+  dynamic vision_desc,
+  dynamic vision_other,
+  dynamic speech_code,
+  dynamic speech_desc,
+  dynamic diet_code,
+  dynamic diet_desc,
+  dynamic diet_other,
+  dynamic diet_pre_code,
+  dynamic diet_pre_desc,
+  dynamic ng_tube,
+  dynamic gastrostomy,
+  dynamic size,
+  dynamic size_note,
+  dynamic last_date_changed,
+  dynamic food_dislike,
+  dynamic bowel_elimination_code,
+  dynamic bowel_elimination_desc,
+  dynamic stool_consistency_code,
+  dynamic stool_consistency_desc,
+  dynamic gas_presence_code,
+  dynamic gas_presence_desc,
+  dynamic bmi_out_range,
+  dynamic loss_weight,
+  dynamic reduce_dietary,
+  dynamic severely_ill,
+  dynamic nutrition_normal,
+  dynamic nutrition_score1,
+  dynamic nutrition_score2,
+  dynamic nutrition_score3,
+  dynamic nutrition_score,
+  dynamic normal_nutrition_req,
+  dynamic severity_score1,
+  dynamic severity_score2,
+  dynamic severity_score3,
+  dynamic severity_score,
+  dynamic younger_70,
+  dynamic older_70,
+  dynamic age_score,
+  dynamic total_nutri_score,
+  dynamic urination,
+  dynamic inter_catheter,
+  dynamic inter_catheter_note,
+  dynamic ind_catheter,
+  dynamic ind_catheter_size,
+  dynamic ind_catheter_date,
+  dynamic sup_catheter,
+  dynamic sup_catheter_size,
+  dynamic last_sup_catheter_date,
+  dynamic menstruation_code,
+  dynamic menstruation_desc,
+  dynamic cycle_day,
+  dynamic last_mens_period,
+  dynamic not_pregnancy,
+  dynamic pre_pregnancy,
+  dynamic para,
+  dynamic cur_pregnancy,
+  dynamic pregnancy_week,
+  dynamic contraception_code,
+  dynamic contraception_desc,
+  dynamic contraception_other,
+  dynamic mus_history,
+  dynamic paralysis,
+  dynamic paralysis_note,
+  dynamic amputation,
+  dynamic amputation_note,
+  dynamic contracture,
+  dynamic contracture_note,
+  dynamic prosthesis,
+  dynamic prosthesis_note,
+  dynamic cur_in_pain,
+  dynamic p_location_1,
+  dynamic p_location_2,
+  dynamic p_location_3,
+  dynamic q_location_1,
+  dynamic q_location_2,
+  dynamic q_location_3,
+  dynamic r_location_1,
+  dynamic r_location_2,
+  dynamic r_location_3,
+  dynamic s_location_1,
+  dynamic s_location_2,
+  dynamic s_location_3,
+  dynamic t_location_1,
+  dynamic t_location_2,
+  dynamic t_location_3,
+  dynamic pain_annotation,
+  dynamic using_pain_killer,
+  dynamic pain_killer_name,
+  dynamic pa_comment,
+  dynamic condition,
+  dynamic wounds,
+  dynamic skin_anno,
+  dynamic skin_anno_data,
+  dynamic sensory_code,
+  dynamic sensory_desc,
+  dynamic moisture_code,
+  dynamic moisture_desc,
+  dynamic activity_code,
+  dynamic activity_desc,
+  dynamic mobility_code,
+  dynamic mobility_desc,
+  dynamic nutrition_code,
+  dynamic nutrition_desc,
+  dynamic friction_code,
+  dynamic friction_desc,
+  dynamic total_score,
+  dynamic pres_sore_risk_code,
+  dynamic pres_sore_risk_desc,
+  dynamic preven_action,
+  dynamic bathing_code,
+  dynamic bathing_desc,
+  dynamic oral_care_code,
+  dynamic oral_care_desc,
+  dynamic oral_care_note,
+  dynamic dentures_code,
+  dynamic dentures_desc,
+  dynamic toilet_use_code,
+  dynamic toilet_use_desc,
+  dynamic dressing_code,
+  dynamic dressing_desc,
+  dynamic eating_code,
+  dynamic eating_desc,
+  dynamic turning_bed_code,
+  dynamic turning_bed_desc,
+  dynamic ambulation_code,
+  dynamic ambulation_desc,
+  dynamic ambulation_note,
+  dynamic sleep_code,
+  dynamic sleep_desc,
+  dynamic medication_used,
+  dynamic fall_history_code,
+  dynamic fall_history_desc,
+  dynamic secon_diagnosis_code,
+  dynamic secon_diagnosis_desc,
+  dynamic ambula_aids_code,
+  dynamic ambula_aids_desc,
+  dynamic intra_therapy_code,
+  dynamic intra_therapy_desc,
+  dynamic gait_trans_code,
+  dynamic gait_trans_desc,
+  dynamic fr_mental_status_code,
+  dynamic fr_mental_status_desc,
+  dynamic fr_total_score,
+  dynamic involvement,
+  dynamic req_med_equipment,
+  dynamic req_foll_care,
+  dynamic suicidal_referral,
+  dynamic alone_reduce_functional,
+  dynamic ref_physiotherapist,
+  dynamic ref_speech_therapist,
+  dynamic ref_dietician,
+  dynamic ref_psychologist,
+  dynamic ref_other_hospital,
+  dynamic support_at_home,
+  dynamic req_transportation,
+  dynamic stairs_climb_home,
+  dynamic dis_planning,
+  dynamic dis_management,
+  dynamic assess_date_time
+            )
+        {
+            this.document_id = document_id;
+            this.user_name = user_name;
+            this.status = status;
+            this.amend_reason = amend_reason;
+            this.residence_code = residence_code;
+  this.residence_desc = residence_desc;
+  this.residence_other = residence_other;
+  this.language_code = language_code;
+  this.language_desc = language_desc;
+  this.language_other = language_other;
+  this.req_interpreter = req_interpreter;
+  this.religion_code = religion_code;
+  this.religion_desc = religion_desc;
+  this.religion_other = religion_other;
+  this.spiritual_couns = spiritual_couns;
+  this.occupation = occupation;
+  this.living_status_code = living_status_code;
+  this.living_status_desc = living_status_desc;
+  this.living_status_note = living_status_note;
+  this.hospital_concern_code = hospital_concern_code;
+  this.hospital_concern_desc = hospital_concern_desc;
+  this.hospital_concern_other = hospital_concern_other;
+  this.accompanied = accompanied;
+  this.relationship = relationship;
+  this.admit_from_code = admit_from_code;
+  this.admit_from_desc = admit_from_desc;
+  this.admit_from_other = admit_from_other;
+  this.arrived = arrived;
+  this.admission_reason = admission_reason;
+  this.previous_admission = previous_admission;
+  this.past_med_history = past_med_history;
+  this.past_med_history_note = past_med_history_note;
+  this.past_sur_history = past_sur_history;
+  this.past_sur_history_note = past_sur_history_note;
+  this.substance_abuse = substance_abuse;
+  this.substance_abuse_other = substance_abuse_other;
+  this.previous_document = previous_document;
+  this.previous_document_note = previous_document_note;
+  this.cur_home_medication = cur_home_medication;
+  this.allergy = allergy;
+  this.allergy_note = allergy_note;
+  this.high_risk_patient = high_risk_patient;
+  this.vs_temperature = vs_temperature;
+  this.vs_heart_rate = vs_heart_rate;
+  this.vs_weight = vs_weight;
+  this.vs_height = vs_height;
+  this.vs_respiratory_rate = vs_respiratory_rate;
+  this.vs_BMI = vs_BMI;
+  this.vs_blood_pressure = vs_blood_pressure;
+  this.vs_spO2 = vs_spO2;
+  this.vs_pulse = vs_pulse;
+  this.respiratory_system = respiratory_system;
+  this.cough = cough;
+  this.pro_cough = pro_cough;
+  this.pro_cough_note = pro_cough_note;
+  this.pulse_code = pulse_code;
+  this.pulse_desc = pulse_desc;
+  this.presence = presence;
+  this.extremities = extremities;
+  this.oriented = oriented;
+  this.mental_status = mental_status;
+  this.mental_status_other = mental_status_other;
+  this.hearing_code = hearing_code ;
+  this.hearing_desc = hearing_desc;
+  this.vision_code = vision_code;
+  this.vision_desc = vision_desc;
+  this.vision_other = vision_other;
+  this.speech_code = speech_code;
+  this.speech_desc = speech_desc;
+  this.diet_code = diet_code;
+  this.diet_desc = diet_desc;
+  this.diet_other = diet_other;
+  this.diet_pre_code = diet_pre_code;
+  this.diet_pre_desc = diet_pre_desc;
+  this.ng_tube = ng_tube;
+  this.gastrostomy = gastrostomy;
+  this.size = size;
+  this.size_note = size_note;
+            this.last_date_changed = last_date_changed;
+  this.food_dislike = food_dislike;
+  this.bowel_elimination_code = bowel_elimination_code;
+  this.bowel_elimination_desc = bowel_elimination_desc;
+  this.stool_consistency_code = stool_consistency_code;
+  this.stool_consistency_desc = stool_consistency_desc;
+  this.gas_presence_code = gas_presence_code;
+  this.gas_presence_desc = gas_presence_desc;
+  this.bmi_out_range = bmi_out_range;
+  this.loss_weight = loss_weight;
+  this.reduce_dietary = reduce_dietary;
+  this.severely_ill = severely_ill;
+  this.nutrition_normal = nutrition_normal;
+  this.nutrition_score1 = nutrition_score1;
+  this.nutrition_score2 = nutrition_score2;
+  this.nutrition_score3 = nutrition_score3;
+  this.nutrition_score = nutrition_score;
+  this.normal_nutrition_req = normal_nutrition_req;
+  this.severity_score1 = severity_score1;
+  this.severity_score2 = severity_score2;
+  this.severity_score3 = severity_score3;
+  this.severity_score = severity_score;
+  this.younger_70 = younger_70;
+  this.older_70 = older_70;
+  this.age_score = age_score;
+  this.total_nutri_score = total_nutri_score;
+  this.urination = urination;
+  this.inter_catheter = inter_catheter;
+  this.inter_catheter_note = inter_catheter_note;
+  this.ind_catheter = ind_catheter;
+  this.ind_catheter_size = ind_catheter_size;
+            this.ind_catheter_date = ind_catheter_date;
+  this.sup_catheter = sup_catheter;
+  this.sup_catheter_size = sup_catheter_size;
+            this.last_sup_catheter_date = last_sup_catheter_date;
+  this.menstruation_code = menstruation_code;
+  this.menstruation_desc = menstruation_desc;
+  this.cycle_day = cycle_day;
+  this.last_mens_period = last_mens_period;
+  this.not_pregnancy = not_pregnancy;
+  this.pre_pregnancy = pre_pregnancy;
+  this.para = para;
+  this.cur_pregnancy = cur_pregnancy;
+  this.pregnancy_week = pregnancy_week;
+  this.contraception_code = contraception_code;
+  this.contraception_desc = contraception_desc;
+  this.contraception_other = contraception_other;
+  this.mus_history = mus_history ;
+  this.paralysis = paralysis;
+  this.paralysis_note = paralysis_note;
+  this.amputation = amputation;
+  this.amputation_note = amputation_note;
+  this.contracture = contracture;
+  this.contracture_note = contracture_note;
+  this.prosthesis = prosthesis;
+  this.prosthesis_note = prosthesis_note;
+  this.cur_in_pain = cur_in_pain;
+  this.p_location_1 = p_location_1;
+  this.p_location_2 = p_location_2;
+  this.p_location_3 = p_location_3;
+  this.q_location_1 = q_location_1;
+  this.q_location_2 = q_location_2;
+  this.q_location_3 = q_location_3;
+  this.r_location_1 = r_location_1;
+  this.r_location_2 = r_location_2;
+  this.r_location_3 = r_location_3;
+  this.s_location_1 = s_location_1;
+  this.s_location_2 = s_location_2;
+  this.s_location_3 = s_location_3;
+  this.t_location_1 = t_location_1;
+  this.t_location_2 = t_location_2;
+  this.t_location_3 = t_location_3;
+  this.pain_annotation = pain_annotation;
+  this.using_pain_killer = using_pain_killer;
+  this.pain_killer_name = pain_killer_name;
+  this.pa_comment = pa_comment;
+  this.condition = condition;
+  this.wounds = wounds;
+  this.skin_anno = skin_anno;
+  this.skin_anno_data = skin_anno_data;
+  this.sensory_code = sensory_code;
+  this.sensory_desc = sensory_desc;
+  this.moisture_code = moisture_code;
+  this.moisture_desc = moisture_desc;
+  this.activity_code = activity_code;
+  this.activity_desc = activity_desc;
+  this.mobility_code = mobility_code;
+  this.mobility_desc = mobility_desc;
+  this.nutrition_code = nutrition_code;
+  this.nutrition_desc = nutrition_desc;
+  this.friction_code = friction_code;
+  this.friction_desc = friction_desc;
+  this.total_score = total_score;
+  this.pres_sore_risk_code = pres_sore_risk_code;
+  this.pres_sore_risk_desc = pres_sore_risk_desc;
+  this.preven_action = preven_action;
+  this.bathing_code = bathing_code;
+  this.bathing_desc = bathing_desc;
+  this.oral_care_code = oral_care_code;
+  this.oral_care_desc = oral_care_desc;
+  this.oral_care_note = oral_care_note;
+  this.dentures_code = dentures_code;
+  this.dentures_desc = dentures_desc;
+  this.toilet_use_code = toilet_use_code;
+  this.toilet_use_desc = toilet_use_desc;
+  this.dressing_code = dressing_code;
+  this.dressing_desc = dressing_desc;
+  this.eating_code = eating_code;
+  this.eating_desc = eating_desc;
+  this.turning_bed_code = turning_bed_code;
+  this.turning_bed_desc = turning_bed_desc;
+  this.ambulation_code = ambulation_code;
+  this.ambulation_desc = ambulation_desc;
+  this.ambulation_note = ambulation_note;
+  this.sleep_code = sleep_code;
+  this.sleep_desc = sleep_desc;
+  this.medication_used = medication_used;
+  this.fall_history_code = fall_history_code;
+  this.fall_history_desc = fall_history_desc;
+  this.secon_diagnosis_code = secon_diagnosis_code;
+  this.secon_diagnosis_desc = secon_diagnosis_desc;
+  this.ambula_aids_code = ambula_aids_code;
+  this.ambula_aids_desc = ambula_aids_desc;
+  this.intra_therapy_code = intra_therapy_code;
+  this.intra_therapy_desc = intra_therapy_desc;
+  this.gait_trans_code = gait_trans_code;
+  this.gait_trans_desc = gait_trans_desc;
+  this.fr_mental_status_code = fr_mental_status_code;
+  this.fr_mental_status_desc = fr_mental_status_desc ;
+  this.fr_total_score = fr_total_score;
+  this.involvement = involvement;
+  this.req_med_equipment = req_med_equipment;
+  this.req_foll_care = req_foll_care;
+  this.suicidal_referral = suicidal_referral;
+  this.alone_reduce_functional = alone_reduce_functional;
+  this.ref_physiotherapist = ref_physiotherapist;
+  this.ref_speech_therapist = ref_speech_therapist;
+  this.ref_dietician = ref_dietician;
+  this.ref_psychologist = ref_psychologist;
+  this.ref_other_hospital = ref_other_hospital;
+  this.support_at_home = support_at_home;
+  this.req_transportation = req_transportation;
+            this.stairs_climb_home = stairs_climb_home;
+            this.dis_planning = dis_planning;
+            this.dis_management = dis_management;
+            this.assess_date_time = assess_date_time;
+        }
+        #region dictionary
+        public static Dictionary<string, string> RESIDENCE_CODE = new Dictionary<string, string>()
+        {
+            { "VNM", "Việt Nam" },
+            { "OTH", "Khác" },
+        };
+        public static Dictionary<string, string> LANGUAGE_CODE = new Dictionary<string, string>()
+        {
+            { "VI", "Tiếng Việt" },
+            { "EN", "Tiếng Anh" },
+            { "OTH", "Tiếng khác" },
+        };
+        public static Dictionary<string, string> RELIGION_CODE = new Dictionary<string, string>()
+        {
+            { "CH", "Thiên chúa giáo" },
+            { "BH", "Phật giáo/ Buddhism" },
+            { "OTH", "Khác" },
+        };
+        public static Dictionary<string, string> LIVING_STATUS_CODE = new Dictionary<string, string>()
+        {
+            { "ALN", "Một mình/ Alone" },
+            { "WTH", "Với vợ, chồng, con, anh, chị, em ruột/ With spouse, children, sibling" },
+            { "OTH", "Khác" },
+        };
+        public static Dictionary<string, string> PULSE_CODE = new Dictionary<string, string>()
+        {
+            { "I", "Không đều/Irregular" },
+            { "R", "Đều/ Regular" },
+        };
+        public static Dictionary<string, string> SUBSTANCE_ABUSE = new Dictionary<string, string>()
+        {
+            { "A", "Rượu bia/ Acohol" },
+            { "OTH", "Khác/ Other" },
+            { "S", "Hút thuốc/ Smoking" },
+        };
+        public static Dictionary<string, string> HOSPITAL_CONCERN_CODE = new Dictionary<string, string>()
+        {
+            { "NON", "Không/ None" },
+            { "WOR", "Lo âu/ Worriedness" },
+            { "OTH", "Khác/ Others" },
+            { "REL", "Gia đình, các mối quan hệ/ Family, relationship issues" },
+            { "FIN", "Tài chính/ Financial" },
+        };
+        public static Dictionary<string, string> ADMIT_FROM_CODE = new Dictionary<string, string>()
+        {
+            { "OTH", "Khác/Referral" },
+            { "ER", "Khoa cấp cứu/ ER" },
+            { "OPD", "Khoa khám bệnh/ OPD" },
+            { "VD", "Bác sĩ hơp tác/ Visiting Doctor" },
+        };
+        public static Dictionary<string, string> FR_MENTAL_STATUS_CODE = new Dictionary<string, string>()
+        {
+            { "0", "Hiểu được giới hạn bản thân/Understands limitations = 0" },
+            { "15", "Không hiểu được giới hạn bản thân/Does not understand limitation = 15" },
+        };
+        public static Dictionary<string, string> GAIT_TRANS_CODE = new Dictionary<string, string>()
+        {
+            { "0", "Bình thường, nằm tại giường/Normal, bedrest = 0" },
+            { "10", "Yếu/Weak = 10" },
+            { "20", "Suy yếu/Impaired = 20" },
+        };
+        public static Dictionary<string, string> INTRA_THERAPY_CODE = new Dictionary<string, string>()
+        {
+            { "0", "Không/No = 0" },
+            { "20", "Có/Yes = 20" },
+        };
+
+        public static Dictionary<string, string> AMBULATION_CODE = new Dictionary<string, string>()
+        {
+            { "BF", "Liệt giường/ Bedfast" },
+            { "NA", "Cần hỗ trợ (ghi rõ)/ Need assistance (specify)" },
+            { "IN", "Tự đi/ Independent" },
+        };
+
+        public static Dictionary<string, string> AMBULA_AIDS_CODE = new Dictionary<string, string>()
+        {
+            { "0", "Không di chuyển, nằm tại giường, điều dưỡng hỗ trợ/ None, bedrest, wheelchair, nurse assist = 0" },
+            { "15", "Nạng, thiết bị hỗ trợ đi lại/Crutches, cane walker = 15" },
+            { "30", "Sử dụng vật dụng hỗ trợ/Furniture = 30" },
+        };
+
+        public static Dictionary<string, string> SECON_DIAGNOSIS_CODE = new Dictionary<string, string>()
+        {
+            { "0", "Không/No = 0" },
+            { "15", "Có/Yes = 15" },
+        };
+        public static Dictionary<string, string> FALL_HISTORY_CODE = new Dictionary<string, string>()
+        {
+            { "0", "Không/No = 0" },
+            { "25", "Có/Yes = 25" },
+        };
+
+        public static Dictionary<string, string> URINATION_CODE = new Dictionary<string, string>()
+        {
+            { "DY", "Khó tiểu/ Dysuria" },
+            { "FR", "Thường xuyên/ Frequency" },
+            { "IN", "Không kiểm soát/ Incontinece" },
+            { "NM", "Không có vấn đề/ Normal" },
+            { "NO", "Tiểu đêm/ Nocturia" },
+        };
+
+        public static Dictionary<string, string> NUTRITION_SCORE1_CODE = new Dictionary<string, string>()
+        {
+            { "1", "Sụt cân > 5% trong 3 tháng Weight loss > 5% in 3 months" },
+            { "2", "Ăn ít 50%-75% so với nhu cầu ăn bình thường trong tuần qua Food intake below 50 - 75% of normal requirement in preceding week" },
+        };
+
+        public static Dictionary<string, string> NUTRITION_SCORE2_CODE = new Dictionary<string, string>()
+        {
+            { "1", "Sụt cân > 5% trong 2 tháng Weight loss > 5% in 2 months" },
+            { "2", "BMI 18.5-20.5 và tổng trạng suy yếu BMI 18.5 - 20.5 and impaired general condition" },
+            { "3", "Ăn ít 25%-50% so với nhu cầu ăn bình thường trong tuần qua Food intake 25–50% of normal requirement in preceding week" },
+        };
+
+        public static Dictionary<string, string> NUTRITION_SCORE3_CODE = new Dictionary<string, string>()
+        {
+            { "1", "Sụt cân > 5% trong 1 tháng Weight loss > 5% in 1 month" },
+            { "2", "BMI < 18.5 và tổng trạng suy yếu BMI < 18.5 and impaired general condition" },
+            { "3", "Ăn ít 0-25% so với nhu cầu ăn bình thường trong tuần qua Food intake 0-25% of normal requirement in preceding week" },
+        };
+
+        public static Dictionary<string, string> SEVERITY_SCORE1_CODE = new Dictionary<string, string>()
+        {
+            { "1", "Gãy khớp háng/ Hip fracture" },
+            { "2", "Bệnh mãn tính có kèm theo biến chứng/ Chronic disease with complications" },
+            { "3", "Viêm phổi tắc nghẽn mãn tính/ COPD" },
+            { "4", "NB yếu nhưng có thể di chuyển được/ The patient is weak but can move out of bed" },
+        };
+
+        public static Dictionary<string, string> SEVERITY_SCORE2_CODE = new Dictionary<string, string>()
+        {
+            { "1", "Có phẫu thuật ở bụng/ Major abdominal surgery" },
+            { "2", "Đột quị/ Stroke" },
+            { "3", "Viêm phổi nặng/ Severe pneumonia" },
+            { "4", "Bệnh ác tính huyết học/ Hematologic malignancy" },
+            { "5", "NB nằm liệt giường/ The patient is bedridden" },
+        };
+
+        public static Dictionary<string, string> SEVERITY_SCORE3_CODE = new Dictionary<string, string>()
+        {
+            { "1", "Chấn thương đầu/ Head injury" },
+            { "2", "Ghép tủy xương/ Bone marrow transplantation" },
+            { "3", "Bệnh nhân chăm sóc chuyên sâu (APACHE> 10)/ Intensive care patients (APACHE > 10)" },
+        };
+
+        public static Dictionary<string, string> HIGH_RISK_PATIENT_CODE = new Dictionary<string, string>()
+        {
+            { "CH", "Trẻ em (< hoặc 8 tuổi)/ Children (<8 years old)" },
+            { "SDP", "Những người bệnh tàn tật năng/ Severely disabled patients" },
+            { "ELD", "Người cao tuổi (80 tuổi hoặc hơn)/ Elderly people (80 years old or above)" },
+            { "HRF", "Những người bệnh có nguy cơ té ngã cao/ Patients with high risk of falls" },
+            { "CCP", "Những người bệnh lú lẫn/hôn mê/ Confused or comatose patients" },
+            { "RES", "Người bệnh bị kìm giữ/ Restrained patients" },
+            { "HRT", "Người bệnh đang điều trị có nguy cơ cao (như chạy thận nhân tạo, hóa trị liệu..)/ Patients that receiving high-risk treatments (such as dialysis, chemotherapy…)" },
+        };
+
+        public static Dictionary<string, string> RESPIRATORY_SYSTEM_CODE = new Dictionary<string, string>()
+        {
+            { "N", "Không có vấn đề/ Normal" },
+            { "D", "Khó thở/ Dyspnea" },
+            { "O", "Khó thở nằm/ Orthopnea" },
+            { "W", "Khó thở khò khè/ Wheeze" },
+            { "C", "Da xanh tái/ Cyanosis" },
+        };
+
+        public static Dictionary<string, string> PRESENCE_CODE = new Dictionary<string, string>()
+        {
+            { "CP", "Đau ngực/ Chest pain" },
+            { "DI", "Chóng mặt/ Dizzinness" },
+            { "CA", "Đau bắp chân/ Calf pain" },
+            { "PE", "Phù ngoại biên/ Peripheral edema" },
+        };
+
+        public static Dictionary<string, string> EXTREMITIES_CODE = new Dictionary<string, string>()
+        {
+            { "WA", "Ấm/ Warm" },
+            { "CO", "Lạnh/ Cold" },
+            { "CL", "Ẩm ướt/ Clammy" },
+            { "CY", "Xanh tái/ Cyanosed" },
+        };
+
+        public static Dictionary<string, string> ORIENTED_CODE = new Dictionary<string, string>()
+        {
+            { "DAY", "Ngày/ Day" },
+            { "TIME", "Thời gian/ Time" },
+            { "PER", "Người/ Person" },
+            { "PLA", "Nơi/ Place" },
+            { "NA", "Không định hướng được/ Not all all" },
+        };
+
+        public static Dictionary<string, string> MENTAL_STATUS_CODE = new Dictionary<string, string>()
+        {
+            { "AL", "Tỉnh táo/ Alert" },
+            { "CF", "Nhầm lẫn/ Confused" },
+            { "AG", "Kích động/ Agitated" },
+            { "FR", "Quấy/ Fretful" },
+            { "OTH", "Khác/ Other" },
+            { "DE", "Trầm cảm/ Depressed" },
+            { "LE", "Lơ mơ/ Lethargic" },
+        };
+
+        public static Dictionary<string, string> HEARING_CODE = new Dictionary<string, string>()
+        {
+            { "N", "Bình thường/ Normal" },
+            { "HI", "Khiếm thính/ Hearing impaired" },
+            { "HA", "Dùng máy trợ thính (Trái/Phải)/ Uses hearing aid (Left/Right)" },
+        };
+
+        public static Dictionary<string, string> DIET_CODE = new Dictionary<string, string>()
+        {
+            { "NM", "Bình thường/ Normal" },
+            { "BF", "Bú bình/ Bottle feeding" },
+            { "TBF", "Bú mẹ hoàn toàn/ Total breast feeding" },
+            { "OTH", "Khác/ Other" },
+        };
+
+        public static Dictionary<string, string> DIET_PRE_CODE = new Dictionary<string, string>()
+        {
+            { "V", "Nôn/ Vomiting" },
+            { "N", "Buồn nôn/ Nausea" },
+            { "S", "Nuốt khó (chuyển đến chuyên gia trị liệu)/ Swalloing difficulties (refer to therapist)" },
+        };
+
+        public static Dictionary<string, string> BOWEL_ELIMINATION_CODE = new Dictionary<string, string>()
+        {
+            { "TWO", "2 lần/ ngày (2 times/day)" },
+            { "ONE", "1 lần/ ngày (1 time/day)" },
+            { "EOD", "Cách ngày/ Every other day" },
+            { "OTH", "Khác/ Other" },
+        };
+
+        public static Dictionary<string, string> STOOL_CONSISTENCY_CODE = new Dictionary<string, string>()
+        {
+            { "H", "Cứng/ Hard" },
+            { "F", "Có hình dạng/ Formed" },
+            { "L", "Lỏng/ Loose" },
+            { "W", "Phân nước/ Watery" },
+        };
+
+        public static Dictionary<string, string> GAS_PRESENCE_CODE = new Dictionary<string, string>()
+        {
+            { "N", "Bình thường/ Normal" },
+            { "I", "Không kiểm soát/ Incontinence" },
+            { "S", "Hậu môn nhân tạo/ Stoma" },
+        };
+
+        public static Dictionary<string, string> VISION_CODE = new Dictionary<string, string>()
+        {
+            { "NM", "Bình thường/ Normal" },
+            { "GL", "Đeo kính/ Glasses" },
+            { "CL", "Kính sát tròng/ Contact lenses" },
+            { "OTH", "Khác/ Other" },
+        };
+
+        public static Dictionary<string, string> SPEECH_CODE = new Dictionary<string, string>()
+        {
+            { "NM", "Bình thường/ Normal" },
+            { "SL", "Nói lắp/ Slurred" },
+            { "AP", "Chứng mất ngôn ngữ/ Aphasic" },
+            { "NC", "Không giao tiếp (Bất tỉnh or mê)/ Non-communicative(Unconscious )" },
+            { "SI", "Khiếm ngôn/ Speech impaired" },
+            { "NV", "Chưa biết nói/ Non-verbal" },
+        };
+
+        public static Dictionary<string, string> MENSTRUATION_CODE = new Dictionary<string, string>()
+        {
+            { "ME", "Mãn kinh/ Menopause" },
+            { "AM", "Vô kinh/ Amenorrhea" },
+            { "CY", "Chu kỳ (ngày)/ Cycle (day)" },
+        };
+
+        public static Dictionary<string, string> CONTRACEPTION_CODE = new Dictionary<string, string>()
+        {
+            { "NO", "Không/ No" },
+            { "PILL", "Thuốc ngừa thai/ Contraceptive pill" },
+            { "OTH", "Khác/ Other" },
+            { "DEV", "Dụng cụ ngừa thai đặt trong tử cung/ Intrauterine Device" },
+        };
+
+        public static Dictionary<string, string> MUS_HISTORY = new Dictionary<string, string>()
+        {
+            { "JP", "Đau khớp/ Joint pain" },
+            { "MS", "Sự co rút cơ/ Muscle spasms" },
+            { "NM", "Bình thường/ Normal" },
+            { "JS", "Sưng khớp/ Joint swelling" },
+        };
+
+        public static Dictionary<string, string> CONDITION_CODE = new Dictionary<string, string>()
+        {
+            { "NM", "Bình thường/ Normal" },
+            { "PA", "Tái/ Pale" },
+            { "FL", "Đỏ/ Flush" },
+            { "JA", "Vàng da/ Jaundiced" },
+            { "DR", "Khô/ Dry" },
+            { "OI", "Nhờn/ Oily" },
+            { "SW", "Nhiều mồ hôi/ Sweaty" },
+            { "RA", "Phát ban/ Rash" },
+        };
+
+        public static Dictionary<string, string> WOUNDS_CODE = new Dictionary<string, string>()
+        {
+            { "1", "Máu tụ (1)/ Haematoma" },
+            { "2", "Sự thâm tím (2)/ Bruises" },
+            { "3", "Rách (3)/ Laceration" },
+            { "4", "Sẹo (4)/ Scar" },
+            { "5", "Phỏng (5)/ Burn" },
+            { "6", "Loét do tỳ đè (6)/ Pressure sore" },
+        };
+
+        public static Dictionary<string, string> BATHING_CODE = new Dictionary<string, string>()
+        {
+            { "IN", "Tự tắm/ Independent" },
+            { "AS", "Cần sự hỗ trợ khi tắm/ Assisted in shower" },
+            { "DB", "Tự tắm tại giường/ Dependent in bed" },
+            { "AB", "Hỗ trợ tắm tại giường/ Assisted in bed" },
+        };
+
+        public static Dictionary<string, string> ORAL_CARE_CODE = new Dictionary<string, string>()
+        {
+            { "AB", "Hỗ trợ đánh răng/ Assisted to brush teeth" },
+            { "PU", "Chỉ chuẩn bị đồ dùng/ Prepare utensils only" },
+            { "OC", "Tự làm/ Independent" },
+            { "OTH", "." },
+            { "DB", "Dependent in bed" },
+        };
+
+        public static Dictionary<string, string> DENTURES_CODE = new Dictionary<string, string>()
+        {
+            { "P", "Từng phần/ Partial" },
+            { "L", "Hàm dưới/ Lower" },
+            { "N", "Không có/ None" },
+            { "U", "Hàm trên/ Upper" },
+        };
+
+        public static Dictionary<string, string> TOILET_USE_CODE = new Dictionary<string, string>()
+        {
+            { "AC", "Cần hỗ trợ trên ghế dùng để tiểu tiện trong phòng/ Assisted on the commode" },
+            { "AT", "Cần hỗ trợ khi đi vệ sinh/ Assisted to the toilet" },
+            { "BU", "Bô dùng tại giường/ Bedpan/urine bottle" },
+            { "CA", "Ống thông tiểu/ Urinary catheter" },
+            { "DI", "Tã/ Diaper" },
+            { "IN", "Tự vệ sinh/ Independent" },
+            { "UC", "Ống thông tiểu đặt ngoài bàng quang/ Urinary condom" },
+        };
+
+        public static Dictionary<string, string> DRESSING_CODE = new Dictionary<string, string>()
+        {
+            { "WA", "Cần hỗ trợ/ With assistance" },
+            { "IN", "Tự làm/ Independent" },
+        };
+
+        public static Dictionary<string, string> EATING_CODE = new Dictionary<string, string>()
+        {
+            { "DP", "Phụ thuộc về tư thế/ Dependon position" },
+            { "TU", "Cho ăn qua ống/ NG tube/Gastrostomy" },
+            { "DA", "Phụ thuộc về ăn uống/ Dependent to eat" },
+            { "IN", "Tự ăn/ Independent" },
+        };
+
+        public static Dictionary<string, string> TURNING_BED_CODE = new Dictionary<string, string>()
+        {
+            { "IN", "Tự xoay sở/ Independent" },
+            { "DN", "Không tự xoay sở/ Does not turn independently" },
+        };
+
+        //public static Dictionary<string, string> AMBULATION_CODE = new Dictionary<string, string>()
+        //{
+        //    { "BF", "Liệt giường/ Bedfast" },
+        //    { "NA", "Cần hỗ trợ (ghi rõ)/ Need assistance (specify)" },
+        //    { "IN", "Tự đi/ Independent" },
+        //};
+
+        public static Dictionary<string, string> SLEEP_CODE = new Dictionary<string, string>()
+        {
+            { "PFA", "Khó ngủ/ Problem to fall asleep" },
+            { "PST", "Khó ngủ say/ Problem to sleep through" },
+            { "NM", "Bình thường/ Normal" },
+            { "AE", "Thức sớm/ Awake early" },
+        };
+
+        public static Dictionary<string, string> SENSORY_CODE = new Dictionary<string, string>()
+        {
+            { "1", "1_Giới hạn hoàn toàn/ Completely limited" },
+            { "2", "2_Giới hạn nhiều/ Very limited" },
+            { "3", "3_Giới hạn ít/ Slightly limited" },
+            { "4", "4_Không giới hạn/ No limitations" },
+        };
+
+        public static Dictionary<string, string> MOISTURE_CODE = new Dictionary<string, string>()
+        {
+            { "1", "1_Liên tục ẩm/ Constantly moist" },
+            { "2", "2_Thường ẩm/ Often moist" },
+            { "3", "3_Thỉnh thoảng ẩm/ Occasionally moist" },
+            { "4", "4_Hiếm khi ẩm/ Rarely moist" },
+        };
+
+        public static Dictionary<string, string> ACTIVITY_CODE = new Dictionary<string, string>()
+        {
+            { "1", "1_Nằm liệt giường/ Bedfast" },
+            { "2", "2_Cố định trên ghế/ Chairfast" },
+            { "3", "3_Thỉnh thoảng đi lại Walks/ occasionally moist" },
+            { "4", "4_Đi lại thường xuyên/ Walks frequently" },
+        };
+
+        public static Dictionary<string, string> MOBILITY_CODE = new Dictionary<string, string>()
+        {
+            { "1", "1_Hoàn toàn bất động/ Completely immobile" },
+            { "2", "2_Rất hạn chế/ Very limited" },
+            { "3", "3_Ít hạn chế/ Slightly limited" },
+            { "4", "4_Không giới hạn/ No limitations" },
+        };
+
+        public static Dictionary<string, string> NUTRITION_CODE = new Dictionary<string, string>()
+        {
+            { "1", "1_Rất kém/ Very poor" },
+            { "2", "2_Có thể không đầy đủ/ Probably inadequate" },
+            { "3", "3_Đầy đủ/ Adequate" },
+            { "4", "4_Hoàn hảo/ Excellent" },
+        };
+
+        public static Dictionary<string, string> FRICTION_CODE = new Dictionary<string, string>()
+        {
+            { "1", "1_Có vấn đề/ Problem" },
+            { "2", "2_Vấn đề tiềm ẩn/ Potential problem" },
+            { "3", "3_Không có vấn đề/ No problem" },
+        };
+
+        public static Dictionary<string, string> PRES_SCORE_RISK_CODE = new Dictionary<string, string>()
+        {
+            { "L", "Thấp/ Low" },
+            { "H", "Cao/ High" },
+            { "V", "Rất cao/ Very high" },
+        };
+
+        public static Dictionary<string, string> SKIN_ANNO = new Dictionary<string, string>()
+        {
+            { "id", "" },
+            { "location", "" },
+            { "type", "" },
+        };
+        #endregion
+        public Iina(dynamic document_id)
+        {
+            dynamic response = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
+
+            if(response.Status == System.Net.HttpStatusCode.OK)
+            {
+                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
+                WebHelpers.BindingDatafield(db, this);
+            } else if(response.Status == System.Net.HttpStatusCode.NotFound)
+            {
+
+            }
+        }
+
+        #region METHODS
+        public string[] Update()
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(string.Format("{0}/edit", api), this);
+            message[0] = responseStatus;
+
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, document_id));
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        public static string[] Delete(string userName)
+        {
+            string[] message = new string[2];
+
+            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
+            message[0] = responseStatus;
+            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            {
+                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, DataHelpers.varDocId));
+                message[1] = responseStatus;
+            }
+
+            return message;
+        }
+        #endregion
+    }
+
     public class Iima
     {
 
@@ -1320,10 +2494,10 @@ namespace EMR
         public dynamic user_name { get; set; }
         public dynamic status { get; set; }
         public dynamic amend_reason { get; set; }
-          public dynamic chief_complaint { get; set; }
-          public dynamic cur_med_history { get; set; }
-          public dynamic cur_medication { get; set; }
-          public dynamic personal { get; set; }
+        public dynamic chief_complaint { get; set; }
+        public dynamic cur_med_history { get; set; }
+        public dynamic cur_medication { get; set; }
+        public dynamic personal { get; set; }
         public dynamic habits_smoking { get; set; }
         public dynamic habits_smoking_pack { get; set; }
         public dynamic habits_alcohol { get; set; }
@@ -1336,25 +2510,25 @@ namespace EMR
         public dynamic allergy { get; set; }
         public dynamic allergy_note { get; set; }
         public dynamic family { get; set; }
-          public dynamic immunization { get; set; }
-          public dynamic vs_temperature { get; set; }
-          public dynamic vs_heart_rate { get; set; }
-          public dynamic vs_weight { get; set; }
-          public dynamic vs_height { get; set; }
-          public dynamic vs_respiratory_rate { get; set; }
-          public dynamic vs_BMI { get; set; }
-          public dynamic vs_blood_pressure { get; set; }
-          public dynamic vs_spO2 { get; set; }
-          public dynamic vs_pulse { get; set; }
-          public dynamic physical_exam { get; set; }
-          public dynamic psy_consul_required { get; set; }
-          public dynamic laboratory_result { get; set; }
-          public dynamic add_investigation { get; set; }
-          public dynamic initial_diagnosis { get; set; }
-          public dynamic diagnosis { get; set; }
-          public dynamic diff_diagnosis { get; set; }
-          public dynamic associated_conditions { get; set; }
-          public dynamic treatment_plan { get; set; }
+        public dynamic immunization { get; set; }
+        public dynamic vs_temperature { get; set; }
+        public dynamic vs_heart_rate { get; set; }
+        public dynamic vs_weight { get; set; }
+        public dynamic vs_height { get; set; }
+        public dynamic vs_respiratory_rate { get; set; }
+        public dynamic vs_BMI { get; set; }
+        public dynamic vs_blood_pressure { get; set; }
+        public dynamic vs_spO2 { get; set; }
+        public dynamic vs_pulse { get; set; }
+        public dynamic physical_exam { get; set; }
+        public dynamic psy_consul_required { get; set; }
+        public dynamic laboratory_result { get; set; }
+        public dynamic add_investigation { get; set; }
+        public dynamic initial_diagnosis { get; set; }
+        public dynamic diagnosis { get; set; }
+        public dynamic diff_diagnosis { get; set; }
+        public dynamic associated_conditions { get; set; }
+        public dynamic treatment_plan { get; set; }
         public dynamic discharge_plan { get; set; }
         #endregion
 
@@ -1496,7 +2670,7 @@ namespace EMR
         public dynamic amend_reason { get; set; }
         public dynamic chief_complaint { get; set; }
         public dynamic cur_med_history { get; set; }
-        public dynamic cur_medication { get; set; }
+        public dynamic cur_medications { get; set; }
         public dynamic personal { get; set; }
         public dynamic family { get; set; }
         public dynamic allergy { get; set; }
@@ -1538,7 +2712,7 @@ namespace EMR
             dynamic amend_reason,
              dynamic chief_complaint,
              dynamic cur_med_history,
-             dynamic cur_medication,
+             dynamic cur_medications,
              dynamic personal,
              dynamic family,
              dynamic allergy,
@@ -1579,7 +2753,7 @@ namespace EMR
             this.amend_reason = amend_reason;
             this.chief_complaint = chief_complaint;
             this.cur_med_history = cur_med_history;
-            this.cur_medication = cur_medication;
+            this.cur_medications = cur_medications;
             this.personal = personal;
             this.family = family;
             this.allergy = allergy;
@@ -1621,7 +2795,14 @@ namespace EMR
             { "IPD", "Nhập viện/Admission" },
             { "TRF", "Chuyển viện/Transfer" },
         };
-
+        public static Dictionary<string, string> APPOINTED_VACCINE = new Dictionary<string, string>()
+        {
+            { "id", "" },
+            { "drug_name", "" },
+            { "strength", "" },
+            { "router", "" },
+            { "reason", "" },
+        };
         public Mrfv(dynamic document_id)
         {
             string _jsonData = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
@@ -2899,12 +4080,15 @@ namespace EMR
         /// <param name="document_id"></param>
         public MC(dynamic document_id)
         {
-            string _jsonData = WebHelpers.GetAPI("api/mc/" + document_id);
+            dynamic response = WebHelpers.GetAPI("api/mc/" + document_id);
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
 
-            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
-            
-            WebHelpers.BindingDatafield(db, this);
+                WebHelpers.BindingDatafield(db, this);
+            }
         }
+
         public MC(dynamic document_id, dynamic use_name)
         {
             this.document_id = document_id;
