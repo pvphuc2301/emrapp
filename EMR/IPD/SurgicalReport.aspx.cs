@@ -19,7 +19,7 @@ namespace EMR
             {
                Initial();
             }
-            LoadDataToPrint();
+            //LoadDataToPrint();
         }
 
         public void Initial()
