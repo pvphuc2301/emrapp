@@ -37,18 +37,61 @@ namespace EMR
             //pa= new PageInfo(DataHelpers.)
             loadDataToControls(mc);
         }
-        public string _PatientName = "";
-        public string _DoB = "";
-        public string _PID = "";
+
 
         public void loadDataToControls(MC mc)
         {
-             
-            _PatientName = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
-            _DoB = DataHelpers.patient.date_of_birth + "|" + DataHelpers.patient.gender_l;
-            _PID = DataHelpers.patient.visible_patient_id;
-          
+
+            lbPatientName.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
+            lbDoB.Text = DataHelpers.patient.date_of_birth ;
+            lbPID.Text = DataHelpers.patient.visible_patient_id;
+            lbPID2.Text = DataHelpers.patient.visible_patient_id;
+            lbNgayKhamBenh.Text = DataHelpers.patientVisit.actual_visit_date_time;
+
+            if ( ((string)DataHelpers.patient.gender_l).ToLower() == "nam")
+            {
+                lbMan1.Visible = lbWomen2.Visible =true;
+                lbMan2.Visible = lbWomen1.Visible  =  false;
+                
+            }
+            else
+            {
+                lbMan1.Visible = lbWomen2.Visible = false;
+                lbMan2.Visible = lbWomen1.Visible = true;
+            }
+            // 2. Lý do đến khám
+            lbChiefComplaint.Text = mc.chief_complain;
+            
+            // 3. Tóm tắt bệnh sử                          
+            lbHistoryPresentIllness.Text = mc.history_present_illness;
+
+            // 4. Tiền sử bệnh                
+            lbPastHistory.Text = mc.past_history;
+            // 5. Đặc điểm lâm sàng
+            lbClinicalFindings.Text = mc.clinical_findings;
+
+            //6. Cận lâm sàng được chỉ định
+            lbParaClinicalInvestigations.Text = mc.para_clinical_investigations;
+
+            //7. Chẩn đoán
+            lbDiagnosis.Text = mc.diagnosis;
+
+            //8. Phương pháp và thuốc điều trị
+            lbTreatment.Text = mc.treatment;
+
+            //9. Thời gian điều trị
+            lbTreatmentPeriod.Text = mc.treatment_period;
+
+            //10. Lời khuyên và theo dõi
+            lbRecommendation.Text = mc.recommendation;
+
+            //11. Lời khuyên và theo dõi
+            //lbTreatmentPlan.Text = mc.treatment_plan;
+
             //Barcode.
+
+
+
             // 2. Lý do đến khám
             txtChiefComplaint.Value = mc.chief_complain;
             txtChiefComplaint.Disabled = false;
