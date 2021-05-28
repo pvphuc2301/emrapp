@@ -37,7 +37,7 @@
                             </div>
                             <div style="font-size: 13.3333px">
 
-                                <div style="width: 200px; text-align: left">
+                                <div style="width: 200px; text-align: center">
                               <%--      <div>
                                         <asp:Label ID="lbPatientName" runat="server"></asp:Label>
                                     </div>
