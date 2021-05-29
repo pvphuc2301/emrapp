@@ -179,9 +179,12 @@
     <Content Include="emr\labinfor.aspx" />
     <Content Include="ER\EmerMedRec.aspx" />
     <Content Include="ER\EmerTriaAndNurAssRec.aspx" />
+    <Content Include="icons\Calculator.ascx" />
+    <Content Include="icons\ExclamationTriangle.ascx" />
     <Content Include="icons\PlusCircle.ascx" />
     <Content Include="icons\Trash.ascx" />
     <Content Include="icons\XSquare.ascx" />
+    <Content Include="images\2021-05-25_21-54-42.png" />
     <Content Include="images\AIH_Logo.jpg" />
     <Content Include="images\AIH_PI_FULL.png" />
     <Content Include="images\bottomline.png" />
@@ -327,6 +330,13 @@
     </Compile>
     <Compile Include="ER\EmerTriaAndNurAssRec.aspx.designer.cs">
       <DependentUpon>EmerTriaAndNurAssRec.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="icons\Calculator.ascx.cs">
+      <DependentUpon>Calculator.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="icons\Calculator.ascx.designer.cs">
+      <DependentUpon>Calculator.ascx</DependentUpon>
     </Compile>
     <Compile Include="icons\PlusCircle.ascx.cs">
       <DependentUpon>PlusCircle.ascx</DependentUpon>

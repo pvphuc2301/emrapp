@@ -10,6 +10,7 @@ namespace EMR
     public partial class USUrinarySystemReport : System.Web.UI.Page
     {
         Uusr uusr;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)

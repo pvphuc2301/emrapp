@@ -192,8 +192,6 @@ namespace EMR.OPD
             catch (Exception ex) { }
         }
 
-
-
         protected void DisabledControl(bool disabled)
         {
             txt_chief_complaint.Disabled = disabled;

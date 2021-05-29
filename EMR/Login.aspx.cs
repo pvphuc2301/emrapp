@@ -14,6 +14,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.DirectoryServices;
 using EMR;
+using Newtonsoft.Json.Linq;
 
 namespace Emr_client.Emr
 {
@@ -22,8 +23,11 @@ namespace Emr_client.Emr
         public string ConnStringEMR = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-            ConnClass ConnStr = new ConnClass();
-            ConnStringEMR = ConnStr.SQL_EMRConnString;
+            if (Convert.ToString(Session["company_code"]) == "AIHC")
+            {
+                ConnClass ConnStr = new ConnClass();
+                ConnStringEMR = ConnStr.SQL_EMRConnString;
+            }
         }        
         protected void cmdLogin_Click(object sender, System.EventArgs e)
         {
@@ -116,17 +120,40 @@ namespace Emr_client.Emr
 
         public void Insert_EMR_Account(string varAccount)
         {
-            SQLAppClass SQL_Class = new SQLAppClass();
-
-            string query = "SELECT top 1 user_name, site_rcd ";
-            query += "FROM account WITH (NOLOCK) ";
-            query += "WHERE (user_name = '" + varAccount + "') ";
-
-            if (string.IsNullOrEmpty(SQL_Class.CheckAndGetItem(query, "user_name", ConnStringEMR)))
+            if (Convert.ToString(Session["company_code"]) == "AIHC")
             {
-                string queryInsert = "INSERT INTO account (user_name, site_rcd ) ";
-                queryInsert += "VALUEs ('" + varAccount + "','AIH') ";
-                SQL_Class.RunQuery(queryInsert, ConnStringEMR);
+                SQLAppClass SQL_Class = new SQLAppClass();
+
+                string query = "SELECT top 1 user_name, site_rcd ";
+                query += "FROM account WITH (NOLOCK) ";
+                query += "WHERE (user_name = '" + varAccount + "') ";
+
+                if (string.IsNullOrEmpty(SQL_Class.CheckAndGetItem(query, "user_name", ConnStringEMR)))
+                {
+                    string queryInsert = "INSERT INTO account (user_name, site_rcd ) ";
+                    queryInsert += "VALUEs ('" + varAccount + "','AIH') ";
+                    SQL_Class.RunQuery(queryInsert, ConnStringEMR);
+                }
+            }
+        }
+        public void put_session_value(string varUserAccount, string varUserPW)
+        {
+            dynamic response = WebHelpers.GetAPI("api/employee/employee/user/" + varUserAccount);
+
+            if(response.Status = System.Net.HttpStatusCode.OK)
+            {
+                if (!string.IsNullOrEmpty(response.Data))
+                {
+                    dynamic data = JObject.Parse(response.Data);
+                    Session["UserName"] = data.patient_name_e;
+                    Session["DepCode"] = data.department_code;
+                    Session["DepName"] = data.department_name_e;
+                    Session["user_email"] = data.email_business;
+                    Session["emp_id"] = data.employee_id;
+                    Session["emp_nr"] = data.employee_nr;
+                    //  Session["upw"] = varUserPW;
+                    Session["company_code"] = "AIH";
+                }
             }
         }
     }

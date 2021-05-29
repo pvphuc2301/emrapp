@@ -8231,7 +8231,7 @@ button.bg-purple:hover {
 }
 
 @media print {
-    .d-print-none {
+    /*.d-print-none {
         display: none !important
     }
 
@@ -8269,7 +8269,7 @@ button.bg-purple:hover {
         display: -webkit-inline-box !important;
         display: -ms-inline-flexbox !important;
         display: inline-flex !important
-    }
+    }*/
 }
 
 .embed-responsive {
@@ -11286,7 +11286,7 @@ a.text-purple:hover {
 }
 
 @media print {
-    *,
+    /**,
     :after,
     :before {
         text-shadow: none !important;
@@ -11381,7 +11381,7 @@ a.text-purple:hover {
     .table .thead-dark th {
         color: inherit;
         border-color: #dee2e6
-    }
+    }*/
 }
 
 /*!
@@ -16058,7 +16058,7 @@ ul.list-style-none {
 
 .scroll-sidebar {
     height: calc(100% - 67px);
-    position: relative
+    position: absolute !important;
 }
 
     .scroll-sidebar.ps .ps__scrollbar-y-rail {

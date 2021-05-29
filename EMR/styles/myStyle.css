@@ -207,7 +207,7 @@ table thead th {
 
 div[contenteditable="false"] {
     /*background-color: rgba(215, 215, 219, 0.2);*/
-    background-color: transparent;
+    background-color: #eaeaea;
     cursor: default;
     /*border: 1px solid #f2f2f4;*/
     border: none;
@@ -421,6 +421,7 @@ fieldset legend {
         font-size: 8pt;
         font-family: Times New Roman;
     }
+
     .report-footer .report-footer-cell {
         display: inline-block;
         position: fixed;
