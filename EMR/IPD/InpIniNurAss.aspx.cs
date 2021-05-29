@@ -332,7 +332,7 @@ namespace EMR
                 BindRadioButton("rad_gait_trans_code_" + iina.gait_trans_code);
                 BindRadioButton("rad_fr_mental_status_code_" + iina.fr_mental_status_code);
 
-                txt_fr_total_score.Value = iina.fr_total_score;
+                txt_fr_total_score.Text = iina.fr_total_score;
 
                 BindRadioButton("rad_involvement_" + iina.involvement);
                 BindRadioButton("rad_req_med_equipment_" + iina.req_med_equipment);
@@ -814,7 +814,7 @@ namespace EMR
                 iina.fr_mental_status_code = GetRadioButton("rad_fr_mental_status_code_", Iina.FR_MENTAL_STATUS_CODE);
                 if (iina.fr_mental_status_code != null) iina.fr_mental_status_desc = Iina.FR_MENTAL_STATUS_CODE[iina.fr_mental_status_code];
 
-                iina.fr_total_score = txt_fr_total_score.Value;
+                iina.fr_total_score = txt_fr_total_score.Text;
                 //D
                 iina.involvement = GetRadioButton("rad_involvement_");
                 iina.req_med_equipment = GetRadioButton("rad_req_med_equipment_");

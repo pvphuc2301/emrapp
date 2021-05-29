@@ -1860,13 +1860,22 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_nutrition_score3_3;
 
         /// <summary>
-        /// nutrition_score control.
+        /// Calculator1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl nutrition_score;
+        protected global::EMR.icons.Calculator Calculator1;
+
+        /// <summary>
+        /// lbl_nutrition_score control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_nutrition_score;
 
         /// <summary>
         /// txt_nutrition_score control.
@@ -2409,6 +2418,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_cur_in_pain_True;
 
         /// <summary>
+        /// XSquare43 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare43;
+
+        /// <summary>
         /// txt_p_location_1 control.
         /// </summary>
         /// <remarks>
@@ -2560,6 +2578,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_using_pain_killer_True;
+
+        /// <summary>
+        /// XSquare44 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare44;
 
         /// <summary>
         /// txt_pain_killer_name control.
@@ -2859,6 +2886,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_bathing_code_db;
 
         /// <summary>
+        /// XSquare1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare1;
+
+        /// <summary>
         /// rad_oral_care_code_oc control.
         /// </summary>
         /// <remarks>
@@ -2895,13 +2931,13 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputText Text1;
 
         /// <summary>
-        /// Radio1 control.
+        /// rad_oral_care_code_oth control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton Radio1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_oral_care_code_oth;
 
         /// <summary>
         /// rad_oral_care_code_db control.
@@ -2911,6 +2947,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_oral_care_code_db;
+
+        /// <summary>
+        /// XSquare3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare3;
 
         /// <summary>
         /// rad_dentures_code_n control.
@@ -2947,6 +2992,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_dentures_code_p;
+
+        /// <summary>
+        /// XSquare32 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare32;
 
         /// <summary>
         /// rad_toilet_use_code_in control.
@@ -3012,6 +3066,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_toilet_use_code_ca;
 
         /// <summary>
+        /// XSquare33 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare33;
+
+        /// <summary>
         /// rad_dressing_code_in control.
         /// </summary>
         /// <remarks>
@@ -3028,6 +3091,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_dressing_code_wa;
+
+        /// <summary>
+        /// XSquare34 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare34;
 
         /// <summary>
         /// rad_eating_code_in control.
@@ -3066,6 +3138,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_eating_code_tu;
 
         /// <summary>
+        /// XSquare35 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare35;
+
+        /// <summary>
         /// rad_turning_bed_code_in control.
         /// </summary>
         /// <remarks>
@@ -3082,6 +3163,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_turning_bed_code_dn;
+
+        /// <summary>
+        /// XSquare36 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare36;
 
         /// <summary>
         /// rad_ambulation_code_in control.
@@ -3109,6 +3199,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_ambulation_code_na;
+
+        /// <summary>
+        /// XSquare37 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare37;
 
         /// <summary>
         /// rad_sleep_code_nm control.
@@ -3147,6 +3246,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_sleep_code_pst;
 
         /// <summary>
+        /// XSquare38 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare38;
+
+        /// <summary>
         /// txt_medication_used control.
         /// </summary>
         /// <remarks>
@@ -3174,6 +3282,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_fall_history_code_0;
 
         /// <summary>
+        /// XSquare39 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare39;
+
+        /// <summary>
         /// rad_secon_diagnosis_code_15 control.
         /// </summary>
         /// <remarks>
@@ -3190,6 +3307,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_secon_diagnosis_code_0;
+
+        /// <summary>
+        /// XSquare40 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare40;
 
         /// <summary>
         /// rad_ambula_aids_code_30 control.
@@ -3219,6 +3345,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_ambula_aids_code_0;
 
         /// <summary>
+        /// XSquare42 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare42;
+
+        /// <summary>
         /// rad_intra_therapy_code_20 control.
         /// </summary>
         /// <remarks>
@@ -3235,6 +3370,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_intra_therapy_code_0;
+
+        /// <summary>
+        /// XSquare41 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare41;
 
         /// <summary>
         /// rad_gait_trans_code_20 control.
@@ -3264,6 +3408,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_gait_trans_code_0;
 
         /// <summary>
+        /// XSquare45 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare45;
+
+        /// <summary>
         /// rad_fr_mental_status_code_15 control.
         /// </summary>
         /// <remarks>
@@ -3282,13 +3435,31 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_fr_mental_status_code_0;
 
         /// <summary>
+        /// XSquare46 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.XSquare XSquare46;
+
+        /// <summary>
+        /// Calculator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.Calculator Calculator;
+
+        /// <summary>
         /// txt_fr_total_score control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_fr_total_score;
+        protected global::System.Web.UI.WebControls.Label txt_fr_total_score;
 
         /// <summary>
         /// rad_involvement_True control.
