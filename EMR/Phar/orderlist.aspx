@@ -27,7 +27,7 @@
                            <asp:HyperLink ID="lbcreation_date_time" runat="server" NavigateUrl='<%# Eval("urlink","{0:dd/MMM/yyyy hh:mm}") %>' 
                                Text='<%# Eval("creation_date_time") %>' Target="_blank" Visible="false" >
                            </asp:HyperLink> 
-                            <a href="#" onclick="javascript:window.open('<%# Eval("urlink") %>','mywin','left=60,top=20,width=1100,height=1000,toolbar=0,resizable=0');return false;" >
+                            <a href="#" onclick="javascript:window.open('<%# Eval("urlink") %>','mywin','left=60,top=20,width=1300,height=1000,toolbar=0,resizable=0');return false;" >
                                 <%# Eval("creation_date_time") %>
                             </a> 
                         </ItemTemplate>

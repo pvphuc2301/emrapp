@@ -17,7 +17,7 @@ namespace EMR
         public string ConnStringHIS = ""; public string ConnStringEMR = "";
 
         public string varPID = ""; string varPVId = "";
-        public string UserID;
+        public string UserID; string orderType = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             varPID = Request.QueryString["pid"]; // "97052A99-0134-11EB-B34D-D89EF37D444C";//  "C248E0FC-39B6-493F-A197-6CF2A96B37AD";//
@@ -36,12 +36,18 @@ namespace EMR
             //
 
             if (!IsPostBack)
-            {
+            {               
                 DataHelpers.LoadPatientInfomation(varPID);
-
                 lblPatientInfo.InnerHtml = "<strong>" + DataHelpers.patient.first_name_e + " " + DataHelpers.patient.last_name_e + " (" + DataHelpers.patient.title_e + ")</strong>, <small>DOB</small> " + DateTime.Parse(DataHelpers.patient.date_of_birth).ToString("dd/MM/yyyy") + " (" + DataHelpers.CalculateAge(DateTime.Parse(DataHelpers.patient.date_of_birth)) + "y) <small>SEX</small> " + DataHelpers.patient.gender_l + " <small>PID</small> <strong>" + DataHelpers.patient.visible_patient_id + "</strong>";
-
                 MainContent.ContentUrl = "../other/patientsummary.aspx?pid=" + varPID;
+                //string pageName = Request.ServerVariables["script_name"];
+                //if (Session["PageOpenEMR"] != null)
+                //{
+                //    HttpContext current_ss = HttpContext.Current;
+                //    HttpContext.Current.Response.Redirect("InvalidAccess.aspx");
+                //    // The page is already opened in another tab.
+                //}
+                //else { Session["PageOpenEMR"] = true; }
             }
 
             //form ký sinh trùng
@@ -73,8 +79,8 @@ namespace EMR
             {
                 case "F1":
                     {
-                        string ParentID = Convert.ToString(dataItem.GetDataKeyValue("patient_visit_id"));
-                        
+                        string ParentID = Convert.ToString(dataItem.GetDataKeyValue("patient_visit_id"));                        
+
                         DataHelpers.LoadPatientVisitInfomation(ParentID);
 
                         string _jsonData = WebHelpers.GetAPI("api/emr/menu-form/" + ParentID);
@@ -181,7 +187,10 @@ namespace EMR
                         string ParentID1 = Convert.ToString(dataItem.GetDataKeyValue("document_type_rcd"));
                         string apiURL = "api/patient/menu-lab-visit/" + ParentID;
                         if (ParentID1 == "RAD")
+                        {
                             apiURL = "api/patient/menu-rad-visit/" + ParentID;
+                            orderType = ParentID1;
+                        }
                         string _jsonData = WebHelpers.GetAPI(apiURL);
                         if (!string.IsNullOrEmpty(_jsonData))
                         {
@@ -277,6 +286,9 @@ namespace EMR
         {           
             string tmp = "labinfor.aspx?pid=" + varPID + "&vid="+ varModelID;
 
+            if (Convert.ToString(orderType) == "RAD")
+                tmp = "ImagingDiagnosticReporting.aspx?pid=" + varPID + "&vid=" + varModelID;
+
             return tmp;
         }
 
@@ -310,9 +322,8 @@ namespace EMR
         }
 
         protected void btnLogout_ServerClick(object sender, EventArgs e)
-        {
-            Session["UserID"] = "";
-            Response.Redirect("../login.aspx");
+        {            
+            Response.Redirect("../logout.aspx");
         }
     }
 }

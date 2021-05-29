@@ -217,7 +217,7 @@
                                 <%--</div>--%>
 
 
-                                <%--<div class="card">
+                                <div class="card">
                         <div class="card-header bg-white">
                             <h4 class="card-title control-label m-0">
                                 <span class="text-primary">My Outpatient List</span>
@@ -225,8 +225,10 @@
                         </div>
                         <div class="card-body" style="padding: 0">
                             <div class="table-responsive">
-                                <telerik:RadGrid CssClass="table" BorderWidth="0" OnSelectedIndexChanged="RadGrid1_SelectedIndexChanged" AutoGenerateColumns="false" ID="RadGrid1" runat="server" AllowPaging="True" OnItemDataBound="RadGrid1_ItemDataBound" AllowSorting="true" OnNeedDataSource="RadGrid1_NeedDataSource">
-                                    <MasterTableView AutoGenerateColumns="False" ClientDataKeyNames="patient_id">
+                                <telerik:RadGrid CssClass="table" BorderWidth="0" OnSelectedIndexChanged="RadGrid5_SelectedIndexChanged1" 
+                                    AutoGenerateColumns="false" ID="RadGrid1" runat="server" AllowPaging="True" OnItemDataBound="RadGrid1_ItemDataBound" 
+                                    AllowSorting="true" OnNeedDataSource="RadGrid1_NeedDataSource">
+                                    <MasterTableView AutoGenerateColumns="False" ClientDataKeyNames="patient_id, visible_patient_id">
                                         <Columns>
                                             <telerik:GridBoundColumn
                                                 SortExpression="visible_patient_id"
@@ -315,10 +317,9 @@
                                             </telerik:GridBoundColumn>
                                         </Columns>
                                     </MasterTableView>
-                                    <ClientSettings EnableRowHoverStyle="true">
-                                        <Selecting AllowRowSelect="True" />
-                                        <ClientEvents OnRowSelected="RadGrid1_RowSelected" />
-                                    </ClientSettings>
+                                    <ClientSettings EnableRowHoverStyle="true" Selecting-AllowRowSelect="true" EnablePostBackOnRowClick="true">
+                                                        <Selecting AllowRowSelect="True" />
+                                                    </ClientSettings>
                                 </telerik:RadGrid>
                             </div>
                         </div>
@@ -598,7 +599,7 @@
                                 <div class="card-footer bg-white py-4"></div>
                             </div>
                         </div>
-                    </div>--%>
+                    </div>
                             </div>
                     </main>
                     </div>

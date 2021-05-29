@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -38,8 +39,9 @@ namespace Emr_client.Emr
             if (isLogin)
             {
                 Session["UserID"] = UserName.Value;
-                HttpContext current_ss = HttpContext.Current;
-                Session["current_session"] = current_ss.Session.SessionID;
+                put_session_value(UserName.Value, Password.Value);
+              //  HttpContext current_ss = HttpContext.Current;
+                //Session["current_session"] = current_ss.Session.SessionID;
                 Insert_EMR_Account(UserName.Value);
                 if (string.IsNullOrEmpty(Request.QueryString["ReturnUrl"]))
                     Response.Redirect("dashboard.aspx");
@@ -49,6 +51,23 @@ namespace Emr_client.Emr
             else
                 lblInfo.Text = "Login Failed!";
 
+        }
+        public void put_session_value(string varUserAccount, string varUserPW)
+        {
+            string _jsonData = WebHelpers.GetAPI("api/employee/employee/user/" + varUserAccount);
+
+            if (!string.IsNullOrEmpty(_jsonData))
+            {
+                dynamic data = JObject.Parse(_jsonData);
+                Session["UserName"] = Convert.ToString(data.patient_name_e);
+                Session["DepCode"] = Convert.ToString(data.department_code);
+                Session["DepName"] = Convert.ToString(data.department_name_e);
+                Session["user_email"] = Convert.ToString(data.email_business);
+                Session["emp_id"] = Convert.ToString(data.employee_id);
+                Session["emp_nr"] = Convert.ToString(data.employee_nr);
+              //  Session["upw"] = varUserPW;
+                Session["company_code"] = "AIH";
+            }
         }
         public string EncodePassword(string originalPassword)
         {

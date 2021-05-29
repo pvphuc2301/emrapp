@@ -51,7 +51,7 @@ namespace EMR
             SQLAppClass SQL_Class = new SQLAppClass();
             string get_folder = "";
 
-            string final_query = "SELECT PrimaryServer = dbo.PrimaryServer('" + varFobjID + "')";
+            string final_query = "SELECT PrimaryServer = dbo.fn_emr_get_primary_server_by_obj_id('" + varFobjID + "')";
             get_folder = SQL_Class.CheckAndGetItem(final_query, "PrimaryServer", ConnStringEMR);
 
             return get_folder;

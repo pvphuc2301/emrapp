@@ -21,6 +21,11 @@ namespace EMR.Print
             ConnStringHIS = ConnStr.SQL_HISConnString;
             ConnStringEMR = ConnStr.SQL_EMRConnString;
 
+            if (Convert.ToString(Session["company_code"]) == "AIHC")
+            {
+                ConnStringHIS = ConnStr.SQL_HIS_C01ConnString;
+                ConnStringEMR = ConnStr.SQL_EMR_C01ConnString;
+            }
             varPID = Request.QueryString["pid"];
             varVbID = Request.QueryString["vibid"];
             varPV_ID = Request.QueryString["vid"];

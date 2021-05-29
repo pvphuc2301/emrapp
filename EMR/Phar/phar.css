@@ -5,7 +5,7 @@
         .rgview table
 	    {
 	        border-collapse: collapse;
-	        background: #ebf1de;
+	        /*background: #ebf1de;*/
 	    }
 	    .rgview th, .rgview td
 	    {  
@@ -13,8 +13,8 @@
 	    }
 	    .rgview th
 	    {           
-	        background-color: #d8e4bc;
-	        color: #fff;
+	        /*background-color: #d8e4bc;
+	        color: #fff;*/
 	        border: 1px solid #ccc;
 	    }
 	    .rgview th a
@@ -24,7 +24,7 @@
 	    }
 	    .rgview tr:hover
 	    {  
-	        background: #d8e4bc;
+	        background: #DCDCDC;
 	    }
 	    .rgview td
 	    {

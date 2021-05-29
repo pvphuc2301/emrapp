@@ -16,8 +16,8 @@ namespace EMR.emr
     public partial class labinfor : System.Web.UI.Page
     {
         public string ConnStringHIS = "";
-        public string UserID = ""; string UserName = ""; Guid PersonID; string UGroup = ""; string lng = "vn";
-        public Guid PatientID; Guid VisitID; bool Export = false; bool Export_Group = false; string status = "";
+        public string UserID = ""; string UserName = ""; 
+        public Guid PatientID; Guid VisitID;string status = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             ConnClass ConnStr = new ConnClass();
@@ -26,19 +26,16 @@ namespace EMR.emr
             RadGrid1.MasterTableView.HierarchyDefaultExpanded = true;
             PatientID = Guid.Parse(Request.QueryString["pid"]);
             VisitID = Guid.Parse(Request.QueryString["vid"]);
-            UserID = (string)Session["UserID"]; UserName = (string)Session["UserName"];
-            UGroup = (string)Session["UserGroup"];
+            UserID = Convert.ToString(Session["UserID"]); UserName = Convert.ToString(Session["UserName"]);
+            //UGroup = (string)Session["UserGroup"];
             status = Request.QueryString["st"];
-            //if (status == "WARNI")
-            //  status = "Verified";
-            //else
-            //  status = "Pending";
+
             if (!string.IsNullOrEmpty(UserID))
             {
                 //PersonID = (Guid)Session["PersonID"];//PersonID = Guid.Parse("15b5b2f0-cf23-466a-9a9a-01f06e858052");
-                lng = Request.QueryString["lg"];
-                lng = "eng";
-                Get_Patient_Infor(PatientID);
+                //lng = Request.QueryString["lg"];
+              //  lng = "eng";                
+               // Get_Patient_Infor(PatientID);
             }
         }
         public DataTable GetDataTable(string query)
@@ -60,61 +57,7 @@ namespace EMR.emr
             }
 
             return myDataTable;
-        }
-        private void Get_Patient_Infor(Guid varPID)
-        {
-            SQLAppClass SQL_Class = new SQLAppClass();
-
-            string Get_Cus_Name = "SELECT top 1 cus.customer_id, cus.person_id, pt.visible_patient_id AS visible_customer_id, pt.sex_rcd, ";
-            if (lng == "eng")
-                Get_Cus_Name +="pt.first_name_e + N' ' + pt.last_name_e AS customer_name, ";
-            else
-                Get_Cus_Name +="pt.first_name_l + N' ' + pt.last_name_l AS customer_name, ";
-            Get_Cus_Name +="CONVERT(VARCHAR(10), pt.date_of_birth, 111) as date_of_birth ";
-            Get_Cus_Name +="FROM dbo.customer_nl_view AS cus RIGHT OUTER JOIN ";
-            Get_Cus_Name +="dbo.patient_info_view AS pt ON cus.person_id = pt.person_id ";
-            Get_Cus_Name +="WHERE (cus.customer_id = '" + varPID + "') OR (pt.person_id = '" + varPID + "') ";
-            //Get_Cus_Name +="OR (cus.customer_id = '" + varPID + "')";
-
-            try
-            {
-                PatientInfor.DataSource = GetDataTable(Get_Cus_Name);
-                PatientInfor.DataBind();
-            }
-            catch (Exception ex)
-            {
-                Response.Write(ex.Message);
-            }
-                //    if (lng == "eng")
-                (PatientInfor.FindControl("lbTitle") as Label).Text = "LAB TEST DETAIL";
-            //  else
-            //    (PatientInfor.FindControl("lbTitle") as Label).Text = "CHI TIẾT LAB TEST";
-        }
-        protected void RadGrid1_PreRender(object sender, EventArgs e)
-        {
-
-        }
-        protected void RadGrid1_ItemCreated(object sender, GridItemEventArgs e)
-        {
-            if (e.Item is GridDataItem && Export)
-            {
-                foreach (TableCell cell in e.Item.Cells)
-                    cell.Style["Vertical-align"] = "top";
-            }
-            if (e.Item is GridHeaderItem && Export)
-            {
-                GridHeaderItem item = e.Item as GridHeaderItem;
-                item.Style["border"] = "solid 0.1pt #000000";
-            }
-            if (e.Item is GridFooterItem && Export)
-            {
-                GridFooterItem itemf = e.Item as GridFooterItem;
-                itemf.BackColor = System.Drawing.Color.LightBlue;
-                itemf.Font.Bold = true;
-            }
-            if (e.Item is GridFilteringItem && Export)
-                e.Item.Visible = false;
-        }
+        }        
         protected void RadGrid1_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
             if (e.Item is GridDataItem)
@@ -140,30 +83,6 @@ namespace EMR.emr
                     //dataItem["observed_value"].BackColor = Color.Yellow;
                 }
             }
-            if (e.Item is GridDataItem && Export)
-            {
-                GridDataItem dataItem = (GridDataItem)e.Item;
-                foreach (TableCell cell in e.Item.Cells)
-                {
-                    cell.Style["Vertical-align"] = "top";
-                    //dataItem["OPD"].Font.Strikeout = true;
-                    if (Export_Group)
-                        cell.Style["font-weight"] = "normal";
-                }
-            }
-            if (e.Item is GridHeaderItem && Export)
-            {
-                GridHeaderItem item = e.Item as GridHeaderItem;
-                item.Style["border"] = "solid 0.1pt #000000";
-            }
-            if (e.Item is GridFooterItem && Export)
-            {
-                GridFooterItem itemf = e.Item as GridFooterItem;
-                itemf.BackColor = System.Drawing.Color.LightBlue;
-                itemf.Font.Bold = true;
-            }
-            if (e.Item is GridFilteringItem && Export)
-                e.Item.Visible = false;
         }
         protected void RadGrid1_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {

@@ -1,0 +1,139 @@
+﻿body{
+            margin:0px auto;
+            width:100%;            
+        }        
+        .rgview table
+	    {
+	        border-collapse: collapse;
+	        /*background: #ebf1de;*/
+            width:100%;
+	    }
+	    .rgview th, .rgview td
+	    {  
+	        padding: 4px 8px;
+	    }
+	    .rgview th
+	    {           
+	        /*background-color: #d8e4bc;*/
+	        color: #fff;
+	        border: 1px solid #ccc;
+	    }
+	    .rgview th a
+	    {
+	        color: #fff;
+	        text-decoration: none;
+	    }
+	    .rgview tr:hover
+	    {  
+	        background: #d8e4bc;
+	    }
+	    .rgview td
+	    {
+	        border: 1px solid #ccc;           
+	    }   
+        
+        .tblHeader {
+			border-collapse: collapse;
+			border: 1px solid #ccc;
+			font-size: smaller;
+            table-layout: fixed;
+			width: 100%;
+            align-content:center;
+            border-spacing: 0px;
+            font-weight:normal;
+		} 
+                     
+        .tbFooter table
+	   {            
+	        border-spacing: 0px;
+            border-collapse:collapse;  /* <--- add this so all the internal <td>s share adjacent borders  */
+            border:1px solid black;
+            width: 100%;
+	    }
+	    .tbFooter th, .tbFooter td
+	    {  
+	        padding: 5px;
+            border-collapse:collapse;  
+	    }
+	    .tbFooter th
+	    {           	                	        
+	        border: 1px solid #ccc;            
+	    }	    
+	    .tbFooter td
+	    {
+	        border: 1px solid #ccc;                       
+	    }
+    .column1 {
+			float: left;
+			width: 28%;
+			text-align:center;
+			border: 1pt;
+			font-style: italic;
+		}		
+		.column2 {
+			float: left;
+			width: 72%;
+		}				
+		/* Clear floats after the columns */		
+        .RadGrid_WebBlue td, .RadGrid_WebBlue th
+        {
+            border-collapse: collapse;            
+            border-right: solid 1px black !important;              
+            border-top:solid 1px black !important;         
+        }        
+        .tbRadGrid_Item table
+	   {            
+	        border-spacing: 0px;
+            border-collapse:collapse;  /* <--- add this so all the internal <td>s share adjacent borders  */
+            border:0px;
+            width: 100%;
+	    }
+        .tbRadGrid_Item td, .tbRadGrid_Item th
+	   {            	        
+            border-collapse:collapse;  
+            border:0px;            
+	    }
+        @media screen{
+            .cssclsNoScreen{display:none}            
+        }
+        
+        @media print {
+            .cssclsNoPrint {display: none;}            
+        }
+
+#menu {list-style-type:none; padding:0; margin:0;width:1150px; position:relative;}
+#menu ul {list-style-type:none; padding:0; margin:0; background:#fff;}
+#menu li {float:right; background:#457; position:relative;border-right:1px solid #fff;}
+#menu li.sub {background:#007196; margin-right:1px; }
+#menu li.sub.hover {color:#ff0;}
+#menu li.sub.click {color:#ff0;}
+#menu li.sub.hover {background:#97bb19;}
+#menu li.sub.click {background:#97bb19;}
+
+
+#menu li.hover {background:#663; z-index:500;}
+#menu li.click {background:#663;}
+
+#menu li, #menu li a {display:block; color:#fff; font-family:arial, sans-serif; font-size:12px; line-height:24px; width:125px; text-decoration:none; text-align:center; cursor:pointer; font-weight:bold;}
+
+#menu ul li a {text-align:left; text-indent:5px;width:250px;}
+
+#menu ul {position:absolute;left:-9999px;}
+#menu li.click ul ul {position:absolute;left:-9999px;}
+#menu li.click ul li.hover ul ul {position:absolute;left:-9999px;}
+
+#menu li.click ul li {margin-top:1px; border-right:0;}
+
+#menu li.click ul {left:0px; top:24px; background:#fff; border-right:1px solid #fff;}
+#menu li.click ul li.hover ul, 
+#menu li.click ul li.hover ul li.hover ul {left:110px; top:-1px; border-left:1px solid #fff; background:#fff;}
+
+#menu li.click ul li.hover ul li {background:#c60;}
+#menu li.click ul li.hover ul li.hover ul li {background:#780; z-index:500;}
+
+#menu li.click ul li.hover ul li.hover {z-index:500; background:#fa4;}
+#menu li.click ul li.hover ul li.hover a {color:#000;}
+
+#menu li.click ul li.hover ul li.hover ul li.hover {background:#aa0;}
+#menu li.click ul li.hover ul li.hover ul li.hover a {color:#fff;}
+

@@ -31,7 +31,7 @@
                     <telerik:GridTemplateColumn HeaderButtonType="TextButton" HeaderStyle-Width = "15%" DataField="patient_name"
                         UniqueName="patient_name" HeaderText="Patient name" SortExpression="patient_name" HeaderStyle-HorizontalAlign="Left">
                         <ItemTemplate>                             
-                            <a href="#" onclick="javascript:window.open('<%# Eval("urlink") %>','mywin','left=60,top=20,width=1100,height=1000,toolbar=0,resizable=0');return false;" >
+                            <a href="#" onclick="javascript:window.open('<%# Eval("urlink") %>','mywin','left=60,top=20,width=1300,height=1000,toolbar=0,resizable=0');return false;" >
                                 <%# Eval("patient_name") %>
                             </a>
                         </ItemTemplate>

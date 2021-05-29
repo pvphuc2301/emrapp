@@ -20,25 +20,23 @@ namespace EMR
 
         protected void Page_Load(object sender, EventArgs e)
         {
-                UserID = (string)Session["UserID"];
-                string redirecturl = "./login.aspx?ReturnUrl=";
-                redirecturl += Request.ServerVariables["script_name"] + "?";
-                redirecturl += Server.UrlEncode(Request.QueryString.ToString());
-                if (string.IsNullOrEmpty(UserID))
-                    Response.Redirect(redirecturl);
+            UserID = (string)Session["UserID"];
+            string redirecturl = "./login.aspx?ReturnUrl=";
+            redirecturl += Request.ServerVariables["script_name"] + "?";
+            redirecturl += Server.UrlEncode(Request.QueryString.ToString());
+            if (string.IsNullOrEmpty(UserID))
+                Response.Redirect(redirecturl);
 
-                lblUserName.InnerText = UserID;
-            // TheSessionId();
-            //if (!string.IsNullOrEmpty(txt_pid.Text))
-            //{
-            //    string _jsonData = WebHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=4&keyword=" + txt_pid.Text);
-
-            //    if (_jsonData != null)
-            //    {
-            //        RadGrid5.DataSource = WebHelpers.GetJSONToDataTable(_jsonData);
-            //        RadGrid5.DataBind();
-            //    }
-            //}
+            lblUserName.InnerText = UserID;
+            if (!IsPostBack)
+            {
+        //        if (Session["PageOpened"] != null)
+          //      {
+           //         HttpContext current_ss = HttpContext.Current;
+          //          HttpContext.Current.Response.Redirect("InvalidAccess.aspx");
+           //     }
+         //       else { Session["PageOpened"] = true; }
+            }
         }
         public void TheSessionId()
         {
