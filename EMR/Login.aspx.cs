@@ -14,6 +14,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.DirectoryServices;
 using EMR;
+
 using Newtonsoft.Json.Linq;
 
 namespace Emr_client.Emr
@@ -21,6 +22,7 @@ namespace Emr_client.Emr
     public partial class Login : System.Web.UI.Page
     {
         public string ConnStringEMR = "";
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Convert.ToString(Session["company_code"]) == "AIHC")
@@ -28,7 +30,8 @@ namespace Emr_client.Emr
                 ConnClass ConnStr = new ConnClass();
                 ConnStringEMR = ConnStr.SQL_EMRConnString;
             }
-        }        
+        }
+
         protected void cmdLogin_Click(object sender, System.EventArgs e)
         {
             bool isLogin = false;// string current_session = "";
@@ -39,12 +42,12 @@ namespace Emr_client.Emr
 
             if (pp == "06C86B4053CDB66C7D0A58BF2BB82542" | pp == "06c86b4053cdb66c7d0a58bf2bb82542")
                 isLogin = true;
-            //TODO Lab 16: Login users and generate an auth. cookie        
+            //TODO Lab 16: Login users and generate an auth. cookie
             if (isLogin)
             {
                 Session["UserID"] = UserName.Value;
                 put_session_value(UserName.Value, Password.Value);
-              //  HttpContext current_ss = HttpContext.Current;
+                //  HttpContext current_ss = HttpContext.Current;
                 //Session["current_session"] = current_ss.Session.SessionID;
                 Insert_EMR_Account(UserName.Value);
                 if (string.IsNullOrEmpty(Request.QueryString["ReturnUrl"]))
@@ -54,25 +57,53 @@ namespace Emr_client.Emr
             }
             else
                 lblInfo.Text = "Login Failed!";
-
         }
+
+        //public void put_session_value(string varUserAccount, string varUserPW)
+        //{
+        //    string _jsonData = WebHelpers.GetAPI("api/employee/employee/user/" + varUserAccount);
+
+        //    if (!string.IsNullOrEmpty(_jsonData))
+        //    {
+        //        dynamic data = JObject.Parse(_jsonData);
+        //        Session["UserName"] = Convert.ToString(data.patient_name_e);
+        //        Session["DepCode"] = Convert.ToString(data.department_code);
+        //        Session["DepName"] = Convert.ToString(data.department_name_e);
+        //        Session["user_email"] = Convert.ToString(data.email_business);
+        //        Session["emp_id"] = Convert.ToString(data.employee_id);
+        //        Session["emp_nr"] = Convert.ToString(data.employee_nr);
+        //      //  Session["upw"] = varUserPW;
+        //        Session["company_code"] = "AIH";
+        //    }
+        //}
         public void put_session_value(string varUserAccount, string varUserPW)
         {
-            string _jsonData = WebHelpers.GetAPI("api/employee/employee/user/" + varUserAccount);
+            dynamic response = WebHelpers.GetAPI("api/employee/employee/user/" + varUserAccount);
 
-            if (!string.IsNullOrEmpty(_jsonData))
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic data = JObject.Parse(_jsonData);
-                Session["UserName"] = Convert.ToString(data.patient_name_e);
-                Session["DepCode"] = Convert.ToString(data.department_code);
-                Session["DepName"] = Convert.ToString(data.department_name_e);
-                Session["user_email"] = Convert.ToString(data.email_business);
-                Session["emp_id"] = Convert.ToString(data.employee_id);
-                Session["emp_nr"] = Convert.ToString(data.employee_nr);
-              //  Session["upw"] = varUserPW;
-                Session["company_code"] = "AIH";
+                if (!string.IsNullOrEmpty(response.Data))
+                {
+                    dynamic data = JObject.Parse(response.Data);
+                    Session["UserName"] = Convert.ToString(data.patient_name_e);
+                    Session["DepCode"] = Convert.ToString(data.department_code);
+                    Session["DepName"] = Convert.ToString(data.department_name_e);
+                    Session["user_email"] = Convert.ToString(data.email_business);
+                    Session["emp_id"] = Convert.ToString(data.employee_id);
+                    Session["emp_nr"] = Convert.ToString(data.employee_nr);
+
+                    //Session["UserName"] = data.patient_name_e;
+                    //Session["DepCode"] = data.department_code;
+                    //Session["DepName"] = data.department_name_e;
+                    //Session["user_email"] = data.email_business;
+                    //Session["emp_id"] = data.employee_id;
+                    //Session["emp_nr"] = data.employee_nr;
+                    //  Session["upw"] = varUserPW;
+                    Session["company_code"] = "AIH";
+                }
             }
         }
+
         public string EncodePassword(string originalPassword)
         {
             //Declarations
@@ -90,6 +121,7 @@ namespace Emr_client.Emr
             return EnPassword.Replace("-", "");
             // return BitConverter.ToString(encodedBytes);
         }
+
         public bool IsAuthenticated(string user, string pass)
         {
             bool authenticated = false;
@@ -133,26 +165,6 @@ namespace Emr_client.Emr
                     string queryInsert = "INSERT INTO account (user_name, site_rcd ) ";
                     queryInsert += "VALUEs ('" + varAccount + "','AIH') ";
                     SQL_Class.RunQuery(queryInsert, ConnStringEMR);
-                }
-            }
-        }
-        public void put_session_value(string varUserAccount, string varUserPW)
-        {
-            dynamic response = WebHelpers.GetAPI("api/employee/employee/user/" + varUserAccount);
-
-            if(response.Status = System.Net.HttpStatusCode.OK)
-            {
-                if (!string.IsNullOrEmpty(response.Data))
-                {
-                    dynamic data = JObject.Parse(response.Data);
-                    Session["UserName"] = data.patient_name_e;
-                    Session["DepCode"] = data.department_code;
-                    Session["DepName"] = data.department_name_e;
-                    Session["user_email"] = data.email_business;
-                    Session["emp_id"] = data.employee_id;
-                    Session["emp_nr"] = data.employee_nr;
-                    //  Session["upw"] = varUserPW;
-                    Session["company_code"] = "AIH";
                 }
             }
         }

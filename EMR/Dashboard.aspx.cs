@@ -30,28 +30,29 @@ namespace EMR
             lblUserName.InnerText = UserID;
             if (!IsPostBack)
             {
-        //        if (Session["PageOpened"] != null)
-          //      {
-           //         HttpContext current_ss = HttpContext.Current;
-          //          HttpContext.Current.Response.Redirect("InvalidAccess.aspx");
-           //     }
-         //       else { Session["PageOpened"] = true; }
+                //        if (Session["PageOpened"] != null)
+                //      {
+                //         HttpContext current_ss = HttpContext.Current;
+                //          HttpContext.Current.Response.Redirect("InvalidAccess.aspx");
+                //     }
+                //       else { Session["PageOpened"] = true; }
             }
         }
+
         public void TheSessionId()
         {
             HttpContext current_ss = HttpContext.Current;
             current_session = current_ss.Session.SessionID;
             if (!string.IsNullOrEmpty(current_ss.Session.SessionID))
                 HttpContext.Current.Response.Redirect("InvalidAccess.aspx");
-           /* current_ss.Session["UserID"] = firstName;
-            firstName = (string)(context.Session["FirstName"]);
+            /* current_ss.Session["UserID"] = firstName;
+             firstName = (string)(context.Session["FirstName"]);
 
-            HttpContext ss = HttpContext.Current.Session;
-            if (!HttpContext.Current.Session("id") == null)
-                HttpContext.Current.Response.Redirect("InvalidAccess.aspx");
-            else
-                HttpContext.Current.Session("id") = ss.SessionID;*/
+             HttpContext ss = HttpContext.Current.Session;
+             if (!HttpContext.Current.Session("id") == null)
+                 HttpContext.Current.Response.Redirect("InvalidAccess.aspx");
+             else
+                 HttpContext.Current.Session("id") = ss.SessionID;*/
         }
 
         protected void RadGrid1_SelectedIndexChanged(object sender, EventArgs e)
@@ -60,41 +61,41 @@ namespace EMR
 
             string patientID = item.GetDataKeyValue("patient_id").ToString();
 
-            string _jsonData = WebHelpers.GetAPI("api/Patient/check-primary/" + patientID);
-            dynamic data = JObject.Parse(_jsonData);
-
-            string script;
-
-            if (data.primary_visible_patient_id != null)
+            dynamic response = WebHelpers.GetAPI("api/Patient/check-primary/" + patientID);
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                _jsonData = WebHelpers.GetAPI("api/Patient/select-patient-linked/" + patientID);
+                dynamic data = JObject.Parse(response.Data);
 
-                JavaScriptSerializer js = new JavaScriptSerializer();
-            }
-            else
-            {
-                script = "openPID('" + patientID + "');";
-                ScriptManager.RegisterClientScriptBlock((sender as Control), GetType(), "alert", script, true);
+                string script;
+
+                if (data.primary_visible_patient_id != null)
+                {
+                    //response = WebHelpers.GetAPI("api/Patient/select-patient-linked/" + patientID);
+                    JavaScriptSerializer js = new JavaScriptSerializer();
+                }
+                else
+                {
+                    script = "openPID('" + patientID + "');";
+                    ScriptManager.RegisterClientScriptBlock((sender as Control), GetType(), "alert", script, true);
+                }
             }
         }
 
         protected void RadGrid5_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
 
         protected void RadGrid2_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
         }
 
         protected void RadGrid1_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            string _jsonData = WebHelpers.GetAPI("api/Patient/outpatient-today-list?keyword=my.nguyen&pageIndex=1&pageSize=4");
+            dynamic response = WebHelpers.GetAPI("api/Patient/outpatient-today-list?keyword=my.nguyen&pageIndex=1&pageSize=4");
 
-            if (_jsonData != null)
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                JObject json = JObject.Parse(_jsonData);
+                JObject json = JObject.Parse(response.Data);
                 string strJSON = "";
                 strJSON += json["items"];
 
@@ -104,27 +105,24 @@ namespace EMR
 
         protected void RadGrid2_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            string _jsonData = WebHelpers.GetAPI("api/Patient/appoinment-today-list?keyword=my.nguyen&pageIndex=1&pageSize=4");
+            dynamic response = WebHelpers.GetAPI("api/Patient/appoinment-today-list?keyword=my.nguyen&pageIndex=1&pageSize=4");
 
-            if (_jsonData != null)
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                JObject json = JObject.Parse(_jsonData);
+                JObject json = JObject.Parse(response.Data);
                 string strJSON = "";
                 strJSON += json["items"];
 
                 (sender as RadGrid).DataSource = WebHelpers.GetJSONToDataTable(strJSON);
             }
-
         }
 
         protected void RadGrid3_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-
             dynamic response = WebHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=4&keyword=" + txt_pid.Value);
 
             if (response.Status == System.Net.HttpStatusCode.OK)
@@ -135,7 +133,7 @@ namespace EMR
 
             //string pid = txt_pid.Text;
 
-            //string _jsonData = WebHelpers.GetAPI("api/Patient/demographic-search?keyword=" + pid + "&pageIndex=1&pageSize=4");
+            //dynamic response = WebHelpers.GetAPI("api/Patient/demographic-search?keyword=" + pid + "&pageIndex=1&pageSize=4");
 
             //if (!String.IsNullOrEmpty(_jsonData))
             //{
@@ -149,7 +147,6 @@ namespace EMR
 
         protected void RadGrid4_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-
         }
 
         protected void RadGrid1_ItemDataBound(object sender, GridItemEventArgs e)
@@ -176,8 +173,8 @@ namespace EMR
             }
         }
 
-
         #region ...
+
         //public DataTable GetDataTable(string query)
         //{
         //    SqlConnection conn = new SqlConnection(ConnStringHIS);
@@ -239,13 +236,12 @@ namespace EMR
             query += " ORDER BY pwqe.start_date_time DESC;";
 
             return query;
-
         }
-        #endregion
+
+        #endregion ...
 
         protected void RadGrid5_SelectedIndexChanged1(object sender, EventArgs e)
         {
-            
             GridDataItem item = (GridDataItem)(sender as RadGrid).SelectedItems[0];
             string PID = item.GetDataKeyValue("patient_id").ToString();
             string PVID = item.GetDataKeyValue("visible_patient_id").ToString();

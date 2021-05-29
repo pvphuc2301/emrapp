@@ -19,6 +19,7 @@ namespace EMR
 
         public string varPID = ""; public string varVPID = "";
         public string UserID;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             //if (Session["PageOpenEMR"] != null)
@@ -30,7 +31,7 @@ namespace EMR
             //else { Session["PageOpenEMR"] = true; }
 
             varPID = Request.QueryString["pid"]; // "97052A99-0134-11EB-B34D-D89EF37D444C";//  "C248E0FC-39B6-493F-A197-6CF2A96B37AD";//
-            varVPID = Request.QueryString["vpid"]; //"3afc144a-86ca-11eb-9dfe-dca2660bc0a2";// ValueHiddenField.Value;        
+            varVPID = Request.QueryString["vpid"]; //"3afc144a-86ca-11eb-9dfe-dca2660bc0a2";// ValueHiddenField.Value;
             //varVisibleID = Request.QueryString["vbid"]; //"900031267";
             //LoadPatientInfomation();
 
@@ -50,7 +51,7 @@ namespace EMR
 
                 lblPatientInfo.InnerHtml = "<strong>" + DataHelpers.patient.first_name_e + " " + DataHelpers.patient.last_name_e + " (" + DataHelpers.patient.title_e + ")</strong>, <small>DOB</small> " + DateTime.Parse(DataHelpers.patient.date_of_birth).ToString("dd/MM/yyyy") + " (" + DataHelpers.CalculateAge(DateTime.Parse(DataHelpers.patient.date_of_birth)) + "y) <small>SEX</small> " + DataHelpers.patient.gender_l + " <small>PID</small> <strong>" + DataHelpers.patient.visible_patient_id + "</strong>";
 
-                MainContent.ContentUrl = string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}",varPID, varVPID);
+                MainContent.ContentUrl = string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", varPID, varVPID);
             }
 
             //form ký sinh trùng
@@ -60,7 +61,6 @@ namespace EMR
                 ConnStringHIS = ConnStr.SQL_HISConnString;
                 ConnStringEMR = ConnStr.SQL_EMRConnString;
             }
-
         }
 
         protected void RadGrid1_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
@@ -68,7 +68,7 @@ namespace EMR
             if (!IsPostBack)
             {
                 dynamic response = WebHelpers.GetAPI("api/emr/menu-visit/" + varPID);
-                
+
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
                     RadGrid1.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
@@ -85,11 +85,11 @@ namespace EMR
                 case "F1":
                     {
                         string ParentID = Convert.ToString(dataItem.GetDataKeyValue("patient_visit_id"));
-                        
+
                         DataHelpers.LoadPatientVisitInfomation(ParentID);
 
                         dynamic response = WebHelpers.GetAPI("api/emr/menu-form/" + ParentID);
-                        
+
                         if (response.Status == System.Net.HttpStatusCode.OK)
                         {
                             e.DetailTableView.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
@@ -109,6 +109,7 @@ namespace EMR
                 RadGrid1.DataSource = WebHelpers.GetJSONToDataTable(query);
             }
         }
+
         public string ReturnVisit_Date(object varDate, object varVisitType, object varVisitNo)
         {
             string tmp = ""; DateTime tmpDate;
@@ -120,6 +121,7 @@ namespace EMR
             }
             return tmp;
         }
+
         public string ReturnForm_Name(object varStatus, object varFormName, object varDr)
         {
             string tmp = "";
@@ -134,9 +136,9 @@ namespace EMR
 
         //    if (_jsonData != null)
         //    {
-        //        dynamic data = JObject.Parse(_jsonData);                
-        //        tmp = "../" + data.url + "?pid=" + varVisibleID;//"../emr/"+ 
-        //    }                
+        //        dynamic data = JObject.Parse(_jsonData);
+        //        tmp = "../" + data.url + "?pid=" + varVisibleID;//"../emr/"+
+        //    }
         //    return tmp;
         //}
         public string Return_Doc_URL(object varModelId, object varDocID)
@@ -146,7 +148,7 @@ namespace EMR
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                   dynamic data = JObject.Parse(response.Data);
+                dynamic data = JObject.Parse(response.Data);
                 tmp = string.Format("../{0}?modelId={1}&docId={2}&pId={3}&vpId={4}", data.url, varModelId, varDocID, varPID, varVPID);
             }
 
@@ -177,6 +179,7 @@ namespace EMR
             }
             return null;
         }
+
         protected void RadGrid2_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
             string query = "SELECT document_type_rcd, document_type_name description FROM document_type ";
@@ -185,6 +188,7 @@ namespace EMR
             if (!string.IsNullOrEmpty(varPID) && !IsPostBack)
                 RadGrid2.DataSource = GetDataTable(query, ConnStringEMR);
         }
+
         protected void RadGrid2_DetailTableDataBind(object source, Telerik.Web.UI.GridDetailTableDataBindEventArgs e)
         {
             GridDataItem dataItem = (GridDataItem)e.DetailTableView.ParentItem;
@@ -208,6 +212,7 @@ namespace EMR
                     }
             }
         }
+
         protected void RadGrid3_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
             if (!IsPostBack)
@@ -220,6 +225,7 @@ namespace EMR
                 }
             }
         }
+
         protected void RadGrid3_DetailTableDataBind(object source, Telerik.Web.UI.GridDetailTableDataBindEventArgs e)
         {
             GridDataItem dataItem = (GridDataItem)e.DetailTableView.ParentItem;
@@ -228,10 +234,10 @@ namespace EMR
             {
                 case "F1":
                     {
-                        string ParentID1 = Convert.ToString(dataItem.GetDataKeyValue("patient_id")); 
+                        string ParentID1 = Convert.ToString(dataItem.GetDataKeyValue("patient_id"));
                         string ParentID = Convert.ToString(dataItem.GetDataKeyValue("document_type_rcd"));
                         string apiURL = "api/patient/document-list/" + ParentID1 + "/" + ParentID;
-                        dynamic response = WebHelpers.GetAPI("api/emr/menu-form/" + ParentID);
+                        dynamic response = WebHelpers.GetAPI(apiURL);
 
                         if (response.Status == System.Net.HttpStatusCode.OK)
                         {
@@ -241,6 +247,27 @@ namespace EMR
                     }
             }
         }
+
+        //protected void RadGrid3_DetailTableDataBind(object source, Telerik.Web.UI.GridDetailTableDataBindEventArgs e)
+        //{
+        //    GridDataItem dataItem = (GridDataItem)e.DetailTableView.ParentItem;
+
+        //    switch (e.DetailTableView.Name)
+        //    {
+        //        case "F1":
+        //            {
+        //                string ParentID1 = Convert.ToString(dataItem.GetDataKeyValue("patient_id"));
+        //                string ParentID = Convert.ToString(dataItem.GetDataKeyValue("document_type_rcd"));
+        //                string apiURL = "api/patient/document-list/" + ParentID1 + "/" + ParentID;
+        //                dynamic response = WebHelpers.GetAPI(apiURL);
+        //                if (response.Status == System.Net.HttpStatusCode.OK)
+        //                {
+        //                    e.DetailTableView.DataSource = WebHelpers.GetJSONToDataTable(response);
+        //                }
+        //                break;
+        //            }
+        //    }
+        //}
 
         public string GetQuery(bool showDetail, string varID)
         {
@@ -262,7 +289,7 @@ namespace EMR
             query += "INNER JOIN document_page_nl_view AS dp ON dp.document_version_id = dv.document_version_id LEFT JOIN ";
             query += "document_scan_info_nl_view AS dsi ON dsi.document_scan_info_id = dp.document_scan_info_id LEFT JOIN ";
             query += "primary_patient_view AS patv ON patv.transaction_patient_id = doc.person_id AND patv.hospital_code = 'AIH' LEFT JOIN ";
-            query += "person_formatted_name_iview_nl_view AS pfn ON pfn.person_id = patv.display_patient_id ";            
+            query += "person_formatted_name_iview_nl_view AS pfn ON pfn.person_id = patv.display_patient_id ";
             query += "WHERE visible_patient_id = '" + varVisibleID + "') as scnd ";
             query += "GROUP BY scnd.visible_patient_id, scnd.person_name_e, scnd.person_name_l, scnd.document_type_rcd, ";
             query += "scnd.doc_type_name_e, scnd.doc_type_name_l, scnd.document_type_rcd ";// --AND ecr.name_e LIKE N'Lab%'
@@ -272,12 +299,12 @@ namespace EMR
 
             return Get_query;
         }
+
         public string GetQuery_Detail(bool showDetail, string varDocTypeID)
         {
             string Get_query = "";
-            
-            return Get_query;
 
+            return Get_query;
         }
 
         public string ReturnScan_Date(object varDate, object varEvent)
@@ -291,9 +318,10 @@ namespace EMR
             }
             return tmp;
         }
+
         public string Return_OrderURL(object varModelID)
-        {           
-            string tmp = "labinfor.aspx?pid=" + varPID + "&vid="+ varModelID;
+        {
+            string tmp = "labinfor.aspx?pid=" + varPID + "&vid=" + varModelID;
 
             return tmp;
         }
@@ -324,7 +352,6 @@ namespace EMR
 
         protected void RadGrid1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
         }
 
         protected void btnLogout_ServerClick(object sender, EventArgs e)
