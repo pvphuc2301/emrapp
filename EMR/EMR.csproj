@@ -49,17 +49,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Asp.Net.Web.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Asp.Net.Web.UI\bin\Asp.Net.Web.UI.dll</HintPath>
-    </Reference>
     <Reference Include="BarcodeLib, Version=1.0.0.19, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Q:\HIS OPERATION\4.EMR\Tmp\BarcodeLib.dll</HintPath>
-    </Reference>
-    <Reference Include="Bootstrap.Icons, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Bootstrap.Icons\bin\Bootstrap.Icons.dll</HintPath>
+      <HintPath>bin\BarcodeLib.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -67,7 +59,7 @@
     </Reference>
     <Reference Include="OnBarcode.Barcode.BarcodeScanner, Version=4.2.0.0, Culture=neutral, PublicKeyToken=7fbb339ece197812, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Q:\HIS OPERATION\4.EMR\Tmp\OnBarcode.Barcode.BarcodeScanner.dll</HintPath>
+      <HintPath>bin\OnBarcode.Barcode.BarcodeScanner.dll</HintPath>
     </Reference>
     <Reference Include="PopupControl, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\AdamsLair.WinForms.PopupControl.1.0.1\lib\net40\PopupControl.dll</HintPath>
@@ -138,7 +130,7 @@
     </Reference>
     <Reference Include="zxing, Version=0.14.0.0, Culture=neutral, PublicKeyToken=4e88037ac681fe60, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Q:\HIS OPERATION\4.EMR\Tmp\zxing.dll</HintPath>
+      <HintPath>bin\zxing.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -178,17 +170,19 @@
     <Content Include="App_Data\RadCaptcha\X.wav" />
     <Content Include="App_Data\RadCaptcha\Y.wav" />
     <Content Include="App_Data\RadCaptcha\Z.wav" />
-    <Content Include="BarcodeLib.dll" />
+    <Content Include="assets\node_modules\html5-editor\bootstrap-wysihtml5.css" />
+    <Content Include="assets\node_modules\html5-editor\bootstrap-wysihtml5.js" />
+    <Content Include="assets\node_modules\html5-editor\wysihtml5-0.3.0.js" />
     <Content Include="Dashboard.aspx" />
     <Content Include="emr\emrinfor.aspx" />
     <Content Include="emr\emrview.aspx" />
     <Content Include="emr\labinfor.aspx" />
     <Content Include="ER\EmerMedRec.aspx" />
     <Content Include="ER\EmerTriaAndNurAssRec.aspx" />
-    <Content Include="icons\ExclamationTriangle.ascx" />
     <Content Include="icons\PlusCircle.ascx" />
     <Content Include="icons\Trash.ascx" />
     <Content Include="icons\XSquare.ascx" />
+    <Content Include="images\AIH_Logo.jpg" />
     <Content Include="images\AIH_PI_FULL.png" />
     <Content Include="images\bottomline.png" />
     <Content Include="IPD\DeliveryCertificate.aspx" />
@@ -204,18 +198,19 @@
     <Content Include="IPD\SurgicalCertificate.aspx" />
     <Content Include="IPD\SurgicalReport.aspx" />
     <Content Include="Login.aspx" />
-    <Content Include="OnBarcode.Barcode.BarcodeScanner.dll" />
+    <Content Include="Logout.aspx" />
     <Content Include="OPD\MedicalCertificate.aspx" />
-    <Content Include="OPD\MedRecForNeoVaccin.aspx" />
     <Content Include="OPD\MedRecForVac.aspx" />
     <Content Include="OPD\OutPatMedRec.aspx" />
     <Content Include="OPD\OutPatMedRecPed.aspx" />
     <Content Include="OPD\SumOfComOutpCase.aspx" />
     <Content Include="OPD\UsUriSysReport.aspx" />
+    <Content Include="Other\AdminGroup.aspx" />
     <Content Include="Other\GridView.aspx" />
     <Content Include="Other\PageWidthAjax.aspx" />
     <Content Include="Other\Paint.aspx" />
     <Content Include="Other\PatientSummary.aspx" />
+    <Content Include="Other\sendlogview.aspx" />
     <Content Include="Phar\marprinting.aspx" />
     <Content Include="Phar\opdprescription.aspx" />
     <Content Include="Phar\opdpreslist.aspx" />
@@ -224,16 +219,16 @@
     <Content Include="Phar\orderprint.aspx" />
     <Content Include="Phar\ordertab.aspx" />
     <Content Include="Phar\phar.css" />
-    <Content Include="Print\IPD\PrtDisCer.aspx" />
     <Content Include="Print\OutPatMedRec.aspx" />
-    <Content Include="Report\ImagingDiagnosticReporting.aspx" />
+    <Content Include="emr\ImagingDiagnosticReporting.aspx" />
+    <Content Include="Print\PrtOPMedRec.aspx" />
+    <Content Include="Print\PrtOutPatMedRec.aspx" />
     <Content Include="scripts\contenteditable.min.js" />
     <Content Include="scripts\dynamicModal.js" />
     <Content Include="scripts\dynamicModal.min.js" />
     <Content Include="scripts\emrScript.js" />
     <Content Include="scripts\jquery-2.2.1.js" />
     <Content Include="scripts\jquery-2.2.1.min.js" />
-    <Content Include="zxing.dll" />
     <None Include="scripts\jquery.validate-vsdoc.js" />
     <Content Include="scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="scripts\jquery.unobtrusive-ajax.min.js" />
@@ -445,19 +440,19 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Logout.aspx.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Logout.aspx.designer.cs">
+      <DependentUpon>Logout.aspx</DependentUpon>
+    </Compile>
     <Compile Include="OPD\MedicalCertificate.aspx.cs">
       <DependentUpon>MedicalCertificate.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPD\MedicalCertificate.aspx.designer.cs">
       <DependentUpon>MedicalCertificate.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OPD\MedRecForNeoVaccin.aspx.cs">
-      <DependentUpon>MedRecForNeoVaccin.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OPD\MedRecForNeoVaccin.aspx.designer.cs">
-      <DependentUpon>MedRecForNeoVaccin.aspx</DependentUpon>
     </Compile>
     <Compile Include="OPD\MedRecForVac.aspx.cs">
       <DependentUpon>MedRecForVac.aspx</DependentUpon>
@@ -501,6 +496,13 @@
     <Compile Include="OPD\UsUriSysReport.aspx.designer.cs">
       <DependentUpon>UsUriSysReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Other\AdminGroup.aspx.cs">
+      <DependentUpon>AdminGroup.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Other\AdminGroup.aspx.designer.cs">
+      <DependentUpon>AdminGroup.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Other\GridView.aspx.cs">
       <DependentUpon>GridView.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -528,6 +530,13 @@
     </Compile>
     <Compile Include="Other\PatientSummary.aspx.designer.cs">
       <DependentUpon>PatientSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Other\sendlogview.aspx.cs">
+      <DependentUpon>sendlogview.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Other\sendlogview.aspx.designer.cs">
+      <DependentUpon>sendlogview.aspx</DependentUpon>
     </Compile>
     <Compile Include="Phar\marprinting.aspx.cs">
       <DependentUpon>marprinting.aspx</DependentUpon>
@@ -571,13 +580,6 @@
     <Compile Include="Phar\ordertab.aspx.designer.cs">
       <DependentUpon>ordertab.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Print\IPD\PrtDisCer.aspx.cs">
-      <DependentUpon>PrtDisCer.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Print\IPD\PrtDisCer.aspx.designer.cs">
-      <DependentUpon>PrtDisCer.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Print\OutPatMedRec.aspx.cs">
       <DependentUpon>OutPatMedRec.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -585,12 +587,26 @@
     <Compile Include="Print\OutPatMedRec.aspx.designer.cs">
       <DependentUpon>OutPatMedRec.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Print\PrtOPMedRec.aspx.cs">
+      <DependentUpon>PrtOPMedRec.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Print\PrtOPMedRec.aspx.designer.cs">
+      <DependentUpon>PrtOPMedRec.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Print\PrtOutPatMedRec.aspx.cs">
+      <DependentUpon>PrtOutPatMedRec.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Print\PrtOutPatMedRec.aspx.designer.cs">
+      <DependentUpon>PrtOutPatMedRec.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Report\ImagingDiagnosticReporting.aspx.cs">
+    <Compile Include="emr\ImagingDiagnosticReporting.aspx.cs">
       <DependentUpon>ImagingDiagnosticReporting.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Report\ImagingDiagnosticReporting.aspx.designer.cs">
+    <Compile Include="emr\ImagingDiagnosticReporting.aspx.designer.cs">
       <DependentUpon>ImagingDiagnosticReporting.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Alert.ascx.cs">
@@ -607,20 +623,6 @@
     <Compile Include="UserControls\AmendReason.ascx.designer.cs">
       <DependentUpon>AmendReason.ascx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\Barcode.ascx.cs">
-      <DependentUpon>Barcode.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\Barcode.ascx.designer.cs">
-      <DependentUpon>Barcode.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\Checkbox\Checkbox.ascx.cs">
-      <DependentUpon>Checkbox.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\Checkbox\Checkbox.ascx.designer.cs">
-      <DependentUpon>Checkbox.ascx</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\Message.ascx.cs">
       <DependentUpon>Message.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -634,40 +636,6 @@
     </Compile>
     <Compile Include="UserControls\PatientInfo.ascx.designer.cs">
       <DependentUpon>PatientInfo.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\PopupModal.ascx.designer.cs">
-      <DependentUpon>PopupModal.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\PrintTemplate\Date.ascx.designer.cs">
-      <DependentUpon>Date.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\PrintTemplate\DateTime.ascx.cs">
-      <DependentUpon>DateTime.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\PrintTemplate\DateTime.ascx.designer.cs">
-      <DependentUpon>DateTime.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\PrintTemplate\Label.ascx.cs">
-      <DependentUpon>Label.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\PrintTemplate\Label.ascx.designer.cs">
-      <DependentUpon>Label.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\PrintTemplate\Row.ascx.cs">
-      <DependentUpon>Row.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\PrintTemplate\Row.ascx.designer.cs">
-      <DependentUpon>Row.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="UserControls\PrintTemplate\Signature.ascx.cs">
-      <DependentUpon>Signature.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\PrintTemplate\Signature.ascx.designer.cs">
-      <DependentUpon>Signature.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\PromptButton.ascx.cs">
       <DependentUpon>PromptButton.ascx</DependentUpon>
@@ -697,17 +665,8 @@
     <Content Include="styles\telerik-custom.css" />
     <Content Include="UserControls\Alert.ascx" />
     <Content Include="UserControls\AmendReason.ascx" />
-    <Content Include="UserControls\Barcode.ascx" />
-    <Content Include="UserControls\Checkbox\Checkbox.ascx" />
     <Content Include="UserControls\Message.ascx" />
     <Content Include="UserControls\PatientInfo.ascx" />
-    <Content Include="UserControls\PopupModal.ascx" />
-    <Content Include="UserControls\PrintTemplate\Date.ascx" />
-    <Content Include="UserControls\PrintTemplate\DateTime.ascx" />
-    <Content Include="UserControls\PrintTemplate\Label.ascx" />
-    <Content Include="UserControls\PrintTemplate\Row.ascx" />
-    <Content Include="UserControls\PrintTemplate\Signature.ascx" />
-    <Content Include="UserControls\PrintTemplate\PrintWindow.ascx" />
     <Content Include="UserControls\PromptButton.ascx" />
     <Content Include="UserControls\TextField.ascx" />
     <Content Include="web.config" />
@@ -723,19 +682,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DataEntities\" />
-    <Folder Include="Print\OPD\" />
+    <Folder Include="Report\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CustomControls\CustomControls.csproj">
-      <Project>{f048a140-483f-41ab-b729-8636e67b5968}</Project>
-      <Name>CustomControls</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
@@ -757,7 +710,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

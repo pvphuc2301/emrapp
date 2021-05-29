@@ -106,7 +106,9 @@ namespace AIHPortal.Phar
             query += "dbo.patient_hospital_usage_nl_view AS phu ON phu.patient_id = pre.patient_id INNER JOIN ";
             query += "dbo.user_account_nl_view AS uac ON uac.person_id = pre.prescriber_employee_id INNER JOIN ";
             query += "dbo.employee_formatted_name_iview_nl_view AS efni ON efni.person_id = uac.person_id ";
-            query += "WHERE (pre.patient_id = '" + Guid.Parse(varPID) + "') AND (employee_nr = N'" + EmpID + "') ";
+            query += "WHERE (pre.patient_id = '" + Guid.Parse(varPID) + "') ";
+            //query += "AND (employee_nr = N'" + EmpID + "') ";
+
             // query += "WHERE (phu.visible_patient_id = '" + varVbID + "') ";
 
             //if (UGroup != "Full" | Job_Type == "Dr.")

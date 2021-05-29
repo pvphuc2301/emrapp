@@ -174,7 +174,7 @@ namespace EMR
 
             string _jsonData = WebHelpers.GetAPI("api/emr/check-document-exists/" + PVID + "/" + modelID);
 
-            if (_jsonData != null)
+            if (!string.IsNullOrEmpty(_jsonData))
             {
                 DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
                 
@@ -248,7 +248,7 @@ namespace EMR
 
             string _jsonData = WebHelpers.GetAPI(apiStr);
             
-            if (_jsonData != null)
+            if (!string.IsNullOrEmpty(_jsonData))
             {
                 DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
                 ddlDocList.Items.Clear();
@@ -270,7 +270,7 @@ namespace EMR
         {
             string _jsonData = WebHelpers.GetAPI(apiString);
 
-            if (_jsonData != null)
+            if (!string.IsNullOrEmpty(_jsonData))
             {
                 JObject json = JObject.Parse(_jsonData);
                 string strJSON = "";

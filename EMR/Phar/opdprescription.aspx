@@ -112,7 +112,7 @@
         <asp:Label runat="server" ID="lbError" ForeColor="Red" Visible="false"></asp:Label>
         <div class="cssclsNoPrint" style="height:40px;""></div>
         <telerik:RadGrid ID="RadGrid1" GridLines="None" runat="server" AllowAutomaticDeletes="True" AutoGenerateColumns="False" 
-            Width="100%" OnNeedDataSource="RadGrid1_NeedDataSource" CssClass="rgview" Skin="">
+            Width="100%" OnNeedDataSource="RadGrid1_NeedDataSource" CssClass="rgview" Skin="" ItemStyle-CssClass="rgview">
                 <MasterTableView DataKeyNames="ph_prescription_id" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Font-Bold="true" 
                     ItemStyle-Font-Size="Smaller" AlternatingItemStyle-Font-Size="Smaller" ShowHeader="true" Width="100%">
                     <Columns>                                                
@@ -238,7 +238,8 @@
 					</table>
 			  </div>
 			</div>	
-        </div>        
+        </div>
+<div style="background-color:white">
         <div style="text-align:center">
             <h2 id="lbDT" runat="server" style="margin: 0;" visible="true">ĐƠN THUỐC / PRESCRIPTION</h2>
             <h2 id="lbTV" runat="server" style="margin: 0;" visible="false">PHIẾU TƯ VẤN / CONSULTANCE NOTES</h2>
@@ -255,10 +256,10 @@
                 <label>CHẨN ĐOÁN/ DIAGNOSIS:</label>
                 <asp:Label ID="lbDianosis" runat="server" Font-Bold="false" Visible="true"></asp:Label>                                
                     <asp:Label ID="Label1" runat="server" Font-Bold="false" Visible="false"></asp:Label>
-                    <div class="cssclsNoPrint" >
+                    <div class="cssclsNoPrint">
                         <div id="PrevireDiv" runat="server" style="position: relative; float: left; padding-right: 20px;padding-left: 0px;"> 
                         <telerik:RadComboBox ID="rcbMyList1" runat="server" RenderMode="Lightweight" CssClass="cssclsNoPrint" 
-                            DataTextField="diagnosis" DataValueField="diagnosis" Width="400">  
+                            DataTextField="diagnosis" DataValueField="diagnosis" Width="400" >  
                             <ItemTemplate> 
                                 <asp:CheckBox ID="CheckBox1" runat="server" Text='<%# Eval("diagnosis") %>' CssClass="cssclsNoPrint" /> 
                             </ItemTemplate> 
@@ -280,7 +281,8 @@
                     <asp:Button runat="server" ID="PrintTV" Text="Xem phiếu tư vấn" CssClass="cssclsNoPrint"
                         OnClick="cmd_PrintTV_Click" Width="150px" Visible="false" />
 </div>            		
-		</div>  
+		</div> 
+</div>        
     </header>
     <footer id="pageFooter">
         <table class="tbFooter" style="width:100%; font-size:small; border-collapse:collapse" >
