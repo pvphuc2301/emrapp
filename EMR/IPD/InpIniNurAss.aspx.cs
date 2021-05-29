@@ -306,7 +306,7 @@ namespace EMR
                 BindSelectOption(select_mobility_code, iina.mobility_code);
                 BindSelectOption(select_nutrition_code, iina.nutrition_code);
                 BindSelectOption(select_friction_code, iina.friction_code);
-                txt_total_score.Value = iina.total_score;
+                txt_total_score.Text = iina.total_score;
 
                 txt_pres_sore_risk_code.Value = iina.pres_sore_risk_desc;
                 txt_preven_action.Value = iina.preven_action;
@@ -762,7 +762,7 @@ namespace EMR
                 iina.friction_code = Request.Form.Get("select_friction_code");
                 if (iina.friction_code != null) iina.friction_desc = Iina.FRICTION_CODE[iina.friction_code];
 
-                iina.total_score = txt_total_score.Value;
+                iina.total_score = txt_total_score.Text;
                 iina.preven_action = txt_preven_action.Value;
                 //11
                 iina.bathing_code = GetRadioButton("rad_bathing_code_", Iina.BATHING_CODE);

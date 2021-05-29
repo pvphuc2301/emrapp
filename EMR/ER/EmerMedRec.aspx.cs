@@ -825,14 +825,14 @@ namespace EMR.ER
         }
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            if (EmergencyMedicalRecord.Delete((string)Session["UserID"])[0] == WebHelpers.ResponseStatus.OK)
+            if (EmergencyMedicalRecord.Delete((string)Session["UserID"], Request.QueryString["vpid"])[0] == WebHelpers.ResponseStatus.OK)
             {
 
             }
         }
         protected void btn_grid_progress_note_del_Click(object sender, EventArgs e)
         {
-            if (EmergencyMedicalRecord.Delete((string)Session["UserID"])[0] == WebHelpers.ResponseStatus.OK)
+            if (EmergencyMedicalRecord.Delete((string)Session["UserID"], Request.QueryString["vpid"])[0] == WebHelpers.ResponseStatus.OK)
             {
 
             }

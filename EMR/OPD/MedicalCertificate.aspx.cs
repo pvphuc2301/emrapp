@@ -198,7 +198,7 @@ namespace EMR
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            if (MC.Delete((string)Session["UserID"])[0] == WebHelpers.ResponseStatus.OK) { 
+            if (MC.Delete((string)Session["UserID"], Request.QueryString["vpid"])[0] == WebHelpers.ResponseStatus.OK) { 
                 
             }
         }

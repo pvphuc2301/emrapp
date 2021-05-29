@@ -284,7 +284,7 @@ namespace EMR
 
         protected void btnDelete_ServerClick(object sender, EventArgs e)
         {
-            if (OutPatientInitialNursingAssement.Delete((string)Session["UserID"])[0] == WebHelpers.ResponseStatus.OK)
+            if (OutPatientInitialNursingAssement.Delete((string)Session["UserID"], Request.QueryString["vpid"])[0] == WebHelpers.ResponseStatus.OK)
             {
 
             }

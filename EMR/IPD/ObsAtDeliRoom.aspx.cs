@@ -706,7 +706,7 @@ namespace EMR
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            if (Oadr.Delete((string)Session["UserID"])[0] == WebHelpers.ResponseStatus.OK)
+            if (Oadr.Delete((string)Session["UserID"], Request.QueryString["vpid"])[0] == WebHelpers.ResponseStatus.OK)
             {
 
             }

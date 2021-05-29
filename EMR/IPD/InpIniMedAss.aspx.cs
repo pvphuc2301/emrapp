@@ -309,7 +309,7 @@ namespace EMR
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            Iima.Delete((string)Session["UserID"]);
+            Iima.Delete((string)Session["UserID"], Request.QueryString["vpid"]);
         }
     }
 }

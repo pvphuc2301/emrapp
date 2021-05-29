@@ -2829,7 +2829,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_total_score;
+        protected global::System.Web.UI.WebControls.Label txt_total_score;
 
         /// <summary>
         /// txt_pres_sore_risk_code control.

@@ -2018,9 +2018,21 @@ applicable for children and pregnant</span>)
                                             <div class="col-md-12">
                                                 <label class="control-label w-7 mb-2 mr-2">Nhận thức giác quan/ <span class="text-primary">Sensory perception</span></label>
 
-                                                <select runat="server" id="select_sensory_code" class="custom-select d-inline-block w-n mb-2">
+                                                <select onchange="pressure_score_risk_change()" runat="server" id="select_sensory_code" class="custom-select d-inline-block w-n mb-2">
                                                     <option></option>
                                                 </select>
+
+                                                <script>
+                                                    let sensory_score, moisture_score, activity_score, mobility_score, nutrition_score, friction_score;
+
+                                                    let pressure_score_risk_change = () => {
+                                                        if (!sensory_score || !moisture_score || !activity_score || !mobility_score || !nutrition_score || !friction_score) {
+                                                            txt_total_score.innerText = "—";
+                                                        } else {
+                                                            txt_total_score.innerText = sensory_score + moisture_score + activity_score + mobility_score + nutrition_score + friction_score;
+                                                        }
+                                                    }
+                                                </script>
                                             </div>
 
                                             <div class="col-md-12">
@@ -2067,7 +2079,7 @@ applicable for children and pregnant</span>)
                                                 <label class="control-label w-7 mb-2 mr-2">Tổng số điểm/ <span class="text-primary">Total Score</span></label>
 
                                                 <div class="form-group d-inline-block w-4">
-                                                    <webUI:TextField runat="server" ID="txt_total_score" />
+                                                    <asp:Label runat="server" ID="txt_total_score" ></asp:Label>
                                                 </div>
                                             </div>
 

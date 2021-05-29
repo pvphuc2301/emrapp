@@ -263,11 +263,14 @@ namespace EMR
 
         public Ena(dynamic document_id)
         {
-            string _jsonData = WebHelpers.GetAPI(api + document_id);
+            dynamic response = WebHelpers.GetAPI(api + document_id);
 
-            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+            if(response.Status == System.Net.HttpStatusCode.OK)
+            {
+                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
 
-            WebHelpers.BindingDatafield(db, this);
+                WebHelpers.BindingDatafield(db, this);
+            }
         }
         public Ena(dynamic document_id, dynamic user_name)
         {
@@ -468,43 +471,35 @@ namespace EMR
     }
 
         public string[] Update()
-        {   
+        {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI(api + "/edit", this);
-            message[0] = responseStatus;
+            dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
+            message[0] = response1;
 
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                responseStatus = WebHelpers.PostAPI(api + "/log/" + this.document_id);
-                message[1] = responseStatus;
+                dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
+                message[1] = response2;
             }
 
             return message;
         }
 
-        public static string[] Delete(string userName)
+        public static string[] Delete(string userName, string docId)
         {
             string[] message = new string[2];
-            try
+
+            dynamic response1 = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docId));
+
+            message[0] = response1;
+            if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-
-                string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
-
-                message[0] = responseStatus;
-                if (responseStatus == WebHelpers.ResponseStatus.OK)
-                {
-                    responseStatus = WebHelpers.PostAPI("api/ena/log/" + DataHelpers.varDocId);
-                    message[1] = responseStatus;
-                }
-
-                return message;
-            } catch (Exception ex)
-            {
-                message[0] = ex.Message;
-                return message;
+                dynamic response2 = WebHelpers.PostAPI("api/ena/log/" + docId);
+                message[1] = response2;
             }
-            
+
+            return message;
         }
     }
 
@@ -741,11 +736,14 @@ namespace EMR
 
         public Oadr(string document_id)
         {
-            string _jsonData = WebHelpers.GetAPI("api/oadr/" + document_id);
+            dynamic response = WebHelpers.GetAPI("api/oadr/" + document_id);
 
-            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+            if(response.Status == System.Net.HttpStatusCode.OK)
+            {
+                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
 
-            WebHelpers.BindingDatafield(db, this);
+                WebHelpers.BindingDatafield(db, this);
+            }
         }
 
         #region METHODS
@@ -753,32 +751,34 @@ namespace EMR
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI(api + "/edit", this);
-            message[0] = responseStatus;
+            dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
+            message[0] = response1;
 
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                responseStatus = WebHelpers.PostAPI(api + "/log/" + this.document_id);
-                message[1] = responseStatus;
+                dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
+                message[1] = response2;
             }
 
             return message;
         }
-        public static string[] Delete(string userName)
+
+        public static string[] Delete(string userName, string docId)
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
+            dynamic response1 = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docId));
 
-            message[0] = responseStatus;
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            message[0] = response1;
+            if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                responseStatus = WebHelpers.PostAPI("api/oadr/log/" + DataHelpers.varDocId);
-                message[1] = responseStatus;
+                dynamic response2 = WebHelpers.PostAPI("api/oadr/log/" + docId);
+                message[1] = response2;
             }
 
             return message;
         }
+
         #endregion
     }
 
@@ -838,11 +838,14 @@ namespace EMR
         }
         public Disc(dynamic document_id)
         {
-            string _jsonData = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
+            dynamic response = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
 
-            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+            if(response.Status == System.Net.HttpStatusCode.OK)
+            {
+                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
 
-            WebHelpers.BindingDatafield(db, this);
+                WebHelpers.BindingDatafield(db, this);
+            }
         }
 
         #region METHODS
@@ -850,31 +853,43 @@ namespace EMR
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI(string.Format("{0}/edit", api), this);
-            message[0] = responseStatus;
+            dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
+            message[0] = response1;
 
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, document_id));
-                message[1] = responseStatus;
+                dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
+                message[1] = response2;
             }
 
             return message;
         }
-        public static string[] Delete(string userName)
+        public static string[] Delete(string userName, string docid)
         {
             string[] message = new string[2];
-
-            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
-
-            message[0] = responseStatus;
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            try
             {
-                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, DataHelpers.varDocId));
-                message[1] = responseStatus;
-            }
+                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
 
-            return message;
+                message[0] = response;
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic response1 = WebHelpers.PostAPI(api + "/log/" + docid);
+                    message[1] = response1;
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = "Error";
+                response.Data = ex.Message;
+
+                message[0] = response;
+                return message;
+            }
         }
         #endregion
     }
@@ -1019,32 +1034,45 @@ namespace EMR
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI(string.Format("{0}/edit", api), this);
-            message[0] = responseStatus;
+            dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
+            message[0] = response1;
 
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, document_id));
-                message[1] = responseStatus;
+                dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
+                message[1] = response2;
             }
 
             return message;
         }
-        public static string[] Delete(string userName)
+        public static string[] Delete(string userName, string docid)
         {
             string[] message = new string[2];
-
-            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
-
-            message[0] = responseStatus;
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            try
             {
-                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, DataHelpers.varDocId));
-                message[1] = responseStatus;
-            }
+                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
 
-            return message;
+                message[0] = response;
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic response1 = WebHelpers.PostAPI(api + "/log/" + docid);
+                    message[1] = response1;
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = "Error";
+                response.Data = ex.Message;
+
+                message[0] = response;
+                return message;
+            }
         }
+        
         #endregion
     }
     public class Uusr
@@ -1096,11 +1124,14 @@ namespace EMR
       
         public Uusr(dynamic document_id)
         {
-            string _jsonData = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
+            dynamic response = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
 
-            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+            if(response.Status == System.Net.HttpStatusCode.OK)
+            {
+                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
 
-            WebHelpers.BindingDatafield(db, this);
+                WebHelpers.BindingDatafield(db, this);
+            }
         }
 
         #region METHODS
@@ -1108,30 +1139,43 @@ namespace EMR
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI(string.Format("{0}/edit", api), this);
-            message[0] = responseStatus;
+            dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
+            message[0] = response1;
 
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, document_id));
-                message[1] = responseStatus;
+                dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
+                message[1] = response2;
             }
 
             return message;
         }
-        public static string[] Delete(string userName)
+        public static string[] Delete(string userName, string docid)
         {
             string[] message = new string[2];
-
-            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
-            message[0] = responseStatus;
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            try
             {
-                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, DataHelpers.varDocId));
-                message[1] = responseStatus;
-            }
+                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
 
-            return message;
+                message[0] = response;
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic response1 = WebHelpers.PostAPI(api + "/log/" + docid);
+                    message[1] = response1;
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = "Error";
+                response.Data = ex.Message;
+
+                message[0] = response;
+                return message;
+            }
         }
         #endregion
     }
@@ -1184,11 +1228,15 @@ namespace EMR
 
         public Surc(dynamic document_id)
         {
-            string _jsonData = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
+            dynamic response = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
 
-            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
 
-            WebHelpers.BindingDatafield(db, this);
+                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
+
+                WebHelpers.BindingDatafield(db, this);
+            }
         }
 
         #region METHODS
@@ -1196,30 +1244,43 @@ namespace EMR
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI(string.Format("{0}/edit", api), this);
-            message[0] = responseStatus;
+            dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
+            message[0] = response1;
 
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, document_id));
-                message[1] = responseStatus;
+                dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
+                message[1] = response2;
             }
 
             return message;
         }
-        public static string[] Delete(string userName)
+        public static string[] Delete(string userName, string docid)
         {
             string[] message = new string[2];
-
-            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
-            message[0] = responseStatus;
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            try
             {
-                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, DataHelpers.varDocId));
-                message[1] = responseStatus;
-            }
+                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
 
-            return message;
+                message[0] = response;
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic response1 = WebHelpers.PostAPI(api + "/log/" + docid);
+                    message[1] = response1;
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = "Error";
+                response.Data = ex.Message;
+
+                message[0] = response;
+                return message;
+            }
         }
         #endregion
     }
@@ -1275,11 +1336,14 @@ namespace EMR
 
         public Somr(dynamic document_id)
         {
-            string _jsonData = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
+            dynamic response = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
 
-            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+            if(response.Status == System.Net.HttpStatusCode.OK)
+            {
+                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
 
-            WebHelpers.BindingDatafield(db, this);
+                WebHelpers.BindingDatafield(db, this);
+            }
         }
 
         #region METHODS
@@ -1287,30 +1351,43 @@ namespace EMR
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI(string.Format("{0}/edit", api), this);
-            message[0] = responseStatus;
+            dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
+            message[0] = response1;
 
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, document_id));
-                message[1] = responseStatus;
+                dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
+                message[1] = response2;
             }
 
             return message;
         }
-        public static string[] Delete(string userName)
+        public static string[] Delete(string userName, string docid)
         {
             string[] message = new string[2];
-
-            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
-            message[0] = responseStatus;
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            try
             {
-                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, DataHelpers.varDocId));
-                message[1] = responseStatus;
-            }
+                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
 
-            return message;
+                message[0] = response;
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic response1 = WebHelpers.PostAPI(api + "/log/" + docid);
+                    message[1] = response1;
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = "Error";
+                response.Data = ex.Message;
+
+                message[0] = response;
+                return message;
+            }
         }
         #endregion
     }
@@ -2457,30 +2534,43 @@ namespace EMR
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI(string.Format("{0}/edit", api), this);
-            message[0] = responseStatus;
+            dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
+            message[0] = response1;
 
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, document_id));
-                message[1] = responseStatus;
+                dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
+                message[1] = response2;
             }
 
             return message;
         }
-        public static string[] Delete(string userName)
+        public static string[] Delete(string userName, string docid)
         {
             string[] message = new string[2];
-
-            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
-            message[0] = responseStatus;
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            try
             {
-                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, DataHelpers.varDocId));
-                message[1] = responseStatus;
-            }
+                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
 
-            return message;
+                message[0] = response;
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic response1 = WebHelpers.PostAPI(api + "/log/" + docid);
+                    message[1] = response1;
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = "Error";
+                response.Data = ex.Message;
+
+                message[0] = response;
+                return message;
+            }
         }
         #endregion
     }
@@ -2619,11 +2709,14 @@ namespace EMR
 
         public Iima(dynamic document_id)
         {
-            string _jsonData = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
+            dynamic response = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
 
-            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
 
-            WebHelpers.BindingDatafield(db, this);
+                WebHelpers.BindingDatafield(db, this);
+            }
         }
 
         #region METHODS
@@ -2631,30 +2724,43 @@ namespace EMR
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI(string.Format("{0}/edit", api), this);
-            message[0] = responseStatus;
+            dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
+            message[0] = response1;
 
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, document_id));
-                message[1] = responseStatus;
+                dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
+                message[1] = response2;
             }
 
             return message;
         }
-        public static string[] Delete(string userName)
+        public static string[] Delete(string userName, string docid)
         {
             string[] message = new string[2];
-
-            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
-            message[0] = responseStatus;
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            try
             {
-                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, DataHelpers.varDocId));
-                message[1] = responseStatus;
-            }
+                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
 
-            return message;
+                message[0] = response;
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic response1 = WebHelpers.PostAPI(api + "/log/" + docid);
+                    message[1] = response1;
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = "Error";
+                response.Data = ex.Message;
+
+                message[0] = response;
+                return message;
+            }
         }
         #endregion
     }
@@ -2805,11 +2911,14 @@ namespace EMR
         };
         public Mrfv(dynamic document_id)
         {
-            string _jsonData = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
+            dynamic response = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
 
-            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
 
-            WebHelpers.BindingDatafield(db, this);
+                WebHelpers.BindingDatafield(db, this);
+            }
         }
 
         #region METHODS
@@ -2817,30 +2926,43 @@ namespace EMR
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI(string.Format("{0}/edit", api), this);
-            message[0] = responseStatus;
+            dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
+            message[0] = response1;
 
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, document_id));
-                message[1] = responseStatus;
+                dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
+                message[1] = response2;
             }
 
             return message;
         }
-        public static string[] Delete(string userName)
+        public static string[] Delete(string userName, string docid)
         {
             string[] message = new string[2];
-
-            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
-            message[0] = responseStatus;
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            try
             {
-                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, DataHelpers.varDocId));
-                message[1] = responseStatus;
-            }
+                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
 
-            return message;
+                message[0] = response;
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic response1 = WebHelpers.PostAPI(api + "/log/" + docid);
+                    message[1] = response1;
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = "Error";
+                response.Data = ex.Message;
+
+                message[0] = response;
+                return message;
+            }
         }
         #endregion
     }
@@ -2995,11 +3117,14 @@ namespace EMR
 
         public Mrnv(dynamic document_id)
         {
-            string _jsonData = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
+            dynamic response = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
 
-            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
 
-            WebHelpers.BindingDatafield(db, this);
+                WebHelpers.BindingDatafield(db, this);
+            }
         }
 
         #region METHODS
@@ -3007,30 +3132,43 @@ namespace EMR
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI(string.Format("{0}/edit", api), this);
-            message[0] = responseStatus;
+            dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
+            message[0] = response1;
 
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, document_id));
-                message[1] = responseStatus;
+                dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
+                message[1] = response2;
             }
 
             return message;
         }
-        public static string[] Delete(string userName)
+        public static string[] Delete(string userName, string docid)
         {
             string[] message = new string[2];
-
-            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
-            message[0] = responseStatus;
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            try
             {
-                responseStatus = WebHelpers.PostAPI(string.Format("{0}/log/{1}", api, DataHelpers.varDocId));
-                message[1] = responseStatus;
-            }
+                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
 
-            return message;
+                message[0] = response;
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic response1 = WebHelpers.PostAPI(api + "/log/" + docid);
+                    message[1] = response1;
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = "Error";
+                response.Data = ex.Message;
+
+                message[0] = response;
+                return message;
+            }
         }
         #endregion
     }
@@ -3198,12 +3336,14 @@ namespace EMR
 
         public OutPatientInitialNursingAssement(string document_id)
         {
-            string _jsonData = WebHelpers.GetAPI("api/oina/" + document_id);
+            dynamic response = WebHelpers.GetAPI("api/oina/" + document_id);
 
-            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
 
-            WebHelpers.BindingDatafield(db, this);
-
+                WebHelpers.BindingDatafield(db, this);
+            }
         }
         /// <summary>
         /// returns: an array of messages
@@ -3213,32 +3353,43 @@ namespace EMR
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI("api/oina/edit", this);
-            message[0] = responseStatus;
+            dynamic response1 = WebHelpers.PostAPI("api/oina/edit", this);
+            message[0] = response1;
 
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                responseStatus = WebHelpers.PostAPI("api/oina/log/" + document_id);
-                message[1] = responseStatus;
+                dynamic response2 = WebHelpers.PostAPI("api/oina/log/" + this.document_id);
+                message[1] = response2;
             }
 
             return message;
         }
-
-        public static string[] Delete(string userName)
+        public static string[] Delete(string userName, string docid)
         {
             string[] message = new string[2];
-
-            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
-
-            message[0] = responseStatus;
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            try
             {
-                responseStatus = WebHelpers.PostAPI("api/oina/log/" + DataHelpers.varDocId);
-                message[1] = responseStatus;
-            }
+                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
 
-            return message;
+                message[0] = response;
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic response1 = WebHelpers.PostAPI("api/oina/log/" + docid);
+                    message[1] = response1;
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = "Error";
+                response.Data = ex.Message;
+
+                message[0] = response;
+                return message;
+            }
         }
     }
 
@@ -3315,11 +3466,14 @@ namespace EMR
         public POMR() { }
         public POMR(string document_id)
         {
-            string _jsonData = WebHelpers.GetAPI("api/pomr/" + document_id);
+            dynamic response = WebHelpers.GetAPI("api/pomr/" + document_id);
 
-            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
 
-            WebHelpers.BindingDatafield(db, this);
+                WebHelpers.BindingDatafield(db, this);
+            }
         }
 
 
@@ -3328,13 +3482,13 @@ namespace EMR
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI("api/pomr/edit", this);
-            message[0] = responseStatus;
+            dynamic response1 = WebHelpers.PostAPI("api/pomr/edit", this);
+            message[0] = response1;
 
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                responseStatus = WebHelpers.PostAPI("api/pomr/log/" + this.document_id);
-                message[1] = responseStatus;
+                dynamic response2 = WebHelpers.PostAPI("api/pomr/log/" + this.document_id);
+                message[1] = response2;
             }
 
             return message;
@@ -3549,14 +3703,15 @@ namespace EMR
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI("api/omr/edit", this);
+            dynamic response1 = WebHelpers.PostAPI("api/omr/edit", this);
+            message[0] = response1;
 
-            message[0] = responseStatus;
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                responseStatus = WebHelpers.PostAPI("api/omr/log/" + document_id);
-                message[1] = responseStatus;
+                dynamic response2 = WebHelpers.PostAPI("api/omr/log/" + this.document_id);
+                message[1] = response2;
             }
+
             return message;
         }
         #endregion
@@ -3573,12 +3728,12 @@ namespace EMR
         {
 
             DataTable tbl = new DataTable();
-            string _jsonData = WebHelpers.GetAPI("api/omr/" + document_id);
+            dynamic response = WebHelpers.GetAPI("api/omr/" + document_id);
 
-            if (_jsonData != null)
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 // this = new OutpatientMedicalRecord();
-                tbl = WebHelpers.GetJSONToDataTable(_jsonData);
+                tbl = WebHelpers.GetJSONToDataTable(response.Data);
                 WebHelpers.BindingDatafield(tbl, this);
                 DataHelpers.varDocumentStatus = this.status;
             }
@@ -3799,11 +3954,14 @@ namespace EMR
 
         public OGIA(dynamic document_id)
         {
-            string _jsonData = WebHelpers.GetAPI(api + document_id);
+            dynamic response = WebHelpers.GetAPI(api + document_id);
 
-            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
 
-            WebHelpers.BindingDatafield(db, this);
+                WebHelpers.BindingDatafield(db, this);
+            }
         }
         public OGIA(dynamic document_id, dynamic user_name)
         {
@@ -4008,42 +4166,55 @@ namespace EMR
         public string[] Update()
         {
             string[] message = new string[2];
-
-            string responseStatus = WebHelpers.PostAPI(api + "/edit", this);
-            message[0] = responseStatus;
-
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            try
             {
-                responseStatus = WebHelpers.PostAPI(api + "/log/" + this.document_id);
-                message[1] = responseStatus;
-            }
+                dynamic response = WebHelpers.PostAPI(api + "/edit", this);
+                message[0] = response;
 
-            return message;
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic response1 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
+                    message[1] = response1;
+                }
+                return message;
+            }
+            catch (Exception ex)
+            {
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = "Error";
+                response.Data = ex.Message;
+
+                message[0] = response;
+                return message;
+            }
         }
 
-        public static string[] Delete(string userName)
+        public static string[] Delete(string userName, string docid)
         {
             string[] message = new string[2];
             try
             {
+                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
 
-                string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
+                message[0] = response;
 
-                message[0] = responseStatus;
-                if (responseStatus == WebHelpers.ResponseStatus.OK)
+                if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    responseStatus = WebHelpers.PostAPI("api/OGIA/log/" + DataHelpers.varDocId);
-                    message[1] = responseStatus;
+                    dynamic response1 = WebHelpers.PostAPI("api/OGIA/log/" + docid);
+                    message[1] = response1;
                 }
 
                 return message;
             }
             catch (Exception ex)
             {
-                message[0] = ex.Message;
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = "Error";
+                response.Data = ex.Message;
+
+                message[0] = response;
                 return message;
             }
-
         }
     }
     public partial class MC
@@ -4155,33 +4326,55 @@ namespace EMR
         public string[] Update()
         {
             string[] message = new string[2];
-
-            string responseStatus = WebHelpers.PostAPI("api/mc/edit", this);
-            message[0] = responseStatus;
-
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            try
             {
-                responseStatus = WebHelpers.PostAPI("api/mc/log/" + this.document_id);
-                message[1] = responseStatus;
-            }
+                dynamic response = WebHelpers.PostAPI("api/mc/edit", this);
+                message[0] = response;
 
-            return message;
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic response1 = WebHelpers.PostAPI("api/mc/edit" + this.document_id);
+                    message[1] = response1;
+                }
+                return message;
+            }
+            catch (Exception ex)
+            {
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = "Error";
+                response.Data = ex.Message;
+
+                message[0] = response;
+                return message;
+            }
         }
 
-        public static string[] Delete(string userName)
+        public static string[] Delete(string userName, string docid)
         {
             string[] message = new string[2];
-
-            string responseStatus = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
-
-            message[0] = responseStatus;
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            try
             {
-                responseStatus = WebHelpers.PostAPI("api/oina/log/" + DataHelpers.varDocId);
-                message[1] = responseStatus;
-            }
+                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
 
-            return message;
+                message[0] = response;
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic response1 = WebHelpers.PostAPI("api/oina/log/" + docid);
+                    message[1] = response1;
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = "Error";
+                response.Data = ex.Message;
+
+                message[0] = response;
+                return message;
+            }
         }
     }
 
@@ -4320,12 +4513,12 @@ namespace EMR
         public EmergencyMedicalRecord(dynamic document_id)
         {
             DataTable tbl = new DataTable();
-            string _jsonData = WebHelpers.GetAPI("api/emr/" + document_id);
+            dynamic response = WebHelpers.GetAPI("api/emr/" + document_id);
 
-            if (_jsonData != null)
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 // this = new OutpatientMedicalRecord();
-                tbl = WebHelpers.GetJSONToDataTable(_jsonData);
+                tbl = WebHelpers.GetJSONToDataTable(response.Data);
                 WebHelpers.BindingDatafield(tbl, this);
                 DataHelpers.varDocumentStatus = this.status;
             }
@@ -4497,32 +4690,43 @@ namespace EMR
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI("api/emr/edit", this);
-            message[0] = responseStatus;
+            dynamic response1 = WebHelpers.PostAPI("api/emr/edit", this);
+            message[0] = response1;
 
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                responseStatus = WebHelpers.PostAPI("api/emr/log/" + this.document_id);
-                message[1] = responseStatus;
+                dynamic response2 = WebHelpers.PostAPI("api/emr/log/" + this.document_id);
+                message[1] = response2;
             }
 
             return message;
         }
-
-        public static string[] Delete(string userName)
+        public static string[] Delete(string userName, string docid)
         {
             string[] message = new string[2];
-
-            string responseStatus = WebHelpers.PostAPI("api/emr/document-del/" + userName + "/" + DataHelpers.varDocId);
-
-            message[0] = responseStatus;
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            try
             {
-                responseStatus = WebHelpers.PostAPI("api/emr/log/" + DataHelpers.varDocId);
-                message[1] = responseStatus;
-            }
+                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
 
-            return message;
+                message[0] = response;
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic response1 = WebHelpers.PostAPI("api/emr/log/" + docid);
+                    message[1] = response1;
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = "Error";
+                response.Data = ex.Message;
+
+                message[0] = response;
+                return message;
+            }
         }
     }
     #endregion
@@ -4677,12 +4881,12 @@ namespace EMR
         public IniMedAssForNeoInpatient(dynamic document_id)
         {
             DataTable tbl = new DataTable();
-            string _jsonData = WebHelpers.GetAPI("api/imani/" + document_id);
+            dynamic response = WebHelpers.GetAPI("api/imani/" + document_id);
 
-            if (_jsonData != null)
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 // this = new OutpatientMedicalRecord();
-                tbl = WebHelpers.GetJSONToDataTable(_jsonData);
+                tbl = WebHelpers.GetJSONToDataTable(response.Data);
                 WebHelpers.BindingDatafield(tbl, this);
                 DataHelpers.varDocumentStatus = this.status;
             }
@@ -4698,32 +4902,43 @@ namespace EMR
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI("api/imani/edit", this);
-            message[0] = responseStatus;
+            dynamic response1 = WebHelpers.PostAPI("api/imani/edit", this);
+            message[0] = response1;
 
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                responseStatus = WebHelpers.PostAPI("api/imani/log/" + this.document_id);
-                message[1] = responseStatus;
+                dynamic response2 = WebHelpers.PostAPI("api/imani/log/" + this.document_id);
+                message[1] = response2;
             }
 
             return message;
         }
-
-        public static string[] Delete(string userName)
+        public static string[] Delete(string userName, string docid)
         {
             string[] message = new string[2];
-
-            string responseStatus = WebHelpers.PostAPI("api/imani/document-del/" + userName + "/" + DataHelpers.varDocId);
-
-            message[0] = responseStatus;
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            try
             {
-                responseStatus = WebHelpers.PostAPI("api/imani/log/" + DataHelpers.varDocId);
-                message[1] = responseStatus;
-            }
+                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
 
-            return message;
+                message[0] = response;
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic response1 = WebHelpers.PostAPI("api/imani/log/" + docid);
+                    message[1] = response1;
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = "Error";
+                response.Data = ex.Message;
+
+                message[0] = response;
+                return message;
+            }
         }
         #endregion
 
@@ -4878,11 +5093,14 @@ namespace EMR
 
         public Surr(string document_id)
         {
-            string _jsonData = WebHelpers.GetAPI("api/surr/" + document_id);
+            dynamic response = WebHelpers.GetAPI("api/surr/" + document_id);
 
-            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
 
-            WebHelpers.BindingDatafield(db, this);
+                WebHelpers.BindingDatafield(db, this);
+            }
         }
 
         #region METHODS
@@ -4890,13 +5108,13 @@ namespace EMR
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI(api + "/edit", this);
-            message[0] = responseStatus;
+            dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
+            message[0] = response1;
 
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                responseStatus = WebHelpers.PostAPI(api + "/log/" + this.document_id);
-                message[1] = responseStatus;
+                dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
+                message[1] = response2;
             }
 
             return message;
@@ -4905,13 +5123,13 @@ namespace EMR
         {
             string[] message = new string[2];
 
-            string responseStatus = WebHelpers.PostAPI(string.Format("api/surr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
+            dynamic response1 = WebHelpers.PostAPI(string.Format("api/surr/document-del/{0}/{1}", userName, DataHelpers.varDocId));
 
-            message[0] = responseStatus;
-            if (responseStatus == WebHelpers.ResponseStatus.OK)
+            message[0] = response1;
+            if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                responseStatus = WebHelpers.PostAPI("api/surr/log/" + DataHelpers.varDocId);
-                message[1] = responseStatus;
+                dynamic response2 = WebHelpers.PostAPI("api/surr/log/" + DataHelpers.varDocId);
+                message[1] = response2;
             }
 
             return message;

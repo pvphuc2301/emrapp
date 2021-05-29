@@ -167,7 +167,7 @@
 
                                             <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
 
-                                            <asp:Button ID="btnPrint" CssClass="btn btn-secondary" OnClientClick="Print()" runat="server" Text="Print" />
+                                            <asp:Button ID="btnPrint" CssClass="btn btn-secondary" OnClientClick="window.Print()" runat="server" Text="Print" />
 
                                             <asp:Button ID="btnCancel" OnClick="btnCancel_Click" CssClass="btn btn-secondary" runat="server" Text="Cancel" />
 
@@ -219,13 +219,6 @@
     <script src="../../scripts/custom.min.js"></script>
     <script src="../../scripts/myScript.js"></script>
     <script src="../../scripts/contenteditable.min.js"></script>
-    <script>
-        function Print() {
-
-        <% LoadDataToPrint(); %>
-        window.print();
-        }
-    </script>
 </body>
 </html>
 
