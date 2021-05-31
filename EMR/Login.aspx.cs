@@ -25,7 +25,7 @@ namespace Emr_client.Emr
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Convert.ToString(Session["company_code"]) == "AIHC")
+            //if (Convert.ToString(Session["company_code"]) == "AIHC")
             {
                 ConnClass ConnStr = new ConnClass();
                 ConnStringEMR = ConnStr.SQL_EMRConnString;
@@ -152,7 +152,7 @@ namespace Emr_client.Emr
 
         public void Insert_EMR_Account(string varAccount)
         {
-            if (Convert.ToString(Session["company_code"]) == "AIHC")
+            //if (Convert.ToString(Session["company_code"]) == "AIHC")
             {
                 SQLAppClass SQL_Class = new SQLAppClass();
 

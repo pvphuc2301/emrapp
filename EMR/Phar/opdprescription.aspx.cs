@@ -13,15 +13,16 @@ namespace EMR.Print
 {
     public partial class opdprescription : System.Web.UI.Page
     {
-        string ConnStringHIS = ""; string ConnStringEMR = "";string visitType = "";
-        public string varPID = ""; string varPV_ID = ""; string varPharID = ""; string varVbID = ""; bool oldVisit = false;
+        private string ConnStringHIS = ""; private string ConnStringEMR = ""; private string visitType = "";
+        public string varPID = ""; private string varPV_ID = ""; private string varPharID = ""; private string varVbID = ""; private bool oldVisit = false;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             ConnClass ConnStr = new ConnClass();
             ConnStringHIS = ConnStr.SQL_HISConnString;
             ConnStringEMR = ConnStr.SQL_EMRConnString;
 
-            if (Convert.ToString(Session["company_code"]) == "AIHC")
+            //if (Convert.ToString(Session["company_code"]) == "AIHC")
             {
                 ConnStringHIS = ConnStr.SQL_HIS_C01ConnString;
                 ConnStringEMR = ConnStr.SQL_EMR_C01ConnString;
@@ -34,14 +35,14 @@ namespace EMR.Print
             {
                 LoadPatientInfomation(varPID);
                 load_visit_infor(varPV_ID);
-              //  load_vital_sign(varPV_ID);                
+                //  load_vital_sign(varPV_ID);
                 Load_Allergy(varPV_ID);
                 Load_Dianosis(varPV_ID);
                 Load_Diagnosis_List(varPV_ID, varVbID);
                 Get_Doctor_Note(varPharID);
 
-                bool CheckTV = false; 
-                CheckTV = Check_Pres(varPharID, "TV");                
+                bool CheckTV = false;
+                CheckTV = Check_Pres(varPharID, "TV");
                 if (CheckTV)
                 {
                     PrintTV.Visible = true;
@@ -49,9 +50,10 @@ namespace EMR.Print
                 }
             }
         }
+
         protected void RadGrid1_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
-           // if (!IsPostBack)
+            // if (!IsPostBack)
             {
                 string _jsonData = WebHelpers.GetAPI("api/pharmacy/prescription_normal/" + varPharID);
 
@@ -61,9 +63,10 @@ namespace EMR.Print
                 }
             }
         }
+
         protected void RadGrid2_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
-        //    if (!IsPostBack)
+            //    if (!IsPostBack)
             {
                 string _jsonData = WebHelpers.GetAPI("api/pharmacy/prescription_consult/" + varPharID);
 
@@ -73,8 +76,9 @@ namespace EMR.Print
                 }
             }
         }
+
         public void LoadPatientInfomation(string varPID)//object sender, EventArgs e
-        {            
+        {
             string _jsonData = WebHelpers.GetAPI("api/emr/demographic/" + varPID);
 
             if (!string.IsNullOrEmpty(_jsonData))
@@ -87,7 +91,7 @@ namespace EMR.Print
                     lbSex.Text = "Nam/ Man";
                 else if (data.gender_e == "Female")
                     lbSex.Text = "Nữ/ Woman";
-                //lbSex.Text = data.gender_e;                
+                //lbSex.Text = data.gender_e;
                 lbPID.Text = data.visible_patient_id;
                 ptAge = DataHelpers.CalculateAge(DateTime.Parse(data.date_of_birth.ToString())).ToString();
 
@@ -105,9 +109,10 @@ namespace EMR.Print
                         lbGuardian.Text = data.contact_name_l;
                     }
                 }
-                lbPrintDate.Text = "Printed date: " + string.Format("{0:dd/MMM/yyyy hh:mm tt}", DateTime.Now);                
+                lbPrintDate.Text = "Printed date: " + string.Format("{0:dd/MMM/yyyy hh:mm tt}", DateTime.Now);
             }
         }
+
         public void load_vital_sign(string varPV_ID)
         {
             string jsString = "";
@@ -122,9 +127,10 @@ namespace EMR.Print
             {
                 dynamic data = JObject.Parse(_jsonData);
                 lbWeight.Text = data.vs_weight + " kg";
-                lbHeight.Text = data.vs_height + " cm";           
+                lbHeight.Text = data.vs_height + " cm";
             }
         }
+
         public void load_specialty(string varPV_ID)
         {
             SQLAppClass SQL_Class = new SQLAppClass();
@@ -143,6 +149,7 @@ namespace EMR.Print
 
             lbSpecialty.Text = SQL_Class.CheckAndGetItem(Get_Specialty_Name, "name_l", ConnStringHIS);  // Request.QueryString["spec"];
         }
+
         public void load_visit_infor(string varPV_ID)
         {
             string _jsonData = WebHelpers.GetAPI("api/emr/patient-visit/" + varPV_ID);
@@ -154,9 +161,9 @@ namespace EMR.Print
 
                 if (!string.IsNullOrEmpty(lbVisitDate.Text))
                 {
-                    DateTime vsDate = Convert.ToDateTime(data.actual_visit_date_time);                    
+                    DateTime vsDate = Convert.ToDateTime(data.actual_visit_date_time);
                     if (vsDate.Month < 8 && vsDate.Year <= 2020)
-                        oldVisit = true;                    
+                        oldVisit = true;
                 }
                 if (data.visit_type_group_rcd == "OPD")
                 {
@@ -170,6 +177,7 @@ namespace EMR.Print
                 }
             }
         }
+
         public void Load_Dianosis(string varPV_ID)//object sender, EventArgs e
         {
             string _jsonData = WebHelpers.GetAPI("api/emr/diagnosis/" + varPV_ID);
@@ -192,6 +200,7 @@ namespace EMR.Print
                 RadGrid1.Visible = false;
             }
         }
+
         public void Load_Allergy(string varPV_ID)//object sender, EventArgs e
         {
             string _jsonData = WebHelpers.GetAPI("api/emr/allergy/" + varPV_ID);
@@ -203,10 +212,10 @@ namespace EMR.Print
             }
             else
                 lbAllergy.Text = "No/ Không có";
-
         }
+
         protected void Load_Diagnosis_List(string varPV_ID, string varVbID)
-        {           
+        {
             DataTable dt = new DataTable();
             string _jsonData = WebHelpers.GetAPI("api/patient/diagnosis-list/" + varPV_ID);
             if (!string.IsNullOrEmpty(_jsonData))
@@ -217,7 +226,8 @@ namespace EMR.Print
                 rcbMyList1.DataSource = dt;
                 rcbMyList1.DataBind();
             }
-        }        
+        }
+
         public void Get_Doctor_Note(string varPharID)
         {
             string query = "SELECT  (SELECT  TOP (1) notes ";
@@ -261,6 +271,7 @@ namespace EMR.Print
                 conn.Close();
             }
         }
+
         public bool Check_Pres(string varPharID, string varType)
         {
             SQLAppClass SQL_Class = new SQLAppClass();
@@ -288,17 +299,17 @@ namespace EMR.Print
                 return true;
             else
                 return false;
-
         }
 
         public void ButtonGetValue_Click(object sender, EventArgs e)
         {
             lbDianosis.Text = GetCheckBoxValues(rcbMyList1);
         }
+
         private string GetCheckBoxValues(Telerik.Web.UI.RadComboBox cbo)
         {
             string sValues = "";
-            //foreach (RadComboBoxItem item in cbo)  
+            //foreach (RadComboBoxItem item in cbo)
             for (int x = 0; x < cbo.Items.Count; x++)
             {
                 if ((cbo.Items[x].FindControl("CheckBox1") as CheckBox).Checked)
@@ -307,10 +318,11 @@ namespace EMR.Print
                 }
             }
             //if (sValues != "")
-            //  sValues = sValues.Substring(1);            
+            //  sValues = sValues.Substring(1);
 
             return sValues;
         }
+
         public string ReturnMedicine_Name(object varMedicineName, object varInstruction_l, object varInstruction_e, object varCachdung_l, object varCachdung_e)
         {
             string tmp = "";
@@ -321,6 +333,7 @@ namespace EMR.Print
 
             return tmp;
         }
+
         public string ReturnSL_Name(object varQty, object varDuration, object varRefill)
         {
             string tmp = "";
@@ -329,7 +342,8 @@ namespace EMR.Print
             + "Thời gian/" + " <i> Duration: </i> " + varDuration + "<br /> " + "Lặp lại/" + " <i> Refill: </i>" + varRefill;
 
             return tmp;
-        }        
+        }
+
         protected void cmd_PrintDT_Click(object sender, EventArgs e)
         {
             lbDT.Visible = true;
@@ -343,13 +357,14 @@ namespace EMR.Print
 
             // Response.Redirect("../phar/opdprescons.aspx?pid=" + PatientID + "&vid=" + VisitID + "&phar=" + PharID + "&vibid=" + Visible_ID);
         }
+
         protected void cmd_PrintTV_Click(object sender, EventArgs e)
         {
             lbDT.Visible = false;
             lbTV.Visible = true;
             RadGrid1.Visible = false;
             RadGrid1.Rebind();
-            //  RadGrid1.MasterTableView.DataBind();                  
+            //  RadGrid1.MasterTableView.DataBind();
             RadGrid2.Visible = true;
             RadGrid2.Rebind();
         }

@@ -17,7 +17,7 @@ namespace EMR
     {
         public string ConnStringHIS = ""; public string ConnStringEMR = "";
 
-        public string varPID = ""; public string varVPID = "";
+        public string varPID = ""; public string varVPID = ""; private string orderType = "";
         public string UserID;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -58,7 +58,7 @@ namespace EMR
             }
 
             //form ký sinh trùng
-            if (Convert.ToString(Session["company_code"]) == "AIHC")
+            //if (Convert.ToString(Session["company_code"]) == "AIH")
             {
                 ConnClass ConnStr = new ConnClass();
                 ConnStringHIS = ConnStr.SQL_HISConnString;
@@ -160,7 +160,7 @@ namespace EMR
 
         public DataTable GetDataTable(string query, string varConn)
         {
-            if (Convert.ToString(Session["company_code"]) == "AIHC")
+            //if (Convert.ToString(Session["company_code"]) == "AIH")
             {
                 SqlConnection conn = new SqlConnection(varConn);
                 SqlDataAdapter adapter = new SqlDataAdapter();
@@ -204,13 +204,19 @@ namespace EMR
                         string ParentID1 = Convert.ToString(dataItem.GetDataKeyValue("document_type_rcd"));
                         string apiURL = "api/patient/menu-lab-visit/" + ParentID;
                         if (ParentID1 == "RAD")
+                        {
                             apiURL = "api/patient/menu-rad-visit/" + ParentID;
-                        dynamic response = WebHelpers.GetAPI("api/emr/menu-form/" + ParentID);
-
+                            orderType = ParentID1;
+                        }
+                        dynamic response = WebHelpers.GetAPI(apiURL);
                         if (response.Status == System.Net.HttpStatusCode.OK)
                         {
-                            e.DetailTableView.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+                            if (!string.IsNullOrEmpty(response.Data))
+                            {
+                                e.DetailTableView.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+                            }
                         }
+
                         break;
                     }
             }
@@ -325,6 +331,9 @@ namespace EMR
         public string Return_OrderURL(object varModelID)
         {
             string tmp = "labinfor.aspx?pid=" + varPID + "&vid=" + varModelID;
+
+            if (Convert.ToString(orderType) == "RAD")
+                tmp = "ImagingDiagnosticReporting.aspx?pid=" + varPID + "&vid=" + varModelID;
 
             return tmp;
         }
