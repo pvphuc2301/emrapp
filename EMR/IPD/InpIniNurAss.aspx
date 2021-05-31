@@ -30,7 +30,6 @@
     </style>
 </head>
 <body>
-
     <div class="cssclsNoScreen">
         <table class="report-container">
             <thead class="report-header">
@@ -98,8 +97,8 @@
         <form method="post" action="#" id="form2" runat="server">
             <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
             <div class="scroll-sidebar h-100 w-100">
-                <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
-                    <ContentTemplate>
+                <%--<asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>--%>
                         <asp:HiddenField runat="server" ID="RequiredFieldValidator" />
                         <asp:Panel runat="server" ID="messagePlaceHolder">
                             <webUI:AmendReason runat="server" ID="txt_amendReason" />
@@ -772,6 +771,7 @@ applicable for children and pregnant</span>)
                                                     <div class="form-group pro_cough_note_field d-inline-block ml-2 w-n">
                                                         <webUI:TextField runat="server" ID="txt_pro_cough_note" />
                                                     </div>
+                                                    <span class="text-danger" id="pro_cough_error"></span>
                                                 </div>
                                             </fieldset>
 
@@ -1084,6 +1084,7 @@ applicable for children and pregnant</span>)
                                                     <label class="control-label mr-2">Ngày thay ống gần nhất/ <span class="text-primary">Last Date Changed</span></label>
 
                                                     <telerik:RadDatePicker runat="server" ID="dpk_last_date_changed" Width="120px" />
+                                                    <div class="text-danger" id="last_date_changed_error"></div>
                                                 </div>
 
                                                 <div class="col-md-12 mb-2">
@@ -1187,13 +1188,13 @@ applicable for children and pregnant</span>)
                                                             <label class="control-label d-block">1. Chỉ số BMI < 20.5/ <span class="text-primary">Is BMI < 20.5?</span></label>
 
                                                             <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
-                                                                <input type="radio" disabled-for="final_screening" runat="server" id="rad_bmi_out_range_True" name="rad_bmi_out_range" class="custom-control-input" />
+                                                                <input type="radio" onchange="initial_screening_change()" runat="server" id="rad_bmi_out_range_True" name="rad_bmi_out_range" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_bmi_out_range_True">Có/ <span class="text-primary">Yes</span></label>
                                                             </div>
                                                             <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
-                                                                <input type="radio" runat="server" id="rad_bmi_out_range_False" name="rad_bmi_out_range" class="custom-control-input" />
+                                                                <input type="radio" runat="server" id="rad_bmi_out_range_False" onchange="initial_screening_change()" name="rad_bmi_out_range" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_bmi_out_range_False">Không/ <span class="text-primary">No</span></label>
-                                                                <a href="javascript:void(0)" class="el-hide" data-clear="rad_bmi_out_range" onclick="clear_radiobutton(this)">
+                                                                <a href="javascript:void(0)" class="el-hide"  data-clear="rad_bmi_out_range" onclick="clear_radiobutton(this)">
                                                                     <icon:xsquare runat="server" ID="XSquare28" />
                                                                 </a>
                                                             </div>
@@ -1202,11 +1203,11 @@ applicable for children and pregnant</span>)
                                                             <label class="control-label d-block">2. NB có sụt cân trong vòng 3 tháng gần đây không?/ <span class="text-primary">Has the patient lost weight within the last 3 months?</span></label>
 
                                                             <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
-                                                                <input type="radio" disabled-for="final_screening" runat="server" id="rad_loss_weight_True" name="rad_loss_weight" class="custom-control-input" />
+                                                                <input type="radio" onchange="initial_screening_change()" runat="server" id="rad_loss_weight_True" name="rad_loss_weight" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_loss_weight_True">Có/ <span class="text-primary">Yes</span></label>
                                                             </div>
                                                             <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
-                                                                <input type="radio" runat="server" id="rad_loss_weight_False" name="rad_loss_weight" class="custom-control-input" />
+                                                                <input type="radio" runat="server" id="rad_loss_weight_False" onchange="initial_screening_change()" name="rad_loss_weight" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_loss_weight_False">Không/ <span class="text-primary">No</span></label>
                                                                 <a href="javascript:void(0)" class="el-hide" data-clear="rad_loss_weight" onclick="clear_radiobutton(this)">
                                                                     <icon:xsquare runat="server" ID="XSquare29" />
@@ -1216,11 +1217,11 @@ applicable for children and pregnant</span>)
                                                         <div class="col-md-12">
                                                             <label class="control-label d-block">3. NB có chán ăn trong 1 tuần qua không?/ <span class="text-primary">Has the patient had a reduced dietary intake in the last week?</span></label>
                                                             <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
-                                                                <input disabled-for="final_screening" type="radio" runat="server" id="rad_reduce_dietary_True" name="rad_reduce_dietary" class="custom-control-input" />
+                                                                <input onchange="initial_screening_change()" type="radio" runat="server" id="rad_reduce_dietary_True" name="rad_reduce_dietary" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_reduce_dietary_True">Có/ <span class="text-primary">Yes</span></label>
                                                             </div>
                                                             <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
-                                                                <input type="radio" runat="server" id="rad_reduce_dietary_False" name="rad_reduce_dietary" class="custom-control-input" />
+                                                                <input type="radio" onchange="initial_screening_change()" runat="server" id="rad_reduce_dietary_False" name="rad_reduce_dietary" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_reduce_dietary_False">Không/ <span class="text-primary">No</span></label>
                                                                 <a href="javascript:void(0)" class="el-hide" data-clear="rad_reduce_dietary" onclick="clear_radiobutton(this)">
                                                                     <icon:xsquare runat="server" ID="XSquare30" />
@@ -1230,11 +1231,11 @@ applicable for children and pregnant</span>)
                                                         <div class="col-md-12">
                                                             <label class="control-label d-block">4. NB có bị bệnh gì nghiêm trọng không?/ <span class="text-primary">Is the patient severely ill?</span></label>
                                                             <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
-                                                                <input disabled-for="final_screening" type="radio" runat="server" id="rad_severely_ill_True" name="rad_severely_ill" class="custom-control-input" />
+                                                                <input onchange="initial_screening_change()" type="radio" runat="server" id="rad_severely_ill_True" name="rad_severely_ill" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_severely_ill_True">Có/ <span class="text-primary">Yes</span></label>
                                                             </div>
                                                             <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
-                                                                <input type="radio" runat="server" id="rad_severely_ill_False" name="rad_severely_ill" class="custom-control-input" />
+                                                                <input onchange="initial_screening_change()" type="radio" runat="server" id="rad_severely_ill_False" name="rad_severely_ill" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_severely_ill_False">Không/ <span class="text-primary">No</span></label>
                                                                 <a href="javascript:void(0)" class="el-hide" data-clear="rad_severely_ill" onclick="clear_radiobutton(this)">
                                                                     <icon:xsquare runat="server" ID="XSquare31" />
@@ -1273,12 +1274,12 @@ applicable for children and pregnant</span>)
                                                                     <label class="control-label mb-1 d-block">Điểm = 1/ <span class="text-primary">Score = 1</span></label>
 
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" disabled-for="mental_status_other_field" class="custom-control-input" runat="server" id="cb_nutrition_score1_1" />
+                                                                        <input type="checkbox"  class="custom-control-input" runat="server" onchange="nutrition_score1Change()" id="cb_nutrition_score1_1" />
                                                                         <span class="custom-control-label">Sụt cân > 5% trong 3 tháng/ <span class="text-primary">Weight loss > 5% in 3 months</span></span>
                                                                     </label>
 
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" disabled-for="mental_status_other_field" class="custom-control-input" runat="server" id="cb_nutrition_score1_2" />
+                                                                        <input type="checkbox" onchange="nutrition_score1Change()" class="custom-control-input" runat="server" id="cb_nutrition_score1_2" />
                                                                         <span class="custom-control-label">Ăn ít 50%-75% so với nhu cầu ăn bình thường trong tuần qua/ <span class="text-primary">Food intake below 50 - 75% of normal requirement in preceding week</span></span>
                                                                     </label>
                                                                 </div>
@@ -1286,15 +1287,15 @@ applicable for children and pregnant</span>)
                                                                 <div class="col-md-12">
                                                                     <label class="control-label mb-1 d-block">Điểm = 2/ <span class="text-primary">Score = 2</span></label>
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" disabled-for="mental_status_other_field" class="custom-control-input" runat="server" id="cb_nutrition_score2_1" />
+                                                                        <input type="checkbox" onchange="nutrition_score2Change()" class="custom-control-input" runat="server" id="cb_nutrition_score2_1" />
                                                                         <span class="custom-control-label">Sụt cân > 5% trong 2 tháng/ <span class="text-primary">Weight loss > 5% in 2 months</span></span>
                                                                     </label>
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" disabled-for="mental_status_other_field" class="custom-control-input" runat="server" id="cb_nutrition_score2_2" />
+                                                                        <input type="checkbox" onchange="nutrition_score2Change()" class="custom-control-input" runat="server" id="cb_nutrition_score2_2" />
                                                                         <span class="custom-control-label">BMI 18.5-20.5 và tổng trạng suy yếu/ <span class="text-primary">BMI 18.5 - 20.5 and impaired general condition</span></span>
                                                                     </label>
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" disabled-for="mental_status_other_field" class="custom-control-input" runat="server" id="cb_nutrition_score2_3"  />
+                                                                        <input type="checkbox" onchange="nutrition_score2Change()" class="custom-control-input" runat="server" id="cb_nutrition_score2_3" />
                                                                         <span class="custom-control-label">Ăn ít 25%-50% so với nhu cầu ăn bình thường trong tuần qua/ <span class="text-primary">Food intake 25–50% of normal requirement in preceding week</span></span>
                                                                     </label>
                                                                 </div>
@@ -1302,29 +1303,29 @@ applicable for children and pregnant</span>)
                                                                 <div class="col-md-12">
                                                                     <label class="control-label mb-1 d-block">Điểm = 3/ <span class="text-primary">Score = 3</span></label>
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_nutrition_score3_1" />
+                                                                        <input type="checkbox" class="custom-control-input" onchange="nutrition_score3Change()" runat="server" id="cb_nutrition_score3_1" />
                                                                         <span class="custom-control-label">Sụt cân > 5% trong 1 tháng/ <span class="text-primary">Weight loss > 5% in 1 month</span></span>
                                                                     </label>
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_nutrition_score3_2" />
+                                                                        <input type="checkbox" class="custom-control-input" onchange="nutrition_score3Change()" runat="server" id="cb_nutrition_score3_2" />
                                                                         <span class="custom-control-label">BMI < 18.5 và tổng trạng suy yếu/ <span class="text-primary">BMI < 18.5 and impaired general condition</span></span>
                                                                     </label>
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_nutrition_score3_3" />
+                                                                        <input type="checkbox" class="custom-control-input" onchange="nutrition_score3Change()" runat="server" id="cb_nutrition_score3_3" />
                                                                         <span class="custom-control-label">Ăn ít 0-25% so với nhu cầu ăn bình thường trong tuần qua/ <span class="text-primary">Food intake 0-25% of normal requirement in preceding week</span></span>
                                                                     </label>
                                                                 </div>
 
                                                                 <div class="col-md-12">
-                                                                    <label class="control-label mb-1 mr-2">Điểm/ <span class="text-primary">Score</span>
+                                                                    <label class="control-label mb-1 mr-2">
+                                                                        Điểm/ <span class="text-primary">Score</span>
                                                                         <icon:Calculator runat="server" Width="16" Height="16" ID="Calculator1" />
                                                                     </label>
-                                                                    <asp:Label runat="server" ID="lbl_nutrition_score" ></asp:Label>
+                                                                    <asp:Label Text="—" runat="server" ID="lbl_nutrition_score"></asp:Label>
                                                                     <div class="form-group d-inline-block w-3">
                                                                         <asp:Label Text="text" runat="server" ID="txt_nutrition_score" />
                                                                     </div>
                                                                 </div>
-
                                                             </fieldset>
                                                         </div>
 
@@ -1336,26 +1337,26 @@ applicable for children and pregnant</span>)
                                                                 <div class="col-md-12">
                                                                     <label class="control-label mb-1 d-block">Điểm = 0/ <span class="text-primary">Score = 0</span></label>
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" class="custom-control-input" runat="server" />
+                                                                        <input type="checkbox" class="custom-control-input"  runat="server" />
                                                                         <span class="custom-control-label">Yêu cầu dinh dưỡng đặc biệt/ <span class="text-primary">Normal nutritional requirements</span></span>
                                                                     </label>
                                                                 </div>
                                                                 <div class="col-md-12">
                                                                     <label class="control-label mb-1 d-block">Điểm = 1/ <span class="text-primary">Score = 1</span></label>
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_severity_score1_1" />
+                                                                        <input type="checkbox" class="custom-control-input" onchange="severity_score1Change()" runat="server" id="cb_severity_score1_1" />
                                                                         <span class="custom-control-label">Gãy khớp háng/ <span class="text-primary">Hip fracture</span></span>
                                                                     </label>
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_severity_score1_2" />
+                                                                        <input type="checkbox" class="custom-control-input" onchange="severity_score1Change()" runat="server" id="cb_severity_score1_2" />
                                                                         <span class="custom-control-label">Bệnh mãn tính có kèm theo biến chứng/ <span class="text-primary">Chronic disease with complications</span></span>
                                                                     </label>
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_severity_score1_3" />
+                                                                        <input type="checkbox" class="custom-control-input" onchange="severity_score1Change()" runat="server" id="cb_severity_score1_3" />
                                                                         <span class="custom-control-label">Viêm phổi tắc nghẽn mãn tính/ <span class="text-primary">COPD</span></span>
                                                                     </label>
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_severity_score1_4" />
+                                                                        <input type="checkbox" class="custom-control-input" onchange="severity_score1Change()" runat="server" id="cb_severity_score1_4" />
                                                                         <span class="custom-control-label">NB yếu nhưng có thể di chuyển được/ <span class="text-primary">The patient is weak but can move out of bed</span></span>
                                                                     </label>
 
@@ -1364,15 +1365,15 @@ applicable for children and pregnant</span>)
                                                                 <div class="col-md-12">
                                                                     <label class="control-label mb-1 d-block">Điểm = 2/ <span class="text-primary">Score = 2</span></label>
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_severity_score2_1" />
+                                                                        <input type="checkbox" class="custom-control-input" onchange="severity_score2Change()" runat="server" id="cb_severity_score2_1" />
                                                                         <span class="custom-control-label">Có phẫu thuật ở bụng/ <span class="text-primary">Major abdominal surgery</span></span>
                                                                     </label>
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" disabled-for="mental_status_other_field" class="custom-control-input" runat="server" id="cb_severity_score2_2" />
+                                                                        <input type="checkbox" onchange="severity_score2Change()" class="custom-control-input" runat="server" id="cb_severity_score2_2" />
                                                                         <span class="custom-control-label">Đột quị/ <span class="text-primary">Stroke</span></span>
                                                                     </label>
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" disabled-for="mental_status_other_field" class="custom-control-input" runat="server" id="cb_severity_score2_3" />
+                                                                        <input type="checkbox" onchange="severity_score2Change()" class="custom-control-input" runat="server" id="cb_severity_score2_3" />
                                                                         <span class="custom-control-label">Viêm phổi nặng/ <span class="text-primary">Severe pneumonia</span></span>
                                                                     </label>
                                                                     <label class="custom-control custom-checkbox ml-2">
@@ -1380,7 +1381,7 @@ applicable for children and pregnant</span>)
                                                                         <span class="custom-control-label">Bệnh ác tính huyết học/ <span class="text-primary">Hematologic malignancy</span></span>
                                                                     </label>
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" disabled-for="mental_status_other_field" class="custom-control-input" runat="server" id="cb_severity_score2_5" />
+                                                                        <input type="checkbox" onchange="severity_score2Change()" class="custom-control-input" runat="server" id="cb_severity_score2_5" />
                                                                         <span class="custom-control-label">NB nằm liệt giường/ <span class="text-primary">The patient is bedridden</span></span>
                                                                     </label>
                                                                 </div>
@@ -1388,25 +1389,25 @@ applicable for children and pregnant</span>)
                                                                 <div class="col-md-12">
                                                                     <label class="control-label mb-1 d-block">Điểm = 3/ <span class="text-primary">Score = 3</span></label>
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_severity_score3_1" />
+                                                                        <input type="checkbox" class="custom-control-input" onchange="severity_score3Change()" runat="server" id="cb_severity_score3_1" />
                                                                         <span class="custom-control-label">Chấn thương đầu/ <span class="text-primary">Head injury</span></span>
                                                                     </label>
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_severity_score3_2" />
+                                                                        <input type="checkbox" class="custom-control-input" onchange="severity_score3Change()" runat="server" id="cb_severity_score3_2" />
                                                                         <span class="custom-control-label">Ghép tủy xương/ <span class="text-primary">Bone marrow transplantation</span></span>
                                                                     </label>
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_severity_score3_3" />
+                                                                        <input type="checkbox" class="custom-control-input" onchange="severity_score3Change()" runat="server" id="cb_severity_score3_3" />
                                                                         <span class="custom-control-label">Bệnh nhân chăm sóc chuyên sâu (APACHE> 10)/ <span class="text-primary">Intensive care patients (APACHE > 10)</span></span>
                                                                     </label>
 
                                                                 </div>
 
                                                                 <div class="col-md-12">
-                                                                    <label class="control-label mb-1">Điểm/ <span class="text-primary">Score</span></label>
-                                                                    <div class="form-group d-inline-block w-4">
-                                                                        <webUI:TextField runat="server" ID="txt_severity_score" />
-                                                                    </div>
+                                                                    <<label class="control-label mb-1 mr-2">Điểm/ <span class="text-primary">Score</span>
+                                                                        <icon:Calculator runat="server" Width="16" Height="16" />
+                                                                    </label>
+                                                                    <asp:Label Text="—" class="d-inline-block" runat="server" id="lbl_severity_score"></asp:Label>
                                                                 </div>
 
                                                             </fieldset>
@@ -1427,27 +1428,27 @@ applicable for children and pregnant</span>)
                                                                 <div class="col-md-12">
                                                                     <label class="control-label mb-1 d-block">Điểm = 1/ <span class="text-primary">Score = 1</span></label>
                                                                     <label class="custom-control custom-checkbox ml-2">
-                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_older_70_True" />
+                                                                        <input type="checkbox" class="custom-control-input" onchange="age_score1Change()" runat="server" id="cb_older_70_True" />
                                                                         <span class="custom-control-label">≥ 70 tuổi/ <span class="text-primary">≥ 70 years old</span></span>
                                                                     </label>
 
                                                                 </div>
 
                                                                 <div class="col-md-12">
-                                                                    <label class="control-label mb-1">Điểm/ <span class="text-primary">Score</span></label>
-                                                                    <div class="form-group w-4 d-inline-block mr-2">
-                                                                        <webUI:TextField runat="server" ID="txt_age_score" />
-                                                                    </div>
+                                                                    <label class="control-label mb-1 mr-2">Điểm/ <span class="text-primary">Score</span>
+                                                                        <icon:Calculator runat="server" Width="16" Height="16" />
+                                                                    </label>
+                                                                    <asp:Label runat="server" ID="lbl_age_score"></asp:Label>
                                                                 </div>
 
                                                             </fieldset>
                                                         </div>
 
                                                         <div class="col-md-12">
-                                                            <label class="control-label mb-1">TỔNG SỐ ĐIỂM/ <span class="text-primary">TOTAL SCORE</span></label>
-                                                            <div class="form-group w-4 d-inline-block mr-2">
-                                                                <webUI:TextField runat="server" ID="txt_total_nutri_score" />
-                                                            </div>
+                                                            <label class="control-label mb-1 mr-2">TỔNG SỐ ĐIỂM/ <span class="text-primary">TOTAL SCORE</span>
+                                                                <icon:Calculator runat="server" Width="16" Height="16" />
+                                                            </label>
+                                                            <asp:Label Text="—" runat="server" ID="lbl_total_nutri_score"></asp:Label>
                                                             <p>
                                                                 *Ghi chú: Khi đánh giá điểm cho mỗi tiêu chí thì luôn luôn chọn điểm cao nhất. Sau đó Sau đó cộng tất cả các điểm số ở cuối để có điểm số cuối cùng<br />
                                                                 <span class="text-primary">Notes: When assessing the score for each criterion, always choose the highest score. Then add up all scores at the end to get the final score</span><br />
@@ -1507,7 +1508,7 @@ applicable for children and pregnant</span>)
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_ind_catheter_True" />
                                                         <span class="custom-control-label">Ống thông tiểu lưu/ <span class="text-primary">Indwelling catheter</span></span>
                                                     </label>
-
+                                                    <span class="text-danger" id="ind_catheter_error"></span>
                                                     <label class="mr-2">Kích cỡ/ <span class="text-primary">Size</span></label>
 
                                                     <div class="form-group w-s mr-2 d-inline-block">
@@ -1517,7 +1518,7 @@ applicable for children and pregnant</span>)
                                                     <label class="control-label mr-2">Ngày thay gần nhất/ <span class="text-primary">Fr, Date last changed</span></label>
 
                                                     <telerik:RadDatePicker runat="server" ID="dpk_ind_catheter_date" Width="120px" />
-
+                                                    <span class="text-danger" id="ind_catheter_date_error"></span>
                                                 </div>
 
                                                 <div class="col-12">
@@ -1535,6 +1536,7 @@ applicable for children and pregnant</span>)
                                                     <label class="control-label">Ngày thay gần nhất/ <span class="text-primary">Fr, Date last changed</span></label>
 
                                                     <telerik:RadDatePicker runat="server" ID="dpk_last_sup_catheter_date" Width="120px" />
+                                                    <span class="text-danger" id="last_sup_catheter_date_error"></span>
                                                 </div>
                                                 <div class="col-12">
                                                     <label class="control-label d-block">Đối với người bệnh nữ/ <span class="text-primary">For female patients only:</span></label>
@@ -1719,8 +1721,8 @@ applicable for children and pregnant</span>)
                                                 </label>
 
                                                 <a href="javascript:void(0)" data-clear="rad_cur_in_pain" onclick="clear_radiobutton(this)">
-                                                                <icon:xsquare runat="server" ID="XSquare43" />
-                                                            </a>
+                                                    <icon:xsquare runat="server" ID="XSquare43" />
+                                                </a>
                                             </div>
                                         </div>
 
@@ -1728,12 +1730,18 @@ applicable for children and pregnant</span>)
                                             <table class="table table-bordered">
                                                 <tbody>
                                                     <tr>
-                                                        <th scope="row" style="width:376px;">
+                                                        <th scope="row" style="width: 376px;">
                                                             <div class="mt-2 mb-2">Pain Assessment Description</div>
                                                         </th>
-                                                        <td><div class="mt-2 mb-2">Location 1</div></td>
-                                                        <td><div class="mt-2 mb-2">Location 2</div></td>
-                                                        <td><div class="mt-2 mb-2">Location 3</div></td>
+                                                        <td>
+                                                            <div class="mt-2 mb-2">Location 1</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="mt-2 mb-2">Location 2</div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="mt-2 mb-2">Location 3</div>
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <th scope="row">P Provoking factors (what factors precipitated the discomfort?)</th>
@@ -2018,27 +2026,15 @@ applicable for children and pregnant</span>)
                                             <div class="col-md-12">
                                                 <label class="control-label w-7 mb-2 mr-2">Nhận thức giác quan/ <span class="text-primary">Sensory perception</span></label>
 
-                                                <select onchange="pressure_score_risk_change()" runat="server" id="select_sensory_code" class="custom-select d-inline-block w-n mb-2">
+                                                <select onchange="sensory_score_change(this)" runat="server" id="select_sensory_code" class="custom-select d-inline-block w-n mb-2">
                                                     <option></option>
                                                 </select>
-
-                                                <script>
-                                                    let sensory_score, moisture_score, activity_score, mobility_score, nutrition_score, friction_score;
-
-                                                    let pressure_score_risk_change = () => {
-                                                        if (!sensory_score || !moisture_score || !activity_score || !mobility_score || !nutrition_score || !friction_score) {
-                                                            txt_total_score.innerText = "—";
-                                                        } else {
-                                                            txt_total_score.innerText = sensory_score + moisture_score + activity_score + mobility_score + nutrition_score + friction_score;
-                                                        }
-                                                    }
-                                                </script>
                                             </div>
 
                                             <div class="col-md-12">
                                                 <label class="control-label w-7 mb-2 mr-2">Độ ẩm/ <span class="text-primary">Moisture</span></label>
 
-                                                <select runat="server" id="select_moisture_code" class="custom-select d-inline-block w-n mb-2">
+                                                <select onchange="moisture_score_change(this)" runat="server" id="select_moisture_code" class="custom-select d-inline-block w-n mb-2">
                                                     <option></option>
                                                 </select>
                                             </div>
@@ -2046,7 +2042,7 @@ applicable for children and pregnant</span>)
                                             <div class="col-md-12">
                                                 <label class="control-label w-7 mb-2 mr-2">Vận động/ <span class="text-primary">Activity</span></label>
 
-                                                <select runat="server" id="select_activity_code" class="custom-select d-inline-block w-n mb-2">
+                                                <select onchange="activity_score_change(this)" runat="server" id="select_activity_code" class="custom-select d-inline-block w-n mb-2">
                                                     <option></option>
                                                 </select>
                                             </div>
@@ -2054,7 +2050,7 @@ applicable for children and pregnant</span>)
                                             <div class="col-md-12">
                                                 <label class="control-label w-7 mb-2 mr-2">Di chuyển/ <span class="text-primary">Mobility</span></label>
 
-                                                <select runat="server" id="select_mobility_code" class="custom-select d-inline-block w-n mb-2">
+                                                <select onchange="mobility_score_change(this)" runat="server" id="select_mobility_code" class="custom-select d-inline-block w-n mb-2">
                                                     <option></option>
                                                 </select>
                                             </div>
@@ -2062,7 +2058,7 @@ applicable for children and pregnant</span>)
                                             <div class="col-md-12">
                                                 <label class="control-label w-7 mb-2 mr-2">Dinh dưỡng/ <span class="text-primary">Nutrition</span></label>
 
-                                                <select runat="server" id="select_nutrition_code" class="custom-select d-inline-block w-n mb-2">
+                                                <select onchange="nutrition_score_change(this)" runat="server" id="select_nutrition_code" class="custom-select d-inline-block w-n mb-2">
                                                     <option></option>
                                                 </select>
                                             </div>
@@ -2070,17 +2066,16 @@ applicable for children and pregnant</span>)
                                             <div class="col-md-12 mb-2">
                                                 <label class="control-label w-7 mb-2 mr-2">Sự ma sát & trượt da/ <span class="text-primary">Friction & shear</span></label>
 
-                                                <select runat="server" id="select_friction_code" class="custom-select d-inline-block w-n">
+                                                <select onchange="friction_score_change(this)" runat="server" id="select_friction_code" class="custom-select d-inline-block w-n">
                                                     <option></option>
                                                 </select>
                                             </div>
 
                                             <div class="col-md-12">
-                                                <label class="control-label w-7 mb-2 mr-2">Tổng số điểm/ <span class="text-primary">Total Score</span></label>
-
-                                                <div class="form-group d-inline-block w-4">
-                                                    <asp:Label runat="server" ID="txt_total_score" ></asp:Label>
-                                                </div>
+                                                <label class="control-label w-7 mb-2 mr-2">Tổng số điểm/ <span class="text-primary">Total Score</span>
+                                                                <icon:Calculator runat="server" Width="16" Height="16" />
+                                                            </label>
+                                                    <asp:Label Text="—" runat="server" ID="lbl_total_score"></asp:Label>
                                             </div>
 
                                             <div class="col-md-12">
@@ -2474,25 +2469,25 @@ applicable for children and pregnant</span>)
                                                     <legend>
                                                         <label class="control-label">Tiền sử bị ngã/ <span class="text-primary">History of falling</span></label>
                                                     </legend>
-                                                
-                                                <div class="col-md-12">
-                                                    <div class="custom-control custom-radio mr-2 d-inline-block">
-                                                        <input type="radio" id="rad_fall_history_code_25" runat="server" name="rad_fall_history_code" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="rad_fall_history_code_25">
-                                                            Có/ <span class="text-primary">Yes</span>  = 25
-                                                        </label>
+
+                                                    <div class="col-md-12">
+                                                        <div class="custom-control custom-radio mr-2 d-inline-block">
+                                                            <input type="radio" id="rad_fall_history_code_25" runat="server" name="rad_fall_history_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_fall_history_code_25">
+                                                                Có/ <span class="text-primary">Yes</span>  = 25
+                                                            </label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio d-inline-block">
+                                                            <input type="radio" id="rad_fall_history_code_0" runat="server" name="rad_fall_history_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_fall_history_code_0">
+                                                                Không/ <span class="text-primary">No</span>  = 0
+                                                            </label>
+                                                            <a href="javascript:void(0)" data-clear="rad_fall_history_code" onclick="clear_fall_history_score(this)">
+                                                                <icon:xsquare runat="server" ID="XSquare39" />
+                                                            </a>
+                                                        </div>
                                                     </div>
-                                                    <div class="custom-control custom-radio d-inline-block">
-                                                        <input type="radio" id="rad_fall_history_code_0" runat="server" name="rad_fall_history_code" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="rad_fall_history_code_0">
-                                                            Không/ <span class="text-primary">No</span>  = 0
-                                                        </label>
-                                                        <a href="javascript:void(0)" data-clear="rad_fall_history_code" onclick="clear_fall_history_score(this)">
-                                                            <icon:xsquare runat="server" ID="XSquare39" />
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                    </fieldset>
+                                                </fieldset>
                                             </div>
 
                                             <div class="col-md-12 mb-2">
@@ -2502,20 +2497,20 @@ applicable for children and pregnant</span>)
                                                     </legend>
                                                     <div class="col-md-12">
                                                         <div class="custom-control custom-radio mr-2 d-inline-block">
-                                                    <input type="radio" id="rad_secon_diagnosis_code_15" runat="server" name="rad_secon_diagnosis_code" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_secon_diagnosis_code_15">
-                                                        Có/ <span class="text-primary">Yes</span>  = 15
-                                                    </label>
-                                                </div>
-                                                <div class="custom-control custom-radio d-inline-block">
-                                                    <input type="radio" id="rad_secon_diagnosis_code_0" runat="server" name="rad_secon_diagnosis_code" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_secon_diagnosis_code_0">
-                                                        Không/ <span class="text-primary">No</span>  = 0
-                                                    </label>
-                                                    <a href="javascript:void(0)" data-clear="rad_secon_diagnosis_code" onclick="clear_secon_diagnosis_score(this)">
+                                                            <input type="radio" id="rad_secon_diagnosis_code_15" runat="server" name="rad_secon_diagnosis_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_secon_diagnosis_code_15">
+                                                                Có/ <span class="text-primary">Yes</span>  = 15
+                                                            </label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio d-inline-block">
+                                                            <input type="radio" id="rad_secon_diagnosis_code_0" runat="server" name="rad_secon_diagnosis_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_secon_diagnosis_code_0">
+                                                                Không/ <span class="text-primary">No</span>  = 0
+                                                            </label>
+                                                            <a href="javascript:void(0)" data-clear="rad_secon_diagnosis_code" onclick="clear_secon_diagnosis_score(this)">
                                                                 <icon:xsquare runat="server" ID="XSquare40" />
                                                             </a>
-                                                </div>
+                                                        </div>
                                                     </div>
                                                 </fieldset>
                                             </div>
@@ -2526,27 +2521,27 @@ applicable for children and pregnant</span>)
                                                         <label class="control-label">Khả năng di chuyển/ <span class="text-primary">Ambulatory Aids</span></label>
                                                     </legend>
                                                     <div class="col-md-12">
-                                                    <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_ambula_aids_code_30" runat="server" name="rad_ambula_aids_code" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_ambula_aids_code_30">
-                                                        Sử dụng vật dụng hỗ trợ/ <span class="text-primary">Furniture</span>  = 30
-                                                    </label>
-                                                </div>
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_ambula_aids_code_15" runat="server" name="rad_ambula_aids_code" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_ambula_aids_code_15">
-                                                        Nạng, thiết bị hỗ trợ đi lại/ <span class="text-primary">Crutches, cane walker</span> = 15
-                                                    </label>
-                                                </div>
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_ambula_aids_code_0" runat="server" name="rad_ambula_aids_code" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_ambula_aids_code_0">
-                                                        Không di chuyển, nằm tại giường, điều dưỡng hỗ trợ/ <span class="text-primary">None, bedrest, wheelchair, nurse assist</span> = 0
-                                                    </label>
-                                                    <a href="javascript:void(0)" data-clear="rad_ambula_aids_code" onclick="clear_ambula_aids_score(this)">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" id="rad_ambula_aids_code_30" runat="server" name="rad_ambula_aids_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_ambula_aids_code_30">
+                                                                Sử dụng vật dụng hỗ trợ/ <span class="text-primary">Furniture</span>  = 30
+                                                            </label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" id="rad_ambula_aids_code_15" runat="server" name="rad_ambula_aids_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_ambula_aids_code_15">
+                                                                Nạng, thiết bị hỗ trợ đi lại/ <span class="text-primary">Crutches, cane walker</span> = 15
+                                                            </label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" id="rad_ambula_aids_code_0" runat="server" name="rad_ambula_aids_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_ambula_aids_code_0">
+                                                                Không di chuyển, nằm tại giường, điều dưỡng hỗ trợ/ <span class="text-primary">None, bedrest, wheelchair, nurse assist</span> = 0
+                                                            </label>
+                                                            <a href="javascript:void(0)" data-clear="rad_ambula_aids_code" onclick="clear_ambula_aids_score(this)">
                                                                 <icon:xsquare runat="server" ID="XSquare42" />
                                                             </a>
-                                                </div>
+                                                        </div>
                                                     </div>
                                                 </fieldset>
                                             </div>
@@ -2558,20 +2553,20 @@ applicable for children and pregnant</span>)
                                                     </legend>
                                                     <div class="col-md-12">
                                                         <div class="custom-control custom-radio d-inline-block mr-2">
-                                                    <input type="radio" id="rad_intra_therapy_code_20" runat="server" name="rad_intra_therapy_code" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_intra_therapy_code_20">
-                                                        Có/ <span class="text-primary">Yes</span> = 20
-                                                    </label>
-                                                </div>
-                                                <div class="custom-control custom-radio d-inline-block">
-                                                    <input type="radio" id="rad_intra_therapy_code_0" runat="server" name="rad_intra_therapy_code" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_intra_therapy_code_0">
-                                                        Không/ <span class="text-primary">No</span> = 0
-                                                    </label>
-                                                    <a href="javascript:void(0)" data-clear="rad_intra_therapy_code" onclick="clear_intra_therapy_score(this)">
+                                                            <input type="radio" id="rad_intra_therapy_code_20" runat="server" name="rad_intra_therapy_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_intra_therapy_code_20">
+                                                                Có/ <span class="text-primary">Yes</span> = 20
+                                                            </label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio d-inline-block">
+                                                            <input type="radio" id="rad_intra_therapy_code_0" runat="server" name="rad_intra_therapy_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_intra_therapy_code_0">
+                                                                Không/ <span class="text-primary">No</span> = 0
+                                                            </label>
+                                                            <a href="javascript:void(0)" data-clear="rad_intra_therapy_code" onclick="clear_intra_therapy_score(this)">
                                                                 <icon:xsquare runat="server" ID="XSquare41" />
                                                             </a>
-                                                </div>
+                                                        </div>
                                                     </div>
                                                 </fieldset>
                                             </div>
@@ -2583,26 +2578,26 @@ applicable for children and pregnant</span>)
                                                     </legend>
                                                     <div class="col-md-12">
                                                         <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_gait_trans_code_20" runat="server" name="rad_gait_trans_code" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_gait_trans_code_20">
-                                                        Suy yếu/ <span class="text-primary">Impaired</span> = 20
-                                                    </label>
-                                                </div>
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_gait_trans_code_10" runat="server" name="rad_gait_trans_code" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_gait_trans_code_10">
-                                                        Yếu/ <span class="text-primary">Weak</span> = 10
-                                                    </label>
-                                                </div>
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_gait_trans_code_0" runat="server" name="rad_gait_trans_code" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_gait_trans_code_0">
-                                                        Bình thường, nằm tại giường/ <span class="text-primary">Normal, bedrest</span> = 0
-                                                    </label>
-                                                    <a href="javascript:void(0)" data-clear="rad_gait_trans_code" onclick="clear_gait_trans_score(this)">
+                                                            <input type="radio" id="rad_gait_trans_code_20" runat="server" name="rad_gait_trans_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_gait_trans_code_20">
+                                                                Suy yếu/ <span class="text-primary">Impaired</span> = 20
+                                                            </label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" id="rad_gait_trans_code_10" runat="server" name="rad_gait_trans_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_gait_trans_code_10">
+                                                                Yếu/ <span class="text-primary">Weak</span> = 10
+                                                            </label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" id="rad_gait_trans_code_0" runat="server" name="rad_gait_trans_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_gait_trans_code_0">
+                                                                Bình thường, nằm tại giường/ <span class="text-primary">Normal, bedrest</span> = 0
+                                                            </label>
+                                                            <a href="javascript:void(0)" data-clear="rad_gait_trans_code" onclick="clear_gait_trans_score(this)">
                                                                 <icon:xsquare runat="server" ID="XSquare45" />
                                                             </a>
-                                                </div>
+                                                        </div>
                                                     </div>
                                                 </fieldset>
                                             </div>
@@ -2614,27 +2609,28 @@ applicable for children and pregnant</span>)
                                                     </legend>
                                                     <div class="col-md-12">
                                                         <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_fr_mental_status_code_15" runat="server" name="rad_fr_mental_status_code" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_fr_mental_status_code_15">
-                                                        Không hiểu được giới hạn bản thân/ <span class="text-primary">Does not understand limitation</span> = 15
-                                                    </label>
-                                                </div>
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_fr_mental_status_code_0" runat="server" name="rad_fr_mental_status_code" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_fr_mental_status_code_0">
-                                                        Hiểu được giới hạn bản thân/ <span class="text-primary">Understands limitations</span> = 0
-                                                    </label>
-                                                    <a href="javascript:void(0)" data-clear="rad_fr_mental_status_code" onclick="clear_fr_mental_status_score(this)">
+                                                            <input type="radio" id="rad_fr_mental_status_code_15" runat="server" name="rad_fr_mental_status_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_fr_mental_status_code_15">
+                                                                Không hiểu được giới hạn bản thân/ <span class="text-primary">Does not understand limitation</span> = 15
+                                                            </label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" id="rad_fr_mental_status_code_0" runat="server" name="rad_fr_mental_status_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_fr_mental_status_code_0">
+                                                                Hiểu được giới hạn bản thân/ <span class="text-primary">Understands limitations</span> = 0
+                                                            </label>
+                                                            <a href="javascript:void(0)" data-clear="rad_fr_mental_status_code" onclick="clear_fr_mental_status_score(this)">
                                                                 <icon:xsquare runat="server" ID="XSquare46" />
                                                             </a>
-                                                </div>
+                                                        </div>
                                                     </div>
                                                 </fieldset>
                                             </div>
 
                                             <div class="col-md-12 mb-2">
-                                                <label class="control-label mr-2">TỔNG ĐIỂM/ <span class="text-primary">TOTAL SCORE:</span>
-                                                    <icon:Calculator Width="16" Height="16" runat="server" id="Calculator" />
+                                                <label class="control-label mr-2">
+                                                    TỔNG ĐIỂM/ <span class="text-primary">TOTAL SCORE:</span>
+                                                    <icon:Calculator Width="16" Height="16" runat="server" ID="Calculator" />
                                                 </label>
                                                 <div class="form-group d-inline-block w-4">
                                                     <asp:Label runat="server" ID="txt_fr_total_score"></asp:Label>
@@ -2815,6 +2811,7 @@ applicable for children and pregnant</span>)
                                                     Không/ <span class="text-primary">No</span>
                                                 </label>
                                             </div>
+                                            <span class="text-danger" id="other_hospital_error"></span>
                                         </div>
 
                                         <div class="col-md-12 mb-2">
@@ -2883,6 +2880,7 @@ applicable for children and pregnant</span>)
                                             <label class="control-label mb-1 mr-2">Ngày giờ/ <span class="text-primary">Date & Time:</span></label>
                                             <div class="form-group d-inline-block">
                                                 <telerik:RadDateTimePicker runat="server" ID="dtpk_assess_date_time" Width="200px" />
+                                                <span class="text-danger" id="assess_date_time_error"></span>
                                             </div>
                                         </div>
 
@@ -2917,13 +2915,13 @@ applicable for children and pregnant</span>)
                                 </div>
                             </div>
                         </div>
-                    </ContentTemplate>
+                    <%--</ContentTemplate>
                     <Triggers>
                         <asp:PostBackTrigger ControlID="btnAmend" />
                         <asp:PostBackTrigger ControlID="btnCancel" />
-                        <%--<asp:PostBackTrigger ControlID="btnSave" />                     <asp:PostBackTrigger ControlID="btnComplete" />--%>
+                        
                     </Triggers>
-                </asp:UpdatePanel>
+                </asp:UpdatePanel>--%>
             </div>
         </form>
     </div>
@@ -2935,148 +2933,301 @@ applicable for children and pregnant</span>)
     <script src="../../scripts/contenteditable.min.js"></script>
     <script>
 
-        let fall_history_score = 0;
-        let secon_diagnosis_score = 0;
-        let ambula_aids_score = 0;
-        let intra_therapy_score = 0;
-        let gait_trans_score = 0;
-        let fr_mental_status_score = 0;
-        // History of falling
-        document.querySelector('#rad_fall_history_code_0').addEventListener("change", () => { fall_history_score = 0; updateFrTotalScore(); });
+            let fall_history_score = 0;
+            let secon_diagnosis_score = 0;
+            let ambula_aids_score = 0;
+            let intra_therapy_score = 0;
+            let gait_trans_score = 0;
+            let fr_mental_status_score = 0;
+            // History of falling
+            document.querySelector('#rad_fall_history_code_0').addEventListener("change", () => { fall_history_score = 0; updateFrTotalScore(); });
 
-        document.querySelector('#rad_fall_history_code_25').addEventListener("change", () => { fall_history_score = 25; updateFrTotalScore(); });
-        //Secondary diagnosis
-        document.querySelector('#rad_secon_diagnosis_code_0').addEventListener("change", () => { secon_diagnosis_score = 0; updateFrTotalScore(); });
+            document.querySelector('#rad_fall_history_code_25').addEventListener("change", () => { fall_history_score = 25; updateFrTotalScore(); });
+            //Secondary diagnosis
+            document.querySelector('#rad_secon_diagnosis_code_0').addEventListener("change", () => { secon_diagnosis_score = 0; updateFrTotalScore(); });
 
-        document.querySelector('#rad_secon_diagnosis_code_15').addEventListener("change", () => { secon_diagnosis_score = 15; updateFrTotalScore(); });
-        //Ambulatory Aids
-        document.querySelector('#rad_ambula_aids_code_30').addEventListener("change", () => { ambula_aids_score = 30; updateFrTotalScore(); });
+            document.querySelector('#rad_secon_diagnosis_code_15').addEventListener("change", () => { secon_diagnosis_score = 15; updateFrTotalScore(); });
+            //Ambulatory Aids
+            document.querySelector('#rad_ambula_aids_code_30').addEventListener("change", () => { ambula_aids_score = 30; updateFrTotalScore(); });
 
-        document.querySelector('#rad_ambula_aids_code_15').addEventListener("change", () => { ambula_aids_score = 15; updateFrTotalScore(); });
+            document.querySelector('#rad_ambula_aids_code_15').addEventListener("change", () => { ambula_aids_score = 15; updateFrTotalScore(); });
 
-        document.querySelector('#rad_ambula_aids_code_0').addEventListener("change", () => { ambula_aids_score = 0; updateFrTotalScore(); });
-        //Intravenous therapy/heparin locked
-        document.querySelector('#rad_intra_therapy_code_20').addEventListener("change", () => { intra_therapy_score = 20; updateFrTotalScore(); });
+            document.querySelector('#rad_ambula_aids_code_0').addEventListener("change", () => { ambula_aids_score = 0; updateFrTotalScore(); });
+            //Intravenous therapy/heparin locked
+            document.querySelector('#rad_intra_therapy_code_20').addEventListener("change", () => { intra_therapy_score = 20; updateFrTotalScore(); });
 
-        document.querySelector('#rad_intra_therapy_code_0').addEventListener("change", () => { intra_therapy_score = 0; updateFrTotalScore(); });
-        //Gait/ transferring
-        document.querySelector('#rad_gait_trans_code_20').addEventListener("change", () => { gait_trans_score = 20; updateFrTotalScore(); });
+            document.querySelector('#rad_intra_therapy_code_0').addEventListener("change", () => { intra_therapy_score = 0; updateFrTotalScore(); });
+            //Gait/ transferring
+            document.querySelector('#rad_gait_trans_code_20').addEventListener("change", () => { gait_trans_score = 20; updateFrTotalScore(); });
 
-        document.querySelector('#rad_gait_trans_code_10').addEventListener("change", () => { gait_trans_score = 10; updateFrTotalScore(); });
+            document.querySelector('#rad_gait_trans_code_10').addEventListener("change", () => { gait_trans_score = 10; updateFrTotalScore(); });
 
-        document.querySelector('#rad_gait_trans_code_0').addEventListener("change", () => { gait_trans_score = 0; updateFrTotalScore(); });
-        //Mental status
-        document.querySelector('#rad_fr_mental_status_code_15').addEventListener("change", () => { fr_mental_status_score = 15; updateFrTotalScore(); });
+            document.querySelector('#rad_gait_trans_code_0').addEventListener("change", () => { gait_trans_score = 0; updateFrTotalScore(); });
+            //Mental status
+            document.querySelector('#rad_fr_mental_status_code_15').addEventListener("change", () => { fr_mental_status_score = 15; updateFrTotalScore(); });
 
-        document.querySelector('#rad_fr_mental_status_code_0').addEventListener("change", () => { fr_mental_status_score = 0; updateFrTotalScore(); });
+            document.querySelector('#rad_fr_mental_status_code_0').addEventListener("change", () => { fr_mental_status_score = 0; updateFrTotalScore(); });
 
-        function updateFrTotalScore() {
-            document.querySelector("#txt_fr_total_score").innerText = fall_history_score + secon_diagnosis_score + ambula_aids_score + intra_therapy_score + gait_trans_score + fr_mental_status_score;
-        }
+            function updateFrTotalScore() {
+                document.querySelector("#txt_fr_total_score").innerText = fall_history_score + secon_diagnosis_score + ambula_aids_score + intra_therapy_score + gait_trans_score + fr_mental_status_score;
+            }
 
         let nutrition_score1 = 0;
         let nutrition_score2 = 0;
         let nutrition_score3 = 0;
+        let nutrition_score_total = 0;
 
-        document.getElementById("cb_nutrition_score1_1").addEventListener("change", () => {
-            nutrition_score1 = nutrition_scoreChange(["cb_nutrition_score1_1", "cb_nutrition_score1_2"], 1);
-            updateNutritionScore();
-        });
-        document.getElementById("cb_nutrition_score1_2").addEventListener("change", () => {
-            nutrition_score1 = nutrition_scoreChange(["cb_nutrition_score1_1", "cb_nutrition_score1_2"], 1);
-            updateNutritionScore();
-        });
+        function nutrition_score1Change() {
+            nutrition_score1 = 0;
+            let checkbox1 = document.getElementById("cb_nutrition_score1_1");
+            let checkbox2 = document.getElementById("cb_nutrition_score1_2");
 
-        document.getElementById("cb_nutrition_score2_1").addEventListener("change", () => {
-            nutrition_score3 = nutrition_scoreChange(["cb_nutrition_score2_1", "cb_nutrition_score2_2", "cb_nutrition_score2_3"], 2);
-            updateNutritionScore();
-        });
-        document.getElementById("cb_nutrition_score2_2").addEventListener("change", () => {
-            nutrition_score3 = nutrition_scoreChange(["cb_nutrition_score2_1", "cb_nutrition_score2_2", "cb_nutrition_score2_3"], 2);
-            updateNutritionScore();
-        });
-        document.getElementById("cb_nutrition_score2_3").addEventListener("change", () => {
-            nutrition_score3 = nutrition_scoreChange(["cb_nutrition_score2_1", "cb_nutrition_score2_2", "cb_nutrition_score2_3"], 2);
-            updateNutritionScore();
-        });
-
-        document.getElementById("cb_nutrition_score3_1").addEventListener("change", () => {
-            nutrition_score3 = nutrition_scoreChange(["cb_nutrition_score3_1", "cb_nutrition_score3_2", "cb_nutrition_score3_3"], 3);
-            updateNutritionScore();
-        });
-        document.getElementById("cb_nutrition_score3_2").addEventListener("change", () => {
-            nutrition_score3 = nutrition_scoreChange(["cb_nutrition_score3_1", "cb_nutrition_score3_2", "cb_nutrition_score3_3"], 3);
-            updateNutritionScore();
-        });
-        document.getElementById("cb_nutrition_score3_3").addEventListener("change", () => {
-            nutrition_score3 = nutrition_scoreChange(["cb_nutrition_score3_1", "cb_nutrition_score3_2", "cb_nutrition_score3_3"], 3);
-            console.log(nutrition_score3);
+            if (checkbox1.checked || checkbox2.checked) {
+                nutrition_score1 = 1;
+            }
 
             updateNutritionScore();
-        });
+        }
+
+        function nutrition_score2Change()  {
+            nutrition_score2 = 0;
+
+            let checkbox1 = document.getElementById("cb_nutrition_score2_1");
+            let checkbox2 = document.getElementById("cb_nutrition_score2_2");
+            let checkbox3 = document.getElementById("cb_nutrition_score2_3");
+
+            if (checkbox1.checked || checkbox2.checked || checkbox3.checked) {
+                nutrition_score2 = 2;
+            }
+
+            updateNutritionScore();
+        }
+
+        function nutrition_score3Change () {
+            nutrition_score3 = 0;
+
+            let checkbox1 = document.getElementById("cb_nutrition_score3_1");
+            let checkbox2 = document.getElementById("cb_nutrition_score3_2");
+            let checkbox3 = document.getElementById("cb_nutrition_score3_3");
+
+            if (checkbox1.checked || checkbox2.checked || checkbox3.checked) {
+                nutrition_score3 = 3;
+            }
+
+            updateNutritionScore();
+        }
 
         function updateNutritionScore() {
-            document.getElementById("txt_nutrition_score").innerText = nutrition_score1 + nutrition_score2 + nutrition_score3;
+            nutrition_score_total = parseInt(nutrition_score1) + parseInt(nutrition_score2) + parseInt(nutrition_score3);
+            document.getElementById("lbl_nutrition_score").innerText = nutrition_score_total;
+
+            updateTotalNutriScore();
         }
 
-        function nutrition_scoreChange(_checkbox, score) {
-            _checkbox.forEach(e => {
-                if (document.getElementById(e).checked) {
-                    return score;
+
+        // Severity of disease
+
+        let severity_score1 = 0;
+        let severity_score2 = 0;
+        let severity_score3 = 0;
+        let severity_score_total = 0;
+
+        function severity_score1Change() {
+            severity_score1 = 0;
+            let checkbox1 = document.getElementById("cb_severity_score1_1");
+            let checkbox2 = document.getElementById("cb_severity_score1_2");
+            let checkbox3 = document.getElementById("cb_severity_score1_3");
+            let checkbox4 = document.getElementById("cb_severity_score1_4");
+
+            if (checkbox1.checked || checkbox2.checked || checkbox3.checked || checkbox4.checked) {
+                severity_score1 = 1;
+            }
+
+            updateSeverityScore();
+        }
+
+        function severity_score2Change() {
+            severity_score2 = 0;
+            let checkbox1 = document.getElementById("cb_severity_score2_1");
+            let checkbox2 = document.getElementById("cb_severity_score2_2");
+            let checkbox3 = document.getElementById("cb_severity_score2_3");
+            let checkbox4 = document.getElementById("cb_severity_score2_4");
+            let checkbox5 = document.getElementById("cb_severity_score2_5");
+
+            if (checkbox1.checked || checkbox2.checked || checkbox3.checked || checkbox4.checked || checkbox5.checked) {
+                severity_score2 = 2;
+            }
+
+            updateSeverityScore();
+        }
+
+        function severity_score3Change() {
+            severity_score3 = 0;
+            let checkbox1 = document.getElementById("cb_severity_score3_1");
+            let checkbox2 = document.getElementById("cb_severity_score3_2");
+            let checkbox3 = document.getElementById("cb_severity_score3_3");
+
+            if (checkbox1.checked || checkbox2.checked || checkbox3.checked) {
+                severity_score3 = 3;
+            }
+
+            updateSeverityScore();
+        }
+
+
+
+        function updateSeverityScore() {
+            severity_score_total = parseInt(severity_score1) + parseInt(severity_score2) + parseInt(severity_score3);
+            document.getElementById("lbl_severity_score").innerText = severity_score_total;
+
+            updateTotalNutriScore();
+        }
+
+        let age_score1 = 0;
+        let age_score_total = 0;
+
+        function age_score1Change() {
+            age_score = 0;
+            let checkbox1 = document.getElementById("cb_older_70_True");
+
+            if (checkbox1.checked) {
+                age_score1 = 1;
+            }
+
+            updateAgeScore();
+        }
+
+        function updateAgeScore() {
+            age_score_total = parseInt(age_score1);
+            document.getElementById("lbl_age_score").innerText = age_score_total;
+            updateTotalNutriScore();
+        }
+
+        function updateTotalNutriScore() {
+            document.getElementById("lbl_total_nutri_score").innerText = nutrition_score_total + severity_score_total + age_score_total;
+        }
+
+            let clear_fall_history_score = (el) => {
+                clearRadioButton(el);
+                fall_history_score = 0;
+                updateFrTotalScore();
+            }
+
+            let clear_secon_diagnosis_score = (el) => {
+                clearRadioButton(el);
+                secon_diagnosis_score = 0;
+                updateFrTotalScore();
+            }
+
+            let clear_ambula_aids_score = (el) => {
+                clearRadioButton(el);
+                ambula_aids_score = 0;
+                updateFrTotalScore();
+            }
+
+            let clear_intra_therapy_score = (el) => {
+                clearRadioButton(el);
+                intra_therapy_score = 0;
+                updateFrTotalScore();
+            }
+
+            let clear_gait_trans_score = (el) => {
+                clearRadioButton(el);
+                gait_trans_score = 0;
+                updateFrTotalScore();
+            }
+
+            let clear_fr_mental_status_score = (el) => {
+                clearRadioButton(el);
+                clear_fr_mental_status_score = 0;
+                updateFrTotalScore();
+            }
+
+            function clearRadioButton(el) {
+                let radioButton = document.querySelector(`input[name="${el.getAttribute("data-clear")}"]:checked`);
+                if (radioButton) { radioButton.checked = false; }
+            }
+
+        let sensory_score, moisture_score, activity_score, mobility_score, nutrition_score, friction_score;
+        let total_score = document.getElementById("lbl_total_score")
+
+            let update_total_score = () => {
+                if (!sensory_score || !moisture_score || !activity_score || !mobility_score || !nutrition_score || !friction_score) {
+                    lbl_total_score.innerText = "—";
+                } else {
+                    lbl_total_score.innerText = parseInt(sensory_score) + parseInt(moisture_score) + parseInt(activity_score) + parseInt(mobility_score) + parseInt(nutrition_score) + parseInt(friction_score);
                 }
-            });
-            return 0;
+            }
+
+            let sensory_score_change = (e) => { sensory_score = e.value; update_total_score(); }
+
+            let moisture_score_change = (e) => { moisture_score = e.value; update_total_score(); }
+
+            let activity_score_change = (e) => { activity_score = e.value; update_total_score(); }
+
+            let mobility_score_change = (e) => { mobility_score = e.value; update_total_score(); }
+
+            let nutrition_score_change = (e) => { nutrition_score = e.value; update_total_score(); }
+
+            let friction_score_change = (e) => { friction_score = e.value; update_total_score(); }
+
+            //
+            let bmi_out_range = document.getElementById("rad_bmi_out_range_True");
+            let severely_ill = document.getElementById("rad_severely_ill_True");
+            let reduce_dietary = document.getElementById("rad_reduce_dietary_True");
+            let loss_weight = document.getElementById("rad_loss_weight_True");
+
+            function initial_screening_change() {
+                let final_screening = document.querySelector(".final_screening");
+                if (bmi_out_range.checked || severely_ill.checked || reduce_dietary.checked || loss_weight.checked) {
+                    final_screening.classList.remove("el-hide");
+                } else {
+                    final_screening.classList.add("el-hide");
+                }
         }
 
-        let clear_fall_history_score = (el) => {
-            clearRadioButton(el);
-            fall_history_score = 0;
-            updateFrTotalScore();
+        //
+        if (document.querySelector("#RequiredFieldValidator").value) {
+            let errors = document.querySelector("#RequiredFieldValidator").value
+            console.log(errors);
+
+            if (errors.includes("pro_cough_error")) {
+                document.querySelector("#pro_cough_error").innerHTML = "this field is required.";
+            }
+
+            if (errors.includes("last_date_changed_error")) {
+                let last_date_changed_error = document.getElementById("last_date_changed_error");
+                if (last_date_changed_error) last_date_changed_error.innerHTML = "Ngày thay gần nhất/ Fr, Date last changed is required";
+            }
+
+            if (errors.includes("last_sup_catheter_date_error")) {
+                let last_date_changed_error = document.getElementById("last_sup_catheter_date_error");
+                if (last_date_changed_error) last_date_changed_error.innerHTML = "Ngày thay gần nhất/ Fr, Date last changed is required";
+            }
+
+            
+
+            if (errors.includes("other_hospital_error")) {
+                let other_hospital_error = document.getElementById("other_hospital_error"); if (other_hospital_error) other_hospital_error.innerHTML = "Yêu cầu chuyển đến bệnh viện khác/ Requires referral to other hospital";
+            }
+
+            if (errors.includes("assess_date_time_error")) {
+                let assess_date_time_error = document.getElementById("assess_date_time_error");
+                if (assess_date_time_error) assess_date_time_error.innerHTML = "Ngày giờ/ Date & Time is required";
+            }
+
+            if (errors.includes("ind_catheter_error")) {
+                let ind_catheter_error = document.getElementById("ind_catheter_error");
+                if (ind_catheter_error) ind_catheter_error.innerHTML = "Ngày giờ/ Date & Time is required";
+            }
+
+            if (errors.includes("ind_catheter_date_error")) {
+                let ind_catheter_date_error = document.getElementById("ind_catheter_date_error");
+                if (ind_catheter_date_error) ind_catheter_date_error.innerHTML = "Ngày giờ/ Date & Time is required";
+            }
+
+            
         }
-
-        let clear_secon_diagnosis_score = (el) => {
-            clearRadioButton(el);
-            secon_diagnosis_score = 0;
-            updateFrTotalScore();
-        }
-
-        let clear_ambula_aids_score = (el) => {
-            clearRadioButton(el);
-            ambula_aids_score = 0;
-            updateFrTotalScore();
-        }
-
-        let clear_intra_therapy_score = (el) => {
-            clearRadioButton(el);
-            intra_therapy_score = 0;
-            updateFrTotalScore();
-        }
-
-        let clear_gait_trans_score = (el) => {
-            clearRadioButton(el);
-            gait_trans_score = 0;
-            updateFrTotalScore();
-        }
-
-        let clear_fr_mental_status_score = (el) => {
-            clearRadioButton(el);
-            clear_fr_mental_status_score = 0;
-            updateFrTotalScore();
-        }
-
-        function clearRadioButton(el) {
-            let radioButton = document.querySelector(`input[name="${el.getAttribute("data-clear")}"]:checked`);
-            if (radioButton) { radioButton.checked = false; }
-        }
-
-        //document.getElementById("clear_radiobutton1").addEventListener("change", () => {
-        //    nutrition_score3 = nutrition_scoreChange(["cb_nutrition_score3_1", "cb_nutrition_score3_2", "cb_nutrition_score3_3"], 3);
-        //    console.log(nutrition_score3);
-
-        //    updateNutritionScore();
-        //});
-        
-
     </script>
 </body>
 </html>

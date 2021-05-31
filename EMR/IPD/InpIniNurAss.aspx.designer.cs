@@ -78,15 +78,6 @@ namespace EMR
         protected global::Telerik.Web.UI.RadScriptManager RadScriptManager2;
 
         /// <summary>
-        /// Upd control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel Upd;
-
-        /// <summary>
         /// RequiredFieldValidator control.
         /// </summary>
         /// <remarks>
@@ -1995,13 +1986,13 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_severity_score3_3;
 
         /// <summary>
-        /// txt_severity_score control.
+        /// lbl_severity_score control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_severity_score;
+        protected global::System.Web.UI.WebControls.Label lbl_severity_score;
 
         /// <summary>
         /// cb_younger_70_True control.
@@ -2022,22 +2013,22 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_older_70_True;
 
         /// <summary>
-        /// txt_age_score control.
+        /// lbl_age_score control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_age_score;
+        protected global::System.Web.UI.WebControls.Label lbl_age_score;
 
         /// <summary>
-        /// txt_total_nutri_score control.
+        /// lbl_total_nutri_score control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_total_nutri_score;
+        protected global::System.Web.UI.WebControls.Label lbl_total_nutri_score;
 
         /// <summary>
         /// cb_urination_nm control.
@@ -2823,13 +2814,13 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlSelect select_friction_code;
 
         /// <summary>
-        /// txt_total_score control.
+        /// lbl_total_score control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txt_total_score;
+        protected global::System.Web.UI.WebControls.Label lbl_total_score;
 
         /// <summary>
         /// txt_pres_sore_risk_code control.

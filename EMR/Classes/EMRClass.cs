@@ -1491,7 +1491,7 @@ namespace EMR
         public dynamic nutrition_score2 { get; set; }
         public dynamic nutrition_score3 { get; set; }
         public dynamic nutrition_score { get; set; }
-        public dynamic normal_nutrition_req { get; set; }
+        public bool? normal_nutrition_req { get; set; }
         public dynamic severity_score1 { get; set; }
         public dynamic severity_score2 { get; set; }
         public dynamic severity_score3 { get; set; }

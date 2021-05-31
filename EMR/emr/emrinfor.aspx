@@ -9,8 +9,72 @@
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/telerik-custom.css" rel="stylesheet" />
     <link href="../styles/style-custom.css" rel="stylesheet" />
+    <style>
+       .tooltip1 {
+           position: relative;
+
+       }
+
+       .tooltip__item {
+           position: fixed;
+            min-width: 100px;
+            padding: 20px;
+            visibility: hidden;
+            opacity: 0;
+            background: white;
+            transition: all .250s cubic-bezier(0, 0, 0.2, 1);
+            color: #484848;
+            border: 1px solid #cecece;
+            border-radius: 3px;
+            font-weight: 500;
+            box-shadow: 0 2px 1px #bcbcbc;
+            z-index: 1000;
+            
+       }
+
+        /*.tooltip__item:before {
+            content: "";
+              display: block;
+              position: absolute;
+              width: 0;
+              height: 0;
+              border-style: solid;
+        }*/
+
+        .tooltip__initiator {
+            cursor: pointer;
+            z-index: 5;
+        }
+
+        .tooltip__initiator:hover ~ .tooltip__item {
+          /*transform: translate3d(0, -50%, 0);*/
+          visibility: visible;
+          opacity: 1;
+          transform: translate(5px, 50%) scale(1);
+        }
+
+        .tooltip__item {
+            top: 50%;
+            left: calc(100% + 1em);
+            transform: translate3d(15px, -50%, 0);
+        }
+
+        /*.tooltip__item:before {
+            top: 50%;
+            left: 0;*/
+            /*transform: translate3d(0, -50%, 0);*/
+            /*border-width: 0.5em 0 0.5em 0.5em;
+            border-color: transparent transparent transparent white;
+            -webkit-filter: drop-shadow(1px 2px 1px #bcbcbc);
+            filter: drop-shadow(1px 2px 1px #bcbcbc);
+            transform: translate(0, -50%) rotateY(180deg);
+      }*/
+
+        
+
+    </style>
 </head>
-<body>
+<body onload="bodyOnloadHandler()">
     <form id="form1" runat="server">
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
 <%--        <asp:UpdatePanel ID="updatePanel_main" runat="server" UpdateMode="Always">
@@ -125,6 +189,8 @@
                         <!-- Sidebar scroll-->
                         <div class="scroll-sidebar w-100">
                             <nav class="sidebar-wrapper" style="position: initial; width: inherit">
+                                  
+
                                 <div class="sidebar-menu">
                                     <asp:UpdatePanel ID="updatePanel_main" runat="server" UpdateMode="Always">
             <ContentTemplate>
@@ -153,12 +219,11 @@
                                                                     <%-- <asp:HyperLink ID="lbURL" 
                            NavigateUrl ="http://172.16.0.78:8082/api/omr/0d79db3e-ae3f-433e-a1d2-aa96107654e1"                           
                           </asp:HyperLink>--%>
-
-                                                                    <asp:HyperLink Style="display: inline-block;" ID="lbURL" runat="server" NavigateUrl='<%# Return_Doc_URL(Eval("model_id"),Eval("document_id")) %>'
+                                                                    
+                                                                    <asp:HyperLink data-title='<%# ReturnForm_Name(Eval("status"),Eval("model_name"), "") %>' data-category='' data-visit='' data-author='<%# Eval("created_name_e") %>' CssClass="list-item d-inline-block" ID="lbURL" runat="server" NavigateUrl='<%# Return_Doc_URL(Eval("model_id"),Eval("document_id")) %>'
                                                                         Text='<%# ReturnForm_Name(Eval("status"),Eval("model_name"),Eval("created_name_e")) %>' Target="MainContent">
-
+                                                                        
                                                                     </asp:HyperLink>
-
                                                                 </ItemTemplate>
                                                             </telerik:GridTemplateColumn>
                                                         </Columns>
@@ -178,6 +243,11 @@
                                             </MasterTableView>
                                             <ClientSettings EnableRowHoverStyle="true" Selecting-AllowRowSelect="true" EnablePostBackOnRowClick="true">
                                                 <Selecting AllowRowSelect="true" />
+                                                <ClientEvents 
+                                                     OnColumnCreated="OnGridCreated"
+                                                     OnDataBinding="OnGridCreated"
+
+OnDataSourceResolved="OnGridCreated" />
                                             </ClientSettings>
                                         </telerik:RadGrid>
                                         <%--END Load Left Menu--%>
@@ -296,6 +366,28 @@
                 <asp:AsyncPostBackTrigger ControlID="btnSearch" EventName="Click" />
             </Triggers>
         </asp:UpdatePanel>--%>
+        <div id="tooltip__item" class="tooltip__item">
+            <table>
+                <tbody>
+                    <tr>
+                        <th colspan="2" class="title mb-2 font-bold"></th>
+                    </tr>
+                    <tr>
+                        <td style="width: 90px;">Category</td>
+                        <td class="category"></td>
+                    </tr>
+                    <tr>
+                        <td>Author</td>
+                        <td class="author"></td>
+                    </tr>
+                    <tr>
+                        <td>Visit</td>
+                        <td class="visit"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
     </form>
 
     <script src="../../scripts/jquery-3.2.1.min.js"></script>
@@ -304,5 +396,119 @@
     <script src="../../scripts/custom.min.js"></script>
     <script src="../../scripts/myScript.js"></script>
     <script src="../../scripts/contenteditable.min.js"></script>
+
+    <script>
+
+        //window.addEventListener('load', function () {
+        //    console.log('All assets are loaded')
+        //})
+
+        //window.addEventListener('DOMContentLoaded', (event) => {
+        //    console.log('DOM fully loaded and parsed');
+        //});
+
+        window.onload = function () {
+            console.log('window loaded');
+            let listItem = document.getElementsByClassName("list-item");
+            let tooltip1 = document.getElementById("tooltip__item");
+
+            tooltip1.style.position = "fixed";
+            
+            tooltip1.style.zIndex = 1000;
+            tooltip1.style.visibility = "visible";
+            tooltip1.style.opacity = 1;
+            
+            //listItem[0].addEventListener("mouseenter", function () {
+            //    console.log("dsfsfs");
+            //});
+
+            //listItem[0].addEventListener("mouseover", function () {
+
+            //    tooltip1.style.visibility = "hidden";
+            //    tooltip1.style.opacity = 0;
+            //});
+        }
+
+        //document.onload = function () {
+        //    console.log('document loaded');
+        //}
+
+        //window.addEventListener('DOMContentLoaded', function () {
+        //    console.log('window - DOMContentLoaded - capture'); // 1st
+        //}, true);
+        //document.addEventListener('DOMContentLoaded', function () {
+        //    console.log('document - DOMContentLoaded - capture'); // 2nd
+        //}, true);
+        //document.addEventListener('DOMContentLoaded', function () {
+        //    console.log('document - DOMContentLoaded - bubble'); // 2nd
+        //});
+        //window.addEventListener('DOMContentLoaded', function () {
+        //    console.log('window - DOMContentLoaded - bubble'); // 3rd
+        //});
+
+        //window.addEventListener('load', function () {
+        //    console.log(document.getElementsByClassName("list-item"));
+
+        //}, true);
+        //document.addEventListener('load', function (e) {
+        //    /* Filter out load events not related to the document */
+        //    if (['style', 'script'].indexOf(e.target.tagName.toLowerCase()) < 0)
+        //        console.log('document - load - capture'); // DOES NOT HAPPEN
+        //}, true);
+        //document.addEventListener('load', function () {
+        //    console.log('document - load - bubble'); // DOES NOT HAPPEN
+        //});
+        //window.addEventListener('load', function () {
+        //    console.log('window - load - bubble'); // 4th
+        //    setTimeout(function () {
+        //        console.log(document.getElementsByClassName("list-item"));
+        //    }, 3000);
+        //});
+
+        //window.onload = function () {
+        //    console.log('window - onload'); // 4th
+
+        //};
+        //document.onload = function () {
+        //    console.log('document - onload'); // DOES NOT HAPPEN
+        //};
+
+        //function bodyOnloadHandler() {
+        //    console.log("body onload");
+        //}
+
+    </script>
+
+    <script type="text/javascript">
+        function OnGridCreated(sender, args) {
+            
+
+            let listItem = document.querySelectorAll(".list-item");
+            let tooltip1 = document.getElementById("tooltip__item");
+
+            if (listItem.length > 0) {
+
+                listItem.forEach(item => {
+                    item.addEventListener("mouseenter", function (e) {
+                        tooltip1.style.top = e.clientY + "px";
+                        tooltip1.style.left = e.clientX + "px";
+                        tooltip1.style.visibility = "visible";
+                        tooltip1.style.opacity = 1;
+                        tooltip1.querySelector(".title").innerText = item.getAttribute("data-title");
+                        tooltip1.querySelector(".category").innerText = item.getAttribute("data-category");
+                        tooltip1.querySelector(".author").innerText = item.getAttribute("data-author");
+                        tooltip1.querySelector(".visit").innerText = item.getAttribute("data-visit");
+                    })
+
+                    item.addEventListener("mouseleave", function (e) {
+                        
+                        tooltip1.style.visibility = "hidden";
+                        tooltip1.style.opacity = 0;
+                    })
+                })
+            }
+            
+        }
+    </script>
 </body>
 </html>

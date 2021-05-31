@@ -292,8 +292,9 @@ namespace EMR
                         //string temp2 = obj.GetType().GetProperty(col.ToString()).Name.ToString();
                         //string temp1 =  tbl.Rows[0].Field<dynamic>(col);
                         //obj.GetType().GetProperty(col.ToString()).SetValue(obj, tbl.Rows[0].Field<dynamic>(col));
-
-                        obj.GetType().GetProperty(col.ToString()).SetValue(obj, Convert.ToString(tbl.Rows[0].Field<dynamic>(col)));
+                        var field = tbl.Rows[0].Field<dynamic>(col);
+                        
+                        obj.GetType().GetProperty(col.ToString()).SetValue(obj, field);
                     }
                 }
             }
@@ -478,7 +479,8 @@ namespace EMR
             }
             catch (WebException ex)
             {
-                result.Status = ((dynamic)ex.Response).StatusCode;
+                result.Status = ex.Status;
+                //result.Status = ((dynamic)ex.Response).StatusCode;
 
                 result.Data = ex.Message;
 

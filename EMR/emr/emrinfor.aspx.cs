@@ -48,8 +48,11 @@ namespace EMR
             if (!IsPostBack)
             {
                 DataHelpers.LoadPatientInfomation(varPID);
+                DateTime dob;
 
-                lblPatientInfo.InnerHtml = "<strong>" + DataHelpers.patient.first_name_e + " " + DataHelpers.patient.last_name_e + " (" + DataHelpers.patient.title_e + ")</strong>, <small>DOB</small> " + DateTime.Parse(DataHelpers.patient.date_of_birth).ToString("dd/MM/yyyy") + " (" + DataHelpers.CalculateAge(DateTime.Parse(DataHelpers.patient.date_of_birth)) + "y) <small>SEX</small> " + DataHelpers.patient.gender_l + " <small>PID</small> <strong>" + DataHelpers.patient.visible_patient_id + "</strong>";
+                DateTime.TryParse(Convert.ToString(DataHelpers.patient.date_of_birth), out dob);
+
+                lblPatientInfo.InnerHtml = "<strong>" + DataHelpers.patient.first_name_e + " " + DataHelpers.patient.last_name_e + " (" + DataHelpers.patient.title_e + ")</strong>, <small>DOB</small> " + dob.ToString("dd/MM/yyyy") + " (" + DataHelpers.CalculateAge(dob) + "y) <small>SEX</small> " + DataHelpers.patient.gender_l + " <small>PID</small> <strong>" + DataHelpers.patient.visible_patient_id + "</strong>";
 
                 MainContent.ContentUrl = string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", varPID, varVPID);
             }

@@ -51,7 +51,7 @@ namespace EMR
             if (vi_laganue) //Language = Vietnamese ( Default)
             {
                 lblGender.InnerText = DataHelpers.patient.gender_l;
-                lblAge.InnerText = DataHelpers.patient.date_of_birth;
+                lblAge.InnerText = DataHelpers.patient.date_of_birth.ToString();
                 lblAddress.InnerText = DataHelpers.patient.address_line_l + " " + DataHelpers.patient.address_subregion_l + " " + DataHelpers.patient.address_region_l + " " + DataHelpers.patient.address_country_l;
                 lblPhone.InnerText = DataHelpers.patient.contact_phone_number;
                 lblName.InnerText = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;

@@ -140,13 +140,13 @@ namespace EMR
                 BindCheckBox("cb_severity_score1_", iina.severity_score1);
                 BindCheckBox("cb_severity_score2_", iina.severity_score2);
                 BindCheckBox("cb_severity_score3_", iina.severity_score3);
-                txt_severity_score.Value = iina.severity_score;
-
+                lbl_severity_score.Text = iina.severity_score;
+                
                 BindCheckBox("cb_younger_70_" + iina.younger_70);
                 BindCheckBox("cb_older_70_" + iina.older_70);
-                txt_age_score.Value = iina.age_score;
+                lbl_age_score.Text = iina.age_score;
 
-                txt_total_nutri_score.Value = iina.total_nutri_score;
+                lbl_total_nutri_score.Text = iina.total_nutri_score;
 
                 //7
                 BindCheckBox("cb_urination_", iina.urination);
@@ -306,7 +306,7 @@ namespace EMR
                 BindSelectOption(select_mobility_code, iina.mobility_code);
                 BindSelectOption(select_nutrition_code, iina.nutrition_code);
                 BindSelectOption(select_friction_code, iina.friction_code);
-                txt_total_score.Text = iina.total_score;
+                lbl_total_score.Text = iina.total_score;
 
                 txt_pres_sore_risk_code.Value = iina.pres_sore_risk_desc;
                 txt_preven_action.Value = iina.preven_action;
@@ -529,6 +529,9 @@ namespace EMR
             else
             {
                 RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
+
+                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
+                message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
             }
         }
 
@@ -665,12 +668,12 @@ namespace EMR
                 iina.severity_score1 = GetCheckBox("cb_severity_score1_", Iina.SEVERITY_SCORE1_CODE);
                 iina.severity_score2 = GetCheckBox("cb_severity_score2_", Iina.SEVERITY_SCORE2_CODE);
                 iina.severity_score3 = GetCheckBox("cb_severity_score3_", Iina.SEVERITY_SCORE3_CODE);
-                iina.severity_score = txt_severity_score.Value;
+                iina.severity_score = lbl_severity_score.Text;
                 //Age
                 iina.younger_70 = GetCheckBox("cb_younger_70_");
                 iina.older_70 = GetCheckBox("cb_older_70_");
-                iina.age_score = txt_age_score.Value;
-                iina.total_nutri_score = txt_total_nutri_score.Value;
+                iina.age_score = lbl_age_score.Text;
+                iina.total_nutri_score = lbl_total_nutri_score.Text;
                 //7
                 iina.urination = GetCheckBox("cb_urination_", Iina.URINATION_CODE);
                 iina.inter_catheter = GetCheckBox("cb_inter_catheter_");
@@ -678,11 +681,11 @@ namespace EMR
 
                 iina.ind_catheter = GetCheckBox("cb_ind_catheter_");
                 iina.ind_catheter_size = txt_ind_catheter_size.Value;
-                iina.ind_catheter_date = dpk_ind_catheter_date.SelectedDate;
+                iina.ind_catheter_date = DataHelpers.ConvertSQLDateTime(dpk_ind_catheter_date.SelectedDate);
 
                 iina.sup_catheter = GetCheckBox("cb_sup_catheter_");
                 iina.sup_catheter_size = txt_sup_catheter_size.Value;
-                iina.last_sup_catheter_date = dpk_last_sup_catheter_date.SelectedDate;
+                iina.last_sup_catheter_date = DataHelpers.ConvertSQLDateTime(dpk_last_sup_catheter_date.SelectedDate);
 
 
                 iina.menstruation_code = GetRadioButton("rad_menstruation_code_", Iina.MENSTRUATION_CODE);
@@ -745,24 +748,24 @@ namespace EMR
                 iina.skin_anno = WebHelpers.GetJSONFromTable(grid_skin_anno, Iina.SKIN_ANNO);
 
                 iina.sensory_code = Request.Form.Get("select_sensory_code");
-                if (iina.sensory_code != null) iina.sensory_desc = Iina.SENSORY_CODE[iina.sensory_code];
+                if (!string.IsNullOrEmpty(iina.sensory_code)) iina.sensory_desc = Iina.SENSORY_CODE[iina.sensory_code];
 
                 iina.moisture_code = Request.Form.Get("select_moisture_code");
-                if (iina.moisture_code != null) iina.moisture_desc = Iina.MOISTURE_CODE[iina.moisture_code];
+                if (!string.IsNullOrEmpty(iina.moisture_code)) iina.moisture_desc = Iina.MOISTURE_CODE[iina.moisture_code];
 
                 iina.activity_code = Request.Form.Get("select_activity_code");
-                if (iina.activity_code != null) iina.activity_desc = Iina.ACTIVITY_CODE[iina.activity_code];
+                if (!string.IsNullOrEmpty(iina.activity_code)) iina.activity_desc = Iina.ACTIVITY_CODE[iina.activity_code];
 
                 iina.mobility_code = Request.Form.Get("select_mobility_code");
-                if (iina.mobility_code != null) iina.mobility_desc = Iina.MOBILITY_CODE[iina.mobility_code];
+                if (!string.IsNullOrEmpty(iina.mobility_code)) iina.mobility_desc = Iina.MOBILITY_CODE[iina.mobility_code];
 
                 iina.nutrition_code = Request.Form.Get("select_nutrition_code");
-                if (iina.nutrition_code != null) iina.nutrition_desc = Iina.NUTRITION_CODE[iina.nutrition_code];
+                if (!string.IsNullOrEmpty(iina.nutrition_code)) iina.nutrition_desc = Iina.NUTRITION_CODE[iina.nutrition_code];
 
                 iina.friction_code = Request.Form.Get("select_friction_code");
-                if (iina.friction_code != null) iina.friction_desc = Iina.FRICTION_CODE[iina.friction_code];
+                if (!string.IsNullOrEmpty(iina.friction_code)) iina.friction_desc = Iina.FRICTION_CODE[iina.friction_code];
 
-                iina.total_score = txt_total_score.Text;
+                iina.total_score = lbl_total_score.Text;
                 iina.preven_action = txt_preven_action.Value;
                 //11
                 iina.bathing_code = GetRadioButton("rad_bathing_code_", Iina.BATHING_CODE);
@@ -934,6 +937,35 @@ namespace EMR
 
         private void checkValidField(List<string> errors)
         {
+            if (!rad_pro_cough_True.Checked && !rad_pro_cough_False.Checked)
+            {
+                errors.Add("pro_cough_error");
+            }
+            if (dpk_last_date_changed.SelectedDate == null)
+            {
+                errors.Add("last_date_changed_error");
+            }
+            if (dpk_last_sup_catheter_date.SelectedDate == null)
+            {
+                errors.Add("last_sup_catheter_date_error");
+            }
+            if(!rad_other_hospital_True.Checked && !rad_other_hospital_False.Checked)
+            {
+                errors.Add("other_hospital_error");
+            }
+            if(dtpk_assess_date_time.SelectedDate == null)
+            {
+                errors.Add("assess_date_time_error");
+            }
+            if (!cb_ind_catheter_True.Checked)
+            {
+                errors.Add("ind_catheter_error");
+            }
+            if (dpk_ind_catheter_date.SelectedDate == null)
+            {
+                errors.Add("ind_catheter_date_error");
+            }
+
             
         }
     }
