@@ -55,18 +55,8 @@ namespace EMR
                 txt_vs_pulse.Value = pomr.vs_pulse;
 
                 //allergy
-                if(pomr.allergy != null)
-                {
-                    if (bool.Parse(pomr.allergy))
-                    {
-                        rad_allergy2.Checked = true;
-                        txt_allergy_note.Value = pomr.allergy_note;
-                    }
-                    else
-                    {
-                        rad_allergy1.Checked = true;
-                    }
-                }
+                BindRadioButton("rad_allergy_" + pomr.allergy);
+                txt_allergy_note.Value = pomr.allergy_note;
 
                 txt_physical_examination.Value = DataHelpers.FormatPhysicalExamination(pomr.physical_examination);
 
@@ -75,44 +65,16 @@ namespace EMR
                 txt_differential_diagnosis.Value = pomr.differential_diagnosis;
                 txt_associated_conditions.Value = pomr.associated_conditions;
 
-                foreach (KeyValuePair<string, string> code in POMR.TREATMENT_CODE)
-                {
-                    try
-                    {
-                        ((HtmlInputRadioButton)FindControl("rad_treatment_code_" + code.Key.ToLower())).Checked = true;
-                    }
-                    catch (Exception ex) { }
-                }
+                BindRadioButton("rad_treatment_code_" + pomr.treatment_code);
 
-                if (pomr.spec_opinion_requested != null)
-                {
-                    if (bool.Parse(pomr.spec_opinion_requested))
-                    {
-                        rad_spec_opinion_requested2.Checked = true;
-                        txt_spec_opinion_requested_note.Value = pomr.spec_opinion_requested_note;
-                    }
-                    else
-                    {
-                        rad_spec_opinion_requested2.Checked = true;
-                    }
-                }
+                BindRadioButton("rad_spec_opinion_requested_" + pomr.spec_opinion_requested);
 
-                if (pomr.bool_next_appointment != null)
-                {
-                    if (bool.Parse(pomr.bool_next_appointment))
-                    {
-                        rad_next_appointment1.Checked = true;
-                        try
-                        {
-                            dtpk_date_next_appointment.SelectedDate = DateTime.Parse(pomr.date_next_appointment);
-                        }catch(Exception ex) { }
-                    }
-                    else
-                    {
-                        rad_next_appointment2.Checked = true;
-                        txt_next_appointment.Value = pomr.txt_next_appointment;
-                    }
-                }
+                txt_spec_opinion_requested_note.Value = pomr.spec_opinion_requested_note;
+
+                BindRadioButton("rad_next_appointment_" + pomr.bool_next_appointment);
+
+                WebHelpers.BindDateTimePicker(dtpk_date_next_appointment, pomr.date_next_appointment);
+                txt_next_appointment.Value = pomr.txt_next_appointment;
 
                 btnCancel.Visible = false;
                 txt_amendReason.Visible = false;
@@ -137,6 +99,13 @@ namespace EMR
             } catch (Exception ex) { }
         }
 
+        private void BindRadioButton(string value)
+        {
+            if (FindControl(value) != null)
+            {
+                ((HtmlInputRadioButton)FindControl(value)).Checked = true;
+            }
+        }
         protected void DisabledControl(bool disabled)
         {
             txt_chief_complaint.Disabled = disabled;
@@ -144,8 +113,8 @@ namespace EMR
             txt_medical_history.Disabled = disabled;
             txt_personal.Disabled = disabled;
             txt_family.Disabled = disabled;
-            rad_allergy1.Disabled = disabled;
-            rad_allergy2.Disabled = disabled;
+            rad_allergy_true.Disabled = disabled;
+            rad_allergy_false.Disabled = disabled;
             txt_allergy_note.Disabled = disabled;
             txt_vs_temperature.Disabled = true;
             txt_vs_heart_rate.Disabled = true;
@@ -170,15 +139,15 @@ namespace EMR
             }
             txt_medication.Disabled = disabled;
             txt_transfer.Disabled = disabled;
-            rad_spec_opinion_requested1.Disabled = disabled;
-            rad_spec_opinion_requested2.Disabled = disabled;
+            rad_spec_opinion_requested_true.Disabled = disabled;
+            rad_spec_opinion_requested_false.Disabled = disabled;
             txt_spec_opinion_requested_note.Disabled = disabled;
             txt_specific_education_required.Disabled = disabled;
 
-            rad_next_appointment1.Disabled = disabled;
+            rad_next_appointment_true.Disabled = disabled;
             WebHelpers.DisabledDateTimePicker(dtpk_date_next_appointment, disabled);
 
-            rad_next_appointment2.Disabled = disabled;
+            rad_next_appointment_false.Disabled = disabled;
             txt_next_appointment.Disabled = disabled;
             
         }
@@ -201,9 +170,9 @@ namespace EMR
             pomr.personal = txt_personal.Value;
             pomr.family = txt_family.Value;
 
-            if (rad_allergy2.Checked)
+            if (rad_allergy_true.Checked)
             { pomr.allergy = false; pomr.allergy_note = txt_allergy_note.Value; }
-            else if (rad_allergy2.Checked)
+            else if (rad_allergy_false.Checked)
             { pomr.allergy = true; }
 
             pomr.physical_examination = txt_physical_examination.Value;
@@ -212,7 +181,7 @@ namespace EMR
             pomr.differential_diagnosis = txt_differential_diagnosis.Value;
             pomr.associated_conditions = txt_associated_conditions.Value;
 
-            foreach (KeyValuePair<string, string> code in DocumentCode.TriageCode)
+            foreach (KeyValuePair<string, string> code in Ena.TRIAGE_CODE)
             {
                 if (((HtmlInputRadioButton)FindControl("rad_triage_code_" + code.Key.ToLower())).Checked)
                 {
@@ -222,17 +191,17 @@ namespace EMR
                 }
             }
 
-            if (rad_spec_opinion_requested1.Checked)
+            if (rad_spec_opinion_requested_true.Checked)
             {
                 pomr.spec_opinion_requested = false;
             }
-            else if (rad_spec_opinion_requested2.Checked)
+            else if (rad_spec_opinion_requested_false.Checked)
             {
                 pomr.spec_opinion_requested = true;
                 pomr.spec_opinion_requested_note = txt_spec_opinion_requested_note.Value;
             }
 
-            if (rad_next_appointment1.Checked)
+            if (rad_next_appointment_true.Checked)
             {
                 pomr.bool_next_appointment = true;
                 pomr.txt_next_appointment = null;
@@ -242,7 +211,7 @@ namespace EMR
                     pomr.date_next_appointment = DataHelpers.ConvertSQLDateTime(dtpk_date_next_appointment.SelectedDate);
                 }
             }
-            else if(rad_next_appointment2.Checked)
+            else if(rad_next_appointment_false.Checked)
             {
                 pomr.bool_next_appointment = false;
                 pomr.txt_next_appointment = txt_next_appointment.Value;
@@ -287,6 +256,11 @@ namespace EMR
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             Initial();
+        }
+
+        protected void btnUpdateVitalSign_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

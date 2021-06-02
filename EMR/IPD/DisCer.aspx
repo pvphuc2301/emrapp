@@ -25,7 +25,7 @@
     <link href="../../style/style-custom.css" rel="stylesheet" />
 </head>
 <body>
-    <webUI:PrintWindow runat="server" ID="PrintWindow">
+    <%--<webUI:PrintWindow runat="server" ID="PrintWindow">
         <PrintTitle>
             <div style="color: #007297; font-size: 26.6667px;">GIẤY RA VIỆN</div>
             <div style="color: #e20e5a; font-size: 16.6667px;">DISCHARGE CERTIFICATE</div>
@@ -232,7 +232,7 @@
             </div>
 
         </PrintContent>
-    </webUI:PrintWindow>
+    </webUI:PrintWindow>--%>
 
     <div class="cssclsNoPrint">
         <form method="post" action="#" id="form2" runat="server">

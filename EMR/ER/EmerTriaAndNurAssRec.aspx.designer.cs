@@ -42,13 +42,13 @@ namespace EMR
         protected global::System.Web.UI.WebControls.HiddenField RequiredFieldValidator;
 
         /// <summary>
-        /// Panel1 control.
+        /// messagePlaceHolder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel Panel1;
+        protected global::System.Web.UI.WebControls.Panel messagePlaceHolder;
 
         /// <summary>
         /// txt_amendReason control.
@@ -564,22 +564,22 @@ namespace EMR
         protected global::EMR.TextField txt_caregiver_after_discharge;
 
         /// <summary>
-        /// rad_btc_language1 control.
+        /// rad_btc_language_false control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_language1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_language_false;
 
         /// <summary>
-        /// rad_btc_language2 control.
+        /// rad_btc_language_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_language2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_language_true;
 
         /// <summary>
         /// txt_btc_language_note control.
@@ -591,22 +591,22 @@ namespace EMR
         protected global::EMR.TextField txt_btc_language_note;
 
         /// <summary>
-        /// rad_btc_cognitive1 control.
+        /// rad_btc_cognitive_false control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_cognitive1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_cognitive_false;
 
         /// <summary>
-        /// rad_btc_cognitive2 control.
+        /// rad_btc_cognitive_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_cognitive2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_cognitive_true;
 
         /// <summary>
         /// txt_btc_cognitive_note control.
@@ -618,22 +618,22 @@ namespace EMR
         protected global::EMR.TextField txt_btc_cognitive_note;
 
         /// <summary>
-        /// rad_btc_sensory1 control.
+        /// rad_btc_sensory_false control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_sensory1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_sensory_false;
 
         /// <summary>
-        /// rad_btc_sensory2 control.
+        /// rad_btc_sensory_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_sensory2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_sensory_true;
 
         /// <summary>
         /// txt_btc_sensory_note control.
@@ -645,22 +645,22 @@ namespace EMR
         protected global::EMR.TextField txt_btc_sensory_note;
 
         /// <summary>
-        /// rad_btc_religious1 control.
+        /// rad_btc_religious_false control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_religious1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_religious_false;
 
         /// <summary>
-        /// rad_btc_religious2 control.
+        /// rad_btc_religious_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_religious2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_religious_true;
 
         /// <summary>
         /// txt_btc_religious_note control.
@@ -672,22 +672,22 @@ namespace EMR
         protected global::EMR.TextField txt_btc_religious_note;
 
         /// <summary>
-        /// rad_btc_cultural1 control.
+        /// rad_btc_cultural_false control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_cultural1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_cultural_false;
 
         /// <summary>
-        /// rad_btc_cultural2 control.
+        /// rad_btc_cultural_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_cultural2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_btc_cultural_true;
 
         /// <summary>
         /// txt_btc_cultural_note control.
@@ -753,31 +753,31 @@ namespace EMR
         protected global::EMR.TextField txt_motion;
 
         /// <summary>
-        /// cb_alert control.
+        /// cb_alert_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_alert;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_alert_true;
 
         /// <summary>
-        /// cb_coma control.
+        /// cb_coma_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_coma;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_coma_true;
 
         /// <summary>
-        /// cb_others control.
+        /// cb_others_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_others;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_others_true;
 
         /// <summary>
         /// txt_str_others control.
@@ -879,31 +879,31 @@ namespace EMR
         protected global::EMR.TextField txt_respiratory_oth;
 
         /// <summary>
-        /// cb_rhythm_regular control.
+        /// cb_rhythm_regular_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_rhythm_regular;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_rhythm_regular_true;
 
         /// <summary>
-        /// cb_rhythm_inregular control.
+        /// cb_rhythm_inregular_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_rhythm_inregular;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_rhythm_inregular_true;
 
         /// <summary>
-        /// cb_rhythm_others control.
+        /// cb_rhythm_others_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_rhythm_others;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_rhythm_others_true;
 
         /// <summary>
         /// txt_rhythm_str_others control.
@@ -915,22 +915,22 @@ namespace EMR
         protected global::EMR.TextField txt_rhythm_str_others;
 
         /// <summary>
-        /// cb_psychosocial control.
+        /// cb_psychosocial_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_psychosocial;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_psychosocial_true;
 
         /// <summary>
-        /// cb_psychosocial_others control.
+        /// cb_psychosocial_others_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_psychosocial_others;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_psychosocial_others_true;
 
         /// <summary>
         /// txt_psychosocial_str_others control.
@@ -942,22 +942,22 @@ namespace EMR
         protected global::EMR.TextField txt_psychosocial_str_others;
 
         /// <summary>
-        /// cb_other_systems_normal control.
+        /// cb_other_systems_normal_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_other_systems_normal;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_other_systems_normal_true;
 
         /// <summary>
-        /// cb_other_systems_abnormal control.
+        /// cb_other_systems_abnormal_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_other_systems_abnormal;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_other_systems_abnormal_true;
 
         /// <summary>
         /// txt_others_systems_str control.
@@ -969,13 +969,13 @@ namespace EMR
         protected global::EMR.TextField txt_others_systems_str;
 
         /// <summary>
-        /// cb_lmp control.
+        /// cb_lmp_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_lmp;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_lmp_true;
 
         /// <summary>
         /// txt_lmP_note control.
@@ -1113,13 +1113,13 @@ namespace EMR
         protected global::System.Web.UI.WebControls.GridView grid_AssessmentSystem;
 
         /// <summary>
-        /// updateProgress_AssessmentSystem control.
+        /// Spinner1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdateProgress updateProgress_AssessmentSystem;
+        protected global::EMR.UserControls.Spinner1 Spinner1;
 
         /// <summary>
         /// btn_grid_AssessmentSystem_add control.
@@ -1354,15 +1354,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCancel;
-
-        /// <summary>
-        /// messagePlaceHolder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl messagePlaceHolder;
 
         /// <summary>
         /// myModal control.

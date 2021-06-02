@@ -226,7 +226,7 @@ namespace EMR
         {
             if (!IsPostBack)
             {
-                dynamic response = WebHelpers.GetAPI("api/patient/document-type-list/" + varPID);
+                dynamic response = WebHelpers.GetAPI("api/patient/document-type-list/" + Session["company_code"] + "/" + varPID);
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {

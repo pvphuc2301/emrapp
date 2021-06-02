@@ -26,7 +26,7 @@ namespace EMR
             if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
             if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
 
-            iina = new Iina(DataHelpers.varDocId);
+            iina = new Iina(Request.QueryString["docId"]);
             loadDataToControls(iina);
         }
         public void loadDataToControls(Iina iina)
@@ -63,7 +63,7 @@ namespace EMR
                 //
                 txt_admission_reason.Value = iina.admission_reason;
                 //
-                txt_previous_admission.Value = iina.previous_admission;
+                lbl_previous_admission.Text = iina.previous_admission;
                 //
                 BindRadioButton("rad_past_med_history_" + iina.past_med_history);
                 txt_past_med_history_note.Value = iina.past_med_history_note;
@@ -332,7 +332,7 @@ namespace EMR
                 BindRadioButton("rad_gait_trans_code_" + iina.gait_trans_code);
                 BindRadioButton("rad_fr_mental_status_code_" + iina.fr_mental_status_code);
 
-                txt_fr_total_score.Text = iina.fr_total_score;
+                lbl_fr_total_score.Text = iina.fr_total_score;
 
                 BindRadioButton("rad_involvement_" + iina.involvement);
                 BindRadioButton("rad_req_med_equipment_" + iina.req_med_equipment);
@@ -397,9 +397,12 @@ namespace EMR
         {
             try
             {
-                ViewState[gridView.ID] = dataSource;
-                gridView.DataSource = (DataTable)ViewState[gridView.ID];
-                gridView.DataBind();
+                if(dataSource != null)
+                {
+                    ViewState[gridView.ID] = dataSource;
+                    gridView.DataSource = (DataTable)ViewState[gridView.ID];
+                    gridView.DataBind();
+                }
             }
             catch (Exception ex)
             {
@@ -455,16 +458,21 @@ namespace EMR
             try
             {
                 DataTable table = (DataTable)ViewState[grid_skin_anno.ID];
-                if (table == null) table = new DataTable();
-
-                if (table.Rows.Count <= 0)
+                //new object
+                if (table == null)
                 {
-                    foreach (KeyValuePair<string, string> col in Iina.SKIN_ANNO)
+                    table = new DataTable();
+                }
+                //create header
+                for(int i = 0; i < Iina.SKIN_ANNO.Count; i++)
+                {
+                    var col = Iina.SKIN_ANNO.ElementAt(i);
+                    if(!table.Columns.Contains(col.Key))
                     {
                         table.Columns.Add(col.Key);
                     }
                 }
-
+                //get current data
                 for (int r = 0; r < grid_skin_anno.Rows.Count; r++)
                 {
                     for (int i = 0; i < grid_skin_anno.Rows[r].Cells.Count; i++)
@@ -480,7 +488,7 @@ namespace EMR
                         catch { }
                     }
                 }
-
+                //add new row
                 DataRow dtRow = table.NewRow();
 
                 dtRow = table.NewRow();
@@ -520,11 +528,7 @@ namespace EMR
                 iina.user_name = (string)Session["UserID"];
                 iina.status = DocumentStatus.DRAFT;
 
-                if (UpdateData(iina) == WebHelpers.ResponseStatus.OK)
-                {
-                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
-                }
+                UpdateData(iina);
             }
             else
             {
@@ -535,7 +539,7 @@ namespace EMR
             }
         }
 
-        private string UpdateData(Iina iina)
+        private void UpdateData(Iina iina)
         {
             try
             {
@@ -687,7 +691,6 @@ namespace EMR
                 iina.sup_catheter_size = txt_sup_catheter_size.Value;
                 iina.last_sup_catheter_date = DataHelpers.ConvertSQLDateTime(dpk_last_sup_catheter_date.SelectedDate);
 
-
                 iina.menstruation_code = GetRadioButton("rad_menstruation_code_", Iina.MENSTRUATION_CODE);
                 if(iina.menstruation_code != null) { iina.menstruation_code = Iina.MENSTRUATION_CODE[iina.menstruation_code]; }
                 iina.cycle_day = txt_cycle_day.Value;
@@ -777,7 +780,6 @@ namespace EMR
                 iina.dentures_code = GetRadioButton("rad_dentures_code_", Iina.DENTURES_CODE);
                 if (iina.dentures_code != null) iina.dentures_desc = Iina.DENTURES_CODE[iina.dentures_code];
 
-
                 iina.toilet_use_code = GetRadioButton("rad_toilet_use_code_", Iina.TOILET_USE_CODE);
                 if (iina.toilet_use_code != null) iina.toilet_use_desc = Iina.TOILET_USE_CODE[iina.toilet_use_code];
 
@@ -795,7 +797,6 @@ namespace EMR
 
                 iina.sleep_code = GetRadioButton("rad_sleep_code_", Iina.SLEEP_CODE);
                 if (iina.sleep_code != null) iina.sleep_desc = Iina.SLEEP_CODE[iina.sleep_code];
-
 
                 iina.medication_used = txt_medication_used.Value;
                 //12
@@ -836,11 +837,15 @@ namespace EMR
                 iina.dis_management = txt_dis_management.Value;
                 iina.assess_date_time = DataHelpers.ConvertSQLDateTime(dtpk_assess_date_time.SelectedDate);
 
-                return iina.Update()[0];
+                if(iina.Update().Status == System.Net.HttpStatusCode.OK)
+                {
+                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
+                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
+                }
             }
             catch (Exception ex)
             {
-                return ex.Message;
+
             }
         }
 
@@ -920,21 +925,6 @@ namespace EMR
             return null;
         }
 
-        private void GetRadioButton(string radio_name, Dictionary<int, string> value)
-        {
-            foreach (KeyValuePair<int, string> code in value)
-            {
-                try
-                {
-                    if (((HtmlInputRadioButton)FindControl(radio_name + code.Key)).Checked)
-                    {
-
-                    }
-                }
-                catch (Exception ex) { }
-            }
-        }
-
         private void checkValidField(List<string> errors)
         {
             if (!rad_pro_cough_True.Checked && !rad_pro_cough_False.Checked)
@@ -965,8 +955,17 @@ namespace EMR
             {
                 errors.Add("ind_catheter_date_error");
             }
+        }
 
-            
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            if (Iina.Delete((string)Session["UserId"], Request.QueryString["docId"]).Status == System.Net.HttpStatusCode.OK)
+            {
+                string pid = Request["pid"];
+                string vpid = Request["vpid"];
+
+                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+            }
         }
     }
 }

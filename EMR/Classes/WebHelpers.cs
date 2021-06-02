@@ -183,7 +183,12 @@ namespace EMR
 
         public static string GetDataTableToJSON(DataTable dataTable)
         {
-            try { return JsonConvert.SerializeObject(dataTable); }catch(Exception ex) { return ex.Message; }
+            try {
+                if (dataTable.Rows.Count <= 0) return null;
+                return JsonConvert.SerializeObject(dataTable);
+            } catch(Exception ex) {
+                return ex.Message; 
+            }
         }
 
         public static DataTable GetDataTable(string api_direction, string para)
@@ -380,13 +385,16 @@ namespace EMR
             }
             catch (WebException e)
             {
-                result.Status = e.Status;
+                result.Status = System.Net.HttpStatusCode.NotFound;
+                result.Data = e.Message;
+                result.Details = e.Response.ResponseUri;
+                //result.Status = e.Status;
                 return result;
             }
             catch (Exception e)
             {
+                result.Status = System.Net.HttpStatusCode.NotFound;
                 result.Data = e.Message;
-                result.Status = "Error";
                 return result;
             }
         }
@@ -479,7 +487,7 @@ namespace EMR
             }
             catch (WebException ex)
             {
-                result.Status = ex.Status;
+                result.Status = System.Net.HttpStatusCode.NotFound;
                 //result.Status = ((dynamic)ex.Response).StatusCode;
 
                 result.Data = ex.Message;
@@ -541,7 +549,7 @@ namespace EMR
             {
                 if (datetime != null)
                 {
-                    radDateTimePicker.SelectedDate = DateTime.Parse(datetime);
+                    radDateTimePicker.SelectedDate = datetime;
                 }
             }
             catch (Exception ex) { }
@@ -552,7 +560,7 @@ namespace EMR
             {
                 if (datetime != null)
                 {
-                    radDatePicker.SelectedDate = DateTime.Parse(datetime);
+                    radDatePicker.SelectedDate = datetime;
                 }
             }
             catch (Exception ex) { }

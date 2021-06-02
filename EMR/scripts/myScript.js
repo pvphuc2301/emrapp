@@ -130,3 +130,47 @@ function clear_radiobutton(el) {
 function changeValue(a, b) {
     document.getElementById(b).value = document.getElementById(a).innerHTML;
 }
+
+//
+function setInputFilter(textbox, inputFilter) {
+    ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
+        textbox.addEventListener(event, function () {
+            if (inputFilter(this.value)) {
+                this.oldValue = this.value;
+                this.oldSelectionStart = this.selectionStart;
+                this.oldSelectionEnd = this.selectionEnd;
+            } else if (this.hasOwnProperty("oldValue")) {
+                this.value = this.oldValue;
+                this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+            } else {
+                this.value = "";
+            }
+        });
+    });
+}
+
+        //function setInputFilter(textbox, inputFilter) {
+        //    ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
+        //        textbox.addEventListener(event, function () {
+        //            if (inputFilter(this.innerText)) {
+        //                this.oldValue = this.innerHTML;
+        //                this.oldSelectionStart = this.selectionStart;
+        //                this.oldSelectionEnd = this.selectionEnd;
+        //            } else if (this.hasOwnProperty("oldValue")) {
+        //                this.innerHTML = this.oldValue;
+
+        //                this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
+        //            } else {
+        //                this.innerHTML = "";
+        //            }
+        //        });
+        //    });
+        //}
+let temp = document.querySelectorAll('div[type="number"]');
+let temp1 = document.querySelectorAll('input[data-type="number"]');
+
+temp1.forEach(e => {
+    setInputFilter(e, function (value) {
+        return /^\d*\.?\d*$/.test(value);
+    });
+})

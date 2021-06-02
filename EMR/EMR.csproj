@@ -179,8 +179,17 @@
     <Content Include="emr\labinfor.aspx" />
     <Content Include="ER\EmerMedRec.aspx" />
     <Content Include="ER\EmerTriaAndNurAssRec.aspx" />
+    <Content Include="icons\Bell.ascx" />
+    <Content Include="icons\BoxArrowInLeft.ascx" />
     <Content Include="icons\Calculator.ascx" />
+    <Content Include="icons\CaretDown.ascx" />
     <Content Include="icons\ExclamationTriangle.ascx" />
+    <Content Include="icons\Eye.ascx" />
+    <Content Include="icons\EyeSlash.ascx" />
+    <Content Include="icons\Gear.ascx" />
+    <Content Include="icons\House.ascx" />
+    <Content Include="icons\InfoCircle.ascx" />
+    <Content Include="icons\Person.ascx" />
     <Content Include="icons\PlusCircle.ascx" />
     <Content Include="icons\Trash.ascx" />
     <Content Include="icons\XSquare.ascx" />
@@ -210,10 +219,12 @@
     <Content Include="OPD\UsUriSysReport.aspx" />
     <Content Include="Other\AdminGroup.aspx" />
     <Content Include="Other\GridView.aspx" />
+    <Content Include="Other\PageNotFound.aspx" />
     <Content Include="Other\PageWidthAjax.aspx" />
     <Content Include="Other\Paint.aspx" />
     <Content Include="Other\PatientSummary.aspx" />
     <Content Include="Other\sendlogview.aspx" />
+    <Content Include="Pages\ExceptionPage.aspx" />
     <Content Include="Phar\marprinting.aspx" />
     <Content Include="Phar\opdprescription.aspx" />
     <Content Include="Phar\opdpreslist.aspx" />
@@ -226,6 +237,7 @@
     <Content Include="emr\ImagingDiagnosticReporting.aspx" />
     <Content Include="Print\PrtOPMedRec.aspx" />
     <Content Include="Print\PrtOutPatMedRec.aspx" />
+    <Content Include="scripts\checkValidFields.js" />
     <Content Include="scripts\contenteditable.min.js" />
     <Content Include="scripts\dynamicModal.js" />
     <Content Include="scripts\dynamicModal.min.js" />
@@ -331,12 +343,75 @@
     <Compile Include="ER\EmerTriaAndNurAssRec.aspx.designer.cs">
       <DependentUpon>EmerTriaAndNurAssRec.aspx</DependentUpon>
     </Compile>
+    <Compile Include="icons\Bell.ascx.cs">
+      <DependentUpon>Bell.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="icons\Bell.ascx.designer.cs">
+      <DependentUpon>Bell.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="icons\BoxArrowInLeft.ascx.cs">
+      <DependentUpon>BoxArrowInLeft.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="icons\BoxArrowInLeft.ascx.designer.cs">
+      <DependentUpon>BoxArrowInLeft.ascx</DependentUpon>
+    </Compile>
     <Compile Include="icons\Calculator.ascx.cs">
       <DependentUpon>Calculator.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="icons\Calculator.ascx.designer.cs">
       <DependentUpon>Calculator.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="icons\CaretDown.ascx.cs">
+      <DependentUpon>CaretDown.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="icons\CaretDown.ascx.designer.cs">
+      <DependentUpon>CaretDown.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="icons\Eye.ascx.cs">
+      <DependentUpon>Eye.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="icons\Eye.ascx.designer.cs">
+      <DependentUpon>Eye.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="icons\EyeSlash.ascx.cs">
+      <DependentUpon>EyeSlash.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="icons\EyeSlash.ascx.designer.cs">
+      <DependentUpon>EyeSlash.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="icons\Gear.ascx.cs">
+      <DependentUpon>Gear.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="icons\Gear.ascx.designer.cs">
+      <DependentUpon>Gear.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="icons\House.ascx.cs">
+      <DependentUpon>House.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="icons\House.ascx.designer.cs">
+      <DependentUpon>House.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="icons\InfoCircle.ascx.cs">
+      <DependentUpon>InfoCircle.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="icons\InfoCircle.ascx.designer.cs">
+      <DependentUpon>InfoCircle.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="icons\Person.ascx.cs">
+      <DependentUpon>Person.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="icons\Person.ascx.designer.cs">
+      <DependentUpon>Person.ascx</DependentUpon>
     </Compile>
     <Compile Include="icons\PlusCircle.ascx.cs">
       <DependentUpon>PlusCircle.ascx</DependentUpon>
@@ -520,6 +595,13 @@
     <Compile Include="Other\GridView.aspx.designer.cs">
       <DependentUpon>GridView.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Other\PageNotFound.aspx.cs">
+      <DependentUpon>PageNotFound.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Other\PageNotFound.aspx.designer.cs">
+      <DependentUpon>PageNotFound.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Other\PageWidthAjax.aspx.cs">
       <DependentUpon>PageWidthAjax.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -547,6 +629,13 @@
     </Compile>
     <Compile Include="Other\sendlogview.aspx.designer.cs">
       <DependentUpon>sendlogview.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ExceptionPage.aspx.cs">
+      <DependentUpon>ExceptionPage.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\ExceptionPage.aspx.designer.cs">
+      <DependentUpon>ExceptionPage.aspx</DependentUpon>
     </Compile>
     <Compile Include="Phar\marprinting.aspx.cs">
       <DependentUpon>marprinting.aspx</DependentUpon>
@@ -633,6 +722,20 @@
     <Compile Include="UserControls\AmendReason.ascx.designer.cs">
       <DependentUpon>AmendReason.ascx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\Barcode.ascx.cs">
+      <DependentUpon>Barcode.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\Barcode.ascx.designer.cs">
+      <DependentUpon>Barcode.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Checkbox\Checkbox.ascx.cs">
+      <DependentUpon>Checkbox.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\Checkbox\Checkbox.ascx.designer.cs">
+      <DependentUpon>Checkbox.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Message.ascx.cs">
       <DependentUpon>Message.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -647,12 +750,74 @@
     <Compile Include="UserControls\PatientInfo.ascx.designer.cs">
       <DependentUpon>PatientInfo.ascx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\PopupModal.ascx.designer.cs">
+      <DependentUpon>PopupModal.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Date.ascx.designer.cs">
+      <DependentUpon>Date.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\DateTime.ascx.cs">
+      <DependentUpon>DateTime.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\DateTime.ascx.designer.cs">
+      <DependentUpon>DateTime.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Label.ascx.cs">
+      <DependentUpon>Label.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Label.ascx.designer.cs">
+      <DependentUpon>Label.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Line.ascx.cs">
+      <DependentUpon>Line.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Line.ascx.designer.cs">
+      <DependentUpon>Line.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\PatientLabel1.ascx.cs">
+      <DependentUpon>PatientLabel1.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\PatientLabel1.ascx.designer.cs">
+      <DependentUpon>PatientLabel1.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\PrintWindow.ascx.cs">
+      <DependentUpon>PrintWindow.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\PrintWindow.ascx.designer.cs">
+      <DependentUpon>PrintWindow.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Row.ascx.cs">
+      <DependentUpon>Row.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Row.ascx.designer.cs">
+      <DependentUpon>Row.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Signature.ascx.cs">
+      <DependentUpon>Signature.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Signature.ascx.designer.cs">
+      <DependentUpon>Signature.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\PromptButton.ascx.cs">
       <DependentUpon>PromptButton.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="UserControls\PromptButton.ascx.designer.cs">
       <DependentUpon>PromptButton.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\Spinner1.ascx.cs">
+      <DependentUpon>Spinner1.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\Spinner1.ascx.designer.cs">
+      <DependentUpon>Spinner1.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\TextField.ascx.cs">
       <DependentUpon>TextField.ascx</DependentUpon>
@@ -675,9 +840,21 @@
     <Content Include="styles\telerik-custom.css" />
     <Content Include="UserControls\Alert.ascx" />
     <Content Include="UserControls\AmendReason.ascx" />
+    <Content Include="UserControls\Barcode.ascx" />
+    <Content Include="UserControls\Checkbox\Checkbox.ascx" />
     <Content Include="UserControls\Message.ascx" />
     <Content Include="UserControls\PatientInfo.ascx" />
+    <Content Include="UserControls\PopupModal.ascx" />
+    <Content Include="UserControls\PrintTemplate\Date.ascx" />
+    <Content Include="UserControls\PrintTemplate\DateTime.ascx" />
+    <Content Include="UserControls\PrintTemplate\Label.ascx" />
+    <Content Include="UserControls\PrintTemplate\Line.ascx" />
+    <Content Include="UserControls\PrintTemplate\PatientLabel1.ascx" />
+    <Content Include="UserControls\PrintTemplate\PrintWindow.ascx" />
+    <Content Include="UserControls\PrintTemplate\Row.ascx" />
+    <Content Include="UserControls\PrintTemplate\Signature.ascx" />
     <Content Include="UserControls\PromptButton.ascx" />
+    <Content Include="UserControls\Spinner1.ascx" />
     <Content Include="UserControls\TextField.ascx" />
     <Content Include="web.config" />
     <None Include="packages.config" />

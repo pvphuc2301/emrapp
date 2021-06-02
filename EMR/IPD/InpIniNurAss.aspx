@@ -128,18 +128,20 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_residence_code_vnm" name="rad_residence_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_residence_code_vnm">Việt Nam</label>
                                                     </div>
-                                                    <div class="custom-control custom-radio mb-1 mr-2 d-inline-block">
+
+                                                    <div class="custom-control custom-radio ml-2 d-inline-block">
                                                         <input disabled-for="residence_other_field" type="radio" runat="server" id="rad_residence_code_oth" name="rad_residence_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_residence_code_oth">Khác</label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_residence_code" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_residence_code" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare2" />
                                                         </a>
                                                     </div>
-                                                    <div class="form-group d-inline-block w-n residence_other_field">
+
+                                                    <div class="form-group d-inline-block ml-2 w-n residence_other_field">
                                                         <webUI:TextField runat="server" ID="txt_residence_other" />
                                                     </div>
                                                 </div>
@@ -151,24 +153,25 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_language_code_vi" name="rad_language_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_language_code_vi">Tiếng Việt</label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_language_code_en" name="rad_language_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_language_code_en">Tiếng Anh</label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input disabled-for="language_other_field" type="radio" runat="server" id="rad_language_code_oth" name="rad_language_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_language_code_oth">Tiếng khác</label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_language_code" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_language_code" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare4" />
                                                         </a>
                                                     </div>
-                                                    <div class="form-group language_other_field w-n d-inline-block">
+
+                                                    <div class="form-group language_other_field ml-2 w-n d-inline-block">
                                                         <webUI:TextField runat="server" ID="txt_language_other" />
                                                     </div>
                                                 </div>
@@ -180,15 +183,15 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_req_interpreter_True" name="rad_req_interpreter" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_req_interpreter_True">Có/ <span class="text-primary">Yes</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_req_interpreter_False" name="rad_req_interpreter" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_req_interpreter_False">Không/ <span class="text-primary">No</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_req_interpreter" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)" data-clear="rad_req_interpreter" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare5" />
                                                         </a>
                                                     </div>
@@ -201,25 +204,25 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_religion_code_bh" name="rad_religion_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_religion_code_bh">Phật giáo/ <span class="text-primary">Buddhism</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_religion_code_ch" name="rad_religion_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_religion_code_ch">Thiên chúa giáo</label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input disabled-for="religion_other_field" type="radio" runat="server" id="rad_religion_code_oth" name="rad_religion_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_religion_code_oth">Khác</label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_religion_code" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_religion_code" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare6" />
                                                         </a>
                                                     </div>
 
-                                                    <div class="form-group religion_other_field w-n d-inline-block">
+                                                    <div class="form-group religion_other_field w-n d-inline-block ml-2">
                                                         <webUI:TextField runat="server" ID="TextField3" />
                                                     </div>
                                                 </div>
@@ -231,15 +234,15 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_spiritual_couns_True" name="rad_spiritual_couns" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_spiritual_couns_True">Có/ <span class="text-primary">Yes</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_spiritual_couns_False" name="rad_spiritual_couns" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_spiritual_couns_False">Không/ <span class="text-primary">No</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_spiritual_couns" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_spiritual_couns" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare7" />
                                                         </a>
                                                     </div>
@@ -248,8 +251,9 @@
 
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
-                                                    <label class="control-label d-inline-block mr-2">Nghề nghiệp/ <span class="text-primary">Occupation:</span></label>
-                                                    <div class="form-group d-inline-block w-n">
+                                                    <label class="control-label d-inline-block">Nghề nghiệp/ <span class="text-primary">Occupation:</span></label>
+
+                                                    <div class="form-group d-inline-block w-n ml-2">
                                                         <webUI:TextField runat="server" ID="txt_occupation" />
                                                     </div>
                                                 </div>
@@ -261,25 +265,25 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_living_status_code_aln" name="rad_living_status_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_living_status_code_aln">Một mình/ <span class="text-primary">Alone</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_living_status_code_wth" name="rad_living_status_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_living_status_code_wth">Với vợ, chồng, con, anh, chị, em ruột/ <span class="text-primary">With spouse, children, sibling</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input disabled-for="living_status_note_field" type="radio" runat="server" id="rad_living_status_code_oth" name="rad_living_status_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_living_status_code_oth">Khác</label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_living_status_code" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_living_status_code" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare8" />
                                                         </a>
                                                     </div>
 
-                                                    <div class="form-group living_status_note_field w-n d-inline-block">
+                                                    <div class="form-group living_status_note_field w-n ml-2 d-inline-block">
                                                         <webUI:TextField runat="server" ID="txt_living_status_note" />
                                                     </div>
                                                 </div>
@@ -291,35 +295,35 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_hospital_concern_code_non" name="rad_hospital_concern_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_hospital_concern_code_non">Không/ <span class="text-primary">None</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_hospital_concern_code_rel" name="rad_hospital_concern_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_hospital_concern_code_rel">Gia đình, các mối quan hệ/ <span class="text-primary">Family, relationship issues</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_hospital_concern_code_fin" name="rad_hospital_concern_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_hospital_concern_code_fin">Tài chính/ <span class="text-primary">Financial</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_hospital_concern_code_wor" name="rad_hospital_concern_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_hospital_concern_code_wor">Lo âu/ <span class="text-primary">Worriedness</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input disabled-for="hospital_concern_other_field" type="radio" runat="server" id="rad_hospital_concern_code_oth" name="rad_hospital_concern_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_hospital_concern_code_oth">Khác/ <span class="text-primary">Others</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_hospital_concern_code" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_hospital_concern_code" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare13" />
                                                         </a>
                                                     </div>
 
-                                                    <div class="form-group w-n d-inline-block hospital_concern_other_field">
+                                                    <div class="form-group w-n d-inline-block hospital_concern_other_field ml-2">
                                                         <webUI:TextField runat="server" ID="txt_hospital_concern_other" />
                                                     </div>
 
@@ -357,30 +361,30 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_admit_from_code_opd" name="rad_admit_from_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_admit_from_code_opd">Khoa khám bệnh/ <span class="text-primary">OPD</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_admit_from_code_er" name="rad_admit_from_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_admit_from_code_er">Khoa cấp cứu/ <span class="text-primary">ER</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_admit_from_code_vd" name="rad_admit_from_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_admit_from_code_vd">Bác sĩ hơp tác/ <span class="text-primary">Visiting Doctor</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_admit_from_code_oth" disabled-for="admit_from_other_field" name="rad_admit_from_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_admit_from_code_oth">Khác/ <span class="text-primary">Referral</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_admit_from_code" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_admit_from_code" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare9" />
                                                         </a>
                                                     </div>
 
-                                                    <div class="form-group admit_from_other_field w-n d-inline-block">
+                                                    <div class="form-group admit_from_other_field w-n d-inline-block ml-2">
                                                         <webUI:TextField runat="server" ID="txt_admit_from_other" />
                                                     </div>
 
@@ -394,15 +398,15 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_arrived_code_w" />
                                                         <span class="custom-control-label">Tự đi được/ <span class="text-primary">Walking</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_arrived_code_s" />
                                                         <span class="custom-control-label">Bằng băng ca/ <span class="text-primary">Stretcher</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_arrived_code_wc" />
                                                         <span class="custom-control-label">Bằng xe lăn/ <span class="text-primary">Wheelchair</span></span>
                                                     </label>
@@ -412,7 +416,7 @@
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
                                                     <label class="control-label">Lý do nhập viện/ <span class="text-primary">Reason for admission:</span></label>
-                                                    <div class="form-group">
+                                                    <div class="form-group ml-2">
                                                         <webUI:TextField runat="server" ID="txt_admission_reason" />
                                                     </div>
                                                 </div>
@@ -420,10 +424,8 @@
 
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
-                                                    <label class="control-label mb-1 mr-2">Lần nhập viện trước tại bệnh viện Quốc tế Mỹ</label>
-                                                    <div class="form-group d-inline-block">
-                                                        <webUI:TextField runat="server" ID="txt_previous_admission" />
-                                                    </div>
+                                                    <label class="control-label">Lần nhập viện trước tại bệnh viện Quốc tế Mỹ</label>
+                                                    <asp:Label CssClass="ml-2" runat="server" ID="lbl_previous_admission"></asp:Label>
                                                 </div>
                                             </div>
 
@@ -433,20 +435,20 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_past_med_history_False" name="rad_past_med_history" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_past_med_history_False">Không/ <span class="text-primary">No</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_past_med_history_True" disabled-for="past_med_history_note_field" name="rad_past_med_history" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_past_med_history_True">Có/ <span class="text-primary">Yes</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_past_med_history" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_past_med_history" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare10" />
                                                         </a>
                                                     </div>
 
-                                                    <div class="form-group past_med_history_note_field d-inline-block w-n">
+                                                    <div class="form-group past_med_history_note_field d-inline-block w-n ml-2">
                                                         <webUI:TextField runat="server" ID="txt_past_med_history_note" />
                                                     </div>
 
@@ -460,20 +462,20 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_past_sur_history_False" name="rad_past_sur_history" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_past_sur_history_False">Không/ <span class="text-primary">No</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_past_sur_history_True" disabled-for="past_sur_history_note_field" name="rad_past_sur_history" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_past_sur_history_True">Có/ <span class="text-primary">Yes</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_past_sur_history" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_past_sur_history" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare11" />
                                                         </a>
                                                     </div>
 
-                                                    <div class="form-group past_sur_history_note_field d-inline-block w-n">
+                                                    <div class="form-group past_sur_history_note_field d-inline-block w-n ml-2">
                                                         <webUI:TextField runat="server" ID="txt_past_sur_history_note" />
                                                     </div>
                                                 </div>
@@ -486,19 +488,19 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_substance_abuse_s" />
                                                         <span class="custom-control-label">Hút thuốc/ <span class="text-primary">Smoking</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_substance_abuse_a" />
                                                         <span class="custom-control-label">Rượu bia/ <span class="text-primary">Acohol</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" disabled-for="substance_abuse_other_field" class="custom-control-input" runat="server" id="cb_substance_abuse_oth" />
                                                         <span class="custom-control-label">Khác/ <span class="text-primary">Other</span></span>
                                                     </label>
-                                                    <div class="form-group substance_abuse_other_field d-inline-block w-n">
+                                                    <div class="form-group substance_abuse_other_field d-inline-block w-n ml-2">
                                                         <webUI:TextField runat="server" ID="txt_substance_abuse_other" />
                                                     </div>
                                                 </div>
@@ -511,19 +513,19 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_previous_document_False" name="rad_previous_document" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_previous_document_False">Không/ <span class="text-primary">No</span></label>
                                                     </div>
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_previous_document_True" disabled-for="previous_document_note_field" name="rad_previous_document" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_previous_document_True">Yes/ <span class="text-primary">Có</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_previous_document" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_previous_document" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare14" />
                                                         </a>
                                                     </div>
 
-                                                    <div class="form-group previous_document_note_field d-inline-block">
+                                                    <div class="form-group previous_document_note_field d-inline-block ml-2">
                                                         <webUI:TextField runat="server" ID="txt_previous_document_note" />
                                                     </div>
                                                 </div>
@@ -536,15 +538,15 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_cur_home_medication_False" name="rad_cur_home_medication" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_cur_home_medication_False">Không/ <span class="text-primary">No</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_cur_home_medication_True" name="rad_cur_home_medication" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_cur_home_medication_True">Có/ Yes (Tham khảo đơn thuốc đính kèm)/ <span class="text-primary">If, yes please refer to the prescription attached</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_cur_home_medication" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_cur_home_medication" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare15" />
                                                         </a>
                                                     </div>
@@ -557,20 +559,20 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_allergy_False" name="rad_allergy" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_allergy_False">Không/ <span class="text-primary">No</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_allergy_True" disabled-for="allergy_note_field" name="rad_allergy" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_allergy_True">Có (ghi rõ)/ <span class="text-primary">Yes (specify)</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_allergy" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_allergy" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare16" />
                                                         </a>
                                                     </div>
 
-                                                    <div class="form-group allergy_note_field w-n d-inline-block">
+                                                    <div class="form-group allergy_note_field w-n d-inline-block ml-2">
                                                         <webUI:TextField runat="server" ID="txt_allergy_note" />
                                                     </div>
                                                 </div>
@@ -583,31 +585,31 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <label class="custom-control custom-checkbox">
+                                                    <label class="custom-control custom-checkbox ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_ch" />
                                                         <span class="custom-control-label">Trẻ em (< hoặc 8 tuổi)/ <span class="text-primary">Children (<8 years old)</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox">
+                                                    <label class="custom-control custom-checkbox ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_sdp" />
                                                         <span class="custom-control-label">Những người bệnh tàn tật năng/ <span class="text-primary">Severely disabled patients</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox">
+                                                    <label class="custom-control custom-checkbox ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_eld" />
                                                         <span class="custom-control-label">Người cao tuổi (80 tuổi hoặc hơn)/ <span class="text-primary">Elderly people (80 years old or above)</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox">
+                                                    <label class="custom-control custom-checkbox ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_hrf" />
                                                         <span class="custom-control-label">Những người bệnh có nguy cơ té ngã cao/ <span class="text-primary">Patients with high risk of falls</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox">
+                                                    <label class="custom-control custom-checkbox ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_ccp" />
                                                         <span class="custom-control-label">Những người bệnh lú lẫn/hôn mê/ <span class="text-primary">Confused or comatose patients</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox">
+                                                    <label class="custom-control custom-checkbox ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_res" />
                                                         <span class="custom-control-label">Người bệnh bị kìm giữ/ <span class="text-primary">Restrained patients</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox">
+                                                    <label class="custom-control custom-checkbox ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_hrt" />
                                                         <span class="custom-control-label">Người bệnh đang điều trị có nguy cơ cao (như chạy thận nhân tạo, hóa trị liệu..)/ <span class="text-primary">Patients that receiving high-risk treatments (such as dialysis, chemotherapy…)</span></span>
                                                     </label>
@@ -639,7 +641,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6 mb-2">
-                                                    <label class="control-label mr-2 mb-1 ">Cân Nặng/ <span class="text-primary">Weight:</span></label>
+                                                    <label class="control-label mr-2 mb-1">Cân Nặng/ <span class="text-primary">Weight:</span></label>
                                                     <div class="form-group w-4 d-inline-block">
                                                         <input runat="server" id="txt_vs_weight" class="form-control text-right" />
                                                         <span class="append">Kg</span>
@@ -653,7 +655,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6 mb-2">
-                                                    <label class="control-label mr-2 mb-1 ">Chiều cao/ <span class="text-primary">Height:</span></label>
+                                                    <label class="control-label mr-2 mb-1">Chiều cao/ <span class="text-primary">Height:</span></label>
                                                     <div class="form-group w-4 d-inline-block">
                                                         <input maxlength="3" id="txt_vs_height" runat="server" class="form-control text-right" />
                                                         <span class="append">cm</span>
@@ -718,23 +720,27 @@ applicable for children and pregnant</span>)
                                                 </legend>
 
                                                 <div class="col-md-12">
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_respiratory_system_n" />
                                                         <span class="custom-control-label">Không có vấn đề/ <span class="text-primary">Normal</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_respiratory_system_d" />
                                                         <span class="custom-control-label">Khó thở/ <span class="text-primary">Dyspnea</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_respiratory_system_o" />
                                                         <span class="custom-control-label">Khó thở nằm/ <span class="text-primary">Orthopnea</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_respiratory_system_w" />
                                                         <span class="custom-control-label">Khó thở khò khè/ <span class="text-primary">Wheeze</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block">
+
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_respiratory_system_c" />
                                                         <span class="custom-control-label">Da xanh tái/ <span class="text-primary">Cyanosis</span></span>
                                                     </label>
@@ -742,29 +748,31 @@ applicable for children and pregnant</span>)
 
                                                 <div class="col-md-12">
                                                     <label class="control-label mb-2">Ho/ <span class="text-primary">Cough:</span></label>
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_cough_False" name="rad_cough" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_cough_False">Không/ <span class="text-primary">No</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_cough_True" name="rad_cough" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_cough_True">Có/ <span class="text-primary">Yes</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_cough" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_cough" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare12" />
                                                         </a>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-md-12">
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_pro_cough_False" name="rad_pro_cough" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_pro_cough_False">Không có đờm/ <span class="text-primary">Unproductive cough</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_pro_cough_True" name="rad_pro_cough" class="custom-control-input" disabled-for="pro_cough_note_field" />
                                                         <label class="custom-control-label" for="rad_pro_cough_True">Có đờm (ghi rõ màu/ tính chất/ số lượng)/ <span class="text-primary">Productive (Specify color/ nature/ amount)</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_pro_cough" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_pro_cough" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare17" />
                                                         </a>
                                                     </div>
@@ -781,15 +789,15 @@ applicable for children and pregnant</span>)
                                                 </legend>
                                                 <div class="col-md-12">
                                                     <label class="control-label mb-2 d-block">Mạch/ <span class="text-primary">Pulse:</span></label>
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_pulse_code_r" name="rad_pulse_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_pulse_code_r">Đều/ <span class="text-primary">Regular</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_pulse_code_i" name="rad_pulse_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_pulse_code_i">Không đều/ <span class="text-primary">Irregular</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_pulse_code" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_pulse_code" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare18" />
                                                         </a>
                                                     </div>
@@ -798,19 +806,19 @@ applicable for children and pregnant</span>)
                                                 <div class="col-md-12">
                                                     <label class="control-label mb-2 d-block">Tình trạng hiện có/ <span class="text-primary">Presence with</span></label>
 
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_presence_cp" />
                                                         <span class="custom-control-label">Đau ngực/ <span class="text-primary">Chest pain</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_presence_di" />
                                                         <span class="custom-control-label">Chóng mặt/ <span class="text-primary">Dizzinness</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_presence_ca" />
                                                         <span class="custom-control-label">Đau bắp chân/ <span class="text-primary">Calf pain</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_presence_pe" />
                                                         <span class="custom-control-label">Phù ngoại biên/  <span class="text-primary">Peripheral edema</span></span>
                                                     </label>
@@ -818,19 +826,19 @@ applicable for children and pregnant</span>)
 
                                                 <div class="col-md-12">
                                                     <label class="control-label mb-2 d-block">Tứ chi/ <span class="text-primary">Extremities</span></label>
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_extremities_wa" />
                                                         <span class="custom-control-label">Ấm/ <span class="text-primary">Warm</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_extremities_co" />
                                                         <span class="custom-control-label">Lạnh/ <span class="text-primary">Cold</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_extremities_cl" />
                                                         <span class="custom-control-label">Ẩm ướt/ <span class="text-primary">Clammy</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_extremities_cy" />
                                                         <span class="custom-control-label">Xanh tái/ <span class="text-primary">Cyanosed</span></span>
                                                     </label>
@@ -845,23 +853,23 @@ applicable for children and pregnant</span>)
                                                 <div class="col-md-12">
                                                     <label class="control-label mb-2 d-block">Định hướng được/ <span class="text-primary">Oriented</span></label>
 
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_oriented_day" />
                                                         <span class="custom-control-label">Ngày/ <span class="text-primary">Day</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_oriented_time" />
                                                         <span class="custom-control-label">Thời gian/ <span class="text-primary">Time</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_oriented_per" />
                                                         <span class="custom-control-label">Người/ <span class="text-primary">Person</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_oriented_pla" />
                                                         <span class="custom-control-label">Nơi/ <span class="text-primary">Place</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_oriented_na" />
                                                         <span class="custom-control-label">Không định hướng được/ <span class="text-primary">Not all all</span></span>
                                                     </label>
@@ -870,35 +878,35 @@ applicable for children and pregnant</span>)
                                                 <div class="col-md-12 mb-2">
                                                     <label class="control-label mb-2 d-block">Tình trạng tinh thần/ <span class="text-primary">Mental status</span></label>
 
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_mental_status_al" />
                                                         <span class="custom-control-label">Tỉnh táo/ <span class="text-primary">Alert</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_mental_status_cf" />
                                                         <span class="custom-control-label">Nhầm lẫn/ <span class="text-primary">Confused</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_mental_status_ag" />
                                                         <span class="custom-control-label">Kích động/ <span class="text-primary">Agitated</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_mental_status_an" />
                                                         <span class="custom-control-label">Lo âu/ <span class="text-primary">Anxious</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_mental_status_fr" />
                                                         <span class="custom-control-label">Quấy/ <span class="text-primary">Fretful</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_mental_status_le" />
                                                         <span class="custom-control-label">Lơ mơ/ <span class="text-primary">Lethargic</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_mental_status_de" />
                                                         <span class="custom-control-label">Trầm cảm/ <span class="text-primary">Depressed</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block">
+                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
                                                         <input type="checkbox" disabled-for="mental_status_other_field" class="custom-control-input" runat="server" id="cb_mental_status_oth" />
                                                         <span class="custom-control-label">Khác/ <span class="text-primary">Other</span></span>
                                                     </label>
@@ -910,20 +918,20 @@ applicable for children and pregnant</span>)
 
                                                 <div class="col-md-12 mb-2">
                                                     <label class="control-label mb-2 d-block">Thính giác/ <span class="text-primary">Hearing:</span></label>
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_hearing_code_n" name="rad_hearing_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_hearing_code_n">Bình thường/ <span class="text-primary">Normal</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_hearing_code_hi" name="rad_hearing_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_hearing_code_hi">Khiếm thính/ <span class="text-primary">Hearing impaired</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_hearing_code_ha" name="rad_hearing_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_hearing_code_ha">Dùng máy trợ thính (Trái/Phải)/ <span class="text-primary">Uses hearing aid (Left/Right)</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_hearing_code" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_hearing_code" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare20" />
                                                         </a>
                                                     </div>
@@ -931,66 +939,65 @@ applicable for children and pregnant</span>)
 
                                                 <div class="col-md-12 mb-2">
                                                     <label class="control-label mb-2 d-block">Thị giác/ <span class="text-primary">Vision:</span></label>
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_vision_code_nm" name="rad_vision_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_vision_code_nm">Bình thường/ <span class="text-primary">Normal</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_vision_code_gl" name="rad_vision_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_vision_code_gl">Đeo kính/ <span class="text-primary">Glasses</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_vision_code_cl" name="rad_vision_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_vision_code_cl">Kính sát tròng/ <span class="text-primary">Contact lenses</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" disabled-for="vision_other_field" runat="server" id="rad_vision_code_oth" name="rad_vision_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_vision_code_oth">Khác/ <span class="text-primary">Other</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_vision_code" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_vision_code" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare21" />
                                                         </a>
                                                     </div>
 
-                                                    <div class="form-group vision_other_field ml-2
-                                                    w-n">
+                                                    <div class="form-group vision_other_field ml-2 w-n">
                                                         <webUI:TextField runat="server" ID="txt_vision_other" />
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-12">
                                                     <label class="control-label mb-2 d-block">Khả năng ngôn ngữ/ <span class="text-primary">Speech:</span></label>
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_speech_code_nm" name="rad_speech_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_speech_code_nm">Bình thường/ <span class="text-primary">Normal</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_speech_code_sl" name="rad_speech_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_speech_code_sl">Nói lắp/ <span class="text-primary">Slurred</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_speech_code_ap" name="rad_speech_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_speech_code_ap">Chứng mất ngôn ngữ/ <span class="text-primary">Aphasic</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_speech_code_nc" name="rad_speech_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_speech_code_nc">Không giao tiếp (Bất tỉnh or mê)/ <span class="text-primary">Non-communicative(Unconscious )</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_speech_code_si" name="rad_speech_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_speech_code_si">Khiếm ngôn/ <span class="text-primary">Speech impaired</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio d-inline-block">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_speech_code_nv" name="rad_speech_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_speech_code_nv">Chưa biết nói/ <span class="text-primary">Non-verbal</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_speech_code" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_speech_code" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare19" />
                                                         </a>
                                                     </div>
@@ -1007,27 +1014,29 @@ applicable for children and pregnant</span>)
                                                 <div class="col-md-12">
                                                     <label class="control-label d-block">Chế độ ăn uống/ <span class="text-primary">Diet</span></label>
 
-                                                    <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
+                                                    <div class="custom-control custom-radio ml-2 d-inline-block">
                                                         <input type="radio" runat="server" id="rad_diet_code_nm" name="rad_diet_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_diet_code_nm">Bình thường/ <span class="text-primary">Normal</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
+                                                    <div class="custom-control custom-radio ml-2 d-inline-block">
                                                         <input type="radio" runat="server" id="rad_diet_code_bf" name="rad_diet_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_diet_code_bf">Bú bình/ <span class="text-primary">Bottle feeding</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
+                                                    <div class="custom-control custom-radio ml-2 d-inline-block">
                                                         <input type="radio" runat="server" id="rad_diet_code_tbf" name="rad_diet_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_diet_code_tbf">Bú mẹ hoàn toàn/ <span class="text-primary">Total breast feeding</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
+                                                    <div class="custom-control custom-radio ml-2 d-inline-block">
                                                         <input type="radio" disabled-for="diet_other_field" runat="server" id="rad_diet_code_oth" name="rad_diet_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_diet_code_oth">Khác/ <span class="text-primary">Other</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_diet_code" onclick="clear_radiobutton(this)">
+                                                        
+                                                        <a href="javascript:void(0)"  data-clear="rad_diet_code" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare22" />
                                                         </a>
+
                                                         <div class="form-group w-n diet_other_field mt-2">
                                                             <webUI:TextField runat="server" ID="txt_diet_other" />
                                                         </div>
@@ -1036,43 +1045,43 @@ applicable for children and pregnant</span>)
 
                                                 <div class="col-md-12">
                                                     <label class="control-label d-block">Tình trạng hiện có/ <span class="text-primary">Presence of</span></label>
-                                                    <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
+                                                    <div class="custom-control custom-radio ml-2 d-inline-block">
                                                         <input type="radio" runat="server" id="rad_diet_pre_code_v" name="rad_diet_pre_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_diet_pre_code_v">Nôn/ <span class="text-primary">Vomiting</span></label>
                                                     </div>
-                                                    <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
+                                                    <div class="custom-control custom-radio ml-2 d-inline-block">
                                                         <input type="radio" runat="server" id="rad_diet_pre_code_n" name="rad_diet_pre_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_diet_pre_code_n">Buồn nôn/ <span class="text-primary">Nausea</span></label>
                                                     </div>
-                                                    <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
+                                                    <div class="custom-control custom-radio ml-2 d-inline-block">
                                                         <input type="radio" runat="server" id="rad_diet_pre_code_s" name="rad_diet_pre_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_diet_pre_code_s">Nuốt khó (chuyển đến chuyên gia trị liệu)/ <span class="text-primary">Swalloing difficulties (refer to therapist)</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_diet_pre_code" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_diet_pre_code" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare23" />
                                                         </a>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
+                                                    <div class="custom-control custom-radio ml-2 d-inline-block">
                                                         <input type="radio" runat="server" id="rad_ng_tube_True" name="rad_ng_tube" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_ng_tube_True">Ống thông/ <span class="text-primary">NG Tube</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
+                                                    <div class="custom-control custom-radio ml-2 d-inline-block">
                                                         <input type="radio" runat="server" id="rad_ng_tube_False" name="rad_ng_tube" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_ng_tube_False">Không/ <span class="text-primary">No</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_ng_tube" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_ng_tube" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare24" />
                                                         </a>
                                                     </div>
 
-                                                    <label class="custom-control custom-checkbox ml-2 mb-1 d-inline-block">
+                                                    <label class="custom-control custom-checkbox ml-2 d-inline-block">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_gastrostomy_True" />
                                                         <span class="custom-control-label">Mở dạ dày/ <span class="text-primary">Gastrostomy</span></span>
                                                     </label>
 
-                                                    <label class="custom-control custom-checkbox ml-2 mb-1 d-inline-block">
+                                                    <label class="custom-control custom-checkbox ml-2 d-inline-block">
                                                         <input type="checkbox" disabled-for="size_note_field" class="custom-control-input" runat="server" id="cb_size_True" />
                                                         <span class="custom-control-label">Kích cỡ/ <span class="text-primary">Size</span></span>
                                                     </label>
@@ -1081,9 +1090,9 @@ applicable for children and pregnant</span>)
                                                         <webUI:TextField runat="server" ID="txt_size_note" />
                                                     </div>
 
-                                                    <label class="control-label mr-2">Ngày thay ống gần nhất/ <span class="text-primary">Last Date Changed</span></label>
+                                                    <label class="control-label ml-2">Ngày thay ống gần nhất/ <span class="text-primary">Last Date Changed</span></label>
 
-                                                    <telerik:RadDatePicker runat="server" ID="dpk_last_date_changed" Width="120px" />
+                                                    <telerik:RadDatePicker CssClass="ml-2" runat="server" ID="dpk_last_date_changed" Width="120px" />
                                                     <div class="text-danger" id="last_date_changed_error"></div>
                                                 </div>
 
@@ -1115,7 +1124,7 @@ applicable for children and pregnant</span>)
                                                     <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
                                                         <input type="radio" runat="server" id="rad_bowel_elimination_code_oth" name="rad_bowel_elimination_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_bowel_elimination_code_oth">Khác/ <span class="text-primary">Other</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_bowel_elimination_code" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_bowel_elimination_code" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare27" />
                                                         </a>
                                                     </div>
@@ -1142,7 +1151,7 @@ applicable for children and pregnant</span>)
                                                     <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
                                                         <input type="radio" runat="server" id="rad_stool_consistency_code_w" name="rad_stool_consistency_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_stool_consistency_code_w">Phân nước/ <span class="text-primary">Watery</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_stool_consistency_code" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_stool_consistency_code" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare25" />
                                                         </a>
                                                     </div>
@@ -1166,7 +1175,7 @@ applicable for children and pregnant</span>)
                                                     <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
                                                         <input type="radio" runat="server" id="rad_gas_presence_code_s" name="rad_gas_presence_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_gas_presence_code_s">Hậu môn nhân tạo/ <span class="text-primary">Stoma</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_gas_presence_code" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)"  data-clear="rad_gas_presence_code" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare26" />
                                                         </a>
                                                     </div>
@@ -1194,7 +1203,7 @@ applicable for children and pregnant</span>)
                                                             <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
                                                                 <input type="radio" runat="server" id="rad_bmi_out_range_False" onchange="initial_screening_change()" name="rad_bmi_out_range" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_bmi_out_range_False">Không/ <span class="text-primary">No</span></label>
-                                                                <a href="javascript:void(0)" class="el-hide"  data-clear="rad_bmi_out_range" onclick="clear_radiobutton(this)">
+                                                                <a href="javascript:void(0)"   data-clear="rad_bmi_out_range" onclick="clear_radiobutton(this)">
                                                                     <icon:xsquare runat="server" ID="XSquare28" />
                                                                 </a>
                                                             </div>
@@ -1209,7 +1218,7 @@ applicable for children and pregnant</span>)
                                                             <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
                                                                 <input type="radio" runat="server" id="rad_loss_weight_False" onchange="initial_screening_change()" name="rad_loss_weight" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_loss_weight_False">Không/ <span class="text-primary">No</span></label>
-                                                                <a href="javascript:void(0)" class="el-hide" data-clear="rad_loss_weight" onclick="clear_radiobutton(this)">
+                                                                <a href="javascript:void(0)"  data-clear="rad_loss_weight" onclick="clear_radiobutton(this)">
                                                                     <icon:xsquare runat="server" ID="XSquare29" />
                                                                 </a>
                                                             </div>
@@ -1223,7 +1232,7 @@ applicable for children and pregnant</span>)
                                                             <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
                                                                 <input type="radio" onchange="initial_screening_change()" runat="server" id="rad_reduce_dietary_False" name="rad_reduce_dietary" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_reduce_dietary_False">Không/ <span class="text-primary">No</span></label>
-                                                                <a href="javascript:void(0)" class="el-hide" data-clear="rad_reduce_dietary" onclick="clear_radiobutton(this)">
+                                                                <a href="javascript:void(0)"  data-clear="rad_reduce_dietary" onclick="clear_radiobutton(this)">
                                                                     <icon:xsquare runat="server" ID="XSquare30" />
                                                                 </a>
                                                             </div>
@@ -1237,7 +1246,7 @@ applicable for children and pregnant</span>)
                                                             <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
                                                                 <input onchange="initial_screening_change()" type="radio" runat="server" id="rad_severely_ill_False" name="rad_severely_ill" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_severely_ill_False">Không/ <span class="text-primary">No</span></label>
-                                                                <a href="javascript:void(0)" class="el-hide" data-clear="rad_severely_ill" onclick="clear_radiobutton(this)">
+                                                                <a href="javascript:void(0)"  data-clear="rad_severely_ill" onclick="clear_radiobutton(this)">
                                                                     <icon:xsquare runat="server" ID="XSquare31" />
                                                                 </a>
                                                             </div>
@@ -1404,9 +1413,10 @@ applicable for children and pregnant</span>)
                                                                 </div>
 
                                                                 <div class="col-md-12">
-                                                                    <<label class="control-label mb-1 mr-2">Điểm/ <span class="text-primary">Score</span>
+                                                                    <label class="control-label mb-1 mr-2">Điểm/ <span class="text-primary">Score</span>
                                                                         <icon:Calculator runat="server" Width="16" Height="16" />
                                                                     </label>
+
                                                                     <asp:Label Text="—" class="d-inline-block" runat="server" id="lbl_severity_score"></asp:Label>
                                                                 </div>
 
@@ -1464,36 +1474,37 @@ applicable for children and pregnant</span>)
                                                 <legend>
                                                     <label class="control-label mb-2 font-bold">7. Hệ tiết niệu sinh dục/ <span class="text-primary">Genitourinary system</span></label>
                                                 </legend>
+
                                                 <div class="col-md-12">
                                                     <label class="control-label d-block">Tiểu/ <span class="text-primary">Urination</span></label>
 
-                                                    <label class="custom-control custom-checkbox ml-2 mb-1 d-inline-block">
+                                                    <label class="custom-control custom-checkbox mr-2 d-inline-block">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_urination_nm" />
                                                         <span class="custom-control-label">Không có vấn đề/ <span class="text-primary">Normal</span></span>
                                                     </label>
 
-                                                    <label class="custom-control custom-checkbox ml-2 mb-1 d-inline-block">
+                                                    <label class="custom-control custom-checkbox mr-2 d-inline-block">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_urination_no" />
                                                         <span class="custom-control-label">Tiểu đêm/ <span class="text-primary">Nocturia</span></span>
                                                     </label>
 
-                                                    <label class="custom-control custom-checkbox ml-2 mb-1 d-inline-block">
+                                                    <label class="custom-control custom-checkbox mr-2 d-inline-block">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_urination_fr" />
                                                         <span class="custom-control-label">Thường xuyên/ <span class="text-primary">Frequency</span></span>
                                                     </label>
 
-                                                    <label class="custom-control custom-checkbox ml-2 mb-1 d-inline-block">
+                                                    <label class="custom-control custom-checkbox mr-2 d-inline-block">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_urination_dy" />
                                                         <span class="custom-control-label">Khó tiểu/ <span class="text-primary">Dysuria</span></span>
                                                     </label>
 
-                                                    <label class="custom-control custom-checkbox ml-2 mb-1 d-inline-block">
+                                                    <label class="custom-control custom-checkbox d-inline-block">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_urination_in" />
                                                         <span class="custom-control-label">Không kiểm soát/ <span class="text-primary">Incontinece</span></span>
                                                     </label>
                                                 </div>
 
-                                                <div class="col-12">
+                                                <div class="col-md-12">
                                                     <label class="custom-control custom-checkbox d-inline-block mr-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_inter_catheter_True" />
                                                         <span class="custom-control-label">Thông tiểu ngắt quãng (lần/ ngày)/ <span class="text-primary">Intermittent catheterization</span></span>
@@ -1503,11 +1514,12 @@ applicable for children and pregnant</span>)
                                                     </div>
                                                 </div>
 
-                                                <div class="col-12">
-                                                    <label class="custom-control custom-checkbox mr-2 mb-1 d-inline-block">
+                                                <div class="col-md-12">
+                                                    <label class="custom-control custom-checkbox mr-2 d-inline-block">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_ind_catheter_True" />
                                                         <span class="custom-control-label">Ống thông tiểu lưu/ <span class="text-primary">Indwelling catheter</span></span>
                                                     </label>
+
                                                     <span class="text-danger" id="ind_catheter_error"></span>
                                                     <label class="mr-2">Kích cỡ/ <span class="text-primary">Size</span></label>
 
@@ -1515,105 +1527,108 @@ applicable for children and pregnant</span>)
                                                         <webUI:TextField runat="server" ID="txt_ind_catheter_size" />
                                                     </div>
 
-                                                    <label class="control-label mr-2">Ngày thay gần nhất/ <span class="text-primary">Fr, Date last changed</span></label>
+                                                    <div class="d-inline-block">
+                                                        <label class="control-label mr-2">Ngày thay gần nhất/ <span class="text-primary">Fr, Date last changed</span></label>
+                                                        <telerik:RadDatePicker runat="server" ID="dpk_ind_catheter_date" Width="120px" />
+                                                        <span class="text-danger" id="ind_catheter_date_error"></span>
+                                                    </div>
 
-                                                    <telerik:RadDatePicker runat="server" ID="dpk_ind_catheter_date" Width="120px" />
-                                                    <span class="text-danger" id="ind_catheter_date_error"></span>
                                                 </div>
 
-                                                <div class="col-12">
-                                                    <label class="custom-control custom-checkbox ml-2 mb-1 d-inline-block">
+                                                <div class="col-md-12">
+                                                    <label class="custom-control custom-checkbox mr-2 d-inline-block">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_sup_catheter_True" />
                                                         <span class="custom-control-label">Ống thông bàng quang qua da/ <span class="text-primary">Suprapubic catheter</span></span>
                                                     </label>
 
                                                     <label class="mr-2">Kích cỡ/ <span class="text-primary">Size</span></label>
 
-                                                    <div class="form-group w-s size_note_field d-inline-block">
+                                                    <div class="form-group w-s mr-2 size_note_field d-inline-block">
                                                         <webUI:TextField runat="server" ID="txt_sup_catheter_size" />
                                                     </div>
 
-                                                    <label class="control-label">Ngày thay gần nhất/ <span class="text-primary">Fr, Date last changed</span></label>
+                                                    <label class="control-label mr-2">Ngày thay gần nhất/ <span class="text-primary">Fr, Date last changed</span></label>
 
                                                     <telerik:RadDatePicker runat="server" ID="dpk_last_sup_catheter_date" Width="120px" />
                                                     <span class="text-danger" id="last_sup_catheter_date_error"></span>
                                                 </div>
-                                                <div class="col-12">
+
+                                                <div class="col-md-12">
                                                     <label class="control-label d-block">Đối với người bệnh nữ/ <span class="text-primary">For female patients only:</span></label>
 
                                                     <label class="control-label d-block">Kinh nguyệt/ <span class="text-primary">Menstruation:</span></label>
 
-                                                    <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
+                                                    <div class="custom-control custom-radio mr-2 d-inline-block">
                                                         <input disabled-for="final_screening" type="radio" runat="server" id="rad_menstruation_code_am" name="rad_menstruation_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_menstruation_code_am">Vô kinh/ <span class="text-primary">Amenorrhea</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
+                                                    <div class="custom-control custom-radio mr-2 d-inline-block">
                                                         <input disabled-for="final_screening" type="radio" runat="server" id="rad_menstruation_code_me" name="rad_menstruation_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_menstruation_code_me">Mãn kinh/ <span class="text-primary">Menopause</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
+                                                    <div class="custom-control custom-radio mr-2 d-inline-block">
                                                         <input disabled-for="final_screening" type="radio" runat="server" id="rad_menstruation_code_cy" name="rad_menstruation_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_menstruation_code_cy">Chu kỳ (ngày)/ <span class="text-primary">Cycle (day)</span></label>
                                                     </div>
 
-                                                    <div class="form-group w-s d-inline-block">
+                                                    <div class="form-group mr-2 w-s d-inline-block">
                                                         <webUI:TextField runat="server" ID="txt_cycle_day" />
                                                     </div>
 
-                                                    <label class="control-label">Ngày đầu của kỳ kinh cuối/ <span class="text-primary">Last menstrual period started:</span></label>
+                                                    <label class="control-label mr-2">Ngày đầu của kỳ kinh cuối/ <span class="text-primary">Last menstrual period started:</span></label>
 
-                                                    <div class="form-group w-s mt-1 d-inline-block">
+                                                    <div class="form-group w-s mr-2 d-inline-block">
                                                         <webUI:TextField runat="server" ID="txt_last_mens_period" />
                                                     </div>
 
                                                     <label class="control-label d-block">Có thai/ <span class="text-primary">Pregnancy:</span></label>
 
-                                                    <label class="custom-control custom-checkbox ml-2 mb-1 d-inline-block">
+                                                    <label class="custom-control custom-checkbox mr-2 d-inline-block">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_not_pregnancy_True" />
                                                         <span class="custom-control-label">Không/ <span class="text-primary">No</span></span>
                                                     </label>
 
-                                                    <label class="custom-control custom-checkbox ml-2 mb-1 d-inline-block">
+                                                    <label class="custom-control custom-checkbox mr-2 d-inline-block">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_pre_pregnancy_True" />
                                                         <span class="custom-control-label">Đã từng mang thai trước đây/ <span class="text-primary">Previous pregnancy</span></span>
                                                     </label>
 
-                                                    <label class="control-label mb-1"><span class="text-primary">PARA</span></label>
+                                                    <label class="control-label mr-2"><span class="text-primary">PARA</span></label>
 
-                                                    <div class="form-group w-s d-inline-block">
+                                                    <div class="form-group w-s mr-2 d-inline-block">
                                                         <webUI:TextField runat="server" ID="txt_para" />
                                                     </div>
 
-                                                    <label class="custom-control custom-checkbox ml-2 mb-1 d-inline-block">
+                                                    <label class="custom-control custom-checkbox mr-2 d-inline-block">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_cur_pregnancy_True" />
                                                         <span class="custom-control-label">Hiện đang mang thai/ <span class="text-primary">Current pregnancy</span></span>
                                                     </label>
 
-                                                    <div class="form-group w-s d-inline-block">
+                                                    <div class="form-group w-5 d-inline-block">
                                                         <input id="txt_pregnancy_week" runat="server" class="form-control text-right" />
                                                         <span class="append">tuần/ week</span>
                                                     </div>
 
                                                     <label class="control-label mb-1 d-block">Ngừa thai/ <span class="text-primary">Contraception</span></label>
 
-                                                    <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
+                                                    <div class="custom-control custom-radio mr-2 d-inline-block">
                                                         <input disabled-for="final_screening" type="radio" runat="server" id="cb_contraception_code_no" name="cb_contraception_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="cb_contraception_code_no">Không/ <span class="text-primary">No</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
+                                                    <div class="custom-control custom-radio mr-2 d-inline-block">
                                                         <input disabled-for="final_screening" type="radio" runat="server" id="cb_contraception_code_pill" name="cb_contraception_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="cb_contraception_code_pill">Thuốc ngừa thai/ <span class="text-primary">Contraceptive pill</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
+                                                    <div class="custom-control custom-radio mr-2 d-inline-block">
                                                         <input disabled-for="final_screening" type="radio" runat="server" id="cb_contraception_code_dev" name="cb_contraception_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="cb_contraception_code_dev">Dụng cụ ngừa thai đặt trong tử cung/ <span class="text-primary">Intrauterine Device</span></label>
                                                     </div>
 
-                                                    <div class="custom-control custom-radio ml-2 mb-1 d-inline-block">
+                                                    <div class="custom-control custom-radio mr-2 d-inline-block">
                                                         <input disabled-for="final_screening" type="radio" runat="server" id="cb_contraception_code_oth" name="cb_contraception_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="cb_contraception_code_oth">Khác/ <span class="text-primary">Other</span></label>
                                                     </div>
@@ -1665,12 +1680,12 @@ applicable for children and pregnant</span>)
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <label class="custom-control custom-checkbox mr-2 mb-1 d-inline">
+                                                    <label class="custom-control custom-checkbox ml-2 d-inline">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_amputation_True" />
                                                         <span class="custom-control-label">Đoạn chi/ <span class="text-primary">Amputation</span></span>
                                                     </label>
 
-                                                    <div class="form-group w-s d-inline-block">
+                                                    <div class="form-group ml-2 w-s d-inline-block">
                                                         <webUI:TextField runat="server" ID="txt_amputation_note" />
                                                     </div>
                                                 </div>
@@ -1681,7 +1696,7 @@ applicable for children and pregnant</span>)
                                                         <span class="custom-control-label">Cơ bắp co rút/ <span class="text-primary">Contracture</span></span>
                                                     </label>
 
-                                                    <div class="form-group w-s mt-1 d-inline-block ml-2">
+                                                    <div class="form-group w-s d-inline-block ml-2">
                                                         <webUI:TextField runat="server" ID="txt_contracture_note" />
                                                     </div>
                                                 </div>
@@ -1692,11 +1707,10 @@ applicable for children and pregnant</span>)
                                                         <span class="custom-control-label">Lắp bộ phận giả/ <span class="text-primary">Prosthesis</span></span>
                                                     </label>
 
-                                                    <div class="form-group w-s mt-1 d-inline-block ml-2">
+                                                    <div class="form-group w-s d-inline-block ml-2">
                                                         <webUI:TextField runat="server" ID="txt_prosthesis_note" />
                                                     </div>
                                                 </div>
-                                        </div>
                                         </fieldset>
 
                                     <fieldset class="row mb-2">
@@ -2632,9 +2646,8 @@ applicable for children and pregnant</span>)
                                                     TỔNG ĐIỂM/ <span class="text-primary">TOTAL SCORE:</span>
                                                     <icon:Calculator Width="16" Height="16" runat="server" ID="Calculator" />
                                                 </label>
-                                                <div class="form-group d-inline-block w-4">
-                                                    <asp:Label runat="server" ID="txt_fr_total_score"></asp:Label>
-                                                </div>
+                                                <asp:Label runat="server" ID="lbl_fr_total_score"></asp:Label>
+                                                <asp:TextBox runat="server" ID="txt_fr_total_score" />
                                             </div>
 
                                             <div class="col-md-12">
@@ -2906,7 +2919,7 @@ applicable for children and pregnant</span>)
                                                 </div>
                                                 <div class="text-right">
                                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    <asp:Button runat="server" Text="Delete" ID="Button1" class="btn btn-danger" />
+                                                    <asp:Button runat="server" Text="Delete" ID="btnDelete" OnClick="btnDelete_Click" class="btn btn-danger" />
                                                 </div>
                                             </ModalBody>
                                         </webUI:PopupModal>
@@ -2932,50 +2945,94 @@ applicable for children and pregnant</span>)
     <script src="../../scripts/myScript.js"></script>
     <script src="../../scripts/contenteditable.min.js"></script>
     <script>
-
-            let fall_history_score = 0;
-            let secon_diagnosis_score = 0;
-            let ambula_aids_score = 0;
-            let intra_therapy_score = 0;
-            let gait_trans_score = 0;
-            let fr_mental_status_score = 0;
-            // History of falling
-            document.querySelector('#rad_fall_history_code_0').addEventListener("change", () => { fall_history_score = 0; updateFrTotalScore(); });
-
-            document.querySelector('#rad_fall_history_code_25').addEventListener("change", () => { fall_history_score = 25; updateFrTotalScore(); });
-            //Secondary diagnosis
-            document.querySelector('#rad_secon_diagnosis_code_0').addEventListener("change", () => { secon_diagnosis_score = 0; updateFrTotalScore(); });
-
-            document.querySelector('#rad_secon_diagnosis_code_15').addEventListener("change", () => { secon_diagnosis_score = 15; updateFrTotalScore(); });
-            //Ambulatory Aids
-            document.querySelector('#rad_ambula_aids_code_30').addEventListener("change", () => { ambula_aids_score = 30; updateFrTotalScore(); });
-
-            document.querySelector('#rad_ambula_aids_code_15').addEventListener("change", () => { ambula_aids_score = 15; updateFrTotalScore(); });
-
-            document.querySelector('#rad_ambula_aids_code_0').addEventListener("change", () => { ambula_aids_score = 0; updateFrTotalScore(); });
-            //Intravenous therapy/heparin locked
-            document.querySelector('#rad_intra_therapy_code_20').addEventListener("change", () => { intra_therapy_score = 20; updateFrTotalScore(); });
-
-            document.querySelector('#rad_intra_therapy_code_0').addEventListener("change", () => { intra_therapy_score = 0; updateFrTotalScore(); });
-            //Gait/ transferring
-            document.querySelector('#rad_gait_trans_code_20').addEventListener("change", () => { gait_trans_score = 20; updateFrTotalScore(); });
-
-            document.querySelector('#rad_gait_trans_code_10').addEventListener("change", () => { gait_trans_score = 10; updateFrTotalScore(); });
-
-            document.querySelector('#rad_gait_trans_code_0').addEventListener("change", () => { gait_trans_score = 0; updateFrTotalScore(); });
-            //Mental status
-            document.querySelector('#rad_fr_mental_status_code_15').addEventListener("change", () => { fr_mental_status_score = 15; updateFrTotalScore(); });
-
-            document.querySelector('#rad_fr_mental_status_code_0').addEventListener("change", () => { fr_mental_status_score = 0; updateFrTotalScore(); });
-
-            function updateFrTotalScore() {
-                document.querySelector("#txt_fr_total_score").innerText = fall_history_score + secon_diagnosis_score + ambula_aids_score + intra_therapy_score + gait_trans_score + fr_mental_status_score;
-            }
+        //
+        let fall_history_score = 0;
+        let secon_diagnosis_score = 0;
+        let ambula_aids_score = 0;
+        let intra_therapy_score = 0;
+        let gait_trans_score = 0;
+        let fr_mental_status_score = 0;
 
         let nutrition_score1 = 0;
         let nutrition_score2 = 0;
         let nutrition_score3 = 0;
         let nutrition_score_total = 0;
+
+        let severity_score1 = 0;
+        let severity_score2 = 0;
+        let severity_score3 = 0;
+        let severity_score_total = 0;
+
+        let age_score1 = 0;
+        let age_score_total = 0;
+
+        (function initial() {
+            if (document.getElementById('rad_fall_history_code_0').checked) { fall_history_score = 0; }
+            else if (document.getElementById('rad_fall_history_code_25').checked) { fall_history_score = 25; }
+
+            if (document.getElementById('rad_secon_diagnosis_code_0').checked) { secon_diagnosis_score = 0; }
+            else if (document.getElementById('rad_secon_diagnosis_code_15').checked) { secon_diagnosis_score = 15; }
+
+            if (document.getElementById('rad_ambula_aids_code_30').checked) { ambula_aids_score = 30; }
+            else if (document.getElementById('rad_ambula_aids_code_15').checked) { ambula_aids_score = 15; }
+            else if (document.getElementById('rad_ambula_aids_code_0').checked) { ambula_aids_score = 0; }
+
+            if (document.getElementById('rad_intra_therapy_code_20').checked) { intra_therapy_score = 20; }
+            else if (document.getElementById('rad_intra_therapy_code_0').checked) { intra_therapy_score = 0; }
+
+            if (document.getElementById('rad_gait_trans_code_20').checked) { gait_trans_score = 20; }
+            else if (document.getElementById('rad_gait_trans_code_10').checked) { gait_trans_score = 10; }
+            else if (document.getElementById('rad_gait_trans_code_20').checked) { gait_trans_score = 0; }
+
+            if (document.getElementById('rad_fr_mental_status_code_15').checked) { fr_mental_status_score = 15; }
+            else if (document.getElementById('rad_fr_mental_status_code_0').checked) { fr_mental_status_score = 0; }
+
+            updateFrTotalScore();
+        }());
+
+        // History of falling
+        document.querySelector('#rad_fall_history_code_0').addEventListener("change", () => { fall_history_score = 0; updateFrTotalScore(); });
+
+        document.querySelector('#rad_fall_history_code_25').addEventListener("change", () => { fall_history_score = 25; updateFrTotalScore(); });
+        //Secondary diagnosis
+        document.querySelector('#rad_secon_diagnosis_code_0').addEventListener("change", () => { secon_diagnosis_score = 0; updateFrTotalScore(); });
+
+        document.querySelector('#rad_secon_diagnosis_code_15').addEventListener("change", () => { secon_diagnosis_score = 15; updateFrTotalScore(); });
+        //Ambulatory Aids
+        document.querySelector('#rad_ambula_aids_code_30').addEventListener("change", () => { ambula_aids_score = 30; updateFrTotalScore(); });
+
+        document.querySelector('#rad_ambula_aids_code_15').addEventListener("change", () => { ambula_aids_score = 15; updateFrTotalScore(); });
+
+        document.querySelector('#rad_ambula_aids_code_0').addEventListener("change", () => { ambula_aids_score = 0; updateFrTotalScore(); });
+        //Intravenous therapy/heparin locked
+        document.querySelector('#rad_intra_therapy_code_20').addEventListener("change", () => { intra_therapy_score = 20; updateFrTotalScore(); });
+
+        document.querySelector('#rad_intra_therapy_code_0').addEventListener("change", () => { intra_therapy_score = 0; updateFrTotalScore(); });
+        //Gait/ transferring
+        document.querySelector('#rad_gait_trans_code_20').addEventListener("change", () => { gait_trans_score = 20; updateFrTotalScore(); });
+
+        document.querySelector('#rad_gait_trans_code_10').addEventListener("change", () => { gait_trans_score = 10; updateFrTotalScore(); });
+
+        document.querySelector('#rad_gait_trans_code_0').addEventListener("change", () => { gait_trans_score = 0; updateFrTotalScore(); });
+        //Mental status
+        document.querySelector('#rad_fr_mental_status_code_15').addEventListener("change", () => { fr_mental_status_score = 15; updateFrTotalScore(); });
+
+        document.querySelector('#rad_fr_mental_status_code_0').addEventListener("change", () => { fr_mental_status_score = 0; updateFrTotalScore(); });
+
+        function updateFrTotalScore() {
+
+            document.querySelector("#lbl_fr_total_score").value = fall_history_score + secon_diagnosis_score + ambula_aids_score + intra_therapy_score + gait_trans_score + fr_mental_status_score;
+
+            document.querySelector("#txt_fr_total_score").value = fall_history_score + secon_diagnosis_score + ambula_aids_score + intra_therapy_score + gait_trans_score + fr_mental_status_score;
+        }
+
+        
+        (function temp(){
+            nutrition_score1Change();
+            nutrition_score2Change();
+            nutrition_score3Change();
+
+        }());
 
         function nutrition_score1Change() {
             nutrition_score1 = 0;
@@ -3027,11 +3084,6 @@ applicable for children and pregnant</span>)
 
         // Severity of disease
 
-        let severity_score1 = 0;
-        let severity_score2 = 0;
-        let severity_score3 = 0;
-        let severity_score_total = 0;
-
         function severity_score1Change() {
             severity_score1 = 0;
             let checkbox1 = document.getElementById("cb_severity_score1_1");
@@ -3082,9 +3134,6 @@ applicable for children and pregnant</span>)
 
             updateTotalNutriScore();
         }
-
-        let age_score1 = 0;
-        let age_score_total = 0;
 
         function age_score1Change() {
             age_score = 0;
@@ -3205,7 +3254,6 @@ applicable for children and pregnant</span>)
                 if (last_date_changed_error) last_date_changed_error.innerHTML = "Ngày thay gần nhất/ Fr, Date last changed is required";
             }
 
-            
 
             if (errors.includes("other_hospital_error")) {
                 let other_hospital_error = document.getElementById("other_hospital_error"); if (other_hospital_error) other_hospital_error.innerHTML = "Yêu cầu chuyển đến bệnh viện khác/ Requires referral to other hospital";

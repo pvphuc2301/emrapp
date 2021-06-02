@@ -11,6 +11,8 @@
 <%@ Register Src="~/UserControls/PopupModal.ascx" TagPrefix="webUI" TagName="PopupModal" %>
 <%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="icon" TagName="ExclamationTriangle" %>
 <%@ Register Src="~/UserControls/Checkbox/Checkbox.ascx" TagPrefix="webUI" TagName="Checkbox" %>
+<%@ Register Src="~/UserControls/Spinner1.ascx" TagPrefix="aih" TagName="Spinner1" %>
+
 
 <!DOCTYPE html>
 
@@ -20,7 +22,20 @@
     <link href="../../styles/style.css" rel="stylesheet" />
     <link href="../../styles/myStyle.css" rel="stylesheet" />
     <link href="../../style/style-custom.css" rel="stylesheet" />
+    <style>
+        .table-bordered > tr > td {
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+        .table-bordered > tr > th {
+            padding: 0.5rem;
+        }
 
+        table > tbody
+        {
+            border: 1px solid #dee2e6;
+        }
+    </style>
 </head>
 <body>
 
@@ -37,13 +52,14 @@
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
+    <div>
         <form method="post" action="#" id="form2" runat="server">
             <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
-            <div class="scroll-sidebar h-100 w-100">
+            <div class="h-100 w-100" style="overflow: scroll">
                 <%--<asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>--%>
                 <asp:HiddenField runat="server" ID="RequiredFieldValidator" />
-                <asp:Panel runat="server" ID="Panel1">
+                <asp:Panel runat="server" ID="messagePlaceHolder">
                     <aih:AmendReason runat="server" ID="txt_amendReason" />
                 </asp:Panel>
 
@@ -61,16 +77,16 @@
 
                                     <fieldset class="row mb-2">
                                         <div class="col-md-12 mb-2">
-                                            <label class="control-label mb-1 mr-2">
+                                            <label class="control-label mb-1 mr-2 w-6">
                                                 <span class="text-primary">Triage Date Time <span class="text-danger">*</span></span>
                                             </label>
                                             <div class="form-group d-inline-block">
                                                 <telerik:RadDateTimePicker runat="server" ID="dtpk_triage_time" Width="200px" />
-                                                <span class="text-danger" id="dtpk_triage_time_error"></span>
+                                                <span class="text-danger el-hide" id="dtpk_triage_time_error">Triage Date Time is required</span>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            <label class="control-label mb-1 mr-2">Khu vực/ <span class="text-primary">Triage Area #:</span></label>
+                                            <label class="control-label mb-1 mr-2 w-6">Khu vực/ <span class="text-primary">Triage Area #:</span></label>
                                             <div class="form-group d-inline-block w-n">
                                                 <webUI:TextField runat="server" ID="txt_triage_area" />
                                             </div>
@@ -284,36 +300,36 @@
                                         </legend>
 
                                         <div class="col-md-12 mb-2">
-                                            <label class="control-label mb-1 mr-2">Điểm đau/ <span class="text-primary">Pain score:</span></label>
+                                            <label class="control-label mb-1 w-6">Điểm đau/ <span class="text-primary">Pain score:</span></label>
                                             <div class="form-group w-4 d-inline-block">
                                                 <input runat="server" maxlength="2" class="form-control d-inline-block w-4" id="txt_pain_score" data-type="number" />
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12 mb-2">
-                                            <label class="control-label mb-1">Khởi phát/ <span class="text-primary">Onset:</span></label>
-                                            <div class="form-group">
+                                        <div class="col-md-12 mb-2 d-flex no-block">
+                                            <label class="control-label mb-1 w-6">Khởi phát/ <span class="text-primary">Onset:</span></label>
+                                            <div class="form-group d-inline-block flex-grow-1">
                                                 <webUI:TextField runat="server" ID="txt_pain_onset" />
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12 mb-2">
-                                            <label class="control-label mb-1">Vị trí/ <span class="text-primary">Location:</span></label>
-                                            <div class="form-group">
+                                        <div class="col-md-12 mb-2 d-flex no-block">
+                                            <label class="control-label mb-1 w-6">Vị trí/ <span class="text-primary">Location:</span></label>
+                                            <div class="form-group d-inline-block flex-grow-1">
                                                 <webUI:TextField runat="server" ID="txt_pain_location" />
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12 mb-2">
-                                            <label class="control-label mb-1">Kéo dài/ <span class="text-primary">Duration:</span></label>
-                                            <div class="form-group">
+                                        <div class="col-md-12 mb-2 d-flex no-block">
+                                            <label class="control-label mb-1 w-6">Kéo dài/ <span class="text-primary">Duration:</span></label>
+                                            <div class="form-group d-inline-block flex-grow-1">
                                                 <webUI:TextField runat="server" ID="txt_pain_duration" />
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12 mb-2">
-                                            <label class="control-label mb-1">Hướng lan/ <span class="text-primary">Radiation:</span></label>
-                                            <div class="form-group">
+                                        <div class="col-md-12 mb-2 d-flex no-block">
+                                            <label class="control-label mb-1 w-6">Hướng lan/ <span class="text-primary">Radiation:</span></label>
+                                            <div class="form-group d-inline-block flex-grow-1">
                                                 <webUI:TextField runat="server" ID="txt_pain_radiation" />
                                             </div>
                                         </div>
@@ -472,7 +488,7 @@
 
                                         <div class="col-md-12">
                                             <label class="control-label mb-1 mr-2">Người chăm sóc sau khi xuất viện <span class="text-primary">People who will look after patient after discharge:</span></label>
-                                            <div class="form-group d-inline-block">
+                                            <div class="form-group d-inline-block w-n">
                                                 <webUI:TextField runat="server" ID="txt_caregiver_after_discharge" />
                                             </div>
                                         </div>
@@ -487,12 +503,12 @@
                                         <div class="col-md-12">
                                             <label class="control-label mb-1 mr-2">1. Trở ngại về ngôn ngữ/ <span class="text-primary">Language Barriers:</span></label>
                                             <div class="custom-control custom-radio d-inline-block mr-2">
-                                                <input type="radio" id="rad_btc_language1" name="rad_btc_language" class="custom-control-input" runat="server" />
-                                                <label class="custom-control-label" for="rad_btc_language1">Không/ <span class="text-primary">No</span></label>
+                                                <input type="radio" id="rad_btc_language_false" name="rad_btc_language" class="custom-control-input" runat="server" />
+                                                <label class="custom-control-label" for="rad_btc_language_false">Không/ <span class="text-primary">No</span></label>
                                             </div>
                                             <div class="custom-control custom-radio d-inline-block mr-2">
-                                                <input disabled-for="btc_language_note_field" type="radio" id="rad_btc_language2" name="rad_btc_language" class="custom-control-input" runat="server" />
-                                                <label class="custom-control-label" for="rad_btc_language2">Có, Giải thích/ <span class="text-primary">Yes, Explain:</span></label>
+                                                <input disabled-for="btc_language_note_field" type="radio" id="rad_btc_language_true" name="rad_btc_language" class="custom-control-input" runat="server" />
+                                                <label class="custom-control-label" for="rad_btc_language_true">Có, Giải thích/ <span class="text-primary">Yes, Explain:</span></label>
                                                 <a href="javascript:void(0)" class="el-hide" data-clear="rad_btc_language" onclick="clear_radiobutton(this)">
                                                     <icon:xsquare runat="server" />
                                                 </a>
@@ -505,13 +521,13 @@
                                         <div class="col-md-12">
                                             <label class="control-label mb-1 mr-2">2. Trở ngại về nhận thức/ <span class="text-primary">Cognitive Barriers:</span></label>
                                             <div class="custom-control custom-radio d-inline-block mr-2">
-                                                <input type="radio" id="rad_btc_cognitive1" name="rad_btc_cognitive" class="custom-control-input" runat="server" />
-                                                <label class="custom-control-label" for="rad_btc_cognitive1">Không/ <span class="text-primary">No</span></label>
+                                                <input type="radio" id="rad_btc_cognitive_false" name="rad_btc_cognitive" class="custom-control-input" runat="server" />
+                                                <label class="custom-control-label" for="rad_btc_cognitive_false">Không/ <span class="text-primary">No</span></label>
                                             </div>
 
                                             <div class="custom-control custom-radio  d-inline-block mr-2">
-                                                <input disabled-for="btc_cognitive_field" type="radio" id="rad_btc_cognitive2" name="rad_btc_cognitive" class="custom-control-input" runat="server" />
-                                                <label class="custom-control-label" for="rad_btc_cognitive2">Có, Giải thích/ <span class="text-primary">Yes, Explain:</span></label>
+                                                <input disabled-for="btc_cognitive_field" type="radio" id="rad_btc_cognitive_true" name="rad_btc_cognitive" class="custom-control-input" runat="server" />
+                                                <label class="custom-control-label" for="rad_btc_cognitive_true">Có, Giải thích/ <span class="text-primary">Yes, Explain:</span></label>
                                                 <a href="javascript:void(0)" style="display: none;" data-clear="rad_btc_cognitive" onclick="clear_radiobutton(this)">
                                                     <icon:xsquare runat="server" />
                                                 </a>
@@ -524,13 +540,13 @@
                                         <div class="col-md-12">
                                             <label class="control-label mb-1 mr-2">3. Trở ngại về Giác quan/ <span class="text-primary">Sensory Barriers:</span></label>
                                             <div class="custom-control custom-radio d-inline-block mr-2">
-                                                <input type="radio" id="rad_btc_sensory1" name="rad_btc_sensory" class="custom-control-input" runat="server" />
-                                                <label class="custom-control-label" for="rad_btc_sensory1">Không/ <span class="text-primary">No</span></label>
+                                                <input type="radio" id="rad_btc_sensory_false" name="rad_btc_sensory" class="custom-control-input" runat="server" />
+                                                <label class="custom-control-label" for="rad_btc_sensory_false">Không/ <span class="text-primary">No</span></label>
                                             </div>
                                             <div class="custom-control custom-radio d-inline-block mr-2">
-                                                <input disabled-for="btc_sensory_field" type="radio" id="rad_btc_sensory2" name="rad_btc_sensory" class="custom-control-input" runat="server" />
-                                                <label class="custom-control-label" for="rad_btc_sensory2">Có, Giải thích/ <span class="text-primary">Yes, Explain:</span></label>
-                                                <a href="javascript:void(0)" style="display: none;" data-clear="rad_btc_sensory" onclick="clear_radiobutton(this)">
+                                                <input disabled-for="btc_sensory_field" type="radio" id="rad_btc_sensory_true" name="rad_btc_sensory" class="custom-control-input" runat="server" />
+                                                <label class="custom-control-label" for="rad_btc_sensory_true">Có, Giải thích/ <span class="text-primary">Yes, Explain:</span></label>
+                                                <a href="javascript:void(0)" data-clear="rad_btc_sensory" onclick="clear_radiobutton(this)">
                                                     <icon:xsquare runat="server" />
                                                 </a>
                                             </div>
@@ -542,13 +558,13 @@
                                         <div class="col-md-12">
                                             <label class="control-label mb-1 mr-2">4. Trở ngại về Tôn giáo/ <span class="text-primary">Religious Barriers:</span></label>
                                             <div class="custom-control custom-radio d-inline-block mr-2">
-                                                <input type="radio" id="rad_btc_religious1" name="rad_btc_religious" class="custom-control-input" runat="server" />
-                                                <label class="custom-control-label" for="rad_btc_religious1">Không/ <span class="text-primary">No</span></label>
+                                                <input type="radio" id="rad_btc_religious_false" name="rad_btc_religious" class="custom-control-input" runat="server" />
+                                                <label class="custom-control-label" for="rad_btc_religious_false">Không/ <span class="text-primary">No</span></label>
                                             </div>
                                             <div class="custom-control custom-radio d-inline-block mr-2">
-                                                <input disabled-for="btc_religious_field" type="radio" id="rad_btc_religious2" name="rad_btc_religious" class="custom-control-input" runat="server" />
-                                                <label class="custom-control-label" for="rad_btc_religious2">Có, Giải thích/ <span class="text-primary">Yes, Explain:</span></label>
-                                                <a href="javascript:void(0)" style="display: none;" data-clear="rad_btc_religious" onclick="clear_radiobutton(this)">
+                                                <input disabled-for="btc_religious_field" type="radio" id="rad_btc_religious_true" name="rad_btc_religious" class="custom-control-input" runat="server" />
+                                                <label class="custom-control-label" for="rad_btc_religious_true">Có, Giải thích/ <span class="text-primary">Yes, Explain:</span></label>
+                                                <a href="javascript:void(0)" data-clear="rad_btc_religious" onclick="clear_radiobutton(this)">
                                                     <icon:xsquare runat="server" />
                                                 </a>
                                             </div>
@@ -559,13 +575,13 @@
                                         <div class="col-md-12">
                                             <label class="control-label mb-1 mr-2">5. Trở ngại về Văn hóa/ <span class="text-primary">Cultural Barriers:</span></label>
                                             <div class="custom-control custom-radio d-inline-block mr-2">
-                                                <input type="radio" id="rad_btc_cultural1" name="rad_btc_cultural" class="custom-control-input" runat="server" />
-                                                <label class="custom-control-label" for="rad_btc_cultural1">Không/ <span class="text-primary">No</span></label>
+                                                <input type="radio" id="rad_btc_cultural_false" name="rad_btc_cultural" class="custom-control-input" runat="server" />
+                                                <label class="custom-control-label" for="rad_btc_cultural_false">Không/ <span class="text-primary">No</span></label>
                                             </div>
                                             <div class="custom-control custom-radio d-inline-block mr-2">
-                                                <input disabled-for="btc_cultural_field" type="radio" id="rad_btc_cultural2" name="rad_btc_cultural" class="custom-control-input" runat="server" />
-                                                <label class="custom-control-label" for="rad_btc_cultural2">Có, Giải thích/ <span class="text-primary">Yes, Explain:</span></label>
-                                                <a href="javascript:void(0)" style="display: none;" data-clear="rad_btc_cultural" onclick="clear_radiobutton(this)">
+                                                <input disabled-for="btc_cultural_field" type="radio" id="rad_btc_cultural_true" name="rad_btc_cultural" class="custom-control-input" runat="server" />
+                                                <label class="custom-control-label" for="rad_btc_cultural_true">Có, Giải thích/ <span class="text-primary">Yes, Explain:</span></label>
+                                                <a href="javascript:void(0)" data-clear="rad_btc_cultural" onclick="clear_radiobutton(this)">
                                                     <icon:xsquare runat="server" />
                                                 </a>
                                             </div>
@@ -631,16 +647,16 @@
 
                                                 <div class="col-md-12">
                                                     <label class="custom-control custom-checkbox d-inline-block mr-2">
-                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_alert" />
+                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_alert_true" />
                                                         <span class="custom-control-label">Tỉnh táo/ <span class="text-primary">Alert</span></span>
                                                     </label>
                                                     <label class="custom-control custom-checkbox d-inline-block mr-2">
-                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_coma" />
+                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_coma_true" />
                                                         <span class="custom-control-label">Hôn mê/ <span class="text-primary">Coma</span></span>
                                                     </label>
                                                     <div class="d-inline-block">
                                                         <label class="custom-control custom-checkbox d-inline-block mr-2">
-                                                            <input disabled-for="str_others_field" type="checkbox" class="custom-control-input" id="cb_others" runat="server" />
+                                                            <input disabled-for="str_others_field" type="checkbox" class="custom-control-input" id="cb_others_true" runat="server" />
                                                             <span class="custom-control-label">Khác/ <span class="text-primary">Others:</span></span>
                                                         </label>
                                                         <div class="form-group str_others_field d-inline-block">
@@ -712,15 +728,15 @@
                                                 <div class="col-md-12">
                                                     <label class="control-label mr-2 ">Nhịp tim/ <span class="text-primary">Rhythm:</span></label>
                                                     <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_regular" />
+                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_regular_true" />
                                                         <span class="custom-control-label">Đều/ <span class="text-primary">Regular</span></span>
                                                     </label>
                                                     <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_inregular" />
+                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_inregular_true" />
                                                         <span class="custom-control-label">Không đều/ <span class="text-primary">Inregular</span></span>
                                                     </label>
                                                     <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                        <input disabled-for="rhythm_field" type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_others" />
+                                                        <input disabled-for="rhythm_field" type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_others_true" />
                                                         <span class="custom-control-label">Khác/ <span class="text-primary">Others:</span></span>
                                                     </label>
 
@@ -737,11 +753,11 @@
                                                 </legend>
                                                 <div class="col-md-12">
                                                     <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_psychosocial" />
+                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_psychosocial_true" />
                                                         <span class="custom-control-label">Bình thường/ <span class="text-primary">Normal</span></span>
                                                     </label>
                                                     <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                        <input disabled-for="psychosocial_str_others_field" type="checkbox" class="custom-control-input" runat="server" id="cb_psychosocial_others" />
+                                                        <input disabled-for="psychosocial_str_others_field" type="checkbox" class="custom-control-input" runat="server" id="cb_psychosocial_others_true" />
                                                         <span class="custom-control-label">Khác/ <span class="text-primary">Others</span></span>
                                                     </label>
 
@@ -757,11 +773,11 @@
                                                 </legend>
                                                 <div class="col-md-12">
                                                     <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_other_systems_normal" />
+                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_other_systems_normal_true" />
                                                         <span class="custom-control-label">Bình thường/ <span class="text-primary">Normal</span></span>
                                                     </label>
                                                     <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                        <input disabled-for="other_systems_field" type="checkbox" class="custom-control-input" runat="server" id="cb_other_systems_abnormal" />
+                                                        <input disabled-for="other_systems_field" type="checkbox" class="custom-control-input" runat="server" id="cb_other_systems_abnormal_true" />
                                                         <span class="custom-control-label">Khác/ <span class="text-primary">Others</span></span>
                                                     </label>
 
@@ -777,7 +793,7 @@
                                                 </legend>
                                                 <div class="col-md-12 mb-2">
                                                     <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_lmp" />
+                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_lmp_true" />
                                                         <span class="custom-control-label">Kinh cuối/ <span class="text-primary">LMP</span></span>
                                                     </label>
 
@@ -807,22 +823,22 @@
                                     <div class="row mb-2">
                                         <div class="col-md-12">
                                             <table class="table-responsive">
-                                                <thead>
+                                                <thead class="table-bordered">
                                                     <tr>
                                                         <th scope="col">
-                                                            <div class="p-2" style="width: 300px;">Thủ thuật can thiệp/ <span class="text-primary">Intervention Procedure</span></div>
+                                                            <div style="width: 300px;">Thủ thuật can thiệp/ <span class="text-primary">Intervention Procedure</span></div>
                                                         </th>
                                                         <th scope="col">
-                                                            <div class="p-2">Thời gian/ <span class="text-primary">Time</span></div>
+                                                            <div>Thời gian/ <span class="text-primary">Time</span></div>
                                                         </th>
                                                         <th scope="col">
-                                                            <div class="p-2" style="width: 300px;">Ghi chú/ <span class="text-primary">Notes</span></div>
+                                                            <div style="width: 300px;">Ghi chú/ <span class="text-primary">Notes</span></div>
                                                         </th>
                                                     </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody class="table-bordered">
                                                     <tr>
-                                                        <td>
+                                                        <td class="pl-2">
                                                             <div>ĐHMM/Capillary Blood glucose </div>
                                                         </td>
                                                         <td>
@@ -906,7 +922,7 @@
                                                                     <div style="width: 105px" class="text-primary pt-2 pb-2">Time</div>
                                                                 </HeaderTemplate>
                                                                 <ItemTemplate>
-                                                                    <telerik:RadTimePicker Width="105px" ID="time" SelectedTime='<%# TimeSpan.Parse(Eval("time").ToString()) %>' runat="server" />
+                                                                    <telerik:RadTimePicker Width="105px" ID="time" SelectedTime='<%# GetTimeSpan(Eval("time").ToString()) %>' runat="server" />
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
                                                             <asp:TemplateField>
@@ -1000,14 +1016,16 @@
                                                                     <webUI:TextField Value='<%#Eval("initial") %>' DataKey="initial" runat="server" />
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
-                                                            <asp:CommandField ShowDeleteButton="True" ButtonType="Button" />
+                                                            <asp:TemplateField HeaderText="">
+                                                                <ItemTemplate>
+                                                                    <asp:LinkButton runat="server" CommandName="Delete" CssClass="btn btn-sm btn-outline-secondary" OnClientClick="return confirm('are you sure?')">
+                                                                        <icon:Trash runat="server" ID="Trash" />
+                                                                    </asp:LinkButton>
+                                                                </ItemTemplate>
+                                                            </asp:TemplateField>
                                                         </Columns>
                                                     </asp:GridView>
-                                                    <asp:UpdateProgress ID="updateProgress_AssessmentSystem" runat="server" AssociatedUpdatePanelID="updatePanel_AssessmentSystem">
-                                                        <ProgressTemplate>
-                                                            Please wait....
-                                                        </ProgressTemplate>
-                                                    </asp:UpdateProgress>
+                                                    <aih:Spinner1 runat="server" ID="Spinner1" AssociatedUpdatePanelID="updatePanel_AssessmentSystem" />
                                                     <div class="mt-2">
                                                         <asp:Button ID="btn_grid_AssessmentSystem_add" runat="server" CssClass="btn btn-sm btn-outline-primary" OnClick="btn_grid_AssessmentSystem_add_Click" Text="Add row" />
                                                     </div>
@@ -1039,7 +1057,7 @@
                                                                     <div style="width: 105px" class="pt-2 pb-2">Thời gian/ <span class="text-primary">Time</span></div>
                                                                 </HeaderTemplate>
                                                                 <ItemTemplate>
-                                                                    <telerik:RadTimePicker ID="dir_med_time" SelectedTime='<%# TimeSpan.Parse(Eval("dir_med_time").ToString()) %>' Width="105px" runat="server" />
+                                                                    <telerik:RadTimePicker ID="dir_med_time" SelectedTime='<%# GetTimeSpan(Eval("dir_med_time").ToString()) %>' Width="105px" runat="server" />
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
                                                             <asp:TemplateField>
@@ -1095,7 +1113,7 @@
                                                                     <div>Thời gian/ <span class="text-primary">Time</span></div>
                                                                 </HeaderTemplate>
                                                                 <ItemTemplate>
-                                                                    <telerik:RadTimePicker ID="dir_med_time2" SelectedTime='<%# TimeSpan.Parse(Eval("dir_med_time2").ToString()) %>' Width="105px" runat="server" />
+                                                                    <telerik:RadTimePicker ID="dir_med_time2" SelectedTime='<%# GetTimeSpan(Eval("dir_med_time2").ToString()) %>' Width="105px" runat="server" />
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
                                                             <asp:TemplateField>
@@ -1106,7 +1124,13 @@
                                                                     <webUI:TextField Value='<%#Eval("dir_med_initial") %>' DataKey="dir_med_initial" runat="server" />
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
-                                                            <asp:CommandField ShowDeleteButton="True" ButtonType="Button" />
+                                                            <asp:TemplateField HeaderText="">
+                                                                <ItemTemplate>
+                                                                    <asp:LinkButton runat="server" CommandName="Delete" CssClass="btn btn-sm btn-outline-secondary" OnClientClick="return confirm('are you sure?')">
+                                                                        <icon:Trash runat="server" ID="Trash" />
+                                                                    </asp:LinkButton>
+                                                                </ItemTemplate>
+                                                            </asp:TemplateField>
                                                         </Columns>
                                                     </asp:GridView>
                                                     <asp:UpdateProgress ID="UpdateProgressDirectMedication" runat="server" AssociatedUpdatePanelID="UpdatePanelDirectMedication">
@@ -1221,7 +1245,7 @@
                                                         OnRowDeleting="grid_NursingNotes_RowDeleting"
                                                         OnRowUpdating="gridAssessmentSystem_RowUpdating"
                                                         OnRowDataBound="gridAssessmentSystem_RowDataBound"
-                                                        CssClass="tb-responsive"
+                                                        CssClass="tb-responsive table-bordered"
                                                         AutoGenerateColumns="false">
                                                         <Columns>
                                                             <asp:TemplateField>
@@ -1230,7 +1254,7 @@
                                                                 </HeaderTemplate>
                                                                 <ItemTemplate>
                                                                     <div class="form-group">
-                                                                        <telerik:RadDateTimePicker ID="date_time" SelectedDate='<%#Eval("date_time") %>' Width="200px" runat="server" />
+                                                                        <telerik:RadDateTimePicker ID="date_time" SelectedDate='<%# DBNull.Value.Equals((Eval("date_time"))) ? null : Eval("date_time") %>' Width="200px" runat="server" />
                                                                     </div>
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
@@ -1250,8 +1274,13 @@
                                                                     <webUI:TextField Value='<%#Eval("signature_name") %>' DataKey="signature_name" runat="server" />
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
-                                                            <asp:CommandField ShowDeleteButton="True" ButtonType="Button" />
-
+                                                            <asp:TemplateField HeaderText="">
+                                                                <ItemTemplate>
+                                                                    <asp:LinkButton runat="server" CommandName="Delete" CssClass="btn btn-sm btn-outline-secondary" OnClientClick="return confirm('are you sure?')">
+                                                                        <icon:Trash runat="server" ID="Trash" />
+                                                                    </asp:LinkButton>
+                                                                </ItemTemplate>
+                                                            </asp:TemplateField>
                                                         </Columns>
                                                     </asp:GridView>
                                                     <asp:UpdateProgress ID="updateProgress_NursingNotes" runat="server" AssociatedUpdatePanelID="updatePanel_NursingNotes">
@@ -1273,13 +1302,12 @@
                                     <fieldset class="row">
                                         <div class="col-md-12">
                                             <div class="form-actions">
-                                                <asp:Button ID="btnComplete" class="btn btn-primary" runat="server" Text="Complete" />
+                                                <asp:Button ID="btnComplete" OnClick="btnComplete_Click" class="btn btn-primary" runat="server" Text="Complete" />
                                                 <asp:Button ID="btnSave" OnClick="btnSave_Click" class="btn btn-primary" runat="server" Text="Save" />
                                                 <button type="button" id="btnDeleteModal" runat="server" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
-                                                <asp:Button ID="btnAmend" class="btn btn-secondary" runat="server" Text="Amend" />
+                                                <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
                                                 <asp:Button ID="btnPrint" CssClass="btn btn-secondary" runat="server" Text="Print" />
-                                                <asp:Button ID="btnCancel" CssClass="btn btn-secondary" runat="server" Text="Cancel" />
-                                                <div runat="server" id="messagePlaceHolder"></div>
+                                                <asp:Button ID="btnCancel" OnClick="btnCancel_Click" CssClass="btn btn-secondary" runat="server" Text="Cancel" />
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1314,106 +1342,11 @@
     </div>
 
     <script src="../../scripts/popper.min.js"></script>
-    <script src="../../scripts/jquery-3.2.1.min.js">script src="../../scripts/bootstrap.min.js"></script>
+    <script src="../../scripts/jquery-3.2.1.min.js"></script>
     <script src="../../scripts/perfect-scrollbar.jquery.min.js"></script>
     <script src="../../scripts/custom.min.js"></script>
     <script src="../../scripts/myScript.js"></script>
     <script src="../../scripts/contenteditable.min.js"></script>
-
-
-    <%--<script>
-        let errors = document.getElementById("RequiredFieldValidator");
-        
-        errors = JSON.parse(errors.value);
-        
-        errors.forEach(e => {
-            document.getElementById(`${e}_error`).classList.add("required-field");
-        })
-
-        let temp = document.querySelectorAll(".required");
-
-
-        temp.forEach(e => {
-            console.log(e);
-
-            e.required = true;
-        });
-    </script>--%>
-
-    <script>
-        function setInputFilter(textbox, inputFilter) {
-            ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
-                textbox.addEventListener(event, function () {
-                    if (inputFilter(this.value)) {
-                        this.oldValue = this.value;
-                        this.oldSelectionStart = this.selectionStart;
-                        this.oldSelectionEnd = this.selectionEnd;
-                    } else if (this.hasOwnProperty("oldValue")) {
-                        this.value = this.oldValue;
-                        this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-                    } else {
-                        this.value = "";
-                    }
-                });
-            });
-        }
-
-        //function setInputFilter(textbox, inputFilter) {
-        //    ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
-        //        textbox.addEventListener(event, function () {
-        //            if (inputFilter(this.innerText)) {
-        //                this.oldValue = this.innerHTML;
-        //                this.oldSelectionStart = this.selectionStart;
-        //                this.oldSelectionEnd = this.selectionEnd;
-        //            } else if (this.hasOwnProperty("oldValue")) {
-        //                this.innerHTML = this.oldValue;
-
-        //                this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-        //            } else {
-        //                this.innerHTML = "";
-        //            }
-        //        });
-        //    });
-        //}
-
-
-        let temp = document.querySelectorAll('div[type="number"]');
-        let temp1 = document.querySelectorAll('input[data-type="number"]');
-
-        //document.querySelectorAll('div[type="number"]')[0].addEventListener("input", function () {
-        //    if (inputFilter(this.value)) {
-        //        this.oldValue = this.value;
-        //        this.oldSelectionStart = this.selectionStart;
-        //        this.oldSelectionEnd = this.selectionEnd;
-        //    } else if (this.hasOwnProperty("oldValue")) {
-        //        this.value = this.oldValue;
-        //        this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-        //    } else {
-        //        this.value = "";
-        //    }
-        //});
-
-        //$(document).ready(function () {
-        //    console.log("ready!");
-        //    $('#testtooltip').tooltip().eq(0).tooltip('show').tooltip('disable').one('mouseout', function () {
-        //        $(this).tooltip('enable');
-        //    });
-        //});
-
-        //setInputFilter(document.querySelectorAll('div[type="number"]')[0], function (value) {
-        //    return /^-?\d*$/.test(value);
-        //});
-
-
-
-        temp1.forEach(e => {
-
-            setInputFilter(e, function (value) {
-                return /^\d*\.?\d*$/.test(value);
-            });
-
-        })
-
-    </script>
+    <script src="../scripts/checkValidFields.js"></script>
 </body>
 </html>

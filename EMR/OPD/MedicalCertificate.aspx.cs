@@ -43,10 +43,10 @@ namespace EMR
         {
 
             lbPatientName.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
-            lbDoB.Text = DataHelpers.patient.date_of_birth ;
+            lbDoB.Text = DataHelpers.patient.date_of_birth.ToString("dd/MM/yyyy");
             lbPID.Text = DataHelpers.patient.visible_patient_id;
             lbPID2.Text = DataHelpers.patient.visible_patient_id;
-            lbNgayKhamBenh.Text = DataHelpers.patientVisit.actual_visit_date_time;
+            lbNgayKhamBenh.Text = DataHelpers.patientVisit.actual_visit_date_time.ToString("dd/MM/yyyy");
 
             if ( ((string)DataHelpers.patient.gender_l).ToLower() == "nam")
             {

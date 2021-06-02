@@ -39,7 +39,8 @@ namespace EMR
 
                 if (iima.habits_smoking != null)
                 {
-                    if (bool.Parse(iima.habits_smoking))
+                    if (
+                        (iima.habits_smoking))
                     {
                         rad_habits_smoking2.Checked = true;
                         txt_habits_smoking_pack.Value = iima.habits_smoking_pack;
@@ -52,7 +53,7 @@ namespace EMR
 
                 if (iima.habits_alcohol != null)
                 {
-                    if (bool.Parse(iima.habits_alcohol))
+                    if (iima.habits_alcohol)
                     {
                         rad_habits_alcohol2.Checked = true;
                         txt_habits_alcohol_note.Value = iima.habits_alcohol_note;
@@ -65,7 +66,7 @@ namespace EMR
 
                 if (iima.habits_drugs != null)
                 {
-                    if (bool.Parse(iima.habits_drugs))
+                    if (iima.habits_drugs)
                     {
                         rad_habits_drugs2.Checked = true;
                         txt_habits_drugs_note.Value = iima.habits_drugs_note;
@@ -78,7 +79,7 @@ namespace EMR
 
                 if (iima.habits_physical_exercise != null)
                 {
-                    if (bool.Parse(iima.habits_physical_exercise))
+                    if (iima.habits_physical_exercise)
                     {
                         rad_habits_physical_exercise2.Checked = true;
                         txt_habits_phy_exer_note.Value = iima.habits_phy_exer_note;
@@ -93,7 +94,7 @@ namespace EMR
 
                 if (iima.allergy != null)
                 {
-                    if (bool.Parse(iima.allergy))
+                    if (iima.allergy)
                     {
                         rad_allergy2.Checked = true;
                         txt_allergy_note.Value = iima.allergy_note;
@@ -118,7 +119,7 @@ namespace EMR
                 txt_physical_exam.Value = iima.physical_exam;
                 if(iima.psy_consul_required != null)
                 {
-                    if (bool.Parse(iima.psy_consul_required))
+                    if (iima.psy_consul_required)
                     {
                         rad_psy_consult_required2.Checked = true;
                     } else

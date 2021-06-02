@@ -15,7 +15,7 @@
 <body>
     <form method="post" action="#" id="form2" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
-        <div class="scroll-sidebar h-100 w-100">
+        <div class="h-100 w-100" style="overflow: scroll">
             <%--<asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>--%>
 

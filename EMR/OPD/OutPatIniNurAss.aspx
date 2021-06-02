@@ -11,7 +11,7 @@
 <%@ Register Src="~/UserControls/PrintTemplate/Date.ascx" TagPrefix="webUI" TagName="Date" %>
 <%@ Register Src="~/UserControls/Barcode.ascx" TagPrefix="webUI" TagName="Barcode" %>
 <%@ Register Src="~/UserControls/AmendReason.ascx" TagPrefix="webUI" TagName="AmendReason" %>
-
+<%@ Register Src="~/icons/XSquare.ascx" TagPrefix="icon" TagName="xsquare" %>
 
 
 
@@ -180,7 +180,7 @@
 
         <form method="post" action="#" id="form2" runat="server">
             <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
-            <div class="scroll-sidebar h-100 w-100">
+            <div class="h-100 w-100">
                 <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
                         <asp:HiddenField runat="server" ID="RequiredFieldValidator" />
@@ -318,80 +318,101 @@
                                             </div>
 
                                             <%-- 1. Chief complaint --%>
-                                            <div class="row mb-2">
+                                            <fieldset class="row mb-2">
+                                                <legend>
+                                                    <label class="control-label">1. Lý do đến khám/ <span class="text-primary">Chief complaint:</span></label>
+                                                </legend>
                                                 <div class="col-md-12">
-                                                    <label class="control-label mb-1 font-bold">1. Lý do đến khám/ <span class="text-primary">Chief complaint:</span></label>
                                                     <div class="form-group">
                                                         <webUI:TextField runat="server" id="txtChiefComplaint" />
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </fieldset>
 
-                                            <div class="row mb-2">
-                                                <div class="col-md-12">
-                                                    <label class="control-label mb-1 font-bold">2. Dị ứng/ <span class="text-primary">Allergy:</span></label>
-                                                </div>
 
+                                            <fieldset class="row mb-2">
+                                                <legend>
+                                                    <label class="control-label">2. Dị ứng/ <span class="text-primary">Allergy:</span></label>
+                                                </legend>
                                                 <div class="col-md-12">
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
-                                                        <input type="radio" runat="server" id="radAllergy1" name="radAllergy" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="radAllergy1">Không/ <span class="text-primary">No</span></label>
+                                                    <div class="custom-control custom-radio d-inline-block ml-2 mb-1">
+                                                        <input type="radio" runat="server" id="rad_allergy_false" name="rad_allergy" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_allergy_false">Không/ <span class="text-primary">No</span></label>
                                                     </div>
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
-                                                        <input disabled-for="txtAllergy" type="radio" runat="server" id="radAllergy2" name="radAllergy" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="radAllergy2">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
+
+                                                    <div class="custom-control custom-radio d-inline-block ml-2 mb-1">
+                                                        <input disabled-for="allergy_field" type="radio" runat="server" id="rad_allergy_true" name="rad_allergy" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_allergy_true">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
                                                     </div>
-                                                    <div class="form-group txtAllergy">
-                                                        <webUI:TextField runat="server" id="txtAllergy" />
+
+                                                    <div class="form-group allergy_field">
+                                                        <webUI:TextField runat="server" id="txt_allergy_note" />
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </fieldset>
 
                                             <%-- 3. Allergy --%>
-                                            <div class="row">
+                                            <fieldset class="row mb-2">
+                                                <legend>
+                                                    <label class="control-label">3. Trạng thái tinh thần/ <span class="text-primary">Mental status:</span></label>
+                                                </legend>
                                                 <div class="col-md-12">
-                                                    <label class="control-label mb-1 font-bold">3. Trạng thái tinh thần/ <span class="text-primary">Mental status:</span></label>
-                                                </div>
-                                            </div>
+                                                    <label class="control-label mb-1 w-7">Đáp ứng phù hợp/ <span class="text-primary">Appropriate response:</span></label>
 
-                                            <div class="row mb-2">
-                                                <div class="col-md-12">
-                                                    <label class="control-label mb-1">Đáp ứng phù hợp/ <span class="text-primary">Appropriate response:</span></label>
-                                                </div>
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                        <input type="radio" runat="server" id="rad_mental_status_true" name="rad_mental_status" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_mental_status_true">Có/ <span class="text-primary">Yes</span></label>
+                                                    </div>
 
-                                                <div class="col-md-4">
-                                                    <div class="custom-control custom-radio">
-                                                        <input type="radio" runat="server" id="radMentalStatus1" name="radMentalStatus" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="radMentalStatus1">Có/ <span class="text-primary">Yes</span></label>
+                                                    <div class="custom-control custom-radio  d-inline-block ml-2">
+                                                        <input disabled-for="mental_status_note_field" type="radio" runat="server" id="rad_mental_status_false" name="rad_mental_status" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_mental_status_false">Không, ghi rõ/ <span class="text-primary">No, specify:</span></label>
+                                                    </div>
+
+                                                    <div class="form-group mental_status_note_field">
+                                                        <webUI:TextField runat="server" id="txt_mental_status_note" />
                                                     </div>
                                                 </div>
-
-                                                <div class="col-md-8">
-                                                    <div class="custom-control custom-radio mb-1">
-                                                        <input disabled-for="txtMentalStatus" type="radio" runat="server" id="radMentalStatus2" name="radMentalStatus" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="radMentalStatus2">Không, ghi rõ/ <span class="text-primary">No, specify:</span></label>
-                                                    </div>
-                                                    <div class="form-group txtMentalStatus">
-                                                        <webUI:TextField runat="server" id="txtMentalStatus" />
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            </fieldset>
 
                                             <%-- 4. Pain score --%>
-                                            <div class="row mb-2">
-                                                <div class="col-md-4">
-                                                    <label class="control-label mb-1 font-bold">4. Thang điểm đau/ <span class="text-primary">Pain score:</span></label>
+                                            <fieldset class="row mb-2">
+                                                <legend>
+                                                    <label class="control-label mb-2">4. Thang điểm đau/ <span class="text-primary">Pain score:</span></label>
+                                                </legend>
+                                                <div class="col-md-12">
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                        <input type="radio" id="rad_paint_score_code_0" runat="server" name="rad_paint_score_code" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_paint_score_code_0">Không đau/ <span class="text-primary">No hurt</span></label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                        <input type="radio" id="rad_paint_score_code_1" runat="server" name="rad_paint_score_code" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_paint_score_code_1">Đau rất ít/ <span class="text-primary">Little hurt</span></label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                        <input type="radio" id="rad_paint_score_code_2" runat="server" name="rad_paint_score_code" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_paint_score_code_2">Đau nhẹ/ <span class="text-primary">Slight hurt</span></label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                        <input type="radio" id="rad_paint_score_code_3" runat="server" name="rad_paint_score_code" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_paint_score_code_3">Đau vừa/ <span class="text-primary">Considerable hurt</span></label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                        <input type="radio" id="rad_paint_score_code_4" runat="server" name="rad_paint_score_code" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_paint_score_code_4">Đau nhiều/ <span class="text-primary">Serious hurt</span></label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                        <input type="radio" id="rad_paint_score_code_5" runat="server" name="rad_paint_score_code" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_paint_score_code_5">Rất đau/ <span class="text-primary">Worst hurt</span></label>
+                                                        <a href="javascript:void(0)" data-clear="rad_paint_score_code" onclick="clear_radiobutton(this)">
+                                                    <icon:xsquare runat="server" ID="XSquare2" />
+                                                </a>
+                                                    </div>
                                                 </div>
-                                                <div class="col-md-8">
-                                                    <input runat="server" class="form-control d-inline-block w-4" id="txtPainCore" />
-                                                </div>
-                                            </div>
-
-                                            <div class="row mb-2">
                                                 <div class="col-md-12">
                                                     <img src="../images/pain_score.png" style="max-width: 720px; width: 100%;" alt="" />
                                                 </div>
-                                            </div>
+                                            </fieldset>
 
                                             <%-- 5. Fall risk MORSE SCALE --%>
                                             <div class="row mb-2">
@@ -401,18 +422,18 @@
 
                                                 <div class="col-md-4">
                                                     <div class="custom-control custom-radio">
-                                                        <input type="radio" runat="server" id="radFrms1" name="radFrms" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="radFrms1">Không có nguy cơ/ <span class="text-primary">No risk</span></label>
+                                                        <input type="radio" runat="server" id="rad_fall_risk_false" name="rad_fall_risk" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_fall_risk_false">Không có nguy cơ/ <span class="text-primary">No risk</span></label>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-8">
                                                     <div class="custom-control custom-radio mb-1">
-                                                        <input disabled-for="txtFrms" type="radio" runat="server" id="radFrms2" name="radFrms" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="radFrms2">Nếu có, cung cấp phương tiện hỗ trợ/ <span class="text-primary">If yes, provide assistance</span></label>
+                                                        <input disabled-for="fall_risk_assistance_field" type="radio" runat="server" id="rad_fall_risk_true" name="rad_fall_risk" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_fall_risk_true">Nếu có, cung cấp phương tiện hỗ trợ/ <span class="text-primary">If yes, provide assistance</span></label>
                                                     </div>
-                                                    <div class="form-group txtFrms">
-                                                        <webUI:TextField runat="server" id="txtFrms" />
+                                                    <div class="form-group fall_risk_assistance_field">
+                                                        <webUI:TextField runat="server" id="txt_fall_risk_assistance" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -425,22 +446,22 @@
 
                                                 <div class="col-md-4">
                                                     <div class="custom-control custom-radio">
-                                                        <input type="radio" runat="server" id="radNss1" name="radNss" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="radNss1">Bình thường/ <span class="text-primary">Normal</span></label>
+                                                        <input type="radio" runat="server" id="rad_nutrition_status_code_n" name="rad_nutrition_status_code" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_nutrition_status_code_n">Bình thường/ <span class="text-primary">Normal</span></label>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-4">
                                                     <div class="custom-control custom-radio">
-                                                        <input type="radio" runat="server" id="radNss2" name="radNss" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="radNss2">Suy dinh dưỡng/ <span class="text-primary">Malnutrition</span></label>
+                                                        <input type="radio" runat="server" id="rad_nutrition_status_code_u" name="rad_nutrition_status_code" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_nutrition_status_code_u">Suy dinh dưỡng/ <span class="text-primary">Undernutrition</span></label>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-4">
                                                     <div class="custom-control custom-radio">
-                                                        <input type="radio" runat="server" id="radNss3" name="radNss" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="radNss3">Thừa cân hoặc béo phì/ <span class="text-primary">Overweight or obesity</span></label>
+                                                        <input type="radio" runat="server" id="rad_nutrition_status_code_o" name="rad_nutrition_status_code" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_nutrition_status_code_o">Thừa cân hoặc béo phì/ <span class="text-primary">Overweight or obesity</span></label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -459,15 +480,15 @@
 
                                                 <div class="col-md-4">
                                                     <div class="custom-control custom-radio">
-                                                        <input type="radio" runat="server" id="radHousing1" name="radHousing" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="radHousing1">Sống một mình/ <span class="text-primary">Lives alone</span></label>
+                                                        <input type="radio" runat="server" id="rad_housing_code_aln" name="rad_housing_code" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_housing_code_aln">Sống một mình/ <span class="text-primary">Lives alone</span></label>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-8">
                                                     <div class="custom-control custom-radio">
-                                                        <input type="radio" runat="server" id="radHousing2" name="radHousing" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="radHousing2">Sống với người thân/ <span class="text-primary">With relatives</span></label>
+                                                        <input type="radio" runat="server" id="rad_housing_code_rel" name="rad_housing_code" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_housing_code_rel">Sống với người thân/ <span class="text-primary">With relatives</span></label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -480,15 +501,15 @@
 
                                                 <div class="col-md-4">
                                                     <div class="custom-control custom-radio">
-                                                        <input type="radio" runat="server" id="radPrior1" name="radPrior" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="radPrior1">Cần được khám ngay/ <span class="text-primary">Immediate consulting requirement</span></label>
+                                                        <input type="radio" runat="server" id="rad_prioritization_code_im" name="rad_prioritization_code" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_prioritization_code_im">Cần được khám ngay/ <span class="text-primary">Immediate consulting requirement</span></label>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-8">
                                                     <div class="custom-control custom-radio">
-                                                        <input type="radio" runat="server" id="radPrior2" name="radPrior" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="radPrior2">Có thể chờ khám trong khoảng thời gian xác định/ <span class="text-primary">Be able to wait for consultation at a specific time</span></label>
+                                                        <input type="radio" runat="server" id="rad_prioritization_code_wa" name="rad_prioritization_code" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_prioritization_code_wa">Có thể chờ khám trong khoảng thời gian xác định/ <span class="text-primary">Be able to wait for consultation at a specific time</span></label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -532,5 +553,7 @@
     <script src="../../scripts/custom.min.js"></script>
     <script src="../../scripts/myScript.js"></script>
     <script src="../../scripts/contenteditable.min.js"></script>
+    <script src="../scripts/checkValidFields.js"></script>
+
 </body>
 </html>

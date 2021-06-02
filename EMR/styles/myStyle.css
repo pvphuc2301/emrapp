@@ -254,7 +254,7 @@
 
     div[contenteditable="false"] {
         /*background-color: rgba(215, 215, 219, 0.2);*/
-        background-color: #eaeaea;
+        /*background-color: #eaeaea;*/
         cursor: default;
         /*border: 1px solid #f2f2f4;*/
         border: none;
@@ -450,4 +450,23 @@
         border-radius: 0;
     }
 
+}
+
+.RadInput_Bootstrap .riRead, .RadInput_Read_Bootstrap {
+    border: none !important;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    background-color: #F5F5F5;
+    height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #ddd;
+    border-radius: 4px;
 }

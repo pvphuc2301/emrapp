@@ -21,16 +21,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UserControl PrintWindow;
-
-        /// <summary>
-        /// Barcode control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UserControl Barcode;
+        protected global::EMR.UserControls.PrintTemplate.PrintWindow PrintWindow;
 
         /// <summary>
         /// form2 control.
@@ -123,22 +114,22 @@ namespace EMR
         protected global::EMR.TextField txt_family;
 
         /// <summary>
-        /// rad_allergy1 control.
+        /// rad_allergy_false control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_allergy1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_allergy_false;
 
         /// <summary>
-        /// rad_allergy2 control.
+        /// rad_allergy_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_allergy2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_allergy_true;
 
         /// <summary>
         /// txt_allergy_note control.
@@ -148,6 +139,24 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.TextField txt_allergy_note;
+
+        /// <summary>
+        /// ExclamationTriangle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UserControl ExclamationTriangle;
+
+        /// <summary>
+        /// btnUpdateVitalSign control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnUpdateVitalSign;
 
         /// <summary>
         /// txt_vs_temperature control.
@@ -321,22 +330,22 @@ namespace EMR
         protected global::EMR.TextField txt_medication;
 
         /// <summary>
-        /// rad_spec_opinion_requested1 control.
+        /// rad_spec_opinion_requested_false control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_spec_opinion_requested1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_spec_opinion_requested_false;
 
         /// <summary>
-        /// rad_spec_opinion_requested2 control.
+        /// rad_spec_opinion_requested_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_spec_opinion_requested2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_spec_opinion_requested_true;
 
         /// <summary>
         /// txt_spec_opinion_requested_note control.
@@ -357,13 +366,13 @@ namespace EMR
         protected global::EMR.TextField txt_specific_education_required;
 
         /// <summary>
-        /// rad_next_appointment1 control.
+        /// rad_next_appointment_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_next_appointment1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_next_appointment_true;
 
         /// <summary>
         /// dtpk_date_next_appointment control.
@@ -375,13 +384,13 @@ namespace EMR
         protected global::Telerik.Web.UI.RadDateTimePicker dtpk_date_next_appointment;
 
         /// <summary>
-        /// rad_next_appointment2 control.
+        /// rad_next_appointment_false control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_next_appointment2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_next_appointment_false;
 
         /// <summary>
         /// txt_next_appointment control.

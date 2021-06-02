@@ -46,7 +46,7 @@ namespace EMR
             lbDoB.Text = DataHelpers.patient.date_of_birth + "| " + DataHelpers.patient.gender_l;
             lbPID.Text = DataHelpers.patient.visible_patient_id;
 
-            lbNgayKhamBenh.Text = DataHelpers.patientVisit.actual_visit_date_time;
+            lbNgayKhamBenh.Text = DataHelpers.patientVisit.actual_visit_date_time.ToString("dd/MM/yyyy");
             lbChiefComplaint.Text = omr1.chief_complain;
 
             // II. Bệnh sử/ Medical History:
@@ -177,8 +177,8 @@ namespace EMR
 
             // 2.Tiền sử bệnh/ Antecedent Medical History:
             txtPersonal.Value = omr1.personal;
-
-            if (bool.Parse(omr1.habits_smoking))
+            
+            if (omr1.habits_smoking)
             {
                 rad_habits_smoking2.Checked = true;
                 txt_habits_smoking_pack.Value = omr1.habits_smoking_pack;
@@ -188,7 +188,7 @@ namespace EMR
                 rad_habits_smoking1.Checked = true;
             }
 
-            if (bool.Parse(omr1.habits_alcohol))
+            if (omr1.habits_alcohol)
             {
                 rad_habits_alcohol2.Checked = true;
                 txt_habits_alcohol_note.Value = omr1.habits_alcohol_note;
@@ -198,7 +198,7 @@ namespace EMR
                 rad_habits_alcohol1.Checked = true;
             }
 
-            if (bool.Parse(omr1.habits_drugs))
+            if (omr1.habits_drugs)
             {
                 rad_habits_drugs2.Checked = true;
                 txt_habits_drugs_note.Value = omr1.habits_drugs_note;
@@ -208,7 +208,7 @@ namespace EMR
                 rad_habits_drugs1.Checked = true;
             }
 
-            if (bool.Parse(omr1.habits_physical_exercise))
+            if (omr1.habits_physical_exercise)
             {
                 rad_habits_physical_exercise2.Checked = true;
                 txt_habits_phy_exer_note.Value = omr1.habits_phy_exer_note;
@@ -219,7 +219,7 @@ namespace EMR
             }
 
             txt_habits_other.Value = omr1.habits_other;
-            if (bool.Parse(omr1.allergy))
+            if (omr1.allergy)
             {
                 radAllergy2.Checked = true;
                 txtAllergyNote.Value = omr1.allergy_note;
@@ -245,7 +245,7 @@ namespace EMR
             txt_pulse.Value = omr1.vs_pulse;
 
             txt_physical_examination.Value = DataHelpers.FormatPhysicalExamination(omr1.physical_examination);
-            if (bool.Parse(omr1.psy_consult_required))
+            if (omr1.psy_consult_required)
             {
                 rad_psy_consult_required2.Checked = true;
             }
@@ -272,7 +272,7 @@ namespace EMR
             // 5.Current medications
             txtMedicine.Value = omr1.medicine;
 
-            if (bool.Parse(omr1.spec_opinion_requested))
+            if (omr1.spec_opinion_requested)
             {
                 rad_spec_opinion_requested2.Checked = true;
                 txt_spec_opinion_requested_note.Value = omr1.spec_opinion_requested_note;

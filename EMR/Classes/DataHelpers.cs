@@ -33,6 +33,7 @@ namespace EMR
 
         public static string FormatPhysicalExamination(string value)
         {
+            if (value == null) return null;
             try
             {
                 string[] temp = value.ToString().Split('•');
