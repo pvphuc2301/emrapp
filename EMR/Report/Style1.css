@@ -1,0 +1,41 @@
+﻿#example .demo-container {
+    min-height: 203px;
+    max-width: 700px;
+    width: 500px;
+}
+
+.demo-content {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+}
+
+.multiPage {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+}
+
+.demo-container .RadTabStrip.rtsHorizontal.rtsBottom {
+    margin-top: -5px;
+}
+
+.demo-container .RadTabStrip.rtsVertical.rtsLeft {
+    margin-right: -10px;
+}
+
+.demo-container .RadTabStrip.rtsVertical.rtsRight {
+    margin-left: -10px;
+}
+
+* html .demo-container div.RadTabStripVertical .rtsLevel {
+    width: 93px;
+}
+
+.demo-container img {
+    display: block;
+}
+
+.demo-container .rtsLevel.rtsCenter {
+    height: 36px;
+}

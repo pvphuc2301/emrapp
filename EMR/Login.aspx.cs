@@ -15,8 +15,6 @@ using System.Security.Cryptography;
 using System.DirectoryServices;
 using EMR;
 
-using Newtonsoft.Json.Linq;
-
 namespace Emr_client.Emr
 {
     public partial class Login : System.Web.UI.Page

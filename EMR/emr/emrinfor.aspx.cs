@@ -180,7 +180,6 @@ namespace EMR
 
                 return myDataTable;
             }
-            return null;
         }
 
         protected void RadGrid2_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
@@ -221,12 +220,39 @@ namespace EMR
                     }
             }
         }
+        protected void RadGrid2_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
+        {
+            if (e.Item is GridDataItem)
+            {
+                if (e.Item is GridDataItem && e.Item.OwnerTableView.Name == "F1")
+                { 
+                    e.Item.BackColor = System.Drawing.Color.White;
+                }
+            }
+        }
+        protected void LinkButton1_Click(object sender, EventArgs e)
+        {
+            GridDataItem item1 = ((sender as LinkButton).NamingContainer as GridDataItem);
+            GridTableView gridTable = RadGrid2.MasterTableView;
 
+            foreach (GridDataItem item in gridTable.Items)
+            {
+                if (item.Expanded)
+                {
+                    foreach (GridTableView childItem in item.ChildItem.NestedTableViews)
+                    {
+                        childItem.BackColor = System.Drawing.Color.Blue; // set this color as per your skin
+                    }
+                }                
+            }
+
+            item1.BackColor = System.Drawing.Color.Red;
+        }
         protected void RadGrid3_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
             if (!IsPostBack)
             {
-                dynamic response = WebHelpers.GetAPI("api/patient/document-type-list/" + varPID);
+                dynamic response = WebHelpers.GetAPI("api/patient/document-type-list/aih/" + varPID);
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
@@ -256,66 +282,6 @@ namespace EMR
                     }
             }
         }
-
-        //protected void RadGrid3_DetailTableDataBind(object source, Telerik.Web.UI.GridDetailTableDataBindEventArgs e)
-        //{
-        //    GridDataItem dataItem = (GridDataItem)e.DetailTableView.ParentItem;
-
-        //    switch (e.DetailTableView.Name)
-        //    {
-        //        case "F1":
-        //            {
-        //                string ParentID1 = Convert.ToString(dataItem.GetDataKeyValue("patient_id"));
-        //                string ParentID = Convert.ToString(dataItem.GetDataKeyValue("document_type_rcd"));
-        //                string apiURL = "api/patient/document-list/" + ParentID1 + "/" + ParentID;
-        //                dynamic response = WebHelpers.GetAPI(apiURL);
-        //                if (response.Status == System.Net.HttpStatusCode.OK)
-        //                {
-        //                    e.DetailTableView.DataSource = WebHelpers.GetJSONToDataTable(response);
-        //                }
-        //                break;
-        //            }
-        //    }
-        //}
-
-        public string GetQuery(bool showDetail, string varID)
-        {
-            string Get_query = ""; //string query_final = "";
-
-            /*
-            string query = "SELECT scnd.visible_patient_id, scnd.person_name_e, scnd.person_name_l, scnd.document_type_rcd,";
-            query += "scnd.doc_type_name_e, scnd.doc_type_name_l, scnd.document_type_rcd ";
-            query += "FROM (SELECT DISTINCT patv.visible_patient_id, patv.display_patient_id AS patient_id, pfn.list_name_e AS person_name_e, ";
-            query += "pfn.list_name_l AS person_name_l, doc.document_id, doc.creation_date, doc.entry_date, doc.document_type_rcd, ";
-            query += "dtr.name_e AS doc_type_name_e, dtr.name_l AS doc_type_name_l, doc.description AS document_description, ";
-            query += "doc.patient_visit_id, doc.organizational_unit_id AS organizational_unit, hsp.name_e AS hospital_name_e, ";
-            query += "hsp.name_l AS hospital_name_l, CASE WHEN dc.document_id IS NULL THEN 0 ELSE 1 END AS related_document_flag ";
-            query += "FROM document_nl_view AS doc INNER JOIN ";
-            query += "hospital_nl_view AS hsp ON hsp.hospital_code = doc.cust_site_code INNER JOIN ";
-            query += "document_type_ref_nl_view AS dtr ON dtr.document_type_rcd = doc.document_type_rcd LEFT JOIN ";
-            query += "document_context_nl_view AS dc ON dc.document_id = doc.document_id INNER JOIN ";
-            query += "document_version_nl_view AS dv ON dv.document_id = doc.document_id AND dv.version_number = doc.latest_version_number ";
-            query += "INNER JOIN document_page_nl_view AS dp ON dp.document_version_id = dv.document_version_id LEFT JOIN ";
-            query += "document_scan_info_nl_view AS dsi ON dsi.document_scan_info_id = dp.document_scan_info_id LEFT JOIN ";
-            query += "primary_patient_view AS patv ON patv.transaction_patient_id = doc.person_id AND patv.hospital_code = 'AIH' LEFT JOIN ";
-            query += "person_formatted_name_iview_nl_view AS pfn ON pfn.person_id = patv.display_patient_id ";
-            query += "WHERE visible_patient_id = '" + varVisibleID + "') as scnd ";
-            query += "GROUP BY scnd.visible_patient_id, scnd.person_name_e, scnd.person_name_l, scnd.document_type_rcd, ";
-            query += "scnd.doc_type_name_e, scnd.doc_type_name_l, scnd.document_type_rcd ";// --AND ecr.name_e LIKE N'Lab%'
-            query += "ORDER BY scnd.doc_type_name_l";
-            */
-            //Get_query = query;
-
-            return Get_query;
-        }
-
-        public string GetQuery_Detail(bool showDetail, string varDocTypeID)
-        {
-            string Get_query = "";
-
-            return Get_query;
-        }
-
         public string ReturnScan_Date(object varDate, object varEvent)
         {
             string tmp = ""; DateTime tmpDate;
@@ -328,13 +294,15 @@ namespace EMR
             return tmp;
         }
 
-        public string Return_OrderURL(object varModelID)
+        public string Return_OrderURL(object varModelID, object varEpmID)
         {
-            string tmp = "labinfor.aspx?pid=" + varPID + "&vid=" + varModelID;
+            string tmp = "../report/labtab.aspx?pid=" + varPID + "&vid=" + varModelID + "&eid=" + varEpmID;
 
             if (Convert.ToString(orderType) == "RAD")
-                tmp = "ImagingDiagnosticReporting.aspx?pid=" + varPID + "&vid=" + varModelID;
-
+            {
+                tmp = "../report/ImagingTab.aspx?pid=" + varPID + "&vid=" + varModelID;
+               // tmp = "ImagingDiagnosticReporting.aspx?pid=" + varPID + "&vid=" + varModelID;
+            }
             return tmp;
         }
 
@@ -364,6 +332,7 @@ namespace EMR
 
         protected void RadGrid1_SelectedIndexChanged(object sender, EventArgs e)
         {
+
         }
 
         protected void btnLogout_ServerClick(object sender, EventArgs e)

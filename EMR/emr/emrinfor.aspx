@@ -72,7 +72,7 @@
 
         
 
-    </style>
+    </style>ipt>
 </head>
 <body onload="bodyOnloadHandler()">
     <form id="form1" runat="server">
@@ -245,15 +245,13 @@
                                                 <Selecting AllowRowSelect="true" />
                                                 <ClientEvents 
                                                      OnColumnCreated="OnGridCreated"
-                                                     OnDataBinding="OnGridCreated"
-
-OnDataSourceResolved="OnGridCreated" />
+                                                     OnDataBinding="OnGridCreated" OnDataSourceResolved="OnGridCreated" />
                                             </ClientSettings>
                                         </telerik:RadGrid>
                                         <%--END Load Left Menu--%>
 
                                         <%--Load LAB and IMG Document--%>
-                                        <telerik:RadGrid ID="RadGrid2" runat="server" Width="100%" OnNeedDataSource="RadGrid2_NeedDataSource"
+                                        <telerik:RadGrid ID="RadGrid2" runat="server" Width="100%" OnNeedDataSource="RadGrid2_NeedDataSource" OnItemDataBound="RadGrid2_ItemDataBound"
                                             ShowHeader="false" OnDetailTableDataBind="RadGrid2_DetailTableDataBind" AllowSorting="true" AllowFilteringByColumn="false"
                                             AutoGenerateColumns="False" AllowMultiRowSelection="False" GridLines="None" EnableLinqExpressions="false" ShowFooter="false">
                                             <MasterTableView DataKeyNames="document_type_rcd" AllowMultiColumnSorting="True" Width="100%" Name="Master" TableLayout="Fixed"
@@ -266,13 +264,18 @@ OnDataSourceResolved="OnGridCreated" />
                                                             <telerik:GridBoundColumn SortExpression="actual_visit_date_time" DataField="actual_visit_date_time" HeaderStyle-Width="99%"
                                                                 ItemStyle-HorizontalAlign="Left" DataFormatString="{0:dd-MMM-yyyy hh:mm}" Visible="false">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridTemplateColumn HeaderStyle-Width="10%" UniqueName="actual_visit_date_time">
+                                                            <telerik:GridTemplateColumn HeaderStyle-Width="10%" UniqueName="actual_visit_date_time" Visible="false">
                                                                 <ItemTemplate>
-                                                                    <asp:HyperLink ID="lbScanLink" runat="server" NavigateUrl='<%# Return_OrderURL(Eval("patient_visit_id")) %>'
+                                                                    <asp:HyperLink ID="lbScanLink" runat="server" NavigateUrl='<%# Return_OrderURL(Eval("patient_visit_id"), Eval("employee_id")) %>'
                                                                         Text='<%# ReturnScan_Date(Eval("actual_visit_date_time"),Eval("caregiver_name_l")) %>' Target="MainContent" SkinID="test">
                                                                     </asp:HyperLink>
                                                                 </ItemTemplate>
                                                             </telerik:GridTemplateColumn>
+                                                            <telerik:GridTemplateColumn>
+                        <ItemTemplate>
+                          <asp:LinkButton ID="LinkButton1" runat="server" onclick="LinkButton1_Click">Link</asp:LinkButton>
+                        </ItemTemplate>
+                    </telerik:GridTemplateColumn>
                                                         </Columns>
                                                     </telerik:GridTableView>
                                                 </DetailTables>

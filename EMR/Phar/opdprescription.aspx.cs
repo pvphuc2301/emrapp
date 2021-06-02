@@ -55,11 +55,12 @@ namespace EMR.Print
         {
             // if (!IsPostBack)
             {
-                string _jsonData = WebHelpers.GetAPI("api/pharmacy/prescription_normal/" + varPharID);
+              // string _jsonData = WebHelpers.GetAPI("api/pharmacy/prescription_normal/" + varPharID);
+                dynamic response = WebHelpers.GetAPI("api/pharmacy/prescription_normal/" + varPharID);
 
-                if (!string.IsNullOrEmpty(_jsonData))
+                if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    RadGrid1.DataSource = WebHelpers.GetJSONToDataTable(_jsonData);
+                    RadGrid1.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
                 }
             }
         }
@@ -68,23 +69,25 @@ namespace EMR.Print
         {
             //    if (!IsPostBack)
             {
-                string _jsonData = WebHelpers.GetAPI("api/pharmacy/prescription_consult/" + varPharID);
+                //string _jsonData = WebHelpers.GetAPI("api/pharmacy/prescription_consult/" + varPharID);
+                dynamic response = WebHelpers.GetAPI("api/pharmacy/prescription_consult/" + varPharID);
 
-                if (!string.IsNullOrEmpty(_jsonData))
+                if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    RadGrid2.DataSource = WebHelpers.GetJSONToDataTable(_jsonData);
+                    RadGrid2.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
                 }
             }
         }
 
         public void LoadPatientInfomation(string varPID)//object sender, EventArgs e
         {
-            string _jsonData = WebHelpers.GetAPI("api/emr/demographic/" + varPID);
+            //string _jsonData = WebHelpers.GetAPI("api/emr/demographic/" + varPID);
+            dynamic response = WebHelpers.GetAPI("api/emr/demographic/" + varPID);
 
-            if (!string.IsNullOrEmpty(_jsonData))
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 string ptAge = "";
-                dynamic data = JObject.Parse(_jsonData);
+                dynamic data = JObject.Parse(response.Data);
 
                 lbFullName.Text = data.first_name_l + " " + data.last_name_l + " (" + data.title_l + ")";
                 if (data.gender_e == "Male")
@@ -121,11 +124,12 @@ namespace EMR.Print
             else if (visitType == "IPD")
                 jsString = "api/emr/vital-sign-ipd/" + varPV_ID;
 
-            string _jsonData = WebHelpers.GetAPI(jsString);
+        //    string _jsonData = WebHelpers.GetAPI(jsString);
+            dynamic response = WebHelpers.GetAPI(jsString);
 
-            if (!string.IsNullOrEmpty(_jsonData))
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic data = JObject.Parse(_jsonData);
+                dynamic data = JObject.Parse(response.Data);
                 lbWeight.Text = data.vs_weight + " kg";
                 lbHeight.Text = data.vs_height + " cm";
             }
@@ -152,11 +156,12 @@ namespace EMR.Print
 
         public void load_visit_infor(string varPV_ID)
         {
-            string _jsonData = WebHelpers.GetAPI("api/emr/patient-visit/" + varPV_ID);
+            //string _jsonData = WebHelpers.GetAPI("api/emr/patient-visit/" + varPV_ID);
+            dynamic response = WebHelpers.GetAPI("api/emr/patient-visit/" + varPV_ID);
 
-            if (!string.IsNullOrEmpty(_jsonData))
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic data = JObject.Parse(_jsonData);
+                dynamic data = JObject.Parse(response.Data);
                 lbVisitDate.Text = data.actual_visit_date_time.ToString("dd-MM-yyyy");
 
                 if (!string.IsNullOrEmpty(lbVisitDate.Text))
@@ -180,11 +185,12 @@ namespace EMR.Print
 
         public void Load_Dianosis(string varPV_ID)//object sender, EventArgs e
         {
-            string _jsonData = WebHelpers.GetAPI("api/emr/diagnosis/" + varPV_ID);
+           // string _jsonData = WebHelpers.GetAPI("api/emr/diagnosis/" + varPV_ID);
+            dynamic response = WebHelpers.GetAPI("api/emr/diagnosis/" + varPV_ID);
 
-            if (!string.IsNullOrEmpty(_jsonData))
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic data = JObject.Parse(_jsonData);
+                dynamic data = JObject.Parse(response.Data);
                 lbDianosis.Text = data.diagnosis;
             }
             if (!string.IsNullOrEmpty(lbDianosis.Text))
@@ -203,11 +209,12 @@ namespace EMR.Print
 
         public void Load_Allergy(string varPV_ID)//object sender, EventArgs e
         {
-            string _jsonData = WebHelpers.GetAPI("api/emr/allergy/" + varPV_ID);
+           // string _jsonData = WebHelpers.GetAPI("api/emr/allergy/" + varPV_ID);
+            dynamic response = WebHelpers.GetAPI("api/emr/allergy/" + varPV_ID);
 
-            if (!string.IsNullOrEmpty(_jsonData))
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic data = JObject.Parse(_jsonData);
+                dynamic data = JObject.Parse(response.Data);
                 lbAllergy.Text = data.allergy;
             }
             else
@@ -217,10 +224,12 @@ namespace EMR.Print
         protected void Load_Diagnosis_List(string varPV_ID, string varVbID)
         {
             DataTable dt = new DataTable();
-            string _jsonData = WebHelpers.GetAPI("api/patient/diagnosis-list/" + varPV_ID);
-            if (!string.IsNullOrEmpty(_jsonData))
+        //    string _jsonData = WebHelpers.GetAPI("api/patient/diagnosis-list/" + varPV_ID);
+            dynamic response = WebHelpers.GetAPI("api/patient/diagnosis-list/" + varPV_ID);
+            
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                dt = WebHelpers.GetJSONToDataTable(_jsonData);// GetDataTableJS(_jsonData);
+                dt = WebHelpers.GetJSONToDataTable(response.Data);// GetDataTableJS(_jsonData);
                 rcbMyList1.DataTextField = "diagnosis";
                 rcbMyList1.DataValueField = "diagnosis";
                 rcbMyList1.DataSource = dt;
