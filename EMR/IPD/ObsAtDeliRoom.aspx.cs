@@ -49,7 +49,7 @@ namespace EMR
 
                 if (oadr.birth_defect != null)
                 {
-                    rad_birth_defect2.Checked = bool.Parse(oadr.birth_defect);
+                    rad_birth_defect2.Checked = oadr.birth_defect;
                     txt_birth_defect_note.Value = oadr.birth_defect_note;
                 }
                 //Neonatal status after birth
@@ -57,7 +57,7 @@ namespace EMR
                 //Intervention and results
                 if (oadr.intervention != null)
                 {
-                    if (bool.Parse(oadr.intervention))
+                    if (oadr.intervention)
                     {
                         rad_birth_defect2.Checked = true;
                         txt_birth_defect_note.Value = oadr.intervention_note;
@@ -71,7 +71,7 @@ namespace EMR
                 //
                 if(oadr.placenta_deli != null)
                 {
-                    if (bool.Parse(oadr.placenta_deli))
+                    if (oadr.placenta_deli)
                     {
                         rad_placenta_deli1.Checked = true;
                     }
@@ -97,7 +97,7 @@ namespace EMR
 
                 if (oadr.birth_defect != null)
                 {
-                    if (bool.Parse(oadr.birth_defect))
+                    if (oadr.birth_defect)
                     {
                         rad_birth_defect1.Checked = true;
                     }
@@ -116,7 +116,7 @@ namespace EMR
 
                 if (oadr.umbilical_coil != null)
                 {
-                    if (bool.Parse(oadr.umbilical_coil))
+                    if (oadr.umbilical_coil)
                     {
                         rad_umbilical_coil2.Checked = true;
                     }
@@ -129,7 +129,7 @@ namespace EMR
 
                 if (oadr.intervention != null)
                 {
-                    if (bool.Parse(oadr.intervention))
+                    if (oadr.intervention)
                     {
                         rad_intervention2.Checked = true;
                         txt_intervention_note.Value = oadr.intervention_note;
@@ -143,7 +143,7 @@ namespace EMR
                 txt_blood_loss.Value = oadr.blood_loss;
                 if (oadr.p_intervention != null)
                 {
-                    if (bool.Parse(oadr.p_intervention))
+                    if (oadr.p_intervention)
                     {
                         rad_p_intervention2.Checked = true;
                         txt_p_intervention_note.Value = oadr.p_intervention_note;
@@ -192,22 +192,22 @@ namespace EMR
                 txt_interven_reason.Value = oadr.interven_reason;
                 if(oadr.pre_intact != null)
                 {
-                    if (bool.Parse(oadr.pre_intact)) { cb_pre_intact.Checked = true; }
+                    if (oadr.pre_intact) { cb_pre_intact.Checked = true; }
                 }
 
                 if (oadr.pre_lacera != null)
                 {
-                    if (bool.Parse(oadr.pre_lacera)) { cb_pre_lacera.Checked = true; txt_pre_lacera_degree.Value = oadr.pre_lacera_degree; }
+                    if (oadr.pre_lacera) { cb_pre_lacera.Checked = true; txt_pre_lacera_degree.Value = oadr.pre_lacera_degree; }
                 }
 
                 if(oadr.pre_episiotomy != null)
                 {
-                    if (bool.Parse(oadr.pre_episiotomy)) { cb_pre_episiotomy.Checked = true; txt_pre_episiotomy_st.Value = oadr.pre_episiotomy_st; }
+                    if (oadr.pre_episiotomy) { cb_pre_episiotomy.Checked = true; txt_pre_episiotomy_st.Value = oadr.pre_episiotomy_st; }
                 }
 
                 if(oadr.cervix_intact != null)
                 {
-                    if (bool.Parse(oadr.cervix_intact)) { rad_cervix_intact1.Checked = true; }
+                    if (oadr.cervix_intact) { rad_cervix_intact1.Checked = true; }
                     else { rad_cervix_intact2.Checked = true; }
                 }
 
@@ -225,13 +225,13 @@ namespace EMR
 
                 if (oadr.sur_incident != null)
                 {
-                    if (bool.Parse(oadr.sur_incident)) { rad_sur_incident2.Checked = true; txt_sur_incident_note.Value = oadr.sur_incident_note; }
+                    if (oadr.sur_incident) { rad_sur_incident2.Checked = true; txt_sur_incident_note.Value = oadr.sur_incident_note; }
                     else { rad_sur_incident1.Checked = true; }
                 }
 
                 if (oadr.sur_complication != null)
                 {
-                    if (bool.Parse(oadr.sur_complication)) { rad_sur_complication2.Checked = true; txt_sur_complication_note.Value = oadr.sur_complication_note; }
+                    if (oadr.sur_complication) { rad_sur_complication2.Checked = true; txt_sur_complication_note.Value = oadr.sur_complication_note; }
                     else { rad_sur_complication1.Checked = true; }
                 }
 

@@ -6,14 +6,11 @@
 <%@ Register Src="~/UserControls/PopupModal.ascx" TagPrefix="webUI" TagName="PopupModal" %>
 <%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="icon" TagName="ExclamationTriangle" %>
 <%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="webUI" TagName="TextField" %>
-<%@ Register Src="~/UserControls/PrintTemplate/PrintWindow.ascx" TagPrefix="webUI" TagName="PrintWindow" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Label.ascx" TagPrefix="webUI" TagName="Label" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Signature.ascx" TagPrefix="webUI" TagName="Signature" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Date.ascx" TagPrefix="webUI" TagName="Date" %>
-
-
-
-
+<%@ Register Src="~/UserControls/PrintTemplate/Line.ascx" TagPrefix="webUI" TagName="Line" %>
+<%@ Register Src="~/UserControls/PrintTemplate/PatientLabel1.ascx" TagPrefix="webUI" TagName="PatientLabel1" %>
 
 <!DOCTYPE html>
 
@@ -25,14 +22,28 @@
     <link href="../../style/style-custom.css" rel="stylesheet" />
 </head>
 <body>
-    <webUI:PrintWindow runat="server" ID="PrintWindow">
-        <PrintTitle>
-            <div style="color: #007297; font-size: 26.6667px;">TÓM TẮT CA BỆNH NGOẠI TRÚ PHỨC TẠP</div>
+    <div class="cssclsNoScreen">
+        <table class="report-container">
+            <thead class="report-header">
+                <tr>
+                    <th class="report-header-cell">
+                        <div class="header-info" style="display: flex; align-items: center;">
+                            <img style="width: 200px" src="../images/AIH_PI_FULL.png" />
+                            <div style="flex-grow: 1; text-align: center;">
+                                <div style="color: #007297; font-size: 26.6667px;">TÓM TẮT CA BỆNH NGOẠI TRÚ PHỨC TẠP</div>
             <div style="color: #e20e5a; font-size: 16.6667px;">SUMMARY OF COMPLEX OUTPATIENT CASES</div>
-        </PrintTitle>
-        <PrintContent>
-
-            <div class="row mb-2">
+                            </div>
+                            <webUI:PatientLabel1 runat="server" id="PatientLabel1" />
+                        </div>
+                        <webUI:Line runat="server" id="Line" />
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="report-content">
+                <tr>
+                    <td class="report-content-cell">
+                        <div class="main" runat="server" id="print_content">
+                            <div class="row mb-2">
                 <div class="col-6">
                     <webUI:Label runat="server" Title="Họ tên bệnh nhân:" SubTitle="Patient's name" />
                     <div class="d-inline-block ml-2 align-top">MAI MAI MAI</div>
@@ -125,9 +136,27 @@
                     </div>
                 </div>
             </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot class="report-footer">
+                <tr>
+                    <td class="report-footer-cell">
+                        <img style="width: 100%" src="../images/bottomline.png" />
+                        <div class="footer-info">
+                            <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
+                            <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>
+                            <div>Tel: 028 3910 9999</div>
+                            <div>www.aih.com.vn</div>
+                        </div>
+                    </td>
+                    <td class="report-footer-space"></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
 
-        </PrintContent>
-    </webUI:PrintWindow>
     <div class="cssclsNoPrint">
     <form id="form1" runat="server">
         <!-- ============================================================== -->

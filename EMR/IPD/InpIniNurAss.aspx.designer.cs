@@ -519,13 +519,13 @@ namespace EMR
         protected global::EMR.TextField txt_admission_reason;
 
         /// <summary>
-        /// txt_previous_admission control.
+        /// lbl_previous_admission control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_previous_admission;
+        protected global::System.Web.UI.WebControls.Label lbl_previous_admission;
 
         /// <summary>
         /// rad_past_med_history_False control.
@@ -3444,13 +3444,22 @@ namespace EMR
         protected global::EMR.icons.Calculator Calculator;
 
         /// <summary>
+        /// lbl_fr_total_score control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_fr_total_score;
+
+        /// <summary>
         /// txt_fr_total_score control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txt_fr_total_score;
+        protected global::System.Web.UI.WebControls.TextBox txt_fr_total_score;
 
         /// <summary>
         /// rad_involvement_True control.
@@ -3777,12 +3786,12 @@ namespace EMR
         protected global::System.Web.UI.UserControl myModal;
 
         /// <summary>
-        /// Button1 control.
+        /// btnDelete control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button btnDelete;
     }
 }

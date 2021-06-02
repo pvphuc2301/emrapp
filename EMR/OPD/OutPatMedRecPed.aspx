@@ -10,6 +10,8 @@
 <%@ Register Src="~/UserControls/PrintTemplate/Date.ascx" TagPrefix="webUI" TagName="Date" %>
 <%@ Register Src="~/UserControls/Barcode.ascx" TagPrefix="webUI" TagName="Barcode" %>
 <%@ Register Src="~/UserControls/AmendReason.ascx" TagPrefix="webUI" TagName="AmendReason" %>
+<%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="webUI" TagName="ExclamationTriangle" %>
+
 
 
 
@@ -197,8 +199,8 @@
                                 <div class="card-body collapse show" id="collapseOne">
                                     <div class="form-body">
                                         <div class="row mb-2">
-                                            <label class="control-label mb-2 font-bold">I. Lý do đến khám/ <span class="text-primary">Chief complaint:</span></label>
                                             <div class="col-md-12">
+                                                <label class="control-label mb-2 font-bold">I. Lý do đến khám/ <span class="text-primary">Chief complaint:</span></label>
                                                 <div class="form-group">
                                                     <webUI:TextField runat="server" id="txt_chief_complaint" />
                                                 </div>
@@ -211,16 +213,16 @@
                                             </div>
                                         </div>
 
-                                        <div class="row mb-2">
+                                        <fieldset class="row mb-2">
+                                            <legend>
+                                                <label class="control-label mb-2">1. Bệnh sử hiện tại/ <span class="text-primary">Current Medical History:</span></label>
+                                            </legend>
                                             <div class="col-md-12">
-                                                <label class="control-label mb-1 font-bold">1. Bệnh sử hiện tại/ <span class="text-primary">Current Medical History:</span></label>
                                                 <div class="form-group">
                                                     <webUI:TextField runat="server" id="txt_medical_history" />
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <div class="row mb-2">
                                             <div class="col-md-12">
                                                 <label class="control-label mb-1">Thuốc đang sử dụng/ <span class="text-primary">Current medications:</span></label>
 
@@ -228,54 +230,40 @@
                                                     <webUI:TextField runat="server" id="txt_current_medication" />
                                                 </div>
                                             </div>
-                                        </div>
+                                        </fieldset>
 
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label class="control-label mb-1 font-bold">2. Tiền sử bệnh/ <span class="text-primary">Antecedent Medical History:</span></label>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-2">
+                                        <fieldset class="row mb-2">
+                                            <legend>
+                                                <label class="control-label mb-2">2. Tiền sử bệnh/ <span class="text-primary">Antecedent Medical History:</span></label>
+                                            </legend>
                                             <div class="col-md-12">
                                                 <label class="control-label">Bản thân/ <span class="text-primary">Personal:</span></label>
                                                 <div class="form-group">
                                                     <webUI:TextField runat="server" id="txt_personal" />
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="row mb-2">
                                             <div class="col-md-12">
                                                 <label class="control-label">Gia đình/ <span class="text-primary">Family:</span></label>
                                                 <div class="form-group">
                                                     <webUI:TextField runat="server" id="txt_family" />
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="row mb-2">
                                             <div class="col-md-12">
-                                                <label class="control-label mb-2">Dị ứng/ <span class="text-primary">Allergy:</span></label>
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" runat="server" id="rad_allergy1" name="rad_allergy" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_allergy1">Không/ <span class="text-primary">No</span></label>
+                                                <label class="control-label mb-2 d-block">Dị ứng/ <span class="text-primary">Allergy:</span></label>
+                                                <div class="custom-control custom-radio ml-2 d-inline-block">
+                                                    <input type="radio" runat="server" id="rad_allergy_false" name="rad_allergy" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="rad_allergy_false">Không/ <span class="text-primary">No</span></label>
                                                 </div>
-                                            </div>
-
-                                            <div class="col-md-8">
-                                                <div class="custom-control custom-radio mb-1">
-                                                    <input disabled-for="allergy_note_field" type="radio" runat="server" id="rad_allergy2" name="rad_allergy" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_allergy2">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
+                                                <div class="custom-control custom-radio ml-2 d-inline-block">
+                                                    <input disabled-for="allergy_note_field" type="radio" runat="server" id="rad_allergy_true" name="rad_allergy" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="rad_allergy_true">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
                                                 </div>
                                                 <div class="form-group allergy_note_field">
                                                     <webUI:TextField runat="server" id="txt_allergy_note" />
                                                 </div>
                                             </div>
-                                        </div>
+                                        </fieldset>
+
 
                                         <div class="row mb-2">
                                             <div class="col-md-12">
@@ -285,14 +273,20 @@
                                             </div>
                                         </div>
 
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label class="control-label mb-2 font-bold">Dấu hiệu sinh tồn/ <span class="text-primary">Vital signs</span></label>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-6 mb-2 d-flex no-block">
+                                         <fieldset class="row mb-2">
+                                            <legend>
+                                                <label class="control-label mb-2">Dấu hiệu sinh tồn/ <span class="text-primary">Vital signs</span></label>
+                                            </legend>
+                                             <div class="col-md-12">
+                                                 <div class="alert alert-warning d-flex no-block">
+                                                     <div class="flex-grow-1">
+                                                         <webUI:ExclamationTriangle runat="server" ID="ExclamationTriangle" Size="28" />
+                                                         Updates are available.
+                                                     </div>
+                                                     <asp:Button runat="server" ID="btnUpdateVitalSign" CssClass="btn btn-sm btn-warning" OnClick="btnUpdateVitalSign_Click" Text="Update" />
+                                                 </div>
+                                             </div>
+                                             <div class="col-sm-6 mb-2 d-flex no-block">
                                                 <label class="control-label w-6 mb-1">Nhiệt độ/ <span class="text-primary">Temperature:</span></label>
                                                 <div class="form-group w-4">
                                                     <input id="txt_vs_temperature" runat="server" class="form-control text-right" />
@@ -306,10 +300,7 @@
                                                     <span class="append">/phút (m)</span>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-6 mb-2 d-flex no-block">
+                                             <div class="col-sm-6 mb-2 d-flex no-block">
                                                 <label class="control-label w-6 mb-1 ">Cân Nặng/ <span class="text-primary">Weight:</span></label>
                                                 <div class="form-group w-4">
                                                     <input id="txt_vs_weight" runat="server" class="form-control text-right" />
@@ -323,10 +314,7 @@
                                                     <span class="append">/phút (m)</span>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-6 mb-2 d-flex no-block">
+                                             <div class="col-sm-6 mb-2 d-flex no-block">
                                                 <label class="control-label w-6 mb-1 ">Chiều cao/ <span class="text-primary">Height:</span></label>
                                                 <div class="form-group w-4">
                                                     <input id="txt_vs_height" maxlength="3" runat="server" class="form-control text-right" />
@@ -340,10 +328,7 @@
                                                     <span class="append">mmHg</span>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-6 mb-2">
+                                             <div class="col-sm-6 mb-2">
                                                 <div class="d-flex no-block">
                                                     <label for="bmi" class="control-label w-6 mb-1">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
                                                     <div class="form-group w-5">
@@ -364,17 +349,14 @@
                                                     <span class="append">%</span>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-6 mb-2 d-flex no-block">
+                                             <div class="col-sm-6 mb-2 d-flex no-block">
                                                 <label for="head-circumference" class="control-label w-6 mb-1">Vòng đầu (trẻ em < 2 tuổi)/ <span class="text-primary">Head Circumference (children < 2 year old) </span></label>
                                                 <div class="form-group w-4">
                                                     <input id="txt_vs_pulse" runat="server" class="form-control text-right" />
                                                     <span class="append">cm</span>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </fieldset>
 
                                         <div class="row mb-2">
                                             <div class="col-md-12">
@@ -474,15 +456,15 @@
 
                                             <div class="col-md-4">
                                                 <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_spec_opinion_requested1" runat="server" name="rad_spec_opinion_requested" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_spec_opinion_requested1">Không/ <span class="text-primary">No</span></label>
+                                                    <input type="radio" id="rad_spec_opinion_requested_false" runat="server" name="rad_spec_opinion_requested" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="rad_spec_opinion_requested_false">Không/ <span class="text-primary">No</span></label>
                                                 </div>
                                             </div>
 
                                             <div class="col-md-8 mb-2">
                                                 <div class="custom-control custom-radio mb-1">
-                                                    <input type="radio" id="rad_spec_opinion_requested2" runat="server" disabled-for="spec_opinion_requested_note_field" name="rad_spec_opinion_requested" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_spec_opinion_requested2">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
+                                                    <input type="radio" id="rad_spec_opinion_requested_true" runat="server" disabled-for="spec_opinion_requested_note_field" name="rad_spec_opinion_requested" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="rad_spec_opinion_requested_true">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
                                                 </div>
                                                 <div class="form-group spec_opinion_requested_note_field">
                                                     <webUI:TextField runat="server" id="txt_spec_opinion_requested_note" />
@@ -510,8 +492,8 @@
                                         <div class="row mb-2">
                                             <div class="col-sm-4">
                                                 <div class="custom-control custom-radio">
-                                                    <input disabled-for="date_next_appointment_field" type="radio" id="rad_next_appointment1" runat="server" name="rad_next_appointment" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_next_appointment1"><span class="text-primary">Calendar</span></label>
+                                                    <input disabled-for="date_next_appointment_field" type="radio" id="rad_next_appointment_true" runat="server" name="rad_next_appointment" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="rad_next_appointment_true"><span class="text-primary">Calendar</span></label>
                                                 </div>
                                                 <div class="form-group date_next_appointment_field">
                                                     <telerik:RadDateTimePicker runat="server" ID="dtpk_date_next_appointment" Width="200px" />
@@ -519,8 +501,8 @@
                                             </div>
                                             <div class="col-sm-8">
                                                 <div class="custom-control custom-radio">
-                                                    <input disabled-for="text_next_appointment_field" type="radio" id="rad_next_appointment2" runat="server" name="rad_next_appointment" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_next_appointment2"><span class="text-primary">Text</span></label>
+                                                    <input disabled-for="text_next_appointment_field" type="radio" id="rad_next_appointment_false" runat="server" name="rad_next_appointment" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="rad_next_appointment_false"><span class="text-primary">Text</span></label>
                                                 </div>
                                                 <div class="form-group text_next_appointment_field">
                                                     <webUI:TextField runat="server" id="txt_next_appointment" />

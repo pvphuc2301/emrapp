@@ -34,67 +34,41 @@ namespace EMR
 
             loadDataToOMRControls(oina);
         }
-        public void loadDataToOMRControls(OutPatientInitialNursingAssement outPatientInitialNursingAssement)
+        public void loadDataToOMRControls(OutPatientInitialNursingAssement oina)
         {
-            txtTemperature.Value = outPatientInitialNursingAssement.vs_temperature;
-            txtHeartRate.Value = outPatientInitialNursingAssement.vs_heart_rate;
-            txtWeight.Value = outPatientInitialNursingAssement.vs_weight;
-            txtRespiratoryRate.Value = outPatientInitialNursingAssement.vs_respiratory_rate;
-            txtHeight.Value = outPatientInitialNursingAssement.vs_height;
-            txtBloodPressure.Value = outPatientInitialNursingAssement.vs_blood_pressure;
-            txtBmi.Value = outPatientInitialNursingAssement.vs_BMI;
-            txtSpo2.Value = outPatientInitialNursingAssement.vs_spO2;
+            txtTemperature.Value = oina.vs_temperature;
+            txtHeartRate.Value = oina.vs_heart_rate;
+            txtWeight.Value = oina.vs_weight;
+            txtRespiratoryRate.Value = oina.vs_respiratory_rate;
+            txtHeight.Value = oina.vs_height;
+            txtBloodPressure.Value = oina.vs_blood_pressure;
+            txtBmi.Value = oina.vs_BMI;
+            txtSpo2.Value = oina.vs_spO2;
 
-            txtPluse.Value = outPatientInitialNursingAssement.pulse;
+            txtPluse.Value = oina.pulse;
 
-            txtChiefComplaint.Value = outPatientInitialNursingAssement.chief_complaint;
+            txtChiefComplaint.Value = oina.chief_complaint;
 
             //allergy
-            if (bool.Parse(outPatientInitialNursingAssement.allergy))
-            {
-                radAllergy2.Checked = true;
-                txtAllergy.Value = outPatientInitialNursingAssement.allergy_note;
-            }
-            else
-            {
-                radAllergy1.Checked = true;
-            }
+            BindRadioButton("rad_allergy_" + oina.allergy);
+            txt_allergy_note.Value = oina.allergy_note;
 
             // Mental Status
-            if (bool.Parse(outPatientInitialNursingAssement.mental_status))
-            {
-                radMentalStatus1.Checked = true;
-                txtMentalStatus.Value = outPatientInitialNursingAssement.mental_status_note;
-            }
-            else
-            {
-                radMentalStatus2.Checked = true;
-                txtMentalStatus.Value = outPatientInitialNursingAssement.mental_status_note;
-            }
+            BindRadioButton("rad_mental_status_" + oina.mental_status);
+            txt_mental_status_note.Value = oina.mental_status_note;
 
             // Fall risk MORSE SCALE
-            if (bool.Parse(outPatientInitialNursingAssement.fall_risk))
-            {
-                radFrms2.Checked = true;
-                txtFrms.Value = outPatientInitialNursingAssement.fall_risk_assistance;
-            }
-            else
-            {
-                radFrms1.Checked = true;
-            }
+            BindRadioButton("rad_fall_risk_" + oina.fall_risk);
+            txt_fall_risk_assistance.Value = oina.fall_risk_assistance;
 
             //mental status
-            txtPainCore.Value = outPatientInitialNursingAssement.paint_score_code;
+            //txt_paint_score_code.Value = oina.paint_score_code;
 
-            if (outPatientInitialNursingAssement.nutrition_status_code == "N") { radNss2.Checked = true; }
-            else if (outPatientInitialNursingAssement.nutrition_status_code == "O") { radNss3.Checked = true; }
-            else if (outPatientInitialNursingAssement.nutrition_status_code == "U") { radNss1.Checked = true; }
+            BindRadioButton("rad_nutrition_status_code_" + oina.nutrition_status_code);
 
-            if (outPatientInitialNursingAssement.housing_code == "ALN") { radHousing1.Checked = true; }
-            else if (outPatientInitialNursingAssement.housing_code == "REL") { radHousing2.Checked = true; }
+            BindRadioButton("rad_housing_code_" + oina.housing_code);
 
-            if (outPatientInitialNursingAssement.prioritization_code == "IM") { radPrior1.Checked = true; }
-            else if (outPatientInitialNursingAssement.prioritization_code == "WA") { radPrior2.Checked = true; }
+            BindRadioButton("rad_prioritization_code_" + oina.prioritization_code);
 
             btnCancel.Visible = false;
             txt_amendReason.Visible = false;
@@ -132,32 +106,58 @@ namespace EMR
 
             txtChiefComplaint.Disabled = disabled;
 
-            radAllergy1.Disabled = disabled;
-            radAllergy2.Disabled = disabled;
-            txtAllergy.Disabled = disabled;
+            rad_allergy_true.Disabled = disabled;
+            rad_allergy_false.Disabled = disabled;
+            txt_allergy_note.Disabled = disabled;
 
-            radMentalStatus1.Disabled = disabled;
-            radMentalStatus2.Disabled = disabled;
-            txtMentalStatus.Disabled = disabled;
+            rad_mental_status_true.Disabled = disabled;
+            rad_mental_status_false.Disabled = disabled;
+            txt_mental_status_note.Disabled = disabled;
 
-            txtPainCore.Disabled = disabled;
+            //txt_paint_score_code.Disabled = disabled;
 
-            radFrms1.Disabled = disabled;
-            radFrms2.Disabled = disabled;
-            txtFrms.Disabled = disabled;
+            rad_fall_risk_false.Disabled = disabled;
+            rad_fall_risk_true.Disabled = disabled;
+            txt_fall_risk_assistance.Disabled = disabled;
 
-            radNss1.Disabled = disabled;
-            radNss2.Disabled = disabled;
-            radNss3.Disabled = disabled;
+            DisabledRadioButton("rad_nutrition_status_code_", OutPatientInitialNursingAssement.NUTRITION_STATUS_CODE, disabled);
 
-            radHousing1.Disabled = disabled;
-            radHousing2.Disabled = disabled;
+            DisabledRadioButton("rad_housing_code_", OutPatientInitialNursingAssement.HOUSING_CODE, disabled);
 
-            radPrior1.Disabled = disabled;
-            radPrior2.Disabled = disabled;
+            DisabledRadioButton("rad_prioritization_code_", OutPatientInitialNursingAssement.PRIORITIZATION_CODE, disabled);
 
         }
+        public void BindRadioButton(dynamic value)
+        {
+            if (FindControl(value) != null)
+            {
+                ((HtmlInputRadioButton)FindControl(value)).Checked = true;
+            }
+        }
+        private dynamic GetRadioButton(string radio_name)
+        {
+            if (((HtmlInputRadioButton)FindControl(radio_name + "True")).Checked)
+            {
+                return true;
+            }
+            else if (((HtmlInputRadioButton)FindControl(radio_name + "False")).Checked)
+            {
+                return false;
+            }
+            else { return null; }
+        }
 
+        private void DisabledRadioButton(string radioButtonName, Dictionary<string, string> value, bool disabled)
+        {
+            foreach (KeyValuePair<string, string> code in value)
+            {
+                try
+                {
+                    ((HtmlInputRadioButton)FindControl(radioButtonName + code.Key.ToLower())).Disabled = disabled;
+                }
+                catch (Exception ex) { }
+            }
+        }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
             txt_amendReason.Visible = true;
@@ -173,63 +173,70 @@ namespace EMR
 
         protected void btnComplete_Click(object sender, EventArgs e)
         {
-            oina = new OutPatientInitialNursingAssement(DataHelpers.varDocId);
-            oina.status = DocumentStatus.FINAL;
+            string errors = checkValidField();
 
-            oina.vs_temperature = txtTemperature.Value;
-            oina.vs_heart_rate = txtHeartRate.Value;
-            oina.vs_weight = txtWeight.Value;
-            oina.vs_respiratory_rate = txtRespiratoryRate.Value;
-            oina.vs_height = txtHeight.Value;
-            oina.vs_blood_pressure = txtBloodPressure.Value;
-            oina.vs_BMI = txtBmi.Value;
-            oina.vs_spO2 = txtSpo2.Value;
-            oina.pulse = txtPluse.Value;
-            oina.chief_complaint = txtChiefComplaint.Value;
-                
-            oina.allergy = radAllergy2.Checked;
-            if(radAllergy2.Checked) { oina.allergy_note = txtAllergy.Value; }
-                
-            oina.mental_status = radMentalStatus1.Checked;
-            if (radMentalStatus2.Checked) { oina.mental_status_note = txtMentalStatus.Value; }
-
-            oina.paint_score_code = txtPainCore.Value;
-            //oina.amend_reason = txtAmendReason.Value;
-
-            oina.fall_risk = radFrms2.Checked; 
-            if(radFrms2.Checked) { oina.fall_risk_assistance = txtFrms.Value; }
-
-            if (radNss1.Checked) { oina.nutrition_status_code = "U"; }
-            else if (radNss2.Checked) { oina.nutrition_status_code = "N"; }
-            else if (radNss3.Checked) { oina.nutrition_status_code = "O"; }
-
-            if (radHousing1.Checked) { oina.housing_code = "ALN"; }
-            else { oina.housing_code = "REL"; }
-                
-            if (radPrior1.Checked) { oina.prioritization_code = "IM"; }
-            else if (radPrior2.Checked) { oina.prioritization_code = "WA"; }
-
-            oina.assessment_date_time = DataHelpers.ConvertSQLDateTime(DateTime.Parse(oina.assessment_date_time));
-
-            oina.user_name = (string)Session["UserID"];
-
-            if (oina.Update()[0] == WebHelpers.ResponseStatus.OK)
+            if (string.IsNullOrEmpty(errors))
             {
-                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                message.Load(Page, Message.CODE.MS001, Message.TYPE.SUCCESS);
+                oina = new OutPatientInitialNursingAssement(DataHelpers.varDocId);
+                oina.status = DocumentStatus.FINAL;
 
-                Initial();
+                oina.user_name = (string)Session["UserID"];
+
+                UpdateData(oina);
+            }
+            else
+            {
+                RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
             }
         }
 
+        private string GetRadioButton(string radio_name, Dictionary<string, string> value)
+        {
+            foreach (KeyValuePair<string, string> code in value)
+            {
+                try
+                {
+                    if (((HtmlInputRadioButton)FindControl(radio_name + code.Key)).Checked)
+                    {
+                        return code.Key;
+                        break;
+                    }
+                }
+                catch (Exception ex) { }
+            }
+            return null;
+        }
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            oina = new OutPatientInitialNursingAssement(DataHelpers.varDocId);
+            string errors = checkValidField();
 
-            oina.status = DocumentStatus.DRAFT;
-            
+            if (string.IsNullOrEmpty(errors))
+            {
+                oina = new OutPatientInitialNursingAssement(DataHelpers.varDocId);
+
+                oina.user_name = (string)Session["UserID"];
+                oina.status = DocumentStatus.DRAFT;
+
+                UpdateData(oina);
+            }
+            else
+            {
+                RequiredFieldValidator.Value = errors;
+
+                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
+                message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
+            }
+        }
+
+        private string checkValidField()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void UpdateData(OutPatientInitialNursingAssement oina)
+        {
+            oina.amend_reason = txt_amendReason.Value;
             oina.vs_temperature = txtTemperature.Value;
-            
             oina.vs_heart_rate = txtHeartRate.Value;
             oina.vs_weight = txtWeight.Value;
             oina.vs_respiratory_rate = txtRespiratoryRate.Value;
@@ -238,42 +245,43 @@ namespace EMR
             oina.vs_BMI = txtBmi.Value;
             oina.vs_spO2 = txtSpo2.Value;
             oina.pulse = txtPluse.Value;
-
             oina.chief_complaint = txtChiefComplaint.Value;
-            oina.allergy = radAllergy2.Checked;
-            oina.mental_status = radMentalStatus1.Checked;
-            oina.fall_risk = radFrms2.Checked;
-            oina.paint_score_code = txtPainCore.Value;
 
-            oina.allergy = radAllergy2.Checked;
-            if (radAllergy2.Checked) { oina.allergy_note = txtAllergy.Value; }
+            oina.allergy = GetRadioButton("rad_allergy_");
+            oina.allergy_note = txt_allergy_note.Value;
 
-            oina.mental_status = radMentalStatus1.Checked;
-            if (radMentalStatus2.Checked) { oina.mental_status_note = txtMentalStatus.Value; }
+            oina.mental_status = GetRadioButton("rad_mental_status_");
+            oina.mental_status_note = txt_mental_status_note.Value;
 
-            oina.fall_risk = radFrms2.Checked;
-            if (radFrms2.Checked) { oina.fall_risk_assistance = txtFrms.Value; }
+            //oina.paint_score_code = txt_paint_score_code.Value;
 
-            if (radNss1.Checked) { oina.nutrition_status_code = "U"; }
-            else if (radNss2.Checked) { oina.nutrition_status_code = "N"; }
-            else if (radNss3.Checked) { oina.nutrition_status_code = "O"; }
+            //oina.amend_reason = txtAmendReason.Value;
+            oina.fall_risk = GetRadioButton("rad_fall_risk_");
 
-            if (radHousing1.Checked) { oina.housing_code = "ALN"; }
-            else { oina.housing_code = "REL"; }
+            oina.fall_risk_assistance = txt_fall_risk_assistance.Value;
 
-            if (radPrior1.Checked) { oina.prioritization_code = "IM"; }
-            else if (radPrior2.Checked) { oina.prioritization_code = "WA"; }
+            GetRadioButton("rad_nutrition_status_code_", OutPatientInitialNursingAssement.NUTRITION_STATUS_CODE);
+
+            GetRadioButton("rad_housing_code_", OutPatientInitialNursingAssement.HOUSING_CODE);
+
+            oina.prioritization_code = GetRadioButton("rad_prioritization_code_", OutPatientInitialNursingAssement.PRIORITIZATION_CODE);
+            if (oina.prioritization_code != null) oina.prioritization_description = OutPatientInitialNursingAssement.PRIORITIZATION_CODE[oina.prioritization_code];
 
             oina.assessment_date_time = DataHelpers.ConvertSQLDateTime(DateTime.Parse(oina.assessment_date_time));
 
             oina.user_name = (string)Session["UserID"];
 
-            if(oina.Update()[0] == WebHelpers.ResponseStatus.OK)
+            if (oina.Update()[0].Status == System.Net.HttpStatusCode.OK)
             {
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                message.Load(Page, Message.CODE.MS001, Message.TYPE.SUCCESS);
+                message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
 
                 Initial();
+            }
+            else
+            {
+                Session["PageNotFound"] = oina.Update()[0];
+                Response.Redirect("../Other/PageNotFound.aspx", false);
             }
         }
 

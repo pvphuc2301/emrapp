@@ -225,7 +225,7 @@ namespace EMR
             if (e.Item is GridDataItem)
             {
                 if (e.Item is GridDataItem && e.Item.OwnerTableView.Name == "F1")
-                { 
+                {
                     e.Item.BackColor = System.Drawing.Color.White;
                 }
             }
@@ -243,7 +243,7 @@ namespace EMR
                     {
                         childItem.BackColor = System.Drawing.Color.Blue; // set this color as per your skin
                     }
-                }                
+                }
             }
 
             item1.BackColor = System.Drawing.Color.Red;
@@ -252,7 +252,7 @@ namespace EMR
         {
             if (!IsPostBack)
             {
-                dynamic response = WebHelpers.GetAPI("api/patient/document-type-list/aih/" + varPID);
+                dynamic response = WebHelpers.GetAPI("api/patient/document-type-list/" + Session["company_code"] + "/" + varPID);
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
@@ -332,7 +332,6 @@ namespace EMR
 
         protected void RadGrid1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
         }
 
         protected void btnLogout_ServerClick(object sender, EventArgs e)

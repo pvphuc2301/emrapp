@@ -51,117 +51,25 @@ namespace EMR
             public static class U { public static string code = "U"; public static string desc = "Không đáp ứng/U- Unresponsive"; }
             public static class V { public static string code = "V"; public static string desc = "Lời nói/V-Verbal"; }
         }
-        public static Dictionary<string, string> GeneralAppearance = new Dictionary<string, string>()
-        {
-            { "P", "Hồng hào/ Pink" },
-            { "T", "Tái/ Pallor" },
-            { "C", "Tím/ Cyanosis" },
-        };
-        public static Dictionary<string, string> SkinIntegrity = new Dictionary<string, string>()
-        {
-            { "A", "Trầy xước/Abrasion (A)" },
-            { "B", "Bỏng/Burn (B)" },
-            { "D", "Biến dạng/Deformity (D)" },
-            { "H", "Loét/ Ulceration (U)" },
-            { "L", "Rách da/Laceration (L)" },
-            { "S", "Bong gân Sprain/ Căng cơ Strain (S)" },
-        };
-        public static Dictionary<string, string> ComDisSrc = new Dictionary<string, string>()
-        {
-            { "F", "Sốt/Fever" },
-            { "R", "Nổi mẩn/Rash" },
-            { "T", "Đi khỏi Việt Nam trong vòng 15 ngày gần đây/Travel outside Vietnam in recent 15 days" },
-            { "S", "Đau họng/ Sore throat" },
-            { "C", "Ho/Cough" },
-        };
-        public static Dictionary<string, string> DischargePlan = new Dictionary<string, string>()
-        {
-            { "RA", "Cần trợ  giúp sinh hoạt hàng ngày/ Require assistance with daily living" },
-            { "LA", "Sống một mình/ Live alone" },
-            { "HF", "Nguy cơ ngã cao/ High falling risk" },
-        };
-        public static Dictionary<string, string> TriageCode = new Dictionary<string, string>()
-        {
-            { "1", "1-Hồi sức/ Resuscitation" },
-            { "2", "2-Cấp cứu/ Emergent" },
-            { "3", "3-Khẩn trương/ Urgent" },
-            { "4", "4- Trì hoãn/ Less urgent" },
-            { "5", "5- Không cấp cứu/ Nonurgent" },
-        };
-        public static Dictionary<string, string> Respiratory = new Dictionary<string, string>()
-        {
-            { "REG", "Thở đều/Regular" },
-            { "NRE", "Thở không đều/Regular" },
-            { "TAC", "Thở nhanh/Tachypneic" },
-            { "COU", "Ho/Cough" },
-            { "SPU", "Có đàm/Sputum" },
-            { "LAB", "Thở gắng sức/Labored" },
-            { "SHA", "Thở nông/Shallow" },
-            { "RET", "Co kéo/Retractions" },
-        };
-        public static Dictionary<string, string> disAfterDischarge = new Dictionary<string, string>()
-        {
-            { "H", "Nhà riêng/ Private home" },
-            { "O", "Cơ sở y tế khác/Other healthcare facility" },
-        };
-        public static Dictionary<string, string> ArrivalMode = new Dictionary<string, string>()
-        {
-            { "WHE", "Xe lăn/Wheel chair" },
-            { "WAL", "Tự đến/Walk-in" },
-            { "AMB", "Xe cấp cứu/Ambulance" },
-        };
-        public static Dictionary<string, string> DischargeOption = new Dictionary<string, string>()
-        {
-            { "H", "Về nhà/ Home" },
-            { "A", "Tự ý/ AMA" },
-            { "D", "Tử vong/ Dead" },
-        };
+        
+        
+        
+        
+        
+        
+       
+        
+        
 }
 
     public static class EMRTable
     {
-        public static Dictionary<string, string> assessmentSystem = new Dictionary<string, string>()
-        {
-            { "id", "" },
-            { "time", "" },
-            { "rrlp", "" },
-            { "o2sat", "" },
-            { "hr", "" },
-            { "bp", "" },
-            { "temp", "" },
-            { "gcs", "" },
-            { "pain", "" },
-            { "ats", "" },
-            { "intervention", "" },
-            { "initial", "" },
-        };
-        public static Dictionary<string, string> directMedication = new Dictionary<string, string>()
-        {
-            { "id", "" },
-            { "dir_med_time", "" },
-            { "dir_medication", "" },
-            { "dir_med_dose", "" },
-            { "dir_med_route", "" },
-            { "dir_med_rate", "" },
-            { "dir_med_doctor", "" },
-            { "dir_med_comment", "" },
-            { "dir_med_time2", "" },
-            { "dir_med_initial", "" },
-        };
-        public static Dictionary<string, string> nursingNote = new Dictionary<string, string>()
-        {
-            { "id", "" },
-            { "date_time", "" },
-            { "patient_condition", "" },
-            { "signature_name", "" },
-        };
-        
     }
 
     public partial class Ena
     {
         #region Properties
-        private string api = "api/ena/";
+        private string api = "api/ena";
         public dynamic document_id { get; set; }
         public dynamic triage_time { get; set; }
         public dynamic triage_area { get; set; }
@@ -255,15 +163,114 @@ namespace EMR
         public dynamic status { get; set; }
         public dynamic user_name { get; set; }
         public dynamic skin_anno_data { get; set; }
-        
+
 
         #endregion
-
+        public static Dictionary<string, string> DIRECT_MEDICATION_COL = new Dictionary<string, string>()
+        {
+            { "id", "" },
+            { "dir_med_time", "" },
+            { "dir_medication", "" },
+            { "dir_med_dose", "" },
+            { "dir_med_route", "" },
+            { "dir_med_rate", "" },
+            { "dir_med_doctor", "" },
+            { "dir_med_comment", "" },
+            { "dir_med_time2", "" },
+            { "dir_med_initial", "" },
+        };
+        public static Dictionary<string, string> NURSING_NOTE_COL = new Dictionary<string, string>()
+        {
+            { "id", "" },
+            { "date_time", "" },
+            { "patient_condition", "" },
+            { "signature_name", "" },
+        };
+        public static Dictionary<string, string> ASSESSMENT_SYSTEM_COL = new Dictionary<string, string>()
+        {
+            { "id", "" },
+            { "time", "" },
+            { "rrlp", "" },
+            { "o2sat", "" },
+            { "hr", "" },
+            { "bp", "" },
+            { "temp", "" },
+            { "gcs", "" },
+            { "pain", "" },
+            { "ats", "" },
+            { "intervention", "" },
+            { "initial", "" },
+        };
+        public static Dictionary<string, string> ARRIVAL_MODE_CODE = new Dictionary<string, string>()
+        {
+            { "WHE", "Xe lăn/Wheel chair" },
+            { "WAL", "Tự đến/Walk-in" },
+            { "AMB", "Xe cấp cứu/Ambulance" },
+        };
+        public static Dictionary<string, string> TRIAGE_CODE = new Dictionary<string, string>()
+        {
+            { "1", "1-Hồi sức/ Resuscitation" },
+            { "2", "2-Cấp cứu/ Emergent" },
+            { "3", "3-Khẩn trương/ Urgent" },
+            { "4", "4- Trì hoãn/ Less urgent" },
+            { "5", "5- Không cấp cứu/ Nonurgent" },
+        };
+        public static Dictionary<string, string> SKIN_INTEGRITY_CODE = new Dictionary<string, string>()
+        {
+            { "A", "Trầy xước/Abrasion (A)" },
+            { "B", "Bỏng/Burn (B)" },
+            { "D", "Biến dạng/Deformity (D)" },
+            { "H", "Loét/ Ulceration (U)" },
+            { "L", "Rách da/Laceration (L)" },
+            { "S", "Bong gân Sprain/ Căng cơ Strain (S)" },
+        };
+        public static Dictionary<string, string> COM_DIS_SRC_CODE = new Dictionary<string, string>()
+        {
+            { "F", "Sốt/Fever" },
+            { "R", "Nổi mẩn/Rash" },
+            { "T", "Đi khỏi Việt Nam trong vòng 15 ngày gần đây/Travel outside Vietnam in recent 15 days" },
+            { "S", "Đau họng/ Sore throat" },
+            { "C", "Ho/Cough" },
+        };
+        public static Dictionary<string, string> DISCHARGE_PLAN_CODE = new Dictionary<string, string>()
+        {
+            { "RA", "Cần trợ  giúp sinh hoạt hàng ngày/ Require assistance with daily living" },
+            { "LA", "Sống một mình/ Live alone" },
+            { "HF", "Nguy cơ ngã cao/ High falling risk" },
+        };
+        public static Dictionary<string, string> DIS_AFTER_DISCHARGE_CODE = new Dictionary<string, string>()
+        {
+            { "H", "Nhà riêng/ Private home" },
+            { "O", "Cơ sở y tế khác/Other healthcare facility" },
+        };
+        public static Dictionary<string, string> GENERAL_APPEARANCE_CODE = new Dictionary<string, string>()
+        {
+            { "P", "Hồng hào/ Pink" },
+            { "T", "Tái/ Pallor" },
+            { "C", "Tím/ Cyanosis" },
+        };
+        public static Dictionary<string, string> RESPIRATORY_CODE = new Dictionary<string, string>()
+        {
+            { "REG", "Thở đều/Regular" },
+            { "NRE", "Thở không đều/Regular" },
+            { "TAC", "Thở nhanh/Tachypneic" },
+            { "COU", "Ho/Cough" },
+            { "SPU", "Có đàm/Sputum" },
+            { "LAB", "Thở gắng sức/Labored" },
+            { "SHA", "Thở nông/Shallow" },
+            { "RET", "Co kéo/Retractions" },
+        };
+        public static Dictionary<string, string> DISCHARGE_OPTION_CODE = new Dictionary<string, string>()
+        {
+            { "H", "Về nhà/ Home" },
+            { "A", "Tự ý/ AMA" },
+            { "D", "Tử vong/ Dead" },
+        };
         Ena() { }
 
         public Ena(dynamic document_id)
         {
-            dynamic response = WebHelpers.GetAPI(api + document_id);
+            dynamic response = WebHelpers.GetAPI(api + "/" + document_id);
 
             if(response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -470,19 +477,16 @@ namespace EMR
             this.skin_anno_data = skin_anno_data;
     }
 
-        public string[] Update()
+        public dynamic[] Update()
         {
-            string[] message = new string[2];
+            dynamic[] message = new dynamic[2];
 
             dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
             message[0] = response1;
-
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
-                message[1] = response2;
+                message[1] = WebHelpers.PostAPI(api + "/log/" + this.document_id);
             }
-
             return message;
         }
 
@@ -1344,50 +1348,41 @@ namespace EMR
 
                 WebHelpers.BindingDatafield(db, this);
             }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine(response.Status);
+                System.Diagnostics.Debug.WriteLine(response.Data);
+            }
         }
 
         #region METHODS
-        public string[] Update()
+        public bool Update()
         {
-            string[] message = new string[2];
-
             dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
-            message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
                 dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
-                message[1] = response2;
+                return true;
             }
-
-            return message;
+            else
+            {
+                System.Diagnostics.Debug.WriteLine(response1.Status);
+                System.Diagnostics.Debug.WriteLine(response1.Data);
+                return false;
+            }
         }
-        public static string[] Delete(string userName, string docid)
+        public static bool Delete(string userName, string docid)
         {
-            string[] message = new string[2];
-            try
+            dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
-
-                message[0] = response;
-
-                if (response.Status == System.Net.HttpStatusCode.OK)
-                {
-                    dynamic response1 = WebHelpers.PostAPI(api + "/log/" + docid);
-                    message[1] = response1;
-                }
-
-                return message;
+                dynamic response1 = WebHelpers.PostAPI(api + "/log/" + docid);
+                return true;
             }
-            catch (Exception ex)
-            {
-                dynamic response = new System.Dynamic.ExpandoObject();
-                response.Status = "Error";
-                response.Data = ex.Message;
 
-                message[0] = response;
-                return message;
-            }
+            return false;
         }
         #endregion
     }
@@ -2523,44 +2518,41 @@ namespace EMR
             {
                 DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
                 WebHelpers.BindingDatafield(db, this);
-            } else if(response.Status == System.Net.HttpStatusCode.NotFound)
+            } 
+            else if(response.Status == System.Net.HttpStatusCode.NotFound)
             {
 
             }
         }
 
         #region METHODS
-        public string[] Update()
+        public dynamic Update()
         {
-            string[] message = new string[2];
-
             dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
-            message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
                 dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
-                message[1] = response2;
             }
 
-            return message;
+            return response1;
         }
-        public static string[] Delete(string userName, string docid)
+        public static dynamic Delete(string userName, string docid)
         {
-            string[] message = new string[2];
+            //string[] message = new string[2];
             try
             {
                 dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
 
-                message[0] = response;
+                //message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
                     dynamic response1 = WebHelpers.PostAPI(api + "/log/" + docid);
-                    message[1] = response1;
+                    //message[1] = response1;
                 }
 
-                return message;
+                return response;
             }
             catch (Exception ex)
             {
@@ -2568,8 +2560,8 @@ namespace EMR
                 response.Status = "Error";
                 response.Data = ex.Message;
 
-                message[0] = response;
-                return message;
+                //message[0] = response;
+                return response;
             }
         }
         #endregion
@@ -3176,6 +3168,7 @@ namespace EMR
     public class OutPatientInitialNursingAssement
     {
         #region Properties
+        public static string api = "api/oina";
         public dynamic vs_temperature { get; set; }
         public dynamic user_name { get; set; }
         public dynamic vs_heart_rate { get; set; }
@@ -3229,6 +3222,34 @@ namespace EMR
         public dynamic document_type_rcd { get; set; }
         public dynamic amend_reason { get; set; }
         #endregion
+
+        public static Dictionary<string, string> NUTRITION_STATUS_CODE = new Dictionary<string, string>()
+        {
+            { "U", "Suy dinh dưỡng/ Undernutrition" },
+            { "O", "Thừa cân hoặc béo phì/ Overweight or obesity" },
+            { "N", "Bình thường/ Normal" },
+        };
+        //public static Dictionary<string, string> PAINT_SCORE_CODE = new Dictionary<string, string>()
+        //{
+        //    { "0", "Không đau/ No hurt" },
+        //    { "1", "Đau rất ít/ Little hurt" },
+        //    { "2", "Đau nhẹ/ Slight hurt" },
+        //    { "3", "Đau vừa/ Considerable hurt" },
+        //    { "4", "Đau nhiều/ Serious hurt" },
+        //    { "5", "Rất đau/ Worst hurt" },
+        //};
+
+        public static Dictionary<string, string> HOUSING_CODE = new Dictionary<string, string>()
+        {
+            { "REL", "Sống với người thân/ With relatives" },
+            { "ALN", "Sống một mình/ Lives alone" },
+        };
+
+        public static Dictionary<string, string> PRIORITIZATION_CODE = new Dictionary<string, string>()
+        {
+            { "IM", "Cần được khám ngay/ Immediate consulting requirement" },
+            { "WA", "Có thể chờ khám trong khoảng thời gian xác định/ Be able to wait for consultation at a specific time" },
+        };
 
         /// <summary>
         /// Load document
@@ -3349,21 +3370,21 @@ namespace EMR
         /// returns: an array of messages
         /// </summary>
         /// <returns></returns>
-        public string[] Update()
+        /// 
+
+        public dynamic[] Update()
         {
-            string[] message = new string[2];
+            dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI("api/oina/edit", this);
+            dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
             message[0] = response1;
-
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI("api/oina/log/" + this.document_id);
-                message[1] = response2;
+                message[1] = WebHelpers.PostAPI(api + "/log/" + this.document_id);
             }
-
             return message;
         }
+
         public static string[] Delete(string userName, string docid)
         {
             string[] message = new string[2];
@@ -3375,7 +3396,7 @@ namespace EMR
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI("api/oina/log/" + docid);
+                    dynamic response1 = WebHelpers.PostAPI(api + "/log/" + docid);
                     message[1] = response1;
                 }
 
@@ -3478,10 +3499,25 @@ namespace EMR
 
 
         //
-        public string[] Update()
+        public dynamic[] Update()
         {
-            string[] message = new string[2];
+            dynamic[] message = new dynamic[2];
 
+            dynamic response1 = WebHelpers.PostAPI("api/pomr/edit", this);
+            message[0] = response1;
+
+            if (response1.Status == System.Net.HttpStatusCode.OK)
+            {
+                dynamic response2 = WebHelpers.PostAPI("api/pomr/log/" + this.document_id);
+                message[1] = response2;
+            }
+
+            return message;
+        }
+
+        public dynamic[] UpdateVitalSign()
+        {
+            dynamic[] message = new dynamic[2];
             dynamic response1 = WebHelpers.PostAPI("api/pomr/edit", this);
             message[0] = response1;
 

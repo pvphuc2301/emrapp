@@ -24,6 +24,24 @@ namespace Emr_client.Emr
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
+        /// ScriptManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
+
+        /// <summary>
+        /// up control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel up;
+
+        /// <summary>
         /// UserName control.
         /// </summary>
         /// <remarks>
@@ -42,6 +60,15 @@ namespace Emr_client.Emr
         protected global::System.Web.UI.HtmlControls.HtmlInputPassword Password;
 
         /// <summary>
+        /// Eye control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.Eye Eye;
+
+        /// <summary>
         /// lblInfo control.
         /// </summary>
         /// <remarks>
@@ -58,5 +85,14 @@ namespace Emr_client.Emr
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlButton btnLogin;
+
+        /// <summary>
+        /// Spinner1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.Spinner1 Spinner1;
     }
 }
