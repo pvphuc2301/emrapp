@@ -479,7 +479,7 @@ namespace EMR
             }
             catch (WebException ex)
             {
-                result.Status = ex.Status;
+                result.Status = System.Net.HttpStatusCode.NotFound;
                 //result.Status = ((dynamic)ex.Response).StatusCode;
 
                 result.Data = ex.Message;

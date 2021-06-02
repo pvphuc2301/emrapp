@@ -258,11 +258,12 @@ namespace EMR
         }
         public void LoadPatientInfomation(string varPID)//object sender, EventArgs e
         {
-            string _jsonData = WebHelpers.GetAPI("api/emr/demographic/" + varPID);
+           // string _jsonData = WebHelpers.GetAPI("api/emr/demographic/" + varPID);
+            dynamic response = WebHelpers.GetAPI("api/emr/demographic/" + varPID);
 
-            if (!string.IsNullOrEmpty(_jsonData))
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic data = JObject.Parse(_jsonData);
+                dynamic data = JObject.Parse(response.Data);
 
                 lbFullName.Text = data.first_name_l + " " + data.last_name_l + " (" + data.title_l + ")";
                 if (data.gender_e == "Male")

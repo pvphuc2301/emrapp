@@ -204,6 +204,7 @@
     <Content Include="Dashboard.aspx" />
     <Content Include="emr\emrinfor.aspx" />
     <Content Include="emr\emrview.aspx" />
+    <Content Include="Report\ImagingTab.aspx" />
     <Content Include="emr\labinfor.aspx" />
     <Content Include="ER\EmerMedRec.aspx" />
     <Content Include="ER\EmerTriaAndNurAssRec.aspx" />
@@ -266,6 +267,12 @@
     <Content Include="emr\ImagingDiagnosticReporting.aspx" />
     <Content Include="Print\PrtOPMedRec.aspx" />
     <Content Include="Print\PrtOutPatMedRec.aspx" />
+    <Content Include="Report\ImagingReport.ascx" />
+    <Content Include="Report\LabReport.ascx" />
+    <Content Include="Report\LabTab.aspx" />
+    <Content Include="Report\Style1.css" />
+    <Content Include="Report\TabStyle.css" />
+    <Content Include="Report\TestTasb.aspx" />
     <Content Include="scripts\contenteditable.min.js" />
     <Content Include="scripts\dynamicModal.js" />
     <Content Include="scripts\dynamicModal.min.js" />
@@ -358,6 +365,13 @@
     </Compile>
     <Compile Include="emr\emrview.aspx.designer.cs">
       <DependentUpon>emrview.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ImagingTab.aspx.cs">
+      <DependentUpon>ImagingTab.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\ImagingTab.aspx.designer.cs">
+      <DependentUpon>ImagingTab.aspx</DependentUpon>
     </Compile>
     <Compile Include="emr\labinfor.aspx.cs">
       <DependentUpon>labinfor.aspx</DependentUpon>
@@ -689,6 +703,34 @@
     </Compile>
     <Compile Include="emr\ImagingDiagnosticReporting.aspx.designer.cs">
       <DependentUpon>ImagingDiagnosticReporting.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ImagingReport.ascx.cs">
+      <DependentUpon>ImagingReport.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\ImagingReport.ascx.designer.cs">
+      <DependentUpon>ImagingReport.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\LabReport.ascx.cs">
+      <DependentUpon>LabReport.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\LabReport.ascx.designer.cs">
+      <DependentUpon>LabReport.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\LabTab.aspx.cs">
+      <DependentUpon>LabTab.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\LabTab.aspx.designer.cs">
+      <DependentUpon>LabTab.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\TestTasb.aspx.cs">
+      <DependentUpon>TestTasb.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\TestTasb.aspx.designer.cs">
+      <DependentUpon>TestTasb.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Alert.ascx.cs">
       <DependentUpon>Alert.ascx</DependentUpon>
