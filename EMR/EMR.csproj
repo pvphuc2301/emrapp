@@ -171,8 +171,6 @@
     <Content Include="App_Data\RadCaptcha\Y.wav" />
     <Content Include="App_Data\RadCaptcha\Z.wav" />
     <Content Include="assets\node_modules\html5-editor\bootstrap-wysihtml5.css" />
-    <Content Include="assets\node_modules\html5-editor\bootstrap-wysihtml5.js" />
-    <Content Include="assets\node_modules\html5-editor\wysihtml5-0.3.0.js" />
     <Content Include="BarcodeLib.dll" />
     <Content Include="bin\BarcodeLib.dll" />
     <Content Include="bin\EMR.dll" />
@@ -259,7 +257,6 @@
     <Content Include="Other\PageNotFound.aspx" />
     <Content Include="Other\PageWidthAjax.aspx" />
     <Content Include="Other\Paint.aspx" />
-    <Content Include="Other\patientapp.aspx" />
     <Content Include="Other\PatientSummary.aspx" />
     <Content Include="Other\sendlogview.aspx" />
     <Content Include="Pages\ExceptionPage.aspx" />
@@ -685,13 +682,6 @@
     <Compile Include="Other\Paint.aspx.designer.cs">
       <DependentUpon>Paint.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Other\patientapp.aspx.cs">
-      <DependentUpon>patientapp.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Other\patientapp.aspx.designer.cs">
-      <DependentUpon>patientapp.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Other\PatientSummary.aspx.cs">
       <DependentUpon>PatientSummary.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -981,7 +971,6 @@
   <ItemGroup>
     <Folder Include="DataEntities\" />
     <Folder Include="obj\Debug\TempPE\" />
-    <Folder Include="Report\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
@@ -1009,7 +998,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

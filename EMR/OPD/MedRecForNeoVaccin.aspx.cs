@@ -11,7 +11,8 @@ namespace EMR.OPD
 {
     public partial class MedRecForNeoVaccin : System.Web.UI.Page
     {
-        Mrnv mrnv;
+        private Mrnv mrnv;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -42,7 +43,6 @@ namespace EMR.OPD
                 txt_family.Value = mrnv.family;
                 if (mrnv.allergy != null)
                 {
-
                     ((HtmlInputRadioButton)FindControl("rad_allergy_" + Convert.ToBoolean(mrnv.allergy))).Checked = true;
                 }
                 txt_allergy_note.Value = mrnv.allergy_text;
@@ -72,18 +72,15 @@ namespace EMR.OPD
                 txt_associated_conditions.Value = mrnv.associated_conditions;
                 if (mrnv.treatment_code != null)
                 {
-
                     ((HtmlInputRadioButton)FindControl("rad_treatment_code_" + mrnv.treatment_code)).Checked = true;
                 }
                 if (mrnv.spec_opinion_req != null)
                 {
-
                     ((HtmlInputRadioButton)FindControl("rad_spec_opinion_req_" + Convert.ToBoolean(mrnv.spec_opinion_req))).Checked = true;
                 }
                 txt_spec_opinion_req_text.Value = mrnv.spec_opinion_req_text;
                 txt_pecific_edu_req.Value = mrnv.pecific_edu_req;
                 txt_next_appointment.Value = mrnv.next_appointment;
-
 
                 if (mrnv.status == DocumentStatus.FINAL)
                 {
@@ -97,19 +94,17 @@ namespace EMR.OPD
 
                     DisabledControl(true);
                 }
-
                 else if (mrnv.status == DocumentStatus.DRAFT)
                 {
                     btnAmend.Visible = false;
                     btnPrint.Visible = false;
                 }
-
             }
             catch (Exception ex)
             {
-
             }
         }
+
         public void UpdateData(Mrnv mrnv)
         {
             try
@@ -232,7 +227,6 @@ namespace EMR.OPD
             txt_spec_opinion_req_text.Disabled = disabled;
             txt_pecific_edu_req.Disabled = disabled;
             txt_next_appointment.Disabled = disabled;
-
         }
 
         private void _BindGridView(GridView gridView, DataTable dataSource)
@@ -251,11 +245,10 @@ namespace EMR.OPD
 
         protected void btn_grid_appointedVaccine_add_Click(object sender, EventArgs e)
         {
-
         }
+
         protected void btn_grid_appointedVaccine_Del_Click(object sender, EventArgs e)
         {
-
         }
 
         protected void btnAmend_Click(object sender, EventArgs e)
@@ -270,31 +263,28 @@ namespace EMR.OPD
 
             DisabledControl(false);
         }
+
         protected void btnSave_Click(object sender, EventArgs e)
         {
             mrnv = new Mrnv(DataHelpers.varDocId);
             mrnv.user_name = (string)Session["UserID"];
             mrnv.status = DocumentStatus.DRAFT;
             UpdateData(mrnv);
-
         }
+
         protected void btnComplete_Click(object sender, EventArgs e)
         {
-
             mrnv = new Mrnv(DataHelpers.varDocId);
             mrnv.status = DocumentStatus.FINAL;
             mrnv.user_name = (string)Session["UserID"];
             UpdateData(mrnv);
-
-
         }
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            if (IniMedAssForNeoInpatient.Delete((string)Session["UserID"])[0] == WebHelpers.ResponseStatus.OK)
-            {
-
-            }
+            //if (IniMedAssForNeoInpatient.Delete((string)Session["UserID"])[0] == WebHelpers.ResponseStatus.OK)
+            //{
+            //}
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)
@@ -310,8 +300,8 @@ namespace EMR.OPD
 
         protected void btnPrint_Click(object sender, EventArgs e)
         {
-
         }
+
         protected void gridappointed_vaccine_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -326,11 +316,12 @@ namespace EMR.OPD
                 }
             }
         }
+
         protected void gridappointed_vaccine_RowUpdating(object sender, GridViewUpdateEventArgs e)
 
         {
-
         }
+
         protected void btn_grid_appointed_vaccine_add_Click(object sender, EventArgs e)
         {
             try
@@ -371,13 +362,14 @@ namespace EMR.OPD
             }
             catch (Exception ex)
             {
-
             }
         }
+
         protected void grid_appointed_vaccine_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             DeleteGridViewRow((GridView)sender, e.RowIndex);
         }
+
         private void DeleteGridViewRow(GridView gridView, int rowIndex)
         {
             DataTable dt = ViewState[gridView.ID] as DataTable;
@@ -385,6 +377,7 @@ namespace EMR.OPD
 
             _BindGridView(gridView, dt);
         }
+
         protected void DisabledGridView(GridView gridView, bool disabled)
         {
             try
@@ -400,19 +393,13 @@ namespace EMR.OPD
                                 TextField text2 = gridView.Rows[r].Cells[i].Controls[1] as TextField;
                                 text2.Disabled = disabled;
                             }
-
-
-
                         }
                         catch (Exception ex) { }
                     }
                 }
                 ((Button)FindControl("btn_" + gridView.ID + "_add")).Visible = !disabled;
-
-
             }
             catch (Exception ex) { }
-
         }
     }
 }
