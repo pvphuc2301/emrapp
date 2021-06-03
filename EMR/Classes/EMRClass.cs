@@ -3419,6 +3419,7 @@ namespace EMR
     public class POMR
     {
         #region Properties
+        public static string api = "api/pomr";
         public dynamic chief_complaint { get; set; }
         public dynamic user_name { get; set; }
         public dynamic medical_history { get; set; }
@@ -3515,19 +3516,8 @@ namespace EMR
             return message;
         }
 
-        public dynamic[] UpdateVitalSign()
-        {
-            dynamic[] message = new dynamic[2];
-            dynamic response1 = WebHelpers.PostAPI("api/pomr/edit", this);
-            message[0] = response1;
-
-            if (response1.Status == System.Net.HttpStatusCode.OK)
-            {
-                dynamic response2 = WebHelpers.PostAPI("api/pomr/log/" + this.document_id);
-                message[1] = response2;
-            }
-
-            return message;
+        public static dynamic UpdateVitalSign(string document_id) { 
+            return WebHelpers.PostAPI(api + "/update-vital-sign/" + document_id);
         }
     }
 
