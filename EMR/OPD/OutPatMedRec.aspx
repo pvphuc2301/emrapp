@@ -340,12 +340,7 @@
         </table>
     </div>
     
-
     <div class="cssclsNoPrint">
-        <!-- ============================================================== -->
-        <!-- Main wrapper - style you can find in pages.scss -->
-        <!-- ============================================================== -->
-
         <form method="post" action="#" id="form2" runat="server">
             <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
             <div class="scroll-sidebar h-100 w-100">

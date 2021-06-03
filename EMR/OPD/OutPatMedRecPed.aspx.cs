@@ -27,10 +27,10 @@ namespace EMR
 
             pomr = new POMR(DataHelpers.varDocId);
 
-            loadDataToOMRControls(pomr);
+            loadDataToControls(pomr);
         }
 
-        public void loadDataToOMRControls(POMR pomr)
+        public void loadDataToControls(POMR pomr)
         {
             try
             {
@@ -81,6 +81,8 @@ namespace EMR
 
                 if (pomr.status == DocumentStatus.FINAL)
                 {
+                    loadDataToPrint(pomr);
+
                     btnComplete.Visible = false;
                     btnSave.Visible = false;
                     btnDelete.Visible = false;
@@ -96,7 +98,21 @@ namespace EMR
                     btnAmend.Visible = false;
                     btnPrint.Visible = false;
                 }
+
+                
             } catch (Exception ex) { }
+        }
+
+        private void loadDataToPrint(POMR pomr)
+        {
+            prt_day_of_visit.Text = "";
+            prt_chief_complaint.Text = pomr.chief_complaint;
+            prt_medical_history.Text = pomr.medical_history;
+            prt_personal.Text = pomr.personal;
+            prt_family.Text = pomr.family;
+            prt_current_medication.Text = pomr.current_medication;
+            prt_physical_examination.Text = pomr.physical_examination;
+
         }
 
         private void BindRadioButton(string value)
@@ -260,7 +276,10 @@ namespace EMR
 
         protected void btnUpdateVitalSign_Click(object sender, EventArgs e)
         {
-
+            if (POMR.UpdateVitalSign(Request.QueryString["docId"]).Status == System.Net.HttpStatusCode.OK)
+            {
+                
+            }
         }
     }
 }
