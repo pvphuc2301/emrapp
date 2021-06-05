@@ -26,7 +26,8 @@
             </div>
         </div>
     </telerik:RadAjaxPanel>
-    
+    <asp:image ID="Image1" runat="server" Height="15" Width="15" />  
+        <asp:image ID="Image2" runat="server" Height="15" Width="15" />  
 
     </form>
 </body>

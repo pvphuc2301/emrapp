@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 using Newtonsoft.Json.Linq;
 using System.Data;
-
+using System.Data.SqlClient;
 
 namespace EMR.Report
 {
@@ -15,27 +15,85 @@ namespace EMR.Report
     {
         public string[] lab_report_id = new string[20];// { "ID1", "ID1", "ID1", "ID1", "ID1", "ID1", "ID1", "ID1", "ID1", "ID1", "ID1", "ID1", "ID1", "ID1", "ID1", "ID1", "ID1", "ID1", "ID1", "ID1" };
         public string[] lab_report_name = new string[20];//{ "N1", "N1", "N1", "N1", "N1", "N1", "N1", "N1", "N1", "N1", "N1", "N1", "N1", "N1", "N1", "N1", "N1", "N1", "N1", "N1" };
-        public int count_report = 0;
+        public int count_report = 0; public string ConnStringHIS = "";
         protected void Page_Init(object sender, System.EventArgs e)
         {
-            if (!Page.IsPostBack)
-            {
-                for (int i = 0; i < 20; i++)
-                {
-                    lab_report_id[i] = "ID1";
-                    lab_report_id[i] = "N1";
-                }
-                get_report_id();
+            ConnClass ConnStr = new ConnClass();           
+            ConnStringHIS = ConnStr.SQL_HISConnString;
+            FetchImage();
 
-                for (int i = 0; i < count_report; i++)
+        //if (!Page.IsPostBack)
+        //{
+        //    for (int i = 0; i < 20; i++)
+        //    {
+        //        lab_report_id[i] = "ID1";
+        //        lab_report_id[i] = "N1";
+        //    }
+        //    get_report_id();
+
+            //    for (int i = 0; i < count_report; i++)
+            //    {
+            //        AddTab(lab_report_name[i], lab_report_id[i]);
+            //        if (i == 0)
+            //        {
+            //            AddPageView(RadTabStrip1.FindTabByValue(lab_report_id[i]));// FindTabByText(lab_report_name[i])
+            //        }
+            //    }
+            //}
+        }
+        public DataTable GetDataTable(string query, string varConn)
+        {
+            //if (Convert.ToString(Session["company_code"]) == "AIH")
+            {
+                SqlConnection conn = new SqlConnection(varConn);
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = new SqlCommand(query, conn);
+
+                DataTable myDataTable = new DataTable();
+
+                conn.Open();
+                try
                 {
-                    AddTab(lab_report_name[i], lab_report_id[i]);
-                    if (i == 0)
-                    {
-                        AddPageView(RadTabStrip1.FindTabByValue(lab_report_id[i]));// FindTabByText(lab_report_name[i])
-                    }
+                    adapter.Fill(myDataTable);
                 }
+                finally
+                {
+                    conn.Close();
+                }
+
+                return myDataTable;
             }
+        }
+        protected void FetchImage()
+        {
+            string query = "SELECT  phu.visible_patient_id,pif.name_e,pif.icon_image ";
+            query += "FROM person_indicator_nl_view AS pin ";
+            query += "INNER JOIN person_indicator_ref_nl_view AS pif ON pif.person_indicator_rcd = pin.person_indicator_rcd ";
+            query += "INNER JOIN dbo.patient_hospital_usage_nl_view phu ON phu.patient_id = pin.person_id ";
+            query += "WHERE phu.visible_patient_id = '900000011' AND pin.active_flag <> 0 ";
+            query += "ORDER BY pif.seq_num ";
+
+            DataTable mydataTable = new DataTable();int i = 0;
+            mydataTable = GetDataTable(query, ConnStringHIS);
+
+            foreach (DataRow row in mydataTable.Rows)
+            {
+                byte[] bytes = (byte[])row["icon_image"]; //GetDataTable(query, ConnStringHIS).Rows[1]["icon_image"];
+                string base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
+                if (i == 0)
+                {
+                    Image1.ImageUrl = "data:image/png;base64," + base64String;
+                    Image1.ToolTip = row.Field<string>("name_e");
+                }
+                else if (i == 1)
+                {
+                    Image2.ImageUrl = "data:image/png;base64," + base64String;
+                    Image2.ToolTip = row.Field<string>("name_e");
+                    //       mydataTable.Columns.Add(new DataColumn("ID" + i, typeof(string)));
+                }
+                i += 1;
+            }
+
         }
         public void get_report_id()
         {

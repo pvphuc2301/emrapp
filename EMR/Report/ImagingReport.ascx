@@ -13,36 +13,36 @@
                                                 </tr>
                                                 <tr>
                                                     <td style="width: 194px;">Mã bệnh nhân/ <span class="text-primary">PID:</span></td>
-                                                    <td style="width: 156px;">900000488</td>
+                                                    <td style="width: 156px;"><asp:Label ID="lbPID" runat="server"></asp:Label></td>
                                                     <td style="width: 186px;"><span class="text-primary">RPID:</span></td>
-                                                    <td style="width: 144px;">AIH1900822101</td>
+                                                    <td style="width: 144px;"><asp:Label ID="lbRadRequestNo" runat="server"></asp:Label></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Họ Tên/ <span class="text-primary">Patient Name:</span></td>
-                                                    <td colspan="3">MAI MAI MAI</td>
+                                                    <td colspan="3"><asp:Label ID="lbFullName" runat="server"></asp:Label></td>
                                                     
                                                 </tr>
                                                 <tr>
                                                     <td>Giới tính/ <span class="text-primary">Gender:</span></td>
-                                                    <td>Male</td>
+                                                    <td><asp:Label ID="lbSex" runat="server"></asp:Label></td>
                                                     <td>Ngày sinh / <span class="text-primary">DOB:</span></td>
-                                                    <td>04/10/1960</td>
+                                                    <td><asp:Label ID="lbBirthday" runat="server"></asp:Label></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Ngày chỉ định/<span class="text-primary">Req.  Date:</span></td>
-                                                    <td>28/03/2019 4:31 CH</td>
+                                                    <td><asp:Label ID="lbOrderDate" runat="server"></asp:Label></td>
                                                     <td>Hoàn thành / <span class="text-primary">Completed:</span></td>
-                                                    <td>28/03/2019 4:33 CH</td>
+                                                    <td><asp:Label ID="lbCompletedDate" runat="server"></asp:Label></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Loại khám/ <span class="text-primary">Visit Type:</span></td>
-                                                    <td><span class="text-primary">OPD Visit / 5547</td>
+                                                    <td><span class="text-primary"><asp:Label ID="lbVisitType" runat="server"></asp:Label></span></td>
                                                     <td>BS chỉ định / <span class="text-primary">Ref. Physician:</span></td>
-                                                    <td>No Title HIS User Test</td>
+                                                    <td><asp:Label ID="lbOrderDr" runat="server"></asp:Label></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Tên chỉ định/ <span class="text-primary">Study:</span></td>
-                                                    <td colspan="3">2D Ultrasound (OBS & GYN)</td>
+                                                    <td colspan="3"><asp:Label ID="lbOrderName" runat="server"></asp:Label></td>
                                                 </tr>
 
                                             </table>

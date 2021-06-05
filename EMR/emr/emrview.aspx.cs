@@ -111,17 +111,16 @@ namespace EMR
         }
         public void viewImg(string varImgFile)
         {
-            string DefaultImagePath = HttpContext.Current.Server.MapPath("../images/Pic1.jpg");
+            byte[] imageArray = System.IO.File.ReadAllBytes(varImgFile);//DefaultImagePath
+            string base64ImageRepresentation = Convert.ToBase64String(imageArray);
+            Image1.ImageUrl = "data:image/png;base64," + base64ImageRepresentation;
 
+            //  byte[] bytes = Convert.FromBase64String(base64ImageRepresentation);
+            // string DefaultImagePath = HttpContext.Current.Server.MapPath("../images/Pic1.jpg");
             //byte[] bytes = (byte[])DefaultImagePath;
             //string b64img = Convert.ToBase64String(bytes);
             //Image1.ImageUrl = "data:image/jpeg;base64," + b64img;
 
-            byte[] imageArray = System.IO.File.ReadAllBytes(varImgFile);//DefaultImagePath
-            string base64ImageRepresentation = Convert.ToBase64String(imageArray);
-            byte[] bytes = Convert.FromBase64String(base64ImageRepresentation);
-
-            Image1.ImageUrl = "data:image/png;base64," + base64ImageRepresentation;
         }
     }
 }

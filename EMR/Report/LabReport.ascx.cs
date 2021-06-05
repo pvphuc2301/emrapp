@@ -12,11 +12,36 @@ namespace EMR.Report
 {
     public partial class LabReport : System.Web.UI.UserControl
     {
-        public string varReportID = "";
+        public string varPvID = ""; string varPID = "";string varTabValue = "";string varFrDate = ""; string frDate = ""; string toDate = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             RadGrid1.MasterTableView.HierarchyDefaultExpanded = true;
-            varReportID = (string)Session["labid"]; //Request.QueryString["radid"];
+            //  varPvID = (string)Session["pvid"]; 
+            varPvID = Request.QueryString["vid"];
+            varPID = Request.QueryString["pid"];
+            varTabValue = (string)Session["cat"];
+            varFrDate = Request.QueryString["frd"];                       
+            {                
+                if (varTabValue == "All")
+                {
+                //    if (!IsPostBack)
+                    {
+                        if (string.IsNullOrEmpty(varFrDate))
+                        {
+                            from_date.SelectedDate = DateTime.Today;
+                            to_date.SelectedDate = DateTime.Today;
+                        }
+                        else if (string.IsNullOrEmpty(Convert.ToString(from_date.SelectedDate)))
+                        {
+                            from_date.SelectedDate = Convert.ToDateTime(varFrDate);
+                            to_date.SelectedDate = Convert.ToDateTime(varFrDate);
+                        }                        
+                    }
+                    SelectDate.Visible = true;
+                    //if (string.IsNullOrEmpty(Convert.ToString(from_date.SelectedDate)))
+                    
+                }
+            }
         }
         protected void RadGrid1_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
@@ -49,28 +74,37 @@ namespace EMR.Report
         }
         protected void RadGrid1_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
-            if (!string.IsNullOrEmpty(varReportID))
-            {
-                dynamic response = WebHelpers.GetAPI("api/patient/menu-lab-orderable/" + varReportID);//f076907a-ecf6-475a-4315-0000219f339b
+            if (!string.IsNullOrEmpty(varTabValue))
+            {                
+                string api_url = "api/patient/menu-lab-orderable/" + varPID + "/" + varPvID + "/" + varTabValue;
+                if (varTabValue == "All")
+                {
+                    frDate = from_date.SelectedDate.Value.Year.ToString() + "-" + from_date.SelectedDate.Value.Month.ToString() + "-" + from_date.SelectedDate.Value.Day.ToString();
+                    toDate = to_date.SelectedDate.Value.Year.ToString() + "-" + to_date.SelectedDate.Value.Month.ToString() + "-" + to_date.SelectedDate.Value.Day.ToString();
+                    api_url = "api/patient/menu-lab-orderable_date/" + varPID + "/" + frDate + "/" + toDate;
+                }
+                dynamic response = WebHelpers.GetAPI(api_url);//f076907a-ecf6-475a-4315-0000219f339b
                 //dynamic jsonObject;
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
                     RadGrid1.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
                 }
-                Session["labid"] = "";
+                if (varTabValue != "All")
+                    Session["cat"] = "";
             }
         }
         protected void RadGrid1_DetailTableDataBind(object source, Telerik.Web.UI.GridDetailTableDataBindEventArgs e)
         {
-            string ParentID; 
+            string sID; string oID;
             GridDataItem dataItem = (GridDataItem)e.DetailTableView.ParentItem;
 
             switch (e.DetailTableView.Name)
             {
                 case "F1":
                     {
-                        ParentID = Convert.ToString(dataItem.GetDataKeyValue("lab_orderable_rid"));
-                        dynamic response = WebHelpers.GetAPI("api/patient/menu-lab-result-sid/" + varReportID + "/" + ParentID);
+                        sID = Convert.ToString(dataItem.GetDataKeyValue("specimen_id"));
+                        oID = Convert.ToString(dataItem.GetDataKeyValue("lab_orderable_rid"));
+                        dynamic response = WebHelpers.GetAPI("api/patient/menu-lab-result/" + sID + "/" + oID);
                         if (response.Status == System.Net.HttpStatusCode.OK)
                         {
                             e.DetailTableView.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
@@ -90,6 +124,10 @@ namespace EMR.Report
             {
                 return false;
             }
+        }
+        protected void btnComplete_Click(object sender, EventArgs e)
+        {            
+            RadGrid1.Rebind();
         }
     }
 }

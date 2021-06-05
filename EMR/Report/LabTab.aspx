@@ -38,16 +38,28 @@
             }
             /* ]]> */
         </script>
-        <telerik:RadTabStrip RenderMode="Lightweight" OnClientTabSelecting="onTabSelecting" ID="RadTabStrip1" SelectedIndex="0" 
+        <telerik:RadTabStrip RenderMode="Lightweight" runat="server" ID="RadTabStrip1"  MultiPageID="RadMultiPage1" SelectedIndex="0" Skin="Silk" 
+            OnClientTabSelecting="onTabSelecting" OnTabClick="RadTabStrip1_TabClick">
+                <Tabs>
+                    <telerik:RadTab Text="BIOCHEMISTRY" Value="BIOCHEMISTRY" Width="200px"></telerik:RadTab>
+                    <telerik:RadTab Text="HEMATOLOGY" Value="HEMATOLOGY" Width="200px"></telerik:RadTab>
+                    <telerik:RadTab Text="MICROBIOLOGY" Value="MICROBIOLOGY" Width="200px"></telerik:RadTab>
+                    <telerik:RadTab Text="All" Value="All" Width="200px"></telerik:RadTab>
+                </Tabs>
+            </telerik:RadTabStrip>
+        <telerik:RadMultiPage runat="server" ID="RadMultiPage1" SelectedIndex="0" OnPageViewCreated="RadMultiPage1_PageViewCreated">
+            
+        </telerik:RadMultiPage>
+
+       <%-- <telerik:RadTabStrip RenderMode="Lightweight" OnClientTabSelecting="onTabSelecting" ID="RadTabStrip1" SelectedIndex="0" 
             runat="server" MultiPageID="RadMultiPage1" Width="100%" Skin="Silk" Orientation="HorizontalTop"
             OnTabClick="RadTabStrip1_TabClick" ScrollChildren="true">
         </telerik:RadTabStrip>
         <div class="recipeImage qsf-ib">
         <telerik:RadMultiPage ID="RadMultiPage1" runat="server" SelectedIndex="0" 
             OnPageViewCreated="RadMultiPage1_PageViewCreated" ScrollBars="Auto">
-        </telerik:RadMultiPage>
-            </div>
-    </div>  
+        </telerik:RadMultiPage>--%>
+            </div>  
     </form>
 </body>
 </html>

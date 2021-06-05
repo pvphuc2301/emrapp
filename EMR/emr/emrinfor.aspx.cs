@@ -31,7 +31,7 @@ namespace EMR
             //else { Session["PageOpenEMR"] = true; }
 
             varPID = Request.QueryString["pid"]; // "97052A99-0134-11EB-B34D-D89EF37D444C";//  "C248E0FC-39B6-493F-A197-6CF2A96B37AD";//
-            varVPID = Request.QueryString["vpid"]; //"3afc144a-86ca-11eb-9dfe-dca2660bc0a2";// ValueHiddenField.Value;
+            varVPID = Request.QueryString["vbid"]; //"3afc144a-86ca-11eb-9dfe-dca2660bc0a2";// ValueHiddenField.Value;
             //varVisibleID = Request.QueryString["vbid"]; //"900031267";
             //LoadPatientInfomation();
 
@@ -44,9 +44,12 @@ namespace EMR
 
             lblUserName.InnerText = UserID;
             //
+            ConnClass ConnStr = new ConnClass();
+            ConnStringHIS = ConnStr.SQL_HISConnString;
+            ConnStringEMR = ConnStr.SQL_EMRConnString;
 
             if (!IsPostBack)
-            {
+            {                
                 DataHelpers.LoadPatientInfomation(varPID);
                 DateTime dob;
 
@@ -55,17 +58,92 @@ namespace EMR
                 lblPatientInfo.InnerHtml = "<strong>" + DataHelpers.patient.first_name_e + " " + DataHelpers.patient.last_name_e + " (" + DataHelpers.patient.title_e + ")</strong>, <small>DOB</small> " + dob.ToString("dd/MM/yyyy") + " (" + DataHelpers.CalculateAge(dob) + "y) <small>SEX</small> " + DataHelpers.patient.gender_l + " <small>PID</small> <strong>" + DataHelpers.patient.visible_patient_id + "</strong>";
 
                 MainContent.ContentUrl = string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", varPID, varVPID);
+
+                FetchImage();
             }
 
             //form ký sinh trùng
-            //if (Convert.ToString(Session["company_code"]) == "AIH")
+            //if (Convert.ToString(Session["company_code"]) == "AIH")            
+        }
+        protected void FetchImage()
+        {
+            string apiURL = "api/patient/patient-indicator/" + varPID;
+            dynamic response = WebHelpers.GetAPI(apiURL); int i = 0;
+
+            DataTable mydataTable = new DataTable();
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                ConnClass ConnStr = new ConnClass();
-                ConnStringHIS = ConnStr.SQL_HISConnString;
-                ConnStringEMR = ConnStr.SQL_EMRConnString;
+                mydataTable = WebHelpers.GetJSONToDataTable(response.Data);
+                foreach (DataRow row in mydataTable.Rows)
+                {
+               //     byte[] bytes = row.Field<byte[]>("icon_image");// (byte[])row["icon_image"]; //GetDataTable(query, ConnStringHIS).Rows[1]["icon_image"];
+                    string base64String = row.Field<string>("icon_image");// Convert.ToBase64String(bytes, 0, bytes.Length);
+                    if (i == 0)
+                    {
+                        Image1.ImageUrl = base64String;
+                        Image1.ToolTip = row.Field<string>("name_e");
+                        Image1.Visible = true;
+                    }
+                    else if (i == 1)
+                    {
+                        Image2.ImageUrl = base64String;
+                        Image2.ToolTip = row.Field<string>("name_e");
+                        Image2.Visible = true;
+                        //       mydataTable.Columns.Add(new DataColumn("ID" + i, typeof(string)));
+                    }
+                    else if (i == 2)
+                    {
+                        Image3.ImageUrl = base64String;
+                        Image3.ToolTip = row.Field<string>("name_e");
+                        Image3.Visible = true;
+                    }
+                    else if (i == 3)
+                    {
+                        Image4.ImageUrl = base64String;
+                        Image4.ToolTip = row.Field<string>("name_e");
+                        Image4.Visible = true;
+                    }
+                    else if (i == 4)
+                    {
+                        Image5.ImageUrl = base64String;
+                        Image5.ToolTip = row.Field<string>("name_e");
+                        Image5.Visible = true;
+                    }
+                    else if (i == 5)
+                    {
+                        Image6.ImageUrl = base64String;
+                        Image6.ToolTip = row.Field<string>("name_e");
+                        Image6.Visible = true;
+                    }
+                    else if (i == 6)
+                    {
+                        Image7.ImageUrl = base64String;
+                        Image7.ToolTip = row.Field<string>("name_e");
+                        Image7.Visible = true;
+                    }
+                    else if (i == 7)
+                    {
+                        Image8.ImageUrl = base64String;
+                        Image8.ToolTip = row.Field<string>("name_e");
+                        Image8.Visible = true;
+                    }
+                    else if (i == 8)
+                    {
+                        Image9.ImageUrl = base64String;
+                        Image9.ToolTip = row.Field<string>("name_e");
+                        Image9.Visible = true;
+                    }
+                    else if (i == 9)
+                    {
+                        Image10.ImageUrl = base64String;
+                        Image10.ToolTip = row.Field<string>("name_e");
+                        Image10.Visible = true;
+                    }
+                    i += 1;
+                }
             }
         }
-
         protected void RadGrid1_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
             if (!IsPostBack)
@@ -181,7 +259,6 @@ namespace EMR
                 return myDataTable;
             }
         }
-
         protected void RadGrid2_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
             string query = "SELECT document_type_rcd, document_type_name description FROM document_type ";
@@ -294,9 +371,15 @@ namespace EMR
             return tmp;
         }
 
-        public string Return_OrderURL(object varModelID, object varEpmID)
+        public string Return_OrderURL(object varModelID, object varDate)
         {
-            string tmp = "../report/labtab.aspx?pid=" + varPID + "&vid=" + varModelID + "&eid=" + varEpmID;
+            DateTime tmpDate; string tmpD = "";
+            if (!string.IsNullOrEmpty(Convert.ToString(varDate)))
+            {
+                tmpDate = Convert.ToDateTime(varDate);
+                tmpD = tmpDate.Year.ToString() + "-" + tmpDate.Month.ToString() + "-" + tmpDate.Day.ToString();
+            }
+            string tmp = "../report/labtab.aspx?pid=" + varPID + "&vid=" + varModelID + "&frd=" + tmpD;
 
             if (Convert.ToString(orderType) == "RAD")
             {

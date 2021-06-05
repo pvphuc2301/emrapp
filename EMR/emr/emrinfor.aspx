@@ -98,6 +98,28 @@
                         <!-- Search -->
                         <!-- ============================================================== -->
                     </ul>
+                    <ul class="navbar-nav d-none d-lg-flex">                        
+                        <li><a class="nav-link btn-link  waves-effect waves-primary" href="javascript:void(0)">
+                            <asp:image ID="Image1" runat="server" Height="16" Width="16" Visible="false" /></a></li>
+                        <li><a class="nav-link btn-link  waves-effect waves-primary" href="javascript:void(0)">
+                            <asp:image ID="Image2" runat="server" Height="16" Width="16" Visible="false" /></a></li>
+                        <li><a class="nav-link btn-link  waves-effect waves-primary" href="javascript:void(0)">
+                            <asp:image ID="Image3" runat="server" Height="16" Width="16" Visible="false" /></a></li>
+                        <li><a class="nav-link btn-link  waves-effect waves-primary" href="javascript:void(0)">
+                            <asp:image ID="Image4" runat="server" Height="16" Width="16" Visible="false" /></a></li>
+                        <li><a class="nav-link btn-link  waves-effect waves-primary" href="javascript:void(0)">
+                            <asp:image ID="Image5" runat="server" Height="16" Width="16" Visible="false" /></a></li>
+                        <li><a class="nav-link btn-link  waves-effect waves-primary" href="javascript:void(0)">
+                            <asp:image ID="Image6" runat="server" Height="16" Width="16" Visible="false" /></a></li>
+                        <li><a class="nav-link btn-link  waves-effect waves-primary" href="javascript:void(0)">
+                            <asp:image ID="Image7" runat="server" Height="16" Width="16" Visible="false" /></a></li>
+                        <li><a class="nav-link btn-link  waves-effect waves-primary" href="javascript:void(0)">
+                            <asp:image ID="Image8" runat="server" Height="16" Width="16" Visible="false" /></a></li>
+                        <li><a class="nav-link btn-link  waves-effect waves-primary" href="javascript:void(0)">
+                            <asp:image ID="Image9" runat="server" Height="16" Width="16" Visible="false" /></a></li>
+                        <li><a class="nav-link btn-link  waves-effect waves-primary" href="javascript:void(0)">
+                            <asp:image ID="Image10" runat="server" Height="16" Width="16" Visible="false" /></a></li>
+                    </ul>
                     <ul class="navbar-nav my-lg-0 ml-auto">
                         <li class="nav-item dropdown">
                             <a class="nav-link btn-link  waves-effect waves-primary" href="javascript:void(0)">
@@ -107,7 +129,7 @@
                                 </svg>
                             </a>
                         </li>
-
+                        
                         <li class="nav-item dropdown">
                             <a class="nav-link btn-link icon-badge-container" href="../other/sendlogview.aspx?view=mail" target="MainContent">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
@@ -257,14 +279,14 @@
                                                             <telerik:GridBoundColumn SortExpression="actual_visit_date_time" DataField="actual_visit_date_time" HeaderStyle-Width="99%"
                                                                 ItemStyle-HorizontalAlign="Left" DataFormatString="{0:dd-MMM-yyyy hh:mm}" Visible="false">
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridTemplateColumn HeaderStyle-Width="10%" UniqueName="actual_visit_date_time" Visible="false">
+                                                            <telerik:GridTemplateColumn HeaderStyle-Width="10%" UniqueName="actual_visit_date_time" Visible="true">
                                                                 <ItemTemplate>
-                                                                    <asp:HyperLink ID="lbScanLink" runat="server" NavigateUrl='<%# Return_OrderURL(Eval("patient_visit_id"), Eval("employee_id")) %>'
+                                                                    <asp:HyperLink ID="lbScanLink" runat="server" NavigateUrl='<%# Return_OrderURL(Eval("patient_visit_id"), Eval("actual_visit_date_time")) %>'
                                                                         Text='<%# ReturnScan_Date(Eval("actual_visit_date_time"),Eval("caregiver_name_l")) %>' Target="MainContent" SkinID="test">
                                                                     </asp:HyperLink>
                                                                 </ItemTemplate>
                                                             </telerik:GridTemplateColumn>
-                                                            <telerik:GridTemplateColumn>
+                                                            <telerik:GridTemplateColumn Visible="false">
                                                                 <ItemTemplate>
                                                                     <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click">Link</asp:LinkButton>
                                                                 </ItemTemplate>
