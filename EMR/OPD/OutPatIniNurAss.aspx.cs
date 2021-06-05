@@ -114,7 +114,7 @@ namespace EMR
             rad_mental_status_false.Disabled = disabled;
             txt_mental_status_note.Disabled = disabled;
 
-            //txt_paint_score_code.Disabled = disabled;
+            DisabledRadioButton("rad_paint_score_code_", OutPatientInitialNursingAssement.PAINT_SCORE_CODE, disabled);
 
             rad_fall_risk_false.Disabled = disabled;
             rad_fall_risk_true.Disabled = disabled;
@@ -230,7 +230,8 @@ namespace EMR
 
         private string checkValidField()
         {
-            throw new NotImplementedException();
+            string error = "";
+            return error;
         }
 
         private void UpdateData(OutPatientInitialNursingAssement oina)
@@ -253,25 +254,29 @@ namespace EMR
             oina.mental_status = GetRadioButton("rad_mental_status_");
             oina.mental_status_note = txt_mental_status_note.Value;
 
-            //oina.paint_score_code = txt_paint_score_code.Value;
+            oina.paint_score_code = GetRadioButton("rad_paint_score_code_", OutPatientInitialNursingAssement.PAINT_SCORE_CODE);
+            if (oina.paint_score_code != null) oina.paint_score_description = OutPatientInitialNursingAssement.PAINT_SCORE_CODE[oina.paint_score_code];
 
-            //oina.amend_reason = txtAmendReason.Value;
             oina.fall_risk = GetRadioButton("rad_fall_risk_");
 
             oina.fall_risk_assistance = txt_fall_risk_assistance.Value;
 
-            GetRadioButton("rad_nutrition_status_code_", OutPatientInitialNursingAssement.NUTRITION_STATUS_CODE);
+            oina.nutrition_status_code = GetRadioButton("rad_nutrition_status_code_", OutPatientInitialNursingAssement.NUTRITION_STATUS_CODE);
+            if (oina.nutrition_status_code != null) oina.nutrition_status_description = OutPatientInitialNursingAssement.NUTRITION_STATUS_CODE[oina.nutrition_status_code];
 
-            GetRadioButton("rad_housing_code_", OutPatientInitialNursingAssement.HOUSING_CODE);
+            oina.housing_code = GetRadioButton("rad_housing_code_", OutPatientInitialNursingAssement.HOUSING_CODE);
+            if (oina.housing_code != null) oina.housing_description = OutPatientInitialNursingAssement.HOUSING_CODE[oina.housing_code];
 
             oina.prioritization_code = GetRadioButton("rad_prioritization_code_", OutPatientInitialNursingAssement.PRIORITIZATION_CODE);
             if (oina.prioritization_code != null) oina.prioritization_description = OutPatientInitialNursingAssement.PRIORITIZATION_CODE[oina.prioritization_code];
 
-            oina.assessment_date_time = DataHelpers.ConvertSQLDateTime(DateTime.Parse(oina.assessment_date_time));
+            oina.assessment_date_time = DataHelpers.ConvertSQLDateTime(oina.assessment_date_time);
 
             oina.user_name = (string)Session["UserID"];
 
-            if (oina.Update()[0].Status == System.Net.HttpStatusCode.OK)
+            dynamic result = oina.Update();
+
+            if (result[0].Status == System.Net.HttpStatusCode.OK)
             {
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                 message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
@@ -280,7 +285,7 @@ namespace EMR
             }
             else
             {
-                Session["PageNotFound"] = oina.Update()[0];
+                Session["PageNotFound"] = result[0];
                 Response.Redirect("../Other/PageNotFound.aspx", false);
             }
         }
@@ -290,17 +295,27 @@ namespace EMR
             Initial();
         }
 
-        protected void btnDelete_ServerClick(object sender, EventArgs e)
-        {
-            if (OutPatientInitialNursingAssement.Delete((string)Session["UserID"], Request.QueryString["vpid"])[0] == WebHelpers.ResponseStatus.OK)
-            {
-
-            }
-        }
-
         protected void btnPrint_Click(object sender, EventArgs e)
         {
 
+        }
+
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            dynamic result = Diss.Delete((string)Session["UserId"], Request.QueryString["docId"]);
+
+            if (result[0].Status == System.Net.HttpStatusCode.OK)
+            {
+                string pid = Request["pid"];
+                string vpid = Request["vpid"];
+
+                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+            }
+            else
+            {
+                Session["PageNotFound"] = result[0];
+                Response.Redirect("../Other/PageNotFound.aspx", false);
+            }
         }
     }
 }

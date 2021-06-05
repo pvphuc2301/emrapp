@@ -12,8 +12,8 @@
 <%@ Register Src="~/UserControls/Barcode.ascx" TagPrefix="webUI" TagName="Barcode" %>
 <%@ Register Src="~/UserControls/AmendReason.ascx" TagPrefix="webUI" TagName="AmendReason" %>
 <%@ Register Src="~/icons/XSquare.ascx" TagPrefix="icon" TagName="xsquare" %>
-
-
+<%@ Register Src="~/UserControls/PopupModal.ascx" TagPrefix="webUI" TagName="PopupModal" %>
+<%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="icon" TagName="ExclamationTriangle" %>
 
 <!DOCTYPE html>
 
@@ -203,56 +203,56 @@
 
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <label class="control-label mb-2 font-bold">I. DẤU HIỆU SINH TỒN/ <span class="text-primary">Vital signs</span></label>
+                                                    <label class="control-label h5">I. DẤU HIỆU SINH TỒN/ <span class="text-primary">VITAL SIGNS</span></label>
                                                 </div>
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-sm-6 mb-2 d-flex no-block">
-                                                    <label class="control-label w-6 mb-1">Nhiệt độ/ <span class="text-primary">Temperature:</span></label>
-                                                    <div class="form-group w-4">
-                                                        <input id="txtTemperature" runat="server" class="form-control text-right" />
+                                                <div class="col-sm-6 mb-2">
+                                                    <label class="control-label  mb-1">Nhiệt độ/ <span class="text-primary">Temperature:</span></label>
+                                                    <div class="form-group w-4 d-inline-block ml-2">
+                                                        <input id="txtTemperature" maxlength="2" data-type="number" runat="server" class="form-control text-right" />
                                                         <span class="append">°C</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-6 mb-2 d-flex no-block">
-                                                    <label class="control-label w-6 mb-1">Nhịp tim/ <span class="text-primary">rate:</span></label>
-                                                    <div class="form-group w-5">
-                                                        <input id="txtHeartRate" runat="server" class="form-control text-right" />
+                                                <div class="col-sm-6 mb-2">
+                                                    <label class="control-label  mb-1">Nhịp tim/ <span class="text-primary">rate:</span></label>
+                                                    <div class="form-group w-5 d-inline-block ml-2">
+                                                        <input id="txtHeartRate" runat="server" maxlength="3" data-type="number" class="form-control text-right" />
                                                         <span class="append">/phút (m)</span>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-sm-6 mb-2 d-flex no-block">
-                                                    <label class="control-label w-6 mb-1 ">Cân Nặng/ <span class="text-primary">Weight:</span></label>
-                                                    <div class="form-group w-4">
-                                                        <input id="txtWeight" runat="server" class="form-control text-right" />
+                                                <div class="col-sm-6 mb-2">
+                                                    <label class="control-label  mb-1 ">Cân Nặng/ <span class="text-primary">Weight:</span></label>
+                                                    <div class="form-group w-4 d-inline-block ml-2">
+                                                        <input id="txtWeight" runat="server" maxlength="3" data-type="number" class="form-control text-right" />
                                                         <span class="append">Kg</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-6 mb-2 d-flex no-block">
-                                                    <label class="control-label w-6 mb-1">Nhịp thở/ <span class="text-primary">Respiratory rate:</span></label>
-                                                    <div class="form-group w-5">
-                                                        <input id="txtRespiratoryRate" runat="server" class="form-control text-right" />
+                                                <div class="col-sm-6 mb-2">
+                                                    <label class="control-label  mb-1">Nhịp thở/ <span class="text-primary">Respiratory rate:</span></label>
+                                                    <div class="form-group w-5 d-inline-block ml-2">
+                                                        <input id="txtRespiratoryRate" maxlength="3" data-type="number" runat="server" class="form-control text-right" />
                                                         <span class="append">/phút (m)</span>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-sm-6 mb-2 d-flex no-block">
-                                                    <label class="control-label w-6 mb-1 ">Chiều cao/ <span class="text-primary">Height:</span></label>
-                                                    <div class="form-group w-4">
-                                                        <input id="txtHeight" maxlength="3" runat="server" class="form-control text-right" />
+                                                <div class="col-sm-6 mb-2">
+                                                    <label class="control-label  mb-1 ">Chiều cao/ <span class="text-primary">Height:</span></label>
+                                                    <div class="form-group w-4 d-inline-block ml-2">
+                                                        <input id="txtHeight" maxlength="3" data-type="number" runat="server" class="form-control text-right" />
                                                         <span class="append">cm</span>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-6 mb-2 d-flex no-block">
-                                                    <label class="control-label w-6 mb-1">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
-                                                    <div class="form-group w-5">
-                                                        <input id="txtBloodPressure" runat="server" class="form-control text-right" />
+                                                <div class="col-sm-6 mb-2">
+                                                    <label class="control-label  mb-1">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
+                                                    <div class="form-group w-5 d-inline-block ml-2">
+                                                        <input id="txtBloodPressure" maxlength="3" data-type="number" runat="server" class="form-control text-right" />
                                                         <span class="append">mmHg</span>
                                                     </div>
                                                 </div>
@@ -260,10 +260,9 @@
 
                                             <div class="row">
                                                 <div class="col-sm-6 mb-2">
-                                                    <div class="d-flex no-block">
-                                                        <label for="bmi" class="control-label w-6 mb-1">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
-                                                        <div class="form-group w-5">
-                                                            <input id="txtBmi" runat="server" class="form-control text-right" disabled="disabled" />
+                                                    <label for="bmi" class="control-label mb-1">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
+                                                        <div class="form-group w-5 d-inline-block ml-2">
+                                                            <input id="txtBmi" runat="server" data-type="number" class="form-control text-right" disabled="disabled" />
                                                             <span class="append">(Kg/m <sup>2</sup>)</span>
                                                             <telerik:RadScriptBlock ID="RadScriptBlock1" runat="server">
                                                                 <script type="text/javascript">
@@ -284,27 +283,26 @@
                                                                 </script>
                                                             </telerik:RadScriptBlock>
                                                         </div>
-                                                    </div>
+                                                    
                                                     <p class="mt-1">
                                                         (Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not
             applicable for children and pregnant</span>)
                                                     </p>
                                                 </div>
-
-                                                <div class="col-sm-6 mb-2 d-flex no-block">
-                                                    <label for="spO2" class="control-label w-6 mb-1">Độ bão hòa Oxy/ <span class="text-primary">SpO2:</span></label>
-                                                    <div class="form-group w-4">
-                                                        <input id="txtSpo2" runat="server" class="form-control text-right" />
+                                                <div class="col-sm-6 mb-2">
+                                                    <label for="spO2" class="control-label mb-1">Độ bão hòa Oxy/ <span class="text-primary">SpO2:</span></label>
+                                                    <div class="form-group w-4 d-inline-block ml-2">
+                                                        <input id="txtSpo2" runat="server" data-type="number" maxlength="3" class="form-control text-right" />
                                                         <span class="append">%</span>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-sm-6 mb-2 d-flex no-block">
-                                                    <label for="head-circumference" class="control-label w-6 mb-1">Vòng đầu (trẻ em < 2 tuổi)/ <span class="text-primary">Head Circumference (children < 2 year old) </span></label>
-                                                    <div class="form-group w-4">
-                                                        <input id="txtPluse" runat="server" class="form-control text-right" />
+                                                <div class="col-sm-12 mb-2">
+                                                    <label for="head-circumference" class="control-label mb-1">Vòng đầu (trẻ em < 2 tuổi)/ <span class="text-primary">Head Circumference (children < 2 year old) </span></label>
+                                                    <div class="form-group w-4 d-inline-block ml-2">
+                                                        <input id="txtPluse" runat="server" data-type="number" maxlength="3" class="form-control text-right" />
                                                         <span class="append">cm</span>
                                                     </div>
                                                 </div>
@@ -313,7 +311,7 @@
                                             <%-- III. ASSESSMENT --%>
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
-                                                    <label class="control-label font-bold">II. ĐÁNH GIÁ/ <span class="text-primary">ASSESSMENT</span></label>
+                                                    <label class="control-label  h5">II. ĐÁNH GIÁ/ <span class="text-primary">ASSESSMENT</span></label>
                                                 </div>
                                             </div>
 
@@ -351,7 +349,6 @@
                                                 </div>
                                             </fieldset>
 
-                                            <%-- 3. Allergy --%>
                                             <fieldset class="row mb-2">
                                                 <legend>
                                                     <label class="control-label">3. Trạng thái tinh thần/ <span class="text-primary">Mental status:</span></label>
@@ -415,101 +412,94 @@
                                             </fieldset>
 
                                             <%-- 5. Fall risk MORSE SCALE --%>
-                                            <div class="row mb-2">
+                                            <fieldset class="row mb-2">
+                                                <legend>
+                                                    <label class="control-label mb-2">5. Tầm soát nguy cơ té ngã/ <span class="text-primary">Fall risk MORSE SCALE:</span></label>
+                                                </legend>
                                                 <div class="col-md-12">
-                                                    <label class="control-label mb-1 font-bold d-block">5. Tầm soát nguy cơ té ngã/ <span class="text-primary">Fall risk MORSE SCALE:</span></label>
-                                                </div>
-
-                                                <div class="col-md-4">
                                                     <div class="custom-control custom-radio">
                                                         <input type="radio" runat="server" id="rad_fall_risk_false" name="rad_fall_risk" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_fall_risk_false">Không có nguy cơ/ <span class="text-primary">No risk</span></label>
                                                     </div>
-                                                </div>
-
-                                                <div class="col-md-8">
                                                     <div class="custom-control custom-radio mb-1">
                                                         <input disabled-for="fall_risk_assistance_field" type="radio" runat="server" id="rad_fall_risk_true" name="rad_fall_risk" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_fall_risk_true">Nếu có, cung cấp phương tiện hỗ trợ/ <span class="text-primary">If yes, provide assistance</span></label>
+                                                        <a href="javascript:void(0)"  data-clear="rad_fall_risk" onclick="clear_radiobutton(this)">
+                                                            <icon:xsquare runat="server" ID="XSquare22" />
+                                                        </a>
                                                     </div>
                                                     <div class="form-group fall_risk_assistance_field">
                                                         <webUI:TextField runat="server" id="txt_fall_risk_assistance" />
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </fieldset>
+
 
                                             <%-- 6. Nutritional status screening --%>
-                                            <div class="row mb-2">
+                                            <fieldset class="row mb-2">
+                                                <legend>
+                                                    <label class="control-label mb-2">6. Đánh giá tình trang dinh dưỡng/ <span class="text-primary">Nutritional status screening:</span></label>
+                                                </legend>
                                                 <div class="col-md-12">
-                                                    <label class="control-label mb-1 font-bold d-block">6. Đánh giá tình trang dinh dưỡng/ <span class="text-primary">Nutritional status screening:</span></label>
-                                                </div>
-
-                                                <div class="col-md-4">
                                                     <div class="custom-control custom-radio">
                                                         <input type="radio" runat="server" id="rad_nutrition_status_code_n" name="rad_nutrition_status_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_nutrition_status_code_n">Bình thường/ <span class="text-primary">Normal</span></label>
                                                     </div>
-                                                </div>
-
-                                                <div class="col-md-4">
                                                     <div class="custom-control custom-radio">
                                                         <input type="radio" runat="server" id="rad_nutrition_status_code_u" name="rad_nutrition_status_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_nutrition_status_code_u">Suy dinh dưỡng/ <span class="text-primary">Undernutrition</span></label>
                                                     </div>
-                                                </div>
-
-                                                <div class="col-md-4">
                                                     <div class="custom-control custom-radio">
                                                         <input type="radio" runat="server" id="rad_nutrition_status_code_o" name="rad_nutrition_status_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_nutrition_status_code_o">Thừa cân hoặc béo phì/ <span class="text-primary">Overweight or obesity</span></label>
+                                                        <a href="javascript:void(0)"  data-clear="rad_nutrition_status_code" onclick="clear_radiobutton(this)">
+                                                            <icon:xsquare runat="server" ID="XSquare1" />
+                                                        </a>
                                                     </div>
                                                 </div>
-                                            </div>
-
-                                            <%-- III. SOCIAL FACTORS ASSESSMENT (ONLY FOR THE FIRST VISIT) --%>
-                                            <div class="row mb-2">
-                                                <div class="col-md-12">
-                                                    <label class="control-label font-bold d-block">III. ĐÁNH GIÁ CÁC YẾU TỐ XÃ HỘI CỦA NGƯỜI BỆNH (DUY NHẤT CHO LẦN KHÁM ĐẦU TIÊN)/ <span class="text-primary">SOCIAL FACTORS ASSESSMENT (ONLY FOR THE FIRST VISIT):</span></label>
-                                                </div>
-                                            </div>
+                                            </fieldset>
 
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
-                                                    <label class="control-label mb-1">Tình trạng sinh sống/ <span class="text-primary">Housing</span></label>
-                                                </div>
-
-                                                <div class="col-md-4">
-                                                    <div class="custom-control custom-radio">
-                                                        <input type="radio" runat="server" id="rad_housing_code_aln" name="rad_housing_code" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="rad_housing_code_aln">Sống một mình/ <span class="text-primary">Lives alone</span></label>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-8">
-                                                    <div class="custom-control custom-radio">
-                                                        <input type="radio" runat="server" id="rad_housing_code_rel" name="rad_housing_code" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="rad_housing_code_rel">Sống với người thân/ <span class="text-primary">With relatives</span></label>
-                                                    </div>
+                                                    <label class="control-label  h5">III. ĐÁNH GIÁ CÁC YẾU TỐ XÃ HỘI CỦA NGƯỜI BỆNH (DUY NHẤT CHO LẦN KHÁM ĐẦU TIÊN)/ <span class="text-primary">SOCIAL FACTORS ASSESSMENT (ONLY FOR THE FIRST VISIT):</span></label>
                                                 </div>
                                             </div>
 
-                                            <%-- IV. PRIORITIZATION --%>
+                                            <fieldset class="row mb-2">
+                                                        <legend>
+                                                            <label class="control-label mb-1">Tình trạng sinh sống/ <span class="text-primary">Housing</span></label>
+                                                        </legend>
+                                                        <div class="col-md-12">
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" runat="server" id="rad_housing_code_aln" name="rad_housing_code" class="custom-control-input" />
+                                                                <label class="custom-control-label" for="rad_housing_code_aln">Sống một mình/ <span class="text-primary">Lives alone</span></label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" runat="server" id="rad_housing_code_rel" name="rad_housing_code" class="custom-control-input" />
+                                                                <label class="custom-control-label" for="rad_housing_code_rel">Sống với người thân/ <span class="text-primary">With relatives</span></label>
+                                                                <a href="javascript:void(0)"  data-clear="rad_housing_code" onclick="clear_radiobutton(this)">
+                                                            <icon:xsquare runat="server" ID="XSquare3" />
+                                                        </a>
+                                                            </div>
+                                                        </div>
+                                                    </fieldset>
+
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
-                                                    <label class="control-label mb-1 font-bold d-block">IV.	MỨC ĐỘ ƯU TIÊN/ <span class="text-primary">PRIORITIZATION:</span></label>
+                                                    <label class="control-label mb-1 h5">IV. MỨC ĐỘ ƯU TIÊN/ <span class="text-primary">PRIORITIZATION:</span></label>
                                                 </div>
 
-                                                <div class="col-md-4">
-                                                    <div class="custom-control custom-radio">
+                                                <div class="col-md-12">
+                                                    <div class="custom-control custom-radio ml-2">
                                                         <input type="radio" runat="server" id="rad_prioritization_code_im" name="rad_prioritization_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_prioritization_code_im">Cần được khám ngay/ <span class="text-primary">Immediate consulting requirement</span></label>
                                                     </div>
-                                                </div>
-
-                                                <div class="col-md-8">
-                                                    <div class="custom-control custom-radio">
+                                                    <div class="custom-control custom-radio ml-2">
                                                         <input type="radio" runat="server" id="rad_prioritization_code_wa" name="rad_prioritization_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_prioritization_code_wa">Có thể chờ khám trong khoảng thời gian xác định/ <span class="text-primary">Be able to wait for consultation at a specific time</span></label>
+                                                        <a href="javascript:void(0)"  data-clear="rad_housing_code" onclick="clear_radiobutton(this)">
+                                                            <icon:xsquare runat="server" ID="XSquare4" />
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -528,6 +518,20 @@
                                                 </div>
                                             </div>
                                         </fieldset>
+                                        
+                                        <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
+                                        <ModalBody>
+                                            <div class="text-center">
+                                                <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                                <h4 class="mt-4 mb-4">Delete document?
+                                                </h4>
+                                            </div>
+                                            <div class="text-right">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <asp:Button runat="server" OnClick="btnDelete_Click" Text="Delete" ID="btnDelete" class="btn btn-danger" />
+                                            </div>
+                                        </ModalBody>
+                                    </webUI:PopupModal>
 
                                     </div>
                                 </div>

@@ -122,21 +122,23 @@ namespace EMR
                 {
                     row = table.NewRow();
                     row["id"] = (r + 1);
+                    Control control;
                     for (int i = 0; i < gridView.Rows[r].Cells.Count; i++)
                     {
+                        control = gridView.Rows[r].Cells[i].Controls[1];
                         try
                         {
-                            if (gridView.Rows[r].Cells[i].Controls[1] is TextField)
+                            if (control is TextField)
                             {
                                 TextField text2 = gridView.Rows[r].Cells[i].Controls[1] as TextField;
                                 row[text2.DataKey] = text2.Value;
                             }
-                            else if (gridView.Rows[r].Cells[i].Controls[1] is RadTimePicker)
+                            else if (control is RadTimePicker)
                             {
                                 RadTimePicker text2 = gridView.Rows[r].Cells[i].Controls[1] as RadTimePicker;
                                 row[text2.ID] = DateTime.Parse(text2.SelectedTime.ToString()).ToString("HH:mm");
                             }
-                            else if (gridView.Rows[r].Cells[i].Controls[1] is RadDateTimePicker)
+                            else if (control is RadDateTimePicker)
                             {
                                 RadDateTimePicker text2 = gridView.Rows[r].Cells[i].Controls[1] as RadDateTimePicker;
                                 row[text2.ID] = DataHelpers.ConvertSQLDateTime(DateTime.Parse(text2.SelectedDate.ToString()));
@@ -179,6 +181,12 @@ namespace EMR
             //{
             //    return null;
             //}
+        }
+
+        internal static string ConvertDateTime(dynamic date_of_discharge, string dateTime)
+        {
+            if (date_of_discharge == null) return "";
+            return date_of_discharge.ToString(dateTime);
         }
 
         public static string GetDataTableToJSON(DataTable dataTable)

@@ -19,7 +19,6 @@ namespace EMR
             {
                Initial();
             }
-            //LoadDataToPrint();
         }
 
         public void Initial()
@@ -29,10 +28,10 @@ namespace EMR
             if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
             if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
             surr = new Surr(DataHelpers.varDocId);
-            loadDataToSurrControls(surr);
+            loadDataToControls(surr);
         }
 
-        public void loadDataToSurrControls(Surr surr)
+        public void loadDataToControls(Surr surr)
         {
             try
             {

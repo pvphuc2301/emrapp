@@ -202,6 +202,9 @@
     <Content Include="Dashboard.aspx" />
     <Content Include="emr\emrinfor.aspx" />
     <Content Include="emr\emrview.aspx" />
+    <Content Include="icons\ExclamationTriangle.ascx" />
+    <Content Include="IPD\ObsGynIniAss.aspx" />
+    <Content Include="Print\Test.aspx" />
     <Content Include="Report\ImagingTab.aspx" />
     <Content Include="emr\labinfor.aspx" />
     <Content Include="ER\EmerMedRec.aspx" />
@@ -210,7 +213,6 @@
     <Content Include="icons\BoxArrowInLeft.ascx" />
     <Content Include="icons\Calculator.ascx" />
     <Content Include="icons\CaretDown.ascx" />
-    <Content Include="icons\ExclamationTriangle.ascx" />
     <Content Include="icons\Eye.ascx" />
     <Content Include="icons\EyeSlash.ascx" />
     <Content Include="icons\Gear.ascx" />
@@ -233,7 +235,6 @@
     <Content Include="IPD\InpIniMedAss.aspx" />
     <Content Include="IPD\InpIniNurAss.aspx" />
     <Content Include="IPD\InpatientMedicalRecord.aspx" />
-    <Content Include="IPD\ObsGynIniAss.aspx" />
     <Content Include="IPD\ObsAtDeliRoom.aspx" />
     <Content Include="IPD\SummaryOfMedRec.aspx" />
     <Content Include="IPD\SurgicalCertificate.aspx" />
@@ -292,6 +293,10 @@
     <Content Include="obj\Debug\EMR.csprojAssemblyReference.cache" />
     <Content Include="UserControls\Barcode.ascx" />
     <Content Include="UserControls\PopupModal.ascx" />
+    <Content Include="UserControls\PrintTemplate\Date.ascx" />
+    <Content Include="UserControls\PrintTemplate\Label1.ascx" />
+    <Content Include="UserControls\PrintTemplate\Signature1.ascx" />
+    <Content Include="UserControls\PrintTemplate\Signature2.ascx" />
     <Content Include="zxing.dll" />
     <Content Include="Print\Print.rar" />
     <Content Include="bin\EMR.dll.config" />
@@ -372,6 +377,27 @@
     </Compile>
     <Compile Include="emr\emrview.aspx.designer.cs">
       <DependentUpon>emrview.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="icons\ExclamationTriangle.ascx.cs">
+      <DependentUpon>ExclamationTriangle.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="icons\ExclamationTriangle.ascx.designer.cs">
+      <DependentUpon>ExclamationTriangle.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="IPD\ObsGynIniAss.aspx.cs">
+      <DependentUpon>ObsGynIniAss.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IPD\ObsGynIniAss.aspx.designer.cs">
+      <DependentUpon>ObsGynIniAss.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Print\Test.aspx.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Print\Test.aspx.designer.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
     </Compile>
     <Compile Include="Report\ImagingTab.aspx.cs">
       <DependentUpon>ImagingTab.aspx</DependentUpon>
@@ -540,13 +566,6 @@
     </Compile>
     <Compile Include="IPD\InpatientMedicalRecord.aspx.designer.cs">
       <DependentUpon>InpatientMedicalRecord.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="IPD\ObsGynIniAss.aspx.cs">
-      <DependentUpon>ObsGynIniAss.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="IPD\ObsGynIniAss.aspx.designer.cs">
-      <DependentUpon>ObsGynIniAss.aspx</DependentUpon>
     </Compile>
     <Compile Include="IPD\ObsAtDeliRoom.aspx.cs">
       <DependentUpon>ObsAtDeliRoom.aspx</DependentUpon>
@@ -854,6 +873,10 @@
     <Compile Include="UserControls\PopupModal.ascx.designer.cs">
       <DependentUpon>PopupModal.ascx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\PrintTemplate\Date.ascx.cs">
+      <DependentUpon>Date.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="UserControls\PrintTemplate\Date.ascx.designer.cs">
       <DependentUpon>Date.ascx</DependentUpon>
     </Compile>
@@ -870,6 +893,13 @@
     </Compile>
     <Compile Include="UserControls\PrintTemplate\Label.ascx.designer.cs">
       <DependentUpon>Label.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Label1.ascx.cs">
+      <DependentUpon>Label1.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Label1.ascx.designer.cs">
+      <DependentUpon>Label1.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\PrintTemplate\Line.ascx.cs">
       <DependentUpon>Line.ascx</DependentUpon>
@@ -905,6 +935,20 @@
     </Compile>
     <Compile Include="UserControls\PrintTemplate\Signature.ascx.designer.cs">
       <DependentUpon>Signature.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Signature1.ascx.cs">
+      <DependentUpon>Signature1.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Signature1.ascx.designer.cs">
+      <DependentUpon>Signature1.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Signature2.ascx.cs">
+      <DependentUpon>Signature2.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\Signature2.ascx.designer.cs">
+      <DependentUpon>Signature2.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\PromptButton.ascx.cs">
       <DependentUpon>PromptButton.ascx</DependentUpon>
@@ -946,7 +990,6 @@
     <Content Include="UserControls\Message.ascx" />
     <Content Include="UserControls\PatientInfo.ascx" />
     <Content Include="UserControls\PopupModal.ascx" />
-    <Content Include="UserControls\PrintTemplate\Date.ascx" />
     <Content Include="UserControls\PrintTemplate\DateTime.ascx" />
     <Content Include="UserControls\PrintTemplate\Label.ascx" />
     <Content Include="UserControls\PrintTemplate\Line.ascx" />

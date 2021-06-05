@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -65,6 +66,7 @@ namespace EMR
                     btnPrint.Visible = true;
 
                     DisabledControl(true);
+                    loadDataToPrint(disc);
                 }
                 else if (disc.status == DocumentStatus.DRAFT)
                 {
@@ -78,6 +80,26 @@ namespace EMR
                 
             }
         }
+
+        private void loadDataToPrint(Disc disc)
+        {
+            prt_pid.Text = DataHelpers.patient.visible_patient_id;
+            prt_patient_name.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
+            prt_dob.Text = WebHelpers.ConvertDateTime(DataHelpers.patient.date_of_birth, "dd-MM-yyyy");
+            prt_gender.Text = DataHelpers.patient.gender_l;
+            prt_nationality.Text = DataHelpers.patient.nationality_l;
+            prt_occupation.Text = DataHelpers.patient.occupation_l;
+            prt_valid_from.Text = "?";
+            prt_no_health_insurance.Text = "?";
+            prt_address.Text = DataHelpers.patient.address_line_l + " " + DataHelpers.patient.address_subregion_l + " " + DataHelpers.patient.religion_l + " " +  DataHelpers.patient.address_country_l;
+            prt_disc_date_time.dateTime = Convert.ToString(disc.disc_date_time);
+            prt_diagnosis.Text = disc.diagnosis;
+            prt_notes.Text = disc.notes;
+
+            prt_signature1.dateTime = System.DateTime.Now.ToString();
+            prt_signature2.dateTime = System.DateTime.Now.ToString();
+        }
+
         protected void DisabledControl(bool disabled)
         {
             ddbtn_disc_ward.Disabled = disabled;
@@ -114,19 +136,23 @@ namespace EMR
 
         protected void btnComplete_Click(object sender, EventArgs e)
         {
-            if (CheckFieldsValid())
+            string errors = checkValidField();
+
+            if (string.IsNullOrEmpty(errors))
             {
-                disc = new Disc(DataHelpers.varDocId);
-                disc.status = DocumentStatus.FINAL;
+                disc = new Disc(Request.QueryString["docId"]);
+
                 disc.user_name = (string)Session["UserID"];
+                disc.status = DocumentStatus.FINAL;
 
                 UpdateData(disc);
             }
             else
             {
+                RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
+
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                 message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
-                RequiredFieldValidator.Value = "true";
             }
         }
 
@@ -135,10 +161,9 @@ namespace EMR
             try
             {
                 disc.amend_reason = txt_amendReason.Value;
-
+                disc.no_discharge = disc.no_discharge;
                 disc.disc_ward_code = ddbtn_disc_ward.Value;
-
-                disc.disc_ward_desc = Disc.DISC_WARD_CODE[disc.disc_ward_code];
+                if(disc.disc_ward_code != null) disc.disc_ward_desc = Disc.DISC_WARD_CODE[disc.disc_ward_code];
                 disc.no_health_insurance = txt_no_health_insurance.Value;
                 disc.valid_from = DataHelpers.ConvertSQLDateTime(dpk_valid_from.SelectedDate);
                 disc.disc_date_time = DataHelpers.ConvertSQLDateTime(dtpk_disc_date_time.SelectedDate);
@@ -146,16 +171,21 @@ namespace EMR
                 disc.disc_medication = txt_disc_medication.Value;
                 disc.followup_instruc = txt_followup_instruc.Value;
                 disc.notes = txt_notes.Value;
-                //?
-                disc.no_discharge = Int32.Parse(disc.no_discharge);
                 disc.signature_date = DataHelpers.ConvertSQLDateTime(dpk_signature_date.SelectedDate);
+                //?
 
-                if (disc.Update()[0] == WebHelpers.ResponseStatus.OK)
+                dynamic result = disc.Update();
+
+                if (result[0].Status == System.Net.HttpStatusCode.OK)
                 {
                     Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                    message.Load(Page, Message.CODE.MS001, Message.TYPE.SUCCESS, 100000);
-
+                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
                     Initial();
+                }
+                else
+                {
+                    Session["PageNotFound"] = result[0];
+                    Response.Redirect("../Other/PageNotFound.aspx", false);
                 }
             }
             catch (Exception ex) { }
@@ -163,9 +193,11 @@ namespace EMR
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            if (CheckFieldsValid())
+            string errors = checkValidField();
+
+            if (string.IsNullOrEmpty(errors))
             {
-                disc = new Disc(DataHelpers.varDocId);
+                disc = new Disc(Request.QueryString["docId"]);
 
                 disc.user_name = (string)Session["UserID"];
                 disc.status = DocumentStatus.DRAFT;
@@ -174,23 +206,38 @@ namespace EMR
             }
             else
             {
+                RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
+
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                 message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
-                RequiredFieldValidator.Value = "true";
             }
         }
+
+        private string checkValidField()
+        {
+            string error = "";
+            return error;
+        }
+
         private bool CheckFieldsValid()
         {
             return true;
         }
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            if (Disc.Delete((string)Session["UserID"], Request.QueryString["vpid"])[0] == WebHelpers.ResponseStatus.OK)
+            dynamic result = Diss.Delete((string)Session["UserId"], Request.QueryString["docId"]);
+
+            if (result[0].Status == System.Net.HttpStatusCode.OK)
             {
                 string pid = Request["pid"];
                 string vpid = Request["vpid"];
 
                 Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+            }
+            else
+            {
+                Session["PageNotFound"] = result[0];
+                Response.Redirect("../Other/PageNotFound.aspx", false);
             }
         }
     }
