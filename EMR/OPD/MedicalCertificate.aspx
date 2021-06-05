@@ -9,6 +9,15 @@
 <%@ Register Src="~/UserControls/PrintTemplate/Signature.ascx" TagPrefix="webUI" TagName="Signature" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Date.ascx" TagPrefix="webUI" TagName="Date" %>
 <%@ Register Src="~/UserControls/Barcode.ascx" TagPrefix="webUI" TagName="Barcode" %>
+<%@ Register Src="~/UserControls/PrintTemplate/PatientLabel1.ascx" TagPrefix="webUI" TagName="PatientLabel1" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Line.ascx" TagPrefix="webUI" TagName="Line" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Signature2.ascx" TagPrefix="webUI" TagName="Signature2" %>
+<%@ Register Src="~/UserControls/PrintTemplate/DateTime.ascx" TagPrefix="webUI" TagName="DateTime" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Signature1.ascx" TagPrefix="webUI" TagName="Signature1" %>
+<%@ Register Src="~/UserControls/AmendReason.ascx" TagPrefix="webUI" TagName="AmendReason" %>
+<%@ Register Src="~/UserControls/PopupModal.ascx" TagPrefix="webUI" TagName="PopupModal" %>
+<%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="icon" TagName="ExclamationTriangle" %>
+
 
 <!DOCTYPE html>
 
@@ -18,44 +27,30 @@
     <link href="../../styles/style.css" rel="stylesheet" />
     <link href="../../styles/myStyle.css" rel="stylesheet" />
     <link href="../../style/style-custom.css" rel="stylesheet" />
-
+    <style>
+        .icheckbox {
+                font-size: 20px;
+                line-height: 20px;
+                display: inline-block;
+        }
+    </style>
 </head>
 <body>
-
-    <div class="cssclsNoScreen">
-        <table class="report-container" style="max-width: 992px; width: 100%; margin-top: 20px; margin-bottom: 100px;">
+    <%--class="cssclsNoScreen"--%> 
+    <div class="cssclsNoScreen" style="font-family: Tahoma !important; font-size: 13.3048px !important;">
+        <table class="report-container">
             <thead class="report-header">
                 <tr>
                     <th class="report-header-cell">
                         <div class="header-info" style="display: flex; align-items: center;">
-                            <img width="200px" src="../images/AIH_PI_FULL.png" />
-                            <div style="flex-grow: 1">
-                                <div style="color: #007297; font-size: 26.6667px;">BỆNH ÁN NGOẠI TRÚ</div>
-                                <div style="color: #e20e5a; font-size: 16.6667px;">OUTPATIENT MEDICAL RECORD</div>
+                            <img width="180px" src="../images/AIH_PI_FULL.png" />
+                            <div style="flex-grow: 1; text-align: center">
+                                <div style="color: #007297; font-size: 20.6963px;">GIẤY CHỨNG NHẬN ĐIỀU TRỊ</div>
+                                <div style="color: #e20e5a; font-size: 16.6667px;">MEDICAL CERTIFICATE</div>
                             </div>
-                            <div style="font-size: 13.3333px">
-
-                                <div style="width: 200px; text-align: center">
-                              <%--      <div>
-                                        <asp:Label ID="lbPatientName" runat="server"></asp:Label>
-                                    </div>
-                                    <div>
-                                        <asp:Label ID="lbDoB" runat="server"></asp:Label>
-                                    </div>--%>
-
-                                    <webUI:Barcode runat="server" ID="Barcode" Text="900000488" Width="200" Height="40" />
-
-                                    <div>
-                                        <asp:Label class="font-bold" ID="lbPID" runat="server"></asp:Label>
-                                    </div>
-                                </div>
-
-                            </div>
+                            <webUI:PatientLabel1 runat="server" ID="prt_patient_label" />
                         </div>
-                        <div style="margin-bottom: 80px;">
-                            <span style="width: 190px; border-bottom-style: solid; border-bottom-color: #e20e5a; border-bottom-width: 5px; display: inline-block; font-size: 26.6667px;"></span>
-                            <span style="display: inline-block; border-bottom-style: solid; border-bottom-color: #007297; border-bottom-width: 5px; width: calc(100% - 191px); margin-left: -5px;"></span>
-                        </div>
+                        <webUI:Line runat="server" ID="Line" />
                     </th>
                 </tr>
             </thead>
@@ -64,175 +59,106 @@
                 <tr>
                     <td class="report-content-cell">
                         <div class="main">
-                            <!-- Code printed here -->
-                            <div class="row mb-2">
-                                <div class="col-12">
-                                    <webUI:Label runat="server" Title="BỆNH VIỆN QUỐC TẾ MỸ CHỨNG NHẬN:" SubTitle="AMERICAN INTERNATIONAL HOSPITAL CERTIFIES THAT" />
+                            <div class="d-grid" style="grid-template-columns: 1fr">
+                                <div>
+                                    <webUI:Label runat="server" SubTitle="AMERICAN INTERNATIONAL HOSPITAL CERTIFIES THAT" Title="BỆNH VIỆN QUỐC TẾ MỸ CHỨNG NHẬN:" />
                                 </div>
                             </div>
 
-                            <div class="row mb-2">
-                                <div class="col-6">
-                                    <webUI:Label runat="server" Title="Họ tên bệnh nhân:" SubTitle="Patient's name" />
-                                    <div class="d-inline-block ml-2 align-top">
-                                    <asp:Label ID="lbPatientName" runat="server" class="d-inline-block ml-2 align-top"> </asp:Label>    
-                                        
-                                        </div>
+                            <div class="d-grid" style="grid-template-columns: 2fr 1fr">
+                                <div>
+                                    <webUI:Label runat="server" SubTitle="Patient's Name" Title="Họ tên bệnh nhân:" />
+                                    <asp:Label runat="server" ID="prt_patient_name" />
                                 </div>
-                                <div class="col-6">
-                                    <webUI:Label runat="server" Title="Ngày sinh:" SubTitle="DOB" />
-                                    <div class="d-inline-block ml-2 align-top">
-                                    <asp:Label ID="lbDoB" runat="server" class="d-inline-block ml-2 align-top"> </asp:Label>   
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="row mb-2">
-                                <div class="col-12">
-                                    <webUI:Label runat="server" Title="Giới tính:" SubTitle="Gender" />
-                                    
-                                    <webUI:Label runat="server" Title="Nam" SubTitle="Male" />
-                                    <asp:label ID="lbMan1" runat="server" class="d-inline-block ml-2 align-top mr-5">✕</asp:label>
-                                    <asp:label ID="lbMan2" runat="server" class="d-inline-block ml-2 align-top mr-5">❏</asp:label>
-
-                                    <webUI:Label runat="server" Title="Nữ " SubTitle="Female" />   
-                                    <asp:label ID="lbWomen1" runat="server" class="d-inline-block ml-2 align-top">✕</asp:label>
-                                    <asp:label ID="lbWomen2" runat="server" class="d-inline-block ml-2 align-top">❏</asp:label>
-
-                                </div>
-                            </div>
-                           
-
-                            <div class="row mb-2">
-                                <div class="col-6">
-                                    <webUI:Label runat="server" Title="Khoa:" SubTitle="Dept" />
-                                    <div class="d-inline-block ml-2 align-top">
-                                        Khoa khám bệnh
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <webUI:Label runat="server" Title="Mã BN:" SubTitle="Patient ID" />
-                                    <div class="d-inline-block ml-2 align-top">
-                                       <asp:Label ID="lbPID2" runat="server" class="d-inline-block ml-2 align-top"> </asp:Label>
-
-                                    </div>
+                                
+                                <div class="d-grid" style="grid-template-columns: 110px 1fr">
+                                    <webUI:Label runat="server" SubTitle="DOB" Title="Ngày sinh:" />
+                                    <asp:Label runat="server" ID="prt_dob" />
                                 </div>
                             </div>
 
-                            <div class="row mb-2">
-                                <div class="col-12">
-                                    <webUI:Label runat="server" Title="Đã đến khám và điều trị tại bệnh viện của chúng tôi, với những thông tin như sau:" SubTitle="Visited and received treatment at our hospital, with the following information" />
-                                    <div class="d-inline-block ml-2 align-top">
-
-                                    </div>
+                            <div class="d-grid" style="grid-template-columns: 170px 150px 150px">
+                                <webUI:Label runat="server" SubTitle="Gender" Title="Giới tính:" />
+                                
+                                <div>
+                                    <webUI:Label runat="server" SubTitle="Male" Title="Nam" />
+                                    <asp:Label runat="server" CssClass="icheckbox" ID="prt_gender_male" />
+                                </div>
+                                <div>
+                                    <webUI:Label runat="server" SubTitle="Female" Title="Nữ" />
+                                    <asp:Label runat="server" CssClass="icheckbox" ID="prt_gender_female" />
                                 </div>
                             </div>
 
-                            <div class="row mb-2">
-                                <div class="col-12">
-                                    <webUI:Label runat="server" Title="Ngày khám bệnh:" SubTitle="Date of visit" />
-                                    <div class="d-inline-block ml-2 align-top">                                        
-                                        <asp:Label ID="lbNgayKhamBenh" runat="server" class="d-inline-block ml-2 align-top"> </asp:Label>
-                                    </div>
+                            <div class="d-grid" style="grid-template-columns: 2fr 1fr">
+                                <div class="d-grid" style="grid-template-columns: 170px 1fr">
+                                    <webUI:Label runat="server" SubTitle="Dept" Title="Khoa:" />
+                                    <asp:Label runat="server" ID="prt" />
+                                </div>
+                                <div  class="d-grid" style="grid-template-columns: 110px 1fr">
+                                    <webUI:Label runat="server" SubTitle="Patient ID" Title="Mã BN:" />
+                                    <asp:Label CssClass="align-top" runat="server" ID="prt_pid" />
                                 </div>
                             </div>
 
-                            <div class="row mb-2">
-                                <div class="col-12">
-                                    <webUI:Label runat="server" Title="Lý do đến khám:" SubTitle="Chief complaint" />
-                                    <div class="d-inline-block ml-2 align-top">
-                                        <asp:Label ID="lbChiefComplaint" runat="server" class="d-inline-block ml-2 align-top"> </asp:Label>
-                                    </div>
-                                </div>
+                            <div class="d-grid" style="grid-template-columns: 1fr">
+                                <webUI:Label runat="server" SubTitle="Visited and received treatment at our hospital, with the following information" Title="Đã đến khám và điều trị tại bệnh viện của chúng tôi, với những thông tin như sau:" />
                             </div>
 
-                            <div class="row mb-2">
-                                <div class="col-12">
-                                    <webUI:Label runat="server" Title="Tóm tắt bệnh sử:" SubTitle="History of present illness" />
-                                    <div class="d-inline-block ml-2 align-top">
-                                        <asp:Label ID="lbHistoryPresentIllness" runat="server" class="d-inline-block ml-2 align-top"> </asp:Label>
-                                    </div>
-                                </div>
+                            <div class="d-grid" style="grid-template-columns: 260px 1fr">
+                                <webUI:Label runat="server" SubTitle="Date of visit" Title="Ngày khám bệnh:" />
+                                <asp:Label CssClass="align-top" runat="server" ID="prt_date_of_visit" />
                             </div>
 
-                            <div class="row mb-2">
-                                <div class="col-12">
-                                    <webUI:Label runat="server" Title="Tiền sử bệnh:" SubTitle="Past history" />
-                                    <div class="d-inline-block ml-2 align-top">
-                                        <asp:Label ID="lbPastHistory" runat="server" class="d-inline-block ml-2 align-top"> </asp:Label>
-                                    </div>
-                                </div>
+                            <div class="d-grid" style="grid-template-columns: 260px 1fr">
+                                <webUI:Label runat="server" SubTitle="Chief complaint" Title="Lý do đến khám:" />
+                                <asp:Label CssClass="align-top" runat="server" ID="prt_chief_complain" />
                             </div>
 
-                            <div class="row mb-2">
-                                <div class="col-12">
-                                    <webUI:Label runat="server" Title="Đặc điểm lâm sàng:" SubTitle="Clinical findings" />
-                                    <div class="d-inline-block ml-2 align-top">
-                                        <asp:Label ID="lbClinicalFindings" runat="server" class="d-inline-block ml-2 align-top"> </asp:Label>
-                                    </div>
-                                </div>
+                            <div class="d-grid" style="grid-template-columns: 260px 1fr">
+                                <webUI:Label runat="server" SubTitle="History of present illness" Title="Tóm tắt bệnh sử:" />
+                                <asp:Label CssClass="align-top" runat="server" ID="prt_history_present_illness" />
                             </div>
 
-                            <div class="row mb-2">
-                                <div class="col-12">
-                                    <webUI:Label runat="server" Title="Cận lâm sàng được chỉ định:" SubTitle="Para-clinical investigations" />
-                                    <div class="d-inline-block ml-2 align-top">
-                                         <asp:Label ID="lbParaClinicalInvestigations" runat="server" class="d-inline-block ml-2 align-top"> </asp:Label>
-                                    </div>
-                                </div>
+                            <div class="d-grid" style="grid-template-columns: 260px 1fr">
+                                <webUI:Label runat="server" SubTitle="Past history" Title="Tiền sử bệnh:" />
+                                <asp:Label CssClass="align-top" runat="server" ID="prt_past_history" />
                             </div>
 
-                            <div class="row mb-2">
-                                <div class="col-12">
-                                    <webUI:Label runat="server" Title="Chẩn đoán:" SubTitle="Diagnosis" />
-                                    <div class="d-inline-block ml-2 align-top">
-                                        <asp:Label ID="lbDiagnosis" runat="server" class="d-inline-block ml-2 align-top"> </asp:Label>
-
-                                    </div>
-                                </div>
+                            <div class="d-grid" style="grid-template-columns: 260px 1fr">
+                                <webUI:Label runat="server" SubTitle="Clinical findings" Title="Đặc điểm lâm sàng:" />
+                                <asp:Label CssClass="align-top" runat="server" ID="prt_clinical_findings" />
                             </div>
 
-                            <div class="row mb-2">
-                                <div class="col-12">
-                                    <webUI:Label runat="server" Title="Phương pháp và thuốc điều trị:" SubTitle="Treatment and medications" />
-                                    <div class="d-inline-block ml-2 align-top">
-                                       <asp:Label ID="lbTreatment" runat="server" class="d-inline-block ml-2 align-top"> </asp:Label>
-
-                                    </div>
-                                </div>
+                            <div class="d-grid" style="grid-template-columns: 260px 1fr">
+                                <webUI:Label runat="server" SubTitle="Para-clinical investigations" Title="Cận lâm sàng được chỉ định:" />
+                                <asp:Label CssClass="align-top" runat="server" ID="prt_para_clinical_investigations" />
                             </div>
 
-                            <div class="row mb-2">
-                                <div class="col-12">
-                                    <webUI:Label runat="server" Title="Thời gian điều trị:" SubTitle="Treatment period" />
-                                    <div class="d-inline-block ml-2 align-top">
-                                        <asp:Label ID="lbTreatmentPeriod" runat="server" class="d-inline-block ml-2 align-top"> </asp:Label>
-                                    </div>
-                                </div>
+                            <div class="d-grid" style="grid-template-columns: 260px 1fr">
+                                <webUI:Label runat="server" SubTitle="Diagnosis" Title="Chẩn đoán:" />
+                                <asp:Label CssClass="align-top" runat="server" ID="prt_diagnosis" />
                             </div>
 
-                            <div class="row mb-2">
-                                <div class="col-12">
-                                    <webUI:Label runat="server" Title="Lời khuyên và theo dõi:" SubTitle="Recommendation and Follow-up" />
-                                    <div class="d-inline-block ml-2 align-top">
-                                        <asp:Label ID="lbRecommendation" runat="server" class="d-inline-block ml-2 align-top"> </asp:Label>
-                                    </div>
-                                </div>
+                            <div class="d-grid" style="grid-template-columns: 260px 1fr">
+                                <webUI:Label runat="server" SubTitle="Treatment and medications" Title="Phương pháp và thuốc điều trị:" />
+                                <asp:Label CssClass="align-top" runat="server" ID="prt_treatment" />
                             </div>
 
-                               <!-- Chu ky bac sy -->
-                            <div class="row">
-                                <div class="col-6">
-                                </div>
-                                <div class="col-6 mb-2">
-                                    <div>
-                                        <webUI:Signature runat="server" Day="23" Month="5" Year="2021" Title="BÁC SĨ ĐIỀU TRỊ" SubTitle="ATTENDING DOCTOR" FullName="Dr. Nguyen Dinh My" />
-
-                                    </div>
-                                </div>
+                            <div class="d-grid" style="grid-template-columns: 260px 1fr">
+                                <webUI:Label runat="server" SubTitle="Treatment period" Title="Thời gian điều trị:" />
+                                <asp:Label CssClass="align-top" runat="server" ID="prt_treatment_period" />
                             </div>
-                            <!--Het Chu ky bac sy -->
 
+                            <div class="d-grid" style="grid-template-columns: 260px 1fr">
+                                <webUI:Label runat="server" SubTitle="Recommendation and Follow-up" Title="Lời khuyên và theo dõi:" />
+                                <asp:Label CssClass="align-top" runat="server" ID="prt_recommendation" />
+                            </div>
+
+                            <div class="d-grid mt-4" style="grid-template-columns: 1fr 1fr">
+                                <div></div>
+                                <webUI:Signature2 runat="server" id="prt_signature1" Title="BÁC SĨ ĐIỀU TRỊ/ ATTENDING DOCTOR" SubTitle="Họ tên, chữ ký & MSNV/ Full name, Signature & ID"/>
+                            </div>
                         </div>
                     </td>
                 </tr>
@@ -240,21 +166,19 @@
 
             <tfoot class="report-footer">
                 <tr>
-                    <td class="report-footer-cell">
+                    <td class="report-footer-cell" style="font-size: 10px">
                         <img style="width: 100%" src="../images/bottomline.png" />
-                        <div class="footer-info" style="display: flex; justify-content: space-between; width: 100%;">
+                        <div class="footer-info">
                             <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
                             <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>
                             <div>Tel: 028 3910 9999</div>
                             <div>www.aih.com.vn</div>
                         </div>
                     </td>
-                    <td class="report-footer-space" style="height: 100px;"></td>
+                    <td class="report-footer-space"></td>
                 </tr>
             </tfoot>
-
         </table>
-
     </div>
 
     <div class="cssclsNoPrint">
@@ -268,7 +192,10 @@
             <div class="scroll-sidebar h-100 w-100">
                 <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
-                        <div id="AmendReasonPlaceHolder" runat="server"></div>
+                        <asp:HiddenField runat="server" ID="RequiredFieldValidator" />
+                        <asp:Panel runat="server" ID="messagePlaceHolder">
+                            <webUI:AmendReason runat="server" ID="txt_amend_reason" />
+                        </asp:Panel>
 
                         <uc1:PatientInfo runat="server" ID="PatientInfo" />
 
@@ -378,47 +305,34 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-actions mb-3">
-                                            <asp:Button ID="btnComplete" OnClick="btnComplete_Click" class="btn btn-primary" runat="server" Text="Complete" />
+                                        <fieldset class="row mb-2">
+                                                <div class="form-actions">
+                                                    <asp:Button ID="btnComplete" OnClick="btnComplete_Click" class="btn btn-primary" runat="server" Text="Complete" />
 
-                                            <asp:Button ID="btnSave" OnClick="btnSave_Click" class="btn btn-primary" runat="server" Text="Save" />
+                                                    <asp:Button ID="btnSave" OnClick="btnSave_Click" class="btn btn-primary" runat="server" Text="Save" />
 
-                                            <asp:Button ID="btnDelete" data-target="#exampleModalCenter" data-toggle="modal" data-backdrop="static" data-keyboard="false" class="btn btn-danger" runat="server" Text="Delete" />
+                                                    <button type="button" id="btnDeleteModal" runat="server" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
 
-                                            <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
+                                                    <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
+                                                    <asp:Button OnClientClick="window.print()" ID="btnPrint" CssClass="btn btn-secondary" runat="server" Text="Print" />
 
-                                            <asp:Button ID="btnPrint" CssClass="btn btn-secondary" runat="server" OnClientClick="window.print()" Text="Print" />
-
-                                            <asp:Button ID="btnCancel" CssClass="btn btn-secondary" runat="server" OnClick="btnCancel_Click" Text="Cancel" />
-                                        </div>
-
-                                        <asp:UpdatePanel ID="updatePanelDeleteReason" runat="server" UpdateMode="Always">
-                                            <ContentTemplate>
-                                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLongTitle">Delete document</h5>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p runat="server">Please provide reason for deletion</p>
-                                                                <div class="form-group mb-2">
-                                                                    <Input:TextField runat="server" ID="TextField1" />
-                                                                </div>
-                                                                <div id="Div1" class="text-danger" runat="server">Nội dung lý do xóa phải trên 3 ký tự</div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button onserverclick="btnDelete_Click" class="btn btn-danger" runat="server">Delete</button>
-                                                                <button id="btnClose" data-dismiss="modal" class="btn btn-secondary">Close</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <asp:Button ID="btnCancel" OnClick="btnCancel_Click" CssClass="btn btn-secondary" runat="server" Text="Cancel" />
                                                 </div>
-                                            </ContentTemplate>
-                                        </asp:UpdatePanel>
+                                            </fieldset>
+                                        
+                                            <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
+                                                <modalbody>
+                                                <div class="text-center">
+                                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                                    <h4 class="mt-4 mb-4">Delete document?
+                                                    </h4>
+                                                </div>
+                                                <div class="text-right">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <asp:Button runat="server" OnClick="btnDelete_Click" Text="Delete" ID="btnDelete" class="btn btn-danger" />
+                                                </div>
+                                            </modalbody>
+                                            </webUI:PopupModal>
 
                                     </div>
                                 </div>

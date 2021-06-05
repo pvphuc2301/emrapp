@@ -24,15 +24,6 @@ namespace EMR.UserControls.PrintTemplate
         protected global::System.Web.UI.WebControls.Label lbl_fullname;
 
         /// <summary>
-        /// lbl_DOB control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_DOB;
-
-        /// <summary>
         /// lbl_gender control.
         /// </summary>
         /// <remarks>
@@ -40,6 +31,15 @@ namespace EMR.UserControls.PrintTemplate
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_gender;
+
+        /// <summary>
+        /// lbl_DOB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_DOB;
 
         /// <summary>
         /// Barcode control.

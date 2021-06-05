@@ -21,7 +21,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UserControl Barcode;
+        protected global::EMR.UserControls.Barcode Barcode;
 
         /// <summary>
         /// print_content control.
@@ -60,6 +60,24 @@ namespace EMR
         protected global::System.Web.UI.UpdatePanel Upd;
 
         /// <summary>
+        /// RequiredFieldValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField RequiredFieldValidator;
+
+        /// <summary>
+        /// messagePlaceHolder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel messagePlaceHolder;
+
+        /// <summary>
         /// txt_amendReason control.
         /// </summary>
         /// <remarks>
@@ -84,7 +102,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lbl_admission_date;
+        protected global::System.Web.UI.WebControls.Label lbl_admission_date;
 
         /// <summary>
         /// lbl_procedure_date control.
@@ -93,7 +111,16 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lbl_procedure_date;
+        protected global::System.Web.UI.WebControls.Label lbl_procedure_date;
+
+        /// <summary>
+        /// dpk_discharge_date control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker dpk_discharge_date;
 
         /// <summary>
         /// txt_preo_diagnosis control.
@@ -165,7 +192,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDeleteModal;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnDeleteModal;
 
         /// <summary>
         /// btnAmend control.
@@ -195,22 +222,13 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Button btnCancel;
 
         /// <summary>
-        /// messagePlaceHolder control.
+        /// myModal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl messagePlaceHolder;
-
-        /// <summary>
-        /// TextField1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField TextField1;
+        protected global::System.Web.UI.UserControl myModal;
 
         /// <summary>
         /// btnDelete control.

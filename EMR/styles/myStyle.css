@@ -470,3 +470,25 @@
     background-color: #ddd;
     border-radius: 4px;
 }
+
+.d-grid {
+    display: grid;
+    column-gap: 2px;
+    margin-bottom: 10px;
+}
+
+.grid-template-1 {
+    grid-template-columns: 230px auto;
+}
+
+.h5 {
+    margin-bottom: 0;
+}
+
+.grid-template-2 {
+    grid-template-columns: 1fr 1fr;
+}
+
+.my-icon {
+    display: inline-block;
+}

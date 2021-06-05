@@ -19,7 +19,8 @@ namespace EMR.UserControls.PrintTemplate
             lbl_fullname.Text = FullName;
             Barcode.Text = PID;
             lbl_gender.Text = Gender;
-            lbl_DOB.Text = DOB;
+            if(!string.IsNullOrEmpty(DOB)) lbl_DOB.Text = "DOB: " + DOB;
+
         }
     }
 }

@@ -1,9 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SurgicalCertificate.aspx.cs" Inherits="EMR.SurgicalCertificate" ValidateRequest="false" %>
 
-
-
-
-
 <%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="webUI" TagName="PatientInfo" %>
 <%@ Register Src="~/UserControls/Alert.ascx" TagPrefix="uc1" TagName="Alert" %>
 <%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="webUI" TagName="TextField" %>
@@ -14,8 +10,8 @@
 <%@ Register Src="~/UserControls/PrintTemplate/Date.ascx" TagPrefix="webUI" TagName="Date" %>
 <%@ Register Src="~/UserControls/Barcode.ascx" TagPrefix="webUI" TagName="Barcode" %>
 <%@ Register Src="~/UserControls/AmendReason.ascx" TagPrefix="webUI" TagName="AmendReason" %>
-
-
+<%@ Register Src="~/UserControls/PopupModal.ascx" TagPrefix="webUI" TagName="PopupModal" %>
+<%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="icon" TagName="ExclamationTriangle" %>
 
 
 <!DOCTYPE html>
@@ -89,14 +85,17 @@
 
     <form method="post" action="#" id="form2" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
-        <div class="scroll-sidebar h-100 w-100">
+        <div class="h-100 w-100">
             <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
-                    <webUI:AmendReason runat="server" ID="txt_amendReason" />
 
+                    <asp:HiddenField runat="server" ID="RequiredFieldValidator" />
+                    <asp:Panel runat="server" ID="messagePlaceHolder">
+                        <webUI:AmendReason runat="server" ID="txt_amendReason" />
+                    </asp:Panel>
                     <webUI:PatientInfo runat="server" ID="PatientInfo1" />
 
-                    <div class="row" style="margin-bottom: 50px;">
+                    <div class="row">
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-header">
@@ -108,18 +107,24 @@
                                         <div class="row mb-2">
                                             <div class="col-md-12">
                                                 <label class="control-label mb-2">Ngày nhập viện/ <span class="text-primary">Admisstion date: </span></label>
-                                                <div runat="server" ID="lbl_admission_date" ></div>
+                                                <asp:Label runat="server" ID="lbl_admission_date" />
                                             </div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-md-12">
                                                 <label class="control-label mb-2">Ngày phẫu thuật/ <span class="text-primary">Procedure date:</span></label>
-                                                <div runat="server" ID="lbl_procedure_date" ></div>
+                                                <asp:Label runat="server" ID="lbl_procedure_date" />
                                             </div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-md-12">
-                                                <label class="control-label mb-2">Chẩn đoán trước phẫu thuật/ <span class="text-primary">Preoperative diagnosis:</span></label>
+                                                <label class="control-label mb-2">3. Ngày xuất viện/ <span class="text-primary">Discharge date:</span></label>
+                                                <telerik:RadDatePicker CssClass="ml-2" runat="server" ID="dpk_discharge_date" Width="120px" />
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <label class="control-label mb-2">4. Chẩn đoán trước phẫu thuật/ <span class="text-primary">Preoperative diagnosis:</span></label>
                                                 <div class="form-group">
                                                     <webUI:TextField runat="server" ID="txt_preo_diagnosis" />
                                                 </div>
@@ -127,7 +132,7 @@
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-md-12">
-                                                <label class="control-label mb-2">Phương pháp phẫu thuật/ <span class="text-primary">Name of surgery/procedure:</span></label>
+                                                <label class="control-label mb-2">5. Phương pháp phẫu thuật/ <span class="text-primary">Name of surgery/procedure:</span></label>
                                                 <div class="form-group">
                                                     <webUI:TextField runat="server" ID="txt_name_of_procedure" />
                                                 </div>
@@ -135,7 +140,7 @@
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-md-12">
-                                                <label class="control-label mb-2">Cách thức phẫu thuật/ <span class="text-primary">Procedure narrative:</span></label>
+                                                <label class="control-label mb-2">6. Cách thức phẫu thuật/ <span class="text-primary">Procedure narrative:</span></label>
                                                 <div class="form-group">
                                                     <webUI:TextField runat="server" ID="txt_proce_narrative" />
                                                 </div>
@@ -143,7 +148,7 @@
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-md-12">
-                                                <label class="control-label mb-2">Nhóm máu/ <span class="text-primary">BloodType:</span></label>
+                                                <label class="control-label mb-2">7. Nhóm máu/ <span class="text-primary">BloodType:</span></label>
                                                 <div class="form-group">
                                                     <webUI:TextField runat="server" ID="txt_blood_type" />
                                                 </div>
@@ -151,52 +156,39 @@
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-md-12">
-                                                <label class="control-label mb-2">Yếu tố Rh/ <span class="text-primary">Rh:</span></label>
+                                                <label class="control-label mb-2">8. Yếu tố Rh/ <span class="text-primary">Rh:</span></label>
                                                 <div class="form-group">
                                                     <webUI:TextField runat="server" ID="txt_rh" />
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                        <div class="form-actions mb-3">
-                                            <asp:Button ID="btnComplete" OnClick="btnComplete_Click" class="btn btn-primary" runat="server" Text="Complete" />
-
-                                            <asp:Button ID="btnSave" OnClick="btnSave_Click" class="btn btn-primary" runat="server" Text="Save" />
-
-                                            <asp:Button ID="btnDeleteModal" data-toggle="modal" data-target="#deleteDocumentModal" class="btn btn-danger" runat="server" Text="Delete" />
-
-                                            <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
-
-                                            <asp:Button ID="btnPrint" CssClass="btn btn-secondary" OnClientClick="window.Print()" runat="server" Text="Print" />
-
-                                            <asp:Button ID="btnCancel" OnClick="btnCancel_Click" CssClass="btn btn-secondary" runat="server" Text="Cancel" />
-
-                                            <div runat="server" id="messagePlaceHolder"></div>
-                                        </div>
-
-                                        <div class="modal fade" id="deleteDocumentModal" tabindex="-1" role="dialog" aria-labelledby="deleteDocumentModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="deleteDocumentModalLabel">Delete document</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p runat="server">Please provide reason for deletion</p>
-                                                        <div class="form-group mb-2">
-                                                            <webUI:TextField runat="server" ID="TextField1" />
-                                                        </div>
-                                                        <div class="text-danger" runat="server">Nội dung lý do xóa phải trên 3 ký tự</div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                        <asp:Button runat="server" Text="Delete" ID="btnDelete" class="btn btn-danger" />
-                                                    </div>
+                                        <fieldset class="row mb-2">
+                                            <div class="col-md-12">
+                                                <div class="form-actions">
+                                                    <asp:Button ID="btnComplete" class="btn btn-primary" OnClick="btnComplete_Click" runat="server" Text="Complete" />
+                                                    <asp:Button ID="btnSave" class="btn btn-primary" runat="server" OnClick="btnSave_Click" Text="Save" />
+                                                    <button type="button" id="btnDeleteModal" runat="server" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
+                                                    <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
+                                                    <asp:Button ID="btnPrint" OnClientClick="window.print()" CssClass="btn btn-secondary" runat="server" Text="Print" />
+                                                    <asp:Button ID="btnCancel" CssClass="btn btn-secondary" OnClick="btnCancel_Click" runat="server" Text="Cancel" />
                                                 </div>
                                             </div>
-                                        </div>
+                                        </fieldset>
+                                        
+                                        <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
+                                            <ModalBody>
+                                                <div class="text-center">
+                                                    <icon:ExclamationTriangle cssClass="text-danger" Width="80" Height="80" runat="server" />
+                                                    <h4 class="mt-4 mb-4">Delete document?
+                                                    </h4>
+                                                </div>
+                                                <div class="text-right">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                    <asp:Button runat="server" Text="Delete" ID="btnDelete" OnClick="btnDelete_Click" class="btn btn-danger" />
+                                                </div>
+                                            </ModalBody>
+                                        </webUI:PopupModal>
+
                                     </div>
                                 </div>
                             </div>

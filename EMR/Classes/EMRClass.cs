@@ -853,9 +853,9 @@ namespace EMR
         }
 
         #region METHODS
-        public string[] Update()
+        public dynamic[] Update()
         {
-            string[] message = new string[2];
+            dynamic[] message = new dynamic[2];
 
             dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
             message[0] = response1;
@@ -868,9 +868,9 @@ namespace EMR
 
             return message;
         }
-        public static string[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid)
         {
-            string[] message = new string[2];
+            dynamic[] message = new dynamic[2];
             try
             {
                 dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
@@ -888,7 +888,7 @@ namespace EMR
             catch (Exception ex)
             {
                 dynamic response = new System.Dynamic.ExpandoObject();
-                response.Status = "Error";
+                response.Status = System.Net.HttpStatusCode.NotFound;
                 response.Data = ex.Message;
 
                 message[0] = response;
@@ -1034,9 +1034,9 @@ namespace EMR
         }
 
         #region METHODS
-        public string[] Update()
+        public dynamic[] Update()
         {
-            string[] message = new string[2];
+            dynamic[] message = new dynamic[2];
 
             dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
             message[0] = response1;
@@ -1049,9 +1049,9 @@ namespace EMR
 
             return message;
         }
-        public static string[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid)
         {
-            string[] message = new string[2];
+            dynamic[] message = new dynamic[2];
             try
             {
                 dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
@@ -1069,7 +1069,7 @@ namespace EMR
             catch (Exception ex)
             {
                 dynamic response = new System.Dynamic.ExpandoObject();
-                response.Status = "Error";
+                response.Status = System.Net.HttpStatusCode.NotFound;
                 response.Data = ex.Message;
 
                 message[0] = response;
@@ -1236,7 +1236,6 @@ namespace EMR
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
-
                 DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
 
                 WebHelpers.BindingDatafield(db, this);
@@ -1244,9 +1243,9 @@ namespace EMR
         }
 
         #region METHODS
-        public string[] Update()
+        public dynamic[] Update()
         {
-            string[] message = new string[2];
+            dynamic[] message = new dynamic[2];
 
             dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
             message[0] = response1;
@@ -1259,9 +1258,9 @@ namespace EMR
 
             return message;
         }
-        public static string[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid)
         {
-            string[] message = new string[2];
+            dynamic[] message = new dynamic[2];
             try
             {
                 dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
@@ -1279,7 +1278,7 @@ namespace EMR
             catch (Exception ex)
             {
                 dynamic response = new System.Dynamic.ExpandoObject();
-                response.Status = "Error";
+                response.Status = System.Net.HttpStatusCode.NotFound;
                 response.Data = ex.Message;
 
                 message[0] = response;
@@ -1372,17 +1371,32 @@ namespace EMR
                 return false;
             }
         }
-        public static bool Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid)
         {
-            dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
-
-            if (response.Status == System.Net.HttpStatusCode.OK)
+            dynamic[] message = new dynamic[2];
+            try
             {
-                dynamic response1 = WebHelpers.PostAPI(api + "/log/" + docid);
-                return true;
-            }
+                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
 
-            return false;
+                message[0] = response;
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic response1 = WebHelpers.PostAPI(api + "/log/" + docid);
+                    message[1] = response1;
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = System.Net.HttpStatusCode.NotFound;
+                response.Data = ex.Message;
+
+                message[0] = response;
+                return message;
+            }
         }
         #endregion
     }
@@ -2557,7 +2571,7 @@ namespace EMR
             catch (Exception ex)
             {
                 dynamic response = new System.Dynamic.ExpandoObject();
-                response.Status = "Error";
+                response.Status = System.Net.HttpStatusCode.NotFound;
                 response.Data = ex.Message;
 
                 //message[0] = response;
@@ -3229,15 +3243,16 @@ namespace EMR
             { "O", "Thừa cân hoặc béo phì/ Overweight or obesity" },
             { "N", "Bình thường/ Normal" },
         };
-        //public static Dictionary<string, string> PAINT_SCORE_CODE = new Dictionary<string, string>()
-        //{
-        //    { "0", "Không đau/ No hurt" },
-        //    { "1", "Đau rất ít/ Little hurt" },
-        //    { "2", "Đau nhẹ/ Slight hurt" },
-        //    { "3", "Đau vừa/ Considerable hurt" },
-        //    { "4", "Đau nhiều/ Serious hurt" },
-        //    { "5", "Rất đau/ Worst hurt" },
-        //};
+
+        public static Dictionary<string, string> PAINT_SCORE_CODE = new Dictionary<string, string>()
+        {
+            { "0", "Không đau/ No hurt" },
+            { "1", "Đau rất ít/ Little hurt" },
+            { "2", "Đau nhẹ/ Slight hurt" },
+            { "3", "Đau vừa/ Considerable hurt" },
+            { "4", "Đau nhiều/ Serious hurt" },
+            { "5", "Rất đau/ Worst hurt" },
+        };
 
         public static Dictionary<string, string> HOUSING_CODE = new Dictionary<string, string>()
         {
@@ -3875,10 +3890,10 @@ namespace EMR
             this.next_appointment = next_appointment;
         }
     }
-    public partial class OGIA
+    public partial class Ogia
     {
-        #region OGIA_Properties
-        private dynamic api = "api/ogia/";
+        #region Ogia_Properties
+        private dynamic api = "api/ogia";
         public dynamic document_id { get; set; }
         public dynamic user_name { get; set; }
         public dynamic status { get; set; }
@@ -3920,6 +3935,7 @@ namespace EMR
         public dynamic edema { get; set; }
         public dynamic edema_note { get; set; }
         public dynamic cardio_system { get; set; }
+        public dynamic respiratory_system { get; set; }
         public dynamic digestive_system { get; set; }
         public dynamic nervous_system { get; set; }
         public dynamic uro_system { get; set; }
@@ -3976,11 +3992,41 @@ namespace EMR
 
         #endregion
 
-        OGIA() { }
-
-        public OGIA(dynamic document_id)
+        public static Dictionary<string, string> OBS_HISTORY = new Dictionary<string, string>()
         {
-            dynamic response = WebHelpers.GetAPI(api + document_id);
+            { "id", "" },
+            { "label", "" },
+            { "grav_1", "" },
+            { "grav_2", "" },
+            { "grav_3", "" },
+            { "grav_4", "" },
+            { "grav_5", "" },
+            { "grav_6", "" },
+        };
+
+        public static Dictionary<string, string> OBS_FEAT_AMNIOTIC = new Dictionary<string, string>()
+        {
+            { "N", "Bình thường/ Normal" },
+            { "O", "Thiểu ối/ Oligohydramnios" },
+            { "P", "Đa ối/ Polyhydramnios" },
+        };
+        public static Dictionary<string, string> OBS_PRESENTATION_CODE = new Dictionary<string, string>()
+        {
+            { "O", "Ngôi khác/ Others, specify" },
+            { "B", "Mông/ Breech" },
+            { "C", "Đầu/ Cephalic" },
+        };
+
+        public static Dictionary<string, string> OBS_MEM_CONDITION_CODE = new Dictionary<string, string>()
+        {
+            { "IN", "Nguyên vẹn/ Intact" },
+            { "RU", "Đã vỡ/ Ruptured" },
+        };
+        Ogia() { }
+
+        public Ogia(dynamic document_id)
+        {
+            dynamic response = WebHelpers.GetAPI(api + "/" + document_id);
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -3989,14 +4035,14 @@ namespace EMR
                 WebHelpers.BindingDatafield(db, this);
             }
         }
-        public OGIA(dynamic document_id, dynamic user_name)
+        public Ogia(dynamic document_id, dynamic user_name)
         {
             this.document_id = document_id;
             this.user_name = user_name;
         }
 
         // Constructor for API Inssert
-        public OGIA(
+        public Ogia(
   dynamic document_id,
   dynamic user_name,
   dynamic status,
@@ -4043,6 +4089,7 @@ namespace EMR
           dynamic edema_,
           dynamic edema_note_,
           dynamic cardio_system_,
+          dynamic respiratory_system,
           dynamic digestive_system_,
           dynamic nervous_system_,
           dynamic uro_system_,
@@ -4136,6 +4183,7 @@ namespace EMR
             this.edema = edema_;
             this.edema_note = edema_note_;
             this.cardio_system = cardio_system_;
+            this.respiratory_system = respiratory_system;
             this.digestive_system = digestive_system_;
             this.nervous_system = nervous_system_;
             this.uro_system = uro_system_;
@@ -4189,9 +4237,9 @@ namespace EMR
             this.discharge_plan = discharge_plan_;
         }
 
-        public string[] Update()
+        public dynamic[] Update()
         {
-            string[] message = new string[2];
+            dynamic[] message = new dynamic[2];
             try
             {
                 dynamic response = WebHelpers.PostAPI(api + "/edit", this);
@@ -4207,17 +4255,17 @@ namespace EMR
             catch (Exception ex)
             {
                 dynamic response = new System.Dynamic.ExpandoObject();
-                response.Status = "Error";
+                response.Status = System.Net.HttpStatusCode.NotFound;
                 response.Data = ex.Message;
-
+                
                 message[0] = response;
                 return message;
             }
         }
 
-        public static string[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid)
         {
-            string[] message = new string[2];
+            dynamic[] message = new dynamic[2];
             try
             {
                 dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
@@ -4226,7 +4274,7 @@ namespace EMR
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI("api/OGIA/log/" + docid);
+                    dynamic response1 = WebHelpers.PostAPI("api/Ogia/log/" + docid);
                     message[1] = response1;
                 }
 
@@ -4235,7 +4283,7 @@ namespace EMR
             catch (Exception ex)
             {
                 dynamic response = new System.Dynamic.ExpandoObject();
-                response.Status = "Error";
+                response.Status = System.Net.HttpStatusCode.NotFound;
                 response.Data = ex.Message;
 
                 message[0] = response;
@@ -4349,9 +4397,9 @@ namespace EMR
             this.treatment_plan = _treatment_plan;
         }
 
-        public string[] Update()
+        public dynamic[] Update()
         {
-            string[] message = new string[2];
+            dynamic[] message = new dynamic[2];
             try
             {
                 dynamic response = WebHelpers.PostAPI("api/mc/edit", this);
@@ -4367,7 +4415,7 @@ namespace EMR
             catch (Exception ex)
             {
                 dynamic response = new System.Dynamic.ExpandoObject();
-                response.Status = "Error";
+                response.Status = System.Net.HttpStatusCode.NotFound;
                 response.Data = ex.Message;
 
                 message[0] = response;

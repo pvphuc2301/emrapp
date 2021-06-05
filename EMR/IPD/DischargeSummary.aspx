@@ -6,10 +6,19 @@
 <%@ Register Src="~/icons/XSquare.ascx" TagPrefix="icon" TagName="xsquare" %>
 <%@ Register Src="~/UserControls/PopupModal.ascx" TagPrefix="webUI" TagName="PopupModal" %>
 <%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="icon" TagName="ExclamationTriangle" %>
-<%@ Register Src="~/UserControls/PrintTemplate/Label.ascx" TagPrefix="aih" TagName="Label" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Label.ascx" TagPrefix="webUI" TagName="Label" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Date.ascx" TagPrefix="aih" TagName="Date" %>
-<%@ Register Src="~/UserControls/PrintTemplate/Signature.ascx" TagPrefix="aih" TagName="Signature" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Signature.ascx" TagPrefix="webUI" TagName="Signature" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrintWindow.ascx" TagPrefix="webUI" TagName="PrintWindow" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Line.ascx" TagPrefix="aih" TagName="Line" %>
+<%@ Register Src="~/UserControls/Barcode.ascx" TagPrefix="webUI" TagName="Barcode" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Label1.ascx" TagPrefix="webUI" TagName="Label1" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Signature1.ascx" TagPrefix="webUI" TagName="Signature1" %>
+<%@ Register Src="~/UserControls/PrintTemplate/PatientLabel1.ascx" TagPrefix="aih" TagName="PatientLabel1" %>
+
+
+
+
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -20,28 +29,20 @@
     <%--<link href="../../style/style-custom.css" rel="stylesheet" />--%>
 </head>
 <body>
-    <div class="cssclsNoScreen">
+    <div class="cssclsNoScreen" style="font-family: Tahoma !important; font-size: 13.3048px !important;">
         <table class="report-container">
             <thead class="report-header">
                 <tr>
                     <th class="report-header-cell">
                         <div class="header-info" style="display: flex; align-items: center;">
-                            <img width="200px" src="../images/AIH_PI_FULL.png" />
-                            <div style="flex-grow: 1">
-                                <div style="color: #007297; font-size: 26.6667px;">BỆNH ÁN NGOẠI TRÚ</div>
-                                <div style="color: #e20e5a; font-size: 16.6667px;">OUTPATIENT MEDICAL RECORD</div>
+                            <img width="180px" src="../images/AIH_PI_FULL.png" />
+                            <div style="flex-grow: 1; text-align: center">
+                                <div style="color: #007297; font-size: 20.6963px;">TÓM TẮT XUẤT VIỆN</div>
+                                <div style="color: #e20e5a; font-size: 16.6667px;">DISCHARGE SUMMARY</div>
                             </div>
-                            <div style="font-size: 13.3333px">
-                                <div><asp:Label ID="lbPatientName" runat="server"></asp:Label>MAI MAI MÃI1</div>
-                                <div><asp:Label ID="lbBirthday" runat="server" Text='<%# Eval("date_of_birth") %>'></asp:Label> 
-                                    | <asp:Label ID="lbSex" runat="server"></asp:Label></div>
-                                <div><asp:Label ID="lbPID" runat="server" Font-Bold="true"></asp:Label></div>
-                            </div>
+                            <aih:PatientLabel1 runat="server" ID="PatientLabel1" />
                         </div>
-                        <div style="margin-bottom: 80px;">
-                            <span style="width: 190px; border-bottom-style: solid; border-bottom-color: #e20e5a; border-bottom-width: 5px; display: inline-block; font-size: 26.6667px;"></span>
-                            <span style="display: inline-block; border-bottom-style: solid; border-bottom-color: #007297; border-bottom-width: 5px; width: calc(100% - 191px); margin-left: -5px;"></span>
-                        </div>
+                        <aih:Line runat="server" ID="Line" />
                     </th>
                 </tr>
             </thead>
@@ -50,262 +51,87 @@
                 <tr>
                     <td class="report-content-cell">
                         <div class="main">
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="font-bold d-block mb-0 h4">Ngày khám bệnh:</label>
-                                    Day of visit
+                            
+                            <div class="d-grid grid-template-2">
+                                <div>
+                                    <webUI:Label runat="server" SubTitle="Day of visit" Title="Ngày nhập viện:" />
+                                    <asp:Label runat="server" ID="prt_date_of_hospital" />
                                 </div>
-                                <div class="d-inline-block ml-2 align-top">02-03-2021</div>
-                            </div>
-
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="font-bold d-block mb-0 h4">I. LÝ DO ĐẾN KHÁM:</label>
-                                    CHIEF COMPLAINT
-                                </div>
-                                <div class="d-inline-block ml-2 align-top"><asp:Label ID="lbReason" runat="server"></asp:Label>
-                                    <%--Đau họng, sốt, khan tiếng--%></div>
-                            </div>
-
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="font-bold d-block mb-0 h4">II. BỆNH SỬ:</label>
-                                    MEDICAL HISTORY
-                                </div>
-                                <div class="d-inline-block ml-2 align-top">
-                                    <asp:Label ID="lbmedical_history" runat="server"></asp:Label>
-                                    <%--Hai ngày trước: Ho nhiều, nuốt đau ăn uống khó, sau đó sốt nhẹ, khan tiếnguống thuốc nhưng không đỡ--%>
+                                <div>
+                                    <webUI:Label runat="server" SubTitle="Day of visit" Title="Ngày xuất viện:" />
+                                    <asp:Label runat="server" ID="prt_date_of_discharge" />
                                 </div>
                             </div>
 
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="font-bold  d-block mb-0 h5">III. TIỀN SỬ BỆNH:</label>
-                                    ANTECEDENT MEDICAL HISTORY
-                                </div>
-                                <div class="d-inline-block ml-2 align-top"></div>
+                            <div class="d-grid grid-template-1">
+                                <webUI:Label1 runat="server" SubTitle="Reason for admission" No="1." Title="Lý do nhập viện:" />
+                                <asp:Label CssClass="align-top" runat="server" ID="prt_admission_reason" />
                             </div>
 
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="font-bold  d-block mb-0 h5">❖ Bản thân:</label>                                    
-                                    Personal
+                            <div class="d-grid grid-template-1">
+                                    <webUI:Label1 runat="server" ID="Label2" SubTitle="Diagnosis" No="2." Title="Chẩn đoán:" />
+                                    <asp:Label runat="server" ID="prt_icd10_diagnosis" />
                                 </div>
-                                <div class="d-inline-block ml-2 align-top"><asp:Label ID="lbPersonal" runat="server"></asp:Label></div>
+
+                            <div class="d-grid grid-template-1">
+                                <webUI:Label1 runat="server" ID="Label4" SubTitle="Medical History" No="3." Title="Bệnh sử:" />
+                                <asp:Label runat="server" ID="prt_cur_med_history" />
                             </div>
 
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="font-bold  d-block mb-0 h5">❖ Gia đình:</label>
-                                    Family
-                                </div>
-                                <div class="d-inline-block ml-2 align-top">Khỏe mạnh</div>
+                            <div class="d-grid grid-template-1">
+                                <webUI:Label1 runat="server" SubTitle="Physical findings on admission" No="4." Title="Khám lâm sàng:" />
+                                <asp:Label runat="server" ID="prt_physical_finding" />
                             </div>
 
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="font-bold  d-block mb-0 h5">❖ Tiêm chủng:</label>
-                                    Immunization
-                                </div>
-                                <div class="d-inline-block ml-2 align-top"></div>
+                            <div class="d-grid grid-template-1">
+                                    <webUI:Label1 runat="server" ID="Label8" SubTitle="Laboratory investigation results" No="5." Title="Kết quả xét nghiệm:" />
+                                    <asp:Label runat="server" ID="prt_lab_result" />
                             </div>
 
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="font-bold d-block mb-0 h5">❖ Thuốc đang sử dụng:</label>
-                                    Current medications
-                                </div>
-                                <div class="d-inline-block ml-2 align-top">Không rõ</div>
+                            <div class="d-grid grid-template-1">
+                                <webUI:Label1 runat="server" SubTitle="Procedures performed" No="6." Title="Các quy trình đã được thực hiện:" />
+                                <asp:Label runat="server" ID="prt_proce_performed" />
                             </div>
 
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="font-bold  d-block mb-0 h5">IV. Khám bệnh:</label>
-                                    Physical Examination
+                            <div class="d-grid grid-template-1">
+                                    <webUI:Label1 runat="server" SubTitle="Treatment during hospitalization" No="7." Title="Điều trị trong quá trình nằm viện:" />
+                                    <asp:Label runat="server" ID="prt_treatment" />
                                 </div>
-                                <div class="d-inline-block ml-2 align-top"></div>
+
+                            <div class="d-grid grid-template-1">
+                                <webUI:Label1 runat="server"  SubTitle="Evolution during hospitalization" No="8." Title="Diễn tiến trong quá trình nằm viện:" />
+                                <asp:Label runat="server" ID="prt_evolution" />
                             </div>
 
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="mb-0 h5"><span class="font-bold ">1. Dấu hiệu sinh tồn</span>/ Vital signs:</label>
-                                </div>
+                            <div class="d-grid grid-template-1">
+                                <webUI:Label1 runat="server" SubTitle="Patient’s condition on discharge" No="9." Title="Tình trạng của bệnh nhân khi xuất viện:" />
+                                <asp:Label runat="server" ID="prt_disc_condition" />
                             </div>
 
-                            <div class="col-md-12 mb-2">
-                                <table class="table-bordered">
-                                    <tr>
-                                        <td class="p-2">Nhiệt độ/ Temperature (C degree)</td>
-                                        <td class="p-2" style="width: 100px;"></td>
-                                        <td class="p-2">Mạch/ Pulse (/min)</td>
-                                        <td class="p-2" style="width: 100px;"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-2">Cân nặng/ Weight (Kg)</td>
-                                        <td class="p-2"></td>
-                                        <td class="p-2">Nhịp thở/ Respiratory Rate (/min)</td>
-                                        <td class="p-2"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-2">Chiều cao/Height (cm)</td>
-                                        <td class="p-2"></td>
-                                        <td class="p-2">Huyết áp/Blood pressure (mmHg)</td>
-                                        <td class="p-2"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-2">Chỉ số khối cơ thể/ BMI (Kg/m2)</td>
-                                        <td class="p-2"></td>
-                                        <td class="p-2">Độ bão hòa Oxy/ SpO2 (%)</td>
-                                        <td class="p-2"></td>
-                                    </tr>
-                                </table>
+                            <div class="d-grid grid-template-1">
+                                <webUI:Label1 runat="server" SubTitle="Discharge medications" No="10." Title="Thuốc khi xuất viện:" />
+                                <asp:Label runat="server" ID="prt_disc_medication" />
                             </div>
 
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="mb-0 h5"><span class="font-bold ">2. Khám bệnh</span>/ Physical Examination:</label>
-                                </div>
+                            <div class="d-grid grid-template-1">
+                                <webUI:Label1 runat="server" SubTitle="Follow-up instructions (signs and symptoms for immediate revisit)" No="11." Title="Hướng dẫn theo dõi (ghi rõ các dấu hiệu cần tái khám):" />
+                                <asp:Label runat="server" ID="prt_follow_up_instruc" />
                             </div>
 
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="mb-0 h4 d-block"><span class="font-bold ">❖ Yêu cầu khám chuyên khoa tâm lý:</span></label>
-                                    Psychological consultation required
-                                </div>
-                                <div class="d-inline-block ml-2 align-top">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
-                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                    </svg>
-                                    Không/No
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-square" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
-                                    </svg>
-                                    Có/Yes
-                                </div>
+                            <div class="d-grid  grid-template-1">
+                                <webUI:Label1 runat="server" No="12." SubTitle="Special diet" Title="Chế độ ăn uống:" />
+                                <asp:Label runat="server" ID="prt_special_diet" />
                             </div>
 
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="font-bold  d-block mb-0 h5">V. Chỉ định và kết quả xét nghiệm:</label>
-                                    Laboratory indications and results
-                                </div>
-                                <div class="d-inline-block ml-2 align-top"></div>
+                            <div class="d-grid grid-template-1">
+                                <webUI:Label1 runat="server" SubTitle="Next consultation (specify date and with whom)" No="13." Title="Ngày tái khám (ghi rõ ngày và tên bác sỹ):" />
+                                <asp:Label runat="server" ID="prt_next_consult" />
                             </div>
 
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="font-bold  d-block mb-0 h5">❖ Khảo sát bổ sung khác:</label>
-                                    Additional investigations
-                                </div>
-                                <div class="d-inline-block ml-2 align-top"></div>
+                            <div class="d-grid grid-template-2">
+                                <div></div>
+                                <webUI:Signature1 runat="server" id="Signature1" Title="Bác sỹ điều trị/ Attending Physician:" DateTime="Ngày/ Date: .........." />
                             </div>
-
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="font-bold  d-block mb-0 h5">VI. Kết luận:</label>
-                                    Conclusion
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="font-bold  d-block mb-0 h5">● Chẩn đoán ban đầu:</label>
-                                    Initial diagnosis
-                                </div>
-                                <div class="d-inline-block ml-2 align-top">Viêm mũi họng cấp</div>
-                            </div>
-
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="font-bold  d-block mb-0 h5">● Chẩn đoán xác định:</label>
-                                    Diagnosis
-                                </div>
-                                <div class="d-inline-block ml-2 align-top">Chronic rhinitis, nasopharyngitis and pharyngitis (J31)</div>
-                            </div>
-
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="font-bold  d-block mb-0 h5">● Chẩn đoán phân biệt:</label>
-                                    Differential diagnosis
-                                </div>
-                                <div class="d-inline-block ml-2 align-top">Không</div>
-                            </div>
-
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="font-bold  d-block mb-0 h5">● Bệnh kèm theo:</label>
-                                    Associated conditions
-                                </div>
-                                <div class="d-inline-block ml-2 align-top"></div>
-                            </div>
-
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="font-bold  d-block mb-0 h5">● Điều trị:</label>
-                                    Treatment
-                                </div>
-                                <div class="d-inline-block ml-2 align-top">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
-                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                    </svg>
-                                    Ngoại trú/Ambulatory care
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-square" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
-                                    </svg>
-                                    Nhập viện/Admission
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-square" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
-                                    </svg>
-                                    Chuyển viện/Transfer
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="font-bold  d-block mb-0 h5">❖ Yêu cầu ý kiến chuyên khoa:</label>
-                                    Specialized opinion requested
-                                </div>
-                                <div class="d-inline-block ml-2 align-top">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
-                                        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                                    </svg>
-                                    Không/No
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-square" viewBox="0 0 16 16">
-                                        <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" />
-                                    </svg>
-                                    Có/Yes
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="font-bold  d-block mb-0 h5">● Hướng dẫn cụ thể dành cho bệnh nhân:</label>
-                                    Specific education required
-                                </div>
-                                <div class="d-inline-block ml-2 align-top">Tái khám theo hẹn</div>
-                            </div>
-
-                            <div class="col-md-12 mb-2">
-                                <div class="d-inline-block">
-                                    <label class="font-bold  d-block mb-0 h5">● Hẹn lần khám tới:</label>
-                                    Next Appointment
-                                </div>
-                                <div class="d-inline-block ml-2 align-top"></div>
-                            </div>
-
-                            <div class="col-md-12 mb-2">
-                                <div class="text-center" style="float: right;margin-right: 100px;">
-                                    <div>
-                                        <label class="font-bold d-block mb-0 h5">BÁC SĨ ĐIỀU TRỊ</label>
-                                        ATTENDING DOCTOR
-                                    </div>
-                                    <div style="margin-top: 100px">Dr. Nguyen Dinh My</div>
-                                </div>
-                            </div>
-
                         </div>
                     </td>
                 </tr>
@@ -313,7 +139,7 @@
 
             <tfoot class="report-footer">
                 <tr>
-                    <td class="report-footer-cell">
+                    <td class="report-footer-cell" style="font-size: 10px">
                         <img style="width: 100%" src="../images/bottomline.png" />
                         <div class="footer-info">
                             <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
@@ -629,7 +455,7 @@
                                     <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
                                         <ModalBody>
                                             <div class="text-center">
-                                                <icon:ExclamationTriangle cssClass="text-danger" Width="80" Height="80" runat="server" />
+                                                <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
                                                 <h4 class="mt-4 mb-4">Delete document?
                                                 </h4>
                                             </div>

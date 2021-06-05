@@ -11,70 +11,52 @@ namespace EMR.UserControls.PrintTemplate
 {
 
 
-    public partial class Date
+    public partial class Signature2
     {
 
         /// <summary>
-        /// datetimeContainer control.
+        /// signature control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl datetimeContainer;
+        protected global::System.Web.UI.WebControls.Panel signature;
 
         /// <summary>
-        /// lblDay control.
+        /// prt_date control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblDay;
+        protected global::EMR.UserControls.PrintTemplate.Date prt_date;
 
         /// <summary>
-        /// prt_day control.
+        /// prt_title control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_day;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_title;
 
         /// <summary>
-        /// lblMonth control.
+        /// prt_supTitle control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblMonth;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_supTitle;
 
         /// <summary>
-        /// prt_month control.
+        /// prt_fullname control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_month;
-
-        /// <summary>
-        /// lblYear control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblYear;
-
-        /// <summary>
-        /// prt_year control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_year;
+        protected global::System.Web.UI.WebControls.Label prt_fullname;
     }
 }

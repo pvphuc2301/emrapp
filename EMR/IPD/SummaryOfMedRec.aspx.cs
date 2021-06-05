@@ -46,7 +46,7 @@ namespace EMR
 
                 if (somr.status == DocumentStatus.FINAL)
                 {
-                    loadDataToFormPrint(somr);
+                    loadDataToPrint(somr);
 
                     btnComplete.Visible = false;
                     btnSave.Visible = false;
@@ -70,20 +70,22 @@ namespace EMR
             }
         }
 
-        private void loadDataToFormPrint(Somr somr)
+        private void loadDataToPrint(Somr somr)
         {
             PatientLabel1.PID = "900000488";
             PatientLabel1.FullName = "BOY OF MAI MAI MAI900000489";
             PatientLabel1.DOB = "04-10-1960";
             PatientLabel1.Gender = "Male";
 
-            lbl_form_date.Text = somr.form_date.ToString("dd-MM-yyyy");
-            lbl_to_date.Text = somr.to_date.ToString("dd-MM-yyyy");
-            lbl_chief_complaint.Text = somr.chief_complaint;
-            lbl_diagnosis.Text = somr.diagnosis;
-            lbl_clinical_evolution.Text = somr.clinical_evolution;
-            lbl_result_para_clinical.Text = somr.result_para_clinical;
-            lbl_treatment_prognosis.Text = somr.treatment_prognosis;
+            prt_form_date.Text = WebHelpers.ConvertDateTime(somr.form_date, "dd-MM-yyyy");
+            prt_to_date.Text = WebHelpers.ConvertDateTime(somr.to_date, "dd-MM-yyyy");
+            prt_chief_complaint.Text = somr.chief_complaint;
+            prt_diagnosis.Text = somr.diagnosis;
+            prt_clinical_evolution.Text = somr.clinical_evolution;
+            prt_result_para_clinical.Text = somr.result_para_clinical;
+            prt_treatment_prognosis.Text = somr.treatment_prognosis;
+
+
 
         }
 
@@ -208,7 +210,9 @@ namespace EMR
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            if (Somr.Delete((string)Session["UserID"], Request.QueryString["vpid"]))
+
+            dynamic result = Disc.Delete((string)Session["UserID"], Request.QueryString["docid"])[0];
+            if (result.Status == System.Net.HttpStatusCode.OK)
             {
                 string pid = Request["pid"];
                 string vpid = Request["vpid"];
@@ -217,8 +221,8 @@ namespace EMR
             }
             else
             {
-                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                message.Load(messagePlaceHolder, "Can't delete document", Message.TYPE.DANGER, 2000);
+                Session["PageNotFound"] = result;
+                Response.Redirect("../Other/PageNotFound.aspx", false);
             }
         }
     }

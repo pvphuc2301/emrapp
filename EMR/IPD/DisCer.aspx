@@ -11,8 +11,13 @@
 <%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="icon" TagName="ExclamationTriangle" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Date.ascx" TagPrefix="webUI" TagName="Date" %>
 <%@ Register Src="~/UserControls/PrintTemplate/DateTime.ascx" TagPrefix="webUI" TagName="DateTime" %>
-<%@ Register Src="~/UserControls/PrintTemplate/PrintWindow.ascx" TagPrefix="webUI" TagName="PrintWindow" %>
-
+<%@ Register Src="~/UserControls/PrintTemplate/Line.ascx" TagPrefix="aih" TagName="Line" %>
+<%@ Register Src="~/UserControls/Barcode.ascx" TagPrefix="webUI" TagName="Barcode" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Label1.ascx" TagPrefix="webUI" TagName="Label1" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Signature1.ascx" TagPrefix="webUI" TagName="Signature1" %>
+<%@ Register Src="~/UserControls/PrintTemplate/PatientLabel1.ascx" TagPrefix="aih" TagName="PatientLabel1" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Label.ascx" TagPrefix="webUI" TagName="Label" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Signature2.ascx" TagPrefix="aih" TagName="Signature2" %>
 
 
 <!DOCTYPE html>
@@ -25,214 +30,151 @@
     <link href="../../style/style-custom.css" rel="stylesheet" />
 </head>
 <body>
-    <%--<webUI:PrintWindow runat="server" ID="PrintWindow">
-        <PrintTitle>
-            <div style="color: #007297; font-size: 26.6667px;">GIẤY RA VIỆN</div>
-            <div style="color: #e20e5a; font-size: 16.6667px;">DISCHARGE CERTIFICATE</div>
-        </PrintTitle>
-
-        <PrintContent>
-            
-            <div class="row">
-                <div class="col-6">
-                    <div class="d-inline-block">
-                        <label class="font-bold d-block mb-0 h4">Họ tên người bệnh:</label>
-                        Patient's Name
-                    </div>
-                    <div class="d-inline-block ml-2 align-top">MAI MAI MAI</div>
-                </div>
-                <div class="col-6">
-                    <div class="d-inline-block">
-                        <div class="d-inline-block">
-                            <label class="font-bold d-block mb-0 h4">Ngày tháng năm sinh:</label>
-                            DOB
-                        </div>
-                        <div class="d-inline-block ml-2 align-top">04-10-1960</div>
-                    </div>
-                
-                    <div class="d-inline-block">
-                        <div class="d-inline-block">
-                            <label class="font-bold d-block mb-0 h4">Giới tính:</label>
-                            Gender
-                        </div>
-                        <div class="d-inline-block ml-2 align-top">Nam</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <div class="d-inline-block">
-                        <label class="font-bold d-block mb-0 h4">Dân tộc:</label>
-                        Nationality
-                    </div>
-                    <div class="d-inline-block ml-2 align-top">Việt Nam</div>
-                </div>
-                <div class="col-6">
-                    <div class="d-inline-block">
-                        <div class="d-inline-block">
-                            <label class="font-bold d-block mb-0 h4">Nghề nghiệp:</label>
-                            Occupation
-                        </div>
-                        <div class="d-inline-block ml-2 align-top">Không biết</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="d-inline-block">
-                        <div class="d-inline-block">
-                            <label class="font-bold d-block mb-0 h4">BHYT:</label>
-                            Health Insurance
-                        </div>
-                        <div class="d-inline-block ml-2 align-top"></div>
-                    </div>
-                    <div class="d-inline-block">
-                        <div class="d-inline-block">
-                            <label class="font-bold d-block mb-0 h4">Giá trị từ:</label>
-                            Valid from
-                        </div>
-                        <div class="d-inline-block ml-2 align-top"></div>
-                    </div>
-                    <div class="d-inline-block">
-                        <div class="d-inline-block">
-                            <label class="font-bold d-block mb-0 h4">đến:</label>
-                            to
-                        </div>
-                        <div class="d-inline-block ml-2 align-top"></div>
-                    </div>
-                    <div class="d-inline-block">
-                        <div class="d-inline-block">
-                            <label class="font-bold d-block mb-0 h4">Số:</label>
-                            No
-                        </div>
-                        <div class="d-inline-block ml-2 align-top"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="d-inline-block">
-                        <div class="d-inline-block">
-                            <label class="font-bold d-block mb-0 h4">Địa chỉ:</label>
-                            Address
-                        </div>
-                        <div class="d-inline-block">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="d-inline-block">
-                        <div class="d-inline-block">
-                            <label class="font-bold d-block mb-0 h4">Vào viện lúc:</label>
-                            Admitted time
-                        </div>
-                        <aih:DateTime Minute="23" Hour="10" CssClass="d-inline-block" runat="server" Day="23" Month="01" Year="1997" />
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="d-inline-block">
-                        <div class="d-inline-block">
-                            <label class="font-bold d-block mb-0 h4">Ra viện lúc:</label>
-                            Discharged time
-                        </div>
-                        <aih:DateTime Minute="23" Hour="10" CssClass="d-inline-block" runat="server" Day="23" Month="01" Year="1997" />
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="d-inline-block">
-                        <div class="d-inline-block">
-                            <label class="font-bold d-block mb-0 h4">Chẩn đoán:</label>
-                            Diagnosis
-                        </div>
-                        <div class="d-inline-block">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="d-inline-block">
-                        <div class="d-inline-block">
-                            <label class="font-bold d-block mb-0 h4">Phương pháp điều trị:</label>
-                            Treatment
-                        </div>
-                        <div class="d-inline-block">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="d-inline-block">
-                        <div class="d-inline-block">
-                            <label class="font-bold d-block mb-0 h4">Lời dặn của bác sĩ:</label>
-                            Doctor’s recommendation
-                        </div>
-                        <div class="d-inline-block">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
-                    <div class="d-inline-block">
-                        <div class="d-inline-block">
-                            <label class="font-bold d-block mb-0 h4">Ghi chú:</label>
-                            Notes
-                        </div>
-                        <div class="d-inline-block">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="row">
-                <div class="col-6">
-                    <aih:Date CssClass="text-center" runat="server" ID="Date" Day="23" Month="01" Year="1997" />
-                    <div class="text-center">
-                        <div class="d-inline-block">
-                            <div class="d-inline-block">
-                                <label class="font-bold d-block mb-0 h4">TỔNG GIÁM ĐỐC/ CEO</label>
-                                Họ tên, chữ ký, MSNV/ Full name, Signature, ID
+    <%--139--%> 
+    <div class="cssclsNoScreen" style="font-family: Tahoma !important; font-size: 13.3048px !important;">
+        <table class="report-container">
+            <thead class="report-header">
+                <tr>
+                    <th class="report-header-cell">
+                        <div class="header-info" style="display: flex; align-items: center;">
+                            <div class="text-center">
+                                <div>SỞ Y TẾ TP.HCM</div>
+                                <div class="text-primary">HCMC DOH</div>
+                                <div>BỆNH VIỆN QUỐC TẾ MỸ</div>
+                                <div class="text-primary">AMERICAN INTERNATIONAL HOSPITAL</div>
+                                <div class="font-bold">KHOA/<span  class="text-primary">DEPARTMENT:</span></div>
+                            </div>
+                            <div style="flex-grow: 1; text-align: center">
+                                <div class="font-bold">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
+                                <div class="text-primary">SOCIALIST REPUBLIC OF VIETNAM</div>
+                                <div class="font-bold">Độc lập - Tự do - Hạnh phúc</div>
+                                <div class="text-primary">Independence – Freedom – Happiness</div>
                             </div>
                             <div>
+                                <div>MS: 01/BV-01</div>
+                                <div>Số lưu trữ/ <span class="text-primary">No:</span></div>
+                                <div>Mã Y tế/ <span class="text-primary">PID:</span> <asp:Label runat="server" ID="prt_pid" /></div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </th>
+                </tr>
+            </thead>
 
-                <div class="col-6">
-                    <aih:Date CssClass="text-center" runat="server" ID="Date1" Day="23" Month="01" Year="1997" />
-                    <div class="text-center">
-                        <div class="d-inline-block">
-                            <div class="d-inline-block">
-                                <label class="font-bold d-block mb-0 h4">TRƯỞNG KHOA/ HEAD OF DEPARTMENT</label>
-                                Họ tên, chữ ký, MSNV/ Full name, Signature, ID
+            <tbody class="report-content">
+                <tr>
+                    <td class="report-content-cell">
+                        <div class="main">
+                            <div class="text-center font-bold h4 mt-4 mb-4">
+                                <div>GIẤY RA VIỆN</div>
+                                <div class="text-primary">DISCHARGE CERTIFICATE</div>
                             </div>
-                            <div>
+
+                            <div class="d-grid" style="grid-template-columns: 1fr 275px 139px">
+                                <div>
+                                    <webUI:Label runat="server" SubTitle="Patient's Name" Title="Họ tên người bệnh:" />
+                                    <asp:Label runat="server" ID="prt_patient_name" />
+                                </div>
+                                
+                                <div>
+                                    <webUI:Label runat="server" SubTitle="DOB" Title="Ngày tháng năm sinh:" />
+                                    <asp:Label runat="server" ID="prt_dob" />
+                                </div>
+
+                                <div>
+                                    <webUI:Label runat="server" SubTitle="Gender" Title="Giới tính:" />
+                                    <asp:Label runat="server" ID="prt_gender" />
+                                </div>
+                            </div>
+
+                            <div class="d-grid" style="grid-template-columns: 1fr 1fr">
+                                <div>
+                                    <webUI:Label runat="server" SubTitle="Nationality" Title="Dân tộc:" />
+                                    <asp:Label CssClass="align-top" runat="server" ID="prt_nationality" />
+                                </div>
+                                <div>
+                                    <webUI:Label runat="server" SubTitle="Occupation" Title="Nghề nghiệp:" />
+                                    <asp:Label CssClass="align-top" runat="server" ID="prt_occupation" />
+                                </div>
+                            </div>
+
+                            <div class="d-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr">
+                                <div>
+                                    <webUI:Label runat="server" SubTitle="Health Insurance" Title="BHYT:" />
+                                </div>
+                                <div>
+                                    <webUI:Label runat="server" SubTitle="Valid from" Title="Giá trị từ:" />
+                                    <asp:Label CssClass="align-top" runat="server" ID="prt_valid_from" />
+                                </div>
+                                <div>
+                                    <webUI:Label runat="server" SubTitle="to" Title="đến:" />
+                                    <asp:Label CssClass="align-top" runat="server" ID="Label5" />
+                                </div>
+                                <div>
+                                    <webUI:Label runat="server" SubTitle="No" Title="Số:" />
+                                    <asp:Label CssClass="align-top" runat="server" ID="prt_no_health_insurance" />
+                                </div>
+                            </div>
+
+                            <div class="d-grid" style="grid-template-columns:  170px 1fr">
+                                <webUI:Label runat="server" SubTitle="Address" Title="Địa chỉ:" />
+                                <asp:Label CssClass="align-top" runat="server" ID="prt_address" />
+                            </div>
+
+                            <div class="d-grid" style="grid-template-columns:  170px 1fr">
+                                <webUI:Label runat="server" SubTitle="Admitted time"  Title="Vào viện lúc:" />
+                                <webUI:DateTime runat="server" ID="prt_" />
+                            </div>
+
+                            <div class="d-grid" style="grid-template-columns:  170px 1fr">
+                                <webUI:Label runat="server" SubTitle="Discharged time" Title="Ra viện lúc:" />
+                                <webUI:DateTime runat="server" ID="prt_disc_date_time" />
+                            </div>
+
+                            <div class="d-grid" style="grid-template-columns:  170px 1fr">
+                                <webUI:Label runat="server" SubTitle="Diagnosis" Title="Chẩn đoán:" />
+                                <asp:Label CssClass="align-top" runat="server" ID="prt_diagnosis" />
+                            </div>
+
+                            <div class="d-grid">
+                                <webUI:Label runat="server" SubTitle="Treatment" Title="Phương pháp điều trị:" />
+                                <asp:Label CssClass="align-top" runat="server" ID="Label11" />
+                            </div>
+
+                            <div class="d-grid">
+                                <webUI:Label runat="server" SubTitle="Doctor’s recommendation" Title="Lời dặn của bác sĩ:" />
+                                <asp:Label CssClass="align-top" runat="server" ID="Label12" />
+                            </div>
+
+                            <div class="d-grid">
+                                <webUI:Label runat="server" SubTitle="Notes" Title="Ghi chú:" />
+                                <asp:Label CssClass="align-top" runat="server" ID="prt_notes" />
+                            </div>
+
+                            <div class="d-grid grid-template-2 mt-4">
+                                <aih:Signature2 runat="server" id="prt_signature1" Title="TỔNG GIÁM ĐỐC/ CEO" SubTitle="Họ tên, chữ ký, MSNV/ Full name, Signature, ID"/>
+                                <aih:Signature2 runat="server" id="prt_signature2" Title="TRƯỞNG KHOA/ HEAD OF DEPARTMENT" SubTitle="Họ tên, chữ ký, MSNV/ Full name, Signature, ID"/>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </td>
+                </tr>
+            </tbody>
 
-        </PrintContent>
-    </webUI:PrintWindow>--%>
+            <tfoot class="report-footer">
+                <tr>
+                    <%--<td class="report-footer-cell" style="font-size: 10px">
+                        <img style="width: 100%" src="../images/bottomline.png" />
+                        <div class="footer-info">
+                            <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
+                            <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>
+                            <div>Tel: 028 3910 9999</div>
+                            <div>www.aih.com.vn</div>
+                        </div>
+                    </td>
+                    <td class="report-footer-space"></td>--%>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
 
     <div class="cssclsNoPrint">
         <form method="post" action="#" id="form2" runat="server">
@@ -355,7 +297,7 @@
                                             <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
                                                 <modalbody>
                                                 <div class="text-center">
-                                                    <icon:ExclamationTriangle cssClass="text-danger" Width="80" Height="80" runat="server" />
+                                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
                                                     <h4 class="mt-4 mb-4">Delete document?
                                                     </h4>
                                                 </div>

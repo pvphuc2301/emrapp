@@ -21,7 +21,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UserControl Barcode;
+        protected global::EMR.UserControls.Barcode Barcode;
 
         /// <summary>
         /// lbl_pid control.

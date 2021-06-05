@@ -7,30 +7,48 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EMR
+namespace EMR.Print
 {
 
 
-    public partial class SummaryOfMedicalReport
+    public partial class Tét
     {
 
         /// <summary>
-        /// PatientLabel1 control.
+        /// lbPatientName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.PrintTemplate.PatientLabel1 PatientLabel1;
+        protected global::System.Web.UI.WebControls.Label lbPatientName;
 
         /// <summary>
-        /// Line control.
+        /// lbDoB control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.PrintTemplate.Line Line;
+        protected global::System.Web.UI.WebControls.Label lbDoB;
+
+        /// <summary>
+        /// Barcode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.Barcode Barcode;
+
+        /// <summary>
+        /// lbPID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbPID;
 
         /// <summary>
         /// print_content control.
@@ -42,309 +60,300 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl print_content;
 
         /// <summary>
-        /// prt_form_date control.
+        /// lbNgayKhamBenh control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_form_date;
+        protected global::System.Web.UI.WebControls.Label lbNgayKhamBenh;
 
         /// <summary>
-        /// prt_to_date control.
+        /// lbChiefComplaint control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_to_date;
+        protected global::System.Web.UI.WebControls.Label lbChiefComplaint;
 
         /// <summary>
-        /// prt_ control.
+        /// lbMedicalHistory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_;
+        protected global::System.Web.UI.WebControls.Label lbMedicalHistory;
 
         /// <summary>
-        /// prt_chief_complaint control.
+        /// Label2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_chief_complaint;
+        protected global::System.Web.UI.WebControls.Label Label2;
 
         /// <summary>
-        /// prt_diagnosis control.
+        /// lbPersonal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_diagnosis;
+        protected global::System.Web.UI.WebControls.Label lbPersonal;
 
         /// <summary>
-        /// prt_clinical_evolution control.
+        /// lbFamily control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_clinical_evolution;
+        protected global::System.Web.UI.WebControls.Label lbFamily;
 
         /// <summary>
-        /// prt_result_para_clinical control.
+        /// lbImmunization control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_result_para_clinical;
+        protected global::System.Web.UI.WebControls.Label lbImmunization;
 
         /// <summary>
-        /// prt_treatment control.
+        /// lbCurrentMedication control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_treatment;
+        protected global::System.Web.UI.WebControls.Label lbCurrentMedication;
 
         /// <summary>
-        /// prt_eval_treatment control.
+        /// Label3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_eval_treatment;
+        protected global::System.Web.UI.WebControls.Label Label3;
 
         /// <summary>
-        /// prt_treatment_prognosis control.
+        /// Label6 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_treatment_prognosis;
+        protected global::System.Web.UI.WebControls.Label Label6;
 
         /// <summary>
-        /// form2 control.
+        /// lbTemperature control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form2;
+        protected global::System.Web.UI.WebControls.TableCell lbTemperature;
 
         /// <summary>
-        /// RadScriptManager2 control.
+        /// lbHeartRate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadScriptManager RadScriptManager2;
+        protected global::System.Web.UI.WebControls.TableCell lbHeartRate;
 
         /// <summary>
-        /// RequiredFieldValidator control.
+        /// lbWeight control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField RequiredFieldValidator;
+        protected global::System.Web.UI.WebControls.TableCell lbWeight;
 
         /// <summary>
-        /// messagePlaceHolder control.
+        /// lbRespiratoryRate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel messagePlaceHolder;
+        protected global::System.Web.UI.WebControls.TableCell lbRespiratoryRate;
 
         /// <summary>
-        /// txt_amendReason control.
+        /// lbHeight control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.AmendReason txt_amendReason;
+        protected global::System.Web.UI.WebControls.TableCell lbHeight;
 
         /// <summary>
-        /// PatientInfo1 control.
+        /// lbBloodPressure control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.PatientInfo PatientInfo1;
+        protected global::System.Web.UI.WebControls.TableCell lbBloodPressure;
 
         /// <summary>
-        /// dpk_form_date control.
+        /// lbBmi control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dpk_form_date;
+        protected global::System.Web.UI.WebControls.TableCell lbBmi;
 
         /// <summary>
-        /// dpk_to_date control.
+        /// lbSpo2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker dpk_to_date;
+        protected global::System.Web.UI.WebControls.TableCell lbSpo2;
 
         /// <summary>
-        /// txt_chief_complaint control.
+        /// Label27 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_chief_complaint;
+        protected global::System.Web.UI.WebControls.Label Label27;
 
         /// <summary>
-        /// txt_diagnosis control.
+        /// Label7 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_diagnosis;
+        protected global::System.Web.UI.WebControls.Label Label7;
 
         /// <summary>
-        /// txt_clinical_evolution control.
+        /// Label5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_clinical_evolution;
+        protected global::System.Web.UI.WebControls.Label Label5;
 
         /// <summary>
-        /// txt_result_para_clinical control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_result_para_clinical;
+        protected global::System.Web.UI.WebControls.Label Label1;
 
         /// <summary>
-        /// txt_treatment control.
+        /// Label18 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_treatment;
+        protected global::System.Web.UI.WebControls.Label Label18;
 
         /// <summary>
-        /// txt_eval_treatment control.
+        /// Label15 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_eval_treatment;
+        protected global::System.Web.UI.WebControls.Label Label15;
 
         /// <summary>
-        /// txt_treatment_prognosis control.
+        /// Label16 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_treatment_prognosis;
+        protected global::System.Web.UI.WebControls.Label Label16;
 
         /// <summary>
-        /// btnComplete control.
+        /// lb_initial_diagnosis control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnComplete;
+        protected global::System.Web.UI.WebControls.Label lb_initial_diagnosis;
 
         /// <summary>
-        /// btnSave control.
+        /// lb_diagnosis control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSave;
+        protected global::System.Web.UI.WebControls.Label lb_diagnosis;
 
         /// <summary>
-        /// btnDeleteModal control.
+        /// lb_diffesrentialDiagnosis control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnDeleteModal;
+        protected global::System.Web.UI.WebControls.Label lb_diffesrentialDiagnosis;
 
         /// <summary>
-        /// btnAmend control.
+        /// lb_associated_conditions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnAmend;
+        protected global::System.Web.UI.WebControls.Label lb_associated_conditions;
 
         /// <summary>
-        /// btnPrint control.
+        /// Label14 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPrint;
+        protected global::System.Web.UI.WebControls.Label Label14;
 
         /// <summary>
-        /// btnCancel control.
+        /// Label11 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancel;
+        protected global::System.Web.UI.WebControls.Label Label11;
 
         /// <summary>
-        /// myModal control.
+        /// lb_specific_education_required control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UserControl myModal;
+        protected global::System.Web.UI.WebControls.Label lb_specific_education_required;
 
         /// <summary>
-        /// ExclamationTriangle control.
+        /// lb_next_appointment control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.ExclamationTriangle ExclamationTriangle;
-
-        /// <summary>
-        /// btnDelete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDelete;
+        protected global::System.Web.UI.WebControls.Label lb_next_appointment;
     }
 }
