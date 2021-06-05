@@ -1,9 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DisCer.aspx.cs" Inherits="EMR.DischargeCertificate" ValidateRequest="false" %>
 
-<%@ Register Assembly="Asp.Net.Web.UI" Namespace="Asp.Net.Web.UI" TagPrefix="webUI" %>
-
-<%@ Register Assembly="Bootstrap.Icons" Namespace="Bootstrap.Icons" TagPrefix="Icons" %>
-
 <%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="uc1" TagName="PatientInfo" %>
 <%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="aih" TagName="TextField" %>
 <%@ Register Src="~/UserControls/AmendReason.ascx" TagPrefix="aih" TagName="AmendReason" %>
@@ -19,7 +15,6 @@
 <%@ Register Src="~/UserControls/PrintTemplate/Label.ascx" TagPrefix="webUI" TagName="Label" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Signature2.ascx" TagPrefix="aih" TagName="Signature2" %>
 
-
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -30,7 +25,7 @@
     <link href="../../style/style-custom.css" rel="stylesheet" />
 </head>
 <body>
-    <%--139--%> 
+    <%--139--%>
     <div class="cssclsNoScreen" style="font-family: Tahoma !important; font-size: 13.3048px !important;">
         <table class="report-container">
             <thead class="report-header">
@@ -42,7 +37,7 @@
                                 <div class="text-primary">HCMC DOH</div>
                                 <div>BỆNH VIỆN QUỐC TẾ MỸ</div>
                                 <div class="text-primary">AMERICAN INTERNATIONAL HOSPITAL</div>
-                                <div class="font-bold">KHOA/<span  class="text-primary">DEPARTMENT:</span></div>
+                                <div class="font-bold">KHOA/<span class="text-primary">DEPARTMENT:</span></div>
                             </div>
                             <div style="flex-grow: 1; text-align: center">
                                 <div class="font-bold">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
@@ -53,7 +48,8 @@
                             <div>
                                 <div>MS: 01/BV-01</div>
                                 <div>Số lưu trữ/ <span class="text-primary">No:</span></div>
-                                <div>Mã Y tế/ <span class="text-primary">PID:</span> <asp:Label runat="server" ID="prt_pid" /></div>
+                                <div>Mã Y tế/ <span class="text-primary">PID:</span>
+                                    <asp:Label runat="server" ID="prt_pid" /></div>
                             </div>
                         </div>
                     </th>
@@ -74,7 +70,7 @@
                                     <webUI:Label runat="server" SubTitle="Patient's Name" Title="Họ tên người bệnh:" />
                                     <asp:Label runat="server" ID="prt_patient_name" />
                                 </div>
-                                
+
                                 <div>
                                     <webUI:Label runat="server" SubTitle="DOB" Title="Ngày tháng năm sinh:" />
                                     <asp:Label runat="server" ID="prt_dob" />
@@ -115,22 +111,22 @@
                                 </div>
                             </div>
 
-                            <div class="d-grid" style="grid-template-columns:  170px 1fr">
+                            <div class="d-grid" style="grid-template-columns: 170px 1fr">
                                 <webUI:Label runat="server" SubTitle="Address" Title="Địa chỉ:" />
                                 <asp:Label CssClass="align-top" runat="server" ID="prt_address" />
                             </div>
 
-                            <div class="d-grid" style="grid-template-columns:  170px 1fr">
-                                <webUI:Label runat="server" SubTitle="Admitted time"  Title="Vào viện lúc:" />
+                            <div class="d-grid" style="grid-template-columns: 170px 1fr">
+                                <webUI:Label runat="server" SubTitle="Admitted time" Title="Vào viện lúc:" />
                                 <webUI:DateTime runat="server" ID="prt_" />
                             </div>
 
-                            <div class="d-grid" style="grid-template-columns:  170px 1fr">
+                            <div class="d-grid" style="grid-template-columns: 170px 1fr">
                                 <webUI:Label runat="server" SubTitle="Discharged time" Title="Ra viện lúc:" />
                                 <webUI:DateTime runat="server" ID="prt_disc_date_time" />
                             </div>
 
-                            <div class="d-grid" style="grid-template-columns:  170px 1fr">
+                            <div class="d-grid" style="grid-template-columns: 170px 1fr">
                                 <webUI:Label runat="server" SubTitle="Diagnosis" Title="Chẩn đoán:" />
                                 <asp:Label CssClass="align-top" runat="server" ID="prt_diagnosis" />
                             </div>
@@ -151,8 +147,8 @@
                             </div>
 
                             <div class="d-grid grid-template-2 mt-4">
-                                <aih:Signature2 runat="server" id="prt_signature1" Title="TỔNG GIÁM ĐỐC/ CEO" SubTitle="Họ tên, chữ ký, MSNV/ Full name, Signature, ID"/>
-                                <aih:Signature2 runat="server" id="prt_signature2" Title="TRƯỞNG KHOA/ HEAD OF DEPARTMENT" SubTitle="Họ tên, chữ ký, MSNV/ Full name, Signature, ID"/>
+                                <aih:Signature2 runat="server" ID="prt_signature1" Title="TỔNG GIÁM ĐỐC/ CEO" SubTitle="Họ tên, chữ ký, MSNV/ Full name, Signature, ID" />
+                                <aih:Signature2 runat="server" ID="prt_signature2" Title="TRƯỞNG KHOA/ HEAD OF DEPARTMENT" SubTitle="Họ tên, chữ ký, MSNV/ Full name, Signature, ID" />
                             </div>
                         </div>
                     </td>
@@ -295,17 +291,17 @@
                                             </fieldset>
 
                                             <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
-                                                <modalbody>
-                                                <div class="text-center">
-                                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                                    <h4 class="mt-4 mb-4">Delete document?
-                                                    </h4>
-                                                </div>
-                                                <div class="text-right">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    <asp:Button runat="server" OnClick="btnDelete_Click" Text="Delete" ID="btnDelete" class="btn btn-danger" />
-                                                </div>
-                                            </modalbody>
+                                                <ModalBody>
+                                                    <div class="text-center">
+                                                        <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                                        <h4 class="mt-4 mb-4">Delete document?
+                                                        </h4>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <asp:Button runat="server" OnClick="btnDelete_Click" Text="Delete" ID="btnDelete" class="btn btn-danger" />
+                                                    </div>
+                                                </ModalBody>
                                             </webUI:PopupModal>
                                         </div>
                                     </div>
@@ -320,7 +316,6 @@
                 </asp:UpdatePanel>
             </div>
         </form>
-
     </div>
 
     <script src="../../scripts/jquery-3.2.1.min.js"></script>
@@ -329,6 +324,5 @@
     <script src="../../scripts/custom.min.js"></script>
     <script src="../../scripts/myScript.js"></script>
     <script src="../../scripts/contenteditable.min.js"></script>
-
 </body>
 </html>
