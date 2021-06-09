@@ -15,31 +15,13 @@ namespace EMR.UserControls.PrintTemplate
     {
 
         /// <summary>
-        /// signature control.
+        /// prt_content control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel signature;
-
-        /// <summary>
-        /// prt_dateTime control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_dateTime;
-
-        /// <summary>
-        /// prt_title control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_title;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_content;
 
         /// <summary>
         /// prt_supTitle control.
@@ -57,6 +39,6 @@ namespace EMR.UserControls.PrintTemplate
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_fullname;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_fullname;
     }
 }

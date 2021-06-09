@@ -15,13 +15,175 @@ namespace EMR
     {
 
         /// <summary>
-        /// PrintWindow control.
+        /// prt_patient_label control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.PrintTemplate.PrintWindow PrintWindow;
+        protected global::EMR.UserControls.PrintTemplate.PatientLabel1 prt_patient_label;
+
+        /// <summary>
+        /// Line control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.Line Line;
+
+        /// <summary>
+        /// prt_vs_temperature control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_vs_temperature;
+
+        /// <summary>
+        /// prt_pulse control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_pulse;
+
+        /// <summary>
+        /// prt_vs_weight control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_vs_weight;
+
+        /// <summary>
+        /// prt_vs_respiratory_rate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_vs_respiratory_rate;
+
+        /// <summary>
+        /// prt_vs_height control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_vs_height;
+
+        /// <summary>
+        /// prt_vs_blood_pressure control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_vs_blood_pressure;
+
+        /// <summary>
+        /// prt_vs_BMI control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_vs_BMI;
+
+        /// <summary>
+        /// prt_vs_spO2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_vs_spO2;
+
+        /// <summary>
+        /// prt_chief_complaint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_chief_complaint;
+
+        /// <summary>
+        /// prt_allergy control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_allergy;
+
+        /// <summary>
+        /// prt_mental_status control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS2 prt_mental_status;
+
+        /// <summary>
+        /// prt_paint_score_code control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_paint_score_code;
+
+        /// <summary>
+        /// prt_fall_risk control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_fall_risk;
+
+        /// <summary>
+        /// prt_nutrition_status_code control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_nutrition_status_code;
+
+        /// <summary>
+        /// prt_housing_code control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS2 prt_housing_code;
+
+        /// <summary>
+        /// prt_prioritization_code control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_prioritization_code;
+
+        /// <summary>
+        /// prt_signature1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.Signature1 prt_signature1;
 
         /// <summary>
         /// form2 control.

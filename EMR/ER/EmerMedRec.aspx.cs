@@ -439,7 +439,7 @@ namespace EMR.ER
                 }
                 emr.patient_discharge = WebHelpers.GetDataTableToJSON(patient_discharge);
                 emr.icd_10 = txticd_10.Value;
-                if (emr.Update()[0] == WebHelpers.ResponseStatus.OK)
+                if (emr.Update()[0] == "OK")
                 {
                     Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                     message.Load(Page, Message.CODE.MS001, Message.TYPE.SUCCESS);
@@ -806,7 +806,7 @@ namespace EMR.ER
             }
             emr.patient_discharge = WebHelpers.GetDataTableToJSON(patient_discharge);
             emr.icd_10 = txticd_10.Value;
-            if (emr.Update()[0] == WebHelpers.ResponseStatus.OK)
+            if (emr.Update()[0] == "OK")
             {
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                 message.Load(Page, Message.CODE.MS001, Message.TYPE.SUCCESS);
@@ -825,14 +825,14 @@ namespace EMR.ER
         }
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            if (EmergencyMedicalRecord.Delete((string)Session["UserID"], Request.QueryString["vpid"])[0] == WebHelpers.ResponseStatus.OK)
+            if (EmergencyMedicalRecord.Delete((string)Session["UserID"], Request.QueryString["vpid"])[0] == "OK")
             {
 
             }
         }
         protected void btn_grid_progress_note_del_Click(object sender, EventArgs e)
         {
-            if (EmergencyMedicalRecord.Delete((string)Session["UserID"], Request.QueryString["vpid"])[0] == WebHelpers.ResponseStatus.OK)
+            if (EmergencyMedicalRecord.Delete((string)Session["UserID"], Request.QueryString["vpid"])[0] == "OK")
             {
 
             }

@@ -13,8 +13,8 @@
 <%@ Register Src="~/UserControls/PrintTemplate/PatientLabel1.ascx" TagPrefix="webUI" TagName="PatientLabel1" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Line.ascx" TagPrefix="webUI" TagName="Line" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Label1.ascx" TagPrefix="webUI" TagName="Label1" %>
-
-
+<%@ Register Src="~/UserControls/PrintTemplate/PrtRowS1.ascx" TagPrefix="webUI" TagName="PrtRowS1" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Signature1.ascx" TagPrefix="webUI" TagName="Signature1" %>
 
 <!DOCTYPE html>
 
@@ -26,6 +26,7 @@
     <link href="../../style/style-custom.css" rel="stylesheet" />
 </head>
 <body>
+    <%----%>
     <div class="cssclsNoScreen">
         <table class="report-container">
             <thead class="report-header">
@@ -37,7 +38,7 @@
                                 <div style="color: #007297; font-size: 26.6667px;">TÓM TẮT BỆNH ÁN</div>
                                 <div style="color: #e20e5a; font-size: 16.6667px;">SUMMARY OF MEDICAL REPORT</div>
                             </div>
-                            <webUI:PatientLabel1 runat="server" id="PatientLabel1" />
+                            <webUI:PatientLabel1 runat="server" id="prt_patient_label1" />
                         </div>
                         <webUI:Line runat="server" id="Line" />
                     </th>
@@ -47,83 +48,32 @@
                 <tr>
                     <td class="report-content-cell">
                         <div class="main" runat="server" id="print_content">
-                            <div class="d-grid" style="grid-template-columns: 1fr 1fr">
-                                <div><span class="font-bold">Từ ngày</span>/ From: <asp:Label runat="server" ID="prt_form_date" />
-                                </div>
-                                <div><span class="font-bold">Đến ngày</span>/ To: <asp:Label runat="server" ID="prt_to_date" />
-                                </div>
-                            </div>
-                            <div class="d-grid" style="grid-template-columns: 170px 1fr">
-                                <div>
-                                    <span class="font-bold">Khoa</span>Department: 
-                                </div>
-                                <asp:Label runat="server" ID="prt_" />
-                            </div>
 
                             <div class="d-grid" style="grid-template-columns: 1fr 1fr">
-                                <div>
-                                    <span class="font-bold">Lý do nhập viện</span>Chief complaint: 
-                                </div>
-                                <asp:Label runat="server" ID="prt_chief_complaint" />
+                                <webUI:PrtRowS1  CssClass="text-inline" FixedLeft="30" Title="Từ ngày/ " SubTitle="From:" runat="server" id="prt_form_date"  />
+
+                                <webUI:PrtRowS1  CssClass="text-inline" FixedLeft="30" Title="Đến ngày/ " SubTitle="To:" runat="server" id="prt_to_date"  />
                             </div>
+
+                            <webUI:PrtRowS1  CssClass="text-inline" FixedLeft="30" Title="Khoa/ " SubTitle="Department:" runat="server" id="PrtRowS1"  />
+
+                            <webUI:PrtRowS1 FixedLeft="30" CssClass="text-inline"  Title="Lý do nhập viện/ " SubTitle="Chief complaint:" runat="server" id="prt_chief_complaint"  />
+
+                            <webUI:PrtRowS1  CssClass="text-inline" FixedLeft="30" Title="Chẩn đoán/ " SubTitle="Diagnosis:" runat="server" id="prt_diagnosis"  />
+
+                            <webUI:PrtRowS1 Order="1."  CssClass="text-inline"  Title="Diễn biến lâm sàng trong đợt điều trị/ " SubTitle="Clinical Evolution:" runat="server" id="prt_clinical_evolution"  />
+
+                            <webUI:PrtRowS1 Order="2."  CssClass="text-inline"  Title="KQ xét nghiệm cận lâm sàng/ " SubTitle="Results of para clinical tests:" runat="server" id="prt_result_para_clinical"  />
+
+                            <webUI:PrtRowS1 Order="3."  CssClass="text-inline"  Title="Quá trình điều trị/ " SubTitle="Treatment:" runat="server" id="prt_treatment"  />
+
+                            <webUI:PrtRowS1 Order="4."  CssClass="text-inline"  Title="Đánh giá kết quả/ " SubTitle="Evaluation of treatment:" runat="server" id="prt_eval_treatment"  />
+
+                            <webUI:PrtRowS1 Order="5."  CssClass="text-inline"  Title="Hướng dẫn điều trị tiếp và tiên lượng/ " SubTitle="Continuous treatment and prognosis:" runat="server" id="prt_treatment_prognosis"  />
 
                             <div class="d-grid" style="grid-template-columns: 1fr 1fr">
-                                <div>
-                                    <span class="font-bold">Chẩn đoán/ </span>Diagnosis:
-                                </div>
-                                <asp:Label runat="server" ID="prt_diagnosis" />
-                            </div>
-
-                            <div class="d-grid" style="grid-template-columns: 1fr 1fr">
-                                <div>
-                                    <span class="font-bold">1. Diễn biến lâm sàng trong đợt điều trị</span>/ Clinical Evolution:
-                                </div>
-                                <asp:Label runat="server" ID="prt_clinical_evolution" />
-                            </div>
-
-                            <div class="d-grid" style="grid-template-columns: 1fr 1fr">
-                                <div>
-                                    <span class="font-bold">2. KQ xét nghiệm cận lâm sàng</span>/ Results of para clinical tests:
-                                </div>
-                                <asp:Label runat="server" ID="prt_result_para_clinical" />
-                            </div>
-
-                            <div class="d-grid" style="grid-template-columns: 1fr 1fr">
-                                <div>
-                                    <span class="font-bold">3. Quá trình điều trị</span>/ Treatment:
-                                </div>
-                                <asp:Label runat="server" ID="prt_treatment" />
-                            </div>
-
-                            <div class="d-grid" style="grid-template-columns: 1fr 1fr">
-                                <div>
-                                <span class="font-bold">4. Đánh giá kết quả</span>/ Evaluation of treatment:
-                                </div>
-                                <asp:Label runat="server" ID="prt_eval_treatment" />
-                            </div>
-
-                            <div class="d-grid" style="grid-template-columns: 1fr 1fr">
-                                <div>
-                                <span class="font-bold">5. Hướng dẫn điều trị tiếp và tiên lượng</span>/ Continuous treatment and prognosis
-                                </div>
-                                <asp:Label runat="server" ID="prt_treatment_prognosis" />
-                            </div>
-
-                            <div class="row mb-2">
-                                <div class="col-6 mb-2">
-                                    <webUI:Signature runat="server" Title="Trưởng khoa (ký và ghi rõ họ tên)" SubTitle="The Head of Department's signature and full name">
-                                        <ItemTemplate>
-                                            <aih:Date runat="server" Day="23" Month="5" Year="2021" />
-                                        </ItemTemplate>
-                                    </webUI:Signature>
-                                </div>
-                                <div class="col-6 mb-2">
-                                    <webUI:Signature runat="server" Title="Bác sĩ điều trị (ký và ghi rõ họ tên)" SubTitle="Physician's signature and full name">
-                                        <ItemTemplate>
-                                            <aih:Date runat="server" Day="23" Month="5" Year="2021" />
-                                        </ItemTemplate>
-                                    </webUI:Signature>
-                                </div>
+                                <webUI:Signature1 runat="server" ID="prt_signature1" />
+                                <webUI:Signature1 runat="server" ID="prt_signature2" />
                             </div>
                         </div>
                     </td>

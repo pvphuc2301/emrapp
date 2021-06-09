@@ -9,8 +9,9 @@ namespace EMR
 {
     public static class DataHelpers
     {
-        public static int CalculateAge(DateTime dateOfBirth)
+        public static dynamic CalculateAge(DateTime dateOfBirth)
         {
+            if (dateOfBirth == null) return null;
             int age = 0;
             age = DateTime.Now.Year - dateOfBirth.Year;
             if (DateTime.Now.DayOfYear < dateOfBirth.DayOfYear)
@@ -30,7 +31,6 @@ namespace EMR
                 return null; 
             }
         }
-
         public static string FormatPhysicalExamination(string value)
         {
             if (value == null) return null;

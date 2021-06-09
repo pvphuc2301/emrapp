@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -39,7 +40,18 @@ namespace EMR
             dt = JsonConvert.DeserializeObject<DataTable>(Convert.ToString(jsonObject));
             return dt;
         }
+        //public static string FormatNumber(string value, string format)
+        //{
+        //    if (value == null) return "";
+        //    return Decimal.Round( value.ToString("f1"); 
+        //}
+        public static bool IsPropertyExist(dynamic settings, string name)
+        {
+            if (settings is ExpandoObject)
+                return ((IDictionary<string, object>)settings).ContainsKey(name);
 
+            return settings.GetType().GetProperty(name) != null;
+        }
         public static string GetJSONFromTable(GridView gridView, DataTable table)
         {
             DataRow row;
@@ -183,10 +195,15 @@ namespace EMR
             //}
         }
 
-        internal static string ConvertDateTime(dynamic date_of_discharge, string dateTime)
+        internal static string CreateOptions(params object[] theObjects)
         {
-            if (date_of_discharge == null) return "";
-            return date_of_discharge.ToString(dateTime);
+            return JsonConvert.SerializeObject(theObjects);
+        }
+
+        internal static string FormatDateTime(dynamic dateTime, string format = "dd-MM-yyyy")
+        {
+            if (dateTime == null) return "";
+            return dateTime.ToString(format);
         }
 
         public static string GetDataTableToJSON(DataTable dataTable)
@@ -455,11 +472,6 @@ namespace EMR
             }
         }
 
-        public static class ResponseStatus
-        {
-            public static string OK = "OK";
-        }
-
         /// <summary>
         /// test
         /// </summary>
@@ -525,23 +537,26 @@ namespace EMR
                     {
                         try
                         {
-                            if (gridView.Rows[r].Cells[i].Controls[1] is TextField)
+                            var control = gridView.Rows[r].Cells[i].Controls[1];
+
+                            if (control is TextField)
                             {
-                                TextField text2 = gridView.Rows[r].Cells[i].Controls[1] as TextField;
-                                text2.Disabled = disabled;
+                                (control as TextField).Disabled = disabled;
                             }
-                            else if (gridView.Rows[r].Cells[i].Controls[1] is RadTimePicker)
+                            else if (control is RadTimePicker)
                             {
-                                RadTimePicker text2 = gridView.Rows[r].Cells[i].Controls[1] as RadTimePicker;
-                                text2.TimePopupButton.Visible = !disabled;
-                                text2.EnableTyping = !disabled;
+                                (control as RadTimePicker).TimePopupButton.Visible = !disabled;
+                                (control as RadTimePicker).EnableTyping = !disabled;
                             }
-                            else if (gridView.Rows[r].Cells[i].Controls[1] is RadDateTimePicker)
+                            else if (control is RadDateTimePicker)
                             {
-                                RadDateTimePicker text2 = gridView.Rows[r].Cells[i].Controls[1] as RadDateTimePicker;
-                                text2.DatePopupButton.Visible = !disabled;
-                                text2.TimePopupButton.Visible = !disabled;
-                                text2.EnableTyping = !disabled;
+                                (control as RadDateTimePicker).DatePopupButton.Visible = !disabled;
+                                (control as RadDateTimePicker).TimePopupButton.Visible = !disabled;
+                                (control as RadDateTimePicker).EnableTyping = !disabled;
+                            }
+                            else if (control is LinkButton)
+                            {
+                                (control as LinkButton).Visible = !disabled;
                             }
                         }
                         catch (Exception ex) { }
@@ -572,6 +587,20 @@ namespace EMR
                 }
             }
             catch (Exception ex) { }
+        }
+
+        public static string GetSignatureTemplate1(string dateTime, string title_l, string title_e, string subTitle_l, string subTitle_e, string fullname)
+        {
+            string template = "";
+             template += dateTime;
+            if (!string.IsNullOrEmpty(title_l))
+            { template += "<div>" + title_l + "</div>"; }
+            if (!string.IsNullOrEmpty(title_e)) { template += "<div class='text-primary'>" + title_e + "</div>"; }
+            if (!string.IsNullOrEmpty(subTitle_l)) { template += "<div>" + subTitle_l + "</div>"; }
+            if (!string.IsNullOrEmpty(subTitle_e)) { template += "<div class='text-primary'>" + subTitle_e + "</div>"; }
+            if (!string.IsNullOrEmpty(fullname)) { template += "<div style='margin-top: 100px'>" + fullname + "</div>"; }
+
+            return template;
         }
     }
 }

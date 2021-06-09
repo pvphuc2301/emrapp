@@ -605,7 +605,7 @@ namespace EMR
                 //
                 oadr.treatment_plan = txt_treatment_plan.Value;
 
-                if (oadr.Update()[0] == WebHelpers.ResponseStatus.OK)
+                if (oadr.Update()[0] == "OK")
                 {
                     Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                     message.Load(Page, Message.CODE.MS001, Message.TYPE.SUCCESS, 100000);
@@ -706,7 +706,7 @@ namespace EMR
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            if (Oadr.Delete((string)Session["UserID"], Request.QueryString["vpid"])[0] == WebHelpers.ResponseStatus.OK)
+            if (Oadr.Delete((string)Session["UserID"], Request.QueryString["vpid"])[0] == "OK")
             {
 
             }

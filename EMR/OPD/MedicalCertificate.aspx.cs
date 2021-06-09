@@ -91,22 +91,26 @@ namespace EMR
 
         private void loadDataToPrint(MC mc)
         {
-            prt_patient_label.PID = DataHelpers.patient.visible_patient_id;
-            prt_patient_name.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
-            prt_dob.Text = DataHelpers.patient.date_of_birth.ToString("dd-MM-yyyy");
-            prt_gender_male.Text = string.Format("{0}", ((string)DataHelpers.patient.gender_l).ToLower() == "nam" ? "☒" : "❏");
-            prt_gender_female.Text = string.Format("{0}", ((string)DataHelpers.patient.gender_l).ToLower() == "nữ" ? "☒" : "❏");
-            prt_pid.Text = DataHelpers.patient.visible_patient_id;
-            prt_chief_complain.Text = mc.chief_complain;
-            prt_history_present_illness.Text = mc.history_present_illness;
-            prt_past_history.Text = mc.past_history;
-            prt_clinical_findings.Text = mc.clinical_findings;
-            prt_para_clinical_investigations.Text = mc.para_clinical_investigations;
-            prt_diagnosis.Text = mc.diagnosis;
-            prt_treatment.Text = mc.treatment;
-            prt_treatment_period.Text = mc.treatment_period;
-            prt_recommendation.Text = mc.recommendation;
+            Patient patient = Patient.Instance();
 
+            prt_patient_label.PID = DataHelpers.patient.visible_patient_id;
+            prt_patient_name.Value = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
+            prt_dob.Value = DataHelpers.patient.date_of_birth.ToString("dd-MM-yyyy");
+
+            prt_gender.SelectedIndex = patient.gender_l == "nam" ? 1 : 2;
+
+            prt_pid.Value = DataHelpers.patient.visible_patient_id;
+            prt_chief_complain.Value = mc.chief_complain;
+            prt_history_present_illness.Value = mc.history_present_illness;
+            prt_past_history.Value = mc.past_history;
+            prt_clinical_findings.Value = mc.clinical_findings;
+            prt_para_clinical_investigations.Value = mc.para_clinical_investigations;
+            prt_diagnosis.Value = mc.diagnosis;
+            prt_treatment.Value = mc.treatment;
+            prt_treatment_period.Value = mc.treatment_period;
+            prt_recommendation.Value = mc.recommendation;
+
+            prt_signature1.Content = WebHelpers.GetSignatureTemplate1("", "BÁC SĨ ĐIỀU TRỊ", "ATTENDING DOCTOR", "(Họ tên, chữ ký & MSNV)", "(Full name, Signature & ID)", (string)Session["UserId"]);
         }
 
         protected void btnComplete_Click(object sender, EventArgs e)

@@ -15,6 +15,15 @@ namespace EMR.UserControls.PrintTemplate
     {
 
         /// <summary>
+        /// prt_patient_lable_wrap control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel prt_patient_lable_wrap;
+
+        /// <summary>
         /// lbl_fullname control.
         /// </summary>
         /// <remarks>

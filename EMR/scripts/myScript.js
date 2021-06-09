@@ -27,8 +27,6 @@ document.querySelectorAll('input[type=radio]').forEach(e => {
 for (let i = 0; i < radiosAttr.length; i++) {
     let radiosEle = $(`input[name=${radiosAttr[i]}]`);
 
-    let isChecked = false;
-
     for (let j = 0; j < radiosEle.length; j++) {
         let disabledFor = radiosEle[j].getAttribute('disabled-for');
 
@@ -45,10 +43,6 @@ for (let i = 0; i < radiosAttr.length; i++) {
 
         radiosEle[j].addEventListener('change', function () {
             try {
-
-                if (document.querySelector(`[data-clear="${radiosEle[j].getAttribute('name')}"]`)) {
-                    document.querySelector(`[data-clear="${radiosEle[j].getAttribute('name')}"]`).classList.remove("el-hide");
-                }
 
                 let disabledFor = radiosEle[j].getAttribute('disabled-for');
 
@@ -120,8 +114,6 @@ function clear_radiobutton(el) {
                 EleByClassName[k].classList.add("el-hide");
             }
         }
-
-        el.classList.add("el-hide");
     } catch (ex) {
         console.error(ex);
     }

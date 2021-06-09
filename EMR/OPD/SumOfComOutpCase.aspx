@@ -44,15 +44,15 @@
                     <td class="report-content-cell">
                         <div class="main" runat="server" id="print_content">
                             <div class="row mb-2">
-                <div class="col-6">
-                    <webUI:Label runat="server" Title="Họ tên bệnh nhân:" SubTitle="Patient's name" />
-                    <div class="d-inline-block ml-2 align-top">MAI MAI MAI</div>
-                </div>
-                <div class="col-6">
-                    <webUI:Label runat="server" Title="Ngày xuất viện:" SubTitle="Date of Discharge" />
-                    <div class="d-inline-block ml-2 align-top">04-10-1960</div>
-                </div>
-            </div>
+                                <div class="col-6">
+                                    <webUI:Label runat="server" Title="Họ tên bệnh nhân:" SubTitle="Patient's name" />
+                                    <div class="d-inline-block ml-2 align-top">MAI MAI MAI</div>
+                                </div>
+                                <div class="col-6">
+                                    <webUI:Label runat="server" Title="Ngày xuất viện:" SubTitle="Date of Discharge" />
+                                    <div class="d-inline-block ml-2 align-top">04-10-1960</div>
+                                </div>
+                            </div>
 
             <div class="row mb-2">
                 <div class="col-6">

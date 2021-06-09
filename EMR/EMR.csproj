@@ -170,7 +170,6 @@
     <Content Include="App_Data\RadCaptcha\X.wav" />
     <Content Include="App_Data\RadCaptcha\Y.wav" />
     <Content Include="App_Data\RadCaptcha\Z.wav" />
-    <Content Include="assets\node_modules\html5-editor\bootstrap-wysihtml5.css" />
     <Content Include="BarcodeLib.dll" />
     <Content Include="bin\BarcodeLib.dll" />
     <Content Include="bin\EMR.dll" />
@@ -202,8 +201,12 @@
     <Content Include="Dashboard.aspx" />
     <Content Include="emr\emrinfor.aspx" />
     <Content Include="emr\emrview.aspx" />
+    <Content Include="icons\ChatRight.ascx" />
+    <Content Include="icons\Envelope.ascx" />
     <Content Include="icons\ExclamationTriangle.ascx" />
+    <Content Include="icons\X.ascx" />
     <Content Include="IPD\ObsGynIniAss.aspx" />
+    <Content Include="Other\PageException.aspx" />
     <Content Include="Print\Test.aspx" />
     <Content Include="Report\ImagingTab.aspx" />
     <Content Include="emr\labinfor.aspx" />
@@ -260,7 +263,6 @@
     <Content Include="Other\Paint.aspx" />
     <Content Include="Other\PatientSummary.aspx" />
     <Content Include="Other\sendlogview.aspx" />
-    <Content Include="Pages\ExceptionPage.aspx" />
     <Content Include="Phar\marprinting.aspx" />
     <Content Include="Phar\opdprescription.aspx" />
     <Content Include="Phar\opdpreslist.aspx" />
@@ -295,6 +297,11 @@
     <Content Include="UserControls\PopupModal.ascx" />
     <Content Include="UserControls\PrintTemplate\Date.ascx" />
     <Content Include="UserControls\PrintTemplate\Label1.ascx" />
+    <Content Include="UserControls\PrintTemplate\PrtDate.ascx" />
+    <Content Include="UserControls\PrintTemplate\PrtGender.ascx" />
+    <Content Include="UserControls\PrintTemplate\PrtRowS1.ascx" />
+    <Content Include="UserControls\PrintTemplate\PrtRowS2.ascx" />
+    <Content Include="UserControls\PrintTemplate\PrtRowS3.ascx" />
     <Content Include="UserControls\PrintTemplate\Signature1.ascx" />
     <Content Include="UserControls\PrintTemplate\Signature2.ascx" />
     <Content Include="zxing.dll" />
@@ -378,6 +385,20 @@
     <Compile Include="emr\emrview.aspx.designer.cs">
       <DependentUpon>emrview.aspx</DependentUpon>
     </Compile>
+    <Compile Include="icons\ChatRight.ascx.cs">
+      <DependentUpon>ChatRight.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="icons\ChatRight.ascx.designer.cs">
+      <DependentUpon>ChatRight.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="icons\Envelope.ascx.cs">
+      <DependentUpon>Envelope.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="icons\Envelope.ascx.designer.cs">
+      <DependentUpon>Envelope.ascx</DependentUpon>
+    </Compile>
     <Compile Include="icons\ExclamationTriangle.ascx.cs">
       <DependentUpon>ExclamationTriangle.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -385,12 +406,26 @@
     <Compile Include="icons\ExclamationTriangle.ascx.designer.cs">
       <DependentUpon>ExclamationTriangle.ascx</DependentUpon>
     </Compile>
+    <Compile Include="icons\X.ascx.cs">
+      <DependentUpon>X.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="icons\X.ascx.designer.cs">
+      <DependentUpon>X.ascx</DependentUpon>
+    </Compile>
     <Compile Include="IPD\ObsGynIniAss.aspx.cs">
       <DependentUpon>ObsGynIniAss.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="IPD\ObsGynIniAss.aspx.designer.cs">
       <DependentUpon>ObsGynIniAss.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Other\PageException.aspx.cs">
+      <DependentUpon>PageException.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Other\PageException.aspx.designer.cs">
+      <DependentUpon>PageException.aspx</DependentUpon>
     </Compile>
     <Compile Include="Print\Test.aspx.cs">
       <DependentUpon>Test.aspx</DependentUpon>
@@ -715,13 +750,6 @@
     <Compile Include="Other\sendlogview.aspx.designer.cs">
       <DependentUpon>sendlogview.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ExceptionPage.aspx.cs">
-      <DependentUpon>ExceptionPage.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Pages\ExceptionPage.aspx.designer.cs">
-      <DependentUpon>ExceptionPage.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Phar\marprinting.aspx.cs">
       <DependentUpon>marprinting.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -922,6 +950,41 @@
     <Compile Include="UserControls\PrintTemplate\PrintWindow.ascx.designer.cs">
       <DependentUpon>PrintWindow.ascx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\PrintTemplate\PrtDate.ascx.cs">
+      <DependentUpon>PrtDate.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\PrtDate.ascx.designer.cs">
+      <DependentUpon>PrtDate.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\PrtGender.ascx.cs">
+      <DependentUpon>PrtGender.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\PrtGender.ascx.designer.cs">
+      <DependentUpon>PrtGender.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\PrtRowS1.ascx.cs">
+      <DependentUpon>PrtRowS1.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\PrtRowS1.ascx.designer.cs">
+      <DependentUpon>PrtRowS1.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\PrtRowS2.ascx.cs">
+      <DependentUpon>PrtRowS2.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\PrtRowS2.ascx.designer.cs">
+      <DependentUpon>PrtRowS2.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\PrtRowS3.ascx.cs">
+      <DependentUpon>PrtRowS3.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PrintTemplate\PrtRowS3.ascx.designer.cs">
+      <DependentUpon>PrtRowS3.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\PrintTemplate\Row.ascx.cs">
       <DependentUpon>Row.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1012,8 +1075,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="assets\node_modules\html5-editor\" />
     <Folder Include="DataEntities\" />
     <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="Pages\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
@@ -1041,7 +1106,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

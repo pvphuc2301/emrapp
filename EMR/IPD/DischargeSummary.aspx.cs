@@ -28,13 +28,13 @@ namespace EMR
             
             diss = new Diss(DataHelpers.varDocId);
             loadDataToOMRControls(diss);
+
         }
 
         public void loadDataToOMRControls(Diss diss)
         {
             try
             {
-                
                 BindRadioButton("rad_disc_reason_code_" + diss.disc_reason_code);
 
                 WebHelpers.BindDateTimePicker(dpk_date_of_hospital, diss.date_of_hospital);
@@ -63,7 +63,13 @@ namespace EMR
                 //9
                 txt_disc_condition.Value = diss.disc_condition;
                 //10
-                txt_disc_medication.Value = diss.disc_medication;
+                if (diss.disc_reason_code == "DAMA")
+                {
+                    txt_disc_medication.Visible = false;
+                }
+                else { 
+                    txt_disc_medication.Value = diss.disc_medication;
+                }
                 //11
                 txt_follow_up_instruc.Value = diss.follow_up_instruc;
                 //12
@@ -83,6 +89,7 @@ namespace EMR
                 WebHelpers.BindDateTimePicker(dpk_signed_date, diss.signed_date);
                 txt_signed_doctor.Value = diss.signed_doctor;
 
+
                 btnCancel.Visible = false;
                 txt_amendReason.Visible = false;
 
@@ -98,7 +105,6 @@ namespace EMR
                     DisabledControl(true);
                     LoadDataToPrint(diss);
                 }
-
                 else if (diss.status == DocumentStatus.DRAFT)
                 {
                     btnAmend.Visible = false;
@@ -114,28 +120,81 @@ namespace EMR
 
         private void LoadDataToPrint(Diss diss)
         {
-            PatientLabel1.FullName = string.Format("{0} ({1}) - {2}", DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l, DataHelpers.patient.title_l, DataHelpers.patient.gender_l);
-            PatientLabel1.DOB = DataHelpers.patient.date_of_birth.ToString("dd-MM-yyyy");
-            PatientLabel1.PID = string.Format("{0} - {1} - {2}", DataHelpers.patient.visible_patient_id, DataHelpers.patientVisit.visit_type, DataHelpers.patientVisit.visit_code);
+            Patient patient = Patient.Instance();
+            PatientVisit patientVisit = PatientVisit.Instance(Request["pvid"]);
 
-            
-            prt_date_of_hospital.Text = WebHelpers.ConvertDateTime(diss.date_of_hospital, "dd-MM-yyyy");
-            prt_date_of_discharge.Text = WebHelpers.ConvertDateTime(diss.date_of_discharge, "dd-MM-yyyy");
-            prt_admission_reason.Text = diss.admission_reason;
-            prt_icd10_diagnosis.Text = diss.icd10_diagnosis;
-            prt_cur_med_history.Text = diss.cur_med_history;
-            prt_physical_finding.Text = diss.physical_finding;
-            prt_lab_result.Text = diss.lab_result;
-            prt_proce_performed.Text = diss.proce_performed;
-            prt_treatment.Text = diss.treatment;
-            prt_evolution.Text = diss.evolution;
-            prt_disc_condition.Text = diss.disc_condition;
-            prt_disc_medication.Text = diss.disc_medication;
-            prt_follow_up_instruc.Text = diss.follow_up_instruc;
-            prt_special_diet.Text = diss.special_diet;
-            prt_next_consult.Text = WebHelpers.ConvertDateTime(diss.next_consult_date, "dd-MM-yyy") + " " + diss.next_consult_doctor;
-            Signature1.DateTime = string.Format("Ngày/ Date: {0}", WebHelpers.ConvertDateTime(diss.date_of_discharge, "dd-MM-yyyy"));
-            Signature1.FullName = (string)Session["UserId"];
+            prt_fullname.InnerText = string.Format("{0} ({1}) - {2}", patient.GetFullName(), patient.title_l, patient.gender_l);
+            prt_DOB.InnerText = "DOB: " + WebHelpers.FormatDateTime(patient.date_of_birth);
+            prt_vpid.InnerText = string.Format("{0} - {1} - {2}", patient.visible_patient_id, patientVisit.visit_type, patientVisit.visit_code);
+            prt_barcode.Text = patient.visible_patient_id;
+
+            prt_date_of_hospital.Value = WebHelpers.FormatDateTime(diss.date_of_hospital);
+            prt_date_of_discharge.Value = WebHelpers.FormatDateTime(diss.date_of_discharge);
+            //1
+            prt_admission_reason.Value = diss.admission_reason;
+            //2
+            prt_icd10_diagnosis.Value = diss.icd10_diagnosis;
+            //3
+            prt_cur_med_history.Value = diss.cur_med_history;
+            //4
+            prt_physical_finding.Value = diss.physical_finding;
+            //5
+            prt_lab_result.Value = diss.lab_result;
+            //6
+            prt_proce_performed.Value = diss.proce_performed;
+            //7
+            prt_treatment.Value = diss.treatment;
+            //8
+            prt_evolution.Value = diss.evolution;
+            //9
+            prt_disc_condition.Value = diss.disc_condition;
+            //10
+            prt_disc_medication.Value = diss.disc_medication;
+
+            prt_follow_up_instruc.Visible = false;
+            prt_special_diet.Visible = false;
+            prt_next_consult.Visible = false;
+            prt_dama.Visible = false;
+            prt_trans_to_hospital.Visible = false;
+            prt_transfer_reason.Visible = false;
+            prt_disc_medication.Visible = false;
+
+            if (diss.disc_reason_code == "DAMA")
+            {
+                //10
+                prt_dama.Visible = true;
+                prt_dama.Value = diss.dama;
+                
+            }
+            else if(diss.disc_reason_code == "TRANSFER")
+            {
+                //10
+                prt_disc_medication.Visible = true;
+                prt_disc_medication.Value = diss.disc_medication;
+                //11
+                prt_trans_to_hospital.Visible = true;
+                prt_trans_to_hospital.Value = diss.trans_to_hospital;
+
+                prt_transfer_reason.Visible = true;
+                prt_transfer_reason.Value = diss.transfer_reason;
+            } else if (diss.disc_reason_code == "AMA")
+            {
+                //10
+                prt_disc_medication.Visible = true;
+                prt_disc_medication.Value = diss.disc_medication;
+                //11
+                prt_follow_up_instruc.Visible = true;
+                prt_follow_up_instruc.Value = diss.follow_up_instruc;
+                //12
+                prt_special_diet.Visible = true;
+                prt_special_diet.Value = diss.special_diet;
+                //13
+                prt_next_consult.Visible = true;
+                prt_next_consult.Value = WebHelpers.FormatDateTime(diss.next_consult_date, "dd-MM-yyy") + " " + diss.next_consult_doctor;
+            }
+
+            prt_signature1.Content = WebHelpers.GetSignatureTemplate1("Ngày/ <span class='text-primary'>Date</span>: __-__-20__", "Bác sỹ điều trị/ <span class='text-primary'> Attending Physician:<span>", "", "", "", "");
+
         }
 
         private bool CheckFieldsValid()
@@ -209,11 +268,8 @@ namespace EMR
             //    WebHelpers.DisabledDateTimePicker(dpk_next_consult_date, disabled);
             //    txt_next_consult_doctor.Disabled = disabled;
             //}
-            //else if(diss.disc_reason_code == "DAMA")
-            //{
-            //    txt_dama.Disabled = disabled;
-            //    txt_dama_note.Disabled = disabled;
-            //}
+            //else 
+            
         }
 
         protected void btnComplete_Click(object sender, EventArgs e)

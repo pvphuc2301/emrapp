@@ -15,14 +15,12 @@ namespace EMR.UserControls.PrintTemplate
         public string  SubTitle { get; set; }
         public string FullName { get; set; }
         public string DateTime { get; set; }
+        public string Content { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            prt_dateTime.InnerHtml = DateTime;
-            signature.CssClass = CssClass + " text-center";
-            prt_title.InnerHtml = Title;
+            prt_fullname.InnerHtml = FullName;
+            prt_content.InnerHtml = Content;
             prt_supTitle.InnerHtml = SubTitle;
-            prt_fullname.Text = FullName;
-
         }
     }
 }

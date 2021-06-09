@@ -424,13 +424,13 @@
                                                     <label class="control-label mb-1 d-block">Dị ứng/ <span class="text-primary">Allergy:</span></label>
 
                                                     <div class="custom-control custom-radio d-inline-block mr-2 d-inline-block">
-                                                        <input type="radio" id="rad_allergy_False" runat="server" name="rad_allergy" class="custom-control-input" />
-			                                            <label class="custom-control-label" for="rad_allergy_False">Không/<span class="text-primary">No</span></label>
+                                                        <input type="radio" id="rad_allergy_false" runat="server" name="rad_allergy" class="custom-control-input" />
+			                                            <label class="custom-control-label" for="rad_allergy_false">Không/<span class="text-primary">No</span></label>
                                                     </div>
 
                                                     <div class="custom-control custom-radio d-inline-block d-inline-block">
-                                                        <input disabled-for="required_code_field" type="radio" id="rad_allergy_True" runat="server" name="rad_allergy" class="custom-control-input" />
-			                                            <label class="custom-control-label" for="rad_allergy_True">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
+                                                        <input disabled-for="required_code_field" type="radio" id="rad_allergy_true" runat="server" name="rad_allergy" class="custom-control-input" />
+			                                            <label class="custom-control-label" for="rad_allergy_true">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
 			                                            <a href="javascript:void(0)" class="el-hide" data-clear="rad_allergy" onclick="clear_radiobutton(this)">
 				                                            <icon:xsquare runat="server" ID="XSquare2" />
 			                                            </a>
@@ -818,13 +818,13 @@
 
                                                 <div class="col-12 mb-2">
                                                     <div class="custom-control custom-radio d-inline-block mr-2 d-inline-block">
-                                                        <input type="radio" id="rad_spec_opinion_req_False" runat="server" name="rad_spec_opinion_req" class="custom-control-input" />
-			                                            <label class="custom-control-label" for="rad_spec_opinion_req_False">Không/<span class="text-primary">No</span></label>
+                                                        <input type="radio" id="rad_spec_opinion_req_false" runat="server" name="rad_spec_opinion_req" class="custom-control-input" />
+			                                            <label class="custom-control-label" for="rad_spec_opinion_req_false">Không/<span class="text-primary">No</span></label>
                                                     </div>
 
                                                     <div class="custom-control custom-radio d-inline-block d-inline-block">
-                                                        <input disabled-for="spec_opinion_req_text_field" type="radio" id="rad_spec_opinion_req_True" runat="server" name="rad_spec_opinion_req" class="custom-control-input" />
-			                                            <label class="custom-control-label" for="rad_spec_opinion_req_True">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
+                                                        <input disabled-for="spec_opinion_req_text_field" type="radio" id="rad_spec_opinion_req_true" runat="server" name="rad_spec_opinion_req" class="custom-control-input" />
+			                                            <label class="custom-control-label" for="rad_spec_opinion_req_true">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
 			                                            <a href="javascript:void(0)" class="el-hide" data-clear="rad_spec_opinion_req" onclick="clear_radiobutton(this)">
 				                                            <icon:xsquare runat="server" ID="XSquare3" />
 			                                            </a>

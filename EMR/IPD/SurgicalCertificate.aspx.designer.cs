@@ -15,22 +15,166 @@ namespace EMR
     {
 
         /// <summary>
-        /// Barcode control.
+        /// prt_patient_label control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.Barcode Barcode;
+        protected global::EMR.UserControls.PrintTemplate.PatientLabel1 prt_patient_label;
 
         /// <summary>
-        /// print_content control.
+        /// Line control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl print_content;
+        protected global::EMR.UserControls.PrintTemplate.Line Line;
+
+        /// <summary>
+        /// PrtRowS9 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 PrtRowS9;
+
+        /// <summary>
+        /// prt_fullname control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_fullname;
+
+        /// <summary>
+        /// prt_dob control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_dob;
+
+        /// <summary>
+        /// prt_gender control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS2 prt_gender;
+
+        /// <summary>
+        /// prt_patient_id control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_patient_id;
+
+        /// <summary>
+        /// prt_address control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_address;
+
+        /// <summary>
+        /// prt_admission_date control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_admission_date;
+
+        /// <summary>
+        /// prt_procedure_date control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_procedure_date;
+
+        /// <summary>
+        /// prt_discharge_date control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_discharge_date;
+
+        /// <summary>
+        /// prt_preo_diagnosis control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_preo_diagnosis;
+
+        /// <summary>
+        /// prt_name_of_procedure control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_name_of_procedure;
+
+        /// <summary>
+        /// prt_proce_narrative control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_proce_narrative;
+
+        /// <summary>
+        /// prt_blood_type control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_blood_type;
+
+        /// <summary>
+        /// prt_rh control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_rh;
+
+        /// <summary>
+        /// prt_signature1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.Signature1 prt_signature1;
+
+        /// <summary>
+        /// prt_signature2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PrintTemplate.Signature1 prt_signature2;
 
         /// <summary>
         /// form2 control.

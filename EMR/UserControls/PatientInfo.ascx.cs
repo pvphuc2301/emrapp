@@ -17,25 +17,26 @@ namespace EMR.UserControls
 
         public void LoadPatientInfo(bool vi_laganue)
         {
+            Patient patient = Patient.Instance();
             try
             {
                 if (vi_laganue) //Language = Vietnamese ( Default)
                 {
-                    lblFirstName.InnerText = DataHelpers.patient.first_name_l;
-                    lblLastName.InnerText = DataHelpers.patient.last_name_l;
-                    lblGender.InnerText = DataHelpers.patient.gender_l;
-                    lblDoB.InnerText = DateTime.Parse(DataHelpers.patient.date_of_birth).ToString("dd/MM/yyyy") + " (" + DataHelpers.CalculateAge(DateTime.Parse(DataHelpers.patient.date_of_birth)) + "t)";
-                    lblPatientAddress.InnerText = DataHelpers.patient.address_line_l;
-                    lblContactPerson.InnerText = DataHelpers.patient.contact_name_l;
+                    lblFirstName.InnerText = patient.first_name_l;
+                    lblLastName.InnerText = patient.last_name_l;
+                    lblGender.InnerText = patient.gender_l;
+                    lblDoB.InnerText = WebHelpers.FormatDateTime(patient.date_of_birth) + " (" + DataHelpers.CalculateAge(patient.date_of_birth) + "t)";
+                    lblPatientAddress.InnerText = patient.address_line_l;
+                    lblContactPerson.InnerText = patient.contact_name_l;
                 }
                 else
                 {
-                    lblFirstName.InnerText = DataHelpers.patient.first_name_e;
-                    lblLastName.InnerText = DataHelpers.patient.last_name_e;
-                    lblGender.InnerText = DataHelpers.patient.gender_l;
-                    lblDoB.InnerText = DateTime.Parse(DataHelpers.patient.date_of_birth).ToString("dd/MM/yyyy") + " (" + DataHelpers.CalculateAge(DateTime.Parse(DataHelpers.patient.date_of_birth)) + "y)";
-                    lblPatientAddress.InnerText = DataHelpers.patient.address_line_e;
-                    lblContactPerson.InnerText = DataHelpers.patient.contact_name_e;
+                    lblFirstName.InnerText = patient.first_name_e;
+                    lblLastName.InnerText = patient.last_name_e;
+                    lblGender.InnerText = patient.gender_e;
+                    lblDoB.InnerText = WebHelpers.FormatDateTime(patient.date_of_birth) + " (" + DataHelpers.CalculateAge(patient.date_of_birth) + "y)";
+                    lblPatientAddress.InnerText = patient.address_line_e;
+                    lblContactPerson.InnerText = patient.contact_name_e;
                 }
             }
             catch(Exception ex)
@@ -46,9 +47,9 @@ namespace EMR.UserControls
 
         public void LoadPatientVisitInfo(bool vi_laganue)
         {
-            try { 
+            try {
                 lblVisitCode.InnerText = DataHelpers.patientVisit.visit_code;
-                lblVisitDate.InnerText = DateTime.Parse(DataHelpers.patientVisit.actual_visit_date_time).ToString("dd/MM/yyyy HH:mm:ss");
+                lblVisitDate.InnerText = WebHelpers.FormatDateTime(DataHelpers.patientVisit.actual_visit_date_time, "dd/MM/yyyy HH:mm:ss");
 
                 //if (vi_laganue) //Language = Vietnamese ( Default)
                 //{

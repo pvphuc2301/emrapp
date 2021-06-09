@@ -177,6 +177,15 @@ namespace EMR
         protected global::System.Web.UI.UpdateProgress updateProgress_demographicSearch;
 
         /// <summary>
+        /// RadGrid6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid RadGrid6;
+
+        /// <summary>
         /// RadGrid1 control.
         /// </summary>
         /// <remarks>

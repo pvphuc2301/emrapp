@@ -51,6 +51,9 @@ namespace EMR
             if (!IsPostBack)
             {                
                 DataHelpers.LoadPatientInfomation(varPID);
+
+                new Patient(varPID);
+
                 DateTime dob;
 
                 DateTime.TryParse(Convert.ToString(DataHelpers.patient.date_of_birth), out dob);
@@ -62,7 +65,6 @@ namespace EMR
                 FetchImage();
             }
 
-            //form ký sinh trùng
             //if (Convert.ToString(Session["company_code"]) == "AIH")            
         }
         protected void FetchImage()
@@ -222,7 +224,7 @@ namespace EMR
         //    }
         //    return tmp;
         //}
-        public string Return_Doc_URL(object varModelId, object varDocID)
+        public string Return_Doc_URL(object varModelId, object varDocID, object varPVID)
         {
             string tmp = ""; string apiURL = "api/emr/get-api/" + varModelId;
             dynamic response = WebHelpers.GetAPI(apiURL);
@@ -230,7 +232,7 @@ namespace EMR
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 dynamic data = JObject.Parse(response.Data);
-                tmp = string.Format("../{0}?modelId={1}&docId={2}&pId={3}&vpId={4}", data.url, varModelId, varDocID, varPID, varVPID);
+                tmp = string.Format("../{0}?modelId={1}&docId={2}&pId={3}&vpId={4}&pvid={5}", data.url, varModelId, varDocID, varPID, varVPID, varPVID);
             }
 
             return tmp;

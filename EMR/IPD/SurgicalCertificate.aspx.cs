@@ -58,6 +58,7 @@ namespace EMR
                     btnPrint.Visible = true;
 
                     DisabledControl(true);
+                    LoadDataToPrint(surc);
                 }
 
                 else if (surc.status == DocumentStatus.DRAFT)
@@ -71,6 +72,33 @@ namespace EMR
 
             }
         }
+
+        private void LoadDataToPrint(Surc surc)
+        {
+            Patient patient = Patient.Instance();
+
+            prt_patient_label.PID = patient.visible_patient_id;
+
+            prt_fullname.Value = patient.GetFullName();
+            prt_dob.Value = WebHelpers.FormatDateTime(patient.date_of_birth);
+            prt_gender.SelectedIndex = patient.gender_l == "nam" ? 1 : 2;
+            prt_patient_id.Value = patient.visible_patient_id;
+            prt_address.Value = patient.GetAddress();
+
+            prt_admission_date.Value = WebHelpers.FormatDateTime(surc.admission_date);
+            prt_procedure_date.Value = WebHelpers.FormatDateTime(surc.procedure_date);
+            prt_discharge_date.Value = WebHelpers.FormatDateTime(surc.discharge_date);
+            prt_preo_diagnosis.Value = surc.preo_diagnosis;
+            prt_name_of_procedure.Value = surc.name_of_procedure;
+            prt_proce_narrative.Value = surc.proce_narrative;
+            prt_blood_type.Value = surc.blood_type;
+            prt_rh.Value = surc.rh;
+
+            prt_signature1.Content = WebHelpers.GetSignatureTemplate1("","TRƯỞNG KHOA", "HEAD OF DEPARTMEN", "(Họ tên, chữ ký & MSNV)", "(Full name, Signature & ID)", "");
+
+            prt_signature2.Content = WebHelpers.GetSignatureTemplate1("","BAN GIÁM ĐỐC Y KHOA", "BOARD OF MEDICAL DIRECTOR", "(Họ tên, chữ ký & MSNV)", "(Full name, Signature & ID)", "");
+        }
+
         protected void DisabledControl(bool disabled)
         {
             WebHelpers.DisabledDateTimePicker(dpk_discharge_date, disabled);

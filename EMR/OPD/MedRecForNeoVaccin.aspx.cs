@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -28,10 +29,10 @@ namespace EMR.OPD
             if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
 
             mrnv = new Mrnv(DataHelpers.varDocId);
-            loadDataToMRVNControls(mrnv);
+            loadDataToControls(mrnv);
         }
 
-        public void loadDataToMRVNControls(Mrnv mrnv)
+        public void loadDataToControls(Mrnv mrnv)
         {
             try
             {
@@ -41,10 +42,7 @@ namespace EMR.OPD
                 txt_cur_medications.Value = mrnv.cur_medications;
                 txt_personal.Value = mrnv.personal;
                 txt_family.Value = mrnv.family;
-                if (mrnv.allergy != null)
-                {
-                    ((HtmlInputRadioButton)FindControl("rad_allergy_" + Convert.ToBoolean(mrnv.allergy))).Checked = true;
-                }
+                BindRadioButton("rad_allergy_" + mrnv.allergy);
                 txt_allergy_note.Value = mrnv.allergy_text;
                 txt_vs_temperature.Value = mrnv.vs_temperature;
                 txt_vs_heart_rate.Value = mrnv.vs_heart_rate;
@@ -70,30 +68,29 @@ namespace EMR.OPD
                 txt_initial_diagnosis.Value = mrnv.initial_diagnosis;
                 txt_differential_diagnosis.Value = mrnv.differential_diagnosis;
                 txt_associated_conditions.Value = mrnv.associated_conditions;
-                if (mrnv.treatment_code != null)
-                {
-                    ((HtmlInputRadioButton)FindControl("rad_treatment_code_" + mrnv.treatment_code)).Checked = true;
-                }
-                if (mrnv.spec_opinion_req != null)
-                {
-                    ((HtmlInputRadioButton)FindControl("rad_spec_opinion_req_" + Convert.ToBoolean(mrnv.spec_opinion_req))).Checked = true;
-                }
+                BindRadioButton("rad_treatment_code_" + mrnv.treatment_code);
+                BindRadioButton("rad_spec_opinion_req_" + mrnv.spec_opinion_req);
                 txt_spec_opinion_req_text.Value = mrnv.spec_opinion_req_text;
                 txt_pecific_edu_req.Value = mrnv.pecific_edu_req;
                 txt_next_appointment.Value = mrnv.next_appointment;
 
+                btnCancel.Visible = false;
+                txt_amendReason.Visible = false;
+
                 if (mrnv.status == DocumentStatus.FINAL)
                 {
+
                     btnComplete.Visible = false;
                     btnSave.Visible = false;
                     btnDeleteModal.Visible = false;
-                    btnCancel.Visible = false;
-                    btnDeleteModal.Visible = false;
+
                     btnAmend.Visible = true;
                     btnPrint.Visible = true;
 
                     DisabledControl(true);
+                    loadDataToPrint(mrnv);
                 }
+
                 else if (mrnv.status == DocumentStatus.DRAFT)
                 {
                     btnAmend.Visible = false;
@@ -105,6 +102,11 @@ namespace EMR.OPD
             }
         }
 
+        private void loadDataToPrint(Mrnv mrnv)
+        {
+            
+        }
+
         public void UpdateData(Mrnv mrnv)
         {
             try
@@ -114,16 +116,11 @@ namespace EMR.OPD
                 mrnv.cur_medications = txt_cur_medications.Value;
                 mrnv.personal = txt_personal.Value;
                 mrnv.family = txt_family.Value;
-                if (rad_allergy_True.Checked)
-                {
-                    mrnv.allergy = true;
-                    mrnv.allergy_text = txt_allergy_note.Value;
-                }
-                if (rad_allergy_False.Checked)
-                {
-                    mrnv.allergy = false;
-                    mrnv.allergy_text = "";
-                }
+
+                mrnv.allergy = GetRadioButton("rad_allergy_");
+                if (mrnv.allergy) { mrnv.allergy_text = txt_allergy_note.Value; }
+                else { mrnv.allergy_text = null; }
+
                 mrnv.vs_temperature = txt_vs_temperature.Value;
                 mrnv.vs_heart_rate = txt_vs_heart_rate.Value;
                 mrnv.vs_weight = txt_vs_weight.Value;
@@ -133,6 +130,7 @@ namespace EMR.OPD
                 mrnv.vs_blood_pressure = txt_vs_blood_pressure.Value;
                 mrnv.vs_SpO2 = txt_vs_spO2.Value;
                 mrnv.vs_pulse = txt_vs_pulse.Value;
+
                 mrnv.scr_before_vacc_1 = txt_scr_before_vacc_1.Value;
                 mrnv.scr_before_vacc_2 = txt_scr_before_vacc_2.Value;
                 mrnv.scr_before_vacc_3 = txt_scr_before_vacc_3.Value;
@@ -155,33 +153,29 @@ namespace EMR.OPD
                 mrnv.differential_diagnosis = txt_differential_diagnosis.Value;
                 mrnv.associated_conditions = txt_associated_conditions.Value;
 
-                foreach (KeyValuePair<string, string> code in Mrnv.TREATMENT_CODE)
-                {
-                    if (((HtmlInputRadioButton)FindControl("rad_treatment_code_" + code.Key.ToLower())).Checked)
-                    {
-                        mrnv.treatment_code = code.Key;
-                        mrnv.treatment_desc = code.Value;
-                    }
-                }
-                if (rad_spec_opinion_req_True.Checked)
-                {
-                    mrnv.spec_opinion_req = true;
-                    mrnv.spec_opinion_req_text = txt_spec_opinion_req_text.Value;
-                }
-                if (rad_spec_opinion_req_False.Checked)
-                {
-                    mrnv.spec_opinion_req = false;
-                    mrnv.spec_opinion_req_text = "";
-                }
+                mrnv.treatment_code = GetRadioButton("rad_treatment_code_", Mrnv.TREATMENT_CODE);
+                if (mrnv.treatment_code != null) { mrnv.treatment_desc = Mrnv.TREATMENT_CODE[mrnv.treatment_code]; }
+
+                mrnv.spec_opinion_req = GetRadioButton("rad_spec_opinion_req_");
+                if (mrnv.spec_opinion_req) { mrnv.spec_opinion_req_text = txt_spec_opinion_req_text.Value; }
+                else { mrnv.spec_opinion_req_text = null; }
+
                 mrnv.pecific_edu_req = txt_pecific_edu_req.Value;
                 mrnv.next_appointment = txt_next_appointment.Value;
 
-                if (mrnv.Update()[0] == WebHelpers.ResponseStatus.OK)
+                dynamic result = mrnv.Update();
+
+                if (result[0].Status == System.Net.HttpStatusCode.OK)
                 {
                     Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                    message.Load(Page, Message.CODE.MS001, Message.TYPE.SUCCESS, 100000);
+                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
 
                     Initial();
+                }
+                else
+                {
+                    Session["PageNotFound"] = result[0];
+                    Response.Redirect("../Other/PageNotFound.aspx", false);
                 }
             }
             catch (Exception ex) { }
@@ -194,8 +188,8 @@ namespace EMR.OPD
             txt_cur_medications.Disabled = disabled;
             txt_personal.Disabled = disabled;
             txt_family.Disabled = disabled;
-            rad_allergy_False.Disabled = disabled;
-            rad_allergy_True.Disabled = disabled;
+            rad_allergy_false.Disabled = disabled;
+            rad_allergy_true.Disabled = disabled;
             txt_allergy_note.Disabled = disabled;
             txt_vs_temperature.Disabled = disabled;
             txt_vs_heart_rate.Disabled = disabled;
@@ -215,33 +209,21 @@ namespace EMR.OPD
             txt_scr_before_vacc_7.Disabled = disabled;
             txt_scr_before_vacc_8.Disabled = disabled;
             txt_scr_before_vacc_9.Disabled = disabled;
-            DisabledGridView(grid_appointed_vaccine, disabled);
+            WebHelpers.DisabledGridView(grid_appointed_vaccine, disabled);
             txt_additional_investigations.Disabled = disabled;
             txt_differential_diagnosis.Disabled = disabled;
             txt_associated_conditions.Disabled = disabled;
             rad_treatment_code_TRF.Disabled = disabled;
             rad_treatment_code_OPD.Disabled = disabled;
             rad_treatment_code_IPD.Disabled = disabled;
-            rad_spec_opinion_req_True.Disabled = disabled;
-            rad_spec_opinion_req_False.Disabled = disabled;
+            rad_spec_opinion_req_true.Disabled = disabled;
+            rad_spec_opinion_req_false.Disabled = disabled;
             txt_spec_opinion_req_text.Disabled = disabled;
             txt_pecific_edu_req.Disabled = disabled;
             txt_next_appointment.Disabled = disabled;
         }
 
-        private void _BindGridView(GridView gridView, DataTable dataSource)
-        {
-            try
-            {
-                ViewState[gridView.ID] = dataSource;
-                gridView.DataSource = (DataTable)ViewState[gridView.ID];
-                gridView.DataBind();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
+        
 
         protected void btn_grid_appointedVaccine_add_Click(object sender, EventArgs e)
         {
@@ -274,17 +256,46 @@ namespace EMR.OPD
 
         protected void btnComplete_Click(object sender, EventArgs e)
         {
-            mrnv = new Mrnv(DataHelpers.varDocId);
-            mrnv.status = DocumentStatus.FINAL;
-            mrnv.user_name = (string)Session["UserID"];
-            UpdateData(mrnv);
+            string errors = checkValidField();
+
+            if (string.IsNullOrEmpty(errors))
+            {
+                mrnv = new Mrnv(Request.QueryString["docId"]);
+                mrnv.status = DocumentStatus.FINAL;
+                mrnv.user_name = (string)Session["UserID"];
+
+                UpdateData(mrnv);
+            }
+            else
+            {
+                RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
+
+                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
+                message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
+            }
+        }
+
+        private string checkValidField()
+        {
+            return "";
         }
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            //if (IniMedAssForNeoInpatient.Delete((string)Session["UserID"])[0] == WebHelpers.ResponseStatus.OK)
-            //{
-            //}
+            dynamic result = Mrnv.Delete((string)Session["UserId"], Request.QueryString["docId"]);
+
+            if (result[0].Status == System.Net.HttpStatusCode.OK)
+            {
+                string pid = Request["pid"];
+                string vpid = Request["vpid"];
+
+                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+            }
+            else
+            {
+                Session["PageNotFound"] = result[0];
+                Response.Redirect("../Other/PageNotFound.aspx", false);
+            }
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)
@@ -378,28 +389,55 @@ namespace EMR.OPD
             _BindGridView(gridView, dt);
         }
 
-        protected void DisabledGridView(GridView gridView, bool disabled)
+        #region METHODS
+        private dynamic GetRadioButton(string radio_name)
+    {
+        if (((HtmlInputRadioButton)FindControl(radio_name + "True")).Checked)
+        {
+            return true;
+        }
+        else if (((HtmlInputRadioButton)FindControl(radio_name + "False")).Checked)
+        {
+            return false;
+        }
+        else { return null; }
+    }
+        private void BindRadioButton(string value)
+        {
+            if (FindControl(value) != null)
+            {
+                ((HtmlInputRadioButton)FindControl(value)).Checked = true;
+            }
+        }
+        private dynamic GetRadioButton(string radio_name, Dictionary<string, string> value)
+        {
+            foreach (KeyValuePair<string, string> code in value)
+            {
+                try
+                {
+                    if (((HtmlInputRadioButton)FindControl(radio_name + code.Key)).Checked)
+                    {
+                        return code.Key;
+                        break;
+                    }
+                }
+                catch (Exception ex) { }
+            }
+            return null;
+        }
+        private void _BindGridView(GridView gridView, DataTable dataSource)
         {
             try
             {
-                for (int r = 0; r < gridView.Rows.Count; r++)
-                {
-                    for (int i = 0; i < gridView.Rows[r].Cells.Count; i++)
-                    {
-                        try
-                        {
-                            if (gridView.Rows[r].Cells[i].Controls[1] is TextField)
-                            {
-                                TextField text2 = gridView.Rows[r].Cells[i].Controls[1] as TextField;
-                                text2.Disabled = disabled;
-                            }
-                        }
-                        catch (Exception ex) { }
-                    }
-                }
-                ((Button)FindControl("btn_" + gridView.ID + "_add")).Visible = !disabled;
+                ViewState[gridView.ID] = dataSource;
+                gridView.DataSource = (DataTable)ViewState[gridView.ID];
+                gridView.DataBind();
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
+        #endregion
     }
 }

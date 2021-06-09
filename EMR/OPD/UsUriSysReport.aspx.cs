@@ -110,7 +110,7 @@ namespace EMR
             uusr.conclusion = txt_conclusion.Value;
             uusr.recommendation = txt_recommendation.Value;
 
-            if (uusr.Update()[0] == WebHelpers.ResponseStatus.OK)
+            if (uusr.Update()[0] == "OK")
             {
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                 message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS);

@@ -10,6 +10,124 @@ namespace EMR
     public class EMRClass
     {
     }
+    public class Option
+    {
+        public string Text { get; set; }
+        public dynamic Value { get; set; }
+        public dynamic FixWidth { get; set; }
+    }
+    public class PatientVisit
+    {
+        protected PatientVisit(string visible_patient_id)
+        {
+            dynamic response = WebHelpers.GetAPI("api/emr/patient-visit/" + visible_patient_id);
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                DataTable tbl = WebHelpers.GetJSONToDataTable(response.Data);
+                WebHelpers.BindingDatafield(tbl, this);
+                instance = this;
+            }
+        }
+
+        private static readonly object _lock = new object();
+        private static PatientVisit instance = null;
+        public static PatientVisit Instance(string visible_patient_id)
+        {
+            if (instance == null)
+            {
+                instance = new PatientVisit(visible_patient_id);
+            }
+            return instance;
+        }
+
+        #region Properties
+        public dynamic patient_visit_id { get; set; }
+        public dynamic patient_id { get; set; }
+        public dynamic associated_visit_id { get; set; }
+        public dynamic visit_type_group_rcd { get; set; }
+        public dynamic visit_type { get; set; }
+        public dynamic visit_code { get; set; }
+        public dynamic actual_visit_date_time { get; set; }
+        public dynamic closure_date_time { get; set; }
+        public dynamic caregiver_name_e { get; set; }
+        public dynamic caregiver_name_l { get; set; }
+        public dynamic specialty_name_e { get; set; }
+        public dynamic specialty_name_l { get; set; }
+        #endregion
+    }
+
+    public class Patient
+    {
+        public Patient(string visible_patient_id) {
+            dynamic response = WebHelpers.GetAPI("api/emr/demographic/" + visible_patient_id);
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                DataTable tbl = WebHelpers.GetJSONToDataTable(response.Data);
+                WebHelpers.BindingDatafield(tbl, this);
+                instance = this;
+            }
+        }
+
+        private static Patient instance = null;
+        public static Patient Instance()
+        {
+            return instance;
+        }
+
+        #region Properties
+        public dynamic patient_id { get; set; }
+        public dynamic hospital_code { get; set; }
+        public dynamic visible_patient_id { get; set; }
+        public dynamic primary_patient_id { get; set; }
+        public dynamic primary_hospital_code { get; set; }
+        public dynamic primary_visible_patient_id { get; set; }
+        public dynamic title_e { get; set; }
+        public dynamic title_l { get; set; }
+        public dynamic first_name_e { get; set; }
+        public dynamic first_name_l { get; set; }
+        public dynamic last_name_e { get; set; }
+        public dynamic last_name_l { get; set; }
+        public dynamic date_of_birth { get; set; }
+        public dynamic gender_e { get; set; }
+        public dynamic gender_l { get; set; }
+        public dynamic national_id { get; set; }
+        public dynamic passport { get; set; }
+        public dynamic home_email { get; set; }
+        public dynamic business_email { get; set; }
+        public dynamic occupation_e { get; set; }
+        public dynamic occupation_l { get; set; }
+        public dynamic nationality_e { get; set; }
+        public dynamic nationality_l { get; set; }
+        public dynamic religion_e { get; set; }
+        public dynamic religion_l { get; set; }
+        public dynamic address_line_e { get; set; }
+        public dynamic address_line_l { get; set; }
+        public dynamic address_subregion_e { get; set; }
+        public dynamic address_subregion_l { get; set; }
+        public dynamic address_region_e { get; set; }
+        public dynamic address_region_l { get; set; }
+        public dynamic address_country_e { get; set; }
+        public dynamic address_country_l { get; set; }
+        public dynamic contact_name_e { get; set; }
+        public dynamic contact_name_l { get; set; }
+        public dynamic relationship_type_rcd { get; set; }
+        public dynamic contact_phone_number { get; set; }
+        public dynamic lu_updated { get; set; }
+        #endregion
+
+        #region Methods
+        public string GetFullName()
+        {
+            return this.first_name_l + " " + this.last_name_l;
+        }
+        public string GetAddress()
+        {
+            return string.Format("{0} {1} {2} {3}", this.address_line_l, this.address_subregion_l, this.address_region_l, this.address_country_l);
+        }
+        #endregion
+    }
 
     public class PageInfo
     {
@@ -61,10 +179,6 @@ namespace EMR
         
         
 }
-
-    public static class EMRTable
-    {
-    }
 
     public partial class Ena
     {
@@ -3134,24 +3248,24 @@ namespace EMR
         }
 
         #region METHODS
-        public string[] Update()
+        public dynamic[] Update()
         {
-            string[] message = new string[2];
+            dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
+            dynamic response1 = WebHelpers.PostAPI("api/pomr/edit", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
+                dynamic response2 = WebHelpers.PostAPI("api/pomr/log/" + this.document_id);
                 message[1] = response2;
             }
 
             return message;
         }
-        public static string[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid)
         {
-            string[] message = new string[2];
+            dynamic[] message = new dynamic[2];
             try
             {
                 dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
@@ -3169,7 +3283,7 @@ namespace EMR
             catch (Exception ex)
             {
                 dynamic response = new System.Dynamic.ExpandoObject();
-                response.Status = "Error";
+                response.Status = System.Net.HttpStatusCode.NotFound;
                 response.Data = ex.Message;
 
                 message[0] = response;
@@ -3179,7 +3293,7 @@ namespace EMR
         #endregion
     }
 
-    public class OutPatientInitialNursingAssement
+    public class Oina
     {
         #region Properties
         public static string api = "api/oina";
@@ -3320,7 +3434,7 @@ namespace EMR
         /// <param name="delete_date_time"></param>
         /// <param name="document_type_rcd"></param>
         /// <param name="amend_reason"></param>
-        public OutPatientInitialNursingAssement(dynamic vs_temperature, dynamic vs_heart_rate, dynamic vs_weight, dynamic vs_respiratory_rate, dynamic vs_height, dynamic vs_BMI, dynamic vs_blood_pressure, dynamic vs_spO2, dynamic pulse, dynamic chief_complaint, dynamic allergy, dynamic allergy_note, dynamic mental_status, dynamic mental_status_note, dynamic paint_score_code, dynamic paint_score_description, dynamic fall_risk, dynamic fall_risk_assistance, dynamic nutrition_status_code, dynamic nutrition_status_description, dynamic housing_code, dynamic housing_description, dynamic prioritization_code, dynamic prioritization_description, dynamic assessment_date_time, dynamic document_id, dynamic model_id, dynamic patient_visit_id, dynamic status, dynamic created_user_id, dynamic created_name_e, dynamic created_name_l, dynamic created_date_time, dynamic modified_user_id, dynamic modified_name_e, dynamic modified_name_l, dynamic modified_date_time, dynamic submited_user_id, dynamic submited_name_e, dynamic submited_name_l, dynamic submited_date_time, dynamic signed_user_id, dynamic signed_name_e, dynamic signed_name_l, dynamic signed_date_time, dynamic delete_user_id, dynamic delete_name_e, dynamic delete_name_l, dynamic delete_date_time, dynamic document_type_rcd, dynamic amend_reason)
+        public Oina(dynamic vs_temperature, dynamic vs_heart_rate, dynamic vs_weight, dynamic vs_respiratory_rate, dynamic vs_height, dynamic vs_BMI, dynamic vs_blood_pressure, dynamic vs_spO2, dynamic pulse, dynamic chief_complaint, dynamic allergy, dynamic allergy_note, dynamic mental_status, dynamic mental_status_note, dynamic paint_score_code, dynamic paint_score_description, dynamic fall_risk, dynamic fall_risk_assistance, dynamic nutrition_status_code, dynamic nutrition_status_description, dynamic housing_code, dynamic housing_description, dynamic prioritization_code, dynamic prioritization_description, dynamic assessment_date_time, dynamic document_id, dynamic model_id, dynamic patient_visit_id, dynamic status, dynamic created_user_id, dynamic created_name_e, dynamic created_name_l, dynamic created_date_time, dynamic modified_user_id, dynamic modified_name_e, dynamic modified_name_l, dynamic modified_date_time, dynamic submited_user_id, dynamic submited_name_e, dynamic submited_name_l, dynamic submited_date_time, dynamic signed_user_id, dynamic signed_name_e, dynamic signed_name_l, dynamic signed_date_time, dynamic delete_user_id, dynamic delete_name_e, dynamic delete_name_l, dynamic delete_date_time, dynamic document_type_rcd, dynamic amend_reason)
         {
             this.vs_temperature = vs_temperature;
             this.vs_heart_rate = vs_heart_rate;
@@ -3370,7 +3484,7 @@ namespace EMR
             this.amend_reason = amend_reason;
         }
 
-        public OutPatientInitialNursingAssement(string document_id)
+        public Oina(string document_id)
         {
             dynamic response = WebHelpers.GetAPI("api/oina/" + document_id);
 
@@ -3393,16 +3507,19 @@ namespace EMR
 
             dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
             message[0] = response1;
+
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                message[1] = WebHelpers.PostAPI(api + "/log/" + this.document_id);
+                dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
+                message[1] = response2;
             }
+
             return message;
         }
 
-        public static string[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid)
         {
-            string[] message = new string[2];
+            dynamic[] message = new dynamic[2];
             try
             {
                 dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
@@ -3420,7 +3537,7 @@ namespace EMR
             catch (Exception ex)
             {
                 dynamic response = new System.Dynamic.ExpandoObject();
-                response.Status = "Error";
+                response.Status = System.Net.HttpStatusCode.NotFound;
                 response.Data = ex.Message;
 
                 message[0] = response;
@@ -3494,6 +3611,7 @@ namespace EMR
         public dynamic document_type_rcd { get; set; }
         public dynamic documentid { get; set; }
         #endregion
+
         public static Dictionary<string, string> TREATMENT_CODE = new Dictionary<string, string>()
         {
             { "OPD", "Ngoại trú/Ambulatory care" },
@@ -3513,7 +3631,6 @@ namespace EMR
             }
         }
 
-
         //
         public dynamic[] Update()
         {
@@ -3531,6 +3648,35 @@ namespace EMR
             return message;
         }
 
+        public static dynamic[] Delete(string userName, string docid)
+        {
+            dynamic[] message = new dynamic[2];
+            try
+            {
+                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
+
+                message[0] = response;
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic response1 = WebHelpers.PostAPI(api + "/log/" + docid);
+                    message[1] = response1;
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = System.Net.HttpStatusCode.NotFound;
+                response.Data = ex.Message;
+
+                message[0] = response;
+                return message;
+            }
+        }
+
+
         public static dynamic UpdateVitalSign(string document_id) { 
             return WebHelpers.PostAPI(api + "/update-vital-sign/" + document_id);
         }
@@ -3541,13 +3687,54 @@ namespace EMR
     #region OUTPATIENT MEDICAL RECORD - Mr. Chung
     public partial class PatientInfo
     {
-        public  PatientInfo() { }
+        #region Properties
+        public string p_info;
+        public int p_age;
+        public dynamic patient_id { get; set; }
+        public dynamic hospital_code { get; set; }
+        public dynamic visible_patient_id { get; set; }
+        public dynamic primary_patient_id { get; set; }
+        public dynamic primary_hospital_code { get; set; }
+        public dynamic primary_visible_patient_id { get; set; }
+        public dynamic title_e { get; set; }
+        public dynamic title_l { get; set; }
+        public dynamic first_name_e { get; set; }
+        public dynamic first_name_l { get; set; }
+        public dynamic last_name_e { get; set; }
+        public dynamic last_name_l { get; set; }
+        public dynamic date_of_birth { get; set; }
+        public dynamic gender_e { get; set; }
+        public dynamic gender_l { get; set; }
+        public dynamic national_id { get; set; }
+        public dynamic passport { get; set; }
+        public dynamic home_email { get; set; }
+        public dynamic business_email { get; set; }
+        public dynamic occupation_e { get; set; }
+        public dynamic occupation_l { get; set; }
+        public dynamic nationality_e { get; set; }
+        public dynamic nationality_l { get; set; }
+        public dynamic religion_e { get; set; }
+        public dynamic religion_l { get; set; }
+        public dynamic address_line_e { get; set; }
+        public dynamic address_line_l { get; set; }
+        public dynamic address_subregion_e { get; set; }
+        public dynamic address_subregion_l { get; set; }
+        public dynamic address_region_e { get; set; }
+        public dynamic address_region_l { get; set; }
+        public dynamic address_country_e { get; set; }
+        public dynamic address_country_l { get; set; }
+        public dynamic contact_name_e { get; set; }
+        public dynamic contact_name_l { get; set; }
+        public dynamic relationship_type_rcd { get; set; }
+        public dynamic contact_phone_number { get; set; }
+        public dynamic lu_updated { get; set; }
+
+        #endregion
+        public PatientInfo() { }
         public PatientInfo(string _patient_id) {
             this.patient_id = _patient_id;
         }
-        public string p_info;
-        public int p_age;
-
+        
         public string ShowPatientInfo(bool vi_laganue)
         {
             p_age = DataHelpers.CalculateAge(DateTime.Parse(date_of_birth.ToString()));
@@ -3561,94 +3748,6 @@ namespace EMR
             }
             return p_info;
         }
-
-        public dynamic patient_id { get; set; }
-
-
-        public dynamic hospital_code { get; set; }
-
-
-        public dynamic visible_patient_id { get; set; }
-
-        public dynamic primary_patient_id { get; set; }
-
-        public dynamic primary_hospital_code { get; set; }
-
-        public dynamic primary_visible_patient_id { get; set; }
-
-        public dynamic title_e { get; set; }
-
-
-        public dynamic title_l { get; set; }
-
-
-        public dynamic first_name_e { get; set; }
-
-
-        public dynamic first_name_l { get; set; }
-
-
-        public dynamic last_name_e { get; set; }
-
-
-        public dynamic last_name_l { get; set; }
-
-        public dynamic date_of_birth { get; set; }
-
-
-        public dynamic gender_e { get; set; }
-
-
-        public dynamic gender_l { get; set; }
-
-        public dynamic national_id { get; set; }
-
-        public dynamic passport { get; set; }
-
-        public dynamic home_email { get; set; }
-
-        public dynamic business_email { get; set; }
-
-        public dynamic occupation_e { get; set; }
-
-        public dynamic occupation_l { get; set; }
-
-        public dynamic nationality_e { get; set; }
-
-        public dynamic nationality_l { get; set; }
-
-        public dynamic religion_e { get; set; }
-
-        public dynamic religion_l { get; set; }
-
-        public dynamic address_line_e { get; set; }
-
-        public dynamic address_line_l { get; set; }
-
-        public dynamic address_subregion_e { get; set; }
-
-        public dynamic address_subregion_l { get; set; }
-
-        public dynamic address_region_e { get; set; }
-
-        public dynamic address_region_l { get; set; }
-
-        public dynamic address_country_e { get; set; }
-
-        public dynamic address_country_l { get; set; }
-
-
-        public dynamic contact_name_e { get; set; }
-
-
-        public dynamic contact_name_l { get; set; }
-
-
-        public dynamic relationship_type_rcd { get; set; }
-
-        public dynamic contact_phone_number { get; set; }
-
-        public dynamic lu_updated { get; set; }
 
     }
 
@@ -3688,9 +3787,10 @@ namespace EMR
 
     }
 
-    public partial class OutpatientMedicalRecord
+    public class Omr
     {
         #region Properties
+        public static string api = "api/omr";
         public dynamic document_id { get; set; }
         public dynamic user_name { get; set; }
         public dynamic status { get; set; }
@@ -3739,33 +3839,73 @@ namespace EMR
         public dynamic next_appointment { get; set; }
         #endregion
 
-        #region Methods
-        public string[] Update()
+        public static Dictionary<string, string> TREATMENT_CODE = new Dictionary<string, string>()
         {
-            string[] message = new string[2];
+            { "OPD", "Ngoại trú/Ambulatory care" },
+            { "IPD", "Nhập viện/Admission" },
+            { "TRF", "Chuyển viện/Transfer" },
+        };
 
-            dynamic response1 = WebHelpers.PostAPI("api/omr/edit", this);
+        #region Methods
+        public dynamic[] Update()
+        {
+            dynamic[] message = new dynamic[2];
+
+            dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI("api/omr/log/" + this.document_id);
+                dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
                 message[1] = response2;
             }
 
             return message;
         }
+
+        public static dynamic[] Delete(string userName, string docid)
+        {
+            dynamic[] message = new dynamic[2];
+            try
+            {
+                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
+
+                message[0] = response;
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic response1 = WebHelpers.PostAPI(api + "/log/" + docid);
+                    message[1] = response1;
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = System.Net.HttpStatusCode.NotFound;
+                response.Data = ex.Message;
+
+                message[0] = response;
+                return message;
+            }
+        }
+
+        public static dynamic UpdateVitalSign(string document_id)
+        {
+            return WebHelpers.PostAPI(api + "/update-vital-sign/" + document_id);
+        }
         #endregion
 
         #region Constructors
-        public OutpatientMedicalRecord() { }
+        public Omr() { }
 
         // Constructor for API Update
         /// <summary>
         /// Get document by document_id
         /// </summary>
         /// <param name="document_id"></param>
-        public OutpatientMedicalRecord(dynamic document_id)
+        public Omr(dynamic document_id)
         {
 
             DataTable tbl = new DataTable();
@@ -3773,25 +3913,24 @@ namespace EMR
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                // this = new OutpatientMedicalRecord();
                 tbl = WebHelpers.GetJSONToDataTable(response.Data);
                 WebHelpers.BindingDatafield(tbl, this);
                 DataHelpers.varDocumentStatus = this.status;
             }
-        }//32.69 - 39678
+        }
         // Constructor for API Delete
         /// <summary>
         /// Method for API delete document by document_id & use_name
         /// </summary>
         /// <param name="document_id"></param>
         /// <param name="use_name"></param>
-        public OutpatientMedicalRecord(dynamic document_id, dynamic use_name)
+        public Omr(dynamic document_id, dynamic use_name)
         {
             this.document_id = document_id;
             this.user_name = user_name;
         }
         // Constructor for API Inssert
-        public OutpatientMedicalRecord(dynamic document_id
+        public Omr(dynamic document_id
             , dynamic username
             , dynamic doc_status
             , dynamic amend_reason
@@ -4434,7 +4573,7 @@ namespace EMR
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI("api/oina/log/" + docid);
+                    dynamic response1 = WebHelpers.PostAPI("api/mc/log/" + docid);
                     message[1] = response1;
                 }
 

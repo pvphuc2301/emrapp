@@ -14,6 +14,18 @@
 <%@ Register Src="~/icons/XSquare.ascx" TagPrefix="icon" TagName="xsquare" %>
 <%@ Register Src="~/UserControls/PopupModal.ascx" TagPrefix="webUI" TagName="PopupModal" %>
 <%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="icon" TagName="ExclamationTriangle" %>
+<%@ Register Src="~/UserControls/PrintTemplate/PatientLabel1.ascx" TagPrefix="webUI" TagName="PatientLabel1" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Line.ascx" TagPrefix="webUI" TagName="Line" %>
+<%@ Register Src="~/UserControls/PrintTemplate/PrtRowS1.ascx" TagPrefix="webUI" TagName="PrtRowS1" %>
+<%@ Register Src="~/UserControls/PrintTemplate/PrtGender.ascx" TagPrefix="webUI" TagName="PrtGender" %>
+<%@ Register Src="~/UserControls/PrintTemplate/PrtDate.ascx" TagPrefix="webUI" TagName="PrtDate" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Signature1.ascx" TagPrefix="webUI" TagName="Signature1" %>
+<%@ Register Src="~/UserControls/PrintTemplate/PrtRowS2.ascx" TagPrefix="webUI" TagName="PrtRowS2" %>
+
+
+
+
+
 
 <!DOCTYPE html>
 
@@ -26,152 +38,119 @@
 
 </head>
 <body>
-    <webUI:PrintWindow runat="server" ID="PrintWindow">
-        <PrintHeader>
-            <img style="width: 200px" src="../images/AIH_PI_FULL.png" />
-            <div style="flex-grow: 1; text-align: center;">
-                <div style="color: #007297; font-size: 26.6667px;">GIẤY CHỨNG NHẬN ĐIỀU TRỊ</div>
-            <div style="color: #e20e5a; font-size: 16.6667px;">MEDICAL CERTIFICATE</div>
-            </div>
-            <div style="width: 200px; text-align: center">
-                <div>MAI MAI MÃI1</div>
-                <div>05-10-1960 | Nữ</div>
-                <webUI:Barcode runat="server" id="Barcode" Text="900000488" Width="200" Height="40" />
-                <div>900000488</div>
-            </div>
-        </PrintHeader>
-        <PrintContent>
+    <%--class="cssclsNoScreen"--%>
+    <div class="cssclsNoScreen" style="font-family: Tahoma !important; font-size: 13.3048px !important;">
+        <table class="report-container">
+            <thead class="report-header">
+                <tr>
+                    <th class="report-header-cell">
+                        <div class="header-info" style="display: flex; align-items: center;">
+                            <img width="180px" src="../images/AIH_PI_FULL.png" />
+                            <div style="flex-grow: 1; text-align: center">
+                                <div style="color: #007297; font-size: 20.6963px;">PHIẾU ĐÁNH GIÁ ĐIỀU <br /> DƯỠNG BỆNH NGOẠI TRÚ</div>
+                                <div style="color: #e20e5a; font-size: 16.6667px;">OUTPATIENT INITIAL NURSING ASSESSMENT</div>
+                            </div>
+                            <webUI:PatientLabel1 runat="server" ID="prt_patient_label" />
+                        </div>
+                        <webUI:Line runat="server" ID="Line" />
+                    </th>
+                </tr>
+            </thead>
 
-            <div class="row mb-2">
-                <div class="col-12">
-                   <webUI:Label runat="server" Title="BỆNH VIỆN QUỐC TẾ MỸ CHỨNG NHẬN:" SubTitle="AMERICAN INTERNATIONAL HOSPITAL CERTIFIES THAT" />
-                </div>
-            </div>
+            <tbody class="report-content">
+                <tr>
+                    <td class="report-content-cell">
+                        <div class="main">
+                            <webUI:PrtRowS1 Order="I." FontBold="true" Title="DẤU HIỆU SINH TỒN:" SubTitle="VITAL SIGNS"  runat="server" />
+                            <table class="table-bordered mb-2" style="table-layout: fixed; width: 100%">
+                                    <tr>
+                                        <td class="p-2">Nhiệt độ/ Temperature (C degree)</td>
+                                        <td class="p-2 text-right" style="width: 100px;"><asp:Label runat="server" ID="prt_vs_temperature" /></td>
+                                        <td class="p-2">Mạch/ Pulse (/min)</td>
+                                        <td class="p-2 text-right" style="width: 100px;"><asp:Label runat="server" ID="prt_pulse" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2">Cân nặng/ Weight (Kg)</td>
+                                        <td class="p-2 text-right"><asp:Label runat="server" ID="prt_vs_weight" /></td>
+                                        <td class="p-2">Nhịp thở/ Respiratory Rate (/min)</td>
+                                        <td class="p-2 text-right"><asp:Label runat="server" ID="prt_vs_respiratory_rate" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2">Chiều cao/Height (cm)</td>
+                                        <td class="p-2 text-right"><asp:Label runat="server" ID="prt_vs_height" /></td>
+                                        <td class="p-2">Huyết áp/Blood pressure (mmHg)</td>
+                                        <td class="p-2 text-right"><asp:Label runat="server" ID="prt_vs_blood_pressure" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="p-2">Chỉ số khối cơ thể/ BMI (Kg/m2)</td>
+                                        <td class="p-2 text-right"><asp:Label runat="server" ID="prt_vs_BMI" /></td>
+                                        <td class="p-2">Độ bão hòa Oxy/ SpO2 (%)</td>
+                                        <td class="p-2 text-right"><asp:Label runat="server" ID="prt_vs_spO2" /></td>
+                                    </tr>
+                                </table>
 
-            <div class="row mb-2">
-                <div class="col-6">
-                   <webUI:Label runat="server" Title="Họ tên bệnh nhân:" SubTitle="Patient's name" />
-                    <div class="d-inline-block ml-2 align-top">MAI MAI MÃI1</div>
-                </div>
-                <div class="col-6">
-                   <webUI:Label runat="server" Title="Ngày sinh:" SubTitle="DOB" />
-                    <div class="d-inline-block ml-2 align-top">05-10-1960</div>
-                </div>
-            </div>
+                            <webUI:PrtRowS1 FontBold="true" Order="II." Title="ĐÁNH GIÁ:" SubTitle="ASSESSMENT"  runat="server" />
 
-            <div class="row mb-2">
-                <div class="col-12">
-                   <webUI:Label runat="server" Title="Giới tính:" SubTitle="Gender" />
-                    <webUI:Label runat="server" Title="Nam" SubTitle="Male" />
-                    <webUI:Label runat="server" Title="Nữ " SubTitle="Female" />
-                </div>
-            </div>
+                            <webUI:PrtRowS1 FontBold="true" Order="1." FixedWidth="152" Title="Lý do đến khám:" SubTitle="Chief complaint" ID="prt_chief_complaint"  runat="server" />
 
-            <div class="row mb-2">
-                <div class="col-6">
-                    <webUI:Label runat="server" Title="Khoa:" SubTitle="Dept" />
-                    <div class="d-inline-block ml-2 align-top">Khoa khám bệnh</div>
-                </div>
-                <div class="col-6">
-                    <webUI:Label runat="server" Title="Mã BN:" SubTitle="Patient ID" />
-                    <div class="d-inline-block ml-2 align-top">900000488</div>
-                </div>
-            </div>
+                            <webUI:PrtRowS1 FontBold="true" Order="2." FixedWidth="152" Title="Dị ứng:" SubTitle="Allergy" ID="prt_allergy" runat="server" />
 
-            <div class="row mb-2">
-                <div class="col-12">
-                   <webUI:Label runat="server" Title="Đã đến khám và điều trị tại bệnh viện của chúng tôi, với những thông tin như sau:" SubTitle="Visited and received treatment at our hospital, with the following information" />
-                    <div class="d-inline-block ml-2 align-top"></div>
-                </div>
-            </div>
+                            <webUI:PrtRowS1 FontBold="true" Order="3." Title="Trạng thái tinh thần" SubTitle="Mental status"   runat="server" />
 
-            <div class="row mb-2">
-                <div class="col-12">
-                   <webUI:Label runat="server" Title="Ngày khám bệnh:" SubTitle="Date of visit" />
-                    <div class="d-inline-block ml-2 align-top">05-03-2021</div>
-                </div>
-            </div>
+                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                <webUI:PrtRowS1 FixedLeft="30"  FixedWidth="152"  Title="Đáp ứng phù hợp" SubTitle="Appropriate response"   runat="server" />
+                                <webUI:PrtRowS2 ID="prt_mental_status" Gap="20"  runat="server" />
+                            </div>
 
-            <div class="row mb-2">
-                <div class="col-12">
-                   <webUI:Label runat="server" Title="Lý do đến khám:" SubTitle="Chief complaint" />
-                    <div class="d-inline-block ml-2 align-top"></div>
-                </div>
-            </div>
+                            <webUI:PrtRowS1 FontBold="true" Order="4." FixedWidth="152" Title="Thang điểm đau:" SubTitle="Pain Score" ID="prt_paint_score_code" runat="server" Value="0" />
 
-            <div class="row mb-2">
-                <div class="col-12">
-                   <webUI:Label runat="server" Title="Tóm tắt bệnh sử:" SubTitle="History of present illness" />
-                    <div class="d-inline-block ml-2 align-top"></div>
-                </div>
-            </div>
+                            <div class="text-center mb-2">
+                                <img src="../images/pain_score.png" />
+                            </div>
 
-            <div class="row mb-2">
-                <div class="col-12">
-                   <webUI:Label runat="server" Title="Tiền sử bệnh:" SubTitle="Past history" />
-                    <div class="d-inline-block ml-2 align-top"></div>
-                </div>
-            </div>
+                            <webUI:PrtRowS1 FontBold="true" Order="5." FixedWidth="235" Title="Tầm soát nguy cơ té ngã:" SubTitle="Fall Risk Morse Scale" Value="Không có nguy cơ/ No risk"  runat="server" ID="prt_fall_risk" />
 
-            <div class="row mb-2">
-                <div class="col-12">
-                   <webUI:Label runat="server" Title="Đặc điểm lâm sàng:" SubTitle="Clinical findings" />
-                    <div class="d-inline-block ml-2 align-top"></div>
-                </div>
-            </div>
+                            <webUI:PrtRowS1 FontBold="true" Order="6." FixedWidth="235" Title="Đánh giá tình trạng dinh dưỡng:" SubTitle="Nutritional Status Screening" Value="Không ghi nhận/ N/A" ID="prt_nutrition_status_code" runat="server" />
 
-            <div class="row mb-2">
-                <div class="col-12">
-                   <webUI:Label runat="server" Title="Cận lâm sàng được chỉ định:" SubTitle="Para-clinical investigations" />
-                    <div class="d-inline-block ml-2 align-top">None;</div>
-                </div>
-            </div>
+                            <webUI:PrtRowS1 FontBold="true" Order="III." Title="ĐÁNH GIÁ CÁC YẾU TỐ XÃ HỘI CỦA NGƯỜI BỆNH(DUY NHẤT CHO LẦN KHÁM ĐẦU TIÊN):" SubTitle="SOCIAL FACTORS ASSESSMENT(ONLY FOR THE FIRST VISIT)"  runat="server" />
 
-            <div class="row mb-2">
-                <div class="col-12">
-                   <webUI:Label runat="server" Title="Chẩn đoán:" SubTitle="Diagnosis" />
-                    <div class="d-inline-block ml-2 align-top">J01.0: Acute maxillary sinusitis/ Viêm xoang hàm cấp;;</div>
-                </div>
-            </div>
+                            
+                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                <webUI:PrtRowS1 FontBold="true" FixedLeft="30"  FixedWidth="152"  Title="Tình trạng sinh sống:" SubTitle="Housing" runat="server" />
+                                <webUI:PrtRowS2  runat="server" Gap="10" ID="prt_housing_code" />
+                            </div>
+                            
 
-            <div class="row mb-2">
-                <div class="col-12">
-                   <webUI:Label runat="server" Title="Phương pháp và thuốc điều trị:" SubTitle="Treatment and medications" />
-                    <div class="d-inline-block ml-2 align-top">Paracetamol (Perfalgan) 10mg/ml;;</div>
-                </div>
-            </div>
+                            <webUI:PrtRowS1 FontBold="true" Order="IV." FixedWidth="152" ID="prt_prioritization_code" Title="MỨC ĐỘ ƯU TIÊN:" SubTitle="PRIORITIZATION" Value="Có thể chờ khám trong khoảng thời gian xác định"  runat="server" />
 
-            <div class="row mb-2">
-                <div class="col-12">
-                   <webUI:Label runat="server" Title="Thời gian điều trị:" SubTitle="Treatment period" />
-                    <div class="d-inline-block ml-2 align-top"></div>
-                </div>
-            </div>
+                            <div class="d-grid mt-4" style="grid-template-columns: 1fr 1fr">
+                                <div></div>
+                                <div class="text-center" >
+                                    <webUI:Signature1 runat="server" ID="prt_signature1" />
+                                </div>
+                            </div>
 
-            <div class="row mb-2">
-                <div class="col-12">
-                   <webUI:Label runat="server" Title="Lời khuyên và theo dõi:" SubTitle="Recommendation and Follow-up" />
-                    <div class="d-inline-block ml-2 align-top"></div>
-                </div>
-            </div>
-            
-            <div class="row">
-                <div class="col-6">
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
 
-                </div>
-                <div class="col-6 mb-2">
-                    <div>
-                        <webUI:Signature runat="server" Title="BÁC SĨ ĐIỀU TRỊ" SubTitle="ATTENDING DOCTOR" FullName="Dr. Nguyen Dinh My">
-                            <ItemTemplate>
-                                <webUI:Date runat="server" Day="23" Month="5" Year="2021" />
-                            </ItemTemplate>
-                        </webUI:Signature>
-                    </div>
-                </div>
-            </div>
-
-        </PrintContent>
-    </webUI:PrintWindow>
+            <tfoot class="report-footer">
+                <tr>
+                    <td class="report-footer-cell" style="font-size: 10px">
+                        <img style="width: 100%" src="../images/bottomline.png" />
+                        <div class="footer-info">
+                            <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
+                            <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>
+                            <div>Tel: 028 3910 9999</div>
+                            <div>www.aih.com.vn</div>
+                        </div>
+                    </td>
+                    <td class="report-footer-space"></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
 
     <div class="cssclsNoPrint">
     <!-- ============================================================== -->
@@ -513,7 +492,7 @@
                                                     <asp:Button ID="btnSave" OnClick="btnSave_Click" class="btn btn-primary" runat="server" Text="Save" />
                                                     <button type="button" id="btnDeleteModal" runat="server" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
                                                     <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
-                                                    <asp:Button ID="btnPrint" OnClientClick="window.print()" CssClass="btn btn-secondary" runat="server" Text="Print" />
+                                                    <asp:Button ID="btnPrint" OnClientClick="window.print();return false" CssClass="btn btn-secondary" runat="server" Text="Print" />
                                                     <asp:Button ID="btnCancel" OnClick="btnCancel_Click" CssClass="btn btn-secondary" runat="server" Text="Cancel" />
                                                 </div>
                                             </div>

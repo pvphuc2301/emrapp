@@ -21,16 +21,7 @@ namespace EMR.OPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UserControl PrintWindow;
-
-        /// <summary>
-        /// Barcode control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UserControl Barcode;
+        protected global::EMR.UserControls.PrintTemplate.PrintWindow PrintWindow;
 
         /// <summary>
         /// form1 control.
@@ -141,22 +132,22 @@ namespace EMR.OPD
         protected global::EMR.TextField txt_family;
 
         /// <summary>
-        /// rad_allergy_False control.
+        /// rad_allergy_false control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_allergy_False;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_allergy_false;
 
         /// <summary>
-        /// rad_allergy_True control.
+        /// rad_allergy_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_allergy_True;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_allergy_true;
 
         /// <summary>
         /// XSquare2 control.
@@ -447,22 +438,22 @@ namespace EMR.OPD
         protected global::EMR.icons.XSquare XSquare1;
 
         /// <summary>
-        /// rad_spec_opinion_req_False control.
+        /// rad_spec_opinion_req_false control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_spec_opinion_req_False;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_spec_opinion_req_false;
 
         /// <summary>
-        /// rad_spec_opinion_req_True control.
+        /// rad_spec_opinion_req_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_spec_opinion_req_True;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_spec_opinion_req_true;
 
         /// <summary>
         /// XSquare3 control.

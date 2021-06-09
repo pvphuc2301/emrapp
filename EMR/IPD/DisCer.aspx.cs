@@ -85,7 +85,7 @@ namespace EMR
         {
             prt_pid.Text = DataHelpers.patient.visible_patient_id;
             prt_patient_name.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
-            prt_dob.Text = WebHelpers.ConvertDateTime(DataHelpers.patient.date_of_birth, "dd-MM-yyyy");
+            prt_dob.Text = WebHelpers.FormatDateTime(DataHelpers.patient.date_of_birth, "dd-MM-yyyy");
             prt_gender.Text = DataHelpers.patient.gender_l;
             prt_nationality.Text = DataHelpers.patient.nationality_l;
             prt_occupation.Text = DataHelpers.patient.occupation_l;
@@ -127,11 +127,7 @@ namespace EMR
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            btnComplete.Visible = false;
-            btnCancel.Visible = false;
-            btnAmend.Visible = true;
-            btnPrint.Visible = true;
-            txt_amendReason.Visible = false;
+            Initial();
         }
 
         protected void btnComplete_Click(object sender, EventArgs e)

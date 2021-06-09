@@ -140,7 +140,7 @@ namespace EMR
                 surr.procedure_chart = txt_procedure_chart.Value;
                 surr.procedure_narrative = txt_procedure_narrative.Value;
 
-                if (surr.Update()[0] == WebHelpers.ResponseStatus.OK)
+                if (surr.Update()[0] == "OK")
                 {
                     Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                     message.Load(Page, Message.CODE.MS001, Message.TYPE.SUCCESS, 100000);
@@ -200,7 +200,7 @@ namespace EMR
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            if (Surr.Delete((string)Session["UserID"])[0] == WebHelpers.ResponseStatus.OK)
+            if (Surr.Delete((string)Session["UserID"])[0] == "OK")
             {
             }
         }

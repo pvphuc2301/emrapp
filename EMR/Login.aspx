@@ -148,21 +148,9 @@
                             <div class="form-group text-center">
                                 <div class="col-xs-12 p-b-20">
                                     <button class="btn btn-block btn-lg btn-info btn-rounded" runat="server" id="btnLogin" onserverclick="cmdLogin_Click">
-                                    
-
                                         Login
-                                    
                                     </button>
                                     <webUI:Spinner1 AssociatedUpdatePanelID="up" runat="server" ID="Spinner1" />
-                                    <%--<asp:UpdateProgress ID="UpdateProgress1" DynamicLayout="true" runat="server"  AssociatedUpdatePanelID="up" >
-                                        <ProgressTemplate>
-                                            <div runat="server" id="Spinner1" class="spinner">
-                                                <div class="bounce1"></div>
-                                                <div class="bounce2"></div>
-                                                <div class="bounce3"></div>
-                                            </div>
-                                        </ProgressTemplate>
-                                    </asp:UpdateProgress>--%>
                                 </div>
                             </div>
 

@@ -27,12 +27,12 @@
             padding-left: 0.5rem;
             padding-right: 0.5rem;
         }
+
         .table-bordered > tr > th {
             padding: 0.5rem;
         }
 
-        table > tbody
-        {
+        table > tbody {
             border: 1px solid #dee2e6;
         }
     </style>
@@ -1019,7 +1019,7 @@
                                                             <asp:TemplateField HeaderText="">
                                                                 <ItemTemplate>
                                                                     <asp:LinkButton runat="server" CommandName="Delete" CssClass="btn btn-sm btn-outline-secondary" OnClientClick="return confirm('are you sure?')">
-                                                                        <icon:Trash runat="server" ID="Trash" />
+                                                                        <icon:trash runat="server" ID="Trash" />
                                                                     </asp:LinkButton>
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
@@ -1127,7 +1127,7 @@
                                                             <asp:TemplateField HeaderText="">
                                                                 <ItemTemplate>
                                                                     <asp:LinkButton runat="server" CommandName="Delete" CssClass="btn btn-sm btn-outline-secondary" OnClientClick="return confirm('are you sure?')">
-                                                                        <icon:Trash runat="server" ID="Trash" />
+                                                                        <icon:trash runat="server" ID="Trash" />
                                                                     </asp:LinkButton>
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
@@ -1277,7 +1277,7 @@
                                                             <asp:TemplateField HeaderText="">
                                                                 <ItemTemplate>
                                                                     <asp:LinkButton runat="server" CommandName="Delete" CssClass="btn btn-sm btn-outline-secondary" OnClientClick="return confirm('are you sure?')">
-                                                                        <icon:Trash runat="server" ID="Trash" />
+                                                                        <icon:trash runat="server" ID="Trash" />
                                                                     </asp:LinkButton>
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>

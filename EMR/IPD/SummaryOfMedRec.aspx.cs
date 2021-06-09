@@ -72,21 +72,24 @@ namespace EMR
 
         private void loadDataToPrint(Somr somr)
         {
-            PatientLabel1.PID = "900000488";
-            PatientLabel1.FullName = "BOY OF MAI MAI MAI900000489";
-            PatientLabel1.DOB = "04-10-1960";
-            PatientLabel1.Gender = "Male";
+            Patient patient = Patient.Instance();
+            prt_patient_label1.PID = patient.visible_patient_id;
+            prt_patient_label1.FullName = patient.first_name_l;
+            prt_patient_label1.DOB = WebHelpers.FormatDateTime(patient.date_of_birth);
+            prt_patient_label1.Gender = patient.gender_l;
 
-            prt_form_date.Text = WebHelpers.ConvertDateTime(somr.form_date, "dd-MM-yyyy");
-            prt_to_date.Text = WebHelpers.ConvertDateTime(somr.to_date, "dd-MM-yyyy");
-            prt_chief_complaint.Text = somr.chief_complaint;
-            prt_diagnosis.Text = somr.diagnosis;
-            prt_clinical_evolution.Text = somr.clinical_evolution;
-            prt_result_para_clinical.Text = somr.result_para_clinical;
-            prt_treatment_prognosis.Text = somr.treatment_prognosis;
+            prt_form_date.Value = WebHelpers.FormatDateTime(somr.form_date);
+            prt_to_date.Value = WebHelpers.FormatDateTime(somr.to_date);
 
+            prt_chief_complaint.Value = somr.chief_complaint;
+            prt_diagnosis.Value = somr.diagnosis;
+            prt_clinical_evolution.Value = somr.clinical_evolution;
+            prt_result_para_clinical.Value = somr.result_para_clinical;
+            prt_treatment_prognosis.Value = somr.treatment_prognosis;
 
+            prt_signature1.Content = WebHelpers.GetSignatureTemplate1("__-__-20__", "Trưởng khoa (ký và ghi rõ họ tên)", "", "The Head of Department's signature and full name", "", (string)Session["UserId"]);
 
+            prt_signature2.Content = WebHelpers.GetSignatureTemplate1("__-__-20__", "Bác sĩ điều trị (ký và ghi rõ họ tên)", "", "Physician's signature and full name", "", (string)Session["UserId"]);
         }
 
         protected void DisabledControl(bool disabled)

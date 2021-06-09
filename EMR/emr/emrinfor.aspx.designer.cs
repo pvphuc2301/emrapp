@@ -141,6 +141,42 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblUserName;
 
         /// <summary>
+        /// CaretDown control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.CaretDown CaretDown;
+
+        /// <summary>
+        /// Person control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.Person Person;
+
+        /// <summary>
+        /// Gear control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.Gear Gear;
+
+        /// <summary>
+        /// InfoCircle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.icons.InfoCircle InfoCircle;
+
+        /// <summary>
         /// btnLogout control.
         /// </summary>
         /// <remarks>

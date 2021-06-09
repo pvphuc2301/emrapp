@@ -10,15 +10,13 @@
 <%@ Register Src="~/UserControls/PrintTemplate/Date.ascx" TagPrefix="aih" TagName="Date" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Signature.ascx" TagPrefix="webUI" TagName="Signature" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrintWindow.ascx" TagPrefix="webUI" TagName="PrintWindow" %>
-<%@ Register Src="~/UserControls/PrintTemplate/Line.ascx" TagPrefix="aih" TagName="Line" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Line.ascx" TagPrefix="webUI" TagName="Line" %>
 <%@ Register Src="~/UserControls/Barcode.ascx" TagPrefix="webUI" TagName="Barcode" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Label1.ascx" TagPrefix="webUI" TagName="Label1" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Signature1.ascx" TagPrefix="webUI" TagName="Signature1" %>
-<%@ Register Src="~/UserControls/PrintTemplate/PatientLabel1.ascx" TagPrefix="aih" TagName="PatientLabel1" %>
-
-
-
-
+<%@ Register Src="~/UserControls/PrintTemplate/PatientLabel1.ascx" TagPrefix="webUI" TagName="PatientLabel1" %>
+<%@ Register Src="~/UserControls/PrintTemplate/PrtRowS1.ascx" TagPrefix="webUI" TagName="PrtRowS1" %>
+<%@ Register Src="~/UserControls/PrintTemplate/PrtDate.ascx" TagPrefix="webUI" TagName="PrtDate" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -27,22 +25,34 @@
     <link href="../../styles/style.css" rel="stylesheet" />
     <link href="../../styles/myStyle.css" rel="stylesheet" />
     <%--<link href="../../style/style-custom.css" rel="stylesheet" />--%>
+    <style>
+        * {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 <body>
-    <div class="cssclsNoScreen" style="font-family: Tahoma !important; font-size: 13.3048px !important;">
+    <%--class="cssclsNoScreen"--%>
+    <div class="cssclsNoScreen">
         <table class="report-container">
             <thead class="report-header">
                 <tr>
                     <th class="report-header-cell">
-                        <div class="header-info" style="display: flex; align-items: center;">
-                            <img width="180px" src="../images/AIH_PI_FULL.png" />
-                            <div style="flex-grow: 1; text-align: center">
-                                <div style="color: #007297; font-size: 20.6963px;">TÓM TẮT XUẤT VIỆN</div>
-                                <div style="color: #e20e5a; font-size: 16.6667px;">DISCHARGE SUMMARY</div>
+                        <div class="header-info">
+                            <img src="../images/AIH_PI_FULL.png" />
+                            <div class="header-info-title">
+                                <h4>TÓM TẮT XUẤT VIỆN</h4>
+                                <h5>DISCHARGE SUMMARY</h5>
                             </div>
-                            <aih:PatientLabel1 runat="server" ID="PatientLabel1" />
+                            <div style="width: 175px;">
+                                <div runat="server" id="prt_fullname" style="margin-left: 16px"></div> 
+                                <div runat="server" id="prt_gender" style="margin-left: 16px"></div>
+                                <div class="d-block" runat="server" id="prt_DOB" style="margin-left: 16px"></div> 
+                                <div runat="server" id="prt_vpid" class="d-block" style="margin-left: 16px"></div>
+                                <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
+                            </div>
                         </div>
-                        <aih:Line runat="server" ID="Line" />
+                        <webUI:Line runat="server" ID="Line" />
                     </th>
                 </tr>
             </thead>
@@ -51,86 +61,49 @@
                 <tr>
                     <td class="report-content-cell">
                         <div class="main">
+                            <div class="d-grid" style="grid-template-columns: 1fr 1fr">
+                                <webUI:PrtRowS1  FontBold="true" FixedLeft="30" FixedWidth="120" Title="Ngày nhập viện" SubTitle="Day of visit"  runat="server" id="prt_date_of_hospital"  />
+
+                                <webUI:PrtRowS1 FontBold="true" FixedLeft="30" FixedWidth="120" Title="Ngày xuất viện" SubTitle="Date of Discharge"  runat="server" id="prt_date_of_discharge"  />
+                            </div>
+
+                            <webUI:PrtRowS1 FontBold="true" FixedWidth="200" Order="1." Title="Lý do nhập viện:" SubTitle="Reason for admission"  runat="server" id="prt_admission_reason"  />
+
+                            <webUI:PrtRowS1 FontBold="true" FixedWidth="200" Order="2." Title="Chẩn đoán:" SubTitle="Diagnosis"  runat="server" id="prt_icd10_diagnosis"  />
+
+                            <webUI:PrtRowS1 FontBold="true" FixedWidth="200" Order="3." Title="Bệnh sử:" SubTitle="Medical History"  runat="server" id="prt_cur_med_history"  />
+
+                        <webUI:PrtRowS1 FontBold="true" FixedWidth="200" Order="4." Title="Khám lâm sàng:" SubTitle="Physical findings on admission"  runat="server" id="prt_physical_finding"  />
+
+                            <webUI:PrtRowS1 FontBold="true" FixedWidth="200" Order="5." Title="Kết quả xét nghiệm:" SubTitle="Laboratory investigation results"  runat="server" id="prt_lab_result"  />
+
+                            <webUI:PrtRowS1 FontBold="true" FixedWidth="200" Order="6." Title="Các quy trình đã được thực hiện:" SubTitle="Procedures performed"  runat="server" id="prt_proce_performed"  />
+
+                            <webUI:PrtRowS1 FontBold="true" FixedWidth="200" Order="7." Title="Điều trị trong quá trình nằm viện:" SubTitle="Treatment during hospitalization"  runat="server" id="prt_treatment"  />
+
+                            <webUI:PrtRowS1 FontBold="true" FixedWidth="200" Order="8." Title="Diễn tiến trong quá trình nằm viện:" SubTitle="Evolution during hospitalization"  runat="server" id="prt_evolution"  />
+
+                            <webUI:PrtRowS1 FontBold="true"  FixedWidth="200" Order="9." Title="Tình trạng của bệnh nhân khi xuất viện:" SubTitle="Patient’s condition on discharge"  runat="server" id="prt_disc_condition"  />
                             
-                            <div class="d-grid grid-template-2">
-                                <div>
-                                    <webUI:Label runat="server" SubTitle="Day of visit" Title="Ngày nhập viện:" />
-                                    <asp:Label runat="server" ID="prt_date_of_hospital" />
-                                </div>
-                                <div>
-                                    <webUI:Label runat="server" SubTitle="Day of visit" Title="Ngày xuất viện:" />
-                                    <asp:Label runat="server" ID="prt_date_of_discharge" />
-                                </div>
-                            </div>
+                            <webUI:PrtRowS1 FontBold="true" FixedWidth="200" Order="10." Title="Thuốc khi xuất viện:" SubTitle="Discharge medications"  runat="server" id="prt_disc_medication"  />
 
-                            <div class="d-grid grid-template-1">
-                                <webUI:Label1 runat="server" SubTitle="Reason for admission" No="1." Title="Lý do nhập viện:" />
-                                <asp:Label CssClass="align-top" runat="server" ID="prt_admission_reason" />
-                            </div>
+                            <webUI:PrtRowS1 FontBold="true" FixedWidth="200" Order="10." Title="Xuất viện trái lời khuyên bác sỹ:" SubTitle="Discharge against medical advice(DAMA)"  runat="server" id="prt_dama"  />
 
-                            <div class="d-grid grid-template-1">
-                                    <webUI:Label1 runat="server" ID="Label2" SubTitle="Diagnosis" No="2." Title="Chẩn đoán:" />
-                                    <asp:Label runat="server" ID="prt_icd10_diagnosis" />
-                                </div>
+                            <webUI:PrtRowS1 FontBold="true" FixedWidth="200" Order="11." Title="Chuyển viện:" SubTitle="Transfer to another hospita"  runat="server" id="prt_trans_to_hospital"  />
 
-                            <div class="d-grid grid-template-1">
-                                <webUI:Label1 runat="server" ID="Label4" SubTitle="Medical History" No="3." Title="Bệnh sử:" />
-                                <asp:Label runat="server" ID="prt_cur_med_history" />
-                            </div>
+                            <webUI:PrtRowS1 FontBold="true" FixedWidth="200" FixedLeft="30" Title="Nếu có, nêu rõ lý do:" SubTitle="If yes, specify the reaso"  runat="server" id="prt_transfer_reason"  />
 
-                            <div class="d-grid grid-template-1">
-                                <webUI:Label1 runat="server" SubTitle="Physical findings on admission" No="4." Title="Khám lâm sàng:" />
-                                <asp:Label runat="server" ID="prt_physical_finding" />
-                            </div>
+                            <webUI:PrtRowS1 FontBold="true" FixedWidth="200" Order="11." Title="Hướng dẫn theo dõi (ghi rõ các dấu hiệu cần tái khám):" SubTitle="Follow-up instructions (signs and symptoms for immediate revisit)"  runat="server" id="prt_follow_up_instruc"  />
 
-                            <div class="d-grid grid-template-1">
-                                    <webUI:Label1 runat="server" ID="Label8" SubTitle="Laboratory investigation results" No="5." Title="Kết quả xét nghiệm:" />
-                                    <asp:Label runat="server" ID="prt_lab_result" />
-                            </div>
+                            <webUI:PrtRowS1 FontBold="true" FixedWidth="200" Order="12." Title="Chế độ ăn uống:" SubTitle="Special diet"  runat="server" id="prt_special_diet"  />
 
-                            <div class="d-grid grid-template-1">
-                                <webUI:Label1 runat="server" SubTitle="Procedures performed" No="6." Title="Các quy trình đã được thực hiện:" />
-                                <asp:Label runat="server" ID="prt_proce_performed" />
-                            </div>
+                            <webUI:PrtRowS1 FontBold="true" FixedWidth="200" Order="13." Title="Ngày tái khám (ghi rõ ngày và tên bác sỹ):" SubTitle="Next consultation (specify date and with whom):"  runat="server" id="prt_next_consult"  />
 
-                            <div class="d-grid grid-template-1">
-                                    <webUI:Label1 runat="server" SubTitle="Treatment during hospitalization" No="7." Title="Điều trị trong quá trình nằm viện:" />
-                                    <asp:Label runat="server" ID="prt_treatment" />
-                                </div>
-
-                            <div class="d-grid grid-template-1">
-                                <webUI:Label1 runat="server"  SubTitle="Evolution during hospitalization" No="8." Title="Diễn tiến trong quá trình nằm viện:" />
-                                <asp:Label runat="server" ID="prt_evolution" />
-                            </div>
-
-                            <div class="d-grid grid-template-1">
-                                <webUI:Label1 runat="server" SubTitle="Patient’s condition on discharge" No="9." Title="Tình trạng của bệnh nhân khi xuất viện:" />
-                                <asp:Label runat="server" ID="prt_disc_condition" />
-                            </div>
-
-                            <div class="d-grid grid-template-1">
-                                <webUI:Label1 runat="server" SubTitle="Discharge medications" No="10." Title="Thuốc khi xuất viện:" />
-                                <asp:Label runat="server" ID="prt_disc_medication" />
-                            </div>
-
-                            <div class="d-grid grid-template-1">
-                                <webUI:Label1 runat="server" SubTitle="Follow-up instructions (signs and symptoms for immediate revisit)" No="11." Title="Hướng dẫn theo dõi (ghi rõ các dấu hiệu cần tái khám):" />
-                                <asp:Label runat="server" ID="prt_follow_up_instruc" />
-                            </div>
-
-                            <div class="d-grid  grid-template-1">
-                                <webUI:Label1 runat="server" No="12." SubTitle="Special diet" Title="Chế độ ăn uống:" />
-                                <asp:Label runat="server" ID="prt_special_diet" />
-                            </div>
-
-                            <div class="d-grid grid-template-1">
-                                <webUI:Label1 runat="server" SubTitle="Next consultation (specify date and with whom)" No="13." Title="Ngày tái khám (ghi rõ ngày và tên bác sỹ):" />
-                                <asp:Label runat="server" ID="prt_next_consult" />
-                            </div>
-
-                            <div class="d-grid grid-template-2">
+                            <div class="d-grid" style="grid-template-columns: 1fr 1fr">
                                 <div></div>
-                                <webUI:Signature1 runat="server" id="Signature1" Title="Bác sỹ điều trị/ Attending Physician:" DateTime="Ngày/ Date: .........." />
+                                <div style="break-inside: avoid;">
+                                    <webUI:Signature1 runat="server" ID="prt_signature1" />
+                                </div>
                             </div>
                         </div>
                     </td>
@@ -157,7 +130,7 @@
     <div class="cssclsNoPrint">
         <form method="post" action="#" id="form2" runat="server">
             <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
-            <div class="scroll-sidebar h-100 w-100">
+            <div class="h-100 w-100" id="form-content">
                 <asp:HiddenField runat="server" ID="RequiredFieldValidator" />
                 <asp:Panel runat="server" ID="messagePlaceHolder">
                     <aih:AmendReason runat="server" ID="txt_amendReason" />
@@ -179,17 +152,17 @@
                                         <div class="col-md-12">
                                             <label class="control-label mb-1">Lý do xuất viện/ <span class="text-primary">Discharge Reason <span class="text-danger">*</span>:</span></label>
                                             <div class="custom-control custom-radio d-inline-block ml-2">
-                                                <input disabled-for="normal_field" type="radio" runat="server" id="rad_disc_reason_code_ama" name="rad_disc_reason_code" class="custom-control-input" />
+                                                <input onchange="document.getElementById('rad_disc_reason_code_error').innerHTML=''" disabled-for="normal_field" type="radio" runat="server" id="rad_disc_reason_code_ama" name="rad_disc_reason_code" class="custom-control-input" />
                                                 <label class="custom-control-label" for="rad_disc_reason_code_ama"><span class="text-primary">Normal</span></label>
                                             </div>
                                             <div class="custom-control custom-radio d-inline-block ml-2">
-                                                <input type="radio" runat="server" id="rad_disc_reason_code_dama" disabled-for="dama_field" name="rad_disc_reason_code" class="custom-control-input" />
+                                                <input onchange="document.getElementById('rad_disc_reason_code_error').innerHTML=''" type="radio" runat="server" id="rad_disc_reason_code_dama" disabled-for="dama_field" name="rad_disc_reason_code" class="custom-control-input" />
                                                 <label class="custom-control-label" for="rad_disc_reason_code_dama"><span class="text-primary">DAMA</span></label>
                                             </div>
                                             <div class="custom-control custom-radio d-inline-block ml-2">
-                                                <input type="radio" runat="server" id="rad_disc_reason_code_transfer" disabled-for="transfer_field" name="rad_disc_reason_code" class="custom-control-input" />
+                                                <input onchange="document.getElementById('rad_disc_reason_code_error').innerHTML=''" type="radio" runat="server" id="rad_disc_reason_code_transfer" disabled-for="transfer_field" name="rad_disc_reason_code" class="custom-control-input" />
                                                 <label class="custom-control-label" for="rad_disc_reason_code_transfer"><span class="text-primary">Transfer</span></label>
-                                                <a href="javascript:void(0)" class="el-hide" data-clear="rad_disc_reason_code" onclick="clear_radiobutton(this)">
+                                                <a href="javascript:void(0)" data-clear="rad_disc_reason_code" onclick="clear_radiobutton(this)">
                                                     <icon:xsquare runat="server" ID="XSquare38" />
                                                 </a>
                                             </div>
@@ -212,7 +185,6 @@
                                             </div>
                                         </div>
                                     </fieldset>
-
 
                                     <fieldset class="row mb-2">
                                         <legend>
@@ -345,7 +317,7 @@
                                         </div>
                                     </fieldset>
 
-                                    <fieldset class="row mb-2 normal_field transfer_field">
+                                    <fieldset class="row mb-2">
                                         <legend>
                                             <label class="control-label mb-2">10. Thuốc khi xuất viện/ <span class="text-primary">Discharge medications:</span></label>
                                         </legend>
@@ -443,10 +415,10 @@
                                         <div class="col-md-12">
                                             <div class="form-actions">
                                                 <asp:Button ID="btnComplete" OnClick="btnComplete_Click" class="btn btn-primary" runat="server" Text="Complete" />
-                                                <asp:Button ID="btnSave" OnClick="btnSave_Click" class="btn btn-primary" runat="server" Text="Save" />
+                                                <asp:Button ID="btnSave" OnClick="btnSave_Click" OnClientClick="JavaScript:return validateForm()" class="btn btn-primary" runat="server" Text="Save" />
                                                 <button type="button" id="btnDeleteModal" runat="server" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
                                                 <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
-                                                <asp:Button ID="btnPrint" OnClientClick="window.print()" CssClass="btn btn-secondary" runat="server" Text="Print" />
+                                                <asp:Button ID="btnPrint" OnClientClick="window.print();return false;" CssClass="btn btn-secondary" runat="server" Text="Print" />
                                                 <asp:Button ID="btnCancel" OnClick="btnCancel_Click" CssClass="btn btn-secondary" runat="server" Text="Cancel" />
                                             </div>
                                         </div>
@@ -483,13 +455,18 @@
     <script src="../../scripts/contenteditable.min.js"></script>
 
     <script>
-        console.log(document.querySelector("#RequiredFieldValidator").value, document.querySelector("#RequiredFieldValidator").value == true);
 
-        if (document.querySelector("#RequiredFieldValidator").value) {
-            if (!document.querySelector('input[name="rad_disc_reason_code"]:checked')) {
+        function validateForm() {
+            disc_reason = document.querySelector("input[type='radio'][name='rad_disc_reason_code']:checked");
+            if (!disc_reason) {
                 document.querySelector("#rad_disc_reason_code_error").innerHTML = "Lý do xuất viện/ Discharge Reason is required.";
+                
+                document.getElementById('rad_disc_reason_code_error').scrollIntoView();
             }
+
+            return false;
         }
+
     </script>
 
 </body>

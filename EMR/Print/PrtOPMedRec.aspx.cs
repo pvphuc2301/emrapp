@@ -27,13 +27,13 @@ namespace EMR.Print
             if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
 
             // Get du lieu tu API to Object
-            OutpatientMedicalRecord omr1 = new OutpatientMedicalRecord(DataHelpers.varDocId);
+            Omr omr1 = new Omr(DataHelpers.varDocId);
 
             // Fill du lieu tu Object to Controls.
             loadDataToOMRControls(omr1);
         }
 
-        public void loadDataToOMRControls(OutpatientMedicalRecord omr1)
+        public void loadDataToOMRControls(Omr omr1)
         {
             // I. Lý do đến khám/ Chief complaint:
             txtChiefComplaint.Value = lbReason.Text = omr1.chief_complain;
@@ -239,7 +239,7 @@ namespace EMR.Print
             //btnAmend.Enabled = btnCancel.Enabled = false;
             amendReason = "";
 
-            UpdateData(DataHelpers.varDocId, DataHelpers.varUseName, DocumentStatus.DRAFT, amendReason);
+            
 
         }
         /// <summary>
@@ -263,72 +263,9 @@ namespace EMR.Print
 
         protected void btnComplete_Click(object sender, EventArgs e)
         {
-            UpdateData(DataHelpers.varDocId, (string)Session["UserID"], DocumentStatus.FINAL, amendReason);
+            
         }
-        protected void UpdateData(string varDocID, string varUseName, string varStatus, string varAmendReason)
-        {
-            string _notification = "";
-
-            string _varTreatmentCode = "";
-            if (radTreatment1.Checked) _varTreatmentCode = "OPD";
-            else if (radTreatment2.Checked) _varTreatmentCode = "IPD";
-            else if (radTreatment3.Checked) _varTreatmentCode = "TRF";
-
-            OutpatientMedicalRecord omr2 = new OutpatientMedicalRecord(
-                varDocID,
-                varUseName,
-                varStatus,
-                "",
-                txtChiefComplaint.Value,
-                txtMedicalHistory.Value,
-                txtPersonal.Value,
-                rad_habits_smoking2.Checked,
-                txt_habits_smoking_pack.Value,
-                rad_habits_alcohol2.Checked,
-                txt_habits_alcohol_note.Value,
-                rad_habits_drugs2.Checked,
-                txt_habits_drugs_note.Value,
-                rad_habits_physical_exercise2.Checked,
-                txt_habits_phy_exer_note.Value,
-                txt_habits_other.Value,
-                radAllergy2.Checked,
-                txtAllergyNote.Value,
-                txtFamily.Value,
-                txtImmunization.Value,
-                txtCurrentMedication.Value,
-                txtTemperature.Value,
-                txtHeartRate.Value,
-                txtWeight.Value,
-                txtHeight.Value,
-                txtRespiratoryRate.Value,
-                txtBmi.Value,
-                txtBloodPressure.Value,
-                txtSpo2.Value,
-                txt_pulse.Value,
-                txt_physical_examination.Value,
-                rad_psy_consult_required2.Checked,
-                txt_laboratory_indications_results.Value,
-                txt_additional_investigation.Value,
-                txt_initial_diagnosis.Value,
-                txt_diagnosis.Value,
-                txtDiffesrentialDiagnosis.Value,
-                txt_associated_conditions.Value,
-                _varTreatmentCode,
-                "",
-                txtMedicine.Value,
-                rad_spec_opinion_requested2.Checked,
-                txt_spec_opinion_requested_note.Value,
-                txt_specific_education_required.Value,
-                txt_next_appointment.Value);
-
-            if (omr2.Update()[0] == WebHelpers.ResponseStatus.OK)
-            {
-                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                message.Load(Page, Message.CODE.MS001, Message.TYPE.SUCCESS);
-
-                Initial();
-            }
-        }
+        
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {

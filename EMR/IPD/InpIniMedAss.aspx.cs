@@ -281,7 +281,7 @@ namespace EMR
             iima.treatment_plan = txt_treatment_plan.Value;
             iima.discharge_plan = txt_discharge_plan.Value;
 
-            if (iima.Update()[0] == WebHelpers.ResponseStatus.OK)
+            if (iima.Update()[0] == "OK")
             {
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                 message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS);
