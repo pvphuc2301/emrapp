@@ -161,7 +161,6 @@ namespace EMR
             }
         }
 
-
         protected void btnSave_Click(object sender, EventArgs e)
         {
             string selectedItem = Request.Form.Get("ddlDocList");
@@ -199,7 +198,10 @@ namespace EMR
                         dynamic response4 = WebHelpers.PostAPI("api/" + data.api + "/log/" + docId);
                         if(response4.Status == System.Net.HttpStatusCode.OK)
                         {
-                            Response.Redirect("../" + _params[1]);
+
+                           string url = string.Format("../{0}?modelId={1}&docId={2}&pId={3}&vpId={4}&pvid={5}", _params[1], modelID, docId, varPID, Request["vpid"], PVID);
+
+                            Response.Redirect(url);
                         }
                     }
                 }

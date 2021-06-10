@@ -29,122 +29,171 @@ namespace EMR.ER
             emr = new EmergencyMedicalRecord(DataHelpers.varDocId);
             loadDataToControls(emr);
         }
+        public string tmp_chief_complaint_code_R = "";
         public void loadDataToControls(EmergencyMedicalRecord emr)
         {
             lbPatientName.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
-            lbDoB.Text = DateTime.Parse(DataHelpers.patient.date_of_birth).ToString("dd/MM/yyyy") + "| " + DataHelpers.patient.gender_l;
+            lbDoB.Text = WebHelpers.FormatDateTime(DataHelpers.patient.date_of_birth) + "| " + DataHelpers.patient.gender_l;
             lbPID.Text = DataHelpers.patient.visible_patient_id;
-            lbl_evaluation_time.Text = DateTime.Parse(emr.evaluation_time).ToString("HH:mm");
+            //lbl_evaluation_time.Text =  
+            WebHelpers.FormatDateTime(emr.evaluation_time, "dd/MM/yyyy HH:mm tt");
             txt_amendReason.Visible = false;
             if (emr.evaluation_time != null)
             {
-                 rad_evaluation_time.SelectedDate = DateTime.Parse(emr.evaluation_time);
+                 rad_evaluation_time.SelectedDate = emr.evaluation_time;
             }
 
-            lbl_chief_complaint.Text=txtChiefComplaint.Value = emr.chief_complaint;
+            //lbl_chief_complaint.Text=
+                txtChiefComplaint.Value = emr.chief_complaint;
+            
             if (emr.chief_complaint_code != null)
             {
                 ((HtmlInputRadioButton)FindControl("rad_chief_complaint_code_" + emr.chief_complaint_code)).Checked = true;
-                //((HtmlInputRadioButton)FindControl("lbl_chief_complaint_code_" + emr.chief_complaint_code)).Checked = true;
+                //((HtmlInputCheckBox)FindControl("lbl_chief_complaint_code_" + emr.chief_complaint_code)).Checked = true;
             }
-            txtHistoryofPresent.Value = emr.history_of_present;
+            //lbl_history_of_present.Text= 
+                txtHistoryofPresent.Value = emr.history_of_present;
             //Meds
-            txtpastmedhismeds.Value = emr.past_med_his_meds;
+            //lbl_past_med_his_meds.Text=
+                txtpastmedhismeds.Value = emr.past_med_his_meds;
             //Surgical
-            txtpastmedhissurs.Value = emr.past_med_his_surs;
+            //lbl_past_med_his_surs.Text = 
+                txtpastmedhissurs.Value = emr.past_med_his_surs;
             foreach (DataRow row in WebHelpers.GetJSONToDataTable(emr.habits).Rows)
             {
                 ((System.Web.UI.HtmlControls.HtmlInputCheckBox)FindControl("cb_habits_" + row.Field<dynamic>("cde").ToLower())).Checked = true;
+                //((System.Web.UI.HtmlControls.HtmlInputCheckBox)FindControl("lbl_habits_" + row.Field<dynamic>("cde").ToLower())).Checked = true;
             }
-            txthabitsother.Value = emr.habits_other;
-            txthomemedications.Value = emr.home_medications;
-            txtallergies.Value = emr.allergies;
-            txtrelevantfamilyhistory.Value = emr.relevant_family_history;
-            txtfinding.Value = emr.finding;
+            //lbl_habits_other.Text = 
+                txthabitsother.Value = emr.habits_other;
+            //lbl_home_medications.Text = 
+                txthomemedications.Value = emr.home_medications;
+            //lbl_allergies.Text = 
+                txtallergies.Value = emr.allergies;
+            //lbl_relevant_family_history.Text = 
+                txtrelevantfamilyhistory.Value = emr.relevant_family_history;
+            //lbl_finding.Text = 
+                txtfinding.Value = emr.finding;
             if (emr.required_code != null)
             {
-                ((HtmlInputRadioButton)FindControl("rad_required_code_" + Convert.ToBoolean(emr.required_code))).Checked = true;
+                ((HtmlInputRadioButton)FindControl("rad_required_code_" + emr.required_code)).Checked = true;
+                //((HtmlInputCheckBox)FindControl("lbl_required_code_" + emr.required_code))).Checked = true;
             }
 
-            txtrequiredtext.Value = emr.required_text;
-            txtinvestigationsresults.Value = emr.investigations_results;
-            txtinitialdiagnosis.Value = emr.initial_diagnosis;
-            txtdiferentialdiagnosis.Value = emr.diferential_diagnosis;
-            txtassociatedconditions.Value = emr.associated_conditions;
-            txtcomfirmeddiagnosis.Value = emr.comfirmed_diagnosis;
+            //lbl_required_text.Text= 
+                txtrequiredtext.Value = emr.required_text;
+            //lbl_investigations_results.Text = 
+                txtinvestigationsresults.Value = emr.investigations_results;
+            //lbl_initial_diagnosis.Text = 
+                txtinitialdiagnosis.Value = emr.initial_diagnosis;
+            //lbl_diferential_diagnosis.Text = 
+                txtdiferentialdiagnosis.Value = emr.diferential_diagnosis;
+            //lbl_associated_conditions.Text = 
+                txtassociatedconditions.Value = emr.associated_conditions;
+            //lbl_comfirmed_diagnosis.Text = 
+                txtcomfirmeddiagnosis.Value = emr.comfirmed_diagnosis;
             if (emr.specialist_opinion != null)
             {
-                ((HtmlInputRadioButton)FindControl("rad_specialist_opinion_" + Convert.ToBoolean(emr.specialist_opinion))).Checked = true;
+                ((HtmlInputRadioButton)FindControl("rad_specialist_opinion_" + emr.specialist_opinion)).Checked = true;
+                //((HtmlInputCheckBox)FindControl("lbl_specialist_opinion_" + emr.specialist_opinion))).Checked = true;
             }
-            txtnameofspecialist.Value = emr.name_of_specialist;
+            //lbl_name_of_specialist.Text = 
+                txtnameofspecialist.Value = emr.name_of_specialist;
             if (emr.time_contaced != null)
             {
-                rad_time_contaced.SelectedDate = DateTime.Parse(emr.time_contaced);
+                rad_time_contaced.SelectedDate = emr.time_contaced;
+                //lbl_time_contaced.Text = emr.time_contaced).ToString("dd/MM/yyyy HH:mm tt");
             }
             if (emr.time_provided != null)
             {
-                rad_time_provided.SelectedDate = DateTime.Parse(emr.time_provided);
+                rad_time_provided.SelectedDate = emr.time_provided;
+                //lbl_time_provided.Text = emr.time_provided).ToString("dd/MM/yyyy HH:mm tt");
             }
-            txtspecopinionsummarised.Value = emr.spec_opinion_summarised;
+            //lbl_spec_opinion_summarised.Text = 
+                txtspecopinionsummarised.Value = emr.spec_opinion_summarised;
 
             _BindGridView(grid_Treatment, WebHelpers.GetJSONToDataTable(emr.treatment));
+            //_BindGridView(lbl_Treatment, WebHelpers.GetJSONToDataTable(emr.treatment));
             _BindGridView(grid_progress_note, WebHelpers.GetJSONToDataTable(emr.progress_note));
+            //_BindGridView(lbl_progress_note, WebHelpers.GetJSONToDataTable(emr.progress_note));
+            lbl_conclusions.Text = 
+                txtconclusions.Value = emr.conclusions;
             if (emr.required_code != null)
             {
-                ((HtmlInputRadioButton)FindControl("rad_discharge_" + Convert.ToBoolean(emr.discharge))).Checked = true;
+                ((HtmlInputRadioButton)FindControl("rad_discharge_" + emr.discharge)).Checked = true;
+                ((HtmlInputCheckBox)FindControl("lbl_discharge_" + emr.discharge)).Checked = true;
+
             }
-            txtconclusions.Value = emr.conclusions;
-            //if (emr.discharge != null)
-            //{
-            //    ((HtmlInputRadioButton)FindControl("rad_discharge_" + Convert.ToBoolean(emr.discharge))).Checked = true;
-            //}
-            txtprescription.Value = emr.prescription;
-            txtspecifycareinstructions.Value = emr.specify_care_instructions;
+            lbl_prescription.Text = 
+                txtprescription.Value = emr.prescription;
+            lbl_specify_care_instructions.Text =
+                txtspecifycareinstructions.Value = emr.specify_care_instructions;
             if (emr.discharge_time != null)
             {
-                rad_discharge_time.SelectedDate = DateTime.Parse(emr.discharge_time);
+                rad_discharge_time.SelectedDate = emr.discharge_time;
+                lbl_discharge_time.Text = WebHelpers.FormatDateTime(emr.discharge_time, "dd/MM/yyyy HH:mm tt");
             }
             if (emr.referred_to_OPD != null)
             {
-                ((HtmlInputRadioButton)FindControl("rad_referred_OPD_" + Convert.ToBoolean(emr.referred_to_OPD))).Checked = true;
+                ((HtmlInputRadioButton)FindControl("rad_referred_OPD_" + emr.referred_to_OPD)).Checked = true;
+                ((HtmlInputCheckBox)FindControl("lbl_referred_OPD_" + emr.referred_to_OPD)).Checked = true;
             }
             txtreferredtoOPDtext.Value = emr.referred_to_OPD_text;
-
+            lbl_referred_to_OPD_text.Text = emr.referred_to_OPD_text;
             if (emr.hospitalisation_required != null)
             {
-                ((HtmlInputRadioButton)FindControl("rad_hospitalisation_required_" + Convert.ToBoolean(emr.hospitalisation_required))).Checked = true;
+                ((HtmlInputRadioButton)FindControl("rad_hospitalisation_required_" + emr.hospitalisation_required)).Checked = true;
+                ((HtmlInputCheckBox)FindControl("lbl_hospitalisation_required_" + emr.hospitalisation_required)).Checked = true;
             }
             txtreason.Value = emr.reason;
+            lbl_reason.Text = emr.reason;
             txtward.Value = emr.ward;
+            lbl_ward.Text = emr.ward;
+
             if (emr.discharge_time != null)
             {
-                rad_timeofleavingemergency.SelectedDate = DateTime.Parse(emr.time_of_leaving_emergency);
+                rad_timeofleavingemergency.SelectedDate = emr.time_of_leaving_emergency;
+                lbl_time_of_leaving_emergency.Text = WebHelpers.FormatDateTime(emr.time_of_leaving_emergency,"dd/MM/yyyy HH:mm tt");
             }
             if (emr.emergency_surgery != null)
             {
-                ((HtmlInputRadioButton)FindControl("rad_emergency_surgery_" + Convert.ToBoolean(emr.emergency_surgery))).Checked = true;
+                ((HtmlInputRadioButton)FindControl("rad_emergency_surgery_" + emr.emergency_surgery)).Checked = true;
+                ((HtmlInputCheckBox)FindControl("lbl_emergency_surgery_" + emr.emergency_surgery)).Checked = true;
             }
             txtpreoperative_diagnosis.Value = emr.pre_operative_diagnosis;
+            lbl_preoperative_diagnosis.Text = emr.pre_operative_diagnosis;
             txtprebrief_summary.Value = emr.brief_summary;
+            lbl_brief_summary.Text = emr.pre_operative_diagnosis;
+
             if (emr.time_of_leaving_emer_e != null)
             {
-                rad_time_of_leaving_emer_e.SelectedDate = DateTime.Parse(emr.time_of_leaving_emer_e);
+                rad_time_of_leaving_emer_e.SelectedDate = emr.time_of_leaving_emer_e;
+                lbl_time_of_leaving_emer_e.Text = WebHelpers.FormatDateTime(emr.time_of_leaving_emer_e,"dd/MM/yyyy HH:mm tt");
             }
             if (emr.transfer_hospital != null)
             {
-                ((HtmlInputRadioButton)FindControl("rad_transfer_hospital_" + Convert.ToBoolean(emr.transfer_hospital))).Checked = true;
+                ((HtmlInputRadioButton)FindControl("rad_transfer_hospital_" + emr.transfer_hospital)).Checked = true;
+                ((HtmlInputCheckBox)FindControl("lbl_transfer_hospital_" + emr.transfer_hospital)).Checked = true;
             }
             txtreasonfor_transfer.Value = emr.reason_for_transfer;
+            lbl_reason_for_transfer.Text = emr.reason_for_transfer;
             txtstatus_before_transfer.Value = emr.status_before_transfer;
+            lbl_status_before_transfer.Text = emr.status_before_transfer;
             if (emr.time_of_leaving_emer_a != null)
             {
-                rad_time_of_leaving_emer_a.SelectedDate = DateTime.Parse(emr.time_of_leaving_emer_a);
+                rad_time_of_leaving_emer_a.SelectedDate = emr.time_of_leaving_emer_a;
+                lbl_time_of_leaving_emer_a.Text = WebHelpers.FormatDateTime(emr.time_of_leaving_emer_a,"dd/MM/yyyy HH:mm tt");
             }
             foreach (DataRow row in WebHelpers.GetJSONToDataTable(emr.patient_discharge).Rows)
             {
                 ((System.Web.UI.HtmlControls.HtmlInputCheckBox)FindControl("cb_patient_discharge_" + row.Field<dynamic>("cde").ToLower())).Checked = true;
+                ((System.Web.UI.HtmlControls.HtmlInputCheckBox)FindControl("lbl_patient_discharge_" + row.Field<dynamic>("cde").ToLower())).Checked = true;
             }
+            txt_patient_discharge.Value = emr.txt_patient_discharge;
+            lbl_patient_discharge.Text = emr.txt_patient_discharge;
             txticd_10.Value = emr.icd_10;
+            lbl_icd_10.Text = emr.icd_10;
+
             if (emr.status == DocumentStatus.FINAL)
             {
                 btnComplete.Visible = false;
@@ -235,6 +284,7 @@ namespace EMR.ER
             cb_patient_discharge_IMP.Disabled = disabled;
             cb_patient_discharge_UNC.Disabled = disabled;
             cb_patient_discharge_UNS.Disabled = disabled;
+            txt_patient_discharge.Disabled = disabled;
             txticd_10.Disabled = disabled;
             DisabledGridView(grid_Treatment, disabled);
             DisabledGridView(grid_progress_note, disabled);
@@ -438,13 +488,22 @@ namespace EMR.ER
                     }
                 }
                 emr.patient_discharge = WebHelpers.GetDataTableToJSON(patient_discharge);
+                //emr.txt_patient_discharge = txt_patient_discharge.Value;
                 emr.icd_10 = txticd_10.Value;
-                if (emr.Update()[0] == "OK")
+
+                dynamic result = emr.Update();
+
+                if (result.Status == System.Net.HttpStatusCode.OK)
                 {
                     Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                     message.Load(Page, Message.CODE.MS001, Message.TYPE.SUCCESS);
 
                     Initial();
+                }
+                else
+                {
+                    Session["PageNotFound"] = result[0];
+                    Response.Redirect("../Other/PageNotFound.aspx", false);
                 }
             }
             catch (Exception ex)
@@ -526,7 +585,7 @@ namespace EMR.ER
                             else if (grid_Treatment.Rows[r].Cells[i].Controls[1] is RadTimePicker)
                             {
                                 RadTimePicker text2 = grid_Treatment.Rows[r].Cells[i].Controls[1] as RadTimePicker;
-                                table.Rows[r][text2.ID] = DateTime.Parse(text2.SelectedDate.ToString()).ToString("HH:mm");
+                                table.Rows[r][text2.ID] = WebHelpers.FormatDateTime(text2.SelectedDate, "HH:mm");
                             }
                         }
                         catch (Exception ex) { }
@@ -574,7 +633,7 @@ namespace EMR.ER
                             else if (grid_progress_note.Rows[r].Cells[i].Controls[1] is RadTimePicker)
                             {
                                 RadTimePicker text2 = grid_progress_note.Rows[r].Cells[i].Controls[1] as RadTimePicker;
-                                table.Rows[r][text2.ID] = DateTime.Parse(text2.SelectedDate.ToString()).ToString("HH:mm");
+                                table.Rows[r][text2.ID] = WebHelpers.FormatDateTime(text2.SelectedDate, "HH:mm");
                             }
                         }
                         catch (Exception ex) { }
@@ -805,15 +864,23 @@ namespace EMR.ER
                 }
             }
             emr.patient_discharge = WebHelpers.GetDataTableToJSON(patient_discharge);
+            emr.txt_patient_discharge = txt_patient_discharge.Value;
             emr.icd_10 = txticd_10.Value;
-            if (emr.Update()[0] == "OK")
+
+            dynamic result = emr.Update()[0];
+
+            if (result.Status == System.Net.HttpStatusCode.OK)
             {
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                 message.Load(Page, Message.CODE.MS001, Message.TYPE.SUCCESS);
 
                 Initial();
             }
-
+            else
+            {
+                Session["PageNotFound"] = result[0];
+                Response.Redirect("../Other/PageNotFound.aspx", false);
+            }
         }
         protected void btnPrint_Click(object sender, EventArgs e)
         {
@@ -825,18 +892,22 @@ namespace EMR.ER
         }
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            if (EmergencyMedicalRecord.Delete((string)Session["UserID"], Request.QueryString["vpid"])[0] == "OK")
-            {
+            dynamic result = EmergencyMedicalRecord.Delete((string)Session["UserId"], Request.QueryString["docId"]);
 
+            if (result[0].Status == System.Net.HttpStatusCode.OK)
+            {
+                string pid = Request["pid"];
+                string vpid = Request["vpid"];
+
+                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+            }
+            else
+            {
+                Session["PageNotFound"] = result[0];
+                Response.Redirect("../Other/PageNotFound.aspx", false);
             }
         }
-        protected void btn_grid_progress_note_del_Click(object sender, EventArgs e)
-        {
-            if (EmergencyMedicalRecord.Delete((string)Session["UserID"], Request.QueryString["vpid"])[0] == "OK")
-            {
 
-            }
-        }
         protected void DisabledGridView(GridView gridView, bool disabled)
         {
             try

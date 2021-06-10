@@ -23,7 +23,6 @@
     <link href="../../styles/style.css" rel="stylesheet" />
     <link href="../../styles/myStyle.css" rel="stylesheet" />
     <link href="../../style/style-custom.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
 </head>
 
 <body>
@@ -304,18 +303,16 @@
         </table>
     </div>
 
-
-
     <div class="cssclsNoPrint">
         <form method="post" action="#" id="form2" runat="server">
             <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
-            <div class="scroll-sidebar h-100 w-100">
+            <div class="h-100 w-100">
                 <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
                         <div id="AmendReasonPlaceHolder" runat="server"></div>
                         <aih:AmendReason runat="server" ID="txt_amendReason" />
                         <uc1:PatientInfo runat="server" ID="PatientInfo1" />
-                        <div class="row" style="margin-bottom: 50px;">
+                        <div class="row" >
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-header">

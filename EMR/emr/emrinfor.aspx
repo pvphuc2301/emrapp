@@ -9,7 +9,6 @@
 <%@ Register Src="~/icons/BoxArrowInLeft.ascx" TagPrefix="icon" TagName="BoxArrowInLeft" %>
 <%@ Register Src="~/icons/X.ascx" TagPrefix="icon" TagName="X" %>
 
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">

@@ -30,7 +30,7 @@ namespace EMR
         public void loadDataToControls(IniMedAssForNeoInpatient imani)
         {
             lbPatientName.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
-            lbDoB.Text = DateTime.Parse(DataHelpers.patient.date_of_birth).ToString("dd/MM/yyyy") + "| " + DataHelpers.patient.gender_l;
+            lbDoB.Text = WebHelpers.FormatDateTime(DataHelpers.patient.date_of_birth) + "| " + DataHelpers.patient.gender_l;
             lbPID.Text = DataHelpers.patient.visible_patient_id;
             lbl_admission_reason.Text=txt_admission_reason.Value = imani.admission_reason;
             lbl_cur_med_history.Text=txt_cur_med_history.Value = imani.cur_med_history;
@@ -128,12 +128,18 @@ namespace EMR
                 imani.treatment_plan = txt_treatment_plan.Value;
                 imani.discharge_plan = txt_discharge_plan.Value;
 
-                if (imani.Update()[0] == "OK")
+                dynamic result = imani.Update()[0];
+                if (result.Status == System.Net.HttpStatusCode.OK)
                 {
                     Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                     message.Load(Page, Message.CODE.MS001, Message.TYPE.SUCCESS, 100000);
 
                     Initial();
+                }
+                else
+                {
+                    Session["PageNotFound"] = result[0];
+                    Response.Redirect("../Other/PageNotFound.aspx", false);
                 }
             }
             catch (Exception ex) { }
@@ -159,10 +165,21 @@ namespace EMR
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            if (IniMedAssForNeoInpatient.Delete((string)Session["UserID"], Request.QueryString["vpid"])[0] == "OK")
-            {
+            dynamic result = IniMedAssForNeoInpatient.Delete((string)Session["UserId"], Request.QueryString["docId"]);
 
+            if (result[0].Status == System.Net.HttpStatusCode.OK)
+            {
+                string pid = Request["pid"];
+                string vpid = Request["vpid"];
+
+                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
             }
+            else
+            {
+                Session["PageNotFound"] = result[0];
+                Response.Redirect("../Other/PageNotFound.aspx", false);
+            }
+
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)

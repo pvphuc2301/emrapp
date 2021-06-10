@@ -10,6 +10,10 @@
 <%@ Register Src="~/UserControls/Barcode.ascx" TagPrefix="webUI" TagName="Barcode" %>
 <%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="aih" TagName="TextField" %>
 <%@ Register Src="~/UserControls/AmendReason.ascx" TagPrefix="aih" TagName="AmendReason" %>
+<%@ Register Src="~/UserControls/PopupModal.ascx" TagPrefix="WebUI" TagName="PopupModal" %>
+<%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="icon" TagName="ExclamationTriangle" %>
+
+
 
 <!DOCTYPE html>
 
@@ -334,11 +338,14 @@
     <div class="cssclsNoPrint">
         <form method="post" action="#" id="form2" runat="server">
             <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
-            <div class="scroll-sidebar h-100 w-100">
+            <div class="h-100 w-100">
                 <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
-                        <div id="AmendReasonPlaceHolder" runat="server"></div>
-                        <aih:AmendReason runat="server" ID="txt_amendReason" />
+                        <asp:HiddenField runat="server" ID="RequiredFieldValidator" />
+                        <asp:Panel runat="server" ID="messagePlaceHolder">
+                            <aih:AmendReason runat="server" ID="txt_amendReason" />
+                        </asp:Panel>
+
                         <uc1:PatientInfo runat="server" ID="PatientInfo1" />
                         <div class="row" style="margin-bottom: 50px;">
                             <div class="col-lg-12">
@@ -535,30 +542,21 @@
                                                     <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
                                                     <asp:Button ID="btnPrint" CssClass="btn btn-secondary" runat="server" OnClientClick="window.print()" Text="Print" />
                                                     <asp:Button ID="btnCancel" OnClick="btnCancel_Click" CssClass="btn btn-secondary" runat="server" Text="Cancel" />
-                                                    <div runat="server" id="messagePlaceHolder"></div>
                                                 </div>
-
-                                                <div id="myModal" class="modal fade" role="dialog">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h4 class="modal-title">Delete document</h4>
-                                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <p runat="server">Please provide reason for deletion</p>
-                                                                <div class="form-group mb-2">
-                                                                    <aih:TextField runat="server" ID="TextField17" />
-                                                                </div>
-                                                                <div class="text-danger" runat="server">Nội dung lý do xóa phải trên 3 ký tự</div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                <asp:Button runat="server" OnClick="btnDelete_Click" Text="Delete" ID="btnDelete" class="btn btn-danger" />
-                                                            </div>
+                                                
+                                                <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
+                                                    <ModalBody>
+                                                        <div class="text-center">
+                                                            <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                                            <h4 class="mt-4 mb-4">Delete document?
+                                                            </h4>
                                                         </div>
-                                                    </div>
-                                                </div>
+                                                        <div class="text-right">
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            <asp:Button runat="server" OnClick="btnDelete_Click" Text="Delete" ID="btnDelete" class="btn btn-danger" />
+                                                        </div>
+                                                    </ModalBody>
+                                                </webUI:PopupModal>
 
                                             </div>
                                         </form>

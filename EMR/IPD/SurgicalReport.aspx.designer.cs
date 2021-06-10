@@ -267,13 +267,22 @@ namespace EMR
         protected global::System.Web.UI.UpdatePanel Upd;
 
         /// <summary>
-        /// AmendReasonPlaceHolder control.
+        /// RequiredFieldValidator control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AmendReasonPlaceHolder;
+        protected global::System.Web.UI.WebControls.HiddenField RequiredFieldValidator;
+
+        /// <summary>
+        /// messagePlaceHolder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel messagePlaceHolder;
 
         /// <summary>
         /// txt_amendReason control.
@@ -510,22 +519,13 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Button btnCancel;
 
         /// <summary>
-        /// messagePlaceHolder control.
+        /// myModal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl messagePlaceHolder;
-
-        /// <summary>
-        /// TextField17 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField TextField17;
+        protected global::System.Web.UI.UserControl myModal;
 
         /// <summary>
         /// btnDelete control.
