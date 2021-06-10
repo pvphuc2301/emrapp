@@ -99,7 +99,7 @@
     <div class="cssclsNoPrint">
         <form method="post" action="#" id="form2" runat="server">
             <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
-            <div class="scroll-sidebar h-100 w-100">
+            <div class="h-100 w-100">
                 <asp:HiddenField runat="server" ID="RequiredFieldValidator" />
                 <asp:Panel runat="server" ID="messagePlaceHolder">
                     <aih:AmendReason runat="server" ID="txt_amendReason" />
@@ -120,8 +120,11 @@
                                         <div class="col-md-12">
                                             <label class="control-label mr-2">Từ ngày/ <span class="text-primary">From</span><span class="text-danger">*</span></label>
                                             <div class="d-inline-block">
-                                                <telerik:RadDatePicker runat="server" ID="dpk_form_date" Width="120px" />
+                                                <telerik:RadDatePicker runat="server" ID="dpk_form_date" Width="120px" CssClass="required" ClientEvents-OnDateSelected="dpk_form_date_changing"/>
                                                 <span class="text-danger el-hide" id="dpk_form_date_error">Từ ngày/ From is required</span>
+                                                <script>
+                                                    dpk_form_date_changing = (sender, eventArgs, cb) => { document.getElementById("dpk_form_date_error").classList.add('el-hide'); }
+                                                </script>
                                             </div>
                                         </div>
                                     </div>
@@ -129,8 +132,11 @@
                                         <div class="col-md-12">
                                             <label class="control-label mr-2">Đến ngày/ <span class="text-primary">To:</span><span class="text-danger">*</span><span class="text-danger"></span></label>
                                             <div class="d-inline-block">
-                                                <telerik:RadDatePicker runat="server" ID="dpk_to_date" Width="120px" />
+                                                <telerik:RadDatePicker runat="server" ID="dpk_to_date" Width="120px" CssClass="required" ClientEvents-OnDateSelected="dpk_to_date_changing" />
                                                 <span class="text-danger el-hide" id="dpk_to_date_error">Đến ngày/ To is required</span>
+                                                <script>
+                                                    dpk_to_date_changing = (sender, eventArgs, cb) => { document.getElementById("dpk_to_date_error").classList.add('el-hide'); }
+                                                </script>
                                             </div>
                                         </div>
                                     </div>
@@ -195,7 +201,7 @@
                                     <div class="form-actions mb-3">
                                         <asp:Button ID="btnComplete" OnClick="btnComplete_Click" class="btn btn-primary" runat="server" Text="Complete" />
 
-                                        <asp:Button ID="btnSave" OnClick="btnSave_Click" class="btn btn-primary" runat="server" Text="Save" />
+                                        <asp:Button ID="btnSave" OnClick="btnSave_Click" OnClientClick="JavaScript:return validateForm()" class="btn btn-primary" runat="server" Text="Save" />
 
                                         <button type="button" id="btnDeleteModal" runat="server" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
 
@@ -235,8 +241,27 @@
     <script src="../../scripts/custom.min.js"></script>
     <script src="../../scripts/myScript.js"></script>
     <script src="../../scripts/contenteditable.min.js"></script>
-    <script src="../scripts/checkValidFields.js"></script>
+    <%--<script src="../scripts/checkValidFields.js"></script>--%>
 
+    <script>
+
+        function validateForm() {
+            let dpk_form_date = document.getElementById("dpk_form_date");
+
+            if (!dpk_form_date.value) {
+                document.getElementById("dpk_form_date_error").classList.remove('el-hide');
+            }
+
+            let dpk_to_date = document.getElementById("dpk_to_date");
+            if (!dpk_to_date.value) {
+                document.getElementById("dpk_to_date_error").classList.remove('el-hide');
+            }
+
+            document.getElementById('RequiredFieldValidator').value = "true";
+            //return false;
+        }
+
+    </script>
 </body>
 </html>
 
