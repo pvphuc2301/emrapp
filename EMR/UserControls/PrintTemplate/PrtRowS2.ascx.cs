@@ -38,21 +38,38 @@ namespace EMR.UserControls.PrintTemplate
 
             DataTable tb = WebHelpers.GetJSONToDataTable(Options);
 
+
+
             string content = "";
             if(tb != null)
             {
+                string _checked = "❏";
+                dynamic value = "";
+                string _text = "";
+                string _fixWidth = "";
+
                 for (int i = 0; i < tb.Rows.Count; i++)
                 {
+                    if(tb.Columns.Contains("Value"))
+                    {
+                        value = tb.Rows[i]["Value"];
+                    }
+                    if (tb.Columns.Contains("Text")) { _text = tb.Rows[i]["Text"].ToString(); }
+                    if(tb.Columns.Contains("FixWidth")) { _fixWidth = "width: " + tb.Rows[i]["FixWidth"] + "px"; }
+
+                    value = tb.Columns.Contains("Value") ? tb.Rows[i]["Value"].ToString() : "";
+                    if(SelectedValue != null)
+                    {
+                        _checked = value == SelectedValue.ToString() ? "☒" : "❏";
+                    }
+
                     content += string.Format(
                         @"<div style='margin-right: {2}px; {3}' >
                         <span style='font-size: 20px; line-height: 13.3048px;'>
                         {0}
                         <span style='font-size: 13.3048px'> {1}</span>
                         </span>
-                        
-                    </div>", (tb.Columns.Contains("Value") ? tb.Rows[i]["Value"].ToString() == SelectedValue.ToString() : false) ? "☒" : "❏", tb.Columns.Contains("Text") ? tb.Rows[i]["Text"] : "", Gap, tb.Columns.Contains("FixWidth") ? "width: " + tb.Rows[i]["FixWidth"] + "px" : "");
-
-                    //< div class='align-top' style='margin-left: 6px; display: inline-block;'> {1} </div>
+                    </div>", _checked, _text, Gap, _fixWidth);
                 }
 
             }

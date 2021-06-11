@@ -3370,8 +3370,8 @@ namespace EMR
 
         public static Dictionary<string, string> HOUSING_CODE = new Dictionary<string, string>()
         {
-            { "REL", "Sống với người thân/ With relatives" },
             { "ALN", "Sống một mình/ Lives alone" },
+            { "REL", "Sống với người thân/ With relatives" },
         };
 
         public static Dictionary<string, string> PRIORITIZATION_CODE = new Dictionary<string, string>()

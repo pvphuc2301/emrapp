@@ -20,14 +20,14 @@ namespace EMR
                 txtAmendReason.Value = value;
             }
         }
-
+        public override string ID { get { return txtAmendReason.ID; } set { txtAmendReason.ID = value; } }
         #endregion
-        public void Load(ControlCollection controls)
+        public void LoadControl(ControlCollection controls)
         {
             controls.Add(this);
         }
 
-        public void Load(Control control)
+        public void LoadControl(Control control)
         {
             control.Controls.Add(this);
         }

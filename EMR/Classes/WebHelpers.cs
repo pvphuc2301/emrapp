@@ -119,6 +119,12 @@ namespace EMR
             //}
         }
 
+        internal static string GetValue(dynamic value, string defaultValue = "—")
+        {
+            if (string.IsNullOrEmpty(value)) return defaultValue;
+            return value;
+        }
+
         public static string GetJSONFromTable(GridView gridView, Dictionary<string, string> cols)
         {
             DataTable table = new DataTable();

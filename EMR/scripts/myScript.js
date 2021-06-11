@@ -71,6 +71,8 @@ for (let i = 0; i < radiosAttr.length; i++) {
     }
 }
 
+
+
 //Checkbox
 let cbs = document.querySelectorAll('input[type=checkbox]');
 
@@ -165,4 +167,9 @@ temp1.forEach(e => {
     setInputFilter(e, function (value) {
         return /^\d*\.?\d*$/.test(value);
     });
-})
+});
+
+function CalculateBmi() {
+    if (document.getElementById('txt_vs_height').value == "" || document.getElementById('txt_vs_weight').value == "") document.getElementById('txt_vs_bmi').value = "";
+    else { document.getElementById('txt_vs_bmi').value = (document.getElementById('txt_vs_weight').value / ((document.getElementById('txt_vs_height').value / 100) * 2)).toFixed(2) };
+}

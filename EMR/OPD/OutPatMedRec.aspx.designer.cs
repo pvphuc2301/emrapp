@@ -582,13 +582,22 @@ namespace EMR
         protected global::EMR.TextField txt_immunization;
 
         /// <summary>
+        /// updatepnl_vital_sign control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel updatepnl_vital_sign;
+
+        /// <summary>
         /// btnUpdateVS control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnUpdateVS;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnUpdateVS;
 
         /// <summary>
         /// txt_vs_temperature control.
@@ -597,7 +606,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_temperature;
+        protected global::EMR.UserControls.TextField1 txt_vs_temperature;
 
         /// <summary>
         /// txt_vs_heart_rate control.
@@ -606,7 +615,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_heart_rate;
+        protected global::EMR.UserControls.TextField1 txt_vs_heart_rate;
 
         /// <summary>
         /// txt_vs_weight control.
@@ -615,7 +624,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_weight;
+        protected global::EMR.UserControls.TextField1 txt_vs_weight;
 
         /// <summary>
         /// txt_vs_respiratory_rate control.
@@ -624,7 +633,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_respiratory_rate;
+        protected global::EMR.UserControls.TextField1 txt_vs_respiratory_rate;
 
         /// <summary>
         /// txt_vs_height control.
@@ -633,7 +642,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_height;
+        protected global::EMR.UserControls.TextField1 txt_vs_height;
 
         /// <summary>
         /// txt_vs_blood_pressure control.
@@ -642,7 +651,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_blood_pressure;
+        protected global::EMR.UserControls.TextField1 txt_vs_blood_pressure;
 
         /// <summary>
         /// txt_vs_bmi control.
@@ -651,7 +660,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_bmi;
+        protected global::EMR.UserControls.TextField1 txt_vs_bmi;
 
         /// <summary>
         /// txt_vs_spO2 control.
@@ -660,7 +669,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_spO2;
+        protected global::EMR.UserControls.TextField1 txt_vs_spO2;
 
         /// <summary>
         /// txt_vs_pulse control.
@@ -669,7 +678,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_pulse;
+        protected global::EMR.UserControls.TextField1 txt_vs_pulse;
 
         /// <summary>
         /// txt_physical_examination control.
@@ -876,7 +885,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnPrint;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnPrint;
 
         /// <summary>
         /// btnCancel control.

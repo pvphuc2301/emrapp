@@ -174,6 +174,7 @@ namespace EMR
                 btnDeleteModal.Visible = false;
 
                 btnAmend.Visible = true;
+                
                 btnPrint.Visible = true;
 
                 DisabledControl(true);

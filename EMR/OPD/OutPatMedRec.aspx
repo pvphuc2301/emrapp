@@ -17,8 +17,7 @@
 <%@ Register Src="~/UserControls/PrintTemplate/Signature1.ascx" TagPrefix="webUI" TagName="Signature1" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrtRowS1.ascx" TagPrefix="webUI" TagName="PrtRowS1" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrtRowS2.ascx" TagPrefix="webUI" TagName="PrtRowS2" %>
-
-
+<%@ Register Src="~/UserControls/TextField1.ascx" TagPrefix="webUI" TagName="TextField1" %>
 
 
 <!DOCTYPE html>
@@ -29,11 +28,7 @@
     <link href="../../styles/style.css" rel="stylesheet" />
     <link href="../../styles/myStyle.css" rel="stylesheet" />
     <link href="../../style/style-custom.css" rel="stylesheet" />
-    <style>
-        .ml {
-            margin-left: 160px;
-        }
-    </style>
+
 </head>
 <body>
     <%--class="cssclsNoScreen"--%>
@@ -179,7 +174,7 @@
     <div class="cssclsNoPrint">
         <form method="post" action="#" id="form2" runat="server">
             <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
-            <div class="scroll-sidebar h-100 w-100">
+            <div class="h-100 w-100">
                 <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
                         <asp:HiddenField runat="server" ID="RequiredFieldValidator" />
@@ -189,7 +184,7 @@
 
                         <webUI:PatientInfo runat="server" ID="PatientInfo" />
 
-                        <div class="row">
+                        <div class="row" style="margin-bottom: 50px">
                             <div class="col-lg-12">
                                 <div class="card mt-2">
                                     <div class="card-header">
@@ -430,83 +425,111 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <label class="control-label mb-2 font-bold">Dấu hiệu sinh tồn/ <span class="text-primary">Vital signs</span></label>
-                                                    <asp:Button class="btn btn-sm btn-out-secondary" runat="server" ID="btnUpdateVS" Text="Update" OnClick="btnUpdateVS_Click"/>
-                                                </div>
-                                            </div>
+                                            <asp:UpdatePanel ID="updatepnl_vital_sign" runat="server">  
+                                                <ContentTemplate>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label class="control-label mb-2 font-bold">Dấu hiệu sinh tồn/ <span class="text-primary">Vital signs</span></label>
+                                                            <button onserverclick="btnUpdateVS_Click" class="btn btn-secondary waves-effect" runat="server" id="btnUpdateVS">
+                                                                Update
+                                                            </button>
+                                                                <asp:UpdateProgress runat="server" AssociatedUpdatePanelID="updatepnl_vital_sign">
+                                                                    <ProgressTemplate>
+                                                                        <div>Updating...</div>
+                                                                    </ProgressTemplate>
+                                                                </asp:UpdateProgress>
+                                                            <%--<button class="btn btn-info waves-effect" runat="server" id="btnUpdateVS">sdfsdfsd</button>--%>
+                                                            <%--<asp:Button CssClass="btn btn-info waves-effect" runat="server" ID="btnUpdateVS" AutoPostBack="true" Text="Update" OnClick="btnUpdateVS_Click"/>--%>
+                                                        </div>
+                                                    </div>
 
                                             <div class="row">
-                                                <div class="col-sm-6 mb-2">
+
+                                                <div class="col-sm-6 mb-2 d-flex no-block">
                                         <label class="control-label mr-2 mb-1">Nhiệt độ/ <span class="text-primary">Temperature:</span></label>
-                                        <div class="form-group w-4 d-inline-block">
-                                            <input runat="server" id="txt_vs_temperature" class="form-control text-right" disabled="disabled"/>
-                                            <span class="append">°C</span>
-                                        </div>
+                                                    <div class="w-5">
+                                                        <WebUI:TextField1 Disabled="true" runat="server" ID="txt_vs_temperature" >
+                                                            <Append>°C</Append>
+                                                        </WebUI:TextField1>
+                                                    </div>
                                     </div>
-                                    <div class="col-sm-6 mb-2">
+                                    <div class="col-sm-6 mb-2 d-flex no-block">
                                         <label class="control-label mr-2 mb-1">Mạch/ <span class="text-primary">Heart Rate:</span></label>
-                                        <div class="form-group w-5 d-inline-block">
-                                            <input runat="server" id="txt_vs_heart_rate" class="form-control text-right"  disabled="disabled"/>
-                                            <span class="append">/phút (m)</span>
+                                        <div class="w-5">
+                                            <WebUI:TextField1 Disabled="true" runat="server" ID="txt_vs_heart_rate" >
+                                                <Append>/phút (m)</Append>
+                                            </WebUI:TextField1>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6 mb-2">
+                                    <div class="col-sm-6 mb-2 d-flex no-block">
                                         <label class="control-label mr-2 mb-1">Cân Nặng/ <span class="text-primary">Weight:</span></label>
-                                        <div class="form-group w-4 d-inline-block">
-                                            <input runat="server" id="txt_vs_weight" class="form-control text-right" disabled="disabled" />
-                                            <span class="append">Kg</span>
+                                        <div class="w-5">
+                                        <WebUI:TextField1 Disabled="true" runat="server" ID="txt_vs_weight" >
+                                            <Append>Kg</Append>
+                                        </WebUI:TextField1>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6 mb-2">
+                                    <div class="col-sm-6 mb-2 d-flex no-block">
                                         <label class="control-label mr-2 mb-1">Nhịp thở/ <span class="text-primary">Respiratory rate:</span></label>
-                                        <div class="form-group w-5 d-inline-block">
-                                            <input runat="server" id="txt_vs_respiratory_rate" class="form-control text-right" disabled="disabled" />
-                                            <span class="append">/phút (m)</span>
-                                        </div>
+                                        <div class="w-5">
+                                        <WebUI:TextField1 Disabled="true" TextMode="number" runat="server" ID="txt_vs_respiratory_rate" >
+                                            <Append>/phút (m)</Append>
+                                        </WebUI:TextField1>
+                                            </div>
                                     </div>
-                                    <div class="col-sm-6 mb-2">
+                                    <div class="col-sm-6 mb-2 d-flex no-block">
                                         <label class="control-label mr-2 mb-1">Chiều cao/ <span class="text-primary">Height:</span></label>
-                                        <div class="form-group w-4 d-inline-block">
-                                            <input maxlength="3" id="txt_vs_height" runat="server" class="form-control text-right" disabled="disabled" />
-                                            <span class="append">cm</span>
-                                        </div>
+                                        <div class="w-5">
+                                        <WebUI:TextField1 Disabled="true" runat="server" ID="txt_vs_height" >
+                                            <Append>cm</Append>
+                                        </WebUI:TextField1>
+                                            </div>
                                     </div>
-                                    <div class="col-sm-6 mb-2">
+                                    <div class="col-sm-6 mb-2 d-flex no-block">
                                         <label class="control-label mr-2 mb-1">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
-                                        <div class="form-group w-5 d-inline-block">
-                                            <input id="txt_vs_blood_pressure" runat="server" class="form-control text-right" disabled="disabled" />
-                                            <span class="append">mmHg</span>
-                                        </div>
+                                        <div class="w-5">
+                                        <WebUI:TextField1 Disabled="true" runat="server" ID="txt_vs_blood_pressure" >
+                                            <Append>mmHg</Append>
+                                        </WebUI:TextField1>
+                                            </div>
                                     </div>
-                                    <div class="col-sm-6 mb-2">
+                                    <div class="col-sm-6 mb-2 d-flex no-block">
                                         <label for="bmi" class="control-label mb-1 mr-2">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
-                                        <div class="form-group w-5 d-inline-block">
-                                            <input runat="server" id="txt_vs_bmi" class="form-control text-right" disabled="disabled" />
-                                            <span class="append">(Kg/m <sup>2</sup>)</span>
-                                        </div>
+                                        <div class="w-5">
+                                        <WebUI:TextField1 Disabled="true" runat="server" ID="txt_vs_bmi" >
+                                            <Append>(Kg/m <sup>2</sup>)</Append>
+                                        </WebUI:TextField1>
+                                            </div>
                                         <div class="mt-1">
                                             (Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not
 applicable for children and pregnant</span>)
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-6 mb-2">
+                                    <div class="col-sm-6 mb-2 d-flex no-block">
                                         <label for="spO2" class="control-label mb-1 mr-2">Độ bão hòa Oxy/ <span class="text-primary">SpO2:</span></label>
-                                        <div class="form-group w-4 d-inline-block">
-                                            <input runat="server" id="txt_vs_spO2" class="form-control text-right" disabled="disabled" />
-                                            <span class="append">%</span>
-                                        </div>
+                                        <div class="w-5">
+                                        <WebUI:TextField1 Disabled="true" runat="server" ID="txt_vs_spO2" >
+                                            <Append>%</Append>
+                                        </WebUI:TextField1>
+                                            </div>
                                     </div>
-                                    <div class="col-md-12 mb-2">
+
+                                    <div class="col-md-12 mb-2 d-flex no-block">
                                         <label for="head-circumference" class="control-label mb-1 mr-2">Vòng đầu (trẻ em < 2 tuổi)/ <span class="text-primary">Head Circumference (children < 2 year old) </span></label>
-                                        <div class="form-group w-4 d-inline-block">
-                                            <input runat="server" id="txt_vs_pulse" class="form-control text-right" disabled="disabled" />
-                                            <span class="append">cm</span>
-                                        </div>
+                                        <div class="w-5">
+                                        <WebUI:TextField1 Disabled="true" runat="server" ID="txt_vs_pulse" >
+                                            <Append>cm</Append>
+                                        </WebUI:TextField1>
+                                            </div>
                                     </div>
                                                 </div>
+                                            </ContentTemplate>  
+                                                <Triggers>
+                  <asp:AsyncPostBackTrigger ControlID="btnUpdateVS" />
+               </Triggers>
+                                            </asp:UpdatePanel>  
+
                                                 <div class="row mb-2">
                                                     <div class="col-md-12">
                                                         <div class="form-group">
@@ -666,18 +689,18 @@ applicable for children and pregnant</span>)
                                                 </div>
                                             </div>
 
-                                            <fieldset class="row mb-2">
+                                            <div class="row mb-2">
                                                 <div class="col-md-12">
                                                     <div class="form-actions">
                                                         <asp:Button ID="btnComplete" OnClick="btnComplete_Click" class="btn btn-primary" runat="server" Text="Complete" />
                                                         <asp:Button ID="btnSave" OnClick="btnSave_Click" class="btn btn-primary" runat="server" Text="Save" />
                                                         <button type="button" id="btnDeleteModal" runat="server" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
                                                         <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
-                                                        <asp:Button ID="btnPrint" OnClientClick="window.print();return false;" CssClass="btn btn-secondary" runat="server" Text="Print" />
+                                                        <button onclick="window.print();return false;" class="btn btn-secondary waves-effect" runat="server" id="btnPrint">Print</button>
                                                         <asp:Button ID="btnCancel" OnClick="btnCancel_Click" CssClass="btn btn-secondary" runat="server" Text="Cancel" />
                                                     </div>
                                                 </div>
-                                            </fieldset>
+                                            </div>
 
                                             <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
                                                 <ModalBody>
@@ -703,7 +726,7 @@ applicable for children and pregnant</span>)
                         <asp:PostBackTrigger ControlID="btnAmend" />
                         <asp:PostBackTrigger ControlID="btnCancel" />
                         <asp:PostBackTrigger ControlID="btnComplete" />
-                        <asp:PostBackTrigger ControlID="btnUpdateVS" />
+                        <%--<asp:PostBackTrigger ControlID="btnUpdateVS" />--%>
                         <%--<asp:AsyncPostBackTrigger ControlID="btnUpdateVS" EventName="Click" />--%>
                     </Triggers>
                 </asp:UpdatePanel>
@@ -713,26 +736,47 @@ applicable for children and pregnant</span>)
 
 
 
-    <script src="../../scripts/jquery-3.2.1.min.js"></script>
-    <script src="../../scripts/bootstrap.min.js"></script>
-    <script src="../../scripts/perfect-scrollbar.jquery.min.js"></script>
-    <script src="../../scripts/custom.min.js"></script>
-    <script src="../../scripts/myScript.js"></script>
-    <script src="../../scripts/contenteditable.min.js"></script>
-    <script>
+    <script type="text/javascript" src="../scripts/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../scripts/perfect-scrollbar.jquery.min.js"></script>
+    <script type="text/javascript" src="../scripts/custom.min.js"></script>
+    <script type="text/javascript" src="../scripts/myScript.js"></script>
+    <script type="text/javascript" src="../scripts/contenteditable.min.js"></script>
+    <script type="text/javascript" src="../scripts/waves.js"></script>
 
-        //function delivery_mode_change(e) {
-        //    if (e.value == "s") {
-        //        document.getElementById("delivery_mode_c").style.display = "";
-        //        document.getElementById("delivery_mode_v").style.display = "none";
-        //    } else if (e.value == "v") {
-        //        document.getElementById("delivery_mode_v").style.display = "";
-        //        document.getElementById("delivery_mode_c").style.display = "none";
-        //    } else {
-        //        document.getElementById("delivery_mode_v").style.display = "none";
-        //        document.getElementById("delivery_mode_c").style.display = "none";
-        //    }
-        //}
+    <script type="text/javascript">
+        function beforeAsyncPostBack() {
+            var curtime = new Date();
+        }
+
+        function afterAsyncPostBack() {
+            let temp = document.querySelectorAll('div[type="number"]');
+            let temp1 = document.querySelectorAll('input[data-type="number"]');
+
+            temp1.forEach(e => {
+                setInputFilter(e, function (value) {
+                    return /^\d*\.?\d*$/.test(value);
+                });
+            });
+        }
+
+        Sys.Application.add_init(appl_init);
+
+        function appl_init() {
+            var pgRegMgr = Sys.WebForms.PageRequestManager.getInstance();
+            pgRegMgr.add_beginRequest(BeginHandler);
+            pgRegMgr.add_endRequest(EndHandler);
+        }
+
+        function BeginHandler() {
+            beforeAsyncPostBack();
+        }
+
+        function EndHandler() {
+            afterAsyncPostBack();
+        }
+
     </script>
+
 </body>
 </html>

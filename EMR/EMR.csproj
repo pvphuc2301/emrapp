@@ -304,6 +304,7 @@
     <Content Include="UserControls\PrintTemplate\PrtRowS3.ascx" />
     <Content Include="UserControls\PrintTemplate\Signature1.ascx" />
     <Content Include="UserControls\PrintTemplate\Signature2.ascx" />
+    <Content Include="UserControls\TextField1.ascx" />
     <Content Include="zxing.dll" />
     <Content Include="Print\Print.rar" />
     <Content Include="bin\EMR.dll.config" />
@@ -1034,6 +1035,13 @@
     <Compile Include="UserControls\TextField.ascx.designer.cs">
       <DependentUpon>TextField.ascx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\TextField1.ascx.cs">
+      <DependentUpon>TextField1.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\TextField1.ascx.designer.cs">
+      <DependentUpon>TextField1.ascx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\RadSpell\de-DE.tdf" />
@@ -1106,7 +1114,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

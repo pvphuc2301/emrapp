@@ -560,3 +560,7 @@
     page-break-after: none;
     page-break-inside: avoid;
 }
+
+.input-group-text {
+    background-color: transparent !important;
+}

@@ -6,5 +6,5 @@
         <asp:Label CssClass="prt-title" runat="server" ID="prt_title" />
         <asp:Label CssClass="prt-subtitle" runat="server" ID="prt_subtitle" />
     </asp:Panel>
-    <asp:Label CssClass="prt-value ml-2" runat="server" ID="prt_value" Text="String" />
+    <asp:Label CssClass="prt-value ml-2" runat="server" ID="prt_value"/>
 </asp:Panel>    

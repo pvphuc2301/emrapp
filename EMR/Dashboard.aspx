@@ -144,7 +144,10 @@
                                                 <div class="input-group mb-3">
                                                     <input type="text" class="form-control" placeholder="Search for PID" aria-label="Search for PID" aria-describedby="basic-addon2" style="max-width: 240px;" runat="server" id="txt_pid" />
                                                     <div class="input-group-append">
-                                                        <asp:Button CssClass="btn btn-outline-secondary" runat="server" ID="btnSearch" OnClick="btnSearch_Click" Text="Search" />
+                                                        
+                                                        <button runat="server" onserverclick="btnSearch_Click" id="btnSearch" class="btn btn-outline-secondary waves-effect form-edit">
+                                                        Search
+                                                    </button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -190,7 +193,7 @@
                                     </asp:UpdateProgress>
                                 </ContentTemplate>
                                 <Triggers>
-                                    <asp:AsyncPostBackTrigger ControlID="btnSearch" EventName="Click" />
+                                    <asp:AsyncPostBackTrigger ControlID="btnSearch" />
                                 </Triggers>
                             </asp:UpdatePanel>
 
@@ -732,7 +735,7 @@
     <script src="../scripts/perfect-scrollbar.jquery.min.js"></script>
     <script src="../scripts/myScript.js"></script>
     <script src="../scripts/emrScript.js"></script>
-
+    <script src="scripts/waves.js"></script>
     <script type="text/javascript">
 
         $(".sidebar-dropdown > a").click(function () {
@@ -797,5 +800,6 @@
             });
         }
     </script>
+
 </body>
 </html>

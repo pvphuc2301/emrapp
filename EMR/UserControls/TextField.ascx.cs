@@ -11,8 +11,6 @@ namespace EMR
 {
     public partial class TextField : System.Web.UI.UserControl
     {
-        internal string Text;
-
         public string Value
         {
             get
@@ -49,6 +47,10 @@ namespace EMR
             get
             {
                 return InputControl.ID;
+            }
+            set
+            {
+                InputControl.ID = value;
             }
         }
 

@@ -26,6 +26,10 @@ namespace EMR
 
                 Initial();
             }
+            if (Request["__EVENTTARGET"] == "btnComplete")
+            {
+                btnComplete_Click(sender, e);
+            }
         }
 
         public void Initial()
@@ -39,33 +43,37 @@ namespace EMR
         {
             try
             {
-                txtTemperature.Value = oina.vs_temperature;
-                txtHeartRate.Value = oina.vs_heart_rate;
-                txtWeight.Value = oina.vs_weight;
-                txtRespiratoryRate.Value = oina.vs_respiratory_rate;
-                txtHeight.Value = oina.vs_height;
-                txtBloodPressure.Value = oina.vs_blood_pressure;
-                txtBmi.Value = oina.vs_BMI;
-                txtSpo2.Value = oina.vs_spO2;
+                txt_vs_temperature.Value = oina.vs_temperature;
+                txt_vs_heart_rate.Value = oina.vs_heart_rate;
+                txt_vs_weight.Value = oina.vs_weight;
+                txt_vs_respiratory_rate.Value = oina.vs_respiratory_rate;
+                txt_vs_height.Value = oina.vs_height;
+                txt_vs_blood_pressure.Value = oina.vs_blood_pressure;
+                txt_vs_bmi.Value = oina.vs_BMI;
+                txt_vs_spo2.Value = oina.vs_spO2;
 
-                txtPluse.Value = oina.pulse;
+                txt_vs_pluse.Value = oina.vs_heart_rate;
 
+                //1.
                 txtChiefComplaint.Value = oina.chief_complaint;
-
-                //allergy
+                //2.
                 BindRadioButton("rad_allergy_" + oina.allergy);
                 txt_allergy_note.Value = oina.allergy_note;
-
-                // Mental Status
+                //3.
                 BindRadioButton("rad_mental_status_" + oina.mental_status);
                 txt_mental_status_note.Value = oina.mental_status_note;
-
-                // Fall risk MORSE SCALE
+                //4
+                //5
                 BindRadioButton("rad_fall_risk_" + oina.fall_risk);
                 txt_fall_risk_assistance.Value = oina.fall_risk_assistance;
 
                 //mental status
                 //txt_paint_score_code.Value = oina.paint_score_code;
+                //BindRadioButton( Oina.PAINT_SCORE_CODE
+
+                //4
+                lbl_paint_score_desc.Text = oina.paint_score_description;
+                //
 
                 BindRadioButton("rad_nutrition_status_code_" + oina.nutrition_status_code);
 
@@ -78,20 +86,27 @@ namespace EMR
 
                 if (oina.status == DocumentStatus.FINAL)
                 {
-                    btnComplete.Visible = false;
-                    btnSave.Visible = false;
-                    btnDeleteModal.Visible = false;
+                    //form2.Attributes["data-form-state"] = "view";
+                    FormState.Value = "view";
+                    //btnComplete.Visible = false;
+                    //btnSave.Visible = false;
+                    //btnPrint.Visible = true;
+                    //btnDeleteModal.Visible = false;
 
-                    btnAmend.Visible = true;
-                    btnPrint.Visible = true;
+                    //btnAmend.Visible = true;
 
-                    DisabledControl(true);
+                    //DisabledControl(true);
                     loadDataToPrint(oina);
+
+                    loadDataToView(oina);
                 }
 
                 else if (oina.status == DocumentStatus.DRAFT)
                 {
-                    btnAmend.Visible = false;
+                    FormState.Value = "edit";
+                    //form2.Attributes["data-form-state"] = "edit";
+
+                    //btnAmend.Visible = false;
                     btnPrint.Visible = false;
                 }
             }
@@ -101,6 +116,48 @@ namespace EMR
                 Response.Redirect("../Other/PageNotFound.aspx", false);
             }
 
+        }
+
+        public void loadDataToView(Oina oina)
+        {
+            lbl_fall_risk.Text = oina.fall_risk ? "Có, cung cấp phương tiện hỗ trợ/ Yes, provide assistance: " + oina.fall_risk_assistance : "Không có nguy cơ/ No risk";
+            lbl_mental_status.Text = oina.mental_status ? "Có/ Yes" : "Không, ghi rõ/ No, specify:";
+
+            lbl_chief_complaint.Text = WebHelpers.GetValue(oina.chief_complaint);
+            if(oina.allergy)
+            {
+                lbl_allergy.Text = "Có, ghi rõ/ Yes, specify:";
+                lbl_allergy_note.Text = WebHelpers.GetValue(oina.allergy_note);
+            }
+            else
+            {
+                lbl_allergy.Text = "Không/ No";
+                lbl_allergy_note.Visible = false;
+            }
+
+            if (oina.mental_status)
+            {
+                lbl_mental_status_note.Visible = false;
+            }
+            else
+            {
+                lbl_mental_status_note.Text = WebHelpers.GetValue(oina.mental_status_note);
+            }
+
+            lbl_nutrition_status_desc.Text = WebHelpers.GetValue(oina.nutrition_status_description);
+            lbl_housing_desc.Text = WebHelpers.GetValue(oina.housing_description);
+            lbl_prioritization_desc.Text = WebHelpers.GetValue(oina.prioritization_description);
+
+            lbl_vs_temperature.Text = WebHelpers.GetValue(oina.vs_temperature) + " °C";
+            lbl_vs_heart_rate.Text = WebHelpers.GetValue(oina.vs_heart_rate) + " / phút (m)";
+            lbl_vs_weight.Text = WebHelpers.GetValue(oina.vs_weight) + " kg";
+            lbl_vs_height.Text = WebHelpers.GetValue(oina.vs_height) + " cm";
+            lbl_vs_respiratory_rate.Text = WebHelpers.GetValue(oina.vs_respiratory_rate) + " / phút (min)";
+            lbl_vs_bmi.Text = WebHelpers.GetValue(oina.vs_BMI) + " Kg/m2";
+            lbl_vs_blood_pressure.Text = WebHelpers.GetValue(oina.vs_blood_pressure) + " mmHg";
+            lbl_vs_pluse.Text = "—";
+            lbl_vs_spo2.Text = WebHelpers.GetValue(oina.vs_spO2);
+            lbl_assessment_date_time.Text = WebHelpers.FormatDateTime(oina.assessment_date_time, "dd-MM-yyyy HH:mm");
         }
 
         private void loadDataToPrint(Oina oina)
@@ -113,7 +170,7 @@ namespace EMR
             prt_vs_weight.Text = oina.vs_weight;
             prt_vs_height.Text = oina.vs_height;
             prt_vs_BMI.Text = oina.vs_BMI;
-            prt_pulse.Text = oina.pulse;
+            prt_pulse.Text = oina.vs_heart_rate;
             prt_vs_respiratory_rate.Text = oina.vs_respiratory_rate;
             prt_vs_blood_pressure.Text = oina.vs_blood_pressure;
             prt_vs_spO2.Text = oina.vs_spO2;
@@ -136,7 +193,7 @@ namespace EMR
 
             prt_paint_score_code.Value = oina.paint_score_code;
 
-            prt_fall_risk.Value = oina.fall_risk ? "Không có nguy cơ/ No risk" : "Nếu có, cung cấp phương tiện hỗ trợ/ If yes, provide assistance {0}" + oina.fall_risk_assistance;
+            prt_fall_risk.Value = oina.fall_risk ? "Nếu có, cung cấp phương tiện hỗ trợ/ If yes, provide assistance" + oina.fall_risk_assistance : "Không có nguy cơ/ No risk";
 
             prt_nutrition_status_code.Value = oina.nutrition_status_description;
 
@@ -151,22 +208,22 @@ namespace EMR
             prt_housing_code.SelectedValue = oina.housing_code;
 
             prt_prioritization_code.Value = oina.prioritization_description;
-
-            prt_signature1.Content = WebHelpers.GetSignatureTemplate1("<div>Ngày <span class='text-primary'>Date:</span></div>", "ĐIỀU DƯỠNG ĐÁNH GIÁ", "Assessment done by Nurse", "", "","");
+            
+            prt_signature1.Content = WebHelpers.GetSignatureTemplate1("<div>Ngày <span class='text-primary'>Date:</span></div>", "<span class='font-bold'>ĐIỀU DƯỠNG ĐÁNH GIÁ</span>", "Assessment done by Nurse", "", "","");
             
         }
 
         protected void DisabledControl(bool disabled)
         {
-            txtTemperature.Disabled = disabled;
-            txtWeight.Disabled = disabled;
-            txtHeight.Disabled = disabled;
-            txtHeartRate.Disabled = disabled;
-            txtRespiratoryRate.Disabled = disabled;
-            txtBloodPressure.Disabled = disabled;
-            txtSpo2.Disabled = disabled;
-            txtPluse.Disabled = disabled;
-            txtBmi.Disabled = true;
+            txt_vs_temperature.Disabled = disabled;
+            txt_vs_weight.Disabled = disabled;
+            txt_vs_height.Disabled = disabled;
+            txt_vs_heart_rate.Disabled = disabled;
+            txt_vs_respiratory_rate.Disabled = disabled;
+            txt_vs_blood_pressure.Disabled = disabled;
+            txt_vs_spo2.Disabled = disabled;
+            txt_vs_pluse.Disabled = disabled;
+            txt_vs_bmi.Disabled = true;
 
             txtChiefComplaint.Disabled = disabled;
 
@@ -224,15 +281,19 @@ namespace EMR
         }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
+            FormState.Value = "edit";
+            //form2.Attributes["data-form-state"] = "edit";
             txt_amendReason.Visible = true;
+            txt_amendReason.Value = "";
 
             btnComplete.Visible = true;
-            btnComplete.Attributes["Disabled"] = "disabled";
             btnCancel.Visible = true;
-            btnAmend.Visible = false;
-            btnPrint.Visible = false;
+            btnDeleteModal.Visible = false;
+            btnSave.Visible = false;
+            //btnAmend.Visible = false;
+            //btnPrint.Visible = false;
 
-            DisabledControl(false);
+            //DisabledControl(false);
         }
 
         protected void btnComplete_Click(object sender, EventArgs e)
@@ -250,7 +311,7 @@ namespace EMR
             }
             else
             {
-                RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
+                //RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
             }
         }
 
@@ -285,7 +346,7 @@ namespace EMR
             }
             else
             {
-                RequiredFieldValidator.Value = errors;
+                //RequiredFieldValidator.Value = errors;
 
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                 message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
@@ -304,15 +365,15 @@ namespace EMR
             {
                 oina.amend_reason = txt_amendReason.Value;
 
-                oina.vs_temperature = txtTemperature.Value;
-                oina.vs_heart_rate = txtHeartRate.Value;
-                oina.vs_weight = txtWeight.Value;
-                oina.vs_respiratory_rate = txtRespiratoryRate.Value;
-                oina.vs_height = txtHeight.Value;
-                oina.vs_blood_pressure = txtBloodPressure.Value;
-                oina.vs_BMI = txtBmi.Value;
-                oina.vs_spO2 = txtSpo2.Value;
-                oina.pulse = txtPluse.Value;
+                oina.vs_temperature = txt_vs_temperature.Value;
+                oina.vs_heart_rate = txt_vs_heart_rate.Value;
+                oina.vs_weight = txt_vs_weight.Value;
+                oina.vs_respiratory_rate = txt_vs_respiratory_rate.Value;
+                oina.vs_height = txt_vs_height.Value;
+                oina.vs_blood_pressure = txt_vs_blood_pressure.Value;
+                oina.vs_BMI = txt_vs_bmi.Value;
+                oina.vs_spO2 = txt_vs_spo2.Value;
+                oina.vs_heart_rate = txt_vs_pluse.Value;
                 //1.
                 oina.chief_complaint = txtChiefComplaint.Value;
                 //2.
@@ -373,7 +434,6 @@ namespace EMR
                 Session["ExceptionDetails"] = ex;
                 Response.Redirect("../Other/PageNotFound.aspx", false);
             }
-            
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)

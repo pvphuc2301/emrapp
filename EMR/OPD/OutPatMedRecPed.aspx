@@ -54,33 +54,34 @@
                         <div class="main" runat="server" id="print_content">
                             <!-- Code printed here -->
 
-                            <webUI:PrtRowS1 FixedLeft="30" Title="Ngày khám bệnh" SubTitle="Day of visit" runat="server" ID="prt_day_of_visit" />
+                            <webUI:PrtRowS1 FontBold="true" Title="Ngày khám bệnh" SubTitle="Day of visit" runat="server" ID="prt_day_of_visit" />
 
-                            <webUI:PrtRowS1 Order="I." FixedWidth="168" Title="Lý do đến khám:" SubTitle="Chief complaint" runat="server" ID="prt_chief_complaint" />
+                            <webUI:PrtRowS1 FontBold="true" Order="I." FixedWidth="168" Title="Lý do đến khám:" SubTitle="Chief complaint" runat="server" ID="prt_chief_complaint" />
 
-                            <webUI:PrtRowS1 Order="II." FixedWidth="168" Title="Bệnh sử:" SubTitle="Medical history" runat="server" />
+                            <webUI:PrtRowS1 FontBold="true" Order="II." FixedWidth="168" Title="Bệnh sử:" SubTitle="Medical history" runat="server" />
 
-                            <webUI:PrtRowS1 Order="1." FixedWidth="168" Title="Bệnh sử hiện tại:" SubTitle="Current Medical History" runat="server" ID="prt_medical_history" />
+                            <webUI:PrtRowS1 FontBold="true" Order="1." FixedWidth="168" Title="Bệnh sử hiện tại:" SubTitle="Current Medical History" runat="server" ID="prt_medical_history" />
 
-                            <webUI:PrtRowS1 Order="❖" FixedWidth="168" Title="Thuốc đang sử dụng:" SubTitle="Current medications" runat="server" ID="prt_current_medication" />
+                            <webUI:PrtRowS1 FontBold="true" FixedLeft="5" Order="❖" FixedWidth="168" Title="Thuốc đang sử dụng:" SubTitle="Current medications" runat="server" ID="prt_current_medication" />
 
-                            <webUI:PrtRowS1 Order="II." Title="Tiền sử bệnh:" SubTitle="Atencedent medical history" runat="server" />
+                            <webUI:PrtRowS1 FontBold="true" Order="2." Title="Tiền sử bệnh:" SubTitle="Atencedent medical history" runat="server" />
 
-                            <webUI:PrtRowS1 Order="❖" Title="Bản Thân:" SubTitle="Personal" runat="server" ID="prt_personal" />
+                            <webUI:PrtRowS1 FontBold="true" FixedWidth="80" FixedLeft="5" Order="❖" Title="Bản Thân:" SubTitle="Personal" runat="server" ID="prt_personal" />
 
-                            <webUI:PrtRowS1 Order="❖" Title="Gia đình:" SubTitle="Family" runat="server" ID="prt_family" />
+                            <webUI:PrtRowS1 FontBold="true" FixedWidth="80" FixedLeft="5" Order="❖" Title="Gia đình:" SubTitle="Family" runat="server" ID="prt_family" />
 
-                            <webUI:PrtRowS2 Order="❖" Title="Dị ứng:" SubTitle="Allergy" runat="server" ID="prt_allergy" Gap="20" />
+                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                <webUI:PrtRowS1 FixedWidth="80" FontBold="true" Order="❖" Title="Dị ứng:" SubTitle="Allergy" runat="server" />
+                                <webUI:PrtRowS2  runat="server" ID="prt_allergy" Gap="20" />
+                            </div>
 
-                            <webUI:PrtRowS1 Order="●" Title="Nếu có, nêu rõ:" SubTitle="If yes, specify" runat="server" ID="prt_allergy_note" />
+                            <webUI:PrtRowS1 Visible="false" FontBold="true" FixedLeft="5" Order="●" Title="Nếu có, nêu rõ:" SubTitle="If yes, specify" runat="server" ID="prt_allergy_note" />
 
-                            <%--<webUI:PrtRowS1  Order="❖" FixedWidth="168" Title="Thuốc đang sử dụng:" SubTitle="Current medications"  runat="server" ID="prt_current_medication"  />--%>
+                            <webUI:PrtRowS1  FontBold="true" Order="II." Title="Khám bệnh:" SubTitle="Physical examinations" runat="server" />
 
-                            <webUI:PrtRowS1 Order="IV." Title="Khám bệnh:" SubTitle="Physical examinations" runat="server" />
+                            <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Order="1." Title="Dấu hiệu sinh tồn/ " SubTitle="Vital signs:" runat="server" />
 
-                            <webUI:PrtRowS1 CssClass="text-inline" Order="1." Title="Dấu hiệu sinh tồn/ " SubTitle="Vital signs:" runat="server" />
-
-                            <table class="table-bordered" style="table-layout: fixed; width: 100%">
+                            <table class="table-bordered mb-2" style="table-layout: fixed; width: 100%">
                                 <tr>
                                     <td class="p-2">Nhiệt độ/ Temperature (C degree)</td>
                                     <td class="p-2 text-right" style="width: 100px;">
@@ -115,42 +116,40 @@
                                 </tr>
                             </table>
 
-                            <webUI:PrtRowS1 CssClass="text-inline" Order="2." Title="Khám bệnh/ " SubTitle="Physical Examination:" runat="server" />
+                            <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Order="2." Title="Khám bệnh/ " SubTitle="Physical Examination:" runat="server" />
 
-                            <webUI:PrtRowS1 CssClass="text-inline" FixedLeft="20" runat="server" ID="prt_physical_examination" />
+                            <webUI:PrtRowS1 CssClass="text-inline" FixedLeft="5" runat="server" ID="prt_physical_examination" />
 
-                            <webUI:PrtRowS2 Order="❖" ID="prt_psy_consult_required" Title="Yêu cầu khám chuyên khoa tâm lý" SubTitle="Psychological consultation required:" runat="server" FixedWidth="280" Gap="40" />
-
-                            <webUI:PrtRowS1 Order="V." Title="Chỉ định và kết quả xét nghiệm:" SubTitle="Laboratory indications and results" runat="server" />
+                            <webUI:PrtRowS1 FontBold="true" Order="IV." Title="Chỉ định và kết quả xét nghiệm:" SubTitle="Laboratory indications and results" runat="server" />
 
                             <webUI:PrtRowS1 runat="server" ID="prt_laboratory_indications_results" FixedLeft="30" />
 
+                            <webUI:PrtRowS1 FontBold="true" Order="V." Title="Kết luận:" SubTitle="Conclusion" runat="server" />
 
+                            <webUI:PrtRowS1 FixedLeft="5" FontBold="true" Order="•" FixedWidth="185" Title="Chẩn đoán ban đầu:" SubTitle="Initial diagnosis" runat="server" ID="prt_initial_diagnosis" />
 
-                            <webUI:PrtRowS1 Order="❖" Title="Khảo sát bổ sung khác:" SubTitle="Additional investigations" runat="server" ID="prt_additional_investigation" />
+                            <webUI:PrtRowS1 FixedLeft="5" FontBold="true" Order="•" FixedWidth="185" Title="Chẩn đoán phân biệt:" SubTitle="Differential diagnosis" runat="server" ID="prt_differential_diagnosis" />
 
-                            <webUI:PrtRowS1 Order="VI." Title="Kết luận:" SubTitle="Conclusion" runat="server" />
+                            <webUI:PrtRowS1 FixedLeft="5" FontBold="true" Order="•" FixedWidth="185" Title="Bệnh kèm theo:" SubTitle="Associated conditions" runat="server" ID="prt_associated_conditions" />
 
-                            <webUI:PrtRowS1 Order="•" FixedWidth="185" Title="Chẩn đoán ban đầu:" SubTitle="Initial diagnosis" runat="server" ID="prt_initial_diagnosis" />
+                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                <webUI:PrtRowS1 FixedLeft="5" FontBold="true" Order="•" Title="Điều trị:" FixedWidth="80" SubTitle="Treatment" runat="server" />
+                                <webUI:PrtRowS2 runat="server" ID="prt_treatment" Gap="35" />
+                            </div>
 
-                            <webUI:PrtRowS1 Order="•" FixedWidth="185" Title="Chẩn đoán xác định:" SubTitle="Diagnosis" runat="server" ID="prt_diagnosis" />
+                            <webUI:PrtRowS1 Visible="false" FixedLeft="85" runat="server" ID="prt_medicine" />
 
-                            <webUI:PrtRowS1 Order="•" FixedWidth="185" Title="Chẩn đoán phân biệt:" SubTitle="Differential diagnosis" runat="server" ID="prt_differential_diagnosis" />
+                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                <webUI:PrtRowS1 FontBold="true" Order="❖" FixedWidth="260"  runat="server" Title="Yêu cầu ý kiến chuyên khoa:" SubTitle="Specialized opinion requested" />
 
-                            <webUI:PrtRowS1 Order="•" FixedWidth="185" Title="Bệnh kèm theo:" SubTitle="Associated conditions" runat="server" ID="prt_associated_conditions" />
+                                <webUI:PrtRowS2  ID="prt_spec_opinion_requested"  runat="server" Gap="40" />
+                            </div>
+                            
+                            <webUI:PrtRowS1 Visible="false" FontBold="true" FixedLeft="5" runat="server" Order="•" Title="Nếu có, nêu rõ:" SubTitle="If yes, specif" ID="prt_spec_opinion_requested_note" />
 
-                            <webUI:PrtRowS2 Order="•" Title="Điều trị:" FixedWidth="80" SubTitle="Treatment" runat="server" ID="prt_treatment" Gap="35" />
-
-                            <webUI:PrtRowS1 FixedLeft="30" Title="Điều trị:" FixedWidth="80" SubTitle="Treatment" runat="server" ID="prt_medicine" />
-
-
-                            <webUI:PrtRowS2 Order="❖" FixedWidth="280" ID="prt_spec_opinion_requested" Title="Yêu cầu ý kiến chuyên khoa:" SubTitle="Specialized opinion requested" runat="server" Gap="40" />
-
-                            <webUI:PrtRowS1 Order="•" Title="Nếu có, nêu rõ:" SubTitle="If yes, specif" runat="server" ID="prt_spec_opinion_requested_note" />
-
-                            <webUI:PrtRowS1 Order="•" FixedWidth="187" Title="Hướng dẫn cụ thể dành cho bệnh nhân:" SubTitle="Specific education required" runat="server" ID="prt_specific_education_required" />
-
-                            <webUI:PrtRowS1 Order="•" FixedWidth="187" Title="Hẹn lần khám tới:" SubTitle="Next Appointment" runat="server" ID="prt_next_appointment" />
+                            <webUI:PrtRowS1 FontBold="true" FixedLeft="5" Order="•" FixedWidth="187" Title="Hướng dẫn cụ thể dành cho bệnh nhân:" SubTitle="Specific education required" ID="prt_specific_education_required"  runat="server"/>
+                            
+                            <webUI:PrtRowS1 FontBold="true" Order="•" FixedLeft="5" FixedWidth="187" Title="Hẹn lần khám tới:" SubTitle="Next Appointment" runat="server" ID="prt_next_appointment" />
 
                             <div class="d-grid" style="grid-template-columns: 1fr 1fr">
                                 <div></div>
@@ -188,11 +187,11 @@
 
             <webUI:PatientInfo runat="server" ID="PatientInfo1" />
 
-            <div class="row">
+            <div class="row" style="margin-bottom: 50px">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="text-primary">PEDIATRIC OUTPATIENT MEDICAL RECORD</h4>
+                            <h4 class="text-primary">OUTPATIENT MEDICAL RECORD - PEDIATRIC</h4>
                             <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="arrowhead"></a>
                         </div>
                         <div class="card-body collapse show" id="collapseOne">
@@ -223,11 +222,16 @@
                                     </div>
 
                                     <div class="col-md-12">
-                                        <label class="control-label">Thuốc đang sử dụng/ <span class="text-primary">Current medications:</span></label>
-
-                                        <div class="form-group">
-                                            <webUI:TextField runat="server" id="txt_current_medication" />
-                                        </div>
+                                        <fieldset class="row mb-2">
+                                            <legend>
+                                                <label class="control-label">Thuốc đang sử dụng/ <span class="text-primary">Current medications:</span></label>
+                                            </legend>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <webUI:TextField runat="server" id="txt_current_medication" />
+                                                </div>
+                                            </div>
+                                        </fieldset>
                                     </div>
                                 </fieldset>
 
@@ -270,7 +274,7 @@
                                 <div class="row mb-2">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label class="control-label mb-1 h4">III. Khám bệnh/ <span class="text-primary">Physical Examination:</span></label>
+                                            <label class="control-label h4">III. Khám bệnh/ <span class="text-primary">Physical Examination:</span></label>
                                         </div>
                                     </div>
                                 </div>
@@ -280,12 +284,8 @@
                                         <label class="control-label">Dấu hiệu sinh tồn/ <span class="text-primary">Vital signs</span></label>
                                     </legend>
                                     <div class="col-md-12">
-                                        <div class="alert alert-warning d-flex no-block">
-                                            <div class="flex-grow-1">
-                                                <icon:ExclamationTriangle runat="server" ID="ExclamationTriangle" Size="28" />
-                                                <span class="ml-2">Updates are available.
-                                                </span>
-                                            </div>
+                                        <div class="alert alert-warning d-grid" style="grid-template-columns: 1fr auto" >
+                                            <div>Updates vital signs.</div>
                                             <asp:Button runat="server" ID="btnUpdateVitalSign" CssClass="btn btn-sm btn-secondary" OnClick="btnUpdateVitalSign_Click" Text="Update" />
                                         </div>
                                     </div>
@@ -508,18 +508,18 @@ applicable for children and pregnant</span>)
                                     </div>
                                 </div>
                                 </div>
-                                <fieldset class="row mb-2">
+                                <div class="row mb-2">
                                     <div class="col-md-12">
                                         <div class="form-actions">
                                             <asp:Button ID="btnComplete" OnClick="btnComplete_Click" OnClientClick="checkValidData()" class="btn btn-primary" runat="server" Text="Complete" />
                                             <asp:Button ID="btnSave" OnClick="btnSave_Click" class="btn btn-primary" runat="server" Text="Save" />
                                             <button type="button" id="btnDeleteModal" runat="server" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
                                             <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
-                                            <asp:Button ID="btnPrint" OnClientClick="window.print()" CssClass="btn btn-secondary" runat="server" Text="Print" />
+                                            <asp:Button ID="btnPrint" OnClientClick="window.print(); return false" CssClass="btn btn-secondary" runat="server" Text="Print" />
                                             <asp:Button ID="btnCancel" OnClick="btnCancel_Click" CssClass="btn btn-secondary" runat="server" Text="Cancel" />
                                         </div>
                                     </div>
-                                </fieldset>
+                                </div>
 
                                 <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
                                     <ModalBody>
@@ -548,6 +548,7 @@ applicable for children and pregnant</span>)
     <script src="../../scripts/custom.min.js"></script>
     <script src="../../scripts/myScript.js"></script>
     <script src="../../scripts/contenteditable.min.js"></script>
+    <script src="../scripts/waves.js"></script>
 
     <script>
         function checkValidData() {

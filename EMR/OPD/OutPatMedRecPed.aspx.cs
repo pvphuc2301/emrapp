@@ -110,7 +110,7 @@ namespace EMR
 
             prt_patient_label.FullName = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
             prt_patient_label.PID = DataHelpers.patient.visible_patient_id;
-            prt_patient_label.DOB = string.Format("{0} | {1}", DataHelpers.patient.date_of_birth.ToString("dd-MM-yyyy"), DataHelpers.patient.gender_l);
+            prt_patient_label.DOB = string.Format("{0} | {1}", WebHelpers.FormatDateTime(DataHelpers.patient.date_of_birth), DataHelpers.patient.gender_l);
             //
             prt_day_of_visit.Value = WebHelpers.FormatDateTime(patientVisit.actual_visit_date_time);
             //I.
@@ -126,7 +126,7 @@ namespace EMR
             prt_family.Value = pomr.family;
             //prt_immunization.Value = pomr.immunization;
 
-            prt_allergy.Options = WebHelpers.CreateOptions(new Option {Text= "Không/ <span No", Value=false }, new Option { Text= "Có/ Yes:", Value=true});
+            prt_allergy.Options = WebHelpers.CreateOptions(new Option {Text= "Không/ No", Value = false }, new Option { Text= "Có/ Yes", Value = true});
             prt_allergy.SelectedValue = pomr.allergy;
 
             if (pomr.allergy != null)
@@ -154,18 +154,6 @@ namespace EMR
             //2.
             prt_physical_examination.Value = DataHelpers.FormatPhysicalExamination(pomr.physical_examination);
 
-            //dynamic[] psy_consult_required_lst = new dynamic[2];
-
-            //psy_consult_required_lst[0] = new System.Dynamic.ExpandoObject();
-            //psy_consult_required_lst[0].title = "Không/ <span class='text-primary'>No</span>";
-
-            //psy_consult_required_lst[1] = new System.Dynamic.ExpandoObject();
-            //psy_consult_required_lst[1].title = "Có/ <span class='text-primary'>Yes</span>:";
-
-            //prt_psy_consult_required.Options = JsonConvert.SerializeObject(psy_consult_required_lst);
-
-            //prt_psy_consult_required.SelectedIndex = pomr.psy_consult_required ? 1 : 0;
-
             prt_laboratory_indications_results.Value = pomr.laboratory_indications_results;
             //prt_additional_investigation.Value = pomr.additional_investigation;
             prt_initial_diagnosis.Value = pomr.initial_diagnosis;
@@ -178,13 +166,17 @@ namespace EMR
             {
                 var item = POMR.TREATMENT_CODE.ElementAt(i);
 
-                treatments[i] = new Option { Text = item.Key, Value = item.Value };
+                treatments[i] = new Option { Text = item.Value, Value = item.Key };
             }
 
             prt_treatment.Options = WebHelpers.CreateOptions(treatments);
             prt_treatment.SelectedValue = pomr.treatment_code;
 
-            prt_medicine.Value = pomr.medicine;
+            if(pomr.treatment_code == "OPD")
+            {
+                prt_medicine.Visible = true;
+                prt_medicine.Value = pomr.medicine;
+            }
 
             prt_spec_opinion_requested.Options = WebHelpers.CreateOptions(new Option { Text = "Không/ <span No", Value = false }, new Option { Text = "Có/ Yes:", Value = true });
             prt_spec_opinion_requested.SelectedValue = pomr.spec_opinion_requested;

@@ -95,7 +95,7 @@ namespace EMR
         protected void btnAmend_Click(object sender, EventArgs e)
         {
             AmendReason amendReason = (AmendReason)Page.LoadControl("~/UserControls/AmendReason.ascx");
-            amendReason.Load(AmendReasonPlaceHolder);
+            amendReason.LoadControl(AmendReasonPlaceHolder);
 
             btnComplete.Visible = true;
             btnComplete.Attributes["disabled"] = "disabled";

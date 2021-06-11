@@ -147,7 +147,7 @@
                             </div>
                             <div class="form-group text-center">
                                 <div class="col-xs-12 p-b-20">
-                                    <button class="btn btn-block btn-lg btn-info btn-rounded" runat="server" id="btnLogin" onserverclick="cmdLogin_Click">
+                                    <button class="btn btn-block btn-lg btn-info btn-rounded waves-effect" runat="server" id="btnLogin" onserverclick="cmdLogin_Click">
                                         Login
                                     </button>
                                     <webUI:Spinner1 AssociatedUpdatePanelID="up" runat="server" ID="Spinner1" />
@@ -161,6 +161,7 @@
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>
+    <script src="scripts/waves.js"></script>
     <script>
         function togglePassword(id, eyeID) {
             let x = document.getElementById(id);

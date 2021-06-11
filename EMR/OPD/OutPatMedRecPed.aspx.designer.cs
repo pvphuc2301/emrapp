@@ -195,15 +195,6 @@ namespace EMR
         protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_physical_examination;
 
         /// <summary>
-        /// prt_psy_consult_required control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.UserControls.PrintTemplate.PrtRowS2 prt_psy_consult_required;
-
-        /// <summary>
         /// prt_laboratory_indications_results control.
         /// </summary>
         /// <remarks>
@@ -213,15 +204,6 @@ namespace EMR
         protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_laboratory_indications_results;
 
         /// <summary>
-        /// prt_additional_investigation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_additional_investigation;
-
-        /// <summary>
         /// prt_initial_diagnosis control.
         /// </summary>
         /// <remarks>
@@ -229,15 +211,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_initial_diagnosis;
-
-        /// <summary>
-        /// prt_diagnosis control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_diagnosis;
 
         /// <summary>
         /// prt_differential_diagnosis control.
@@ -454,15 +427,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.TextField txt_allergy_note;
-
-        /// <summary>
-        /// ExclamationTriangle control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.icons.ExclamationTriangle ExclamationTriangle;
 
         /// <summary>
         /// btnUpdateVitalSign control.
