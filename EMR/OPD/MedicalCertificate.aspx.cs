@@ -10,10 +10,18 @@ namespace EMR
 {
     public partial class MedicalCertificate : System.Web.UI.Page
     {
-        MC mc;
+        MC mc; string UserID = "";
         PatientInfo pa;         
         protected void Page_Load(object sender, EventArgs e)
         {
+            UserID = (string)Session["UserID"];
+            string redirecturl = "../login.aspx?ReturnUrl=";
+            redirecturl += Request.ServerVariables["script_name"] + "?";
+            redirecturl += Server.UrlEncode(Request.QueryString.ToString());
+            if (string.IsNullOrEmpty(UserID))
+                Response.Redirect(redirecturl);
+
+
             if (!IsPostBack)
             {
                 Initial();

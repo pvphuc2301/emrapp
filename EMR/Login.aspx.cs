@@ -47,7 +47,7 @@ namespace Emr_client.Emr
                 put_session_value(UserName.Value, Password.Value);
                 //  HttpContext current_ss = HttpContext.Current;
                 //Session["current_session"] = current_ss.Session.SessionID;
-                Insert_EMR_Account(UserName.Value);
+                Insert_EMR_Account(UserName.Value, Convert.ToString(Session["company_code"]));
                 if (string.IsNullOrEmpty(Request.QueryString["ReturnUrl"]))
                     Response.Redirect("dashboard.aspx");
                 else
@@ -56,24 +56,7 @@ namespace Emr_client.Emr
             else
                 lblInfo.Text = "Login Failed!";
         }
-
-        //public void put_session_value(string varUserAccount, string varUserPW)
-        //{
-        //    string _jsonData = WebHelpers.GetAPI("api/employee/employee/user/" + varUserAccount);
-
-        //    if (!string.IsNullOrEmpty(_jsonData))
-        //    {
-        //        dynamic data = JObject.Parse(_jsonData);
-        //        Session["UserName"] = Convert.ToString(data.patient_name_e);
-        //        Session["DepCode"] = Convert.ToString(data.department_code);
-        //        Session["DepName"] = Convert.ToString(data.department_name_e);
-        //        Session["user_email"] = Convert.ToString(data.email_business);
-        //        Session["emp_id"] = Convert.ToString(data.employee_id);
-        //        Session["emp_nr"] = Convert.ToString(data.employee_nr);
-        //      //  Session["upw"] = varUserPW;
-        //        Session["company_code"] = "AIH";
-        //    }
-        //}
+        
         public void put_session_value(string varUserAccount, string varUserPW)
         {
             dynamic response = WebHelpers.GetAPI("api/employee/employee/user/" + varUserAccount);
@@ -89,15 +72,13 @@ namespace Emr_client.Emr
                     Session["user_email"] = Convert.ToString(data.email_business);
                     Session["emp_id"] = Convert.ToString(data.employee_id);
                     Session["emp_nr"] = Convert.ToString(data.employee_nr);
-
-                    //Session["UserName"] = data.patient_name_e;
-                    //Session["DepCode"] = data.department_code;
-                    //Session["DepName"] = data.department_name_e;
-                    //Session["user_email"] = data.email_business;
-                    //Session["emp_id"] = data.employee_id;
-                    //Session["emp_nr"] = data.employee_nr;
+                    Session["job_type"] = Convert.ToString(data.job_type_code);
+                    Session["company_code"] = Convert.ToString(data.company_code);
+                    Session["specialty_code"] = Convert.ToString(data.specialty_code);
+                    Session["location"] = Convert.ToString(data.company_code);
+                    Session.Timeout = 60;
                     //  Session["upw"] = varUserPW;
-                    Session["company_code"] = "AIH";
+
                 }
             }
         }
@@ -148,22 +129,87 @@ namespace Emr_client.Emr
             return authenticated;
         }
 
-        public void Insert_EMR_Account(string varAccount)
+        public void Insert_EMR_Account(string varAccount, string varSite)
         {
-            //if (Convert.ToString(Session["company_code"]) == "AIHC")
+            string varGroup = ""; string varType = "";string varCompanyCode = "";string varAccess = "NA";bool active_authorize = false;
+            string[] nurseGroup = new string[5] {"2CACC", "6CFC2", "1E273", "FB611", "NA" };//"Midwife", "Nurse", "Heath Care Assistant", "Nurse Office", "NA" 
+            string[] docGroup = new string[5] {"FE4EE", "CDBFD", "03192", "3E787", "7504C" };//"Internist", "Surgeon", "Lab Doctor", "Nutritionist", "Radiologist"
+            string[] MAGroup = new string[5] { "708AD", "BE046", "NA", "NA", "NA" };//VPYK, KHTH
+            string[] CSOGroup = new string[5] { "26CC3", "12E4D", "NA", "NA", "NA" };//CSO, thu ký y khoa
+            string[] TechGroup = new string[5] { "97F59", "A5255", "FA538", "NA", "NA" };//Iamging Tech, VLTri lieu, LAB Tech
+
+            SQLAppClass SQL_Class = new SQLAppClass();
+
+            string query = "SELECT top 1 user_name, site_rcd, access_authorize, active_authorize,account_group_rcd ";
+            query += "FROM account WITH (NOLOCK) ";
+            query += "WHERE (user_name = '" + varAccount + "') AND (site_rcd = '" + varSite + "') ";
+            string get_access = ""; string group_access = "";// SQL_Class.CheckAndGetItem(query, "access_authorize", ConnStringEMR);
+
+            SqlConnection conn = new SqlConnection(ConnStringEMR);
+            SqlCommand com = new SqlCommand(query, conn);
+            conn.Open();
+            SqlDataReader reader = com.ExecuteReader();
+            try
             {
-                SQLAppClass SQL_Class = new SQLAppClass();
-
-                string query = "SELECT top 1 user_name, site_rcd ";
-                query += "FROM account WITH (NOLOCK) ";
-                query += "WHERE (user_name = '" + varAccount + "') ";
-
-                if (string.IsNullOrEmpty(SQL_Class.CheckAndGetItem(query, "user_name", ConnStringEMR)))
+                if (reader.HasRows)
                 {
-                    string queryInsert = "INSERT INTO account (user_name, site_rcd ) ";
-                    queryInsert += "VALUEs ('" + varAccount + "','AIH') ";
-                    SQL_Class.RunQuery(queryInsert, ConnStringEMR);
+                    while (reader.Read())
+                    {
+                        get_access = Convert.ToString(reader["access_authorize"]);
+                        group_access = Convert.ToString(reader["account_group_rcd"]);
+                        active_authorize = Convert.ToBoolean(reader["active_authorize"]);
+                        reader.Close();
+                        break;
+                    }
                 }
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            if (string.IsNullOrEmpty(get_access))
+            {
+                varType = Convert.ToString(Session["job_type"]);
+                if (MISClass.In_Array(nurseGroup, varType))
+                {
+                    varGroup = "NURSE";
+                    varAccess = "FullAccess";
+                }
+                else if (MISClass.In_Array(docGroup, varType))
+                {
+                    varGroup = "DOC";
+                    varAccess = "FullAccess";
+                }
+                else if (MISClass.In_Array(MAGroup, varType))
+                {
+                    varGroup = "MA";
+                    varAccess = "MAFullAccess";
+                }
+                else if (MISClass.In_Array(CSOGroup, varType))
+                {
+                    varGroup = "CSO";
+                    varAccess = "CSOAccess";
+                }
+                else if (MISClass.In_Array(TechGroup, varType))
+                {
+                    varGroup = "TECH";
+                    varAccess = "TechAccess";
+                }
+
+                varCompanyCode = Convert.ToString(Session["company_code"]);
+                Session["access_authorize"] = varAccess;
+                Session["group_access"] = varGroup;
+
+                string queryInsert = "INSERT INTO account (user_name, site_rcd, account_group_rcd, access_authorize ) ";
+                queryInsert += "VALUEs ('" + varAccount + "','" + varCompanyCode + "','" + varGroup + "','" + varAccess + "') ";
+                SQL_Class.RunQuery(queryInsert, ConnStringEMR);
+            }
+            else
+            {
+                Session["access_authorize"] = get_access;
+                Session["group_access"] = group_access;
+                Session["active_authorize"] = active_authorize;
             }
         }
     }

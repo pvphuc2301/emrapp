@@ -177,6 +177,15 @@ namespace EMR
         protected global::System.Web.UI.UpdateProgress updateProgress_demographicSearch;
 
         /// <summary>
+        /// btn_my_opd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btn_my_opd;
+
+        /// <summary>
         /// RadGrid1 control.
         /// </summary>
         /// <remarks>
@@ -193,6 +202,33 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid RadGrid2;
+
+        /// <summary>
+        /// btn_my_hc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btn_my_hc;
+
+        /// <summary>
+        /// RadGridHC control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid RadGridHC;
+
+        /// <summary>
+        /// last_customer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl last_customer;
 
         /// <summary>
         /// RadGrid3 control.

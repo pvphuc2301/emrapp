@@ -200,11 +200,13 @@
     <Content Include="bin\Telerik.Windows.Zip.xml" />
     <Content Include="bin\zxing.dll" />
     <Content Include="Dashboard.aspx" />
+    <Content Include="emrbyvisit\opdTab.aspx" />
     <Content Include="emr\emrinfor.aspx" />
     <Content Include="emr\emrview.aspx" />
     <Content Include="icons\ExclamationTriangle.ascx" />
     <Content Include="IPD\ObsGynIniAss.aspx" />
     <Content Include="Print\Test.aspx" />
+    <Content Include="Report\CompleteVisitReport.aspx" />
     <Content Include="Report\ImagingTab.aspx" />
     <Content Include="emr\labinfor.aspx" />
     <Content Include="ER\EmerMedRec.aspx" />
@@ -364,6 +366,13 @@
       <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Classes\DataHelpers.cs" />
+    <Compile Include="emrbyvisit\opdTab.aspx.cs">
+      <DependentUpon>opdTab.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="emrbyvisit\opdTab.aspx.designer.cs">
+      <DependentUpon>opdTab.aspx</DependentUpon>
+    </Compile>
     <Compile Include="emr\emrinfor.aspx.cs">
       <DependentUpon>emrinfor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -398,6 +407,13 @@
     </Compile>
     <Compile Include="Print\Test.aspx.designer.cs">
       <DependentUpon>Test.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\CompleteVisitReport.aspx.cs">
+      <DependentUpon>CompleteVisitReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\CompleteVisitReport.aspx.designer.cs">
+      <DependentUpon>CompleteVisitReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Report\ImagingTab.aspx.cs">
       <DependentUpon>ImagingTab.aspx</DependentUpon>
@@ -1041,7 +1057,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

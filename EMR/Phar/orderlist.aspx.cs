@@ -105,7 +105,9 @@ namespace EMR
             query += "LEFT OUTER JOIN dbo.patient_visit_nl_view AS pv ON ISNULL(cpo.execution_visit_id, cpo.creation_visit_id) = pv.patient_visit_id ";
             query += "LEFT OUTER JOIN dbo.employee_formatted_name_iview_nl_view AS efni ON efni.person_id = cpo.order_owner_employee_id ";
             query += "WHERE(cpog.patient_id = '" + varPatientID + "') AND (scat.healthcare_service_type_rcd IN('LB', 'IM', 'OT')) ";
-            query += "AND (cpo.cpoe_placer_order_status_rcd <> 'CANCL') AND pv.facility_id = 'DB7FE460-06C3-4343-9909-57709F9538E3' ";
+            query += "AND (cpo.cpoe_placer_order_status_rcd <> 'CANCL') ";
+            if (Convert.ToString(Session["location"]) == "AIH")
+                query += "AND pv.facility_id = 'DB7FE460-06C3-4343-9909-57709F9538E3' ";    
             //query += "AND (employee_nr = N'" + EmpID + "') ";
             query += ") AS lablist ";
             query += "GROUP BY creation_date_time,visit_code, urlink, visit_date_time, order_owner_name_e,visit_type_rcd,employee_nr ";

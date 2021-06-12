@@ -52,7 +52,7 @@ namespace EMR.Report
                     if (cell.Text == "0" | cell.Text == "0%")// | cell.Text == "0.0" | cell.Text == "0.00" | cell.Text == "0.000")
                         cell.Text = String.Empty;
                 }
-                GridDataItem dataItem = (GridDataItem)e.Item;
+                GridDataItem dataItem = (GridDataItem)e.Item;            
                 //GridDataItem dataItem = (GridDataItem)e.DetailTableView.ParentItem;
                 if (e.Item is GridDataItem && e.Item.OwnerTableView.Name == "F1")
                 {
@@ -128,6 +128,11 @@ namespace EMR.Report
         protected void btnComplete_Click(object sender, EventArgs e)
         {            
             RadGrid1.Rebind();
+        }
+        public string ReturnService_Name(object varOrderName, object varSpecNum)
+        {
+            string tmp = Convert.ToString(varOrderName) + " (" + Convert.ToString(varSpecNum) +")";            
+            return tmp;
         }
     }
 }

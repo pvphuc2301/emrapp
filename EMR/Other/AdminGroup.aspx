@@ -19,8 +19,7 @@
                                   <div class="row mt-4">
                                     <div class="col-md-12">
                                         <telerik:RadTabStrip RenderMode="Lightweight" runat="server" ID="RadTabStrip1"  
-                                            MultiPageID="RadMultiPage1" SelectedIndex="0" Skin="Silk" 
-                                            Width="100%">
+                                            MultiPageID="RadMultiPage1" SelectedIndex="0" Skin="Silk" Width="100%">
                                             <Tabs>
                                                 <telerik:RadTab Text="Doctor" Width="180px"></telerik:RadTab>
                                                 <telerik:RadTab Text="Nurse" Width="180px"></telerik:RadTab>
@@ -29,8 +28,9 @@
                                                 <telerik:RadTab Text="CSO" Width="180px"></telerik:RadTab>
                                             </Tabs>
                                         </telerik:RadTabStrip>
-                                        <telerik:RadMultiPage runat="server" ID="RadMultiPage1"  SelectedIndex="0" CssClass="outerMultiPage" Width="620px">
+                                        <telerik:RadMultiPage runat="server" ID="RadMultiPage1"  SelectedIndex="0" >
                                             <telerik:RadPageView runat="server" ID="RadPageView1">
+                                                <div class="table-responsive">
                                                 <telerik:RadGrid ItemStyle-Height="32px" HeaderStyle-Height="32px" CssClass="table" BorderWidth="0" 
                                                     AutoGenerateColumns="false" ID="RadGrid1" runat="server" AllowPaging="True" Width="100%" 
                                                     OnNeedDataSource="RadGrid1_NeedDataSource" AllowSorting="true">
@@ -65,9 +65,10 @@
                                                     </MasterTableView>
                                                     <ClientSettings EnableRowHoverStyle="true">
                                                     </ClientSettings>
-                                                </telerik:RadGrid>
+                                                </telerik:RadGrid></div>
                                             </telerik:RadPageView>
                                             <telerik:RadPageView runat="server" ID="RadPageView2">
+                                                <div class="table-responsive">
                                                 <telerik:RadGrid ItemStyle-Height="32px" HeaderStyle-Height="32px" CssClass="table" BorderWidth="0" 
                                                     AutoGenerateColumns="false" ID="RadGrid2" runat="server" AllowPaging="True" 
                                                     OnNeedDataSource="RadGrid2_NeedDataSource" AllowSorting="true">
@@ -102,9 +103,10 @@
                                                     </MasterTableView>
                                                     <ClientSettings EnableRowHoverStyle="true">
                                                     </ClientSettings>
-                                                </telerik:RadGrid>
+                                                </telerik:RadGrid></div>
                                             </telerik:RadPageView>
                                             <telerik:RadPageView runat="server" ID="RadPageView3" >
+                                                <div class="table-responsive">
                                                 <telerik:RadGrid ItemStyle-Height="32px" HeaderStyle-Height="32px" CssClass="table" BorderWidth="0" 
                                                     AutoGenerateColumns="false" ID="RadGrid3" runat="server" AllowPaging="True" 
                                                     OnNeedDataSource="RadGrid3_NeedDataSource" AllowSorting="true">
@@ -139,9 +141,10 @@
                                                     </MasterTableView>
                                                     <ClientSettings EnableRowHoverStyle="true">
                                                     </ClientSettings>
-                                                </telerik:RadGrid>
+                                                </telerik:RadGrid></div>
                                             </telerik:RadPageView>
                                             <telerik:RadPageView runat="server" ID="RadPageView4" >
+                                                <div class="table-responsive">
                                                 <telerik:RadGrid ItemStyle-Height="32px" HeaderStyle-Height="32px" CssClass="table" BorderWidth="0" 
                                                     AutoGenerateColumns="false" ID="RadGrid4" runat="server" AllowPaging="True" 
                                                     OnNeedDataSource="RadGrid4_NeedDataSource" AllowSorting="true">
@@ -176,9 +179,10 @@
                                                     </MasterTableView>
                                                     <ClientSettings EnableRowHoverStyle="true">
                                                     </ClientSettings>
-                                                </telerik:RadGrid>
+                                                </telerik:RadGrid></div>
                                             </telerik:RadPageView>
                                             <telerik:RadPageView runat="server" ID="RadPageView5" >
+                                                <div class="table-responsive">
                                                 <telerik:RadGrid ItemStyle-Height="32px" HeaderStyle-Height="32px" CssClass="table" BorderWidth="0" 
                                                     AutoGenerateColumns="false" ID="RadGrid5" runat="server" AllowPaging="True" 
                                                     OnNeedDataSource="RadGrid5_NeedDataSource" AllowSorting="true">
@@ -213,7 +217,7 @@
                                                     </MasterTableView>
                                                     <ClientSettings EnableRowHoverStyle="true">
                                                     </ClientSettings>
-                                                </telerik:RadGrid>
+                                                </telerik:RadGrid></div>
                                             </telerik:RadPageView>
                                         </telerik:RadMultiPage>                          
                                     </div>

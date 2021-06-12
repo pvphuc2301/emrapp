@@ -79,9 +79,10 @@ namespace AIHPortal.Phar
         }
         protected void RadGrid1_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
+            string get_access = Convert.ToString(Session["access_authorize"]);
             string query = GetQuery();
-
-            RadGrid1.DataSource = GetDataTable(query, ConnStringHIS);
+            if (Convert.ToString(Session["group_access"]) == "DOC" | get_access== "FullAccess" | get_access == "MAFullAccess")
+                RadGrid1.DataSource = GetDataTable(query, ConnStringHIS);
         }
         public string GetQuery()
         {
@@ -107,6 +108,7 @@ namespace AIHPortal.Phar
             query += "dbo.user_account_nl_view AS uac ON uac.person_id = pre.prescriber_employee_id INNER JOIN ";
             query += "dbo.employee_formatted_name_iview_nl_view AS efni ON efni.person_id = uac.person_id ";
             query += "WHERE (pre.patient_id = '" + Guid.Parse(varPID) + "') ";
+
             //query += "AND (employee_nr = N'" + EmpID + "') ";
 
             // query += "WHERE (phu.visible_patient_id = '" + varVbID + "') ";

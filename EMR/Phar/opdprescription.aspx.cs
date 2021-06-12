@@ -13,20 +13,14 @@ namespace EMR.Print
 {
     public partial class opdprescription : System.Web.UI.Page
     {
-        private string ConnStringHIS = ""; private string ConnStringEMR = ""; private string visitType = "";
+        private string ConnStringHIS = ""; private string visitType = "";
         public string varPID = ""; private string varPV_ID = ""; private string varPharID = ""; private string varVbID = ""; private bool oldVisit = false;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             ConnClass ConnStr = new ConnClass();
             ConnStringHIS = ConnStr.SQL_HISConnString;
-            ConnStringEMR = ConnStr.SQL_EMRConnString;
 
-            //if (Convert.ToString(Session["company_code"]) == "AIHC")
-            {
-                ConnStringHIS = ConnStr.SQL_HIS_C01ConnString;
-                ConnStringEMR = ConnStr.SQL_EMR_C01ConnString;
-            }
             varPID = Request.QueryString["pid"];
             varVbID = Request.QueryString["vibid"];
             varPV_ID = Request.QueryString["vid"];

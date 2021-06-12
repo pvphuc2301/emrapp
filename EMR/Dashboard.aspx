@@ -201,14 +201,18 @@
                                                 </ul>
                                             </nav>--%>
                             <%--</div>--%>
-
-
-                            <div class="card">
+                            <div class="card">                                
                                 <div class="card-header bg-white">
                                     <h4 class="card-title control-label m-0">
-                                        <span class="text-primary">My Outpatient List</span>
+                                        <span class="text-primary">
+                                            <asp:LinkButton ID="btn_my_opd" runat="server" Text="My Outpatient List" OnClick="cmd_refresh_opd"></asp:LinkButton> 
+                                        </span>
+                                        <span style="padding-left:700px">
+                                            <a href="#" onclick="javascript:window.open('../report/CompleteVisitReport.aspx?view=opd','_blank','left=60,top=20,width=1300,height=1000,toolbar=no, menubar=no, location=no, addressbar=no,resizable=0');return false;" >
+                                My Completed List</a>
+                                        </span>
                                     </h4>
-                                </div>
+                                </div>                                    
                                 <div class="card-body" style="padding: 0">
                                     <div class="table-responsive">
                                         <telerik:RadGrid CssClass="table" BorderWidth="0" OnSelectedIndexChanged="RadGrid_SelectedIndexChanged"
@@ -454,7 +458,54 @@
                                 <div class="card-footer bg-white py-4"></div>
                             </div>
 
-                            <div class="row">
+                            <div class="card">
+                                <div class="card-header bg-white">
+                                    <h4 class="card-title control-label m-0">
+                                        <span class="text-primary">
+                                            <asp:LinkButton ID="btn_my_hc" runat="server" Text="My Health Check-up for Today" OnClick="cmd_refresh_hc"></asp:LinkButton> 
+                                            </span>
+                                        <span style="padding-left:600px">
+                                            <a href="#" onclick="javascript:window.open('../report/CompleteVisitReport.aspx?view=hc','mywin','left=60,top=20,width=1300,height=1000,toolbar=0,resizable=0');return false;" >
+                                My Completed Health Check-up List</a>
+                                        </span>
+                                    </h4>
+                                </div>
+                                <div class="card-body" style="padding: 0">
+                                    <div class="table-responsive">
+        <telerik:RadGrid ID="RadGridHC" runat="server" Width="100%" OnNeedDataSource="RadGridHC_NeedDataSource"
+            AllowSorting="true" AllowFilteringByColumn="false" CssClass="table" BorderWidth="0"
+            AutoGenerateColumns="False" AllowMultiRowSelection="False" GridLines="None" EnableLinqExpressions="false" ShowFooter="false">
+            <MasterTableView DataKeyNames="visible_patient_id" AllowMultiColumnSorting="True" Width="100%" Name="Master" TableLayout="Fixed" 
+                HeaderStyle-HorizontalAlign="Left" HeaderStyle-ForeColor="#457">
+                <Columns>
+                    <telerik:GridTemplateColumn SortExpression="visible_patient_id" HeaderText="PID" HeaderButtonType="TextButton"
+                        DataField="visible_patient_id" ShowFilterIcon="false">
+                            <ItemTemplate>
+                                <asp:Label ID="lbvisible_patient_id" runat="server" Text='<%# Eval("visible_patient_id") %>' />
+                            </ItemTemplate>                            
+                    </telerik:GridTemplateColumn>
+                    <telerik:GridTemplateColumn SortExpression="patient_name" HeaderText="Last Name" HeaderButtonType="TextButton"
+                        DataField="patient_name" ShowFilterIcon="false">
+                            <ItemTemplate>
+                                <asp:Label ID="lbpatient_name" runat="server" Text='<%# Eval("patient_name") %>' />
+                            </ItemTemplate>                            
+                    </telerik:GridTemplateColumn>
+                    <telerik:GridBoundColumn SortExpression="checkin_date" HeaderText="Check-in date" DataField="checkin_date" 
+                        ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457">
+                    </telerik:GridBoundColumn>
+                </Columns>
+                <CommandItemSettings ShowAddNewRecordButton="false" />
+            </MasterTableView>
+            <ClientSettings EnableRowHoverStyle="true">
+            <Selecting AllowRowSelect="True"/>                         
+        </ClientSettings>
+        </telerik:RadGrid>
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-white py-4"></div>
+                            </div>
+
+                            <div class="row" id="last_customer" runat="server" visible="false">
                                 <div class="col-md-6">
                                     <div class="card">
                                         <div class="card-header bg-white">
