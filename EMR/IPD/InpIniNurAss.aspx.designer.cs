@@ -11,7 +11,7 @@ namespace EMR
 {
 
 
-    public partial class InpatientInitialNursingAssessment
+    public partial class InpIniNurAss
     {
 
         /// <summary>
@@ -859,15 +859,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_BMI;
-
-        /// <summary>
-        /// RadScriptBlock1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadScriptBlock RadScriptBlock1;
 
         /// <summary>
         /// txt_vs_spO2 control.
@@ -2094,13 +2085,13 @@ namespace EMR
         protected global::EMR.TextField txt_inter_catheter_note;
 
         /// <summary>
-        /// cb_ind_catheter_True control.
+        /// cb_ind_catheter_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_ind_catheter_True;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_ind_catheter_true;
 
         /// <summary>
         /// txt_ind_catheter_size control.
@@ -3738,7 +3729,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSave;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnSave;
 
         /// <summary>
         /// btnDeleteModal control.

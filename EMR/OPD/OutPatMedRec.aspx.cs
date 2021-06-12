@@ -32,9 +32,85 @@ namespace EMR
             omr = new Omr(Request.QueryString["docId"]);
 
             // Fill du lieu tu Object to Controls.
-            loadDataToControls(omr);
+
+            lbl_vs_temperature.Text = omr.vs_temperature;
+            lbl_vs_heart_rate.Text = omr.vs_heart_rate;
+            lbl_vs_weight.Text = omr.vs_weight;
+            lbl_vs_respiratory_rate.Text = omr.vs_respiratory_rate;
+            lbl_vs_height.Text = omr.vs_height;
+            lbl_vs_blood_pressure.Text = omr.vs_blood_pressure;
+            lbl_vs_bmi.Text = omr.vs_BMI;
+            lbl_vs_spo2.Text = omr.vs_spO2;
+            lbl_vs_pulse.Text = omr.vs_pulse;
+
+            btnCancel.Visible = false;
+            txt_amendReason.Visible = false;
+
+            if (omr.status == DocumentStatus.FINAL)
+            {
+                FormState.Value = "view";
+                btnComplete.Visible = false;
+                btnSave.Visible = false;
+                btnDeleteModal.Visible = false;
+
+                btnAmend.Visible = true;
+
+                btnPrint.Visible = true;
+
+                //DisabledControl(true);
+                LoadDataToPrint(omr);
+                loadDataToView(omr);
+            }
+
+            else if (omr.status == DocumentStatus.DRAFT)
+            {
+                FormState.Value = "edit";
+                btnAmend.Visible = false;
+                loadDataToControls(omr);
+                btnPrint.Visible = false;
+            }
         }
-      
+
+        private void loadDataToView(Omr omr)
+        {
+            lbl_chief_complaint.Text = WebHelpers.GetValue(omr.chief_complain);
+            lbl_current_medication.Text = WebHelpers.GetValue(omr.chief_complain);
+            lbl_medical_history.Text = WebHelpers.GetValue(omr.medical_history);
+            lbl_personal.Text = WebHelpers.GetValue(omr.personal);
+
+            if(omr.allergy != null)
+            {
+                lbl_allergy.Text = omr.allergy ? "" : "Không/ No";
+                if (omr.allergy) { lbl_allergy.Text += omr.allergy_note; }
+            }
+            lbl_family.Text = WebHelpers.GetValue(omr.family);
+            lbl_immunization.Text = WebHelpers.GetValue(omr.immunization);
+            lbl_physical_examination.Text = DataHelpers.FormatPhysicalExamination(omr.physical_examination);
+            if(omr.psy_consult_required != null)
+            {
+                lbl_psy_consult_required.Text = omr.psy_consult_required ? "" : "Không/ No";
+
+            }
+            lbl_laboratory_indications_results.Text = WebHelpers.GetValue(omr.laboratory_indications_results);
+            lbl_additional_investigation.Text = WebHelpers.GetValue(omr.additional_investigation);
+            lbl_initial_diagnosis.Text = WebHelpers.GetValue(omr.initial_diagnosis);
+            lbl_diagnosis.Text = WebHelpers.GetValue(omr.diagnosis);
+            lbl_differential_diagnosis.Text = WebHelpers.GetValue(omr.differential_diagnosis);
+            lbl_associated_conditions.Text = WebHelpers.GetValue(omr.associated_conditions);
+            lbl_treatment.Text = WebHelpers.GetValue(omr.treatment_desc);
+            
+            if(omr.spec_opinion_requested != null)
+            {
+                lbl_spec_opinion_requested.Text = omr.spec_opinion_requested ? "" : "Không/ No";
+                if (omr.spec_opinion_requested)
+                {
+                    lbl_spec_opinion_requested.Text += " " + omr.spec_opinion_requested_note;
+                }
+            }
+            lbl_specific_education_required.Text = WebHelpers.GetValue(omr.specific_education_required);
+            lbl_next_appointment.Text = WebHelpers.GetValue(omr.next_appointment);
+        }
+
         public void loadDataToControls(Omr omr1)
         {
             Patient patient = Patient.Instance();
@@ -114,15 +190,6 @@ namespace EMR
 
             // III.Khám bệnh/ Physical Examination:
             // DẤU HIỆU SINH TỒN/ VITAL SIGNS:
-            txt_vs_temperature.Value = omr1.vs_temperature;
-            txt_vs_heart_rate.Value = omr1.vs_heart_rate;
-            txt_vs_weight.Value = omr1.vs_weight;
-            txt_vs_respiratory_rate.Value = omr1.vs_respiratory_rate;
-            txt_vs_height.Value = omr1.vs_height;
-            txt_vs_blood_pressure.Value = omr1.vs_blood_pressure;
-            txt_vs_bmi.Value = omr1.vs_BMI;
-            txt_vs_spO2.Value = omr1.vs_spO2;
-            txt_vs_pulse.Value = omr1.vs_pulse;
 
             txt_physical_examination.Value = DataHelpers.FormatPhysicalExamination(omr1.physical_examination);
 
@@ -166,26 +233,6 @@ namespace EMR
 
             btnCancel.Visible = false;
             txt_amendReason.Visible = false;
-
-            if (omr1.status == DocumentStatus.FINAL)
-            {
-                btnComplete.Visible = false;
-                btnSave.Visible = false;
-                btnDeleteModal.Visible = false;
-
-                btnAmend.Visible = true;
-                
-                btnPrint.Visible = true;
-
-                DisabledControl(true);
-                LoadDataToPrint(omr1);
-            }
-
-            else if (omr1.status == DocumentStatus.DRAFT)
-            {
-                btnAmend.Visible = false;
-                btnPrint.Visible = false;
-            }
         }
 
         private void LoadDataToPrint(Omr omr1)
@@ -315,9 +362,7 @@ namespace EMR
         /// <param name="e"></param>
         protected void btnSave_Click(object sender, EventArgs e) 
         {
-            string errors = checkValidField();
-
-            if (string.IsNullOrEmpty(errors))
+            if (Page.IsValid)
             {
                 omr = new Omr(Request.QueryString["docId"]);
                 omr.status = DocumentStatus.DRAFT;
@@ -327,12 +372,9 @@ namespace EMR
             }
             else
             {
-                RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
-
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                 message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
             }
-
         }
        /// <summary>
        /// DocumentStatus = Final, muon chinh sua du lieu --> thuc hien Button nay, de bat trang thai Edit cho tat ca TextBox.
@@ -344,7 +386,6 @@ namespace EMR
             txt_amendReason.Visible = true;
 
             btnComplete.Visible = true;
-            btnComplete.Attributes["Disabled"] = "disabled";
             btnCancel.Visible = true;
             btnAmend.Visible = false;
             btnPrint.Visible = false;
@@ -354,9 +395,7 @@ namespace EMR
 
         protected void btnComplete_Click(object sender, EventArgs e)
         {
-            string errors = checkValidField();
-
-            if (string.IsNullOrEmpty(errors))
+            if (Page.IsValid)
             {
                 omr = new Omr(Request.QueryString["docId"]);
                 omr.status = DocumentStatus.FINAL;
@@ -366,8 +405,6 @@ namespace EMR
             }
             else
             {
-                RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
-
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                 message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
             }
@@ -396,15 +433,15 @@ namespace EMR
             else if (rad_allergy_false.Checked)
             { omr.allergy = false; }
             //II.
-            omr.vs_temperature = txt_vs_temperature.Value;
-            omr.vs_weight = txt_vs_weight.Value;
-            omr.vs_height = txt_vs_height.Value;
-            omr.vs_BMI = txt_vs_bmi.Value;
-            omr.vs_pulse = txt_vs_pulse.Value;
-            omr.vs_heart_rate = txt_vs_heart_rate.Value;
-            omr.vs_respiratory_rate = txt_vs_respiratory_rate.Value;
-            omr.vs_blood_pressure = txt_vs_blood_pressure.Value;
-            omr.vs_spO2 = txt_vs_spO2.Value;
+            omr.vs_temperature = lbl_vs_temperature.Text;
+            omr.vs_weight = lbl_vs_weight.Text;
+            omr.vs_height = lbl_vs_height.Text;
+            omr.vs_BMI = lbl_vs_bmi.Text;
+            omr.vs_pulse = lbl_vs_pulse.Text;
+            omr.vs_heart_rate = lbl_vs_heart_rate.Text;
+            omr.vs_respiratory_rate = lbl_vs_respiratory_rate.Text;
+            omr.vs_blood_pressure = lbl_vs_blood_pressure.Text;
+            omr.vs_spO2 = lbl_vs_spo2.Text;
             omr.physical_examination = txt_physical_examination.Value.Replace("<br>", "");
             //IV.
             omr.laboratory_indications_results = txt_laboratory_indications_results.Value;
@@ -535,6 +572,18 @@ namespace EMR
             {
                 Initial();
             }
+        }
+        protected void CustomValidator2_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = txt_amendReason.Value.Length > 3;
+        }
+
+        protected void btnPrint_ServerClick(object sender, EventArgs e)
+        {
+            omr = new Omr(Request.QueryString["docId"]);
+            LoadDataToPrint(omr);
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "window.print();", true);
         }
     }
 }

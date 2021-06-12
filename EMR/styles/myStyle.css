@@ -564,3 +564,15 @@
 .input-group-text {
     background-color: transparent !important;
 }
+
+form[data-form-state=view] .form-edit {
+    display: none;
+}
+
+form[data-form-state=edit] .form-view {
+    display: none;
+}
+
+* {
+    scroll-behavior: smooth;
+}

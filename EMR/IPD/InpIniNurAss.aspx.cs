@@ -10,7 +10,7 @@ using System.Web.UI.WebControls;
 
 namespace EMR
 {
-    public partial class InpatientInitialNursingAssessment : System.Web.UI.Page
+    public partial class InpIniNurAss : System.Web.UI.Page
     {
         Iina iina;
         protected void Page_Load(object sender, EventArgs e)
@@ -517,13 +517,11 @@ namespace EMR
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            var errors = new List<string>();
+            string errors = checkValidField();
 
-            checkValidField(errors);
-
-            if (errors.Count <= 0)
+            if (string.IsNullOrEmpty(errors))
             {
-                iina = new Iina(Request["docID"]);
+                iina = new Iina(DataHelpers.varDocId);
 
                 iina.user_name = (string)Session["UserID"];
                 iina.status = DocumentStatus.DRAFT;
@@ -532,11 +530,16 @@ namespace EMR
             }
             else
             {
-                RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
+                //RequiredFieldValidator.Value = errors;
 
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                 message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
             }
+        }
+
+        private string checkValidField()
+        {
+            return "";
         }
 
         private void UpdateData(Iina iina)
@@ -947,7 +950,7 @@ namespace EMR
             {
                 errors.Add("assess_date_time_error");
             }
-            if (!cb_ind_catheter_True.Checked)
+            if (!cb_ind_catheter_true.Checked)
             {
                 errors.Add("ind_catheter_error");
             }

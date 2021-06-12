@@ -12,11 +12,24 @@ namespace EMR
     public partial class DischargeSummary : System.Web.UI.Page
     {
         Diss diss;
+        public string UserID;
         protected void Page_Load(object sender, EventArgs e)
         {
+            UserID = (string)Session["UserID"];
+            string redirecturl = "../login.aspx?ReturnUrl=";
+            redirecturl += Request.ServerVariables["script_name"] + "?";
+            redirecturl += Server.UrlEncode(Request.QueryString.ToString());
+            if (string.IsNullOrEmpty(UserID))
+                Response.Redirect(redirecturl);
+
             if (!IsPostBack)
             {
                 Initial();
+            }
+
+            if (Request["__EVENTTARGET"] == "discReasonCode_Change")
+            {
+                LoadDischargeReason(Request["__EVENTARGUMENT"]);
             }
         }
 
@@ -27,14 +40,16 @@ namespace EMR
             if (Request.QueryString["vpid"] != null) DataHelpers.varPVId = Request.QueryString["vpid"];
             
             diss = new Diss(DataHelpers.varDocId);
-            loadDataToOMRControls(diss);
+            loadDataToControls(diss);
 
         }
 
-        public void loadDataToOMRControls(Diss diss)
+        public void loadDataToControls(Diss diss)
         {
             try
             {
+
+                LoadDischargeReason(diss.disc_reason_code);
                 BindRadioButton("rad_disc_reason_code_" + diss.disc_reason_code);
 
                 WebHelpers.BindDateTimePicker(dpk_date_of_hospital, diss.date_of_hospital);
@@ -103,7 +118,6 @@ namespace EMR
                     btnPrint.Visible = true;
 
                     DisabledControl(true);
-                    LoadDataToPrint(diss);
                 }
                 else if (diss.status == DocumentStatus.DRAFT)
                 {
@@ -128,28 +142,29 @@ namespace EMR
             prt_vpid.InnerText = string.Format("{0} - {1} - {2}", patient.visible_patient_id, patientVisit.visit_type, patientVisit.visit_code);
             prt_barcode.Text = patient.visible_patient_id;
 
-            prt_date_of_hospital.Value = WebHelpers.FormatDateTime(diss.date_of_hospital);
-            prt_date_of_discharge.Value = WebHelpers.FormatDateTime(diss.date_of_discharge);
+            prt_date_of_hospital.Text = WebHelpers.FormatDateTime(diss.date_of_hospital);
+            
+            prt_date_of_discharge.Text = WebHelpers.FormatDateTime(diss.date_of_discharge);
             //1
-            prt_admission_reason.Value = diss.admission_reason;
+            prt_admission_reason.Text = diss.admission_reason;
             //2
-            prt_icd10_diagnosis.Value = diss.icd10_diagnosis;
+            prt_icd10_diagnosis.Text = diss.icd10_diagnosis;
             //3
-            prt_cur_med_history.Value = diss.cur_med_history;
+            prt_cur_med_history.Text = diss.cur_med_history;
             //4
-            prt_physical_finding.Value = diss.physical_finding;
+            prt_physical_finding.Text = diss.physical_finding;
             //5
-            prt_lab_result.Value = diss.lab_result;
+            prt_lab_result.Text = diss.lab_result;
             //6
-            prt_proce_performed.Value = diss.proce_performed;
+            prt_proce_performed.Text = diss.proce_performed;
             //7
-            prt_treatment.Value = diss.treatment;
+            prt_treatment.Text = diss.treatment;
             //8
-            prt_evolution.Value = diss.evolution;
+            prt_evolution.Text = diss.evolution;
             //9
-            prt_disc_condition.Value = diss.disc_condition;
+            prt_disc_condition.Text = diss.disc_condition;
             //10
-            prt_disc_medication.Value = diss.disc_medication;
+            prt_disc_medication.Text = diss.disc_medication;
 
             prt_follow_up_instruc.Visible = false;
             prt_special_diet.Visible = false;
@@ -163,34 +178,34 @@ namespace EMR
             {
                 //10
                 prt_dama.Visible = true;
-                prt_dama.Value = diss.dama;
+                prt_dama.Text = diss.dama;
                 
             }
             else if(diss.disc_reason_code == "TRANSFER")
             {
                 //10
                 prt_disc_medication.Visible = true;
-                prt_disc_medication.Value = diss.disc_medication;
+                prt_disc_medication.Text = diss.disc_medication;
                 //11
                 prt_trans_to_hospital.Visible = true;
-                prt_trans_to_hospital.Value = diss.trans_to_hospital;
+                prt_trans_to_hospital.Text = diss.trans_to_hospital;
 
                 prt_transfer_reason.Visible = true;
-                prt_transfer_reason.Value = diss.transfer_reason;
+                prt_transfer_reason.Text = diss.transfer_reason;
             } else if (diss.disc_reason_code == "AMA")
             {
                 //10
                 prt_disc_medication.Visible = true;
-                prt_disc_medication.Value = diss.disc_medication;
+                prt_disc_medication.Text = diss.disc_medication;
                 //11
                 prt_follow_up_instruc.Visible = true;
-                prt_follow_up_instruc.Value = diss.follow_up_instruc;
+                prt_follow_up_instruc.Text = diss.follow_up_instruc;
                 //12
                 prt_special_diet.Visible = true;
-                prt_special_diet.Value = diss.special_diet;
+                prt_special_diet.Text = diss.special_diet;
                 //13
                 prt_next_consult.Visible = true;
-                prt_next_consult.Value = WebHelpers.FormatDateTime(diss.next_consult_date, "dd-MM-yyy") + " " + diss.next_consult_doctor;
+                prt_next_consult.Text = WebHelpers.FormatDateTime(diss.next_consult_date, "dd-MM-yyy") + " " + diss.next_consult_doctor;
             }
 
             prt_signature1.Content = WebHelpers.GetSignatureTemplate1("Ngày/ <span class='text-primary'>Date</span>: __-__-20__", "Bác sỹ điều trị/ <span class='text-primary'> Attending Physician:<span>", "", "", "", "");
@@ -254,6 +269,8 @@ namespace EMR
             WebHelpers.DisabledDateTimePicker(dpk_signed_date, disabled);
             txt_signed_doctor.Disabled = disabled;
 
+            txt_dama.Disabled = disabled;
+            txt_dama_note.Disabled = disabled;
             //if(diss.disc_reason_code == "TRANSFER")
             //{
             //    txt_trans_to_hospital.Disabled = disabled;
@@ -274,9 +291,7 @@ namespace EMR
 
         protected void btnComplete_Click(object sender, EventArgs e)
         {
-            string errors = checkValidField();
-
-            if (string.IsNullOrEmpty(errors))
+            if (Page.IsValid)
             {
                 diss = new Diss(Request.QueryString["docId"]);
                 diss.status = DocumentStatus.FINAL;
@@ -286,8 +301,6 @@ namespace EMR
             }
             else
             {
-                RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
-
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                 message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
             }
@@ -301,9 +314,7 @@ namespace EMR
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            string errors = checkValidField();
-
-            if (string.IsNullOrEmpty(errors))
+            if (Page.IsValid)
             {
                 diss = new Diss(Request.QueryString["docId"]);
                 diss.status = DocumentStatus.DRAFT;
@@ -311,13 +322,24 @@ namespace EMR
 
                 UpdateData(diss);
             }
-            else
-            {
-                RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
 
-                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
-            }
+            //string errors = checkValidField();
+
+            //if (string.IsNullOrEmpty(errors))
+            //{
+            //    diss = new Diss(Request.QueryString["docId"]);
+            //    diss.status = DocumentStatus.DRAFT;
+            //    diss.user_name = (string)Session["UserID"];
+
+            //    UpdateData(diss);
+            //}
+            //else
+            //{
+            //    RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
+
+            //    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
+            //    message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
+            //}
         }
 
         protected void btnAmend_Click(object sender, EventArgs e)
@@ -325,7 +347,6 @@ namespace EMR
             txt_amendReason.Visible = true;
 
             btnComplete.Visible = true;
-            btnComplete.Attributes["Disabled"] = "disabled";
             btnCancel.Visible = true;
             btnAmend.Visible = false;
             btnPrint.Visible = false;
@@ -462,7 +483,72 @@ namespace EMR
 
         protected void btnPrint_Click(object sender, EventArgs e)
         {
+            diss = new Diss(Request.QueryString["docId"]);
+            LoadDataToPrint(diss);
+            
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "window.print();", true);
+        }
 
+        protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_disc_reason_code_ama.Checked || rad_disc_reason_code_dama.Checked || rad_disc_reason_code_transfer.Checked;
+        }
+        protected void CustomValidator2_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = txt_amendReason.Value.Length > 3;
+        }
+
+        protected void rad_disc_reason_code_ama_ServerChange(object sender, EventArgs e)
+        {
+            LoadDischargeReason("AMA");
+        }
+
+        protected void rad_disc_reason_code_dama_ServerChange(object sender, EventArgs e)
+        {
+            LoadDischargeReason("DAMA");
+        }
+
+        protected void rad_disc_reason_code_transfer_ServerChange(object sender, EventArgs e)
+        {
+            LoadDischargeReason("TRANSFER");
+        }
+
+        private void LoadDischargeReason(string value)
+        {
+            value = value.ToLower();
+            if(value == "dama")
+            {
+                dama_field.Visible = true;
+                //-----------------------------
+                disc_medication_field.Visible = false;
+                transfer_field.Visible = false;
+                follow_up_field.Visible = false;
+                special_diet_field.Visible = false;
+                next_consultation_field.Visible = false;
+            }else if(value == "transfer")
+            {
+                disc_medication_field.Visible = true;
+                transfer_field.Visible = true;
+
+                //-----------------------------
+                follow_up_field.Visible = false;
+                special_diet_field.Visible = false;
+                next_consultation_field.Visible = false;
+                dama_field.Visible = false;
+
+            }
+            else if (value == "ama")
+            {
+                disc_medication_field.Visible = true;
+                follow_up_field.Visible = true;
+                special_diet_field.Visible = true;
+                next_consultation_field.Visible = true;
+
+                //-----------------------------
+                transfer_field.Visible = false;
+                dama_field.Visible = false;
+           
+            }
         }
     }
 }

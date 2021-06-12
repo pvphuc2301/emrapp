@@ -30,6 +30,7 @@
 
 </head>
 <body>
+    
     <div class="cssclsNoScreen">
         <table class="report-container">
             <thead class="report-header">
@@ -176,13 +177,17 @@
             </tfoot>
         </table>
     </div>
-
+        
     <div class="cssclsNoPrint">
         <form method="post" action="#" id="form2" runat="server">
             <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
+            <div class="h-100 w-100">
+                <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
+                    <ContentTemplate>
             <asp:HiddenField runat="server" ID="RequiredFieldValidator" />
             <asp:Panel runat="server" ID="messagePlaceHolder">
                 <webUI:AmendReason runat="server" ID="txt_amendReason" />
+                <asp:CustomValidator ID="CustomValidator2" runat="server" Display="Dynamic" ValidationGroup="SaveDoc" ErrorMessage="" CssClass="text-danger" OnServerValidate="CustomValidator2_ServerValidate"></asp:CustomValidator>
             </asp:Panel>
 
             <webUI:PatientInfo runat="server" ID="PatientInfo1" />
@@ -511,11 +516,11 @@ applicable for children and pregnant</span>)
                                 <div class="row mb-2">
                                     <div class="col-md-12">
                                         <div class="form-actions">
-                                            <asp:Button ID="btnComplete" OnClick="btnComplete_Click" OnClientClick="checkValidData()" class="btn btn-primary" runat="server" Text="Complete" />
-                                            <asp:Button ID="btnSave" OnClick="btnSave_Click" class="btn btn-primary" runat="server" Text="Save" />
-                                            <button type="button" id="btnDeleteModal" runat="server" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
-                                            <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
-                                            <asp:Button ID="btnPrint" OnClientClick="window.print(); return false" CssClass="btn btn-secondary" runat="server" Text="Print" />
+                                            <button type="button" onserverclick="btnComplete_Click" validationgroup="SaveDoc" runat="server" id="btnComplete" class="btn btn-primary waves-effect">Complete</button>
+                                                    <button type="button" onserverclick="btnSave_Click" validationgroup="SaveDoc" runat="server" id="btnSave" class="btn btn-primary waves-effect">Save</button>
+                                                    <button type="button" id="btnDeleteModal" runat="server" class="btn btn-danger form-edit" data-toggle="modal" data-target="#myModal">Delete</button>
+                                                    <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
+                                                    <button type="button" onserverclick="btnPrint_Click" runat="server" id="btnPrint" class="btn btn-secondary waves-effect">Print</button>
                                             <asp:Button ID="btnCancel" OnClick="btnCancel_Click" CssClass="btn btn-secondary" runat="server" Text="Cancel" />
                                         </div>
                                     </div>
@@ -539,24 +544,28 @@ applicable for children and pregnant</span>)
                         </div>
                     </div>
                 </div>
+                        </ContentTemplate>
+                    <Triggers>
+                        <asp:PostBackTrigger ControlID="btnSave" />
+                        <asp:PostBackTrigger ControlID="btnAmend" />
+                        <asp:PostBackTrigger ControlID="btnCancel" />
+                        <asp:PostBackTrigger ControlID="btnComplete" />
+                        <asp:AsyncPostBackTrigger ControlID="btnPrint" />
+                        <%--<asp:PostBackTrigger ControlID="btnUpdateVS" />--%>
+                        <%--<asp:AsyncPostBackTrigger ControlID="btnUpdateVS" EventName="Click" />--%>
+                    </Triggers>
+            </asp:UpdatePanel>
+                </div>
         </form>
     </div>
 
-    <script src="../../scripts/jquery-3.2.1.min.js"></script>
-    <script src="../../scripts/bootstrap.min.js"></script>
-    <script src="../../scripts/perfect-scrollbar.jquery.min.js"></script>
-    <script src="../../scripts/custom.min.js"></script>
-    <script src="../../scripts/myScript.js"></script>
-    <script src="../../scripts/contenteditable.min.js"></script>
+    <script src="../scripts/jquery-3.2.1.min.js"></script>
+    <script src="../scripts/bootstrap.min.js"></script>
+    <script src="../scripts/perfect-scrollbar.jquery.min.js"></script>
+    <script src="../scripts/custom.min.js"></script>
+    <script src="../scripts/myScript.js"></script>
+    <script src="../scripts/contenteditable.min.js"></script>
     <script src="../scripts/waves.js"></script>
-
-    <script>
-        function checkValidData() {
-
-            alert("check data");
-
-        }
-    </script>
 </body>
 </html>
 

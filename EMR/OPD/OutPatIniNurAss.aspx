@@ -30,20 +30,6 @@
     <link href="../../styles/style.css" rel="stylesheet" />
     <link href="../../styles/myStyle.css" rel="stylesheet" />
     <link href="../../style/style-custom.css" rel="stylesheet" />
-    <style>
-        form[data-form-state=view] .form-edit {
-            display: none;
-        }
-
-        form[data-form-state=edit] .form-view {
-            display: none;
-        }
-
-        * {
-            scroll-behavior: smooth;
-        }
-    </style>
-
 </head>
 <body>
     <%--class="cssclsNoScreen"--%>
@@ -187,7 +173,6 @@
 
                                     <div class="card-body collapse show" id="collapseOne">
                                         <div class="form-body mb-4">
-
                                             <div class="row">
                                                 <div class="col-md-12 mb-2">
                                                     <label class="control-label h5">I. DẤU HIỆU SINH TỒN/ <span class="text-primary">VITAL SIGNS</span></label>
@@ -270,13 +255,9 @@
                                                 <div class="col-sm-6 mb-2 ">
                                                     <div class="d-flex no-block">
                                                         <label for="bmi" class="control-label mb-1 mr-2">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
-                                                        <asp:Label runat="server" ID="lbl_vs_bmi" CssClass="form-view" />
-                                                        <div class="w-5 form-edit">
-                                                            <WebUI:TextField1 Disabled="true" runat="server" ID="txt_vs_bmi" >
-                                                                <Append>(Kg/m <sup>2</sup>)</Append>
-                                                            </WebUI:TextField1>
-                                                        </div>
-
+                                                        <span style="width: 100px" class="text-right">
+                                                            <asp:Label runat="server" ID="lbl_vs_bmi" CssClass="mr-1"/> (Kg/m <sup>2</sup>)
+                                                        </span>
                                                     </div>
                                                     <p class="mt-1">
                                                         (Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not
@@ -346,7 +327,7 @@
                                                         <a href="javascript:void(0)" data-clear="rad_allergy" onclick="clear_radiobutton(this)">
                                                     <icon:xsquare runat="server" ID="XSquare5" />
                                                 </a>
-                                                        <span id="rad_allergy_error" data-message-error="Dị ứng/ Allergy is required" class="text-danger"></span>
+                                                        <span id="rad_allergy_error" data-for="rad_allergy" data-message-error="Dị ứng/ Allergy is required" class="text-danger required"></span>
                                                     </div>
 
                                                     <div class="form-group allergy_field">
@@ -378,7 +359,7 @@
                                                         <a href="javascript:void(0)" data-clear="rad_mental_status" onclick="clear_radiobutton(this)">
                                                     <icon:xsquare runat="server" ID="XSquare6" />
                                                 </a>
-                                                        <span id="rad_mental_status_error" class="text-danger" data-message-error="Trạng thái tinh thần/ Appropriate response is required"></span>
+                                                        <span id="rad_mental_status_error" class="text-danger required" data-for="rad_mental_status"  data-message-error="Trạng thái tinh thần/ Appropriate response is required"></span>
                                                     </div>
 
                                                     <div class="form-group mental_status_note_field">
@@ -449,7 +430,7 @@
                                                         <a href="javascript:void(0)"  data-clear="rad_fall_risk" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare22" />
                                                         </a>
-                                                        <span id="rad_fall_risk_error" data-message-error="Tầm soát nguy cơ té ngã/ Fall risk MORSE SCALE is required" class="text-danger"></span>
+                                                        <span id="rad_fall_risk_error" data-for="rad_fall_risk" data-message-error="Tầm soát nguy cơ té ngã/ Fall risk MORSE SCALE is required" class="text-danger required"></span>
                                                     </div>
                                                     <div class="form-group fall_risk_assistance_field">
                                                         <webUI:TextField runat="server" id="txt_fall_risk_assistance" />
@@ -569,7 +550,7 @@
                                         <div class="row mb-2">
                                             <div class="col-md-12">
                                                 <div class="form-actions">
-                                                    <button type="button" onclick="validateForm()" runat="server" id="btnComplete" class="btn btn-primary waves-effect form-edit">
+                                                    <button type="button" onclick="validateForm1()" runat="server" id="btnComplete" class="btn btn-primary waves-effect form-edit">
                                                         Complete
                                                     </button>
 
@@ -729,15 +710,27 @@
                 errorElement.innerHTML = errorElement.getAttribute('data-message-error')
                 return false;
             }
+            return true;
         }
 
-        function validateForm() {
+        function validateForm1() {
+            validateForm(() => {
+                console.log("Passed");
+                __doPostBack('<%=btnComplete.UniqueID%>', '');
+            });
+        };
 
-            checkradiobutton("rad_mental_status");
-            checkradiobutton("rad_allergy");
-            checkradiobutton("rad_fall_risk");
+        function validateForm(pass) {
 
-
+            let checks = document.querySelectorAll(`.required`);
+            console.log(checks);
+            let errors = [];
+            checks.forEach(e => {
+                e.getAttribute("data-for");
+                if (!checkradiobutton(e.getAttribute("data-for"))) {
+                    errors.push(e);
+                }
+            });
 
             amend_reason = document.getElementById("txt_amendReason");
 
@@ -745,11 +738,12 @@
                 if (amend_reason.value.length <= 3) {
                     document.getElementById("messagePlaceHolder").scrollIntoView();
                     document.getElementById("DisplayControl").focus();
-                    return false;
+                    errors.push(amend_reason);
                 }
             }
 
-            __doPostBack('<%=btnComplete.UniqueID%>', '');
+            if (errors.length <= 0) pass();
+
         }
 
         function radioButtonChange(eventArgs) {

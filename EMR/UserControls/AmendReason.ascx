@@ -11,10 +11,10 @@
     </div>
 </div>
 
-<script type="text/javascript">
+<%--<script type="text/javascript">
     document.getElementById('<%= txtAmendReason.ClientID %>_DisplayControl').addEventListener("input", function () {
         if (this.innerText.length < 3) {
             if (document.getElementById("btnComplete").disabled != undefined) document.getElementById("btnComplete").setAttribute("disabled", "disabled");
         } else { document.getElementById("btnComplete").removeAttribute("disabled") }
     })
-</script>
+</script>--%>

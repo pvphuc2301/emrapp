@@ -375,15 +375,6 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label lbl_vs_bmi;
 
         /// <summary>
-        /// txt_vs_bmi control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.UserControls.TextField1 txt_vs_bmi;
-
-        /// <summary>
         /// lbl_vs_spo2 control.
         /// </summary>
         /// <remarks>

@@ -1299,18 +1299,23 @@
                                         </div>
                                     </fieldset>
 
-                                    <fieldset class="row">
+                                    <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-actions">
-                                                <asp:Button ID="btnComplete" OnClick="btnComplete_Click" class="btn btn-primary" runat="server" Text="Complete" />
-                                                <asp:Button ID="btnSave" OnClick="btnSave_Click" class="btn btn-primary" runat="server" Text="Save" />
-                                                <button type="button" id="btnDeleteModal" runat="server" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
-                                                <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
-                                                <asp:Button ID="btnPrint" CssClass="btn btn-secondary" runat="server" Text="Print" />
-                                                <asp:Button ID="btnCancel" OnClick="btnCancel_Click" CssClass="btn btn-secondary" runat="server" Text="Cancel" />
+                                                <button type="button" onserverclick="btnComplete_Click" validationgroup="SaveDoc" runat="server" id="btnComplete" class="btn btn-primary waves-effect">Complete</button>
+
+                                                <button type="button" onserverclick="btnSave_Click" validationgroup="SaveDoc" runat="server" id="btnSave" class="btn btn-primary waves-effect">Save</button>
+
+                                                <button type="button" id="btnDeleteModal" runat="server" class="btn btn-danger waves-effect" data-toggle="modal" data-target="myModal">Delete</button>
+
+                                                <button type="button" onserverclick="btnAmend_Click" runat="server" id="btnAmend" class="btn btn-secondary waves-effect">Amend</button>
+
+                                                <button type="button" onserverclick="btnPrint_Click" runat="server" id="btnPrint" class="btn btn-secondary waves-effect">Print</button>
+
+                                                <button type="button" onserverclick="btnCancel_Click" runat="server" id="btnCancel" class="btn btn-default waves-effect">Cancel</button>
                                             </div>
                                         </div>
-                                    </fieldset>
+                                    </div>
 
                                     <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
                                         <ModalBody>
@@ -1341,12 +1346,12 @@
         </form>
     </div>
 
-    <script src="../../scripts/popper.min.js"></script>
-    <script src="../../scripts/jquery-3.2.1.min.js"></script>
-    <script src="../../scripts/perfect-scrollbar.jquery.min.js"></script>
-    <script src="../../scripts/custom.min.js"></script>
-    <script src="../../scripts/myScript.js"></script>
-    <script src="../../scripts/contenteditable.min.js"></script>
+    <script src="../scripts/popper.min.js"></script>
+    <script src="../scripts/jquery-3.2.1.min.js"></script>
+    <script src="../scripts/perfect-scrollbar.jquery.min.js"></script>
+    <script src="../scripts/custom.min.js"></script>
+    <script src="../scripts/myScript.js"></script>
+    <script src="../scripts/contenteditable.min.js"></script>
     <script src="../scripts/checkValidFields.js"></script>
 </body>
 </html>

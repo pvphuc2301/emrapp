@@ -38,8 +38,6 @@ namespace EMR.UserControls.PrintTemplate
 
             DataTable tb = WebHelpers.GetJSONToDataTable(Options);
 
-
-
             string content = "";
             if(tb != null)
             {

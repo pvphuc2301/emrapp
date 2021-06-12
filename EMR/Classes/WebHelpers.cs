@@ -378,7 +378,7 @@ namespace EMR
         /// <returns></returns>
         public static dynamic PostAPI(string url, dynamic obj)
         {
-            dynamic result = new System.Dynamic.ExpandoObject();
+            dynamic result = new ExpandoObject();
 
             var jsonContent = new JavaScriptSerializer().Serialize(obj);
 

@@ -58,6 +58,7 @@ namespace EMR.ER
                 txtpastmedhismeds.Value = emr.past_med_his_meds;
             //Surgical
             //lbl_past_med_his_surs.Text = 
+
                 txtpastmedhissurs.Value = emr.past_med_his_surs;
             foreach (DataRow row in WebHelpers.GetJSONToDataTable(emr.habits).Rows)
             {

@@ -142,7 +142,7 @@
                                             </legend>
                                             <div class="col-md-12">
                                                 <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" placeholder="Search for PID" aria-label="Search for PID" aria-describedby="basic-addon2" style="max-width: 240px;" runat="server" id="txt_pid" />
+                                                    <input  type="text" class="form-control" placeholder="Search for PID" aria-label="Search for PID" aria-describedby="basic-addon2" style="max-width: 240px;" runat="server" id="txt_pid" />
                                                     <div class="input-group-append">
                                                         
                                                         <button runat="server" onserverclick="btnSearch_Click" id="btnSearch" class="btn btn-outline-secondary waves-effect form-edit">

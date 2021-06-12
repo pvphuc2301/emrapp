@@ -79,7 +79,6 @@ namespace EMR
                 btnPrint.Visible = true;
 
                 DisabledControl(true);
-                loadDataToPrint(mc);
             }
             else if (mc.status == DocumentStatus.DRAFT)
             {
@@ -89,7 +88,7 @@ namespace EMR
             }
         }
 
-        private void loadDataToPrint(MC mc)
+        private void LoadDataToPrint(MC mc)
         {
             Patient patient = Patient.Instance();
 
@@ -97,7 +96,10 @@ namespace EMR
             prt_patient_name.Value = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
             prt_dob.Value = DataHelpers.patient.date_of_birth.ToString("dd-MM-yyyy");
 
-            prt_gender.SelectedIndex = patient.gender_l == "nam" ? 1 : 2;
+
+            prt_gender.Options = WebHelpers.CreateOptions(new Option { Text = "Nam/ <span class='text-primary'>Male</span>", Value = "Male" }, new Option { Text = "Nữ <span class='text-primary'>Female</span>:", Value = "Female" });
+
+            prt_gender.SelectedValue = patient.gender_e;
 
             prt_pid.Value = DataHelpers.patient.visible_patient_id;
             prt_chief_complain.Value = mc.chief_complain;
@@ -110,14 +112,12 @@ namespace EMR
             prt_treatment_period.Value = mc.treatment_period;
             prt_recommendation.Value = mc.recommendation;
 
-            prt_signature1.Content = WebHelpers.GetSignatureTemplate1("", "BÁC SĨ ĐIỀU TRỊ", "ATTENDING DOCTOR", "(Họ tên, chữ ký & MSNV)", "(Full name, Signature & ID)", (string)Session["UserId"]);
+            prt_signature1.Content = WebHelpers.GetSignatureTemplate1("Ngày/ <span class='text-primary'>Date</span>:", "<span class='font-bold'>BÁC SĨ ĐIỀU TRỊ</span>", "<span class='font-bold'>ATTENDING DOCTOR</span>", "(Họ tên, chữ ký & MSNV)", "(Full name, Signature & ID)", "");
         }
 
         protected void btnComplete_Click(object sender, EventArgs e)
         {
-            string errors = checkValidField();
-
-            if (string.IsNullOrEmpty(errors))
+            if (Page.IsValid)
             {
                 mc = new MC(Request.QueryString["docId"]);
 
@@ -128,11 +128,10 @@ namespace EMR
             }
             else
             {
-                RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
-
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                 message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
             }
+
         }
 
         private string checkValidField()
@@ -180,9 +179,7 @@ namespace EMR
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            string errors = checkValidField();
-
-            if (string.IsNullOrEmpty(errors))
+            if (Page.IsValid)
             {
                 mc = new MC(Request.QueryString["docId"]);
 
@@ -193,8 +190,6 @@ namespace EMR
             }
             else
             {
-                RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
-
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                 message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
             }
@@ -236,7 +231,6 @@ namespace EMR
         {
 
             btnComplete.Visible = true;
-            btnComplete.Attributes["Disabled"] = "Disabled";
             btnCancel.Visible = true;
             btnAmend.Visible = false;
             btnPrint.Visible = false;
@@ -247,12 +241,20 @@ namespace EMR
 
         protected void btnPrint_Click(object sender, EventArgs e)
         {
+            mc = new MC(Request.QueryString["docId"]);
+            LoadDataToPrint(mc);
 
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "window.print();", true);
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             Initial();
+        }
+
+        protected void CustomValidator2_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = txt_amend_reason.Value.Length > 3;
         }
     }
 }

@@ -43,17 +43,17 @@ namespace EMR
         {
             try
             {
+                //I.
                 txt_vs_temperature.Value = oina.vs_temperature;
                 txt_vs_heart_rate.Value = oina.vs_heart_rate;
                 txt_vs_weight.Value = oina.vs_weight;
                 txt_vs_respiratory_rate.Value = oina.vs_respiratory_rate;
                 txt_vs_height.Value = oina.vs_height;
                 txt_vs_blood_pressure.Value = oina.vs_blood_pressure;
-                txt_vs_bmi.Value = oina.vs_BMI;
+                lbl_vs_bmi.Text = oina.vs_BMI;
                 txt_vs_spo2.Value = oina.vs_spO2;
-
                 txt_vs_pluse.Value = oina.vs_heart_rate;
-
+                //II.
                 //1.
                 txtChiefComplaint.Value = oina.chief_complaint;
                 //2.
@@ -63,23 +63,18 @@ namespace EMR
                 BindRadioButton("rad_mental_status_" + oina.mental_status);
                 txt_mental_status_note.Value = oina.mental_status_note;
                 //4
+                BindRadioButton("rad_paint_score_code_" + oina.paint_score_code);
                 //5
                 BindRadioButton("rad_fall_risk_" + oina.fall_risk);
                 txt_fall_risk_assistance.Value = oina.fall_risk_assistance;
-
-                //mental status
-                //txt_paint_score_code.Value = oina.paint_score_code;
-                //BindRadioButton( Oina.PAINT_SCORE_CODE
-
-                //4
-                lbl_paint_score_desc.Text = oina.paint_score_description;
-                //
-
+                //6.
                 BindRadioButton("rad_nutrition_status_code_" + oina.nutrition_status_code);
-
+                //III.
                 BindRadioButton("rad_housing_code_" + oina.housing_code);
-
+                //IV.
                 BindRadioButton("rad_prioritization_code_" + oina.prioritization_code);
+
+                WebHelpers.BindDateTimePicker(dtpk_assess_date_time, oina.assessment_date_time);
 
                 btnCancel.Visible = false;
                 txt_amendReason.Visible = false;
@@ -122,7 +117,7 @@ namespace EMR
         {
             lbl_fall_risk.Text = oina.fall_risk ? "Có, cung cấp phương tiện hỗ trợ/ Yes, provide assistance: " + oina.fall_risk_assistance : "Không có nguy cơ/ No risk";
             lbl_mental_status.Text = oina.mental_status ? "Có/ Yes" : "Không, ghi rõ/ No, specify:";
-
+            lbl_paint_score_desc.Text = oina.paint_score_description;
             lbl_chief_complaint.Text = WebHelpers.GetValue(oina.chief_complaint);
             if(oina.allergy)
             {
@@ -153,7 +148,7 @@ namespace EMR
             lbl_vs_weight.Text = WebHelpers.GetValue(oina.vs_weight) + " kg";
             lbl_vs_height.Text = WebHelpers.GetValue(oina.vs_height) + " cm";
             lbl_vs_respiratory_rate.Text = WebHelpers.GetValue(oina.vs_respiratory_rate) + " / phút (min)";
-            lbl_vs_bmi.Text = WebHelpers.GetValue(oina.vs_BMI) + " Kg/m2";
+            lbl_vs_bmi.Text = WebHelpers.GetValue(oina.vs_BMI);
             lbl_vs_blood_pressure.Text = WebHelpers.GetValue(oina.vs_blood_pressure) + " mmHg";
             lbl_vs_pluse.Text = "—";
             lbl_vs_spo2.Text = WebHelpers.GetValue(oina.vs_spO2);
@@ -193,7 +188,7 @@ namespace EMR
 
             prt_paint_score_code.Value = oina.paint_score_code;
 
-            prt_fall_risk.Value = oina.fall_risk ? "Nếu có, cung cấp phương tiện hỗ trợ/ If yes, provide assistance" + oina.fall_risk_assistance : "Không có nguy cơ/ No risk";
+            prt_fall_risk.Value = oina.fall_risk ? "Nếu có, cung cấp phương tiện hỗ trợ/ If yes, provide assistance: " + oina.fall_risk_assistance : "Không có nguy cơ/ No risk";
 
             prt_nutrition_status_code.Value = oina.nutrition_status_description;
 
@@ -223,8 +218,7 @@ namespace EMR
             txt_vs_blood_pressure.Disabled = disabled;
             txt_vs_spo2.Disabled = disabled;
             txt_vs_pluse.Disabled = disabled;
-            txt_vs_bmi.Disabled = true;
-
+            
             txtChiefComplaint.Disabled = disabled;
 
             rad_allergy_true.Disabled = disabled;
@@ -371,7 +365,7 @@ namespace EMR
                 oina.vs_respiratory_rate = txt_vs_respiratory_rate.Value;
                 oina.vs_height = txt_vs_height.Value;
                 oina.vs_blood_pressure = txt_vs_blood_pressure.Value;
-                oina.vs_BMI = txt_vs_bmi.Value;
+                oina.vs_BMI = lbl_vs_bmi.Text;
                 oina.vs_spO2 = txt_vs_spo2.Value;
                 oina.vs_heart_rate = txt_vs_pluse.Value;
                 //1.

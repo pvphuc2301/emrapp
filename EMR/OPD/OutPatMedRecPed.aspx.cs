@@ -91,7 +91,6 @@ namespace EMR
                     btnPrint.Visible = true;
 
                     DisabledControl(true);
-                    loadDataToPrint(pomr);
                 }
 
                 else if (pomr.status == DocumentStatus.DRAFT)
@@ -104,7 +103,7 @@ namespace EMR
             } catch (Exception ex) { }
         }
 
-        private void loadDataToPrint(POMR pomr)
+        private void LoadDataToPrint(POMR pomr)
         {
             PatientVisit patientVisit = PatientVisit.Instance(Request["pvid"]);
 
@@ -268,9 +267,7 @@ namespace EMR
 
         protected void btnComplete_Click(object sender, EventArgs e)
         {
-            string errors = checkValidField();
-
-            if (string.IsNullOrEmpty(errors))
+            if (Page.IsValid)
             {
                 pomr = new POMR(Request.QueryString["docId"]);
                 pomr.status = DocumentStatus.FINAL;
@@ -280,8 +277,6 @@ namespace EMR
             }
             else
             {
-                RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
-
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                 message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
             }
@@ -377,9 +372,7 @@ namespace EMR
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            string errors = checkValidField();
-
-            if (string.IsNullOrEmpty(errors))
+            if (Page.IsValid)
             {
                 pomr = new POMR(Request.QueryString["docId"]);
                 pomr.status = DocumentStatus.DRAFT;
@@ -389,11 +382,10 @@ namespace EMR
             }
             else
             {
-                RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
-
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                 message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
             }
+            
         }
 
         protected void btnAmend_Click(object sender, EventArgs e)
@@ -401,7 +393,6 @@ namespace EMR
             txt_amendReason.Visible = true;
 
             btnComplete.Visible = true;
-            btnComplete.Attributes["Disabled"] = "disabled";
             btnCancel.Visible = true;
             btnAmend.Visible = false;
             btnPrint.Visible = false;
@@ -411,6 +402,10 @@ namespace EMR
 
         protected void btnPrint_Click(object sender, EventArgs e)
         {
+            pomr = new POMR(Request.QueryString["docId"]);
+            LoadDataToPrint(pomr);
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "window.print();", true);
 
         }
 
@@ -476,5 +471,10 @@ namespace EMR
             else { return null; }
         }
         #endregion
+
+        protected void CustomValidator2_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = txt_amendReason.Value.Length > 3;
+        }
     }
 }

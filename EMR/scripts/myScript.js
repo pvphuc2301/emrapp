@@ -165,11 +165,20 @@ let temp1 = document.querySelectorAll('input[data-type="number"]');
 
 temp1.forEach(e => {
     setInputFilter(e, function (value) {
-        return /^\d*\.?\d*$/.test(value);
+        return /^[0-9\.\-\/]+$/.test(value);
+        //return /^\d*\.?\d*$/.test(value);
     });
 });
 
 function CalculateBmi() {
-    if (document.getElementById('txt_vs_height').value == "" || document.getElementById('txt_vs_weight').value == "") document.getElementById('txt_vs_bmi').value = "";
-    else { document.getElementById('txt_vs_bmi').value = (document.getElementById('txt_vs_weight').value / ((document.getElementById('txt_vs_height').value / 100) * 2)).toFixed(2) };
+    let vs_height = document.getElementById('txt_vs_height');
+    let vs_weight = document.getElementById('txt_vs_weight');
+    let vs_bmi = document.getElementById('lbl_vs_bmi');
+    console.log(vs_height, vs_weight, vs_bmi);
+    if (vs_height.value == "" || vs_weight.value == "") {
+        vs_bmi.innerText = "";
+    }
+    else {
+        vs_bmi.innerText = (vs_weight.value / ((vs_height.value / 100) * 2)).toFixed(2);
+    };
 }

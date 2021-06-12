@@ -89,7 +89,7 @@ namespace Emr_client.Emr
                     Session["user_email"] = Convert.ToString(data.email_business);
                     Session["emp_id"] = Convert.ToString(data.employee_id);
                     Session["emp_nr"] = Convert.ToString(data.employee_nr);
-
+                    
                     //Session["UserName"] = data.patient_name_e;
                     //Session["DepCode"] = data.department_code;
                     //Session["DepName"] = data.department_name_e;

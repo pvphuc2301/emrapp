@@ -106,10 +106,7 @@ namespace EMR
         }
         protected void btnComplete_Click(object sender, EventArgs e)
         {
-            string errors = "";
-            errors = checkValidField();
-
-            if (string.IsNullOrEmpty(errors))
+            if (Page.IsValid)
             {
                 somr = new Somr(DataHelpers.varDocId);
                 somr.status = DocumentStatus.FINAL;
@@ -119,28 +116,14 @@ namespace EMR
             }
             else
             {
-                RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
-
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                 message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
             }
         }
 
-        private bool CheckFieldsValid()
-        {
-            if(dpk_form_date.SelectedDate == null || dpk_to_date.SelectedDate == null)
-            {
-                return false;
-            }
-            return true;
-        }
-
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            string errors = "";
-            errors = checkValidField();
-
-            if (string.IsNullOrEmpty(errors))
+            if (Page.IsValid)
             {
                 somr = new Somr(DataHelpers.varDocId);
                 somr.status = DocumentStatus.DRAFT;
@@ -150,8 +133,6 @@ namespace EMR
             }
             else
             {
-                RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
-
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                 message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
             }
@@ -177,7 +158,6 @@ namespace EMR
             txt_amendReason.Visible = true;
 
             btnComplete.Visible = true;
-            btnComplete.Attributes["Disabled"] = "disabled";
             btnCancel.Visible = true;
             btnAmend.Visible = false;
             btnPrint.Visible = false;
@@ -191,8 +171,6 @@ namespace EMR
         }
         public void UpdateData(Somr somr)
         {
-            RequiredFieldValidator.Value = "";
-
             somr.amend_reason = txt_amendReason.Value;
             somr.form_date = DataHelpers.ConvertSQLDateTime(dpk_form_date.SelectedDate);
             somr.to_date = DataHelpers.ConvertSQLDateTime(dpk_to_date.SelectedDate);
@@ -227,6 +205,19 @@ namespace EMR
                 Session["PageNotFound"] = result;
                 Response.Redirect("../Other/PageNotFound.aspx", false);
             }
+        }
+
+        protected void btnPrint_Click(object sender, EventArgs e)
+        {
+            somr = new Somr(Request["docid"]);
+            loadDataToPrint(somr);
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "window.print();", true);
+        }
+
+        protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = dpk_form_date.SelectedDate != null && dpk_to_date.SelectedDate != null;
         }
     }
 }
