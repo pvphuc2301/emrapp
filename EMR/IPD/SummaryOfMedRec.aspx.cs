@@ -42,7 +42,7 @@ namespace EMR
                 txt_treatment_prognosis.Value = somr.treatment_prognosis;
 
                 btnCancel.Visible = false;
-                txt_amendReason.Visible = false;
+                amendReasonWraper.Visible = false;
 
                 if (somr.status == DocumentStatus.FINAL)
                 {
@@ -114,11 +114,6 @@ namespace EMR
 
                 UpdateData(somr);
             }
-            else
-            {
-                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
-            }
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
@@ -131,31 +126,11 @@ namespace EMR
 
                 UpdateData(somr);
             }
-            else
-            {
-                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
-            }
-        }
-
-        private string checkValidField()
-        {
-            string errors = "";
-
-            if (dpk_form_date.SelectedDate == null)
-            {
-                errors += "dpk_form_date_error ";
-            }
-            if (dpk_to_date.SelectedDate == null)
-            {
-                errors += "dpk_to_date_error ";
-            }
-            return errors;
         }
 
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            txt_amendReason.Visible = true;
+            amendReasonWraper.Visible = true;
 
             btnComplete.Visible = true;
             btnCancel.Visible = true;
@@ -171,7 +146,7 @@ namespace EMR
         }
         public void UpdateData(Somr somr)
         {
-            somr.amend_reason = txt_amendReason.Value;
+            somr.amend_reason = txt_amendReason.Text;
             somr.form_date = DataHelpers.ConvertSQLDateTime(dpk_form_date.SelectedDate);
             somr.to_date = DataHelpers.ConvertSQLDateTime(dpk_to_date.SelectedDate);
             somr.chief_complaint = txt_chief_complaint.Value;
@@ -182,10 +157,19 @@ namespace EMR
             somr.eval_treatment = txt_eval_treatment.Value;
             somr.treatment_prognosis = txt_treatment_prognosis.Value;
 
-            if (somr.Update())
+            dynamic result = somr.Update()[0];
+
+            if (result.Status == System.Net.HttpStatusCode.OK)
             {
                 Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                 message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
+
+                Initial();
+            }
+            else
+            {
+                Session["PageNotFound"] = result;
+                Response.Redirect("../Other/PageNotFound.aspx", false);
             }
         }
 
@@ -213,11 +197,6 @@ namespace EMR
             loadDataToPrint(somr);
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "window.print();", true);
-        }
-
-        protected void CustomValidator1_ServerValidate(object source, ServerValidateEventArgs args)
-        {
-            args.IsValid = dpk_form_date.SelectedDate != null && dpk_to_date.SelectedDate != null;
         }
     }
 }

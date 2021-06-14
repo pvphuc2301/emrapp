@@ -24,6 +24,8 @@ namespace EMR
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            DocumentList.Visible = false;
+
             varPID = Request.QueryString["pid"];
             varVbID = Request.QueryString["vpid"];
 
@@ -87,6 +89,16 @@ namespace EMR
 
         protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
         {
+            switch (e.CommandName)
+            {
+                case "addNew":
+                    GridDataItem item = (e.Item as GridDataItem);
+                    DocumentList.Visible = true;
+                    string pvid = item.GetDataKeyValue("patient_visit_id").ToString();
+                    string visitType = item.GetDataKeyValue("visit_type_rcd").ToString();
+                    AddForm(pvid, visitType);
+                    break;
+            }
             if (e.CommandName == "RowClick")
             {
                 bool lastState = e.Item.Expanded;
@@ -94,67 +106,26 @@ namespace EMR
             }
         }
 
-        //protected void RadGrid1_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    GridDataItem item = (GridDataItem)(sender as RadGrid).SelectedItems[0];
-
-        //    string PVID = item.GetDataKeyValue("patient_visit_id").ToString();
-        //    string visitType = item.GetDataKeyValue("visit_type_rcd").ToString();
-        //    string closureDateTime = item.GetDataKeyValue("closure_date_time").ToString();
-
-        //    if(closureDateTime != "")
-        //    {
-                
-        //    }
-        //    else
-        //    {
-        //        string apiStr = "api/emr/list-form/" + PVID + "/" + visitType;
-
-        //        string _jsonData = WebHelpers.GetAPI(apiStr);
-
-        //        if (_jsonData != null)
-        //        {
-        //            DataTable db = WebHelpers.GetJSONToDataTable(_jsonData);
-        //            ddlDocList.Items.Clear();
-
-        //            foreach (DataRow row in db.Rows)
-        //            {
-        //                ListItem item1 = new ListItem();
-
-        //                item1.Value = row.Field<string>("model_id") + "|" + row.Field<string>("url") + "|" + PVID;
-        //                item1.Text = row.Field<string>("model_name");
-
-        //                ddlDocList.Items.Add(item1);
-        //            }
-        //        }
-
-        //        showPopup = true;
-        //    }
-        //}
-
         protected void RadGrid1_ItemDataBound(object sender, GridItemEventArgs e)
         {
             if(e.Item is GridDataItem)
             {
-                Button btnAction = e.Item.FindControl("btnAction") as Button;
+                LinkButton btnAction = e.Item.FindControl("btnAddNew") as LinkButton;
                 
                 GridEditableItem editableItem = e.Item as GridEditableItem;
 
                 string closure_date_time = editableItem["closure_date_time"].Text;
                 string allow_date_time = ((GridDataItem)e.Item).GetDataKeyValue("allow_date_time").ToString();
                 
-
                 DateTime dateTime;
-                btnAction.Attributes["data-pvid"] = ((GridDataItem)e.Item).GetDataKeyValue("patient_visit_id").ToString();
-                btnAction.Attributes["data-visitType"] = ((GridDataItem)e.Item).GetDataKeyValue("visit_type_rcd").ToString();
-                
                 if (DateTime.TryParse(closure_date_time, out dateTime))
                 {
                     btnAction.Text = "Update";
-                    btnAction.CssClass = "btn btn-warning";
+                    btnAction.CssClass = "btn btn-sm btn-warning waves-effect ";
 
                     if (allow_date_time != null)
                     {
+                        btnAction.CssClass += "disabled";
                         btnAction.Enabled = false;
                     }
                 }
@@ -236,19 +207,6 @@ namespace EMR
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine(ex.Message);
-            }
-        }
-
-        protected void btnAction_Click(object sender, EventArgs e)
-        {
-            Button btn = sender as Button;
-
-            string pvid = btn.Attributes["data-pvid"].ToString();
-            string visitType = btn.Attributes["data-visittype"].ToString();
-            
-            if (btn.Text == "Add new")
-            {
-                AddForm(pvid, visitType);
             }
         }
 

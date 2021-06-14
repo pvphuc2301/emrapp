@@ -15,6 +15,33 @@ namespace EMR
     {
 
         /// <summary>
+        /// form2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlForm form2;
+
+        /// <summary>
+        /// RadScriptManager2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadScriptManager RadScriptManager2;
+
+        /// <summary>
+        /// UpPrintForm control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpPrintForm;
+
+        /// <summary>
         /// prt_patient_label control.
         /// </summary>
         /// <remarks>
@@ -111,7 +138,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_chief_complaint;
+        protected global::System.Web.UI.WebControls.Label prt_chief_complaint;
 
         /// <summary>
         /// prt_allergy control.
@@ -120,7 +147,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_allergy;
+        protected global::System.Web.UI.WebControls.Label prt_allergy;
 
         /// <summary>
         /// prt_mental_status control.
@@ -129,7 +156,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.PrintTemplate.PrtRowS2 prt_mental_status;
+        protected global::System.Web.UI.WebControls.Label prt_mental_status;
 
         /// <summary>
         /// prt_paint_score_code control.
@@ -159,13 +186,13 @@ namespace EMR
         protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_nutrition_status_code;
 
         /// <summary>
-        /// prt_housing_code control.
+        /// prt_housing control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.PrintTemplate.PrtRowS2 prt_housing_code;
+        protected global::System.Web.UI.WebControls.Label prt_housing;
 
         /// <summary>
         /// prt_prioritization_code control.
@@ -183,52 +210,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.PrintTemplate.Signature1 prt_signature1;
-
-        /// <summary>
-        /// form2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form2;
-
-        /// <summary>
-        /// RadScriptManager2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadScriptManager RadScriptManager2;
-
-        /// <summary>
-        /// Upd control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel Upd;
-
-        /// <summary>
-        /// HiddenField1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField HiddenField1;
-
-        /// <summary>
-        /// FormState control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField FormState;
+        protected global::System.Web.UI.WebControls.Label prt_signature1;
 
         /// <summary>
         /// messagePlaceHolder control.
@@ -240,13 +222,49 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Panel messagePlaceHolder;
 
         /// <summary>
+        /// amendReasonWraper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl amendReasonWraper;
+
+        /// <summary>
         /// txt_amendReason control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.AmendReason txt_amendReason;
+        protected global::System.Web.UI.WebControls.TextBox txt_amendReason;
+
+        /// <summary>
+        /// DisplayControl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DisplayControl;
+
+        /// <summary>
+        /// RequiredFieldValidator2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
+
+        /// <summary>
+        /// valSum control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary valSum;
 
         /// <summary>
         /// PatientInfo1 control.
@@ -267,13 +285,22 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label lbl_vs_temperature;
 
         /// <summary>
+        /// temperatureWrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl temperatureWrapper;
+
+        /// <summary>
         /// txt_vs_temperature control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.TextField1 txt_vs_temperature;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_temperature;
 
         /// <summary>
         /// lbl_vs_heart_rate control.
@@ -285,13 +312,22 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label lbl_vs_heart_rate;
 
         /// <summary>
+        /// HeartRateWrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl HeartRateWrapper;
+
+        /// <summary>
         /// txt_vs_heart_rate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.TextField1 txt_vs_heart_rate;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_heart_rate;
 
         /// <summary>
         /// lbl_vs_weight control.
@@ -301,6 +337,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_vs_weight;
+
+        /// <summary>
+        /// WeightWrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl WeightWrapper;
 
         /// <summary>
         /// txt_vs_weight control.
@@ -321,13 +366,22 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label lbl_vs_respiratory_rate;
 
         /// <summary>
+        /// RespiratoryRateWrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl RespiratoryRateWrapper;
+
+        /// <summary>
         /// txt_vs_respiratory_rate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.TextField1 txt_vs_respiratory_rate;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_respiratory_rate;
 
         /// <summary>
         /// lbl_vs_height control.
@@ -337,6 +391,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_vs_height;
+
+        /// <summary>
+        /// HeightWrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl HeightWrapper;
 
         /// <summary>
         /// txt_vs_height control.
@@ -355,6 +418,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_vs_blood_pressure;
+
+        /// <summary>
+        /// BloodPressureWrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl BloodPressureWrapper;
 
         /// <summary>
         /// txt_vs_blood_pressure control.
@@ -384,13 +456,22 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label lbl_vs_spo2;
 
         /// <summary>
+        /// Spo2Wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Spo2Wrapper;
+
+        /// <summary>
         /// txt_vs_spo2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.TextField1 txt_vs_spo2;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_spo2;
 
         /// <summary>
         /// lbl_vs_pluse control.
@@ -402,13 +483,22 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label lbl_vs_pluse;
 
         /// <summary>
+        /// PluseWrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PluseWrapper;
+
+        /// <summary>
         /// txt_vs_pluse control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.TextField1 txt_vs_pluse;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_pluse;
 
         /// <summary>
         /// txtChiefComplaint control.
@@ -427,6 +517,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_chief_complaint;
+
+        /// <summary>
+        /// AllergyWrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AllergyWrapper;
 
         /// <summary>
         /// rad_allergy_false control.
@@ -456,6 +555,15 @@ namespace EMR
         protected global::EMR.icons.XSquare XSquare5;
 
         /// <summary>
+        /// CustomValidator3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator3;
+
+        /// <summary>
         /// txt_allergy_note control.
         /// </summary>
         /// <remarks>
@@ -481,6 +589,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_allergy_note;
+
+        /// <summary>
+        /// MentalStatusWrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl MentalStatusWrapper;
 
         /// <summary>
         /// rad_mental_status_true control.
@@ -510,6 +627,15 @@ namespace EMR
         protected global::EMR.icons.XSquare XSquare6;
 
         /// <summary>
+        /// CustomValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator1;
+
+        /// <summary>
         /// txt_mental_status_note control.
         /// </summary>
         /// <remarks>
@@ -535,6 +661,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_mental_status_note;
+
+        /// <summary>
+        /// PaintScoreWrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PaintScoreWrapper;
 
         /// <summary>
         /// rad_paint_score_code_0 control.
@@ -609,6 +744,15 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label lbl_paint_score_desc;
 
         /// <summary>
+        /// FallRiskWrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl FallRiskWrapper;
+
+        /// <summary>
         /// rad_fall_risk_false control.
         /// </summary>
         /// <remarks>
@@ -636,6 +780,15 @@ namespace EMR
         protected global::EMR.icons.XSquare XSquare22;
 
         /// <summary>
+        /// CustomValidator4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator4;
+
+        /// <summary>
         /// txt_fall_risk_assistance control.
         /// </summary>
         /// <remarks>
@@ -652,6 +805,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_fall_risk;
+
+        /// <summary>
+        /// NutritionStatusWrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl NutritionStatusWrapper;
 
         /// <summary>
         /// rad_nutrition_status_code_n control.
@@ -699,6 +861,15 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label lbl_nutrition_status_desc;
 
         /// <summary>
+        /// HousingWrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl HousingWrapper;
+
+        /// <summary>
         /// rad_housing_code_aln control.
         /// </summary>
         /// <remarks>
@@ -735,6 +906,15 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label lbl_housing_desc;
 
         /// <summary>
+        /// PrioritizationWrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl PrioritizationWrapper;
+
+        /// <summary>
         /// rad_prioritization_code_im control.
         /// </summary>
         /// <remarks>
@@ -769,6 +949,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_prioritization_desc;
+
+        /// <summary>
+        /// AssessDateTimeWrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl AssessDateTimeWrapper;
 
         /// <summary>
         /// dtpk_assess_date_time control.

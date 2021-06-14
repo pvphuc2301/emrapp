@@ -201,9 +201,43 @@ namespace EMR
             //}
         }
 
-        internal static string CreateOptions(params object[] theObjects)
+        //internal static string CreateOptions(params object[] theObjects)
+        //{
+        //    return JsonConvert.SerializeObject(theObjects);
+        //}
+
+        internal static string CreateOptions(params dynamic[] options)
         {
-            return JsonConvert.SerializeObject(theObjects);
+            string option = "";
+            int lastIndex = options.Length - 1;
+
+            for (int i = 0; i < lastIndex; i++)
+            {
+                option += "<div style='display: grid; grid-template-columns: auto 1fr;'> ";
+                option += (options[lastIndex] == options[i].Value ? "☒ " : "❏ ");
+                option += "<span class='ml-1'>";
+                option += options[i].Text;
+                option += "</span>";
+                option += "</div>";
+            }
+            return option;
+        }
+
+        internal static string CreateOptions(Dictionary<string, string> options, string value)
+        {
+            string option = "";
+            for (int i = 0; i < options.Count; i++)
+            {
+                var item = options.ElementAt(i);
+
+                option += "<div style='display: grid; grid-template-columns: auto 1fr;'> ";
+                option += (item.Key == value ? "☒ " : "❏ ");
+                option += "<span class='ml-1'>";
+                option += item.Value;
+                option += "</span>";
+                option += "</div>";
+            }
+            return option;
         }
 
         internal static string FormatDateTime(dynamic dateTime, string format = "dd-MM-yyyy")
@@ -418,7 +452,6 @@ namespace EMR
             {
                 result.Status = System.Net.HttpStatusCode.NotFound;
                 result.Data = e.Message;
-                result.Details = e.Response.ResponseUri;
                 //result.Status = e.Status;
                 return result;
             }
@@ -587,10 +620,7 @@ namespace EMR
         {
             try
             {
-                if (datetime != null)
-                {
-                    radDatePicker.SelectedDate = datetime;
-                }
+                radDatePicker.SelectedDate = datetime;
             }
             catch (Exception ex) { }
         }

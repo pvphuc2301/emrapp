@@ -13,76 +13,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <link href="../styles/html5reset-1.6.1.css" rel="stylesheet" />
+    <%--<link href="../styles/html5reset-1.6.1.css" rel="stylesheet" />--%>
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/telerik-custom.css" rel="stylesheet" />
     <link href="../styles/style-custom.css" rel="stylesheet" />
-    <style>
-        .tooltip1 {
-            position: relative;
-        }
-
-        .tooltip__item {
-            position: fixed;
-            min-width: 100px;
-            padding: 20px;
-            visibility: hidden;
-            opacity: 0;
-            background: white;
-            transition: all .250s cubic-bezier(0, 0, 0.2, 1);
-            color: #484848;
-            border: 1px solid #cecece;
-            border-radius: 3px;
-            font-weight: 500;
-            box-shadow: 0 2px 1px #bcbcbc;
-            z-index: 1000;
-        }
-
-        /*.tooltip__item:before {
-            content: "";
-              display: block;
-              position: absolute;
-              width: 0;
-              height: 0;
-              border-style: solid;
-        }*/
-
-        .tooltip__initiator {
-            cursor: pointer;
-            z-index: 5;
-        }
-
-            .tooltip__initiator:hover ~ .tooltip__item {
-                /*transform: translate3d(0, -50%, 0);*/
-                visibility: visible;
-                opacity: 1;
-                transform: translate(5px, 50%) scale(1);
-            }
-
-        .tooltip__item {
-            top: 50%;
-            left: calc(100% + 1em);
-            transform: translate3d(15px, -50%, 0);
-        }
-
-        /*.tooltip__item:before {
-            top: 50%;
-            left: 0;*/
-        /*transform: translate3d(0, -50%, 0);*/
-        /*border-width: 0.5em 0 0.5em 0.5em;
-            border-color: transparent transparent transparent white;
-            -webkit-filter: drop-shadow(1px 2px 1px #bcbcbc);
-            filter: drop-shadow(1px 2px 1px #bcbcbc);
-            transform: translate(0, -50%) rotateY(180deg);
-      }*/
-    </style>
+    
+    <%--<link href="../styles/style.css" rel="stylesheet" />
+    <link href="../styles/myStyle.css" rel="stylesheet" />
+    <link href="../style/style-custom.css" rel="stylesheet" />--%>
 </head>
 <body onload="bodyOnloadHandler()">
     <form id="form1" runat="server">
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
-        <%--        <asp:UpdatePanel ID="updatePanel_main" runat="server" UpdateMode="Always">
-            <ContentTemplate>--%>
         <header class="topbar">
             <nav class="navbar top-navbar navbar-expand-md navbar-white bg-white border-bottom-2 border-darkgrey">
                 <!-- ============================================================== -->
@@ -190,12 +133,14 @@
                 </div>
             </nav>
         </header>
-        <telerik:RadSplitter runat="server" ID="RadSplitter1" CssClass="border-top border-default" LiveResize="true"
-            ResizeWithParentPane="false" SplitBarsSize="2" RenderMode="Mobile" ResizeMode="Proportional"
+        <%--        <asp:UpdatePanel ID="updatePanel_main" runat="server" UpdateMode="Always">
+            <ContentTemplate>--%>
+        
+        <telerik:RadSplitter runat="server" ID="RadSplitter1" CssClass="border-top border-default" SplitBarsSize="2" 
             Orientation="Vertical" Width="100%" Height="100%">
             <telerik:RadPane runat="server" ID="TopPane" Width="220" MinWidth="150" MaxWidth="550">
                 <!-- Sidebar scroll-->
-                <div class="scroll-sidebar w-100">
+                <div style="overflow-y: scroll; overflow-x: hidden; height: calc(100vh - 51px);">
                     <nav class="sidebar-wrapper" style="position: initial; width: inherit">
 
                         <div class="sidebar-menu">
@@ -396,12 +341,12 @@
         </div>
     </form>
 
-    <script src="../../scripts/jquery-3.2.1.min.js"></script>
-    <script src="../../scripts/bootstrap.min.js"></script>
-    <script src="../../scripts/perfect-scrollbar.jquery.min.js"></script>
-    <script src="../../scripts/custom.min.js"></script>
-    <script src="../../scripts/myScript.js"></script>
-    <script src="../../scripts/contenteditable.min.js"></script>
+    <script src="../scripts/jquery-3.2.1.min.js"></script>
+    <script src="../scripts/bootstrap.min.js"></script>
+    <%--<script s"../../scripts/perfect-scrollbar.jquery.min.js"></script>--%>
+    <%--<script src="../scripts/custom.min.js"></script>--%>
+    <script src="../scripts/myScript.js"></script>
+    <script src="../scripts/contenteditable.min.js"></script>
 
     <script>
 
@@ -485,6 +430,7 @@
     </script>
 
     <script type="text/javascript">
+        
         function OnGridCreated(sender, args) {
 
             let listItem = document.querySelectorAll(".list-item");

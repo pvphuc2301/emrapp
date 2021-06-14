@@ -15,13 +15,22 @@ namespace EMR.UserControls
     {
 
         /// <summary>
-        /// TextField_Wrapper control.
+        /// TextFieldPlaceHolder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText TextField_Wrapper;
+        protected global::System.Web.UI.WebControls.PlaceHolder TextFieldPlaceHolder;
+
+        /// <summary>
+        /// DisplayControl control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DisplayControl;
 
         /// <summary>
         /// basicAddon2 control.

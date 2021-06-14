@@ -7,17 +7,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <link href="../../styles/style.css" rel="stylesheet" />
-    <link href="../../styles/myStyle.css" rel="stylesheet" />
-    <link href="../../style/style-custom.css" rel="stylesheet" />
-    <%--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />--%>
+    <link href="../styles/style.css" rel="stylesheet" />
+    <link href="../styles/myStyle.css" rel="stylesheet" />
+    <link href="../styles/style-custom.css" rel="stylesheet" />
 </head>
 <body>
     <form method="post" action="#" id="form2" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
-        <div class="h-100 w-100" style="overflow: scroll">
-            <%--<asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
-                <ContentTemplate>--%>
+        <div style="overflow-y: scroll; overflow-x: hidden; height: calc(100vh - 51px);">
+            <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
+                <ContentTemplate>
 
                     <!-- ============================================================== -->
                     <!-- Main wrapper - style you can find in pages.scss -->
@@ -98,10 +97,10 @@
                                 </div>
                             </div>
                             <div class="card">
-                    <%--<div class="card-body">--%>
-                            <div class="row col-12">                                
+                                <%--<div class="card-body">--%>
+                                <div class="row col-12">
                                     <div class="demo-container no-bg">
-                                        <telerik:RadTabStrip RenderMode="Lightweight" runat="server" ID="RadTabStrip1"  MultiPageID="RadMultiPage1" SelectedIndex="0" Skin="Silk" 
+                                        <telerik:RadTabStrip RenderMode="Lightweight" runat="server" ID="RadTabStrip1" MultiPageID="RadMultiPage1" SelectedIndex="0" Skin="Silk"
                                             Width="100%">
                                             <Tabs>
                                                 <telerik:RadTab Text="Order Printing" Width="180px"></telerik:RadTab>
@@ -109,17 +108,17 @@
                                                 <telerik:RadTab Text="OPD Prescription" Width="180px"></telerik:RadTab>
                                             </Tabs>
                                         </telerik:RadTabStrip>
-                                        <telerik:RadMultiPage runat="server" ID="RadMultiPage1"  SelectedIndex="0" CssClass="outerMultiPage" Width="620px">
+                                        <telerik:RadMultiPage runat="server" ID="RadMultiPage1" SelectedIndex="0" CssClass="outerMultiPage" Width="620px">
                                             <telerik:RadPageView runat="server" ID="RadPageView1">
                                             </telerik:RadPageView>
                                             <telerik:RadPageView runat="server" ID="RadPageView2" ContentUrl="~/phar/marprinting.aspx">
                                             </telerik:RadPageView>
-                                            <telerik:RadPageView runat="server" ID="RadPageView3" >
+                                            <telerik:RadPageView runat="server" ID="RadPageView3">
                                             </telerik:RadPageView>
                                         </telerik:RadMultiPage>
-                                    </div>                             
+                                    </div>
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </div>
 
@@ -132,40 +131,39 @@
 
                                 <div class="row mt-4">
                                     <div class="col-md-12">
-                                        <%--<asp:UpdatePanel ID="Upd" runat="server" OnLoad="Upd_Load" UpdateMode="Conditional">
+                                        <%--<asp:UpdatePanel ID="Upd1" runat="server" OnLoad="Upd_Load" UpdateMode="Conditional">
                                             <ContentTemplate>--%>
-                                                <telerik:RadGrid ItemStyle-Height="32px" HeaderStyle-Height="32px" CssClass="table" BorderWidth="0" AutoGenerateColumns="false" ID="RadGrid1" runat="server" AllowPaging="True" OnNeedDataSource="RadGrid1_NeedDataSource" AllowSorting="true" OnItemDataBound="RadGrid1_ItemDataBound">
-                                                    <MasterTableView AutoGenerateColumns="False" DataKeyNames="patient_visit_id, visit_type_rcd, closure_date_time, allow_date_time">
-                                                        <Columns>
-                                                            <telerik:GridTemplateColumn ItemStyle-Width="100px">
-                                                                <HeaderTemplate>
-                                                                    <div>Action</div>
-                                                                </HeaderTemplate>
-                                                                <ItemTemplate>
-                                                                    <asp:Button OnClick="btnAction_Click" Enabled="true" CssClass="btn btn-primary" ID="btnAction" Text="Add new" Width="82px" runat="server" />
-                                                                </ItemTemplate>
-                                                            </telerik:GridTemplateColumn>
-                                                            <telerik:GridBoundColumn SortExpression="actual_visit_date_time" HeaderText="actual_visit_date_time" DataField="actual_visit_date_time" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
-                                                            </telerik:GridBoundColumn>
+                                        <telerik:RadGrid ItemStyle-Height="32px" HeaderStyle-Height="32px" CssClass="table" BorderWidth="0" AutoGenerateColumns="false" ID="RadGrid1" runat="server" AllowPaging="True" OnNeedDataSource="RadGrid1_NeedDataSource" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand" OnItemDataBound="RadGrid1_ItemDataBound">
+                                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="patient_visit_id, visit_type_rcd, closure_date_time, allow_date_time">
+                                                <Columns>
+                                                    <telerik:GridTemplateColumn ItemStyle-Width="100px">
+                                                        <HeaderTemplate>
+                                                            <div>Action</div>
+                                                        </HeaderTemplate>
+                                                        <ItemTemplate>
+                                                            <asp:LinkButton runat="server" CommandName="addNew" ID="btnAddNew" CssClass="btn btn-sm btn-primary waves-effect" Width="66px">Add new</asp:LinkButton>
+                                                        </ItemTemplate>
+                                                    </telerik:GridTemplateColumn>
+                                                    <telerik:GridBoundColumn SortExpression="actual_visit_date_time" HeaderText="actual_visit_date_time" DataField="actual_visit_date_time" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
+                                                    </telerik:GridBoundColumn>
 
-                                                            <telerik:GridBoundColumn UniqueName="closure_date_time" SortExpression="closure_date_time" HeaderText="closure_date_time" DataField="closure_date_time" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
-                                                            </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="closure_date_time" SortExpression="closure_date_time" HeaderText="closure_date_time" DataField="closure_date_time" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
+                                                    </telerik:GridBoundColumn>
 
-                                                            <telerik:GridBoundColumn SortExpression="visit_type_group_rcd" HeaderText="visit_type_group_rcd" DataField="visit_type_group_rcd" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
-                                                            </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn SortExpression="visit_type_group_rcd" HeaderText="visit_type_group_rcd" DataField="visit_type_group_rcd" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
+                                                    </telerik:GridBoundColumn>
 
-                                                            <telerik:GridBoundColumn SortExpression="visit_type_rcd" HeaderText="visit_type_rcd" DataField="visit_type_rcd" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
-                                                            </telerik:GridBoundColumn>                                                            
-                                                            <telerik:GridBoundColumn SortExpression="visit_code" HeaderText="visit_code" DataField="visit_code" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
-                                                            </telerik:GridBoundColumn>
-                                                        </Columns>
-                                                    </MasterTableView>
-                                                    <ClientSettings EnableRowHoverStyle="true">
-                                                    </ClientSettings>
-                                                </telerik:RadGrid>
-                                            <%--</ContentTemplate>    
+                                                    <telerik:GridBoundColumn SortExpression="visit_type_rcd" HeaderText="visit_type_rcd" DataField="visit_type_rcd" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn SortExpression="visit_code" HeaderText="visit_code" DataField="visit_code" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
+                                                    </telerik:GridBoundColumn>
+                                                </Columns>
+                                            </MasterTableView>
+                                            <ClientSettings EnableRowHoverStyle="true">
+                                            </ClientSettings>
+                                        </telerik:RadGrid>
+                                        <%--</ContentTemplate>    
                                         </asp:UpdatePanel>--%>
-
                                     </div>
                                 </div>
 
@@ -192,7 +190,7 @@
                         </div>
                     </div>
 
-                    <div id="exampleModalCenter" class="modal fade" role="dialog">
+                    <div id="DocumentList" runat="server" class="modal fade in" role="dialog" tabindex="-1" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -205,8 +203,8 @@
                                     <select id="ddlDocList" runat="server" class="custom-select"></select>
                                 </div>
                                 <div class="modal-footer">
-                                    <button id="btnClose" data-dismiss="modal" class="btn btn-white">Close</button>
-                                    <asp:Button runat="server" OnClick="btnSave_Click" ID="btnSave" class="btn btn-primary" Text="Save"/>
+                                    <button id="btnClose" data-dismiss="modal" class="btn btn-default waves-effect">Close</button>
+                                    <button id="btnSave" runat="server" onserverclick="btnSave_Click" class="btn btn-primary waves-effect">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -228,73 +226,53 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button data-dismiss="modal" class="btn btn-white">Close</button>
-                                    <asp:Button runat="server" OnClick="btnOpen_Click" ID="btnOpen" class="btn btn-primary" Text="Ok"/>
+                                    <asp:Button runat="server" OnClick="btnOpen_Click" ID="btnOpen" class="btn btn-primary" Text="Ok" />
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                <%--</ContentTemplate>
+                </ContentTemplate>
                 <Triggers>
-                    <asp:PostBackTrigger ControlID="btnAction" />
-                    <asp:PostBackTrigger ControlID="btnSave" />
-                    <asp:PostBackTrigger ControlID="btnComplete" />
+                    <%--<asp:PostBackTrigger ControlID="btnAction" />--%>
+                    <%--<asp:PostBackTrigger ControlID="btnSave" />
+                    <asp:PostBackTrigger ControlID="btnComplete" />--%>
                 </Triggers>
-            </asp:UpdatePanel>--%>
+            </asp:UpdatePanel>
         </div>
     </form>
-    
-    <script src="../../scripts/jquery-3.2.1.min.js"></script>
-    <script src="../../scripts/bootstrap.min.js"></script>
-    <script src="../../scripts/perfect-scrollbar.jquery.min.js"></script>
-    <script src="../../scripts/custom.min.js"></script>
-    <script src="../../scripts/myScript.js"></script>
-    <script src="../../scripts/contenteditable.min.js"></script>
+
+    <script src="../scripts/jquery-3.2.1.min.js"></script>
+    <script src="../scripts/bootstrap.min.js"></script>
+    <%--<script src="../scripts/custom.min.js"></script>--%>
+    <script src="../scripts/myScript.js"></script>
+    <script src="../scripts/contenteditable.min.js"></script>
+    <script src="../scripts/waves.js"></script>
 
     <script>
-
-        //function btnAction_Click(sender) {
-
-        //    let data = {
-        //        pvid: String(sender.getAttribute("data-pvid")),
-        //        visitType: String(sender.getAttribute("data-visittype"))
-        //    }
-
-        //    POST("PatientSummary.aspx/AddForm", JSON.stringify(data), (res) => {
-
-        //        let ddlDocList = document.getElementById("ddlDocList");
-
-        //        JSON.parse(res.d).forEach((item) => {
-        //            let option = document.createElement("option");
-        //            option.value = `${item.model_id}|${item.url}|${item.pvid}`;
-        //            option.text = item.model_name;
-
-        //            ddlDocList.appendChild(option);
-        //        });
-
-        //        $("#exampleModalCenter").modal("show");
-        //    });
-        //}
-
-        //function POST(url, data, callback) {
-        //    $.ajax({
-        //        type: "POST",
-        //        url: url,
-        //        data: data,
-        //        contentType: 'application/json; charset=utf-8',
-        //        dataType: 'json',
-        //        success: function (msg) {
-        //            callback(msg);
-        //        }
-        //    });
-        //}
-
-        if ('<%= showPopup %>' == 'True') {
-            $("#exampleModalCenter").modal("show");
+        function beforeAsyncPostBack() {
+            var curtime = new Date();
+            console.log(curtime);
         }
 
-        if ('<%= isDraft %>' == 'True') {
-            $("#popupConfirm").modal("show");
+        function afterAsyncPostBack() {
+            $('#DocumentList').modal('show');
+        }
+
+        Sys.Application.add_init(appl_init);
+
+        function appl_init() {
+            var pgRegMgr = Sys.WebForms.PageRequestManager.getInstance();
+            pgRegMgr.add_beginRequest(BeginHandler);
+            pgRegMgr.add_endRequest(EndHandler);
+        }
+
+        function BeginHandler() {
+            beforeAsyncPostBack();
+        }
+
+        function EndHandler() {
+            afterAsyncPostBack();
         }
     </script>
 

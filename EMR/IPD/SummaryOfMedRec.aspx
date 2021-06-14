@@ -15,6 +15,12 @@
 <%@ Register Src="~/UserControls/PrintTemplate/Label1.ascx" TagPrefix="webUI" TagName="Label1" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrtRowS1.ascx" TagPrefix="webUI" TagName="PrtRowS1" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Signature1.ascx" TagPrefix="webUI" TagName="Signature1" %>
+<%@ Register Src="~/UserControls/Message.ascx" TagPrefix="aih" TagName="Message" %>
+<%@ Register Src="~/icons/X.ascx" TagPrefix="aih" TagName="X" %>
+<%@ Register Src="~/UserControls/TextField1.ascx" TagPrefix="aih" TagName="TextField1" %>
+
+
+
 
 <!DOCTYPE html>
 
@@ -24,27 +30,6 @@
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../style/style-custom.css" rel="stylesheet" />
-    <style>
-        . {
-            margin-left: 120px;
-        }
-    </style>
-    <script runat="server">
-
-        void ServerValidation(object source, ServerValidateEventArgs args)
-        {
-            try
-            {
-                args.IsValid = dpk_form_date.SelectedDate != null && dpk_to_date.SelectedDate != null;
-            }
-
-            catch(Exception ex)
-            {
-                args.IsValid = false;
-            }
-        }
-
-   </script>   
 </head>
 <body>
     <form method="post" action="#" id="form2" runat="server">
@@ -129,7 +114,27 @@
                 <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                     <ContentTemplate>
                         <asp:Panel runat="server" ID="messagePlaceHolder">
-                            <aih:AmendReason runat="server" ID="txt_amendReason" />
+                            <div class="card" runat="server" id="amendReasonWraper">
+                                <div class="card-body">
+                                    <h5>Lý do thay đổi/ <span class="text-primary">amend reason: </span>
+                                        <br />
+                                        <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
+                                    <div class="form-group mb-2">
+                                        
+                            <asp:TextBox runat="server" ID="txt_amendReason" CssClass="el-hide" />
+                            <div spellcheck="false" style="height: auto; text-align: left; display: inline-block;" class="form-control" id="DisplayControl"  onblur="changeValue1(this, 'txt_amendReason')" contenteditable='true' runat="server"></div>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amendReason" ErrorMessage="Please enter amend reason"   
+ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                                    </div>
+                                </div>
+                            </div>
+
+                                <asp:ValidationSummary 
+                                  id="valSum" 
+                                  DisplayMode="BulletList"
+                                    CssClass="validationSummary"
+                                  runat="server" ValidationGroup="Group1"
+                                  HeaderText="Please complete the highlighted field(s)."/>
                         </asp:Panel>
                         <uc1:PatientInfo runat="server" ID="PatientInfo1" />
 
@@ -147,15 +152,8 @@
                                                     <label class="control-label" style="width: 120px">Từ ngày/ <span class="text-primary">From</span><span class="text-danger">*</span></label>
                                                     <div class="d-inline-block">
                                                         <telerik:RadDatePicker runat="server" ID="dpk_form_date" Width="120px" CssClass="required" />
-                                                        <asp:CustomValidator id="CustomValidator1"
-           ClientValidationFunction="ClientValidate"
-           Display="Dynamic"
-                                                            EnableClientScript="True"
-           ErrorMessage="Not an even number!"
-           ForeColor="Red"
-           Font-Name="verdana" 
-           Font-Size="10pt"
-           runat="server"/>
+                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ValidationGroup="Group1" runat="server" ControlToValidate="dpk_form_date" ErrorMessage="Please select a day"   
+ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                                     </div>
                                                 </div>
                                             </div>
@@ -165,15 +163,8 @@
                                                     <label class="control-label" style="width: 120px">Đến ngày/ <span class="text-primary">To:</span><span class="text-danger">*</span><span class="text-danger"></span></label>
                                                     <div class="d-inline-block">
                                                         <telerik:RadDatePicker runat="server" ID="dpk_to_date" Width="120px" CssClass="required"/>
-                                                        <asp:CustomValidator id="CustomValidator2"
-           ClientValidationFunction="ClientValidate"
-           Display="Dynamic"
-                                                            EnableClientScript="True"
-           ErrorMessage="Not an even number!"
-           ForeColor="Red"
-           Font-Name="verdana" 
-           Font-Size="10pt"
-           runat="server"/>
+                                                        <asp:RequiredFieldValidator ID="pass" runat="server" ControlToValidate="dpk_to_date" ValidationGroup="Group1" ErrorMessage="Please select a day"   
+ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                                     </div>
                                                 </div>
                                             </div>
@@ -183,6 +174,7 @@
                                                     <label class="control-label mb-2">Lý do nhập viện/ <span class="text-primary">Chief complaint:</span></label>
                                                     <div class="form-group ">
                                                         <aih:TextField runat="server" ID="txt_chief_complaint" />
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -242,9 +234,9 @@
                                             </div>
 
                                             <div class="form-actions mb-3">
-                                                <button type="button" onserverclick="btnComplete_Click" runat="server" id="btnComplete" class="btn btn-primary waves-effect">Complete</button>
+                                                <button type="button" onserverclick="btnComplete_Click" runat="server" validationgroup="Group1" id="btnComplete" class="btn btn-primary waves-effect">Complete</button>
 
-                                                <button type="button" onserverclick="btnSave_Click" runat="server" id="btnSave" class="btn btn-primary waves-effect">Save</button>
+                                                <button type="button" onserverclick="btnSave_Click" runat="server" id="btnSave" validationgroup="Group1" class="btn btn-primary waves-effect">Save</button>
 
                                                 <button type="button" id="btnDeleteModal" runat="server" class="btn btn-danger waves-effect" data-toggle="modal" data-target="#myModal">Delete</button>
 
@@ -291,22 +283,6 @@
     <script src="../scripts/contenteditable.min.js"></script>
     <script src="../scripts/waves.js"></script>
 
-    <script language="javascript">
-        debugger;
-        function ClientValidate(sender, args) {
-            debugger;
-            console.log("ClientValidate");
-            let dpkFromDate = document.getElementById('<%=dpk_form_date.ClientID%>');
-            let dpkToDate = document.getElementById('<%=dpk_to_date.ClientID%>');
-            console.log(dpkFromDate, dpkToDate);
-            args.IsValid = false;
-        }
-    </script>
-
-    <script>
-        if (Page_ClientValidate(""))
-            alert("its valid");
-    </script>
 </body>
 </html>
 

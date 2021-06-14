@@ -125,6 +125,10 @@ function changeValue(a, b) {
     document.getElementById(b).value = document.getElementById(a).innerHTML;
 }
 
+function changeValue1(a, b) {
+    document.getElementById(b).value = a.innerHTML;
+}
+
 //
 function setInputFilter(textbox, inputFilter) {
     ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {

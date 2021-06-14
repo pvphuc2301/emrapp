@@ -18,67 +18,190 @@ namespace EMR
         {
             if (!IsPostBack)
             {
+                if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
+                if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
+                if (Request.QueryString["vpId"] != null) DataHelpers.varPVId = Request.QueryString["vpId"];
+
                 Initial();
             }
         }
 
         public void Initial()
         {
-            if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
-            if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
-            if (Request.QueryString["vpId"] != null) DataHelpers.varPVId = Request.QueryString["vpId"];
-
+           
             // Get du lieu tu API to Object
             omr = new Omr(Request.QueryString["docId"]);
 
             // Fill du lieu tu Object to Controls.
 
-            lbl_vs_temperature.Text = omr.vs_temperature;
-            lbl_vs_heart_rate.Text = omr.vs_heart_rate;
-            lbl_vs_weight.Text = omr.vs_weight;
-            lbl_vs_respiratory_rate.Text = omr.vs_respiratory_rate;
-            lbl_vs_height.Text = omr.vs_height;
-            lbl_vs_blood_pressure.Text = omr.vs_blood_pressure;
-            lbl_vs_bmi.Text = omr.vs_BMI;
-            lbl_vs_spo2.Text = omr.vs_spO2;
-            lbl_vs_pulse.Text = omr.vs_pulse;
+            //lbl_vs_temperature.Text = omr.vs_temperature;
+            //lbl_vs_heart_rate.Text = omr.vs_heart_rate;
+            //lbl_vs_weight.Text = omr.vs_weight;
+            //lbl_vs_respiratory_rate.Text = omr.vs_respiratory_rate;
+            //lbl_vs_height.Text = omr.vs_height;
+            //lbl_vs_blood_pressure.Text = omr.vs_blood_pressure;
+            //lbl_vs_bmi.Text = omr.vs_BMI;
+            //lbl_vs_spo2.Text = omr.vs_spO2;
+            //lbl_vs_pulse.Text = omr.vs_pulse;
 
-            btnCancel.Visible = false;
-            txt_amendReason.Visible = false;
+            //btnCancel.Visible = false;
+            //txt_amendReason.Visible = false;
 
             if (omr.status == DocumentStatus.FINAL)
             {
-                FormState.Value = "view";
-                btnComplete.Visible = false;
-                btnSave.Visible = false;
-                btnDeleteModal.Visible = false;
-
-                btnAmend.Visible = true;
-
-                btnPrint.Visible = true;
-
-                //DisabledControl(true);
-                LoadDataToPrint(omr);
-                loadDataToView(omr);
+                loadFormView(omr);
             }
 
             else if (omr.status == DocumentStatus.DRAFT)
             {
-                FormState.Value = "edit";
-                btnAmend.Visible = false;
-                loadDataToControls(omr);
-                btnPrint.Visible = false;
+                LoadFormEdit(omr);
+                //btnAmend.Visible = false;
+                //loadDataToControls(omr);
+                //btnPrint.Visible = false;
             }
         }
+        private void LoadFormEdit(Omr omr)
+        {
+            try
+            {
+                DisabledControl(true);
+                //I.
+                Patient patient = Patient.Instance();
+                if (DataHelpers.CalculateAge(patient.date_of_birth) >= 18)
+                {
+                    habits_field.Visible = true;
 
-        private void loadDataToView(Omr omr)
+                    BindRadioButton("rad_habits_smoking_" + omr.habits_smoking);
+
+                    if (omr.habits_smoking != null)
+                    {
+                        if (omr.habits_smoking)
+                        {
+                            txt_habits_smoking_pack.Value = omr.habits_smoking_pack;
+                        }
+                    }
+
+
+                    BindRadioButton("rad_habits_alcohol_" + omr.habits_alcohol);
+
+                    if (omr.habits_alcohol != null)
+                    {
+                        if (omr.habits_alcohol)
+                        {
+                            txt_habits_alcohol_note.Value = omr.habits_alcohol_note;
+                        }
+                    }
+
+                    BindRadioButton("rad_habits_drugs_" + omr.habits_drugs);
+                    if (omr.habits_drugs != null)
+                    {
+                        if (omr.habits_drugs)
+                        {
+                            txt_habits_drugs_note.Value = omr.habits_drugs_note;
+                        }
+                    }
+
+                    BindRadioButton("rad_habits_physical_exercise_" + omr.habits_physical_exercise);
+                    if (omr.habits_physical_exercise != null)
+                    {
+                        if (omr.habits_physical_exercise)
+                        {
+                            txt_habits_phy_exer_note.Value = omr.habits_phy_exer_note;
+                        }
+                    }
+
+                    txt_habits_other.Value = omr.habits_other;
+                }
+                else
+                {
+                    habits_field.Visible = false;
+                }
+
+                // I. Lý do đến khám/ Chief complaint:
+                txt_chief_complaint.Value = omr.chief_complain;
+
+                // II. Bệnh sử/ Medical History:
+                // 1.Bệnh sử hiện tại / Current Medical History:
+                txt_medical_history.Value = omr.medical_history;
+
+                txt_current_medication.Value = omr.current_medication;
+
+                // 2.Tiền sử bệnh/ Antecedent Medical History:
+                txt_personal.Value = omr.personal;
+
+                BindRadioButton("rad_allergy_" + omr.allergy);
+                if (omr.allergy != null)
+                {
+                    if (omr.allergy)
+                    {
+                        txt_allergy_note.Value = omr.allergy_note;
+                    }
+                }
+
+                txt_family.Value = omr.family;
+                txt_immunization.Value = omr.immunization;
+
+                // III.Khám bệnh/ Physical Examination:
+                // DẤU HIỆU SINH TỒN/ VITAL SIGNS:
+
+                txt_physical_examination.Value = DataHelpers.FormatPhysicalExamination(omr.physical_examination);
+
+                BindRadioButton("rad_psy_consult_required_" + omr.psy_consult_required);
+
+                //if(omr1.psy_consult_required != null)
+                //{
+                //    if (omr1.psy_consult_required)
+                //    {
+                //        rad_psy_consult_required2.Checked = true;
+                //    }
+                //}
+
+                txt_laboratory_indications_results.Value = omr.laboratory_indications_results;
+                txt_additional_investigation.Value = omr.additional_investigation;
+                // V.Kết luận/ Conclusion:
+                //txtDiagnosis.Text = omr1.diagnosis;
+                txt_initial_diagnosis.Value = omr.initial_diagnosis;
+                txt_diagnosis.Value = omr.diagnosis;
+                txt_differential_diagnosis.Value = omr.differential_diagnosis;
+                txt_associated_conditions.Value = omr.associated_conditions;
+
+
+                BindRadioButton("rad_treatment_code_" + omr.treatment_code);
+
+                // 5.Current medications
+                txt_medicine.Value = omr.medicine;
+
+                BindRadioButton("rad_spec_opinion_requested_" + omr.spec_opinion_requested);
+
+                if (omr.spec_opinion_requested != null)
+                {
+                    if (omr.spec_opinion_requested)
+                    {
+                        txt_spec_opinion_requested_note.Value = omr.spec_opinion_requested_note;
+                    }
+                }
+
+                txt_specific_education_required.Value = omr.specific_education_required;
+                txt_next_appointment.Value = omr.next_appointment;
+
+            }
+            catch (Exception ex)
+            {
+                Session["PageNotFound"] = ex;
+                Response.Redirect("../Other/PageNotFound.aspx", false);
+            }
+
+            btnAmend.Visible = false;
+            btnPrint.Visible = false;
+        }
+        private void loadFormView(Omr omr)
         {
             lbl_chief_complaint.Text = WebHelpers.GetValue(omr.chief_complain);
             lbl_current_medication.Text = WebHelpers.GetValue(omr.chief_complain);
             lbl_medical_history.Text = WebHelpers.GetValue(omr.medical_history);
             lbl_personal.Text = WebHelpers.GetValue(omr.personal);
 
-            if(omr.allergy != null)
+            if (omr.allergy != null)
             {
                 lbl_allergy.Text = omr.allergy ? "" : "Không/ No";
                 if (omr.allergy) { lbl_allergy.Text += omr.allergy_note; }
@@ -86,7 +209,7 @@ namespace EMR
             lbl_family.Text = WebHelpers.GetValue(omr.family);
             lbl_immunization.Text = WebHelpers.GetValue(omr.immunization);
             lbl_physical_examination.Text = DataHelpers.FormatPhysicalExamination(omr.physical_examination);
-            if(omr.psy_consult_required != null)
+            if (omr.psy_consult_required != null)
             {
                 lbl_psy_consult_required.Text = omr.psy_consult_required ? "" : "Không/ No";
 
@@ -98,8 +221,8 @@ namespace EMR
             lbl_differential_diagnosis.Text = WebHelpers.GetValue(omr.differential_diagnosis);
             lbl_associated_conditions.Text = WebHelpers.GetValue(omr.associated_conditions);
             lbl_treatment.Text = WebHelpers.GetValue(omr.treatment_desc);
-            
-            if(omr.spec_opinion_requested != null)
+
+            if (omr.spec_opinion_requested != null)
             {
                 lbl_spec_opinion_requested.Text = omr.spec_opinion_requested ? "" : "Không/ No";
                 if (omr.spec_opinion_requested)
@@ -109,130 +232,15 @@ namespace EMR
             }
             lbl_specific_education_required.Text = WebHelpers.GetValue(omr.specific_education_required);
             lbl_next_appointment.Text = WebHelpers.GetValue(omr.next_appointment);
-        }
 
-        public void loadDataToControls(Omr omr1)
-        {
-            Patient patient = Patient.Instance();
-            if (DataHelpers.CalculateAge(patient.date_of_birth) >= 18)
-            {
-                habits_field.Visible = true;
+            DisabledControl(true);
 
-                BindRadioButton("rad_habits_smoking_" + omr1.habits_smoking);
+            btnComplete.Visible = false;
+            btnSave.Visible = false;
+            btnDeleteModal.Visible = false;
 
-                if (omr1.habits_smoking != null)
-                {
-                    if (omr1.habits_smoking)
-                    {
-                        txt_habits_smoking_pack.Value = omr1.habits_smoking_pack;
-                    }
-                }
-
-
-                BindRadioButton("rad_habits_alcohol_" + omr1.habits_alcohol);
-
-                if (omr1.habits_alcohol != null)
-                {
-                    if (omr1.habits_alcohol)
-                    {
-                        txt_habits_alcohol_note.Value = omr1.habits_alcohol_note;
-                    }
-                }
-
-                BindRadioButton("rad_habits_drugs_" + omr1.habits_drugs);
-                if (omr1.habits_drugs != null)
-                {
-                    if (omr1.habits_drugs)
-                    {
-                        txt_habits_drugs_note.Value = omr1.habits_drugs_note;
-                    }
-                }
-
-                BindRadioButton("rad_habits_physical_exercise_" + omr1.habits_physical_exercise);
-                if (omr1.habits_physical_exercise != null)
-                {
-                    if (omr1.habits_physical_exercise)
-                    {
-                        txt_habits_phy_exer_note.Value = omr1.habits_phy_exer_note;
-                    }
-                }
-
-                txt_habits_other.Value = omr1.habits_other;
-            }
-            else
-            {
-                habits_field.Visible = false;
-            }
-
-            // I. Lý do đến khám/ Chief complaint:
-            txt_chief_complaint.Value = omr1.chief_complain;
-
-            // II. Bệnh sử/ Medical History:
-            // 1.Bệnh sử hiện tại / Current Medical History:
-            txt_medical_history.Value = omr1.medical_history;
-            
-            txt_current_medication.Value = omr1.current_medication;
-
-            // 2.Tiền sử bệnh/ Antecedent Medical History:
-            txt_personal.Value = omr1.personal;
-
-            BindRadioButton("rad_allergy_" + omr1.allergy);
-            if (omr1.allergy != null)
-            {
-                if (omr1.allergy)
-                {
-                    txt_allergy_note.Value = omr1.allergy_note;
-                }
-            }
-            
-            txt_family.Value = omr1.family;
-            txt_immunization.Value = omr1.immunization;
-
-            // III.Khám bệnh/ Physical Examination:
-            // DẤU HIỆU SINH TỒN/ VITAL SIGNS:
-
-            txt_physical_examination.Value = DataHelpers.FormatPhysicalExamination(omr1.physical_examination);
-
-            BindRadioButton("rad_psy_consult_required_" + omr1.psy_consult_required);
-            
-            //if(omr1.psy_consult_required != null)
-            //{
-            //    if (omr1.psy_consult_required)
-            //    {
-            //        rad_psy_consult_required2.Checked = true;
-            //    }
-            //}
-
-            txt_laboratory_indications_results.Value = omr1.laboratory_indications_results;
-            txt_additional_investigation.Value = omr1.additional_investigation;
-            // V.Kết luận/ Conclusion:
-            //txtDiagnosis.Text = omr1.diagnosis;
-            txt_initial_diagnosis.Value = omr1.initial_diagnosis;
-            txt_diagnosis.Value = omr1.diagnosis;
-            txt_differential_diagnosis.Value = omr1.differential_diagnosis;
-            txt_associated_conditions.Value = omr1.associated_conditions;
-
-
-            BindRadioButton("rad_treatment_code_" + omr1.treatment_code);
-
-            // 5.Current medications
-            txt_medicine.Value = omr1.medicine;
-
-            BindRadioButton("rad_spec_opinion_requested_" + omr1.spec_opinion_requested);
-
-            if (omr1.spec_opinion_requested != null)
-            {
-                if (omr1.spec_opinion_requested)
-                {
-                    txt_spec_opinion_requested_note.Value = omr1.spec_opinion_requested_note;
-                }
-            }
-
-            txt_specific_education_required.Value = omr1.specific_education_required;
-            txt_next_appointment.Value = omr1.next_appointment;
-
-            btnCancel.Visible = false;
-            txt_amendReason.Visible = false;
+            btnAmend.Visible = true;
+            btnPrint.Visible = true;
         }
 
         private void LoadDataToPrint(Omr omr1)
@@ -316,20 +324,11 @@ namespace EMR
 
         }
 
-
         protected void DisabledControl(bool disabled)
         {
-            txt_chief_complaint.Disabled = disabled;
-            txt_current_medication.Disabled = disabled;
-            txt_medical_history.Disabled = disabled;
-            txt_personal.Disabled = disabled;
-            txt_habits_smoking_pack.Disabled = disabled;
-            txt_habits_alcohol_note.Disabled = disabled;
-            txt_allergy_note.Disabled = disabled;
-            txt_habits_drugs_note.Disabled = disabled;
-            txt_habits_phy_exer_note.Disabled = disabled;
-            txt_habits_other.Disabled = disabled;
-            txt_immunization.Disabled = disabled;
+
+            txt_chief_complaint.Visible = txt_current_medication.Visible = txt_medical_history.Visible =  txt_personal.Visible = txt_habits_smoking_pack.Visible = txt_habits_alcohol_note.Visible = txt_allergy_note.Visible = Visible;
+            txt_habits_drugs_note.Visible = txt_habits_phy_exer_note.Visible = txt_habits_other.Visible = txt_immunization.Visible = disabled;
             txt_family.Disabled = disabled;
             txt_physical_examination.Disabled = disabled;
             txt_laboratory_indications_results.Disabled = disabled;
@@ -353,6 +352,35 @@ namespace EMR
             DisabledRadioButton("rad_treatment_code_", Omr.TREATMENT_CODE, disabled);
             DisabledRadioButton("rad_spec_opinion_requested_", disabled);
 
+            foreach (var prop in omr.GetType().GetProperties())
+            {
+                var control1 = FindControl("txt_" + prop.Name);
+                var control2 = FindControl("lbl_" + prop.Name);
+
+                if (control1 != null)
+                {
+                    control1.Visible = !disabled;
+                } else if(control2 != null)
+                {
+                    control2.Visible = disabled;
+                }
+            }
+
+            //if (omr.GetType().GetProperty(col.ToString()) != null)
+            //    {
+            //        // if (tbl.Rows[0].Field<dynamic>(col) != null)
+            //        {
+            //            //string temp2 = obj.GetType().GetProperty(col.ToString()).Name.ToString();
+            //            //string temp1 =  tbl.Rows[0].Field<dynamic>(col);
+            //            //obj.GetType().GetProperty(col.ToString()).SetValue(obj, tbl.Rows[0].Field<dynamic>(col));
+            //            var field = tbl.Rows[0].Field<dynamic>(col);
+
+            //            obj.GetType().GetProperty(col.ToString()).SetValue(obj, field);
+            //        }
+            //    }
+
+            //txt_initial_diagnosis.Visible = txt_diagnosis.Visible = txt_differential_diagnosis.Visible = txt_associated_conditions.Visible = treatmentWrapper.Visible = SpecOpinionRequestedWrapper.Visible = txt_specific_education_required.Visible = txt_next_appointment.Visible = disabled;
+            //lbl_initial_diagnosis.Visible = lbl_diagnosis.Visible = lbl_differential_diagnosis.Visible = lbl_associated_conditions.Visible = lbl_treatment.Visible = lbl_spec_opinion_requested.Visible = lbl_specific_education_required.Visible = lbl_next_appointment.Visible = !disabled;
         }
 
         /// <summary>
@@ -417,7 +445,7 @@ namespace EMR
 
         protected void UpdateData(Omr omr)
         {
-            omr.amend_reason = txt_amendReason.Value;
+            omr.amend_reason = txt_amendReason.Text;
 
             //I.
             omr.chief_complain = txt_chief_complaint.Value;
@@ -575,7 +603,7 @@ namespace EMR
         }
         protected void CustomValidator2_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            args.IsValid = txt_amendReason.Value.Length > 3;
+            args.IsValid = txt_amendReason.Text.Length > 3;
         }
 
         protected void btnPrint_ServerClick(object sender, EventArgs e)

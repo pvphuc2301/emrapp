@@ -33,6 +33,15 @@ namespace EMR
         protected global::Telerik.Web.UI.RadScriptManager RadScriptManager2;
 
         /// <summary>
+        /// Upd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel Upd;
+
+        /// <summary>
         /// lblGender control.
         /// </summary>
         /// <remarks>
@@ -159,6 +168,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl pagination1;
 
         /// <summary>
+        /// DocumentList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DocumentList;
+
+        /// <summary>
         /// ddlDocList control.
         /// </summary>
         /// <remarks>
@@ -174,7 +192,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSave;
+        protected global::System.Web.UI.HtmlControls.HtmlButton btnSave;
 
         /// <summary>
         /// btnOpen control.

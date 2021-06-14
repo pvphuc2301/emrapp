@@ -1469,21 +1469,20 @@ namespace EMR
         }
 
         #region METHODS
-        public bool Update()
+        public dynamic[] Update()
         {
+            dynamic[] message = new dynamic[2];
+
             dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
+            message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
                 dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
-                return true;
+                message[1] = response2;
             }
-            else
-            {
-                System.Diagnostics.Debug.WriteLine(response1.Status);
-                System.Diagnostics.Debug.WriteLine(response1.Data);
-                return false;
-            }
+
+            return message;
         }
         public static dynamic[] Delete(string userName, string docid)
         {
@@ -3370,8 +3369,8 @@ namespace EMR
 
         public static Dictionary<string, string> HOUSING_CODE = new Dictionary<string, string>()
         {
-            { "ALN", "Sống một mình/ Lives alone" },
-            { "REL", "Sống với người thân/ With relatives" },
+            { "ALN", "Sống một mình<div> Lives alone</div>" },
+            { "REL", "Sống với người thân<div> With relatives</div>" },
         };
 
         public static Dictionary<string, string> PRIORITIZATION_CODE = new Dictionary<string, string>()

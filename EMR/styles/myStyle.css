@@ -576,3 +576,16 @@ form[data-form-state=edit] .form-view {
 * {
     scroll-behavior: smooth;
 }
+
+.validationSummary ul {
+    display: none;
+}
+
+.validationSummary {
+    padding: 20px;
+    border: 1px solid #d7d7db;
+    margin: 12px;
+    border-radius: 4px;
+    background: #fff;
+    color: #e46a76;
+}

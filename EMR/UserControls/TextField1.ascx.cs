@@ -11,22 +11,17 @@ namespace EMR.UserControls
     {
         public bool Disabled { get; set; }
         public string TextMode { get; set; }
-        public string Value { get { return TextField_Wrapper.Value; } set { TextField_Wrapper.Value = value; } }
+        public string Value { get { return ""; } set { Value = value; } }
 
         private ITemplate modalHeader = null;
-        private ITemplate modalBody = null;
+        private ITemplate itemTemplate = null;
         private ITemplate append = null;
 
-        public string ID { get { return TextField_Wrapper.ID; } set { TextField_Wrapper.ID = value; } }
+        //public string ID { get { return TextField_Wrapper.ID; } set { TextField_Wrapper.ID = value; } }
 
         [TemplateContainer(typeof(MessageContainer))]
         [PersistenceMode(PersistenceMode.InnerProperty)]
-        public ITemplate ModalHeader { get { return modalHeader; } set { modalHeader = value; } }
-
-        [TemplateContainer(typeof(MessageContainer))]
-        [PersistenceMode(PersistenceMode.InnerProperty)]
-        public ITemplate ModalBody { get { return modalBody; } set { modalBody = value; } }
-
+        public ITemplate ItemTemplate { get { return itemTemplate; } set { itemTemplate = value; } }
         [TemplateContainer(typeof(MessageContainer))]
         [PersistenceMode(PersistenceMode.InnerProperty)]
         public ITemplate Append { get { return append; } set { append = value; } }
@@ -39,13 +34,20 @@ namespace EMR.UserControls
                 basicAddon2.Controls.Add(container);
             }
             else { basicAddon2.Visible = false; }
-            if(Disabled != null)
+            //if(Disabled != null)
+            //{
+            //    TextField_Wrapper.Disabled = Disabled;
+            //}
+            //if(TextMode != null)
+            //{
+            //    TextField_Wrapper.Attributes["data-type"] = TextMode;
+            //}
+            if(itemTemplate != null)
             {
-                TextField_Wrapper.Disabled = Disabled;
-            }
-            if(TextMode != null)
-            {
-                TextField_Wrapper.Attributes["data-type"] = TextMode;
+                MessageContainer container = new MessageContainer();
+                ItemTemplate.InstantiateIn(container);
+
+                TextFieldPlaceHolder.Controls.Add(container);
             }
         }
     }

@@ -295,6 +295,7 @@
     <Content Include="obj\Debug\EMR.csproj.CoreCompileInputs.cache" />
     <Content Include="obj\Debug\EMR.csprojAssemblyReference.cache" />
     <Content Include="UserControls\Barcode.ascx" />
+    <Content Include="UserControls\CustomPagination.ascx" />
     <Content Include="UserControls\PopupModal.ascx" />
     <Content Include="UserControls\PrintTemplate\Date.ascx" />
     <Content Include="UserControls\PrintTemplate\Label1.ascx" />
@@ -886,6 +887,13 @@
     <Compile Include="UserControls\Checkbox\Checkbox.ascx.designer.cs">
       <DependentUpon>Checkbox.ascx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\CustomPagination.ascx.cs">
+      <DependentUpon>CustomPagination.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\CustomPagination.ascx.designer.cs">
+      <DependentUpon>CustomPagination.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\Message.ascx.cs">
       <DependentUpon>Message.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1115,7 +1123,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
