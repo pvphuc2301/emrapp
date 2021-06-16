@@ -126,6 +126,22 @@ namespace EMR
         {
             return string.Format("{0} {1} {2} {3}", this.address_line_l, this.address_subregion_l, this.address_region_l, this.address_country_l);
         }
+        public string GetGender()
+        {
+            return this.gender_l;
+        }
+        public string GetNationality()
+        {
+            return nationality_l;
+        }
+        public string GetOccupation()
+        {
+            return occupation_l;
+        }
+        public string GetTitle()
+        {
+            return this.title_l;
+        }
         #endregion
     }
 
@@ -1253,9 +1269,9 @@ namespace EMR
         }
 
         #region METHODS
-        public string[] Update()
+        public dynamic[] Update()
         {
-            string[] message = new string[2];
+            dynamic[] message = new dynamic[2];
 
             dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
             message[0] = response1;
@@ -1268,9 +1284,9 @@ namespace EMR
 
             return message;
         }
-        public static string[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid)
         {
-            string[] message = new string[2];
+            dynamic[] message = new dynamic[2];
             try
             {
                 dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
@@ -1288,7 +1304,7 @@ namespace EMR
             catch (Exception ex)
             {
                 dynamic response = new System.Dynamic.ExpandoObject();
-                response.Status = "Error";
+                response.Status = System.Net.HttpStatusCode.NotFound;
                 response.Data = ex.Message;
 
                 message[0] = response;
@@ -3041,9 +3057,9 @@ namespace EMR
         }
 
         #region METHODS
-        public string[] Update()
+        public dynamic[] Update()
         {
-            string[] message = new string[2];
+            dynamic[] message = new dynamic[2];
 
             dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
             message[0] = response1;
@@ -3056,9 +3072,9 @@ namespace EMR
 
             return message;
         }
-        public static string[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid)
         {
-            string[] message = new string[2];
+            dynamic[] message = new dynamic[2];
             try
             {
                 dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
@@ -3076,7 +3092,7 @@ namespace EMR
             catch (Exception ex)
             {
                 dynamic response = new System.Dynamic.ExpandoObject();
-                response.Status = "Error";
+                response.Status = System.Net.HttpStatusCode.NotFound;
                 response.Data = ex.Message;
 
                 message[0] = response;

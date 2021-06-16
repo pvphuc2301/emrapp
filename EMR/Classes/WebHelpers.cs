@@ -205,27 +205,47 @@ namespace EMR
         //{
         //    return JsonConvert.SerializeObject(theObjects);
         //}
-
+        /// <summary>
+        /// [0 - (n-2)]: options
+        /// [n-1]: isChecked
+        /// [n]: styles
+        /// </summary>
+        /// <param name="options"></param>
+        /// <returns></returns>
         internal static string CreateOptions(params dynamic[] options)
         {
             string option = "";
             int lastIndex = options.Length - 1;
-
-            for (int i = 0; i < lastIndex; i++)
+            option += string.Format("<div style='{0}'>", options[lastIndex]);
+            for (int i = 0; i < lastIndex - 1; i++)
             {
                 option += "<div style='display: grid; grid-template-columns: auto 1fr;'> ";
-                option += (options[lastIndex] == options[i].Value ? "☒ " : "❏ ");
+                option += (options[lastIndex - 1] == options[i].Value ? "☒ " : "❏ ");
                 option += "<span class='ml-1'>";
                 option += options[i].Text;
                 option += "</span>";
                 option += "</div>";
             }
+            option += "</div>";
             return option;
         }
-
-        internal static string CreateOptions(Dictionary<string, string> options, string value)
+        public static string GenerateBarcode(string Text)
         {
-            string option = "";
+            if (!string.IsNullOrEmpty(Text))
+            {
+                BarcodeLib.Barcode code128 = new BarcodeLib.Barcode();
+                System.Drawing.Image barcode = code128.Encode(BarcodeLib.TYPE.CODE128, Text);
+                System.IO.MemoryStream ms = new System.IO.MemoryStream();
+                barcode.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                ms.ToArray();
+
+                return "data:image/jpeg;base64," + Convert.ToBase64String(ms.ToArray());
+            }
+            return "";
+        }
+        internal static string CreateOptions(Dictionary<string, string> options, string value, string styles)
+        {
+            string option = string.Format("<div style='{0}'>", styles);
             for (int i = 0; i < options.Count; i++)
             {
                 var item = options.ElementAt(i);
@@ -237,6 +257,7 @@ namespace EMR
                 option += "</span>";
                 option += "</div>";
             }
+            option += "</div>";
             return option;
         }
 

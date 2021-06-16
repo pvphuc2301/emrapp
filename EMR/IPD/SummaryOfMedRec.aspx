@@ -19,9 +19,6 @@
 <%@ Register Src="~/icons/X.ascx" TagPrefix="aih" TagName="X" %>
 <%@ Register Src="~/UserControls/TextField1.ascx" TagPrefix="aih" TagName="TextField1" %>
 
-
-
-
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -29,25 +26,29 @@
     <title></title>
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
-    <link href="../style/style-custom.css" rel="stylesheet" />
 </head>
 <body>
     <form method="post" action="#" id="form2" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
-        <div class="cssclsNoScreen">
-            <asp:UpdatePanel ID="UpPrintForm" runat="server" UpdateMode="Conditional">
-                <ContentTemplate>
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+            <ContentTemplate>
+                <div class="cssclsNoScreen">
                     <table class="report-container">
                         <thead class="report-header">
                             <tr>
                                 <th class="report-header-cell">
                                     <div class="header-info" style="display: flex; align-items: center;">
                                         <img style="width: 200px" src="../images/AIH_PI_FULL.png" />
-                                        <div style="flex-grow: 1; text-align: center;">
-                                            <div style="color: #007297; font-size: 26.6667px;">TÓM TẮT BỆNH ÁN</div>
-                                            <div style="color: #e20e5a; font-size: 16.6667px;">SUMMARY OF MEDICAL REPORT</div>
+                                        <div class="header-info-title">
+                                            <h4>TÓM TẮT BỆNH ÁN</h4>
+                                            <h5>SUMMARY OF MEDICAL REPORT</h5>
                                         </div>
-                                        <webUI:PatientLabel1 runat="server" ID="prt_patient_label1" />
+                                        <div style="width: 175px;">
+                                            <asp:Label CssClass="d-block" runat="server" ID="prt_fullname"></asp:Label>
+                                            <asp:Label class="d-block" CssClass="d-block" runat="server" ID="prt_dob"></asp:Label>
+                                            <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
+                                            <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
+                                        </div>
                                     </div>
                                     <webUI:Line runat="server" ID="Line" />
                                 </th>
@@ -59,30 +60,81 @@
                                     <div class="main" runat="server" id="print_content">
 
                                         <div class="d-grid" style="grid-template-columns: 1fr 1fr">
-                                            <webUI:PrtRowS1 CssClass="text-inline" FixedLeft="30" Title="Từ ngày/ " SubTitle="From:" runat="server" ID="prt_form_date" />
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px;">
+                                                <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" FixedLeft="13" Title="Từ ngày/ " SubTitle="From:" runat="server" />
+                                                <p>
+                                                    <asp:Label runat="server" ID="prt_form_date"></asp:Label>
+                                                </p>
+                                            </div>
 
-                                            <webUI:PrtRowS1 CssClass="text-inline" FixedLeft="30" Title="Đến ngày/ " SubTitle="To:" runat="server" ID="prt_to_date" />
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px;">
+                                                <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" FixedLeft="13" Title="Đến ngày/ " SubTitle="To:" runat="server" />
+                                                <p>
+                                                    <asp:Label runat="server" ID="prt_to_date"></asp:Label>
+                                                </p>
+                                            </div>
                                         </div>
 
-                                        <webUI:PrtRowS1 CssClass="text-inline" FixedLeft="30" Title="Khoa/ " SubTitle="Department:" runat="server" ID="PrtRowS1" />
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px;">
+                                            <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" FixedLeft="13" Title="Khoa/ " SubTitle="Department:" runat="server" />
+                                            <p>
 
-                                        <webUI:PrtRowS1 FixedLeft="30" CssClass="text-inline" Title="Lý do nhập viện/ " SubTitle="Chief complaint:" runat="server" ID="prt_chief_complaint" />
+                                                <asp:Label runat="server" ID="prt_department"></asp:Label>
+                                            </p>
+                                        </div>
 
-                                        <webUI:PrtRowS1 CssClass="text-inline" FixedLeft="30" Title="Chẩn đoán/ " SubTitle="Diagnosis:" runat="server" ID="prt_diagnosis" />
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px;">
+                                            <webUI:PrtRowS1 FontBold="true" FixedLeft="13" CssClass="text-inline" Title="Lý do nhập viện/ " SubTitle="Chief complaint:" runat="server" />
+                                            <p>
 
-                                        <webUI:PrtRowS1 Order="1." CssClass="text-inline" Title="Diễn biến lâm sàng trong đợt điều trị/ " SubTitle="Clinical Evolution:" runat="server" ID="prt_clinical_evolution" />
+                                                <asp:Label runat="server" ID="prt_chief_complaint"></asp:Label>
+                                            </p>
+                                        </div>
 
-                                        <webUI:PrtRowS1 Order="2." CssClass="text-inline" Title="KQ xét nghiệm cận lâm sàng/ " SubTitle="Results of para clinical tests:" runat="server" ID="prt_result_para_clinical" />
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px;">
+                                            <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" FixedLeft="13" Title="Chẩn đoán/ " SubTitle="Diagnosis:" runat="server" />
+                                            <p>
 
-                                        <webUI:PrtRowS1 Order="3." CssClass="text-inline" Title="Quá trình điều trị/ " SubTitle="Treatment:" runat="server" ID="prt_treatment" />
+                                                <asp:Label runat="server" ID="prt_diagnosis"></asp:Label>
+                                            </p>
+                                        </div>
 
-                                        <webUI:PrtRowS1 Order="4." CssClass="text-inline" Title="Đánh giá kết quả/ " SubTitle="Evaluation of treatment:" runat="server" ID="prt_eval_treatment" />
+                                        <webUI:PrtRowS1 FontBold="true" Order="1." CssClass="text-inline" Title="Diễn biến lâm sàng trong đợt điều trị/ " SubTitle="Clinical Evolution:" runat="server" />
+                                        <p style="margin-left: 13px;">
+                                            <asp:Label runat="server" ID="prt_clinical_evolution"></asp:Label>
+                                        </p>
 
-                                        <webUI:PrtRowS1 Order="5." CssClass="text-inline" Title="Hướng dẫn điều trị tiếp và tiên lượng/ " SubTitle="Continuous treatment and prognosis:" runat="server" ID="prt_treatment_prognosis" />
+                                        <webUI:PrtRowS1 FontBold="true" Order="2." CssClass="text-inline" Title="KQ xét nghiệm cận lâm sàng/ " SubTitle="Results of para clinical tests:" runat="server" />
+                                        <p style="margin-left: 13px;">
+                                            <asp:Label runat="server" ID="prt_result_para_clinical"></asp:Label>
+                                        </p>
+
+                                        <webUI:PrtRowS1 FontBold="true" Order="3." CssClass="text-inline" Title="Quá trình điều trị/ " SubTitle="Treatment:" runat="server" />
+                                        <p style="margin-left: 13px;">
+                                            <asp:Label runat="server" ID="prt_treatment"></asp:Label>
+                                        </p>
+
+                                        <webUI:PrtRowS1 FontBold="true" Order="4." CssClass="text-inline" Title="Đánh giá kết quả/ " SubTitle="Evaluation of treatment:" runat="server" />
+                                        <p style="margin-left: 13px;">
+                                            <asp:Label runat="server" ID="prt_eval_treatment"></asp:Label>
+                                        </p>
+
+                                        <webUI:PrtRowS1 FontBold="true" Order="5." CssClass="text-inline" Title="Hướng dẫn điều trị tiếp và tiên lượng/ " SubTitle="Continuous treatment and prognosis:" runat="server" />
+                                        <p style="margin-left: 13px;">
+                                            <asp:Label runat="server" ID="prt_treatment_prognosis"></asp:Label>
+                                        </p>
 
                                         <div class="d-grid" style="grid-template-columns: 1fr 1fr">
-                                            <webUI:Signature1 runat="server" ID="prt_signature1" />
-                                            <webUI:Signature1 runat="server" ID="prt_signature2" />
+                                            <div class="text-center" style="break-inside: avoid;">
+                                                <div>Ngày/ Date: 16-06-2021</div>
+                                                <div class="font-bold">Trưởng khoa (ký và ghi rõ họ tên)</div>
+                                                <div class="text-primary">The Head of Department's signature and full name</div>
+                                            </div>
+                                            <div class="text-center" style="break-inside: avoid;">
+                                                <div>Ngày/ Date: 16-06-2021</div>
+                                                <div class="font-bold">Trưởng khoa (ký và ghi rõ họ tên)</div>
+                                                <div class="text-primary">The Head of Department's signature and full name</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </td>
@@ -103,16 +155,11 @@
                             </tr>
                         </tfoot>
                     </table>
-                </ContentTemplate>
-                <Triggers>
-                    <asp:AsyncPostBackTrigger ControlID="btnPrint" />
-                </Triggers>
-            </asp:UpdatePanel>
-        </div>
-        <div class="cssclsNoPrint">
-            <div style="overflow: scroll; height: calc(100vh - 52px); overflow-x: hidden;">
-                <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
-                    <ContentTemplate>
+                </div>
+
+                <div class="cssclsNoPrint">
+                    <div style="overflow: scroll; height: calc(100vh - 52px); overflow-x: hidden;">
+
                         <asp:Panel runat="server" ID="messagePlaceHolder">
                             <div class="card" runat="server" id="amendReasonWraper">
                                 <div class="card-body">
@@ -120,21 +167,21 @@
                                         <br />
                                         <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
                                     <div class="form-group mb-2">
-                                        
-                            <asp:TextBox runat="server" ID="txt_amendReason" CssClass="el-hide" />
-                            <div spellcheck="false" style="height: auto; text-align: left; display: inline-block;" class="form-control" id="DisplayControl"  onblur="changeValue1(this, 'txt_amendReason')" contenteditable='true' runat="server"></div>
-                            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amendReason" ErrorMessage="Please enter amend reason"   
-ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
+
+                                        <asp:TextBox runat="server" ID="txt_amend_reason" CssClass="el-hide" />
+                                        <div spellcheck="false" style="height: auto; text-align: left; display: inline-block;" class="form-control" id="DisplayControl" onblur="changeValue1(this, 'txt_amend_reason')" contenteditable='true' runat="server"></div>
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
+                                            ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                     </div>
                                 </div>
                             </div>
 
-                                <asp:ValidationSummary 
-                                  id="valSum" 
-                                  DisplayMode="BulletList"
-                                    CssClass="validationSummary"
-                                  runat="server" ValidationGroup="Group1"
-                                  HeaderText="Please complete the highlighted field(s)."/>
+                            <asp:ValidationSummary
+                                ID="valSum"
+                                DisplayMode="BulletList"
+                                CssClass="validationSummary"
+                                runat="server" ValidationGroup="Group1"
+                                HeaderText="Please complete the highlighted field(s)." />
                         </asp:Panel>
                         <uc1:PatientInfo runat="server" ID="PatientInfo1" />
 
@@ -150,10 +197,11 @@ ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
                                                     <label class="control-label" style="width: 120px">Từ ngày/ <span class="text-primary">From</span><span class="text-danger">*</span></label>
-                                                    <div class="d-inline-block">
-                                                        <telerik:RadDatePicker runat="server" ID="dpk_form_date" Width="120px" CssClass="required" />
-                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ValidationGroup="Group1" runat="server" ControlToValidate="dpk_form_date" ErrorMessage="Please select a day"   
-ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                                                    <asp:Label runat="server" ID="lbl_form_date"></asp:Label>
+                                                    <div class="d-inline-block" runat="server" id="form_date_wrapper">
+                                                        <telerik:RadDatePicker runat="server" ID="dpk_form_date" Width="120px" />
+                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ValidationGroup="Group1" runat="server" ControlToValidate="dpk_form_date" ErrorMessage="Từ ngày/ From is required"
+                                                            CssClass="text-danger" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                                     </div>
                                                 </div>
                                             </div>
@@ -161,10 +209,11 @@ ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
                                                     <label class="control-label" style="width: 120px">Đến ngày/ <span class="text-primary">To:</span><span class="text-danger">*</span><span class="text-danger"></span></label>
-                                                    <div class="d-inline-block">
-                                                        <telerik:RadDatePicker runat="server" ID="dpk_to_date" Width="120px" CssClass="required"/>
-                                                        <asp:RequiredFieldValidator ID="pass" runat="server" ControlToValidate="dpk_to_date" ValidationGroup="Group1" ErrorMessage="Please select a day"   
-ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                                                    <asp:Label runat="server" ID="lbl_to_date"></asp:Label>
+                                                    <div class="d-inline-block" runat="server" id="to_date_wrapper">
+                                                        <telerik:RadDatePicker runat="server" ID="dpk_to_date" Width="120px" />
+                                                        <asp:RequiredFieldValidator ID="pass" runat="server" ControlToValidate="dpk_to_date" ValidationGroup="Group1" ErrorMessage="Đến ngày/ To is required"
+                                                            CssClass="text-danger" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                                     </div>
                                                 </div>
                                             </div>
@@ -172,9 +221,10 @@ ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
                                                     <label class="control-label mb-2">Lý do nhập viện/ <span class="text-primary">Chief complaint:</span></label>
-                                                    <div class="form-group ">
+                                                    <asp:Label runat="server" ID="lbl_chief_complaint"></asp:Label>
+                                                    <div class="form-group " runat="server" id="chief_complaint_wrapper">
                                                         <aih:TextField runat="server" ID="txt_chief_complaint" />
-                                                        
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -182,7 +232,8 @@ ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
                                                     <label class="control-label mb-2">Chẩn đoán/ <span class="text-primary">Diagnosis:</span></label>
-                                                    <div class="form-group ">
+                                                    <asp:Label runat="server" ID="lbl_diagnosis"></asp:Label>
+                                                    <div class="form-group " runat="server" id="diagnosis_wrapper">
                                                         <aih:TextField runat="server" ID="txt_diagnosis" />
                                                     </div>
                                                 </div>
@@ -191,7 +242,8 @@ ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
                                                     <label class="control-label mb-2">1. Diễn biến lâm sàng trong đợt điều trị/ <span class="text-primary">Clinical Evolution:</span></label>
-                                                    <div class="form-group ">
+                                                    <asp:Label runat="server" ID="lbl_clinical_evolution"></asp:Label>
+                                                    <div class="form-group " runat="server" id="clinical_evolution_wrapper">
                                                         <aih:TextField runat="server" ID="txt_clinical_evolution" />
                                                     </div>
                                                 </div>
@@ -200,7 +252,8 @@ ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
                                                     <label class="control-label mb-2">2. KQ xét nghiệm cận lâm sàng/ <span class="text-primary">Results of para clinical tests:</span></label>
-                                                    <div class="form-group ">
+                                                    <asp:Label runat="server" ID="lbl_result_para_clinical"></asp:Label>
+                                                    <div class="form-group " runat="server" id="result_para_clinical_wrapper">
                                                         <aih:TextField runat="server" ID="txt_result_para_clinical" />
                                                     </div>
                                                 </div>
@@ -209,7 +262,8 @@ ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
                                                     <label class="control-label mb-2">3. Quá trình điều trị/ <span class="text-primary">Treatment:</span></label>
-                                                    <div class="form-group ">
+                                                    <asp:Label runat="server" ID="lbl_treatment"></asp:Label>
+                                                    <div class="form-group " runat="server" id="treatment_wrapper">
                                                         <aih:TextField runat="server" ID="txt_treatment" />
                                                     </div>
                                                 </div>
@@ -218,7 +272,8 @@ ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
                                                     <label class="control-label mb-2">4. Đánh giá kết quả/ <span class="text-primary">Evaluation of treatment:</span></label>
-                                                    <div class="form-group ">
+                                                    <asp:Label runat="server" ID="lbl_eval_treatment"></asp:Label>
+                                                    <div class="form-group " runat="server" id="eval_treatment_wrapper">
                                                         <aih:TextField runat="server" ID="txt_eval_treatment" />
                                                     </div>
                                                 </div>
@@ -227,7 +282,8 @@ ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
                                                     <label class="control-label mb-2">5. Hướng dẫn điều trị tiếp và tiên lượng/ <span class="text-primary">Continuous treatment and prognosis:</span></label>
-                                                    <div class="form-group ">
+                                                    <asp:Label runat="server" ID="lbl_treatment_prognosis"></asp:Label>
+                                                    <div class="form-group " runat="server" id="treatment_prognosis_wrapper">
                                                         <aih:TextField runat="server" ID="txt_treatment_prognosis" />
                                                     </div>
                                                 </div>
@@ -266,22 +322,36 @@ ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                             </div>
                         </div>
 
-                    </ContentTemplate>
-                    <Triggers>
-                        <asp:AsyncPostBackTrigger ControlID="btnAmend" />
-                    </Triggers>
-                </asp:UpdatePanel>
-            </div>
-        </div>
+                    </div>
+                </div>
+            </ContentTemplate>
+            <Triggers>
+                <asp:AsyncPostBackTrigger ControlID="btnPrint" />
+                <asp:AsyncPostBackTrigger ControlID="btnSave" />
+                <asp:AsyncPostBackTrigger ControlID="btnAmend" />
+                <asp:AsyncPostBackTrigger ControlID="btnCancel" />
+                <asp:AsyncPostBackTrigger ControlID="btnComplete" />
+            </Triggers>
+        </asp:UpdatePanel>
     </form>
 
     <script src="../scripts/jquery-3.2.1.min.js"></script>
     <script src="../scripts/bootstrap.min.js"></script>
-    <script src="../scripts/perfect-scrollbar.jquery.min.js"></script>
-    <script src="../scripts/custom.min.js"></script>
     <script src="../scripts/myScript.js"></script>
     <script src="../scripts/contenteditable.min.js"></script>
     <script src="../scripts/waves.js"></script>
+
+    <script type="text/javascript">
+
+        function beforeAsyncPostBack() {
+            var curtime = new Date();
+        }
+
+        function afterAsyncPostBack() {
+        }
+
+    </script>
+
 
 </body>
 </html>

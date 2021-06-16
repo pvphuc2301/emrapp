@@ -23,14 +23,11 @@
 
     <form method="post" action="#" id="form2" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
-        <div class="scroll-sidebar h-100 w-100">
+        <div style="overflow: scroll; height: calc(100vh - 52px); overflow-x: hidden;">
             <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
                 <ContentTemplate>
                     <header class="topbar" style="border-bottom: 1px solid #E8E9F0; border-left: 2px solid #E8E9F0;">
                         <nav class="navbar top-navbar navbar-expand-md navbar-white bg-white border-bottom-2 border-darkgrey">
-                            <!-- ============================================================== -->
-                            <!-- End Logo -->
-                            <!-- ============================================================== -->
                             <div class="navbar-collapse">
                                 <ul class="navbar-nav my-lg-0 ml-auto">
                                     <li class="nav-item dropdown">
@@ -149,6 +146,14 @@
                                                         Search
                                                     </button>
                                                     </div>
+                                                    <asp:UpdateProgress ID="updateProgress_demographicSearch" runat="server" AssociatedUpdatePanelID="updatePanel_demographicSearch">
+                                                        <ProgressTemplate>
+                                                            <div class="loader1 ml-2">
+                                                              <div class="loader-wheel"></div>
+                                                              <%--<div class="loader-text"></div>--%>
+                                                            </div>
+                                                        </ProgressTemplate>
+                                                    </asp:UpdateProgress>
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
@@ -182,15 +187,6 @@
                                             </div>
                                         </fieldset>
                                     </div>
-
-                                    <asp:UpdateProgress ID="updateProgress_demographicSearch" runat="server" AssociatedUpdatePanelID="updatePanel_demographicSearch">
-                                        <ProgressTemplate>
-                                            <div class="loader">
-                                                <div class="loader__figure"></div>
-                                                <p class="loader__label">AIH Hospital</p>
-                                            </div>
-                                        </ProgressTemplate>
-                                    </asp:UpdateProgress>
                                 </ContentTemplate>
                                 <Triggers>
                                     <asp:AsyncPostBackTrigger ControlID="btnSearch" />
@@ -783,6 +779,12 @@
     <script src="../scripts/emrScript.js"></script>
     <script src="scripts/waves.js"></script>
     <script type="text/javascript">
+        function beforeAsyncPostBack() {
+            var curtime = new Date();
+        }
+
+        function afterAsyncPostBack() {
+        }
 
         $(".sidebar-dropdown > a").click(function () {
             $(".sidebar-submenu").slideUp(200);

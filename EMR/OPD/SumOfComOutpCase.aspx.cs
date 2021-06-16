@@ -9,9 +9,9 @@ namespace EMR
 {
     public partial class SummaryOfComplexOutpatientCases : System.Web.UI.Page
     {
+        
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
 
         protected void btnComplete_Click(object sender, EventArgs e)

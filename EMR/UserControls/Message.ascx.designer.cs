@@ -42,12 +42,12 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl messageContent;
 
         /// <summary>
-        /// XSquare control.
+        /// X control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare;
+        protected global::EMR.icons.X X;
     }
 }

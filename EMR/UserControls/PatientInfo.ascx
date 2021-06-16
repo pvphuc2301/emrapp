@@ -4,7 +4,7 @@
         <div class="card">
             <div class="card-header">
                 <h4 class="text-primary">Patient details</h4>
-                <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapsePatientInfo" aria-expanded="true" aria-controls="collapseOne" class="arrowhead"></a>
+                <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapsePatientInfo" aria-expanded="true" aria-controls="collapseOne"></a>
             </div>
             <div class="card-body collapse show" id="collapsePatientInfo" aria-labelledby="headingPatientInfo">
                 <h5 class="box-title">Patient Info</h5>

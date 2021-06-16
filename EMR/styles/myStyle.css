@@ -3,8 +3,8 @@
         display: none
     }
 
-    .void-page-break {
-        page-break-inside: avoid;
+    .avoid-page-break {
+        page-break-inside: avoid !important;
     }
 
     .footer {
@@ -33,6 +33,7 @@
         display: flex;
         justify-content: space-between;
         width: 100%;
+        font-size: 12px;
     }
 
     .report-container {
@@ -42,6 +43,10 @@
     .report-footer-space {
         height: 100px;
     }
+}
+
+.prt-line-solid {
+    border-bottom: 1px solid #000;
 }
 
 .cssclsNoScreen {
@@ -588,4 +593,56 @@ form[data-form-state=edit] .form-view {
     border-radius: 4px;
     background: #fff;
     color: #e46a76;
+}
+
+.loader1 {
+    width: 60px;
+}
+
+.loader-wheel {
+    animation: spin 1s infinite linear;
+    border: 2px solid rgba(30, 30, 30, 0.5);
+    border-left: 4px solid #fff;
+    border-radius: 50%;
+    height: 35px;
+    /*margin-bottom: 10px;*/
+    width: 35px;
+}
+
+.loader-text {
+    color: #fff;
+    font-family: arial, sans-serif;
+}
+
+    .loader-text:after {
+        content: 'Loading';
+        animation: load 2s linear infinite;
+    }
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes load {
+    0% {
+        content: 'Loading';
+    }
+
+    33% {
+        content: 'Loading.';
+    }
+
+    67% {
+        content: 'Loading..';
+    }
+
+    100% {
+        content: 'Loading...';
+    }
 }

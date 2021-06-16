@@ -459,6 +459,12 @@
             }
 
         }
+
+        function beforeAsyncPostBack() {
+            var curtime = new Date();
+        }
+
+        function afterAsyncPostBack() { }
     </script>
 </body>
 </html>

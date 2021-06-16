@@ -846,10 +846,6 @@ namespace EMR
             _BindGridView(gridView, dt);
         }
 
-        protected void btn_AddAssessmentSystem_Click1(object sender, EventArgs e)
-        {
-            
-        }
 
         protected void grid_AssessmentSystem_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {

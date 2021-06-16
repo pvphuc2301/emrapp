@@ -186,3 +186,45 @@ function CalculateBmi() {
         vs_bmi.innerText = (vs_weight.value / ((vs_height.value / 100) * 2)).toFixed(2);
     };
 }
+
+function radioButtonChange(eventArgs) {
+    try {
+        let EleByClassName;
+        let disabledFor = eventArgs.getAttribute('disabled-for');
+
+        if (disabledFor !== undefined && disabledFor !== null) {
+
+            EleByClassName = document.getElementsByClassName(disabledFor);
+
+            for (let l = 0; l < EleByClassName.length; l++) {
+                EleByClassName[l].classList.remove("el-hide");
+            }
+        } else {
+
+            EleByClassName = document.getElementsByClassName(eventArgs.getAttribute("data-target"));
+
+            for (let l = 0; l < EleByClassName.length; l++) {
+                EleByClassName[l].classList.add("el-hide");
+            }
+        }
+
+    } catch (ex) {
+        console.error(ex);
+    }
+}
+
+Sys.Application.add_init(appl_init);
+
+function appl_init() {
+    var pgRegMgr = Sys.WebForms.PageRequestManager.getInstance();
+    pgRegMgr.add_beginRequest(BeginHandler);
+    pgRegMgr.add_endRequest(EndHandler);
+}
+
+function BeginHandler() {
+    beforeAsyncPostBack();
+}
+
+function EndHandler() {
+    afterAsyncPostBack();
+}

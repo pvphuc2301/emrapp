@@ -28,7 +28,7 @@
     <title></title>
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
-    <link href="../style/style-custom.css" rel="stylesheet" />
+    <%--<link href="../style/style-custom.css" rel="stylesheet" />--%>
 </head>
 <body>
     <%--class="cssclsNoScreen"--%>
@@ -105,7 +105,7 @@
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
                                         <webUI:PrtRowS1 FontBold="true" Order="2." FixedWidth="152" Title="Dị ứng:" SubTitle="Allergy" runat="server"  />
-                                            <asp:Label runat="server" ID="prt_allergy" runat="server" />
+                                            <asp:Label runat="server" ID="prt_allergy"/>
                                         </div>
 
                                         <webUI:PrtRowS1 FontBold="true" Order="3." Title="Trạng thái tinh thần" SubTitle="Mental status" runat="server" />
@@ -674,20 +674,12 @@
 
     <script>
 
-        //document.getElementById('form2').setAttribute('form-mode', document.getElementById("FormMode").value);
-
-        //function amend() {
-        //    document.getElementById('form2').setAttribute('data-form-state', 'edit');
-        //    document.getElementById('atop').scrollIntoView();
-        //}
-
         function beforeAsyncPostBack() {
             var curtime = new Date();
             console.log(curtime);
         }
 
         function afterAsyncPostBack() {
-            document.getElementById('form2').setAttribute('form-mode', document.getElementById("FormMode").value);
             let temp1 = document.querySelectorAll('input[data-type="number"]');
 
             temp1.forEach(e => {
@@ -748,25 +740,6 @@
                         }
                     }
                 }
-
-                //if (disabledFor != 'undefined' && disabledFor != false) {
-
-                //    for (let k = 0; k < radiosEle.length; k++) {
-
-                //        let EleByClassName = document.getElementsByClassName(radiosEle[k].getAttribute('disabled-for'));
-
-                //        for (let l = 0; l < EleByClassName.length; l++) {
-
-                //            if (EleByClassName[l].classList.contains(disabledFor)) {
-                //                EleByClassName[l].classList.remove("el-hide");
-                //                EleByClassName[l].classList.add("el-show");
-                //            } else {
-                //                EleByClassName[l].classList.remove("el-show");
-                //                EleByClassName[l].classList.add("el-hide");
-                //            }
-                //        }
-                //    }
-                //}
             } catch (ex) {
                 console.error(ex);
             }
@@ -811,31 +784,6 @@
 
         }
 
-        function radioButtonChange(eventArgs) {
-            try {
-                let EleByClassName;
-                let disabledFor = eventArgs.getAttribute('disabled-for');
-
-                if (disabledFor !== undefined && disabledFor !== null) {
-
-                    EleByClassName = document.getElementsByClassName(disabledFor);
-
-                    for (let l = 0; l < EleByClassName.length; l++) {
-                        EleByClassName[l].classList.remove("el-hide");
-                    }
-                } else {
-
-                    EleByClassName = document.getElementsByClassName(eventArgs.getAttribute("data-target"));
-
-                    for (let l = 0; l < EleByClassName.length; l++) {
-                        EleByClassName[l].classList.add("el-hide");
-                    }
-                }
-
-            } catch (ex) {
-                console.error(ex);
-            }
-        }
     </script>
 
 </body>

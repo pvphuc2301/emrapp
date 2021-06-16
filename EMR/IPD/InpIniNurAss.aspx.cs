@@ -440,7 +440,6 @@ namespace EMR
                     catch(Exception ex)
                     {
                     }
-                    
                 }
             }
         }

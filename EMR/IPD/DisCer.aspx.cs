@@ -10,10 +10,12 @@ namespace EMR
 {
     public partial class DischargeCertificate : System.Web.UI.Page
     {
-        public Disc disc;
+        public Disc disc; string UserID = "";
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            CheckUserID();
+
             if (!IsPostBack)
             {
                 Initial();
@@ -26,115 +28,42 @@ namespace EMR
             if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
             if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
 
-            disc = new Disc(DataHelpers.varDocId);
-            loadDataToOMRControls(disc);
-        }
+            disc = new Disc(Request.QueryString["docId"]);
 
-        public void loadDataToOMRControls(Disc disc)
-        {
-            try
+            amendReasonWraper.Visible = false;
+            btnCancel.Visible = false;
+            prt_admitted_time.dateTime = WebHelpers.FormatDateTime(PatientVisit.Instance(Request.QueryString["pvId"]).actual_visit_date_time);
+            prt_disc_date_time.dateTime = disc.disc_date_time;
+            if (disc.status == DocumentStatus.FINAL)
             {
-                foreach (KeyValuePair<string, string> code in Disc.DISC_WARD_CODE)
-                {
-                    ListItem item = new ListItem(code.Value, code.Key);
-
-                    if (disc.disc_ward_code == code.Key) { item.Selected = true; }
-
-                    ddbtn_disc_ward.Items.Add(item);
-                }
-
-                txt_no_health_insurance.Value = disc.no_health_insurance;
-                WebHelpers.BindDateTimePicker(dpk_valid_from, disc.valid_from);
-                WebHelpers.BindDateTimePicker(dtpk_disc_date_time, disc.disc_date_time);
-                txt_diagnosis.Value = disc.diagnosis;
-                txt_disc_medication.Value = disc.disc_medication;
-                txt_followup_instruc.Value = disc.followup_instruc;
-                txt_notes.Value = disc.notes;
-                WebHelpers.BindDateTimePicker(dpk_signature_date, disc.signature_date);
-
-                btnCancel.Visible = false;
-                txt_amendReason.Visible = false;
-
-                if (disc.status == DocumentStatus.FINAL)
-                {
-                    btnComplete.Visible = false;
-                    btnSave.Visible = false;
-                    btnDeleteModal.Visible = false;
-                    btnCancel.Visible = false;
-
-                    btnAmend.Visible = true;
-                    btnPrint.Visible = true;
-
-                    DisabledControl(true);
-                    loadDataToPrint(disc);
-                }
-                else if (disc.status == DocumentStatus.DRAFT)
-                {
-
-                    btnAmend.Visible = false;
-                    btnPrint.Visible = false;
-                }
+                loadFormView(disc);
             }
-            catch (Exception ex)
+            else if (disc.status == DocumentStatus.DRAFT)
             {
-                
+                LoadFormEdit(disc);
             }
         }
 
-        private void loadDataToPrint(Disc disc)
-        {
-            prt_pid.Text = DataHelpers.patient.visible_patient_id;
-            prt_patient_name.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
-            prt_dob.Text = WebHelpers.FormatDateTime(DataHelpers.patient.date_of_birth, "dd-MM-yyyy");
-            prt_gender.Text = DataHelpers.patient.gender_l;
-            prt_nationality.Text = DataHelpers.patient.nationality_l;
-            prt_occupation.Text = DataHelpers.patient.occupation_l;
-            prt_valid_from.Text = "?";
-            prt_no_health_insurance.Text = "?";
-            prt_address.Text = DataHelpers.patient.address_line_l + " " + DataHelpers.patient.address_subregion_l + " " + DataHelpers.patient.religion_l + " " +  DataHelpers.patient.address_country_l;
-            prt_disc_date_time.dateTime = Convert.ToString(disc.disc_date_time);
-            prt_diagnosis.Text = disc.diagnosis;
-            prt_notes.Text = disc.notes;
-
-            prt_signature1.dateTime = System.DateTime.Now.ToString();
-            prt_signature2.dateTime = System.DateTime.Now.ToString();
-        }
-
-        protected void DisabledControl(bool disabled)
-        {
-            ddbtn_disc_ward.Disabled = disabled;
-            txt_no_health_insurance.Disabled = disabled;
-            WebHelpers.DisabledDateTimePicker(dpk_valid_from, disabled);
-            WebHelpers.DisabledDateTimePicker(dtpk_disc_date_time, disabled);
-            WebHelpers.DisabledDateTimePicker(dpk_signature_date, disabled);
-            txt_diagnosis.Disabled = disabled;
-            txt_disc_medication.Disabled = disabled;
-            txt_followup_instruc.Disabled = disabled;
-            txt_notes.Disabled = disabled;
-        }
+        #region Events
         protected void btnAmend_Click(object sender, EventArgs e)
         {
+            disc = new Disc(Request.QueryString["docId"]);
+
+            amendReasonWraper.Visible = true;
             btnComplete.Visible = true;
-            btnComplete.Attributes["Disabled"] = "Disabled";
             btnCancel.Visible = true;
             btnAmend.Visible = false;
             btnPrint.Visible = false;
 
-            txt_amendReason.Visible = true;
-            DisabledControl(false);
-
+            LoadFormEdit(disc);
         }
-
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             Initial();
         }
-
         protected void btnComplete_Click(object sender, EventArgs e)
         {
-            string errors = checkValidField();
-
-            if (string.IsNullOrEmpty(errors))
+            if (Page.IsValid)
             {
                 disc = new Disc(Request.QueryString["docId"]);
 
@@ -143,23 +72,117 @@ namespace EMR
 
                 UpdateData(disc);
             }
-            else
+        }
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+            if (Page.IsValid)
             {
-                RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
+                disc = new Disc(Request.QueryString["docId"]);
 
-                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
+                disc.user_name = (string)Session["UserID"];
+                disc.status = DocumentStatus.DRAFT;
+
+                UpdateData(disc);
             }
         }
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            dynamic result = Diss.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
+
+            if (result.Status == System.Net.HttpStatusCode.OK)
+            {
+                string pid = Request["pid"];
+                string vpid = Request["vpid"];
+
+                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+            }
+            else
+            {
+                Session["PageNotFound"] = result;
+                Response.Redirect("../Other/PageNotFound.aspx", false);
+            }
+        }
+        protected void btnPrint_Click(object sender, EventArgs e)
+        {
+            disc = new Disc(Request.QueryString["docId"]);
+            LoadFormPrint(disc);
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "window.print();", true);
+        }
+        #endregion
+
+        #region Load Forms
+        private void LoadFormEdit(Disc disc)
+        {
+            txt_no_health_insurance.Value = disc.no_health_insurance;
+            dpk_valid_from.SelectedDate = disc.valid_from;
+            txt_diagnosis.Value = disc.diagnosis;
+            txt_disc_medication.Value = disc.disc_medication;
+            txt_followup_instruc.Value = disc.followup_instruc;
+            txt_notes.Value = disc.notes;
+            dpk_signature_date.SelectedDate = disc.signature_date;
+
+            LoadFormControl(false);
+            btnAmend.Visible = false;
+            btnPrint.Visible = false;
+        }
+        private void loadFormView(Disc disc)
+        {
+            lbl_no_health_insurance.Text = WebHelpers.GetValue(disc.no_health_insurance);
+            lbl_valid_from.Text = WebHelpers.FormatDateTime(disc.valid_from);
+            lbl_disc_date_time.Text = WebHelpers.FormatDateTime(disc.disc_date_time);
+            lbl_diagnosis.Text = WebHelpers.GetValue(disc.diagnosis);
+            lbl_disc_date_time.Text = WebHelpers.GetValue(disc.disc_medication);
+            lbl_followup_instruc.Text = WebHelpers.GetValue(disc.followup_instruc);
+            lbl_notes.Text = WebHelpers.GetValue(disc.notes);
+            lbl_signature_date.Text = WebHelpers.FormatDateTime(disc.signature_date);
+
+            LoadFormControl(true);
+
+            btnComplete.Visible = false;
+            btnSave.Visible = false;
+            btnDeleteModal.Visible = false;
+
+            btnAmend.Visible = true;
+            btnPrint.Visible = true;
+        }
+        private void LoadFormPrint(Disc disc)
+        {
+
+
+            Patient patient = Patient.Instance();
+            PatientVisit patientVisit = PatientVisit.Instance(Request["pvid"]);
+            
+            prt_fullname.Text = patient.GetFullName();
+            prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth);
+            prt_vpid.Text =  patient.visible_patient_id;
+            prt_gender.Text = patient.GetGender();
+            prt_nationality.Text = patient.GetNationality();
+            prt_occupation.Text = patient.GetOccupation();
+            prt_valid_from.Text = WebHelpers.FormatDateTime(disc.valid_from);
+            //prt_to.Text
+            prt_no_health_insurance.Text = disc.no_health_insurance;
+            prt_address.Text = patient.GetAddress();
+            prt_admitted_time.dateTime = WebHelpers.FormatDateTime(patientVisit.actual_visit_date_time);
+            prt_disc_date_time.dateTime = disc.disc_date_time;
+            prt_diagnosis.Text = disc.diagnosis;
+            prt_treatment.Text = disc.disc_medication;
+            prt_followup_instruc.Text = disc.followup_instruc;
+            prt_notes.Text = disc.notes;
+
+
+        }
+        #endregion
 
         public void UpdateData(Disc disc)
         {
             try
             {
-                disc.amend_reason = txt_amendReason.Value;
+
+                disc.amend_reason = txt_amend_reason.Text;
                 disc.no_discharge = disc.no_discharge;
-                disc.disc_ward_code = ddbtn_disc_ward.Value;
-                if(disc.disc_ward_code != null) disc.disc_ward_desc = Disc.DISC_WARD_CODE[disc.disc_ward_code];
+                //disc.disc_ward_code = ddbtn_disc_ward.Value;
+                //if (disc.disc_ward_code != null) disc.disc_ward_desc = Disc.DISC_WARD_CODE[disc.disc_ward_code];
                 disc.no_health_insurance = txt_no_health_insurance.Value;
                 disc.valid_from = DataHelpers.ConvertSQLDateTime(dpk_valid_from.SelectedDate);
                 disc.disc_date_time = DataHelpers.ConvertSQLDateTime(dtpk_disc_date_time.SelectedDate);
@@ -170,9 +193,9 @@ namespace EMR
                 disc.signature_date = DataHelpers.ConvertSQLDateTime(dpk_signature_date.SelectedDate);
                 //?
 
-                dynamic result = disc.Update();
+                dynamic result = disc.Update()[0];
 
-                if (result[0].Status == System.Net.HttpStatusCode.OK)
+                if (result.Status == System.Net.HttpStatusCode.OK)
                 {
                     Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                     message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
@@ -180,61 +203,42 @@ namespace EMR
                 }
                 else
                 {
-                    Session["PageNotFound"] = result[0];
+                    Session["PageNotFound"] = result;
                     Response.Redirect("../Other/PageNotFound.aspx", false);
                 }
             }
             catch (Exception ex) { }
         }
 
-        protected void btnSave_Click(object sender, EventArgs e)
+        protected void LoadFormControl(bool disabled)
         {
-            string errors = checkValidField();
-
-            if (string.IsNullOrEmpty(errors))
+            foreach (var prop in disc.GetType().GetProperties())
             {
-                disc = new Disc(Request.QueryString["docId"]);
+                var control1 = FindControl(prop.Name + "_wrapper");
+                var control2 = FindControl("lbl_" + prop.Name);
 
-                disc.user_name = (string)Session["UserID"];
-                disc.status = DocumentStatus.DRAFT;
-
-                UpdateData(disc);
-            }
-            else
-            {
-                RequiredFieldValidator.Value = JsonConvert.SerializeObject(errors);
-
-                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
+                if (control1 != null)
+                {
+                    control1.Visible = !disabled;
+                }
+                if (control2 != null)
+                {
+                    control2.Visible = disabled;
+                }
             }
         }
 
-        private string checkValidField()
+        #region Session
+        private void CheckUserID()
         {
-            string error = "";
-            return error;
+            UserID = (string)Session["UserID"];
+            string redirecturl = "../login.aspx?ReturnUrl=";
+            redirecturl += Request.ServerVariables["script_name"] + "?";
+            redirecturl += Server.UrlEncode(Request.QueryString.ToString());
+            if (string.IsNullOrEmpty(UserID))
+                Response.Redirect(redirecturl);
         }
 
-        private bool CheckFieldsValid()
-        {
-            return true;
-        }
-        protected void btnDelete_Click(object sender, EventArgs e)
-        {
-            dynamic result = Diss.Delete((string)Session["UserId"], Request.QueryString["docId"]);
-
-            if (result[0].Status == System.Net.HttpStatusCode.OK)
-            {
-                string pid = Request["pid"];
-                string vpid = Request["vpid"];
-
-                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
-            }
-            else
-            {
-                Session["PageNotFound"] = result[0];
-                Response.Redirect("../Other/PageNotFound.aspx", false);
-            }
-        }
+        #endregion
     }
 }

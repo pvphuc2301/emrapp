@@ -14,113 +14,178 @@ namespace EMR
         PatientInfo pa;         
         protected void Page_Load(object sender, EventArgs e)
         {
-            UserID = (string)Session["UserID"];
-            string redirecturl = "../login.aspx?ReturnUrl=";
-            redirecturl += Request.ServerVariables["script_name"] + "?";
-            redirecturl += Server.UrlEncode(Request.QueryString.ToString());
-            if (string.IsNullOrEmpty(UserID))
-                Response.Redirect(redirecturl);
-
-
+            CheckUserID();
+            
             if (!IsPostBack)
             {
                 Initial();
             }
         }
 
+        private void CheckUserID()
+        {
+            UserID = (string)Session["UserID"];
+            string redirecturl = "../login.aspx?ReturnUrl=";
+            redirecturl += Request.ServerVariables["script_name"] + "?";
+            redirecturl += Server.UrlEncode(Request.QueryString.ToString());
+            if (string.IsNullOrEmpty(UserID))
+                Response.Redirect(redirecturl);
+        }
+
         public void Initial()
         {
             if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
             if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
-            if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
+            if (Request.QueryString["vpId"] != null) DataHelpers.varPVId = Request.QueryString["vpId"];
 
             mc = new MC(DataHelpers.varDocId);
-
-            loadDataToControls(mc);
-        }
-
-
-        public void loadDataToControls(MC mc)
-        {
-            
-            // 2. Lý do đến khám
-            txtChiefComplaint.Value = mc.chief_complain;
-            txtChiefComplaint.Disabled = false;
-
-            // 3. Tóm tắt bệnh sử                          
-            txtHistoryPresentIllness.Value = mc.history_present_illness;
-
-            // 4. Tiền sử bệnh                
-            txtPastHistory.Value = mc.past_history;
-            // 5. Đặc điểm lâm sàng
-            txtClinicalFindings.Value = mc.clinical_findings;
-
-            //6. Cận lâm sàng được chỉ định
-            txtParaClinicalInvestigations.Value = mc.para_clinical_investigations;
-
-            //7. Chẩn đoán
-            txtDiagnosis.Value = mc.diagnosis;
-
-            //8. Phương pháp và thuốc điều trị
-            txtTreatment.Value = mc.treatment;
-
-            //9. Thời gian điều trị
-            txtTreatmentPeriod.Value = mc.treatment_period;
-
-            //10. Lời khuyên và theo dõi
-            txtRecommendation.Value = mc.recommendation;
-
-            //11. Lời khuyên và theo dõi
-            txtTreatmentPlan.Value = mc.treatment_plan;
-
+            Patient patient = Patient.Instance();
+            prt_barcode.Text = patient.visible_patient_id;
+            amendReasonWraper.Visible = false;
             btnCancel.Visible = false;
-            txt_amend_reason.Visible = false;
-
+            //LoadFormPrint(mc);
             if (mc.status == DocumentStatus.FINAL)
             {
-                btnComplete.Visible = false;
-                btnSave.Visible = false;
-                btnDeleteModal.Visible = false;
-                btnCancel.Visible = false;
-
-                btnAmend.Visible = true;
-                btnPrint.Visible = true;
-
-                DisabledControl(true);
+                loadFormView(mc);
             }
             else if (mc.status == DocumentStatus.DRAFT)
             {
-
-                btnAmend.Visible = false;
-                btnPrint.Visible = false;
+                LoadFormEdit(mc);
             }
         }
+        private void loadFormView(MC omr)
+        {
+            lbl_chief_complain.Text = WebHelpers.GetValue(omr.chief_complain);
+            lbl_history_present_illness.Text = WebHelpers.GetValue(omr.history_present_illness);
+            lbl_past_history.Text = WebHelpers.GetValue(omr.past_history);
+            lbl_clinical_findings.Text = WebHelpers.GetValue(omr.clinical_findings);
+            lbl_para_clinical_investigations.Text = WebHelpers.GetValue(omr.para_clinical_investigations);
+            lbl_diagnosis.Text = WebHelpers.GetValue(omr.diagnosis);
+            lbl_treatment.Text = WebHelpers.GetValue(omr.treatment);
+            lbl_treatment_period.Text = WebHelpers.GetValue(omr.treatment_period);
+            lbl_recommendation.Text = WebHelpers.GetValue(omr.recommendation);
+            lbl_treatment_plan.Text = WebHelpers.GetValue(omr.treatment_plan);
 
-        private void LoadDataToPrint(MC mc)
+            LoadFormControl(true);
+
+            btnComplete.Visible = false;
+            btnSave.Visible = false;
+            btnDeleteModal.Visible = false;
+
+            btnAmend.Visible = true;
+            btnPrint.Visible = true;
+        }
+        private void LoadFormEdit(MC mc)
+        {
+            // 2. Lý do đến khám
+            txt_chief_complain.Value = mc.chief_complain;
+            txt_chief_complain.Disabled = false;
+            // 3. Tóm tắt bệnh sử                          
+            txt_history_present_illness.Value = mc.history_present_illness;
+            // 4. Tiền sử bệnh                
+            txt_past_history.Value = mc.past_history;
+            // 5. Đặc điểm lâm sàng
+            txt_clinical_findings.Value = mc.clinical_findings;
+            //6. Cận lâm sàng được chỉ định
+            txt_para_clinical_investigations.Value = mc.para_clinical_investigations;
+            //7. Chẩn đoán
+            txt_diagnosis.Value = mc.diagnosis;
+            //8. Phương pháp và thuốc điều trị
+            txt_treatment.Value = mc.treatment;
+            //9. Thời gian điều trị
+            txt_treatment_period.Value = mc.treatment_period;
+            //10. Lời khuyên và theo dõi
+            txt_recommendation.Value = mc.recommendation;
+            //11. Lời khuyên và theo dõi
+            txt_treatment_plan.Value = mc.treatment_plan;
+            //
+            //
+            //
+            LoadFormControl(false);
+
+            btnAmend.Visible = false;
+            btnPrint.Visible = false;
+        }
+
+        //public void loadDataToControls(MC mc)
+        //{
+        //    try
+        //    {
+        //        DisabledControl(false);
+
+        //        //// 2. Lý do đến khám
+        //        //txt_chief_complain.Value = mc.chief_complain;
+        //        //txt_chief_complain.Disabled = false;
+        //        //// 3. Tóm tắt bệnh sử                          
+        //        //txt_history_present_illness.Value = mc.history_present_illness;
+        //        //// 4. Tiền sử bệnh                
+        //        //txt_past_history.Value = mc.past_history;
+        //        //// 5. Đặc điểm lâm sàng
+        //        //txt_clinical_findings.Value = mc.clinical_findings;
+        //        ////6. Cận lâm sàng được chỉ định
+        //        //txt_para_clinical_investigations.Value = mc.para_clinical_investigations;
+        //        ////7. Chẩn đoán
+        //        //txt_diagnosis.Value = mc.diagnosis;
+        //        ////8. Phương pháp và thuốc điều trị
+        //        //txt_treatment.Value = mc.treatment;
+        //        ////9. Thời gian điều trị
+        //        //txt_treatment_period.Value = mc.treatment_period;
+        //        ////10. Lời khuyên và theo dõi
+        //        //txt_recommendation.Value = mc.recommendation;
+        //        ////11. Lời khuyên và theo dõi
+        //        //txt_treatment_plan.Value = mc.treatment_plan;
+
+        //    } catch(Exception ex)
+        //    {
+
+        //    }
+            
+
+        //    btnCancel.Visible = false;
+        //    txt_amend_reason.Visible = false;
+
+        //    if (mc.status == DocumentStatus.FINAL)
+        //    {
+        //        btnComplete.Visible = false;
+        //        btnSave.Visible = false;
+        //        btnDeleteModal.Visible = false;
+        //        btnCancel.Visible = false;
+
+        //        btnAmend.Visible = true;
+        //        btnPrint.Visible = true;
+
+        //        DisabledControl(true);
+        //    }
+        //    else if (mc.status == DocumentStatus.DRAFT)
+        //    {
+
+        //        btnAmend.Visible = false;
+        //        btnPrint.Visible = false;
+        //    }
+        //}
+
+        private void LoadFormPrint(MC mc)
         {
             Patient patient = Patient.Instance();
+            prt_vpid.Text = prt_barcode.Text = patient.visible_patient_id;
+            
+            prt_patient_name.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
+            prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth);
 
-            prt_patient_label.PID = DataHelpers.patient.visible_patient_id;
-            prt_patient_name.Value = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
-            prt_dob.Value = DataHelpers.patient.date_of_birth.ToString("dd-MM-yyyy");
+            prt_gender.Text = WebHelpers.CreateOptions(new Option { Text = "Nam <div class='text-primary'>Male</div>", Value = "Male" }, new Option { Text = "Nữ<div class='text-primary'>Female</div>", Value = "Female" }, DataHelpers.patient.gender_e, "display: grid; grid-template-columns: 1fr 1fr; width: 300px");
 
+            prt_pid.Text = DataHelpers.patient.visible_patient_id;
+            prt_date_of_visit.Text =  WebHelpers.FormatDateTime(DataHelpers.patientVisit.actual_visit_date_time);
+            prt_chief_complain.Text = mc.chief_complain;
+            prt_history_present_illness.Text = mc.history_present_illness;
+            prt_past_history.Text = mc.past_history;
+            prt_clinical_findings.Text = mc.clinical_findings;
+            prt_para_clinical_investigations.Text = mc.para_clinical_investigations;
+            prt_diagnosis.Text = mc.diagnosis;
+            prt_treatment.Text = mc.treatment;
+            prt_treatment_period.Text = mc.treatment_period;
+            prt_recommendation.Text = mc.recommendation;
 
-            prt_gender.Options = WebHelpers.CreateOptions(new Option { Text = "Nam/ <span class='text-primary'>Male</span>", Value = "Male" }, new Option { Text = "Nữ <span class='text-primary'>Female</span>:", Value = "Female" });
-
-            prt_gender.SelectedValue = patient.gender_e;
-
-            prt_pid.Value = DataHelpers.patient.visible_patient_id;
-            prt_chief_complain.Value = mc.chief_complain;
-            prt_history_present_illness.Value = mc.history_present_illness;
-            prt_past_history.Value = mc.past_history;
-            prt_clinical_findings.Value = mc.clinical_findings;
-            prt_para_clinical_investigations.Value = mc.para_clinical_investigations;
-            prt_diagnosis.Value = mc.diagnosis;
-            prt_treatment.Value = mc.treatment;
-            prt_treatment_period.Value = mc.treatment_period;
-            prt_recommendation.Value = mc.recommendation;
-
-            prt_signature1.Content = WebHelpers.GetSignatureTemplate1("Ngày/ <span class='text-primary'>Date</span>:", "<span class='font-bold'>BÁC SĨ ĐIỀU TRỊ</span>", "<span class='font-bold'>ATTENDING DOCTOR</span>", "(Họ tên, chữ ký & MSNV)", "(Full name, Signature & ID)", "");
         }
 
         protected void btnComplete_Click(object sender, EventArgs e)
@@ -134,39 +199,27 @@ namespace EMR
 
                 UpdateData(mc);
             }
-            else
-            {
-                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
-            }
-
-        }
-
-        private string checkValidField()
-        {
-            string error = "";
-            return error;
         }
 
         private void UpdateData(MC mc)
         {
             try
             {
-                mc.amend_reason = txt_amend_reason.Value;
-                mc.chief_complain = txtChiefComplaint.Value;
-                mc.history_present_illness = txtHistoryPresentIllness.Value;
-                mc.past_history = txtPastHistory.Value;
-                mc.clinical_findings = txtClinicalFindings.Value;
-                mc.para_clinical_investigations = txtParaClinicalInvestigations.Value;
-                mc.diagnosis = txtDiagnosis.Value;
-                mc.treatment = txtTreatment.Value;
-                mc.treatment_period = txtTreatmentPeriod.Value;
-                mc.recommendation = txtRecommendation.Value;
-                mc.treatment_plan = txtTreatmentPlan.Value;
+                mc.amend_reason = txt_amend_reason.Text;
+                mc.chief_complain = txt_chief_complain.Value;
+                mc.history_present_illness = txt_history_present_illness.Value;
+                mc.past_history = txt_past_history.Value;
+                mc.clinical_findings = txt_clinical_findings.Value;
+                mc.para_clinical_investigations = txt_para_clinical_investigations.Value;
+                mc.diagnosis = txt_diagnosis.Value;
+                mc.treatment = txt_treatment.Value;
+                mc.treatment_period = txt_treatment_period.Value;
+                mc.recommendation = txt_recommendation.Value;
+                mc.treatment_plan = txt_treatment_plan.Value;
 
-                dynamic result = mc.Update();
+                dynamic result = mc.Update()[0];
 
-                if (result[0].Status == System.Net.HttpStatusCode.OK)
+                if (result.Status == System.Net.HttpStatusCode.OK)
                 {
                     Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
                     message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
@@ -196,11 +249,6 @@ namespace EMR
 
                 UpdateData(mc);
             }
-            else
-            {
-                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                message.Load(messagePlaceHolder, "Please complete the highlighted field(s).", Message.TYPE.DANGER);
-            }
         }
 
         protected void btnDelete_Click(object sender, EventArgs e)
@@ -221,36 +269,41 @@ namespace EMR
             }
         }
 
-        protected void DisabledControl(bool disabled)
+        protected void LoadFormControl(bool disabled)
         {
-            txtChiefComplaint.Disabled = disabled;
-            txtHistoryPresentIllness.Disabled = disabled;
-            txtPastHistory.Disabled = disabled;
-            txtClinicalFindings.Disabled = disabled;
-            txtParaClinicalInvestigations.Disabled = disabled;
-            txtDiagnosis.Disabled = disabled;
-            txtTreatment.Disabled = disabled;
-            txtTreatmentPeriod.Disabled = disabled;
-            txtRecommendation.Disabled = disabled;
-            txtTreatmentPlan.Disabled = disabled;
+            foreach (var prop in mc.GetType().GetProperties())
+            {
+                var control1 = FindControl(prop.Name + "_wrapper");
+                var control2 = FindControl("lbl_" + prop.Name);
+
+                if (control1 != null)
+                {
+                    control1.Visible = !disabled;
+                }
+                if (control2 != null)
+                {
+                    control2.Visible = disabled;
+                }
+            }
         }
 
         protected void btnAmend_Click(object sender, EventArgs e)
         {
+            mc = new MC(Request.QueryString["docId"]);
 
+            amendReasonWraper.Visible = true;
             btnComplete.Visible = true;
             btnCancel.Visible = true;
             btnAmend.Visible = false;
             btnPrint.Visible = false;
 
-            txt_amend_reason.Visible = true;
-            DisabledControl(false);
+            LoadFormEdit(mc);
         }
 
         protected void btnPrint_Click(object sender, EventArgs e)
         {
             mc = new MC(Request.QueryString["docId"]);
-            LoadDataToPrint(mc);
+            LoadFormPrint(mc);
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "window.print();", true);
         }
@@ -262,7 +315,7 @@ namespace EMR
 
         protected void CustomValidator2_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            args.IsValid = txt_amend_reason.Value.Length > 3;
+            args.IsValid = txt_amend_reason.Text.Length > 3;
         }
     }
 }

@@ -203,6 +203,7 @@
     <Content Include="emr\emrinfor.aspx" />
     <Content Include="emr\emrview.aspx" />
     <Content Include="icons\ChatRight.ascx" />
+    <Content Include="icons\CheckCircle.ascx" />
     <Content Include="icons\Envelope.ascx" />
     <Content Include="icons\ExclamationTriangle.ascx" />
     <Content Include="icons\X.ascx" />
@@ -403,6 +404,13 @@
     </Compile>
     <Compile Include="icons\ChatRight.ascx.designer.cs">
       <DependentUpon>ChatRight.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="icons\CheckCircle.ascx.cs">
+      <DependentUpon>CheckCircle.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="icons\CheckCircle.ascx.designer.cs">
+      <DependentUpon>CheckCircle.ascx</DependentUpon>
     </Compile>
     <Compile Include="icons\Envelope.ascx.cs">
       <DependentUpon>Envelope.ascx</DependentUpon>
@@ -1139,7 +1147,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

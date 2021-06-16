@@ -11,10 +11,9 @@
 <head runat="server">
     <title></title>
 
-    <link href="../styles/default.css" rel="stylesheet" />
-    <link href="../styles/style.min.css" rel="stylesheet" />
-    <link href="../styles/myStyle.css" rel="stylesheet" />
-    <link href="../styles/login-register-look.css" rel="stylesheet" />
+    <link href="./styles/default.css" rel="stylesheet" />
+    <link href="./styles/style.css" rel="stylesheet" />
+    <link href="./styles/myStyle.css" rel="stylesheet" />
     <style>
         .login-register {
             background-size: cover;
@@ -106,7 +105,7 @@
         <asp:UpdatePanel ID="up" runat="server">
             <ContentTemplate>
             <section id="wrapper">
-                <div class="login-register" style="background-image: url(../assets/images/background/login-register.jpg);">
+                <div class="login-register">
                     <div class="login-box card">
                         <div class="card-body">
 

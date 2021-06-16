@@ -1,6 +1,6 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="Message.ascx.cs" Inherits="EMR.Message" %>
-<%@ Register Src="~/icons/XSquare.ascx" TagPrefix="uc1" TagName="XSquare" %>
-
+<%@ Register Src="~/icons/X.ascx" TagPrefix="uc1" TagName="X" %>
+<%@ Register Src="~/icons/CheckCircle.ascx" TagPrefix="uc1" TagName="CheckCircle" %>
 
 <style>
     .message-box {
@@ -13,12 +13,11 @@
 
 <div class="card message-box" id="messageBox" runat="server">
     <div class="card-body" id="alertType" style="display: flex;" runat="server">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle mr-2" viewBox="0 0 16 16">
-            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
-            <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
-        </svg>
+        <uc1:CheckCircle runat="server"/>
         <span style="flex-grow: 1; align-items: center;" runat="server" id="messageContent"></span>
-        <a href="javascript:void(0)" onclick="document.getElementsByClassName('message-box')[0].remove()"><uc1:XSquare runat="server" ID="XSquare" /></a>
+        <a href="javascript:void(0)" onclick="document.getElementsByClassName('message-box')[0].remove()">
+            <uc1:X runat="server" ID="X" />
+        </a>
     </div>
 </div>
 
