@@ -32,7 +32,7 @@ namespace EMR
 
             amendReasonWraper.Visible = false;
             btnCancel.Visible = false;
-            prt_admitted_time.dateTime = WebHelpers.FormatDateTime(PatientVisit.Instance(Request.QueryString["pvId"]).actual_visit_date_time);
+            prt_admitted_time.dateTime = WebHelpers.FormatDateTime(PatientVisit.Instance().actual_visit_date_time);
             prt_disc_date_time.dateTime = disc.disc_date_time;
             if (disc.status == DocumentStatus.FINAL)
             {
@@ -151,7 +151,7 @@ namespace EMR
 
 
             Patient patient = Patient.Instance();
-            PatientVisit patientVisit = PatientVisit.Instance(Request["pvid"]);
+            PatientVisit patientVisit = PatientVisit.Instance();
             
             prt_fullname.Text = patient.GetFullName();
             prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth);

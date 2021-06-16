@@ -359,7 +359,7 @@ namespace EMR.OPD
         private void LoadFormPrint(Mrfv mrfv)
         {
             Patient patient = Patient.Instance();
-            PatientVisit patientVisit = PatientVisit.Instance(Request["pvid"]);
+            PatientVisit patientVisit = PatientVisit.Instance();
             
             prt_barcode.Text = prt_vpid.Text = patient.visible_patient_id;
             prt_fullname.Text = patient.GetFullName();

@@ -1,6 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ObsAtDeliRoom.aspx.cs" Inherits="EMR.ObstetricObservationAtDeliveryRoom" ValidateRequest="false" %>
 
-
 <%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="webUI" TagName="PatientInfo" %>
 <%@ Register Src="~/UserControls/Alert.ascx" TagPrefix="uc1" TagName="Alert" %>
 <%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="webUI" TagName="TextField" %>
@@ -11,18 +10,23 @@
 <%@ Register Src="~/UserControls/PrintTemplate/Date.ascx" TagPrefix="webUI" TagName="Date" %>
 <%@ Register Src="~/UserControls/Barcode.ascx" TagPrefix="webUI" TagName="Barcode" %>
 <%@ Register Src="~/UserControls/AmendReason.ascx" TagPrefix="webUI" TagName="AmendReason" %>
-
-
-
+<%@ Register Src="~/UserControls/PopupModal.ascx" TagPrefix="webUI" TagName="PopupModal" %>
+<%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="icon" TagName="ExclamationTriangle" %>
+<%@ Register Src="~/UserControls/PrintTemplate/PatientLabel1.ascx" TagPrefix="webUI" TagName="PatientLabel1" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Line.ascx" TagPrefix="webUI" TagName="Line" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Signature1.ascx" TagPrefix="webUI" TagName="Signature1" %>
+<%@ Register Src="~/UserControls/PrintTemplate/PrtRowS1.ascx" TagPrefix="webUI" TagName="PrtRowS1" %>
+<%@ Register Src="~/UserControls/PrintTemplate/PrtRowS2.ascx" TagPrefix="webUI" TagName="PrtRowS2" %>
+<%@ Register Src="~/UserControls/TextField1.ascx" TagPrefix="webUI" TagName="TextField1" %>
+<%@ Register Src="~/icons/XSquare.ascx" TagPrefix="icon" TagName="XSquare" %>
 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
-    <link href="../../styles/style.css" rel="stylesheet" />
-    <link href="../../styles/myStyle.css" rel="stylesheet" />
-    <link href="../../style/style-custom.css" rel="stylesheet" />
+    <title>OBSTETRIC OBSERVATION AT DELIVERY ROOM</title>
+    <link href="../styles/style.css" rel="stylesheet" />
+    <link href="../styles/myStyle.css" rel="stylesheet" />
 
 </head>
 <body>
@@ -31,12 +35,12 @@
             <img style="width: 200px" src="../images/AIH_PI_FULL.png" />
             <div style="flex-grow: 1; text-align: center;">
                 <div style="color: #007297; font-size: 26.6667px;">GIẤY CHỨNG NHẬN ĐIỀU TRỊ</div>
-            <div style="color: #e20e5a; font-size: 16.6667px;">MEDICAL CERTIFICATE - Mr Chung test</div>
+                <div style="color: #e20e5a; font-size: 16.6667px;">MEDICAL CERTIFICATE - Mr Chung test</div>
             </div>
             <div style="width: 200px; text-align: center">
                 <div>MAI MAI MÃI1</div>
                 <div>05-10-1960 | Nữ</div>
-                <webUI:Barcode runat="server" id="Barcode" Text="900000488" Width="200" Height="40" />
+                <webUI:Barcode runat="server" ID="Barcode" Text="900000488" Width="200" Height="40" />
                 <div>900000488</div>
             </div>
         </PrintHeader>
@@ -44,24 +48,24 @@
 
             <div class="row mb-2">
                 <div class="col-12">
-                   <webUI:Label runat="server" Title="BỆNH VIỆN QUỐC TẾ MỸ CHỨNG NHẬN:" SubTitle="AMERICAN INTERNATIONAL HOSPITAL CERTIFIES THAT" />
+                    <webUI:Label runat="server" Title="BỆNH VIỆN QUỐC TẾ MỸ CHỨNG NHẬN:" SubTitle="AMERICAN INTERNATIONAL HOSPITAL CERTIFIES THAT" />
                 </div>
             </div>
 
             <div class="row mb-2">
                 <div class="col-6">
-                   <webUI:Label runat="server" Title="Họ tên bệnh nhân:" SubTitle="Patient's name" />
+                    <webUI:Label runat="server" Title="Họ tên bệnh nhân:" SubTitle="Patient's name" />
                     <div class="d-inline-block ml-2 align-top">MAI MAI MÃI1</div>
                 </div>
                 <div class="col-6">
-                   <webUI:Label runat="server" Title="Ngày sinh:" SubTitle="DOB" />
+                    <webUI:Label runat="server" Title="Ngày sinh:" SubTitle="DOB" />
                     <div class="d-inline-block ml-2 align-top">05-10-1960</div>
                 </div>
             </div>
 
             <div class="row mb-2">
                 <div class="col-12">
-                   <webUI:Label runat="server" Title="Giới tính:" SubTitle="Gender" />
+                    <webUI:Label runat="server" Title="Giới tính:" SubTitle="Gender" />
                     <webUI:Label runat="server" Title="Nam" SubTitle="Male" />
                     <webUI:Label runat="server" Title="Nữ " SubTitle="Female" />
                 </div>
@@ -80,84 +84,83 @@
 
             <div class="row mb-2">
                 <div class="col-12">
-                   <webUI:Label runat="server" Title="Đã đến khám và điều trị tại bệnh viện của chúng tôi, với những thông tin như sau:" SubTitle="Visited and received treatment at our hospital, with the following information" />
+                    <webUI:Label runat="server" Title="Đã đến khám và điều trị tại bệnh viện của chúng tôi, với những thông tin như sau:" SubTitle="Visited and received treatment at our hospital, with the following information" />
                     <div class="d-inline-block ml-2 align-top"></div>
                 </div>
             </div>
 
             <div class="row mb-2">
                 <div class="col-12">
-                   <webUI:Label runat="server" Title="Ngày khám bệnh:" SubTitle="Date of visit" />
+                    <webUI:Label runat="server" Title="Ngày khám bệnh:" SubTitle="Date of visit" />
                     <div class="d-inline-block ml-2 align-top">05-03-2021</div>
                 </div>
             </div>
 
             <div class="row mb-2">
                 <div class="col-12">
-                   <webUI:Label runat="server" Title="Lý do đến khám:" SubTitle="Chief complaint" />
+                    <webUI:Label runat="server" Title="Lý do đến khám:" SubTitle="Chief complaint" />
                     <div class="d-inline-block ml-2 align-top"></div>
                 </div>
             </div>
 
             <div class="row mb-2">
                 <div class="col-12">
-                   <webUI:Label runat="server" Title="Tóm tắt bệnh sử:" SubTitle="History of present illness" />
+                    <webUI:Label runat="server" Title="Tóm tắt bệnh sử:" SubTitle="History of present illness" />
                     <div class="d-inline-block ml-2 align-top"></div>
                 </div>
             </div>
 
             <div class="row mb-2">
                 <div class="col-12">
-                   <webUI:Label runat="server" Title="Tiền sử bệnh:" SubTitle="Past history" />
+                    <webUI:Label runat="server" Title="Tiền sử bệnh:" SubTitle="Past history" />
                     <div class="d-inline-block ml-2 align-top"></div>
                 </div>
             </div>
 
             <div class="row mb-2">
                 <div class="col-12">
-                   <webUI:Label runat="server" Title="Đặc điểm lâm sàng:" SubTitle="Clinical findings" />
+                    <webUI:Label runat="server" Title="Đặc điểm lâm sàng:" SubTitle="Clinical findings" />
                     <div class="d-inline-block ml-2 align-top"></div>
                 </div>
             </div>
 
             <div class="row mb-2">
                 <div class="col-12">
-                   <webUI:Label runat="server" Title="Cận lâm sàng được chỉ định:" SubTitle="Para-clinical investigations" />
+                    <webUI:Label runat="server" Title="Cận lâm sàng được chỉ định:" SubTitle="Para-clinical investigations" />
                     <div class="d-inline-block ml-2 align-top">None;</div>
                 </div>
             </div>
 
             <div class="row mb-2">
                 <div class="col-12">
-                   <webUI:Label runat="server" Title="Chẩn đoán:" SubTitle="Diagnosis" />
+                    <webUI:Label runat="server" Title="Chẩn đoán:" SubTitle="Diagnosis" />
                     <div class="d-inline-block ml-2 align-top">J01.0: Acute maxillary sinusitis/ Viêm xoang hàm cấp;;</div>
                 </div>
             </div>
 
             <div class="row mb-2">
                 <div class="col-12">
-                   <webUI:Label runat="server" Title="Phương pháp và thuốc điều trị:" SubTitle="Treatment and medications" />
+                    <webUI:Label runat="server" Title="Phương pháp và thuốc điều trị:" SubTitle="Treatment and medications" />
                     <div class="d-inline-block ml-2 align-top">Paracetamol (Perfalgan) 10mg/ml;;</div>
                 </div>
             </div>
 
             <div class="row mb-2">
                 <div class="col-12">
-                   <webUI:Label runat="server" Title="Thời gian điều trị:" SubTitle="Treatment period" />
+                    <webUI:Label runat="server" Title="Thời gian điều trị:" SubTitle="Treatment period" />
                     <div class="d-inline-block ml-2 align-top"></div>
                 </div>
             </div>
 
             <div class="row mb-2">
                 <div class="col-12">
-                   <webUI:Label runat="server" Title="Lời khuyên và theo dõi:" SubTitle="Recommendation and Follow-up" />
+                    <webUI:Label runat="server" Title="Lời khuyên và theo dõi:" SubTitle="Recommendation and Follow-up" />
                     <div class="d-inline-block ml-2 align-top"></div>
                 </div>
             </div>
-            
+
             <div class="row">
                 <div class="col-6">
-
                 </div>
                 <div class="col-6 mb-2">
                     <div>
@@ -173,717 +176,921 @@
         </PrintContent>
     </webUI:PrintWindow>
 
-
-    <div class="cssclsNoPrint">
-    <!-- ============================================================== -->
-    <!-- Main wrapper - style you can find in pages.scss -->
-    <!-- ============================================================== -->
-    
-
-<body>
     <form method="post" action="#" id="form2" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
-        <div class="scroll-sidebar h-100 w-100">
-            <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
-                <ContentTemplate>
-                    <webUI:AmendReason runat="server" ID="txt_amendReason" />
-                    <webUI:PatientInfo runat="server" ID="PatientInfo1" />
 
-                    <div class="row" style="margin-bottom: 50px;">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="text-primary">OBSTETRIC OBSERVATION AT DELIVERY ROOM</h4>
-                                    <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="arrowhead"></a>
+        <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
+            <ContentTemplate>
+                <div class="cssclsNoScreen">
+                    <table class="report-container">
+                        <thead class="report-header">
+                            <tr>
+                                <th class="report-header-cell">
+                                    <div class="header-info">
+                                        <img src="../images/AIH_PI_FULL.png" />
+                                        <div class="header-info-title">
+                                            <h4>BỆNH ÁN NGOẠI TRÚ</h4>
+                                            <h5>OUTPATIENT MEDICAL RECORD</h5>
+                                        </div>
+                                        <div style="width: 175px;">
+                                            <asp:Label CssClass="d-block" runat="server" ID="prt_fullname"></asp:Label>
+                                            <asp:Label class="d-block" CssClass="d-block" runat="server" ID="prt_dob"></asp:Label>
+                                            <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
+                                            <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
+                                        </div>
+                                    </div>
+                                    <webUI:Line runat="server" ID="Line" />
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody class="report-content">
+                            <tr>
+                                <td class="report-content-cell">
+                                    <div class="main" runat="server" id="print_content">
+
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Title="Ngày khám bệnh" SubTitle="Day of visit" runat="server" />
+                                            <asp:Label runat="server" ID="prt_day_of_visit" />
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 180px 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="I." Title="Lý do đến khám:" SubTitle="Chief complaint" runat="server" />
+                                            <asp:Label runat="server" ID="prt_chief_complaint" />
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 180px 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="II." Title="Bệnh sử:" SubTitle="Medical history" runat="server" />
+                                            <asp:Label runat="server" ID="prt_medical_history" />
+                                        </div>
+
+                                        <webUI:PrtRowS1 FontBold="true" Order="III." Title="Tiền sử bệnh:" SubTitle="Atencedent medical history" runat="server" />
+
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
+                                            <webUI:PrtRowS1 FontBold="true" FixedLeft="10" Order="❖" Title="Bản Thân:" SubTitle="Personal" runat="server" />
+                                            <asp:Label runat="server" ID="prt_personal" />
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
+                                            <webUI:PrtRowS1 FontBold="true" FixedLeft="10" Order="❖" Title="Gia đình:" SubTitle="Family" runat="server" />
+                                            <asp:Label runat="server" ID="prt_family" />
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
+                                            <webUI:PrtRowS1 FontBold="true" FixedLeft="10" Order="❖" Title="Tiêm chủng:" SubTitle="Imminization" runat="server" />
+                                            <asp:Label runat="server" ID="prt_immunization" />
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
+                                            <webUI:PrtRowS1 FontBold="true" FixedLeft="10" Order="❖" Title="Thuốc đang sử dụng:" SubTitle="Current medications" runat="server" />
+                                            <asp:Label runat="server" ID="prt_current_medication" />
+                                        </div>
+
+                                        <webUI:PrtRowS1 FontBold="true" Order="IV." Title="Khám bệnh:" SubTitle="Physical examinations" runat="server" />
+
+                                        <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Order="1." Title="Dấu hiệu sinh tồn/ " SubTitle="Vital signs:" runat="server" />
+
+                                        <table class="table-bordered mb-2" style="table-layout: fixed; width: 100%">
+                                            <tr>
+                                                <td class="p-2">Nhiệt độ/ Temperature (C degree)</td>
+                                                <td class="p-2 text-right" style="width: 100px;">
+                                                    <asp:Label runat="server" ID="prt_vs_temperature" /></td>
+                                                <td class="p-2">Mạch/ Pulse (/min)</td>
+                                                <td class="p-2 text-right" style="width: 100px;">
+                                                    <asp:Label runat="server" ID="prt_pulse" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2">Cân nặng/ Weight (Kg)</td>
+                                                <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="prt_vs_weight" /></td>
+                                                <td class="p-2">Nhịp thở/ Respiratory Rate (/min)</td>
+                                                <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="prt_vs_respiratory_rate" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2">Chiều cao/Height (cm)</td>
+                                                <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="prt_vs_height" /></td>
+                                                <td class="p-2">Huyết áp/Blood pressure (mmHg)</td>
+                                                <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="prt_vs_blood_pressure" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2">Chỉ số khối cơ thể/ BMI (Kg/m2)</td>
+                                                <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="prt_vs_BMI" /></td>
+                                                <td class="p-2">Độ bão hòa Oxy/ SpO2 (%)</td>
+                                                <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="prt_vs_spO2" /></td>
+                                            </tr>
+                                        </table>
+
+
+                                        <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Order="2." Title="Khám bệnh/ " SubTitle="Physical Examination:" runat="server" />
+
+                                        <div class="d-grid" style="grid-template-columns: 10px 1fr">
+                                            <label></label>
+                                            <asp:Label runat="server" ID="prt_physical_examination" />
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="❖" Title="Yêu cầu khám chuyên khoa tâm lý" SubTitle="Psychological consultation required:" FixedLeft="5" runat="server" FixedWidth="280" />
+                                            <asp:Label runat="server" ID="prt_psy_consult_required" />
+                                        </div>
+
+                                        <webUI:PrtRowS1 FontBold="true" Order="V." Title="Chỉ định và kết quả xét nghiệm:" SubTitle="Laboratory indications and results" runat="server" />
+
+                                        <div class="d-grid" style="grid-template-columns: 20px 1fr">
+                                            <label></label>
+                                            <asp:Label runat="server" ID="prt_laboratory_indications_results" />
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px;">
+                                            <webUI:PrtRowS1 FontBold="true" FixedLeft="5" Order="❖" Title="Khảo sát bổ sung khác:" SubTitle="Additional investigations" runat="server" />
+                                            <asp:Label runat="server" ID="prt_additional_investigation" />
+                                        </div>
+
+                                        <webUI:PrtRowS1 FontBold="true" Order="VI." Title="Kết luận:" SubTitle="Conclusion" runat="server" />
+
+                                        <div class="d-grid" style="grid-template-columns: 180px 1fr; grid-gap: 5px">
+                                            <webUI:PrtRowS1 FontBold="true" Order="•" FixedLeft="10" Title="Chẩn đoán ban đầu:" SubTitle="Initial diagnosis" runat="server" />
+                                            <asp:Label runat="server" ID="prt_initial_diagnosis" />
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 180px 1fr; grid-gap: 5px">
+                                            <webUI:PrtRowS1 FontBold="true" Order="•" FixedLeft="10" Title="Chẩn đoán xác định:" SubTitle="Diagnosis" runat="server" />
+                                            <asp:Label runat="server" ID="prt_diagnosis" />
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 180px 1fr; grid-gap: 5px">
+                                            <webUI:PrtRowS1 FontBold="true" Order="•" FixedLeft="10" Title="Chẩn đoán phân biệt:" SubTitle="Differential diagnosis" runat="server" />
+                                            <asp:Label runat="server" ID="prt_differential_diagnosis" />
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 180px 1fr; grid-gap: 5px">
+                                            <webUI:PrtRowS1 FontBold="true" Order="•" FixedLeft="10" Title="Bệnh kèm theo:" SubTitle="Associated conditions" runat="server" />
+                                            <asp:Label runat="server" ID="prt_associated_conditions" />
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 85px 1fr; grid-gap: 5px;">
+                                            <webUI:PrtRowS1 FontBold="true" FixedLeft="10" Order="•" Title="Điều trị:" SubTitle="Treatment" runat="server" />
+                                            <asp:Label runat="server" ID="prt_treatment" />
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 90px 1fr">
+                                            <label></label>
+                                            <asp:Label runat="server" ID="prt_medicine" />
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 280px 1fr; grid-gap: 5px;">
+                                            <webUI:PrtRowS1 FontBold="true" FixedLeft="5" Order="❖" Title="Yêu cầu ý kiến chuyên khoa:" SubTitle="Specialized opinion requested" runat="server" />
+                                            <asp:Label runat="server" ID="prt_spec_opinion_requested" />
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 220px 1fr; grid-gap: 5px;">
+                                            <webUI:PrtRowS1 FontBold="true" FixedLeft="10" Order="•" Title="Nếu có, nêu rõ:" SubTitle="If yes, specif" runat="server" />
+                                            <asp:Label runat="server" ID="prt_spec_opinion_requested_note" />
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 220px 1fr; grid-gap: 5px;">
+                                            <webUI:PrtRowS1 FontBold="true" FixedLeft="10" Order="•" Title="Hướng dẫn cụ thể dành cho bệnh nhân:" SubTitle="Specific education required" runat="server" />
+                                            <asp:Label runat="server" ID="prt_specific_education_required" />
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 220px 1fr; grid-gap: 5px;">
+                                            <webUI:PrtRowS1 FontBold="true" FixedLeft="10" Order="•" Title="Hẹn lần khám tới:" SubTitle="Next Appointment" runat="server" />
+                                            <asp:Label runat="server" ID="prt_next_appointment" />
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr">
+                                            <div></div>
+                                            <div class="text-center" style="break-inside: avoid;">
+                                                <div class="font-bold">BÁC SĨ ĐIỀU TRỊ</div>
+                                                <div>ATTENDING DOCTOR</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+
+                        <tfoot class="report-footer">
+                            <tr>
+                                <td class="report-footer-cell">
+                                    <img style="width: 100%" src="../images/bottomline.png" />
+                                    <div class="footer-info">
+                                        <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
+                                        <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>
+                                        <div>Tel: 028 3910 9999</div>
+                                        <div>www.aih.com.vn</div>
+                                    </div>
+                                </td>
+                                <td class="report-footer-space"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="cssclsNoPrint">
+                    <div style="overflow: scroll; height: calc(100vh - 52px); overflow-x: hidden;">
+                        <asp:Panel runat="server" ID="messagePlaceHolder">
+                            <div class="card" runat="server" id="amendReasonWraper">
+                                <div class="card-body">
+                                    <h5>Lý do thay đổi/ <span class="text-primary">amend reason: </span>
+                                        <br />
+                                        <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
+                                    <div class="form-group mb-2">
+
+                                        <asp:TextBox runat="server" ID="txt_amend_reason" CssClass="el-hide" />
+                                        <div spellcheck="false" style="height: auto; text-align: left; display: inline-block;" class="form-control" id="DisplayControl" onblur="changeValue1(this, 'txt_amend_reason')" contenteditable='true' runat="server"></div>
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
+                                            ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                                    </div>
                                 </div>
-                                <div class="card-body collapse show" id="collapseOne">
-                                    <div class="form-body">
-                                        <div class="row mb-2">
-                                            <label class="control-label mb-2">Nhập phòng sinh lúc/ <span class="text-primary">Admission to Delivery room at:</span></label>
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <telerik:RadDateTimePicker runat="server" ID="dtpk_admis_delivery" Width="200px" />
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 mb-2 d-lg-flex">
-                                                <div class="w-sm-8">
-                                                    <label class="control-label mb-1">Người theo dõi/ <span class="text-primary">Observer’s name:</span></label>
-                                                </div>
-                                                <div class="form-group flex-grow-1">
-                                                    <webUI:TextField runat="server" id="txt_obs_name" />
-                                                </div>
-                                            </div>
+                            </div>
 
-                                            <div class="col-md-6 mb-2 d-lg-flex">
-                                                <div class="w-sm-8">
-                                                    <label class="control-label mb-1">Chức danh/ <span class="text-primary">Initial:</span></label>
-                                                </div>
-                                                <div class="form-group flex-grow-1">
-                                                    <webUI:TextField runat="server" id="txt_obs_initial" />
-                                                </div>
-                                            </div>
-                                        </div>
+                            <asp:ValidationSummary
+                                ID="valSum"
+                                DisplayMode="BulletList"
+                                CssClass="validationSummary"
+                                runat="server" ValidationGroup="Group1"
+                                HeaderText="Please complete the highlighted field(s)." />
+                        </asp:Panel>
 
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label class="control-label mb-1 font-bold">1. Đặc điểm trẻ sơ sinh/ <span class="text-primary">Neonatal features:</span></label>
-                                            </div>
-                                        </div>
+                        <webUI:PatientInfo runat="server" ID="PatientInfo" />
 
-                                        <div class="row mb-2">
-                                            <div class="col-md-12 mb-2 d-md-flex">
-                                                <div class="w-sm-8">
-                                                    <label class="control-label mb-1">Sinh lúc/ <span class="text-primary">Delivered at:</span></label>
-                                                </div>
-                                                <div class="form-group">
-                                                    <telerik:RadDateTimePicker runat="server" ID="dtpk_delivery_at" Width="200px" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <label class="control-label font-bold">Điểm số Apgar/ <span class="text-primary">Apgar score:</span></label>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-6 col-md-4 mb-2">
-                                                <label class="control-label mb-1">Phút thứ nhất/ <span class="text-primary">1st minute:</span></label>
-                                                <div class="form-group">
-                                                    <input id="txt_apgar_score_1" runat="server" class="form-control text-right" />
-                                                    <span class="append">điểm/ <span class="text-primary">points</span></span>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-6 col-md-4 mb-2">
-                                                <label class="control-label mb-1">Phút thứ 5/ <span class="text-primary">5st minute:</span></label>
-                                                <div class="form-group">
-                                                    <input id="txt_apgar_score_5" runat="server" class="form-control text-right" />
-                                                    <span class="append">điểm/ <span class="text-primary">points</span></span>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-6 col-md-4 mb-2">
-                                                <label class="control-label mb-1">Phút thứ 10/ <span class="text-primary">10st minute:</span></label>
-                                                <div class="form-group">
-                                                    <input id="txt_apgar_score_10" runat="server" class="form-control text-right" />
-                                                    <span class="append">điểm/ <span class="text-primary">points</span></span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-6 col-md-4 mb-2">
-                                                <label class="control-label mb-1">Cân nặng lúc sinh/ <span class="text-primary">WOB:</span></label>
-                                                <div class="form-group">
-                                                    <input id="txt_weight_of_birth" runat="server" class="form-control text-right" />
-                                                    <span class="append">gram</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-6 col-md-4 mb-2">
-                                                <label class="control-label mb-1">Chiều dài/ <span class="text-primary">Length:</span></label>
-                                                <div class="form-group">
-                                                    <input id="txt_length_of_birth" runat="server" class="form-control text-right" />
-                                                    <span class="append">cm</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-6 col-lg-4 mb-2">
-                                                <label class="control-label mb-1">Vòng đầu/ <span class="text-primary">Head circumference:</span></label>
-                                                <div class="form-group">
-                                                    <input id="txt_head_circum" runat="server" class="form-control text-right" />
-                                                    <span class="append">cm</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-1">
-                                            <div class="col-md-12">
-                                                <label class="control-label font-bold">Trẻ/ <span class="text-primary">Newborn:</span></label>
-                                            </div>
-
-                                            <div class="col-md-12">
-                                                <label class="control-label font-bold">Đơn thai/ <span class="text-primary">Signleton:</span></label>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_singleton_sex_code1" name="rad_singleton_sex_code" class="custom-control-input" runat="server" />
-                                                    <label class="custom-control-label" for="rad_singleton_sex_code1">Nam/ <span class="text-primary">Male</span></label>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-8">
-                                                <div class="custom-control custom-radio mb-1">
-                                                    <input type="radio" id="rad_singleton_sex_code2" name="rad_singleton_sex_code" class="custom-control-input" runat="server" />
-                                                    <label class="custom-control-label" for="rad_singleton_sex_code2">Nữ/ <span class="text-primary">Female</span></label>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-12">
-                                                <label class="control-label font-bold">Đa thai/ <span class="text-primary">Multiple:</span></label>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <label class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_multiple_sex_m" />
-                                                    <span class="custom-control-label">Nam/ <span class="text-primary">Male</span></span>
-                                                </label>
-                                            </div>
-
-                                            <div class="col-sm-8">
-                                                <label class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_multiple_sex_f" />
-                                                    <span class="custom-control-label">Nữ/ <span class="text-primary">Female</span></span>
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <label class="control-label mb-1">Dị tật bẩm sinh/ <span class="text-primary">Birth defect:</span></label>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" runat="server" id="rad_birth_defect1" name="rad_birth_defect" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_birth_defect1">Không/ <span class="text-primary">No</span></label>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-8">
-                                                <div class="custom-control custom-radio mb-1">
-                                                    <input type="radio" runat="server" id="rad_birth_defect2" name="rad_birth_defect" class="custom-control-input" disabled-for="txt_birth_defect_note" />
-                                                    <label class="custom-control-label" for="rad_birth_defect2">Có, chi tiết/ <span class="text-primary">Yes, specify:</span></label>
+                        <div class="row" style="margin-bottom: 50px;">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="text-primary">OBSTETRIC OBSERVATION AT DELIVERY ROOM</h4>
+                                        <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"></a>
+                                    </div>
+                                    <div class="card-body collapse show" id="collapseOne">
+                                        <div class="form-body">
+                                            <div class="row mb-2">
+                                                <div class="col-md-12 mb-2">
+                                                    <label class="h5">VI. Theo dõi thai phụ tại phòng sinh/ <span class="text-primary">Observation at delivery room</span></label>
                                                 </div>
 
-                                                <div class="form-group txt_birth_defect_note">
-                                                    <webUI:TextField runat="server" id="txt_birth_defect_note" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-12 mb-2">
-                                                <label class="control-label mb-1">Tình trạng trẻ sơ sinh sau sinh/ <span class="text-primary">Neonatal status after birth:</span></label>
-                                                <div class="form-group">
-                                                    <webUI:TextField runat="server" ID="txt_neonatal_status" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <label class="control-label mb-1">Can thiệp và kết quả/ <span class="text-primary">Intervention and results:</span></label>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_intervention1" name="rad_intervention" class="custom-control-input" runat="server" />
-                                                    <label class="custom-control-label" for="rad_intervention1">Không/ <span class="text-primary">No</span></label>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-8">
-                                                <div class="custom-control custom-radio mb-1">
-                                                    <input type="radio" id="rad_intervention2" name="rad_intervention" class="custom-control-input" runat="server" disabled-for="intervention_note_field" />
-                                                    <label class="custom-control-label" for="rad_intervention2">Có, chi tiết/ <span class="text-primary">Yes, specify:</span></label>
-                                                </div>
-
-                                                <div class="form-group intervention_note_field">
-                                                    <webUI:TextField runat="server" ID="txt_intervention_note" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <label class="control-label font-bold mb-1">2. Sổ nhau/ <span class="text-primary">Placenta delivery:</span></label>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_placenta_deli1" name="rad_placenta_deli" class="custom-control-input" runat="server" />
-                                                    <label class="custom-control-label" for="rad_placenta_deli1">Bằng tay/ <span class="text-primary">Manual</span></label>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-8">
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_placenta_deli2" name="rad_placenta_deli" class="custom-control-input" runat="server" />
-                                                    <label class="custom-control-label" for="rad_placenta_deli2">Tự nhiên/ <span class="text-primary">Spontaneous</span></label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-2">
-                                            <div class="col-md-12 mb-2 d-md-flex">
-                                                <div class="w-sm-8">
-                                                    <label class="control-label mb-1">At</label>
-                                                </div>
-                                                <div class="form-group">
-                                                    <telerik:RadDateTimePicker runat="server" ID="dtpk_pacental_deli_dt" Width="200px" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-2">
-                                            <div class="col-md-6 mb-2 d-lg-flex">
-                                                <div class="w-sm-8">
-                                                    <label class="control-label">Cách sổ nhau/ <span class="text-primary">Placenta delivery mode:</span></label>
-                                                </div>
-                                                <div class="form-group flex-grow-1">
-                                                    <webUI:TextField runat="server" ID="txt_placenta_deli_mode" />
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 mb-2 d-lg-flex">
-                                                <div class="w-sm-8">
-                                                    <label class="control-label mb-1">Cân nặng/ <span class="text-primary">Weight:</span></label>
-                                                </div>
-                                                <div class="form-group flex-grow-1">
-                                                    <input id="txt_placenta_weight" runat="server" class="form-control text-right" />
-                                                    <span class="append">gram</span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <label class="control-label mb-1">Dây rốn quấn cổ/ <span class="text-primary">Umbilical coil:</span></label>
-                                            </div>
-
-                                            <div class="col-sm-4 col-6">
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_umbilical_coil1" name="rad_umbilical_coil" class="custom-control-input" runat="server" />
-                                                    <label class="custom-control-label" for="rad_umbilical_coil1">Không/ <span class="text-primary">No</span></label>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-4 col-6">
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_umbilical_coil2" name="rad_umbilical_coil" class="custom-control-input" runat="server" />
-                                                    <label class="custom-control-label" for="rad_umbilical_coil2">Có/ <span class="text-primary">Yes</span></label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-6 mb-2 d-lg-flex">
-                                                <div class="w-sm-8">
-                                                    <label class="control-label mb-1">Chiều dài dây rốn/ <span class="text-primary">Umbilical length:</span></label>
-                                                </div>
-                                                <div class="form-group flex-grow-1">
-                                                    <input id="txt_umbilical_length" runat="server" class="form-control text-right" />
-                                                    <span class="append">cm</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 mb-2 d-lg-flex">
-                                                <div class="w-lg-8">
-                                                    <label class="control-label mb-1">Lượng máu mất sau khi sổ nhau/ <span class="text-primary">Quantity of blood loss after placenta delivery:</span></label>
-                                                </div>
-                                                <div class="form-group flex-grow-1">
-                                                    <input id="txt_blood_loss" runat="server" class="form-control text-right" />
-                                                    <span class="append">ml</span>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <label class="control-label mb-1">Can thiệp và kết quả/ <span class="text-primary">Intervention and results:</span></label>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_p_intervention1" name="rad_p_intervention" class="custom-control-input" runat="server" />
-                                                    <label class="custom-control-label" for="rad_p_intervention1">Không/ <span class="text-primary">No</span></label>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <div class="custom-control custom-radio mb-1">
-                                                    <input type="radio" id="rad_p_intervention2" name="rad_p_intervention" class="custom-control-input" disabled-for="p_intervention_note_field" runat="server" />
-                                                    <label class="custom-control-label" for="rad_p_intervention2">Có, chi tiết/ <span class="text-primary">Yes, specify</span></label>
-                                                </div>
-                                                <div class="form-group p_intervention_note_field">
-                                                    <webUI:TextField runat="server" ID="txt_p_intervention_note" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label class="control-label font-bold mb-1">3. Tình trạng sản phụ sau sinh/ <span class="text-primary">Maternal status after delivery:</span></label>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-6 col-md-4 mb-2">
-                                                <label class="control-label mb-1">SpO2:</label>
-                                                <div class="form-group">
-                                                    <input id="txt_spO2" runat="server" class="form-control text-right" />
-                                                    <span class="append">%</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-6 col-md-4 mb-2">
-                                                <label class="control-label mb-1">T°:</label>
-                                                <div class="form-group">
-                                                    <input id="txt_temp" runat="server" class="form-control text-right" />
-                                                    <span class="append">°C</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-6 col-md-4 mb-2">
-                                                <label class="control-label mb-1">Huyết áp/ <span class="text-primary">BP</span></label>
-                                                <div class="form-group">
-                                                    <input id="txt_BP" runat="server" class="form-control text-right" />
-                                                    <span class="append">mmHg</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-6 col-md-4 mb-2">
-                                                <label class="control-label mb-1">Nhịp tim/ <span class="text-primary">HR</span></label>
-                                                <div class="form-group">
-                                                    <input id="txt_HR" runat="server" class="form-control text-right" />
-                                                    <span class="append">lần/phút/bpm</span>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-6 col-md-4 mb-2">
-                                                <label class="control-label mb-1">Nhịp thở/ <span class="text-primary">RR</span></label>
-                                                <div class="form-group">
-                                                    <input id="txt_RR" runat="server" class="form-control text-right" />
-                                                    <span class="append">lần/phút/bpm</span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label class="control-label font-bold mb-1">Tổng trạng chung/ <span class="text-primary">General appearance:</span></label>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label class="control-label mb-1">Phương pháp sinh/ <span class="text-primary">Delivery mode:</span></label>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <div class="custom-control custom-radio">
-                                                    <input disabled-for="vaginal_deli_field" type="radio" id="rad_delivery_mode_code_v" name="rad_delivery_mode_code" class="custom-control-input" runat="server" />
-                                                    <label class="custom-control-label" for="rad_delivery_mode_code_v">Sanh ngã âm đạo/ <span class="text-primary">Vaginal delivery</span></label>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-8">
-                                                <div class="custom-control custom-radio">
-                                                    <input disabled-for="section_field" type="radio" id="rad_delivery_mode_code_s" name="rad_delivery_mode_code" class="custom-control-input" runat="server" />
-                                                    <label class="custom-control-label" for="rad_delivery_mode_code_s">Sanh mổ/ <span class="text-primary">C-Section:</span></label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-sm-4 mb-2">
-                                                <div class="vaginal_deli_field">
-                                                    <div class="custom-control custom-radio">
-                                                        <input type="radio" id="rad_vaginal_deli_code_s" name="rad_vaginal_deli_code" class="custom-control-input" runat="server" />
-                                                        <label class="custom-control-label" for="rad_vaginal_deli_code_s">Sanh tự nhiên/ <span class="text-primary">Spontaneous</span></label>
+                                                <div class="col-md-12 mb-2">
+                                                    <label style="width: 200px" class="control-label mb-2">Nhập phòng sinh lúc/ <span class="text-primary">Admission to Delivery room at:</span></label>
+                                                    <div class="form-group d-inline-block">
+                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_admis_delivery" Width="200px" />
                                                     </div>
-                                                    <div class="custom-control custom-radio">
-                                                        <input type="radio" id="rad_vaginal_deli_code_v" name="rad_vaginal_deli_code" class="custom-control-input" runat="server" />
-                                                        <label class="custom-control-label" for="rad_vaginal_deli_code_v">Sanh hút/ <span class="text-primary">Vacuum-assisted</span></label>
+                                                </div>
+
+                                                <div class="col-md-12 mb-2">
+                                                    <label style="width: 200px" class="control-label mb-1">Người theo dõi/ <span class="text-primary">Observer’s name:</span></label>
+                                                    <div class="form-group d-inline-block w-n">
+                                                        <webUI:TextField runat="server" ID="txt_obs_name" />
                                                     </div>
-                                                    <div class="custom-control custom-radio">
-                                                        <input type="radio" id="rad_vaginal_deli_code_f" name="rad_vaginal_deli_code" class="custom-control-input" runat="server" />
-                                                        <label class="custom-control-label" for="rad_vaginal_deli_code_f">Sanh kềm/ <span class="text-primary">Forceps-assisted</span></label>
+                                                </div>
+
+                                                <div class="col-md-12 mb-2">
+                                                    <label style="width: 200px" class="control-label mb-1">Chức danh/ <span class="text-primary">Initial:</span></label>
+                                                    <div class="form-group d-inline-block w-n">
+                                                        <webUI:TextField runat="server" ID="txt_obs_initial" />
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-8 mb-2">
-                                                <div class="section_field">
-                                                    <div class="custom-control custom-radio">
-                                                        <input type="radio" id="rad_section_code_el" name="rad_section_code" class="custom-control-input" runat="server" />
-                                                        <label class="custom-control-label" for="rad_section_code_el">Mổ chương trình/ <span class="text-primary">Elective</span></label>
+                                            <fieldset class="row mb-2">
+                                                <legend>
+                                                    <label class="control-label font-bold">1. Đặc điểm trẻ sơ sinh/ <span class="text-primary">Neonatal features:</span></label>
+                                                </legend>
+
+                                                <div class="col-md-12 mb-2">
+                                                    <label style="width: 200px" class="control-label mb-1">Sinh lúc/ <span class="text-primary">Delivered at:</span></label>
+                                                    <div class="form-group d-inline-block">
+                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_delivery_at" Width="200px" />
                                                     </div>
-                                                    <div class="custom-control custom-radio">
-                                                        <input type="radio" id="rad_section_code_em" name="rad_section_code" class="custom-control-input" runat="server" />
-                                                        <label class="custom-control-label" for="rad_section_code_em">Mổ cấp cứu/ <span class="text-primary">Emergency</span></label>
+                                                </div>
+
+                                                <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr">
+                                                    <label style="width: 200px" class="control-label">Điểm số Apgar/ <span class="text-primary">Apgar score:</span></label>
+                                                    <div>
+                                                        <div class="d-inline-block mb-2">
+                                                            <label class="control-label mb-1">Phút thứ nhất/ <span class="text-primary">1st minute:</span></label>
+                                                            <asp:Label runat="server" ID="lbl_apgar_score_1"></asp:Label>
+                                                            <div class="form-group d-inline-block" runat="server" id="apgar_score_1_wrapper">
+                                                                <input id="txt_apgar_score_1" style="width: 160px" runat="server" class="form-control text-right" />
+                                                                <span class="append">điểm/ <span class="text-primary">points</span></span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="d-inline-block mb-2">
+                                                            <label class="control-label mb-1">Phút thứ 5/ <span class="text-primary">5st minute:</span></label>
+                                                            <asp:Label runat="server" ID="lbl_apgar_score_5"></asp:Label>
+                                                            <div class="form-group d-inline-block" runat="server" id="apgar_score_5_wrapper">
+                                                                <input id="txt_apgar_score_5" runat="server" style="width: 160px" class="form-control text-right" />
+                                                            <span class="append">điểm/ <span class="text-primary">points</span></span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="d-inline-block mb-2">
+                                                            <label class="control-label mb-1">Phút thứ 10/ <span class="text-primary">10st minute:</span></label>
+                                                            <asp:Label runat="server" ID="lbl_apgar_score_10"></asp:Label>
+                                                            <div class="form-group d-inline-block" runat="server" id="apgar_score_10_wrapper">
+                                                                <input id="txt_apgar_score_10" runat="server" style="width: 160px" class="form-control text-right" />
+                                                                <span class="append">điểm/ <span class="text-primary">points</span></span>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
 
-                                        <div class="row">
-                                            <div class="col-md-12 mb-2">
-                                                <label class="control-label mb-1">Lí do can thiệp, nếu có/ <span class="text-primary">Reason for intervention, if yes:</span></label>
-                                                <div class="form-group">
-                                                    <webUI:TextField runat="server" ID="txt_interven_reason" />
-                                                </div>
-                                            </div>
-                                        </div>
+                                                <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr">
+                                                    <label style="width: 200px" class="control-label mb-1">Cân nặng lúc sinh/ <span class="text-primary">WOB:</span></label>
 
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label class="control-label mb-1">Tầng sinh môn/ <span class="text-primary">Perineum:</span></label>
-                                            </div>
+                                                    <div>
+                                                        <div class="form-group d-inline-block mb-2">
+                                                            <input id="txt_weight_of_birth" style="width: 100px" runat="server" class="form-control text-right" />
+                                                            <span class="append">gram</span>
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="control-label mb-1">Chiều dài/ <span class="text-primary">Length:</span></label>
+                                                            <div class="form-group d-inline-block">
+                                                                <input id="txt_length_of_birth" style="width: 160px" runat="server" class="form-control text-right" />
+                                                                <span class="append">cm</span>
+                                                            </div>
+                                                        </div>
 
-                                            <div class="col-sm-4">
-                                                <label class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_pre_intact" />
-                                                    <span class="custom-control-label">Nguyên vẹn/ <span class="text-primary">Intact</span></span>
-                                                </label>
-                                            </div>
+                                                        <div class="mb-2">
+                                                            <label class="control-label mb-1">Vòng đầu/ <span class="text-primary">Head circumference:</span></label>
+                                                            <div class="form-group d-inline-block">
+                                                                <input id="txt_head_circum" style="width: 160px" runat="server" class="form-control text-right" />
+                                                                <span class="append">cm</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-                                            <div class="col-sm-8 mb-2 d-sm-flex">
-                                                <div class="w-sm-7">
-                                                    <label class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_pre_lacera" disabled-for="pre_lacera_degree" />
-                                                        <span class="custom-control-label">Rách, độ/ <span class="text-primary">Laceration, degree:</span></span>
-                                                    </label>
                                                 </div>
 
-                                                <div class="form-group flex-grow-1 pre_lacera_degree">
-                                                    <webUI:TextField runat="server" ID="txt_pre_lacera_degree" />
+                                                <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr">
+                                                    <label style="width: 200px" class="control-label mb-1">Trẻ/ <span class="text-primary">Newborn:</span></label>
+                                                    <div>
+                                                        <div class="mb-2">
+                                                            <label class="control-label">Đơn thai/ <span class="text-primary">Signleton:</span></label>
+                                                            <div class="custom-control custom-radio d-inline-block">
+                                                                <input type="radio" id="rad_singleton_sex_code1" name="rad_singleton_sex_code" class="custom-control-input" runat="server" />
+                                                                <label class="custom-control-label" for="rad_singleton_sex_code1">Nam/ <span class="text-primary">Male</span></label>
+                                                            </div>
+
+                                                            <div class="custom-control custom-radio d-inline-block">
+                                                                <input type="radio" id="rad_singleton_sex_code2" name="rad_singleton_sex_code" class="custom-control-input" runat="server" />
+                                                                <label class="custom-control-label" for="rad_singleton_sex_code2">Nữ/ <span class="text-primary">Female</span></label>
+                                                                <a href="javascript:void(0)" data-clear="rad_singleton_sex_code" onclick="clear_radiobutton(this)">
+                                                                    <icon:XSquare runat="server" ID="XSquare38" />
+                                                                </a>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="mb-2">
+                                                            <label class="control-label">Đa thai/ <span class="text-primary">Multiple:</span></label>
+                                                            <label class="custom-control custom-checkbox d-inline-block">
+                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_multiple_sex_m" />
+                                                                <span class="custom-control-label">Nam/ <span class="text-primary">Male</span></span>
+                                                            </label>
+
+                                                            <label class="custom-control custom-checkbox d-inline-block">
+                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_multiple_sex_f" />
+                                                                <span class="custom-control-label">Nữ/ <span class="text-primary">Female</span></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-md-12 mb-2">
-                                                <label class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_pre_episiotomy" disabled-for="pre_episiotomy_st_field" />
-                                                    <span class="custom-control-label">Cắt/ <span class="text-primary">Episiotomy. Nếu có, cách khâu và loại chỉ/ If yes, suture and silk type:</span></span>
-                                                </label>
+                                                <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr">
+                                                    <label style="width: 200px" class="control-label mb-1">Dị tật bẩm sinh/ <span class="text-primary">Birth defect:</span></label>
+                                                    <div>
+                                                        <div class="mb-2">
+                                                            <div class="custom-control custom-radio d-inline-block">
+                                                                <input type="radio" runat="server" id="rad_birth_defect1" name="rad_birth_defect" class="custom-control-input" />
+                                                                <label class="custom-control-label" for="rad_birth_defect1">Không/ <span class="text-primary">No</span></label>
+                                                            </div>
 
-                                                <div class="form-group flex-grow-1 pre_episiotomy_st_field">
-                                                    <webUI:TextField runat="server" ID="txt_pre_episiotomy_st" />
+                                                            <div class="custom-control custom-radio d-inline-block">
+                                                                <input type="radio" runat="server" id="rad_birth_defect2" name="rad_birth_defect" class="custom-control-input" disabled-for="txt_birth_defect_note" />
+                                                                <label class="custom-control-label" for="rad_birth_defect2">Có, chi tiết/ <span class="text-primary">Yes, specify:</span></label>
+                                                                <a href="javascript:void(0)" data-clear="rad_birth_defect" onclick="clear_radiobutton(this)">
+                                                                    <icon:XSquare runat="server" ID="XSquare1" />
+                                                                </a>
+                                                            </div>
+
+                                                            <div class="form-group txt_birth_defect_note">
+                                                                <webUI:TextField runat="server" ID="txt_birth_defect_note" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
 
-                                        <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <label class="control-label mb-1">Cổ tử cung/ <span class="text-primary">Cervix:</span></label>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_cervix_intact1" name="rad_cervix_intact" class="custom-control-input" runat="server" />
-                                                    <label class="custom-control-label" for="rad_cervix_intact1">Nguyên vẹn/ <span class="text-primary">Intact</span></label>
+                                                <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr">
+                                                    <label style="width: 200px" class="control-label mb-1">Tình trạng trẻ sơ sinh sau sinh/ <span class="text-primary">Neonatal status after birth:</span></label>
+                                                    <div class="form-group">
+                                                        <webUI:TextField runat="server" ID="txt_neonatal_status" />
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_cervix_intact2" name="rad_cervix_intact" class="custom-control-input" runat="server" />
-                                                    <label class="custom-control-label" for="rad_cervix_intact2">Rách/ <span class="text-primary">Laceration</span></label>
+
+                                                <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr">
+                                                    <label style="width: 200px" class="control-label mb-1">Can thiệp và kết quả/ <span class="text-primary">Intervention and results:</span></label>
+                                                    <div class="form-group">
+                                                        <label>Intervention</label>
+                                                        <div class="custom-control custom-radio d-inline-block">
+                                                            <input type="radio" id="rad_intervention1" name="rad_intervention" class="custom-control-input" runat="server" />
+                                                            <label class="custom-control-label" for="rad_intervention1">Không/ <span class="text-primary">No</span></label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio d-inline-block">
+                                                            <input type="radio" id="rad_intervention2" name="rad_intervention" class="custom-control-input" runat="server" disabled-for="intervention_note_field" />
+                                                            <label class="custom-control-label" for="rad_intervention2">Có, chi tiết/ <span class="text-primary">Yes, specify:</span></label>
+                                                            <a href="javascript:void(0)" data-clear="rad_intervention" onclick="clear_radiobutton(this)">
+                                                                <icon:XSquare runat="server" ID="XSquare2" />
+                                                            </a>
+                                                        </div>
+
+                                                        <div class="form-group intervention_note_field">
+                                                            <label>Intervention note</label>
+                                                            <webUI:TextField runat="server" ID="txt_intervention_note" />
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                            </fieldset>
 
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label class="control-label font-bold mb-1">4. Thông tin phẫu thuật (nếu có)/ <span class="text-primary">Operation details (if possible):</span></label>
-                                            </div>
-                                        </div>
+                                             <fieldset class="row mb-2">
+                                                <legend>
+                                                    <label class="control-label font-bold">2. Sổ nhau/ <span class="text-primary">Placenta delivery:</span></label>
+                                                </legend>
 
-                                        <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <label class="control-label mb-1">Chẩn đoán tiền phẫu/ <span class="text-primary">Preoperative diagnosis:</span></label>
-                                                <div class="form-group">
-                                                    <webUI:TextField runat="server" ID="txt_preo_diagnosis" />
+                                                <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr">
+                                                    <label style="width: 200px" class="control-label"></label>
+                                                    <div class="mb-2">
+                                                        <div class="custom-control custom-radio d-inline-block">
+                                                            <input type="radio" id="rad_placenta_deli1" name="rad_placenta_deli" class="custom-control-input" runat="server" />
+                                                            <label class="custom-control-label" for="rad_placenta_deli1">Bằng tay/ <span class="text-primary">Manual</span></label>
+                                                        </div>
+
+                                                        <div class="custom-control custom-radio d-inline-block">
+                                                            <input type="radio" id="rad_placenta_deli2" name="rad_placenta_deli" class="custom-control-input" runat="server" />
+                                                            <label class="custom-control-label" for="rad_placenta_deli2">Tự nhiên/ <span class="text-primary">Spontaneous</span></label>
+                                                            <a href="javascript:void(0)" data-clear="rad_placenta_deli" onclick="clear_radiobutton(this)">
+                                                                <icon:XSquare runat="server" ID="XSquare3" />
+                                                            </a>
+                                                        </div>
+                                                        <div class="d-inline-block">
+                                                            <label class="control-label mb-1">vào lúc/ At</label>
+
+                                                            <div class="form-group d-inline-block">
+                                                                <telerik:RadDateTimePicker runat="server" ID="dtpk_pacental_deli_dt" Width="200px" />
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
                                                 </div>
-                                            </div>
-                                        </div>
 
-                                        <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <label class="control-label">Chẩn đoán hậu phẫu/ <span class="text-primary">Postoperative diagnosis:</span></label>
-                                                <div class="form-group">
-                                                    <webUI:TextField runat="server" ID="txt_post_diagnosis" />
+                                                 <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr">
+                                                     <label style="width: 200px" class="control-label">Cách sổ nhau/ <span class="text-primary">Placenta delivery mode:</span></label>
+                                                     <div class="form-group">
+                                                        <webUI:TextField runat="server" ID="txt_placenta_deli_mode" />
+                                                    </div>
+                                                 </div>
+
+                                                 <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr">
+                                                     <label style="width: 200px" class="control-label">Cân nặng/ <span class="text-primary">Weight:</span></label>
+                                                     <div class="form-group mb-2">
+                                                        <input id="txt_placenta_weight" style="width: 120px" runat="server" class="form-control text-right" />
+                                                        <span class="append">gram</span>
+                                                    </div>
+                                                 </div>
+
+                                                 <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr">
+                                                    <label style="width: 200px" class="control-label">Dây rốn quấn cổ/ <span class="text-primary">Umbilical coil:</span></label>
+                                                     <div>
+                                                         <div class="custom-control custom-radio d-inline-block">
+                                                            <input type="radio" id="rad_umbilical_coil1" name="rad_umbilical_coil" class="custom-control-input" runat="server" />
+                                                            <label class="custom-control-label" for="rad_umbilical_coil1">Không/ <span class="text-primary">No</span></label>
+                                                        </div>
+                                                         <div class="custom-control custom-radio d-inline-block">
+                                                            <input type="radio" id="rad_umbilical_coil2" name="rad_umbilical_coil" class="custom-control-input" runat="server" />
+                                                            <label class="custom-control-label" for="rad_umbilical_coil2">Có/ <span class="text-primary">Yes</span></label>
+                                                             <a href="javascript:void(0)" data-clear="rad_umbilical_coil" onclick="clear_radiobutton(this)">
+                                                                <icon:XSquare runat="server" ID="XSquare4" />
+                                                            </a>
+                                                        </div>
+                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
 
-                                        <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <asp:UpdatePanel ID="updatePanel_operations" runat="server" UpdateMode="Always">
-                                                    <ContentTemplate>
-                                                        <asp:GridView
-                                                            ShowHeaderWhenEmpty="true"
-                                                            ID="grid_operations"
-                                                            runat="server"
-                                                            CssClass="tb-responsive"
-                                                            AutoGenerateColumns="false">
-                                                            <Columns>
-                                                                <asp:TemplateField>
-                                                                    <HeaderTemplate>
-                                                                        <div style="width: 105px" class="pt-2 pb-2">Ngày/ <span class="text-primary">Date</span> - Giờ/ <span class="text-primary">hour</span></div>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <div class="form-group">
-                                                                            <telerik:RadDateTimePicker ID="date_time" SelectedDate='<%# DBNull.Value.Equals((Eval("date_time"))) ? null : Eval("date_time") %>' Width="200px" runat="server" />
+                                                 <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr">
+                                                     <label style="width: 200px" class="control-label">Chiều dài dây rốn/ <span class="text-primary">Umbilical length:</span></label>
+                                                     <div class="form-group mb-2">
+                                                        <input id="txt_umbilical_length" style="width: 120px" runat="server" class="form-control text-right" />
+                                                        <span class="append">cm</span>
+                                                    </div>
+                                                 </div>
+
+                                                 <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr">
+                                                     <label style="width: 200px" class="control-label">Lượng máu mất sau khi sổ nhau/ <span class="text-primary">Quantity of blood loss after placenta delivery:</span></label>
+                                                     <div class="form-group mb-2">
+                                                        <input id="txt_blood_loss" style="width: 120px" runat="server" class="form-control text-right" />
+                                                        <span class="append">ml</span>
+                                                    </div>
+                                                 </div>
+
+                                                 <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr">
+                                                     <label style="width: 200px" class="control-label">Can thiệp và kết quả/ <span class="text-primary">Intervention and results:</span></label>
+                                                     <div>
+                                                         <div class="custom-control custom-radio d-inline-block">
+                                                            <input type="radio" id="rad_p_intervention1" name="rad_p_intervention" class="custom-control-input" runat="server" />
+                                                            <label class="custom-control-label" for="rad_p_intervention1">Không/ <span class="text-primary">No</span></label>
+                                                        </div>
+                                                         <div class="custom-control custom-radio d-inline-block">
+                                                            <input type="radio" id="rad_p_intervention2" name="rad_p_intervention" class="custom-control-input" disabled-for="p_intervention_note_field" runat="server" />
+                                                            <label class="custom-control-label" for="rad_p_intervention2">Có, chi tiết/ <span class="text-primary">Yes, specify</span></label>
+                                                             <a href="javascript:void(0)" data-clear="rad_p_intervention" onclick="clear_radiobutton(this)">
+                                                                <icon:XSquare runat="server" ID="XSquare5" />
+                                                            </a>
+                                                        </div>
+                                                        <div class="form-group p_intervention_note_field">
+                                                            <webUI:TextField runat="server" ID="txt_p_intervention_note" />
+                                                        </div>
+                                                     </div>
+                                                 </div>
+                                            </fieldset>
+
+                                            <fieldset class="row mb-2">
+                                                <legend>
+                                                    <label class="control-label font-bold">3. Tình trạng sản phụ sau sinh/ <span class="text-primary">Maternal status after delivery:</span></label>
+                                                </legend>
+
+                                                <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr">
+                                                    <label style="width: 200px" class="control-label">SpO2:</label>
+                                                    <div class="form-group mb-2">
+                                                        <input id="txt_spO2" runat="server" class="form-control text-right" />
+                                                        <span class="append">%</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr">
+                                                    <label style="width: 200px" class="control-label">T°:</span></label>
+                                                    <div class="form-group mb-2">
+                                                        <input id="txt_temp" style="width: 120px" runat="server" class="form-control text-right" />
+                                                        <span class="append">°C</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr">
+                                                    <label style="width: 200px" class="control-label">Huyết áp/ <span class="text-primary">BP</span></label>
+                                                    <div class="form-group mb-2">
+                                                        <input id="txt_BP" runat="server" class="form-control text-right" />
+                                                        <span class="append">mmHg</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr">
+                                                    <label style="width: 200px" class="control-label">Nhịp tim/ <span class="text-primary">HR</span></label>
+                                                    <div class="form-group mb-2">
+                                                        <input id="txt_HR" runat="server" class="form-control text-right" />
+                                                        <span class="append">lần/phút/bpm</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr">
+                                                    <label style="width: 200px" class="control-label">Nhịp thở/ <span class="text-primary">RR</span></label>
+                                                    <div class="form-group mb-2">
+                                                        <input id="txt_RR" runat="server" class="form-control text-right" />
+                                                        <span class="append">lần/phút/bpm</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <fieldset class="row mb-2">
+                                                        <legend>
+                                                            <label class="control-label">Tổng trạng chung/ <span class="text-primary">General appearance:</span></label>
+                                                        </legend>
+
+                                                        <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
+                                                            <label style="width: 200px" class="control-label">Phương pháp sinh/ <span class="text-primary">Delivery mode:</span></label>
+                                                            <div class="mb-2">
+                                                                <div class="mb-2">
+                                                                    <div class="custom-control custom-radio d-inline-block">
+                                                                        <input disabled-for="vaginal_deli_field" type="radio" id="rad_delivery_mode_code_v" name="rad_delivery_mode_code" class="custom-control-input" runat="server" />
+                                                                        <label class="custom-control-label" for="rad_delivery_mode_code_v">Sanh ngã âm đạo/ <span class="text-primary">Vaginal delivery</span></label>
+                                                                    </div>
+                                                                    <div class="custom-control custom-radio d-inline-block">
+                                                                        <input disabled-for="section_field" type="radio" id="rad_delivery_mode_code_s" name="rad_delivery_mode_code" class="custom-control-input" runat="server" />
+                                                                        <label class="custom-control-label" for="rad_delivery_mode_code_s">Sanh mổ/ <span class="text-primary">C-Section:</span></label>
+                                                                        <a href="javascript:void(0)" data-clear="rad_delivery_mode_code" onclick="clear_radiobutton(this)">
+                                                                            <icon:XSquare runat="server" ID="XSquare6" />
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                                <div>
+                                                                    <div class="vaginal_deli_field">
+                                                                        <div class="custom-control custom-radio">
+                                                                            <input type="radio" id="rad_vaginal_deli_code_s" name="rad_vaginal_deli_code" class="custom-control-input" runat="server" />
+                                                                            <label class="custom-control-label" for="rad_vaginal_deli_code_s">Sanh tự nhiên/ <span class="text-primary">Spontaneous</span></label>
                                                                         </div>
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField>
-                                                                    <HeaderTemplate>
-                                                                        <div style="width: 300px">Phương pháp phẫu thuật và vô cảm/ <span class="text-primary">Surgical and Anesthesia methods</span></div>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <webUI:TextField Value='<%#Eval("surgical_anesthesia") %>' DataKey="surgical_anesthesia" runat="server" />
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField>
-                                                                    <HeaderTemplate>
-                                                                        <div style="width: 300px">Phẫu thuật viên/ <span class="text-primary">Surgeon</span></div>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <webUI:TextField Value='<%#Eval("surgeon") %>' DataKey="surgeon" runat="server" />
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField>
-                                                                    <HeaderTemplate>
-                                                                        <div style="width: 300px">Bác sĩ gây mê/ <span class="text-primary">Anesthesiologist</span></div>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <webUI:TextField Value='<%#Eval("anesthesiologist") %>' DataKey="anesthesiologist" runat="server" />
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:CommandField ShowDeleteButton="True" ButtonType="Button" />
+                                                                        <div class="custom-control custom-radio">
+                                                                            <input type="radio" id="rad_vaginal_deli_code_v" name="rad_vaginal_deli_code" class="custom-control-input" runat="server" />
+                                                                            <label class="custom-control-label" for="rad_vaginal_deli_code_v">Sanh hút/ <span class="text-primary">Vacuum-assisted</span></label>
+                                                                        </div>
+                                                                        <div class="custom-control custom-radio">
+                                                                            <input type="radio" id="rad_vaginal_deli_code_f" name="rad_vaginal_deli_code" class="custom-control-input" runat="server" />
+                                                                            <label class="custom-control-label" for="rad_vaginal_deli_code_f">Sanh kềm/ <span class="text-primary">Forceps-assisted</span></label>
+                                                                        </div>
+                                                                    </div>
 
-                                                            </Columns>
-                                                        </asp:GridView>
-                                                        <asp:UpdateProgress ID="updateProgress_operations" runat="server" AssociatedUpdatePanelID="updatePanel_operations">
-                                                            <ProgressTemplate>
-                                                                Please wait....
-                                                            </ProgressTemplate>
-                                                        </asp:UpdateProgress>
-                                                        <div class="mt-2">
-                                                            <asp:Button ID="btn_grid_operations_add" OnClick="btn_grid_operations_add_Click" runat="server" CssClass="btn btn-sm btn-outline-primary" Text="Add row" />
+                                                                    <div class="section_field">
+                                                                        <div class="custom-control custom-radio">
+                                                                            <input type="radio" id="rad_section_code_el" name="rad_section_code" class="custom-control-input" runat="server" />
+                                                                            <label class="custom-control-label" for="rad_section_code_el">Mổ chương trình/ <span class="text-primary">Elective</span></label>
+                                                                        </div>
+                                                                        <div class="custom-control custom-radio">
+                                                                            <input type="radio" id="rad_section_code_em" name="rad_section_code" class="custom-control-input" runat="server" />
+                                                                            <label class="custom-control-label" for="rad_section_code_em">Mổ cấp cứu/ <span class="text-primary">Emergency</span></label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </ContentTemplate>
-                                                    <Triggers>
-                                                        <asp:AsyncPostBackTrigger ControlID="btn_grid_operations_add" EventName="Click" />
-                                                    </Triggers>
-                                                </asp:UpdatePanel>
-                                            </div>
-                                        </div>
 
-                                        <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <label class="control-label mb-1">Tai biến/ <span class="text-primary">Incident:</span></label>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_sur_incident1" name="rad_sur_incident" class="custom-control-input" runat="server" />
-                                                    <label class="custom-control-label" for="rad_sur_incident1">Không/ <span class="text-primary">No</span></label>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <div class="custom-control custom-radio mb-1">
-                                                    <input type="radio" id="rad_sur_incident2" name="rad_sur_incident" class="custom-control-input" disabled-for="sur_incident_note_field" runat="server" />
-                                                    <label class="custom-control-label" for="rad_sur_incident2">Có, chi tiết/ <span class="text-primary">Yes, specify:</span></label>
-                                                </div>
-
-                                                <div class="form-group sur_incident_note_field">
-                                                    <webUI:TextField runat="server" ID="txt_sur_incident_note" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <label class="control-label mb-1">Biến chứng/ <span class="text-primary">Complication:</span></label>
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="custom-control custom-radio">
-                                                    <input type="radio" id="rad_sur_complication1" name="rad_sur_complication" class="custom-control-input" runat="server" />
-                                                    <label class="custom-control-label" for="rad_sur_complication1">Không/ <span class="text-primary">No</span></label>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-8">
-                                                <div class="custom-control custom-radio mb-1">
-                                                    <input type="radio" id="rad_sur_complication2" name="rad_sur_complication" class="custom-control-input" disabled-for="sur_complication_note_field" runat="server" />
-                                                    <label class="custom-control-label" for="rad_sur_complication2">Có, chi tiết/ <span class="text-primary">Yes, specify:</span></label>
-                                                </div>
-
-                                                <div class="form-group sur_complication_note_field">
-                                                    <webUI:TextField runat="server" ID="txt_sur_complication_note" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="col-md-12 mb-2">
-                                                <label class="control-label font-bold mb-1">5. Kế hoạch điều trị/ <span class="text-primary">Treatment plan:</span></label>
-                                                <div class="form-group">
-                                                    <webUI:TextField runat="server" ID="txt_treatment_plan" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-actions mb-3">
-                                            <asp:Button ID="btnComplete" OnClick="btnComplete_Click" class="btn btn-primary" runat="server" Text="Complete" />
-
-                                            <asp:Button ID="btnSave" OnClick="btnSave_Click" class="btn btn-primary" runat="server" Text="Save" />
-
-                                            <asp:Button ID="btnDeleteModal" data-toggle="modal" data-target="#deleteDocumentModal" OnClick="btnAmend_Click" class="btn btn-danger" runat="server" Text="Delete" />
-
-                                            <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
-
-                                            <asp:Button ID="btnPrint" CssClass="btn btn-secondary" runat="server" Text="Print" OnClientClick="window.print()" />
-
-                                            <asp:Button ID="btnCancel" CssClass="btn btn-secondary" runat="server" OnClick="btnCancel_Click" Text="Cancel" />
-                                        </div>
-
-                                        <div class="modal fade" id="deleteDocumentModal" tabindex="-1" role="dialog" aria-labelledby="deleteDocumentModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="deleteDocumentModalLabel">Delete document</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <p runat="server">Please provide reason for deletion</p>
-                                                        <div class="form-group mb-2">
-                                                            <webUI:TextField runat="server" ID="TextField1" />
+                                                        <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr">
+                                                            <label style="width: 200px" class="control-label">Lí do can thiệp, nếu có/ <span class="text-primary">Reason for intervention, if yes:</span></label>
+                                                            <div class="form-group">
+                                                                <webUI:TextField runat="server" ID="txt_interven_reason" />
+                                                            </div>
                                                         </div>
-                                                        <div class="text-danger" runat="server">Nội dung lý do xóa phải trên 3 ký tự</div>
+
+                                                        <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr">
+                                                            <label style="width: 200px" class="control-label">Tầng sinh môn/ <span class="text-primary">Perineum:</span></label>
+                                                            <div>
+                                                                <label class="custom-control custom-checkbox d-inline-block">
+                                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_pre_intact" />
+                                                                    <span class="custom-control-label">Nguyên vẹn/ <span class="text-primary">Intact</span></span>
+                                                                </label>
+
+                                                                <div class="d-inline-block">
+                                                                    <label class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_pre_lacera" disabled-for="pre_lacera_degree" />
+                                                                        <span class="custom-control-label">Rách, độ/ <span class="text-primary">Laceration, degree:</span></span>
+                                                                    </label>
+                                                                    <div class="form-group flex-grow-1 pre_lacera_degree">
+                                                                        <webUI:TextField runat="server" ID="txt_pre_lacera_degree" />
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="d-inline-block">
+                                                                    <label class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_pre_episiotomy" disabled-for="pre_episiotomy_st_field" />
+                                                                        <span class="custom-control-label">Cắt/ <span class="text-primary">Episiotomy. Nếu có, cách khâu và loại chỉ/ If yes, suture and silk type:</span></span>
+                                                                    </label>
+
+                                                                    <div class="form-group flex-grow-1 pre_episiotomy_st_field">
+                                                                        <webUI:TextField runat="server" ID="txt_pre_episiotomy_st" />
+                                                                    </div>
+                                                                </div>
+
+
+
+                                                            </div>
+                                                        </div>
+
+                                                    </fieldset>
+                                                </div>
+                                            </fieldset>
+
+
+
+                                            <div class="row mb-2">
+                                                <div class="col-md-12">
+                                                    <label class="control-label mb-1">Cổ tử cung/ <span class="text-primary">Cervix:</span></label>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio" id="rad_cervix_intact1" name="rad_cervix_intact" class="custom-control-input" runat="server" />
+                                                        <label class="custom-control-label" for="rad_cervix_intact1">Nguyên vẹn/ <span class="text-primary">Intact</span></label>
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                                        <asp:Button runat="server" Text="Delete" ID="btnDelete" class="btn btn-danger" OnClick="btnDelete_Click" />
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio" id="rad_cervix_intact2" name="rad_cervix_intact" class="custom-control-input" runat="server" />
+                                                        <label class="custom-control-label" for="rad_cervix_intact2">Rách/ <span class="text-primary">Laceration</span></label>
                                                     </div>
                                                 </div>
                                             </div>
 
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="control-label font-bold mb-1">4. Thông tin phẫu thuật (nếu có)/ <span class="text-primary">Operation details (if possible):</span></label>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-md-12">
+                                                    <label class="control-label mb-1">Chẩn đoán tiền phẫu/ <span class="text-primary">Preoperative diagnosis:</span></label>
+                                                    <div class="form-group">
+                                                        <webUI:TextField runat="server" ID="txt_preo_diagnosis" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-md-12">
+                                                    <label class="control-label">Chẩn đoán hậu phẫu/ <span class="text-primary">Postoperative diagnosis:</span></label>
+                                                    <div class="form-group">
+                                                        <webUI:TextField runat="server" ID="txt_post_diagnosis" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-md-12">
+                                                    <asp:UpdatePanel ID="updatePanel_operations" runat="server" UpdateMode="Always">
+                                                        <ContentTemplate>
+                                                            <asp:GridView
+                                                                ShowHeaderWhenEmpty="true"
+                                                                ID="grid_operations"
+                                                                runat="server"
+                                                                CssClass="tb-responsive"
+                                                                AutoGenerateColumns="false">
+                                                                <Columns>
+                                                                    <asp:TemplateField>
+                                                                        <HeaderTemplate>
+                                                                            <div style="width: 105px" class="pt-2 pb-2">Ngày/ <span class="text-primary">Date</span> - Giờ/ <span class="text-primary">hour</span></div>
+                                                                        </HeaderTemplate>
+                                                                        <ItemTemplate>
+                                                                            <div class="form-group">
+                                                                                <telerik:RadDateTimePicker ID="date_time" SelectedDate='<%# DBNull.Value.Equals((Eval("date_time"))) ? null : Eval("date_time") %>' Width="200px" runat="server" />
+                                                                            </div>
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField>
+                                                                        <HeaderTemplate>
+                                                                            <div style="width: 300px">Phương pháp phẫu thuật và vô cảm/ <span class="text-primary">Surgical and Anesthesia methods</span></div>
+                                                                        </HeaderTemplate>
+                                                                        <ItemTemplate>
+                                                                            <webUI:TextField Value='<%#Eval("surgical_anesthesia") %>' DataKey="surgical_anesthesia" runat="server" />
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField>
+                                                                        <HeaderTemplate>
+                                                                            <div style="width: 300px">Phẫu thuật viên/ <span class="text-primary">Surgeon</span></div>
+                                                                        </HeaderTemplate>
+                                                                        <ItemTemplate>
+                                                                            <webUI:TextField Value='<%#Eval("surgeon") %>' DataKey="surgeon" runat="server" />
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField>
+                                                                        <HeaderTemplate>
+                                                                            <div style="width: 300px">Bác sĩ gây mê/ <span class="text-primary">Anesthesiologist</span></div>
+                                                                        </HeaderTemplate>
+                                                                        <ItemTemplate>
+                                                                            <webUI:TextField Value='<%#Eval("anesthesiologist") %>' DataKey="anesthesiologist" runat="server" />
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:CommandField ShowDeleteButton="True" ButtonType="Button" />
+
+                                                                </Columns>
+                                                            </asp:GridView>
+                                                            <asp:UpdateProgress ID="updateProgress_operations" runat="server" AssociatedUpdatePanelID="updatePanel_operations">
+                                                                <ProgressTemplate>
+                                                                    Please wait....
+                                                                </ProgressTemplate>
+                                                            </asp:UpdateProgress>
+                                                            <div class="mt-2">
+                                                                <asp:Button ID="btn_grid_operations_add" OnClick="btn_grid_operations_add_Click" runat="server" CssClass="btn btn-sm btn-outline-primary" Text="Add row" />
+                                                            </div>
+                                                        </ContentTemplate>
+                                                        <Triggers>
+                                                            <asp:AsyncPostBackTrigger ControlID="btn_grid_operations_add" EventName="Click" />
+                                                        </Triggers>
+                                                    </asp:UpdatePanel>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-md-12">
+                                                    <label class="control-label mb-1">Tai biến/ <span class="text-primary">Incident:</span></label>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio" id="rad_sur_incident1" name="rad_sur_incident" class="custom-control-input" runat="server" />
+                                                        <label class="custom-control-label" for="rad_sur_incident1">Không/ <span class="text-primary">No</span></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <div class="custom-control custom-radio mb-1">
+                                                        <input type="radio" id="rad_sur_incident2" name="rad_sur_incident" class="custom-control-input" disabled-for="sur_incident_note_field" runat="server" />
+                                                        <label class="custom-control-label" for="rad_sur_incident2">Có, chi tiết/ <span class="text-primary">Yes, specify:</span></label>
+                                                    </div>
+
+                                                    <div class="form-group sur_incident_note_field">
+                                                        <webUI:TextField runat="server" ID="txt_sur_incident_note" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2">
+                                                <div class="col-md-12">
+                                                    <label class="control-label mb-1">Biến chứng/ <span class="text-primary">Complication:</span></label>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio" id="rad_sur_complication1" name="rad_sur_complication" class="custom-control-input" runat="server" />
+                                                        <label class="custom-control-label" for="rad_sur_complication1">Không/ <span class="text-primary">No</span></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-8">
+                                                    <div class="custom-control custom-radio mb-1">
+                                                        <input type="radio" id="rad_sur_complication2" name="rad_sur_complication" class="custom-control-input" disabled-for="sur_complication_note_field" runat="server" />
+                                                        <label class="custom-control-label" for="rad_sur_complication2">Có, chi tiết/ <span class="text-primary">Yes, specify:</span></label>
+                                                    </div>
+
+                                                    <div class="form-group sur_complication_note_field">
+                                                        <webUI:TextField runat="server" ID="txt_sur_complication_note" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12 mb-2">
+                                                    <label class="control-label font-bold mb-1">5. Kế hoạch điều trị/ <span class="text-primary">Treatment plan:</span></label>
+                                                    <div class="form-group">
+                                                        <webUI:TextField runat="server" ID="txt_treatment_plan" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-actions mb-3">
+                                                <asp:Button ID="btnComplete" OnClick="btnComplete_Click" class="btn btn-primary" runat="server" Text="Complete" />
+
+                                                <asp:Button ID="btnSave" OnClick="btnSave_Click" class="btn btn-primary" runat="server" Text="Save" />
+
+                                                <asp:Button ID="btnDeleteModal" data-toggle="modal" data-target="#deleteDocumentModal" OnClick="btnAmend_Click" class="btn btn-danger" runat="server" Text="Delete" />
+
+                                                <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
+
+                                                <asp:Button ID="btnPrint" CssClass="btn btn-secondary" runat="server" Text="Print" OnClientClick="window.print()" />
+
+                                                <asp:Button ID="btnCancel" CssClass="btn btn-secondary" runat="server" OnClick="btnCancel_Click" Text="Cancel" />
+                                            </div>
+
+                                            <div class="modal fade" id="deleteDocumentModal" tabindex="-1" role="dialog" aria-labelledby="deleteDocumentModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="deleteDocumentModalLabel">Delete document</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <p runat="server">Please provide reason for deletion</p>
+                                                            <div class="form-group mb-2">
+                                                                <webUI:TextField runat="server" ID="TextField1" />
+                                                            </div>
+                                                            <div class="text-danger" runat="server">Nội dung lý do xóa phải trên 3 ký tự</div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                            <asp:Button runat="server" Text="Delete" ID="btnDelete" class="btn btn-danger" OnClick="btnDelete_Click" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                </ContentTemplate>
-                <Triggers>
-                    <asp:PostBackTrigger ControlID="btnAmend" />
-                    <asp:PostBackTrigger ControlID="btnCancel" />
-                    <%--<asp:PostBackTrigger ControlID="btnSave" />
-                    <asp:PostBackTrigger ControlID="btnComplete" />--%>
-                </Triggers>
-            </asp:UpdatePanel>
-        </div>
+                        </div>
+                    </div>
+                </div>
+            </ContentTemplate>
+            <Triggers>
+                <asp:AsyncPostBackTrigger ControlID="btnPrint" />
+                <asp:AsyncPostBackTrigger ControlID="btnSave" />
+                <asp:AsyncPostBackTrigger ControlID="btnAmend" />
+                <asp:AsyncPostBackTrigger ControlID="btnCancel" />
+                <asp:AsyncPostBackTrigger ControlID="btnComplete" />
+            </Triggers>
+        </asp:UpdatePanel>
     </form>
-  </div>
+    <script src="../scripts/jquery-3.2.1.min.js"></script>
+    <script src="../scripts/bootstrap.min.js"></script>
+    <script src="../scripts/myScript.js"></script>
+    <script src="../scripts/contenteditable.min.js"></script>
+    <script src="../scripts/waves.js"></script>
 
-    <script src="../../scripts/jquery-3.2.1.min.js"></script>
-    <script src="../../scripts/bootstrap.min.js"></script>
-    <script src="../../scripts/perfect-scrollbar.jquery.min.js"></script>
-    <script src="../../scripts/custom.min.js"></script>
-    <script src="../../scripts/myScript.js"></script>
-    <script src="../../scripts/contenteditable.min.js"></script>
+    <script type="text/javascript">
+
+        function beforeAsyncPostBack() {
+            var curtime = new Date();
+        }
+
+        function afterAsyncPostBack() {
+        }
+
+    </script>
+
 </body>
 </html>
+

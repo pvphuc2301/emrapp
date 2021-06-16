@@ -65,6 +65,7 @@ namespace EMR
         public static string varUseName = "chung.nguyen"; // UseName: get username AD login hien tai
         public static string varDocumentStatus;// Document Status: kiem tra trang thai Document
         public static string varNotifications;// Thong bao ket qua xu ly: thanh cong/ fail
+        public static string _LOCATION;
 
         public static PatientInfo patient;
         public static PatientInfo LoadPatientInfomation(string varPID)//object sender, EventArgs e

@@ -22,6 +22,7 @@ namespace EMR
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            CheckUserID();
             //if (Session["PageOpenEMR"] != null)
             //{
             //    HttpContext current_ss = HttpContext.Current;
@@ -29,19 +30,11 @@ namespace EMR
             //    // The page is already opened in another tab.
             //}
             //else { Session["PageOpenEMR"] = true; }
-
             varPID = Request.QueryString["pid"]; // "97052A99-0134-11EB-B34D-D89EF37D444C";//  "C248E0FC-39B6-493F-A197-6CF2A96B37AD";//
             varVPID = Request.QueryString["vbid"]; //"3afc144a-86ca-11eb-9dfe-dca2660bc0a2";// ValueHiddenField.Value;
             //varVisibleID = Request.QueryString["vbid"]; //"900031267";
             //LoadPatientInfomation();
-
-            UserID = (string)Session["UserID"];
-            string redirecturl = "../login.aspx?ReturnUrl=";
-            redirecturl += Request.ServerVariables["script_name"] + "?";
-            redirecturl += Server.UrlEncode(Request.QueryString.ToString());
-            if (string.IsNullOrEmpty(UserID))
-                Response.Redirect(redirecturl);
-
+            
             lblUserName.InnerText = UserID;
             //
             ConnClass ConnStr = new ConnClass();
@@ -49,11 +42,14 @@ namespace EMR
             ConnStringEMR = ConnStr.SQL_EMRConnString;
 
             if (!IsPostBack)
-            {                
+            {
+
+                BindLocation();
+                
                 DataHelpers.LoadPatientInfomation(varPID);
 
                 new Patient(varPID);
-
+                
                 DateTime dob;
 
                 DateTime.TryParse(Convert.ToString(DataHelpers.patient.date_of_birth), out dob);
@@ -65,8 +61,31 @@ namespace EMR
                 FetchImage();
             }
 
+            if (Request["__EVENTTARGET"] == "location_Change")
+            {
+                DataHelpers._LOCATION = Request["__EVENTARGUMENT"];
+                Response.Redirect(Request.RawUrl);
+            }
             //if (Convert.ToString(Session["company_code"]) == "AIH")            
         }
+
+        private void BindLocation()
+        {
+
+            lbl_location.Text = DataHelpers._LOCATION;
+            switch (DataHelpers._LOCATION)
+            {
+                case "AIH":
+                    location_cli.Visible = true;
+                    location_aih.Visible = false;
+                    break;
+                case "CLI":
+                    location_cli.Visible = false;
+                    location_aih.Visible = true;
+                    break;
+            }
+        }
+
         protected void FetchImage()
         {
             string apiURL = "api/patient/patient-indicator/" + varPID;
@@ -150,7 +169,7 @@ namespace EMR
         {
             if (!IsPostBack)
             {
-                dynamic response = WebHelpers.GetAPI("api/emr/menu-visit/" + varPID);
+                dynamic response = WebHelpers.GetAPI(string.Format("api/emr/menu-visit/{0}/{1}", DataHelpers._LOCATION, varPID));
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
@@ -171,7 +190,9 @@ namespace EMR
 
                         DataHelpers.LoadPatientVisitInfomation(ParentID);
 
-                        dynamic response = WebHelpers.GetAPI("api/emr/menu-form/" + ParentID);
+                        new PatientVisit(ParentID);
+
+                        dynamic response = WebHelpers.GetAPI(string.Format("api/emr/menu-form/{0}/{1}", DataHelpers._LOCATION, ParentID));
 
                         if (response.Status == System.Net.HttpStatusCode.OK)
                         {
@@ -185,7 +206,7 @@ namespace EMR
         public void LoadLeftMenu()//object sender, EventArgs e
         {
             string query = "";
-            dynamic response = WebHelpers.GetAPI("api/emr/menu-form/" + varPID);
+            dynamic response = WebHelpers.GetAPI(string.Format("api/emr/menu-form/{0}/{1}", DataHelpers._LOCATION, varPID));
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -226,7 +247,7 @@ namespace EMR
         //}
         public string Return_Doc_URL(object varModelId, object varDocID, object varPVID)
         {
-            string tmp = ""; string apiURL = "api/emr/get-api/" + varModelId;
+            string tmp = ""; string apiURL = string.Format("api/emr/get-api/{0}/{1}", DataHelpers._LOCATION, varModelId);
             dynamic response = WebHelpers.GetAPI(apiURL);
 
             if (response.Status == System.Net.HttpStatusCode.OK)
@@ -428,7 +449,7 @@ namespace EMR
         [System.Web.Services.WebMethod]
         public static string lblURL_Click(string varModelId, string varDocID, string varPID, string varVPID)
         {
-            string apiURL = "api/emr/get-api/" + varModelId;
+            string apiURL = string.Format("api/emr/get-api/{0}/{1}", DataHelpers._LOCATION, varModelId);
             dynamic response = WebHelpers.GetAPI(apiURL);
 
             if (response.Status == System.Net.HttpStatusCode.OK)
@@ -438,6 +459,31 @@ namespace EMR
             }
 
             return null;
+        }
+
+        protected void location_Change(string location)
+        {
+            DataHelpers._LOCATION = location;
+        }
+
+        private void CheckUserID()
+        {
+            UserID = (string)Session["UserID"];
+            string redirecturl = "../login.aspx?ReturnUrl=";
+            redirecturl += Request.ServerVariables["script_name"] + "?";
+            redirecturl += Server.UrlEncode(Request.QueryString.ToString());
+            if (string.IsNullOrEmpty(UserID))
+                Response.Redirect(redirecturl);
+        }
+
+        protected void Unnamed_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void location_cli_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

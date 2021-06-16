@@ -82,7 +82,7 @@ namespace EMR
             args.totalPages = -1;
             args.userName = "my.nguyen";
 
-            string apiString = string.Format("api/patient/encounter-history/{0}?pageIndex={1}&pageSize={2}&keyword={3}", varPID, args.pageIndex, args.pageSize, args.userName);
+            string apiString = string.Format("api/patient/encounter-history/{0}/{1}?pageIndex={2}&pageSize={3}&keyword={4}", DataHelpers._LOCATION, varPID, args.pageIndex, args.pageSize, args.userName);
 
             UpdateRadGrid(RadGrid1, apiString, args);
         }
@@ -142,13 +142,13 @@ namespace EMR
             string modelID = _params[0];
             string userName = (string)Session["UserID"];
 
-            dynamic response = WebHelpers.GetAPI("api/emr/check-document-exists/" + PVID + "/" + modelID);
+            dynamic response = WebHelpers.GetAPI(string.Format("api/emr/check-document-exists/{0}/{1}/{2}", DataHelpers._LOCATION, PVID, modelID));
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
 
-                dynamic response2 = WebHelpers.GetAPI("api/emr/get-api/" + modelID);
+                dynamic response2 = WebHelpers.GetAPI(string.Format("api/emr/get-api/{0}/{1}",DataHelpers._LOCATION, modelID));
 
                 if(response2.Status == System.Net.HttpStatusCode.OK)
                 {
@@ -162,15 +162,14 @@ namespace EMR
                     DataHelpers.varModelId = modelID;
                     DataHelpers.varPVId = PVID;
 
-                    dynamic response3 = WebHelpers.PostAPI("api/" + data.api + "/add", objTemp);
+                    dynamic response3 = WebHelpers.PostAPI(string.Format("api/{0}/add/{1}", data.api, DataHelpers._LOCATION), objTemp);
 
                     if (response3.Status == System.Net.HttpStatusCode.OK)
                     {
-                        dynamic response4 = WebHelpers.PostAPI("api/" + data.api + "/log/" + docId);
+                        dynamic response4 = WebHelpers.PostAPI(string.Format("api/{0}/log/{1}/{2}", data.api, DataHelpers._LOCATION, docId));
                         if(response4.Status == System.Net.HttpStatusCode.OK)
                         {
-
-                           string url = string.Format("../{0}?modelId={1}&docId={2}&pId={3}&vpId={4}&pvid={5}", _params[1], modelID, docId, varPID, Request["vpid"], PVID);
+                            string url = string.Format("../{0}?modelId={1}&docId={2}&pId={3}&vpId={4}&pvid={5}", _params[1], modelID, docId, varPID, Request["vpid"], PVID);
 
                             Response.Redirect(url);
                         }

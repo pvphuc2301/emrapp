@@ -187,7 +187,7 @@ namespace EMR
         private void LoadFormPrint(POMR pomr)
         {
             Patient patient = Patient.Instance();
-            PatientVisit patientVisit = PatientVisit.Instance(Request["pvid"]);
+            PatientVisit patientVisit = PatientVisit.Instance();
             prt_fullname.Text = patient.GetFullName() + " " + patient.title_l;
             prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth) + " | " + patient.GetGender();
             prt_vpid.Text = prt_barcode.Text = patient.visible_patient_id;

@@ -16,11 +16,12 @@ namespace EMR
         public dynamic Value { get; set; }
         public dynamic FixWidth { get; set; }
     }
+    
     public class PatientVisit
     {
-        protected PatientVisit(string visible_patient_id)
+        public PatientVisit(string patient_visit_id)
         {
-            dynamic response = WebHelpers.GetAPI("api/emr/patient-visit/" + visible_patient_id);
+            dynamic response = WebHelpers.GetAPI(string.Format("api/emr/patient-visit/{0}/{1}", DataHelpers._LOCATION, patient_visit_id));
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -32,12 +33,8 @@ namespace EMR
 
         private static readonly object _lock = new object();
         private static PatientVisit instance = null;
-        public static PatientVisit Instance(string visible_patient_id)
+        public static PatientVisit Instance()
         {
-            if (instance == null)
-            {
-                instance = new PatientVisit(visible_patient_id);
-            }
             return instance;
         }
 
@@ -639,8 +636,8 @@ namespace EMR
 
     public class Oadr
     {
-        #region properties
-        private string api = "api/oadr";
+        #region Properties
+        private static string api = "api/oadr";
         public dynamic document_id { get; set; }
         public dynamic user_name { get; set; }
         public dynamic status { get; set; }
@@ -700,6 +697,7 @@ namespace EMR
         public dynamic treatment_plan { get; set; }
         #endregion
 
+        #region Codes
         public static Dictionary<string, string> DELIVERY_MODE_CODE = new Dictionary<string, string>()
         {
             { "S", "Sanh mổ/ C-Section" },
@@ -748,7 +746,9 @@ namespace EMR
                 { "anesthesiologist", "" },
             };
         }
+        #endregion
 
+        #region Constructors
         public Oadr(
             dynamic document_id ,
             dynamic user_name ,
@@ -880,17 +880,19 @@ namespace EMR
             }
         }
 
+        #endregion
+
         #region METHODS
         public string[] Update()
         {
             string[] message = new string[2];
 
-            dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
+            dynamic response1 = WebHelpers.PostAPI(string.Format("{0}/edit/{1}",api, DataHelpers._LOCATION), this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
+                dynamic response2 = WebHelpers.PostAPI(string.Format("{0}/log/{1}/{2}", api, DataHelpers._LOCATION, document_id));
                 message[1] = response2;
             }
 
@@ -901,12 +903,12 @@ namespace EMR
         {
             string[] message = new string[2];
 
-            dynamic response1 = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docId));
+            dynamic response1 = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}/{2}", DataHelpers._LOCATION, userName, docId));
 
             message[0] = response1;
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI("api/oadr/log/" + docId);
+                dynamic response2 = WebHelpers.PostAPI(string.Format("{0}/log/{1}/{2}", api, DataHelpers._LOCATION, docId));
                 message[1] = response2;
             }
 

@@ -268,7 +268,7 @@ namespace EMR
         private void LoadFormPrint(Omr omr1)
         {
             Patient patient = Patient.Instance();
-            PatientVisit patientVisit = PatientVisit.Instance(Request["pvid"]);
+            PatientVisit patientVisit = PatientVisit.Instance();
             prt_fullname.Text = patient.GetFullName() + " " + patient.title_l;
             prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth) + " | " + patient.GetGender();
             prt_vpid.Text = prt_barcode.Text = patient.visible_patient_id;
@@ -368,9 +368,9 @@ namespace EMR
         }
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            dynamic result = POMR.Delete((string)Session["UserId"], Request.QueryString["docId"]);
+            dynamic result = POMR.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
 
-            if (result[0].Status == System.Net.HttpStatusCode.OK)
+            if (result.Status == System.Net.HttpStatusCode.OK)
             {
                 string pid = Request["pid"];
                 string vpid = Request["vpid"];
@@ -379,7 +379,7 @@ namespace EMR
             }
             else
             {
-                Session["PageNotFound"] = result[0];
+                Session["PageNotFound"] = result;
                 Response.Redirect("../Other/PageNotFound.aspx", false);
             }
         }

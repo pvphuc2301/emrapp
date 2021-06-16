@@ -772,12 +772,13 @@
         </div>
     </form>
 
-    <script src="../scripts/jquery-3.2.1.min.js"></script>
-    <script src="../scripts/bootstrap.min.js"></script>
-    <script src="../scripts/perfect-scrollbar.jquery.min.js"></script>
-    <script src="../scripts/myScript.js"></script>
-    <script src="../scripts/emrScript.js"></script>
+    <script src="scripts/jquery-3.2.1.min.js"></script>
+    <script src="scripts/bootstrap.min.js"></script>
+    <script src="scripts/perfect-scrollbar.jquery.min.js"></script>
+    <script src="scripts/myScript.js"></script>
+    <script src="scripts/emrScript.js"></script>
     <script src="scripts/waves.js"></script>
+
     <script type="text/javascript">
         function beforeAsyncPostBack() {
             var curtime = new Date();

@@ -16,10 +16,11 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 
-namespace EMR 
+namespace EMR
 {
     public static class WebHelpers
     {
+        //public static string URL = "http://172.16.0.78:8088/";
         public static string URL = "http://172.16.0.78:8082/";
         public static DataTable GetJSONToDataTable(string JSONData)
         {

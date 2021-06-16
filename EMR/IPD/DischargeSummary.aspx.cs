@@ -156,7 +156,7 @@ namespace EMR
         private void LoadFormPrint(Diss diss)
         {
             Patient patient = Patient.Instance();
-            PatientVisit patientVisit = PatientVisit.Instance(Request["pvid"]);
+            PatientVisit patientVisit = PatientVisit.Instance();
 
             prt_fullname.InnerText = string.Format("{0} - {1}", patient.GetFullName(), patient.gender_l);
             prt_DOB.InnerText = "DOB: " + WebHelpers.FormatDateTime(patient.date_of_birth);

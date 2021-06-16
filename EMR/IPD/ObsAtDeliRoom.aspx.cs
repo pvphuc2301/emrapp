@@ -12,9 +12,11 @@ namespace EMR
 {
     public partial class ObstetricObservationAtDeliveryRoom : System.Web.UI.Page
     {
-        Oadr oadr;
+        Oadr oadr; string UserID = "";
         protected void Page_Load(object sender, EventArgs e)
         {
+            CheckUserID();
+
             if (!IsPostBack)
             {
                 Initial();
@@ -27,335 +29,495 @@ namespace EMR
             if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
             if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
 
-            oadr = new Oadr(DataHelpers.varDocId);
+            oadr = new Oadr(Request.QueryString["docId"]);
 
-            loadDataToOMRControls(oadr);
+            amendReasonWraper.Visible = false;
+            btnCancel.Visible = false;
+            prt_barcode.Text = Patient.Instance().visible_patient_id;
+            if (oadr.status == DocumentStatus.FINAL)
+            {
+                loadFormView(oadr);
+            }
+            else if (oadr.status == DocumentStatus.DRAFT)
+            {
+                LoadFormEdit(oadr);
+            }
         }
 
-        public void loadDataToOMRControls(Oadr oadr)
+        #region Load Forms
+        private void LoadFormEdit(Oadr oadr)
+        {
+            WebHelpers.BindDateTimePicker(dtpk_admis_delivery, oadr.admis_delivery);
+            txt_obs_name.Value = oadr.obs_name;
+            txt_obs_initial.Value = oadr.obs_initial;
+            WebHelpers.BindDateTimePicker(dtpk_delivery_at, oadr.delivery_at);
+            txt_apgar_score_1.Value = oadr.apgar_score_1;
+            txt_apgar_score_5.Value = oadr.apgar_score_5;
+            txt_apgar_score_10.Value = oadr.apgar_score_10;
+            txt_weight_of_birth.Value = oadr.weight_of_birth;
+            txt_length_of_birth.Value = oadr.length_of_birth;
+            txt_head_circum.Value = oadr.head_circum;
+
+            if (oadr.birth_defect != null)
+            {
+                rad_birth_defect2.Checked = oadr.birth_defect;
+                txt_birth_defect_note.Value = oadr.birth_defect_note;
+            }
+            //Neonatal status after birth
+            txt_neonatal_status.Value = oadr.neonatal_status;
+            //Intervention and results
+            if (oadr.intervention != null)
+            {
+                if (oadr.intervention)
+                {
+                    rad_birth_defect2.Checked = true;
+                    txt_birth_defect_note.Value = oadr.intervention_note;
+                }
+                else
+                {
+                    rad_birth_defect1.Checked = true;
+                }
+            }
+
+            //
+            if (oadr.placenta_deli != null)
+            {
+                if (oadr.placenta_deli)
+                {
+                    rad_placenta_deli1.Checked = true;
+                }
+                else
+                {
+                    rad_placenta_deli2.Checked = true;
+                }
+            }
+
+            if (oadr.singleton_sex_code == "M")
+            {
+                rad_singleton_sex_code1.Checked = true;
+            }
+            else if (oadr.singleton_sex_code == "F")
+            {
+                rad_singleton_sex_code2.Checked = true;
+            }
+
+            foreach (DataRow row in WebHelpers.GetJSONToDataTable(oadr.multiple_sex).Rows)
+            {
+                ((HtmlInputCheckBox)FindControl("cb_multiple_sex_" + row.Field<dynamic>("cde").ToLower())).Checked = true;
+            }
+
+            if (oadr.birth_defect != null)
+            {
+                if (oadr.birth_defect)
+                {
+                    rad_birth_defect1.Checked = true;
+                }
+                else
+                {
+                    rad_birth_defect2.Checked = true;
+                    txt_birth_defect_note.Value = oadr.birth_defect_note;
+                }
+            }
+
+            WebHelpers.BindDateTimePicker(dtpk_pacental_deli_dt, oadr.pacental_deli_dt);
+
+            txt_placenta_deli_mode.Value = oadr.placenta_deli_mode;
+            txt_placenta_weight.Value = oadr.placenta_weight;
+            txt_weight_of_birth.Value = oadr.weight_of_birth;
+
+            if (oadr.umbilical_coil != null)
+            {
+                if (oadr.umbilical_coil)
+                {
+                    rad_umbilical_coil2.Checked = true;
+                }
+                else
+                {
+                    rad_umbilical_coil1.Checked = true;
+                }
+            }
+            txt_umbilical_length.Value = oadr.umbilical_length;
+
+            if (oadr.intervention != null)
+            {
+                if (oadr.intervention)
+                {
+                    rad_intervention2.Checked = true;
+                    txt_intervention_note.Value = oadr.intervention_note;
+                }
+                else
+                {
+                    rad_intervention1.Checked = true;
+                }
+            }
+
+            txt_blood_loss.Value = oadr.blood_loss;
+            if (oadr.p_intervention != null)
+            {
+                if (oadr.p_intervention)
+                {
+                    rad_p_intervention2.Checked = true;
+                    txt_p_intervention_note.Value = oadr.p_intervention_note;
+                }
+                else
+                {
+                    rad_p_intervention1.Checked = true;
+                }
+            }
+            txt_spO2.Value = oadr.spO2;
+            txt_temp.Value = oadr.temp;
+            txt_BP.Value = oadr.bp;
+            txt_HR.Value = oadr.hr;
+            txt_RR.Value = oadr.rr;
+
+            if (oadr.delivery_mode_code == Oadr.DELIVERY_MODE_CODE["S"])
+            {
+                rad_delivery_mode_code_s.Checked = true;
+
+                if (oadr.section_code == "EM")
+                {
+                    rad_section_code_em.Checked = true;
+                }
+                else if (oadr.section_code == "EL")
+                {
+                    rad_section_code_el.Checked = true;
+                }
+            }
+            else if (oadr.delivery_mode_code == "V")
+            {
+                rad_delivery_mode_code_v.Checked = true;
+
+                if (oadr.vaginal_deli_code == "V")
+                {
+                    rad_vaginal_deli_code_v.Checked = true;
+                }
+                else if (oadr.vaginal_deli_code == "F")
+                {
+                    rad_vaginal_deli_code_f.Checked = true;
+                }
+                if (oadr.vaginal_deli_code == "S")
+                {
+                    rad_vaginal_deli_code_s.Checked = true;
+                }
+            }
+
+            txt_interven_reason.Value = oadr.interven_reason;
+            if (oadr.pre_intact != null)
+            {
+                if (oadr.pre_intact) { cb_pre_intact.Checked = true; }
+            }
+
+            if (oadr.pre_lacera != null)
+            {
+                if (oadr.pre_lacera) { cb_pre_lacera.Checked = true; txt_pre_lacera_degree.Value = oadr.pre_lacera_degree; }
+            }
+
+            if (oadr.pre_episiotomy != null)
+            {
+                if (oadr.pre_episiotomy) { cb_pre_episiotomy.Checked = true; txt_pre_episiotomy_st.Value = oadr.pre_episiotomy_st; }
+            }
+
+            if (oadr.cervix_intact != null)
+            {
+                if (oadr.cervix_intact) { rad_cervix_intact1.Checked = true; }
+                else { rad_cervix_intact2.Checked = true; }
+            }
+
+            txt_preo_diagnosis.Value = oadr.preo_diagnosis;
+            txt_post_diagnosis.Value = oadr.post_diagnosis;
+
+            _BindGridView(grid_operations, WebHelpers.GetJSONToDataTable(oadr.operations));
+
+            //DataTable operations_tb = new DataTable();
+            //foreach (KeyValuePair<string, string> col in Oadr.TABLE.OPERATION)
+            //{
+            //    operations_tb.Columns.Add(col.Key);
+            //}
+            //oadr.operations = WebHelpers.GetJSONFromTable(grid_operations, operations_tb);
+
+            if (oadr.sur_incident != null)
+            {
+                if (oadr.sur_incident) { rad_sur_incident2.Checked = true; txt_sur_incident_note.Value = oadr.sur_incident_note; }
+                else { rad_sur_incident1.Checked = true; }
+            }
+
+            if (oadr.sur_complication != null)
+            {
+                if (oadr.sur_complication) { rad_sur_complication2.Checked = true; txt_sur_complication_note.Value = oadr.sur_complication_note; }
+                else { rad_sur_complication1.Checked = true; }
+            }
+
+            txt_treatment_plan.Value = oadr.treatment_plan;
+
+            LoadFormControl(false);
+            btnAmend.Visible = false;
+            btnPrint.Visible = false;
+        }
+        private void loadFormView(Oadr oadr)
+        {
+            //1
+            //lbl_chief_complain.Text = WebHelpers.GetValue(omr.chief_complain);
+            //lbl_current_medication.Text = WebHelpers.GetValue(omr.current_medication);
+            ////2
+            //lbl_personal.Text = WebHelpers.GetValue(omr.personal);
+            //if (DataHelpers.CalculateAge(DataHelpers.patient.date_of_birth) >= 18)
+            //{
+            //    habits_field.Visible = true;
+
+
+            //    lbl_habits_smoking.Text = omr.habits_smoking != null && omr.habits_smoking ? "Có, ghi số gói trong năm/ Yes, specify pack years: " + WebHelpers.GetValue(omr.habits_smoking_pack) : "Không/ No";
+            //    lbl_habits_alcohol.Text = omr.habits_alcohol != null && omr.habits_alcohol ? "Có, ghi rõ/ Yes, specify: " + WebHelpers.GetValue(omr.habits_alcohol_note) : "Không/ No";
+            //    lbl_habits_drugs.Text = omr.habits_drugs != null && omr.habits_drugs ? "Có, ghi rõ/ Yes, specify: " + WebHelpers.GetValue(omr.habits_drugs_note) : "Không/ No";
+            //    lbl_habits_physical_exercise.Text = omr.habits_physical_exercise != null && omr.habits_physical_exercise ? "Có, ghi rõ/ Yes, specify: " + WebHelpers.GetValue(omr.habits_phy_exer_note) : "Không/ No";
+            //    lbl_habits_other.Text = WebHelpers.GetValue(omr.habits_other);
+            //}
+            //else
+            //{
+            //    habits_field.Visible = false;
+            //}
+
+            //lbl_medical_history.Text = WebHelpers.GetValue(omr.medical_history);
+
+            //if (omr.allergy != null)
+            //{
+            //    lbl_allergy.Text = omr.allergy ? "Có, ghi rõ/ Yes, specify: " + WebHelpers.GetValue(omr.allergy_note) : "Không/ No";
+            //}
+            //else
+            //{
+            //    omr.allergy_note = "—";
+            //}
+
+            //lbl_family.Text = WebHelpers.GetValue(omr.family);
+            //lbl_immunization.Text = WebHelpers.GetValue(omr.immunization);
+
+            //vs_temperature.Text = WebHelpers.GetValue(omr.vs_temperature);
+            //vs_weight.Text = WebHelpers.GetValue(omr.vs_weight);
+            //vs_height.Text = WebHelpers.GetValue(omr.vs_height);
+            //vs_bmi.Text = WebHelpers.GetValue(omr.vs_BMI);
+            //vs_pulse.Text = WebHelpers.GetValue(omr.vs_pulse);
+            //vs_heart_rate.Text = WebHelpers.GetValue(omr.vs_heart_rate);
+            //vs_respiratory_rate.Text = WebHelpers.GetValue(omr.vs_respiratory_rate);
+            //vs_blood_pressure.Text = WebHelpers.GetValue(omr.vs_blood_pressure);
+            //vs_spo2.Text = WebHelpers.GetValue(omr.vs_spO2);
+
+            //lbl_physical_examination.Text = DataHelpers.FormatPhysicalExamination(omr.physical_examination);
+
+            //if (omr.treatment_code != null)
+            //{
+            //    if (omr.treatment_code == "OPD")
+            //    {
+            //        lbl_medicine.Text = WebHelpers.GetValue(omr.medicine);
+            //    }
+            //}
+
+            //if (omr.psy_consult_required != null)
+            //{
+            //    lbl_psy_consult_required.Text = omr.psy_consult_required ? "Có/ Yes" : "Không/ No";
+            //}
+            //else
+            //{
+            //    lbl_psy_consult_required.Text = "—";
+            //}
+
+            //lbl_laboratory_indications_results.Text = WebHelpers.GetValue(omr.laboratory_indications_results);
+            //lbl_additional_investigation.Text = WebHelpers.GetValue(omr.additional_investigation);
+            //lbl_initial_diagnosis.Text = WebHelpers.GetValue(omr.initial_diagnosis);
+            //lbl_diagnosis.Text = WebHelpers.GetValue(omr.diagnosis);
+            //lbl_differential_diagnosis.Text = WebHelpers.GetValue(omr.differential_diagnosis);
+            //lbl_associated_conditions.Text = WebHelpers.GetValue(omr.associated_conditions);
+            //lbl_treatment_code.Text = WebHelpers.GetValue(omr.treatment_desc);
+
+            //if (omr.spec_opinion_requested != null)
+            //{
+            //    lbl_spec_opinion_requested.Text = omr.spec_opinion_requested ? "Có, ghi rõ/ Yes, specify: " + omr.spec_opinion_requested_note : "Không/ No";
+            //}
+            //else { lbl_spec_opinion_requested.Text = "—"; }
+
+            //lbl_specific_education_required.Text = WebHelpers.GetValue(omr.specific_education_required);
+            //lbl_next_appointment.Text = WebHelpers.GetValue(omr.next_appointment);
+
+            //LoadFormControl(true);
+
+            //btnComplete.Visible = false;
+            //btnSave.Visible = false;
+            //btnDeleteModal.Visible = false;
+            //btnUpdateVitalSign.Visible = false;
+
+            btnAmend.Visible = true;
+            btnPrint.Visible = true;
+        }
+        private void LoadFormPrint(Oadr oadr)
+        {
+            //Patient patient = Patient.Instance();
+            //PatientVisit patientVisit = PatientVisit.Instance();
+            //prt_fullname.Text = patient.GetFullName() + " " + patient.title_l;
+            //prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth) + " | " + patient.GetGender();
+            //prt_vpid.Text = prt_barcode.Text = patient.visible_patient_id;
+
+            //prt_day_of_visit.Text = WebHelpers.FormatDateTime(patientVisit.actual_visit_date_time);
+            //prt_chief_complaint.Text = omr1.chief_complain;
+            //prt_medical_history.Text = omr1.medical_history;
+            //prt_personal.Text = omr1.personal;
+            //prt_family.Text = omr1.family;
+            //prt_immunization.Text = omr1.immunization;
+            //prt_current_medication.Text = omr1.current_medication;
+            ////IV.
+            ////1.
+            //prt_vs_temperature.Text = omr1.vs_temperature;
+            //prt_vs_weight.Text = omr1.vs_weight;
+            //prt_vs_height.Text = omr1.vs_height;
+            //prt_vs_BMI.Text = omr1.vs_BMI;
+            //prt_pulse.Text = omr1.vs_pulse;
+            //prt_vs_respiratory_rate.Text = omr1.vs_respiratory_rate;
+            //prt_vs_blood_pressure.Text = omr1.vs_blood_pressure;
+            //prt_vs_spO2.Text = omr1.vs_spO2;
+            ////2.
+            //prt_physical_examination.Text = DataHelpers.FormatPhysicalExamination(omr1.physical_examination);
+
+            //prt_psy_consult_required.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, omr.psy_consult_required, "display: grid; grid-template-columns: 1fr 1fr; width: 250px");
+
+            //prt_laboratory_indications_results.Text = omr1.laboratory_indications_results;
+            //prt_additional_investigation.Text = omr1.additional_investigation;
+            //prt_initial_diagnosis.Text = omr1.initial_diagnosis;
+            //prt_diagnosis.Text = omr1.diagnosis;
+            //prt_differential_diagnosis.Text = omr1.differential_diagnosis;
+            //prt_associated_conditions.Text = omr1.associated_conditions;
+
+            //prt_treatment.Text = WebHelpers.CreateOptions(Omr.TREATMENT_CODE, (string)omr.treatment_code, "display: grid; grid-template-columns: 1fr 1fr 1fr;");
+
+            //if (omr.treatment_code == "OPD")
+            //{ prt_medicine.Text = omr.medicine; }
+
+            //prt_spec_opinion_requested.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, omr.spec_opinion_requested, "display: grid; grid-template-columns: 1fr 1fr; width: 250px");
+
+            //if (omr.spec_opinion_requested != null)
+            //{
+            //    if (omr.spec_opinion_requested)
+            //    {
+            //        prt_spec_opinion_requested_note.Text = omr.spec_opinion_requested_note;
+            //    }
+            //}
+
+            //prt_specific_education_required.Text = omr.specific_education_required;
+
+            //prt_next_appointment.Text = omr1.next_appointment;
+        }
+        #endregion
+
+        #region Events
+        protected void btnComplete_Click(object sender, EventArgs e)
+        {
+            if (Page.IsValid)
+            {
+                oadr = new Oadr(DataHelpers.varDocId);
+                oadr.status = DocumentStatus.FINAL;
+                oadr.user_name = (string)Session["UserID"];
+
+                UpdateData(oadr);
+            }
+        }
+        protected void btnAmend_Click(object sender, EventArgs e)
+        {
+            oadr = new Oadr(Request.QueryString["docId"]);
+
+            amendReasonWraper.Visible = true;
+            btnComplete.Visible = true;
+            btnCancel.Visible = true;
+            btnAmend.Visible = false;
+            btnPrint.Visible = false;
+
+            LoadFormEdit(oadr);
+        }
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+            if (Page.IsValid)
+            {
+                oadr = new Oadr(Request.QueryString["docId"]);
+                oadr.status = DocumentStatus.DRAFT;
+                oadr.user_name = (string)Session["UserID"];
+
+                UpdateData(oadr);
+            }
+        }
+        protected void btnPrint_Click(object sender, EventArgs e)
+        {
+            oadr = new Oadr(Request.QueryString["docId"]);
+            LoadFormPrint(oadr);
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "window.print();", true);
+        }
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            Initial();
+        }
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            dynamic result = Oadr.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
+
+            if (result.Status == System.Net.HttpStatusCode.OK)
+            {
+                string pid = Request["pid"];
+                string vpid = Request["vpid"];
+
+                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+            }
+            else
+            {
+                Session["PageNotFound"] = result;
+                Response.Redirect("../Other/PageNotFound.aspx", false);
+            }
+        }
+        protected void btn_grid_operations_add_Click(object sender, EventArgs e)
         {
             try
             {
-                WebHelpers.BindDateTimePicker(dtpk_admis_delivery, oadr.admis_delivery);
-                txt_obs_name.Value = oadr.obs_name;
-                txt_obs_initial.Value = oadr.obs_initial;
-                WebHelpers.BindDateTimePicker(dtpk_delivery_at, oadr.delivery_at);
-                txt_apgar_score_1.Value = oadr.apgar_score_1;
-                txt_apgar_score_5.Value = oadr.apgar_score_5;
-                txt_apgar_score_10.Value = oadr.apgar_score_10;
-                txt_weight_of_birth.Value = oadr.weight_of_birth;
-                txt_length_of_birth.Value = oadr.length_of_birth;
-                txt_head_circum.Value = oadr.head_circum;
+                DataTable table = (DataTable)ViewState[grid_operations.ID];
 
-                if (oadr.birth_defect != null)
+                if (table.Rows.Count <= 0)
                 {
-                    rad_birth_defect2.Checked = oadr.birth_defect;
-                    txt_birth_defect_note.Value = oadr.birth_defect_note;
-                }
-                //Neonatal status after birth
-                txt_neonatal_status.Value = oadr.neonatal_status;
-                //Intervention and results
-                if (oadr.intervention != null)
-                {
-                    if (oadr.intervention)
+                    foreach (KeyValuePair<string, string> col in Oadr.TABLE.OPERATION)
                     {
-                        rad_birth_defect2.Checked = true;
-                        txt_birth_defect_note.Value = oadr.intervention_note;
-                    }
-                    else
-                    {
-                        rad_birth_defect1.Checked = true;
+                        table.Columns.Add(col.Key);
                     }
                 }
 
-                //
-                if(oadr.placenta_deli != null)
+                for (int r = 0; r < grid_operations.Rows.Count; r++)
                 {
-                    if (oadr.placenta_deli)
+                    for (int i = 0; i < grid_operations.Rows[r].Cells.Count; i++)
                     {
-                        rad_placenta_deli1.Checked = true;
-                    }
-                    else
-                    {
-                        rad_placenta_deli2.Checked = true;
-                    }
-                }
+                        try
+                        {
+                            if (grid_operations.Rows[r].Cells[i].Controls[1] is TextField)
+                            {
+                                TextField text2 = grid_operations.Rows[r].Cells[i].Controls[1] as TextField;
 
-                if(oadr.singleton_sex_code == "M")
-                {
-                    rad_singleton_sex_code1.Checked = true;
-                }
-                else if (oadr.singleton_sex_code == "F") 
-                {
-                    rad_singleton_sex_code2.Checked = true;
-                }
-
-                foreach (DataRow row in WebHelpers.GetJSONToDataTable(oadr.multiple_sex).Rows)
-                {
-                    ((HtmlInputCheckBox)FindControl("cb_multiple_sex_" + row.Field<dynamic>("cde").ToLower())).Checked = true;
-                }
-
-                if (oadr.birth_defect != null)
-                {
-                    if (oadr.birth_defect)
-                    {
-                        rad_birth_defect1.Checked = true;
-                    }
-                    else
-                    {
-                        rad_birth_defect2.Checked = true;
-                        txt_birth_defect_note.Value = oadr.birth_defect_note;
+                                table.Rows[r][text2.DataKey] = text2.Value;
+                            }
+                            else if (grid_operations.Rows[r].Cells[i].Controls[1] is RadDateTimePicker)
+                            {
+                                RadDateTimePicker dtpk = grid_operations.Rows[r].Cells[i].Controls[1] as RadDateTimePicker;
+                                table.Rows[r][dtpk.ID] = DateTime.Parse(dtpk.SelectedDate.ToString());
+                            }
+                        }
+                        catch { }
                     }
                 }
 
-                WebHelpers.BindDateTimePicker(dtpk_pacental_deli_dt, oadr.pacental_deli_dt);
+                DataRow dtRow = table.NewRow();
 
-                txt_placenta_deli_mode.Value = oadr.placenta_deli_mode;
-                txt_placenta_weight.Value = oadr.placenta_weight;
-                txt_weight_of_birth.Value = oadr.weight_of_birth;
+                dtRow = table.NewRow();
+                table.Rows.Add(dtRow);
 
-                if (oadr.umbilical_coil != null)
-                {
-                    if (oadr.umbilical_coil)
-                    {
-                        rad_umbilical_coil2.Checked = true;
-                    }
-                    else
-                    {
-                        rad_umbilical_coil1.Checked = true;
-                    }
-                }
-                txt_umbilical_length.Value = oadr.umbilical_length;
-
-                if (oadr.intervention != null)
-                {
-                    if (oadr.intervention)
-                    {
-                        rad_intervention2.Checked = true;
-                        txt_intervention_note.Value = oadr.intervention_note;
-                    }
-                    else
-                    {
-                        rad_intervention1.Checked = true;
-                    }
-                }
-
-                txt_blood_loss.Value = oadr.blood_loss;
-                if (oadr.p_intervention != null)
-                {
-                    if (oadr.p_intervention)
-                    {
-                        rad_p_intervention2.Checked = true;
-                        txt_p_intervention_note.Value = oadr.p_intervention_note;
-                    }
-                    else
-                    {
-                        rad_p_intervention1.Checked = true;
-                    }
-                }
-                txt_spO2.Value = oadr.spO2;
-                txt_temp.Value = oadr.temp;
-                txt_BP.Value = oadr.bp;
-                txt_HR.Value = oadr.hr;
-                txt_RR.Value = oadr.rr;
-
-                if(oadr.delivery_mode_code == Oadr.DELIVERY_MODE_CODE["S"])
-                {
-                    rad_delivery_mode_code_s.Checked = true;
-
-                    if(oadr.section_code == "EM")
-                    {
-                        rad_section_code_em.Checked = true;
-                    } else if (oadr.section_code == "EL")
-                    {
-                        rad_section_code_el.Checked = true;
-                    }
-                }
-                else if (oadr.delivery_mode_code == "V")
-                {
-                    rad_delivery_mode_code_v.Checked = true;
-
-                    if (oadr.vaginal_deli_code == "V")
-                    {
-                        rad_vaginal_deli_code_v.Checked = true;
-                    }
-                    else if (oadr.vaginal_deli_code == "F")
-                    {
-                        rad_vaginal_deli_code_f.Checked = true;
-                    }
-                    if (oadr.vaginal_deli_code == "S")
-                    {
-                        rad_vaginal_deli_code_s.Checked = true;
-                    }
-                }
-
-                txt_interven_reason.Value = oadr.interven_reason;
-                if(oadr.pre_intact != null)
-                {
-                    if (oadr.pre_intact) { cb_pre_intact.Checked = true; }
-                }
-
-                if (oadr.pre_lacera != null)
-                {
-                    if (oadr.pre_lacera) { cb_pre_lacera.Checked = true; txt_pre_lacera_degree.Value = oadr.pre_lacera_degree; }
-                }
-
-                if(oadr.pre_episiotomy != null)
-                {
-                    if (oadr.pre_episiotomy) { cb_pre_episiotomy.Checked = true; txt_pre_episiotomy_st.Value = oadr.pre_episiotomy_st; }
-                }
-
-                if(oadr.cervix_intact != null)
-                {
-                    if (oadr.cervix_intact) { rad_cervix_intact1.Checked = true; }
-                    else { rad_cervix_intact2.Checked = true; }
-                }
-
-                txt_preo_diagnosis.Value = oadr.preo_diagnosis;
-                txt_post_diagnosis.Value = oadr.post_diagnosis;
-
-                _BindGridView(grid_operations, WebHelpers.GetJSONToDataTable(oadr.operations));
-
-                //DataTable operations_tb = new DataTable();
-                //foreach (KeyValuePair<string, string> col in Oadr.TABLE.OPERATION)
-                //{
-                //    operations_tb.Columns.Add(col.Key);
-                //}
-                //oadr.operations = WebHelpers.GetJSONFromTable(grid_operations, operations_tb);
-
-                if (oadr.sur_incident != null)
-                {
-                    if (oadr.sur_incident) { rad_sur_incident2.Checked = true; txt_sur_incident_note.Value = oadr.sur_incident_note; }
-                    else { rad_sur_incident1.Checked = true; }
-                }
-
-                if (oadr.sur_complication != null)
-                {
-                    if (oadr.sur_complication) { rad_sur_complication2.Checked = true; txt_sur_complication_note.Value = oadr.sur_complication_note; }
-                    else { rad_sur_complication1.Checked = true; }
-                }
-
-                txt_treatment_plan.Value = oadr.treatment_plan;
-
-                btnCancel.Visible = false;
-                txt_amendReason.Visible = false;
-                
-                if (oadr.status == DocumentStatus.FINAL)
-                {
-                    btnComplete.Visible = false;
-                    btnSave.Visible = false;
-                    btnDeleteModal.Visible = false;
-                    btnCancel.Visible = false;
-
-                    btnAmend.Visible = true;
-                    btnPrint.Visible = true;
-
-                    DisabledControl(true);
-                }
-                else if (oadr.status == DocumentStatus.DRAFT)
-                {
-
-                    btnAmend.Visible = false;
-                    btnPrint.Visible = false;
-                }
+                _BindGridView(grid_operations, table);
             }
             catch (Exception ex)
             {
 
             }
         }
+        #endregion
 
-        protected void DisabledControl(bool disabled)
-        {
-            WebHelpers.DisabledDateTimePicker(dtpk_admis_delivery, disabled);
-            txt_obs_name.Disabled = disabled;
-            txt_obs_initial.Disabled = disabled;
-            WebHelpers.DisabledDateTimePicker(dtpk_delivery_at, disabled);
-            txt_apgar_score_1.Disabled = disabled;
-            txt_apgar_score_5.Disabled = disabled;
-            txt_apgar_score_10.Disabled = disabled;
-            txt_weight_of_birth.Disabled = disabled;
-            txt_length_of_birth.Disabled = disabled;
-            txt_head_circum.Disabled = disabled;
-            rad_singleton_sex_code1.Disabled = disabled;
-            rad_singleton_sex_code2.Disabled = disabled;
-            rad_birth_defect1.Disabled = disabled;
-            cb_multiple_sex_m.Disabled = disabled;
-            cb_multiple_sex_f.Disabled = disabled;
-            rad_birth_defect2.Disabled = disabled;
-            txt_birth_defect_note.Disabled = disabled;
-            txt_neonatal_status.Disabled = disabled;
-            rad_intervention1.Disabled = disabled;
-            rad_intervention2.Disabled = disabled;
-            txt_intervention_note.Disabled = disabled;
-            txt_p_intervention_note.Disabled = disabled;
-            rad_placenta_deli1.Disabled = disabled;
-            rad_placenta_deli2.Disabled = disabled;
-            WebHelpers.DisabledDateTimePicker(dtpk_pacental_deli_dt, disabled);
-            txt_placenta_deli_mode.Disabled = disabled;
-            txt_placenta_weight.Disabled = disabled;
-            rad_umbilical_coil1.Disabled = disabled;
-            rad_umbilical_coil2.Disabled = disabled;
-            txt_umbilical_length.Disabled = disabled;
-            txt_blood_loss.Disabled = disabled;
-            rad_p_intervention1.Disabled = disabled;
-            rad_p_intervention2.Disabled = disabled;
-            txt_spO2.Disabled = disabled;
-            txt_temp.Disabled = disabled;
-            txt_BP.Disabled = disabled;
-            txt_HR.Disabled = disabled;
-            txt_RR.Disabled = disabled;
-
-            foreach (KeyValuePair<string, string> code in Oadr.DELIVERY_MODE_CODE)
-            {
-                try
-                {
-                    ((HtmlInputRadioButton)FindControl("rad_delivery_mode_code_" + code.Key.ToLower())).Disabled = disabled;
-                }
-                catch (Exception ex) { }
-            }
-
-            foreach (KeyValuePair<string, string> code in Oadr.SECTION_CODE)
-            {
-                try
-                {
-                    ((HtmlInputRadioButton)FindControl("rad_section_code_" + code.Key.ToLower())).Disabled = disabled;
-                }
-                catch (Exception ex) { }
-            }
-
-            foreach (KeyValuePair<string, string> code in Oadr.VAGINAL_DELI_CODE)
-            {
-                try
-                {
-                    ((HtmlInputRadioButton)FindControl("rad_vaginal_deli_code_" + code.Key.ToLower())).Disabled = disabled;
-                }
-                catch (Exception ex) { }
-            }
-
-            txt_interven_reason.Disabled = disabled;
-            cb_pre_intact.Disabled = disabled;
-            cb_pre_lacera.Disabled = disabled;
-            txt_pre_lacera_degree.Disabled = disabled;
-            cb_pre_episiotomy.Disabled = disabled;
-            txt_pre_episiotomy_st.Disabled = disabled;
-
-            rad_cervix_intact1.Disabled = disabled;
-            rad_cervix_intact2.Disabled = disabled;
-            txt_preo_diagnosis.Disabled = disabled;
-            txt_post_diagnosis.Disabled = disabled;
-            WebHelpers.DisabledGridView(grid_operations, disabled);
-            btn_grid_operations_add.Visible = !disabled;
-
-            rad_sur_incident1.Disabled = disabled;
-            rad_sur_incident2.Disabled = disabled;
-            txt_sur_incident_note.Disabled = disabled;
-            rad_sur_complication1.Disabled = disabled;
-            rad_sur_complication2.Disabled = disabled;
-            txt_sur_complication_note.Disabled = disabled;
-            txt_treatment_plan.Disabled = disabled;
-        }
-
+        #region Functions
         private void _BindGridView(GridView gridView, DataTable dataSource)
         {
             try
@@ -369,21 +531,11 @@ namespace EMR
                 throw;
             }
         }
-
-        protected void btnComplete_Click(object sender, EventArgs e)
-        {
-            oadr = new Oadr(DataHelpers.varDocId);
-            oadr.status = DocumentStatus.FINAL;
-            oadr.user_name = (string)Session["UserID"];
-
-            UpdateData(oadr);
-        }
-
         public void UpdateData(Oadr oadr)
         {
             try
             {
-                oadr.amend_reason = txt_amendReason.Value;
+                oadr.amend_reason = txt_amend_reason.Text;
                 oadr.admis_delivery = DataHelpers.ConvertSQLDateTime(dtpk_admis_delivery.SelectedDate);
                 oadr.obs_name = txt_obs_name.Value;
                 oadr.obs_initial = txt_obs_initial.Value;
@@ -395,7 +547,8 @@ namespace EMR
                 oadr.length_of_birth = txt_length_of_birth.Value;
                 oadr.head_circum = txt_head_circum.Value;
 
-                if (rad_singleton_sex_code1.Checked) {
+                if (rad_singleton_sex_code1.Checked)
+                {
                     oadr.singleton_sex_code = "M";
                     oadr.singleton_sex_desc = Oadr.SEX_CODE[oadr.singleton_sex_code];
                 }
@@ -432,7 +585,8 @@ namespace EMR
                 if (rad_birth_defect1.Checked)
                 {
                     oadr.birth_defect = false;
-                } else if (rad_birth_defect2.Checked)
+                }
+                else if (rad_birth_defect2.Checked)
                 {
                     oadr.birth_defect = true;
                     oadr.birth_defect_note = txt_birth_defect_note.Value;
@@ -513,7 +667,7 @@ namespace EMR
                         oadr.vaginal_deli_code = "S";
                         oadr.vaginal_deli_desc = Oadr.VAGINAL_DELI_CODE[oadr.vaginal_deli_code];
                     }
-                } 
+                }
                 else if (rad_delivery_mode_code_s.Checked)
                 {
                     oadr.delivery_mode_code = "S";
@@ -534,7 +688,7 @@ namespace EMR
                 //
                 oadr.interven_reason = txt_interven_reason.Value;
                 //
-                
+
                 if (cb_pre_intact.Checked)
                 {
                     oadr.pre_intact = true;
@@ -591,7 +745,7 @@ namespace EMR
                     operations_tb.Columns.Add(col.Key);
                 }
                 oadr.operations = WebHelpers.GetJSONFromTable(grid_operations, operations_tb);
-                
+
                 //
                 if (rad_sur_complication1.Checked)
                 {
@@ -615,101 +769,37 @@ namespace EMR
             }
             catch (Exception ex) { }
         }
-
-        protected void btnSave_Click(object sender, EventArgs e)
+        protected void LoadFormControl(bool disabled)
         {
-            oadr = new Oadr(DataHelpers.varDocId);
-
-            oadr.user_name = (string)Session["UserID"];
-            oadr.status = DocumentStatus.DRAFT;
-
-            UpdateData(oadr);
-        }
-
-        protected void btnAmend_Click(object sender, EventArgs e)
-        {
-            btnComplete.Visible = true;
-            btnComplete.Attributes["Disabled"] = "Disabled";
-            btnCancel.Visible = true;
-            btnAmend.Visible = false;
-            btnPrint.Visible = false;
-
-            txt_amendReason.Visible = true;
-
-            DisabledControl(false);
-        }
-
-        protected void btnPrint_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        protected void btnCancel_Click(object sender, EventArgs e)
-        {
-            btnComplete.Visible = false;
-            btnCancel.Visible = false;
-            btnAmend.Visible = true;
-            btnPrint.Visible = true;
-            txt_amendReason.Visible = false;
-
-            DisabledControl(true);
-        }
-
-        protected void btn_grid_operations_add_Click(object sender, EventArgs e)
-        {
-            try
+            foreach (var prop in oadr.GetType().GetProperties())
             {
-                DataTable table = (DataTable)ViewState[grid_operations.ID];
+                var control1 = FindControl(prop.Name + "_wrapper");
+                var control2 = FindControl("lbl_" + prop.Name);
 
-                if (table.Rows.Count <= 0)
+                if (control1 != null)
                 {
-                    foreach (KeyValuePair<string, string> col in Oadr.TABLE.OPERATION)
-                    {
-                        table.Columns.Add(col.Key);
-                    }
+                    control1.Visible = !disabled;
                 }
-
-                for (int r = 0; r < grid_operations.Rows.Count; r++)
+                if (control2 != null)
                 {
-                    for (int i = 0; i < grid_operations.Rows[r].Cells.Count; i++)
-                    {
-                        try
-                        {
-                            if (grid_operations.Rows[r].Cells[i].Controls[1] is TextField)
-                            {
-                                TextField text2 = grid_operations.Rows[r].Cells[i].Controls[1] as TextField;
-
-                                table.Rows[r][text2.DataKey] = text2.Value;
-                            }
-                            else if (grid_operations.Rows[r].Cells[i].Controls[1] is RadDateTimePicker)
-                            {
-                                RadDateTimePicker dtpk = grid_operations.Rows[r].Cells[i].Controls[1] as RadDateTimePicker;
-                                table.Rows[r][dtpk.ID] = DateTime.Parse(dtpk.SelectedDate.ToString());
-                            }
-                        }
-                        catch { }
-                    }
+                    control2.Visible = disabled;
                 }
-
-                DataRow dtRow = table.NewRow();
-
-                dtRow = table.NewRow();
-                table.Rows.Add(dtRow);
-
-                _BindGridView(grid_operations, table);
-            }
-            catch (Exception ex)
-            {
-
             }
         }
+        #endregion
 
-        protected void btnDelete_Click(object sender, EventArgs e)
+        #region Session
+        private void CheckUserID()
         {
-            if (Oadr.Delete((string)Session["UserID"], Request.QueryString["vpid"])[0] == "OK")
-            {
-
-            }
+            UserID = (string)Session["UserID"];
+            string redirecturl = "../login.aspx?ReturnUrl=";
+            redirecturl += Request.ServerVariables["script_name"] + "?";
+            redirecturl += Server.UrlEncode(Request.QueryString.ToString());
+            if (string.IsNullOrEmpty(UserID))
+                Response.Redirect(redirecturl);
         }
+
+        #endregion
+
     }
 }

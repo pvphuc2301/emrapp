@@ -523,7 +523,7 @@
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <label class="control-label mb-1 mr-2">Nhiệt độ/ <span class="text-primary">Temperature:</span></label>
-                                                            <asp:Label runat="server" ID="vs_temperature" />°C
+                                                            <asp:Label runat="server" ID="vs_temperature" />
                                                         </div>
 
                                                         <div class="col-md-12">

@@ -21,12 +21,7 @@ namespace EMR
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            UserID = (string)Session["UserID"];
-            string redirecturl = "./login.aspx?ReturnUrl=";
-            redirecturl += Request.ServerVariables["script_name"] + "?";
-            redirecturl += Server.UrlEncode(Request.QueryString.ToString());
-            if (string.IsNullOrEmpty(UserID))
-                Response.Redirect(redirecturl);
+            CheckUserID();
 
             lblUserName.InnerText = UserID;
             if (!IsPostBack)
@@ -309,6 +304,16 @@ namespace EMR
 
             Get_query = query_final;
             return Get_query;
+        }
+
+        private void CheckUserID()
+        {
+            UserID = (string)Session["UserID"];
+            string redirecturl = "./login.aspx?ReturnUrl=";
+            redirecturl += Request.ServerVariables["script_name"] + "?";
+            redirecturl += Server.UrlEncode(Request.QueryString.ToString());
+            if (string.IsNullOrEmpty(UserID))
+                Response.Redirect(redirecturl);
         }
     }
 }

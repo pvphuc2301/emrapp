@@ -78,7 +78,8 @@ namespace Emr_client.Emr
                     Session["location"] = Convert.ToString(data.company_code);
                     Session.Timeout = 60;
                     //  Session["upw"] = varUserPW;
-
+                    //edit by mr. Phut
+                    DataHelpers._LOCATION = Convert.ToString(data.company_code);
                 }
             }
         }
