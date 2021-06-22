@@ -239,7 +239,7 @@
                                                                         Text='<%# ReturnForm_Name(Eval("status"),Eval("model_name"),Eval("created_name_e")) %>' Target="MainContent">
                                                                     </asp:HyperLink>--%>
 
-                                                                    <a runat="server" data-varpid='<%# varPID %>' data-varvpid='<%# varVPID %>' data-modelid='<%#Eval("model_id") %>' data-documentid='<%#Eval("document_id") %>' id="lblURL" href="javascript:void(0);" onclick="__doPostBack('lblURL_click','')'><%# ReturnForm_Name(Eval("status"),Eval("model_name"),Eval("created_name_e")) %></a>
+                                                                    <a runat="server" data-varpid='<%# varPID %>' data-varvpid='<%# varVPID %>' data-modelid='<%#Eval("model_id") %>' data-documentid='<%#Eval("document_id") %>' id="lblURL" href="javascript:void(0);" onclick="__doPostBack('lblURL_click', this)'><%# ReturnForm_Name(Eval("status"),Eval("model_name"),Eval("created_name_e")) %></a>
 
                                                                 </ItemTemplate>
                                                             </telerik:GridTemplateColumn>

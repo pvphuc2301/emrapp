@@ -22,7 +22,7 @@ namespace EMR
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            CheckUserID();
+            WebHelpers.CheckSession(this);
             //if (Session["PageOpenEMR"] != null)
             //{
             //    HttpContext current_ss = HttpContext.Current;
@@ -61,7 +61,19 @@ namespace EMR
                 FetchImage();
             }
 
-            if (Request["__EVENTTARGET"] == "location_Change")
+            switch (Request["__EVENTTARGET"])
+            {
+                case "location_Change":
+                    DataHelpers._LOCATION = Request["__EVENTARGUMENT"];
+                    Response.Redirect(Request.RawUrl);
+                    break;
+                case "lblURL_click":
+
+                    //MainContent.ContentUrl = Return_Doc_URL( $"../";
+                    break;
+
+            }
+            if (Request["__EVENTTARGET"] == "")
             {
                 DataHelpers._LOCATION = Request["__EVENTARGUMENT"];
                 Response.Redirect(Request.RawUrl);
@@ -253,7 +265,7 @@ namespace EMR
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 dynamic data = JObject.Parse(response.Data);
-                tmp = string.Format("../{0}?modelId={1}&docId={2}&pId={3}&vpId={4}&pvid={5}", data.url, varModelId, varDocID, varPID, varVPID, varPVID);
+                tmp = $"../{data.url}?modelId={varModelId}&docId={varDocID}&pId={varPID}&vpId={varVPID}&pvid={varPVID}");
             }
 
             return tmp;
