@@ -235,9 +235,12 @@
                            NavigateUrl ="http://172.16.0.78:8082/api/omr/0d79db3e-ae3f-433e-a1d2-aa96107654e1"
                           </asp:HyperLink>--%>
                                                                     
-                                                                    <asp:HyperLink data-title='<%# ReturnForm_Name(Eval("status"),Eval("model_name"), "") %>' data-category='' data-visit='' data-author='<%# Eval("created_name_e") %>' CssClass="list-item d-inline-block" ID="lbURL" runat="server" NavigateUrl='<%# Return_Doc_URL(Eval("model_id"),Eval("document_id"), Eval("patient_visit_id")) %>'
+                                                                    <%--<asp:HyperLink data-title='<%# ReturnForm_Name(Eval("status"),Eval("model_name"), "") %>' data-category='' data-visit='' data-author='<%# Eval("created_name_e") %>' CssClass="list-item d-inline-block" ID="lbURL" runat="server" NavigateUrl='<%# Return_Doc_URL(Eval("model_id"),Eval("document_id"), Eval("patient_visit_id")) %>'
                                                                         Text='<%# ReturnForm_Name(Eval("status"),Eval("model_name"),Eval("created_name_e")) %>' Target="MainContent">
-                                                                    </asp:HyperLink>
+                                                                    </asp:HyperLink>--%>
+
+                                                                    <a runat="server" data-varpid='<%# varPID %>' data-varvpid='<%# varVPID %>' data-modelid='<%#Eval("model_id") %>' data-documentid='<%#Eval("document_id") %>' id="lblURL" href="javascript:void(0);" onclick="__doPostBack('lblURL_click','')'><%# ReturnForm_Name(Eval("status"),Eval("model_name"),Eval("created_name_e")) %></a>
+
                                                                 </ItemTemplate>
                                                             </telerik:GridTemplateColumn>
                                                         </Columns>
