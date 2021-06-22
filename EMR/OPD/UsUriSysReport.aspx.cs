@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,44 +10,27 @@ namespace EMR
 {
     public partial class USUrinarySystemReport : System.Web.UI.Page
     {
-        Uusr uusr; string UserID = "";
+        #region Variables
+        Uusr uusr;
+        #endregion
 
+        #region Page Lifecycle
         protected void Page_Load(object sender, EventArgs e)
         {
-            CheckUserID();
-
+            WebHelpers.CheckSession(this);
+            
             if (!IsPostBack)
             {
                 Initial();
             }
         }
-
-        public void Initial()
+        #endregion
+        
+        #region Binding Data
+        private void BindingDataFormEdit(Uusr uusr)
         {
-            if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
-            if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
-            if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "localStorage_setItem", $"window.sessionStorage.setItem('{uusr}', '{JsonConvert.SerializeObject(uusr)}');", true);
 
-            uusr = new Uusr(Request.QueryString["docId"]);
-
-            amendReasonWraper.Visible = false;
-            btnCancel.Visible = false;
-            prt_barcode.Text = Patient.Instance().visible_patient_id;
-
-            prt_barcode.Text = Patient.Instance().visible_patient_id;
-            if (uusr.status == DocumentStatus.FINAL)
-            {
-                loadFormView(uusr);
-            }
-            else if (uusr.status == DocumentStatus.DRAFT)
-            {
-                LoadFormEdit(uusr);
-            }
-        }
-
-        #region Load Form
-        private void LoadFormEdit(Uusr uusr)
-        {
             txt_diagnosis.Value = uusr.diagnosis;
             txt_left_kidney.Value = uusr.left_kidney;
             txt_right_kidney.Value = uusr.right_kidney;
@@ -56,12 +40,8 @@ namespace EMR
             txt_conclusion.Value = uusr.conclusion;
             txt_recommendation.Value = uusr.recommendation;
 
-            LoadFormControl(false);
-
-            btnAmend.Visible = false;
-            btnPrint.Visible = false;
         }
-        private void loadFormView(Uusr uusr)
+        private void BindingDataFormView(Uusr uusr)
         {
             lbl_diagnosis.Text = uusr.diagnosis;
             lbl_left_kidney.Text = uusr.left_kidney;
@@ -71,21 +51,12 @@ namespace EMR
             lbl_post_void_resi_volume.Text = uusr.post_void_resi_volume;
             lbl_conclusion.Text = uusr.conclusion;
             lbl_recommendation.Text = uusr.recommendation;
-            //
-            LoadFormControl(true);
-
-            btnComplete.Visible = false;
-            btnSave.Visible = false;
-            btnDeleteModal.Visible = false;
-
-            btnAmend.Visible = true;
-            btnPrint.Visible = true;
         }
-        private void LoadFormPrint(Uusr uusr)
+        private void BindingDataFormPrint(Uusr uusr)
         {
-            Patient patient = Patient.Instance();            
+            Patient patient = Patient.Instance();
             prt_pid.Text = prt_vpid.Text = prt_barcode.Text = patient.visible_patient_id;
-
+            
             prt_fullname.Text = patient.GetFullName();
 
             prt_diagnosis.Text = uusr.diagnosis;
@@ -98,8 +69,9 @@ namespace EMR
             prt_recommendation.Text = uusr.recommendation;
 
         }
-
         #endregion
+
+        #region Actions
         protected void btnComplete_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
@@ -111,7 +83,6 @@ namespace EMR
                 UpdateData(uusr);
             }
         }
-
         protected void btnSave_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
@@ -122,28 +93,7 @@ namespace EMR
 
                 UpdateData(uusr);
             }
-
         }
-
-        protected void btnAmend_Click(object sender, EventArgs e)
-        {
-            uusr = new Uusr(Request.QueryString["docId"]);
-
-            amendReasonWraper.Visible = true;
-            btnComplete.Visible = true;
-            btnCancel.Visible = true;
-            btnAmend.Visible = false;
-            btnPrint.Visible = false;
-
-            LoadFormEdit(uusr);
-        }
-
-        protected void btnCancel_Click(object sender, EventArgs e)
-        {
-            Initial();
-        }
-
-
         protected void btnDelete_Click(object sender, EventArgs e)
         {
             dynamic result = Uusr.Delete((string)Session["UserID"], Request.QueryString["docid"])[0];
@@ -160,15 +110,59 @@ namespace EMR
                 Response.Redirect("../Other/PageNotFound.aspx", false);
             }
         }
+        protected void btnAmend_Click(object sender, EventArgs e)
+        {
+            uusr = new Uusr(Request.QueryString["docId"]);
 
+            WebHelpers.VisibleControl(false, btnAmend, btnPrint);
+            WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
+
+            WebHelpers.LoadFormControl(form2, uusr, ControlState.Edit);
+            BindingDataFormEdit(uusr);
+        }
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            Initial();
+        }
         protected void btnPrint_Click(object sender, EventArgs e)
         {
             uusr = new Uusr(Request.QueryString["docId"]);
-            LoadFormPrint(uusr);
+            BindingDataFormPrint(uusr);
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "window.print();", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
         }
-        public void UpdateData(Uusr uusr)
+        #endregion
+
+        #region Methods
+        private void Initial()
+        {
+            if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
+            if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
+            if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
+
+            uusr = new Uusr(Request.QueryString["docId"]);
+
+            prt_barcode.Text = Patient.Instance().visible_patient_id;
+            WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
+            
+            if (uusr.status == DocumentStatus.FINAL)
+            {
+                BindingDataFormView(uusr);
+
+                WebHelpers.VisibleControl(false, btnComplete, btnSave, btnDeleteModal);
+                WebHelpers.VisibleControl(true, btnAmend, btnPrint);
+                WebHelpers.LoadFormControl(form2, uusr, ControlState.View);
+            }
+            else if (uusr.status == DocumentStatus.DRAFT)
+            {
+                BindingDataFormEdit(uusr);
+
+                WebHelpers.VisibleControl(false, btnAmend, btnPrint);
+                WebHelpers.VisibleControl(true, btnComplete, btnSave, btnDeleteModal);
+                WebHelpers.LoadFormControl(form2, uusr, ControlState.Edit);
+            }
+        }
+        private void UpdateData(Uusr uusr)
         {
             uusr.amend_reason = txt_amend_reason.Text;
             uusr.diagnosis = txt_diagnosis.Value;
@@ -194,39 +188,6 @@ namespace EMR
             {
                 Session["PageNotFound"] = result;
                 Response.Redirect("../Other/PageNotFound.aspx", false);
-            }
-        }
-        
-        #region Session
-
-        private void CheckUserID()
-        {
-            UserID = (string)Session["UserID"];
-            string redirecturl = "../login.aspx?ReturnUrl=";
-            redirecturl += Request.ServerVariables["script_name"] + "?";
-            redirecturl += Server.UrlEncode(Request.QueryString.ToString());
-            if (string.IsNullOrEmpty(UserID))
-                Response.Redirect(redirecturl);
-        }
-        #endregion
-
-        #region
-
-        protected void LoadFormControl(bool disabled)
-        {
-            foreach (var prop in uusr.GetType().GetProperties())
-            {
-                var control1 = FindControl(prop.Name + "_wrapper");
-                var control2 = FindControl("lbl_" + prop.Name);
-
-                if (control1 != null)
-                {
-                    control1.Visible = !disabled;
-                }
-                if (control2 != null)
-                {
-                    control2.Visible = disabled;
-                }
             }
         }
         #endregion

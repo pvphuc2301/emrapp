@@ -29,7 +29,7 @@ namespace EMR.OPD
             if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
             if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
 
-            mrfv = new Mrfv(DataHelpers.varDocId);
+            mrfv = new Mrfv(Request.QueryString["docId"]);
             
             amendReasonWraper.Visible = false;
             btnCancel.Visible = false;
@@ -152,111 +152,6 @@ namespace EMR.OPD
             btnPrint.Visible = true;
         }
 
-        public void loadDataToControls(Mrfv mrfv)
-        {
-            try
-            {
-                txt_chief_complaint.Value = mrfv.chief_complaint;
-                txt_cur_med_history.Value = mrfv.cur_med_history;
-                txt_cur_medications.Value = mrfv.cur_medications;
-                txt_personal.Value = mrfv.personal;
-                txt_family.Value = mrfv.family;
-
-                BindRadioButton("rad_allergy_" + mrfv.allergy);
-                if(mrfv.allergy) { txt_allergy_note.Value = mrfv.allergy_text; }
-
-                txt_scr_before_vacc_1.Value = mrfv.scr_before_vacc_1;
-                txt_scr_before_vacc_2.Value = mrfv.scr_before_vacc_2;
-                txt_scr_before_vacc_3.Value = mrfv.scr_before_vacc_3;
-                txt_scr_before_vacc_4.Value = mrfv.scr_before_vacc_4;
-                txt_scr_before_vacc_5.Value = mrfv.scr_before_vacc_5;
-                txt_scr_before_vacc_6.Value = mrfv.scr_before_vacc_6;
-                txt_scr_before_vacc_7.Value = mrfv.scr_before_vacc_7;
-                txt_scr_before_vacc_8.Value = mrfv.scr_before_vacc_8;
-
-                _BindGridView(grid_appointed_vaccine, WebHelpers.GetJSONToDataTable(mrfv.appointed_vaccine));
-                
-                txt_additional_investigations.Value = mrfv.additional_investigations;
-                txt_initial_diagnosis.Value = mrfv.initial_diagnosis;
-                txt_differential_diagnosis.Value = mrfv.differential_diagnosis;
-                txt_associated_conditions.Value = mrfv.associated_conditions;
-
-                BindRadioButton("rad_treatment_code_" + mrfv.treatment_code);
-                BindRadioButton("rad_spec_opinion_req_" + mrfv.spec_opinion_req);
-                if(mrfv.spec_opinion_req) { txt_spec_opinion_req_text.Value = mrfv.spec_opinion_req_text; }
-                
-                txt_pecific_edu_req.Value = mrfv.pecific_edu_req;
-                txt_next_appointment.Value = mrfv.next_appointment;
-
-                btnCancel.Visible = false;
-                txt_amend_reason.Visible = false;
-
-                if (mrfv.status == DocumentStatus.FINAL)
-                {
-
-                    btnComplete.Visible = false;
-                    btnSave.Visible = false;
-                    btnDeleteModal.Visible = false;
-
-                    btnAmend.Visible = true;
-                    btnPrint.Visible = true;
-
-                    DisabledControl(true);
-                }
-
-                else if (mrfv.status == DocumentStatus.DRAFT)
-                {
-                    btnAmend.Visible = false;
-                    btnPrint.Visible = false;
-                }
-
-            } catch (Exception ex)
-            {
-
-            }
-        }
-
-        protected void DisabledControl(bool disabled)
-        {
-            txt_chief_complaint.Disabled = disabled;
-            txt_cur_med_history.Disabled = disabled;
-            txt_cur_medications.Disabled = disabled;
-
-            txt_personal.Disabled = disabled;
-            txt_family.Disabled = disabled;
-
-            rad_allergy_true.Disabled = disabled;
-            rad_allergy_false.Disabled = disabled;
-            txt_allergy_note.Disabled = disabled;
-
-            txt_scr_before_vacc_1.Disabled = disabled;
-            txt_scr_before_vacc_2.Disabled = disabled;
-            txt_scr_before_vacc_3.Disabled = disabled;
-            txt_scr_before_vacc_4.Disabled = disabled;
-            txt_scr_before_vacc_5.Disabled = disabled;
-            txt_scr_before_vacc_6.Disabled = disabled;
-            txt_scr_before_vacc_7.Disabled = disabled;
-            txt_scr_before_vacc_8.Disabled = disabled;
-
-            WebHelpers.DisabledGridView(grid_appointed_vaccine, disabled);
-            btn_grid_appointed_vaccine_add.Visible = !disabled;
-
-            txt_additional_investigations.Disabled = disabled;
-            txt_initial_diagnosis.Disabled = disabled;
-            txt_differential_diagnosis.Disabled = disabled;
-            txt_associated_conditions.Disabled = disabled;
-
-            DisabledRadioButton("rad_treatment_code_", Mrfv.TREATMENT_CODE, disabled);
-
-            rad_spec_opinion_req_true.Disabled = disabled;
-            rad_spec_opinion_req_false.Disabled = disabled;
-            txt_spec_opinion_req_text.Disabled = disabled;
-
-            txt_pecific_edu_req.Disabled = disabled;
-            txt_next_appointment.Disabled = disabled;
-        }
-
-        
         protected void grid_appointed_vaccine_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             DeleteGridViewRow((GridView)sender, e.RowIndex);
@@ -398,6 +293,8 @@ namespace EMR.OPD
             prt_scr_before_vacc_7.Text += mrfv.scr_before_vacc_7;
             prt_scr_before_vacc_8.Text += mrfv.scr_before_vacc_8;
 
+
+
             DataTable tb = WebHelpers.GetJSONToDataTable(mrfv.appointed_vaccine);
             foreach (DataRow row in tb.Rows)
             {
@@ -415,6 +312,7 @@ namespace EMR.OPD
                 prt_appointed_vaccine.Rows.Add(tr);
 
             }
+
 
             prt_additional_investigations.Text = mrfv.additional_investigations;
             prt_initial_diagnosis.Text = mrfv.initial_diagnosis;

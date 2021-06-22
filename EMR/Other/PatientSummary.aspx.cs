@@ -82,7 +82,7 @@ namespace EMR
             args.totalPages = -1;
             args.userName = "my.nguyen";
 
-            string apiString = string.Format("api/patient/encounter-history/{0}/{1}?pageIndex={2}&pageSize={3}&keyword={4}", DataHelpers._LOCATION, varPID, args.pageIndex, args.pageSize, args.userName);
+            string apiString = $"api/patient/encounter-history/{DataHelpers._LOCATION}/{varPID}?pageIndex={args.pageIndex}&pageSize={args.pageSize}&keyword={args.userName}";
 
             UpdateRadGrid(RadGrid1, apiString, args);
         }
@@ -121,9 +121,9 @@ namespace EMR
                 if (DateTime.TryParse(closure_date_time, out dateTime))
                 {
                     btnAction.Text = "Update";
-                    btnAction.CssClass = "btn btn-sm btn-warning waves-effect ";
+                    btnAction.CssClass = "btn btn-sm btn-secondary waves-effect ";
 
-                    if (allow_date_time != null)
+                    if (string.IsNullOrEmpty(allow_date_time))
                     {
                         btnAction.CssClass += "disabled";
                         btnAction.Enabled = false;
@@ -162,16 +162,16 @@ namespace EMR
                     DataHelpers.varModelId = modelID;
                     DataHelpers.varPVId = PVID;
 
-                    dynamic response3 = WebHelpers.PostAPI(string.Format("api/{0}/add/{1}", data.api, DataHelpers._LOCATION), objTemp);
+                    dynamic response3 = WebHelpers.PostAPI($"api/{data.api}/add/{DataHelpers._LOCATION}", objTemp);
 
                     if (response3.Status == System.Net.HttpStatusCode.OK)
                     {
-                        dynamic response4 = WebHelpers.PostAPI(string.Format("api/{0}/log/{1}/{2}", data.api, DataHelpers._LOCATION, docId));
+                        dynamic response4 = WebHelpers.PostAPI($"api/{data.api}/log/{DataHelpers._LOCATION}/{docId}");
                         if(response4.Status == System.Net.HttpStatusCode.OK)
                         {
-                            string url = string.Format("../{0}?modelId={1}&docId={2}&pId={3}&vpId={4}&pvid={5}", _params[1], modelID, docId, varPID, Request["vpid"], PVID);
+                            string url = $"../{_params[1]}?modelId={modelID}&docId={docId}&pId={varPID}&vpId={Request["vpid"]}&pvid={PVID}";
 
-                            Response.Redirect(url);
+                            Response.Redirect(url, false);
                         }
                     }
                 }

@@ -28,11 +28,8 @@
     <title></title>
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
-    <%--<link href="../style/style-custom.css" rel="stylesheet" />--%>
 </head>
 <body>
-    <%--class="cssclsNoScreen"--%>
-
     <form method="post" action="#" id="form2" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
         <asp:UpdatePanel ID="UpPrintForm" runat="server" UpdateMode="Conditional">
@@ -42,15 +39,18 @@
                         <thead class="report-header">
                             <tr>
                                 <th class="report-header-cell">
-                                    <div class="header-info" style="display: flex; align-items: center;">
-                                        <img width="180px" src="../images/AIH_PI_FULL.png" />
-                                        <div style="flex-grow: 1; text-align: center">
-                                            <div style="color: #007297; font-size: 20.6963px;">PHIẾU ĐÁNH GIÁ ĐIỀU
-                                                <br />
-                                                DƯỠNG BỆNH NGOẠI TRÚ</div>
-                                            <div style="color: #e20e5a; font-size: 16.6667px;">OUTPATIENT INITIAL NURSING ASSESSMENT</div>
+                                    <div class="header-info">
+                                        <img src="../images/AIH_PI_FULL.png" />
+                                        <div class="header-info-title">
+                                            <h4>PHIẾU ĐÁNH GIÁ ĐIỀU<br />DƯỠNG BỆNH NGOẠI TRÚ</h4>
+                                            <h5>OUTPATIENT INITIAL NURSING ASSESSMENT</h5>
                                         </div>
-                                        <webUI:PatientLabel1 runat="server" ID="prt_patient_label" />
+                                        <div style="width: 175px;">
+                                            <asp:Label runat="server" ID="prt_fullname" CssClass="d-block"></asp:Label>
+                                            <asp:Label CssClass="d-block" runat="server" ID="prt_DOB"></asp:Label>
+                                            <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
+                                            <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
+                                        </div>
                                     </div>
                                     <webUI:Line runat="server" ID="Line" />
                                 </th>
@@ -140,7 +140,9 @@
                                         <div class="d-grid mt-4" style="grid-template-columns: 1fr 1fr">
                                             <div></div>
                                             <div class="text-center">
-                                                <asp:Label runat="server" ID="prt_signature1" />
+                                                <div>Ngày/ Date: 13-04-2021 13:28</div>
+                                                <div><span class="font-bold">ĐIỀU DƯỠNG ĐÁNH GIÁ</span></div>
+                                                <div>Assessment done by Nurse</div>
                                             </div>
                                         </div>
 
@@ -164,17 +166,10 @@
                             </tr>
                         </tfoot>
                     </table>
-                    <%--</ContentTemplate>
-        <Triggers>
-            <asp:AsyncPostBackTrigger ControlID="btnPrint" />
-        </Triggers>
-    </asp:UpdatePanel>--%>
                 </div>
 
                 <div class="cssclsNoPrint">
                     <div style="overflow: scroll; height: calc(100vh - 52px); overflow-x: hidden;">
-                        <%--<asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
-                <ContentTemplate>--%>
                         <asp:Panel runat="server" ID="messagePlaceHolder">
                             <div class="card" runat="server" id="amendReasonWraper">
                                 <div class="card-body">
@@ -183,20 +178,15 @@
                                         <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
                                     <div class="form-group mb-2">
 
-                                        <asp:TextBox runat="server" ID="txt_amendReason" CssClass="el-hide" />
-                                        <div spellcheck="false" style="height: auto; text-align: left; display: inline-block;" class="form-control" id="DisplayControl" onblur="changeValue1(this, 'txt_amendReason')" contenteditable='true' runat="server"></div>
+                                        <asp:TextBox runat="server" TextMode="MultiLine" ID="txt_amendReason" CssClass="form-control" />
+
                                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amendReason" ErrorMessage="Please enter amend reason"
                                             ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                     </div>
                                 </div>
                             </div>
 
-                            <asp:ValidationSummary
-                                ID="valSum"
-                                DisplayMode="BulletList"
-                                CssClass="validationSummary"
-                                runat="server" ValidationGroup="Group1"
-                                HeaderText="Please complete the highlighted field(s)." />
+                            <asp:ValidationSummary ID="valSum" DisplayMode="BulletList" CssClass="validationSummary" runat="server" ValidationGroup="Group1" HeaderText="Please complete the highlighted field(s)." />
                         </asp:Panel>
 
                         <webUI:PatientInfo runat="server" ID="PatientInfo1" />
@@ -206,7 +196,7 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <h4 class="text-primary">Outpatient Initial Nursing Assessment</h4>
-                                        <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="arrowhead"></a>
+                                        <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"></a>
                                     </div>
 
                                     <div class="card-body collapse show" id="collapseOne">
@@ -220,26 +210,18 @@
                                             <div class="row">
                                                 <div class="col-sm-6 mb-2 d-flex no-block">
                                                     <label class="control-label mb-1 mr-2">Nhiệt độ/ <span class="text-primary">Temperature:</span></label>
-                                                    <asp:Label runat="server" ID="lbl_vs_temperature" data-mode="view" />
-                                                    <div class="w-5" runat="server" id="temperatureWrapper">
-                                                        <div class="input-group" style="place-self: flex-start;">
-                                                            <input type="text" data-type="number" runat="server" id="txt_vs_temperature" placeholder="" aria-label="" aria-describedby="" class="form-control text-right" />
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text">°C</span>
-                                                            </div>
-                                                        </div>
+                                                    <asp:Label runat="server" ID="lbl_vs_temperature"/>
+                                                    <div class="form-group d-inline-block" runat="server" id="vs_temperature_wrapper">
+                                                        <input id="txt_vs_temperature" data-type="number" style="width: 160px" runat="server" class="form-control text-right" />
+                                                        <span class="append">°C</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6 mb-2 d-flex no-block">
                                                     <label class="control-label mb-1 mr-2">Nhịp tim/ <span class="text-primary">rate:</span></label>
-                                                    <asp:Label runat="server" ID="lbl_vs_heart_rate" data-mode="view"/>
-                                                    <div class="w-5" runat="server" id="HeartRateWrapper">
-                                                        <div class="input-group" style="place-self: flex-start;">
-                                                            <input type="text" data-type="number" runat="server" id="txt_vs_heart_rate" placeholder="" aria-label="" aria-describedby="" class="form-control text-right" />
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text">/phút (m)</span>
-                                                            </div>
-                                                        </div>
+                                                    <asp:Label runat="server" ID="lbl_vs_heart_rate"/>
+                                                    <div class="form-group d-inline-block" runat="server" id="vs_heart_rate_wrapper">
+                                                        <input id="txt_vs_heart_rate" data-type="number" style="width: 160px" runat="server" class="form-control text-right" />
+                                                        <span class="append">/phút (m)</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -247,26 +229,18 @@
                                             <div class="row">
                                                 <div class="col-sm-6 mb-2 d-flex no-block">
                                                     <label class="control-label  mb-1 mr-2">Cân Nặng/ <span class="text-primary">Weight:</span></label>
-                                                    <asp:Label runat="server" ID="lbl_vs_weight" data-mode="view"/>
-                                                    <div class="w-5" runat="server" id="WeightWrapper">
-                                                        <div class="input-group" style="place-self: flex-start;">
-                                                            <input type="text" data-type="number" runat="server" id="txt_vs_weight" onchange="CalculateBmi()" placeholder="" aria-label="" aria-describedby="" class="form-control text-right" />
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text">Kg</span>
-                                                            </div>
-                                                        </div>
+                                                    <asp:Label runat="server" ID="lbl_vs_weight"/>
+                                                    <div class="form-group d-inline-block" runat="server" id="vs_weight_wrapper">
+                                                        <input onchange="CalculateBmi()" id="txt_vs_weight" data-type="number" style="width: 160px" runat="server" class="form-control text-right" />
+                                                        <span class="append">Kg</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6 mb-2 d-flex no-block">
                                                     <label class="control-label mb-1 mr-2">Nhịp thở/ <span class="text-primary">Respiratory rate:</span></label>
-                                                    <asp:Label runat="server" ID="lbl_vs_respiratory_rate" data-mode="view"/>
-                                                    <div class="w-5" runat="server" id="RespiratoryRateWrapper">
-                                                        <div class="input-group" style="place-self: flex-start;">
-                                                            <input type="text" data-type="number" runat="server" id="txt_vs_respiratory_rate" placeholder="" aria-label="" aria-describedby="" class="form-control text-right" />
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text">/phút (m)</span>
-                                                            </div>
-                                                        </div>
+                                                    <asp:Label runat="server" ID="lbl_vs_respiratory_rate" />
+                                                    <div class="form-group d-inline-block" runat="server" id="vs_respiratory_rate_wrapper">
+                                                        <input  id="txt_vs_respiratory_rate" data-type="number" style="width: 160px" runat="server" class="form-control text-right" />
+                                                        <span class="append">/phút (m)</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -274,26 +248,18 @@
                                             <div class="row">
                                                 <div class="col-sm-6 mb-2 d-flex no-block">
                                                     <label class="control-label mb-1 mr-2">Chiều cao/ <span class="text-primary">Height:</span></label>
-                                                    <asp:Label runat="server" ID="lbl_vs_height" data-mode="view"/>
-                                                    <div class="w-5" runat="server" id="HeightWrapper">
-                                                        <div class="input-group" style="place-self: flex-start;">
-                                                            <input type="text" data-type="number" runat="server" id="txt_vs_height" onchange="CalculateBmi()" placeholder="" aria-label="Recipient's username" aria-describedby="" class="form-control text-right" />
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text">cm</span>
-                                                            </div>
-                                                        </div>
+                                                    <asp:Label runat="server" ID="lbl_vs_height"/>
+                                                    <div class="form-group d-inline-block" runat="server" id="vs_height_wrapper">
+                                                        <input  id="txt_vs_height" onchange="CalculateBmi()"  data-type="number" style="width: 160px" runat="server" class="form-control text-right" />
+                                                        <span class="append">cm</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6 mb-2 d-flex no-block">
                                                     <label class="control-label mb-1 mr-2">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
-                                                    <asp:Label runat="server" ID="lbl_vs_blood_pressure" data-mode="view"/>
-                                                    <div class="w-6" runat="server" id="BloodPressureWrapper">
-                                                        <div class="input-group" style="place-self: flex-start;">
-                                                            <input type="text" data-type="number" runat="server" id="txt_vs_blood_pressure" placeholder="" aria-label="Recipient's username" aria-describedby="" class="form-control text-right" />
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text">mmHg</span>
-                                                            </div>
-                                                        </div>
+                                                    <asp:Label runat="server" ID="lbl_vs_blood_pressure" />
+                                                    <div class="form-group d-inline-block" runat="server" id="vs_blood_pressure_wrapper">
+                                                        <input  id="txt_vs_blood_pressure" data-type="number" style="width: 160px" runat="server" class="form-control text-right" />
+                                                        <span class="append">mmHg</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -302,10 +268,10 @@
                                                 <div class="col-sm-6 mb-2 ">
                                                     <div class="d-flex no-block">
                                                         <label for="bmi" class="control-label mb-1 mr-2">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
-                                                        <span style="width: 100px" class="text-right">
-                                                            <asp:Label runat="server" ID="lbl_vs_bmi" CssClass="mr-1"/>
-                                                            (Kg/m <sup>2</sup>)
-                                                        </span>
+                                                        <div class="form-group d-inline-block">
+                                                            <input  id="txt_vs_bmi" data-type="number" style="width: 120px; height: 23.2px;" runat="server" disabled="disabled" class="form-control text-right" />
+                                                            <span class="append">(Kg/m <sup>2</sup>)</span>
+                                                        </div>
                                                     </div>
                                                     <p class="mt-1">
                                                         (Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not
@@ -314,14 +280,10 @@
                                                 </div>
                                                 <div class="col-sm-6 mb-2  d-flex no-block">
                                                     <label for="spO2" class="control-label mb-1 mr-2">Độ bão hòa Oxy/ <span class="text-primary">SpO2:</span></label>
-                                                    <asp:Label runat="server" ID="lbl_vs_spo2" data-mode="view"/>
-                                                    <div class="w-5" runat="server" id="Spo2Wrapper">
-                                                        <div class="input-group" style="place-self: flex-start;">
-                                                            <input type="text" data-type="number" runat="server" id="txt_vs_spo2" placeholder="" aria-label="" aria-describedby="" class="form-control text-right" />
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text">%</span>
-                                                            </div>
-                                                        </div>
+                                                    <asp:Label runat="server" ID="lbl_vs_spo2"/>
+                                                    <div class="form-group d-inline-block" runat="server" id="vs_spo2_wrapper">
+                                                        <input  id="txt_vs_spo2"  data-type="number" style="width: 160px" runat="server" class="form-control text-right" />
+                                                        <span class="append">%</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -329,47 +291,38 @@
                                             <div class="row">
                                                 <div class="col-sm-12 mb-2 d-flex no-block">
                                                     <label for="head-circumference" class="control-label mb-1 mr-2">Vòng đầu (trẻ em < 2 tuổi)/ <span class="text-primary">Head Circumference (children < 2 year old) </span></label>
-                                                    <asp:Label runat="server" ID="lbl_vs_pluse" data-mode="view"/>
-                                                    <div class="w-5" runat="server" id="PluseWrapper">
-                                                        <div class="input-group" style="place-self: flex-start;">
-                                                            <input type="text" data-type="number" runat="server" id="txt_vs_pluse" placeholder="" aria-label="" aria-describedby="" class="form-control text-right" />
-                                                            <div class="input-group-append">
-                                                                <span class="input-group-text">%</span>
-                                                            </div>
-                                                        </div>
+                                                    <asp:Label runat="server" ID="lbl_pulse"/>
+                                                    <div class="form-group d-inline-block" runat="server" id="pulse_wrapper">
+                                                        <input id="txt_pulse"  data-type="number" style="width: 160px" runat="server" class="form-control text-right" />
+                                                        <span class="append">%</span>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <%-- III. ASSESSMENT --%>
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
                                                     <label class="control-label  h5">II. ĐÁNH GIÁ/ <span class="text-primary">ASSESSMENT</span></label>
                                                 </div>
                                             </div>
 
-                                            <%-- 1. Chief complaint --%>
                                             <fieldset class="row mb-2">
                                                 <legend>
                                                     <label class="control-label">1. Lý do đến khám/ <span class="text-primary">Chief complaint:</span></label>
                                                 </legend>
                                                 <div class="col-md-12">
-                                                    <div class="form-group">
-                                                        <webUI:TextField runat="server" ID="txtChiefComplaint" />
+                                                    <asp:Label  runat="server" ID="lbl_chief_complaint"  />
+                                                    <div class="form-group" runat="server" id="chief_complaint_wrapper">
+                                                        <webUI:TextField runat="server" ID="txt_chief_complaint" />
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12" >
-                                                    <asp:Label data-mode="view" runat="server" ID="lbl_chief_complaint"  />
-                                                </div>
                                             </fieldset>
-
 
                                             <fieldset class="row mb-2">
                                                 <legend>
                                                     <label class="control-label">2. Dị ứng/ <span class="text-primary">Allergy:</span></label>
                                                 </legend>
 
-                                                <div class="col-md-12" runat="server" id="AllergyWrapper">
+                                                <div class="col-md-12" runat="server" id="allergy_wrapper">
                                                     <div class="custom-control custom-radio d-inline-block ml-2 mb-1">
                                                         <input type="radio" onchange="radioButtonChange(this)" data-target="allergy_field" runat="server" id="rad_allergy_false" name="rad_allergy" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_allergy_false">Không/ <span class="text-primary">No</span></label>
@@ -394,8 +347,8 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <asp:Label runat="server" ID="lbl_allergy" data-mode="view"/><br />
-                                                    <asp:Label runat="server" ID="lbl_allergy_note" data-mode="view"/>
+                                                    <asp:Label runat="server" ID="lbl_allergy" /><br />
+                                                    <asp:Label runat="server" ID="lbl_allergy_note" />
                                                 </div>
                                             </fieldset>
 
@@ -403,10 +356,13 @@
                                                 <legend>
                                                     <label class="control-label">3. Trạng thái tinh thần/ <span class="text-primary">Mental status:</span></label>
                                                 </legend>
-                                                <div class="col-md-12" runat="server" id="MentalStatusWrapper">
-                                                    <label class="control-label mb-1 w-7">Đáp ứng phù hợp/ <span class="text-primary">Appropriate response:</span></label>
+                                                <div class="col-md-12 d-grid" style="grid-template-columns:  auto 1fr; grid-gap: 5px;">
+                                                    <label class="control-label mb-1">Đáp ứng phù hợp/ <span class="text-primary">Appropriate response:</span></label>
 
-                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                    <asp:Label runat="server" ID="lbl_mental_status" />
+
+                                                    <div  runat="server" id="mental_status_wrapper">
+                                                        <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" runat="server" id="rad_mental_status_true" onchange="radioButtonChange(this)" data-target="mental_status_note_field" name="rad_mental_status" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_mental_status_true">Có/ <span class="text-primary">Yes</span></label>
                                                     </div>
@@ -417,16 +373,13 @@
                                                         <a href="javascript:void(0)" data-clear="rad_mental_status" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare6" />
                                                         </a>
-                                                        <asp:CustomValidator ID="CustomValidator1" runat="server" Display="Dynamic" ValidationGroup="Group1" ErrorMessage="Trạng thái tinh thần/ Appropriate response is required" CssClass="text-danger" OnServerValidate="CustomValidatorMentalStatus_ServerValidate"></asp:CustomValidator>
+                                                        <asp:CustomValidator ID="CustomValidator1" runat="server" ValidationGroup="Group1" ErrorMessage="Trạng thái tinh thần/ Appropriate response is required" CssClass="text-danger" OnServerValidate="CustomValidatorMentalStatus_ServerValidate"></asp:CustomValidator>
                                                     </div>
 
                                                     <div class="form-group mental_status_note_field">
                                                         <webUI:TextField runat="server" ID="txt_mental_status_note" />
                                                     </div>
-                                                </div>
-                                                <div class="col-md-12" >
-                                                    <asp:Label runat="server" ID="lbl_mental_status" data-mode="view"/><br />
-                                                    <asp:Label runat="server" ID="lbl_mental_status_note" data-mode="view"/>
+                                                    </div>
                                                 </div>
                                             </fieldset>
 
@@ -435,7 +388,7 @@
                                                 <legend>
                                                     <label class="control-label mb-2">4. Thang điểm đau/ <span class="text-primary">Pain score:</span></label>
                                                 </legend>
-                                                <div class="col-md-12" runat="server" id="PaintScoreWrapper">
+                                                <div class="col-md-12" runat="server" id="paint_score_code_wrapper">
                                                     <div class="custom-control custom-radio d-inline-block ml-2">
                                                         <input type="radio" id="rad_paint_score_code_0" runat="server" name="rad_paint_score_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_paint_score_code_0">Không đau/ <span class="text-primary">No hurt</span></label>
@@ -465,7 +418,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <asp:Label runat="server" ID="lbl_paint_score_desc" data-mode="view"/>
+                                                    <asp:Label runat="server" ID="lbl_paint_score_description" />
                                                 </div>
                                                 <div class="col-md-12">
                                                     <img src="../images/pain_score.png" style="max-width: 720px; width: 100%;" alt="" />
@@ -476,7 +429,7 @@
                                                 <legend>
                                                     <label class="control-label mb-2">5. Tầm soát nguy cơ té ngã/ <span class="text-primary">Fall risk MORSE SCALE:</span></label>
                                                 </legend>
-                                                <div class="col-md-12" runat="server" id="FallRiskWrapper">
+                                                <div class="col-md-12" runat="server" id="fall_risk_wrapper">
                                                     <div class="custom-control custom-radio">
                                                         <input type="radio" runat="server" id="rad_fall_risk_false" name="rad_fall_risk" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_fall_risk_false">Không có nguy cơ/ <span class="text-primary">No risk</span></label>
@@ -487,14 +440,14 @@
                                                         <a href="javascript:void(0)" data-clear="rad_fall_risk" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare22" />
                                                         </a>
-                                                        <asp:CustomValidator ID="CustomValidator4" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="Tầm soát nguy cơ té ngã/ Fall risk MORSE SCALE is required" CssClass="text-danger" OnServerValidate="CustomValidatorFallRisk_ServerValidate"></asp:CustomValidator>
+                                                        <asp:CustomValidator ID="CustomValidator4" ValidationGroup="Group1" runat="server" ErrorMessage="Tầm soát nguy cơ té ngã/ Fall risk MORSE SCALE is required" CssClass="text-danger" OnServerValidate="CustomValidatorFallRisk_ServerValidate"></asp:CustomValidator>
                                                     </div>
                                                     <div class="form-group fall_risk_assistance_field">
                                                         <webUI:TextField runat="server" ID="txt_fall_risk_assistance" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <asp:Label runat="server" ID="lbl_fall_risk" data-mode="view"/>
+                                                    <asp:Label runat="server" ID="lbl_fall_risk" />
                                                 </div>
                                             </fieldset>
 
@@ -502,7 +455,7 @@
                                                 <legend>
                                                     <label class="control-label mb-2">6. Đánh giá tình trang dinh dưỡng/ <span class="text-primary">Nutritional status screening:</span></label>
                                                 </legend>
-                                                <div class="col-md-12" runat="server" id="NutritionStatusWrapper">
+                                                <div class="col-md-12" runat="server" id="nutrition_status_code_wrapper">
                                                     <div class="custom-control custom-radio">
                                                         <input type="radio" runat="server" id="rad_nutrition_status_code_n" name="rad_nutrition_status_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_nutrition_status_code_n">Bình thường/ <span class="text-primary">Normal</span></label>
@@ -521,7 +474,7 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <asp:Label runat="server" ID="lbl_nutrition_status_desc" data-mode="view"/>
+                                                    <asp:Label runat="server" ID="lbl_nutrition_status_description" />
                                                 </div>
                                             </fieldset>
 
@@ -535,7 +488,7 @@
                                                 <legend>
                                                     <label class="control-label mb-1">Tình trạng sinh sống/ <span class="text-primary">Housing</span></label>
                                                 </legend>
-                                                <div class="col-md-12" runat="server" id="HousingWrapper">
+                                                <div class="col-md-12" runat="server" id="housing_code_wrapper">
                                                     <div class="custom-control custom-radio">
                                                         <input type="radio" runat="server" id="rad_housing_code_aln" name="rad_housing_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_housing_code_aln">Sống một mình/ <span class="text-primary">Lives alone</span></label>
@@ -550,7 +503,7 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <asp:Label runat="server" ID="lbl_housing_desc" data-mode="view"/>
+                                                    <asp:Label runat="server" ID="lbl_housing_description" />
                                                 </div>
                                             </fieldset>
 
@@ -559,7 +512,7 @@
                                                     <label class="control-label mb-1 h5">IV. MỨC ĐỘ ƯU TIÊN/ <span class="text-primary">PRIORITIZATION:</span></label>
                                                 </div>
 
-                                                <div class="col-md-12" runat="server" id="PrioritizationWrapper">
+                                                <div class="col-md-12" runat="server" id="prioritization_code_wrapper">
                                                     <div class="custom-control custom-radio ml-2">
                                                         <input type="radio" runat="server" id="rad_prioritization_code_im" name="rad_prioritization_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_prioritization_code_im">Cần được khám ngay/ <span class="text-primary">Immediate consulting requirement</span></label>
@@ -574,65 +527,38 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <asp:Label runat="server" ID="lbl_prioritization_desc" data-mode="view"/>
+                                                    <asp:Label runat="server" ID="lbl_prioritization_description" />
                                                 </div>
                                             </div>
 
                                             <div class="row mb-2">
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px;">
                                                     <label class="control-label mb-1 h5">Ngày, giờ đánh giá/ <span class="text-primary">Time, Date of assessment:</span></label>
-                                                </div>
-
-                                                <div class="col-md-12" runat="server" id="AssessDateTimeWrapper">
-                                                    <telerik:RadDateTimePicker runat="server" ID="dtpk_assess_date_time" Width="200px" />
-
-                                                    <%--                                                    <div class="custom-control custom-radio ml-2">
-                                                    <input type="radio" runat="server" id="Radio1" name="rad_prioritization_code" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_prioritization_code_im">Cần được khám ngay/ <span class="text-primary">Immediate consulting requirement</span></label>
-                                                </div>
-                                                <div class="custom-control custom-radio ml-2">
-                                                    <input type="radio" runat="server" id="Radio2" name="rad_prioritization_code" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_prioritization_code_wa">Có thể chờ khám trong khoảng thời gian xác định/ <span class="text-primary">Be able to wait for consultation at a specific time</span></label>
-                                                    <a href="javascript:void(0)"  data-clear="rad_prioritization_code" onclick="clear_radiobutton(this)">
-                                                        <icon:xsquare runat="server" ID="XSquare7" />
-                                                    </a>
-                                                </div>--%>
-                                                </div>
-                                                <div class="col-md-12">
-                                                    <asp:Label runat="server" ID="lbl_assessment_date_time" data-mode="view"/>
+                                                    <div class="col-md-12" runat="server" id="assessment_date_time_wrapper">
+                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_assessment_date_time" Width="200px" />
+                                                    </div>
+                                                    <asp:Label runat="server" ID="lbl_assessment_date_time" />
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <div class="form-actions">
-                                                    <button type="button" runat="server" id="btnComplete" validationgroup="Group1" onserverclick="btnComplete_Click" class="btn btn-primary waves-effect">
-                                                        Complete
-                                                    </button>
+                                                <div class="col-md-12">
+                                                    <div class="form-actions">
+                                                        <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete"  CssClass="btn btn-primary waves-effect" >Complete</asp:LinkButton>
 
-                                                    <button type="button" onserverclick="btnSave_Click" onclick="ClientValidate(); return false;" validationgroup="Group1" runat="server" id="btnSave" class="btn btn-primary waves-effect">
-                                                        Save
-                                                    </button>
+                                                        <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect" >Save</asp:LinkButton>
 
-                                                    <button type="button" data-toggle="modal" data-target="#myModal" id="btnDeleteModal" runat="server" class="btn btn-danger waves-effect">
-                                                        Delete
-                                                    </button>
+                                                        <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal"  class="btn btn-danger waves-effect">Delete</div>
 
-                                                    <button onserverclick="btnAmend_Click" runat="server" id="btnAmend" class="btn btn-secondary waves-effect">
-                                                        Amend
-                                                    </button>
+                                                        <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                    <button onserverclick="btnPrint_Click" id="btnPrint" runat="server" class="btn btn-secondary waves-effect">
-                                                        Print
-                                                    </button>
+                                                        <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
-                                                    <button runat="server" onserverclick="btnCancel_Click" id="btnCancel" class="btn btn-secondary waves-effect">
-                                                        Cancel
-                                                    </button>
+                                                        <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
                                         <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
                                             <ModalBody>
@@ -642,8 +568,8 @@
                                                     </h4>
                                                 </div>
                                                 <div class="text-right">
-                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                    <asp:Button runat="server" OnClick="btnDelete_Click" Text="Delete" ID="btnDelete" class="btn btn-danger" />
+                                                    <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
+                                                        <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
                                                 </div>
                                             </ModalBody>
                                         </webUI:PopupModal>
@@ -655,24 +581,20 @@
                     </div>
                 </div>
             </ContentTemplate>
-            <Triggers>
-                <asp:AsyncPostBackTrigger ControlID="btnAmend" />
-                <asp:AsyncPostBackTrigger ControlID="btnComplete" />
-                <asp:AsyncPostBackTrigger ControlID="btnSave" />
-                <asp:AsyncPostBackTrigger ControlID="btnPrint" />
-            </Triggers>
         </asp:UpdatePanel>
     </form>
 
     <script src="../scripts/jquery-3.2.1.min.js"></script>
     <script src="../scripts/bootstrap.min.js"></script>
-    <%--<script src="../scripts/custom.min.js"></script>--%>
     <script src="../scripts/myScript.js"></script>
     <script src="../scripts/contenteditable.min.js"></script>
     <script src="../scripts/checkValidFields.js"></script>
     <script src="../scripts/waves.js"></script>
 
     <script>
+        formGroup_init();
+        checkboxRadiobutton_init();
+        InputFilter();
 
         function beforeAsyncPostBack() {
             var curtime = new Date();
@@ -680,108 +602,9 @@
         }
 
         function afterAsyncPostBack() {
-            let temp1 = document.querySelectorAll('input[data-type="number"]');
-
-            temp1.forEach(e => {
-                setInputFilter(e, function (value) {
-                    return /^\d*\.?\d*$/.test(value);
-                });
-            });
-        }
-
-        Sys.Application.add_init(appl_init);
-
-        function appl_init() {
-            var pgRegMgr = Sys.WebForms.PageRequestManager.getInstance();
-            pgRegMgr.add_beginRequest(BeginHandler);
-            pgRegMgr.add_endRequest(EndHandler);
-        }
-
-        function BeginHandler() {
-            beforeAsyncPostBack();
-        }
-
-        function EndHandler() {
-            afterAsyncPostBack();
-        }
-
-        function ClientValidate() {
-            if (!checkradiobutton('rad_allergy')) {
-                document.getElementById('<%=CustomValidator3.ClientID%>').style.display = '';
-            }
-
-            if (!checkradiobutton('rad_mental_status')) {
-                document.getElementById('<%=CustomValidator1.ClientID%>').style.display = '';
-            }
-
-            if (!checkradiobutton('rad_fall_risk')) {
-                document.getElementById('<%=CustomValidator4.ClientID%>').style.display = '';
-            }
-        }
-    </script>
-
-    <script>
-
-        function radioButtonChange(eventArgs) {
-            try {
-                let radiosEle = $(`input[name=${eventArgs.name}]`);
-                console.log(eventArgs);
-
-                let disabledFor = eventArgs.getAttribute('disabled-for');
-                console.log(disabledFor);
-
-                if (disabledFor != 'undefined' && disabledFor != false) {
-
-                    if (!eventArgs.checked) {
-                        let EleByClassName = document.getElementsByClassName(disabledFor);
-
-                        for (let l = 0; l < EleByClassName.length; l++) {
-                            EleByClassName[l].classList.add("el-hide");
-                        }
-                    }
-                }
-            } catch (ex) {
-                console.error(ex);
-            }
-        }
-
-        function checkradiobutton(radio_button_name) {
-            let radio_button = document.querySelector(`input[type='radio'][name='${radio_button_name}']:checked`);
-            if (!radio_button) return false;
-            return true;
-        }
-
-        function validateForm1() {
-            validateForm(() => {
-                console.log("Passed");
-                __doPostBack('<%=btnComplete.UniqueID%>', '');
-            });
-        };
-
-        function validateForm(pass) {
-
-            let checks = document.querySelectorAll(`.required`);
-            console.log(checks);
-            let errors = [];
-            checks.forEach(e => {
-                e.getAttribute("data-for");
-                if (!checkradiobutton(e.getAttribute("data-for"))) {
-                    errors.push(e);
-                }
-            });
-
-            amend_reason = document.getElementById("txt_amendReason");
-
-            if (amend_reason) {
-                if (amend_reason.value.length <= 3) {
-                    document.getElementById("messagePlaceHolder").scrollIntoView();
-                    document.getElementById("DisplayControl").focus();
-                    errors.push(amend_reason);
-                }
-            }
-
-            if (errors.length <= 0) pass();
-
+            formGroup_init();
+            checkboxRadiobutton_init();
+            InputFilter();
         }
 
     </script>

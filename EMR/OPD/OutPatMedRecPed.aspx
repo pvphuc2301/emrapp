@@ -244,8 +244,8 @@
                                         <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
                                     <div class="form-group mb-2">
 
-                                        <asp:TextBox runat="server" ID="txt_amend_reason" CssClass="el-hide" />
-                                        <div spellcheck="false" style="height: auto; text-align: left; display: inline-block;" class="form-control" id="DisplayControl" onblur="changeValue1(this, 'txt_amend_reason')" contenteditable='true' runat="server"></div>
+                                        <asp:TextBox runat="server" TextMode="MultiLine" ID="txt_amend_reason" CssClass="form-control" />
+
                                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
                                             ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                     </div>
@@ -396,9 +396,7 @@
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <label class="control-label">Dấu hiệu sinh tồn/ <span class="text-primary">Vital signs</span></label>
-                                                            <button onserverclick="btnUpdateVitalSign_Click" class="btn btn-sm btn-secondary waves-effect " runat="server" id="btnUpdateVitalSign">
-                                                                Update
-                                                            </button>
+                                                            <asp:LinkButton OnClick="btnUpdateVitalSign_Click" ID="btnUpdateVitalSign" runat="server" CssClass="btn btn-sm btn-secondary waves-effect">Update</asp:LinkButton>
                                                             <asp:UpdateProgress runat="server" AssociatedUpdatePanelID="updatepnl_vital_sign">
                                                                 <ProgressTemplate>
                                                                     <div class="loader1 ml-2">
@@ -636,29 +634,17 @@
                                         <div class="row mb-2">
                                             <div class="col-md-12">
                                                 <div class="form-actions">
-                                                    <button type="button" runat="server" id="btnComplete" validationgroup="Group1" onserverclick="btnComplete_Click" class="btn btn-primary waves-effect">
-                                                        Complete
-                                                    </button>
+                                                    <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
 
-                                                    <button type="button" onserverclick="btnSave_Click" validationgroup="Group1" runat="server" id="btnSave" class="btn btn-primary waves-effect">
-                                                        Save
-                                                    </button>
+                                                        <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
 
-                                                    <button type="button" data-toggle="modal" data-target="#myModal" id="btnDeleteModal" runat="server" class="btn btn-danger waves-effect">
-                                                        Delete
-                                                    </button>
+                                                        <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal" class="btn btn-danger waves-effect">Delete</div>
 
-                                                    <button onserverclick="btnAmend_Click" runat="server" id="btnAmend" class="btn btn-secondary waves-effect">
-                                                        Amend
-                                                    </button>
+                                                        <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                    <button onserverclick="btnPrint_Click" id="btnPrint" runat="server" class="btn btn-secondary waves-effect">
-                                                        Print
-                                                    </button>
+                                                        <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
-                                                    <button runat="server" onserverclick="btnCancel_Click" id="btnCancel" class="btn btn-secondary waves-effect">
-                                                        Cancel
-                                                    </button>
+                                                        <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                                 </div>
                                             </div>
                                         </div>
@@ -667,12 +653,11 @@
                                             <ModalBody>
                                                 <div class="text-center">
                                                     <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                                    <h4 class="mt-4 mb-4">Delete document?
-                                                    </h4>
+                                                    <h4 class="mt-4 mb-4">Delete document?</h4>
                                                 </div>
                                                 <div class="text-right">
-                                                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                                                    <button type="button" onserverclick="btnDelete_Click" runat="server" id="btnDelete" class="btn btn-danger waves-effect">Delete</button>
+                                                    <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
+                                                    <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
                                                 </div>
                                             </ModalBody>
                                         </webUI:PopupModal>
@@ -685,13 +670,6 @@
                 </div>
 
             </ContentTemplate>
-            <Triggers>
-                <asp:AsyncPostBackTrigger ControlID="btnPrint" />
-                <asp:AsyncPostBackTrigger ControlID="btnSave" />
-                <asp:AsyncPostBackTrigger ControlID="btnAmend" />
-                <asp:AsyncPostBackTrigger ControlID="btnCancel" />
-                <asp:AsyncPostBackTrigger ControlID="btnComplete" />
-            </Triggers>
         </asp:UpdatePanel>
     </form>
     <script src="../scripts/jquery-3.2.1.min.js"></script>
@@ -707,58 +685,7 @@
         }
 
         function afterAsyncPostBack() {
-            let radiosAttr = [];
-
-            document.querySelectorAll('input[type=radio]').forEach(e => {
-                if (!radiosAttr.includes(e.name)) radiosAttr.push(e.name);
-            });
-
-            for (let i = 0; i < radiosAttr.length; i++) {
-                let radiosEle = $(`input[name=${radiosAttr[i]}]`);
-
-                for (let j = 0; j < radiosEle.length; j++) {
-                    let disabledFor = radiosEle[j].getAttribute('disabled-for');
-
-                    if (disabledFor != 'undefined' && disabledFor != false) {
-
-                        if (!radiosEle[j].checked) {
-                            let EleByClassName = document.getElementsByClassName(disabledFor);
-
-                            for (let l = 0; l < EleByClassName.length; l++) {
-                                EleByClassName[l].classList.add("el-hide");
-                            }
-                        }
-                    }
-
-                    radiosEle[j].addEventListener('change', function () {
-                        try {
-
-                            let disabledFor = radiosEle[j].getAttribute('disabled-for');
-
-                            if (disabledFor != 'undefined' && disabledFor != false) {
-
-                                for (let k = 0; k < radiosEle.length; k++) {
-
-                                    let EleByClassName = document.getElementsByClassName(radiosEle[k].getAttribute('disabled-for'));
-
-                                    for (let l = 0; l < EleByClassName.length; l++) {
-
-                                        if (EleByClassName[l].classList.contains(disabledFor)) {
-                                            EleByClassName[l].classList.remove("el-hide");
-                                            EleByClassName[l].classList.add("el-show");
-                                        } else {
-                                            EleByClassName[l].classList.remove("el-show");
-                                            EleByClassName[l].classList.add("el-hide");
-                                        }
-                                    }
-                                }
-                            }
-                        } catch (ex) {
-                            console.error(ex);
-                        }
-                    })
-                }
-            }
+            checkboxRadiobutton_init();
         }
 
     </script>

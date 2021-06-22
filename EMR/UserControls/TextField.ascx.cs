@@ -23,6 +23,7 @@ namespace EMR
                 DisplayControl.InnerHtml = value;
             }
         }
+        public string Text { get { return Value; } set { Text = value; } }
         public string Width
         {
             get { return Width; }

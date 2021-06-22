@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using EMR.UserControls;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -18,10 +19,265 @@ using Telerik.Web.UI;
 
 namespace EMR
 {
+    public enum ControlState { View, Edit }
     public static class WebHelpers
     {
-        //public static string URL = "http://172.16.0.78:8088/";
-        public static string URL = "http://172.16.0.78:8082/";
+        public static string URL = "http://172.16.0.78:8088/";
+        //public static string URL = "http://172.16.0.78:8082/";\
+
+        #region API
+        public static dynamic PostAPI(string url, dynamic obj)
+        {
+            dynamic result = new ExpandoObject();
+
+            var jsonContent = new JavaScriptSerializer().Serialize(obj);
+
+            url = URL + url;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = WebRequestMethods.Http.Post;
+            // request.Headers.Add("Authentication", authToken);
+            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+            Byte[] byteArray = encoding.GetBytes(jsonContent);
+            request.ContentLength = byteArray.Length;
+            request.ContentType = "application/json";
+            using (Stream dataStream = request.GetRequestStream())
+            {
+                dataStream.Write(byteArray, 0, byteArray.Length);
+            }
+
+            long length = 0;
+            try
+            {
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    length = response.ContentLength;
+                    WebResponse response1 = request.GetResponse();
+                    Stream dataStream = response1.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+                    var responseFromServer = reader.ReadToEnd();
+
+                    reader.Close();
+                    dataStream.Close();
+                    response.Close();
+
+                    result.Status = response.StatusCode;
+                    return result;
+                }
+            }
+            catch (WebException ex)
+            {
+                string message = string.Format("Message: {0}\\n\\n", ex.Message);
+                message += string.Format("StackTrace: {0}\\n\\n", ex.StackTrace.Replace(Environment.NewLine, string.Empty));
+                message += string.Format("Source: {0}\\n\\n", ex.Source.Replace(Environment.NewLine, string.Empty));
+                message += string.Format("TargetSite: {0}", ex.TargetSite.ToString().Replace(Environment.NewLine, string.Empty));
+
+                result.Message = message;
+                result.Status = System.Net.HttpStatusCode.NotFound;
+                result.Data = ex.Message;
+                //result.Status = e.Status;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                string message = string.Format("Message: {0}\\n\\n", ex.Message);
+                message += string.Format("StackTrace: {0}\\n\\n", ex.StackTrace.Replace(Environment.NewLine, string.Empty));
+                message += string.Format("Source: {0}\\n\\n", ex.Source.Replace(Environment.NewLine, string.Empty));
+                message += string.Format("TargetSite: {0}", ex.TargetSite.ToString().Replace(Environment.NewLine, string.Empty));
+
+                result.Status = System.Net.HttpStatusCode.NotFound;
+                result.Data = ex.Message;
+                result.Message = message;
+
+                return result;
+            }
+        }
+        public static dynamic PostAPI(string url)
+        {
+            dynamic result = new System.Dynamic.ExpandoObject();
+
+            url = URL + url;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = WebRequestMethods.Http.Post;
+            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+            Byte[] byteArray = encoding.GetBytes("{}");
+            request.ContentLength = byteArray.Length;
+            request.ContentType = "application/json";
+            using (Stream dataStream = request.GetRequestStream())
+            {
+                dataStream.Write(byteArray, 0, byteArray.Length);
+            }
+
+            long length = 0;
+            try
+            {
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    length = response.ContentLength;
+                    WebResponse response1 = request.GetResponse();
+                    Stream dataStream = response1.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+                    var responseFromServer = reader.ReadToEnd();
+
+                    //var res = response1;
+                    reader.Close();
+                    dataStream.Close();
+                    response.Close();
+                    result.Status = response.StatusCode;
+                    return result;
+                }
+            }
+            catch (WebException e)
+            {
+                result.Status = e.Status;
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.Data = ex.Message;
+                result.Status = "Error";
+                result.Exception = ex;
+                return result;
+            }
+        }
+        public static dynamic GetAPI(string url)
+        {
+            dynamic result = new System.Dynamic.ExpandoObject();
+
+            url = URL + url;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+            request.ContentType = "application/json";
+            long length = 0;
+            try
+            {
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    length = response.ContentLength;
+                    WebResponse response1 = request.GetResponse();
+                    Stream dataStream = response1.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+                    var responseFromServer = reader.ReadToEnd();
+                    //var res = response1;
+                    reader.Close();
+                    dataStream.Close();
+                    response.Close();
+
+                    result.Status = response.StatusCode;
+                    result.Data = responseFromServer;
+                    return result;
+                }
+            }
+            catch (WebException ex)
+            {
+                result.Status = System.Net.HttpStatusCode.NotFound;
+                //result.Status = ((dynamic)ex.Response).StatusCode;
+
+                result.Data = ex.Message;
+
+                return result;
+            }
+        }
+        public static dynamic GetAPITEST(string url)
+        {
+            dynamic result = new System.Dynamic.ExpandoObject();
+
+            url = URL + url;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+            request.ContentType = "application/json";
+            long length = 0;
+            
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                length = response.ContentLength;
+                WebResponse response1 = request.GetResponse();
+                Stream dataStream = response1.GetResponseStream();
+                StreamReader reader = new StreamReader(dataStream);
+                var responseFromServer = reader.ReadToEnd();
+                //var res = response1;
+                reader.Close();
+                dataStream.Close();
+                response.Close();
+
+                result.Status = response.StatusCode;
+                result.Data = responseFromServer;
+                return result;
+            }
+        }
+        public static dynamic PostAPITEST(string url, dynamic obj)
+        {
+            dynamic result = new ExpandoObject();
+
+            var jsonContent = new JavaScriptSerializer().Serialize(obj);
+
+            url = URL + url;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = WebRequestMethods.Http.Post;
+            // request.Headers.Add("Authentication", authToken);
+            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+            Byte[] byteArray = encoding.GetBytes(jsonContent);
+            request.ContentLength = byteArray.Length;
+            request.ContentType = "application/json";
+            using (Stream dataStream = request.GetRequestStream())
+            {
+                dataStream.Write(byteArray, 0, byteArray.Length);
+            }
+
+            long length = 0;
+            
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                length = response.ContentLength;
+                WebResponse response1 = request.GetResponse();
+                Stream dataStream = response1.GetResponseStream();
+                StreamReader reader = new StreamReader(dataStream);
+                var responseFromServer = reader.ReadToEnd();
+
+                reader.Close();
+                dataStream.Close();
+                response.Close();
+
+                result.Status = response.StatusCode;
+                return result;
+            }
+        }
+        public static dynamic PostAPITEST(string url)
+        {
+            dynamic result = new System.Dynamic.ExpandoObject();
+
+            url = URL + url;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = WebRequestMethods.Http.Post;
+            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+            Byte[] byteArray = encoding.GetBytes("{}");
+            request.ContentLength = byteArray.Length;
+            request.ContentType = "application/json";
+            using (Stream dataStream = request.GetRequestStream())
+            {
+                dataStream.Write(byteArray, 0, byteArray.Length);
+            }
+
+            long length = 0;
+            
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                length = response.ContentLength;
+                WebResponse response1 = request.GetResponse();
+                Stream dataStream = response1.GetResponseStream();
+                StreamReader reader = new StreamReader(dataStream);
+                var responseFromServer = reader.ReadToEnd();
+
+                //var res = response1;
+                reader.Close();
+                dataStream.Close();
+                response.Close();
+                result.Status = response.StatusCode;
+                return result;
+            }
+        }
+        #endregion
+
+        #region Methods
         public static DataTable GetJSONToDataTable(string JSONData)
         {
             if (JSONData == null) { return null; }
@@ -41,17 +297,46 @@ namespace EMR
             dt = JsonConvert.DeserializeObject<DataTable>(Convert.ToString(jsonObject));
             return dt;
         }
-        //public static string FormatNumber(string value, string format)
-        //{
-        //    if (value == null) return "";
-        //    return Decimal.Round( value.ToString("f1"); 
-        //}
+
         public static bool IsPropertyExist(dynamic settings, string name)
         {
             if (settings is ExpandoObject)
                 return ((IDictionary<string, object>)settings).ContainsKey(name);
 
             return settings.GetType().GetProperty(name) != null;
+        }
+        internal static void DataBind(HtmlForm _form, HtmlInputRadioButton controlType, string controlID)
+        {
+            var control = _form.FindControl(controlID);
+            if (control != null)
+            {
+                ((HtmlInputRadioButton)control).Checked = true;
+            }
+        }
+        internal static void DataBind(HtmlForm _from, HtmlInputCheckBox controlType, string controlID)
+        {
+            var control = _from.FindControl(controlID);
+            if (control != null)
+            {
+                ((HtmlInputCheckBox)control).Checked = true;
+            }
+        }
+        internal static void DataBind(HtmlForm _from, HtmlInputCheckBox controlType, string cb_name, string value, string key = "code")
+        {
+            if (value != null && cb_name != null)
+            {
+                foreach (DataRow row in WebHelpers.GetJSONToDataTable(value).Rows)
+                {
+                    try
+                    {
+                        ((HtmlInputCheckBox)_from.FindControl(cb_name + row.Field<dynamic>(key).ToLower())).Checked = true;
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+
+                }
+            }
         }
         public static string GetJSONFromTable(GridView gridView, DataTable table)
         {
@@ -90,43 +375,20 @@ namespace EMR
             } catch (Exception ex) { }
 
             return GetDataTableToJSON(table);
-
-            ////
-            //DataTable dataTable = table;
-            //dataTable.Clear();
-            //DataRow dataRow;
-            //try
-            //{
-            //    for (int r = 0; r < gridView.Rows.Count; r++)
-            //    {
-            //        dataRow = dataTable.NewRow();
-
-            //        for (int i = 0; i < gridView.Rows[r].Cells.Count; i++)
-            //        {
-            //            try
-            //            {
-            //                TextField text2 = gridView.Rows[r].Cells[i].Controls[1] as TextField;
-            //                dataRow[text2.DataKey] = text2.Value;
-            //            }
-            //            catch { }
-            //        }
-            //        dataTable.Rows.Add(dataRow);
-            //    }
-            //    return GetDataTableToJSON(dataTable);
-            //}
-            //catch(Exception ex)
-            //{
-            //    return null;
-            //}
         }
 
         internal static string GetValue(dynamic value, string defaultValue = "—")
         {
             if (string.IsNullOrEmpty(value)) return defaultValue;
-            return value;
+            return $"<span class='font-bold'>{value}</span>";
+        }
+        internal static string FormatString(dynamic value, string defaultValue = "—", string CssClass = "font-bold")
+        {
+            if (string.IsNullOrEmpty(value)) return defaultValue;
+            return $"<span class='{CssClass}'>{value}</span>";
         }
 
-        public static string GetJSONFromTable(GridView gridView, Dictionary<string, string> cols)
+        public static string GetDataGridView(GridView gridView, Dictionary<string, string> cols)
         {
             DataTable table = new DataTable();
             foreach (KeyValuePair<string, string> col in cols)
@@ -141,26 +403,23 @@ namespace EMR
                 {
                     row = table.NewRow();
                     row["id"] = (r + 1);
-                    Control control;
+                    dynamic control;
                     for (int i = 0; i < gridView.Rows[r].Cells.Count; i++)
                     {
                         control = gridView.Rows[r].Cells[i].Controls[1];
                         try
                         {
-                            if (control is TextField)
+                            if (control is TextField || control is TextBox)
                             {
-                                TextField text2 = gridView.Rows[r].Cells[i].Controls[1] as TextField;
-                                row[text2.DataKey] = text2.Value;
+                                row[control.ID] = control.Text;
                             }
                             else if (control is RadTimePicker)
                             {
-                                RadTimePicker text2 = gridView.Rows[r].Cells[i].Controls[1] as RadTimePicker;
-                                row[text2.ID] = DateTime.Parse(text2.SelectedTime.ToString()).ToString("HH:mm");
+                                row[control.ID] = WebHelpers.FormatDateTime(control.SelectedTime, "HH:mm");
                             }
                             else if (control is RadDateTimePicker)
                             {
-                                RadDateTimePicker text2 = gridView.Rows[r].Cells[i].Controls[1] as RadDateTimePicker;
-                                row[text2.ID] = DataHelpers.ConvertSQLDateTime(DateTime.Parse(text2.SelectedDate.ToString()));
+                                row[control.ID] = DataHelpers.ConvertSQLDateTime(control.SelectedDate);
                             }
                         }
                         catch (Exception ex) { }
@@ -202,17 +461,93 @@ namespace EMR
             //}
         }
 
-        //internal static string CreateOptions(params object[] theObjects)
-        //{
-        //    return JsonConvert.SerializeObject(theObjects);
-        //}
-        /// <summary>
-        /// [0 - (n-2)]: options
-        /// [n-1]: isChecked
-        /// [n]: styles
-        /// </summary>
-        /// <param name="options"></param>
-        /// <returns></returns>
+        internal static void SendError(Page page, Exception ex)
+        {
+            PopupException popupException = (PopupException)page.LoadControl("~/UserControls/PopupException.ascx");
+            page.Form.Controls.Add(popupException);
+            
+            string message = string.Format("Message: {0}\\n\\n", ex.Message);
+            message += string.Format("StackTrace: {0}\\n\\n", ex.StackTrace.Replace(Environment.NewLine, string.Empty));
+            message += string.Format("Source: {0}\\n\\n", ex.Source.Replace(Environment.NewLine, string.Empty));
+            message += string.Format("TargetSite: {0}", ex.TargetSite.ToString().Replace(Environment.NewLine, string.Empty));
+            popupException.Text = message;
+            
+            ScriptManager.RegisterStartupScript(page, page.GetType(), "msg_error", "alert(\"" + message + "\");", true);
+        }
+
+        internal static void DisabledControl(bool disabled,params dynamic[] options)
+        {
+            for (int i = 0; i < options.Length; i++)
+            {
+                options[i].Disabled = disabled;
+            }
+        }
+
+        internal static void EnableControl(bool enable, params dynamic[] options)
+        {
+            for (int i = 0; i < options.Length; i++)
+            {
+                options[i].Enable = enable;
+            }
+        }
+
+        internal static void VisibleControl(bool visible, params dynamic[] options)
+        {
+            for (int i = 0; i < options.Length; i++)
+            {
+                options[i].Visible = visible;
+            }
+        }
+        internal static void VisibleControl(Page _page, string _controlID, bool visible, Dictionary<string, string> _source)
+        {
+            for (int i = 0; i < _source.Count; i++)
+            {
+                var control = _controlID.ElementAt(i);
+                _page.FindControl($"{_controlID}{control}").Visible = visible;
+                //options[i].Visible = visible;
+            }
+        }
+        internal static bool LoadFormControl(HtmlForm form1, dynamic obj, ControlState state)
+        {
+            bool visible = (state == 0) ? true : false;
+
+            foreach (var prop in obj.GetType().GetProperties())
+            {
+                var control1 = form1.FindControl(prop.Name + "_wrapper");
+                var control2 = form1.FindControl("lbl_" + prop.Name);
+
+                if (control1 != null)
+                {
+                    control1.Visible = !visible;
+                }
+                if (control2 != null)
+                {
+                    control2.Visible = visible;
+                }
+            }
+            return visible;
+        }
+        internal static bool LoadFormControl(HtmlForm form1, dynamic obj, ControlState state, string session)
+        {
+            //1 - edit
+            bool visible = (state == ControlState.Edit && DataHelpers._LOCATION == session) ? true : false;
+
+            foreach (var prop in obj.GetType().GetProperties())
+            {
+                var control1 = form1.FindControl(prop.Name + "_wrapper");
+                var control2 = form1.FindControl("lbl_" + prop.Name);
+
+                if (control1 != null)
+                {
+                    control1.Visible = visible;
+                }
+                if (control2 != null)
+                {
+                    control2.Visible = !visible;
+                }
+            }
+            return visible;
+        }
         internal static string CreateOptions(params dynamic[] options)
         {
             string option = "";
@@ -262,10 +597,10 @@ namespace EMR
             return option;
         }
 
-        internal static string FormatDateTime(dynamic dateTime, string format = "dd-MM-yyyy")
+        internal static string FormatDateTime(DateTime? dateTime, string format = "dd-MM-yyyy")
         {
             if (dateTime == null) return "";
-            return dateTime.ToString(format);
+            return ((DateTime)dateTime).ToString(format);
         }
 
         public static string GetDataTableToJSON(DataTable dataTable)
@@ -301,6 +636,33 @@ namespace EMR
             tbl.Rows.Add(tbl.NewRow());
             return tbl;
         }
+
+        internal static dynamic getRadioButton(HtmlForm form1, string radioButtonID)
+        {
+            dynamic control1 = form1.FindControl($"{radioButtonID}true");
+            dynamic control2 = form1.FindControl($"{radioButtonID}false");
+
+            if (control1 != null && control2 != null)
+            {
+                return control1.Checked;
+            }
+            else return null;
+        }
+
+        internal static DataTable DataBind(GridView _gridView, DataTable _dataSource)
+        {
+            try
+            {
+                _gridView.DataSource = _dataSource;
+                _gridView.DataBind();
+                return _dataSource;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public static Bitmap ConvertBase64ToImage(string ImageStr)
         {
             try
@@ -393,6 +755,62 @@ namespace EMR
             // return obj;
 
         }
+
+        internal static dynamic GetData(HtmlForm form, HtmlInputRadioButton controlType, string radioButtonID)
+        {
+            dynamic control1 = form.FindControl($"{radioButtonID}true");
+            dynamic control2 = form.FindControl($"{radioButtonID}false");
+
+            if (control1.Checked) { return true; }
+            else if (control2.Checked) { return false; }
+            else { return null; }
+        }
+        internal static dynamic GetData(HtmlForm form, HtmlInputRadioButton controlType, string radioButtonID, Dictionary<string, string> source)
+        {
+            foreach (KeyValuePair<string, string> code in source)
+            {
+                if (((HtmlInputRadioButton)form.FindControl(radioButtonID + code.Key)).Checked)
+                {
+                    return code.Key;
+                    break;
+                }
+            }
+            return null;
+        }
+        internal static dynamic GetData(HtmlForm form, HtmlInputCheckBox controlType, string radioButtonID, bool required = false)
+        {
+            dynamic control1 = form.FindControl($"{radioButtonID}true");
+            dynamic control2 = form.FindControl($"{radioButtonID}false");
+
+            if (control1.Checked) { return true; }
+            else if (control2.Checked) { return false; }
+            else {
+                if (required) { return false; }
+                return null;
+            }
+        }
+        internal static dynamic GetData(HtmlForm form, HtmlInputCheckBox controlType, string radioButtonID, Dictionary<string, string> source, string code_col = "code")
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add(code_col);
+            table.Columns.Add("desc");
+
+            foreach (KeyValuePair<string, string> code in source)
+            {
+                if (((HtmlInputCheckBox)form.FindControl(radioButtonID + code.Key)).Checked)
+                {
+                    DataRow dtRow = table.NewRow();
+
+                    dtRow = table.NewRow();
+                    dtRow["code"] = code.Key;
+                    dtRow["desc"] = code.Value;
+                    table.Rows.Add(dtRow);
+                }
+            }
+            if (table.Rows.Count <= 0) return null;
+            return JsonConvert.SerializeObject(table);
+        }
+
         public static void CopyProperties(object source, object destination)
         {
             foreach (PropertyInfo prop in destination.GetType().GetProperties())
@@ -421,6 +839,44 @@ namespace EMR
             }
         }
 
+        internal static void getAccessButtons(HtmlForm form, string docStatus, string access_authorize, string location)
+        {
+            LinkButton btnComplete = (LinkButton)form.FindControl("btnComplete");
+            Control btnSave = form.FindControl("btnSave");
+            Control btnDelete = form.FindControl("btnDeleteModal");
+            Control btnAmend = form.FindControl("btnAmend");
+            Control btnPrint = form.FindControl("btnPrint");
+            Control btnCancel = form.FindControl("btnCancel");
+            
+            VisibleControl(false, btnCancel);
+
+            if (DataHelpers._LOCATION != location)
+            {
+                VisibleControl(false, btnComplete, btnSave, btnDelete, btnAmend, btnPrint);
+                return;
+            }
+
+            if (docStatus == DocumentStatus.FINAL)
+            {
+                VisibleControl(true, btnAmend, btnPrint);
+                VisibleControl(false, btnComplete, btnSave, btnDelete);
+            }
+            else
+            {
+                VisibleControl(false, btnAmend, btnPrint);
+                VisibleControl(true, btnComplete, btnSave, btnDelete);
+            }
+            
+            //switch (access_authorize)
+            //{
+            //    case "TechAccess":
+            //    case "CSOAccess":
+            //    case "MAFullAccess":
+            //        btnComplete.Enabled = false;
+            //        break;
+            //}
+        }
+
         /// <summary>
         /// { 
         ///     "parameter1": "value1",
@@ -432,150 +888,13 @@ namespace EMR
         /// <param name="jsonContent">
         /// </param>
         /// <returns></returns>
-        public static dynamic PostAPI(string url, dynamic obj)
-        {
-            dynamic result = new ExpandoObject();
 
-            var jsonContent = new JavaScriptSerializer().Serialize(obj);
-
-            url = URL + url;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = WebRequestMethods.Http.Post;
-            // request.Headers.Add("Authentication", authToken);
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes(jsonContent);
-            request.ContentLength = byteArray.Length;
-            request.ContentType = "application/json";
-            using (Stream dataStream = request.GetRequestStream())
-            {
-                dataStream.Write(byteArray, 0, byteArray.Length);
-            }
-
-            long length = 0;
-            try
-            {
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    length = response.ContentLength;
-                    WebResponse response1 = request.GetResponse();
-                    Stream dataStream = response1.GetResponseStream();
-                    StreamReader reader = new StreamReader(dataStream);
-                    var responseFromServer = reader.ReadToEnd();
-
-                    reader.Close();
-                    dataStream.Close();
-                    response.Close();
-
-                    result.Status = response.StatusCode;
-                    return result;
-                }
-            }
-            catch (WebException e)
-            {
-                result.Status = System.Net.HttpStatusCode.NotFound;
-                result.Data = e.Message;
-                //result.Status = e.Status;
-                return result;
-            }
-            catch (Exception e)
-            {
-                result.Status = System.Net.HttpStatusCode.NotFound;
-                result.Data = e.Message;
-                return result;
-            }
-        }
-
-        public static dynamic PostAPI(string url)
-        {
-            dynamic result = new System.Dynamic.ExpandoObject();
-
-            url = URL + url;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = WebRequestMethods.Http.Post;
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes("{}");
-            request.ContentLength = byteArray.Length;
-            request.ContentType = "application/json";
-            using (Stream dataStream = request.GetRequestStream())
-            {
-                dataStream.Write(byteArray, 0, byteArray.Length);
-            }
-
-            long length = 0;
-            try
-            {
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    length = response.ContentLength;
-                    WebResponse response1 = request.GetResponse();
-                    Stream dataStream = response1.GetResponseStream();
-                    StreamReader reader = new StreamReader(dataStream);
-                    var responseFromServer = reader.ReadToEnd();
-
-                    //var res = response1;
-                    reader.Close();
-                    dataStream.Close();
-                    response.Close();
-                    result.Status = response.StatusCode;
-                    return result;
-                }
-            }
-            catch (WebException e)
-            {
-                result.Status = e.Status;
-                return result;
-            }
-            catch (Exception e)
-            {
-                result.Data = e.Message;
-                result.Status = "Error";
-                return result;
-            }
-        }
 
         /// <summary>
         /// test
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public static dynamic GetAPI(string url)
-        {
-            dynamic result = new System.Dynamic.ExpandoObject();
-            
-            url = URL + url;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "GET";
-            request.ContentType = "application/json";
-            long length = 0;
-            try
-            {
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    length = response.ContentLength;
-                    WebResponse response1 = request.GetResponse();
-                    Stream dataStream = response1.GetResponseStream();
-                    StreamReader reader = new StreamReader(dataStream);
-                    var responseFromServer = reader.ReadToEnd();
-                    //var res = response1;
-                    reader.Close();
-                    dataStream.Close();
-                    response.Close();
-
-                    result.Status = response.StatusCode;
-                    result.Data = responseFromServer;
-                    return result;
-                }
-            }
-            catch (WebException ex)
-            {
-                result.Status = System.Net.HttpStatusCode.NotFound;
-                //result.Status = ((dynamic)ex.Response).StatusCode;
-
-                result.Data = ex.Message;
-
-                return result;
-            }
-        }
 
         public static void DisabledDateTimePicker(RadDateTimePicker radDateTimePicker, bool disabled)
         {
@@ -598,31 +917,29 @@ namespace EMR
                     {
                         try
                         {
-                            var control = gridView.Rows[r].Cells[i].Controls[1];
+                            dynamic control = gridView.Rows[r].Cells[i].Controls[1];
 
-                            if (control is TextField)
+                            if (control is TextField || control is TextBox)
                             {
-                                (control as TextField).Disabled = disabled;
+                                control.Disabled = disabled;
                             }
                             else if (control is RadTimePicker)
                             {
-                                (control as RadTimePicker).TimePopupButton.Visible = !disabled;
-                                (control as RadTimePicker).EnableTyping = !disabled;
+                                control.TimePopupButton.Visible = !disabled;
+                                control.EnableTyping = !disabled;
                             }
                             else if (control is RadDateTimePicker)
                             {
-                                (control as RadDateTimePicker).DatePopupButton.Visible = !disabled;
-                                (control as RadDateTimePicker).TimePopupButton.Visible = !disabled;
-                                (control as RadDateTimePicker).EnableTyping = !disabled;
-                            }
-                            else if (control is LinkButton)
-                            {
-                                (control as LinkButton).Visible = !disabled;
+                                control.DatePopupButton.Visible = !disabled;
+                                control.TimePopupButton.Visible = !disabled;
+                                control.EnableTyping = !disabled;
                             }
                         }
                         catch (Exception ex) { }
                     }
                 }
+
+                gridView.Columns[gridView.Columns.Count - 1].Visible = !disabled;
             }
             catch (Exception ex) { }
 
@@ -638,6 +955,13 @@ namespace EMR
             }
             catch (Exception ex) { }
         }
+        internal static void DataBind(RadDateTimePicker radDateTimePicker, dynamic datetime)
+        {
+            if (datetime != null)
+            {
+                radDateTimePicker.SelectedDate = datetime;
+            }
+        }
         public static void BindDateTimePicker(RadDatePicker radDatePicker, dynamic datetime)
         {
             try
@@ -646,7 +970,6 @@ namespace EMR
             }
             catch (Exception ex) { }
         }
-
         public static string GetSignatureTemplate1(string dateTime, string title_l, string title_e, string subTitle_l, string subTitle_e, string fullname)
         {
             string template = "";
@@ -660,5 +983,248 @@ namespace EMR
 
             return template;
         }
+        public static string GetBool(bool? value, string returnTrue = "Có/ Yes", string returnFalse = "Không/ No")
+        {
+            if (value == null) return null; return (bool)value ? returnTrue : returnFalse;
+        }
+        internal static void CheckSession(Page _page, string redirecturl = "../login.aspx?ReturnUrl=")
+        {
+            string UserID = (string)_page.Session["UserID"];
+            redirecturl += _page.Request.ServerVariables["script_name"] + "?";
+            redirecturl += _page.Server.UrlEncode(_page.Request.QueryString.ToString());
+            if (string.IsNullOrEmpty(UserID))
+                _page.Response.Redirect(redirecturl, false);
+
+            switch (_page.Request["__EVENTTARGET"])
+            {
+                case "stayLoggedIn":
+                    _page.Response.Redirect(redirecturl);
+                    break;
+
+                default:
+                    ScriptManager.RegisterStartupScript(_page, _page.GetType(), "session_timeout",
+@"var _session_timeout; 
+clearInterval(_session_timeout); 
+setTimeout(()=> { 
+    $('#PopupShowDelay').modal({ backdrop: 'static', keyboard: false }); 
+
+    let _countDownTimer = 14; 
+    let _timeLeft = document.getElementById('timeleft'); 
+
+    _session_timeout = setInterval(() => 
+    { 
+        _timeLeft.innerText = (_countDownTimer--);
+        if(_countDownTimer < 0) { clearInterval(_session_timeout); logout(); }
+    }, 1000);
+}, 1000 * 60 * 60);", true);
+                    break;
+            }
+        }
+        internal static string GetCheckBox(HtmlForm _form, string _checkboxID, Dictionary<string, string> _source, out DataTable _table, string _code = "code")
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add(_code);
+            table.Columns.Add("desc");
+
+            foreach (KeyValuePair<string, string> code in _source)
+            {
+                try
+                {
+                    if (((HtmlInputCheckBox)_form.FindControl(_checkboxID + code.Key)).Checked)
+                    {
+                        DataRow dtRow = table.NewRow();
+
+                        dtRow = table.NewRow();
+                        dtRow[_code] = code.Key;
+                        dtRow["desc"] = code.Value;
+                        table.Rows.Add(dtRow);
+                    }
+                }
+                catch (Exception ex) { }
+            }
+            _table = table;
+            if (_table.Rows.Count > 0) return JsonConvert.SerializeObject(table);
+            return null;
+        }
+        internal static string GetCheckBox(HtmlForm _form, string _checkboxID, Dictionary<string, string> _source, string _code = "code")
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add(_code);
+            table.Columns.Add("desc");
+
+            foreach (KeyValuePair<string, string> code in _source)
+            {
+                try
+                {
+                    if (((HtmlInputCheckBox)_form.FindControl(_checkboxID + code.Key)).Checked)
+                    {
+                        DataRow dtRow = table.NewRow();
+
+                        dtRow = table.NewRow();
+                        dtRow[_code] = code.Key;
+                        dtRow["desc"] = code.Value;
+                        table.Rows.Add(dtRow);
+                    }
+                }
+                catch (Exception ex) { }
+            }
+            if (table.Rows.Count > 0) return JsonConvert.SerializeObject(table);
+            return null;
+        }
+        private static dynamic GetCheckBox(HtmlForm form, string id, bool required = false)
+        {
+            dynamic contro1 = form.FindControl(id + "true");
+
+            if (contro1 != null)
+            {
+                return ((HtmlInputCheckBox)contro1).Checked;
+            }
+            else
+            {
+                if (required) { return false; }
+                return null;
+            }
+        }
+        internal static DataTable DeleteRow(DataTable dataTable, GridView gridView, int rowIndex)
+        {
+            dataTable = UpdateLastRow(gridView, Iina.SKIN_ANNO, dataTable);
+
+            dataTable.Rows[rowIndex].Delete();
+
+            return DataBind(gridView, dataTable);
+        }
+        private static DataTable UpdateLastRow(GridView gridView, Dictionary<string, string> cols, DataTable table)
+        {
+            if (table.Rows.Count <= 0)
+            {
+                foreach (KeyValuePair<string, string> col in cols)
+                {
+                    table.Columns.Add(col.Key);
+                }
+            }
+
+            for (int i = 0; i < gridView.Rows[gridView.Rows.Count - 1].Cells.Count; i++)
+            {
+                try
+                {
+                    dynamic control = gridView.Rows[gridView.Rows.Count - 1].Cells[i].Controls[1];
+                    if (control is TextField || control is TextBox)
+                    {
+                        table.Rows[gridView.Rows.Count - 1][control.ID] = control.Text;
+                    }
+                }
+                catch (Exception ex) { }
+            }
+
+            return table;
+        }
+        internal static dynamic GetRadioButton(HtmlForm _form, string _radiobuttonID, Dictionary<string, string> _scource)
+        {
+            foreach (KeyValuePair<string, string> code in _scource)
+            {
+                try
+                {
+                    if (((HtmlInputRadioButton)_form.FindControl(_radiobuttonID + code.Key)).Checked)
+                    {
+                        return code.Key;
+                        break;
+                    }
+                }
+                catch (Exception ex) { }
+            }
+            return null;
+        }
+        internal static dynamic GetRadioButton(HtmlForm form1, string radioButtonID)
+        {
+            try
+            {
+                if (((HtmlInputRadioButton)form1.FindControl($"{radioButtonID}true")).Checked)
+                {
+                    return true;
+                }
+                else if (((HtmlInputRadioButton)form1.FindControl($"{radioButtonID}false")).Checked)
+                {
+                    return false;
+                }
+                else return null;
+            }
+            catch (Exception ex) { return null; }
+        }
+        internal static string DisplayCheckBox(dynamic _source, string gap = "<br>")
+        {
+            if (string.IsNullOrEmpty(_source)) return "";
+            DataTable dt = WebHelpers.GetJSONToDataTable(_source);
+            string result = "";
+            foreach (DataRow dr in dt.Rows)
+            {
+                result += $"{dr["desc"]}{gap}";
+            }
+            return result;
+        }
+        internal static DataTable AddRow(DataTable _dataTable, GridView _gridView, Dictionary<string, string> _col)
+        {
+            try
+            {
+                //new object
+                if (_dataTable == null)
+                {
+                    _dataTable = new DataTable();
+                }
+                //create header
+                for (int i = 0; i < _col.Count; i++)
+                {
+                    var col = _col.ElementAt(i);
+
+                    if (!_dataTable.Columns.Contains(col.Key))
+                    {
+
+                        _dataTable.Columns.Add(col.Key);
+                        if (!string.IsNullOrEmpty(col.Value))
+                        {
+                            switch (col.Value)
+                            {
+                                case "DateTime":
+                                    _dataTable.Columns[i].DataType = typeof(DateTime);
+                                    break;
+                            }
+                        }
+                    }
+                }
+                //get current data
+                for (int r = 0; r < _gridView.Rows.Count; r++)
+                {
+                    for (int i = 0; i < _gridView.Rows[r].Cells.Count; i++)
+                    {
+                        try
+                        {
+                            dynamic control = _gridView.Rows[r].Cells[i].Controls[1];
+
+                            if (control is TextField || control is TextBox)
+                            {
+                                _dataTable.Rows[r][control.ID] = control.Text;
+                            }
+                            else if (control is RadDateTimePicker)
+                            {
+                                _dataTable.Rows[r][control.ID] = control.SelectedDate;
+                            }
+                            else if (control is RadTimePicker)
+                            {
+                                _dataTable.Rows[r][control.ID] = ((RadTimePicker)control).SelectedTime;
+                            }
+                        }
+                        catch (Exception ex) { }
+                    }
+                }
+                
+                _dataTable.Rows.Add(_dataTable.NewRow());
+
+                return DataBind(_gridView, _dataTable);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        #endregion
     }
 }

@@ -74,7 +74,7 @@
 
         function updateFrTotalScore() {
 
-        document.querySelector("#lbl_fr_total_score").value = fall_history_score + secon_diagnosis_score + ambula_aids_score + intra_therapy_score + gait_trans_score + fr_mental_status_score;
+        //document.querySelector("#lbl_fr_total_score").value = fall_history_score + secon_diagnosis_score + ambula_aids_score + intra_therapy_score + gait_trans_score + fr_mental_status_score;
 
             document.querySelector("#txt_fr_total_score").value = fall_history_score + secon_diagnosis_score + ambula_aids_score + intra_therapy_score + gait_trans_score + fr_mental_status_score;
         }
@@ -280,7 +280,7 @@
         let loss_weight = document.getElementById("rad_loss_weight_True");
 
         function initial_screening_change() {
-        let final_screening = document.querySelector(".final_screening");
+            let final_screening = document.querySelector(".final_screening");
             if (bmi_out_range.checked || severely_ill.checked || reduce_dietary.checked || loss_weight.checked) {
         final_screening.classList.remove("el-hide");
             } else {

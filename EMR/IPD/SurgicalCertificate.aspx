@@ -170,8 +170,8 @@
                                 <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
                             <div class="form-group mb-2">
 
-                                <asp:TextBox runat="server" ID="txt_amend_reason" CssClass="el-hide" />
-                                <div spellcheck="false" style="height: auto; text-align: left; display: inline-block;" class="form-control" id="DisplayControl" onblur="changeValue1(this, 'txt_amend_reason')" contenteditable='true' runat="server"></div>
+                                <asp:TextBox runat="server" TextMode="MultiLine" ID="txt_amend_reason" CssClass="form-control" />
+
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
                                     ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                             </div>
@@ -205,7 +205,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="d-grid" style="grid-template-columns: 180px 1fr; grid-gap: 5px;">
+                                    <div class="d-grid mb-4" style="grid-template-columns: 180px 1fr; grid-gap: 5px;">
                                         <label class="control-label mb-2">3. Ngày xuất viện/ <span class="text-primary">Discharge date:</span></label>
                                         <div>
                                             <asp:Label runat="server" ID="lbl_discharge_date" />

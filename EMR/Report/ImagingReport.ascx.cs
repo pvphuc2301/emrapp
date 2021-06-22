@@ -37,6 +37,8 @@ namespace EMR
                     lbCompletedDate.Text = jsonObject.completed_date_time.ToString("dd-MM-yyyy HH:MM");
                     lbOrderName.Text = jsonObject.procedure_name_l + "/" + jsonObject.procedure_name_e;
 
+                    var toltalRegion = jsonObject.total_region;
+
                     lbl_diagnosis.InnerHtml = jsonObject.region_1;
 
                     if (!string.IsNullOrEmpty(Convert.ToString(jsonObject.region_4)))

@@ -18,10 +18,10 @@ namespace EMR
         public string ConnStringHIS = ""; public string ConnStringEMR = ""; string ConnStringHC = "";
         public string UserID; string specialty_id = "";string Fr_Date = ""; string To_Date = "";
         public string current_session = "";
-
+        
         protected void Page_Load(object sender, EventArgs e)
         {
-            CheckUserID();
+            WebHelpers.CheckSession(this, "./login.aspx?ReturnUrl=");
 
             lblUserName.InnerText = UserID;
             if (!IsPostBack)
@@ -306,14 +306,20 @@ namespace EMR
             return Get_query;
         }
 
-        private void CheckUserID()
+        #region Sessions
+        private void goToLogInPage()
         {
-            UserID = (string)Session["UserID"];
             string redirecturl = "./login.aspx?ReturnUrl=";
             redirecturl += Request.ServerVariables["script_name"] + "?";
             redirecturl += Server.UrlEncode(Request.QueryString.ToString());
             if (string.IsNullOrEmpty(UserID))
                 Response.Redirect(redirecturl);
+        }
+        #endregion
+
+        protected void LinkButton1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

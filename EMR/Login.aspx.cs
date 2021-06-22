@@ -76,10 +76,10 @@ namespace Emr_client.Emr
                     Session["company_code"] = Convert.ToString(data.company_code);
                     Session["specialty_code"] = Convert.ToString(data.specialty_code);
                     Session["location"] = Convert.ToString(data.company_code);
-                    Session.Timeout = 60;
+                    Session.Timeout = 3;
                     //  Session["upw"] = varUserPW;
                     //edit by mr. Phut
-                    DataHelpers._LOCATION = Convert.ToString(data.company_code);
+                    DataHelpers._LOCATION = $"{Convert.ToString(data.company_code)}";
                 }
             }
         }

@@ -5,9 +5,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-        <link href="../../styles/style.css" rel="stylesheet" />
-    <link href="../../styles/myStyle.css" rel="stylesheet" />
-    <link href="../../style/style-custom.css" rel="stylesheet" />
+        <link href="../styles/style.css" rel="stylesheet" />
+    <link href="../styles/myStyle.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="TabStyle.css" />
 </head>
 <body>

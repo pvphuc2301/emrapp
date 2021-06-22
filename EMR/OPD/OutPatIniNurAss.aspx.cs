@@ -14,26 +14,32 @@ namespace EMR
 {
     public partial class OutPathIniNurAss : System.Web.UI.Page
     {
-        public Oina oina;
+        #region Variables
+        public Oina oina; 
+        string UserID = "";
+        #endregion
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            CheckUserID();
+
             if (!IsPostBack)
             {
-                if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
-                if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
-                if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
-
                 Initial();
             }
         }
 
-        public void Initial()
+        private void Initial()
         {
-            oina = new Oina(DataHelpers.varDocId);
+            if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
+            if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
+            if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
 
-            btnCancel.Visible = false;
+            oina = new Oina(Request.QueryString["docId"]);
+
             amendReasonWraper.Visible = false;
+            btnCancel.Visible = false;
+            prt_barcode.Text = Patient.Instance().visible_patient_id;
 
             if (oina.status == DocumentStatus.FINAL)
             {
@@ -45,11 +51,11 @@ namespace EMR
             }
         }
 
+        #region Load Forms
         private void LoadFormEdit(Oina oina)
         {
             try
             {
-                DisabledControl(true);
                 //I.
                 txt_vs_temperature.Value = oina.vs_temperature;
                 txt_vs_heart_rate.Value = oina.vs_heart_rate;
@@ -57,13 +63,13 @@ namespace EMR
                 txt_vs_respiratory_rate.Value = oina.vs_respiratory_rate;
                 txt_vs_height.Value = oina.vs_height;
                 txt_vs_blood_pressure.Value = oina.vs_blood_pressure;
-                lbl_vs_bmi.Text = oina.vs_BMI;
+                txt_vs_bmi.Value = oina.vs_BMI;
                 txt_vs_spo2.Value = oina.vs_spO2;
-                txt_vs_pluse.Value = oina.vs_heart_rate;
+                txt_pulse.Value = oina.pulse;
 
                 //II.
                 //1.
-                txtChiefComplaint.Value = oina.chief_complaint;
+                txt_chief_complaint.Value = oina.chief_complaint;
                 //2.
                 BindRadioButton("rad_allergy_" + oina.allergy);
                 txt_allergy_note.Value = oina.allergy_note;
@@ -82,7 +88,12 @@ namespace EMR
                 //IV.
                 BindRadioButton("rad_prioritization_code_" + oina.prioritization_code);
 
-                WebHelpers.BindDateTimePicker(dtpk_assess_date_time, oina.assessment_date_time);
+                WebHelpers.BindDateTimePicker(dtpk_assessment_date_time, oina.assessment_date_time);
+
+                LoadFormControl(false);
+
+                btnAmend.Visible = false;
+                btnPrint.Visible = false;
 
             }
             catch (Exception ex)
@@ -91,54 +102,43 @@ namespace EMR
                 Response.Redirect("../Other/PageNotFound.aspx", false);
             }
 
-            btnAmend.Visible = false;
-            btnPrint.Visible = false;
+            
         }
-
         private void loadFormView()
         {
-            DisabledControl(false);
-            lbl_fall_risk.Text = oina.fall_risk ? "Có, cung cấp phương tiện hỗ trợ/ Yes, provide assistance: " + oina.fall_risk_assistance : "Không có nguy cơ/ No risk";
+            lbl_fall_risk.Text = oina.fall_risk ? "Có, cung cấp phương tiện hỗ trợ/ Yes, provide assistance: " + WebHelpers.GetValue(oina.fall_risk_assistance) : "Không có nguy cơ/ No risk";
             lbl_mental_status.Text = oina.mental_status ? "Có/ Yes" : "Không, ghi rõ/ No, specify:";
-            lbl_paint_score_desc.Text = oina.paint_score_description;
+            lbl_paint_score_description.Text = WebHelpers.GetValue(oina.paint_score_description);
             lbl_chief_complaint.Text = WebHelpers.GetValue(oina.chief_complaint);
-            if (oina.allergy)
+            
+            if (oina.allergy != null)
             {
-                lbl_allergy.Text = "Có, ghi rõ/ Yes, specify:";
-                lbl_allergy_note.Text = WebHelpers.GetValue(oina.allergy_note);
-            }
-            else
-            {
-                lbl_allergy.Text = "Không/ No";
-                lbl_allergy_note.Visible = false;
+                lbl_allergy.Text = oina.allergy ? "Có, ghi rõ/ Yes, specify: " + WebHelpers.GetValue(oina.allergy_note) : "Không/ No";
             }
 
-            if (oina.mental_status)
+            if (oina.mental_status != null)
             {
-                lbl_mental_status_note.Visible = false;
-            }
-            else
-            {
-                lbl_mental_status_note.Text = WebHelpers.GetValue(oina.mental_status_note);
+                lbl_mental_status.Text = oina.mental_status ? "Có/ Yes" : "Không, ghi rõ/ No, specify: " + WebHelpers.GetValue(oina.mental_status_note);
             }
 
-            lbl_nutrition_status_desc.Text = WebHelpers.GetValue(oina.nutrition_status_description);
-            lbl_housing_desc.Text = WebHelpers.GetValue(oina.housing_description);
-            lbl_prioritization_desc.Text = WebHelpers.GetValue(oina.prioritization_description);
+            lbl_nutrition_status_description.Text = WebHelpers.GetValue(oina.nutrition_status_description);
+            lbl_housing_description.Text = WebHelpers.GetValue(oina.housing_description);
+            lbl_prioritization_description.Text = WebHelpers.GetValue(oina.prioritization_description);
 
             lbl_vs_temperature.Text = WebHelpers.GetValue(oina.vs_temperature) + " °C";
             lbl_vs_heart_rate.Text = WebHelpers.GetValue(oina.vs_heart_rate) + " / phút (m)";
             lbl_vs_weight.Text = WebHelpers.GetValue(oina.vs_weight) + " kg";
             lbl_vs_height.Text = WebHelpers.GetValue(oina.vs_height) + " cm";
             lbl_vs_respiratory_rate.Text = WebHelpers.GetValue(oina.vs_respiratory_rate) + " / phút (min)";
-            lbl_vs_bmi.Text = WebHelpers.GetValue(oina.vs_BMI);
+            txt_vs_bmi.Value = WebHelpers.GetValue(oina.vs_BMI);
             lbl_vs_blood_pressure.Text = WebHelpers.GetValue(oina.vs_blood_pressure) + " mmHg";
-            lbl_vs_pluse.Text = "—";
-            lbl_vs_spo2.Text = WebHelpers.GetValue(oina.vs_spO2);
+            lbl_pulse.Text = WebHelpers.GetValue(oina.pulse) + " cm";
+            lbl_vs_spo2.Text = WebHelpers.GetValue(oina.vs_spO2) + " %";
             lbl_assessment_date_time.Text = WebHelpers.FormatDateTime(oina.assessment_date_time, "dd-MM-yyyy HH:mm");
 
-            temperatureWrapper.Visible = HeartRateWrapper.Visible = WeightWrapper.Visible = HeightWrapper.Visible = PluseWrapper.Visible = RespiratoryRateWrapper.Visible = BloodPressureWrapper.Visible = Spo2Wrapper.Visible = txtChiefComplaint.Visible = AllergyWrapper.Visible = MentalStatusWrapper.Visible = PaintScoreWrapper.Visible = FallRiskWrapper.Visible = NutritionStatusWrapper.Visible = HousingWrapper.Visible = PrioritizationWrapper.Visible = AssessDateTimeWrapper.Visible = false;
             //
+            LoadFormControl(true);
+
             btnComplete.Visible = false;
             btnSave.Visible = false;
             btnDeleteModal.Visible = false;
@@ -146,12 +146,12 @@ namespace EMR
             btnAmend.Visible = true;
             btnPrint.Visible = true;
         }
-
         private void loadFormPrint(Oina oina)
         {
-            prt_patient_label.FullName = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
-            prt_patient_label.DOB = WebHelpers.FormatDateTime(DataHelpers.patient.date_of_birth) + " | " + DataHelpers.patient.gender_l;
-            prt_patient_label.PID = DataHelpers.patient.visible_patient_id;
+            Patient patient = Patient.Instance();
+            prt_fullname.Text = $"{patient.GetFullName()} ({patient.GetTitle()})";
+            prt_DOB.Text = $"{WebHelpers.FormatDateTime(patient.date_of_birth)} | {patient.GetGender()}";
+            prt_barcode.Text = prt_vpid.Text = patient.visible_patient_id;
 
             prt_vs_temperature.Text = oina.vs_temperature;
             prt_vs_weight.Text = oina.vs_weight;
@@ -165,9 +165,7 @@ namespace EMR
             prt_chief_complaint.Text = oina.chief_complaint;
             prt_allergy.Text = oina.allergy ? "Có, ghi rõ/ Yes, specify: " + oina.allergy_note : "Không";
 
-            prt_mental_status.Text = WebHelpers.CreateOptions(new Option { Text= "Có/ Yes", Value = true }, new Option { Text = "Không, ghi rõ/ No, specify: " + oina.mental_status_note, Value = false }, oina.mental_status);
-
-            prt_mental_status.Attributes["style"] = "display: grid; grid-template-columns: 1fr 1fr";
+            prt_mental_status.Text = WebHelpers.CreateOptions(new Option { Text= "Có/ Yes", Value = true }, new Option { Text = "Không, ghi rõ/ No, specify: " + oina.mental_status_note, Value = false }, oina.mental_status, "display: grid; grid-template-columns: 80px 1fr");
 
             prt_paint_score_code.Value = oina.paint_score_code;
 
@@ -175,16 +173,14 @@ namespace EMR
 
             prt_nutrition_status_code.Value = oina.nutrition_status_description;
 
-            prt_housing.Text = WebHelpers.CreateOptions(Oina.HOUSING_CODE, (string)oina.housing_code);
-
-            prt_housing.Attributes["style"] = "grid-template-columns: 1fr 1fr";
+            prt_housing.Text = WebHelpers.CreateOptions(Oina.HOUSING_CODE, (string)oina.housing_code, "display: grid; grid-template-columns: 1fr 1fr");
             
             prt_prioritization_code.Value = oina.prioritization_description;
             
-            prt_signature1.Text = WebHelpers.GetSignatureTemplate1("<div style='width: 200px;'>Ngày/ <span class='text-primary'>Date:</span></div>", "<span class='font-bold'>ĐIỀU DƯỠNG ĐÁNH GIÁ</span>", "Assessment done by Nurse", "", "", "");
-            
         }
+        #endregion
 
+        #region Events
         protected void btnAmend_Click(object sender, EventArgs e)
         {
             amendReasonWraper.Visible = true;
@@ -197,7 +193,6 @@ namespace EMR
             btnPrint.Visible = false;
             btnAmend.Visible = false;
         }
-
         protected void btnComplete_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
@@ -210,7 +205,6 @@ namespace EMR
                 UpdateData(oina);
             }
         }
-
         protected void btnSave_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
@@ -223,7 +217,48 @@ namespace EMR
                 UpdateData(oina);
             }
         }
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            Initial();
+        }
+        protected void btnPrint_Click(object sender, EventArgs e)
+        {
+            oina = new Oina(Request["docid"]);
+            loadFormPrint(oina);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "window.print();", true);
+        }
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            dynamic result = Oina.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
 
+            if (result.Status == System.Net.HttpStatusCode.OK)
+            {
+                string pid = Request["pid"];
+                string vpid = Request["vpid"];
+
+                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+            }
+            else
+            {
+                Session["PageNotFound"] = result;
+                Response.Redirect("../Other/PageNotFound.aspx", false);
+            }
+        }
+        #endregion
+
+        #region SESSION
+        private void CheckUserID()
+        {
+            UserID = (string)Session["UserID"];
+            string redirecturl = "../login.aspx?ReturnUrl=";
+            redirecturl += Request.ServerVariables["script_name"] + "?";
+            redirecturl += Server.UrlEncode(Request.QueryString.ToString());
+            if (string.IsNullOrEmpty(UserID))
+                Response.Redirect(redirecturl);
+        }
+        #endregion
+
+        #region METHODS
         private void UpdateData(Oina oina)
         {
             try
@@ -236,14 +271,14 @@ namespace EMR
                 oina.vs_respiratory_rate = txt_vs_respiratory_rate.Value;
                 oina.vs_height = txt_vs_height.Value;
                 oina.vs_blood_pressure = txt_vs_blood_pressure.Value;
-                oina.vs_BMI = lbl_vs_bmi.Text;
+                oina.vs_BMI = txt_vs_bmi.Value;
                 oina.vs_spO2 = txt_vs_spo2.Value;
-                oina.vs_heart_rate = txt_vs_pluse.Value;
+                oina.vs_heart_rate = txt_pulse.Value;
                 //1.
-                oina.chief_complaint = txtChiefComplaint.Value;
+                oina.chief_complaint = txt_chief_complaint.Value;
                 //2.
                 oina.allergy = GetRadioButton("rad_allergy_");
-                if(oina.allergy != null)
+                if (oina.allergy != null)
                 {
                     if (oina.allergy)
                     {
@@ -258,7 +293,7 @@ namespace EMR
                 if (oina.paint_score_code != null) oina.paint_score_description = Oina.PAINT_SCORE_CODE[oina.paint_score_code];
                 //5.
                 oina.fall_risk = GetRadioButton("rad_fall_risk_");
-                if(oina.fall_risk != null)
+                if (oina.fall_risk != null)
                 {
                     if (oina.fall_risk)
                     {
@@ -276,7 +311,7 @@ namespace EMR
                 if (oina.prioritization_code != null) oina.prioritization_description = Oina.PRIORITIZATION_CODE[oina.prioritization_code];
 
                 oina.assessment_date_time = DataHelpers.ConvertSQLDateTime(oina.assessment_date_time);
-                
+
                 oina.user_name = (string)Session["UserID"];
 
                 dynamic result = oina.Update()[0];
@@ -294,49 +329,28 @@ namespace EMR
                     Response.Redirect("../Other/PageNotFound.aspx", false);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Session["ExceptionDetails"] = ex;
                 Response.Redirect("../Other/PageNotFound.aspx", false);
             }
         }
-
-        protected void btnCancel_Click(object sender, EventArgs e)
+        protected void LoadFormControl(bool disabled)
         {
-            Initial();
-        }
-
-        protected void btnPrint_Click(object sender, EventArgs e)
-        {
-            oina = new Oina(Request["docid"]);
-            loadFormPrint(oina);
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "window.print();", true);
-        }
-
-        protected void btnDelete_Click(object sender, EventArgs e)
-        {
-            dynamic result = Oina.Delete((string)Session["UserId"], Request.QueryString["docId"]);
-
-            if (result[0].Status == System.Net.HttpStatusCode.OK)
+            foreach (var prop in oina.GetType().GetProperties())
             {
-                string pid = Request["pid"];
-                string vpid = Request["vpid"];
+                var control1 = FindControl(prop.Name + "_wrapper");
+                var control2 = FindControl("lbl_" + prop.Name);
 
-                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                if (control1 != null)
+                {
+                    control1.Visible = !disabled;
+                }
+                if (control2 != null)
+                {
+                    control2.Visible = disabled;
+                }
             }
-            else
-            {
-                Session["PageNotFound"] = result[0];
-                Response.Redirect("../Other/PageNotFound.aspx", false);
-            }
-        }
-
-        #region Methods
-        protected void DisabledControl(bool disabled)
-        {
-            temperatureWrapper.Visible = HeartRateWrapper.Visible = WeightWrapper.Visible = RespiratoryRateWrapper.Visible = HeightWrapper.Visible = BloodPressureWrapper.Visible = Spo2Wrapper.Visible = PluseWrapper.Visible = txtChiefComplaint.Visible = AllergyWrapper.Visible = MentalStatusWrapper.Visible = PaintScoreWrapper.Visible = FallRiskWrapper.Visible = NutritionStatusWrapper.Visible = HousingWrapper.Visible = PrioritizationWrapper.Visible = AssessDateTimeWrapper.Visible = disabled;
-
-            lbl_vs_temperature.Visible = lbl_vs_heart_rate.Visible = lbl_vs_weight.Visible = lbl_vs_height.Visible = lbl_vs_respiratory_rate.Visible = lbl_vs_heart_rate.Visible = lbl_vs_blood_pressure.Visible = lbl_vs_spo2.Visible = lbl_vs_pluse.Visible = lbl_chief_complaint.Visible = lbl_allergy.Visible = lbl_allergy_note.Visible = lbl_mental_status.Visible = lbl_mental_status_note.Visible = lbl_paint_score_desc.Visible = lbl_fall_risk.Visible = lbl_nutrition_status_desc.Visible = lbl_housing_desc.Visible = lbl_prioritization_desc.Visible = lbl_assessment_date_time.Visible = !disabled;
         }
         public void BindRadioButton(dynamic value)
         {
@@ -357,19 +371,6 @@ namespace EMR
             }
             else { return null; }
         }
-
-        private void DisabledRadioButton(string radioButtonName, Dictionary<string, string> value, bool disabled)
-        {
-            foreach (KeyValuePair<string, string> code in value)
-            {
-                try
-                {
-                    ((HtmlInputRadioButton)FindControl(radioButtonName + code.Key.ToLower())).Disabled = disabled;
-                }
-                catch (Exception ex) { }
-            }
-        }
-
         private string GetRadioButton(string radio_name, Dictionary<string, string> value)
         {
             foreach (KeyValuePair<string, string> code in value)

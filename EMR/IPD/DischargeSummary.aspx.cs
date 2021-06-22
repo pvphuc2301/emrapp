@@ -15,7 +15,8 @@ namespace EMR
         public string UserID;
         protected void Page_Load(object sender, EventArgs e)
         {
-            CheckUserID();
+            WebHelpers.CheckSession(this);
+
             if (!IsPostBack)
             {
                 Initial();
@@ -422,40 +423,19 @@ namespace EMR
         }
         private void LoadDischargeReason(string value)
         {
-            value = value.ToLower();
+            WebHelpers.VisibleControl(false, disc_medication_field, transfer_field, follow_up_field, special_diet_field, next_consultation_field, dama_field);
+
             if (value == "dama")
             {
-                dama_field.Visible = true;
-                //-----------------------------
-                disc_medication_field.Visible = false;
-                transfer_field.Visible = false;
-                follow_up_field.Visible = false;
-                special_diet_field.Visible = false;
-                next_consultation_field.Visible = false;
+                WebHelpers.VisibleControl(true, dama_field);
             }
             else if (value == "transfer")
             {
-                disc_medication_field.Visible = true;
-                transfer_field.Visible = true;
-
-                //-----------------------------
-                follow_up_field.Visible = false;
-                special_diet_field.Visible = false;
-                next_consultation_field.Visible = false;
-                dama_field.Visible = false;
-
+                WebHelpers.VisibleControl(true, disc_medication_field, transfer_field);
             }
             else if (value == "ama")
             {
-                disc_medication_field.Visible = true;
-                follow_up_field.Visible = true;
-                special_diet_field.Visible = true;
-                next_consultation_field.Visible = true;
-
-                //-----------------------------
-                transfer_field.Visible = false;
-                dama_field.Visible = false;
-
+                WebHelpers.VisibleControl(true, next_consultation_field, special_diet_field, follow_up_field, disc_medication_field);
             }
         }
         protected void LoadFormControl(bool disabled)

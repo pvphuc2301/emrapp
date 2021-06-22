@@ -42,9 +42,6 @@
                                     <div class="header-info-title">
                                         <h4>BỆNH ÁN TIÊM CHỦNG</h4>
                                         <h5>MEDICAL RECORD FOR VACCINATION</h5>
-                                        <div style="font-size: 12px" class="text-primary">
-                                            <%--( Áp dụng cho các đối tượng ≥1 tháng tuổi/ For person ≥ 1 month old)--%>
-                                        </div>
                                     </div>
                                     <div style="width: 160px" class="text-center">
                                         <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
@@ -331,8 +328,8 @@
                                 <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
                             <div class="form-group mb-2">
 
-                                <asp:TextBox runat="server" ID="txt_amend_reason" CssClass="el-hide" />
-                                <div spellcheck="false" style="height: auto; text-align: left; display: inline-block;" class="form-control" id="DisplayControl" onblur="changeValue1(this, 'txt_amend_reason')" contenteditable='true' runat="server"></div>
+                                <asp:TextBox runat="server" TextMode="MultiLine" ID="txt_amend_reason" CssClass="form-control" />
+
                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
                                     ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                             </div>

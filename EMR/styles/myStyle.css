@@ -524,6 +524,8 @@
     grid-template-columns: 1fr 1fr;
 }
 
+
+
 .my-icon {
     display: inline-block;
 }
@@ -645,4 +647,26 @@ form[data-form-state=edit] .form-view {
     100% {
         content: 'Loading...';
     }
+}
+
+
+.gt-2-a, .gt-3-a, .gt-a-1f, .gt-60-fr {
+    grid-gap: 5px;
+    display: grid;
+}
+
+.gt-a-1f {
+    grid-template-columns: auto 1fr;
+}
+
+.gt-2-a {
+    grid-template-columns: 200px 1fr;
+}
+
+.gt-3-a {
+    grid-template-columns: 300px 1fr;
+}
+
+.gt-60-fr {
+    grid-template-columns: 60px 1fr;
 }

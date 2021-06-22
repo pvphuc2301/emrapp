@@ -30,16 +30,19 @@ namespace EMR
 
             amendReasonWraper.Visible = false;
             btnCancel.Visible = false;
-            prt_barcode.Text = Patient.Instance().visible_patient_id;
 
-            prt_barcode.Text = Patient.Instance().visible_patient_id;
             if (somr.status == DocumentStatus.FINAL)
             {
                 loadFormView(somr);
+
+                WebHelpers.VisibleControl(true, btnAmend, btnAmend);
+                WebHelpers.VisibleControl(false, btnComplete, btnSave, btnDeleteModal);
             }
             else if (somr.status == DocumentStatus.DRAFT)
             {
                 LoadFormEdit(somr);
+
+                WebHelpers.VisibleControl(true, btnPrint, btnAmend);
             }
         }
 
@@ -58,9 +61,6 @@ namespace EMR
             txt_treatment_prognosis.Value = somr.treatment_prognosis;
 
             LoadFormControl(false);
-
-            btnAmend.Visible = false;
-            btnPrint.Visible = false;
         }
         private void loadFormView(Somr somr)
         {
@@ -75,13 +75,6 @@ namespace EMR
             lbl_treatment_prognosis.Text = WebHelpers.GetValue(somr.treatment_prognosis);
             //
             LoadFormControl(true);
-
-            btnComplete.Visible = false;
-            btnSave.Visible = false;
-            btnDeleteModal.Visible = false;
-
-            btnAmend.Visible = true;
-            btnPrint.Visible = true;
         }
         private void LoadFormPrint(Somr somr)
         {
@@ -127,14 +120,10 @@ namespace EMR
         protected void btnAmend_Click(object sender, EventArgs e)
         {
             somr = new Somr(Request.QueryString["docId"]);
-
-            amendReasonWraper.Visible = true;
-            btnComplete.Visible = true;
-            btnCancel.Visible = true;
-            btnAmend.Visible = false;
-            btnPrint.Visible = false;
-
             LoadFormEdit(somr);
+            WebHelpers.VisibleControl(true, amendReasonWraper, btnComplete, btnCancel);
+            WebHelpers.VisibleControl(false, btnPrint, btnAmend);
+
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {

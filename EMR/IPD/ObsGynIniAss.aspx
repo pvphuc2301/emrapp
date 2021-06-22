@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ObsGynIniAss.aspx.cs" Inherits="EMR.IPD.ObsGynIniAss" ValidateRequest="false" %>
 
+<%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="webUI" TagName="PopupShowDelay" %>
 <%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="webUI" TagName="PatientInfo" %>
 <%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="webUI" TagName="TextField" %>
 <%@ Register Src="~/icons/XSquare.ascx" TagPrefix="icon" TagName="xsquare" %>
@@ -18,23 +19,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <link href="../../styles/style.css" rel="stylesheet" />
-    <link href="../../styles/myStyle.css" rel="stylesheet" />
-    <link href="../../style/style-custom.css" rel="stylesheet" />
-    <style>
-        .custom-checkbox {
-            display: flex;
-            align-items: center;
-        }
-
-        div[data-type=edit] .view{
-            display: none !important;
-        }
-
-        div[data-type=view] .edit{
-            display: none !important;
-        }
-    </style>
+    <link href="../styles/style.css" rel="stylesheet" />
+    <link href="../styles/myStyle.css" rel="stylesheet" />
 </head>
 <body>
     <%--<div class="cssclsNoScreen">
@@ -100,261 +86,242 @@
         </table>
     </div>--%>
 
-    <div>
-        <form method="post" action="#" id="form2" runat="server">
-            <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
+    <form method="post" action="#" id="form1" runat="server">
+        <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
+        <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+            <ContentTemplate>
+                <div class="cssclsNoPrint">
+                    <div style="overflow: scroll; height: calc(100vh - 52px); overflow-x: hidden;">
 
-            <asp:HiddenField runat="server" ID="RequiredFieldValidator" />
-            <asp:Panel runat="server" ID="messagePlaceHolder">
-                <webUI:AmendReason runat="server" ID="txt_amendReason" />
-            </asp:Panel>
-            <div class="cssclsNoPrint">
-                <webUI:PatientInfo runat="server" ID="PatientInfo1" />
-            </div>
+                        <asp:Panel runat="server" ID="messagePlaceHolder">
+                            <div class="card" runat="server" id="amendReasonWraper">
+                                <div class="card-body">
+                                    <h5>Lý do thay đổi/ <span class="text-primary">amend reason: </span>
+                                        <br />
+                                        <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
+                                    <div class="form-group mb-2">
 
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header bg-secondary cssclsNoPrint">
-                            <h4 class="text-primary">OBSTETRIC & GYNECOLOGICAL INITIAL ASESMENT</h4>
-                            <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="arrowhead"></a>
-                        </div>
-                        <div class="card-body collapse show" id="collapseOne" data-type="view">
-                            <table class="report-container">
-                                <thead class="report-header cssclsNoScreen">
-                                    <tr>
-                                        <th class="report-header-cell">
-                                            <div class="header-info" style="display: flex; align-items: center;">
-                                                <img width="200px" src="../images/AIH_PI_FULL.png" />
-                                                <div style="flex-grow: 1">
-                                                    <div style="color: #007297; font-size: 26.6667px;">BỆNH ÁN NGOẠI TRÚ</div>
-                                                    <div style="color: #e20e5a; font-size: 16.6667px;">OUTPATIENT MEDICAL RECORD</div>
-                                                </div>
-                                                <div style="font-size: 13.3333px">
-                                                    <div>
-                                                        <asp:Label ID="lbPatientName" runat="server"></asp:Label>MAI MAI MÃI1
-                                                    </div>
-                                                    <div>
-                                                        <asp:Label ID="lbBirthday" runat="server" Text='<%# Eval("date_of_birth") %>'></asp:Label>
-                                                        |
-                                                        <asp:Label ID="lbSex" runat="server"></asp:Label>
-                                                    </div>
-                                                    <div>
-                                                        <asp:Label ID="lbPID" runat="server" Font-Bold="true"></asp:Label>
+                                        <asp:TextBox runat="server" TextMode="MultiLine" ID="txt_amend_reason" CssClass="form-control" />
+
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
+                                            ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <asp:ValidationSummary
+                                ID="valSum"
+                                DisplayMode="BulletList"
+                                CssClass="validationSummary"
+                                runat="server" ValidationGroup="Group1"
+                                HeaderText="Please complete the highlighted field(s)." />
+                        </asp:Panel>
+
+                        <webUI:PatientInfo runat="server" ID="PatientInfo1" />
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="text-primary">OBSTETRIC & GYNECOLOGICAL INITIAL ASSESSMENT</h4>
+                                        <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"></a>
+                                    </div>
+                                    <div class="card-body collapse show" id="collapseOne">
+                                        <div class="form-body">
+                                            <div class="row mb-2">
+                                                <label class="col-md-12 control-label mb-1 h4">I. Lý do nhập viện/ <span class="text-primary">Reason for admission:</span></label>
+                                                <div class="col-md-12 gt-2-a">
+                                                    <label></label>
+                                                    <asp:Label runat="server" ID="lbl_reason_admission" />
+                                                    <div class="form-group" runat="server" id="reason_admission_wrapper">
+                                                        <webUI:TextField runat="server" ID="txt_reason_admission" />
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div style="margin-bottom: 80px;">
-                                                <span style="width: 190px; border-bottom-style: solid; border-bottom-color: #e20e5a; border-bottom-width: 5px; display: inline-block; font-size: 26.6667px;"></span>
-                                                <span style="display: inline-block; border-bottom-style: solid; border-bottom-color: #007297; border-bottom-width: 5px; width: calc(100% - 191px); margin-left: -5px;"></span>
+
+                                            <div class="row mb-2">
+                                                <div class="col-md-12">
+                                                    <label class="control-label mb-1 h4">II. Bệnh sử/ <span class="text-primary">Medical History:</span></label>
+                                                </div>
                                             </div>
-                                        </th>
-                                    </tr>
-                                </thead>
 
-                                <tbody class="report-content">
-                                    <tr>
-                                        <td class="report-content-cell">
-                                            <div class="main" runat="server" id="print_content">
-                                                <div class="form-body">
-                                                    <!-- Chief complaint -->
-                                                    <div class="row mb-2">
-                                                        <div class="col-md-12">
-                                                            <label class="control-label mb-1 h4">I. Lý do nhập viện/ <span class="text-primary">Reason for admission:</span></label>
-                                                            <asp:Label runat="server" ID="prt_reason_admission" Text="" />
-                                                            <div class="form-group edit">
-                                                                <webUI:TextField runat="server" id="txt_reason_admission" />
-                                                            </div>
-
-                                                            
-
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row mb-2">
-                                                        <div class="col-md-12">
-                                                            <label class="control-label mb-1 h4">II. Bệnh sử/ <span class="text-primary">Medical History:</span></label>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row mb-2 view">
-                                                        <div class="col-md-12">
-                                                            <asp:Label runat="server" ID="prt_is_obs_gyn" />
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="row mb-2 edit">
-                                                        <div class="col-md-12">
+                                            <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
+                                                <ContentTemplate>
+                                                    <div class="row mb-2 gt-2-a">
+                                                        <label></label>
+                                                        <asp:Label runat="server" CssClass="col-md-12" ID="lbl_is_obs_gyn" />
+                                                        <div class="col-md-12" runat="server" id="is_obs_gyn_wrapper">
                                                             <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                <input type="radio" disabled-for="obstetrics" runat="server" id="rad_is_obs_gyn_true" name="rad_is_obs_gyn" class="custom-control-input" />
+                                                                <input type="radio" onclick="__doPostBack('is_obs_gyn_change', true)" runat="server" id="rad_is_obs_gyn_true" name="rad_is_obs_gyn" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_is_obs_gyn_true">SẢN KHOA/ <span class="text-primary">OBSTETRICS</span></label>
                                                             </div>
 
                                                             <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                <input type="radio" disabled-for="gynecology_field" runat="server" id="rad_is_obs_gyn_false" name="rad_is_obs_gyn" class="custom-control-input" />
+                                                                <input type="radio" onclick="__doPostBack('is_obs_gyn_change', false)" runat="server" id="rad_is_obs_gyn_false" name="rad_is_obs_gyn" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_is_obs_gyn_false">PHỤ KHOA/ <span class="text-primary">GYNECOLOGY</span></label>
                                                                 <a href="javascript:void(0)" data-clear="rad_is_obs_gyn" onclick="clear_radiobutton(this)">
                                                                     <icon:xsquare runat="server" ID="XSquare24" />
                                                                 </a>
                                                             </div>
+                                                            <asp:CustomValidator ID="CustomValidator1" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="required" CssClass="text-danger" OnServerValidate="is_obs_gyn_ServerValidate"></asp:CustomValidator>
                                                         </div>
                                                     </div>
-
-                                                    <fieldset class="row mb-2 gynecology_field">
+                                                
+                                                    <fieldset runat="server" id="gynecology_field" class="row mb-2">
                                                         <legend>
                                                             <label class="control-label">1. Bệnh sử hiện tại/ <span class="text-primary">Current medical history:</span></label>
                                                         </legend>
-                                                        <div class="col-md-12 mb-2">
-                                                            <div class="form-group">
+                                                        <div class="col-md-12 mb-2 gt-2-a">
+                                                            <label></label>
+                                                            <asp:Label runat="server" ID="lbl_gyn_med_history"></asp:Label>
+                                                            <div class="form-group" runat="server" id="gyn_med_history_wrapper">
                                                                 <webUI:TextField runat="server" ID="txt_gyn_med_history" />
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-2 font-bold">Thuốc đang sử dụng/ <span class="text-primary">Current medications:</span></label>
-                                                            <div class="form-group">
+                                                        <div class="col-md-12 mb-2 gt-2-a">
+                                                            <label class="control-label mb-2">Thuốc đang sử dụng/ <span class="text-primary">Current medications:</span></label>
+                                                            <asp:Label runat="server" ID="lbl_gyn_cur_medication"></asp:Label>
+                                                            <div class="form-group" runat="server" id="gyn_cur_medication_wrapper">
                                                                 <webUI:TextField runat="server" ID="txt_gyn_cur_medication" />
                                                             </div>
                                                         </div>
                                                     </fieldset>
 
-                                                    <fieldset class="row mb-2 obstetrics">
+                                                    <fieldset class="row mb-2" runat="server" id="obstetrics_field">
                                                         <legend>
-                                                            <label class="control-label mb-2 font-bold">1. Bệnh sử hiện tại/ <span class="text-primary">Current medical history:</span></label>
+                                                            <label class="control-label">1. Bệnh sử hiện tại/ <span class="text-primary">Current medical history:</span></label>
                                                         </legend>
-                                                        <div class="col-md-12 mb-2">
+                                                        <div class="col-md-12 mb-2 gt-2-a">
                                                             <label class="control-label mb-1 w-5">Kinh chót/ <span class="text-primary">LMP:</span></label>
-                                                            <div class="d-inline-block">
-                                                                <label class="control-label mb-1 ml-2">từ/ <span class="text-primary">from:</span></label>
-                                                                <asp:Label runat="server" CssClass="view" ID="lbl_lmp_from" Text="_" />
-                                                                <div class="form-group d-inline-block w-5 ml-2 edit">
-                                                                    <webUI:TextField runat="server" id="txt_lmp_from" />
+                                                            <div>
+                                                                <div class="d-inline-block">
+                                                                    <label class="control-label mb-1">từ/ <span class="text-primary">from:</span></label>
+                                                                    <asp:Label runat="server" ID="lbl_lmp_from" />
+                                                                    <div class="form-group d-inline-block w-5 ml-2" runat="server" id="lmp_from_wrapper">
+                                                                        <webUI:TextField runat="server" ID="txt_lmp_from" />
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="d-inline-block">
-                                                                <label class="control-label mb-1 ml-2">đến/ <span class="text-primary">to:</span></label>
-                                                                <asp:Label runat="server" CssClass="view" ID="Label1" Text="_" />
-                                                                <div class="form-group d-inline-block w-5 ml-2 edit">
-                                                                    <webUI:TextField runat="server" id="txt_lmp_to" />
+                                                                <div class="d-inline-block">
+                                                                    <label class="control-label mb-1 ml-2">đến/ <span class="text-primary">to:</span></label>
+                                                                    <asp:Label runat="server" ID="lbl_lmp_to" />
+                                                                    <div class="form-group d-inline-block w-5 ml-2" runat="server" id="lmp_to_wrapper">
+                                                                        <webUI:TextField runat="server" ID="txt_lmp_to" />
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12 mb-2">
+
+                                                        <div class="col-md-12 mb-2 gt-2-a">
                                                             <label class="control-label mb-1 w-5">Tuổi thai/ <span class="text-primary">Gestational age:</span></label>
-                                                            <asp:Label runat="server" CssClass="view" ID="Label2" Text="_ ngày/ days" />
-                                                            <asp:Label runat="server" CssClass="view" ID="Label3" Text="_ tuần/ weeks" />
-                                                            <div class="form-group w-5 d-inline-block ml-2 edit">
-                                                                <input runat="server" data-type="number" id="txt_ges_age_weeks" class="form-control text-right" />
-                                                                <span class="append">tuần/ weeks</span>
-                                                            </div>
-                                                            <div class="form-group w-5 d-inline-block ml-2 edit">
-                                                                <input runat="server" data-type="number" id="txt_ges_age_days" class="form-control text-right" />
-                                                                <span class="append">ngày/ days</span>
+                                                            <asp:Label runat="server" ID="lbl_ges_age_weeks" />
+                                                            <div runat="server" id="ges_age_weeks_wrapper">
+                                                                <div class="form-group d-inline-block w-5">
+                                                                    <input runat="server" data-type="number" id="txt_ges_age_weeks" class="form-control text-right" />
+                                                                    <span class="append">tuần/ weeks</span>
+                                                                </div>
+
+                                                                <div class="form-group d-inline-block w-5 ml-2">
+                                                                    <input runat="server" data-type="number" id="txt_ges_age_days" class="form-control text-right" />
+                                                                    <span class="append">ngày/ days</span>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12 mb-2">
+
+                                                        <div class="col-md-12 mb-2 gt-2-a">
                                                             <label class="control-label mb-1 w-5">Khám thai/ <span class="text-primary">Prenatal visit:</span></label>
-                                                            <asp:Label runat="server" CssClass="view" ID="Label4" Text="_" />
-                                                            <div class="form-group edit">
+                                                            <asp:Label runat="server" ID="lbl_prenatal_visit" />
+                                                            <div class="form-group" runat="server" id="prenatal_visit_wrapper">
                                                                 <webUI:TextField runat="server" ID="txt_prenatal_visit" />
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-12 mb-2">
+                                                        <div class="col-md-12 mb-2 gt-2-a">
                                                             <label class="control-label mb-1">Chủng ngừa uốn ván/ <span class="text-primary">Tetanus vaccination:</span></label>
-                                                            <div class="view">
-                                                                <asp:Label runat="server" ID="prt_tetanus_vaccination_false" Text="❏ Chưa/ Not yet" />
-                                                                <asp:Label runat="server" ID="prt_tetanus_vaccination_true" Text="❏ Có/yes, ………Lần/times" />
-                                                            </div>
-                                                            <div class="d-inline-block edit">
-                                                                <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                    <input type="radio" runat="server" id="rad_tetanus_vaccination_false" name="rad_tetanus_vaccination" class="custom-control-input" />
-                                                                    <label class="custom-control-label" for="rad_tetanus_vaccination_false">Chưa/ <span class="text-primary">Not yet</span></label>
+                                                            <asp:Label runat="server" ID="lbl_tetanus_vaccination" />
+                                                            <div>
+                                                                <div runat="server" class="d-inline-block" id="tetanus_vaccination_wrapper">
+                                                                    <div class="custom-control custom-radio d-inline-block">
+                                                                        <input type="radio" runat="server" id="rad_tetanus_vaccination_false" name="rad_tetanus_vaccination" class="custom-control-input" />
+                                                                        <label class="custom-control-label" for="rad_tetanus_vaccination_false">Chưa/ <span class="text-primary">Not yet</span></label>
+                                                                    </div>
+
+                                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                        <input type="radio" disabled-for="tetanus_vaccin_time_field" id="rad_tetanus_vaccination_true" name="rad_tetanus_vaccination" class="custom-control-input" runat="server" />
+                                                                        <label class="custom-control-label" for="rad_tetanus_vaccination_true">Có/ <span class="text-primary">Yes</span></label>
+                                                                        <a href="javascript:void(0)" data-clear="rad_tetanus_vaccination" onclick="clear_radiobutton(this)">
+                                                                            <icon:xsquare runat="server" ID="XSquare12" />
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
 
-                                                                <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                    <input type="radio" disabled-for="tetanus_vaccin_time_field" id="rad_tetanus_vaccination_true" name="rad_tetanus_vaccination" class="custom-control-input" runat="server" />
-                                                                    <label class="custom-control-label" for="rad_tetanus_vaccination_true">Có/ <span class="text-primary">Yes</span></label>
-                                                                    <a href="javascript:void(0)" data-clear="rad_tetanus_vaccination" onclick="clear_radiobutton(this)">
-                                                                        <icon:xsquare runat="server" ID="XSquare12" />
-                                                                    </a>
-                                                                </div>
-
-                                                                <div class="form-group w-5 d-inline-block tetanus_vaccin_time_field ml-2">
-                                                                    <input runat="server" id="txt_tetanus_vaccin_time" class="form-control text-right" />
+                                                                <div class="form-group w-5 d-inline-block tetanus_vaccin_time_field ml-2" runat="server" id="tetanus_vaccin_time_wrapper">
+                                                                    <input runat="server" data-type="number" id="txt_tetanus_vaccin_time" class="form-control text-right" />
                                                                     <span class="append">lần/ times</span>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-12 mb-2">
+                                                        <div class="col-md-12 mb-2 gt-2-a">
                                                             <label class="control-label mb-1 d-block">Nhiễm Streptococcus nhóm B/ <span class="text-primary">GBS infection:</span></label>
-                                                            <label class="control-label mb-1">Con trước nhiễm trùng huyết do Streptococcus nhóm B/ <span class="text-primary">Previous infant with invasive GBS disease</span></label>
-                                                            <div class="view">
-                                                                <asp:Label runat="server" ID="prt_gbs_disease_false" Text="❏ Không/ No" />
-                                                                <asp:Label runat="server" ID="prt_gbs_disease_true" Text="❏ Có/ Yes" />
-                                                            </div>
-                                                            <div class="d-inline-block edit">
-                                                                <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                    <input type="radio" runat="server" id="rad_gbs_disease_false" name="rad_gbs_disease" class="custom-control-input" />
-                                                                    <label class="custom-control-label" for="rad_gbs_disease_false">Không/ <span class="text-primary">No</span></label>
+                                                            <div>
+
+                                                                <label class="control-label mb-1">Con trước nhiễm trùng huyết do Streptococcus nhóm B/ <span class="text-primary">Previous infant with invasive GBS disease</span></label>
+                                                                <asp:Label runat="server" ID="lbl_gbs_disease" />
+                                                                <div class="form-group d-inline-block" runat="server" id="gbs_disease_wrapper">
+                                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                        <input type="radio" runat="server" id="rad_gbs_disease_false" name="rad_gbs_disease" class="custom-control-input" />
+                                                                        <label class="custom-control-label" for="rad_gbs_disease_false">Không/ <span class="text-primary">No</span></label>
+                                                                    </div>
+
+                                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                        <input type="radio" runat="server" id="rad_gbs_disease_true" name="rad_gbs_disease" class="custom-control-input" />
+                                                                        <label class="custom-control-label" for="rad_gbs_disease_true">Có/ <span class="text-primary">Yes</span></label>
+                                                                        <a href="javascript:void(0)" data-clear="rad_gbs_disease" onclick="clear_radiobutton(this)">
+                                                                            <icon:xsquare runat="server" ID="XSquare1" />
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
 
-                                                                <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                    <input type="radio" runat="server" id="rad_gbs_disease_true" name="rad_gbs_disease" class="custom-control-input" />
-                                                                    <label class="custom-control-label" for="rad_gbs_disease_true">Có/ <span class="text-primary">Yes</span></label>
-                                                                    <a href="javascript:void(0)" data-clear="rad_gbs_disease" onclick="clear_radiobutton(this)">
-                                                                        <icon:xsquare runat="server" ID="XSquare1" />
-                                                                    </a>
-                                                                </div>
-                                                            </div>
+                                                                <label class="control-label mb-1">Nhiễm trùng tiểu do Streptococcus nhóm B trong thai kỳ lần này/ <span class="text-primary">GBS bacteriuria during any trimester of the current pregnancy</span></label>
 
-                                                            <label class="control-label mb-1">Nhiễm trùng tiểu do Streptococcus nhóm B trong thai kỳ lần này/ <span class="text-primary">GBS bacteriuria during any trimester of the current pregnancy</span></label>
-                                                            <div class="view">
-                                                                <asp:Label runat="server" ID="prt_gbs_bacteriuria_false" Text="❏ Không/ No" />
-                                                                <asp:Label runat="server" ID="prt_gbs_bacteriuria_true" Text="❏ Có/ Yes" />
-                                                            </div>
-                                                            <div class="d-inline-block edit">
-                                                                <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                    <input type="radio" runat="server" id="rad_gbs_bacteriuria_false" name="rad_gbs_bacteriuria" class="custom-control-input" />
-                                                                    <label class="custom-control-label" for="rad_gbs_bacteriuria_false">Không/ <span class="text-primary">No</span></label>
-                                                                </div>
+                                                                <asp:Label runat="server" ID="lbl_gbs_bacteriuria" />
+                                                                <div class="form-group  d-inline-block" runat="server" id="gbs_bacteriuria_wrapper">
+                                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                        <input type="radio" runat="server" id="rad_gbs_bacteriuria_false" name="rad_gbs_bacteriuria" class="custom-control-input" />
+                                                                        <label class="custom-control-label" for="rad_gbs_bacteriuria_false">Không/ <span class="text-primary">No</span></label>
+                                                                    </div>
 
-                                                                <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                    <input type="radio" runat="server" id="rad_gbs_bacteriuria_true" name="rad_gbs_bacteriuria" class="custom-control-input" />
-                                                                    <label class="custom-control-label" for="rad_gbs_bacteriuria_true">Có/ <span class="text-primary">Yes</span></label>
-                                                                    <a href="javascript:void(0)" data-clear="rad_gbs_bacteriuria" onclick="clear_radiobutton(this)">
-                                                                        <icon:xsquare runat="server" ID="XSquare2" />
-                                                                    </a>
+                                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                        <input type="radio" runat="server" id="rad_gbs_bacteriuria_true" name="rad_gbs_bacteriuria" class="custom-control-input" />
+                                                                        <label class="custom-control-label" for="rad_gbs_bacteriuria_true">Có/ <span class="text-primary">Yes</span></label>
+                                                                        <a href="javascript:void(0)" data-clear="rad_gbs_bacteriuria" onclick="clear_radiobutton(this)">
+                                                                            <icon:xsquare runat="server" ID="XSquare2" />
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <label class="control-label mb-1">Cấy dịch âm đạo dương tính Streptococcus nhóm B trong tam cá nguyệt cuối thai kỳ lần này/ <span class="text-primary">Positive GBS vaginal-rectal screening culture in late gestation during current pregnancy</span></label>
-                                                            <div class="view">
-                                                                <asp:Label runat="server" ID="prt_gbs_vaginal_false" Text="❏ Không/ No" />
-                                                                <asp:Label runat="server" ID="prt_gbs_vaginal_true" Text="❏ Có/ Yes" />
-                                                            </div>
-                                                            <div class="d-inline-block edit">
-                                                                <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                    <input type="radio" runat="server" id="rad_gbs_vaginal_false" name="rad_gbs_vaginal" class="custom-control-input" />
-                                                                    <label class="custom-control-label" for="rad_gbs_vaginal_false">Không/ <span class="text-primary">No</span></label>
-                                                                </div>
+                                                                <label class="control-label mb-1">Cấy dịch âm đạo dương tính Streptococcus nhóm B trong tam cá nguyệt cuối thai kỳ lần này/ <span class="text-primary">Positive GBS vaginal-rectal screening culture in late gestation during current pregnancy</span><asp:Label runat="server" ID="lbl_gbs_vaginal" /></label>
 
-                                                                <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                    <input type="radio" runat="server" id="rad_gbs_vaginal_true" name="rad_gbs_vaginal" class="custom-control-input" />
-                                                                    <label class="custom-control-label" for="rad_gbs_vaginal_true">Có/ <span class="text-primary">Yes</span></label>
-                                                                    <a href="javascript:void(0)" data-clear="rad_gbs_vaginal" onclick="clear_radiobutton(this)">
-                                                                        <icon:xsquare runat="server" ID="XSquare3" />
-                                                                    </a>
+                                                                <div class="form-group  d-inline-block" runat="server" id="gbs_vaginal_wrapper">
+                                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                        <input type="radio" runat="server" id="rad_gbs_vaginal_false" name="rad_gbs_vaginal" class="custom-control-input" />
+                                                                        <label class="custom-control-label" for="rad_gbs_vaginal_false">Không/ <span class="text-primary">No</span></label>
+                                                                    </div>
+
+                                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                        <input type="radio" runat="server" id="rad_gbs_vaginal_true" name="rad_gbs_vaginal" class="custom-control-input" />
+                                                                        <label class="custom-control-label" for="rad_gbs_vaginal_true">Có/ <span class="text-primary">Yes</span></label>
+                                                                        <a href="javascript:void(0)" data-clear="rad_gbs_vaginal" onclick="clear_radiobutton(this)">
+                                                                            <icon:xsquare runat="server" ID="XSquare3" />
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-12 mb-2">
+                                                        <div class="col-md-12 mb-2 gt-2-a">
                                                             <label class="control-label mb-1">Đái tháo đường thai kỳ/ <span class="text-primary">Gestational Diabetes:</span></label>
-                                                            <div class="view">
-                                                                <asp:Label runat="server" ID="prt_ges_diabetes_false" Text="❏ Không/ No" />
-                                                                <asp:Label runat="server" ID="prt_ges_diabetes_true" Text="❏ Có/ Yes" />
-                                                            </div>
-                                                            <div class="d-inline-block edit">
+                                                            <asp:Label runat="server" ID="lbl_ges_diabetes" />
+                                                            <div class="d-inline-block d-inline-block" runat="server" id="ges_diabetes_wrapper">
                                                                 <div class="custom-control custom-radio d-inline-block ml-2">
                                                                     <input type="radio" runat="server" id="rad_ges_diabetes_false" name="rad_ges_diabetes" class="custom-control-input" />
                                                                     <label class="custom-control-label" for="rad_ges_diabetes_false">Không/ <span class="text-primary">No</span></label>
@@ -370,57 +337,58 @@
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-12 mb-2">
+                                                        <div class="col-md-12 mb-2 gt-2-a">
                                                             <label class="control-label mb-1">Bất thường khác trong thai kỳ/ <span class="text-primary">Other gestational abnormalities:</span></label>
-                                                            <div class="view">
-                                                                <asp:Label runat="server" ID="prt_other_ges_abnormal_true" Text="❏ Không/ No" />
-                                                                <asp:Label runat="server" ID="prt_other_ges_abnormal_false" Text="❏ Có/ Yes" />
-                                                            </div>
-                                                            <div class="d-inline-block edit">
-                                                                <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                    <input type="radio" runat="server" id="rad_other_ges_abnormal_false" name="rad_other_ges_abnormal" class="custom-control-input" />
-                                                                    <label class="custom-control-label" for="rad_other_ges_abnormal_false">Không/ <span class="text-primary">No</span></label>
-                                                                </div>
+                                                            <asp:Label runat="server" ID="lbl_other_ges_abnormal" />
+                                                            <div class="d-inline-block" runat="server" id="other_ges_abnormal_wrapper">
+                                                                <div class="d-inline-block">
+                                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                        <input type="radio" runat="server" id="rad_other_ges_abnormal_false" name="rad_other_ges_abnormal" class="custom-control-input" />
+                                                                        <label class="custom-control-label" for="rad_other_ges_abnormal_false">Không/ <span class="text-primary">No</span></label>
+                                                                    </div>
 
-                                                                <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                    <input disabled-for="other_ges_abnormal_note_field" runat="server" type="radio" id="rad_other_ges_abnormal_true" name="rad_other_ges_abnormal" class="custom-control-input" />
-                                                                    <label class="custom-control-label" for="rad_other_ges_abnormal_true">Có/ <span class="text-primary">Yes</span></label>
-                                                                    <a href="javascript:void(0)" data-clear="rad_cough" onclick="clear_radiobutton(this)">
-                                                                        <icon:xsquare runat="server" ID="XSquare4" />
-                                                                    </a>
+                                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                        <input disabled-for="other_ges_abnormal_note_field" runat="server" type="radio" id="rad_other_ges_abnormal_true" name="rad_other_ges_abnormal" class="custom-control-input" />
+                                                                        <label class="custom-control-label" for="rad_other_ges_abnormal_true">Có/ <span class="text-primary">Yes</span></label>
+                                                                        <a href="javascript:void(0)" data-clear="rad_cough" onclick="clear_radiobutton(this)">
+                                                                            <icon:xsquare runat="server" ID="XSquare4" />
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="form-group other_ges_abnormal_note_field ml-2">
-                                                                <webUI:TextField runat="server" ID="txt_other_ges_abnormal_note" />
+                                                                <div class="form-group d-inline-block w-n other_ges_abnormal_note_field ml-2">
+                                                                    <webUI:TextField runat="server" ID="txt_other_ges_abnormal_note" />
+                                                                </div>
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-12 mb-2">
+                                                        <div class="col-md-12 mb-2 gt-2-a">
                                                             <label class="control-label mb-1">Chuyển dạ khởi phát lúc/ <span class="text-primary">Labor triggered at:</span></label>
-                                                            <asp:Label CssClass="view" runat="server" ID="lbl_labor_trig_at_time" />
-                                                            <telerik:RadDateTimePicker runat="server" ID="dtpk_labor_trig_at_time" Width="200px" CssClass="ml-2 edit" />
+                                                            <asp:Label runat="server" ID="lbl_labor_trig_at_time" />
+                                                            <div class="d-inline-block" runat="server" id="labor_trig_at_time_wrapper">
+                                                                <telerik:RadDateTimePicker runat="server" ID="dtpk_labor_trig_at_time" Width="200px" CssClass="ml-2 edit" />
+                                                            </div>
                                                         </div>
 
-                                                        <div class="col-md-12 mb-2">
+                                                        <div class="col-md-12 mb-2 gt-2-a">
                                                             <label class="control-label mb-1">Dấu hiệu ban đầu/ <span class="text-primary">Preliminary signs:</span></label>
-                                                            <asp:Label CssClass="view" runat="server" ID="prt_preliminary_signs" />
-                                                            <div class="form-group ml-2 edit">
+                                                            <asp:Label runat="server" ID="lbl_preliminary_signs" />
+                                                            <div class="d-inline-block" runat="server" id="preliminary_signs_wrapper">
                                                                 <webUI:TextField runat="server" ID="txt_preliminary_signs" />
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-12 mb-2">
+                                                        <div class="col-md-12 mb-2 gt-2-a">
                                                             <label class="control-label mb-1">Diễn tiến/ <span class="text-primary">Progression:</span></label>
-                                                            <asp:Label CssClass="view" runat="server" ID="prt_progression" />
-                                                            <div class="form-group ml-2 edit">
+                                                            <asp:Label runat="server" ID="lbl_progression" />
+                                                            <div class="d-inline-block" runat="server" id="progression_wrapper">
                                                                 <webUI:TextField runat="server" ID="txt_progression" />
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-md-12 mb-2">
+                                                        <div class="col-md-12 mb-2 gt-2-a">
                                                             <label class="control-label mb-1">Thuốc đang sử dụng/ <span class="text-primary">Current medications:</span></label>
-                                                            <asp:Label CssClass="view" runat="server" ID="prt_obs_cur_medication" />
-                                                            <div class="form-group ml-2 edit">
+                                                            <asp:Label runat="server" ID="lbl_obs_cur_medication" />
+                                                            <div class="d-inline-block" runat="server" id="obs_cur_medication_wrapper">
                                                                 <webUI:TextField runat="server" ID="txt_obs_cur_medication" />
                                                             </div>
                                                         </div>
@@ -428,19 +396,19 @@
 
                                                     <fieldset class="row mb-2">
                                                         <legend>
-                                                            <label class="control-label font-bold">2. Tiền sử bệnh/ <span class="text-primary">Antecedent medical history:</span></label>
+                                                            <label class="control-label">2. Tiền sử bệnh/ <span class="text-primary">Antecedent medical history:</span></label>
                                                         </legend>
-                                                        <div class="col-md-12 mb-2">
+                                                        <div class="col-md-12 mb-2  gt-2-a">
                                                             <label class="control-label mb-1">Bản thân/ <span class="text-primary">Personal</span></label>
-                                                            <asp:Label CssClass="view" runat="server" ID="prt_personal" />
-                                                            <div class="form-group edit">
+                                                            <asp:Label runat="server" ID="lbl_personal" />
+                                                            <div class="d-inline-block" runat="server" id="personal_wrapper">
                                                                 <webUI:TextField runat="server" ID="txt_personal" />
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-12 mb-2">
+                                                        <div class="col-md-12 mb-2  gt-2-a">
                                                             <label class="control-label mb-1">Gia đình/ <span class="text-primary">Family</span></label>
-                                                            <asp:Label CssClass="view" runat="server" ID="prt_family" />
-                                                            <div class="form-group edit">
+                                                            <asp:Label runat="server" ID="lbl_family" />
+                                                            <div class="d-inline-block" runat="server" id="family_wrapper">
                                                                 <webUI:TextField runat="server" ID="txt_family" />
                                                             </div>
                                                         </div>
@@ -448,65 +416,61 @@
 
                                                     <fieldset class="row mb-2">
                                                         <legend>
-                                                            <label class="control-label font-bold">3. Tiền căn phụ khoa/ <span class="text-primary">Gynecological history:</span></label>
+                                                            <label class="control-label">3. Tiền căn phụ khoa/ <span class="text-primary">Gynecological history:</span></label>
                                                         </legend>
                                                         <div class="col-md-12">
-                                                            <div class="row edit">
-                                                                <div class="col-md-12 mb-2">
+                                                            <div class="row">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Tuổi dậy thì/ <span class="text-primary">Age of menarche</span></label>
-                                                                    <div class="form-group d-inline-block w-4 edit">
-                                                                        <webUI:TextField runat="server" ID="txt_age_of_menarhce" />
+                                                                    <asp:Label runat="server" ID="lbl_age_of_menarhce" />
+                                                                    <div class="form-group d-inline-block w-4" runat="server" id="age_of_menarhce_wrapper">
+                                                                        <input runat="server" class="form-control" id="txt_age_of_menarhce" data-type="number" />
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Chu kỳ kinh/ <span class="text-primary">Menstrual cycle</span></label>
-                                                                    <div class="form-group w-5 d-inline-block edit">
+                                                                    <asp:Label runat="server" ID="lbl_menstrual_cycle" />
+                                                                    <div class="form-group w-5 d-inline-block" runat="server" id="menstrual_cycle_wrapper">
                                                                         <input runat="server" data-type="number" id="txt_menstrual_cycle" class="form-control text-right" />
                                                                         <span class="append">ngày/ days</span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Số ngày hành kinh/ <span class="text-primary">Length of period</span></label>
-                                                                    <div class="form-group w-5 d-inline-block edit">
-                                                                        <input runat="server" id="txt_length_of_period" class="form-control text-right" />
+                                                                    <asp:Label runat="server" ID="lbl_length_of_period" />
+
+                                                                    <div class="form-group w-5 d-inline-block" runat="server" id="length_of_period_wrapper">
+                                                                        <input runat="server" data-type="number" id="txt_length_of_period" class="form-control text-right" />
                                                                         <span class="append">ngày/ days</span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Lượng máu kinh/ <span class="text-primary">Amount of menstrual blood</span></label>
-                                                                    <div class="form-group w-4 d-inline-block edit">
+                                                                    <asp:Label runat="server" ID="lbl_amount_mens_blood" />
+                                                                    <div class="form-group w-4 d-inline-block" runat="server" id="amount_mens_blood_wrapper">
                                                                         <input runat="server" id="txt_amount_mens_blood" class="form-control text-right" />
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Tuổi kết hôn/ <span class="text-primary">Marriage age</span></label>
-                                                                    <div class="form-group w-4 d-inline-block edit">
+                                                                    <asp:Label runat="server" ID="lbl_marriage_age" />
+                                                                    <div class="form-group w-4 d-inline-block" runat="server" id="marriage_age_wrapper">
                                                                         <input runat="server" data-type="number" id="txt_marriage_age" class="form-control text-right" />
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Tuổi mãn kinh/ <span class="text-primary">Age of menopause</span></label>
-                                                                    <div class="form-group w-4 d-inline-block edit">
+                                                                    <asp:Label runat="server" ID="lbl_age_menopause" />
+                                                                    <div class="form-group w-4 d-inline-block" runat="server" id="age_menopause_wrapper">
                                                                         <input runat="server" id="txt_age_menopause" class="form-control text-right" />
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Những bệnh phụ khoa đã mắc trước đây/ <span class="text-primary">Previous gynecological diseases</span></label>
-                                                                    <div class="form-group edit">
+                                                                    <asp:Label runat="server" ID="lbl_previous_gyn_diseases" />
+                                                                    <div class="form-group" runat="server" id="previous_gyn_diseases_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_previous_gyn_diseases" />
                                                                     </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row view">
-                                                                <div class="col-md-12 mb-2">
-                                                                    <div runat="server" id="prt_age_of_menarche"></div>
-                                                                    <div runat="server" id="prt_marriage_age"></div>
-                                                                    <div runat="server" id="prt_age_menopause"></div>
-                                                                    <div runat="server" id="prt_previous_gyn_diseases"></div>
-                                                                    <%--<asp:Panel CssClass="view" runat="server" ID="prt_age_of_menarche"></asp:Panel>
-                                                                    <asp:Panel CssClass="view" runat="server" ID="prt_marriage_age" ></asp:Panel>
-                                                                    <asp:Panel CssClass="view" runat="server" ID="prt_age_menopause" ></asp:Panel>
-                                                                    <asp:Panel CssClass="view" runat="server" ID="prt_previous_gyn_diseases" ></asp:Panel>--%>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -514,7 +478,7 @@
 
                                                     <fieldset class="row mb-2">
                                                         <legend>
-                                                            <label class="control-label font-bold">4. Tiền căn sản khoa/ <span class="text-primary">Obstetric history:</span></label>
+                                                            <label class="control-label">4. Tiền căn sản khoa/ <span class="text-primary">Obstetric history:</span></label>
                                                         </legend>
                                                         <div class="col-md-12 mb-2">
                                                             <label class="control-label mb-1">Những bệnh phụ khoa đã mắc trước đây/ <span class="text-primary">Previous gynecological diseases</span></label>
@@ -598,570 +562,9 @@
                                                                 </ContentTemplate>
                                                             </asp:UpdatePanel>
 
-                                                            <%--<div class="table-responsive">
-                                                                <table class="table table-bordered">
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2" style="width: 210px">Lần mang thai thứ/ <span class="text-primary">gravidity</span></label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2">1</label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="w-5">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2">2</label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="w-5">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2">3</label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="w-5">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2">4</label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="w-5">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2">5</label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="w-5">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2">6</label>
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2">Năm/ <span class="text-primary">Year</span></label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control w-5" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control w-5" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control w-5" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control w-5" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control w-5" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control w-5" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2">Sanh đủ tháng/ <span class="text-primary">term delivery</span></label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2">Sanh non tháng/ <span class="text-primary">preterm delivery</span></label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2">Sảy thai/ <span class="text-primary">miscarriage</span></label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2">Hút thai/ <span class="text-primary">aspiration abortion</span></label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2">Nạo thai/ <span class="text-primary">dilation and evacuation</span></label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2">Thủ thuật Kovac/ <span class="text-primary">Kovac’s procedure</span></label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2">Thai ngoài tử cung/ <span class="text-primary">ectopic</span></label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2">Thai trứng/ <span class="text-primary">molar pregnancy</span></label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2">Thai lưu/ <span class="text-primary">stillbirth</span></label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2">Sinh sống/ <span class="text-primary">living child</span></label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2">Cân nặng/ <span class="text-primary">weight</span></label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2">Phương pháp sinh/ <span class="text-primary">delivery mode</span></label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <label class="control-label mb-2">Biến chứng/ <span class="text-primary">complication</span></label>
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                            <td class="pl-1 pr-1">
-                                                                                <div class="form-group p-0 m-0 border-0">
-                                                                                    <input type="text" placeholder="" class="form-control" />
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>--%>
+
                                                         </div>
                                                     </fieldset>
-
 
                                                     <div class="row mb-2">
                                                         <div class="col-md-12">
@@ -1173,210 +576,130 @@
                                                         <legend>
                                                             <label class="control-label">1. Khám tổng quát/ <span class="text-primary">General exam:</span></label>
                                                         </legend>
-                                                        <div class="col-md-12 edit">
+                                                        <div class="col-md-12">
                                                             <div class="row">
-                                                                <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Tổng trạng/<span class="text-primary">General appearance</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="txt_general_appearance" />
-                                                            </div>
-                                                        </div>
+                                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                                    <label class="control-label mb-1">Tổng trạng/<span class="text-primary">General appearance</span></label>
+                                                                    <asp:Label runat="server" ID="lbl_general_appearance" />
+                                                                    <div class="form-group" runat="server" id="general_appearance_wrapper">
+                                                                        <webUI:TextField runat="server" ID="txt_general_appearance" />
+                                                                    </div>
+                                                                </div>
 
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Phù/ <span class="text-primary">Edema</span></label>
-                                                            <label class="custom-control custom-checkbox d-inline-block ml-2">
-                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_edema_true" />
-                                                                <span class="custom-control-label"></span>
-                                                            </label>
-                                                            <div class="form-group d-inline-block w-n">
-                                                                <webUI:TextField runat="server" ID="txt_edema_note" />
-                                                            </div>
-                                                        </div>
+                                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                                    <label class="control-label mb-1">Phù/ <span class="text-primary">Edema</span></label>
+                                                                    <div>
+                                                                        <asp:Label runat="server" ID="lbl_edema"></asp:Label>
+                                                                        <label runat="server" id="edema_wrapper" class="custom-control custom-checkbox d-inline-block ml-2">
+                                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_edema_true" />
+                                                                            <span class="custom-control-label"></span>
+                                                                        </label>
+                                                                        <asp:Label runat="server" ID="lbl_edema_note"></asp:Label>
+                                                                        <div class="form-group d-inline-block w-n" runat="server" id="edema_note_wrapper">
+                                                                            <webUI:TextField runat="server" ID="txt_edema_note" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
 
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Hệ tim mạch/ <span class="text-primary">Cardiovascular system</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="txt_cardio_system" />
-                                                            </div>
-                                                        </div>
+                                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                                    <label class="control-label mb-1">Hệ tim mạch/ <span class="text-primary">Cardiovascular system</span></label>
+                                                                    <asp:Label runat="server" ID="lbl_cardio_system"></asp:Label>
+                                                                    <div class="form-group d-inline-block " runat="server" id="cardio_system_wrapper">
+                                                                        <webUI:TextField runat="server" ID="txt_cardio_system" />
+                                                                    </div>
+                                                                </div>
 
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Hệ hô hấp/ <span class="text-primary">Respiratory system</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="txt_respiratory_system" />
-                                                            </div>
-                                                        </div>
+                                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                                    <label class="control-label mb-1">Hệ hô hấp/ <span class="text-primary">Respiratory system</span></label>
+                                                                    <asp:Label runat="server" ID="lbl_respiratory_system"></asp:Label>
+                                                                    <div class="form-group d-inline-block " runat="server" id="respiratory_system_wrapper">
+                                                                        <webUI:TextField runat="server" ID="txt_respiratory_system" />
+                                                                    </div>
+                                                                </div>
 
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Hệ tiêu hóa/<span class="text-primary">Digestive system</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="txt_digestive_system" />
-                                                            </div>
-                                                        </div>
+                                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                                    <label class="control-label mb-1">Hệ tiêu hóa/<span class="text-primary">Digestive system</span></label>
+                                                                    <asp:Label runat="server" ID="lbl_digestive_system"></asp:Label>
+                                                                    <div class="form-group d-inline-block " runat="server" id="digestive_system_wrapper">
+                                                                        <webUI:TextField runat="server" ID="txt_digestive_system" />
+                                                                    </div>
+                                                                </div>
 
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Hệ thần kinh/<span class="text-primary">Nervous system</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="txt_nervous_system" />
-                                                            </div>
-                                                        </div>
+                                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                                    <label class="control-label mb-1">Hệ thần kinh/<span class="text-primary">Nervous system</span></label>
+                                                                    <asp:Label runat="server" ID="lbl_nervous_system"></asp:Label>
+                                                                    <div class="form-group d-inline-block " runat="server" id="nervous_system_wrapper">
+                                                                        <webUI:TextField runat="server" ID="txt_nervous_system" />
+                                                                    </div>
+                                                                </div>
 
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Hệ niệu-dục/  <span class="text-primary">Urogenital system</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="txt_uro_system" />
-                                                            </div>
-                                                        </div>
+                                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                                    <label class="control-label mb-1">Hệ niệu-dục/  <span class="text-primary">Urogenital system</span></label>
+                                                                    <asp:Label runat="server" ID="lbl_uro_system"></asp:Label>
+                                                                    <div class="form-group d-inline-block " runat="server" id="uro_system_wrapper">
+                                                                        <webUI:TextField runat="server" ID="txt_uro_system" />
+                                                                    </div>
+                                                                </div>
 
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Hệ cơ-xương-khớp/  <span class="text-primary">Musculoskeletal system</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="txt_mus_system" />
-                                                            </div>
-                                                        </div>
+                                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                                    <label class="control-label mb-1">Hệ cơ-xương-khớp/  <span class="text-primary">Musculoskeletal system</span></label>
+                                                                    <asp:Label runat="server" ID="lbl_mus_system"></asp:Label>
+                                                                    <div class="form-group d-inline-block " runat="server" id="mus_system_wrapper">
+                                                                        <webUI:TextField runat="server" ID="txt_mus_system" />
+                                                                    </div>
+                                                                </div>
 
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Tai Mũi Họng/<span class="text-primary">Otorhinolaryngology</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="txt_otorhinolaryngology" />
-                                                            </div>
-                                                        </div>
+                                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                                    <label class="control-label mb-1">Tai Mũi Họng/<span class="text-primary">Otorhinolaryngology</span></label>
+                                                                    <asp:Label runat="server" ID="lbl_otorhinolaryngology"></asp:Label>
+                                                                    <div class="form-group d-inline-block " runat="server" id="otorhinolaryngology_wrapper">
+                                                                        <webUI:TextField runat="server" ID="txt_otorhinolaryngology" />
+                                                                    </div>
+                                                                </div>
 
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Hệ da-lông/ <span class="text-primary">Integumentary system</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="txt_integumentary_system" />
-                                                            </div>
-                                                        </div>
+                                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                                    <label class="control-label mb-1">Hệ da-lông/ <span class="text-primary">Integumentary system</span></label>
+                                                                    <asp:Label runat="server" ID="lbl_integumentary_system"></asp:Label>
+                                                                    <div class="form-group d-inline-block " runat="server" id="integumentary_system_wrapper">
+                                                                        <webUI:TextField runat="server" ID="txt_integumentary_system" />
+                                                                    </div>
+                                                                </div>
 
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Mắt/ <span class="text-primary">Ophthalmology</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="txt_ophthalmology" />
-                                                            </div>
-                                                        </div>
+                                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                                    <label class="control-label mb-1">Mắt/ <span class="text-primary">Ophthalmology</span></label>
+                                                                    <asp:Label runat="server" ID="lbl_ophthalmology"></asp:Label>
+                                                                    <div class="form-group d-inline-block " runat="server" id="ophthalmology_wrapper">
+                                                                        <webUI:TextField runat="server" ID="txt_ophthalmology" />
+                                                                    </div>
+                                                                </div>
 
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Ghi nhận khác/ <span class="text-primary">Other findings</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="txt_other_findings" />
-                                                            </div>
-                                                        </div>
+                                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                                    <label class="control-label mb-1">Ghi nhận khác/ <span class="text-primary">Other findings</span></label>
+                                                                    <asp:Label runat="server" ID="lbl_other_findings"></asp:Label>
+                                                                    <div class="form-group d-inline-block" runat="server" id="other_findings_wrapper">
+                                                                        <webUI:TextField runat="server" ID="txt_other_findings" />
+                                                                    </div>
+                                                                </div>
 
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Yêu cầu khám chuyên khoa tâm lý/ <span class="text-primary">Psychological consultation required</span></label>
-                                                            <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                <input type="radio" runat="server" id="rad_psy_consul_required_true" name="rad_psy_consul_required" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_psy_consul_required_true">Có/ <span class="text-primary">Yes</span></label>
-                                                            </div>
-                                                            <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                <input type="radio" runat="server" id="rad_psy_consul_required_false" name="rad_psy_consul_required" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_psy_consul_required_false">Không/ <span class="text-primary">No</span></label>
-                                                                <a href="javascript:void(0)" data-clear="rad_psy_consul_required" onclick="clear_radiobutton(this)">
-                                                                    <icon:xsquare runat="server" ID="XSquare17" />
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                            </div>
-                                                        </div>
+                                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                                    <label class="control-label mb-1">Yêu cầu khám chuyên khoa tâm lý/ <span class="text-primary">Psychological consultation required</span></label>
 
-                                                        <div class="col-md-12 view">
-                                                            <div class="row">
-                                                                <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Tổng trạng/<span class="text-primary">General appearance</span></label>
-                                                                <div runat="server" id="prt_general_appearance"></div>
-                                                        </div>
+                                                                    <asp:Label runat="server" ID="lbl_psy_consul_required"></asp:Label>
+                                                                    <div class="form-group d-inline-block w-n" runat="server" id="psy_consul_required_wrapper">
 
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Phù/ <span class="text-primary">Edema: </span></label>
-                                                            <div runat="server" id="prt_edema_false"></div>
-                                                            <div runat="server" id="prt_edema_true"></div>
-                                                        </div>
-
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">• Hệ tim mạch/ Cardiovascular syste<span class="text-primary">Cardiovascular system</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="TextField3" />
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Hệ hô hấp/ <span class="text-primary">Respiratory system</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="TextField4" />
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Hệ tiêu hóa/<span class="text-primary">Digestive system</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="TextField5" />
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Hệ thần kinh/<span class="text-primary">Nervous system</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="TextField6" />
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Hệ niệu-dục/  <span class="text-primary">Urogenital system</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="TextField7" />
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Hệ cơ-xương-khớp/  <span class="text-primary">Musculoskeletal system</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="TextField8" />
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Tai Mũi Họng/<span class="text-primary">Otorhinolaryngology</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="TextField9" />
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Hệ da-lông/ <span class="text-primary">Integumentary system</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="TextField10" />
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Mắt/ <span class="text-primary">Ophthalmology</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="TextField11" />
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Ghi nhận khác/ <span class="text-primary">Other findings</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="TextField12" />
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-12 mb-2">
-                                                            <label class="control-label mb-1">Yêu cầu khám chuyên khoa tâm lý/ <span class="text-primary">Psychological consultation required</span></label>
-                                                            <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                <input type="radio" runat="server" id="Radio1" name="rad_psy_consul_required" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_psy_consul_required_true">Có/ <span class="text-primary">Yes</span></label>
-                                                            </div>
-                                                            <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                <input type="radio" runat="server" id="Radio2" name="rad_psy_consul_required" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_psy_consul_required_false">Không/ <span class="text-primary">No</span></label>
-                                                                <a href="javascript:void(0)" data-clear="rad_psy_consul_required" onclick="clear_radiobutton(this)">
-                                                                    <icon:xsquare runat="server" ID="XSquare7" />
-                                                                </a>
-                                                            </div>
-                                                        </div>
+                                                                        <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                            <input type="radio" runat="server" id="rad_psy_consul_required_true" name="rad_psy_consul_required" class="custom-control-input" />
+                                                                            <label class="custom-control-label" for="rad_psy_consul_required_true">Có/ <span class="text-primary">Yes</span></label>
+                                                                        </div>
+                                                                        <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                            <input type="radio" runat="server" id="rad_psy_consul_required_false" name="rad_psy_consul_required" class="custom-control-input" />
+                                                                            <label class="custom-control-label" for="rad_psy_consul_required_false">Không/ <span class="text-primary">No</span></label>
+                                                                            <a href="javascript:void(0)" data-clear="rad_psy_consul_required" onclick="clear_radiobutton(this)">
+                                                                                <icon:xsquare runat="server" ID="XSquare8" />
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </fieldset>
@@ -1386,213 +709,289 @@
                                                             <label class="control-label">2. Khám chuyên khoa/ <span class="text-primary">Specific exam:</span></label>
                                                         </legend>
 
-                                                        <div class="col-md-12 mb-2 obstetrics">
+                                                        <div class="col-md-12 mb-2" runat="server" id="obstetrics_field1">
                                                             <fieldset class="row mb-2">
                                                                 <legend>
                                                                     <label class="control-label">Khám ngoài/ <span class="text-primary">External exam:</span></label>
                                                                 </legend>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Vết mổ cũ/ <span class="text-primary">Previous cicatrice</span></label>
-                                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
+                                                                    <asp:Label runat="server" ID="lbl_obs_pre_cicatrice"></asp:Label>
+                                                                    <label runat="server" id="obs_pre_cicatrice_wrapper" class="custom-control custom-checkbox d-inline-block ml-2">
                                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_obs_pre_cicatrice_true" />
                                                                         <span class="custom-control-label"></span>
                                                                     </label>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Hình dáng tử cung/ <span class="text-primary">Uterine shape</span></label>
-                                                                    <div class="form-group">
-                                                                        <webUI:TextField runat="server" ID="txt_obs_uterine_shape" />
-                                                                    </div>
-                                                                    <label class="control-label mb-1">Tư thế/ <span class="text-primary">Posture</span></label>
-                                                                    <div class="form-group">
-                                                                        <webUI:TextField runat="server" ID="txt_obs_posture" />
+                                                                    <div>
+                                                                        <asp:Label runat="server" ID="lbl_obs_uterine_shape"></asp:Label>
+                                                                        <div class="form-group mb-2" runat="server" id="obs_uterine_shape_wrapper">
+                                                                            <webUI:TextField runat="server" ID="txt_obs_uterine_shape" />
+                                                                        </div>
+                                                                        <label class="control-label mb-1">Tư thế/ <span class="text-primary">Posture</span></label>
+                                                                        <asp:Label runat="server" ID="lbl_obs_posture"></asp:Label>
+                                                                        <div class="form-group d-inline-block w-n" runat="server" id="obs_posture_wrapper">
+                                                                            <webUI:TextField runat="server" ID="txt_obs_posture" />
+                                                                        </div>
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Bề cao tử cung/ <span class="text-primary">Fundal height</span></label>
-                                                                    <div class="form-group w-4 d-inline-block">
-                                                                        <input runat="server" id="txt_obs_fundal_height" class="form-control text-right" />
-                                                                        <span class="append">cm</span>
-                                                                    </div>
-                                                                    <label class="control-label mb-1">chu vi vòng bụng/ <span class="text-primary">abdominal circumference</span></label>
-                                                                    <div class="form-group w-4 d-inline-block">
-                                                                        <input runat="server" id="txt_obs_abdominal_circum" class="form-control text-right" />
-                                                                        <span class="append">cm</span>
+                                                                    <div>
+                                                                        <asp:Label runat="server" ID="lbl_obs_fundal_height"></asp:Label>
+                                                                        <div class="form-group w-4 d-inline-block" runat="server" id="obs_fundal_height_wrapper">
+                                                                            <input runat="server" data-type="number" id="txt_obs_fundal_height" class="form-control text-right" />
+                                                                            <span class="append">cm</span>
+                                                                        </div>
+                                                                        <label class="control-label mb-1">chu vi vòng bụng/ <span class="text-primary">abdominal circumference</span></label>
+                                                                        <asp:Label runat="server" ID="lbl_obs_abdominal_circum"></asp:Label>
+                                                                        <div class="form-group w-4 d-inline-block" runat="server" id="obs_abdominal_circum_wrapper">
+                                                                            <input runat="server" data-type="number" id="txt_obs_abdominal_circum" class="form-control text-right" />
+                                                                            <span class="append">cm</span>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Cơn gò tử cung/ <span class="text-primary">Uterine contraction</span></label>
-                                                                    <div class="form-group">
+                                                                    <asp:Label runat="server" ID="lbl_obs_uterine_con"></asp:Label>
+                                                                    <div class="form-group" runat="server" id="obs_uterine_con_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_obs_uterine_con" />
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Tần số tim thai/ <span class="text-primary">Fetal heart rate</span></label>
-                                                                    <div class="form-group w-5 d-inline-block">
-                                                                        <input runat="server" id="txt_obs_fetal_heart_rate" class="form-control text-right" />
-                                                                        <span class="append">lần/phút/ bpm</span>
-                                                                    </div>
-                                                                    <label class="control-label mb-1">Ngực/ <span class="text-primary">Breasts</span></label>
-                                                                    <div class="form-group">
-                                                                        <webUI:TextField runat="server" ID="txt_obs_breasts" />
+                                                                    <div>
+                                                                        <asp:Label runat="server" ID="lbl_obs_fetal_heart_rate"></asp:Label>
+                                                                        <div class="form-group w-5 d-inline-block" runat="server" id="obs_fetal_heart_rate_wrapper">
+                                                                            <input runat="server" data-type="number" id="txt_obs_fetal_heart_rate" class="form-control text-right" />
+                                                                            <span class="append">lần/phút/ bpm</span>
+                                                                        </div>
+                                                                        <label class="control-label mb-1">Ngực/ <span class="text-primary">Breasts</span></label>
+                                                                        <asp:Label runat="server" ID="lbl_obs_breasts"></asp:Label>
+                                                                        <div class="form-group d-inline-block w-n" runat="server" id="obs_breasts_wrapper">
+                                                                            <webUI:TextField runat="server" ID="txt_obs_breasts" />
+                                                                        </div>
                                                                     </div>
                                                                 </div>
 
                                                             </fieldset>
                                                         </div>
 
-                                                        <div class="col-md-12 mb-2 gynecology_field">
+                                                        <div runat="server" id="gynecology_field1" class="col-md-12 mb-2">
                                                             <fieldset class="row mb-2">
                                                                 <legend>
                                                                     <label class="control-label font-bold">Khám ngoài/ <span class="text-primary">External exam:</span></label>
                                                                 </legend>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Bụng có sẹo phẫu thuật cũ/ <span class="text-primary">Abdominal Surgery Scars</span></label>
-                                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
+                                                                    <asp:Label runat="server" ID="lbl_gyn_abdo_sur_scars"></asp:Label>
+                                                                    <label runat="server" id="gyn_abdo_sur_scars_wrapper" class="custom-control custom-checkbox d-inline-block ml-2">
                                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_gyn_abdo_sur_scars_true" />
                                                                         <span class="custom-control-label"></span>
                                                                     </label>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Lý do/ <span class="text-primary">Reason</span></label>
-                                                                    <div class="form-group">
+                                                                    <asp:Label runat="server" ID="lbl_gyn_reason"></asp:Label>
+                                                                    <div class="form-group" runat="server" id="gyn_reason_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_gyn_reason" />
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Sờ nắn và đo ngoài tử cung/ <span class="text-primary">Uterine Height</span></label>
-                                                                    <div class="form-group">
+                                                                    <asp:Label runat="server" ID="lbl_gyn_uterine_height"></asp:Label>
+                                                                    <div class="form-group" runat="server" id="gyn_uterine_height_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_gyn_uterine_height" />
                                                                     </div>
                                                                 </div>
                                                             </fieldset>
                                                         </div>
 
-                                                        <div class="col-md-12 mb-2 obstetrics">
+                                                        <div class="col-md-12 mb-2" runat="server" id="obstetrics_field2">
                                                             <fieldset class="row mb-2">
                                                                 <legend>
-                                                                    <label class="control-label font-bold">Khám trong/ <span class="text-primary">Internal exam:</span></label>
+                                                                    <label class="control-label">Khám trong/ <span class="text-primary">Internal exam:</span></label>
                                                                 </legend>
 
-                                                                <div class="col-md-12 mb-2">
-                                                                    <label class="control-label mb-1">Âm hộ/ <span class="text-primary">Vulva</span></label>
-                                                                    <div class="form-group d-inline-block w-n ml-2">
-                                                                        <webUI:TextField runat="server" ID="txt_obs_vulva" />
+                                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                                    <label></label>
+                                                                    <div>
+                                                                        <label class="control-label mb-1">Âm hộ/ <span class="text-primary">Vulva</span></label>
+                                                                        <asp:Label runat="server" ID="lbl_obs_vulva"></asp:Label>
+                                                                        <div class="form-group d-inline-block w-n ml-2" runat="server" id="obs_vulva_wrapper">
+                                                                            <webUI:TextField runat="server" ID="txt_obs_vulva" />
+                                                                        </div>
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
-                                                                    <label class="control-label mb-1">Âm đạo/ <span class="text-primary">Vagina</span></label>
-                                                                    <div class="form-group d-inline-block w-n ml-2">
-                                                                        <webUI:TextField runat="server" ID="txt_obs_vagina" />
+                                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                                    <label></label>
+                                                                    <div>
+                                                                        <label class="control-label mb-1">Âm đạo/ <span class="text-primary">Vagina</span></label>
+                                                                        <asp:Label runat="server" ID="lbl_obs_vagina"></asp:Label>
+                                                                        <div class="form-group d-inline-block w-n ml-2" runat="server" id="obs_vagina_wrapper">
+                                                                            <webUI:TextField runat="server" ID="txt_obs_vagina" />
+                                                                        </div>
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
-                                                                    <label class="control-label mb-1">Tầng sinh môn/ <span class="text-primary">Perineum</span></label>
-                                                                    <div class="form-group d-inline-block w-n ml-2">
-                                                                        <webUI:TextField runat="server" ID="txt_obs_perineum" />
+                                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                                    <label></label>
+                                                                    <div>
+                                                                        <label class="control-label mb-1">Tầng sinh môn/ <span class="text-primary">Perineum</span></label>
+                                                                        <asp:Label runat="server" ID="lbl_obs_perineum"></asp:Label>
+                                                                        <div class="form-group d-inline-block w-n ml-2" runat="server" id="obs_perineum_wrapper">
+                                                                            <webUI:TextField runat="server" ID="txt_obs_perineum" />
+                                                                        </div>
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
-                                                                    <label class="control-label mb-1">Cổ tử cung/ <span class="text-primary">Cervix</span></label>
-                                                                    <div class="form-group d-inline-block w-n ml-2">
-                                                                        <webUI:TextField runat="server" ID="txt_obs_cervix" />
+                                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                                    <label></label>
+                                                                    <div>
+                                                                        <label class="control-label mb-1">Cổ tử cung/ <span class="text-primary">Cervix</span></label>
+                                                                        <asp:Label runat="server" ID="lbl_obs_cervix"></asp:Label>
+                                                                        <div class="form-group d-inline-block w-n ml-2" runat="server" id="obs_cervix_wrapper">
+                                                                            <webUI:TextField runat="server" ID="txt_obs_cervix" />
+                                                                        </div>
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
-                                                                    <label class="control-label mb-1">Phần phụ/ <span class="text-primary">Adnexa</span></label>
-                                                                    <div class="form-group d-inline-block w-n ml-2">
-                                                                        <webUI:TextField runat="server" ID="txt_obs_adnexa" />
+                                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                                    <label></label>
+                                                                    <div>
+                                                                        <label class="control-label mb-1">Phần phụ/ <span class="text-primary">Adnexa</span></label>
+                                                                        <asp:Label runat="server" ID="lbl_obs_adnexa"></asp:Label>
+                                                                        <div class="form-group d-inline-block w-n ml-2" runat="server" id="obs_adnexa_wrapper">
+                                                                            <webUI:TextField runat="server" ID="txt_obs_adnexa" />
+                                                                        </div>
                                                                     </div>
                                                                 </div>
+                                                                <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
+                                                                    <ContentTemplate>
+                                                                        <div class="col-md-12 mb-2 gt-2-a">
+                                                                            <label class="control-label mb-1">Tình trạng ối/ <span class="text-primary">Membrane condition</span></label>
+                                                                            <asp:Label runat="server" ID="lbl_obs_mem_condition_code"></asp:Label>
+                                                                            <div class="d-inline-block" runat="server" id="obs_mem_condition_code_wrapper">
+                                                                                <div>
+                                                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                                        <input type="radio" onclick="__doPostBack('obs_mem_condition_code_change','in')" runat="server" id="rad_obs_mem_condition_code_in" name="rad_obs_mem_condition_code" class="custom-control-input" />
+                                                                                        <label class="custom-control-label" for="rad_obs_mem_condition_code_in">Nguyên vẹn/ <span class="text-primary">Intact</span></label>
+                                                                                    </div>
+                                                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                                        <input type="radio" onclick="__doPostBack('obs_mem_condition_code_change','ru')" runat="server" id="rad_obs_mem_condition_code_ru" name="rad_obs_mem_condition_code" class="custom-control-input" />
+                                                                                        <label class="custom-control-label" for="rad_obs_mem_condition_code_ru">Đã vỡ/ <span class="text-primary">Ruptured</span></label>
+                                                                                        <a href="javascript:void(0)" data-clear="rad_obs_mem_condition_code" onclick="clear_radiobutton(this)">
+                                                                                            <icon:xsquare runat="server" ID="XSquare38" />
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
 
-                                                                <div class="col-md-12 mb-2">
-                                                                    <label class="control-label mb-1">Tình trạng ối/ <span class="text-primary">Membrane condition</span></label>
-                                                                    <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                        <input type="radio" runat="server" id="rad_obs_mem_condition_code_in" name="rad_obs_mem_condition_code" class="custom-control-input" />
-                                                                        <label class="custom-control-label" for="rad_obs_mem_condition_code_in">Nguyên vẹn/ <span class="text-primary">Intact</span></label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                        <input type="radio" runat="server" id="rad_obs_mem_condition_code_ru" name="rad_obs_mem_condition_code" class="custom-control-input" />
-                                                                        <label class="custom-control-label" for="rad_obs_mem_condition_code_ru">Đã vỡ/ <span class="text-primary">Ruptured</span></label>
-                                                                    </div>
-                                                                </div>
+                                                                                <div runat="server" id="in_field">
+                                                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                                        <input type="radio" runat="server" id="Radio1" name="rad_obs_mem_condition_code" class="custom-control-input" />
+                                                                                        <label class="custom-control-label" for="Radio1">Phồng/ <span class="text-primary">Inflattable</span></label>
+                                                                                    </div>
+                                                                                    <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                                        <input type="radio" runat="server" id="Radio2" name="rad_obs_mem_condition_code" class="custom-control-input" />
+                                                                                        <label class="custom-control-label" for="Radio2">Dẹt/ <span class="text-primary">Flat</span></label>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                        <div class="col-md-12 mb-2 gt-2-a" runat="server" id="ru_field">
+                                                                            <label class="control-label mb-1">Ối vỡ lúc/ <span class="text-primary">Rupture of membrane at</span></label>
+                                                                            <asp:Label runat="server" ID="Label1"></asp:Label>
+                                                                            <div class="d-inline-block" runat="server" id="Div1">
+                                                                                <telerik:RadDateTimePicker runat="server" ID="RadDateTimePicker1" Width="200px" CssClass="ml-2 edit" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </ContentTemplate>
+                                                                </asp:UpdatePanel>
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Đặc điểm dịch ối/ <span class="text-primary">Features of amniotic fluid</span></label>
-                                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
-                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_obs_feat_amniotic_n" />
-                                                                        <span class="custom-control-label">Bình thường/ <span class="text-primary">Normal</span></span>
-                                                                    </label>
-                                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
-                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_obs_feat_amniotic_o" />
-                                                                        <span class="custom-control-label">Thiểu ối/ <span class="text-primary">Oligohydramnios</span></span>
-                                                                    </label>
-                                                                    <label class="custom-control custom-checkbox d-inline-block ml-2">
-                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_obs_feat_amniotic_p" />
-                                                                        <span class="custom-control-label">Đa ối/ <span class="text-primary">Polyhydramnios</span></span>
-                                                                    </label>
+                                                                    <asp:Label runat="server" ID="lbl_obs_feat_amniotic"></asp:Label>
+                                                                    <div class="d-inline-block" runat="server" id="obs_feat_amniotic_wrapper">
+                                                                        <label class="custom-control custom-checkbox d-inline-block ml-2">
+                                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_obs_feat_amniotic_n" />
+                                                                            <span class="custom-control-label">Bình thường/ <span class="text-primary">Normal</span></span>
+                                                                        </label>
+                                                                        <label class="custom-control custom-checkbox d-inline-block ml-2">
+                                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_obs_feat_amniotic_o" />
+                                                                            <span class="custom-control-label">Thiểu ối/ <span class="text-primary">Oligohydramnios</span></span>
+                                                                        </label>
+                                                                        <label class="custom-control custom-checkbox d-inline-block ml-2">
+                                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_obs_feat_amniotic_p" />
+                                                                            <span class="custom-control-label">Đa ối/ <span class="text-primary">Polyhydramnios</span></span>
+                                                                        </label>
+                                                                    </div>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Màu sắc nước ối/ <span class="text-primary">Color of amniotic fluid</span></label>
-                                                                    <div class="form-group d-inline-block w-n ml-2">
+                                                                    <asp:Label runat="server" ID="lbl_obs_color_amniotic"></asp:Label>
+                                                                    <div class="form-group d-inline-block w-n ml-2" runat="server" id="obs_color_amniotic_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_obs_color_amniotic" />
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Ngôi thai/ <span class="text-primary">Presentation</span></label>
-                                                                    <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                        <input type="radio" runat="server" id="rad_obs_presentation_code_c" name="rad_obs_presentation_code" class="custom-control-input" />
-                                                                        <label class="custom-control-label" for="rad_obs_presentation_code_c">Đầu/ <span class="text-primary">Cephalic</span></label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                        <input type="radio" runat="server" id="rad_obs_presentation_code_b" name="rad_obs_presentation_code" class="custom-control-input" />
-                                                                        <label class="custom-control-label" for="rad_obs_presentation_code_b">Mông/ <span class="text-primary">Breech</span></label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                        <input type="radio" runat="server" id="rad_obs_presentation_code_o" disabled-for="obs_presentation_other_field" name="rad_obs_presentation_code" class="custom-control-input" />
-                                                                        <label class="custom-control-label" for="rad_obs_presentation_code_o">Ngôi khác/ <span class="text-primary">Others, specify</span></label>
-                                                                        <a href="javascript:void(0)" data-clear="rad_obs_presentation_code" onclick="clear_radiobutton(this)">
-                                                                            <icon:xsquare runat="server" ID="XSquare5" />
-                                                                        </a>
-                                                                    </div>
-                                                                    <div class="form-group obs_presentation_other_field d-inline-block ml-2 w-n">
-                                                                        <webUI:TextField runat="server" ID="txt_obs_presentation_other" />
+                                                                    <asp:Label runat="server" ID="lbl_obs_presentation_code"></asp:Label>
+                                                                    <div class="d-inline-block" runat="server" id="obs_presentation_code_wrapper">
+                                                                        <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                            <input type="radio" runat="server" id="rad_obs_presentation_code_c" name="rad_obs_presentation_code" class="custom-control-input" />
+                                                                            <label class="custom-control-label" for="rad_obs_presentation_code_c">Đầu/ <span class="text-primary">Cephalic</span></label>
+                                                                        </div>
+                                                                        <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                            <input type="radio" runat="server" id="rad_obs_presentation_code_b" name="rad_obs_presentation_code" class="custom-control-input" />
+                                                                            <label class="custom-control-label" for="rad_obs_presentation_code_b">Mông/ <span class="text-primary">Breech</span></label>
+                                                                        </div>
+                                                                        <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                            <input type="radio" runat="server" id="rad_obs_presentation_code_o" disabled-for="obs_presentation_other_field" name="rad_obs_presentation_code" class="custom-control-input" />
+                                                                            <label class="custom-control-label" for="rad_obs_presentation_code_o">Ngôi khác/ <span class="text-primary">Others, specify</span></label>
+                                                                            <a href="javascript:void(0)" data-clear="rad_obs_presentation_code" onclick="clear_radiobutton(this)">
+                                                                                <icon:xsquare runat="server" ID="XSquare5" />
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="form-group obs_presentation_other_field d-inline-block ml-2 w-n">
+                                                                            <webUI:TextField runat="server" ID="txt_obs_presentation_other" />
+                                                                        </div>
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Vị trí ngôi thai/ <span class="text-primary">Fetal position</span></label>
-                                                                    <div class="form-group d-inline-block w-n ml-2">
+                                                                    <asp:Label runat="server" ID="lbl_obs_fetal_position"></asp:Label>
+                                                                    <div class="form-group d-inline-block w-n ml-2" runat="server" id="obs_fetal_position_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_obs_fetal_position" />
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Khám khung chậu/ <span class="text-primary">Pelvic exam</span></label>
-                                                                    <div class="form-group d-inline-block w-n ml-2">
+                                                                    <asp:Label runat="server" ID="lbl_obs_pelvic_exam"></asp:Label>
+                                                                    <div class="form-group d-inline-block w-n ml-2" runat="server" id="obs_pelvic_exam_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_obs_pelvic_exam" />
                                                                     </div>
                                                                 </div>
 
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Chỉ số Bishop/ <span class="text-primary">Bishop score</span></label>
-                                                                    <div class="form-group w-5 d-inline-block">
-                                                                        <input runat="server" id="txt_obs_bishop_score" class="form-control text-right" />
+                                                                    <asp:Label runat="server" ID="lbl_obs_bishop_score"></asp:Label>
+                                                                    <div class="form-group d-inline-block w-5 ml-2" runat="server" id="obs_bishop_score_wrapper">
+                                                                        <input runat="server" data-type="number" id="txt_obs_bishop_score" class="form-control text-right" />
                                                                         <span class="append">điểm/ points</span>
                                                                     </div>
                                                                 </div>
@@ -1600,61 +999,68 @@
                                                             </fieldset>
                                                         </div>
 
-                                                        <div class="col-md-12 mb-2 gynecology_field">
+                                                        <div runat="server" id="gynecology_field2" class="col-md-12 mb-2">
                                                             <fieldset class="row mb-2">
                                                                 <legend>
-                                                                    <label class="control-label font-bold">Khám trong/ <span class="text-primary">Internal exam:</span></label>
+                                                                    <label class="control-label">Khám trong/ <span class="text-primary">Internal exam:</span></label>
                                                                 </legend>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Âm hộ/ <span class="text-primary">Vulva</span></label>
-                                                                    <div class="form-group d-inline-block w-n ml-2">
+                                                                    <asp:Label runat="server" ID="lbl_gyn_vulva"></asp:Label>
+                                                                    <div class="form-group d-inline-block w-n ml-2" runat="server" id="gyn_vulva_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_gyn_vulva" />
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Tầng sinh môn/ <span class="text-primary">Perineum</span></label>
-                                                                    <div class="form-group d-inline-block w-n ml-2">
+                                                                    <asp:Label runat="server" ID="lbl_gyn_perineum"></asp:Label>
+                                                                    <div class="form-group d-inline-block w-n ml-2" runat="server" id="gyn_perineum_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_gyn_perineum" />
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Khám mỏ vịt/ <span class="text-primary">Speculum examination</span></label>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Âm đạo/ <span class="text-primary">Vagina</span></label>
-                                                                    <div class="form-group d-inline-block w-n ml-2">
+                                                                    <asp:Label runat="server" ID="lbl_gyn_vagina"></asp:Label>
+                                                                    <div class="form-group d-inline-block w-n ml-2" runat="server" id="gyn_vagina_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_gyn_vagina" />
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Dịch tiết/ <span class="text-primary">Discharge</span></label>
-                                                                    <div class="form-group d-inline-block w-n ml-2">
+                                                                    <asp:Label runat="server" ID="lbl_gyn_discharge"></asp:Label>
+                                                                    <div class="form-group d-inline-block w-n ml-2" runat="server" id="gyn_discharge_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_gyn_discharge" />
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Cổ tử cung/ <span class="text-primary">Cervix</span></label>
-                                                                    <div class="form-group d-inline-block w-n ml-2">
+                                                                    <asp:Label runat="server" ID="lbl_gyn_cervix"></asp:Label>
+                                                                    <div class="form-group d-inline-block w-n ml-2" runat="server" id="gyn_cervix_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_gyn_cervix" />
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Phần phụ/ <span class="text-primary">Adnexa</span></label>
-                                                                    <div class="form-group d-inline-block w-n ml-2">
+                                                                    <asp:Label runat="server" ID="lbl_gyn_adnexa"></asp:Label>
+                                                                    <div class="form-group d-inline-block w-n ml-2" runat="server" id="gyn_adnexa_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_gyn_adnexa" />
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-12 mb-2">
+                                                                <div class="col-md-12 mb-2 gt-2-a">
                                                                     <label class="control-label mb-1">Các túi cùng/ <span class="text-primary">Douglas pouchs</span></label>
-                                                                    <div class="form-group d-inline-block w-n ml-2">
+                                                                    <asp:Label runat="server" ID="lbl_gyn_douglas_pouchs"></asp:Label>
+                                                                    <div class="form-group d-inline-block w-n ml-2" runat="server" id="gyn_douglas_pouchs_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_gyn_douglas_pouchs" />
                                                                     </div>
                                                                 </div>
@@ -1662,126 +1068,138 @@
                                                         </div>
                                                     </fieldset>
 
-                                                    <div class="row mb-2">
-                                                        <div class="col-md-12">
-                                                            <label class="control-label mb-1 font-bold">IV. Laboratory indications and results/ <span class="text-primary">Chỉ định và kết quả xét nghiệm:</span></label>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="txt_lab_result" />
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <label class="control-label mb-1 font-bold">Khảo sát bổ sung khác/ <span class="text-primary">Additional investigations</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="txt_add_investigations" />
-                                                            </div>
-                                                        </div>
-
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
+                                            <div class="row mb-2">
+                                                <label class="col-md-12 control-label mb-1 h5">IV. Laboratory indications and results/ <span class="text-primary">Chỉ định và kết quả xét nghiệm:</span></label>
+                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                    <label></label>
+                                                    <asp:Label runat="server" ID="lbl_lab_result"></asp:Label>
+                                                    <div class="form-group" runat="server" id="lab_result_wrapper">
+                                                        <webUI:TextField runat="server" ID="txt_lab_result" />
                                                     </div>
-
-                                                    <div class="row mb-2">
-                                                        <div class="col-md-12">
-                                                            <label class="control-label mb-1 font-bold">V. Conclusion/ <span class="text-primary">Kết luận:</span></label>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <label class="control-label mb-1 font-bold">Chẩn đoán ban đầu/ <span class="text-primary">Initial diagnosis</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="txt_initial_diagnosis" />
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <label class="control-label mb-1 font-bold">Chẩn đoán xác định/ <span class="text-primary">Diagnosis</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="txt_diagnosis" />
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <label class="control-label mb-1 font-bold">Chẩn đoán phân biệt/ <span class="text-primary">Differential diagnosis</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="txt_diff_diagnosis" />
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <label class="control-label mb-1 font-bold">Bệnh kèm theo/ <span class="text-primary">Associated conditions</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="txt_associated_conditions" />
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <label class="control-label mb-1 font-bold">Kế hoạch điều trị/ <span class="text-primary">Treatment plan</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="txt_treatment_plan" />
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12">
-                                                            <label class="control-label mb-1 font-bold">Kế hoạch xuất viện/ <span class="text-primary">Discharge Plan</span></label>
-                                                            <div class="form-group">
-                                                                <webUI:TextField runat="server" ID="txt_discharge_plan" />
-                                                            </div>
-                                                        </div>
+                                                </div>
+                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                    <label class="control-label mb-1">Khảo sát bổ sung khác/ <span class="text-primary">Additional investigations</span></label>
+                                                    <asp:Label runat="server" ID="lbl_add_investigations"></asp:Label>
+                                                    <div class="form-group" runat="server" id="add_investigations_wrapper">
+                                                        <webUI:TextField runat="server" ID="txt_add_investigations" />
                                                     </div>
-
-                                                    <fieldset class="row mb-2">
-                                                        <div class="col-md-12">
-                                                            <div class="form-actions">
-                                                                <asp:Button ID="btnComplete" OnClick="btnComplete_Click" class="btn btn-primary" runat="server" Text="Complete" />
-                                                                <asp:Button ID="btnSave" class="btn btn-primary" runat="server" OnClick="btnSave_Click" Text="Save" />
-                                                                <button type="button" id="btnDeleteModal" runat="server" class="btn btn-danger" data-toggle="modal" data-target="#myModal">Delete</button>
-                                                                <asp:Button ID="btnAmend" OnClick="btnAmend_Click" class="btn btn-secondary" runat="server" Text="Amend" />
-                                                                <asp:Button ID="btnPrint" OnClientClick="window.print()" CssClass="btn btn-secondary" runat="server" Text="Print" />
-                                                                <asp:Button OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary" runat="server" Text="Cancel" />
-                                                            </div>
-                                                        </div>
-                                                    </fieldset>
-
-                                                    <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
-                                                        <ModalBody>
-                                                            <div class="text-center">
-                                                                <icon:ExclamationTriangle cssClass="text-danger" Width="80" Height="80" runat="server" />
-                                                                <h4 class="mt-4 mb-4">Delete document?
-                                                                </h4>
-                                                            </div>
-                                                            <div class="text-right">
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                <asp:Button runat="server" Text="Delete" ID="btnDelete" OnClick="btnDelete_Click" class="btn btn-danger" />
-                                                            </div>
-                                                        </ModalBody>
-                                                    </webUI:PopupModal>
                                                 </div>
-                                                </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
 
-                                <tfoot class="report-footer cssclsNoScreen">
-                                    <tr>
-                                        <td class="report-footer-cell">
-                                            <img style="width: 100%" src="../images/bottomline.png" />
-                                            <div class="footer-info">
-                                                <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
-                                                <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>
-                                                <div>Tel: 028 3910 9999</div>
-                                                <div>www.aih.com.vn</div>
                                             </div>
-                                        </td>
-                                        <td class="report-footer-space"></td>
-                                    </tr>
-                                </tfoot>
-                            </table>
+
+                                            <div class="row mb-2">
+                                                <div class="col-md-12">
+                                                    <label class="control-label mb-1 h5">V. Conclusion/ <span class="text-primary">Kết luận:</span></label>
+                                                </div>
+                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                    <label class="control-label mb-1">Chẩn đoán ban đầu/ <span class="text-primary">Initial diagnosis</span></label>
+                                                    <asp:Label runat="server" ID="lbl_initial_diagnosis"></asp:Label>
+                                                    <div class="form-group" runat="server" id="initial_diagnosis_wrapper">
+                                                        <webUI:TextField runat="server" ID="txt_initial_diagnosis" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                    <label class="control-label mb-1 ">Chẩn đoán xác định/ <span class="text-primary">Diagnosis</span></label>
+                                                    <asp:Label runat="server" ID="lbl_diagnosis"></asp:Label>
+                                                    <div class="form-group" runat="server" id="diagnosis_wrapper">
+                                                        <webUI:TextField runat="server" ID="txt_diagnosis" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                    <label class="control-label mb-1 ">Chẩn đoán phân biệt/ <span class="text-primary">Differential diagnosis</span></label>
+                                                    <asp:Label runat="server" ID="lbl_diff_diagnosis"></asp:Label>
+                                                    <div class="form-group" runat="server" id="diff_diagnosis_wrapper">
+                                                        <webUI:TextField runat="server" ID="txt_diff_diagnosis" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                    <label class="control-label mb-1 ">Bệnh kèm theo/ <span class="text-primary">Associated conditions</span></label>
+                                                    <asp:Label runat="server" ID="lbl_associated_conditions"></asp:Label>
+                                                    <div class="form-group" runat="server" id="associated_conditions_wrapper">
+                                                        <webUI:TextField runat="server" ID="txt_associated_conditions" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                    <label class="control-label mb-1 ">Kế hoạch điều trị/ <span class="text-primary">Treatment plan</span></label>
+                                                    <asp:Label runat="server" ID="lbl_treatment_plan"></asp:Label>
+                                                    <div class="form-group" runat="server" id="treatment_plan_wrapper">
+                                                        <webUI:TextField runat="server" ID="txt_treatment_plan" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                    <label class="control-label mb-1 ">Kế hoạch xuất viện/ <span class="text-primary">Discharge Plan</span></label>
+                                                    <asp:Label runat="server" ID="lbl_discharge_plan"></asp:Label>
+                                                    <div class="form-group" runat="server" id="discharge_plan_wrapper">
+                                                        <webUI:TextField runat="server" ID="txt_discharge_plan" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <div class="form-actions">
+                                                    <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
+
+                                                    <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
+
+                                                    <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal" class="btn btn-danger waves-effect">Delete</div>
+
+                                                    <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
+
+                                                    <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+
+                                                    <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
+                                            <ModalBody>
+                                                <div class="text-center">
+                                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                                    <h4 class="mt-4 mb-4">Delete document?</h4>
+                                                </div>
+                                                <div class="text-right">
+                                                    <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
+                                                    <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
+                                                </div>
+                                            </ModalBody>
+                                        </webUI:PopupModal>
+
+                                        <webUI:PopupShowDelay runat="server" ID="PopupShowDelay" />
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </form>
-    </div>
-    <script src="../../scripts/jquery-3.2.1.min.js"></script>
-    <script src="../../scripts/bootstrap.min.js"></script>
-    <script src="../../scripts/perfect-scrollbar.jquery.min.js"></script>
-    <script src="../../scripts/custom.min.js"></script>
-    <script src="../../scripts/myScript.js"></script>
-    <script src="../../scripts/contenteditable.min.js"></script>
-    <script src="../scripts/checkValidFields.js"></script>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+    </form>
 
+    <script src="../scripts/jquery-3.2.1.min.js"></script>
+    <script src="../scripts/bootstrap.min.js"></script>
+    <script src="../scripts/myScript.js"></script>
+    <script src="../scripts/contenteditable.min.js"></script>
+    <script src="../scripts/waves.js"></script>
+
+    <script type="text/javascript">
+
+        checkboxRadiobutton_init();
+        formGroup_init();
+
+        function beforeAsyncPostBack() {
+            var curtime = new Date();
+        }
+
+        function afterAsyncPostBack() {
+            checkboxRadiobutton_init();
+            formGroup_init();
+            InputFilter();
+        }
+
+    </script>
 </body>
 </html>

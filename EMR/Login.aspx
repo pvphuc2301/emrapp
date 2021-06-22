@@ -10,7 +10,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-
+    <link rel="shortcut icon" href="#"/>
     <link href="./styles/default.css" rel="stylesheet" />
     <link href="./styles/style.css" rel="stylesheet" />
     <link href="./styles/myStyle.css" rel="stylesheet" />
@@ -106,7 +106,7 @@
             <ContentTemplate>
             <section id="wrapper">
                 <div class="login-register">
-                    <div class="login-box card">
+                    <div class="login-box card" style="width: 354px;">
                         <div class="card-body">
 
                             <h3 class="text-center m-b-20">Sign In</h3>
@@ -145,14 +145,18 @@
                                 </div>
                             </div>
                             <div class="form-group text-center">
-                                <div class="col-xs-12 p-b-20">
-                                    <button class="btn btn-block btn-lg btn-info btn-rounded waves-effect" runat="server" id="btnLogin" onserverclick="cmdLogin_Click">
-                                        Login
-                                    </button>
-                                    <webUI:Spinner1 AssociatedUpdatePanelID="up" runat="server" ID="Spinner1" />
-                                </div>
+                                <asp:LinkButton runat="server" ID="btnLogin" OnClick="cmdLogin_Click" CssClass="btn btn-primary w-100 waves-effect">Login</asp:LinkButton>
+                                <asp:UpdateProgress ID="UpdateProgress1" DynamicLayout="true" runat="server" >
+                                    <ProgressTemplate>
+                                        <div class="spinner">
+                                            <div class="bounce1"></div>
+                                            <div class="bounce2"></div>
+                                            <div class="bounce3"></div>
+                                        </div>
+                                        <div>Loading...</div>
+                                    </ProgressTemplate>
+                                </asp:UpdateProgress>
                             </div>
-
                         </div>
                     </div>
                 </div>

@@ -168,8 +168,8 @@
                                         <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
                                     <div class="form-group mb-2">
 
-                                        <asp:TextBox runat="server" ID="txt_amend_reason" CssClass="el-hide" />
-                                        <div spellcheck="false" style="height: auto; text-align: left; display: inline-block;" class="form-control" id="DisplayControl" onblur="changeValue1(this, 'txt_amend_reason')" contenteditable='true' runat="server"></div>
+                                        <asp:TextBox runat="server" TextMode="MultiLine" ID="txt_amend_reason" CssClass="form-control" />
+
                                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
                                             ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                     </div>
@@ -190,7 +190,7 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <h4 class="text-primary">SUMMARY OF MEDICAL REPORT</h4>
-                                        <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="arrowhead"></a>
+                                        <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"></a>
                                     </div>
                                     <div class="card-body collapse show" id="collapseOne">
                                         <div class="form-body">
@@ -289,33 +289,37 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-actions mb-3">
-                                                <button type="button" onserverclick="btnComplete_Click" runat="server" validationgroup="Group1" id="btnComplete" class="btn btn-primary waves-effect">Complete</button>
+                                            <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <div class="form-actions">
+                                                    <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
 
-                                                <button type="button" onserverclick="btnSave_Click" runat="server" id="btnSave" validationgroup="Group1" class="btn btn-primary waves-effect">Save</button>
+                                                        <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
 
-                                                <button type="button" id="btnDeleteModal" runat="server" class="btn btn-danger waves-effect" data-toggle="modal" data-target="#myModal">Delete</button>
+                                                        <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal" class="btn btn-danger waves-effect">Delete</div>
 
-                                                <button type="button" onserverclick="btnAmend_Click" runat="server" id="btnAmend" class="btn btn-secondary waves-effect">Amend</button>
+                                                        <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                <button type="button" onserverclick="btnPrint_Click" runat="server" id="btnPrint" class="btn btn-secondary waves-effect">Print</button>
+                                                        <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
-                                                <button type="button" onserverclick="btnCancel_Click" runat="server" id="btnCancel" class="btn btn-secondary waves-effect">Cancel</button>
+                                                        <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
+                                                </div>
                                             </div>
+                                        </div>
 
-                                            <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
-                                                <ModalBody>
-                                                    <div class="text-center">
-                                                        <icon:ExclamationTriangle Size="80" runat="server" ID="ExclamationTriangle" />
-                                                        <h4 class="mt-4 mb-4">Delete document?
-                                                        </h4>
-                                                    </div>
-                                                    <div class="text-right">
-                                                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                                                        <button type="button" onserverclick="btnDelete_Click" runat="server" id="btnDelete" class="btn btn-danger waves-effect">Delete</button>
-                                                    </div>
-                                                </ModalBody>
-                                            </webUI:PopupModal>
+                                        <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
+                                            <ModalBody>
+                                                <div class="text-center">
+                                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                                    <h4 class="mt-4 mb-4">Delete document?</h4>
+                                                </div>
+                                                <div class="text-right">
+                                                    <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
+                                                    <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
+                                                </div>
+                                            </ModalBody>
+                                        </webUI:PopupModal>
+
                                         </div>
                                     </div>
                                 </div>

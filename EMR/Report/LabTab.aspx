@@ -51,14 +51,7 @@
             
         </telerik:RadMultiPage>
 
-       <%-- <telerik:RadTabStrip RenderMode="Lightweight" OnClientTabSelecting="onTabSelecting" ID="RadTabStrip1" SelectedIndex="0" 
-            runat="server" MultiPageID="RadMultiPage1" Width="100%" Skin="Silk" Orientation="HorizontalTop"
-            OnTabClick="RadTabStrip1_TabClick" ScrollChildren="true">
-        </telerik:RadTabStrip>
-        <div class="recipeImage qsf-ib">
-        <telerik:RadMultiPage ID="RadMultiPage1" runat="server" SelectedIndex="0" 
-            OnPageViewCreated="RadMultiPage1_PageViewCreated" ScrollBars="Auto">
-        </telerik:RadMultiPage>--%>
+       
             </div>  
     </form>
 </body>

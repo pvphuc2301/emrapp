@@ -15,7 +15,7 @@
 <%@ Register Src="~/UserControls/PrintTemplate/Label.ascx" TagPrefix="webUI" TagName="Label" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Signature2.ascx" TagPrefix="aih" TagName="Signature2" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrtDate.ascx" TagPrefix="aih" TagName="PrtDate" %>
-
+<%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="webUI" TagName="PopupShowDelay" %>
 
 <!DOCTYPE html>
 
@@ -168,11 +168,11 @@
                                                 <div style="height: 50px"></div>
                                             </div>
 
-                                             <div class="text-center">
-                                                 <webUI:Date runat="server" ID="Date1" />
+                                            <div class="text-center">
+                                                <webUI:Date runat="server" ID="Date1" />
                                                 <div><span class="font-bold">TRƯỞNG KHOA/ </span>HEAD OF DEPARTMENT</div>
                                                 <div><span class="text-primary"><span class="font-bold">Họ tên, chữ ký, MSNV</span>/ Full name, Signature, ID</span></div>
-                                                 <div style="height: 50px"></div>
+                                                <div style="height: 50px"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -207,8 +207,8 @@
                                         <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
                                     <div class="form-group mb-2">
 
-                                        <asp:TextBox runat="server" ID="txt_amend_reason" CssClass="el-hide" />
-                                        <div spellcheck="false" style="height: auto; text-align: left; display: inline-block;" class="form-control" id="DisplayControl" onblur="changeValue1(this, 'txt_amend_reason')" contenteditable='true' runat="server"></div>
+                                        <asp:TextBox runat="server" TextMode="MultiLine" ID="txt_amend_reason" CssClass="form-control" />
+
                                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
                                             ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                     </div>
@@ -222,8 +222,8 @@
                                 runat="server" ValidationGroup="Group1"
                                 HeaderText="Please complete the highlighted field(s)." />
                         </asp:Panel>
-                        
-                        <webUI:PatientInfo runat="server" ID="PatientInfo" />
+                        <webUI:PatientInfo runat="server" ID="PatientInfo1" />
+
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="text-primary">Discharge certificate</h4>
@@ -243,18 +243,18 @@
                                     <div class="row mb-2">
                                         <div class="col-md-12">
                                             <label style="width: 140px;" class="control-label mb-1 me-2">BHYT/ <span class="text-primary">HealthInsurance:</span></label>
-                                            <asp:Label runat="server" ID="lbl_no_health_insurance" ></asp:Label>
+                                            <asp:Label runat="server" ID="lbl_no_health_insurance"></asp:Label>
                                             <div class="form-group mb-2 d-inline-block w-n" runat="server" id="no_health_insurance_wrapper">
                                                 <aih:TextField runat="server" ID="txt_no_health_insurance" />
                                             </div>
                                             <div class="form-group mb-2 d-inline-block">
-                                                 <label class="control-label mb-1">Giá trị từ/ <span class="text-primary">Valid from: </span></label>
+                                                <label class="control-label mb-1">Giá trị từ/ <span class="text-primary">Valid from: </span></label>
                                                 <asp:Label runat="server" ID="lbl_valid_from"></asp:Label>
                                                 <div runat="server" class="d-inline-block" id="valid_from_wrapper">
                                                     <telerik:RadDatePicker Width="120px" ID="dpk_valid_from" runat="server"></telerik:RadDatePicker>
                                                 </div>
                                             </div>
-                                         </div>
+                                        </div>
                                     </div>
 
                                     <div class="row mb-2">
@@ -320,29 +320,17 @@
                                     <div class="row mb-2">
                                         <div class="col-md-12">
                                             <div class="form-actions">
-                                                <button type="button" runat="server" id="btnComplete" validationgroup="Group1" onserverclick="btnComplete_Click" class="btn btn-primary waves-effect">
-                                                    Complete
-                                                </button>
+                                                <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
 
-                                                <button type="button" onserverclick="btnSave_Click" validationgroup="Group1" runat="server" id="btnSave" class="btn btn-primary waves-effect">
-                                                    Save
-                                                </button>
+                                                <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
 
-                                                <button type="button" data-toggle="modal" data-target="#myModal" id="btnDeleteModal" runat="server" class="btn btn-danger waves-effect">
-                                                    Delete
-                                                </button>
+                                                <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal" class="btn btn-danger waves-effect">Delete</div>
 
-                                                <button onserverclick="btnAmend_Click" runat="server" id="btnAmend" class="btn btn-secondary waves-effect">
-                                                    Amend
-                                                </button>
+                                                <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                <button onserverclick="btnPrint_Click" id="btnPrint" runat="server" class="btn btn-secondary waves-effect">
-                                                    Print
-                                                </button>
+                                                <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
-                                                <button runat="server" onserverclick="btnCancel_Click" id="btnCancel" class="btn btn-secondary waves-effect">
-                                                    Cancel
-                                                </button>
+                                                <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                             </div>
                                         </div>
                                     </div>
@@ -351,15 +339,16 @@
                                         <ModalBody>
                                             <div class="text-center">
                                                 <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                                <h4 class="mt-4 mb-4">Delete document?
-                                                </h4>
+                                                <h4 class="mt-4 mb-4">Delete document?</h4>
                                             </div>
                                             <div class="text-right">
-                                                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                                                <button type="button" onserverclick="btnDelete_Click" runat="server" id="btnDelete" class="btn btn-danger waves-effect">Delete</button>
+                                                <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
+                                                <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
                                             </div>
                                         </ModalBody>
                                     </webUI:PopupModal>
+
+                                    <webUI:PopupShowDelay runat="server" ID="PopupShowDelay" />
                                 </div>
                             </div>
                         </div>
@@ -367,13 +356,6 @@
                 </div>
 
             </ContentTemplate>
-            <Triggers>
-                <asp:AsyncPostBackTrigger ControlID="btnPrint" />
-                <asp:AsyncPostBackTrigger ControlID="btnSave" />
-                <asp:AsyncPostBackTrigger ControlID="btnAmend" />
-                <asp:AsyncPostBackTrigger ControlID="btnCancel" />
-                <asp:AsyncPostBackTrigger ControlID="btnComplete" />
-            </Triggers>
         </asp:UpdatePanel>
     </form>
     <script src="../scripts/jquery-3.2.1.min.js"></script>

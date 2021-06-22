@@ -98,7 +98,7 @@ namespace EMR
                 mydataTable = WebHelpers.GetJSONToDataTable(response.Data);
                 foreach (DataRow row in mydataTable.Rows)
                 {
-               //     byte[] bytes = row.Field<byte[]>("icon_image");// (byte[])row["icon_image"]; //GetDataTable(query, ConnStringHIS).Rows[1]["icon_image"];
+                    //byte[] bytes = row.Field<byte[]>("icon_image");// (byte[])row["icon_image"]; //GetDataTable(query, ConnStringHIS).Rows[1]["icon_image"];
                     string base64String = row.Field<string>("icon_image");// Convert.ToBase64String(bytes, 0, bytes.Length);
                     if (i == 0)
                     {
@@ -169,7 +169,7 @@ namespace EMR
         {
             if (!IsPostBack)
             {
-                dynamic response = WebHelpers.GetAPI(string.Format("api/emr/menu-visit/{0}/{1}", DataHelpers._LOCATION, varPID));
+                dynamic response = WebHelpers.GetAPI($"api/emr/menu-visit/{DataHelpers._LOCATION}/{varPID}");
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
@@ -192,7 +192,7 @@ namespace EMR
 
                         new PatientVisit(ParentID);
 
-                        dynamic response = WebHelpers.GetAPI(string.Format("api/emr/menu-form/{0}/{1}", DataHelpers._LOCATION, ParentID));
+                        dynamic response = WebHelpers.GetAPI($"api/emr/menu-form/{DataHelpers._LOCATION}/{ParentID}");
 
                         if (response.Status == System.Net.HttpStatusCode.OK)
                         {
@@ -206,7 +206,7 @@ namespace EMR
         public void LoadLeftMenu()//object sender, EventArgs e
         {
             string query = "";
-            dynamic response = WebHelpers.GetAPI(string.Format("api/emr/menu-form/{0}/{1}", DataHelpers._LOCATION, varPID));
+            dynamic response = WebHelpers.GetAPI($"api/emr/menu-form/{DataHelpers._LOCATION}/{varPID}");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -247,7 +247,7 @@ namespace EMR
         //}
         public string Return_Doc_URL(object varModelId, object varDocID, object varPVID)
         {
-            string tmp = ""; string apiURL = string.Format("api/emr/get-api/{0}/{1}", DataHelpers._LOCATION, varModelId);
+            string tmp = ""; string apiURL = $"api/emr/get-api/{DataHelpers._LOCATION}/{varModelId}";
             dynamic response = WebHelpers.GetAPI(apiURL);
 
             if (response.Status == System.Net.HttpStatusCode.OK)
@@ -301,10 +301,10 @@ namespace EMR
                     {
                         string ParentID = varPID;// Convert.ToString(dataItem.GetDataKeyValue("patient_id"));
                         string ParentID1 = Convert.ToString(dataItem.GetDataKeyValue("document_type_rcd"));
-                        string apiURL = "api/patient/menu-lab-visit/" + ParentID;
+                        string apiURL = $"api/patient/menu-lab-visit/{DataHelpers._LOCATION}/" + ParentID;
                         if (ParentID1 == "RAD")
                         {
-                            apiURL = "api/patient/menu-rad-visit/" + ParentID;
+                            apiURL = $"api/patient/menu-rad-visit/{DataHelpers._LOCATION}/" + ParentID;
                             orderType = ParentID1;
                         }
                         dynamic response = WebHelpers.GetAPI(apiURL);
@@ -449,7 +449,7 @@ namespace EMR
         [System.Web.Services.WebMethod]
         public static string lblURL_Click(string varModelId, string varDocID, string varPID, string varVPID)
         {
-            string apiURL = string.Format("api/emr/get-api/{0}/{1}", DataHelpers._LOCATION, varModelId);
+            string apiURL = $"api/emr/get-api/{DataHelpers._LOCATION}/{varModelId}";
             dynamic response = WebHelpers.GetAPI(apiURL);
 
             if (response.Status == System.Net.HttpStatusCode.OK)

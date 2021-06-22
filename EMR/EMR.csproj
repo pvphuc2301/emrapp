@@ -299,7 +299,9 @@
     <Content Include="obj\Debug\EMR.csprojAssemblyReference.cache" />
     <Content Include="UserControls\Barcode.ascx" />
     <Content Include="UserControls\CustomPagination.ascx" />
+    <Content Include="UserControls\PopupException.ascx" />
     <Content Include="UserControls\PopupModal.ascx" />
+    <Content Include="UserControls\PopupShowDelay.ascx" />
     <Content Include="UserControls\PrintTemplate\Date.ascx" />
     <Content Include="UserControls\PrintTemplate\Label1.ascx" />
     <Content Include="UserControls\PrintTemplate\PrtDate.ascx" />
@@ -932,8 +934,22 @@
     <Compile Include="UserControls\PatientInfo.ascx.designer.cs">
       <DependentUpon>PatientInfo.ascx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\PopupException.ascx.cs">
+      <DependentUpon>PopupException.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PopupException.ascx.designer.cs">
+      <DependentUpon>PopupException.ascx</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\PopupModal.ascx.designer.cs">
       <DependentUpon>PopupModal.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\PopupShowDelay.ascx.cs">
+      <DependentUpon>PopupShowDelay.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\PopupShowDelay.ascx.designer.cs">
+      <DependentUpon>PopupShowDelay.ascx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\PrintTemplate\Date.ascx.cs">
       <DependentUpon>Date.ascx</DependentUpon>

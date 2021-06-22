@@ -195,16 +195,16 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLongTitle">Select document</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <div class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
-                                    </button>
+                                    </div>
                                 </div>
                                 <div class="modal-body">
                                     <select id="ddlDocList" runat="server" class="custom-select"></select>
                                 </div>
                                 <div class="modal-footer">
-                                    <button id="btnClose" data-dismiss="modal" class="btn btn-default waves-effect">Close</button>
-                                    <button id="btnSave" runat="server" onserverclick="btnSave_Click" class="btn btn-primary waves-effect">Save</button>
+                                    <div id="btnClose" data-dismiss="modal" class="btn btn-default waves-effect">Close</div>
+                                    <asp:LinkButton runat="server" ID="btnSave" OnClick="btnSave_Click" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
                                 </div>
                             </div>
                         </div>
@@ -237,6 +237,7 @@
                     <%--<asp:PostBackTrigger ControlID="btnAction" />--%>
                     <%--<asp:PostBackTrigger ControlID="btnSave" />
                     <asp:PostBackTrigger ControlID="btnComplete" />--%>
+                    <asp:AsyncPostBackTrigger ControlID="btnSave" />
                 </Triggers>
             </asp:UpdatePanel>
         </div>

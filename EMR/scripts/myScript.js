@@ -1,103 +1,102 @@
 
-document.querySelectorAll('.form-group').forEach(e => {
-    let input = e.getElementsByTagName('input');
-    let prepend = e.getElementsByClassName('prepend');
-    let append = e.getElementsByClassName('append');
+function formGroup_init() {
+    document.querySelectorAll('.form-group').forEach(e => {
+        let input = e.getElementsByTagName('input');
+        let prepend = e.getElementsByClassName('prepend');
+        let append = e.getElementsByClassName('append');
 
-    if (prepend.length != 0) {
-        prepend[0].style.position = "sticky";
-        input[0].style.marginLeft = "-" + (append[0].offsetWidth + 20) + "px";
-    }
-
-    if (append.length != 0) {
-        append[0].style.position = 'relative';
-        append[0].style.marginLeft = "-" + (append[0].offsetWidth + 20) + "px";
-        input[0].style.paddingRight = (append[0].offsetWidth + 25) + "px";
-    }
-});
-
-//Radio button
-
-let radiosAttr = [];
-
-document.querySelectorAll('input[type=radio]').forEach(e => {
-    if (!radiosAttr.includes(e.name)) radiosAttr.push(e.name);
-});
-
-for (let i = 0; i < radiosAttr.length; i++) {
-    let radiosEle = $(`input[name=${radiosAttr[i]}]`);
-
-    for (let j = 0; j < radiosEle.length; j++) {
-        let disabledFor = radiosEle[j].getAttribute('disabled-for');
-
-        if (disabledFor != 'undefined' && disabledFor != false) {
-
-            if (!radiosEle[j].checked) {
-                let EleByClassName = document.getElementsByClassName(disabledFor);
-
-                for (let l = 0; l < EleByClassName.length; l++) {
-                    EleByClassName[l].classList.add("el-hide");
-                }
-            }
+        if (prepend.length != 0) {
+            prepend[0].style.position = "sticky";
+            input[0].style.marginLeft = "-" + (append[0].offsetWidth + 20) + "px";
         }
 
-        radiosEle[j].addEventListener('change', function () {
-            try {
+        if (append.length != 0) {
+            append[0].style.position = 'relative';
+            append[0].style.marginLeft = "-" + (append[0].offsetWidth + 20) + "px";
+            input[0].style.paddingRight = (append[0].offsetWidth + 25) + "px";
+        }
+    });
+}
 
-                let disabledFor = radiosEle[j].getAttribute('disabled-for');
+function checkboxRadiobutton_init() {
+    let radiosAttr = [];
 
-                if (disabledFor != 'undefined' && disabledFor != false) {
+    document.querySelectorAll('input[type=radio]').forEach(e => {
+        if (!radiosAttr.includes(e.name)) radiosAttr.push(e.name);
+    });
 
-                    for (let k = 0; k < radiosEle.length; k++) {
+    for (let i = 0; i < radiosAttr.length; i++) {
+        let radiosEle = $(`input[name=${radiosAttr[i]}]`);
 
-                        let EleByClassName = document.getElementsByClassName(radiosEle[k].getAttribute('disabled-for'));
+        for (let j = 0; j < radiosEle.length; j++) {
+            let disabledFor = radiosEle[j].getAttribute('disabled-for');
 
-                        for (let l = 0; l < EleByClassName.length; l++) {
+            if (disabledFor != 'undefined' && disabledFor != false) {
 
-                            if (EleByClassName[l].classList.contains(disabledFor)) {
-                                EleByClassName[l].classList.remove("el-hide");
-                                EleByClassName[l].classList.add("el-show");
-                            } else {
-                                EleByClassName[l].classList.remove("el-show");
-                                EleByClassName[l].classList.add("el-hide");
+                if (!radiosEle[j].checked) {
+                    let EleByClassName = document.getElementsByClassName(disabledFor);
+
+                    for (let l = 0; l < EleByClassName.length; l++) {
+                        EleByClassName[l].classList.add("el-hide");
+                    }
+                }
+            }
+
+            radiosEle[j].addEventListener('change', function () {
+                try {
+
+                    let disabledFor = radiosEle[j].getAttribute('disabled-for');
+
+                    if (disabledFor != 'undefined' && disabledFor != false) {
+
+                        for (let k = 0; k < radiosEle.length; k++) {
+
+                            let EleByClassName = document.getElementsByClassName(radiosEle[k].getAttribute('disabled-for'));
+
+                            for (let l = 0; l < EleByClassName.length; l++) {
+
+                                if (EleByClassName[l].classList.contains(disabledFor)) {
+                                    EleByClassName[l].classList.remove("el-hide");
+                                    EleByClassName[l].classList.add("el-show");
+                                } else {
+                                    EleByClassName[l].classList.remove("el-show");
+                                    EleByClassName[l].classList.add("el-hide");
+                                }
                             }
                         }
                     }
+                } catch (ex) {
+                    console.error(ex);
                 }
-            } catch (ex) {
-                console.error(ex);
-            }
-        })
-    }
-}
-
-
-
-//Checkbox
-let cbs = document.querySelectorAll('input[type=checkbox]');
-
-cbs.forEach((cb) => {
-    let disabledFor = cb.getAttribute('disabled-for');
-
-    if (disabledFor !== 'undefined' && disabledFor !== false && disabledFor !== null) {
-
-        let EleByClassName = document.querySelectorAll(`.${cb.getAttribute('disabled-for')}`);
-
-        if (cb.checked) {
-            EleByClassName.forEach(e => e.style.display = "");
-        } else {
-            EleByClassName.forEach(e => e.style.display = "none");
+            })
         }
+    }
 
-        cb.addEventListener('change', function () {
+    let cbs = document.querySelectorAll('input[type=checkbox]');
+
+    cbs.forEach((cb) => {
+        let disabledFor = cb.getAttribute('disabled-for');
+
+        if (disabledFor !== 'undefined' && disabledFor !== false && disabledFor !== null) {
+
+            let EleByClassName = document.querySelectorAll(`.${cb.getAttribute('disabled-for')}`);
+
             if (cb.checked) {
                 EleByClassName.forEach(e => e.style.display = "");
             } else {
                 EleByClassName.forEach(e => e.style.display = "none");
             }
-        })
-    }
-})
+
+            cb.addEventListener('change', function () {
+                if (cb.checked) {
+                    EleByClassName.forEach(e => e.style.display = "");
+                } else {
+                    EleByClassName.forEach(e => e.style.display = "none");
+                }
+            })
+        }
+    })
+}
 
 function clear_radiobutton(el) {
     try {
@@ -129,7 +128,6 @@ function changeValue1(a, b) {
     document.getElementById(b).value = a.innerHTML;
 }
 
-//
 function setInputFilter(textbox, inputFilter) {
     ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
         textbox.addEventListener(event, function () {
@@ -147,43 +145,28 @@ function setInputFilter(textbox, inputFilter) {
     });
 }
 
-        //function setInputFilter(textbox, inputFilter) {
-        //    ["input", "keydown", "keyup", "mousedown", "mouseup", "select", "contextmenu", "drop"].forEach(function (event) {
-        //        textbox.addEventListener(event, function () {
-        //            if (inputFilter(this.innerText)) {
-        //                this.oldValue = this.innerHTML;
-        //                this.oldSelectionStart = this.selectionStart;
-        //                this.oldSelectionEnd = this.selectionEnd;
-        //            } else if (this.hasOwnProperty("oldValue")) {
-        //                this.innerHTML = this.oldValue;
+function InputFilter() {
+    let temp = document.querySelectorAll('div[type="number"]');
+    let temp1 = document.querySelectorAll('input[data-type="number"]');
 
-        //                this.setSelectionRange(this.oldSelectionStart, this.oldSelectionEnd);
-        //            } else {
-        //                this.innerHTML = "";
-        //            }
-        //        });
-        //    });
-        //}
-let temp = document.querySelectorAll('div[type="number"]');
-let temp1 = document.querySelectorAll('input[data-type="number"]');
-
-temp1.forEach(e => {
-    setInputFilter(e, function (value) {
-        return /^[0-9\.\-\/]+$/.test(value);
-        //return /^\d*\.?\d*$/.test(value);
+    temp1.forEach(e => {
+        setInputFilter(e, function (value) {
+            return /^[0-9\.\-\/]+$/.test(value);
+            //return /^\d*\.?\d*$/.test(value);
+        });
     });
-});
+}
 
 function CalculateBmi() {
     let vs_height = document.getElementById('txt_vs_height');
     let vs_weight = document.getElementById('txt_vs_weight');
-    let vs_bmi = document.getElementById('lbl_vs_bmi');
+    let vs_bmi = document.getElementById('txt_vs_bmi');
     console.log(vs_height, vs_weight, vs_bmi);
     if (vs_height.value == "" || vs_weight.value == "") {
-        vs_bmi.innerText = "";
+        vs_bmi.value = "";
     }
     else {
-        vs_bmi.innerText = (vs_weight.value / ((vs_height.value / 100) * 2)).toFixed(2);
+        vs_bmi.value = (vs_weight.value / ((vs_height.value / 100) * 2)).toFixed(2);
     };
 }
 
@@ -228,3 +211,14 @@ function BeginHandler() {
 function EndHandler() {
     afterAsyncPostBack();
 }
+
+function stayLoggedIn() {
+    $("#PopupShowDelay").modal('hide');
+}
+
+function logout() {
+    setTimeout("__doPostBack('stayLoggedIn', '')", 0);
+}
+
+//Auto Call
+InputFilter();

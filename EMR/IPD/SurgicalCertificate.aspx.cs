@@ -107,7 +107,7 @@ namespace EMR
         protected void btnAmend_Click(object sender, EventArgs e)
         {
             surc = new Surc(Request.QueryString["docId"]);
-
+            txt_amend_reason.Text = "";
             amendReasonWraper.Visible = true;
             btnComplete.Visible = true;
             btnCancel.Visible = true;

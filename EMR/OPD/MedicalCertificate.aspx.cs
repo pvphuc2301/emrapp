@@ -10,172 +10,87 @@ namespace EMR
 {
     public partial class MedicalCertificate : System.Web.UI.Page
     {
-        MC mc; string UserID = "";
-        PatientInfo pa;         
         protected void Page_Load(object sender, EventArgs e)
         {
-            CheckUserID();
-            
+            WebHelpers.CheckSession(this);
+
             if (!IsPostBack)
             {
                 Initial();
             }
         }
 
-        private void CheckUserID()
+        #region Binding Data
+        private void BindingDataForm(MC mc, bool state)
         {
-            UserID = (string)Session["UserID"];
-            string redirecturl = "../login.aspx?ReturnUrl=";
-            redirecturl += Request.ServerVariables["script_name"] + "?";
-            redirecturl += Server.UrlEncode(Request.QueryString.ToString());
-            if (string.IsNullOrEmpty(UserID))
-                Response.Redirect(redirecturl);
-        }
-
-        public void Initial()
-        {
-            if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
-            if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
-            if (Request.QueryString["vpId"] != null) DataHelpers.varPVId = Request.QueryString["vpId"];
-
-            mc = new MC(DataHelpers.varDocId);
-            Patient patient = Patient.Instance();
-            prt_barcode.Text = patient.visible_patient_id;
-            amendReasonWraper.Visible = false;
-            btnCancel.Visible = false;
-            //LoadFormPrint(mc);
-            if (mc.status == DocumentStatus.FINAL)
+            if (state)
             {
-                loadFormView(mc);
+                BindingDataFormEdit(mc);
             }
-            else if (mc.status == DocumentStatus.DRAFT)
+            else
             {
-                LoadFormEdit(mc);
+                BindingDataFormView(mc);
             }
         }
-        private void loadFormView(MC omr)
+        private void BindingDataFormEdit(MC mc)
         {
-            lbl_chief_complain.Text = WebHelpers.GetValue(omr.chief_complain);
-            lbl_history_present_illness.Text = WebHelpers.GetValue(omr.history_present_illness);
-            lbl_past_history.Text = WebHelpers.GetValue(omr.past_history);
-            lbl_clinical_findings.Text = WebHelpers.GetValue(omr.clinical_findings);
-            lbl_para_clinical_investigations.Text = WebHelpers.GetValue(omr.para_clinical_investigations);
-            lbl_diagnosis.Text = WebHelpers.GetValue(omr.diagnosis);
-            lbl_treatment.Text = WebHelpers.GetValue(omr.treatment);
-            lbl_treatment_period.Text = WebHelpers.GetValue(omr.treatment_period);
-            lbl_recommendation.Text = WebHelpers.GetValue(omr.recommendation);
-            lbl_treatment_plan.Text = WebHelpers.GetValue(omr.treatment_plan);
+            try
+            {
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "localStorage_setItem", $"window.sessionStorage.setItem('{mc}', '{JsonConvert.SerializeObject(mc)}');", true);
 
-            LoadFormControl(true);
-
-            btnComplete.Visible = false;
-            btnSave.Visible = false;
-            btnDeleteModal.Visible = false;
-
-            btnAmend.Visible = true;
-            btnPrint.Visible = true;
+                // 2. Lý do đến khám
+                txt_chief_complain.Value = mc.chief_complain;
+                txt_chief_complain.Disabled = false;
+                // 3. Tóm tắt bệnh sử                          
+                txt_history_present_illness.Value = mc.history_present_illness;
+                // 4. Tiền sử bệnh                
+                txt_past_history.Value = mc.past_history;
+                // 5. Đặc điểm lâm sàng
+                txt_clinical_findings.Value = mc.clinical_findings;
+                //6. Cận lâm sàng được chỉ định
+                txt_para_clinical_investigations.Value = mc.para_clinical_investigations;
+                //7. Chẩn đoán
+                txt_diagnosis.Value = mc.diagnosis;
+                //8. Phương pháp và thuốc điều trị
+                txt_treatment.Value = mc.treatment;
+                //9. Thời gian điều trị
+                txt_treatment_period.Value = mc.treatment_period;
+                //10. Lời khuyên và theo dõi
+                txt_recommendation.Value = mc.recommendation;
+                //11. Lời khuyên và theo dõi
+                txt_treatment_plan.Value = mc.treatment_plan;
+            }
+            catch (Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
         }
-        private void LoadFormEdit(MC mc)
+        private void BindingDataFormView(MC mc)
         {
-            // 2. Lý do đến khám
-            txt_chief_complain.Value = mc.chief_complain;
-            txt_chief_complain.Disabled = false;
-            // 3. Tóm tắt bệnh sử                          
-            txt_history_present_illness.Value = mc.history_present_illness;
-            // 4. Tiền sử bệnh                
-            txt_past_history.Value = mc.past_history;
-            // 5. Đặc điểm lâm sàng
-            txt_clinical_findings.Value = mc.clinical_findings;
-            //6. Cận lâm sàng được chỉ định
-            txt_para_clinical_investigations.Value = mc.para_clinical_investigations;
-            //7. Chẩn đoán
-            txt_diagnosis.Value = mc.diagnosis;
-            //8. Phương pháp và thuốc điều trị
-            txt_treatment.Value = mc.treatment;
-            //9. Thời gian điều trị
-            txt_treatment_period.Value = mc.treatment_period;
-            //10. Lời khuyên và theo dõi
-            txt_recommendation.Value = mc.recommendation;
-            //11. Lời khuyên và theo dõi
-            txt_treatment_plan.Value = mc.treatment_plan;
-            //
-            //
-            //
-            LoadFormControl(false);
+            lbl_chief_complain.Text = WebHelpers.GetValue(mc.chief_complain);
+            lbl_history_present_illness.Text = WebHelpers.GetValue(mc.history_present_illness);
+            lbl_past_history.Text = WebHelpers.GetValue(mc.past_history);
+            lbl_clinical_findings.Text = WebHelpers.GetValue(mc.clinical_findings);
+            lbl_para_clinical_investigations.Text = WebHelpers.GetValue(mc.para_clinical_investigations);
+            lbl_diagnosis.Text = WebHelpers.GetValue(mc.diagnosis);
+            lbl_treatment.Text = WebHelpers.GetValue(mc.treatment);
+            lbl_treatment_period.Text = WebHelpers.GetValue(mc.treatment_period);
+            lbl_recommendation.Text = WebHelpers.GetValue(mc.recommendation);
+            lbl_treatment_plan.Text = WebHelpers.GetValue(mc.treatment_plan);
 
-            btnAmend.Visible = false;
-            btnPrint.Visible = false;
         }
-
-        //public void loadDataToControls(MC mc)
-        //{
-        //    try
-        //    {
-        //        DisabledControl(false);
-
-        //        //// 2. Lý do đến khám
-        //        //txt_chief_complain.Value = mc.chief_complain;
-        //        //txt_chief_complain.Disabled = false;
-        //        //// 3. Tóm tắt bệnh sử                          
-        //        //txt_history_present_illness.Value = mc.history_present_illness;
-        //        //// 4. Tiền sử bệnh                
-        //        //txt_past_history.Value = mc.past_history;
-        //        //// 5. Đặc điểm lâm sàng
-        //        //txt_clinical_findings.Value = mc.clinical_findings;
-        //        ////6. Cận lâm sàng được chỉ định
-        //        //txt_para_clinical_investigations.Value = mc.para_clinical_investigations;
-        //        ////7. Chẩn đoán
-        //        //txt_diagnosis.Value = mc.diagnosis;
-        //        ////8. Phương pháp và thuốc điều trị
-        //        //txt_treatment.Value = mc.treatment;
-        //        ////9. Thời gian điều trị
-        //        //txt_treatment_period.Value = mc.treatment_period;
-        //        ////10. Lời khuyên và theo dõi
-        //        //txt_recommendation.Value = mc.recommendation;
-        //        ////11. Lời khuyên và theo dõi
-        //        //txt_treatment_plan.Value = mc.treatment_plan;
-
-        //    } catch(Exception ex)
-        //    {
-
-        //    }
-            
-
-        //    btnCancel.Visible = false;
-        //    txt_amend_reason.Visible = false;
-
-        //    if (mc.status == DocumentStatus.FINAL)
-        //    {
-        //        btnComplete.Visible = false;
-        //        btnSave.Visible = false;
-        //        btnDeleteModal.Visible = false;
-        //        btnCancel.Visible = false;
-
-        //        btnAmend.Visible = true;
-        //        btnPrint.Visible = true;
-
-        //        DisabledControl(true);
-        //    }
-        //    else if (mc.status == DocumentStatus.DRAFT)
-        //    {
-
-        //        btnAmend.Visible = false;
-        //        btnPrint.Visible = false;
-        //    }
-        //}
-
-        private void LoadFormPrint(MC mc)
+        private void BindingDataFormPrint(MC mc)
         {
             Patient patient = Patient.Instance();
             prt_vpid.Text = prt_barcode.Text = patient.visible_patient_id;
-            
+
             prt_patient_name.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
             prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth);
 
             prt_gender.Text = WebHelpers.CreateOptions(new Option { Text = "Nam <div class='text-primary'>Male</div>", Value = "Male" }, new Option { Text = "Nữ<div class='text-primary'>Female</div>", Value = "Female" }, DataHelpers.patient.gender_e, "display: grid; grid-template-columns: 1fr 1fr; width: 300px");
 
             prt_pid.Text = DataHelpers.patient.visible_patient_id;
-            prt_date_of_visit.Text =  WebHelpers.FormatDateTime(DataHelpers.patientVisit.actual_visit_date_time);
+            prt_date_of_visit.Text = WebHelpers.FormatDateTime(PatientVisit.Instance().actual_visit_date_time);
             prt_chief_complain.Text = mc.chief_complain;
             prt_history_present_illness.Text = mc.history_present_illness;
             prt_past_history.Text = mc.past_history;
@@ -187,20 +102,103 @@ namespace EMR
             prt_recommendation.Text = mc.recommendation;
 
         }
+        #endregion
 
+        #region Events
         protected void btnComplete_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
-                mc = new MC(Request.QueryString["docId"]);
-
-                mc.user_name = (string)Session["UserID"];
+                MC mc = new MC(DataHelpers.varDocId);
                 mc.status = DocumentStatus.FINAL;
+                mc.user_name = (string)Session["UserID"];
 
                 UpdateData(mc);
             }
         }
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+            if (Page.IsValid)
+            {
+                MC mc = new MC(DataHelpers.varDocId);
+                mc.status = DocumentStatus.DRAFT;
+                mc.user_name = (string)Session["UserID"];
 
+                UpdateData(mc);
+            }
+        }
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            dynamic result = MC.Delete((string)Session["UserID"], Request.QueryString["docid"])[0];
+            if (result.Status == System.Net.HttpStatusCode.OK)
+            {
+                string pid = Request["pid"];
+                string vpid = Request["vpid"];
+
+                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+            }
+            else
+            {
+                WebHelpers.SendError(Page, result.ex);
+            }
+        }
+        protected void btnAmend_Click(object sender, EventArgs e)
+        {
+            MC mc = new MC(Request.QueryString["docId"]);
+            txt_amend_reason.Text = "";
+            WebHelpers.VisibleControl(false, btnAmend, btnPrint);
+            WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
+
+            //load form control
+            WebHelpers.LoadFormControl(form1, mc, ControlState.Edit, (string)Session["location"]);
+            //binding data
+            BindingDataFormEdit(mc);
+            //get access button
+        }
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            Initial();
+        }
+        protected void btnPrint_Click(object sender, EventArgs e)
+        {
+            MC mc = new MC(Request.QueryString["docId"]);
+            BindingDataFormPrint(mc);
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
+        }
+        #endregion
+
+        #region Functions
+        public void Initial()
+        {
+            if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
+            if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
+            if (Request.QueryString["vpId"] != null) DataHelpers.varPVId = Request.QueryString["vpId"];
+
+            try
+            {
+                MC mc = new MC(Request.QueryString["docId"]);
+
+                WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
+                
+                if (mc.status == DocumentStatus.FINAL)
+                {
+                    BindingDataForm(mc, WebHelpers.LoadFormControl(form1, mc, ControlState.View, (string)Session["location"]));
+
+                }
+                else if (mc.status == DocumentStatus.DRAFT)
+                {
+                    BindingDataForm(mc, WebHelpers.LoadFormControl(form1, mc, ControlState.Edit, (string)Session["location"]));
+
+                }
+
+                WebHelpers.getAccessButtons(form1, mc.status, (string)Session["access_authorize"], (string)Session["location"]);
+            }
+            catch (Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
+        }
         private void UpdateData(MC mc)
         {
             try
@@ -237,85 +235,13 @@ namespace EMR
 
             }
         }
+        #endregion
 
-        protected void btnSave_Click(object sender, EventArgs e)
-        {
-            if (Page.IsValid)
-            {
-                mc = new MC(Request.QueryString["docId"]);
-
-                mc.user_name = (string)Session["UserID"];
-                mc.status = DocumentStatus.DRAFT;
-
-                UpdateData(mc);
-            }
-        }
-
-        protected void btnDelete_Click(object sender, EventArgs e)
-        {
-            dynamic result = Diss.Delete((string)Session["UserId"], Request.QueryString["docId"]);
-
-            if (result[0].Status == System.Net.HttpStatusCode.OK)
-            {
-                string pid = Request["pid"];
-                string vpid = Request["vpid"];
-
-                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
-            }
-            else
-            {
-                Session["PageNotFound"] = result[0];
-                Response.Redirect("../Other/PageNotFound.aspx", false);
-            }
-        }
-
-        protected void LoadFormControl(bool disabled)
-        {
-            foreach (var prop in mc.GetType().GetProperties())
-            {
-                var control1 = FindControl(prop.Name + "_wrapper");
-                var control2 = FindControl("lbl_" + prop.Name);
-
-                if (control1 != null)
-                {
-                    control1.Visible = !disabled;
-                }
-                if (control2 != null)
-                {
-                    control2.Visible = disabled;
-                }
-            }
-        }
-
-        protected void btnAmend_Click(object sender, EventArgs e)
-        {
-            mc = new MC(Request.QueryString["docId"]);
-
-            amendReasonWraper.Visible = true;
-            btnComplete.Visible = true;
-            btnCancel.Visible = true;
-            btnAmend.Visible = false;
-            btnPrint.Visible = false;
-
-            LoadFormEdit(mc);
-        }
-
-        protected void btnPrint_Click(object sender, EventArgs e)
-        {
-            mc = new MC(Request.QueryString["docId"]);
-            LoadFormPrint(mc);
-
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "window.print();", true);
-        }
-
-        protected void btnCancel_Click(object sender, EventArgs e)
-        {
-            Initial();
-        }
-
+        #region Validation
         protected void CustomValidator2_ServerValidate(object source, ServerValidateEventArgs args)
         {
             args.IsValid = txt_amend_reason.Text.Length > 3;
         }
+        #endregion
     }
 }

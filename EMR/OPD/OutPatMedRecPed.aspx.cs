@@ -40,6 +40,7 @@ namespace EMR
                 LoadFormEdit(pomr);
             }
         }
+        #region Load Forms
         private void LoadFormEdit(POMR pomr)
         {
             Patient patient = Patient.Instance();
@@ -253,6 +254,7 @@ namespace EMR
                 prt_next_appointment.Text = pomr.bool_next_appointment ? WebHelpers.FormatDateTime(pomr.date_next_appointment) : pomr.txt_next_appointment;
             }
         }
+        #endregion
         private void UpdateData(POMR pomr)
         {
             

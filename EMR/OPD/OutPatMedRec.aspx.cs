@@ -389,7 +389,7 @@ namespace EMR
         }
         protected void btnUpdateVitalSign_Click(object sender, EventArgs e)
         {
-            dynamic response = POMR.UpdateVitalSign(Request.QueryString["docId"]);
+            dynamic response = Omr.UpdateVitalSign(Request.QueryString["docId"]);
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 Initial();
