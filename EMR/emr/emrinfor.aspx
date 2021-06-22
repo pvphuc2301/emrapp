@@ -24,6 +24,55 @@
     <%--<link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../style/style-custom.css" rel="stylesheet" />--%>
+    <style>
+
+.tooltip1 {
+            position: relative;
+        }
+
+        .tooltip__item {
+            position: fixed;
+            min-width: 100px;
+            padding: 20px;
+            visibility: hidden;
+            opacity: 0;
+            background: white;
+            transition: all .250s cubic-bezier(0, 0, 0.2, 1);
+            color: #484848;
+            border: 1px solid #cecece;
+            border-radius: 3px;
+            font-weight: 500;
+            box-shadow: 0 2px 1px #bcbcbc;
+            z-index: 1000;
+        }
+
+        /*.tooltip__item:before {
+            content: "";
+              display: block;
+              position: absolute;
+              width: 0;
+              height: 0;
+              border-style: solid;
+        }*/
+
+        .tooltip__initiator {
+            cursor: pointer;
+            z-index: 5;
+        }
+
+            .tooltip__initiator:hover ~ .tooltip__item {
+                /*transform: translate3d(0, -50%, 0);*/
+                visibility: visible;
+                opacity: 1;
+                transform: translate(5px, 50%) scale(1);
+            }
+
+        .tooltip__item {
+            top: 50%;
+            left: calc(100% + 1em);
+            transform: translate3d(15px, -50%, 0);
+        }
+    </style>
 </head>
 <body onload="bodyOnloadHandler()">
     <form id="form1" runat="server">
@@ -185,7 +234,7 @@
                                                                     <%-- <asp:HyperLink ID="lbURL"
                            NavigateUrl ="http://172.16.0.78:8082/api/omr/0d79db3e-ae3f-433e-a1d2-aa96107654e1"
                           </asp:HyperLink>--%>
-
+                                                                    
                                                                     <asp:HyperLink data-title='<%# ReturnForm_Name(Eval("status"),Eval("model_name"), "") %>' data-category='' data-visit='' data-author='<%# Eval("created_name_e") %>' CssClass="list-item d-inline-block" ID="lbURL" runat="server" NavigateUrl='<%# Return_Doc_URL(Eval("model_id"),Eval("document_id"), Eval("patient_visit_id")) %>'
                                                                         Text='<%# ReturnForm_Name(Eval("status"),Eval("model_name"),Eval("created_name_e")) %>' Target="MainContent">
                                                                     </asp:HyperLink>
