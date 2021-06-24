@@ -3749,7 +3749,6 @@ namespace EMR
 
     #endregion
 
-    #region OUTPATIENT MEDICAL RECORD - Mr. Chung
     public partial class PatientInfo
     {
         #region Properties
@@ -4639,8 +4638,6 @@ namespace EMR
             }
         }
     }
-
-    #endregion
 
     #endregion
 
