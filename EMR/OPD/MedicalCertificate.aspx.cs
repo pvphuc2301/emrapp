@@ -129,17 +129,20 @@ namespace EMR
         }
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            dynamic result = MC.Delete((string)Session["UserID"], Request.QueryString["docid"])[0];
-            if (result.Status == System.Net.HttpStatusCode.OK)
+            try
             {
-                string pid = Request["pid"];
-                string vpid = Request["vpid"];
+                dynamic result = MC.Delete((string)Session["UserID"], Request.QueryString["docid"])[0];
+                if (result.Status == System.Net.HttpStatusCode.OK)
+                {
+                    string pid = Request["pid"];
+                    string vpid = Request["vpid"];
 
-                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                }
             }
-            else
+            catch (Exception ex)
             {
-                WebHelpers.SendError(Page, result.ex);
+                WebHelpers.SendError(Page, ex);
             }
         }
         protected void btnAmend_Click(object sender, EventArgs e)

@@ -939,6 +939,7 @@ namespace EMR
             {
                 case "stayLoggedIn":
                     _page.Response.Redirect(redirecturl);
+                    _page.Session.Abandon();
                     return false;
 
                 default:

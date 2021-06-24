@@ -202,6 +202,7 @@
     <Content Include="emrbyvisit\opdTab.aspx" />
     <Content Include="emr\emrinfor.aspx" />
     <Content Include="emr\emrview.aspx" />
+    <Content Include="ER\EmerMedRec.aspx" />
     <Content Include="icons\ChatRight.ascx" />
     <Content Include="icons\CheckCircle.ascx" />
     <Content Include="icons\Envelope.ascx" />
@@ -213,7 +214,6 @@
     <Content Include="Report\CompleteVisitReport.aspx" />
     <Content Include="Report\ImagingTab.aspx" />
     <Content Include="emr\labinfor.aspx" />
-    <Content Include="ER\EmerMedRec.aspx" />
     <Content Include="ER\EmerTriaAndNurAssRec.aspx" />
     <Content Include="icons\Bell.ascx" />
     <Content Include="icons\BoxArrowInLeft.ascx" />
@@ -400,6 +400,13 @@
     <Compile Include="emr\emrview.aspx.designer.cs">
       <DependentUpon>emrview.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ER\EmerMedRec.aspx.cs">
+      <DependentUpon>EmerMedRec.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ER\EmerMedRec.aspx.designer.cs">
+      <DependentUpon>EmerMedRec.aspx</DependentUpon>
+    </Compile>
     <Compile Include="icons\ChatRight.ascx.cs">
       <DependentUpon>ChatRight.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -476,13 +483,6 @@
     </Compile>
     <Compile Include="emr\labinfor.aspx.designer.cs">
       <DependentUpon>labinfor.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ER\EmerMedRec.aspx.cs">
-      <DependentUpon>EmerMedRec.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ER\EmerMedRec.aspx.designer.cs">
-      <DependentUpon>EmerMedRec.aspx</DependentUpon>
     </Compile>
     <Compile Include="ER\EmerTriaAndNurAssRec.aspx.cs">
       <DependentUpon>EmerTriaAndNurAssRec.aspx</DependentUpon>
@@ -1163,7 +1163,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -4749,7 +4749,7 @@ namespace EMR
         public static Dictionary<string, string> Treatment = new Dictionary<string, string>()
         {
             { "id", "" },
-            { "time", "" },
+            { "time", "DateTime" },
             { "medication", "" },
             { "dose", "" },
             { "route", "" },
@@ -4758,7 +4758,7 @@ namespace EMR
         public static Dictionary<string, string> ProgressNote = new Dictionary<string, string>()
         {
             { "id", "" },
-            { "time", "" },
+            { "time", "DateTime" },
             { "progress", "" },
             { "appropriate_order", "" },
         };
@@ -4772,7 +4772,7 @@ namespace EMR
         public EmergencyMedicalRecord(dynamic document_id)
         {
             DataTable tbl = new DataTable();
-            dynamic response = WebHelpers.GetAPI("api/emr/" + document_id);
+            dynamic response = WebHelpers.GetAPI($"api/emr/get/{DataHelpers._LOCATION}/" + document_id);
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -4948,12 +4948,12 @@ namespace EMR
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI("api/emr/edit", this);
+            dynamic response1 = WebHelpers.PostAPI($"api/emr/edit/{DataHelpers._LOCATION}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI("api/emr/log/" + this.document_id);
+                dynamic response2 = WebHelpers.PostAPI($"api/emr/log/{DataHelpers._LOCATION}/{document_id}");
                 message[1] = response2;
             }
 

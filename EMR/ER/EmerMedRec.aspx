@@ -2,7 +2,7 @@
 
 <%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="uc1" TagName="PatientInfo" %>
 <%@ Register Src="~/UserControls/Alert.ascx" TagPrefix="uc1" TagName="Alert" %>
-<%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="Input" TagName="TextField" %>
+<%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="webUI" TagName="TextField" %>
 <%@ Register Src="~/UserControls/PromptButton.ascx" TagPrefix="Button" TagName="Prompt" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrintWindow.ascx" TagPrefix="webUI" TagName="PrintWindow" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Label.ascx" TagPrefix="webUI" TagName="Label" %>
@@ -19,6 +19,9 @@
 <%@ Register Src="~/UserControls/PrintTemplate/PrtRowS1.ascx" TagPrefix="webUI" TagName="PrtRowS1" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrtRowS2.ascx" TagPrefix="webUI" TagName="PrtRowS2" %>
 <%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="Button" TagName="PopupShowDelay" %>
+<%@ Register Src="~/icons/XSquare.ascx" TagPrefix="icon" TagName="XSquare" %>
+<%@ Register Src="~/icons/Trash.ascx" TagPrefix="icon" TagName="Trash" %>
+
 
 <!DOCTYPE html>
 
@@ -853,7 +856,7 @@
                 </div>
 
                 <div class="cssclsNoPrint" style="overflow: scroll; height: calc(100vh - 52px); overflow-x: hidden;">
-                    <asp:Panel runat="server" ID="Panel1">
+                    <asp:Panel runat="server" ID="messagePlaceHolder">
                         <div class="card" runat="server" id="amendReasonWraper">
                             <div class="card-body">
                                 <h5>Lý do thay đổi/ <span class="text-primary">amend reason: </span>
@@ -902,7 +905,7 @@
                                                 <label class="control-label mb-1">
                                                     Lý do đến khám/ <span class="text-primary">Chief complaint:</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtChiefComplaint" />
+                                                    <webUI:TextField runat="server" ID="txt_chief_complaint" />
                                                 </div>
                                             </div>
                                         </div>
@@ -955,7 +958,7 @@
                                                 <label class="control-label mb-1">
                                                     Bệnh Sử/ <span class="text-primary">History of present illness(HPI):</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtHistoryofPresent" />
+                                                    <webUI:TextField runat="server" ID="txt_history_of_present" />
                                                 </div>
                                             </div>
                                         </div>
@@ -975,7 +978,7 @@
                                                                             <span
                                                                                 class="text-danger">*</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtpastmedhismeds" />
+                                                    <webUI:TextField runat="server" ID="txt_past_med_his_meds" />
                                                 </div>
                                             </div>
                                         </div>
@@ -987,7 +990,7 @@
                                                                             <span
                                                                                 class="text-danger">*</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtpastmedhissurs" />
+                                                    <webUI:TextField runat="server" ID="txt_past_med_his_surs" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1047,7 +1050,7 @@
                                                 </label>
 
                                                 <div class="form-group habit_other_field">
-                                                    <aih:TextField runat="server" ID="txthabitsother" />
+                                                    <webUI:TextField runat="server" ID="txt_habits_other" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1061,7 +1064,7 @@
                                                                                 class="text-primary">Home
                                                                                 medications:</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txthomemedications" />
+                                                    <webUI:TextField runat="server" ID="txt_home_medications" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1073,7 +1076,7 @@
                                                                             sử dị ứng/ <span
                                                                                 class="text-primary">Allergies:</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtallergies" />
+                                                    <webUI:TextField runat="server" ID="txt_allergies" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1086,7 +1089,7 @@
                                                                                 class="text-primary">Relevant
                                                                                 family history:</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtrelevantfamilyhistory" />
+                                                    <webUI:TextField runat="server" ID="txt_relevant_family_history" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1111,7 +1114,7 @@
                                                                                 (General and Diagnostic
                                                                                 support):</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtfinding" />
+                                                    <webUI:TextField runat="server" ID="txt_finding" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1147,7 +1150,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="row par required_code_field">
-                                                    <aih:TextField runat="server" ID="txtrequiredtext" />
+                                                    <webUI:TextField runat="server" ID="txt_required_text" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1161,7 +1164,7 @@
                                                                                 Results (Labs,
                                                                                 Imaging...):</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtinvestigationsresults" />
+                                                    <webUI:TextField runat="server" ID="txt_investigations_results" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1174,7 +1177,7 @@
                                                                                 class="text-primary">Initial
                                                                                 diagnosis:</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtinitialdiagnosis" />
+                                                    <webUI:TextField runat="server" ID="txt_initial_diagnosis" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1187,7 +1190,7 @@
                                                                                 class="text-primary">Differential
                                                                                 diagnosis:</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtdiferentialdiagnosis" />
+                                                    <webUI:TextField runat="server" ID="txt_diferential_diagnosis" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1200,7 +1203,7 @@
                                                                                 class="text-primary">Associated
                                                                                 conditions:</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtassociatedconditions" />
+                                                    <webUI:TextField runat="server" ID="txt_associated_conditions" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1213,7 +1216,7 @@
                                                                                 class="text-primary">Confirmed
                                                                                 Diagnosis:</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtcomfirmeddiagnosis" />
+                                                    <webUI:TextField runat="server" ID="txt_comfirmed_diagnosis" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1258,7 +1261,7 @@
                                                                                 specialist/
                                                                                 Department:</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtnameofspecialist" />
+                                                    <webUI:TextField runat="server" ID="txt_name_of_specialist" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1274,7 +1277,7 @@
 
                                                 </div>
                                                 <div class="form-group">
-                                                    <telerik:RadDateTimePicker runat="server" Width="200px" ID="rad_time_contaced" />
+                                                    <telerik:RadDateTimePicker runat="server" Width="200px" ID="dtpk_time_contaced" />
                                                 </div>
                                             </div>
 
@@ -1287,7 +1290,7 @@
                                                                                     provided:</span></label>
                                                 </div>
                                                 <div class="form-group">
-                                                    <telerik:RadDateTimePicker runat="server" Width="200px" ID="rad_time_provided" />
+                                                    <telerik:RadDateTimePicker runat="server" Width="200px" ID="dtpk_time_provided" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1302,7 +1305,7 @@
                                                                                 opinion
                                                                                 summarised:</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtspecopinionsummarised" />
+                                                    <webUI:TextField runat="server" ID="txt_spec_opinion_summarised" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1328,7 +1331,7 @@
                                             <div class="col-md-12">
                                                 <asp:UpdatePanel ID="updatePanel_Treatment" runat="server" UpdateMode="Always">
                                                     <ContentTemplate>
-                                                        <asp:GridView ShowHeaderWhenEmpty="true" ID="grid_Treatment" runat="server" OnRowDeleting="grid_Treatment_RowDeleting" OnRowUpdating="gridTreatment_RowUpdating" OnRowDataBound="gridTreatment_RowDataBound" CssClass="tb-responsive" AutoGenerateColumns="false">
+                                                        <asp:GridView ShowHeaderWhenEmpty="true" ID="grid_Treatment" runat="server" OnRowDeleting="grid_Treatment_RowDeleting"  OnRowDataBound="gridTreatment_RowDataBound" CssClass="tb-responsive" AutoGenerateColumns="false">
                                                             <Columns>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
@@ -1337,10 +1340,7 @@
                                                                         </div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <telerik:RadDateTimePicker Width="200px " ID="time" runat="server" SelectedDate='<%# DataBinder.Eval(Container.DataItem, "time") %>'>
-                                                                            <TimeView TimeFormat="hh:mm " runat="server"></TimeView>
-                                                                            <DateInput DisplayDateFormat="dd/MM/yyyy HH:mm tt " runat="server"></DateInput>
-                                                                        </telerik:RadDateTimePicker>
+                                                                        <telerik:RadDateTimePicker Width="200px " ID="time" runat="server" SelectedDate='<%# DBNull.Value.Equals(Eval("time")) ? null : Eval("time") %>'></telerik:RadDateTimePicker>
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -1350,7 +1350,7 @@
                                                                         </div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <aih:TextField runat="server" Value='<%#Eval("medication") %>' DataKey="medication" />
+                                                                        <webUI:TextField runat="server" Value='<%#Eval("medication") %>' ID="medication" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -1359,7 +1359,7 @@
                                                                         Dose</span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <aih:TextField runat="server" Value='<%#Eval("dose") %>' DataKey="dose" />
+                                                                        <webUI:TextField runat="server" Value='<%#Eval("dose") %>' ID="dose" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -1368,7 +1368,7 @@
                                                                         Route</span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <aih:TextField runat="server" Value='<%#Eval("route") %>' DataKey="route" />
+                                                                        <webUI:TextField runat="server" Value='<%#Eval("route") %>' ID="route" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -1377,10 +1377,16 @@
                                                                         Comment</span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <aih:TextField runat="server" Value='<%#Eval("comment") %>' DataKey="comment" />
+                                                                        <webUI:TextField runat="server" Value='<%#Eval("comment") %>' ID="comment" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:CommandField ShowDeleteButton="True" ButtonType="Button" />
+                                                                <asp:TemplateField>
+                                                                    <ItemTemplate>
+                                                                        <asp:LinkButton runat="server" CommandName="Delete" CssClass="btn btn-sm btn-outline-secondary" OnClientClick="return confirm('are you sure?')">
+                                                                            <icon:Trash runat="server" ID="Trash" />
+                                                                        </asp:LinkButton>
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
                                                             </Columns>
                                                         </asp:GridView>
                                                         <asp:UpdateProgress ID="updateProgress_Treatment" runat="server" AssociatedUpdatePanelID="updatePanel_Treatment">
@@ -1408,7 +1414,7 @@
                                             <div class="col-md-12">
                                                 <asp:UpdatePanel ID="updatePanel_ProgressNote" runat="server" UpdateMode="Always">
                                                     <ContentTemplate>
-                                                        <asp:GridView ShowHeaderWhenEmpty="true" ID="grid_progress_note" runat="server" OnRowDeleting="grid_progress_note_RowDeleting" OnRowUpdating="gridTreatment_RowUpdating" OnRowDataBound="gridTreatment_RowDataBound" CssClass="tb-responsive" AutoGenerateColumns="false">
+                                                        <asp:GridView ShowHeaderWhenEmpty="true" ID="grid_progress_note" runat="server" OnRowDeleting="grid_progress_note_RowDeleting"  OnRowDataBound="gridTreatment_RowDataBound" CssClass="tb-responsive" AutoGenerateColumns="false">
                                                             <Columns>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
@@ -1417,10 +1423,7 @@
                                                                         </div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <telerik:RadDateTimePicker Width="200px " ID="time" runat="server" SelectedDate='<%# DataBinder.Eval(Container.DataItem, "time") %>'>
-                                                                            <TimeView TimeFormat="hh:mm " runat="server"></TimeView>
-                                                                            <DateInput DisplayDateFormat="dd/MM/yyyy HH:mm tt " runat="server"></DateInput>
-                                                                        </telerik:RadDateTimePicker>
+                                                                        <telerik:RadDateTimePicker Width="200px " ID="time" runat="server" SelectedDate='<%# DBNull.Value.Equals(Eval("time")) ? null : Eval("time") %>'></telerik:RadDateTimePicker>
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -1430,7 +1433,7 @@
                                                                         </div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <aih:TextField runat="server" Value='<%#Eval("progress") %>' DataKey="progress" />
+                                                                        <webUI:TextField runat="server" Value='<%#Eval("progress") %>' ID="progress" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -1440,10 +1443,16 @@
                                                                                                             </span>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <aih:TextField runat="server" Value='<%#Eval("appropriate_order") %>' DataKey="appropriate_order" />
+                                                                        <webUI:TextField runat="server" Value='<%#Eval("appropriate_order") %>' ID="appropriate_order" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
-                                                                <asp:CommandField ShowDeleteButton="True" ButtonType="Button" />
+                                                                <asp:TemplateField>
+                                                                    <ItemTemplate>
+                                                                        <asp:LinkButton runat="server" CommandName="Delete" CssClass="btn btn-sm btn-outline-secondary" OnClientClick="return confirm('are you sure?')">
+                                                                            <icon:Trash runat="server" ID="Trash" />
+                                                                        </asp:LinkButton>
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
                                                             </Columns>
                                                         </asp:GridView>
                                                         <asp:UpdateProgress ID="updateProgress_ProgressNote" runat="server" AssociatedUpdatePanelID="updatePanel_ProgressNote">
@@ -1473,7 +1482,7 @@
                                                                                 at termination of
                                                                                 treatmen:</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtconclusions" />
+                                                    <webUI:TextField runat="server" ID="txt_conclusions" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1518,7 +1527,7 @@
                                                                             thuốc/ <span
                                                                                 class="text-primary">Prescription:</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtprescription" />
+                                                    <webUI:TextField runat="server" ID="txt_prescription" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1532,7 +1541,7 @@
                                                                                 follow-up care
                                                                                 instructions:</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtspecifycareinstructions" />
+                                                    <webUI:TextField runat="server" ID="txt_specify_care_instructions" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1547,7 +1556,7 @@
                                                                                     Time:</span></label>
                                                 </div>
                                                 <div class="form-group">
-                                                    <telerik:RadDateTimePicker runat="server" Width="200px" ID="rad_discharge_time" />
+                                                    <telerik:RadDateTimePicker runat="server" Width="200px" ID="dtpk_discharge_time" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1582,7 +1591,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="form-group referred_opd_field">
-                                                    <aih:TextField runat="server" ID="txtreferredtoOPDtext" />
+                                                    <webUI:TextField runat="server" ID="txt_referred_to_OPD_text" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1628,7 +1637,7 @@
                                                                             <span
                                                                                 class="text-primary">Reason:</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtreason" />
+                                                    <webUI:TextField runat="server" ID="txt_reason" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1640,7 +1649,7 @@
                                                                             khoa/ <span
                                                                                 class="text-primary">Ward:</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtward" />
+                                                    <webUI:TextField runat="server" ID="txt_ward" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1655,7 +1664,7 @@
                                                                                     Time:</span></label>
                                                 </div>
                                                 <div class="form-group">
-                                                    <telerik:RadDateTimePicker runat="server" Width="200px" ID="rad_timeofleavingemergency" />
+                                                    <telerik:RadDateTimePicker runat="server" Width="200px" ID="dtpk_time_of_leaving_emergency" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1714,7 +1723,7 @@
                                                                                 class="text-primary">Pre-operative
                                                                                 diagnosis:</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtpreoperative_diagnosis" />
+                                                    <webUI:TextField runat="server" ID="txt_pre_operative_diagnosis" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1727,7 +1736,7 @@
                                                                                 class="text-primary">Brief
                                                                                 summary:</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtprebrief_summary" />
+                                                    <webUI:TextField runat="server" ID="txt_brief_summary" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1775,7 +1784,7 @@
                                                                                     Giải thích/ <span
                                                                                         class="text-primary">Yes,
                                                                                         Explain</span></label>
-                                                        <a href="javascript:void(0)" style="display: none;" data-clear="rad_transfer_hos" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)" data-clear="rad_transfer_hos" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare7" />
                                                         </a>
                                                     </div>
@@ -1791,7 +1800,7 @@
                                                                                 class="text-primary">Reason for
                                                                                 transfer:</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" id="txtreasonfor_transfer" />
+                                                    <webUI:TextField runat="server" id="txt_reason_for_transfer" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1804,7 +1813,7 @@
                                                                                 class="text-primary">Status
                                                                                 before transfer:</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txtstatus_before_transfer" />
+                                                    <webUI:TextField runat="server" ID="txt_status_before_transfer" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1874,19 +1883,17 @@
                                         <div class="row mb-2 ">
                                             <div class="col-md-12 ">
                                                 <div class="form-group ">
-                                                    <aih:TextField runat="server" ID="txt_patient_discharge" />
+                                                    <webUI:TextField runat="server" ID="txt_patient_discharge" />
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row mb-2">
                                             <div class="col-md-12">
                                                 <label class="control-label mb-1">
-                                                    Mã
-                                                                            ICD-10/ <span
-                                                                                class="text-primary">ICD-10
+                                                    Mã ICD-10/ <span class="text-primary">ICD-10
                                                                                 Code(S):</span></label>
                                                 <div class="form-group">
-                                                    <aih:TextField runat="server" ID="txticd_10" />
+                                                    <webUI:TextField runat="server" ID="txt_icd_10" />
                                                 </div>
                                             </div>
                                         </div>
@@ -1932,20 +1939,30 @@
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>
+    <script src="../scripts/jquery-3.2.1.min.js"></script>
+    <script src="../scripts/bootstrap.min.js"></script>
+    <script src="../scripts/myScript.js"></script>
+    <script src="../scripts/contenteditable.min.js"></script>
+    <script src="../scripts/checkValidFields.js"></script>
+    <script src="../scripts/waves.js"></script>
+    <script>
+        formGroup_init();
+        checkboxRadiobutton_init();
+        InputFilter();
 
-    <%--<script>
-        let alertBox = document.getElementById("MessagePlaceHolder");
+        function beforeAsyncPostBack() {
+            var curtime = new Date();
+            console.log(curtime);
+        }
 
-        setTimeout(function () {
-            alertBox.style.top = "0";
-        }, 2000);
-    </script>--%>
-    <script src="../../scripts/jquery-3.2.1.min.js"></script>
-    <script src="../../scripts/bootstrap.min.js"></script>
-    <script src="../../scripts/perfect-scrollbar.jquery.min.js"></script>
-    <script src="../../scripts/custom.min.js"></script>
-    <script src="../../scripts/myScript.js"></script>
-    <script src="../../scripts/contenteditable.min.js"></script>
+        function afterAsyncPostBack() {
+            formGroup_init();
+            checkboxRadiobutton_init();
+            InputFilter();
+        }
+
+    </script>
+
 </body>
 
 </html>
