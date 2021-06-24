@@ -22,7 +22,6 @@
 <%@ Register Src="~/icons/XSquare.ascx" TagPrefix="icon" TagName="XSquare" %>
 <%@ Register Src="~/icons/Trash.ascx" TagPrefix="icon" TagName="Trash" %>
 
-
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
