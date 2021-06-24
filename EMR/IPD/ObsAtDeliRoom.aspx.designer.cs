@@ -15,15 +15,6 @@ namespace EMR
     {
 
         /// <summary>
-        /// PrintWindow control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.UserControls.PrintTemplate.PrintWindow PrintWindow;
-
-        /// <summary>
         /// form2 control.
         /// </summary>
         /// <remarks>
@@ -391,15 +382,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txt_amend_reason;
-
-        /// <summary>
-        /// DisplayControl control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DisplayControl;
 
         /// <summary>
         /// RequiredFieldValidator2 control.
@@ -1894,5 +1876,14 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnDelete;
+
+        /// <summary>
+        /// PopupShowDelay control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PopupShowDelay PopupShowDelay;
     }
 }

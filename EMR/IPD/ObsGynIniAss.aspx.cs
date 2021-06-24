@@ -85,7 +85,7 @@ namespace EMR.IPD
 
                 txt_general_appearance.Value = ogia.general_appearance;
 
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_edema_true_" + ogia.edema);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_edema_true_", ogia.edema);
 
                 txt_edema_note.Value = ogia.edema_note;
                 txt_cardio_system.Value = ogia.cardio_system;
@@ -100,7 +100,7 @@ namespace EMR.IPD
                 txt_other_findings.Value = ogia.other_findings;
 
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_psy_consul_required_" + ogia.psy_consul_required);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_obs_pre_cicatrice_" + ogia.obs_pre_cicatrice);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_obs_pre_cicatrice_", ogia.obs_pre_cicatrice);
 
                 txt_obs_uterine_shape.Value = ogia.obs_uterine_shape;
                 txt_obs_posture.Value = ogia.obs_posture;
@@ -118,7 +118,7 @@ namespace EMR.IPD
 
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_obs_mem_condition_code_" + ogia.obs_mem_condition_code);
 
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_obs_feat_amniotic_" + ogia.obs_feat_amniotic);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_obs_feat_amniotic_", ogia.obs_feat_amniotic);
 
                 txt_obs_color_amniotic.Value = ogia.obs_color_amniotic;
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_obs_presentation_code_" + ogia.obs_presentation_code);
@@ -258,12 +258,12 @@ namespace EMR.IPD
                 lbl_treatment_plan.Text = WebHelpers.GetValue(ogia.treatment_plan);
                 lbl_discharge_plan.Text = WebHelpers.GetValue(ogia.discharge_plan);
 
-        } catch (Exception ex)
+            } catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
 
-}
+        }
         private void BindingDataFormPrint(Ogia ogia)
         {
             Patient patient = Patient.Instance();
@@ -562,11 +562,9 @@ namespace EMR.IPD
                     break;
             }
         }
-        private void is_obs_gyn_change(dynamic _is_obs_gyn)
+        private void is_obs_gyn_change(dynamic is_obs_gyn)
         {
-            bool.TryParse(_is_obs_gyn, out bool is_obs_gyn);
-
-            if (is_obs_gyn)
+            if (bool.Parse(is_obs_gyn.ToString()))
             {
                 WebHelpers.VisibleControl(false, gynecology_field, gynecology_field1, gynecology_field2);
                 WebHelpers.VisibleControl(true, obstetrics_field, obstetrics_field1, obstetrics_field2);

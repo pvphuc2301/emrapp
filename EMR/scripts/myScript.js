@@ -1,3 +1,4 @@
+let intervalID; let timeoutID;
 
 function formGroup_init() {
     document.querySelectorAll('.form-group').forEach(e => {
@@ -218,6 +219,25 @@ function stayLoggedIn() {
 
 function logout() {
     setTimeout("__doPostBack('stayLoggedIn', '')", 0);
+}
+
+function popupShowDelay(sessionTimeout) {
+
+    clearInterval(intervalID);
+    clearTimeout(timeoutID);
+
+    timeoutID = setTimeout(() => {
+        console.log('show delay');
+        $('#PopupShowDelay').modal({ backdrop: 'static', keyboard: false });
+
+        let _countDownTimer = 14;
+        let _timeLeft = document.getElementById('timeleft');
+
+        intervalID = setInterval(() => {
+            _timeLeft.innerText = (_countDownTimer--);
+            if (_countDownTimer < 0) { clearInterval(intervalID); logout(); }
+        }, 1000);
+    }, sessionTimeout * 60000 - 15000);
 }
 
 //Auto Call

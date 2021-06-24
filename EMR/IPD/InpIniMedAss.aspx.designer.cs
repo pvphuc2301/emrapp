@@ -615,7 +615,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlButton btnUpdateVitalSign;
+        protected global::System.Web.UI.WebControls.LinkButton btnUpdateVitalSign;
 
         /// <summary>
         /// vs_temperature control.
@@ -1057,5 +1057,14 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnDelete;
+
+        /// <summary>
+        /// PopupShowDelay control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PopupShowDelay PopupShowDelay;
     }
 }

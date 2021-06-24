@@ -7,6 +7,7 @@ using System.Web;
 
 namespace EMR
 {
+
     public static class DataHelpers
     {
         public static dynamic CalculateAge(DateTime dateOfBirth)

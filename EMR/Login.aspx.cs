@@ -76,9 +76,19 @@ namespace Emr_client.Emr
                     Session["company_code"] = Convert.ToString(data.company_code);
                     Session["specialty_code"] = Convert.ToString(data.specialty_code);
                     Session["location"] = Convert.ToString(data.company_code);
-                    Session.Timeout = 3;
+                    
                     //  Session["upw"] = varUserPW;
                     //edit by mr. Phut
+
+                    dynamic response1 = WebHelpers.GetAPI("api/settings/get/EMR_DOCUMENT_SESSION");
+
+                    if(response1.Status == System.Net.HttpStatusCode.OK)
+                    {
+                        EMRClass.Settings["EMR_DOCUMENT_SESSION"] = JObject.Parse(response1.Data);
+
+                        Session.Timeout = EMRClass.Settings["EMR_DOCUMENT_SESSION"].paramater_value;
+                    }
+
                     DataHelpers._LOCATION = $"{Convert.ToString(data.company_code)}";
                 }
             }

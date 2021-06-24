@@ -34,9 +34,13 @@ namespace EMR
 
             if (!IsPostBack)
             {
-                LoadPatientInfo(true);
+                LoadPatientInfo();
             }
+            PostBackEvent();
+        }
 
+        private void PostBackEvent()
+        {
             if (Request["__EVENTTARGET"] == "goToPage")
             {
                 dynamic args = JsonConvert.DeserializeObject<dynamic>(Request["__EVENTARGUMENT"]);
@@ -48,28 +52,16 @@ namespace EMR
             }
         }
 
-        public void LoadPatientInfo(bool vi_laganue)
+        public void LoadPatientInfo()
         {
-            if (vi_laganue) //Language = Vietnamese ( Default)
-            {
-                lblGender.InnerText = DataHelpers.patient.gender_l;
-                lblAge.InnerText = DataHelpers.patient.date_of_birth.ToString();
-                lblAddress.InnerText = DataHelpers.patient.address_line_l + " " + DataHelpers.patient.address_subregion_l + " " + DataHelpers.patient.address_region_l + " " + DataHelpers.patient.address_country_l;
-                lblPhone.InnerText = DataHelpers.patient.contact_phone_number;
-                lblName.InnerText = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
-                lblRelationship.InnerText = DataHelpers.patient.relationship_type_rcd;
-                
-            }
-            else
-            {
-                lblGender.InnerText = DataHelpers.patient.gender_e;
-                lblAge.InnerText = DataHelpers.patient.date_of_birth;
-                lblAddress.InnerText = DataHelpers.patient.address_line_e + " " + DataHelpers.patient.address_subregion_e + " " + DataHelpers.patient.address_region_e + " " + DataHelpers.patient.address_country_e;
-                lblPhone.InnerText = DataHelpers.patient.contact_phone_number;
-                lblName.InnerText = DataHelpers.patient.first_name_e + " " + DataHelpers.patient.last_name_e;
-                lblRelationship.InnerText = DataHelpers.patient.relationship_type_rcd;
+            Patient patient = Patient.Instance();
 
-            }
+            lblGender.InnerText = patient.GetGender();
+            lblAge.InnerText = WebHelpers.FormatDateTime(patient.date_of_birth);
+            lblAddress.InnerText = patient.GetAddress();
+            lblPhone.InnerText = patient.contact_phone_number;
+            lblName.InnerText = patient.GetFullName();
+            lblRelationship.InnerText = patient.relationship_type_rcd;
         }
 
         protected void RadGrid1_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)

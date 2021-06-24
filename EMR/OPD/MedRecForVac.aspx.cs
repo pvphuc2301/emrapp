@@ -12,10 +12,9 @@ namespace EMR.OPD
 {
     public partial class MedRecForVac : System.Web.UI.Page
     {
-        Mrfv mrfv; string UserID = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-            CheckUserID();
+            WebHelpers.CheckSession(this);
 
             if (!IsPostBack)
             {
@@ -29,30 +28,52 @@ namespace EMR.OPD
             if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
             if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
 
-            mrfv = new Mrfv(Request.QueryString["docId"]);
-            
-            amendReasonWraper.Visible = false;
-            btnCancel.Visible = false;
 
-            vs_temperature.Text = mrfv.vs_temperature;
-            vs_heart_rate.Text = mrfv.vs_heart_rate;
-            vs_weight.Text = mrfv.vs_weight;
-            vs_height.Text = mrfv.vs_height;
-            vs_respiratory_rate.Text = mrfv.vs_respiratory_rate;
-            vs_BMI.Text = mrfv.vs_BMI;
-            vs_blood_pressure.Text = mrfv.vs_blood_pressure;
-            vs_spO2.Text = mrfv.vs_spO2;
-            prt_barcode.Text = Patient.Instance().visible_patient_id;
-            if (mrfv.status == DocumentStatus.FINAL)
+            try
             {
-                loadFormView(mrfv);
+                Mrfv mrfv = new Mrfv(Request.QueryString["docId"]);
+
+                vs_temperature.Text = mrfv.vs_temperature;
+                vs_heart_rate.Text = mrfv.vs_heart_rate;
+                vs_weight.Text = mrfv.vs_weight;
+                vs_height.Text = mrfv.vs_height;
+                vs_respiratory_rate.Text = mrfv.vs_respiratory_rate;
+                vs_BMI.Text = mrfv.vs_BMI;
+                vs_blood_pressure.Text = mrfv.vs_blood_pressure;
+                vs_spO2.Text = mrfv.vs_spO2;
+
+                WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
+                prt_barcode.Text = Patient.Instance().visible_patient_id;
+                if (mrfv.status == DocumentStatus.FINAL)
+                {
+                    BindingDataForm(mrfv, WebHelpers.LoadFormControl(form1, mrfv, ControlState.View, (string)Session["location"]));
+
+                }
+                else if (mrfv.status == DocumentStatus.DRAFT)
+                {
+                    BindingDataForm(mrfv, WebHelpers.LoadFormControl(form1, mrfv, ControlState.Edit, (string)Session["location"]));
+                }
+
+                WebHelpers.getAccessButtons(form1, mrfv.status, (string)Session["access_authorize"], (string)Session["location"]);
             }
-            else if (mrfv.status == DocumentStatus.DRAFT)
+            catch (Exception ex)
             {
-                LoadFormEdit(mrfv);
+                WebHelpers.SendError(Page, ex);
             }
         }
-        private void LoadFormEdit(Mrfv mrfv)
+
+        private void BindingDataForm(Mrfv mrfv, bool state)
+        {
+            if (state)
+            {
+                BindingDataFormEdit(mrfv);
+            }
+            else
+            {
+                BindingDataFormView(mrfv);
+            }
+        }
+        private void BindingDataFormEdit(Mrfv mrfv)
         {
             txt_chief_complaint.Value = mrfv.chief_complaint;
             txt_cur_med_history.Value = mrfv.cur_med_history;
@@ -89,15 +110,8 @@ namespace EMR.OPD
 
             txt_pecific_edu_req.Value = mrfv.pecific_edu_req;
             txt_next_appointment.Value = mrfv.next_appointment;
-            //
-            //
-            //
-            LoadFormControl(false);
-
-            btnAmend.Visible = false;
-            btnPrint.Visible = false;
         }
-         private void loadFormView(Mrfv mrfv)
+         private void BindingDataFormView(Mrfv mrfv)
         {
             lbl_chief_complaint.Text = WebHelpers.GetValue(mrfv.chief_complaint);
             lbl_cur_med_history.Text = WebHelpers.GetValue(mrfv.cur_med_history);
@@ -141,121 +155,12 @@ namespace EMR.OPD
 
             lbl_pecific_edu_req.Text = WebHelpers.GetValue(mrfv.pecific_edu_req);
             lbl_next_appointment.Text = WebHelpers.GetValue(mrfv.next_appointment);
-
-            LoadFormControl(true);
-
-            btnComplete.Visible = false;
-            btnSave.Visible = false;
-            btnDeleteModal.Visible = false;
-
-            btnAmend.Visible = true;
-            btnPrint.Visible = true;
         }
-
-        protected void grid_appointed_vaccine_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-            DeleteGridViewRow((GridView)sender, e.RowIndex);
-        }
-
-        protected void btn_grid_appointed_vaccine_add_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                DataTable table = (DataTable)ViewState[grid_appointed_vaccine.ID];
-
-                //new object
-                if (table == null)
-                {
-                    table = new DataTable();
-                }
-                //create header
-                for (int i = 0; i < Mrfv.APPOINTED_VACCINE.Count; i++)
-                {
-                    var col = Mrfv.APPOINTED_VACCINE.ElementAt(i);
-                    if (!table.Columns.Contains(col.Key))
-                    {
-                        table.Columns.Add(col.Key);
-                    }
-                }
-                //
-                for (int r = 0; r < grid_appointed_vaccine.Rows.Count; r++)
-                {
-                    for (int i = 0; i < grid_appointed_vaccine.Rows[r].Cells.Count; i++)
-                    {
-                        try
-                        {
-                            if (grid_appointed_vaccine.Rows[r].Cells[i].Controls[1] is TextField)
-                            {
-                                TextField text2 = grid_appointed_vaccine.Rows[r].Cells[i].Controls[1] as TextField;
-
-                                table.Rows[r][text2.DataKey] = text2.Value;
-                            }
-                        }
-                        catch (Exception ex) { }
-                    }
-                }
-
-                DataRow dtRow = table.NewRow();
-
-                dtRow = table.NewRow();
-                table.Rows.Add(dtRow);
-
-                _BindGridView(grid_appointed_vaccine, table);
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
-
-        protected void btnComplete_Click(object sender, EventArgs e)
-        {
-            if (Page.IsValid)
-            {
-                mrfv = new Mrfv(DataHelpers.varDocId);
-                mrfv.status = DocumentStatus.FINAL;
-                mrfv.user_name = (string)Session["UserID"];
-
-                UpdateData(mrfv);
-            }
-        }
-
-        protected void btnSave_Click(object sender, EventArgs e)
-        {
-            if (Page.IsValid)
-            {
-                mrfv = new Mrfv(DataHelpers.varDocId);
-                mrfv.status = DocumentStatus.DRAFT;
-                mrfv.user_name = (string)Session["UserID"];
-
-                UpdateData(mrfv);
-            }
-        }
-
-        protected void btnAmend_Click(object sender, EventArgs e)
-        {
-            mrfv = new Mrfv(Request.QueryString["docId"]);
-
-            amendReasonWraper.Visible = true;
-            btnComplete.Visible = true;
-            btnCancel.Visible = true;
-            btnAmend.Visible = false;
-            btnPrint.Visible = false;
-
-            LoadFormEdit(mrfv);
-        }
-        protected void btnPrint_Click(object sender, EventArgs e)
-        {
-            mrfv = new Mrfv(Request.QueryString["docId"]);
-            LoadFormPrint(mrfv);
-
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "window.print();", true);
-        }
-        private void LoadFormPrint(Mrfv mrfv)
+        private void BindingDataFormPrint(Mrfv mrfv)
         {
             Patient patient = Patient.Instance();
             PatientVisit patientVisit = PatientVisit.Instance();
-            
+
             prt_barcode.Text = prt_vpid.Text = patient.visible_patient_id;
             prt_fullname.Text = patient.GetFullName();
             prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth);
@@ -293,24 +198,25 @@ namespace EMR.OPD
             prt_scr_before_vacc_7.Text += mrfv.scr_before_vacc_7;
             prt_scr_before_vacc_8.Text += mrfv.scr_before_vacc_8;
 
-
-
             DataTable tb = WebHelpers.GetJSONToDataTable(mrfv.appointed_vaccine);
-            foreach (DataRow row in tb.Rows)
+            if(tb != null)
             {
-                HtmlTableRow tr = new HtmlTableRow();
-                HtmlTableCell td;
-                for (int i = 0; i < prt_appointed_vaccine.Rows[0].Cells.Count; i++)
+                foreach (DataRow row in tb.Rows)
                 {
-                    var temp = prt_appointed_vaccine.Rows[0].Cells[i];
-                    string colName = temp.Attributes["data-field"];
-                    td = new HtmlTableCell();
-                    td.InnerText = row[colName].ToString();
-                    if (temp.Attributes["data-align"] != null) td.Attributes.Add("class", "text-" + temp.Attributes["data-align"]);
-                    tr.Cells.Add(td);
-                }
-                prt_appointed_vaccine.Rows.Add(tr);
+                    HtmlTableRow tr = new HtmlTableRow();
+                    HtmlTableCell td;
+                    for (int i = 0; i < prt_appointed_vaccine.Rows[0].Cells.Count; i++)
+                    {
+                        var temp = prt_appointed_vaccine.Rows[0].Cells[i];
+                        string colName = temp.Attributes["data-field"];
+                        td = new HtmlTableCell();
+                        td.InnerText = row[colName].ToString();
+                        if (temp.Attributes["data-align"] != null) td.Attributes.Add("class", "text-" + temp.Attributes["data-align"]);
+                        tr.Cells.Add(td);
+                    }
+                    prt_appointed_vaccine.Rows.Add(tr);
 
+                }
             }
 
 
@@ -338,6 +244,75 @@ namespace EMR.OPD
             //
             prt_specific_edu_req.Text = mrfv.pecific_edu_req;
             prt_next_appointment.Text = mrfv.next_appointment;
+
+        }
+
+        protected void grid_appointed_vaccine_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            ViewState[((GridView)sender).ID] = WebHelpers.DeleteRow((DataTable)ViewState[((GridView)sender).ID], (GridView)sender, e.RowIndex);
+        }
+
+        protected void btn_grid_appointed_vaccine_add_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ViewState[grid_appointed_vaccine.ID] = WebHelpers.AddRow((DataTable)ViewState[grid_appointed_vaccine.ID], grid_appointed_vaccine, Iina.SKIN_ANNO);
+            }
+            catch (Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
+        }
+
+        protected void btnComplete_Click(object sender, EventArgs e)
+        {
+            if (Page.IsValid)
+            {
+               Mrfv  mrfv = new Mrfv(DataHelpers.varDocId);
+                mrfv.status = DocumentStatus.FINAL;
+                mrfv.user_name = (string)Session["UserID"];
+
+                UpdateData(mrfv);
+            }
+        }
+
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+            if (Page.IsValid)
+            {
+                Mrfv mrfv = new Mrfv(DataHelpers.varDocId);
+                mrfv.status = DocumentStatus.DRAFT;
+                mrfv.user_name = (string)Session["UserID"];
+
+                UpdateData(mrfv);
+            }
+        }
+
+        protected void btnAmend_Click(object sender, EventArgs e)
+        {
+            Mrfv mrfv = new Mrfv(Request.QueryString["docId"]);
+            string emp_id = (string)Session["emp_id"];
+
+            if (WebHelpers.CanOpenForm(Page, mrfv.document_id, mrfv.status, emp_id, (string)Session["location"]))
+            {
+
+                txt_amend_reason.Text = "";
+                WebHelpers.VisibleControl(false, btnAmend, btnPrint);
+                WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
+
+                //load form control
+                WebHelpers.LoadFormControl(form1, mrfv, ControlState.Edit, (string)Session["location"]);
+                //binding data
+                BindingDataFormEdit(mrfv);
+                //get access button
+            }
+        }
+        protected void btnPrint_Click(object sender, EventArgs e)
+        {
+            Mrfv mrfv = new Mrfv(Request.QueryString["docId"]);
+            BindingDataFormPrint(mrfv);
+
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
@@ -346,22 +321,25 @@ namespace EMR.OPD
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            dynamic result = Mrfv.Delete((string)Session["UserId"], Request.QueryString["docId"]);
-
-            if (result[0].Status == System.Net.HttpStatusCode.OK)
+            try
             {
-                string pid = Request["pid"];
-                string vpid = Request["vpid"];
+                dynamic result = Mrfv.Delete((string)Session["UserId"], Request.QueryString["docId"]);
 
-                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                if (result[0].Status == System.Net.HttpStatusCode.OK)
+                {
+                    string pid = Request["pid"];
+                    string vpid = Request["vpid"];
+
+                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                }
             }
-            else
+            catch(Exception ex)
             {
-                Session["PageNotFound"] = result[0];
-                Response.Redirect("../Other/PageNotFound.aspx", false);
+                WebHelpers.SendError(Page, ex);
             }
         }
 
+        #region METHODS
         public void UpdateData(Mrfv mrfv)
         {
             try
@@ -425,41 +403,10 @@ namespace EMR.OPD
 
                     Initial();
                 }
-                else
-                {
-                    Session["PageNotFound"] = result[0];
-                    Response.Redirect("../Other/PageNotFound.aspx", false);
-                }
             }
-            catch (Exception ex) { }
-        }
-
-        #region METHODS
-        protected void LoadFormControl(bool disabled)
-        {
-            foreach (var prop in mrfv.GetType().GetProperties())
-            {
-                var control1 = FindControl(prop.Name + "_wrapper");
-                var control2 = FindControl("lbl_" + prop.Name);
-
-                if (control1 != null)
-                {
-                    control1.Visible = !disabled;
-                }
-                if (control2 != null)
-                {
-                    control2.Visible = disabled;
-                }
+            catch (Exception ex) {
+                WebHelpers.SendError(Page, ex);
             }
-        }
-        private void CheckUserID()
-        {
-            UserID = (string)Session["UserID"];
-            string redirecturl = "../login.aspx?ReturnUrl=";
-            redirecturl += Request.ServerVariables["script_name"] + "?";
-            redirecturl += Server.UrlEncode(Request.QueryString.ToString());
-            if (string.IsNullOrEmpty(UserID))
-                Response.Redirect(redirecturl);
         }
         private dynamic GetRadioButton(string radio_name)
         {

@@ -20,6 +20,8 @@
 <%@ Register Src="~/UserControls/TextField1.ascx" TagPrefix="webUI" TagName="TextField1" %>
 <%@ Register Src="~/icons/XSquare.ascx" TagPrefix="icon" TagName="XSquare" %>
 <%@ Register Src="~/icons/Trash.ascx" TagPrefix="icon" TagName="Trash" %>
+<%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="Button" TagName="PopupShowDelay" %>
+
 
 
 <!DOCTYPE html>
@@ -32,7 +34,7 @@
 
 </head>
 <body>
-    <webUI:PrintWindow runat="server" ID="PrintWindow">
+    <%--<webUI:PrintWindow runat="server" ID="PrintWindow">
         <PrintHeader>
             <img  src="../images/AIH_PI_FULL.png" />
             <div style="flex-grow: 1; text-align: center;">
@@ -176,7 +178,7 @@
             </div>
 
         </PrintContent>
-    </webUI:PrintWindow>
+    </webUI:PrintWindow>--%>
 
     <form method="post" action="#" id="form2" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
@@ -192,7 +194,7 @@
                                         <img src="../images/AIH_PI_FULL.png" />
                                         <div class="header-info-title">
                                             <h4>BỆNH ÁN NGOẠI TRÚ</h4>
-                                            <h5>OUTPATIENT MEDICAL RECORD</h5>
+                                            <h5>OBSTETRIC OBSERVATION AT DELIVERY ROOM</h5>
                                         </div>
                                         <div style="width: 175px;">
                                             <asp:Label CssClass="d-block" runat="server" ID="prt_fullname"></asp:Label>
@@ -403,8 +405,8 @@
                                         <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
                                     <div class="form-group mb-2">
 
-                                        <asp:TextBox runat="server" ID="txt_amend_reason" CssClass="el-hide" />
-                                        <div spellcheck="false" style="height: auto; text-align: left; display: inline-block;" class="form-control" id="DisplayControl" onblur="changeValue1(this, 'txt_amend_reason')" contenteditable='true' runat="server"></div>
+                                        <asp:TextBox runat="server" TextMode="MultiLine" ID="txt_amend_reason" CssClass="form-control" />
+
                                         <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
                                             ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                     </div>
@@ -1096,7 +1098,7 @@
 
                                                         <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                        <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                        <asp:LinkButton runat="server" OnClick="btnPrint_Click" OnClientClick="alert('Inprocess...');return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                         <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                                     </div>
@@ -1116,6 +1118,9 @@
                                                     </div>
                                                 </ModalBody>
                                             </webUI:PopupModal>
+
+                                            <Button:PopupShowDelay runat="server" ID="PopupShowDelay" />
+
                                         </div>
                                     </div>
                                 </div>

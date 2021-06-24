@@ -84,7 +84,7 @@
                         </div>
 
                         <div class="col-lg-6">
-                            <div class="card">
+                            <%--<div class="card">
                                 <div class="card-header">
                                     <h4>Indicator</h4>
                                 </div>
@@ -95,7 +95,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div>--%>
                             <div class="card">
                                 <%--<div class="card-body">--%>
                                 <div class="row col-12">

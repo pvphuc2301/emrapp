@@ -6,9 +6,12 @@ using System.Web;
 
 namespace EMR
 {
-
     public class EMRClass
     {
+        public static Dictionary<string, dynamic> Settings = new Dictionary<string, dynamic>()
+        {
+            { "EMR_DOCUMENT_SESSION", null }
+        };
     }
     public class Option
     {
@@ -890,7 +893,7 @@ namespace EMR
 
         public Oadr(string document_id)
         {
-            dynamic response = WebHelpers.GetAPITEST(api + "/get/" + DataHelpers._LOCATION + "/" + document_id);
+            dynamic response = WebHelpers.GetAPI(api + "/get/" + DataHelpers._LOCATION + "/" + document_id);
 
             if(response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -4228,7 +4231,7 @@ namespace EMR
 
         public Ogia(dynamic document_id)
         {
-            dynamic response = WebHelpers.GetAPITEST($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -4443,12 +4446,12 @@ namespace EMR
         {
             dynamic[] message = new dynamic[2];
             
-            dynamic response = WebHelpers.PostAPITEST($"{api}/edit/{DataHelpers._LOCATION}", this);
+            dynamic response = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
             message[0] = response;
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response1 = WebHelpers.PostAPITEST($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
                 message[1] = response1;
             }
             return message;

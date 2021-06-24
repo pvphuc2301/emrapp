@@ -15,13 +15,13 @@ namespace EMR
     {
 
         /// <summary>
-        /// form2 control.
+        /// form1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form2;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
         /// RadScriptManager2 control.
@@ -249,13 +249,13 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl amendReasonWraper;
 
         /// <summary>
-        /// txt_amendReason control.
+        /// txt_amend_reason control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txt_amendReason;
+        protected global::System.Web.UI.WebControls.TextBox txt_amend_reason;
 
         /// <summary>
         /// RequiredFieldValidator2 control.
@@ -1057,5 +1057,14 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnDelete;
+
+        /// <summary>
+        /// PopupShowDelay control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PopupShowDelay PopupShowDelay;
     }
 }

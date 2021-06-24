@@ -12,7 +12,7 @@ namespace EMR
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            WebHelpers.CheckSession(this);
+            
 
             if (!IsPostBack)
             {
@@ -145,15 +145,20 @@ namespace EMR
         protected void btnAmend_Click(object sender, EventArgs e)
         {
             MC mc = new MC(Request.QueryString["docId"]);
-            txt_amend_reason.Text = "";
-            WebHelpers.VisibleControl(false, btnAmend, btnPrint);
-            WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
+            string emp_id = (string)Session["emp_id"];
 
-            //load form control
-            WebHelpers.LoadFormControl(form1, mc, ControlState.Edit, (string)Session["location"]);
-            //binding data
-            BindingDataFormEdit(mc);
-            //get access button
+            if(WebHelpers.CanOpenForm(Page, mc.document_id, mc.status, emp_id, (string)Session["location"])) {
+
+                txt_amend_reason.Text = "";
+                WebHelpers.VisibleControl(false, btnAmend, btnPrint);
+                WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
+
+                //load form control
+                WebHelpers.LoadFormControl(form1, mc, ControlState.Edit, (string)Session["location"]);
+                //binding data
+                BindingDataFormEdit(mc);
+                //get access button
+            }
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
@@ -180,7 +185,7 @@ namespace EMR
                 MC mc = new MC(Request.QueryString["docId"]);
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-                
+                prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (mc.status == DocumentStatus.FINAL)
                 {
                     BindingDataForm(mc, WebHelpers.LoadFormControl(form1, mc, ControlState.View, (string)Session["location"]));
@@ -189,7 +194,6 @@ namespace EMR
                 else if (mc.status == DocumentStatus.DRAFT)
                 {
                     BindingDataForm(mc, WebHelpers.LoadFormControl(form1, mc, ControlState.Edit, (string)Session["location"]));
-
                 }
 
                 WebHelpers.getAccessButtons(form1, mc.status, (string)Session["access_authorize"], (string)Session["location"]);
@@ -224,15 +228,10 @@ namespace EMR
 
                     Initial();
                 }
-                else
-                {
-                    Session["PageNotFound"] = result[0];
-                    Response.Redirect("../Other/PageNotFound.aspx", false);
-                }
             }
             catch(Exception ex)
             {
-
+                WebHelpers.SendError(Page, ex);
             }
         }
         #endregion

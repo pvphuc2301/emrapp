@@ -174,7 +174,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblUserName;
+        protected global::System.Web.UI.WebControls.Label lblUserName;
 
         /// <summary>
         /// CaretDown control.
@@ -240,6 +240,15 @@ namespace EMR
         protected global::Telerik.Web.UI.RadPane TopPane;
 
         /// <summary>
+        /// btnPatientSummary control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnPatientSummary;
+
+        /// <summary>
         /// updatePanel_main control.
         /// </summary>
         /// <remarks>
@@ -267,6 +276,15 @@ namespace EMR
         protected global::Telerik.Web.UI.RadGrid RadGrid2;
 
         /// <summary>
+        /// LinkButton2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton LinkButton2;
+
+        /// <summary>
         /// RadGrid3 control.
         /// </summary>
         /// <remarks>
@@ -274,15 +292,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid RadGrid3;
-
-        /// <summary>
-        /// updateProgress_main control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdateProgress updateProgress_main;
 
         /// <summary>
         /// RadSplitBar1 control.

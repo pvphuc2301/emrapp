@@ -18,6 +18,8 @@
 <%@ Register Src="~/UserControls/Message.ascx" TagPrefix="aih" TagName="Message" %>
 <%@ Register Src="~/icons/X.ascx" TagPrefix="aih" TagName="X" %>
 <%@ Register Src="~/UserControls/TextField1.ascx" TagPrefix="aih" TagName="TextField1" %>
+<%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="aih" TagName="PopupShowDelay" %>
+
 
 <!DOCTYPE html>
 
@@ -28,7 +30,7 @@
     <link href="../styles/myStyle.css" rel="stylesheet" />
 </head>
 <body>
-    <form method="post" action="#" id="form2" runat="server">
+    <form method="post" action="#" id="form1" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
@@ -195,7 +197,7 @@
                                     <div class="card-body collapse show" id="collapseOne">
                                         <div class="form-body">
                                             <div class="row mb-2">
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 gt-2-a">
                                                     <label class="control-label" style="width: 120px">Từ ngày/ <span class="text-primary">From</span><span class="text-danger">*</span></label>
                                                     <asp:Label runat="server" ID="lbl_form_date"></asp:Label>
                                                     <div class="d-inline-block" runat="server" id="form_date_wrapper">
@@ -207,7 +209,7 @@
                                             </div>
 
                                             <div class="row mb-2">
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 gt-2-a">
                                                     <label class="control-label" style="width: 120px">Đến ngày/ <span class="text-primary">To:</span><span class="text-danger">*</span><span class="text-danger"></span></label>
                                                     <asp:Label runat="server" ID="lbl_to_date"></asp:Label>
                                                     <div class="d-inline-block" runat="server" id="to_date_wrapper">
@@ -220,7 +222,11 @@
 
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
-                                                    <label class="control-label mb-2">Lý do nhập viện/ <span class="text-primary">Chief complaint:</span></label>
+
+                                                    <label class="control-label mb-2 h5">Lý do nhập viện/ <span class="text-primary">Chief complaint:</span></label>
+                                                </div>
+                                                <div class="col-md-12 gt-2-a">
+                                                    <label></label>
                                                     <asp:Label runat="server" ID="lbl_chief_complaint"></asp:Label>
                                                     <div class="form-group " runat="server" id="chief_complaint_wrapper">
                                                         <aih:TextField runat="server" ID="txt_chief_complaint" />
@@ -231,7 +237,10 @@
 
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
-                                                    <label class="control-label mb-2">Chẩn đoán/ <span class="text-primary">Diagnosis:</span></label>
+                                                    <label class="control-label mb-2 h5">Chẩn đoán/ <span class="text-primary">Diagnosis:</span></label>
+                                                </div>
+                                                <div class="col-md-12 gt-2-a">
+                                                    <label></label>
                                                     <asp:Label runat="server" ID="lbl_diagnosis"></asp:Label>
                                                     <div class="form-group " runat="server" id="diagnosis_wrapper">
                                                         <aih:TextField runat="server" ID="txt_diagnosis" />
@@ -241,7 +250,10 @@
 
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
-                                                    <label class="control-label mb-2">1. Diễn biến lâm sàng trong đợt điều trị/ <span class="text-primary">Clinical Evolution:</span></label>
+                                                    <label class="control-label mb-2 h5">1. Diễn biến lâm sàng trong đợt điều trị/ <span class="text-primary">Clinical Evolution:</span></label>
+                                                </div>
+                                                <div class="col-md-12 gt-2-a">
+                                                    <label></label>
                                                     <asp:Label runat="server" ID="lbl_clinical_evolution"></asp:Label>
                                                     <div class="form-group " runat="server" id="clinical_evolution_wrapper">
                                                         <aih:TextField runat="server" ID="txt_clinical_evolution" />
@@ -251,7 +263,10 @@
 
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
-                                                    <label class="control-label mb-2">2. KQ xét nghiệm cận lâm sàng/ <span class="text-primary">Results of para clinical tests:</span></label>
+                                                    <label class="control-label mb-2 h5">2. KQ xét nghiệm cận lâm sàng/ <span class="text-primary">Results of para clinical tests:</span></label>
+                                                </div>
+                                                <div class="col-md-12 gt-2-a">
+                                                    <label></label>
                                                     <asp:Label runat="server" ID="lbl_result_para_clinical"></asp:Label>
                                                     <div class="form-group " runat="server" id="result_para_clinical_wrapper">
                                                         <aih:TextField runat="server" ID="txt_result_para_clinical" />
@@ -261,7 +276,10 @@
 
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
-                                                    <label class="control-label mb-2">3. Quá trình điều trị/ <span class="text-primary">Treatment:</span></label>
+                                                    <label class="control-label mb-2 h5">3. Quá trình điều trị/ <span class="text-primary">Treatment:</span></label>
+                                                </div>
+                                                <div class="col-md-12 gt-2-a">
+                                                    <label></label>
                                                     <asp:Label runat="server" ID="lbl_treatment"></asp:Label>
                                                     <div class="form-group " runat="server" id="treatment_wrapper">
                                                         <aih:TextField runat="server" ID="txt_treatment" />
@@ -271,7 +289,10 @@
 
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
-                                                    <label class="control-label mb-2">4. Đánh giá kết quả/ <span class="text-primary">Evaluation of treatment:</span></label>
+                                                    <label class="control-label mb-2 h5">4. Đánh giá kết quả/ <span class="text-primary">Evaluation of treatment:</span></label>
+                                                </div>
+                                                <div class="col-md-12 gt-2-a">
+                                                    <label></label>
                                                     <asp:Label runat="server" ID="lbl_eval_treatment"></asp:Label>
                                                     <div class="form-group " runat="server" id="eval_treatment_wrapper">
                                                         <aih:TextField runat="server" ID="txt_eval_treatment" />
@@ -281,7 +302,10 @@
 
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
-                                                    <label class="control-label mb-2">5. Hướng dẫn điều trị tiếp và tiên lượng/ <span class="text-primary">Continuous treatment and prognosis:</span></label>
+                                                    <label class="control-label mb-2 h5">5. Hướng dẫn điều trị tiếp và tiên lượng/ <span class="text-primary">Continuous treatment and prognosis:</span></label>
+                                                </div>
+                                                <div class="col-md-12 gt-2-a">
+                                                    <label></label>
                                                     <asp:Label runat="server" ID="lbl_treatment_prognosis"></asp:Label>
                                                     <div class="form-group " runat="server" id="treatment_prognosis_wrapper">
                                                         <aih:TextField runat="server" ID="txt_treatment_prognosis" />
@@ -290,9 +314,9 @@
                                             </div>
 
                                             <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <div class="form-actions">
-                                                    <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
+                                                <div class="col-md-12">
+                                                    <div class="form-actions">
+                                                        <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
 
                                                         <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
 
@@ -303,39 +327,32 @@
                                                         <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                         <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
-                                            <ModalBody>
-                                                <div class="text-center">
-                                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                                    <h4 class="mt-4 mb-4">Delete document?</h4>
-                                                </div>
-                                                <div class="text-right">
-                                                    <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
-                                                    <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
-                                                </div>
-                                            </ModalBody>
-                                        </webUI:PopupModal>
+                                            <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
+                                                <ModalBody>
+                                                    <div class="text-center">
+                                                        <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                                        <h4 class="mt-4 mb-4">Delete document?</h4>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
+                                                        <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
+                                                    </div>
+                                                </ModalBody>
+                                            </webUI:PopupModal>
 
+                                            <aih:PopupShowDelay runat="server" ID="PopupShowDelay" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </ContentTemplate>
-            <Triggers>
-                <asp:AsyncPostBackTrigger ControlID="btnPrint" />
-                <asp:AsyncPostBackTrigger ControlID="btnSave" />
-                <asp:AsyncPostBackTrigger ControlID="btnAmend" />
-                <asp:AsyncPostBackTrigger ControlID="btnCancel" />
-                <asp:AsyncPostBackTrigger ControlID="btnComplete" />
-            </Triggers>
         </asp:UpdatePanel>
     </form>
 

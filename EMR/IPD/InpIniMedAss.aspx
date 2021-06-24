@@ -14,6 +14,8 @@
 <%@ Register Src="~/UserControls/PrintTemplate/Date.ascx" TagPrefix="webUI" TagName="Date" %>
 <%@ Register Src="~/icons/Calculator.ascx" TagPrefix="icon" TagName="Calculator" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Line.ascx" TagPrefix="webUI" TagName="Line" %>
+<%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="icon" TagName="PopupShowDelay" %>
+
 
 <!DOCTYPE html>
 
@@ -311,20 +313,20 @@
                                             
 
                                             <div class="row mb-2">
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 gt-2-a">
                                                     <label class="control-label mb-1">Gia đình/ <span class="text-primary">Family:</span></label>
                                                     <asp:Label runat="server" ID="lbl_family"></asp:Label>
-                                                                    <div class="form-group" runat="server" id="family_wrapper">
+                                                    <div class="form-group" runat="server" id="family_wrapper">
                                                         <webUI:TextField runat="server" ID="txt_family" />
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="row mb-2">
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 gt-2-a">
                                                     <label class="control-label mb-1">Tiêm chủng/ <span class="text-primary">Immunization:</span></label>
                                                    <asp:Label runat="server" ID="lbl_immunization"></asp:Label>
-                                                                    <div class="form-group" runat="server" id="immunization_wrapper">
+                                                    <div class="form-group" runat="server" id="immunization_wrapper">
                                                         <webUI:TextField runat="server" ID="txt_immunization" />
                                                     </div>
                                                 </div>
@@ -339,11 +341,10 @@
                                             <asp:UpdatePanel ID="updatepnl_vital_sign" runat="server">
                                                 <ContentTemplate>
                                                     <div class="row">
-                                                        <div class="col-md-12">
+                                                        <div class="col-md-12 gt-2-a">
                                                             <label class="control-label">Dấu hiệu sinh tồn/ <span class="text-primary">Vital signs</span></label>
-                                                            <button onserverclick="btnUpdateVitalSign_Click" class="btn btn-sm btn-secondary waves-effect " runat="server" id="btnUpdateVitalSign">
-                                                                Update
-                                                            </button>
+                                                            <div>
+                                                                <asp:LinkButton runat="server" ID="btnUpdateVitalSign" OnClick="btnUpdateVitalSign_Click" CssClass="btn btn-sm btn-secondary waves-effect">Update</asp:LinkButton>
                                                             <asp:UpdateProgress runat="server" AssociatedUpdatePanelID="updatepnl_vital_sign">
                                                                 <ProgressTemplate>
                                                                     <div class="loader1 ml-2">
@@ -351,74 +352,80 @@
                                                                     </div>
                                                                 </ProgressTemplate>
                                                             </asp:UpdateProgress>
+                                                            </div>
                                                         </div>
+
+                                                        <div class="col-md-12 gt-2-a">
+                                                            <label></label>
+                                                            <div>
+                                                                <div>
+                                                                    <label class="control-label mb-1 mr-2">Nhiệt độ/ <span class="text-primary">Temperature:</span></label>
+                                                                    <asp:Label runat="server" ID="vs_temperature" />
+                                                                </div>
+
+                                                                <div >
+                                                                    <label class="control-label mb-1 mr-2">Mạch/ <span class="text-primary">Heart Rate:</span></label>
+                                                                    <asp:Label runat="server" ID="vs_heart_rate" />/phút (m)
+                                                                </div>
+
+                                                                <div >
+                                                                    <label class="control-label mb-1 mr-2">Cân Nặng/ <span class="text-primary">Weight:</span></label>
+                                                                    <asp:Label runat="server" ID="vs_weight" />Kg
+                                                                </div>
+
+                                                                <div >
+                                                                    <label class="control-label mb-1 mr-2">Nhịp thở/ <span class="text-primary">Respiratory rate:</span></label>
+                                                                    <asp:Label runat="server" ID="vs_respiratory_rate" />/phút (m)
+                                                                </div>
+
+                                                                <div >
+                                                                    <label class="control-label mb-1 mr-2">Chiều cao/ <span class="text-primary">Height:</span></label>
+                                                                    <asp:Label runat="server" ID="vs_height" />cm
+                                                                </div>
+
+                                                                <div >
+                                                                    <label class="control-label mb-1 mr-2">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
+                                                                    <asp:Label runat="server" ID="vs_blood_pressure" />mmHg
+                                                                </div>
+
+                                                                <div >
+                                                                    <label for="bmi" class="control-label mb-1 mr-2">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
+                                                                    <asp:Label runat="server" ID="vs_bmi" />(Kg/m <sup>2</sup>)
+                                                    <div>
+                                                        (Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not applicable for children and pregnant</span>)
                                                     </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12">
-                                                            <label class="control-label mb-1 mr-2">Nhiệt độ/ <span class="text-primary">Temperature:</span></label>
-                                                            <asp:Label runat="server" ID="vs_temperature" />
-                                                        </div>
+                                                                </div>
 
-                                                        <div class="col-md-12">
-                                                            <label class="control-label mb-1 mr-2">Mạch/ <span class="text-primary">Heart Rate:</span></label>
-                                                            <asp:Label runat="server" ID="vs_heart_rate" />/phút (m)
-                                                        </div>
+                                                                <div >
+                                                                    <label for="spO2" class="control-label mb-1 mr-2">Độ bão hòa Oxy/ <span class="text-primary">SpO2:</span></label>
+                                                                    <asp:Label runat="server" ID="vs_spo2" />%
+                                                                </div>
 
-                                                        <div class="col-md-12">
-                                                            <label class="control-label mb-1 mr-2">Cân Nặng/ <span class="text-primary">Weight:</span></label>
-                                                            <asp:Label runat="server" ID="vs_weight" />Kg
-                                                        </div>
-
-                                                        <div class="col-md-12">
-                                                            <label class="control-label mb-1 mr-2">Nhịp thở/ <span class="text-primary">Respiratory rate:</span></label>
-                                                            <asp:Label runat="server" ID="vs_respiratory_rate" />/phút (m)
-                                                        </div>
-
-                                                        <div class="col-md-12">
-                                                            <label class="control-label mb-1 mr-2">Chiều cao/ <span class="text-primary">Height:</span></label>
-                                                            <asp:Label runat="server" ID="vs_height" />cm
-                                                        </div>
-
-                                                        <div class="col-md-12">
-                                                            <label class="control-label mb-1 mr-2">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
-                                                            <asp:Label runat="server" ID="vs_blood_pressure" />mmHg
-                                                        </div>
-
-                                                        <div class="col-md-12">
-                                                            <label for="bmi" class="control-label mb-1 mr-2">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
-                                                            <asp:Label runat="server" ID="vs_bmi" />(Kg/m <sup>2</sup>)
-                                            <div>
-                                                (Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not applicable for children and pregnant</span>)
-                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-12">
-                                                            <label for="spO2" class="control-label mb-1 mr-2">Độ bão hòa Oxy/ <span class="text-primary">SpO2:</span></label>
-                                                            <asp:Label runat="server" ID="vs_spo2" />%
-                                                        </div>
-
-                                                        <div class="col-md-12">
-                                                            <label for="head-circumference" class="control-label mb-1 mr-2">Vòng đầu (trẻ em < 2 tuổi)/ <span class="text-primary">Head Circumference (children < 2 year old) </span></label>
-                                                            <asp:Label runat="server" ID="vs_pulse" />cm
+                                                                <div >
+                                                                    <label for="head-circumference" class="control-label mb-1 mr-2">Vòng đầu (trẻ em < 2 tuổi)/ <span class="text-primary">Head Circumference (children < 2 year old) </span></label>
+                                                                    <asp:Label runat="server" ID="vs_pulse" />cm
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </ContentTemplate>
                                             </asp:UpdatePanel>
 
                                             <div class="row mb-2">
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 gt-2-a">
+                                                    <label></label>
                                                     <asp:Label runat="server" ID="lbl_physical_exam"></asp:Label>
-                                                                    <div class="form-group" runat="server" id="physical_exam_wrapper">
+                                                    <div class="form-group" runat="server" id="physical_exam_wrapper">
                                                         <webUI:TextField runat="server" ID="txt_physical_exam" />
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="row mb-2">
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 gt-2-a">
                                                     <label class="control-label mb-1">Yêu cầu khám chuyên khoa tâm lý/ <span class="text-primary">Psychological consultation required:</span></label>
                                                     <asp:Label runat="server" ID="lbl_psy_consul_required"></asp:Label>
-                                                                    <div class="form-group d-inline-block" runat="server" id="psy_consul_required_wrapper">
+                                                    <div class="form-group d-inline-block" runat="server" id="psy_consul_required_wrapper">
                                                         <div class="custom-control custom-radio d-inline-block">
                                                             <input type="radio" runat="server" id="rad_psy_consul_required_false" name="rad_psy_consul_required" class="custom-control-input" />
                                                             <label class="custom-control-label" for="rad_psy_consul_required_false">Không/ <span class="text-primary">No</span></label>
@@ -436,8 +443,9 @@
                                             </div>
 
                                             <div class="row mb-2">
-                                                <div class="col-md-12">
-                                                    <label class="control-label h4">IV. Chỉ định và kết quả xét nghiệm/ <span class="text-primary">Laboratory indications and results:</span></label>
+                                                <div class="col-md-12"><label class="control-label h4">IV. Chỉ định và kết quả xét nghiệm/ <span class="text-primary">Laboratory indications and results:</span></label></div>
+                                                <div class="col-md-12 gt-2-a">
+                                                    <label></label>
                                                     <asp:Label runat="server" ID="lbl_laboratory_result"></asp:Label>
                                                     <div class="form-group" runat="server" id="laboratory_result_wrapper">
                                                         <webUI:TextField runat="server" ID="txt_laboratory_result" />
@@ -446,7 +454,7 @@
                                             </div>
 
                                             <div class="row mb-2">
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 gt-2-a">
                                                     <label class="control-label mb-2">Khảo sát bổ sung khác/ <span class="text-primary">Additional investigations:</span></label>
                                                     <asp:Label runat="server" ID="lbl_add_investigation"></asp:Label>
                                                     <div class="form-group " runat="server" id="add_investigation_wrapper">
@@ -462,7 +470,7 @@
                                             </div>
 
                                             <div class="row mb-2">
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 gt-2-a">
                                                     <label class="control-label mb-1">Chẩn đoán ban đầu/ <span class="text-primary">Initial diagnosis:</span></label>
                                                     <asp:Label runat="server" ID="lbl_initial_diagnosis"></asp:Label>
                                                                     <div class="form-group" runat="server" id="initial_diagnosis_wrapper">
@@ -472,7 +480,7 @@
                                             </div>
 
                                             <div class="row mb-2">
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 gt-2-a">
                                                     <label class="control-label mb-1">Chẩn đoán xác định/ <span class="text-primary">Diagnosis:</span></label>
                                                     <asp:Label runat="server" ID="lbl_diagnosis"></asp:Label>
                                                                     <div class="form-group" runat="server" id="diagnosis_wrapper">
@@ -482,7 +490,7 @@
                                             </div>
 
                                             <div class="row mb-2">
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 gt-2-a">
                                                     <label class="control-label mb-1">Chẩn đoán phân biệt/ <span class="text-primary">Differential diagnosis:</span></label>
                                                     <asp:Label runat="server" ID="lbl_diff_diagnosis"></asp:Label>
                                                                     <div class="form-group" runat="server" id="diff_diagnosis_wrapper">
@@ -492,7 +500,7 @@
                                             </div>
 
                                             <div class="row mb-2">
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 gt-2-a">
                                                     <label class="control-label mb-1">Bệnh kèm theo/ <span class="text-primary">Associated conditions:</span></label>
                                                     <asp:Label runat="server" ID="lbl_associated_conditions"></asp:Label>
                                                                     <div class="form-group" runat="server" id="associated_conditions_wrapper">
@@ -502,7 +510,7 @@
                                             </div>
 
                                             <div class="row mb-2">
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 gt-2-a">
                                                     <label class="control-label mb-1">Kế hoạch điều trị/ <span class="text-primary">Treatment Plan:</span></label>
                                                     <asp:Label runat="server" ID="lbl_treatment_plan"></asp:Label>
                                                                     <div class="form-group" runat="server" id="treatment_plan_wrapper">
@@ -512,7 +520,7 @@
                                             </div>
 
                                             <div class="row mb-2">
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 gt-2-a">
                                                     <label class="control-label mb-1">Kế hoạch xuất viện/ <span class="text-primary">Discharge Plan:</span></label>
                                                     <asp:Label runat="server" ID="lbl_discharge_plan"></asp:Label>
                                                                     <div class="form-group" runat="server" id="discharge_plan_wrapper">
@@ -553,6 +561,8 @@
                                                 </div>
                                             </ModalBody>
                                         </webUI:PopupModal>
+
+                                        <icon:PopupShowDelay runat="server" ID="PopupShowDelay" />
 
                                     </div>
                                 </div>

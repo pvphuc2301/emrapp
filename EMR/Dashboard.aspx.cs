@@ -21,13 +21,14 @@ namespace EMR
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            WebHelpers.CheckSession(this, "./login.aspx?ReturnUrl=");
+            if(!WebHelpers.CheckSession(this, "./login.aspx?ReturnUrl=")) return;
 
-            lblUserName.InnerText = UserID;
             if (!IsPostBack)
             {
+                lblUserName.Text = (string)Session["UserName"];
+                BindLocation();
               //  RadGrid1.MasterTableView.CommandItemDisplay = GridCommandItemDisplay.None;// GridCommandItemDisplay.Top;
-               // RadGridHC.MasterTableView.CommandItemDisplay = GridCommandItemDisplay.None;
+              // RadGridHC.MasterTableView.CommandItemDisplay = GridCommandItemDisplay.None;
             }
 
             specialty_id = Convert.ToString(Session["specialty_code"]);
@@ -35,7 +36,20 @@ namespace EMR
             ConnClass ConnStr = new ConnClass();
             ConnStringEMR = ConnStr.SQL_EMRConnString;
             ConnStringHC = ConnStr.SQL_HCConnString;
+            PostBackEvent();
         }
+
+        private void PostBackEvent()
+        {
+            switch (Request["__EVENTTARGET"])
+            {
+                case "location_Change":
+                    DataHelpers._LOCATION = Request["__EVENTARGUMENT"];
+                    Response.Redirect(Request.RawUrl);
+                    break;
+            }
+        }
+
         protected void RadGrid1_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridDataItem item = (GridDataItem)(sender as RadGrid).SelectedItems[0];
@@ -316,7 +330,21 @@ namespace EMR
                 Response.Redirect(redirecturl);
         }
         #endregion
-
+        private void BindLocation()
+        {
+            lbl_location.Text = DataHelpers._LOCATION;
+            switch (DataHelpers._LOCATION)
+            {
+                case "AIH":
+                    location_cli.Visible = true;
+                    location_aih.Visible = false;
+                    break;
+                case "CLI":
+                    location_cli.Visible = false;
+                    location_aih.Visible = true;
+                    break;
+            }
+        }
         protected void LinkButton1_Click(object sender, EventArgs e)
         {
 

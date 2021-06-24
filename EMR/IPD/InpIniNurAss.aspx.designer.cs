@@ -15,13 +15,13 @@ namespace EMR
     {
 
         /// <summary>
-        /// form2 control.
+        /// form1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form2;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
         /// RadScriptManager2 control.
@@ -1410,13 +1410,13 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl vs_BMI_wrapper;
 
         /// <summary>
-        /// txt_vs_BMI control.
+        /// txt_vs_bmi control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_BMI;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_bmi;
 
         /// <summary>
         /// lbl_vs_spO2 control.
@@ -1479,16 +1479,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lbl_respiratory_system;
-
-        /// <summary>
-        /// Label1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
+        protected global::System.Web.UI.WebControls.Label lbl_respiratory_system;
 
         /// <summary>
         /// respiratory_system_wrapper control.
@@ -3012,6 +3003,15 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label nutrition_score;
 
         /// <summary>
+        /// cb_nutrition_requiredment_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_nutrition_requiredment_true;
+
+        /// <summary>
         /// lbl_severity_score1 control.
         /// </summary>
         /// <remarks>
@@ -3327,6 +3327,24 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_ind_catheter_true;
 
         /// <summary>
+        /// lbl_ind_catheter_size control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_ind_catheter_size;
+
+        /// <summary>
+        /// ind_catheter_size_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ind_catheter_size_wrapper;
+
+        /// <summary>
         /// txt_ind_catheter_size control.
         /// </summary>
         /// <remarks>
@@ -3334,6 +3352,24 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.TextField txt_ind_catheter_size;
+
+        /// <summary>
+        /// lbl_ind_catheter_date control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_ind_catheter_date;
+
+        /// <summary>
+        /// ind_catheter_date_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl ind_catheter_date_wrapper;
 
         /// <summary>
         /// dpk_ind_catheter_date control.
@@ -3363,6 +3399,24 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_sup_catheter_true;
 
         /// <summary>
+        /// lbl_sup_catheter_size control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_sup_catheter_size;
+
+        /// <summary>
+        /// sup_catheter_size_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl sup_catheter_size_wrapper;
+
+        /// <summary>
         /// txt_sup_catheter_size control.
         /// </summary>
         /// <remarks>
@@ -3370,6 +3424,24 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.TextField txt_sup_catheter_size;
+
+        /// <summary>
+        /// lbl_last_sup_catheter_date control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_last_sup_catheter_date;
+
+        /// <summary>
+        /// last_sup_catheter_date_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl last_sup_catheter_date_wrapper;
 
         /// <summary>
         /// dpk_last_sup_catheter_date control.
@@ -3534,40 +3606,40 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl contraception_code_wrapper;
 
         /// <summary>
-        /// cb_contraception_code_no control.
+        /// rad_contraception_code_no control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton cb_contraception_code_no;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_contraception_code_no;
 
         /// <summary>
-        /// cb_contraception_code_pill control.
+        /// rad_contraception_code_pill control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton cb_contraception_code_pill;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_contraception_code_pill;
 
         /// <summary>
-        /// cb_contraception_code_dev control.
+        /// rad_contraception_code_dev control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton cb_contraception_code_dev;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_contraception_code_dev;
 
         /// <summary>
-        /// cb_contraception_code_oth control.
+        /// rad_contraception_code_oth control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton cb_contraception_code_oth;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_contraception_code_oth;
 
         /// <summary>
         /// txt_contraception_other control.
@@ -4263,22 +4335,22 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl sing_pain_killer_wrapper;
 
         /// <summary>
-        /// rad_using_pain_killer_False control.
+        /// rad_using_pain_killer_false control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_using_pain_killer_False;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_using_pain_killer_false;
 
         /// <summary>
-        /// rad_using_pain_killer_True control.
+        /// rad_using_pain_killer_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_using_pain_killer_True;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_using_pain_killer_true;
 
         /// <summary>
         /// XSquare44 control.
@@ -4288,6 +4360,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.icons.XSquare XSquare44;
+
+        /// <summary>
+        /// CustomValidator15 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator15;
 
         /// <summary>
         /// lbl_pain_killer_name control.
@@ -6574,5 +6655,14 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnDelete;
+
+        /// <summary>
+        /// PopupShowDelay control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.UserControls.PopupShowDelay PopupShowDelay;
     }
 }

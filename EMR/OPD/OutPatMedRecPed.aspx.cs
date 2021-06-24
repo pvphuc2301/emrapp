@@ -11,40 +11,30 @@ namespace EMR
 {
     public partial class PediatricOutpatientMedicalRecord : System.Web.UI.Page
     {
-        public POMR pomr; string UserID = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-            CheckUserID();
+            WebHelpers.CheckSession(this);
+
             if (!IsPostBack)
             {
                 Initial();
             }
         }
-        public void Initial()
+
+        #region Binding Data
+        private void BindingDataForm(POMR pomr, bool state)
         {
-            if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
-            if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
-            if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
-
-            pomr = new POMR(Request.QueryString["docId"]);
-
-            amendReasonWraper.Visible = false;
-            btnCancel.Visible = false;
-            prt_barcode.Text = Patient.Instance().visible_patient_id;
-            if (pomr.status == DocumentStatus.FINAL)
+            if (state)
             {
-                loadFormView(pomr);
+                BindingDataFormEdit(pomr);
             }
-            else if (pomr.status == DocumentStatus.DRAFT)
+            else
             {
-                LoadFormEdit(pomr);
+                BindingDataFormView(pomr);
             }
         }
-        #region Load Forms
-        private void LoadFormEdit(POMR pomr)
+        private void BindingDataFormEdit(POMR pomr)
         {
-            Patient patient = Patient.Instance();
-            
             // I. Lý do đến khám/ Chief complaint:
             txt_chief_complaint.Value = pomr.chief_complaint;
 
@@ -57,8 +47,7 @@ namespace EMR
             // 2.Tiền sử bệnh/ Antecedent Medical History:
             txt_personal.Value = pomr.personal;
             txt_family.Value = pomr.family;
-
-            BindRadioButton("rad_allergy_" + pomr.allergy);
+            WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_allergy_" + pomr.allergy);
             if (pomr.allergy != null)
             {
                 if (pomr.allergy)
@@ -78,13 +67,13 @@ namespace EMR
             txt_initial_diagnosis.Value = pomr.initial_diagnosis;
             txt_differential_diagnosis.Value = pomr.differential_diagnosis;
             txt_associated_conditions.Value = pomr.associated_conditions;
-            BindRadioButton("rad_treatment_code_" + pomr.treatment_code);
+            WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_treatment_code_" + pomr.treatment_code);
 
             // 5.Current medications
             txt_medicine.Value = pomr.medicine;
             //treatment = transfer
 
-            BindRadioButton("rad_spec_opinion_requested_" + pomr.spec_opinion_requested);
+            WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_spec_opinion_requested_" + pomr.spec_opinion_requested);
 
             if (pomr.spec_opinion_requested != null)
             {
@@ -98,7 +87,7 @@ namespace EMR
 
             if(pomr.bool_next_appointment != null)
             {
-                BindRadioButton("rad_bool_next_appointment_" + pomr.bool_next_appointment);
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_bool_next_appointment_" + pomr.bool_next_appointment);
                 if (pomr.bool_next_appointment)
                 {
                     WebHelpers.BindDateTimePicker(dtpk_date_next_appointment, pomr.date_next_appointment);
@@ -108,14 +97,8 @@ namespace EMR
                     txt_next_appointment.Value = pomr.txt_next_appointment;
                 }
             }
-
-            LoadFormControl(false);
-
-            btnUpdateVitalSign.Visible = true;
-            btnAmend.Visible = false;
-            btnPrint.Visible = false;
         }
-        private void loadFormView(POMR pomr)
+        private void BindingDataFormView(POMR pomr)
         {
             //1
             lbl_chief_complaint.Text = WebHelpers.GetValue(pomr.chief_complaint);
@@ -174,18 +157,8 @@ namespace EMR
             {
                 lbl_date_next_appointment.Text = pomr.bool_next_appointment ? "Calendar<br>" + WebHelpers.FormatDateTime(pomr.date_next_appointment) : "Text<br>" + WebHelpers.GetValue(pomr.txt_next_appointment);
             }
-
-            LoadFormControl(true);
-
-            btnComplete.Visible = false;
-            btnSave.Visible = false;
-            btnDeleteModal.Visible = false;
-            btnUpdateVitalSign.Visible = false;
-
-            btnAmend.Visible = true;
-            btnPrint.Visible = true;
         }
-        private void LoadFormPrint(POMR pomr)
+        private void BindingDataFormPrint(POMR pomr)
         {
             Patient patient = Patient.Instance();
             PatientVisit patientVisit = PatientVisit.Instance();
@@ -257,89 +230,87 @@ namespace EMR
         #endregion
         private void UpdateData(POMR pomr)
         {
-            
-            pomr.amend_reason = txt_amend_reason.Text;
-            
-            //I.
-            pomr.chief_complaint = txt_chief_complaint.Value;
-            //II.
-            //1.
-            pomr.medical_history = txt_medical_history.Value;
-            pomr.current_medication = txt_current_medication.Value;
-            //2.
-            pomr.personal = txt_personal.Value;
-            pomr.family = txt_family.Value;
-            if (rad_allergy_true.Checked)
-            { pomr.allergy = true; pomr.allergy_note = txt_allergy_note.Value; }
-            else if (rad_allergy_false.Checked)
-            { pomr.allergy = false; }
-            //II.
-            pomr.vs_temperature = vs_temperature.Text;
-            pomr.vs_weight = vs_weight.Text;
-            pomr.vs_height = vs_height.Text;
-            pomr.vs_BMI = vs_bmi.Text;
-            pomr.vs_pulse = vs_pulse.Text;
-            pomr.vs_heart_rate = vs_heart_rate.Text;
-            pomr.vs_respiratory_rate = vs_respiratory_rate.Text;
-            pomr.vs_blood_pressure = vs_blood_pressure.Text;
-            pomr.vs_spO2 = vs_spo2.Text;
-            pomr.physical_examination = txt_physical_examination.Value.Replace("<br>", "");
-            //IV.
-            pomr.laboratory_indications_results = txt_laboratory_indications_results.Value;
-            //V.
-            pomr.initial_diagnosis = txt_initial_diagnosis.Value;
-            pomr.differential_diagnosis = txt_differential_diagnosis.Value;
-            pomr.associated_conditions = txt_associated_conditions.Value;
-
-            pomr.treatment_code = GetRadioButton("rad_treatment_code_", POMR.TREATMENT_CODE);
-            if (pomr.treatment_code != null) pomr.treatment_desc = POMR.TREATMENT_CODE[pomr.treatment_code];
-
-            //5.
-            if(pomr.treatment_code == "OPD") { pomr.medicine = txt_medicine.Value; }
-            else if(pomr.treatment_code == "TRF") { }
-
-            pomr.spec_opinion_requested = GetRadioButton("rad_spec_opinion_requested_");
-            if (rad_spec_opinion_requested_true.Checked)
+            try
             {
-                pomr.spec_opinion_requested_note = txt_spec_opinion_requested_note.Value;
+                pomr.amend_reason = txt_amend_reason.Text;
+
+                //I.
+                pomr.chief_complaint = txt_chief_complaint.Value;
+                //II.
+                //1.
+                pomr.medical_history = txt_medical_history.Value;
+                pomr.current_medication = txt_current_medication.Value;
+                //2.
+                pomr.personal = txt_personal.Value;
+                pomr.family = txt_family.Value;
+                if (rad_allergy_true.Checked)
+                { pomr.allergy = true; pomr.allergy_note = txt_allergy_note.Value; }
+                else if (rad_allergy_false.Checked)
+                { pomr.allergy = false; }
+                //II.
+                pomr.vs_temperature = vs_temperature.Text;
+                pomr.vs_weight = vs_weight.Text;
+                pomr.vs_height = vs_height.Text;
+                pomr.vs_BMI = vs_bmi.Text;
+                pomr.vs_pulse = vs_pulse.Text;
+                pomr.vs_heart_rate = vs_heart_rate.Text;
+                pomr.vs_respiratory_rate = vs_respiratory_rate.Text;
+                pomr.vs_blood_pressure = vs_blood_pressure.Text;
+                pomr.vs_spO2 = vs_spo2.Text;
+                pomr.physical_examination = txt_physical_examination.Value.Replace("<br>", "");
+                //IV.
+                pomr.laboratory_indications_results = txt_laboratory_indications_results.Value;
+                //V.
+                pomr.initial_diagnosis = txt_initial_diagnosis.Value;
+                pomr.differential_diagnosis = txt_differential_diagnosis.Value;
+                pomr.associated_conditions = txt_associated_conditions.Value;
+
+                pomr.treatment_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_treatment_code_", POMR.TREATMENT_CODE);
+                if (pomr.treatment_code != null) pomr.treatment_desc = POMR.TREATMENT_CODE[pomr.treatment_code];
+
+                //5.
+                if (pomr.treatment_code == "OPD") { pomr.medicine = txt_medicine.Value; }
+                else if (pomr.treatment_code == "TRF") { }
+
+                pomr.spec_opinion_requested = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_spec_opinion_requested_");
+                if (rad_spec_opinion_requested_true.Checked)
+                {
+                    pomr.spec_opinion_requested_note = txt_spec_opinion_requested_note.Value;
+                }
+
+                pomr.specific_education_required = txt_specific_education_required.Value;
+
+                pomr.bool_next_appointment = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_bool_next_appointment_");
+
+                if (rad_bool_next_appointment_true.Checked)
+                {
+                    pomr.txt_next_appointment = null;
+
+                    pomr.date_next_appointment = DataHelpers.ConvertSQLDateTime(dtpk_date_next_appointment.SelectedDate);
+                }
+                else if (rad_bool_next_appointment_false.Checked)
+                {
+                    pomr.bool_next_appointment = false;
+                    pomr.txt_next_appointment = txt_next_appointment.Value;
+                }
+
+                dynamic result = pomr.Update()[0];
+
+                if (result.Status == System.Net.HttpStatusCode.OK)
+                {
+                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
+                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
+
+                    Initial();
+                }
             }
-
-            pomr.specific_education_required = txt_specific_education_required.Value;
-
-            pomr.bool_next_appointment = GetRadioButton("rad_bool_next_appointment_");
-
-            if (rad_bool_next_appointment_true.Checked)
-            {
-                pomr.txt_next_appointment = null;
-
-                pomr.date_next_appointment = DataHelpers.ConvertSQLDateTime(dtpk_date_next_appointment.SelectedDate);
-            }
-            else if (rad_bool_next_appointment_false.Checked)
-            {
-                pomr.bool_next_appointment = false;
-                pomr.txt_next_appointment = txt_next_appointment.Value;
-            }
-
-            dynamic result = pomr.Update()[0];
-
-            if (result.Status == System.Net.HttpStatusCode.OK)
-            {
-                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
-
-                Initial();
-            }
-            else
-            {
-                Session["PageNotFound"] = result;
-                Response.Redirect("../Other/PageNotFound.aspx", false);
-            }
+            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
         }
         protected void btnComplete_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
-                pomr = new POMR(Request.QueryString["docId"]);
+                POMR pomr = new POMR(Request.QueryString["docId"]);
                 pomr.status = DocumentStatus.FINAL;
                 pomr.user_name = (string)Session["UserID"];
 
@@ -350,7 +321,7 @@ namespace EMR
         {
             if (Page.IsValid)
             {
-                pomr = new POMR(Request.QueryString["docId"]);
+                POMR pomr = new POMR(Request.QueryString["docId"]);
                 pomr.status = DocumentStatus.DRAFT;
                 pomr.user_name = (string)Session["UserID"];
 
@@ -359,22 +330,29 @@ namespace EMR
         }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            pomr = new POMR(Request.QueryString["docId"]);
+            POMR pomr = new POMR(Request.QueryString["docId"]);
+            string emp_id = (string)Session["emp_id"];
 
-            amendReasonWraper.Visible = true;
-            btnComplete.Visible = true;
-            btnCancel.Visible = true;
-            btnAmend.Visible = false;
-            btnPrint.Visible = false;
+            if (WebHelpers.CanOpenForm(Page, pomr.document_id, pomr.status, emp_id, (string)Session["location"]))
+            {
 
-            LoadFormEdit(pomr);
+                txt_amend_reason.Text = "";
+                WebHelpers.VisibleControl(false, btnAmend, btnPrint);
+                WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
+
+                //load form control
+                WebHelpers.LoadFormControl(form1, pomr, ControlState.Edit, (string)Session["location"]);
+                //binding data
+                BindingDataFormEdit(pomr);
+                //get access button
+            }
         }
         protected void btnPrint_Click(object sender, EventArgs e)
-        {
-            pomr = new POMR(Request.QueryString["docId"]);
-            LoadFormPrint(pomr);
+        {   
+            POMR pomr = new POMR(Request.QueryString["docId"]);
+            BindingDataFormPrint(pomr);
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "window.print();", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
 
         }
         protected void btnCancel_Click(object sender, EventArgs e)
@@ -383,94 +361,63 @@ namespace EMR
         }
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            dynamic result = POMR.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
-
-            if (result.Status == System.Net.HttpStatusCode.OK)
+            try
             {
-                string pid = Request["pid"];
-                string vpid = Request["vpid"];
+                dynamic result = POMR.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
 
-                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                if (result.Status == System.Net.HttpStatusCode.OK)
+                {
+                    string pid = Request["pid"];
+                    string vpid = Request["vpid"];
+
+                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                }
             }
-            else
-            {
-                Session["PageNotFound"] = result;
-                Response.Redirect("../Other/PageNotFound.aspx", false);
-            }
+            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }
         protected void btnUpdateVitalSign_Click(object sender, EventArgs e)
         {
-            dynamic response = POMR.UpdateVitalSign(Request.QueryString["docId"]);
-            if (response.Status == System.Net.HttpStatusCode.OK)
+            try
             {
-                Initial();
+                dynamic response = POMR.UpdateVitalSign(Request.QueryString["docId"]);
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    Initial();
+                }
             }
+            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
+            
         }
 
         #region METHODS
-        private void BindRadioButton(string value)
+        public void Initial()
         {
-            if (FindControl(value) != null)
-            {
-                ((HtmlInputRadioButton)FindControl(value)).Checked = true;
-            }
-        }
-        protected void LoadFormControl(bool disabled)
-        {
-            foreach (var prop in pomr.GetType().GetProperties())
-            {
-                var control1 = FindControl(prop.Name + "_wrapper");
-                var control2 = FindControl("lbl_" + prop.Name);
+            if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
+            if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
+            if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
 
-                if (control1 != null)
-                {
-                    control1.Visible = !disabled;
-                }
-                if (control2 != null)
-                {
-                    control2.Visible = disabled;
-                }
-            }
-        }
-        private dynamic GetRadioButton(string radio_name, Dictionary<string, string> value)
-        {
-            foreach (KeyValuePair<string, string> code in value)
+            try
             {
-                try
-                {
-                    if (((HtmlInputRadioButton)FindControl(radio_name + code.Key)).Checked)
-                    {
-                        return code.Key;
-                        break;
-                    }
-                }
-                catch (Exception ex) { }
-            }
-            return null;
-        }
-        private dynamic GetRadioButton(string radio_name)
-        {
-            if (((HtmlInputRadioButton)FindControl(radio_name + "true")).Checked)
-            {
-                return true;
-            }
-            else if (((HtmlInputRadioButton)FindControl(radio_name + "false")).Checked)
-            {
-                return false;
-            }
-            else { return null; }
-        }
-        #endregion
+                POMR pomr = new POMR(Request.QueryString["docId"]);
 
-        #region Authen
-        private void CheckUserID()
-        {
-            UserID = (string)Session["UserID"];
-            string redirecturl = "../login.aspx?ReturnUrl=";
-            redirecturl += Request.ServerVariables["script_name"] + "?";
-            redirecturl += Server.UrlEncode(Request.QueryString.ToString());
-            if (string.IsNullOrEmpty(UserID))
-                Response.Redirect(redirecturl);
+                WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
+                prt_barcode.Text = Patient.Instance().visible_patient_id;
+                if (pomr.status == DocumentStatus.FINAL)
+                {
+                    BindingDataForm(pomr, WebHelpers.LoadFormControl(form1, pomr, ControlState.View, (string)Session["location"]));
+
+                }
+                else if (pomr.status == DocumentStatus.DRAFT)
+                {
+                    BindingDataForm(pomr, WebHelpers.LoadFormControl(form1, pomr, ControlState.Edit, (string)Session["location"]));
+                }
+
+                WebHelpers.getAccessButtons(form1, pomr.status, (string)Session["access_authorize"], (string)Session["location"]);
+            }
+            catch (Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
         }
         #endregion
 

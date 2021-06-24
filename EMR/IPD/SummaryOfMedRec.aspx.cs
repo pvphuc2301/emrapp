@@ -10,44 +10,29 @@ namespace EMR
 {
     public partial class SummaryOfMedicalReport : System.Web.UI.Page
     {
-        Somr somr; string UserID = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-            CheckUserID();
+            WebHelpers.CheckSession(this);
 
             if (!IsPostBack)
             {
                 Initial();
             }
         }
-        public void Initial()
+        
+        #region Binding Data
+        private void BindingDataForm(Somr somr, bool state)
         {
-            if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
-            if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
-            if (Request.QueryString["vpId"] != null) DataHelpers.varPVId = Request.QueryString["vpId"];
-
-            somr = new Somr(Request.QueryString["docId"]);
-
-            amendReasonWraper.Visible = false;
-            btnCancel.Visible = false;
-
-            if (somr.status == DocumentStatus.FINAL)
+            if (state)
             {
-                loadFormView(somr);
-
-                WebHelpers.VisibleControl(true, btnAmend, btnAmend);
-                WebHelpers.VisibleControl(false, btnComplete, btnSave, btnDeleteModal);
+                BindingDataFormEdit(somr);
             }
-            else if (somr.status == DocumentStatus.DRAFT)
+            else
             {
-                LoadFormEdit(somr);
-
-                WebHelpers.VisibleControl(true, btnPrint, btnAmend);
+                BindingDataFormView(somr);
             }
         }
-
-        #region Load Form
-        private void LoadFormEdit(Somr somr)
+        private void BindingDataFormEdit(Somr somr)
         {
             Patient patient = Patient.Instance();
             WebHelpers.BindDateTimePicker(dpk_form_date, somr.form_date);
@@ -59,10 +44,8 @@ namespace EMR
             txt_treatment.Value = somr.treatment;
             txt_eval_treatment.Value = somr.eval_treatment;
             txt_treatment_prognosis.Value = somr.treatment_prognosis;
-
-            LoadFormControl(false);
         }
-        private void loadFormView(Somr somr)
+        private void BindingDataFormView(Somr somr)
         {
             lbl_form_date.Text = WebHelpers.FormatDateTime(somr.form_date);
             lbl_to_date.Text = WebHelpers.FormatDateTime(somr.to_date);
@@ -74,15 +57,14 @@ namespace EMR
             lbl_eval_treatment.Text = WebHelpers.GetValue(somr.eval_treatment);
             lbl_treatment_prognosis.Text = WebHelpers.GetValue(somr.treatment_prognosis);
             //
-            LoadFormControl(true);
         }
-        private void LoadFormPrint(Somr somr)
+        private void BindingDataFormPrint(Somr somr)
         {
             Patient patient = Patient.Instance();
             prt_fullname.Text = string.Format("{0} ({1})", patient.GetFullName(), patient.GetTitle());
             prt_dob.Text = string.Format("{0} | {1}", WebHelpers.FormatDateTime(patient.date_of_birth), patient.GetGender());
             prt_vpid.Text = prt_barcode.Text = patient.visible_patient_id;
-            
+
             prt_form_date.Text = WebHelpers.FormatDateTime(somr.form_date);
             prt_to_date.Text = WebHelpers.FormatDateTime(somr.to_date);
 
@@ -92,14 +74,14 @@ namespace EMR
             prt_result_para_clinical.Text = somr.result_para_clinical;
             prt_treatment_prognosis.Text = somr.treatment_prognosis;
         }
-
         #endregion
 
+        #region Events
         protected void btnComplete_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
-                somr = new Somr(DataHelpers.varDocId);
+                Somr somr = new Somr(DataHelpers.varDocId);
                 somr.status = DocumentStatus.FINAL;
                 somr.user_name = (string)Session["UserID"];
 
@@ -110,7 +92,7 @@ namespace EMR
         {
             if (Page.IsValid)
             {
-                somr = new Somr(DataHelpers.varDocId);
+                Somr somr = new Somr(DataHelpers.varDocId);
                 somr.status = DocumentStatus.DRAFT;
                 somr.user_name = (string)Session["UserID"];
 
@@ -119,16 +101,55 @@ namespace EMR
         }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            somr = new Somr(Request.QueryString["docId"]);
-            LoadFormEdit(somr);
-            WebHelpers.VisibleControl(true, amendReasonWraper, btnComplete, btnCancel);
-            WebHelpers.VisibleControl(false, btnPrint, btnAmend);
+            Somr somr = new Somr(Request.QueryString["docId"]);
+            string emp_id = (string)Session["emp_id"];
+
+            if (WebHelpers.CanOpenForm(Page, somr.document_id, somr.status, emp_id, (string)Session["location"]))
+            {
+
+                txt_amend_reason.Text = "";
+                WebHelpers.VisibleControl(false, btnAmend, btnPrint);
+                WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
+
+                //load form control
+                WebHelpers.LoadFormControl(form1, somr, ControlState.Edit, (string)Session["location"]);
+                //binding data
+                BindingDataFormEdit(somr);
+                //get access button
+            }
 
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             Initial();
         }
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+
+            dynamic result = Disc.Delete((string)Session["UserID"], Request.QueryString["docid"])[0];
+            if (result.Status == System.Net.HttpStatusCode.OK)
+            {
+                string pid = Request["pid"];
+                string vpid = Request["vpid"];
+
+                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+            }
+            else
+            {
+                Session["PageNotFound"] = result;
+                Response.Redirect("../Other/PageNotFound.aspx", false);
+            }
+        }
+        protected void btnPrint_Click(object sender, EventArgs e)
+        {
+            Somr somr = new Somr(Request.QueryString["docId"]);
+            BindingDataFormPrint(somr);
+            
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
+        }
+
+        #endregion
+        #region Functions
         public void UpdateData(Somr somr)
         {
             somr.amend_reason = txt_amend_reason.Text;
@@ -157,63 +178,36 @@ namespace EMR
                 Response.Redirect("../Other/PageNotFound.aspx", false);
             }
         }
-        protected void btnDelete_Click(object sender, EventArgs e)
+        public void Initial()
         {
+            if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
+            if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
+            if (Request.QueryString["vpId"] != null) DataHelpers.varPVId = Request.QueryString["vpId"];
 
-            dynamic result = Disc.Delete((string)Session["UserID"], Request.QueryString["docid"])[0];
-            if (result.Status == System.Net.HttpStatusCode.OK)
+            try
             {
-                string pid = Request["pid"];
-                string vpid = Request["vpid"];
+                Somr somr = new Somr(Request.QueryString["docId"]);
 
-                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
+                prt_barcode.Text = Patient.Instance().visible_patient_id;
+                if (somr.status == DocumentStatus.FINAL)
+                {
+                    BindingDataForm(somr, WebHelpers.LoadFormControl(form1, somr, ControlState.View, (string)Session["location"]));
+
+                }
+                else if (somr.status == DocumentStatus.DRAFT)
+                {
+                    BindingDataForm(somr, WebHelpers.LoadFormControl(form1, somr, ControlState.Edit, (string)Session["location"]));
+                }
+
+                WebHelpers.getAccessButtons(form1, somr.status, (string)Session["access_authorize"], (string)Session["location"]);
             }
-            else
+            catch (Exception ex)
             {
-                Session["PageNotFound"] = result;
-                Response.Redirect("../Other/PageNotFound.aspx", false);
+                WebHelpers.SendError(Page, ex);
             }
-        }
-        protected void btnPrint_Click(object sender, EventArgs e)
-        {
-            somr = new Somr(Request.QueryString["docId"]);
-            LoadFormPrint(somr);
-
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "window.print();", true);
-        }
-
-        #region Session
-
-        private void CheckUserID()
-        {
-            UserID = (string)Session["UserID"];
-            string redirecturl = "../login.aspx?ReturnUrl=";
-            redirecturl += Request.ServerVariables["script_name"] + "?";
-            redirecturl += Server.UrlEncode(Request.QueryString.ToString());
-            if (string.IsNullOrEmpty(UserID))
-                Response.Redirect(redirecturl);
         }
         #endregion
 
-        #region
-
-        protected void LoadFormControl(bool disabled)
-        {
-            foreach (var prop in somr.GetType().GetProperties())
-            {
-                var control1 = FindControl(prop.Name + "_wrapper");
-                var control2 = FindControl("lbl_" + prop.Name);
-
-                if (control1 != null)
-                {
-                    control1.Visible = !disabled;
-                }
-                if (control2 != null)
-                {
-                    control2.Visible = disabled;
-                }
-            }
-        }
-        #endregion
     }
 }

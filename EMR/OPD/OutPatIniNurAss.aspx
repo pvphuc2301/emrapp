@@ -20,6 +20,8 @@
 <%@ Register Src="~/UserControls/PrintTemplate/PrtDate.ascx" TagPrefix="webUI" TagName="PrtDate" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Signature1.ascx" TagPrefix="webUI" TagName="Signature1" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrtRowS2.ascx" TagPrefix="webUI" TagName="PrtRowS2" %>
+<%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="Button" TagName="PopupShowDelay" %>
+
 
 <!DOCTYPE html>
 
@@ -30,7 +32,7 @@
     <link href="../styles/myStyle.css" rel="stylesheet" />
 </head>
 <body>
-    <form method="post" action="#" id="form2" runat="server">
+    <form method="post" action="#" id="form1" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
         <asp:UpdatePanel ID="UpPrintForm" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
@@ -178,9 +180,9 @@
                                         <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
                                     <div class="form-group mb-2">
 
-                                        <asp:TextBox runat="server" TextMode="MultiLine" ID="txt_amendReason" CssClass="form-control" />
+                                        <asp:TextBox runat="server" TextMode="MultiLine" ID="txt_amend_reason" CssClass="form-control" />
 
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amendReason" ErrorMessage="Please enter amend reason"
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
                                             ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                     </div>
                                 </div>
@@ -573,7 +575,7 @@
                                                 </div>
                                             </ModalBody>
                                         </webUI:PopupModal>
-
+                                        <Button:PopupShowDelay runat="server" ID="PopupShowDelay" />
                                     </div>
                                 </div>
                             </div>

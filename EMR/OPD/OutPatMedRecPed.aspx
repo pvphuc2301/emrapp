@@ -18,6 +18,8 @@
 <%@ Register Src="~/UserControls/PrintTemplate/Signature1.ascx" TagPrefix="webUI" TagName="Signature1" %>
 <%@ Register Src="~/UserControls/PopupModal.ascx" TagPrefix="webUI" TagName="PopupModal" %>
 <%@ Register Src="~/icons/XSquare.ascx" TagPrefix="icon" TagName="XSquare" %>
+<%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="Button" TagName="PopupShowDelay" %>
+
 
 <!DOCTYPE html>
 
@@ -28,7 +30,7 @@
     <link href="../styles/myStyle.css" rel="stylesheet" />
 </head>
 <body>
-    <form method="post" action="#" id="form2" runat="server">
+    <form method="post" action="#" id="form1" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
         <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
@@ -661,6 +663,8 @@
                                                 </div>
                                             </ModalBody>
                                         </webUI:PopupModal>
+
+                                        <Button:PopupShowDelay runat="server" id="PopupShowDelay" />
 
                                     </div>
                                 </div>

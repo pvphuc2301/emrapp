@@ -113,33 +113,33 @@ namespace EMR
 
             //
 
-            WebHelpers.DataBind(form1, new HtmlInputCheckBox(),"cb_alert_" + ena.alert);
+            WebHelpers.DataBind(form1, new HtmlInputCheckBox(),"cb_alert_",  ena.alert);
 
-            WebHelpers.DataBind(form1, new HtmlInputCheckBox(),"cb_coma_" + ena.coma);
-            WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_others_" + ena.others);
+            WebHelpers.DataBind(form1, new HtmlInputCheckBox(),"cb_coma_",  ena.coma);
+            WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_others_",  ena.others);
 
             txt_str_others.Value = ena.str_others;
 
             WebHelpers.DataBind(form1, new HtmlInputCheckBox(),"cb_respiratory_", ena.respiratory);
 
-            WebHelpers.DataBind(form1, new HtmlInputCheckBox(),"cb_rhythm_regular_" + ena.rhythm_regular);
-            WebHelpers.DataBind(form1, new HtmlInputCheckBox(),"cb_rhythm_inregular_" + ena.rhythm_inregular);
-            WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_rhythm_others_" + ena.rhythm_others);
+            WebHelpers.DataBind(form1, new HtmlInputCheckBox(),"cb_rhythm_regular_",  ena.rhythm_regular);
+            WebHelpers.DataBind(form1, new HtmlInputCheckBox(),"cb_rhythm_inregular_",  ena.rhythm_inregular);
+            WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_rhythm_others_",  ena.rhythm_others);
 
             txt_rhythm_str_others.Value = ena.rhythm_str_others;
 
-            WebHelpers.DataBind(form1, new HtmlInputCheckBox(),"cb_psychosocial_" + ena.psychosocial);
-            WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_psychosocial_others_" + ena.psychosocial_others);
+            WebHelpers.DataBind(form1, new HtmlInputCheckBox(),"cb_psychosocial_",  ena.psychosocial);
+            WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_psychosocial_others_",  ena.psychosocial_others);
             txt_psychosocial_str_others.Value = ena.psychosocial_str_others;
 
-            WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_psychosocial_" + ena.psychosocial);
+            WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_psychosocial_",  ena.psychosocial);
 
-            WebHelpers.DataBind(form1, new HtmlInputCheckBox(),"cb_other_systems_normal_" + ena.other_systems_normal);
-            WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_other_systems_abnormal_" + ena.other_systems_abnormal);
+            WebHelpers.DataBind(form1, new HtmlInputCheckBox(),"cb_other_systems_normal_",  ena.other_systems_normal);
+            WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_other_systems_abnormal_",  ena.other_systems_abnormal);
 
             txt_others_systems_str.Value = ena.others_systems_str;
 
-            WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_lmp_" + ena.lmp);
+            WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_lmp_", ena.lmp);
 
             txt_lmP_note.Value = ena.lmP_note;
             txt_para.Value = ena.para;

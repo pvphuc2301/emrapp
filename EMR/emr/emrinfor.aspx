@@ -127,7 +127,7 @@
                             </a>
                         </li>--%>
                         <li class="nav-item dropdown">
-                            <a style="cursor: default;" class="nav-link btn-link  waves-effect waves-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link btn-link  waves-effect waves-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                  <icon:House runat="server" ID="House1" />
                                 <asp:Label runat="server" ID="lbl_location"></asp:Label>
                             </a>
@@ -143,27 +143,24 @@
                         </li>
                         
                         <li class="nav-item dropdown">
-                            <a class="nav-link btn-link icon-badge-container" href="../other/sendlogview.aspx?view=mail" title="Mail" target="MainContent">
+                            <a class="nav-link btn-link waves-effect waves-primary icon-badge-container" href="../other/sendlogview.aspx?view=mail" title="Mail" target="MainContent">
                                 <icon:Envelope runat="server" />
                                 <div class="icon-badge">mail</div>
                             </a>
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link btn-link icon-badge-container" href="../other/sendlogview.aspx?view=sms" title="SMS" target="MainContent">
+                            <a class="nav-link btn-link waves-effect waves-primary icon-badge-container" href="../other/sendlogview.aspx?view=sms" title="SMS" target="MainContent">
                                 <icon:ChatRight runat="server" />
                                 <div class="icon-badge">sms</div>
                             </a>
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link btn-link dropdown-toggle d-none d-lg-block" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link btn-link  waves-effect waves-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <icon:Person runat="server"/>
-
-                                <span id="lblUserName" style="cursor: default;" runat="server">No Name</span>
-                                <span class="hidden-md-down">&nbsp;
-                                    <icon:CaretDown runat="server" id="CaretDown" />
-                                </span>
+                                <asp:Label ID="lblUserName" runat="server">No Name</asp:Label>
+                                <span class="hidden-md-down">&nbsp;<icon:CaretDown runat="server" id="CaretDown" /></span>
                             </a>
 
                             <a class="nav-link btn-link dropdown-toggle waves-effect waves-primary d-lg-none" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -203,18 +200,19 @@
             Orientation="Vertical" Width="100%" Height="100%">
             <telerik:RadPane runat="server" ID="TopPane" Width="220" MinWidth="150" MaxWidth="550">
                 <!-- Sidebar scroll-->
-                <div style="overflow-y: scroll; overflow-x: hidden; height: calc(100vh - 51px);">
+                        <asp:LinkButton CssClass="btn btn-outline-light waves-effect position-sticky waves-secondary text-dark w-100" ID="btnPatientSummary" OnClick="btnPatientSummary_Click" runat="server">Patient Summary</asp:LinkButton>
+                <div style="overflow-x: hidden; height: calc(100vh - 51px);">
                     <nav class="sidebar-wrapper" style="position: initial; width: inherit">
-
                         <div class="sidebar-menu">
                             <asp:UpdatePanel ID="updatePanel_main" runat="server" UpdateMode="Always">
                                 <ContentTemplate>
                                     <ul class="text-nowrap">
-                                        <li>
+                                        <%--<li>
                                             <a href="../emr/emrinfor.aspx?pid=<%= varPID %>" class="bnt-link">Patient Summary</a>
-                                        </li>
+                                        </li>--%>
 
                                         <%--Load Left Menu--%>
+                                        <li>
                                         <telerik:RadGrid ID="RadGrid1" runat="server" Width="100%" OnNeedDataSource="RadGrid1_NeedDataSource" OnItemCommand="RadGrid1_ItemCommand"
                                             ShowHeader="false" OnSelectedIndexChanged="RadGrid1_SelectedIndexChanged" OnDetailTableDataBind="RadGrid1_DetailTableDataBind" AllowSorting="true" AllowFilteringByColumn="false"
                                             AutoGenerateColumns="False" AllowMultiRowSelection="False" GridLines="None" EnableLinqExpressions="false" ShowFooter="false">
@@ -230,16 +228,11 @@
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridTemplateColumn HeaderStyle-Width="99%" UniqueName="model_name">
                                                                 <ItemTemplate>
-
-                                                                    <%-- <asp:HyperLink ID="lbURL"
-                           NavigateUrl ="http://172.16.0.78:8082/api/omr/0d79db3e-ae3f-433e-a1d2-aa96107654e1"
-                          </asp:HyperLink>--%>
-                                                                    
                                                                     <%--<asp:HyperLink data-title='<%# ReturnForm_Name(Eval("status"),Eval("model_name"), "") %>' data-category='' data-visit='' data-author='<%# Eval("created_name_e") %>' CssClass="list-item d-inline-block" ID="lbURL" runat="server" NavigateUrl='<%# Return_Doc_URL(Eval("model_id"),Eval("document_id"), Eval("patient_visit_id")) %>'
                                                                         Text='<%# ReturnForm_Name(Eval("status"),Eval("model_name"),Eval("created_name_e")) %>' Target="MainContent">
                                                                     </asp:HyperLink>--%>
 
-                                                                    <a runat="server" data-varpid='<%# varPID %>' data-varvpid='<%# varVPID %>' data-modelid='<%#Eval("model_id") %>' data-documentid='<%#Eval("document_id") %>' id="lblURL" href="javascript:void(0);" onclick="__doPostBack('lblURL_click', this)'><%# ReturnForm_Name(Eval("status"),Eval("model_name"),Eval("created_name_e")) %></a>
+                                                                    <a data-title='<%# ReturnForm_Name(Eval("status"),Eval("model_name"), "") %>' data-category='' data-visit='' data-author='<%# Eval("created_name_e") %>' class="list-item d-inline-block" runat="server" data-varpid='<%# varPID %>' data-varvpid='<%# varVPID %>' data-modelid='<%#Eval("model_id") %>' data-status='<%#Eval("status") %>' data-documentid='<%#Eval("document_id") %>' id="lblURL" href="javascript:void(0);" onclick="lblURL_click(this)"><%# ReturnForm_Name(Eval("status"),Eval("model_name"),Eval("created_name_e")) %></a>
 
                                                                 </ItemTemplate>
                                                             </telerik:GridTemplateColumn>
@@ -265,10 +258,12 @@
                                                     OnDataBinding="OnGridCreated" OnDataSourceResolved="OnGridCreated" />
                                             </ClientSettings>
                                         </telerik:RadGrid>
+                                        </li>
                                         <%--END Load Left Menu--%>
 
                                         <%--Load LAB and IMG Document--%>
-                                        <telerik:RadGrid ID="RadGrid2" runat="server" Width="100%" OnNeedDataSource="RadGrid2_NeedDataSource" OnItemDataBound="RadGrid2_ItemDataBound"
+                                        <li>
+                                            <telerik:RadGrid ID="RadGrid2" runat="server" Width="100%" OnNeedDataSource="RadGrid2_NeedDataSource" OnItemDataBound="RadGrid2_ItemDataBound"
                                             ShowHeader="false" OnDetailTableDataBind="RadGrid2_DetailTableDataBind" AllowSorting="true" AllowFilteringByColumn="false"
                                             AutoGenerateColumns="False" AllowMultiRowSelection="False" GridLines="None" EnableLinqExpressions="false" ShowFooter="false">
                                             <MasterTableView DataKeyNames="document_type_rcd" AllowMultiColumnSorting="True" Width="100%" Name="Master" TableLayout="Fixed"
@@ -306,14 +301,17 @@
                                                 <Selecting AllowRowSelect="True" />
                                             </ClientSettings>
                                         </telerik:RadGrid>
+                                        </li>
                                         <%--End Load LAB and IMG Document--%>
 
                                         <%--Load Scan Document--%>
-                                        <a href="javascript:void(0)" class="waves-effect waves-primary btn-link" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
-                                            <span>Scan Document</span>
-                                        </a>
+                                        <asp:LinkButton CssClass="btn btn-outline-light waves-effect waves-secondary text-dark w-100" ID="LinkButton2" runat="server" >Scan Document</asp:LinkButton>
 
-                                        <telerik:RadGrid ID="RadGrid3" runat="server" Width="100%" OnNeedDataSource="RadGrid3_NeedDataSource"
+                                        <%--<a href="javascript:void(0)" class="waves-effect waves-primary btn-link" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">
+                                            <span>Scan Document</span>
+                                        </a>--%>
+                                        <li>
+                                            <telerik:RadGrid ID="RadGrid3" runat="server" Width="100%" OnNeedDataSource="RadGrid3_NeedDataSource"
                                             ShowHeader="false" OnDetailTableDataBind="RadGrid3_DetailTableDataBind" AllowSorting="true" AllowFilteringByColumn="false"
                                             AutoGenerateColumns="False" AllowMultiRowSelection="False" GridLines="None" EnableLinqExpressions="false" ShowFooter="false">
                                             <MasterTableView DataKeyNames="patient_id,document_type_rcd" AllowMultiColumnSorting="True" Width="100%" Name="Master" TableLayout="Fixed"
@@ -348,20 +346,10 @@
                                                 <Scrolling AllowScroll="True" ScrollHeight="100%" UseStaticHeaders="True" SaveScrollPosition="true" />
                                             </ClientSettings>
                                         </telerik:RadGrid>
+                                        </li>
                                         <%--End Load Scan Document--%>
                                     </ul>
-                                    <asp:UpdateProgress ID="updateProgress_main" runat="server" AssociatedUpdatePanelID="updatePanel_main">
-                                        <ProgressTemplate>
-                                            <div class="loader">
-                                                <div class="loader__figure"></div>
-                                                <p class="loader__label">AIH Hospital</p>
-                                            </div>
-                                        </ProgressTemplate>
-                                    </asp:UpdateProgress>
                                 </ContentTemplate>
-                                <Triggers>
-                                    <%--<asp:AsyncPostBackTrigger ControlID="btnSearch" EventName="Click" />--%>
-                                </Triggers>
                             </asp:UpdatePanel>
                         </div>
                     </nav>
@@ -413,6 +401,7 @@
     <%--<script src="../scripts/custom.min.js"></script>--%>
     <script src="../scripts/myScript.js"></script>
     <script src="../scripts/contenteditable.min.js"></script>
+    <script src="../scripts/waves.js"></script>
 
     <script>
 
@@ -496,7 +485,20 @@
     </script>
 
     <script type="text/javascript">
-        
+
+        function lblURL_click(args) {
+
+            let data = {
+                varModelId: args.getAttribute("data-modelID"),
+                varDocID: args.getAttribute("data-documentId"),
+                varPID: args.getAttribute("data-varPID"),
+                varVPID: args.getAttribute("data-varVPID"),
+                docStatus: args.getAttribute("data-status"),
+            }
+
+            __doPostBack('lblURL_click', JSON.stringify(data));
+        }
+
         function OnGridCreated(sender, args) {
 
             let listItem = document.querySelectorAll(".list-item");

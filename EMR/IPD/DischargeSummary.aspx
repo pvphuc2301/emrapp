@@ -17,6 +17,8 @@
 <%@ Register Src="~/UserControls/PrintTemplate/PatientLabel1.ascx" TagPrefix="webUI" TagName="PatientLabel1" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrtRowS1.ascx" TagPrefix="webUI" TagName="PrtRowS1" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrtDate.ascx" TagPrefix="webUI" TagName="PrtDate" %>
+<%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="aih" TagName="PopupShowDelay" %>
+
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -26,7 +28,7 @@
     <link href="../styles/myStyle.css" rel="stylesheet" />
 </head>
 <body>
-    <form method="post" action="#" id="form2" runat="server">
+    <form method="post" action="#" id="form1" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManage" />
         <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
@@ -571,6 +573,9 @@
                                                 </div>
                                             </ModalBody>
                                         </webUI:PopupModal>
+
+                                        <aih:PopupShowDelay runat="server" ID="PopupShowDelay" />
+
                                     </div>
                                 </div>
                             </div>

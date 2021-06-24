@@ -10,6 +10,7 @@ using Telerik.Web.UI;
 using System.Data;
 using Newtonsoft.Json;
 using System.Web.UI.HtmlControls;
+using System.Web.SessionState;
 
 namespace EMR
 {
@@ -22,7 +23,7 @@ namespace EMR
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            WebHelpers.CheckSession(this);
+            
             //if (Session["PageOpenEMR"] != null)
             //{
             //    HttpContext current_ss = HttpContext.Current;
@@ -35,7 +36,7 @@ namespace EMR
             //varVisibleID = Request.QueryString["vbid"]; //"900031267";
             //LoadPatientInfomation();
             
-            lblUserName.InnerText = UserID;
+            
             //
             ConnClass ConnStr = new ConnClass();
             ConnStringHIS = ConnStr.SQL_HISConnString;
@@ -45,7 +46,7 @@ namespace EMR
             {
 
                 BindLocation();
-                
+                lblUserName.Text = (string)Session["UserName"];
                 DataHelpers.LoadPatientInfomation(varPID);
 
                 new Patient(varPID);
@@ -68,16 +69,17 @@ namespace EMR
                     Response.Redirect(Request.RawUrl);
                     break;
                 case "lblURL_click":
+                    dynamic args = JObject.Parse(Request["__EVENTARGUMENT"]);
 
-                    //MainContent.ContentUrl = Return_Doc_URL( $"../";
+                    if(WebHelpers.CanOpenForm(Page, (string)args.varDocID, (string)args.docStatus, (string)Session["emp_id"], (string)Session["location"]))
+                    {
+                        MainContent.ContentUrl = Return_Doc_URL(args.varModelId, args.varDocID, args.varVPID);
+                    }
+
                     break;
 
             }
-            if (Request["__EVENTTARGET"] == "")
-            {
-                DataHelpers._LOCATION = Request["__EVENTARGUMENT"];
-                Response.Redirect(Request.RawUrl);
-            }
+            
             //if (Convert.ToString(Session["company_code"]) == "AIH")            
         }
 
@@ -265,7 +267,7 @@ namespace EMR
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 dynamic data = JObject.Parse(response.Data);
-                tmp = $"../{data.url}?modelId={varModelId}&docId={varDocID}&pId={varPID}&vpId={varVPID}&pvid={varPVID}");
+                tmp = $"../{data.url}?modelId={varModelId}&docId={varDocID}&pId={varPID}&vpId={varVPID}&pvid={varPVID}";
             }
 
             return tmp;
@@ -454,7 +456,7 @@ namespace EMR
 
         protected void btnLogout_ServerClick(object sender, EventArgs e)
         {
-            Session["UserID"] = "";
+            Session.Abandon();
             Response.Redirect("../login.aspx");
         }
 
@@ -496,6 +498,11 @@ namespace EMR
         protected void location_cli_Click(object sender, EventArgs e)
         {
 
+        }
+
+        protected void btnPatientSummary_Click(object sender, EventArgs e)
+        {
+            MainContent.ContentUrl = $"../other/patientsummary.aspx?pid={varPID}&vpid={varVPID}";
         }
     }
 }

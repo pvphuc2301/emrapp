@@ -46,8 +46,8 @@ namespace EMR
             }
 
             long length = 0;
-            try
-            {
+            //try
+            //{
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
                     length = response.ContentLength;
@@ -63,34 +63,48 @@ namespace EMR
                     result.Status = response.StatusCode;
                     return result;
                 }
-            }
-            catch (WebException ex)
-            {
-                string message = string.Format("Message: {0}\\n\\n", ex.Message);
-                message += string.Format("StackTrace: {0}\\n\\n", ex.StackTrace.Replace(Environment.NewLine, string.Empty));
-                message += string.Format("Source: {0}\\n\\n", ex.Source.Replace(Environment.NewLine, string.Empty));
-                message += string.Format("TargetSite: {0}", ex.TargetSite.ToString().Replace(Environment.NewLine, string.Empty));
+            //}
+            //catch (WebException ex)
+            //{
+                
+            //    result.Status = System.Net.HttpStatusCode.NotFound;
+            //    //result.Status = e.Status;
+            //    return result;
+            //}
+            //catch (Exception ex)
+            //{
+                
+            //    result.Status = System.Net.HttpStatusCode.NotFound;
+            //    result.Data = ex.Message;
+            //    result.Message = message;
 
-                result.Message = message;
-                result.Status = System.Net.HttpStatusCode.NotFound;
-                result.Data = ex.Message;
-                //result.Status = e.Status;
-                return result;
-            }
-            catch (Exception ex)
-            {
-                string message = string.Format("Message: {0}\\n\\n", ex.Message);
-                message += string.Format("StackTrace: {0}\\n\\n", ex.StackTrace.Replace(Environment.NewLine, string.Empty));
-                message += string.Format("Source: {0}\\n\\n", ex.Source.Replace(Environment.NewLine, string.Empty));
-                message += string.Format("TargetSite: {0}", ex.TargetSite.ToString().Replace(Environment.NewLine, string.Empty));
-
-                result.Status = System.Net.HttpStatusCode.NotFound;
-                result.Data = ex.Message;
-                result.Message = message;
-
-                return result;
-            }
+            //    return result;
+            //}
         }
+        
+        internal static bool CanOpenForm(Page page, string docid, string documentStatus, string emp_id, string location)
+        {
+            if(documentStatus == DocumentStatus.DRAFT && location == DataHelpers._LOCATION)
+            {
+                dynamic result = WebHelpers.GetAPI($"api/emr/check-session/{DataHelpers._LOCATION}/{docid}/{emp_id}");
+
+                if (result.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic obj = JObject.Parse(result.Data);
+                    dynamic employee = obj["items"];
+
+                    //false - open denied
+                    if (!(bool)obj.status)
+                    {
+                        ScriptManager.RegisterStartupScript(page, page.GetType(), "document_block", @" setTimeout(()=> { alert('this document is blocked by " + employee.full_name_e + "'); },0); ", true);
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
         public static dynamic PostAPI(string url)
         {
             dynamic result = new System.Dynamic.ExpandoObject();
@@ -108,8 +122,8 @@ namespace EMR
             }
 
             long length = 0;
-            try
-            {
+            //try
+            //{
                 using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
                     length = response.ContentLength;
@@ -125,20 +139,21 @@ namespace EMR
                     result.Status = response.StatusCode;
                     return result;
                 }
-            }
-            catch (WebException e)
-            {
-                result.Status = e.Status;
-                return result;
-            }
-            catch (Exception ex)
-            {
-                result.Data = ex.Message;
-                result.Status = "Error";
-                result.Exception = ex;
-                return result;
-            }
+            //}
+            //catch (WebException e)
+            //{
+            //    result.Status = e.Status;
+            //    return result;
+            //}
+            //catch (Exception ex)
+            //{
+            //    result.Data = ex.Message;
+            //    result.Status = "Error";
+            //    result.Exception = ex;
+            //    return result;
+            //}
         }
+        
         public static dynamic GetAPI(string url)
         {
             dynamic result = new System.Dynamic.ExpandoObject();
@@ -167,111 +182,9 @@ namespace EMR
                     return result;
                 }
             }
-            catch (WebException ex)
-            {
+            catch(Exception ex) {
                 result.Status = System.Net.HttpStatusCode.NotFound;
-                //result.Status = ((dynamic)ex.Response).StatusCode;
-
                 result.Data = ex.Message;
-
-                return result;
-            }
-        }
-        public static dynamic GetAPITEST(string url)
-        {
-            dynamic result = new System.Dynamic.ExpandoObject();
-
-            url = URL + url;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = "GET";
-            request.ContentType = "application/json";
-            long length = 0;
-            
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            {
-                length = response.ContentLength;
-                WebResponse response1 = request.GetResponse();
-                Stream dataStream = response1.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                var responseFromServer = reader.ReadToEnd();
-                //var res = response1;
-                reader.Close();
-                dataStream.Close();
-                response.Close();
-
-                result.Status = response.StatusCode;
-                result.Data = responseFromServer;
-                return result;
-            }
-        }
-        public static dynamic PostAPITEST(string url, dynamic obj)
-        {
-            dynamic result = new ExpandoObject();
-
-            var jsonContent = new JavaScriptSerializer().Serialize(obj);
-
-            url = URL + url;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = WebRequestMethods.Http.Post;
-            // request.Headers.Add("Authentication", authToken);
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes(jsonContent);
-            request.ContentLength = byteArray.Length;
-            request.ContentType = "application/json";
-            using (Stream dataStream = request.GetRequestStream())
-            {
-                dataStream.Write(byteArray, 0, byteArray.Length);
-            }
-
-            long length = 0;
-            
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            {
-                length = response.ContentLength;
-                WebResponse response1 = request.GetResponse();
-                Stream dataStream = response1.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                var responseFromServer = reader.ReadToEnd();
-
-                reader.Close();
-                dataStream.Close();
-                response.Close();
-
-                result.Status = response.StatusCode;
-                return result;
-            }
-        }
-        public static dynamic PostAPITEST(string url)
-        {
-            dynamic result = new System.Dynamic.ExpandoObject();
-
-            url = URL + url;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = WebRequestMethods.Http.Post;
-            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
-            Byte[] byteArray = encoding.GetBytes("{}");
-            request.ContentLength = byteArray.Length;
-            request.ContentType = "application/json";
-            using (Stream dataStream = request.GetRequestStream())
-            {
-                dataStream.Write(byteArray, 0, byteArray.Length);
-            }
-
-            long length = 0;
-            
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            {
-                length = response.ContentLength;
-                WebResponse response1 = request.GetResponse();
-                Stream dataStream = response1.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                var responseFromServer = reader.ReadToEnd();
-
-                //var res = response1;
-                reader.Close();
-                dataStream.Close();
-                response.Close();
-                result.Status = response.StatusCode;
                 return result;
             }
         }
@@ -307,25 +220,49 @@ namespace EMR
         }
         internal static void DataBind(HtmlForm _form, HtmlInputRadioButton controlType, string controlID)
         {
-            var control = _form.FindControl(controlID);
+            dynamic control = _form.FindControl(controlID);
+            
             if (control != null)
             {
                 ((HtmlInputRadioButton)control).Checked = true;
             }
         }
-        internal static void DataBind(HtmlForm _from, HtmlInputCheckBox controlType, string controlID)
+        internal static void DataBind(HtmlForm _form, HtmlSelect select, Dictionary<string, string> dictionary, string selectedItem)
         {
-            var control = _from.FindControl(controlID);
+            select.Items.Clear();
+            foreach (KeyValuePair<string, string> code in dictionary)
+            {
+                try
+                {
+                    ListItem item = new ListItem();
+                    item.Value = code.Key.ToString();
+                    item.Text = code.Value;
+
+                    select.Items.Add(item);
+                }
+                catch (Exception ex) { }
+            }
+
+            var item1 = select.Items.FindByValue(selectedItem);
+            if (item1 != null)
+            {
+                item1.Selected = true;
+            }
+        }
+        internal static void DataBind(HtmlForm _form, HtmlInputCheckBox controlType, string controlID)
+        {
+            dynamic control = _form.FindControl(controlID);
+
             if (control != null)
             {
                 ((HtmlInputCheckBox)control).Checked = true;
             }
         }
-        internal static void DataBind(HtmlForm _from, HtmlInputCheckBox controlType, string cb_name, string value, string key = "code")
+        internal static void DataBind(HtmlForm _from, HtmlInputCheckBox controlType, string cb_name, DataTable value, string key = "code")
         {
             if (value != null && cb_name != null)
             {
-                foreach (DataRow row in WebHelpers.GetJSONToDataTable(value).Rows)
+                foreach (DataRow row in value.Rows)
                 {
                     try
                     {
@@ -463,14 +400,14 @@ namespace EMR
 
         internal static void SendError(Page page, Exception ex)
         {
-            PopupException popupException = (PopupException)page.LoadControl("~/UserControls/PopupException.ascx");
-            page.Form.Controls.Add(popupException);
+            //PopupException popupException = (PopupException)page.LoadControl("~/UserControls/PopupException.ascx");
+            //page.Form.Controls.Add(popupException);
             
             string message = string.Format("Message: {0}\\n\\n", ex.Message);
             message += string.Format("StackTrace: {0}\\n\\n", ex.StackTrace.Replace(Environment.NewLine, string.Empty));
             message += string.Format("Source: {0}\\n\\n", ex.Source.Replace(Environment.NewLine, string.Empty));
             message += string.Format("TargetSite: {0}", ex.TargetSite.ToString().Replace(Environment.NewLine, string.Empty));
-            popupException.Text = message;
+            //popupException.Text = message;
             
             ScriptManager.RegisterStartupScript(page, page.GetType(), "msg_error", "alert(\"" + message + "\");", true);
         }
@@ -780,10 +717,11 @@ namespace EMR
         internal static dynamic GetData(HtmlForm form, HtmlInputCheckBox controlType, string radioButtonID, bool required = false)
         {
             dynamic control1 = form.FindControl($"{radioButtonID}true");
-            dynamic control2 = form.FindControl($"{radioButtonID}false");
+            //dynamic control2 = form.FindControl($"{radioButtonID}false");
+
 
             if (control1.Checked) { return true; }
-            else if (control2.Checked) { return false; }
+            //else if (control2.Checked) { return false; }
             else {
                 if (required) { return false; }
                 return null;
@@ -987,38 +925,27 @@ namespace EMR
         {
             if (value == null) return null; return (bool)value ? returnTrue : returnFalse;
         }
-        internal static void CheckSession(Page _page, string redirecturl = "../login.aspx?ReturnUrl=")
+        internal static bool CheckSession(Page _page, string redirecturl = "../login.aspx?ReturnUrl=")
         {
             string UserID = (string)_page.Session["UserID"];
             redirecturl += _page.Request.ServerVariables["script_name"] + "?";
             redirecturl += _page.Server.UrlEncode(_page.Request.QueryString.ToString());
             if (string.IsNullOrEmpty(UserID))
+            {
                 _page.Response.Redirect(redirecturl, false);
-
+                return false;
+            }
             switch (_page.Request["__EVENTTARGET"])
             {
                 case "stayLoggedIn":
                     _page.Response.Redirect(redirecturl);
-                    break;
+                    return false;
 
                 default:
-                    ScriptManager.RegisterStartupScript(_page, _page.GetType(), "session_timeout",
-@"var _session_timeout; 
-clearInterval(_session_timeout); 
-setTimeout(()=> { 
-    $('#PopupShowDelay').modal({ backdrop: 'static', keyboard: false }); 
-
-    let _countDownTimer = 14; 
-    let _timeLeft = document.getElementById('timeleft'); 
-
-    _session_timeout = setInterval(() => 
-    { 
-        _timeLeft.innerText = (_countDownTimer--);
-        if(_countDownTimer < 0) { clearInterval(_session_timeout); logout(); }
-    }, 1000);
-}, 1000 * 60 * 60);", true);
+                    ScriptManager.RegisterStartupScript(_page, _page.GetType(), "session_timeout","setTimeout(()=> {popupShowDelay(\"" + EMRClass.Settings["EMR_DOCUMENT_SESSION"].paramater_value + "\");},0);", true);
                     break;
             }
+            return true;
         }
         internal static string GetCheckBox(HtmlForm _form, string _checkboxID, Dictionary<string, string> _source, out DataTable _table, string _code = "code")
         {
@@ -1224,6 +1151,12 @@ setTimeout(()=> {
             {
                 return null;
             }
+        }
+
+        internal static dynamic GetDicDesc(dynamic code, Dictionary<string, string> dictionary)
+        {
+            if (code != null) return dictionary[code];
+            return null;
         }
         #endregion
     }

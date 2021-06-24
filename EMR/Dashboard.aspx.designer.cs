@@ -42,13 +42,40 @@ namespace EMR
         protected global::System.Web.UI.UpdatePanel Upd;
 
         /// <summary>
-        /// House control.
+        /// House1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.House House;
+        protected global::EMR.icons.House House1;
+
+        /// <summary>
+        /// lbl_location control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_location;
+
+        /// <summary>
+        /// location_aih control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor location_aih;
+
+        /// <summary>
+        /// location_cli control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlAnchor location_cli;
 
         /// <summary>
         /// Bell control.
@@ -60,22 +87,13 @@ namespace EMR
         protected global::EMR.icons.Bell Bell;
 
         /// <summary>
-        /// Person control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.icons.Person Person;
-
-        /// <summary>
         /// lblUserName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblUserName;
+        protected global::System.Web.UI.WebControls.Label lblUserName;
 
         /// <summary>
         /// CaretDown control.
@@ -87,13 +105,13 @@ namespace EMR
         protected global::EMR.icons.CaretDown CaretDown;
 
         /// <summary>
-        /// Person1 control.
+        /// Person control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.Person Person1;
+        protected global::EMR.icons.Person Person;
 
         /// <summary>
         /// Gear control.
@@ -121,15 +139,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor btnLogout;
-
-        /// <summary>
-        /// BoxArrowInLeft control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.icons.BoxArrowInLeft BoxArrowInLeft;
 
         /// <summary>
         /// updatePanel_demographicSearch control.
@@ -175,15 +184,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid RadGrid5;
-
-        /// <summary>
-        /// RadGrid6 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid RadGrid6;
 
         /// <summary>
         /// RadGrid1 control.
@@ -249,12 +249,12 @@ namespace EMR
         protected global::Telerik.Web.UI.RadGrid RadGrid4;
 
         /// <summary>
-        /// PopupShowDelay control.
+        /// messagePlaceHolder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.PopupShowDelay PopupShowDelay;
+        protected global::System.Web.UI.WebControls.PlaceHolder messagePlaceHolder;
     }
 }

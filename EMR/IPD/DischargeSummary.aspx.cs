@@ -11,46 +11,26 @@ namespace EMR
 {
     public partial class DischargeSummary : System.Web.UI.Page
     {
-        Diss diss;
-        public string UserID;
         protected void Page_Load(object sender, EventArgs e)
         {
             WebHelpers.CheckSession(this);
-
-            if (!IsPostBack)
-            {
-                Initial();
-            }
-
-            if (Request["__EVENTTARGET"] == "discReasonCode_Change")
-            {
-                LoadDischargeReason(Request["__EVENTARGUMENT"]);
-            }
+            if (!IsPostBack) { Initial(); }
+            PostBackEvent();
         }
-
-        public void Initial()
+        
+        #region Binding Data
+        private void BindingDataForm(Diss diss, bool state)
         {
-            if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
-            if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
-            if (Request.QueryString["vpid"] != null) DataHelpers.varPVId = Request.QueryString["vpid"];
-
-            diss = new Diss(DataHelpers.varDocId);
-
-            amendReasonWraper.Visible = false;
-            btnCancel.Visible = false;
-
-            prt_barcode.Text = Patient.Instance().visible_patient_id;
-
-            if (diss.status == DocumentStatus.FINAL)
+            if (state)
             {
-                LoadFormView(diss);
+                BindingDataFormEdit(diss);
             }
-            else if (diss.status == DocumentStatus.DRAFT)
+            else
             {
-                LoadFormEdit(diss);
+                BindingDataFormView(diss);
             }
         }
-        private void LoadFormView(Diss diss)
+        private void BindingDataFormView(Diss diss)
         {
             lbl_disc_reason_desc.Text = WebHelpers.GetValue(diss.disc_reason_desc);
             lbl_date_of_hospital.Text = WebHelpers.FormatDateTime(diss.date_of_hospital);
@@ -80,21 +60,11 @@ namespace EMR
             lbl_signed_doctor.Text = WebHelpers.GetValue(diss.signed_doctor);
 
             LoadDischargeReason(diss.disc_reason_code);
-
-            //
-            LoadFormControl(true);
-
-            btnComplete.Visible = false;
-            btnSave.Visible = false;
-            btnDeleteModal.Visible = false;
-
-            btnAmend.Visible = true;
-            btnPrint.Visible = true;
         }
-        private void LoadFormEdit(Diss diss)
+        private void BindingDataFormEdit(Diss diss)
         {
             LoadDischargeReason(diss.disc_reason_code);
-            BindRadioButton("rad_disc_reason_code_" + diss.disc_reason_code);
+            WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_disc_reason_code_" + diss.disc_reason_code);
 
             WebHelpers.BindDateTimePicker(dpk_date_of_hospital, diss.date_of_hospital);
 
@@ -111,7 +81,7 @@ namespace EMR
             txt_physical_finding.Value = diss.physical_finding;
             //5
             txt_lab_result.Value = diss.lab_result;
-            BindRadioButton("rad_patho_result_code_" + diss.patho_result_code);
+            WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_patho_result_code_" + diss.patho_result_code);
 
             //6
             txt_proce_performed.Value = diss.proce_performed;
@@ -148,13 +118,8 @@ namespace EMR
 
             WebHelpers.BindDateTimePicker(dpk_signed_date, diss.signed_date);
             txt_signed_doctor.Value = diss.signed_doctor;
-            //
-            LoadFormControl(false);
-
-            btnAmend.Visible = false;
-            btnPrint.Visible = false;
         }
-        private void LoadFormPrint(Diss diss)
+        private void BindingDataFormPrint(Diss diss)
         {
             Patient patient = Patient.Instance();
             PatientVisit patientVisit = PatientVisit.Instance();
@@ -217,7 +182,8 @@ namespace EMR
 
                 prt_transfer_reason.Visible = prt_transfer_reason_title.Visible = true;
                 prt_transfer_reason.Text = diss.transfer_reason;
-            } else if (diss.disc_reason_code == "AMA")
+            }
+            else if (diss.disc_reason_code == "AMA")
             {
                 //10
                 prt_disc_medication.Visible = prt_disc_medication_title.Visible = true;
@@ -234,131 +200,54 @@ namespace EMR
             }
 
         }
+        #endregion
 
+        #region Events
         protected void btnComplete_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
-                diss = new Diss(Request.QueryString["docId"]);
+                Diss diss = new Diss(Request.QueryString["docId"]);
                 diss.status = DocumentStatus.FINAL;
                 diss.user_name = (string)Session["UserID"];
 
                 UpdateData(diss);
             }
         }
-
         protected void btnSave_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
-                diss = new Diss(Request.QueryString["docId"]);
+                Diss diss = new Diss(Request.QueryString["docId"]);
                 diss.status = DocumentStatus.DRAFT;
                 diss.user_name = (string)Session["UserID"];
 
                 UpdateData(diss);
             }
         }
-
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            diss = new Diss(Request.QueryString["docId"]);
+            Diss diss = new Diss(Request.QueryString["docId"]);
+            string emp_id = (string)Session["emp_id"];
 
-            amendReasonWraper.Visible = true;
-            btnComplete.Visible = true;
-            btnCancel.Visible = true;
-            btnAmend.Visible = false;
-            btnPrint.Visible = false;
+            if (WebHelpers.CanOpenForm(Page, diss.document_id, diss.status, emp_id, (string)Session["location"]))
+            {
 
-            LoadFormEdit(diss);
+                txt_amend_reason.Text = "";
+                WebHelpers.VisibleControl(false, btnAmend, btnPrint);
+                WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
+
+                //load form control
+                WebHelpers.LoadFormControl(form1, diss, ControlState.Edit, (string)Session["location"]);
+                //binding data
+                BindingDataFormEdit(diss);
+                //get access button
+            }
         }
-
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             Initial();
         }
-
-        public void UpdateData(Diss diss)
-        {
-            diss.amend_reason = txt_amend_reason.Text;
-
-            diss.disc_reason_code = GetRadioButton("rad_disc_reason_code_", Diss.DISC_REASON_CODE);
-            if (diss.disc_reason_code != null) diss.disc_reason_desc = Diss.DISC_REASON_CODE[diss.disc_reason_code];
-
-            diss.date_of_hospital = DataHelpers.ConvertSQLDateTime(dpk_date_of_hospital.SelectedDate);
-            diss.date_of_discharge = DataHelpers.ConvertSQLDateTime(dpk_date_of_discharge.SelectedDate);
-            diss.admission_reason = txt_admission_reason.Value;
-            diss.icd10_diagnosis = txt_icd10_diagnosis.Value;
-            diss.associated_diagnosis = txt_associated_diagnosis.Value;
-            diss.cur_med_history = txt_cur_med_history.Value;
-            diss.ant_med_history = txt_ant_med_history.Value;
-            diss.physical_finding = txt_physical_finding.Value;
-            diss.lab_result = txt_lab_result.Value;
-
-            diss.patho_result_code = GetRadioButton("rad_patho_result_code_", Diss.PATHO_RESULT_CODE);
-            if (diss.patho_result_code != null) diss.patho_result_desc = Diss.PATHO_RESULT_CODE[diss.patho_result_code];
-
-            diss.proce_performed = txt_proce_performed.Value;
-            diss.treatment = txt_treatment.Value;
-            diss.evolution = txt_evolution.Value;
-            diss.disc_condition = txt_disc_condition.Value;
-            diss.disc_medication = txt_disc_medication.Value;
-
-            if (diss.disc_reason_code == "TRANSFER")
-            {
-                diss.disc_medication = txt_disc_medication.Value;
-                diss.trans_to_hospital = txt_trans_to_hospital.Value;
-                diss.transfer_reason = txt_transfer_reason.Value;
-
-                //
-                diss.next_consult_date = null;
-                diss.next_consult_doctor = null;
-                diss.dama = null;
-                diss.dama_note = null;
-
-            }
-            else if (diss.disc_reason_code == "AMA")
-            {
-                diss.disc_medication = txt_disc_medication.Value;
-                diss.follow_up_instruc = txt_follow_up_instruc.Value;
-                diss.special_diet = txt_special_diet.Value;
-                diss.next_consult_date = DataHelpers.ConvertSQLDateTime(dpk_next_consult_date.SelectedDate);
-                diss.next_consult_doctor = txt_next_consult_doctor.Value;
-
-                //
-                diss.transfer_reason = null;
-                diss.trans_to_hospital = null;
-            }
-            else if (diss.disc_reason_code == "DAMA")
-            {
-                diss.dama = txt_dama.Value;
-                diss.dama_note = txt_dama_note.Value;
-
-                //
-                diss.next_consult_date = null;
-                diss.next_consult_doctor = null;
-                diss.transfer_reason = null;
-                diss.trans_to_hospital = null;
-            }
-
-            diss.signed_date = DataHelpers.ConvertSQLDateTime(dpk_signed_date.SelectedDate);
-            diss.signed_doctor = txt_signed_doctor.Value;
-
-            dynamic result = diss.Update()[0];
-
-            if (result.Status == System.Net.HttpStatusCode.OK)
-            {
-                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
-
-                Initial();
-            }
-            else
-            {
-                Session["PageNotFound"] = result;
-                Response.Redirect("../Other/PageNotFound.aspx", false);
-            }
-        }
-
         protected void btnDelete_Click(object sender, EventArgs e)
         {
             dynamic result = Diss.Delete((string)Session["UserId"], Request.QueryString["docId"]);
@@ -376,49 +265,126 @@ namespace EMR
                 Response.Redirect("../Other/PageNotFound.aspx", false);
             }
         }
-
         protected void btnPrint_Click(object sender, EventArgs e)
         {
-            diss = new Diss(Request.QueryString["docId"]);
-            LoadFormPrint(diss);
+            Diss diss = new Diss(Request.QueryString["docId"]);
+            BindingDataFormPrint(diss);
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "window.print();", true);
-        }
-
-        #region Authen
-        private void CheckUserID()
-        {
-            UserID = (string)Session["UserID"];
-            string redirecturl = "../login.aspx?ReturnUrl=";
-            redirecturl += Request.ServerVariables["script_name"] + "?";
-            redirecturl += Server.UrlEncode(Request.QueryString.ToString());
-            if (string.IsNullOrEmpty(UserID))
-                Response.Redirect(redirecturl);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
         }
         #endregion
 
         #region Functions
-        private dynamic GetRadioButton(string radio_name, Dictionary<string, string> value)
+        public void Initial()
         {
-            foreach (KeyValuePair<string, string> code in value)
+            if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
+            if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
+            if (Request.QueryString["vpid"] != null) DataHelpers.varPVId = Request.QueryString["vpid"];
+
+            try
             {
-                try
+                Diss diss = new Diss(Request.QueryString["docId"]);
+
+                WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
+                prt_barcode.Text = Patient.Instance().visible_patient_id;
+                if (diss.status == DocumentStatus.FINAL)
                 {
-                    if (((HtmlInputRadioButton)FindControl(radio_name + code.Key)).Checked)
-                    {
-                        return code.Key;
-                        break;
-                    }
+                    BindingDataForm(diss, WebHelpers.LoadFormControl(form1, diss, ControlState.View, (string)Session["location"]));
+
                 }
-                catch (Exception ex) { }
+                else if (diss.status == DocumentStatus.DRAFT)
+                {
+                    BindingDataForm(diss, WebHelpers.LoadFormControl(form1, diss, ControlState.Edit, (string)Session["location"]));
+                }
+
+                WebHelpers.getAccessButtons(form1, diss.status, (string)Session["access_authorize"], (string)Session["location"]);
             }
-            return null;
-        }
-        public void BindRadioButton(dynamic value)
-        {
-            if (FindControl(value) != null)
+            catch (Exception ex)
             {
-                ((HtmlInputRadioButton)FindControl(value)).Checked = true;
+                WebHelpers.SendError(Page, ex);
+            }
+        }
+        public void UpdateData(Diss diss)
+        {
+            try
+            {
+                diss.amend_reason = txt_amend_reason.Text;
+
+                diss.disc_reason_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_disc_reason_code_", Diss.DISC_REASON_CODE);
+                if (diss.disc_reason_code != null) diss.disc_reason_desc = Diss.DISC_REASON_CODE[diss.disc_reason_code];
+
+                diss.date_of_hospital = DataHelpers.ConvertSQLDateTime(dpk_date_of_hospital.SelectedDate);
+                diss.date_of_discharge = DataHelpers.ConvertSQLDateTime(dpk_date_of_discharge.SelectedDate);
+                diss.admission_reason = txt_admission_reason.Value;
+                diss.icd10_diagnosis = txt_icd10_diagnosis.Value;
+                diss.associated_diagnosis = txt_associated_diagnosis.Value;
+                diss.cur_med_history = txt_cur_med_history.Value;
+                diss.ant_med_history = txt_ant_med_history.Value;
+                diss.physical_finding = txt_physical_finding.Value;
+                diss.lab_result = txt_lab_result.Value;
+
+                diss.patho_result_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_patho_result_code_", Diss.PATHO_RESULT_CODE);
+                if (diss.patho_result_code != null) diss.patho_result_desc = Diss.PATHO_RESULT_CODE[diss.patho_result_code];
+
+                diss.proce_performed = txt_proce_performed.Value;
+                diss.treatment = txt_treatment.Value;
+                diss.evolution = txt_evolution.Value;
+                diss.disc_condition = txt_disc_condition.Value;
+                diss.disc_medication = txt_disc_medication.Value;
+
+                if (diss.disc_reason_code == "TRANSFER")
+                {
+                    diss.disc_medication = txt_disc_medication.Value;
+                    diss.trans_to_hospital = txt_trans_to_hospital.Value;
+                    diss.transfer_reason = txt_transfer_reason.Value;
+
+                    //
+                    diss.next_consult_date = null;
+                    diss.next_consult_doctor = null;
+                    diss.dama = null;
+                    diss.dama_note = null;
+
+                }
+                else if (diss.disc_reason_code == "AMA")
+                {
+                    diss.disc_medication = txt_disc_medication.Value;
+                    diss.follow_up_instruc = txt_follow_up_instruc.Value;
+                    diss.special_diet = txt_special_diet.Value;
+                    diss.next_consult_date = DataHelpers.ConvertSQLDateTime(dpk_next_consult_date.SelectedDate);
+                    diss.next_consult_doctor = txt_next_consult_doctor.Value;
+
+                    //
+                    diss.transfer_reason = null;
+                    diss.trans_to_hospital = null;
+                }
+                else if (diss.disc_reason_code == "DAMA")
+                {
+                    diss.dama = txt_dama.Value;
+                    diss.dama_note = txt_dama_note.Value;
+
+                    //
+                    diss.next_consult_date = null;
+                    diss.next_consult_doctor = null;
+                    diss.transfer_reason = null;
+                    diss.trans_to_hospital = null;
+                }
+
+                diss.signed_date = DataHelpers.ConvertSQLDateTime(dpk_signed_date.SelectedDate);
+                diss.signed_doctor = txt_signed_doctor.Value;
+
+                dynamic result = diss.Update()[0];
+
+                if (result.Status == System.Net.HttpStatusCode.OK)
+                {
+                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
+                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
+
+                    Initial();
+                }
+            }
+            catch (Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
             }
         }
         private void LoadDischargeReason(string value)
@@ -438,21 +404,11 @@ namespace EMR
                 WebHelpers.VisibleControl(true, next_consultation_field, special_diet_field, follow_up_field, disc_medication_field);
             }
         }
-        protected void LoadFormControl(bool disabled)
+        private void PostBackEvent()
         {
-            foreach (var prop in diss.GetType().GetProperties())
+            if (Request["__EVENTTARGET"] == "discReasonCode_Change")
             {
-                var control1 = FindControl(prop.Name + "_wrapper");
-                var control2 = FindControl("lbl_" + prop.Name);
-
-                if (control1 != null)
-                {
-                    control1.Visible = !disabled;
-                }
-                if (control2 != null)
-                {
-                    control2.Visible = disabled;
-                }
+                LoadDischargeReason(Request["__EVENTARGUMENT"]);
             }
         }
         #endregion
@@ -466,12 +422,10 @@ namespace EMR
         {
             LoadDischargeReason("AMA");
         }
-
         protected void disc_reason_code_dama_ServerChange(object sender, EventArgs e)
         {
             LoadDischargeReason("DAMA");
         }
-
         protected void disc_reason_code_transfer_ServerChange(object sender, EventArgs e)
         {
             LoadDischargeReason("TRANSFER");

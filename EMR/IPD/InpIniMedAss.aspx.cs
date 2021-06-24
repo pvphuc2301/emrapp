@@ -10,9 +10,6 @@ namespace EMR
 {
     public partial class InpIniMedAss : Page
     {
-        #region Variables
-        Iima iima;
-        #endregion
         protected void Page_Load(object sender, EventArgs e)
         {
             WebHelpers.CheckSession(this);
@@ -22,62 +19,45 @@ namespace EMR
             }
         }
 
-        public void Initial()
+        #region Binding Data
+        private void BindingDataForm(Iima iima, bool state)
         {
-            if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
-            if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
-            if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
-
-            iima = new Iima(Request.QueryString["docId"]);
-
-            WebHelpers.VisibleControl(false, amendReasonWraper, btnCancel);
-            //prt_barcode.Text = Patient.Instance().visible_patient_id;
-            if (iima.status == DocumentStatus.FINAL)
-            {
-                BindingDataFormView(iima);
-
-                WebHelpers.VisibleControl(true, btnAmend, btnPrint);
-                WebHelpers.VisibleControl(false, btnUpdateVitalSign, btnComplete, btnSave, btnDeleteModal);
-
-                WebHelpers.LoadFormControl(form1, iima, ControlState.View);
-            }
-            else if (iima.status == DocumentStatus.DRAFT)
+            if (state)
             {
                 BindingDataFormEdit(iima);
-
-                WebHelpers.VisibleControl(false, btnAmend, btnPrint);
-                WebHelpers.VisibleControl(true, btnComplete, btnSave, btnDeleteModal);
-                WebHelpers.LoadFormControl(form1, iima, ControlState.Edit);
+            }
+            else
+            {
+                BindingDataFormView(iima);
             }
         }
-
-        #region Binding Data
         private void BindingDataFormEdit(Iima iima)
         {
             try
             {
                 txt_amend_reason.Text = "";
+
                 txt_chief_complaint.Value = iima.chief_complaint;
                 txt_cur_med_history.Value = iima.cur_med_history;
                 txt_cur_medication.Value = iima.cur_medication;
                 txt_personal.Value = iima.personal;
 
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), $"rad_habits_smoking_{iima.habits_smoking}");
-                txt_habits_smoking_pack.Value = WebHelpers.GetValue(iima.habits_smoking_pack);
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), $"rad_habits_smoking_" + iima.habits_smoking);
+                txt_habits_smoking_pack.Value = iima.habits_smoking_pack;
 
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), $"rad_habits_alcohol_{iima.habits_alcohol}");
-                txt_habits_alcohol_note.Value = WebHelpers.GetValue(iima.habits_alcohol_note);
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), $"rad_habits_alcohol_" + iima.habits_alcohol);
+                txt_habits_alcohol_note.Value = iima.habits_alcohol_note;
 
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), $"rad_habits_drugs_{iima.habits_drugs}");
-                txt_habits_drugs_note.Value = WebHelpers.GetValue(iima.habits_drugs_note);
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), $"rad_habits_drugs_" + iima.habits_drugs);
+                txt_habits_drugs_note.Value = iima.habits_drugs_note;
 
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), $"rad_habits_physical_exercise_{iima.habits_physical_exercise}");
-                txt_habits_phy_exer_note.Value = WebHelpers.GetValue(iima.habits_phy_exer_note);
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), $"rad_habits_physical_exercise_" + iima.habits_physical_exercise);
+                txt_habits_phy_exer_note.Value = iima.habits_phy_exer_note;
 
-                txt_habits_other.Value = WebHelpers.GetValue(iima.habits_other);
+                txt_habits_other.Value = iima.habits_other;
 
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), $"rad_allergy_{iima.allergy}");
-                txt_allergy_note.Value = WebHelpers.GetValue(iima.allergy_note);
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), $"rad_allergy_" + iima.allergy);
+                txt_allergy_note.Value = iima.allergy_note;
 
                 txt_family.Value = iima.family;
                 txt_immunization.Value = iima.immunization;
@@ -92,7 +72,7 @@ namespace EMR
                 vs_pulse.Text = iima.vs_pulse;
                 txt_physical_exam.Value = iima.physical_exam;
 
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), $"rad_psy_consul_required_{iima.psy_consul_required}");
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), $"rad_psy_consul_required_" + iima.psy_consul_required);
                 
                 txt_laboratory_result.Value = iima.laboratory_result;
                 txt_add_investigation.Value = iima.add_investigation;
@@ -102,8 +82,6 @@ namespace EMR
                 txt_associated_conditions.Value = iima.associated_conditions;
                 txt_treatment_plan.Value = iima.treatment_plan;
                 txt_discharge_plan.Value = iima.discharge_plan;
-
-                //WebHelpers.LoadFormControl(form1, iima, false);
             }
             catch (Exception ex)
             {
@@ -129,18 +107,29 @@ namespace EMR
             lbl_allergy.Text = WebHelpers.GetValue(WebHelpers.GetBool(iima.allergy, $"Có, ghi rõ/ Yes, specify: {iima.allergy_note}"));
             lbl_family.Text = WebHelpers.GetValue(iima.family);
             lbl_immunization.Text = WebHelpers.GetValue(iima.immunization);
+            //
+            WebHelpers.VisibleControl(false, btnUpdateVitalSign);
+            vs_temperature.Text = WebHelpers.FormatString(iima.vs_temperature);
+            vs_heart_rate.Text = WebHelpers.FormatString(iima.vs_heart_rate);
+            vs_weight.Text = WebHelpers.FormatString(iima.vs_weight);
+            vs_respiratory_rate.Text = WebHelpers.FormatString(iima.vs_respiratory_rate);
+            vs_height.Text = WebHelpers.FormatString(iima.vs_height);
+            vs_blood_pressure.Text = WebHelpers.FormatString(iima.vs_blood_pressure);
+            vs_bmi.Text = WebHelpers.FormatString(iima.vs_BMI);
+            vs_spo2.Text = WebHelpers.FormatString(iima.vs_spO2);
+            vs_pulse.Text = WebHelpers.FormatString(iima.vs_pulse);
             lbl_physical_exam.Text = WebHelpers.GetValue(iima.physical_exam);
             lbl_psy_consul_required.Text = WebHelpers.GetValue(WebHelpers.GetBool(iima.psy_consul_required));
+            //IV
             lbl_laboratory_result.Text = WebHelpers.GetValue(iima.laboratory_result);
             lbl_add_investigation.Text = WebHelpers.GetValue(iima.add_investigation);
+            //V
             lbl_initial_diagnosis.Text = WebHelpers.GetValue(iima.initial_diagnosis);
             lbl_diagnosis.Text = WebHelpers.GetValue(iima.diagnosis);
             lbl_diff_diagnosis.Text = WebHelpers.GetValue(iima.diff_diagnosis);
             lbl_associated_conditions.Text = WebHelpers.GetValue(iima.associated_conditions);
             lbl_treatment_plan.Text = WebHelpers.GetValue(iima.treatment_plan);
             lbl_discharge_plan.Text = WebHelpers.GetValue(iima.discharge_plan);
-
-            //WebHelpers.LoadFormControl(form1, iima, true);
         }
         private void BindingDataFormPrint(Iima iima)
         {
@@ -179,19 +168,27 @@ namespace EMR
         #region Events
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            iima = new Iima(Request["docid"]);
-            BindingDataFormEdit(iima);
+            Iima iima = new Iima(Request["docid"]);
+            string emp_id = (string)Session["emp_id"];
 
-            WebHelpers.VisibleControl(false, btnAmend, btnPrint);
-            WebHelpers.VisibleControl(true, btnUpdateVitalSign, amendReasonWraper, btnComplete, btnCancel);
-            WebHelpers.LoadFormControl(form1, iima, ControlState.Edit);
+            if (WebHelpers.CanOpenForm(Page, iima.document_id, iima.status, emp_id, (string)Session["location"]))
+            {
+                WebHelpers.VisibleControl(false, btnAmend, btnPrint);
+                WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
+
+                //load form control
+                WebHelpers.LoadFormControl(form1, iima, ControlState.Edit, (string)Session["location"]);
+                //binding data
+                BindingDataFormEdit(iima);
+                //get access button
+            }
         }
         protected void btnComplete_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
 
-                iima = new Iima(DataHelpers.varDocId);
+                Iima iima = new Iima(DataHelpers.varDocId);
                 iima.status = DocumentStatus.FINAL;
 
                 iima.user_name = (string)Session["UserID"];
@@ -203,7 +200,7 @@ namespace EMR
         {
             if (Page.IsValid)
             {
-                iima = new Iima(DataHelpers.varDocId);
+                Iima iima = new Iima(DataHelpers.varDocId);
 
                 iima.user_name = (string)Session["UserID"];
                 iima.status = DocumentStatus.DRAFT;
@@ -217,26 +214,25 @@ namespace EMR
         }
         protected void btnPrint_Click(object sender, EventArgs e)
         {
-            iima = new Iima(Request["docid"]);
+            Iima iima = new Iima(Request["docid"]);
             BindingDataFormPrint(iima);
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "window.print();", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
         }
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            dynamic result = Iima.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
-
-            if (result.Status == System.Net.HttpStatusCode.OK)
+            try
             {
-                string pid = Request["pid"];
-                string vpid = Request["vpid"];
+                dynamic result = Iima.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
 
-                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                if (result.Status == System.Net.HttpStatusCode.OK)
+                {
+                    string pid = Request["pid"];
+                    string vpid = Request["vpid"];
+
+                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                }
             }
-            else
-            {
-                Session["PageNotFound"] = result;
-                Response.Redirect("../Other/PageNotFound.aspx", false);
-            }
+            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }
         protected void btnUpdateVitalSign_Click(object sender, EventArgs e)
         {
@@ -251,6 +247,35 @@ namespace EMR
         #endregion
 
         #region METHOD
+        public void Initial()
+        {
+            if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
+            if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
+            if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
+
+            try
+            {
+                Iima iima = new Iima(Request.QueryString["docId"]);
+
+                WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
+                //prt_barcode.Text = Patient.Instance().visible_patient_id;
+                if (iima.status == DocumentStatus.FINAL)
+                {
+                    BindingDataForm(iima, WebHelpers.LoadFormControl(form1, iima, ControlState.View, (string)Session["location"]));
+
+                }
+                else if (iima.status == DocumentStatus.DRAFT)
+                {
+                    BindingDataForm(iima, WebHelpers.LoadFormControl(form1, iima, ControlState.Edit, (string)Session["location"]));
+                }
+
+                WebHelpers.getAccessButtons(form1, iima.status, (string)Session["access_authorize"], (string)Session["location"]);
+            }
+            catch (Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
+        }
         public void UpdateData(Iima iima)
         {
             try { 

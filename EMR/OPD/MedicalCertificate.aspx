@@ -18,6 +18,8 @@
 <%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="icon" TagName="ExclamationTriangle" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrtRowS1.ascx" TagPrefix="webUI" TagName="PrtRowS1" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrtRowS2.ascx" TagPrefix="webUI" TagName="PrtRowS2" %>
+<%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="Button" TagName="PopupShowDelay" %>
+
 
 <!DOCTYPE html>
 
@@ -45,7 +47,7 @@
                                         </div>
                                         <div class="text-center" style="width: 175px;">
                                             <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
-                                            <asp:Label runat="server" ID="prt_vpid" CssClass="d-block" ></asp:Label>
+                                            <asp:Label runat="server" ID="prt_vpid" CssClass="d-block"></asp:Label>
                                         </div>
                                     </div>
                                     <webUI:Line runat="server" ID="Line" />
@@ -87,7 +89,7 @@
                                         </div>
 
                                         <webUI:PrtRowS1 FontBold="true" Title="Đã đến khám và điều trị tại bệnh viện của chúng tôi, với những thông tin như sau:" SubTitle="Visited and received treatment at our hospital, with the following information" runat="server" />
-                                        
+
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
                                             <webUI:PrtRowS1 FontBold="true" FixedWidth="260" Title="Ngày khám bệnh:" SubTitle="Date of visit" runat="server" />
                                             <asp:Label runat="server" ID="prt_date_of_visit" />
@@ -179,7 +181,7 @@
                                     <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
                                 <div class="form-group mb-2">
 
-                                    <asp:TextBox runat="server" TextMode="MultiLine" ID="txt_amend_reason" CssClass="form-control" />
+                                    <asp:TextBox runat="server" Text="MultiLine" ID="txt_amend_reason" CssClass="form-control" />
 
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
                                         ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
@@ -321,35 +323,37 @@
                                         </fieldset>
                                     </div>
                                     <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <div class="form-actions">
-                                                    <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
+                                        <div class="col-md-12">
+                                            <div class="form-actions">
+                                                <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
 
-                                                        <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
+                                                <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
 
-                                                        <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal" class="btn btn-danger waves-effect">Delete</div>
+                                                <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal" class="btn btn-danger waves-effect">Delete</div>
 
-                                                        <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
+                                                <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                        <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
-                                                        <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
-                                                </div>
+                                                <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
-                                            <ModalBody>
-                                                <div class="text-center">
-                                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                                    <h4 class="mt-4 mb-4">Delete document?</h4>
-                                                </div>
-                                                <div class="text-right">
-                                                    <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
-                                                    <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
-                                                </div>
-                                            </ModalBody>
-                                        </webUI:PopupModal>
+                                    <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
+                                        <ModalBody>
+                                            <div class="text-center">
+                                                <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                                <h4 class="mt-4 mb-4">Delete document?</h4>
+                                            </div>
+                                            <div class="text-right">
+                                                <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
+                                                <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
+                                            </div>
+                                        </ModalBody>
+                                    </webUI:PopupModal>
+
+                                    <Button:PopupShowDelay runat="server" ID="PopupShowDelay" />
                                 </div>
                             </div>
                         </div>
@@ -359,19 +363,12 @@
                 <asp:UpdateProgress runat="server" AssociatedUpdatePanelID="Upd">
                     <ProgressTemplate>
                         <div class="slice">
-                          <div data-loader="circle"></div>
-                          <div>data-loader="circle"</div>
+                            <div data-loader="circle"></div>
+                            <div>data-loader="circle"</div>
                         </div>
                     </ProgressTemplate>
                 </asp:UpdateProgress>
             </ContentTemplate>
-            <Triggers>
-                <asp:AsyncPostBackTrigger ControlID="btnPrint" />
-                <asp:AsyncPostBackTrigger ControlID="btnSave" />
-                <asp:AsyncPostBackTrigger ControlID="btnAmend" />
-                <asp:AsyncPostBackTrigger ControlID="btnCancel" />
-                <asp:AsyncPostBackTrigger ControlID="btnComplete" />
-            </Triggers>
         </asp:UpdatePanel>
     </form>
 
