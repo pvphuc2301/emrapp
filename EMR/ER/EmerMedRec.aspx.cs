@@ -24,65 +24,38 @@ namespace EMR.ER
         }
 
         #region Binding Data
-        private void BindingDataForm(MC mc, bool state)
+        private void BindingDataForm(EmergencyMedicalRecord emr, bool state)
         {
             if (state)
             {
-                BindingDataFormEdit(mc);
+                BindingDataFormEdit(emr);
             }
             else
             {
-                BindingDataFormView(mc);
+                BindingDataFormView(emr);
             }
         }
-        private void BindingDataFormEdit(MC mc)
+        private void BindingDataFormEdit(EmergencyMedicalRecord emr)
         {
             try
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "localStorage_setItem", $"window.sessionStorage.setItem('{mc}', '{JsonConvert.SerializeObject(mc)}');", true);
 
-                // 2. Lý do đến khám
-                txt_chief_complain.Value = mc.chief_complain;
-                txt_chief_complain.Disabled = false;
-                // 3. Tóm tắt bệnh sử                          
-                txt_history_present_illness.Value = mc.history_present_illness;
-                // 4. Tiền sử bệnh                
-                txt_past_history.Value = mc.past_history;
-                // 5. Đặc điểm lâm sàng
-                txt_clinical_findings.Value = mc.clinical_findings;
-                //6. Cận lâm sàng được chỉ định
-                txt_para_clinical_investigations.Value = mc.para_clinical_investigations;
-                //7. Chẩn đoán
-                txt_diagnosis.Value = mc.diagnosis;
-                //8. Phương pháp và thuốc điều trị
-                txt_treatment.Value = mc.treatment;
-                //9. Thời gian điều trị
-                txt_treatment_period.Value = mc.treatment_period;
-                //10. Lời khuyên và theo dõi
-                txt_recommendation.Value = mc.recommendation;
-                //11. Lời khuyên và theo dõi
-                txt_treatment_plan.Value = mc.treatment_plan;
+
+
+
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "localStorage_setItem", $"window.sessionStorage.setItem('{emr}', '{JsonConvert.SerializeObject(emr)}');", true);
             }
             catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
         }
-        private void BindingDataFormView(MC mc)
+        private void BindingDataFormView(EmergencyMedicalRecord emr)
         {
-            lbl_chief_complain.Text = WebHelpers.GetValue(mc.chief_complain);
-            lbl_history_present_illness.Text = WebHelpers.GetValue(mc.history_present_illness);
-            lbl_past_history.Text = WebHelpers.GetValue(mc.past_history);
-            lbl_clinical_findings.Text = WebHelpers.GetValue(mc.clinical_findings);
-            lbl_para_clinical_investigations.Text = WebHelpers.GetValue(mc.para_clinical_investigations);
-            lbl_diagnosis.Text = WebHelpers.GetValue(mc.diagnosis);
-            lbl_treatment.Text = WebHelpers.GetValue(mc.treatment);
-            lbl_treatment_period.Text = WebHelpers.GetValue(mc.treatment_period);
-            lbl_recommendation.Text = WebHelpers.GetValue(mc.recommendation);
-            lbl_treatment_plan.Text = WebHelpers.GetValue(mc.treatment_plan);
+            
 
         }
-        private void BindingDataFormPrint(MC mc)
+        private void BindingDataFormPrint(EmergencyMedicalRecord emr)
         {
             Patient patient = Patient.Instance();
             prt_vpid.Text = prt_barcode.Text = patient.visible_patient_id;
@@ -112,8 +85,29 @@ namespace EMR.ER
             if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
             if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
             if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
-            emr = new EmergencyMedicalRecord(DataHelpers.varDocId);
-            loadDataToControls(emr);
+
+            try
+            {
+                EmergencyMedicalRecord mc = new EmergencyMedicalRecord(Request.QueryString["docId"]);
+
+                WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
+                prt_barcode.Text = Patient.Instance().visible_patient_id;
+                if (mc.status == DocumentStatus.FINAL)
+                {
+                    BindingDataForm(mc, WebHelpers.LoadFormControl(form1, mc, ControlState.View, (string)Session["location"]));
+
+                }
+                else if (mc.status == DocumentStatus.DRAFT)
+                {
+                    BindingDataForm(mc, WebHelpers.LoadFormControl(form1, mc, ControlState.Edit, (string)Session["location"]));
+                }
+
+                WebHelpers.getAccessButtons(form1, mc.status, (string)Session["access_authorize"], (string)Session["location"]);
+            }
+            catch (Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
         }
         public class Habits_Temp
         {

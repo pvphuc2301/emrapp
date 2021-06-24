@@ -26,9 +26,8 @@
 
 <head runat="server">
     <title></title>
-    <link href="../../styles/style.css" rel="stylesheet" />
-    <link href="../../styles/myStyle.css" rel="stylesheet" />
-    <link href="../../style/style-custom.css" rel="stylesheet" />
+    <link href="../styles/style.css" rel="stylesheet" />
+    <link href="../styles/myStyle.css" rel="stylesheet" />
     <style>
         [type="checkbox"]:not(:checked),
         [type="checkbox"]:checked {
@@ -110,9 +109,8 @@
     <!-- ============================================================== -->
     <!-- Main wrapper - style you can find in pages.scss -->
     <!-- ============================================================== -->
-    <form method="post" action="#" id="form2" runat="server">
+    <form method="post" action="#" id="form1" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
-
         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
 
