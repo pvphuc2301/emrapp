@@ -21,7 +21,7 @@
 <%@ Register Src="~/UserControls/PrintTemplate/Signature1.ascx" TagPrefix="webUI" TagName="Signature1" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Signature2.ascx" TagPrefix="webUI" TagName="Signature2" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrtDate.ascx" TagPrefix="webUI" TagName="PrtDate" %>
-<%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="Button" TagName="PopupShowDelay" %>
+<%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="WebUI" TagName="PopupShowDelay" %>
 
 
 <!DOCTYPE html>
@@ -288,7 +288,7 @@
                                                 </div>
                                             </ModalBody>
                                         </webUI:PopupModal>
-                                        <Button:PopupShowDelay runat="server" ID="PopupShowDelay" />
+                                        <WebUI:PopupShowDelay runat="server" ID="PopupShowDelay" />
 
                                     </div>
                                 </div>

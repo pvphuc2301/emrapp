@@ -21,6 +21,7 @@ namespace EMR.ER
                 Initial();
             }
         }
+
         #region Binding Data
         private void BindingDataForm(EmergencyMedicalRecord emr, bool state)
         {
@@ -37,410 +38,7 @@ namespace EMR.ER
         {
             try
             {
-
-                //lbPatientName.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
-                //lbDoB.Text = WebHelpers.FormatDateTime(DataHelpers.patient.date_of_birth) + "| " + DataHelpers.patient.gender_l;
-                //lbPID.Text = DataHelpers.patient.visible_patient_id;
-                //lbl_evaluation_time.Text = WebHelpers.FormatDateTime(emr.evaluation_time, "dd/MM/yyyy HH:mm tt");
-                //WebHelpers.FormatDateTime(emr.evaluation_time, "dd/MM/yyyy HH:mm tt");
-                //txt_amend_reason.Visible = false;
-                //if (emr.evaluation_time != null)
-                //{
-                //    rad_evaluation_time.SelectedDate = emr.evaluation_time;
-                //}
-
-                //lbl_chief_complaint.Text = emr.chief_complaint;
-                //txtChiefComplaint.Value = emr.chief_complaint;
-
-                //if (emr.chief_complaint_code != null)
-                //{
-                //    ((HtmlInputRadioButton)FindControl("rad_chief_complaint_code_" + emr.chief_complaint_code)).Checked = true;
-                //    if (emr.chief_complaint_code == "R")
-                //    {
-                //        lbl_chief_complaint_code_R.Text = "☒";
-                //        lbl_chief_complaint_code_E.Text = "❏";
-                //        lbl_chief_complaint_code_U.Text = "❏";
-                //        lbl_chief_complaint_code_L.Text = "❏";
-                //        lbl_chief_complaint_code_N.Text = "❏";
-
-                //    }
-                //    else if (emr.chief_complaint_code == "E")
-                //    {
-                //        lbl_chief_complaint_code_R.Text = "❏";
-                //        lbl_chief_complaint_code_E.Text = "☒";
-                //        lbl_chief_complaint_code_U.Text = "❏";
-                //        lbl_chief_complaint_code_L.Text = "❏";
-                //        lbl_chief_complaint_code_N.Text = "❏";
-
-                //    }
-                //    else if (emr.chief_complaint_code == "U")
-                //    {
-                //        lbl_chief_complaint_code_R.Text = "❏";
-                //        lbl_chief_complaint_code_E.Text = "❏";
-                //        lbl_chief_complaint_code_U.Text = "☒";
-                //        lbl_chief_complaint_code_L.Text = "❏";
-                //        lbl_chief_complaint_code_N.Text = "❏";
-
-                //    }
-                //    else if (emr.chief_complaint_code == "L")
-                //    {
-                //        lbl_chief_complaint_code_R.Text = "❏";
-                //        lbl_chief_complaint_code_E.Text = "❏";
-                //        lbl_chief_complaint_code_U.Text = "❏";
-                //        lbl_chief_complaint_code_L.Text = "☒";
-                //        lbl_chief_complaint_code_N.Text = "❏";
-
-                //    }
-                //    else if (emr.chief_complaint_code == "N")
-                //    {
-                //        lbl_chief_complaint_code_R.Text = "❏";
-                //        lbl_chief_complaint_code_E.Text = "❏";
-                //        lbl_chief_complaint_code_U.Text = "❏";
-                //        lbl_chief_complaint_code_L.Text = "❏";
-                //        lbl_chief_complaint_code_N.Text = "☒";
-
-                //    }
-                //}
-                //if (emr.chief_complaint_code != null)
-                //{
-
-                //    lbl_chief_complaint_code_R.Text = "❏";
-                //    lbl_chief_complaint_code_E.Text = "❏";
-                //    lbl_chief_complaint_code_U.Text = "❏";
-                //    lbl_chief_complaint_code_L.Text = "❏";
-                //    lbl_chief_complaint_code_N.Text = "❏";
-                //}
-
-                //lbl_history_of_present.Text = emr.history_of_present;
-                //txtHistoryofPresent.Value = emr.history_of_present;
-                ////Meds
-                //lbl_past_med_his_meds.Text = emr.past_med_his_meds;
-                //txtpastmedhismeds.Value = emr.past_med_his_meds;
-                ////Surgical
-                //lbl_past_med_his_surs.Text = emr.past_med_his_surs;
-                //txtpastmedhissurs.Value = emr.past_med_his_surs;
-                //BindCheckBox("cb_habits_", emr.habits, "cde");
-                //string habits_temp = emr.habits;
-                //if (habits_temp != null && habits_temp != "")
-                //{
-                //    List<Habits_Temp> Habits_Temps = JsonConvert.DeserializeObject<List<Habits_Temp>>(habits_temp);
-                //    lbl_habits_A.Text = "❏";
-                //    lbl_habits_S.Text = "❏";
-                //    lbl_habits_D.Text = "❏";
-                //    foreach (Habits_Temp locAvpu in Habits_Temps)
-                //    {
-
-                //        string cde = locAvpu.cde;
-                //        if (cde != null)
-                //        {
-                //            if (cde == "A")
-                //            {
-                //                lbl_habits_A.Text = "☒";
-                //            }
-                //            if (cde == "S")
-                //            {
-                //                lbl_habits_S.Text = "☒";
-                //            }
-                //            if (cde == "D")
-                //            {
-                //                lbl_habits_D.Text = "☒";
-                //            }
-                //        }
-
-                //    }
-                //}
-                //if (habits_temp == null && habits_temp == "")
-                //{
-                //    lbl_habits_A.Text = "❏";
-                //    lbl_habits_S.Text = "❏";
-                //    lbl_habits_D.Text = "❏";
-                //}
-
-                //lbl_habits_other.Text = emr.habits_other;
-                //txthabitsother.Value = emr.habits_other;
-                //lbl_home_medications.Text = emr.home_medications;
-                //txthomemedications.Value = emr.home_medications;
-                //lbl_allergies.Text = emr.allergies;
-                //txtallergies.Value = emr.allergies;
-                //lbl_relevant_family_history.Text = emr.relevant_family_history;
-                //txtrelevantfamilyhistory.Value = emr.relevant_family_history;
-                //lbl_finding.Text = emr.finding;
-                //txtfinding.Value = emr.finding;
-                //if (emr.required_code != null)
-                //{
-                //    ((HtmlInputRadioButton)FindControl("rad_required_code_" + emr.required_code)).Checked = true;
-                //    if (emr.required_code = true)
-                //    {
-                //        lbl_required_code_True.Text = "☒";
-                //        lbl_required_code_False.Text = "❏";
-                //    }
-                //    if (emr.required_code = false)
-                //    {
-                //        lbl_required_code_True.Text = "❏";
-                //        lbl_required_code_False.Text = "☒";
-                //    }
-                //}
-                //if (emr.required_code == null)
-                //{
-
-                //    lbl_required_code_True.Text = "❏";
-                //    lbl_required_code_False.Text = "❏";
-
-                //}
-
-                //lbl_required_text.Text = emr.required_text;
-                //txtrequiredtext.Value = emr.required_text;
-                //lbl_investigations_results.Text = emr.investigations_results;
-                //txtinvestigationsresults.Value = emr.investigations_results;
-                //lbl_initial_diagnosis.Text = emr.initial_diagnosis;
-                //txtinitialdiagnosis.Value = emr.initial_diagnosis;
-                //lbl_diferential_diagnosis.Text = emr.diferential_diagnosis;
-                //txtdiferentialdiagnosis.Value = emr.diferential_diagnosis;
-                //lbl_associated_conditions.Text = emr.associated_conditions;
-                //txtassociatedconditions.Value = emr.associated_conditions;
-                //lbl_comfirmed_diagnosis.Text = emr.comfirmed_diagnosis;
-                //txtcomfirmeddiagnosis.Value = emr.comfirmed_diagnosis;
-                //if (emr.specialist_opinion != null)
-                //{
-                //    ((HtmlInputRadioButton)FindControl("rad_specialist_opinion_" + emr.specialist_opinion)).Checked = true;
-                //    if (emr.specialist_opinion = true)
-                //    {
-                //        lbl_specialist_opinion_True.Text = "☒";
-                //        lbl_specialist_opinion_False.Text = "❏";
-                //    }
-                //    if (emr.specialist_opinion = false)
-                //    {
-                //        lbl_specialist_opinion_True.Text = "❏";
-                //        lbl_specialist_opinion_False.Text = "☒";
-                //    }
-
-                //}
-
-                //if (emr.specialist_opinion == null)
-                //{
-                //    lbl_specialist_opinion_True.Text = "❏";
-                //    lbl_specialist_opinion_False.Text = "❏";
-                //}
-
-                //lbl_name_of_specialist.Text = emr.name_of_specialist;
-                //txtnameofspecialist.Value = emr.name_of_specialist;
-                //if (emr.time_contaced != null)
-                //{
-                //    rad_time_contaced.SelectedDate = emr.time_contaced;
-                //    lbl_time_contaced.Text = emr.time_contaced.ToString("dd/MM/yyyy HH:mm tt");
-                //}
-                //if (emr.time_provided != null)
-                //{
-                //    rad_time_provided.SelectedDate = emr.time_provided;
-                //    lbl_time_provided.Text = emr.time_provided.ToString("dd/MM/yyyy HH:mm tt");
-                //}
-                //lbl_spec_opinion_summarised.Text = emr.spec_opinion_summarised;
-                //txtspecopinionsummarised.Value = emr.spec_opinion_summarised;
-
-                //_BindGridView(grid_Treatment, WebHelpers.GetJSONToDataTable(emr.treatment));
-                //_BindGridView(lbl_Treatment, WebHelpers.GetJSONToDataTable(emr.treatment));
-                //_BindGridView(grid_progress_note, WebHelpers.GetJSONToDataTable(emr.progress_note));
-                //_BindGridView(lbl_progress_note, WebHelpers.GetJSONToDataTable(emr.progress_note));
-                //lbl_conclusions.Text =
-                //    txtconclusions.Value = emr.conclusions;
-                //if (emr.required_code != null)
-                //{
-                //    ((HtmlInputRadioButton)FindControl("rad_discharge_" + emr.discharge)).Checked = true;
-                //    if (emr.discharge = true)
-                //    {
-                //        lbl_discharge_True.Text = "☒";
-                //        lbl_discharge_False.Text = "❏";
-                //    }
-                //    if (emr.discharge = false)
-                //    {
-                //        lbl_discharge_True.Text = "❏";
-                //        lbl_discharge_False.Text = "☒";
-                //    }
-
-                //}
-                //if (emr.required_code == null)
-                //{
-                //    lbl_discharge_True.Text = "❏";
-                //    lbl_discharge_False.Text = "❏";
-                //}
-
-                //lbl_prescription.Text =
-                //    txtprescription.Value = emr.prescription;
-                //lbl_specify_care_instructions.Text =
-                //    txtspecifycareinstructions.Value = emr.specify_care_instructions;
-                //if (emr.discharge_time != null)
-                //{
-                //    rad_discharge_time.SelectedDate = emr.discharge_time;
-                //    lbl_discharge_time.Text = WebHelpers.FormatDateTime(emr.discharge_time, "dd/MM/yyyy HH:mm tt");
-                //}
-                //if (emr.referred_to_OPD != null)
-                //{
-                //    ((HtmlInputRadioButton)FindControl("rad_referred_OPD_" + emr.referred_to_OPD)).Checked = true;
-                //    if (emr.referred_to_OPD = true)
-                //    {
-                //        lbl_referred_OPD_True.Text = "☒";
-                //        lbl_referred_OPD_False.Text = "❏";
-                //    }
-                //    if (emr.referred_to_OPD = false)
-                //    {
-                //        lbl_referred_OPD_True.Text = "❏";
-                //        lbl_referred_OPD_False.Text = "☒";
-                //    }
-                //}
-                //if (emr.referred_to_OPD == null)
-                //{
-
-                //    lbl_referred_OPD_True.Text = "❏";
-                //    lbl_referred_OPD_False.Text = "❏";
-
-                //}
-
-                //txtreferredtoOPDtext.Value = emr.referred_to_OPD_text;
-                //lbl_referred_to_OPD_text.Text = emr.referred_to_OPD_text;
-                //if (emr.hospitalisation_required != null)
-                //{
-                //    ((HtmlInputRadioButton)FindControl("rad_hospitalisation_required_" + emr.hospitalisation_required)).Checked = true;
-                //    if (emr.hospitalisation_required = true)
-                //    {
-                //        lbl_hospitalisation_required_True.Text = "☒";
-                //        lbl_hospitalisation_required_False.Text = "❏";
-                //    }
-                //    if (emr.hospitalisation_required = false)
-                //    {
-                //        lbl_hospitalisation_required_True.Text = "❏";
-                //        lbl_hospitalisation_required_False.Text = "☒";
-                //    }
-                //}
-                //if (emr.hospitalisation_required == null)
-                //{
-
-                //    lbl_hospitalisation_required_True.Text = "❏";
-                //    lbl_hospitalisation_required_False.Text = "❏";
-
-                //}
-
-                //txtreason.Value = emr.reason;
-                //lbl_reason.Text = emr.reason;
-                //txtward.Value = emr.ward;
-                //lbl_ward.Text = emr.ward;
-
-                //if (emr.discharge_time != null)
-                //{
-                //    rad_timeofleavingemergency.SelectedDate = emr.time_of_leaving_emergency;
-                //    lbl_time_of_leaving_emergency.Text = WebHelpers.FormatDateTime(emr.time_of_leaving_emergency, "dd/MM/yyyy HH:mm tt");
-                //}
-                //if (emr.emergency_surgery != null)
-                //{
-                //    ((HtmlInputRadioButton)FindControl("rad_emergency_surgery_" + emr.emergency_surgery)).Checked = true;
-                //    if (emr.emergency_surgery = true)
-                //    {
-                //        lbl_emergency_surgery_True.Text = "☒";
-                //        lbl_emergency_surgery_False.Text = "❏";
-                //    }
-                //    if (emr.emergency_surgery = false)
-                //    {
-                //        lbl_emergency_surgery_True.Text = "❏";
-                //        lbl_emergency_surgery_False.Text = "☒";
-                //    }
-                //}
-                //if (emr.emergency_surgery == null)
-                //{
-
-                //    lbl_emergency_surgery_True.Text = "❏";
-                //    lbl_emergency_surgery_False.Text = "❏";
-
-                //}
-
-                //txtpreoperative_diagnosis.Value = emr.pre_operative_diagnosis;
-                //lbl_preoperative_diagnosis.Text = emr.pre_operative_diagnosis;
-                //txtprebrief_summary.Value = emr.brief_summary;
-                //lbl_brief_summary.Text = emr.pre_operative_diagnosis;
-
-                //if (emr.time_of_leaving_emer_e != null)
-                //{
-                //    rad_time_of_leaving_emer_e.SelectedDate = emr.time_of_leaving_emer_e;
-                //    lbl_time_of_leaving_emer_e.Text = WebHelpers.FormatDateTime(emr.time_of_leaving_emer_e, "dd/MM/yyyy HH:mm tt");
-                //}
-                //if (emr.transfer_hospital != null)
-                //{
-                //    ((HtmlInputRadioButton)FindControl("rad_transfer_hospital_" + emr.transfer_hospital)).Checked = true;
-                //    if (emr.transfer_hospital = true)
-                //    {
-                //        lbl_transfer_hospital_True.Text = "☒";
-                //        lbl_transfer_hospital_False.Text = "❏";
-                //    }
-                //    if (emr.transfer_hospital = false)
-                //    {
-                //        lbl_transfer_hospital_True.Text = "❏";
-                //        lbl_transfer_hospital_False.Text = "☒";
-                //    }
-                //}
-                //if (emr.transfer_hospital == null)
-                //{
-
-                //    lbl_transfer_hospital_True.Text = "❏";
-                //    lbl_transfer_hospital_False.Text = "❏";
-
-                //}
-
-                //txtreasonfor_transfer.Value = emr.reason_for_transfer;
-                //lbl_reason_for_transfer.Text = emr.reason_for_transfer;
-                //txtstatus_before_transfer.Value = emr.status_before_transfer;
-                //lbl_status_before_transfer.Text = emr.status_before_transfer;
-                //if (emr.time_of_leaving_emer_a != null)
-                //{
-                //    rad_time_of_leaving_emer_a.SelectedDate = emr.time_of_leaving_emer_a;
-                //    lbl_time_of_leaving_emer_a.Text = WebHelpers.FormatDateTime(emr.time_of_leaving_emer_a, "dd/MM/yyyy HH:mm tt");
-                //}
-                //BindCheckBox("cb_patient_discharge_", emr.patient_discharge, "cde");
-                //string patient_discharge_temp = emr.patient_discharge;
-                //if (patient_discharge_temp != null && patient_discharge_temp != "")
-                //{
-                //    List<PDT> patient_discharge_temps = JsonConvert.DeserializeObject<List<PDT>>(patient_discharge_temp);
-                //    lbl_patient_discharge_IMP.Text = "❏";
-                //    lbl_patient_discharge_UNC.Text = "❏";
-                //    lbl_patient_discharge_UNS.Text = "❏";
-                //    foreach (PDT PDTS in patient_discharge_temps)
-                //    {
-
-                //        string cde = PDTS.cde;
-                //        if (cde != null)
-                //        {
-                //            if (cde == "IMP")
-                //            {
-                //                lbl_patient_discharge_IMP.Text = "☒";
-                //            }
-                //            if (cde == "UNC")
-                //            {
-                //                lbl_patient_discharge_UNC.Text = "☒";
-                //            }
-                //            if (cde == "UNS")
-                //            {
-                //                lbl_patient_discharge_UNS.Text = "☒";
-                //            }
-                //        }
-
-                //    }
-                //}
-                //if (patient_discharge_temp == null || patient_discharge_temp == "")
-                //{
-                //    lbl_patient_discharge_IMP.Text = "❏";
-                //    lbl_patient_discharge_UNC.Text = "❏";
-                //    lbl_patient_discharge_UNS.Text = "❏";
-                //}
-
-                //txt_patient_discharge.Value = emr.txt_patient_discharge;
-                //lbl_patient_discharge.Text = emr.txt_patient_discharge;
-                //txticd_10.Value = emr.icd_10;
-                //lbl_icd_10.Text = emr.icd_10;
-
-
-                //lbl_date.Text = emr.created_date_time.ToString("dd");
-                //lbl_month.Text = emr.created_date_time.ToString("MM");
-                //lbl_year.Text = emr.created_date_time.ToString("yyyy");
-                //lbl_created_name_l.Text = emr.created_name_l;
-
-                WebHelpers.BindDateTimePicker(rad_evaluation_time, emr.evaluation_time);
+                WebHelpers.BindDateTimePicker(dtpk_evaluation_time, emr.evaluation_time);
                 txt_chief_complaint.Value = emr.chief_complaint;
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_chief_complaint_code_" + emr.chief_complaint_code);
                 txt_history_of_present.Value = emr.history_of_present;
@@ -466,6 +64,7 @@ namespace EMR.ER
                 txt_spec_opinion_summarised.Value = emr.spec_opinion_summarised;
                 ViewState[grid_Treatment.ID] = WebHelpers.DataBind(grid_Treatment, WebHelpers.GetJSONToDataTable(emr.treatment));
                 ViewState[grid_progress_note.ID] = WebHelpers.DataBind(grid_progress_note, WebHelpers.GetJSONToDataTable(emr.progress_note));
+                WebHelpers.VisibleControl(true, btn_grid_progress_note_add, btn_grid_Treatment_add);
                 txt_conclusions.Value = emr.conclusions;
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_discharge_" + emr.discharge);
                 txt_prescription.Value = emr.prescription;
@@ -483,12 +82,12 @@ namespace EMR.ER
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_emergency_surgery_" + emr.emergency_surgery);
                 txt_pre_operative_diagnosis.Value = emr.pre_operative_diagnosis;
                 txt_brief_summary.Value = emr.brief_summary;
-                WebHelpers.BindDateTimePicker(rad_time_of_leaving_emer_e, emr.time_of_leaving_emer_e);
+                WebHelpers.BindDateTimePicker(dtpk_time_of_leaving_emer_e, emr.time_of_leaving_emer_e);
                 //6
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_transfer_hospital_" + emr.transfer_hospital);
                 txt_reason_for_transfer.Value = emr.reason_for_transfer;
                 txt_status_before_transfer.Value = emr.status_before_transfer;
-                WebHelpers.BindDateTimePicker(rad_time_of_leaving_emer_a, emr.time_of_leaving_emer_a);
+                WebHelpers.BindDateTimePicker(dtpk_time_of_leaving_emer_a, emr.time_of_leaving_emer_a);
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_patient_discharge_" + emr.patient_discharge);
                 txt_patient_discharge.Value = emr.txt_patient_discharge;
                 txt_icd_10.Value = emr.icd_10;
@@ -502,16 +101,440 @@ namespace EMR.ER
         }
         private void BindingDataFormView(EmergencyMedicalRecord emr)
         {
+            try
+            {
+                lbl_evaluation_time.Text = WebHelpers.FormatDateTime(emr.evaluation_time);
+                lbl_chief_complaint.Text = WebHelpers.FormatString(emr.chief_complaint);
+                lbl_chief_complaint_desc.Text = WebHelpers.FormatString(emr.chief_complaint_desc);
+                lbl_history_of_present.Text = WebHelpers.FormatString(emr.history_of_present);
+                lbl_past_med_his_meds.Text = WebHelpers.FormatString(emr.past_med_his_meds);
+                lbl_past_med_his_surs.Text = WebHelpers.FormatString(emr.past_med_his_surs);
 
+                lbl_habits.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(emr.habits));
+                lbl_habits.Text += WebHelpers.FormatString(emr.habits_other);
+                lbl_home_medications.Text = WebHelpers.FormatString(emr.home_medications);
+                lbl_allergies.Text = WebHelpers.FormatString(emr.allergies);
+                lbl_relevant_family_history.Text = WebHelpers.FormatString(emr.relevant_family_history);
+
+                lbl_finding.Text = WebHelpers.FormatString(emr.finding);
+                lbl_required_code.Text = WebHelpers.FormatString(WebHelpers.GetBool(emr.required_code));
+                lbl_required_code.Text += WebHelpers.FormatString(emr.required_text);
+                lbl_investigations_results.Text = WebHelpers.FormatString(emr.investigations_results);
+                lbl_initial_diagnosis.Text = WebHelpers.FormatString(emr.initial_diagnosis);
+                lbl_diferential_diagnosis.Text = WebHelpers.FormatString(emr.diferential_diagnosis);
+                lbl_associated_conditions.Text = WebHelpers.FormatString(emr.associated_conditions);
+                lbl_comfirmed_diagnosis.Text = WebHelpers.FormatString(emr.comfirmed_diagnosis);
+                lbl_specialist_opinion.Text = WebHelpers.FormatString(WebHelpers.GetBool(emr.specialist_opinion));
+                lbl_name_of_specialist.Text = WebHelpers.FormatString(emr.name_of_specialist);
+                lbl_time_contaced.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(emr.time_contaced));
+                lbl_time_provided.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(emr.time_provided));
+
+                lbl_spec_opinion_summarised.Text = WebHelpers.FormatString(emr.spec_opinion_summarised);
+
+                WebHelpers.DataBind(grid_Treatment, WebHelpers.GetJSONToDataTable(emr.treatment));
+                WebHelpers.DisabledGridView(grid_Treatment, true);
+
+                WebHelpers.DataBind(grid_progress_note, WebHelpers.GetJSONToDataTable(emr.progress_note));
+                WebHelpers.DisabledGridView(grid_progress_note, true);
+
+                WebHelpers.VisibleControl(false, btn_grid_Treatment_add, btn_grid_progress_note_add);
+
+                lbl_conclusions.Text = WebHelpers.FormatString(emr.conclusions);
+                lbl_discharge.Text = WebHelpers.FormatString(WebHelpers.GetBool(emr.discharge));
+                lbl_prescription.Text = WebHelpers.FormatString(emr.prescription);
+                lbl_specify_care_instructions.Text = WebHelpers.FormatString(emr.specify_care_instructions);
+                lbl_discharge_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(emr.discharge_time));
+                lbl_referred_to_OPD.Text = WebHelpers.FormatString(WebHelpers.GetBool(emr.referred_to_OPD)) + WebHelpers.FormatString(emr.referred_to_OPD_text);
+
+                lbl_hospitalisation_required.Text = WebHelpers.FormatString(WebHelpers.GetBool(emr.hospitalisation_required));
+                lbl_reason.Text = WebHelpers.FormatString(emr.reason);
+                lbl_ward.Text = WebHelpers.FormatString(emr.ward);
+                lbl_time_of_leaving_emergency.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(emr.time_of_leaving_emergency));
+                lbl_emergency_surgery.Text = WebHelpers.FormatString(WebHelpers.GetBool(emr.emergency_surgery));
+                lbl_pre_operative_diagnosis.Text = WebHelpers.FormatString(emr.pre_operative_diagnosis);
+                lbl_brief_summary.Text = WebHelpers.FormatString(emr.brief_summary);
+                lbl_time_of_leaving_emer_e.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(emr.time_of_leaving_emer_e));
+                lbl_transfer_hospital.Text = WebHelpers.FormatString(WebHelpers.GetBool(emr.transfer_hospital));
+                lbl_reason_for_transfer.Text = WebHelpers.FormatString(emr.reason_for_transfer);
+                lbl_status_before_transfer.Text = WebHelpers.FormatString(emr.status_before_transfer);
+                lbl_time_of_leaving_emer_a.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(emr.time_of_leaving_emer_a));
+                lbl_patient_discharge.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(emr.patient_discharge));
+                lbl_txt_patient_discharge.Text = WebHelpers.FormatString(emr.txt_patient_discharge);
+                lbl_icd_10.Text = WebHelpers.FormatString(emr.icd_10);
+
+            }
+            catch(Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
 
         }
         private void BindingDataFormPrint(EmergencyMedicalRecord emr)
         {
+            try
+            {
+                lbPatientName.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
+                lbDoB.Text = WebHelpers.FormatDateTime(DataHelpers.patient.date_of_birth) + "| " + DataHelpers.patient.gender_l;
+                lbPID.Text = DataHelpers.patient.visible_patient_id;
+                lbl_evaluation_time.Text = WebHelpers.FormatDateTime(emr.evaluation_time, "dd/MM/yyyy HH:mm tt");
+                WebHelpers.FormatDateTime(emr.evaluation_time, "dd/MM/yyyy HH:mm tt");
+                txt_amend_reason.Visible = false;
+
+                prt_chief_complaint.Text = emr.chief_complaint;
+
+                if (emr.chief_complaint_code != null)
+                {
+                    ((HtmlInputRadioButton)FindControl("rad_chief_complaint_code_" + emr.chief_complaint_code)).Checked = true;
+                    if (emr.chief_complaint_code == "R")
+                    {
+                        lbl_chief_complaint_code_R.Text = "☒";
+                        lbl_chief_complaint_code_E.Text = "❏";
+                        lbl_chief_complaint_code_U.Text = "❏";
+                        lbl_chief_complaint_code_L.Text = "❏";
+                        lbl_chief_complaint_code_N.Text = "❏";
+
+                    }
+                    else if (emr.chief_complaint_code == "E")
+                    {
+                        lbl_chief_complaint_code_R.Text = "❏";
+                        lbl_chief_complaint_code_E.Text = "☒";
+                        lbl_chief_complaint_code_U.Text = "❏";
+                        lbl_chief_complaint_code_L.Text = "❏";
+                        lbl_chief_complaint_code_N.Text = "❏";
+
+                    }
+                    else if (emr.chief_complaint_code == "U")
+                    {
+                        lbl_chief_complaint_code_R.Text = "❏";
+                        lbl_chief_complaint_code_E.Text = "❏";
+                        lbl_chief_complaint_code_U.Text = "☒";
+                        lbl_chief_complaint_code_L.Text = "❏";
+                        lbl_chief_complaint_code_N.Text = "❏";
+
+                    }
+                    else if (emr.chief_complaint_code == "L")
+                    {
+                        lbl_chief_complaint_code_R.Text = "❏";
+                        lbl_chief_complaint_code_E.Text = "❏";
+                        lbl_chief_complaint_code_U.Text = "❏";
+                        lbl_chief_complaint_code_L.Text = "☒";
+                        lbl_chief_complaint_code_N.Text = "❏";
+
+                    }
+                    else if (emr.chief_complaint_code == "N")
+                    {
+                        lbl_chief_complaint_code_R.Text = "❏";
+                        lbl_chief_complaint_code_E.Text = "❏";
+                        lbl_chief_complaint_code_U.Text = "❏";
+                        lbl_chief_complaint_code_L.Text = "❏";
+                        lbl_chief_complaint_code_N.Text = "☒";
+
+                    }
+                }
+                if (emr.chief_complaint_code != null)
+                {
+
+                    lbl_chief_complaint_code_R.Text = "❏";
+                    lbl_chief_complaint_code_E.Text = "❏";
+                    lbl_chief_complaint_code_U.Text = "❏";
+                    lbl_chief_complaint_code_L.Text = "❏";
+                    lbl_chief_complaint_code_N.Text = "❏";
+                }
+
+                prt_history_of_present.Text = emr.history_of_present;
+                //Meds
+                prt_past_med_his_meds.Text = emr.past_med_his_meds;
+                //Surgical
+                prt_past_med_his_surs.Text = emr.past_med_his_surs;
+                string habits_temp = emr.habits;
+                if (habits_temp != null && habits_temp != "")
+                {
+                    List<Habits_Temp> Habits_Temps = JsonConvert.DeserializeObject<List<Habits_Temp>>(habits_temp);
+                    lbl_habits_A.Text = "❏";
+                    lbl_habits_S.Text = "❏";
+                    lbl_habits_D.Text = "❏";
+                    foreach (Habits_Temp locAvpu in Habits_Temps)
+                    {
+
+                        string cde = locAvpu.cde;
+                        if (cde != null)
+                        {
+                            if (cde == "A")
+                            {
+                                lbl_habits_A.Text = "☒";
+                            }
+                            if (cde == "S")
+                            {
+                                lbl_habits_S.Text = "☒";
+                            }
+                            if (cde == "D")
+                            {
+                                lbl_habits_D.Text = "☒";
+                            }
+                        }
+
+                    }
+                }
+                if (habits_temp == null && habits_temp == "")
+                {
+                    lbl_habits_A.Text = "❏";
+                    lbl_habits_S.Text = "❏";
+                    lbl_habits_D.Text = "❏";
+                }
+
+                lbl_habits_other.Text = emr.habits_other;
+                lbl_home_medications.Text = emr.home_medications;
+                lbl_allergies.Text = emr.allergies;
+                lbl_relevant_family_history.Text = emr.relevant_family_history;
+                lbl_finding.Text = emr.finding;
+                if (emr.required_code != null)
+                {
+                    ((HtmlInputRadioButton)FindControl("rad_required_code_" + emr.required_code)).Checked = true;
+                    if (emr.required_code = true)
+                    {
+                        lbl_required_code_True.Text = "☒";
+                        lbl_required_code_False.Text = "❏";
+                    }
+                    if (emr.required_code = false)
+                    {
+                        lbl_required_code_True.Text = "❏";
+                        lbl_required_code_False.Text = "☒";
+                    }
+                }
+                if (emr.required_code == null)
+                {
+
+                    lbl_required_code_True.Text = "❏";
+                    lbl_required_code_False.Text = "❏";
+
+                }
+
+                lbl_required_text.Text = emr.required_text;
+                lbl_investigations_results.Text = emr.investigations_results;
+                lbl_initial_diagnosis.Text = emr.initial_diagnosis;
+                lbl_diferential_diagnosis.Text = emr.diferential_diagnosis;
+                lbl_associated_conditions.Text = emr.associated_conditions;
+                lbl_comfirmed_diagnosis.Text = emr.comfirmed_diagnosis;
+                if (emr.specialist_opinion != null)
+                {
+                    ((HtmlInputRadioButton)FindControl("rad_specialist_opinion_" + emr.specialist_opinion)).Checked = true;
+                    if (emr.specialist_opinion = true)
+                    {
+                        lbl_specialist_opinion_True.Text = "☒";
+                        lbl_specialist_opinion_False.Text = "❏";
+                    }
+                    if (emr.specialist_opinion = false)
+                    {
+                        lbl_specialist_opinion_True.Text = "❏";
+                        lbl_specialist_opinion_False.Text = "☒";
+                    }
+
+                }
+
+                if (emr.specialist_opinion == null)
+                {
+                    lbl_specialist_opinion_True.Text = "❏";
+                    lbl_specialist_opinion_False.Text = "❏";
+                }
+
+                lbl_name_of_specialist.Text = emr.name_of_specialist;
+                if (emr.time_contaced != null)
+                {
+                    lbl_time_contaced.Text = emr.time_contaced.ToString("dd/MM/yyyy HH:mm tt");
+                }
+                if (emr.time_provided != null)
+                {
+                    lbl_time_provided.Text = emr.time_provided.ToString("dd/MM/yyyy HH:mm tt");
+                }
+                lbl_spec_opinion_summarised.Text = emr.spec_opinion_summarised;
+
+                prt_conclusions.Text = emr.conclusions;
+                if (emr.required_code != null)
+                {
+                    if (emr.discharge = true)
+                    {
+                        lbl_discharge_True.Text = "☒";
+                        lbl_discharge_False.Text = "❏";
+                    }
+                    if (emr.discharge = false)
+                    {
+                        lbl_discharge_True.Text = "❏";
+                        lbl_discharge_False.Text = "☒";
+                    }
+
+                }
+                if (emr.required_code == null)
+                {
+                    lbl_discharge_True.Text = "❏";
+                    lbl_discharge_False.Text = "❏";
+                }
+
+                lbl_prescription.Text = emr.prescription;
+                lbl_specify_care_instructions.Text = emr.specify_care_instructions;
+                if (emr.discharge_time != null)
+                {
+                    lbl_discharge_time.Text = WebHelpers.FormatDateTime(emr.discharge_time, "dd/MM/yyyy HH:mm tt");
+                }
+                if (emr.referred_to_OPD != null)
+                {
+                    if (emr.referred_to_OPD = true)
+                    {
+                        lbl_referred_to_OPD_True.Text = "☒";
+                        lbl_referred_to_OPD_False.Text = "❏";
+                    }
+                    if (emr.referred_to_OPD = false)
+                    {
+                        lbl_referred_to_OPD_True.Text = "❏";
+                        lbl_referred_to_OPD_False.Text = "☒";
+                    }
+                }
+                if (emr.referred_to_OPD == null)
+                {
+
+                    lbl_referred_to_OPD_True.Text = "❏";
+                    lbl_referred_to_OPD_False.Text = "❏";
+
+                }
+
+                lbl_referred_to_OPD_text.Text = emr.referred_to_OPD_text;
+                if (emr.hospitalisation_required != null)
+                {
+                    ((HtmlInputRadioButton)FindControl("rad_hospitalisation_required_" + emr.hospitalisation_required)).Checked = true;
+                    if (emr.hospitalisation_required = true)
+                    {
+                        lbl_hospitalisation_required_True.Text = "☒";
+                        lbl_hospitalisation_required_False.Text = "❏";
+                    }
+                    if (emr.hospitalisation_required = false)
+                    {
+                        lbl_hospitalisation_required_True.Text = "❏";
+                        lbl_hospitalisation_required_False.Text = "☒";
+                    }
+                }
+                if (emr.hospitalisation_required == null)
+                {
+
+                    lbl_hospitalisation_required_True.Text = "❏";
+                    lbl_hospitalisation_required_False.Text = "❏";
+
+                }
+
+                lbl_reason.Text = emr.reason;
+                lbl_ward.Text = emr.ward;
+
+                if (emr.discharge_time != null)
+                {
+                    lbl_time_of_leaving_emergency.Text = WebHelpers.FormatDateTime(emr.time_of_leaving_emergency, "dd/MM/yyyy HH:mm tt");
+                }
+                if (emr.emergency_surgery != null)
+                {
+                    ((HtmlInputRadioButton)FindControl("rad_emergency_surgery_" + emr.emergency_surgery)).Checked = true;
+                    if (emr.emergency_surgery = true)
+                    {
+                        lbl_emergency_surgery_True.Text = "☒";
+                        lbl_emergency_surgery_False.Text = "❏";
+                    }
+                    if (emr.emergency_surgery = false)
+                    {
+                        lbl_emergency_surgery_True.Text = "❏";
+                        lbl_emergency_surgery_False.Text = "☒";
+                    }
+                }
+                if (emr.emergency_surgery == null)
+                {
+
+                    lbl_emergency_surgery_True.Text = "❏";
+                    lbl_emergency_surgery_False.Text = "❏";
+
+                }
+
+                lbl_preoperative_diagnosis.Text = emr.pre_operative_diagnosis;
+                lbl_brief_summary.Text = emr.pre_operative_diagnosis;
+
+                if (emr.time_of_leaving_emer_e != null)
+                {
+                    lbl_time_of_leaving_emer_e.Text = WebHelpers.FormatDateTime(emr.time_of_leaving_emer_e, "dd/MM/yyyy HH:mm tt");
+                }
+                if (emr.transfer_hospital != null)
+                {
+                    ((HtmlInputRadioButton)FindControl("rad_transfer_hospital_" + emr.transfer_hospital)).Checked = true;
+                    if (emr.transfer_hospital = true)
+                    {
+                        lbl_transfer_hospital_True.Text = "☒";
+                        lbl_transfer_hospital_False.Text = "❏";
+                    }
+                    if (emr.transfer_hospital = false)
+                    {
+                        lbl_transfer_hospital_True.Text = "❏";
+                        lbl_transfer_hospital_False.Text = "☒";
+                    }
+                }
+                if (emr.transfer_hospital == null)
+                {
+
+                    lbl_transfer_hospital_True.Text = "❏";
+                    lbl_transfer_hospital_False.Text = "❏";
+
+                }
+
+                lbl_reason_for_transfer.Text = emr.reason_for_transfer;
+                lbl_status_before_transfer.Text = emr.status_before_transfer;
+                if (emr.time_of_leaving_emer_a != null)
+                {
+                    lbl_time_of_leaving_emer_a.Text = WebHelpers.FormatDateTime(emr.time_of_leaving_emer_a, "dd/MM/yyyy HH:mm tt");
+                }
+                string patient_discharge_temp = emr.patient_discharge;
+                if (patient_discharge_temp != null && patient_discharge_temp != "")
+                {
+                    List<PDT> patient_discharge_temps = JsonConvert.DeserializeObject<List<PDT>>(patient_discharge_temp);
+                    lbl_patient_discharge_IMP.Text = "❏";
+                    lbl_patient_discharge_UNC.Text = "❏";
+                    lbl_patient_discharge_UNS.Text = "❏";
+                    foreach (PDT PDTS in patient_discharge_temps)
+                    {
+
+                        string cde = PDTS.cde;
+                        if (cde != null)
+                        {
+                            if (cde == "IMP")
+                            {
+                                lbl_patient_discharge_IMP.Text = "☒";
+                            }
+                            if (cde == "UNC")
+                            {
+                                lbl_patient_discharge_UNC.Text = "☒";
+                            }
+                            if (cde == "UNS")
+                            {
+                                lbl_patient_discharge_UNS.Text = "☒";
+                            }
+                        }
+
+                    }
+                }
+                if (patient_discharge_temp == null || patient_discharge_temp == "")
+                {
+                    lbl_patient_discharge_IMP.Text = "❏";
+                    lbl_patient_discharge_UNC.Text = "❏";
+                    lbl_patient_discharge_UNS.Text = "❏";
+                }
+
+                txt_patient_discharge.Value = emr.txt_patient_discharge;
+                lbl_patient_discharge.Text = emr.txt_patient_discharge;
+                lbl_icd_10.Text = emr.icd_10;
 
 
+                lbl_date.Text = emr.created_date_time.ToString("dd");
+                lbl_month.Text = emr.created_date_time.ToString("MM");
+                lbl_year.Text = emr.created_date_time.ToString("yyyy");
+                lbl_created_name_l.Text = emr.created_name_l;
+            }
+            catch (Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
         }
         #endregion
-
 
         #region Events
         protected void btnComplete_Click(object sender, EventArgs e)
@@ -869,7 +892,7 @@ namespace EMR.ER
             try
             {
                 emr.amend_reason = txt_amend_reason.Text;
-                emr.evaluation_time = DataHelpers.ConvertSQLDateTime(rad_evaluation_time.SelectedDate);
+                emr.evaluation_time = DataHelpers.ConvertSQLDateTime(dtpk_evaluation_time.SelectedDate);
 
                 emr.chief_complaint = txt_chief_complaint.Value;
 
@@ -963,12 +986,12 @@ namespace EMR.ER
                     emr.specify_care_instructions = "";
                     emr.discharge_time = null;
                 }
-                if (rad_referred_OPD_True.Checked)
+                if (rad_referred_to_OPD_True.Checked)
                 {
                     emr.referred_to_OPD = true;
                     emr.referred_to_OPD_text = txt_referred_to_OPD_text.Value;
                 }
-                if (rad_referred_OPD_False.Checked)
+                if (rad_referred_to_OPD_False.Checked)
                 {
                     emr.referred_to_OPD = false;
                     emr.referred_to_OPD_text = "";
@@ -993,7 +1016,7 @@ namespace EMR.ER
                     emr.emergency_surgery = true;
                     emr.pre_operative_diagnosis = txt_pre_operative_diagnosis.Value;
                     emr.brief_summary = txt_brief_summary.Value;
-                    emr.time_of_leaving_emer_e = DataHelpers.ConvertSQLDateTime(rad_time_of_leaving_emer_e.SelectedDate);
+                    emr.time_of_leaving_emer_e = DataHelpers.ConvertSQLDateTime(dtpk_time_of_leaving_emer_e.SelectedDate);
                 }
                 if (rad_emergency_surgery_False.Checked)
                 {
@@ -1007,7 +1030,7 @@ namespace EMR.ER
                     emr.transfer_hospital = true;
                     emr.reason_for_transfer = txt_reason_for_transfer.Value;
                     emr.status_before_transfer = txt_status_before_transfer.Value;
-                    emr.time_of_leaving_emer_a = DataHelpers.ConvertSQLDateTime(rad_time_of_leaving_emer_a.SelectedDate);
+                    emr.time_of_leaving_emer_a = DataHelpers.ConvertSQLDateTime(dtpk_time_of_leaving_emer_a.SelectedDate);
                 }
                 if (rad_transfer_hospital_False.Checked)
                 {
@@ -1054,6 +1077,17 @@ namespace EMR.ER
             }
         }
         #endregion
+
+        public class Habits_Temp
+        {
+            public string cde { get; set; }
+            public string desc { get; set; }
+        }
+        public class PDT
+        {
+            public string cde { get; set; }
+            public string desc { get; set; }
+        }
 
     }
 }

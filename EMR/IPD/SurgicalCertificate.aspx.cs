@@ -118,19 +118,21 @@ namespace EMR
         }
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            dynamic result = Diss.Delete((string)Session["UserId"], Request.QueryString["docId"]);
-
-            if (result[0].Status == System.Net.HttpStatusCode.OK)
+            try
             {
-                string pid = Request["pid"];
-                string vpid = Request["vpid"];
+                dynamic result = Diss.Delete((string)Session["UserId"], Request.QueryString["docId"]);
 
-                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                if (result[0].Status == System.Net.HttpStatusCode.OK)
+                {
+                    string pid = Request["pid"];
+                    string vpid = Request["vpid"];
+
+                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                }
             }
-            else
+            catch(Exception ex)
             {
-                Session["PageNotFound"] = result[0];
-                Response.Redirect("../Other/PageNotFound.aspx", false);
+                WebHelpers.SendError(Page, ex);
             }
         }
         protected void btnPrint_Click(object sender, EventArgs e)

@@ -5207,7 +5207,7 @@ namespace EMR
     public class Surr
     {
         #region properties
-        private string api = "api/surr";
+        private static string api = "api/surr";
         public dynamic document_id { get; set; }
         public dynamic user_name { get; set; }
         public dynamic status { get; set; }
@@ -5351,7 +5351,7 @@ namespace EMR
 
         public Surr(string document_id)
         {
-            dynamic response = WebHelpers.GetAPI("api/surr/" + document_id);
+            dynamic response = WebHelpers.GetAPI($"api/surr/get/{DataHelpers._LOCATION}/{document_id}");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -5367,12 +5367,12 @@ namespace EMR
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI(api + "/edit", this);
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI(api + "/log/" + this.document_id);
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{document_id}");
                 message[1] = response2;
             }
 
@@ -5383,13 +5383,13 @@ namespace EMR
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI("api/surr/log/" + docid);
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
                     message[1] = response1;
                 }
 

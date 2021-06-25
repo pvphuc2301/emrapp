@@ -244,7 +244,6 @@
     <Content Include="IPD\ObsAtDeliRoom.aspx" />
     <Content Include="IPD\SummaryOfMedRec.aspx" />
     <Content Include="IPD\SurgicalCertificate.aspx" />
-    <Content Include="IPD\SurgicalReport.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
     <Content Include="obj\Debug\EMR.csproj.FileListAbsolute.txt" />
@@ -651,13 +650,6 @@
     </Compile>
     <Compile Include="IPD\SurgicalCertificate.aspx.designer.cs">
       <DependentUpon>SurgicalCertificate.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="IPD\SurgicalReport.aspx.cs">
-      <DependentUpon>SurgicalReport.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="IPD\SurgicalReport.aspx.designer.cs">
-      <DependentUpon>SurgicalReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
