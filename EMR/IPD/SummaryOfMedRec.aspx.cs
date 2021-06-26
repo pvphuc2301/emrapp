@@ -86,6 +86,7 @@ namespace EMR
                 somr.user_name = (string)Session["UserID"];
 
                 UpdateData(somr);
+                WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
             }
         }
         protected void btnSave_Click(object sender, EventArgs e)
@@ -101,11 +102,10 @@ namespace EMR
         }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            Somr somr = new Somr(Request.QueryString["docId"]);
-            string emp_id = (string)Session["emp_id"];
-
-            if (WebHelpers.CanOpenForm(Page, somr.document_id, somr.status, emp_id, (string)Session["location"]))
+            if (WebHelpers.CanOpenForm(Page, Request.QueryString["docId"], DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"]))
             {
+                Somr somr = new Somr(Request.QueryString["docId"]);
+                string emp_id = (string)Session["emp_id"];
 
                 txt_amend_reason.Text = "";
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
@@ -121,24 +121,23 @@ namespace EMR
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
+            WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
             Initial();
         }
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-
-            dynamic result = Disc.Delete((string)Session["UserID"], Request.QueryString["docid"])[0];
-            if (result.Status == System.Net.HttpStatusCode.OK)
+            try
             {
-                string pid = Request["pid"];
-                string vpid = Request["vpid"];
+                dynamic result = Disc.Delete((string)Session["UserID"], Request.QueryString["docid"])[0];
+                if (result.Status == System.Net.HttpStatusCode.OK)
+                {
+                    string pid = Request["pid"];
+                    string vpid = Request["vpid"];
 
-                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                }
             }
-            else
-            {
-                Session["PageNotFound"] = result;
-                Response.Redirect("../Other/PageNotFound.aspx", false);
-            }
+            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
         }
         protected void btnPrint_Click(object sender, EventArgs e)
         {
@@ -149,6 +148,7 @@ namespace EMR
         }
 
         #endregion
+
         #region Functions
         public void UpdateData(Somr somr)
         {

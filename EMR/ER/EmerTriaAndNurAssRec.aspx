@@ -332,7 +332,7 @@
                                                 <div class="col-sm-6 mb-2 ">
                                                     <div class="d-flex no-block">
                                                         <label for="bmi" class="control-label mb-1 mr-2">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
-                                                        <asp:Label ID="vs_bmi" runat="server"></asp:Label><span class="append">(Kg/m <sup>2</sup>)</span>
+                                                        <asp:Label ID="txt_vs_bmi" runat="server"></asp:Label><span class="append">(Kg/m <sup>2</sup>)</span>
                                                     </div>
                                                     <p class="mt-1">
                                                         (Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not

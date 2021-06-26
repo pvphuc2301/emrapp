@@ -889,7 +889,7 @@
 
                                                                 <div class="d-inline-block">
                                                                     <label class="custom-control custom-checkbox d-inline-block">
-                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_pre_lacera" disabled-for="pre_lacera_degree" />
+                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_pre_lacera_true" disabled-for="pre_lacera_degree" />
                                                                         <span class="custom-control-label">Rách, độ/ <span class="text-primary">Laceration, degree:</span></span>
                                                                     </label>
                                                                     <div class="d-inline-block">
@@ -901,7 +901,7 @@
 
                                                                 <div class="d-inline-block">
                                                                     <label class="custom-control custom-checkbox d-inline-block">
-                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_pre_episiotomy" disabled-for="pre_episiotomy_st_field" />
+                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_pre_episiotomy_true" disabled-for="pre_episiotomy_st_field" />
                                                                         <span class="custom-control-label">Cắt/ <span class="text-primary">Episiotomy. Nếu có, cách khâu và loại chỉ/ If yes, suture and silk type:</span></span>
                                                                     </label>
                                                                     <div class="d-inline-block">

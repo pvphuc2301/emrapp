@@ -28,7 +28,6 @@ namespace EMR.OPD
             if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
             if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
 
-
             try
             {
                 Mrfv mrfv = new Mrfv(Request.QueryString["docId"]);
@@ -62,6 +61,7 @@ namespace EMR.OPD
             }
         }
 
+        #region Binding Data
         private void BindingDataForm(Mrfv mrfv, bool state)
         {
             if (state)
@@ -81,9 +81,8 @@ namespace EMR.OPD
             txt_personal.Value = mrfv.personal;
             txt_family.Value = mrfv.family;
 
-            BindRadioButton("rad_allergy_" + mrfv.allergy);
+            WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_allergy_" + mrfv.allergy);
             if (mrfv.allergy) { txt_allergy_note.Value = mrfv.allergy_text; }
-
 
             txt_scr_before_vacc_1.Value = mrfv.scr_before_vacc_1;
             txt_scr_before_vacc_2.Value = mrfv.scr_before_vacc_2;
@@ -94,7 +93,7 @@ namespace EMR.OPD
             txt_scr_before_vacc_7.Value = mrfv.scr_before_vacc_7;
             txt_scr_before_vacc_8.Value = mrfv.scr_before_vacc_8;
 
-            _BindGridView(grid_appointed_vaccine, WebHelpers.GetJSONToDataTable(mrfv.appointed_vaccine));
+            ViewState[grid_appointed_vaccine.ID] = WebHelpers.DataBind(grid_appointed_vaccine, WebHelpers.GetJSONToDataTable(mrfv.appointed_vaccine));
 
             btn_grid_appointed_vaccine_add.Visible = true;
             grid_appointed_vaccine.Columns[4].Visible = true;
@@ -104,8 +103,9 @@ namespace EMR.OPD
             txt_differential_diagnosis.Value = mrfv.differential_diagnosis;
             txt_associated_conditions.Value = mrfv.associated_conditions;
 
-            BindRadioButton("rad_treatment_code_" + mrfv.treatment_code);
-            BindRadioButton("rad_spec_opinion_req_" + mrfv.spec_opinion_req);
+            WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_treatment_code_" + mrfv.treatment_code);
+            WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_spec_opinion_req_" + mrfv.spec_opinion_req);
+
             if (mrfv.spec_opinion_req) { txt_spec_opinion_req_text.Value = mrfv.spec_opinion_req_text; }
 
             txt_pecific_edu_req.Value = mrfv.pecific_edu_req;
@@ -134,12 +134,13 @@ namespace EMR.OPD
             lbl_scr_before_vacc_6.Text = WebHelpers.GetValue(mrfv.scr_before_vacc_6);
             lbl_scr_before_vacc_7.Text = WebHelpers.GetValue(mrfv.scr_before_vacc_7);
             lbl_scr_before_vacc_8.Text = WebHelpers.GetValue(mrfv.scr_before_vacc_8);
-            
+
             // Appointed Vaccine
-            _BindGridView(grid_appointed_vaccine, WebHelpers.GetJSONToDataTable(mrfv.appointed_vaccine));
+            ViewState[grid_appointed_vaccine.ID] = WebHelpers.DataBind(grid_appointed_vaccine, WebHelpers.GetJSONToDataTable(mrfv.appointed_vaccine));
             WebHelpers.DisabledGridView(grid_appointed_vaccine, true);
+            
             btn_grid_appointed_vaccine_add.Visible = false;
-            grid_appointed_vaccine.Columns[4].Visible = false;
+            //grid_appointed_vaccine.Columns[4].Visible = false;
 
             lbl_additional_investigations.Text = WebHelpers.GetValue(mrfv.additional_investigations);
 
@@ -246,36 +247,20 @@ namespace EMR.OPD
             prt_next_appointment.Text = mrfv.next_appointment;
 
         }
+        #endregion
 
-        protected void grid_appointed_vaccine_RowDeleting(object sender, GridViewDeleteEventArgs e)
-        {
-            ViewState[((GridView)sender).ID] = WebHelpers.DeleteRow((DataTable)ViewState[((GridView)sender).ID], (GridView)sender, e.RowIndex);
-        }
-
-        protected void btn_grid_appointed_vaccine_add_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                ViewState[grid_appointed_vaccine.ID] = WebHelpers.AddRow((DataTable)ViewState[grid_appointed_vaccine.ID], grid_appointed_vaccine, Iina.SKIN_ANNO);
-            }
-            catch (Exception ex)
-            {
-                WebHelpers.SendError(Page, ex);
-            }
-        }
-
+        #region Events
         protected void btnComplete_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
-               Mrfv  mrfv = new Mrfv(DataHelpers.varDocId);
+                Mrfv  mrfv = new Mrfv(DataHelpers.varDocId);
                 mrfv.status = DocumentStatus.FINAL;
                 mrfv.user_name = (string)Session["UserID"];
 
                 UpdateData(mrfv);
             }
         }
-
         protected void btnSave_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
@@ -287,7 +272,6 @@ namespace EMR.OPD
                 UpdateData(mrfv);
             }
         }
-
         protected void btnAmend_Click(object sender, EventArgs e)
         {
             Mrfv mrfv = new Mrfv(Request.QueryString["docId"]);
@@ -318,6 +302,21 @@ namespace EMR.OPD
         {
             Initial();
         }
+        protected void grid_appointed_vaccine_RowDeleting(object sender, GridViewDeleteEventArgs e)
+        {
+            ViewState[((GridView)sender).ID] = WebHelpers.DeleteRow((DataTable)ViewState[((GridView)sender).ID], (GridView)sender, e.RowIndex);
+        }
+        protected void btn_grid_appointed_vaccine_add_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ViewState[grid_appointed_vaccine.ID] = WebHelpers.AddRow((DataTable)ViewState[grid_appointed_vaccine.ID], grid_appointed_vaccine, Iina.SKIN_ANNO);
+            }
+            catch (Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
+        }
 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
@@ -338,6 +337,7 @@ namespace EMR.OPD
                 WebHelpers.SendError(Page, ex);
             }
         }
+        #endregion
 
         #region METHODS
         public void UpdateData(Mrfv mrfv)
@@ -351,7 +351,7 @@ namespace EMR.OPD
                 mrfv.personal = txt_personal.Value;
                 mrfv.family = txt_family.Value;
 
-                mrfv.allergy = GetRadioButton("rad_allergy_");
+                mrfv.allergy = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_allergy_");
                 mrfv.allergy_text = txt_allergy_note.Value;
 
                 mrfv.vs_temperature = vs_temperature.Text;
@@ -373,22 +373,22 @@ namespace EMR.OPD
                 mrfv.scr_before_vacc_7 = txt_scr_before_vacc_7.Value;
                 mrfv.scr_before_vacc_8 = txt_scr_before_vacc_8.Value;
 
-                DataTable appointed_vaccine_tb = new DataTable();
-                foreach (KeyValuePair<string, string> col in Mrfv.APPOINTED_VACCINE)
-                {
-                    appointed_vaccine_tb.Columns.Add(col.Key);
-                }
-                mrfv.appointed_vaccine = WebHelpers.GetJSONFromTable(grid_appointed_vaccine, appointed_vaccine_tb);
+                //DataTable appointed_vaccine_tb = new DataTable();
+                //foreach (KeyValuePair<string, string> col in Mrfv.APPOINTED_VACCINE)
+                //{
+                //    appointed_vaccine_tb.Columns.Add(col.Key);
+                //}
+                mrfv.appointed_vaccine = WebHelpers.GetDataGridView(grid_appointed_vaccine, Mrfv.APPOINTED_VACCINE);
 
                 mrfv.additional_investigations = txt_additional_investigations.Value;
                 mrfv.initial_diagnosis = txt_initial_diagnosis.Value;
                 mrfv.differential_diagnosis = txt_differential_diagnosis.Value;
                 mrfv.associated_conditions = txt_associated_conditions.Value;
 
-                mrfv.treatment_code = GetRadioButton("rad_treatment_code_", Mrfv.TREATMENT_CODE);
+                mrfv.treatment_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_treatment_code_", Mrfv.TREATMENT_CODE);
                 if(mrfv.treatment_code != null) { mrfv.treatment_desc = Mrfv.TREATMENT_CODE[mrfv.treatment_code]; }
 
-                mrfv.spec_opinion_req = GetRadioButton("rad_spec_opinion_req_");
+                mrfv.spec_opinion_req = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_spec_opinion_req_");
                 mrfv.spec_opinion_req_text = txt_spec_opinion_req_text.Value;
                 
                 mrfv.pecific_edu_req = txt_pecific_edu_req.Value;
@@ -408,104 +408,104 @@ namespace EMR.OPD
                 WebHelpers.SendError(Page, ex);
             }
         }
-        private dynamic GetRadioButton(string radio_name)
-        {
-            if (((HtmlInputRadioButton)FindControl(radio_name + "True")).Checked)
-            {
-                return true;
-            }
-            else if (((HtmlInputRadioButton)FindControl(radio_name + "False")).Checked)
-            {
-                return false;
-            }
-            else { return null; }
-        }
-        private void BindRadioButton(string value)
-        {
-            if (FindControl(value) != null)
-            {
-                ((HtmlInputRadioButton)FindControl(value)).Checked = true;
-            }
-        }
-        private dynamic GetRadioButton(string radio_name, Dictionary<string, string> value)
-        {
-            foreach (KeyValuePair<string, string> code in value)
-            {
-                try
-                {
-                    if (((HtmlInputRadioButton)FindControl(radio_name + code.Key)).Checked)
-                    {
-                        return code.Key;
-                        break;
-                    }
-                }
-                catch (Exception ex) { }
-            }
-            return null;
-        }
-        private void _BindGridView(GridView gridView, DataTable dataSource)
-        {
-            try
-            {
-                ViewState[gridView.ID] = dataSource;
-                gridView.DataSource = (DataTable)ViewState[gridView.ID];
-                gridView.DataBind();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-        }
-        private void DisabledRadioButton(string radioButtonName, Dictionary<string, string> value, bool disabled)
-        {
-            foreach (KeyValuePair<string, string> code in value)
-            {
-                try
-                {
-                    ((HtmlInputRadioButton)FindControl(radioButtonName + code.Key.ToLower())).Disabled = disabled;
-                }
-                catch (Exception ex) { }
-            }
-        }
+        //private dynamic GetRadioButton(string radio_name)
+        //{
+        //    if (((HtmlInputRadioButton)FindControl(radio_name + "True")).Checked)
+        //    {
+        //        return true;
+        //    }
+        //    else if (((HtmlInputRadioButton)FindControl(radio_name + "False")).Checked)
+        //    {
+        //        return false;
+        //    }
+        //    else { return null; }
+        //}
+        //private void BindRadioButton(string value)
+        //{
+        //    if (FindControl(value) != null)
+        //    {
+        //        ((HtmlInputRadioButton)FindControl(value)).Checked = true;
+        //    }
+        //}
+        //private dynamic GetRadioButton(string radio_name, Dictionary<string, string> value)
+        //{
+        //    foreach (KeyValuePair<string, string> code in value)
+        //    {
+        //        try
+        //        {
+        //            if (((HtmlInputRadioButton)FindControl(radio_name + code.Key)).Checked)
+        //            {
+        //                return code.Key;
+        //                break;
+        //            }
+        //        }
+        //        catch (Exception ex) { }
+        //    }
+        //    return null;
+        //}
+        //private void _BindGridView(GridView gridView, DataTable dataSource)
+        //{
+        //    try
+        //    {
+        //        ViewState[gridView.ID] = dataSource;
+        //        gridView.DataSource = (DataTable)ViewState[gridView.ID];
+        //        gridView.DataBind();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw;
+        //    }
+        //}
+        //private void DisabledRadioButton(string radioButtonName, Dictionary<string, string> value, bool disabled)
+        //{
+        //    foreach (KeyValuePair<string, string> code in value)
+        //    {
+        //        try
+        //        {
+        //            ((HtmlInputRadioButton)FindControl(radioButtonName + code.Key.ToLower())).Disabled = disabled;
+        //        }
+        //        catch (Exception ex) { }
+        //    }
+        //}
 
-        private void DeleteGridViewRow(GridView gridView, int rowIndex)
-        {
-            UpdateLastRow(grid_appointed_vaccine, Mrnv.AppointedVaccine);
+        //private void DeleteGridViewRow(GridView gridView, int rowIndex)
+        //{
+        //    UpdateLastRow(grid_appointed_vaccine, Mrnv.AppointedVaccine);
 
-            DataTable dt = ViewState[gridView.ID] as DataTable;
-            dt.Rows[rowIndex].Delete();
+        //    DataTable dt = ViewState[gridView.ID] as DataTable;
+        //    dt.Rows[rowIndex].Delete();
 
-            _BindGridView(gridView, dt);
-        }
+        //    _BindGridView(gridView, dt);
+        //}
 
-        private void UpdateLastRow(GridView gridView, Dictionary<string, string> cols)
-        {
-            DataTable table = (DataTable)ViewState[gridView.ID];
+        //private void UpdateLastRow(GridView gridView, Dictionary<string, string> cols)
+        //{
+        //    DataTable table = (DataTable)ViewState[gridView.ID];
 
-            if (table.Rows.Count <= 0)
-            {
-                foreach (KeyValuePair<string, string> col in cols)
-                {
-                    table.Columns.Add(col.Key);
-                }
-            }
+        //    if (table.Rows.Count <= 0)
+        //    {
+        //        foreach (KeyValuePair<string, string> col in cols)
+        //        {
+        //            table.Columns.Add(col.Key);
+        //        }
+        //    }
 
-            for (int i = 0; i < gridView.Rows[gridView.Rows.Count - 1].Cells.Count; i++)
-            {
-                try
-                {
-                    if (gridView.Rows[gridView.Rows.Count - 1].Cells[i].Controls[1] is TextField)
-                    {
-                        TextField text2 = gridView.Rows[gridView.Rows.Count - 1].Cells[i].Controls[1] as TextField;
+        //    for (int i = 0; i < gridView.Rows[gridView.Rows.Count - 1].Cells.Count; i++)
+        //    {
+        //        try
+        //        {
+        //            if (gridView.Rows[gridView.Rows.Count - 1].Cells[i].Controls[1] is TextField)
+        //            {
+        //                TextField text2 = gridView.Rows[gridView.Rows.Count - 1].Cells[i].Controls[1] as TextField;
 
-                        table.Rows[gridView.Rows.Count - 1][text2.DataKey] = text2.Value;
-                    }
-                }
-                catch (Exception ex) { }
-            }
+        //                table.Rows[gridView.Rows.Count - 1][text2.DataKey] = text2.Value;
+        //            }
+        //        }
+        //        catch (Exception ex) { }
+        //    }
 
-            ViewState[gridView.ID] = table;
-        }
+        //    ViewState[gridView.ID] = table;
+        //}
 
         #endregion
     }

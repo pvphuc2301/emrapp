@@ -163,7 +163,11 @@ namespace EMR
                         {
                             string url = $"../{_params[1]}?modelId={modelID}&docId={docId}&pId={varPID}&vpId={Request["vpid"]}&pvid={PVID}";
 
-                            Response.Redirect(url, false);
+                            if(WebHelpers.CanOpenForm(Page, docId, DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"]))
+                            {
+                                Response.Redirect(url, false);
+                            }
+
                         }
                     }
                 }

@@ -336,24 +336,10 @@ namespace EMR
 
                     Initial();
                 }
-                else
-                {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "msg_error", "alert(\"" + result.Message + "\");", true);
-
-                    //Session["PageNotFound"] = result[0];
-                    //Response.Redirect("../Other/PageNotFound.aspx", false);
-                }
             }
             catch (Exception ex)
             {
-                string message = string.Format("Message: {0}\\n\\n", ex.Message);
-                message += string.Format("StackTrace: {0}\\n\\n", ex.StackTrace.Replace(Environment.NewLine, string.Empty));
-                message += string.Format("Source: {0}\\n\\n", ex.Source.Replace(Environment.NewLine, string.Empty));
-                message += string.Format("TargetSite: {0}", ex.TargetSite.ToString().Replace(Environment.NewLine, string.Empty));
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "msg_error", "alert(\"" + message + "\");", true);
-
-                //Session["ExceptionDetails"] = ex;
-                //Response.Redirect("../Other/PageNotFound.aspx", false);
+                WebHelpers.SendError(Page, ex);
             }
         }
         #endregion

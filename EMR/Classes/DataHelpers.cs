@@ -111,5 +111,11 @@ namespace EMR
                 // DataHelpers.patientVisit = this.patientVisit;
             }
         }
+
+        internal static int? ConvertToInt(string value)
+        {
+            if (value == null || Convert.ToString(value) == "") return null;
+            return Convert.ToInt32(value);
+        }
     }
 }

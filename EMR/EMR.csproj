@@ -209,6 +209,7 @@
     <Content Include="icons\ExclamationTriangle.ascx" />
     <Content Include="icons\X.ascx" />
     <Content Include="IPD\ObsGynIniAss.aspx" />
+    <Content Include="IPD\SurgicalReport.aspx" />
     <Content Include="Other\PageException.aspx" />
     <Content Include="Print\Test.aspx" />
     <Content Include="Report\CompleteVisitReport.aspx" />
@@ -447,6 +448,13 @@
     </Compile>
     <Compile Include="IPD\ObsGynIniAss.aspx.designer.cs">
       <DependentUpon>ObsGynIniAss.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IPD\SurgicalReport.aspx.cs">
+      <DependentUpon>SurgicalReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IPD\SurgicalReport.aspx.designer.cs">
+      <DependentUpon>SurgicalReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Other\PageException.aspx.cs">
       <DependentUpon>PageException.aspx</DependentUpon>
@@ -1155,7 +1163,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

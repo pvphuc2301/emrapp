@@ -12,10 +12,6 @@ namespace EMR
 {
     public partial class InpIniNurAss : System.Web.UI.Page
     {
-        #region Variables
-        Iina iina;
-        #endregion
-        
         protected void Page_Load(object sender, EventArgs e)
         {
             WebHelpers.CheckSession(this);
@@ -150,13 +146,13 @@ namespace EMR
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_severity_score1_", WebHelpers.GetJSONToDataTable(iina.severity_score1));
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_severity_score2_", WebHelpers.GetJSONToDataTable(iina.severity_score2));
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_severity_score3_", WebHelpers.GetJSONToDataTable(iina.severity_score3));
-                severity_score.Text = iina.severity_score;
+                severity_score.Text = Convert.ToString(iina.severity_score);
 
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_younger_70_" + iina.younger_70);
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_older_70_" + iina.older_70);
-                age_score.Text = iina.age_score;
+                age_score.Text = Convert.ToString(iina.age_score);
 
-                total_nutri_score.Text = iina.total_nutri_score;
+                total_nutri_score.Text = Convert.ToString(iina.total_nutri_score);
 
                 //7
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_urination_", WebHelpers.GetJSONToDataTable(iina.urination));
@@ -173,7 +169,7 @@ namespace EMR
                 WebHelpers.BindDateTimePicker(dpk_last_sup_catheter_date, iina.last_sup_catheter_date);
 
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_menstruation_code_" + iina.menstruation_code);
-                txt_cycle_day.Value = iina.cycle_day;
+                txt_cycle_day.Value = Convert.ToString(iina.cycle_day);
 
                 txt_last_mens_period.Value = iina.last_mens_period;
 
@@ -266,7 +262,7 @@ namespace EMR
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_gait_trans_code_" + iina.gait_trans_code);
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_fr_mental_status_code_" + iina.fr_mental_status_code);
 
-                fr_total_score.Text = iina.fr_total_score.ToString();
+                fr_total_score.Text = Convert.ToString(iina.fr_total_score);
 
                 //D
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_involvement_" + iina.involvement);
@@ -380,7 +376,7 @@ namespace EMR
                 lbl_nutrition_score1.Text = WebHelpers.DisplayCheckBox(iina.nutrition_score1);
                 lbl_nutrition_score2.Text = WebHelpers.DisplayCheckBox(iina.nutrition_score2);
                 lbl_nutrition_score3.Text = WebHelpers.DisplayCheckBox(iina.nutrition_score3);
-                nutrition_score.Text = WebHelpers.FormatString(iina.nutrition_score.ToString());
+                nutrition_score.Text = WebHelpers.FormatString(Convert.ToString(iina.nutrition_score));
                 //
                 //Severity of disease
 
@@ -389,14 +385,14 @@ namespace EMR
                 lbl_severity_score1.Text = WebHelpers.DisplayCheckBox(iina.severity_score1);
                 lbl_severity_score2.Text = WebHelpers.DisplayCheckBox(iina.severity_score2);
                 lbl_severity_score3.Text = WebHelpers.DisplayCheckBox(iina.severity_score3);
-                severity_score.Text = WebHelpers.FormatString(iina.severity_score.ToString());
+                severity_score.Text = WebHelpers.FormatString(Convert.ToString(iina.severity_score));
                 //
                 //Age
                 //
                 WebHelpers.VisibleControl(false, cb_younger_70_true, cb_older_70_true);
                 if (iina.younger_70 != null) cb_younger_70_true.Checked = iina.younger_70;
                 if (iina.older_70 != null) cb_older_70_true.Checked = iina.older_70;
-                age_score.Text = WebHelpers.FormatString(iina.age_score.ToString());
+                age_score.Text = WebHelpers.FormatString(Convert.ToString(iina.age_score));
                 //
                 //Total score
                 //
@@ -552,21 +548,27 @@ namespace EMR
         #region Events
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            iina = new Iina(Request.QueryString["docId"]);
-            txt_amend_reason.Text = "";
-            WebHelpers.VisibleControl(false, btnAmend, btnPrint);
-            WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
+            if (WebHelpers.CanOpenForm(Page, (string)Request.QueryString["docId"], DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"]))
+            {
+                Iina iina = new Iina(Request.QueryString["docId"]);
 
-            WebHelpers.LoadFormControl(form1, iina, ControlState.Edit);
+                txt_amend_reason.Text = "";
+                WebHelpers.VisibleControl(false, btnAmend, btnPrint);
+                WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
-            BindingDataFormEdit(iina);
+                //load form control
+                WebHelpers.LoadFormControl(form1, iina, ControlState.Edit, (string)Session["location"]);
+                //binding data
+                BindingDataFormEdit(iina);
+                //get access button
+            }
         }
         protected void btnComplete_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
 
-                iina = new Iina(DataHelpers.varDocId);
+                Iina iina = new Iina(DataHelpers.varDocId);
                 iina.status = DocumentStatus.FINAL;
 
                 iina.user_name = (string)Session["UserID"];
@@ -578,7 +580,7 @@ namespace EMR
         {
             if (Page.IsValid)
             {
-                iina = new Iina(DataHelpers.varDocId);
+                Iina iina = new Iina(DataHelpers.varDocId);
 
                 iina.user_name = (string)Session["UserID"];
                 iina.status = DocumentStatus.DRAFT;
@@ -588,29 +590,32 @@ namespace EMR
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
+            WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
             Initial();
         }
         protected void btnPrint_Click(object sender, EventArgs e)
         {
-            iina = new Iina(Request["docid"]);
+            Iina iina = new Iina(Request["docid"]);
             BindingDataFormPrint(iina);
             ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
         }
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            dynamic result = Iina.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
-
-            if (result.Status == System.Net.HttpStatusCode.OK)
+            try
             {
-                string pid = Request["pid"];
-                string vpid = Request["vpid"];
+                dynamic result = Iina.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
 
-                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                if (result.Status == System.Net.HttpStatusCode.OK)
+                {
+                    string pid = Request["pid"];
+                    string vpid = Request["vpid"];
+
+                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Session["PageNotFound"] = result;
-                Response.Redirect("../Other/PageNotFound.aspx", false);
+                WebHelpers.SendError(Page, ex);
             }
         }
         protected void btn_grid_skin_anno_add_Click(object sender, EventArgs e)
@@ -632,7 +637,7 @@ namespace EMR
 
             try
             {
-                iina = new Iina(Request.QueryString["docId"]);
+                Iina iina = new Iina(Request.QueryString["docId"]);
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
                 //prt_barcode.Text = Patient.Instance().visible_patient_id;
@@ -647,13 +652,12 @@ namespace EMR
                 }
 
                 WebHelpers.getAccessButtons(form1, iina.status, (string)Session["access_authorize"], (string)Session["location"]);
+                final_screening_field.Visible = iina.bmi_out_range || iina.loss_weight || iina.reduce_dietary || iina.severely_ill;
             }
             catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
-
-            final_screening_field.Visible = iina.bmi_out_range || iina.loss_weight || iina.reduce_dietary || iina.severely_ill;
         }
         private string GetPresSoreRiskCode(int score)
         {
@@ -702,7 +706,7 @@ namespace EMR
         }
         private void update_total_nutri_score()
         {
-            total_nutri_score.Text = (int.Parse(nutrition_score.Text) + int.Parse(severity_score.Text) + int.Parse(age_score.Text)).ToString();
+            total_nutri_score.Text = Convert.ToString(int.Parse(nutrition_score.Text) + int.Parse(severity_score.Text) + int.Parse(age_score.Text));
         }
         private void UpdateData(Iina iina)
         {
@@ -714,13 +718,13 @@ namespace EMR
                 iina.residence_other = txt_residence_other.Value;
                 //
                 iina.language_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_language_code_", Iina.LANGUAGE_CODE);
-                if (iina.language_code != null) iina.language_desc = Iina.LANGUAGE_CODE[iina.language_code];
+                iina.language_desc = WebHelpers.GetDicDesc(iina.language_code, Iina.LANGUAGE_CODE);
                 iina.language_other = txt_language_other.Value;
                 //
                 iina.req_interpreter = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_req_interpreter_");
                 //
                 iina.religion_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_religion_code_", Iina.RELIGION_CODE);
-                if (iina.religion_code != null) iina.religion_desc = Iina.RELIGION_CODE[iina.religion_code];
+                iina.religion_desc = WebHelpers.GetDicDesc(iina.religion_code, Iina.RELIGION_CODE);
                 //iina.religion_other =
                 //
                 iina.spiritual_couns = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_spiritual_couns_");
@@ -728,11 +732,11 @@ namespace EMR
                 iina.occupation = txt_occupation.Value;
                 //
                 iina.living_status_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_living_status_code_", Iina.LIVING_STATUS_CODE);
-                if (iina.living_status_code != null) iina.living_status_desc = Iina.LIVING_STATUS_CODE[iina.living_status_code];
+                iina.living_status_desc = WebHelpers.GetDicDesc(iina.living_status_code, Iina.LIVING_STATUS_CODE);
                 iina.living_status_note = txt_living_status_note.Value;
                 //
                 iina.hospital_concern_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_hospital_concern_code_", Iina.HOSPITAL_CONCERN_CODE);
-                if (iina.hospital_concern_code != null) iina.hospital_concern_desc = Iina.HOSPITAL_CONCERN_CODE[iina.hospital_concern_code];
+                iina.hospital_concern_desc = WebHelpers.GetDicDesc(iina.hospital_concern_code, Iina.HOSPITAL_CONCERN_CODE);
                 iina.hospital_concern_other = txt_hospital_concern_other.Value;
                 //
                 iina.accompanied = txt_accompanied.Value;
@@ -741,7 +745,7 @@ namespace EMR
                 //checked
                 //B. BỆNH SỬ/ MEDICAL HISTORY
                 iina.admit_from_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_admit_from_code_", Iina.ADMIT_FROM_CODE);
-                if (iina.admit_from_code != null) iina.admit_from_desc = Iina.ADMIT_FROM_CODE[iina.admit_from_code];
+                iina.admit_from_desc = WebHelpers.GetDicDesc(iina.admit_from_code, Iina.ADMIT_FROM_CODE);
                 if(iina.admit_from_code == "OTH") iina.admit_from_other = txt_admit_from_other.Value;
 
                 iina.arrived = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_arrived_code_", Iina.ARRIVED);
@@ -786,7 +790,8 @@ namespace EMR
                 iina.pro_cough_note = txt_pro_cough_note.Value;
                 //3
                 iina.pulse_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_pulse_code_", Iina.PULSE_CODE);
-                if (iina.pulse_code != null) { iina.pulse_desc = Iina.PULSE_CODE[iina.pulse_code]; }
+                iina.pulse_desc = WebHelpers.GetDicDesc(iina.pulse_code, Iina.PULSE_CODE);
+
                 iina.presence = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_presence_", Iina.PRESENCE_CODE);
                 iina.extremities = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_extremities_", Iina.EXTREMITIES_CODE);
                 //4 - passed
@@ -795,19 +800,19 @@ namespace EMR
                 iina.mental_status_other = txt_mental_status_other.Value;
 
                 iina.hearing_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_hearing_code_", Iina.HEARING_CODE);
-                if (iina.hearing_code != null) iina.hearing_desc = Iina.HEARING_CODE[iina.hearing_code];
+                iina.hearing_desc = WebHelpers.GetDicDesc(iina.hearing_code, Iina.HEARING_CODE);
 
                 iina.vision_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_vision_code_", Iina.VISION_CODE);
-                if (iina.vision_code != null) iina.vision_desc = Iina.VISION_CODE[iina.vision_code];
+                iina.vision_desc = WebHelpers.GetDicDesc(iina.vision_code, Iina.VISION_CODE);
 
                 iina.speech_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_speech_code_", Iina.SPEECH_CODE);
-                if (iina.speech_code != null) iina.speech_desc = Iina.SPEECH_CODE[iina.speech_code];
+                iina.speech_desc = WebHelpers.GetDicDesc(iina.speech_code, Iina.SPEECH_CODE);
                 //5 - passed
                 iina.diet_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_diet_code_", Iina.DIET_CODE);
-                if (iina.diet_code != null) iina.diet_desc = Iina.DIET_CODE[iina.diet_code];
+                iina.diet_desc = WebHelpers.GetDicDesc(iina.diet_code, Iina.DIET_CODE);
                 iina.diet_other = txt_diet_other.Value;
                 iina.diet_pre_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_diet_pre_code_", Iina.DIET_PRE_CODE);
-                if (iina.diet_pre_code != null) iina.diet_pre_desc = Iina.DIET_PRE_CODE[iina.diet_pre_code];
+                iina.diet_pre_desc = WebHelpers.GetDicDesc(iina.diet_pre_code, Iina.DIET_PRE_CODE);
 
                 iina.ng_tube = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_ng_tube_");
                 iina.gastrostomy = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_gastrostomy_", true);
@@ -817,7 +822,7 @@ namespace EMR
                 iina.food_dislike = txt_food_dislike.Value;
 
                 iina.bowel_elimination_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_bowel_elimination_code_", Iina.BOWEL_ELIMINATION_CODE);
-                if (iina.bowel_elimination_code != null) iina.bowel_elimination_desc = Iina.BOWEL_ELIMINATION_CODE[iina.bowel_elimination_code];
+                iina.bowel_elimination_desc = WebHelpers.GetDicDesc(iina.bowel_elimination_code, Iina.BOWEL_ELIMINATION_CODE);
 
                 iina.stool_consistency_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_stool_consistency_code_", Iina.STOOL_CONSISTENCY_CODE);
                 if (iina.stool_consistency_code != null) iina.stool_consistency_desc = Iina.STOOL_CONSISTENCY_CODE[iina.stool_consistency_code];
@@ -914,7 +919,7 @@ namespace EMR
                 iina.t_location_2 = txt_t_location_2.Value;
                 iina.t_location_3 = txt_t_location_3.Value;
 
-                iina.using_pain_killer = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "rad_using_pain_killer_");
+                iina.using_pain_killer = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_using_pain_killer_");
                 iina.pain_killer_name = txt_pain_killer_name.Value;
                 iina.pa_comment = txt_pa_comment.Value;
                 //10 - Passed
@@ -942,7 +947,7 @@ namespace EMR
                 iina.friction_code = Request.Form.Get("select_friction_code");
                 iina.friction_desc = WebHelpers.GetDicDesc(iina.friction_code, Iina.FRICTION_CODE);
 
-                iina.total_score = GetTotalScore().ToString();
+                iina.total_score = Convert.ToString(GetTotalScore());
 
                 //
                 iina.pres_sore_risk_code = GetPresSoreRiskCode(int.Parse(iina.total_score));
@@ -1073,7 +1078,7 @@ namespace EMR
 
             if (rad_fr_mental_status_code_15.Checked) frTotalScore += 15;
 
-            fr_total_score.Text = frTotalScore.ToString();
+            fr_total_score.Text = Convert.ToString(frTotalScore);
         }
         private void total_score_change(string v)
         {
@@ -1081,7 +1086,7 @@ namespace EMR
 
             pres_sore_risk_desc.Text = Iina.PRES_SORE_RISK_CODE[GetPresSoreRiskCode(totalScore)];
 
-            total_score.Text = totalScore.ToString();
+            total_score.Text = Convert.ToString(totalScore);
         }
         protected void age_change(string v)
         {
@@ -1113,7 +1118,7 @@ namespace EMR
                 {
                     score += 3;
                 }
-                severity_score.Text = score.ToString();
+                severity_score.Text = Convert.ToString(score);
                 update_total_nutri_score();
             }
             catch (Exception ex)
@@ -1139,7 +1144,7 @@ namespace EMR
                 {
                     score += 3;
                 }
-                nutrition_score.Text = score.ToString();
+                nutrition_score.Text = Convert.ToString(score);
                 update_total_nutri_score();
             }
             catch (Exception ex)
@@ -1158,7 +1163,6 @@ namespace EMR
                 final_screening_field.Visible = false;
             }
         }
-        
         #endregion
 
         #region Validations

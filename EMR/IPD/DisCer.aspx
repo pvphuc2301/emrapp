@@ -30,12 +30,12 @@
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <div class="cssclsNoScreen" style="font-family: Tahoma !important; font-size: 13.3048px !important;">
+                <div class="cssclsNoScreen">
                     <table class="report-container">
                         <thead class="report-header">
                             <tr>
                                 <th class="report-header-cell">
-                                    <div class="header-info" style="display: flex; align-items: center;">
+                                    <div class="header-info">
                                         <div class="text-center">
                                             <div>SỞ Y TẾ TP.HCM</div>
                                             <div class="text-primary">HCMC DOH</div>
@@ -43,7 +43,7 @@
                                             <div class="text-primary">AMERICAN INTERNATIONAL HOSPITAL</div>
                                             <div class="font-bold">KHOA/<span class="text-primary">DEPARTMENT:</span></div>
                                         </div>
-                                        <div style="flex-grow: 1; text-align: center">
+                                        <div>
                                             <div class="font-bold">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
                                             <div class="text-primary">SOCIALIST REPUBLIC OF VIETNAM</div>
                                             <div class="font-bold">Độc lập - Tự do - Hạnh phúc</div>
@@ -163,14 +163,14 @@
                                         <div class="d-grid grid-template-2 mt-4" style="page-break-inside: avoid;">
                                             <div class="text-center">
                                                 <webUI:Date runat="server" ID="Date" />
-                                                <div><span class="font-bold">TỔNG GIÁM ĐỐC/ </span>CEO</div>
+                                                <div class="mt-2"><span class="font-bold">TỔNG GIÁM ĐỐC/ </span>CEO</div>
                                                 <div><span class="text-primary"><span class="font-bold">Họ tên, chữ ký, MSNV</span>/ Full name, Signature, ID</span></div>
                                                 <div style="height: 50px"></div>
                                             </div>
 
                                             <div class="text-center">
                                                 <webUI:Date runat="server" ID="Date1" />
-                                                <div><span class="font-bold">TRƯỞNG KHOA/ </span>HEAD OF DEPARTMENT</div>
+                                                <div class="mt-2"><span class="font-bold">TRƯỞNG KHOA/ </span>HEAD OF DEPARTMENT</div>
                                                 <div><span class="text-primary"><span class="font-bold">Họ tên, chữ ký, MSNV</span>/ Full name, Signature, ID</span></div>
                                                 <div style="height: 50px"></div>
                                             </div>
@@ -197,52 +197,56 @@
                     </table>
                 </div>
 
-                <div class="cssclsNoPrint">
-                    <div style="overflow: scroll; height: calc(100vh - 52px); overflow-x: hidden;">
-                        <asp:Panel runat="server" ID="messagePlaceHolder">
-                            <div class="card" runat="server" id="amendReasonWraper">
-                                <div class="card-body">
-                                    <h5>Lý do thay đổi/ <span class="text-primary">amend reason: </span>
-                                        <br />
-                                        <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
-                                    <div class="form-group mb-2">
+                <div class="cssclsNoPrint" style="overflow: scroll; height: calc(100vh - 52px); overflow-x: hidden;">
+                    <asp:Panel runat="server" ID="messagePlaceHolder">
+                        <div class="card" runat="server" id="amendReasonWraper">
+                            <div class="card-body">
+                                <h5>Lý do thay đổi/ <span class="text-primary">amend reason: </span>
+                                    <br />
+                                    <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
+                                <div class="form-group mb-2">
 
-                                        <asp:TextBox runat="server" TextMode="MultiLine" ID="txt_amend_reason" CssClass="form-control" />
+                                    <asp:TextBox runat="server" TextMode="MultiLine" ID="txt_amend_reason" CssClass="form-control" />
 
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
-                                            ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
-                                    </div>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
+                                        ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                 </div>
                             </div>
+                        </div>
 
-                            <asp:ValidationSummary
-                                ID="valSum"
-                                DisplayMode="BulletList"
-                                CssClass="validationSummary"
-                                runat="server" ValidationGroup="Group1"
-                                HeaderText="Please complete the highlighted field(s)." />
-                        </asp:Panel>
-                        <webUI:PatientInfo runat="server" ID="PatientInfo1" />
+                        <asp:ValidationSummary
+                            ID="valSum"
+                            DisplayMode="BulletList"
+                            CssClass="validationSummary"
+                            runat="server" ValidationGroup="Group1"
+                            HeaderText="Please complete the highlighted field(s)." />
+                    </asp:Panel>
+                    <webUI:PatientInfo runat="server" ID="PatientInfo1" />
 
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="text-primary">Discharge certificate</h4>
-                                <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"></a>
-                            </div>
-                            <div class="card-body collapse show" id="collapseOne">
-                                <div class="form-body">
-                                    <%--<div class="row">
-                                        <div class="col-md-12 mb-2">
-                                            <label class="control-label mb-1 ml-2">
-                                                <span class="mb-2">Khoa xuất viện/ <span class="text-primary">Discharge ward:</span></span>
-                                                <select class="custom-select" id="Select1" style="width: unset;" runat="server"></select>
-                                            </label>
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="text-primary">Discharge certificate</h4>
+                            <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"></a>
+                        </div>
+                        <div class="card-body collapse show" id="collapseOne">
+                            <div class="form-body">
+                                <div class="row">
+                                    <div class="col-md-12 mb-2 gt-2-a">
+                                        <label class="control-label mb-1">Khoa xuất viện/ <span class="text-primary">Discharge ward <span class="text-danger">*</span>:</span></label>
+                                        <asp:Label runat="server" ID="lbl_disc_ward_desc"></asp:Label>
+                                        <div runat="server" id="disc_ward_code_wrapper">
+                                            <select class="custom-select" id="select_disc_ward_code" style="width: unset; width: 405px;" runat="server"></select>
                                         </div>
-                                    </div>--%>
+                                    </div>
+                                </div>
 
-                                    <div class="row mb-2">
-                                        <div class="col-md-12">
-                                            <label style="width: 140px;" class="control-label mb-1 me-2">BHYT/ <span class="text-primary">HealthInsurance:</span></label>
+                                <div class="row mb-2">
+                                    <div class="col-md-12">
+                                        <label class="control-label mb-1">BHYT/ <span class="text-primary">HealthInsurance:</span></label>
+                                    </div>
+                                    <div class="col-md-12 gt-2-a">
+                                        <label></label>
+                                        <div>
                                             <asp:Label runat="server" ID="lbl_no_health_insurance"></asp:Label>
                                             <div class="form-group mb-2 d-inline-block w-n" runat="server" id="no_health_insurance_wrapper">
                                                 <aih:TextField runat="server" ID="txt_no_health_insurance" />
@@ -256,105 +260,104 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <div class="row mb-2">
-                                        <div class="col-md-12">
-                                            <label class="control-label mb-1 mr-2"><span class="text-primary">Discharge date time:</span></label>
-                                            <asp:Label runat="server" ID="lbl_disc_date_time"></asp:Label>
-                                            <div class="d-inline-block" runat="server" id="disc_date_time_wrapper">
-                                                <telerik:RadDateTimePicker runat="server" ID="dtpk_disc_date_time" Width="204px" />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-3">
-                                        <div class="col-md-12">
-                                            <label class="control-label mb-1">Chẩn đoán/ <span class="text-primary">Diagnosis:</span></label>
-                                            <asp:Label runat="server" ID="lbl_diagnosis"></asp:Label>
-                                            <div class="form-group" runat="server" id="diagnosis_wrapper">
-                                                <aih:TextField runat="server" ID="txt_diagnosis" />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-3">
-                                        <div class="col-md-12">
-                                            <label class="control-label mb-1">Phương pháp điều trị/ <span class="text-primary">Treatment:</span></label>
-                                            <asp:Label runat="server" ID="lbl_disc_medication"></asp:Label>
-                                            <div class="form-group" runat="server" id="disc_medication_wrapper">
-                                                <aih:TextField runat="server" ID="txt_disc_medication" />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-3">
-                                        <div class="col-md-12">
-                                            <label class="control-label mb-1">Lời dặn của bác sĩ/ <span class="text-primary">Doctor’s recommendation:</span></label>
-                                            <asp:Label runat="server" ID="lbl_followup_instruc"></asp:Label>
-                                            <div class="form-group" runat="server" id="followup_instruc_wrapper">
-                                                <aih:TextField runat="server" ID="txt_followup_instruc" />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-3">
-                                        <div class="col-md-12">
-                                            <label class="control-label mb-1">Ghi chú/ <span class="text-primary">Notes:</span></label>
-                                            <asp:Label runat="server" ID="lbl_notes"></asp:Label>
-                                            <div class="form-group" runat="server" id="notes_wrapper">
-                                                <aih:TextField runat="server" ID="txt_notes" />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-5">
-                                        <div class="col-md-12">
-                                            <label class="control-label mb-1 mr-2"><span class="text-primary">Signature Date:</span></label>
-                                            <asp:Label runat="server" ID="lbl_signature_date"></asp:Label>
-                                            <div class="d-inline-block" runat="server" id="signature_date_wrapper">
-                                                <telerik:RadDatePicker Width="120px" ID="dpk_signature_date" runat="server"></telerik:RadDatePicker>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-2">
-                                        <div class="col-md-12">
-                                            <div class="form-actions">
-                                                <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
-
-                                                <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
-
-                                                <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal" class="btn btn-danger waves-effect">Delete</div>
-
-                                                <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
-
-                                                <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
-
-                                                <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
-                                        <ModalBody>
-                                            <div class="text-center">
-                                                <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                                <h4 class="mt-4 mb-4">Delete document?</h4>
-                                            </div>
-                                            <div class="text-right">
-                                                <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
-                                                <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
-                                            </div>
-                                        </ModalBody>
-                                    </webUI:PopupModal>
-
-                                    <webUI:PopupShowDelay runat="server" ID="PopupShowDelay" />
                                 </div>
+
+                                <div class="row mb-2">
+                                    <div class="col-md-12 gt-2-a">
+                                        <label class="control-label mb-1 mr-2"><span class="text-primary">Discharge date time:</span></label>
+                                        <asp:Label runat="server" ID="lbl_disc_date_time"></asp:Label>
+                                        <div class="d-inline-block" runat="server" id="disc_date_time_wrapper">
+                                            <telerik:RadDateTimePicker runat="server" ID="dtpk_disc_date_time" Width="204px" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-12 gt-2-a">
+                                        <label class="control-label mb-1">Chẩn đoán/ <span class="text-primary">Diagnosis:</span></label>
+                                        <asp:Label runat="server" ID="lbl_diagnosis"></asp:Label>
+                                        <div class="form-group" runat="server" id="diagnosis_wrapper">
+                                            <aih:TextField runat="server" ID="txt_diagnosis" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-12 gt-2-a">
+                                        <label class="control-label mb-1">Phương pháp điều trị/ <span class="text-primary">Treatment:</span></label>
+                                        <asp:Label runat="server" ID="lbl_disc_medication"></asp:Label>
+                                        <div class="form-group" runat="server" id="disc_medication_wrapper">
+                                            <aih:TextField runat="server" ID="txt_disc_medication" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-12 gt-2-a">
+                                        <label class="control-label mb-1">Lời dặn của bác sĩ/ <span class="text-primary">Doctor’s recommendation:</span></label>
+                                        <asp:Label runat="server" ID="lbl_followup_instruc"></asp:Label>
+                                        <div class="form-group" runat="server" id="followup_instruc_wrapper">
+                                            <aih:TextField runat="server" ID="txt_followup_instruc" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-md-12 gt-2-a">
+                                        <label class="control-label mb-1">Ghi chú/ <span class="text-primary">Notes:</span></label>
+                                        <asp:Label runat="server" ID="lbl_notes"></asp:Label>
+                                        <div class="form-group" runat="server" id="notes_wrapper">
+                                            <aih:TextField runat="server" ID="txt_notes" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-5">
+                                    <div class="col-md-12 gt-2-a">
+                                        <label class="control-label mb-1 mr-2"><span class="text-primary">Signature Date:</span></label>
+                                        <asp:Label runat="server" ID="lbl_signature_date"></asp:Label>
+                                        <div class="d-inline-block" runat="server" id="signature_date_wrapper">
+                                            <telerik:RadDatePicker Width="120px" ID="dpk_signature_date" runat="server"></telerik:RadDatePicker>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-2">
+                                    <div class="col-md-12">
+                                        <div class="form-actions">
+                                            <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
+
+                                            <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
+
+                                            <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal" class="btn btn-danger waves-effect">Delete</div>
+
+                                            <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
+
+                                            <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+
+                                            <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
+                                    <ModalBody>
+                                        <div class="text-center">
+                                            <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                            <h4 class="mt-4 mb-4">Delete document?</h4>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
+                                            <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
+                                        </div>
+                                    </ModalBody>
+                                </webUI:PopupModal>
+
+                                <webUI:PopupShowDelay runat="server" ID="PopupShowDelay" />
                             </div>
                         </div>
                     </div>
                 </div>
-
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>

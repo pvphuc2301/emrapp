@@ -152,8 +152,8 @@ function InputFilter() {
 
     temp1.forEach(e => {
         setInputFilter(e, function (value) {
-            return /^[0-9\.\-\/]+$/.test(value);
-            //return /^\d*\.?\d*$/.test(value);
+            //return /^[0-9\.\-\/]+$/.test(value);
+            return /^\d*\.?\d*$/.test(value);
         });
     });
 }
@@ -238,6 +238,16 @@ function popupShowDelay(sessionTimeout) {
             if (_countDownTimer < 0) { clearInterval(intervalID); logout(); }
         }, 1000);
     }, sessionTimeout * 60000 - 15000);
+}
+
+function leaveEditFormEvent() {
+    window.addEventListener("beforeunload", function (e) {
+        var confirmationMessage = 'It looks like you have been editing something. '
+            + 'If you leave before saving, your changes will be lost.';
+
+        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+        return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+    });
 }
 
 //Auto Call

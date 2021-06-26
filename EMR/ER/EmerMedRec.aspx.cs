@@ -15,7 +15,7 @@ namespace EMR.ER
         EmergencyMedicalRecord emr;
         protected void Page_Load(object sender, EventArgs e)
         {
-            WebHelpers.CheckSession(this);
+            if (!WebHelpers.CheckSession(this)) return;
             if (!IsPostBack)
             {
                 Initial();
@@ -92,7 +92,7 @@ namespace EMR.ER
                 txt_patient_discharge.Value = emr.txt_patient_discharge;
                 txt_icd_10.Value = emr.icd_10;
 
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "localStorage_setItem", $"window.sessionStorage.setItem('{emr.document_id}', '{JsonConvert.SerializeObject(emr)}');", true);
+                WebHelpers.AddScriptFormEdit(Page, emr);
             }
             catch (Exception ex)
             {
@@ -178,8 +178,7 @@ namespace EMR.ER
                 lbPID.Text = DataHelpers.patient.visible_patient_id;
                 lbl_evaluation_time.Text = WebHelpers.FormatDateTime(emr.evaluation_time, "dd/MM/yyyy HH:mm tt");
                 WebHelpers.FormatDateTime(emr.evaluation_time, "dd/MM/yyyy HH:mm tt");
-                txt_amend_reason.Visible = false;
-
+                
                 prt_chief_complaint.Text = emr.chief_complaint;
 
                 if (emr.chief_complaint_code != null)
@@ -546,206 +545,8 @@ namespace EMR.ER
                 emr.user_name = (string)Session["UserID"];
 
                 UpdateData(emr);
+                WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
             }
-
-            //emr = new EmergencyMedicalRecord(DataHelpers.varDocId);
-            //emr.user_name = (string)Session["UserID"];
-            //emr.status = DocumentStatus.FINAL;
-            //emr.amend_reason = txt_amendReason.Value;
-            //if (rad_evaluation_time.SelectedDate != null)
-            //{
-            //    emr.evaluation_time = DataHelpers.ConvertSQLDateTime(rad_evaluation_time.SelectedDate);
-            //}
-
-            //emr.chief_complaint = txtChiefComplaint.Value;
-            //foreach (KeyValuePair<string, string> code in EmergencyMedicalRecord.ChiefComplaintCode)
-            //{
-            //    if (((HtmlInputRadioButton)FindControl("rad_chief_complaint_code_" + code.Key.ToLower())).Checked)
-            //    {
-            //        emr.chief_complaint_code = code.Key;
-            //        emr.chief_complaint_desc = code.Value;
-            //    }
-            //}
-            //emr.history_of_present = txtHistoryofPresent.Value;
-            //emr.past_med_his_meds = txtpastmedhismeds.Value;
-            //emr.past_med_his_surs = txtpastmedhissurs.Value;
-
-            //DataTable habits = new DataTable();
-            //habits.Columns.Add("cde");
-            //habits.Columns.Add("desc");
-            //DataRow habits_row;
-
-            //foreach (KeyValuePair<string, string> code in EmergencyMedicalRecord.Habits)
-            //{
-            //    if (((HtmlInputCheckBox)FindControl("cb_habits_" + code.Key.ToLower())).Checked)
-            //    {
-            //        habits_row = habits.NewRow();
-            //        habits_row["cde"] = code.Key;
-            //        habits_row["desc"] = code.Value;
-            //        habits.Rows.Add(habits_row);
-            //        if (code.Key == "O")
-            //        {
-            //            emr.habits_other = txthabitsother.Value;
-            //        }
-            //        else
-            //        {
-            //            emr.habits_other = "";
-            //        }
-            //    }
-            //}
-            //emr.habits = WebHelpers.GetDataTableToJSON(habits);
-
-            //emr.home_medications = txthomemedications.Value;
-            //emr.allergies = txtallergies.Value;
-            //emr.relevant_family_history = txtrelevantfamilyhistory.Value;
-            //emr.finding = txtfinding.Value;
-            //if (rad_required_code_True.Checked)
-            //{
-            //    emr.required_code = true;
-            //    emr.required_text = txtrequiredtext.Value;
-            //}
-            //if (rad_required_code_False.Checked)
-            //{
-            //    emr.required_code = false;
-            //    emr.required_text = "";
-            //}
-            //emr.investigations_results = txtinvestigationsresults.Value;
-            //emr.initial_diagnosis = txtinitialdiagnosis.Value;
-            //emr.diferential_diagnosis = txtdiferentialdiagnosis.Value;
-            //emr.associated_conditions = txtassociatedconditions.Value;
-            //emr.comfirmed_diagnosis = txtcomfirmeddiagnosis.Value;
-            //if (rad_specialist_opinion_True.Checked)
-            //{
-            //    emr.specialist_opinion = true;
-            //    emr.name_of_specialist = txtnameofspecialist.Value;
-            //    emr.time_contaced = DataHelpers.ConvertSQLDateTime(rad_time_contaced.SelectedDate);
-            //    emr.time_provided = DataHelpers.ConvertSQLDateTime(rad_time_provided.SelectedDate);
-            //    emr.spec_opinion_summarised = txtspecopinionsummarised.Value;
-
-            //}
-            //if (rad_specialist_opinion_False.Checked)
-            //{
-            //    emr.specialist_opinion = false;
-            //    emr.name_of_specialist = "";
-            //    emr.time_contaced = null;
-            //    emr.time_provided = null;
-            //    emr.spec_opinion_summarised = "";
-
-            //}
-            //DataTable Treatment_tb = new DataTable();
-            //foreach (KeyValuePair<string, string> col in EmergencyMedicalRecord.Treatment)
-            //{
-            //    Treatment_tb.Columns.Add(col.Key);
-            //}
-            //emr.treatment = WebHelpers.GetJSONFromTable(grid_Treatment, Treatment_tb);
-            //DataTable Progress_note_tb = new DataTable();
-            //foreach (KeyValuePair<string, string> col in EmergencyMedicalRecord.ProgressNote)
-            //{
-            //    Progress_note_tb.Columns.Add(col.Key);
-            //}
-            //emr.progress_note = WebHelpers.GetJSONFromTable(grid_progress_note, Progress_note_tb);
-            //emr.conclusions = txtconclusions.Value;
-            //if (rad_discharge_True.Checked)
-            //{
-            //    emr.discharge = true;
-            //    emr.prescription = txtprescription.Value;
-            //    emr.specify_care_instructions = txtspecifycareinstructions.Value;
-            //    emr.discharge_time = DataHelpers.ConvertSQLDateTime(rad_discharge_time.SelectedDate);
-
-            //}
-            //if (rad_discharge_False.Checked)
-            //{
-            //    emr.discharge = false;
-            //    emr.prescription = "";
-            //    emr.specify_care_instructions = "";
-            //    emr.discharge_time = null;
-            //}
-            //if (rad_referred_OPD_True.Checked)
-            //{
-            //    emr.referred_to_OPD = true;
-            //    emr.referred_to_OPD_text = txtreferredtoOPDtext.Value;
-            //}
-            //if (rad_referred_OPD_False.Checked)
-            //{
-            //    emr.referred_to_OPD = false;
-            //    emr.referred_to_OPD_text = "";
-
-            //}
-            //if (rad_hospitalisation_required_True.Checked)
-            //{
-            //    emr.hospitalisation_required = true;
-            //    emr.reason = txtreason.Value;
-            //    emr.ward = txtward.Value;
-            //    emr.time_of_leaving_emergency = DataHelpers.ConvertSQLDateTime(rad_timeofleavingemergency.SelectedDate);
-            //}
-            //if (rad_hospitalisation_required_False.Checked)
-            //{
-            //    emr.hospitalisation_required = false;
-            //    emr.reason = "";
-            //    emr.ward = "";
-            //    emr.time_of_leaving_emergency = null;
-            //}
-            //if (rad_emergency_surgery_True.Checked)
-            //{
-            //    emr.emergency_surgery = true;
-            //    emr.pre_operative_diagnosis = txtpreoperative_diagnosis.Value;
-            //    emr.brief_summary = txtprebrief_summary.Value;
-            //    emr.time_of_leaving_emer_e = DataHelpers.ConvertSQLDateTime(rad_time_of_leaving_emer_e.SelectedDate);
-            //}
-            //if (rad_emergency_surgery_False.Checked)
-            //{
-            //    emr.emergency_surgery = false;
-            //    emr.pre_operative_diagnosis = "";
-            //    emr.brief_summary = "";
-            //    emr.time_of_leaving_emer_e = null;
-            //}
-            //if (rad_transfer_hospital_True.Checked)
-            //{
-            //    emr.transfer_hospital = true;
-            //    emr.reason_for_transfer = txtreasonfor_transfer.Value;
-            //    emr.status_before_transfer = txtstatus_before_transfer.Value;
-            //    emr.time_of_leaving_emer_a = DataHelpers.ConvertSQLDateTime(rad_time_of_leaving_emer_a.SelectedDate);
-            //}
-            //if (rad_transfer_hospital_False.Checked)
-            //{
-            //    emr.transfer_hospital = false;
-            //    emr.reason_for_transfer = "";
-            //    emr.status_before_transfer = "";
-            //    emr.time_of_leaving_emer_a = null;
-            //}
-            //DataTable patient_discharge = new DataTable();
-            //patient_discharge.Columns.Add("cde");
-            //patient_discharge.Columns.Add("desc");
-            //DataRow patient_discharge_row;
-
-            //foreach (KeyValuePair<string, string> code in EmergencyMedicalRecord.PatientDischarge)
-            //{
-            //    if (((HtmlInputCheckBox)FindControl("cb_patient_discharge_" + code.Key.ToLower())).Checked)
-            //    {
-            //        patient_discharge_row = patient_discharge.NewRow();
-            //        patient_discharge_row["cde"] = code.Key;
-            //        patient_discharge_row["desc"] = code.Value;
-            //        patient_discharge.Rows.Add(patient_discharge_row);
-            //    }
-            //}
-            //emr.patient_discharge = WebHelpers.GetDataTableToJSON(patient_discharge);
-            //emr.txt_patient_discharge = txt_patient_discharge.Value;
-            //emr.icd_10 = txticd_10.Value;
-
-            //dynamic result = emr.Update()[0];
-
-            //if (result.Status == System.Net.HttpStatusCode.OK)
-            //{
-            //    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-            //    message.Load(Page, Message.CODE.MS001, Message.TYPE.SUCCESS);
-
-            //    Initial();
-            //}
-            //else
-            //{
-            //    Session["PageNotFound"] = result[0];
-            //    Response.Redirect("../Other/PageNotFound.aspx", false);
-            //}
         }
         protected void btnSave_Click(object sender, EventArgs e)
         {
@@ -766,6 +567,7 @@ namespace EMR.ER
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
+                    WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
                     string pid = Request["pid"];
                     string vpid = Request["vpid"];
 
@@ -779,11 +581,9 @@ namespace EMR.ER
         }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            EmergencyMedicalRecord emr = new EmergencyMedicalRecord(Request.QueryString["docId"]);
-            string emp_id = (string)Session["emp_id"];
-
-            if (WebHelpers.CanOpenForm(Page, emr.document_id, emr.status, emp_id, (string)Session["location"]))
+            if (WebHelpers.CanOpenForm(Page, Request.QueryString["docId"], DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"]))
             {
+                EmergencyMedicalRecord emr = new EmergencyMedicalRecord(Request.QueryString["docId"]);
 
                 txt_amend_reason.Text = "";
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
@@ -897,13 +697,14 @@ namespace EMR.ER
                 emr.chief_complaint = txt_chief_complaint.Value;
 
                 emr.chief_complaint_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_chief_complaint_code_", EmergencyMedicalRecord.ChiefComplaintCode);
-                emr.chief_complaint_code = WebHelpers.GetDicDesc(emr.chief_complaint_code, EmergencyMedicalRecord.ChiefComplaintCode);
+
+                emr.chief_complaint_desc = WebHelpers.GetDicDesc(emr.chief_complaint_code, EmergencyMedicalRecord.ChiefComplaintCode);
 
                 emr.history_of_present = txt_history_of_present.Value;
                 emr.past_med_his_meds = txt_past_med_his_meds.Value;
                 emr.past_med_his_surs = txt_past_med_his_surs.Value;
 
-                WebHelpers.GetCheckBox(form1, "cb_habits_", EmergencyMedicalRecord.Habits, out DataTable habits, "cde");
+                emr.habits = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_habits_", EmergencyMedicalRecord.Habits, out DataTable habits, "cde");
 
                 if (cb_habits_O.Checked)
                 {
@@ -1042,23 +843,8 @@ namespace EMR.ER
 
                 emr.patient_discharge = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_patient_discharge_", EmergencyMedicalRecord.PatientDischarge, "cde");
 
-                //DataTable patient_discharge = new DataTable();
-                //patient_discharge.Columns.Add("cde");
-                //patient_discharge.Columns.Add("desc");
-                //DataRow patient_discharge_row;
+                emr.txt_patient_discharge = txt_patient_discharge.Value;
 
-                //foreach (KeyValuePair<string, string> code in EmergencyMedicalRecord.PatientDischarge)
-                //{
-                //    if (((HtmlInputCheckBox)FindControl("cb_patient_discharge_" + code.Key.ToLower())).Checked)
-                //    {
-                //        patient_discharge_row = patient_discharge.NewRow();
-                //        patient_discharge_row["cde"] = code.Key;
-                //        patient_discharge_row["desc"] = code.Value;
-                //        patient_discharge.Rows.Add(patient_discharge_row);
-                //    }
-                //}
-                //emr.patient_discharge = WebHelpers.GetDataTableToJSON(patient_discharge);
-                //emr.txt_patient_discharge = txt_patient_discharge.Value;
                 emr.icd_10 = txt_icd_10.Value;
 
                 dynamic result = emr.Update()[0];

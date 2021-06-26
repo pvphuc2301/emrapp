@@ -18,7 +18,7 @@
 <%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="icon" TagName="ExclamationTriangle" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrtRowS1.ascx" TagPrefix="webUI" TagName="PrtRowS1" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrtRowS2.ascx" TagPrefix="webUI" TagName="PrtRowS2" %>
-<%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="Button" TagName="PopupShowDelay" %>
+<%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="webUI" TagName="PopupShowDelay" %>
 
 
 <!DOCTYPE html>
@@ -353,7 +353,7 @@
                                         </ModalBody>
                                     </webUI:PopupModal>
 
-                                    <Button:PopupShowDelay runat="server" ID="PopupShowDelay" />
+                                    <webUI:PopupShowDelay runat="server" ID="PopupShowDelay" />
                                 </div>
                             </div>
                         </div>
@@ -376,7 +376,7 @@
     <script src="../scripts/bootstrap.min.js"></script>
     <script src="../scripts/myScript.js"></script>
     <script src="../scripts/contenteditable.min.js"></script>
-
+    <script src="../scripts/waves.js"></script>
     <script type="text/javascript">
 
         function beforeAsyncPostBack() {

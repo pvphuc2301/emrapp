@@ -4163,6 +4163,11 @@ namespace EMR
         public dynamic obs_adnexa { get; set; }
         public dynamic obs_mem_condition_code { get; set; }
         public dynamic obs_mem_condition_desc { get; set; }
+        public dynamic obs_mem_con_attri_code { get; set; }
+        public dynamic obs_mem_con_attri_desc { get; set; }
+        public dynamic obs_rup_of_mem_at { get; set; }
+        public dynamic obs_rup_of_mem_code { get; set; }
+        public dynamic obs_rup_of_mem_desc { get; set; }
         public dynamic obs_feat_amniotic { get; set; }
         public dynamic obs_color_amniotic { get; set; }
         public dynamic obs_presentation_code { get; set; }
@@ -4193,6 +4198,8 @@ namespace EMR
 
 
         #endregion
+
+        public static string OBS_HISTORY_TEMPLATE = "[{\"id\":1,\"label\":\"Năm/ Year\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":2,\"label\":\"Sanh đủ tháng/ term delivery\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":3,\"label\":\"Sanh non tháng/ preterm delivery\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":4,\"label\":\"Sảy thai/ miscarriage\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":5,\"label\":\"Hút thai/ aspiration abortion\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":6,\"label\":\"Nạo thai/ dilation and evacuation\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":7,\"label\":\"Thủ thuật Kovac/ Kovac’s procedure\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":8,\"label\":\"Thai ngoài tử cung/ ectopic\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":9,\"label\":\"Thai trứng/ molar pregnancy\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":10,\"label\":\"Thai lưu/ stillbirth\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":11,\"label\":\"Sinh sống/ living child\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":12,\"label\":\"Cân nặng/ weight\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":13,\"label\":\"Phương pháp sinh/ delivery mode\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":14,\"label\":\"Biến chứng/ complication\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"}]";
 
         #region Dictionary
         public static Dictionary<string, string> OBS_HISTORY = new Dictionary<string, string>()
@@ -4225,6 +4232,13 @@ namespace EMR
             { "IN", "Nguyên vẹn/ Intact" },
             { "RU", "Đã vỡ/ Ruptured" },
         };
+        
+        public static Dictionary<string, string> OBS_MEM_CON_ATTRI_CODE = new Dictionary<string, string>()
+        {
+            { "FLAT", "Dẹt/Flat" },
+            { "INFLAT", "Phồng/Inflattable" },
+        };
+
         #endregion
         Ogia() { }
 
@@ -4318,6 +4332,12 @@ namespace EMR
           dynamic obs_adnexa_,
           dynamic obs_mem_condition_code_,
           dynamic obs_mem_condition_desc_,
+          dynamic obs_mem_condition_desc,
+          dynamic obs_mem_con_attri_code,
+          dynamic obs_mem_con_attri_desc,
+          dynamic obs_rup_of_mem_at,
+          dynamic obs_rup_of_mem_code,
+          dynamic obs_rup_of_mem_desc,
           dynamic obs_feat_amniotic_,
           dynamic obs_color_amniotic_,
           dynamic obs_presentation_code_,
@@ -5372,7 +5392,7 @@ namespace EMR
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{document_id}");
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
                 message[1] = response2;
             }
 

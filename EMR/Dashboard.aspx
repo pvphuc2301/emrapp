@@ -204,7 +204,7 @@
                             <div class="card">
                                 <div class="card-header bg-white">
                                     <h4 class="card-title control-label m-0">
-                                        <span class="text-primary">My Outpatient List</span>
+                                        <span class="text-primary">My Outpatient for Today</span>
                                     </h4>
                                 </div>
                                 <div class="card-body">

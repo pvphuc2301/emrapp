@@ -17,167 +17,188 @@ namespace EMR
         Oadr oadr;
         #endregion
 
-        #region Page Lifecycle
         protected void Page_Load(object sender, EventArgs e)
         {
-            WebHelpers.CheckSession(this);
+            if (!WebHelpers.CheckSession(this)) return;
             if (!IsPostBack)
             {
                 Initial();
             }
         }
-        #endregion
 
         #region Binding Data
+        private void BindingDataForm(Oadr oadr, bool state)
+        {
+            if (state)
+            {
+                BindingDataFormEdit(oadr);
+            }
+            else
+            {
+                BindingDataFormView(oadr);
+            }
+        }
         private void BindingDataFormEdit(Oadr oadr)
         {
-            WebHelpers.BindDateTimePicker(dtpk_admis_delivery, oadr.admis_delivery);
-            txt_obs_name.Value = oadr.obs_name;
-            txt_obs_initial.Value = oadr.obs_initial;
-            WebHelpers.BindDateTimePicker(dtpk_delivery_at, oadr.delivery_at);
-            txt_apgar_score_1.Value = oadr.apgar_score_1;
-            txt_apgar_score_5.Value = oadr.apgar_score_5;
-            txt_apgar_score_10.Value = oadr.apgar_score_10;
-            txt_weight_of_birth.Value = oadr.weight_of_birth;
-            txt_length_of_birth.Value = oadr.length_of_birth;
-            txt_head_circum.Value = oadr.head_circum;
-
-            WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_birth_defect_" + oadr.birth_defect);
-            txt_birth_defect_note.Value = oadr.birth_defect_note;
-
-            //Neonatal status after birth
-            txt_neonatal_status.Value = oadr.neonatal_status;
-            //Intervention and results
-            WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_intervention_" + oadr.intervention);
-            txt_intervention_note.Value = oadr.intervention_note;
-            //2
-            
-            //placenta_deli
-            WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_placenta_deli_" + oadr.placenta_deli);
-            WebHelpers.BindDateTimePicker(dtpk_pacental_deli_dt, oadr.pacental_deli_dt);
-            //
-            txt_placenta_deli_mode.Value = oadr.placenta_deli_mode;
-            txt_weight_of_birth.Value = oadr.weight_of_birth;
-            //
-            WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_umbilical_coil_" + oadr.umbilical_coil);
-            txt_umbilical_length.Value = oadr.umbilical_length;
-            txt_blood_loss.Value = oadr.blood_loss;
-            //
-            WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_p_intervention_" + oadr.p_intervention);
-            txt_p_intervention_note.Value = oadr.p_intervention_note;
-            //
-            txt_spO2.Value = oadr.spO2;
-            txt_temp.Value = oadr.temp;
-            txt_bp.Value = oadr.bp;
-            txt_hr.Value = oadr.hr;
-            txt_rr.Value = oadr.rr;
-            //
-            WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_delivery_mode_code_" + oadr.delivery_mode_code);
-
-            if (oadr.delivery_mode_code == "S")
+            try
             {
-                WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_section_code_" + oadr.section_code);
-            }else if (oadr.delivery_mode_code == "V")
-            {
-                WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_vaginal_deli_code_" + oadr.vaginal_deli_code);
+                WebHelpers.BindDateTimePicker(dtpk_admis_delivery, oadr.admis_delivery);
+                txt_obs_name.Value = oadr.obs_name;
+                txt_obs_initial.Value = oadr.obs_initial;
+                WebHelpers.BindDateTimePicker(dtpk_delivery_at, oadr.delivery_at);
+                txt_apgar_score_1.Value = oadr.apgar_score_1;
+                txt_apgar_score_5.Value = oadr.apgar_score_5;
+                txt_apgar_score_10.Value = oadr.apgar_score_10;
+                txt_weight_of_birth.Value = oadr.weight_of_birth;
+                txt_length_of_birth.Value = oadr.length_of_birth;
+                txt_head_circum.Value = oadr.head_circum;
+
+                WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_birth_defect_" + oadr.birth_defect);
+                txt_birth_defect_note.Value = oadr.birth_defect_note;
+
+                //Neonatal status after birth
+                txt_neonatal_status.Value = oadr.neonatal_status;
+                //Intervention and results
+                WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_intervention_" + oadr.intervention);
+                txt_intervention_note.Value = oadr.intervention_note;
+                //2
+
+                //placenta_deli
+                WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_placenta_deli_" + oadr.placenta_deli);
+                WebHelpers.BindDateTimePicker(dtpk_pacental_deli_dt, oadr.pacental_deli_dt);
+                //
+                txt_placenta_deli_mode.Value = oadr.placenta_deli_mode;
+                txt_weight_of_birth.Value = oadr.weight_of_birth;
+                //
+                WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_umbilical_coil_" + oadr.umbilical_coil);
+                txt_umbilical_length.Value = oadr.umbilical_length;
+                txt_blood_loss.Value = oadr.blood_loss;
+                //
+                WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_p_intervention_" + oadr.p_intervention);
+                txt_p_intervention_note.Value = oadr.p_intervention_note;
+                //
+                txt_spO2.Value = oadr.spO2;
+                txt_temp.Value = oadr.temp;
+                txt_bp.Value = oadr.bp;
+                txt_hr.Value = oadr.hr;
+                txt_rr.Value = oadr.rr;
+                //
+                WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_delivery_mode_code_" + oadr.delivery_mode_code);
+
+                if (oadr.delivery_mode_code == "S")
+                {
+                    WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_section_code_" + oadr.section_code);
+                }
+                else if (oadr.delivery_mode_code == "V")
+                {
+                    WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_vaginal_deli_code_" + oadr.vaginal_deli_code);
+                }
+                txt_interven_reason.Value = oadr.interven_reason;
+                WebHelpers.DataBind(form2, new HtmlInputCheckBox(), "cb_pre_intact_" + oadr.pre_intact);
+                WebHelpers.DataBind(form2, new HtmlInputCheckBox(), "cb_pre_lacera_" + oadr.pre_lacera);
+                txt_pre_lacera_degree.Value = oadr.pre_lacera_degree;
+                WebHelpers.DataBind(form2, new HtmlInputCheckBox(), "cb_pre_episiotomy_" + oadr.pre_episiotomy);
+                txt_pre_episiotomy_st.Value = oadr.pre_episiotomy_st;
+                //
+                WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_cervix_intact_" + oadr.cervix_intact);
+                txt_preo_diagnosis.Value = oadr.preo_diagnosis;
+                txt_post_diagnosis.Value = oadr.post_diagnosis;
+                //
+                ViewState[grid_operations.ID] = WebHelpers.DataBind(grid_operations, WebHelpers.GetJSONToDataTable(oadr.operations));
+                WebHelpers.DisabledGridView(grid_operations, false);
+                WebHelpers.VisibleControl(true, btn_grid_operations_add);
+                //
+                WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_sur_incident_" + oadr.sur_incident);
+                txt_sur_incident_note.Value = oadr.sur_incident_note;
+                WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_sur_complication_" + oadr.sur_incident);
+                txt_sur_complication_note.Value = oadr.sur_complication_note;
+                //5
+                txt_treatment_plan.Value = oadr.treatment_plan;
+
+                WebHelpers.AddScriptFormEdit(Page, oadr);
             }
-            txt_interven_reason.Value = oadr.interven_reason;
-            WebHelpers.DataBind(form2, new HtmlInputCheckBox(), "cb_pre_intact_" + oadr.pre_intact);
-            WebHelpers.DataBind(form2, new HtmlInputCheckBox(), "cb_pre_lacera_" + oadr.pre_lacera);
-            txt_pre_lacera_degree.Value = oadr.pre_lacera_degree;
-            WebHelpers.DataBind(form2, new HtmlInputCheckBox(), "cb_pre_episiotomy_" + oadr.pre_episiotomy);
-            txt_pre_episiotomy_st.Value = oadr.pre_episiotomy_st;
-            //
-            WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_cervix_intact_" + oadr.cervix_intact);
-            txt_preo_diagnosis.Value = oadr.preo_diagnosis;
-            txt_post_diagnosis.Value = oadr.post_diagnosis;
-            //
-            ViewState[grid_operations.ID] = WebHelpers.DataBind(grid_operations, WebHelpers.GetJSONToDataTable(oadr.operations));
-            WebHelpers.DisabledGridView(grid_operations, false);
-
-            //
-            WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_sur_incident_" + oadr.sur_incident);
-            txt_sur_incident_note.Value = oadr.sur_incident_note;
-            WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_sur_complication_" + oadr.sur_incident);
-            txt_sur_complication_note.Value = oadr.sur_complication_note;
-            //
-            txt_treatment_plan.Value = oadr.treatment_plan;
+            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
         }
         private void BindingDataFormView(Oadr oadr)
         {
-            lbl_admis_delivery.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(oadr.admis_delivery, "dd-MM-yyyy HH:mm"));
-            lbl_obs_name.Text = WebHelpers.FormatString(oadr.obs_name);
-            lbl_obs_initial.Text = WebHelpers.FormatString(oadr.obs_initial);
-            lbl_delivery_at.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(oadr.delivery_at, "dd-MM-yyyy HH:mm"));
-            lbl_apgar_score_1.Text = WebHelpers.FormatString(oadr.apgar_score_1, null) + " điểm/ points";
-            lbl_apgar_score_5.Text = WebHelpers.FormatString(oadr.apgar_score_5) + " điểm/ points";
-            lbl_apgar_score_10.Text = WebHelpers.FormatString(oadr.apgar_score_10) + " điểm/ points";
-
-            lbl_weight_of_birth.Text = WebHelpers.FormatString(oadr.weight_of_birth) + " gram";
-            lbl_length_of_birth.Text = WebHelpers.FormatString(oadr.length_of_birth) + " cm";
-            lbl_head_circum.Text = WebHelpers.FormatString(oadr.head_circum) + " cm";
-
-            lbl_singleton_sex_code.Text = WebHelpers.FormatString(oadr.singleton_sex_desc);
-            lbl_multiple_sex.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(oadr.multiple_sex));
-
-            lbl_birth_defect.Text = WebHelpers.FormatString(WebHelpers.GetBool(oadr.birth_defect, "Có, ghi rõ/ Yes, specify: " + WebHelpers.FormatString(oadr.birth_defect_note)));
-
-            lbl_neonatal_status.Text = WebHelpers.FormatString(oadr.neonatal_status);
-
-            lbl_intervention.Text = WebHelpers.GetBool(oadr.intervention, "Có, ghi rõ/ Yes, specify: " + WebHelpers.FormatString(oadr.intervention_note));
-
-            //2. Sổ nhau/ Placenta delivery
-
-            lbl_placenta_deli.Text = WebHelpers.GetBool(oadr.placenta_deli, WebHelpers.FormatString("Bằng tay/ Manual"), WebHelpers.FormatString("Tự nhiên/ Spontaneous"));
-            lbl_pacental_deli_dt.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(oadr.pacental_deli_dt, "dd-MM-yyyy HH:mm"));
-
-            lbl_placenta_deli_mode.Text = WebHelpers.FormatString(oadr.placenta_deli_mode);
-            lbl_placenta_weight.Text = WebHelpers.FormatString(oadr.placenta_weight) + " gram";
-
-            lbl_umbilical_coil.Text = WebHelpers.FormatString(WebHelpers.GetBool(oadr.umbilical_coil));
-            
-            lbl_umbilical_length.Text = WebHelpers.FormatString(oadr.umbilical_length) + " cm";
-            lbl_blood_loss.Text = WebHelpers.FormatString(oadr.blood_loss) + " ml";
-
-            lbl_p_intervention.Text = WebHelpers.FormatString(WebHelpers.GetBool(oadr.p_intervention, "Có, chi tiết/ Yes, specify: " + WebHelpers.FormatString(oadr.p_intervention_note)));
-
-            //3.
-            lbl_spO2.Text = WebHelpers.FormatString(oadr.spO2) + " %";
-            lbl_temp.Text = WebHelpers.FormatString(oadr.temp) + " °C";
-            lbl_BP.Text = WebHelpers.FormatString(oadr.bp) + " mmHg";
-            lbl_HR.Text = WebHelpers.FormatString(oadr.hr) + " lần/phút/ bpm";
-            lbl_RR.Text = WebHelpers.FormatString(oadr.rr) + " lần/phút/ bpm";
-            lbl_delivery_mode_desc.Text = WebHelpers.FormatString(oadr.delivery_mode_desc);
-            lbl_interven_reason.Text = WebHelpers.FormatString(oadr.interven_reason);
-
-
-
-            lbl_pre_intact.Text = WebHelpers.FormatString(WebHelpers.GetBool(oadr.pre_intact, "True", "No"));
-            
-            if (oadr.pre_lacera != null)
+            try
             {
-                lbl_pre_intact.Text += " " + WebHelpers.FormatString(WebHelpers.GetBool(oadr.pre_lacera, "True", "No")) + " " + oadr.pre_lacera_degree;
+                lbl_admis_delivery.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(oadr.admis_delivery, "dd-MM-yyyy HH:mm"));
+                lbl_obs_name.Text = WebHelpers.FormatString(oadr.obs_name);
+                lbl_obs_initial.Text = WebHelpers.FormatString(oadr.obs_initial);
+                lbl_delivery_at.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(oadr.delivery_at, "dd-MM-yyyy HH:mm"));
+                lbl_apgar_score_1.Text = WebHelpers.FormatString(oadr.apgar_score_1, null) + " điểm/ points";
+                lbl_apgar_score_5.Text = WebHelpers.FormatString(oadr.apgar_score_5) + " điểm/ points";
+                lbl_apgar_score_10.Text = WebHelpers.FormatString(oadr.apgar_score_10) + " điểm/ points";
+
+                lbl_weight_of_birth.Text = WebHelpers.FormatString(oadr.weight_of_birth) + " gram";
+                lbl_length_of_birth.Text = WebHelpers.FormatString(oadr.length_of_birth) + " cm";
+                lbl_head_circum.Text = WebHelpers.FormatString(oadr.head_circum) + " cm";
+
+                lbl_singleton_sex_code.Text = WebHelpers.FormatString(oadr.singleton_sex_desc);
+                lbl_multiple_sex.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(oadr.multiple_sex));
+
+                lbl_birth_defect.Text = WebHelpers.FormatString(WebHelpers.GetBool(oadr.birth_defect, "Có, ghi rõ/ Yes, specify: " + WebHelpers.FormatString(oadr.birth_defect_note)));
+
+                lbl_neonatal_status.Text = WebHelpers.FormatString(oadr.neonatal_status);
+
+                lbl_intervention.Text = WebHelpers.GetBool(oadr.intervention, "Có, ghi rõ/ Yes, specify: " + WebHelpers.FormatString(oadr.intervention_note));
+
+                //2. Sổ nhau/ Placenta delivery
+
+                lbl_placenta_deli.Text = WebHelpers.GetBool(oadr.placenta_deli, WebHelpers.FormatString("Bằng tay/ Manual"), WebHelpers.FormatString("Tự nhiên/ Spontaneous"));
+                lbl_pacental_deli_dt.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(oadr.pacental_deli_dt, "dd-MM-yyyy HH:mm"));
+
+                lbl_placenta_deli_mode.Text = WebHelpers.FormatString(oadr.placenta_deli_mode);
+                lbl_placenta_weight.Text = WebHelpers.FormatString(oadr.placenta_weight) + " gram";
+
+                lbl_umbilical_coil.Text = WebHelpers.FormatString(WebHelpers.GetBool(oadr.umbilical_coil));
+
+                lbl_umbilical_length.Text = WebHelpers.FormatString(oadr.umbilical_length) + " cm";
+                lbl_blood_loss.Text = WebHelpers.FormatString(oadr.blood_loss) + " ml";
+
+                lbl_p_intervention.Text = WebHelpers.FormatString(WebHelpers.GetBool(oadr.p_intervention, "Có, chi tiết/ Yes, specify: " + WebHelpers.FormatString(oadr.p_intervention_note)));
+
+                //3.
+                lbl_spO2.Text = WebHelpers.FormatString(oadr.spO2) + " %";
+                lbl_temp.Text = WebHelpers.FormatString(oadr.temp) + " °C";
+                lbl_BP.Text = WebHelpers.FormatString(oadr.bp) + " mmHg";
+                lbl_HR.Text = WebHelpers.FormatString(oadr.hr) + " lần/phút/ bpm";
+                lbl_RR.Text = WebHelpers.FormatString(oadr.rr) + " lần/phút/ bpm";
+                lbl_delivery_mode_desc.Text = WebHelpers.FormatString(oadr.delivery_mode_desc);
+                lbl_interven_reason.Text = WebHelpers.FormatString(oadr.interven_reason);
+
+
+
+                lbl_pre_intact.Text = WebHelpers.FormatString(WebHelpers.GetBool(oadr.pre_intact, "True", "No"));
+
+                if (oadr.pre_lacera != null)
+                {
+                    lbl_pre_intact.Text += " " + WebHelpers.FormatString(WebHelpers.GetBool(oadr.pre_lacera, "True", "No")) + " " + oadr.pre_lacera_degree;
+                }
+                if (oadr.pre_episiotomy != null)
+                {
+                    lbl_pre_intact.Text += " " + WebHelpers.FormatString(WebHelpers.GetBool(oadr.pre_episiotomy, "True", "No")) + " " + oadr.pre_episiotomy_st;
+                }
+
+                lbl_cervix_intact.Text = WebHelpers.FormatString(WebHelpers.GetBool(oadr.cervix_intact, "Nguyên vẹn/ Intact", "Rách/ Laceration"));
+
+                //4.
+                lbl_preo_diagnosis.Text = WebHelpers.FormatString(oadr.preo_diagnosis);
+                lbl_post_diagnosis.Text = WebHelpers.FormatString(oadr.post_diagnosis);
+
+                ViewState[grid_operations.ID] = WebHelpers.DataBind(grid_operations, WebHelpers.GetJSONToDataTable(oadr.operations));
+                WebHelpers.DisabledGridView(grid_operations, true);
+                WebHelpers.VisibleControl(false, btn_grid_operations_add);
+                lbl_sur_incident.Text = WebHelpers.FormatString(WebHelpers.GetBool(oadr.sur_incident, "Có, ghi rõ/ Yes, specify: " + oadr.sur_incident_note));
+
+                lbl_sur_complication.Text = WebHelpers.FormatString(WebHelpers.GetBool(oadr.sur_complication, "Có, ghi rõ/ Yes, specify: " + oadr.sur_complication_note));
+
+                //5.
+                lbl_treatment_plan.Text = WebHelpers.FormatString(oadr.treatment_plan);
             }
-            if(oadr.pre_episiotomy != null)
-            {
-                lbl_pre_intact.Text += " " + WebHelpers.FormatString(WebHelpers.GetBool(oadr.pre_episiotomy, "True", "No")) + " " + oadr.pre_episiotomy_st;
-            }
-
-            lbl_cervix_intact.Text = WebHelpers.FormatString(WebHelpers.GetBool(oadr.cervix_intact, "Nguyên vẹn/ Intact", "Rách/ Laceration"));
-
-            //4.
-            lbl_preo_diagnosis.Text = WebHelpers.FormatString(oadr.preo_diagnosis);
-            lbl_post_diagnosis.Text = WebHelpers.FormatString(oadr.post_diagnosis);
-
-            ViewState[grid_operations.ID] = WebHelpers.DataBind(grid_operations, WebHelpers.GetJSONToDataTable(oadr.operations));
-            WebHelpers.DisabledGridView(grid_operations, true);
-
-            lbl_sur_incident.Text = WebHelpers.FormatString(WebHelpers.GetBool(oadr.sur_incident, "Có, ghi rõ/ Yes, specify: " + oadr.sur_incident_note));
-
-            lbl_sur_complication.Text = WebHelpers.FormatString(WebHelpers.GetBool(oadr.sur_complication, "Có, ghi rõ/ Yes, specify: " + oadr.sur_complication_note));
-
-            //5.
-            lbl_treatment_plan.Text = WebHelpers.FormatString(oadr.treatment_plan);
+            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
+            
         }
         private void BindingDataFormPrint(Oadr oadr)
         {
@@ -247,22 +268,8 @@ namespace EMR
                 oadr.user_name = (string)Session["UserID"];
 
                 UpdateData(oadr);
+                WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
             }
-        }
-        protected void btnAmend_Click(object sender, EventArgs e)
-        {
-            oadr = new Oadr(Request.QueryString["docId"]);
-
-            txt_amend_reason.Text = "";
-
-            WebHelpers.VisibleControl(false, btnAmend, btnPrint);
-
-            WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper, btn_grid_operations_add);
-
-            WebHelpers.LoadFormControl(form2, oadr, ControlState.Edit);
-
-            BindingDataFormEdit(oadr);
-
         }
         protected void btnSave_Click(object sender, EventArgs e)
         {
@@ -275,33 +282,53 @@ namespace EMR
                 UpdateData(oadr);
             }
         }
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            try { 
+                dynamic result = Oadr.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
+
+                if (result.Status == System.Net.HttpStatusCode.OK)
+                {
+                    WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+
+                    string pid = Request["pid"];
+                    string vpid = Request["vpid"];
+
+                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                }
+            }
+            catch (Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
+        }
+        protected void btnAmend_Click(object sender, EventArgs e)
+        {
+            if (WebHelpers.CanOpenForm(Page, Request.QueryString["docId"], DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"]))
+            {
+                Oadr oadr = new Oadr(Request.QueryString["docId"]);
+                
+                txt_amend_reason.Text = "";
+                WebHelpers.VisibleControl(false, btnAmend, btnPrint);
+                WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
+
+                //load form control
+                WebHelpers.LoadFormControl(form2, oadr, ControlState.Edit, (string)Session["location"]);
+                //binding data
+                BindingDataFormEdit(oadr);
+                //get access button
+            }
+        }
         protected void btnPrint_Click(object sender, EventArgs e)
         {
             oadr = new Oadr(Request.QueryString["docId"]);
             BindingDataFormPrint(oadr);
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "window.print();", true);
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             Initial();
-        }
-        protected void btnDelete_Click(object sender, EventArgs e)
-        {
-            dynamic result = Oadr.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
-
-            if (result.Status == System.Net.HttpStatusCode.OK)
-            {
-                string pid = Request["pid"];
-                string vpid = Request["vpid"];
-
-                Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
-            }
-            else
-            {
-                Session["PageNotFound"] = result;
-                Response.Redirect("../Other/PageNotFound.aspx", false);
-            }
         }
         protected void btn_grid_operations_add_Click(object sender, EventArgs e)
         {
@@ -313,7 +340,7 @@ namespace EMR
         }
         #endregion
 
-        #region Methods
+        #region Functions
         public void Initial()
         {
             if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
@@ -322,34 +349,23 @@ namespace EMR
 
             try
             {
-                oadr = new Oadr(Request.QueryString["docId"]);
-
-                amendReasonWraper.Visible = false;
-                btnCancel.Visible = false;
-                prt_barcode.Text = Patient.Instance().visible_patient_id;
+                Oadr oadr = new Oadr(Request.QueryString["docId"]);
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-
+                prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (oadr.status == DocumentStatus.FINAL)
                 {
-                    BindingDataFormView(oadr);
+                    BindingDataForm(oadr, WebHelpers.LoadFormControl(form2, oadr, ControlState.View, (string)Session["location"]));
 
-                    WebHelpers.VisibleControl(true, btnAmend, btnPrint);
-                    WebHelpers.VisibleControl(false, btnComplete, btnSave, btnDeleteModal, btn_grid_operations_add);
-
-                    WebHelpers.LoadFormControl(form2, oadr, ControlState.View);
                 }
                 else if (oadr.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataFormEdit(oadr);
-
-                    WebHelpers.VisibleControl(false, btnAmend, btnPrint);
-                    WebHelpers.VisibleControl(true, btnComplete, btnSave, btnDeleteModal);
-
-                    WebHelpers.LoadFormControl(form2, oadr, ControlState.Edit);
+                    BindingDataForm(oadr, WebHelpers.LoadFormControl(form2, oadr, ControlState.Edit, (string)Session["location"]));
                 }
+
+                WebHelpers.getAccessButtons(form2, oadr.status, (string)Session["access_authorize"], (string)Session["location"]);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
@@ -437,7 +453,7 @@ namespace EMR
                 //
                 oadr.interven_reason = txt_interven_reason.Value;
                 //
-                oadr.pre_intact = WebHelpers.GetData(form2, new HtmlInputCheckBox(), "cb_pre_intact_");
+                oadr.pre_intact = WebHelpers.GetData(form2, new HtmlInputCheckBox(), "cb_pre_intact_", true);
                 oadr.pre_lacera = WebHelpers.GetData(form2, new HtmlInputCheckBox(), "cb_pre_lacera_", true);
                 oadr.pre_lacera_degree = txt_pre_lacera_degree.Value;
                 oadr.pre_episiotomy = WebHelpers.GetData(form2, new HtmlInputCheckBox(), "cb_pre_episiotomy_", true);
@@ -469,10 +485,6 @@ namespace EMR
                     message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
 
                     Initial();
-                }
-                else
-                {
-                    WebHelpers.SendError(Page, result.Message);
                 }
             }
             catch (Exception ex) {

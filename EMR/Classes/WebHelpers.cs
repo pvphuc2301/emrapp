@@ -81,7 +81,12 @@ namespace EMR
             //    return result;
             //}
         }
-        
+
+        internal static void AddScriptFormEdit(Page page, dynamic obj)
+        {
+            ScriptManager.RegisterStartupScript(page, page.GetType(), "localStorage_setItem", "window.sessionStorage.setItem('\"" + obj.document_id + "\"', '\"" +JsonConvert.SerializeObject(obj) + "\"'); setTimeout(()=> { leaveEditFormEvent(); },0);", true);
+        }
+
         internal static bool CanOpenForm(Page page, string docid, string documentStatus, string emp_id, string location)
         {
             if(documentStatus == DocumentStatus.DRAFT && location == DataHelpers._LOCATION)
@@ -249,6 +254,12 @@ namespace EMR
                 item1.Selected = true;
             }
         }
+
+        internal static void clearSessionDoc(string docId)
+        {
+            WebHelpers.PostAPI($"api/emr/clear-session/{DataHelpers._LOCATION}/{docId}");
+        }
+
         internal static void DataBind(HtmlForm _form, HtmlInputCheckBox controlType, string controlID)
         {
             dynamic control = _form.FindControl(controlID);
@@ -321,8 +332,8 @@ namespace EMR
         }
         internal static string FormatString(dynamic value, string defaultValue = "—", string CssClass = "font-bold")
         {
-            if (string.IsNullOrEmpty(value)) return defaultValue;
-            return $"<span class='{CssClass}'>{value}</span>";
+            if (value == null || Convert.ToString(value) == "") return defaultValue;
+            return $"<span class='{CssClass}'>{Convert.ToString(value)}</span>";
         }
 
         public static string GetDataGridView(GridView gridView, Dictionary<string, string> cols)
@@ -516,6 +527,7 @@ namespace EMR
             }
             return "";
         }
+
         internal static string CreateOptions(Dictionary<string, string> options, string value, string styles)
         {
             string option = string.Format("<div style='{0}'>", styles);
@@ -740,7 +752,7 @@ namespace EMR
                     DataRow dtRow = table.NewRow();
 
                     dtRow = table.NewRow();
-                    dtRow["code"] = code.Key;
+                    dtRow[code_col] = code.Key;
                     dtRow["desc"] = code.Value;
                     table.Rows.Add(dtRow);
                 }
@@ -804,15 +816,15 @@ namespace EMR
                 VisibleControl(false, btnAmend, btnPrint);
                 VisibleControl(true, btnComplete, btnSave, btnDelete);
             }
-            
-            //switch (access_authorize)
-            //{
-            //    case "TechAccess":
-            //    case "CSOAccess":
-            //    case "MAFullAccess":
-            //        btnComplete.Enabled = false;
-            //        break;
-            //}
+
+            switch (access_authorize)
+            {
+                case "TechAccess":
+                case "CSOAccess":
+                case "MAFullAccess":
+                    btnComplete.Enabled = false;
+                    break;
+            }
         }
 
         /// <summary>
@@ -947,6 +959,32 @@ namespace EMR
                     break;
             }
             return true;
+        }
+        internal static string GetData(HtmlForm _form, HtmlInputCheckBox controlType, string _checkboxID, Dictionary<string, string> _source, out DataTable _table, string _code = "code")
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add(_code);
+            table.Columns.Add("desc");
+
+            foreach (KeyValuePair<string, string> code in _source)
+            {
+                try
+                {
+                    if (((HtmlInputCheckBox)_form.FindControl(_checkboxID + code.Key)).Checked)
+                    {
+                        DataRow dtRow = table.NewRow();
+
+                        dtRow = table.NewRow();
+                        dtRow[_code] = code.Key;
+                        dtRow["desc"] = code.Value;
+                        table.Rows.Add(dtRow);
+                    }
+                }
+                catch (Exception ex) { }
+            }
+            _table = table;
+            if (_table.Rows.Count > 0) return JsonConvert.SerializeObject(table);
+            return null;
         }
         internal static string GetCheckBox(HtmlForm _form, string _checkboxID, Dictionary<string, string> _source, out DataTable _table, string _code = "code")
         {

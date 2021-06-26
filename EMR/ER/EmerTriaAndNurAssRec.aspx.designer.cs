@@ -654,13 +654,13 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_blood_pressure;
 
         /// <summary>
-        /// vs_bmi control.
+        /// txt_vs_bmi control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label vs_bmi;
+        protected global::System.Web.UI.WebControls.Label txt_vs_bmi;
 
         /// <summary>
         /// lbl_vs_spo2 control.

@@ -12,8 +12,7 @@ namespace EMR
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-
+            if (!WebHelpers.CheckSession(this)) return;
             if (!IsPostBack)
             {
                 Initial();
@@ -36,8 +35,6 @@ namespace EMR
         {
             try
             {
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "localStorage_setItem", $"window.sessionStorage.setItem('{mc}', '{JsonConvert.SerializeObject(mc)}');", true);
-
                 // 2. Lý do đến khám
                 txt_chief_complain.Value = mc.chief_complain;
                 txt_chief_complain.Disabled = false;
@@ -59,6 +56,8 @@ namespace EMR
                 txt_recommendation.Value = mc.recommendation;
                 //11. Lời khuyên và theo dõi
                 txt_treatment_plan.Value = mc.treatment_plan;
+
+                WebHelpers.AddScriptFormEdit(Page, mc);
             }
             catch (Exception ex)
             {
@@ -114,6 +113,7 @@ namespace EMR
                 mc.user_name = (string)Session["UserID"];
 
                 UpdateData(mc);
+                WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
             }
         }
         protected void btnSave_Click(object sender, EventArgs e)
@@ -134,6 +134,8 @@ namespace EMR
                 dynamic result = MC.Delete((string)Session["UserID"], Request.QueryString["docid"])[0];
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
+                    WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+
                     string pid = Request["pid"];
                     string vpid = Request["vpid"];
 
@@ -147,10 +149,9 @@ namespace EMR
         }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            MC mc = new MC(Request.QueryString["docId"]);
-            string emp_id = (string)Session["emp_id"];
-
-            if(WebHelpers.CanOpenForm(Page, mc.document_id, mc.status, emp_id, (string)Session["location"])) {
+            if(WebHelpers.CanOpenForm(Page, Request.QueryString["docId"], DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"])) {
+                MC mc = new MC(Request.QueryString["docId"]);
+                string emp_id = (string)Session["emp_id"];
 
                 txt_amend_reason.Text = "";
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
@@ -166,6 +167,7 @@ namespace EMR
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             Initial();
+            WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
         }
         protected void btnPrint_Click(object sender, EventArgs e)
         {

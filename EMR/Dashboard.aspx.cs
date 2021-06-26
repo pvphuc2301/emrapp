@@ -112,7 +112,7 @@ namespace EMR
         }
         protected void RadGrid2_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            dynamic response = WebHelpers.GetAPI("api/Patient/appoinment-today-list?keyword="+ Session["UserID"] +" & pageIndex=1&pageSize=4");
+            dynamic response = WebHelpers.GetAPI("api/Patient/appoinment-today-list?keyword="+ Session["UserID"] +"&pageIndex=1&pageSize=4");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {

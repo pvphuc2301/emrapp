@@ -1500,13 +1500,13 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_pre_intact_true;
 
         /// <summary>
-        /// cb_pre_lacera control.
+        /// cb_pre_lacera_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_pre_lacera;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_pre_lacera_true;
 
         /// <summary>
         /// txt_pre_lacera_degree control.
@@ -1518,13 +1518,13 @@ namespace EMR
         protected global::EMR.TextField txt_pre_lacera_degree;
 
         /// <summary>
-        /// cb_pre_episiotomy control.
+        /// cb_pre_episiotomy_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_pre_episiotomy;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_pre_episiotomy_true;
 
         /// <summary>
         /// txt_pre_episiotomy_st control.

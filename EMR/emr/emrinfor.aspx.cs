@@ -23,7 +23,7 @@ namespace EMR
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            if (!WebHelpers.CheckSession(this)) return;
             //if (Session["PageOpenEMR"] != null)
             //{
             //    HttpContext current_ss = HttpContext.Current;
