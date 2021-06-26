@@ -152,7 +152,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="input-group mb-3">
-                                                    <input type="text" class="form-control" placeholder="Search for PID" aria-label="Search for PID" aria-describedby="basic-addon2" style="max-width: 240px;" runat="server" id="txt_pid" />
+                                                    <input type="text" maxlength="9" class="form-control" placeholder="Search for PID" aria-label="Search for PID" aria-describedby="basic-addon2" style="max-width: 240px;" runat="server" id="txt_pid" />
                                                     <div class="input-group-append">
 
                                                         <asp:LinkButton CssClass="btn btn-outline-secondary waves-effect form-edit" runat="server" ID="btnSearch" OnClick="btnSearch_Click">Search</asp:LinkButton>

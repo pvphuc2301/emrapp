@@ -598,17 +598,34 @@ namespace EMR
             else return null;
         }
 
-        internal static DataTable DataBind(GridView _gridView, DataTable _dataSource)
+        internal static DataTable DataBind(GridView gridView, DataTable dataSource)
         {
-            try
+            if (dataSource == null) return dataSource;
+            if(dataSource.Rows.Count > 0)
             {
-                _gridView.DataSource = _dataSource;
-                _gridView.DataBind();
-                return _dataSource;
+                gridView.DataSource = dataSource;
+                gridView.DataBind();
             }
-            catch (Exception ex)
+            else
             {
-                throw;
+
+            }
+            return dataSource;
+        }
+
+        internal static DataTable BindingDataGridView(GridView gridView, DataTable dataSource, Dictionary<string, string> columns, dynamic btnAdd = null)
+        {
+            DisabledGridView(gridView, false);
+            if (btnAdd != null) { WebHelpers.VisibleControl(true, btnAdd); }
+            if (dataSource != null)
+            {
+                gridView.DataSource = dataSource;
+                gridView.DataBind();
+                return dataSource;
+            }
+            else
+            {
+                return AddRow(dataSource, gridView, columns);
             }
         }
 
@@ -1053,22 +1070,12 @@ namespace EMR
         }
         internal static DataTable DeleteRow(DataTable dataTable, GridView gridView, int rowIndex)
         {
-            dataTable = UpdateLastRow(gridView, Iina.SKIN_ANNO, dataTable);
-
+            dataTable = UpdateLastRow(gridView, dataTable);
             dataTable.Rows[rowIndex].Delete();
-
             return DataBind(gridView, dataTable);
         }
-        private static DataTable UpdateLastRow(GridView gridView, Dictionary<string, string> cols, DataTable table)
+        private static DataTable UpdateLastRow(GridView gridView, DataTable table)
         {
-            if (table.Rows.Count <= 0)
-            {
-                foreach (KeyValuePair<string, string> col in cols)
-                {
-                    table.Columns.Add(col.Key);
-                }
-            }
-
             for (int i = 0; i < gridView.Rows[gridView.Rows.Count - 1].Cells.Count; i++)
             {
                 try
@@ -1135,27 +1142,29 @@ namespace EMR
                 if (_dataTable == null)
                 {
                     _dataTable = new DataTable();
-                }
-                //create header
-                for (int i = 0; i < _col.Count; i++)
-                {
-                    var col = _col.ElementAt(i);
 
-                    if (!_dataTable.Columns.Contains(col.Key))
+                    //create header
+                    for (int i = 0; i < _col.Count; i++)
                     {
+                        var col = _col.ElementAt(i);
 
-                        _dataTable.Columns.Add(col.Key);
-                        if (!string.IsNullOrEmpty(col.Value))
+                        if (!_dataTable.Columns.Contains(col.Key))
                         {
-                            switch (col.Value)
+
+                            _dataTable.Columns.Add(col.Key);
+                            if (!string.IsNullOrEmpty(col.Value))
                             {
-                                case "DateTime":
-                                    _dataTable.Columns[i].DataType = typeof(DateTime);
-                                    break;
+                                switch (col.Value)
+                                {
+                                    case "DateTime":
+                                        _dataTable.Columns[i].DataType = typeof(DateTime);
+                                        break;
+                                }
                             }
                         }
                     }
                 }
+
                 //get current data
                 for (int r = 0; r < _gridView.Rows.Count; r++)
                 {

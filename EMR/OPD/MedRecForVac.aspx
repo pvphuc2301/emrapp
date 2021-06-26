@@ -631,14 +631,14 @@
                                             <div class="col-md-12">
                                                 <asp:UpdatePanel ID="updatePanel_appointed_vaccine" runat="server" UpdateMode="Always">
                                                     <ContentTemplate>
-                                                        <asp:GridView ShowHeader="true" ShowHeaderWhenEmpty="true" ID="grid_appointed_vaccine" runat="server" OnRowDeleting="grid_appointed_vaccine_RowDeleting" CssClass="table-bordered" AutoGenerateColumns="false">
+                                                        <asp:GridView ShowHeaderWhenEmpty="true" ID="grid_appointed_vaccine" runat="server" OnRowDeleting="grid_appointed_vaccine_RowDeleting" CssClass="table-bordered" AutoGenerateColumns="false">
                                                             <Columns>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
                                                                         <div style="width: 180px">Tên vaccin/ <span class="text-primary">Drug names</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <webUI:TextField Value='<%#Eval("drug_name") %>' DataKey="drug_name" runat="server" />
+                                                                        <webUI:TextField Value='<%#Eval("drug_name") %>' ID="drug_name" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -646,7 +646,7 @@
                                                                         <div style="width: 130px">Hàm lượng/ <span class="text-primary">Strength</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <webUI:TextField Value='<%#Eval("strength") %>' DataKey="strength" runat="server" />
+                                                                        <webUI:TextField Value='<%#Eval("strength") %>' ID="strength" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -654,7 +654,7 @@
                                                                         <div style="width: 120px">Đường dùng/ <span class="text-primary">Route</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <webUI:TextField Value='<%#Eval("router") %>' DataKey="router" runat="server" />
+                                                                        <webUI:TextField Value='<%#Eval("router") %>' ID="router" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -662,7 +662,7 @@
                                                                         <div style="width: 300px">Hướng dẫn bổ sung/ Chỉ định sử dụng khi cần thiết kèm theo lý do/ <span class="text-primary">Additional instruction/ PRN order with reason</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <webUI:TextField Value='<%#Eval("reason") %>' DataKey="reason" runat="server" />
+                                                                        <webUI:TextField Value='<%#Eval("reason") %>' ID="reason" runat="server" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField HeaderText="">
@@ -673,6 +673,7 @@
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                             </Columns>
+                                                            <EmptyDataTemplate>There are no items to display.</EmptyDataTemplate>
                                                         </asp:GridView>
                                                         <asp:UpdateProgress ID="updateProgress_appointed_vaccine" runat="server" AssociatedUpdatePanelID="updatePanel_appointed_vaccine">
                                                             <ProgressTemplate>

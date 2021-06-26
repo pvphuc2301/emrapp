@@ -172,35 +172,6 @@ namespace EMR
         #endregion
 
         #region Functions
-        public void UpdateData(Surc surc)
-        {
-            try
-            {
-                surc.amend_reason = txt_amend_reason.Text;
-                surc.admission_date = DataHelpers.ConvertSQLDateTime(surc.admission_date);
-                surc.procedure_date = DataHelpers.ConvertSQLDateTime(surc.procedure_date);
-                surc.discharge_date = DataHelpers.ConvertSQLDateTime(dpk_discharge_date.SelectedDate);
-                surc.preo_diagnosis = txt_preo_diagnosis.Value;
-                surc.name_of_procedure = txt_name_of_procedure.Value;
-                surc.proce_narrative = txt_proce_narrative.Value;
-                surc.blood_type = txt_blood_type.Value;
-                surc.rh = txt_rh.Value;
-
-                dynamic result = surc.Update()[0];
-
-                if (result.Status == System.Net.HttpStatusCode.OK)
-                {
-                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
-
-                    Initial();
-                }
-            }
-            catch (Exception ex)
-            {
-                WebHelpers.SendError(Page, ex);
-            }
-        }
         public void Initial()
         {
             if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
@@ -224,6 +195,35 @@ namespace EMR
                 }
 
                 WebHelpers.getAccessButtons(form1, surc.status, (string)Session["access_authorize"], (string)Session["location"]);
+            }
+            catch (Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
+        }
+        public void UpdateData(Surc surc)
+        {
+            try
+            {
+                surc.amend_reason = txt_amend_reason.Text;
+                surc.admission_date = DataHelpers.ConvertSQLDateTime(surc.admission_date);
+                surc.procedure_date = DataHelpers.ConvertSQLDateTime(surc.procedure_date);
+                surc.discharge_date = DataHelpers.ConvertSQLDateTime(dpk_discharge_date.SelectedDate);
+                surc.preo_diagnosis = txt_preo_diagnosis.Value;
+                surc.name_of_procedure = txt_name_of_procedure.Value;
+                surc.proce_narrative = txt_proce_narrative.Value;
+                surc.blood_type = txt_blood_type.Value;
+                surc.rh = txt_rh.Value;
+
+                dynamic result = surc.Update()[0];
+
+                if (result.Status == System.Net.HttpStatusCode.OK)
+                {
+                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
+                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
+
+                    Initial();
+                }
             }
             catch (Exception ex)
             {
