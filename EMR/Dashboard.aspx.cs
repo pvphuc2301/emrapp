@@ -21,7 +21,7 @@ namespace EMR
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!WebHelpers.CheckSession(this, "./login.aspx?ReturnUrl=")) return;
+            if(!WebHelpers.CheckSession(this, "./login.aspx?ReturnUrl=", false)) return;
 
             if (!IsPostBack)
             {

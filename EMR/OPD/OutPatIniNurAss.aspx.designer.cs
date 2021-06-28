@@ -447,6 +447,24 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_blood_pressure;
 
         /// <summary>
+        /// lbl_vs_bmi control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_vs_bmi;
+
+        /// <summary>
+        /// vs_bmi_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl vs_bmi_wrapper;
+
+        /// <summary>
         /// txt_vs_bmi control.
         /// </summary>
         /// <remarks>
@@ -573,15 +591,6 @@ namespace EMR
         protected global::EMR.icons.XSquare XSquare5;
 
         /// <summary>
-        /// CustomValidator3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator3;
-
-        /// <summary>
         /// txt_allergy_note control.
         /// </summary>
         /// <remarks>
@@ -652,15 +661,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.icons.XSquare XSquare6;
-
-        /// <summary>
-        /// CustomValidator1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator1;
 
         /// <summary>
         /// txt_mental_status_note control.
@@ -787,15 +787,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.icons.XSquare XSquare22;
-
-        /// <summary>
-        /// CustomValidator4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator4;
 
         /// <summary>
         /// txt_fall_risk_assistance control.

@@ -8,6 +8,7 @@
 <head runat="server">
     <title></title>
     <link href="../../styles/style.css" rel="stylesheet" />
+    <link href="../styles/sweetalert.min.css" rel="stylesheet" />
     <style>
         * {
             margin: 0;
@@ -23,7 +24,7 @@
 <body>
 
     <form id="form1" runat="server">
-        <img src="" id="image1" runat="server" onload="image1_Load" style="display: none;" />
+        <img id="image1" runat="server" onload="image1_Load" style="display: none;" />
 
         <div style="width: 500px;">
             <div id="controllers">
@@ -54,7 +55,8 @@
 
 
         <asp:Button Text="Complete" ID="btnComplete" OnClick="btnComplete_Click" runat="server" />
-
+        <div id="Div1" runat="server" onclick="comfirmDelete()" class="btn btn-danger waves-effect">Delete</div>
+        
         <div runat="server" id="histories"></div>
 
         <div id="container2">
@@ -64,7 +66,57 @@
 
         <script src="../../scripts/jquery-3.2.1.min.js"></script>
         <script>
-
+            function comfirmDelete() {
+                $.ajax({
+                    type: 'POST',
+                    url: "Paint.aspx/GetImage",
+                    data: '{ "imageData" : "' + "sdfs" + '" }',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function () {
+                        swal("Done!", "It was succesfully deleted!", "success");
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        swal("Error deleting!", "Please try again", "error");
+                    }
+                });
+                //$.ajax({
+                //    type: 'POST',
+                //    url: "Paint.aspx/GetImage",
+                //    data: '{ "imageData" : "' + "sdfs" + '" }',
+                //    contentType: 'application/json; charset=utf-8',
+                //    dataType: 'json',
+                //    success: function (msg) {
+                //        console.log(msg);
+                //    }
+                //});
+            }
+                //swal({
+                //    title: "Are you sure?",
+                //    text: "You will not be able to recover this imaginary file!",
+                //    type: "warning",
+                //    showCancelButton: true,
+                //    confirmButtonColor: "#DD6B55",
+                //    confirmButtonText: "Yes, delete it!",
+                //    closeOnConfirm: false
+                //}, function (isConfirm) {
+                //    if (!isConfirm) return;
+                //    $.ajax({
+                //        type: 'POST',
+                //        url: "Paint.aspx/updateImage",
+                //        data: JSON.stringify(history),
+                //        contentType: 'application/json; charset=utf-8',
+                //        dataType: 'json',
+                //        success: function () {
+                //            console.log('done');
+                //            swal("Done!", "It was succesfully deleted!", "success");
+                //        },
+                //        error: function (xhr, ajaxOptions, thrownError) {
+                //            swal("Error deleting!", "Please try again", "error");
+                //        }
+                //    });
+            //    });
+            //}
             // Last updated November 2010 by Simon Sarris
             // www.simonsarris.com
             // sarris@acm.org
@@ -695,10 +747,25 @@
                             data: JSON.stringify(history),
                             contentType: 'application/json; charset=utf-8',
                             dataType: 'json',
-                            success: function (msg) {
-                                console.log(msg);
+                            success: function () {
+                                console.log('done');
+                                swal("Done!", "It was succesfully deleted!", "success");
+                            },
+                            error: function (xhr, ajaxOptions, thrownError) {
+                                swal("Error deleting!", "Please try again", "error");
                             }
                         });
+
+                        //$.ajax({
+                        //    type: 'POST',
+                        //    url: "Paint.aspx/updateImage",
+                        //    data: JSON.stringify(history),
+                        //    contentType: 'application/json; charset=utf-8',
+                        //    dataType: 'json',
+                        //    success: function (msg) {
+                        //        console.log(msg);
+                        //    }
+                        //});
                     }
                 }
 
@@ -762,6 +829,7 @@
 
 
         </script>
+        <script src="../scripts/sweetalert.min.js"></script>
     </form>
 
 </body>

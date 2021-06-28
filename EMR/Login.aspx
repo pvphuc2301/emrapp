@@ -10,7 +10,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <link rel="shortcut icon" href="#"/>
+    <link rel="icon" href="images/aih.ico"/>
     <link href="./styles/default.css" rel="stylesheet" />
     <link href="./styles/style.css" rel="stylesheet" />
     <link href="./styles/myStyle.css" rel="stylesheet" />

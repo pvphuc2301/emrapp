@@ -17,6 +17,22 @@ namespace EMR
             {
                 Initial();
             }
+            PostBackEvent();
+        }
+
+        private void PostBackEvent()
+        {
+            switch (Request["__EVENTTARGET"])
+            {
+                case "leavePage":
+                    
+
+                    break;
+                case "redoLeavePage":
+                    
+
+                    break;
+            }
         }
 
         #region Binding Data
@@ -35,6 +51,8 @@ namespace EMR
         {
             try
             {
+                txt_amend_reason.Text = "";
+
                 // 2. Lý do đến khám
                 txt_chief_complain.Value = mc.chief_complain;
                 txt_chief_complain.Disabled = false;
@@ -66,40 +84,51 @@ namespace EMR
         }
         private void BindingDataFormView(MC mc)
         {
-            lbl_chief_complain.Text = WebHelpers.GetValue(mc.chief_complain);
-            lbl_history_present_illness.Text = WebHelpers.GetValue(mc.history_present_illness);
-            lbl_past_history.Text = WebHelpers.GetValue(mc.past_history);
-            lbl_clinical_findings.Text = WebHelpers.GetValue(mc.clinical_findings);
-            lbl_para_clinical_investigations.Text = WebHelpers.GetValue(mc.para_clinical_investigations);
-            lbl_diagnosis.Text = WebHelpers.GetValue(mc.diagnosis);
-            lbl_treatment.Text = WebHelpers.GetValue(mc.treatment);
-            lbl_treatment_period.Text = WebHelpers.GetValue(mc.treatment_period);
-            lbl_recommendation.Text = WebHelpers.GetValue(mc.recommendation);
-            lbl_treatment_plan.Text = WebHelpers.GetValue(mc.treatment_plan);
+            try
+            {
+                lbl_chief_complain.Text = WebHelpers.GetValue(mc.chief_complain);
+                lbl_history_present_illness.Text = WebHelpers.GetValue(mc.history_present_illness);
+                lbl_past_history.Text = WebHelpers.GetValue(mc.past_history);
+                lbl_clinical_findings.Text = WebHelpers.GetValue(mc.clinical_findings);
+                lbl_para_clinical_investigations.Text = WebHelpers.GetValue(mc.para_clinical_investigations);
+                lbl_diagnosis.Text = WebHelpers.GetValue(mc.diagnosis);
+                lbl_treatment.Text = WebHelpers.GetValue(mc.treatment);
+                lbl_treatment_period.Text = WebHelpers.GetValue(mc.treatment_period);
+                lbl_recommendation.Text = WebHelpers.GetValue(mc.recommendation);
+                lbl_treatment_plan.Text = WebHelpers.GetValue(mc.treatment_plan);
+            }
+            catch (Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
 
         }
         private void BindingDataFormPrint(MC mc)
         {
-            Patient patient = Patient.Instance();
-            prt_vpid.Text = prt_barcode.Text = patient.visible_patient_id;
+            try
+            {
+                Patient patient = Patient.Instance();
+                prt_vpid.Text = prt_barcode.Text = patient.visible_patient_id;
 
-            prt_patient_name.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
-            prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth);
+                prt_patient_name.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
+                prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth);
 
-            prt_gender.Text = WebHelpers.CreateOptions(new Option { Text = "Nam <div class='text-primary'>Male</div>", Value = "Male" }, new Option { Text = "Nữ<div class='text-primary'>Female</div>", Value = "Female" }, DataHelpers.patient.gender_e, "display: grid; grid-template-columns: 1fr 1fr; width: 300px");
+                prt_gender.Text = WebHelpers.CreateOptions(new Option { Text = "Nam <div class='text-primary'>Male</div>", Value = "Male" }, new Option { Text = "Nữ<div class='text-primary'>Female</div>", Value = "Female" }, DataHelpers.patient.gender_e, "display: grid; grid-template-columns: 1fr 1fr; width: 300px");
 
-            prt_pid.Text = DataHelpers.patient.visible_patient_id;
-            prt_date_of_visit.Text = WebHelpers.FormatDateTime(PatientVisit.Instance().actual_visit_date_time);
-            prt_chief_complain.Text = mc.chief_complain;
-            prt_history_present_illness.Text = mc.history_present_illness;
-            prt_past_history.Text = mc.past_history;
-            prt_clinical_findings.Text = mc.clinical_findings;
-            prt_para_clinical_investigations.Text = mc.para_clinical_investigations;
-            prt_diagnosis.Text = mc.diagnosis;
-            prt_treatment.Text = mc.treatment;
-            prt_treatment_period.Text = mc.treatment_period;
-            prt_recommendation.Text = mc.recommendation;
-
+                prt_pid.Text = DataHelpers.patient.visible_patient_id;
+                prt_date_of_visit.Text = WebHelpers.FormatDateTime(PatientVisit.Instance().actual_visit_date_time);
+                prt_chief_complain.Text = mc.chief_complain;
+                prt_history_present_illness.Text = mc.history_present_illness;
+                prt_past_history.Text = mc.past_history;
+                prt_clinical_findings.Text = mc.clinical_findings;
+                prt_para_clinical_investigations.Text = mc.para_clinical_investigations;
+                prt_diagnosis.Text = mc.diagnosis;
+                prt_treatment.Text = mc.treatment;
+                prt_treatment_period.Text = mc.treatment_period;
+                prt_recommendation.Text = mc.recommendation;
+            }
+            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
+            
         }
         #endregion
 
@@ -110,10 +139,9 @@ namespace EMR
             {
                 MC mc = new MC(DataHelpers.varDocId);
                 mc.status = DocumentStatus.FINAL;
-                mc.user_name = (string)Session["UserID"];
-
+                
                 UpdateData(mc);
-                WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+                WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             }
         }
         protected void btnSave_Click(object sender, EventArgs e)
@@ -122,7 +150,6 @@ namespace EMR
             {
                 MC mc = new MC(DataHelpers.varDocId);
                 mc.status = DocumentStatus.DRAFT;
-                mc.user_name = (string)Session["UserID"];
 
                 UpdateData(mc);
             }
@@ -134,7 +161,7 @@ namespace EMR
                 dynamic result = MC.Delete((string)Session["UserID"], Request.QueryString["docid"])[0];
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
                     string pid = Request["pid"];
                     string vpid = Request["vpid"];
@@ -151,9 +178,7 @@ namespace EMR
         {
             if(WebHelpers.CanOpenForm(Page, Request.QueryString["docId"], DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"])) {
                 MC mc = new MC(Request.QueryString["docId"]);
-                string emp_id = (string)Session["emp_id"];
 
-                txt_amend_reason.Text = "";
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
@@ -167,7 +192,7 @@ namespace EMR
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             Initial();
-            WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
         }
         protected void btnPrint_Click(object sender, EventArgs e)
         {
@@ -223,15 +248,14 @@ namespace EMR
                 mc.treatment_period = txt_treatment_period.Value;
                 mc.recommendation = txt_recommendation.Value;
                 mc.treatment_plan = txt_treatment_plan.Value;
+                mc.user_name = (string)Session["UserID"];
 
                 dynamic result = mc.Update()[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
-
                     Initial();
+                    WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
                 }
             }
             catch(Exception ex)

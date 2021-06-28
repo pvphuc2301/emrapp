@@ -118,6 +118,10 @@ namespace EMR
         #endregion
 
         #region Methods
+        public int GetAge()
+        {
+           return DataHelpers.CalculateAge(date_of_birth);
+        }
         public string GetFullName()
         {
             return this.first_name_l + " " + this.last_name_l;
@@ -2644,6 +2648,7 @@ namespace EMR
 
         public static Dictionary<string, string> SENSORY_CODE = new Dictionary<string, string>()
         {
+            { "", "" },
             { "1", "1_Giới hạn hoàn toàn/ Completely limited" },
             { "2", "2_Giới hạn nhiều/ Very limited" },
             { "3", "3_Giới hạn ít/ Slightly limited" },
@@ -2652,6 +2657,7 @@ namespace EMR
 
         public static Dictionary<string, string> MOISTURE_CODE = new Dictionary<string, string>()
         {
+            { "", "" },
             { "1", "1_Liên tục ẩm/ Constantly moist" },
             { "2", "2_Thường ẩm/ Often moist" },
             { "3", "3_Thỉnh thoảng ẩm/ Occasionally moist" },
@@ -2660,6 +2666,7 @@ namespace EMR
 
         public static Dictionary<string, string> ACTIVITY_CODE = new Dictionary<string, string>()
         {
+            { "", "" },
             { "1", "1_Nằm liệt giường/ Bedfast" },
             { "2", "2_Cố định trên ghế/ Chairfast" },
             { "3", "3_Thỉnh thoảng đi lại Walks/ occasionally moist" },
@@ -2668,6 +2675,7 @@ namespace EMR
 
         public static Dictionary<string, string> MOBILITY_CODE = new Dictionary<string, string>()
         {
+            { "", "" },
             { "1", "1_Hoàn toàn bất động/ Completely immobile" },
             { "2", "2_Rất hạn chế/ Very limited" },
             { "3", "3_Ít hạn chế/ Slightly limited" },
@@ -2676,6 +2684,7 @@ namespace EMR
 
         public static Dictionary<string, string> NUTRITION_CODE = new Dictionary<string, string>()
         {
+            { "", "" },
             { "1", "1_Rất kém/ Very poor" },
             { "2", "2_Có thể không đầy đủ/ Probably inadequate" },
             { "3", "3_Đầy đủ/ Adequate" },
@@ -2684,6 +2693,7 @@ namespace EMR
 
         public static Dictionary<string, string> FRICTION_CODE = new Dictionary<string, string>()
         {
+            { "", "" },
             { "1", "1_Có vấn đề/ Problem" },
             { "2", "2_Vấn đề tiềm ẩn/ Potential problem" },
             { "3", "3_Không có vấn đề/ No problem" },
@@ -3157,7 +3167,7 @@ namespace EMR
 
     public class Mrnv
     {
-        public static Dictionary<string, string> AppointedVaccine = new Dictionary<string, string>()
+        public static Dictionary<string, string> APPOINTED_VACCINE = new Dictionary<string, string>()
         {
             { "id", "" },
             { "drug_name", "" },
@@ -3305,7 +3315,7 @@ namespace EMR
 
         public Mrnv(dynamic document_id)
         {
-            dynamic response = WebHelpers.GetAPI(string.Format("{0}/{1}", api, document_id));
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -3320,12 +3330,12 @@ namespace EMR
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI("api/mrnv/edit", this);
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI("api/mrnv/log/" + this.document_id);
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
                 message[1] = response2;
             }
 
@@ -3336,13 +3346,13 @@ namespace EMR
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI(api + "/log/" + docid);
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
                     message[1] = response1;
                 }
 
@@ -5009,9 +5019,10 @@ namespace EMR
     }
     #endregion
     #region Trai
-    public partial class IniMedAssForNeoInpatient
+    public partial class Imani
     {
         #region Properties
+        public static string api = "api/imani";
         public dynamic document_id { get; set; }
         public dynamic user_name { get; set; }
         public dynamic status { get; set; }
@@ -5057,8 +5068,9 @@ namespace EMR
         public dynamic delete_name_l { get; set; }
         public dynamic delete_date_time { get; set; }
         public dynamic document_type_rcd { get; set; }
+        #endregion
 
-        public IniMedAssForNeoInpatient(
+        public Imani(
         dynamic document_id
         , dynamic user_name
         , dynamic status
@@ -5155,41 +5167,35 @@ namespace EMR
         }
 
 
-        IniMedAssForNeoInpatient() { }
-        public IniMedAssForNeoInpatient(dynamic document_id)
+        Imani() { }
+        public Imani(dynamic document_id)
         {
-            DataTable tbl = new DataTable();
-            dynamic response = WebHelpers.GetAPI("api/imani/" + document_id);
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                // this = new OutpatientMedicalRecord();
-                tbl = WebHelpers.GetJSONToDataTable(response.Data);
-                WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                DataTable obj = WebHelpers.GetJSONToDataTable(response.Data);
+                if (obj.Rows.Count <= 0) { throw new Exception(); }
+                WebHelpers.BindingDatafield(obj, this);
             }
         }
-        public IniMedAssForNeoInpatient(dynamic document_id, dynamic use_name)
+        public Imani(dynamic document_id, dynamic use_name)
         {
             this.document_id = document_id;
             this.user_name = user_name;
         }
 
 
-        
-        #endregion
-
-
         public dynamic[] Update()
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI("api/imani/edit", this);
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI("api/imani/log/" + this.document_id);
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
                 message[1] = response2;
             }
 
@@ -5200,13 +5206,13 @@ namespace EMR
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI("api/mrnv/log/" + docid);
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
                     message[1] = response1;
                 }
 

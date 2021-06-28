@@ -13,7 +13,7 @@ namespace EMR
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            WebHelpers.CheckSession(this);
+            if (!WebHelpers.CheckSession(this)) { return; }
 
             if (!IsPostBack)
             {
@@ -35,7 +35,10 @@ namespace EMR
         }
         private void BindingDataFormEdit(POMR pomr)
         {
-            try { 
+            try {
+                
+                txt_amend_reason.Text = "";
+
                 // I. Lý do đến khám/ Chief complaint:
                 txt_chief_complaint.Value = pomr.chief_complaint;
 
@@ -49,13 +52,8 @@ namespace EMR
                 txt_personal.Value = pomr.personal;
                 txt_family.Value = pomr.family;
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_allergy_" + pomr.allergy);
-                if (pomr.allergy != null)
-                {
-                    if (pomr.allergy)
-                    {
-                        txt_allergy_note.Value = pomr.allergy_note;
-                    }
-                }
+                txt_allergy_note.Value = WebHelpers.GetBool(pomr.allergy, pomr.allergy_note, "");
+
 
                 // III.Khám bệnh/ Physical Examination:
                 // DẤU HIỆU SINH TỒN/ VITAL SIGNS:
@@ -86,14 +84,8 @@ namespace EMR
 
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_spec_opinion_requested_" + pomr.spec_opinion_requested);
 
-                if (pomr.spec_opinion_requested != null)
-                {
-                    if (pomr.spec_opinion_requested)
-                    {
-                        txt_spec_opinion_requested_note.Value = pomr.spec_opinion_requested_note;
-                    }
-                }
-            
+                txt_spec_opinion_requested_note.Value = WebHelpers.GetBool(pomr.spec_opinion_requested, pomr.spec_opinion_requested_note, "");
+
                 txt_specific_education_required.Value = pomr.specific_education_required;
 
                 if(pomr.bool_next_appointment != null)
@@ -264,10 +256,9 @@ namespace EMR
             {
                 POMR pomr = new POMR(Request.QueryString["docId"]);
                 pomr.status = DocumentStatus.FINAL;
-                pomr.user_name = (string)Session["UserID"];
-
+                
                 UpdateData(pomr);
-                WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+                WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             }
         }
         protected void btnSave_Click(object sender, EventArgs e)
@@ -276,7 +267,6 @@ namespace EMR
             {
                 POMR pomr = new POMR(Request.QueryString["docId"]);
                 pomr.status = DocumentStatus.DRAFT;
-                pomr.user_name = (string)Session["UserID"];
 
                 UpdateData(pomr);
             }
@@ -289,7 +279,7 @@ namespace EMR
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
                     string pid = Request["pid"];
                     string vpid = Request["vpid"];
@@ -305,7 +295,6 @@ namespace EMR
             {
                 POMR pomr = new POMR(Request.QueryString["docId"]);
 
-                txt_amend_reason.Text = "";
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
@@ -326,6 +315,7 @@ namespace EMR
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             Initial();
         }
         protected void btnUpdateVitalSign_Click(object sender, EventArgs e)
@@ -387,10 +377,8 @@ namespace EMR
                 //2.
                 pomr.personal = txt_personal.Value;
                 pomr.family = txt_family.Value;
-                if (rad_allergy_true.Checked)
-                { pomr.allergy = true; pomr.allergy_note = txt_allergy_note.Value; }
-                else if (rad_allergy_false.Checked)
-                { pomr.allergy = false; }
+                pomr.allergy = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_allergy_");
+                pomr.allergy_note = WebHelpers.GetBool(pomr.allergy, txt_allergy_note.Value, null);
                 //II.
                 pomr.vs_temperature = vs_temperature.Text;
                 pomr.vs_weight = vs_weight.Text;
@@ -410,17 +398,14 @@ namespace EMR
                 pomr.associated_conditions = txt_associated_conditions.Value;
 
                 pomr.treatment_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_treatment_code_", POMR.TREATMENT_CODE);
-                if (pomr.treatment_code != null) pomr.treatment_desc = POMR.TREATMENT_CODE[pomr.treatment_code];
+                pomr.treatment_desc = WebHelpers.GetDicDesc(pomr.treatment_code, Omr.TREATMENT_CODE);
 
                 //5.
                 if (pomr.treatment_code == "OPD") { pomr.medicine = txt_medicine.Value; }
                 else if (pomr.treatment_code == "TRF") { }
 
                 pomr.spec_opinion_requested = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_spec_opinion_requested_");
-                if (rad_spec_opinion_requested_true.Checked)
-                {
-                    pomr.spec_opinion_requested_note = txt_spec_opinion_requested_note.Value;
-                }
+                pomr.spec_opinion_requested_note = WebHelpers.GetBool(pomr.spec_opinion_requested, txt_spec_opinion_requested_note.Value, null);
 
                 pomr.specific_education_required = txt_specific_education_required.Value;
 
@@ -434,17 +419,17 @@ namespace EMR
                 }
                 else if (rad_bool_next_appointment_false.Checked)
                 {
-                    pomr.bool_next_appointment = false;
                     pomr.txt_next_appointment = txt_next_appointment.Value;
+                    pomr.date_next_appointment = null;
                 }
+
+                pomr.user_name = (string)Session["UserID"];
 
                 dynamic result = pomr.Update()[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
-
+                    WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
                     Initial();
                 }
             }

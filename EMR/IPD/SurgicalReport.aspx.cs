@@ -134,7 +134,7 @@ namespace EMR.IPD
                 surr.user_name = (string)Session["UserID"];
 
                 UpdateData(surr);
-                WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+                WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             }
         }
         protected void btnSave_Click(object sender, EventArgs e)
@@ -155,7 +155,7 @@ namespace EMR.IPD
                 dynamic result = Surr.Delete((string)Session["UserID"], Request.QueryString["docid"])[0];
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
                     string pid = Request["pid"];
                     string vpid = Request["vpid"];
@@ -187,7 +187,7 @@ namespace EMR.IPD
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             Initial();
         }
         protected void btnPrint_Click(object sender, EventArgs e)

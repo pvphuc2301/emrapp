@@ -474,6 +474,15 @@ namespace EMR.OPD
         protected global::EMR.UserControls.PatientInfo PatientInfo;
 
         /// <summary>
+        /// lbl_chief_complaint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_chief_complaint;
+
+        /// <summary>
         /// chief_complaint_wrapper control.
         /// </summary>
         /// <remarks>
@@ -492,13 +501,13 @@ namespace EMR.OPD
         protected global::EMR.TextField txt_chief_complaint;
 
         /// <summary>
-        /// lbl_chief_complaint control.
+        /// lbl_cur_med_history control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_chief_complaint;
+        protected global::System.Web.UI.WebControls.Label lbl_cur_med_history;
 
         /// <summary>
         /// cur_med_history_wrapper control.
@@ -517,15 +526,6 @@ namespace EMR.OPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.TextField txt_cur_med_history;
-
-        /// <summary>
-        /// lbl_cur_med_history control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_cur_med_history;
 
         /// <summary>
         /// cur_medications_wrapper control.
@@ -661,6 +661,33 @@ namespace EMR.OPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.TextField txt_allergy_note;
+
+        /// <summary>
+        /// UpdatePanel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+
+        /// <summary>
+        /// btnUpdateVitalSigns control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnUpdateVitalSigns;
+
+        /// <summary>
+        /// ArrowRepeat control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UserControl ArrowRepeat;
 
         /// <summary>
         /// vs_temperature control.
@@ -993,7 +1020,7 @@ namespace EMR.OPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_grid_appointed_vaccine_add;
+        protected global::System.Web.UI.WebControls.LinkButton btn_grid_appointed_vaccine_add;
 
         /// <summary>
         /// lbl_additional_investigations control.

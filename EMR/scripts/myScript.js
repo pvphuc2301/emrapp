@@ -240,14 +240,37 @@ function popupShowDelay(sessionTimeout) {
     }, sessionTimeout * 60000 - 15000);
 }
 
-function leaveEditFormEvent() {
-    window.addEventListener("beforeunload", function (e) {
-        var confirmationMessage = 'It looks like you have been editing something. '
-            + 'If you leave before saving, your changes will be lost.';
+//function leaveEditFormEvent() {
+//    window.addEventListener("beforeunload", function (e) {
+//        var confirmationMessage = 'It looks like you have been editing something. '
+//            + 'If you leave before saving, your changes will be lost.';
+//        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+//        console.log(confirmationMessage);
 
-        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-        return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+//        return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+//    });
+//}
+
+function leaveEditFormEvent() {
+    window.addEventListener('onbeforeunload', function () {
+        setTimeout(function () {
+            setTimeout(function () {
+                console.log('stayed');
+            }, 0);
+        }, 1);
+        console.log('leave');
+        return "You are leaving the page";
     });
+
+    //window.onbeforeunload = () => {
+    //    setTimeout(function () {
+    //        setTimeout(function () {
+    //            console.log('stayed');
+    //        }, 0);
+    //    }, 1);
+    //    console.log('leave');
+    //    return "You are leaving the page";
+    //}
 }
 
 //Auto Call

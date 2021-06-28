@@ -2,7 +2,7 @@
 
 <%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="uc1" TagName="PatientInfo" %>
 <%@ Register Src="~/UserControls/Alert.ascx" TagPrefix="uc1" TagName="Alert" %>
-<%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="Input" TagName="TextField" %>
+<%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="webUI" TagName="TextField" %>
 <%@ Register Src="~/UserControls/PromptButton.ascx" TagPrefix="Button" TagName="Prompt" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrintWindow.ascx" TagPrefix="webUI" TagName="PrintWindow" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Label.ascx" TagPrefix="webUI" TagName="Label" %>
@@ -28,6 +28,8 @@
     <title>Medical Certificate</title>
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
+    <link href="../styles/sweetalert.min.css" rel="stylesheet" />
+    <link href="../styles/alertify.css" rel="stylesheet" />
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
@@ -39,13 +41,13 @@
                         <thead class="report-header">
                             <tr>
                                 <th class="report-header-cell">
-                                    <div class="header-info" style="display: flex; align-items: center;">
-                                        <img width="180px" src="../images/AIH_PI_FULL.png" />
-                                        <div style="flex-grow: 1; text-align: center">
-                                            <div style="color: #007297; font-size: 20.6963px;">GIẤY CHỨNG NHẬN ĐIỀU TRỊ</div>
-                                            <div style="color: #e20e5a; font-size: 16.6667px;">MEDICAL CERTIFICATE</div>
+                                    <div class="header-info">
+                                        <img src="../images/AIH_PI_FULL.png" />
+                                        <div class="header-info-title">
+                                            <h4>GIẤY CHỨNG NHẬN ĐIỀU TRỊ</h4>
+                                            <h5>MEDICAL CERTIFICATE</h5>
                                         </div>
-                                        <div class="text-center" style="width: 175px;">
+                                        <div style="width: 175px;">
                                             <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
                                             <asp:Label runat="server" ID="prt_vpid" CssClass="d-block"></asp:Label>
                                         </div>
@@ -208,7 +210,7 @@
                                             </legend>
                                             <div class="col-md-12">
                                                 <div class="form-group" runat="server" id="chief_complain_wrapper">
-                                                    <Input:TextField runat="server" ID="txt_chief_complain" />
+                                                    <webUI:TextField runat="server" ID="txt_chief_complain" />
                                                 </div>
                                                 <asp:Label runat="server" ID="lbl_chief_complain" />
                                             </div>
@@ -220,7 +222,7 @@
                                             </legend>
                                             <div class="col-md-12">
                                                 <div class="form-group" runat="server" id="history_present_illness_wrapper">
-                                                    <Input:TextField runat="server" ID="txt_history_present_illness" />
+                                                    <webUI:TextField runat="server" ID="txt_history_present_illness" />
                                                 </div>
                                                 <asp:Label runat="server" ID="lbl_history_present_illness" />
                                             </div>
@@ -232,7 +234,7 @@
                                             </legend>
                                             <div class="col-md-12">
                                                 <div class="form-group" runat="server" id="past_history_wrapper">
-                                                    <Input:TextField runat="server" ID="txt_past_history" />
+                                                    <webUI:TextField runat="server" ID="txt_past_history" />
                                                 </div>
                                                 <asp:Label runat="server" ID="lbl_past_history" />
                                             </div>
@@ -244,7 +246,7 @@
                                             </legend>
                                             <div class="col-md-12">
                                                 <div class="form-group" runat="server" id="clinical_findings_wrapper">
-                                                    <Input:TextField runat="server" ID="txt_clinical_findings" />
+                                                    <webUI:TextField runat="server" ID="txt_clinical_findings" />
                                                 </div>
                                                 <asp:Label runat="server" ID="lbl_clinical_findings" />
                                             </div>
@@ -256,7 +258,7 @@
                                             </legend>
                                             <div class="col-md-12">
                                                 <div class="form-group" runat="server" id="para_clinical_investigations_wrapper">
-                                                    <Input:TextField runat="server" ID="txt_para_clinical_investigations" />
+                                                    <webUI:TextField runat="server" ID="txt_para_clinical_investigations" />
                                                 </div>
                                                 <asp:Label runat="server" ID="lbl_para_clinical_investigations" />
                                             </div>
@@ -268,7 +270,7 @@
                                             </legend>
                                             <div class="col-md-12">
                                                 <div class="form-group" runat="server" id="diagnosis_wrapper">
-                                                    <Input:TextField runat="server" ID="txt_diagnosis" />
+                                                    <webUI:TextField runat="server" ID="txt_diagnosis" />
                                                 </div>
                                                 <asp:Label runat="server" ID="lbl_diagnosis" />
                                             </div>
@@ -280,7 +282,7 @@
                                             </legend>
                                             <div class="col-md-12">
                                                 <div class="form-group" runat="server" id="treatment_wrapper">
-                                                    <Input:TextField runat="server" ID="txt_treatment" />
+                                                    <webUI:TextField runat="server" ID="txt_treatment" />
                                                 </div>
                                                 <asp:Label runat="server" ID="lbl_treatment" />
                                             </div>
@@ -292,7 +294,7 @@
                                             </legend>
                                             <div class="col-md-12">
                                                 <div class="form-group" runat="server" id="treatment_period_wrapper">
-                                                    <Input:TextField runat="server" ID="txt_treatment_period" />
+                                                    <webUI:TextField runat="server" ID="txt_treatment_period" />
                                                 </div>
                                                 <asp:Label runat="server" ID="lbl_treatment_period" />
                                             </div>
@@ -304,7 +306,7 @@
                                             </legend>
                                             <div class="col-md-12">
                                                 <div class="form-group" runat="server" id="recommendation_wrapper">
-                                                    <Input:TextField runat="server" ID="txt_recommendation" />
+                                                    <webUI:TextField runat="server" ID="txt_recommendation" />
                                                 </div>
                                                 <asp:Label runat="server" ID="lbl_recommendation" />
                                             </div>
@@ -316,7 +318,7 @@
                                             </legend>
                                             <div class="col-md-12">
                                                 <div class="form-group" runat="server" id="treatment_plan_wrapper">
-                                                    <Input:TextField runat="server" ID="txt_treatment_plan" />
+                                                    <webUI:TextField runat="server" ID="txt_treatment_plan" />
                                                 </div>
                                                 <asp:Label runat="server" ID="lbl_treatment_plan" />
                                             </div>
@@ -359,15 +361,6 @@
                         </div>
                     </div>
                 </div>
-
-                <asp:UpdateProgress runat="server" AssociatedUpdatePanelID="Upd">
-                    <ProgressTemplate>
-                        <div class="slice">
-                            <div data-loader="circle"></div>
-                            <div>data-loader="circle"</div>
-                        </div>
-                    </ProgressTemplate>
-                </asp:UpdateProgress>
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>
@@ -377,6 +370,9 @@
     <script src="../scripts/myScript.js"></script>
     <script src="../scripts/contenteditable.min.js"></script>
     <script src="../scripts/waves.js"></script>
+    <script src="../scripts/sweetalert.min.js"></script>
+    <script src="../scripts/alertify.js"></script>
+
     <script type="text/javascript">
 
         function beforeAsyncPostBack() {

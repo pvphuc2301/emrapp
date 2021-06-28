@@ -308,7 +308,7 @@
                                                                     <div style="width: 80px; text-align: center; margin: 5px">1</div>
                                                                 </HeaderTemplate>
                                                                 <ItemTemplate>
-                                                                    <asp:Label Style="margin: 5px" Text='<%#Eval("grav_1") %>' runat="server" />
+                                                                    <asp:Label Style="margin: 5px" Text='<%#Eval("grav_1") %>' runat="server" Width="100px" />
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
                                                             <asp:TemplateField>
@@ -316,7 +316,7 @@
                                                                     <div style="width: 80px; text-align: center; margin: 5px">2</div>
                                                                 </HeaderTemplate>
                                                                 <ItemTemplate>
-                                                                    <asp:Label Style="margin: 5px" Text='<%#Eval("grav_2") %>' runat="server" />
+                                                                    <asp:Label Style="margin: 5px" Text='<%#Eval("grav_2") %>' runat="server" Width="100px" />
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
                                                             <asp:TemplateField>
@@ -324,7 +324,7 @@
                                                                     <div style="margin: 5px" style="width: 80px; text-align: center; margin: 5px">3</div>
                                                                 </HeaderTemplate>
                                                                 <ItemTemplate>
-                                                                    <asp:Label Style="margin: 5px" Text='<%#Eval("grav_3") %>' runat="server" />
+                                                                    <asp:Label Style="margin: 5px" Text='<%#Eval("grav_3") %>' runat="server" Width="100px" />
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
                                                             <asp:TemplateField>
@@ -332,7 +332,7 @@
                                                                     <div style="width: 80px; text-align: center; margin: 5px">4</div>
                                                                 </HeaderTemplate>
                                                                 <ItemTemplate>
-                                                                    <asp:Label Style="margin: 5px" Text='<%#Eval("grav_4") %>' runat="server" />
+                                                                    <asp:Label Style="margin: 5px" Text='<%#Eval("grav_4") %>' runat="server" Width="100px" />
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
                                                             <asp:TemplateField>
@@ -340,7 +340,7 @@
                                                                     <div style="width: 80px; text-align: center; margin: 5px">5</div>
                                                                 </HeaderTemplate>
                                                                 <ItemTemplate>
-                                                                    <asp:Label Style="margin: 5px" Text='<%#Eval("grav_5") %>' runat="server" />
+                                                                    <asp:Label Style="margin: 5px" Text='<%#Eval("grav_5") %>' runat="server" Width="100px" />
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
                                                             <asp:TemplateField>
@@ -348,7 +348,7 @@
                                                                     <div style="width: 80px; text-align: center; margin: 5px">6</div>
                                                                 </HeaderTemplate>
                                                                 <ItemTemplate>
-                                                                    <asp:Label Style="margin: 5px" Text='<%#Eval("grav_6") %>' runat="server" />
+                                                                    <asp:Label Style="margin: 5px" Text='<%#Eval("grav_6") %>' runat="server" Width="100px" />
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
 
@@ -1232,55 +1232,55 @@
                                                                                     </div>
                                                                                 </HeaderTemplate>
                                                                                 <ItemTemplate>
-                                                                                    <webUI:TextField Value='<%#Eval("label") %>' ID="label" runat="server" Disabled="true" />
+                                                                                    <asp:Label runat="server" ID="label" Height="35px" Text='<%#Eval("label") %>'></asp:Label>
                                                                                 </ItemTemplate>
                                                                             </asp:TemplateField>
                                                                             <asp:TemplateField>
                                                                                 <HeaderTemplate>
-                                                                                    <div style="width: 80px">1</div>
+                                                                                    <div style="width: 123px">1</div>
                                                                                 </HeaderTemplate>
                                                                                 <ItemTemplate>
-                                                                                    <webUI:TextField Value='<%#Eval("grav_1") %>' ID="grav_1" runat="server" />
+                                                                                    <webUI:TextField Value='<%#Eval("grav_1") %>'  ID="grav_1" Width="123px" runat="server" />
                                                                                 </ItemTemplate>
                                                                             </asp:TemplateField>
                                                                             <asp:TemplateField>
                                                                                 <HeaderTemplate>
-                                                                                    <div style="width: 80px">2</div>
+                                                                                    <div style="width: 123px">2</div>
                                                                                 </HeaderTemplate>
                                                                                 <ItemTemplate>
-                                                                                    <webUI:TextField Value='<%#Eval("grav_2") %>' ID="grav_2" runat="server" />
+                                                                                    <webUI:TextField Value='<%#Eval("grav_2") %>' ID="grav_2" Width="123px" runat="server" />
                                                                                 </ItemTemplate>
                                                                             </asp:TemplateField>
                                                                             <asp:TemplateField>
                                                                                 <HeaderTemplate>
-                                                                                    <div style="width: 80px">3</div>
+                                                                                    <div style="width: 123px">3</div>
                                                                                 </HeaderTemplate>
                                                                                 <ItemTemplate>
-                                                                                    <webUI:TextField Value='<%#Eval("grav_3") %>' ID="grav_3" runat="server" />
+                                                                                    <webUI:TextField Value='<%#Eval("grav_3") %>' ID="grav_3" Width="123px" runat="server" />
                                                                                 </ItemTemplate>
                                                                             </asp:TemplateField>
                                                                             <asp:TemplateField>
                                                                                 <HeaderTemplate>
-                                                                                    <div style="width: 80px">4</div>
+                                                                                    <div style="width: 123px">4</div>
                                                                                 </HeaderTemplate>
                                                                                 <ItemTemplate>
-                                                                                    <webUI:TextField Value='<%#Eval("grav_4") %>' ID="grav_4" runat="server" />
+                                                                                    <webUI:TextField Value='<%#Eval("grav_4") %>' ID="grav_4" Width="123px" runat="server" />
                                                                                 </ItemTemplate>
                                                                             </asp:TemplateField>
                                                                             <asp:TemplateField>
                                                                                 <HeaderTemplate>
-                                                                                    <div style="width: 80px">5</div>
+                                                                                    <div style="width: 123px">5</div>
                                                                                 </HeaderTemplate>
                                                                                 <ItemTemplate>
-                                                                                    <webUI:TextField Value='<%#Eval("grav_5") %>' ID="grav_5" runat="server" />
+                                                                                    <webUI:TextField Value='<%#Eval("grav_5") %>' ID="grav_5" Width="123px" runat="server" />
                                                                                 </ItemTemplate>
                                                                             </asp:TemplateField>
                                                                             <asp:TemplateField>
                                                                                 <HeaderTemplate>
-                                                                                    <div style="width: 80px">6</div>
+                                                                                    <div style="width: 123px">6</div>
                                                                                 </HeaderTemplate>
                                                                                 <ItemTemplate>
-                                                                                    <webUI:TextField Value='<%#Eval("grav_6") %>' ID="grav_6" runat="server" />
+                                                                                    <webUI:TextField Value='<%#Eval("grav_6") %>' ID="grav_6" Width="123px" runat="server" />
                                                                                 </ItemTemplate>
                                                                             </asp:TemplateField>
 
@@ -1906,6 +1906,7 @@
                                         </webUI:PopupModal>
 
                                         <webUI:PopupShowDelay runat="server" ID="PopupShowDelay" />
+
                                     </div>
                                 </div>
                             </div>

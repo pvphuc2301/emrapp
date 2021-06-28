@@ -15,12 +15,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
+    <link rel="icon" href="../images/aih.ico"/>
     <%--<link href="../styles/html5reset-1.6.1.css" rel="stylesheet" />--%>
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/telerik-custom.css" rel="stylesheet" />
     <link href="../styles/style-custom.css" rel="stylesheet" />
-    
+    <link href="../styles/sweetalert.min.css" rel="stylesheet" />
     <%--<link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../style/style-custom.css" rel="stylesheet" />--%>
@@ -402,6 +403,7 @@
     <script src="../scripts/myScript.js"></script>
     <script src="../scripts/contenteditable.min.js"></script>
     <script src="../scripts/waves.js"></script>
+    <script src="../scripts/sweetalert.min.js"></script>
 
     <script>
 

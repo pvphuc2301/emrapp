@@ -91,7 +91,7 @@ namespace EMR
                 disc.user_name = (string)Session["UserID"];
 
                 UpdateData(disc);
-                WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+                WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             }
         }
         protected void btnSave_Click(object sender, EventArgs e)
@@ -143,7 +143,7 @@ namespace EMR
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             Initial();
         }
         protected void btnPrint_Click(object sender, EventArgs e)

@@ -30,6 +30,8 @@
     <title>Outpatient Medical Record</title>
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
+    <link href="../styles/sweetalert.min.css" rel="stylesheet" />
+    <link href="../styles/alertify.css" rel="stylesheet" />
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
@@ -456,7 +458,7 @@
                                                                         <icon:XSquare runat="server" ID="XSquare38" />
                                                                     </a>
                                                                 </div>
-                                                                <asp:CustomValidator ID="CustomValidator2" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="Tiền sử dị ứng/ allergy is requested" CssClass="text-danger" OnServerValidate="allergy_ServerValidate"></asp:CustomValidator>
+                                                                <%--<asp:CustomValidator ID="CustomValidator2" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="Tiền sử dị ứng/ allergy is requested" CssClass="text-danger" OnServerValidate="allergy_ServerValidate"></asp:CustomValidator>--%>
                                                                 <div class="form-group allergy_field">
                                                                     <webUI:TextField runat="server" ID="txt_allergy_note" />
                                                                 </div>
@@ -604,7 +606,7 @@
                                                                 <a href="javascript:void(0)" data-clear="rad_psy_consult_required" onclick="clear_radiobutton(this)">
                                                                     <icon:XSquare runat="server" ID="XSquare1" />
                                                                 </a>
-                                                            <asp:CustomValidator ID="CustomValidator3" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="Yêu cầu khám chuyên khoa tâm lý/ Psychological consultation required" CssClass="text-danger" OnServerValidate="psy_consult_required_ServerValidate"></asp:CustomValidator>
+                                                            <%--<asp:CustomValidator ID="CustomValidator3" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="Yêu cầu khám chuyên khoa tâm lý/ Psychological consultation required" CssClass="text-danger" OnServerValidate="psy_consult_required_ServerValidate"></asp:CustomValidator>--%>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -730,7 +732,7 @@
                                                             <a href="javascript:void(0)" data-clear="rad_spec_opinion_requested" onclick="clear_radiobutton(this)">
                                                                 <icon:XSquare runat="server" ID="XSquare3" />
                                                             </a>
-                                                            <asp:CustomValidator ID="CustomValidator1" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="Yêu cầu ý kiến chuyên khoa/ Specialized opinion requested" CssClass="text-danger" OnServerValidate="spec_opinion_requested_ServerValidate"></asp:CustomValidator>
+                                                            <%--<asp:CustomValidator ID="CustomValidator1" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="Yêu cầu ý kiến chuyên khoa/ Specialized opinion requested" CssClass="text-danger" OnServerValidate="spec_opinion_requested_ServerValidate"></asp:CustomValidator>--%>
                                                         </div>
                                                         <div class="form-group spec_opinion_requested_field">
                                                             <webUI:TextField runat="server" ID="txt_spec_opinion_requested_note" />
@@ -806,6 +808,8 @@
     <script src="../scripts/myScript.js"></script>
     <script src="../scripts/contenteditable.min.js"></script>
     <script src="../scripts/waves.js"></script>
+    <script src="../scripts/sweetalert.min.js"></script>
+    <script src="../scripts/alertify.js"></script>
 
     <script type="text/javascript">
 

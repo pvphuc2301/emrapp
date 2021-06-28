@@ -203,11 +203,14 @@
     <Content Include="emr\emrinfor.aspx" />
     <Content Include="emr\emrview.aspx" />
     <Content Include="ER\EmerMedRec.aspx" />
+    <Content Include="icons\ArrowRepeat.ascx" />
     <Content Include="icons\ChatRight.ascx" />
     <Content Include="icons\CheckCircle.ascx" />
     <Content Include="icons\Envelope.ascx" />
     <Content Include="icons\ExclamationTriangle.ascx" />
+    <Content Include="icons\Pencil.ascx" />
     <Content Include="icons\X.ascx" />
+    <Content Include="images\aih.ico" />
     <Content Include="IPD\ObsGynIniAss.aspx" />
     <Content Include="IPD\SurgicalReport.aspx" />
     <Content Include="Other\PageException.aspx" />
@@ -285,6 +288,7 @@
     <Content Include="Report\Style1.css" />
     <Content Include="Report\TabStyle.css" />
     <Content Include="Report\TestTasb.aspx" />
+    <Content Include="scripts\alertify.js" />
     <Content Include="scripts\checkValidFields.js" />
     <Content Include="scripts\contenteditable.min.js" />
     <Content Include="scripts\dynamicModal.js" />
@@ -297,6 +301,8 @@
     <Content Include="obj\Debug\EMR.csproj.CopyComplete" />
     <Content Include="obj\Debug\EMR.csproj.CoreCompileInputs.cache" />
     <Content Include="obj\Debug\EMR.csprojAssemblyReference.cache" />
+    <Content Include="styles\alertify.css" />
+    <Content Include="styles\sweetalert.min.css" />
     <Content Include="UserControls\Barcode.ascx" />
     <Content Include="UserControls\CustomPagination.ascx" />
     <Content Include="UserControls\PopupException.ascx" />
@@ -330,23 +336,6 @@
     <Content Include="styles\style.min.css" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="images\Chrysanthemum.jpg" />
-    <Content Include="images\Desert.jpg" />
-    <Content Include="images\Hydrangeas.jpg" />
-    <Content Include="images\Jellyfish.jpg" />
-    <Content Include="images\Koala.jpg" />
-    <Content Include="images\Lighthouse.jpg" />
-    <Content Include="images\logo.png" />
-    <Content Include="images\Penguins.jpg" />
-    <Content Include="images\Thumbnails\Chrysanthemum.jpg" />
-    <Content Include="images\Thumbnails\Desert.jpg" />
-    <Content Include="images\Thumbnails\Hydrangeas.jpg" />
-    <Content Include="images\Thumbnails\Jellyfish.jpg" />
-    <Content Include="images\Thumbnails\Koala.jpg" />
-    <Content Include="images\Thumbnails\Lighthouse.jpg" />
-    <Content Include="images\Thumbnails\Penguins.jpg" />
-    <Content Include="images\Thumbnails\Tulips.jpg" />
-    <Content Include="images\Tulips.jpg" />
     <Content Include="OPD\OutPatIniNurAss.aspx" />
     <Content Include="scripts\bootstrap.min.js" />
     <Content Include="scripts\custom.js" />
@@ -434,6 +423,13 @@
     </Compile>
     <Compile Include="icons\ExclamationTriangle.ascx.designer.cs">
       <DependentUpon>ExclamationTriangle.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="icons\Pencil.ascx.cs">
+      <DependentUpon>Pencil.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="icons\Pencil.ascx.designer.cs">
+      <DependentUpon>Pencil.ascx</DependentUpon>
     </Compile>
     <Compile Include="icons\X.ascx.cs">
       <DependentUpon>X.ascx</DependentUpon>
@@ -1124,6 +1120,7 @@
     <None Include="packages.config" />
     <Content Include="scripts\jquery-2.2.1.min.map" />
     <Content Include="UserControls\.editorconfig" />
+    <Content Include="scripts\sweetalert.min.js" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

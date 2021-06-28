@@ -14,6 +14,8 @@
 <%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="webUI" TagName="PopupShowDelay" %>
 <%@ Register Src="~/icons/XSquare.ascx" TagPrefix="icon" TagName="XSquare" %>
 <%@ Register Src="~/icons/Trash.ascx" TagPrefix="icon" TagName="Trash" %>
+<%@ Register Src="~/icons/Pencil.ascx" TagPrefix="icon" TagName="Pencil" %>
+
 
 <!DOCTYPE html>
 
@@ -22,6 +24,13 @@
     <title></title>
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
+    <link href="../styles/sweetalert.min.css" rel="stylesheet" />
+    <link href="../styles/alertify.css" rel="stylesheet" />
+    <style>
+        #canvas {
+            border: 2px solid #000;
+        }
+    </style>
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
@@ -490,7 +499,7 @@
                                                     </div>
 
                                                     <div class="d-inline-block">
-                                                        <telerik:RadAjaxPanel runat="server">
+                                                        <%--<telerik:RadAjaxPanel runat="server">
                                                             <telerik:RadImageEditor OnImageLoading="RadImageEditor1_ImageLoading" OnImageChanged="RadImageEditor1_ImageChanged" EnableResize="false" RenderMode="Lightweight" ID="RadImageEditor1" runat="server" Width="513px" Height="565px">
                                                                 <Tools>
                                                                     <telerik:ImageEditorToolGroup>
@@ -503,7 +512,32 @@
                                                                     </telerik:ImageEditorToolGroup>
                                                                 </Tools>
                                                             </telerik:RadImageEditor>
-                                                        </telerik:RadAjaxPanel>
+                                                        </telerik:RadAjaxPanel>--%>
+                                                        <img src="" id="image1" runat="server" style="display: none;" />
+                                                        <asp:HiddenField runat="server" ID="StringBase64" />
+
+                                                        <div style="width: 500px;">
+                                                            <div id="controllers">
+                                                                <span runat="server" class="controller btn btn-secondary" id="undo">undo</span>
+                                                                <span runat="server" class="controller btn btn-secondary" id="redo">redo</span>
+                                                                <div runat="server" id="pencilWrapper"  class=" btn btn-secondary">
+                                                                    <svg id="pencil" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                    </svg>
+                                                                </div>
+                                                                <%--<span class="controller btn btn-secondary" id="note">note</span>--%>
+                                                            </div>
+                                                            <canvas id="canvas" runat="server"></canvas>
+                                                            <%--<div>
+                                                                <div style="display: flex; align-items: center;">
+                                                                    2
+                                                                    <webUI:TextField runat="server" ID="TextField1" />
+                                                                    <div class="btn btn-outline-secondary ml-1">
+                                                                        <icon:Trash runat="server" ID="Trash" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>--%>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </fieldset>
@@ -1480,9 +1514,243 @@
     <script src="../scripts/myScript.js"></script>
     <script src="../scripts/contenteditable.min.js"></script>
     <script src="../scripts/waves.js"></script>
+    <script src="../scripts/sweetalert.min.js"></script>
+    <script src="../scripts/alertify.js"></script>
+
+    <script>
+        function loadImage() {
+                //$("#btnSave").click(function () {
+
+                //    var image = document.getElementById("canvas").toDataURL("image/png");
+                //    image = image.replace('data:image/png;base64,', '');
+
+                //    $.ajax({
+                //        type: 'POST',
+                //        url: "Paint.aspx/GetImage",
+                //        data: '{ "imageData" : "' + image + '" }',
+                //        contentType: 'application/json; charset=utf-8',
+                //        dataType: 'json',
+                //        success: function (msg) {
+                //            console.log(msg);
+                //        }
+                //    });
+                //});
+
+                const canvas = document.querySelector('#canvas');
+                const histories = document.querySelector('#histories');
+                const ctx = canvas.getContext("2d");
+                canvas.height = 500;
+                canvas.width = 500;
+                ctx.strokeStyle = "red";
+                let imageTemp = document.getElementById("image1");
+
+
+                let img1 = new Image();
+
+                img1.onload = function () {
+                    ctx.drawImage(img1, 0, 0);
+
+                    ctx.beginPath();
+                    ctx.moveTo(119, 220);
+                    ctx.lineTo(119, 220);
+                    ctx.lineWidth = 3;
+                    ctx.strokeStyle = '#ff0000';
+                    ctx.lineCap = 'round';
+                    ctx.stroke();
+                }
+
+                img1.src = document.getElementById("image1").src;
+
+                let painting = false;
+                let pen = false;
+
+                var history = {
+                    redo_list: [],
+                    undo_list: [],
+                    saveState: function (canvas, list, keep_redo) {
+                        keep_redo = keep_redo || false;
+                        if (!keep_redo) {
+                            this.redo_list = [];
+                        }
+
+                        (list || this.undo_list).push(canvas.toDataURL());
+                    },
+                    undo: function (canvas, ctx) {
+                        this.restoreState(canvas, ctx, this.undo_list, this.redo_list);
+                    },
+                    redo: function (canvas, ctx) {
+                        this.restoreState(canvas, ctx, this.redo_list, this.undo_list);
+                    },
+                    restoreState: function (canvas, ctx, pop, push) {
+                        if (pop.length) {
+                            this.saveState(canvas, push, true);
+                            var restore_state = pop.pop();
+                            var img = document.createElement("img");
+                            img.src = restore_state;
+
+                            img.onload = function () {
+                                ctx.clearRect(0, 0, canvas.width, 400);
+                                ctx.drawImage(img, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
+                            }
+                        }
+                    }
+                }
+
+                var pencil = {
+                    options: {
+                        stroke_color: "red",
+                        dim: 4
+                    },
+                    init: function (canvas, ctx) {
+                        this.canvas = canvas;
+                        this.ctx = ctx;
+                        this.ctx.strokeColor = this.options.stroke_color;
+                        this.drawing = false;
+                        this.addCanvasEvents();
+                    },
+                    addCanvasEvents: function () {
+                        this.canvas.addEventListener('mousedown', this.start.bind(this));
+                        this.canvas.addEventListener('mousemove', this.stroke.bind(this));
+                        this.canvas.addEventListener('mouseup', this.stop.bind(this));
+                        this.canvas.addEventListener('mouseout', this.stop.bind(this));
+                    },
+                    start: function (e) {
+                        if (currentAct != act.PEN) return;
+                        this.ctx.beginPath();
+                        history.saveState(this.canvas);
+                        this.drawing = true;
+                    },
+                    stroke: function (e) {
+                        if (currentAct != act.PEN) return;
+
+                        if (this.drawing) {
+                            let rect = canvas.getBoundingClientRect();
+
+                            var x = e.clientX - rect.left;
+                            var y = e.clientY - rect.top;
+
+                            this.ctx.lineTo(x, y);
+                            this.ctx.stroke(); // draw line
+                            this.ctx.beginPath();
+                            this.ctx.moveTo(x, y);
+                        }
+                    },
+                    stop: function (e) {
+                        if (currentAct != act.PEN) return;
+
+                        if (this.drawing) {
+                            this.drawing = false;
+                            this.ctx.beginPath();
+                        }
+                        var image = document.getElementById("canvas").toDataURL("image/png");
+                        image = image.replace('data:image/png;base64,', '');
+
+                        document.getElementById("StringBase64").value = image;
+                    }
+                };
+
+                let note = {
+                    options: {},
+                    init: function (canvas, ctx) {
+                        this.canvas = canvas;
+                        this.ctx = ctx;
+                        this.addCanvasEvents();
+                    },
+                    addCanvasEvents: function () {
+                        this.canvas.addEventListener('mousedown', this.start.bind(this));
+                        //this.canvas.addEventListener('mousemove', this.stroke.bind(this));
+                        this.canvas.addEventListener('mouseup', this.stop.bind(this));
+                        this.canvas.addEventListener('mouseout', this.stop.bind(this));
+                    },
+                    start: function (e) {
+                        if (currentAct != act.NOTE) return;
+                        history.saveState(this.canvas);
+
+                        let rect = canvas.getBoundingClientRect();
+
+                        var x = e.clientX - rect.left;
+                        var y = e.clientY - rect.top;
+
+                        ctx.beginPath();
+                        ctx.moveTo(x, y);
+                        ctx.lineTo(x + 20, y);
+                        ctx.lineTo(x + 20, y + 25);
+                        ctx.lineTo(x + 10, y + 30);
+                        ctx.lineTo(x, y + 25);
+                        ctx.lineTo(x, y);
+                        ctx.fillStyle = "blue";
+
+                        ctx.font = "13px Verdana";
+                        ctx.fillText("1", x + 6, y + 18);
+                        ctx.stroke();
+                    },
+                    stop: function (e) {
+                        if (currentAct != act.NOTE) return;
+                        this.ctx.beginPath();
+
+                        let his = JSON.stringify(history);
+                        console.log(his);
+
+                        let img = document.getElementById("image1");
+                        console.log()
+                        img.src = this.canvas;
+
+                        //$.ajax({
+                        //    type: 'POST',
+                        //    url: "Paint.aspx/updateImage",
+                        //    data: JSON.stringify(history),
+                        //    contentType: 'application/json; charset=utf-8',
+                        //    dataType: 'json',
+                        //    success: function () {
+                        //        console.log('done');
+                        //        swal("Done!", "It was succesfully deleted!", "success");
+                        //    },
+                        //    error: function (xhr, ajaxOptions, thrownError) {
+                        //        swal("Error deleting!", "Please try again", "error");
+                        //    }
+                        //});
+
+                        //$.ajax({
+                        //    type: 'POST',
+                        //    url: "Paint.aspx/updateImage",
+                        //    data: JSON.stringify(history),
+                        //    contentType: 'application/json; charset=utf-8',
+                        //    dataType: 'json',
+                        //    success: function (msg) {
+                        //        console.log(msg);
+                        //    }
+                        //});
+                    }
+                }
+
+                const act = { PEN: 1, NOTE: 2 };
+                Object.freeze(act);
+
+                let currentAct;
+
+                $('#note').click(function () {
+                    currentAct = act.NOTE;
+                    note.init(canvas, ctx);
+                });
+
+                $('#pencil').click(function () {
+                    currentAct = act.PEN;
+                    pencil.init(canvas, ctx);
+                });
+
+                $('#undo').click(function () {
+                    history.undo(canvas, ctx);
+                });
+
+                $('#redo').click(function () {
+                    history.redo(canvas, ctx);
+                });
+
+        };
+    </script>
 
     <script type="text/javascript">
-
+        loadImage();
         checkboxRadiobutton_init();
         formGroup_init();
 
@@ -1494,8 +1762,12 @@
             checkboxRadiobutton_init();
             formGroup_init();
             InputFilter();
+            loadImage();
+
         }
 
     </script>
+
+    
 </body>
 </html>

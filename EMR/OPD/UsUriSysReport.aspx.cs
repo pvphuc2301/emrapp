@@ -100,7 +100,7 @@ namespace EMR
                 uusr.user_name = (string)Session["UserID"];
 
                 UpdateData(uusr);
-                WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+                WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             }
         }
         protected void btnSave_Click(object sender, EventArgs e)
@@ -120,7 +120,7 @@ namespace EMR
                 dynamic result = Uusr.Delete((string)Session["UserID"], Request.QueryString["docid"])[0];
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
                     string pid = Request["pid"];
                     string vpid = Request["vpid"];

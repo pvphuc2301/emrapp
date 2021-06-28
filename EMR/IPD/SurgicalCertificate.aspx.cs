@@ -103,7 +103,7 @@ namespace EMR
                 surc.user_name = (string)Session["UserID"];
 
                 UpdateData(surc);
-                WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+                WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             }
         }
         protected void btnSave_Click(object sender, EventArgs e)
@@ -125,7 +125,7 @@ namespace EMR
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
                     string pid = Request["pid"];
                     string vpid = Request["vpid"];

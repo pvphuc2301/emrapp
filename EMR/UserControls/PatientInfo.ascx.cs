@@ -41,7 +41,7 @@ namespace EMR.UserControls
             }
             catch(Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
+                WebHelpers.SendError(Page, ex);
             }
         }
 
@@ -50,21 +50,10 @@ namespace EMR.UserControls
             try {
                 lblVisitCode.InnerText = PatientVisit.Instance().visit_code;
                 lblVisitDate.InnerText = WebHelpers.FormatDateTime(PatientVisit.Instance().actual_visit_date_time, "dd/MM/yyyy HH:mm:ss");
-
-                //if (vi_laganue) //Language = Vietnamese ( Default)
-                //{
-                //    lblVisitCode.InnerText = DataHelpers.patientVisit.visit_code;
-                //    lblVisitDate.InnerText = DataHelpers.patientVisit.actual_visit_date_time;
-                //}
-                //else
-                //{
-                //    lblVisitCode.InnerText = DataHelpers.patientVisit.visit_code;
-                //    lblVisitDate.InnerText = DataHelpers.patientVisit.actual_visit_date_time;
-                //}
             }
             catch(Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
+                WebHelpers.SendError(Page, ex);
             }
         }
     }

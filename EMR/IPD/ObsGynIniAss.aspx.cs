@@ -43,8 +43,8 @@ namespace EMR.IPD
 
                 is_obs_gyn_change(ogia.is_obs_gyn);
 
-                if (ogia.is_obs_gyn)
-                {
+                //if (ogia.is_obs_gyn)
+                //{
                     txt_reason_admission.Value = ogia.reason_admission;
                     WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_is_obs_gyn_" + ogia.is_obs_gyn);
                     txt_lmp_from.Value = ogia.lmp_from;
@@ -100,9 +100,9 @@ namespace EMR.IPD
                     txt_obs_pelvic_exam.Value = ogia.obs_pelvic_exam;
                     txt_obs_bishop_score.Value = ogia.obs_bishop_score;
 
-                }
-                else
-                {
+                //}
+                //else
+                //{
                     txt_gyn_med_history.Value = ogia.gyn_med_history;
                     txt_gyn_cur_medication.Value = ogia.gyn_cur_medication;
                     //III
@@ -120,7 +120,7 @@ namespace EMR.IPD
                     txt_gyn_adnexa.Value = ogia.gyn_adnexa;
                     txt_gyn_douglas_pouchs.Value = ogia.gyn_douglas_pouchs;
 
-                }
+                //}
 
                 //gyn_med_history ? gyn_cur_medication
 
@@ -139,7 +139,8 @@ namespace EMR.IPD
                 
                 //4
                 WebHelpers.DataBind(grid_obs_history, WebHelpers.GetJSONToDataTable(ogia.obs_history));
-
+                WebHelpers.DisabledGridView(grid_obs_history, false);
+                grid_obs_history.Columns[grid_obs_history.Columns.Count - 1].Visible = true;
                 //III
                 //1 General exam
                 txt_general_appearance.Value = ogia.general_appearance;
@@ -183,8 +184,8 @@ namespace EMR.IPD
 
                 is_obs_gyn_change(ogia.is_obs_gyn);
 
-                if (ogia.is_obs_gyn)
-                {
+                //if (ogia.is_obs_gyn)
+                //{
                     lbl_lmp_from.Text = WebHelpers.FormatString(ogia.lmp_from);
                     lbl_lmp_to.Text = WebHelpers.FormatString(ogia.lmp_to);
                     lbl_ges_age_weeks.Text = $"{WebHelpers.FormatString(ogia.ges_age_weeks)} tuần/ weeks {WebHelpers.FormatString(ogia.ges_age_days)} ngày/ days";
@@ -235,14 +236,14 @@ namespace EMR.IPD
 
                     lbl_obs_presentation_code.Text = ogia.obs_presentation_desc + (ogia.obs_presentation_code == "OTH" ? WebHelpers.FormatString(ogia.obs_presentation_other) : "");
 
-                    lbl_obs_fetal_position.Text = WebHelpers.FormatString(ogia.obs_adnexa);
-                    lbl_obs_pelvic_exam.Text = WebHelpers.FormatString(ogia.obs_adnexa);
-                    lbl_obs_bishop_score.Text = WebHelpers.FormatString(ogia.obs_adnexa) + " điểm/ points";
+                    lbl_obs_fetal_position.Text = WebHelpers.FormatString(ogia.obs_fetal_position);
+                    lbl_obs_pelvic_exam.Text = WebHelpers.FormatString(ogia.obs_pelvic_exam);
+                    lbl_obs_bishop_score.Text = WebHelpers.FormatString(ogia.obs_bishop_score) + " điểm/ points";
 
                     WebHelpers.VisibleControl(false, gynecology_field, gynecology_field1, gynecology_field2);
-                }
-                else
-                {
+                //}
+                //else
+                //{
                     lbl_gyn_med_history.Text = WebHelpers.FormatString(ogia.gyn_med_history);
                     lbl_gyn_cur_medication.Text = WebHelpers.FormatString(ogia.gyn_cur_medication);
                     
@@ -259,7 +260,7 @@ namespace EMR.IPD
                     lbl_gyn_cervix.Text = WebHelpers.FormatString(ogia.gyn_cervix);
                     lbl_gyn_adnexa.Text = WebHelpers.FormatString(ogia.gyn_adnexa);
                     lbl_gyn_douglas_pouchs.Text = WebHelpers.FormatString(ogia.gyn_douglas_pouchs);
-                }
+                //}
                 //2
                 lbl_personal.Text = WebHelpers.FormatString(ogia.personal);
                 lbl_family.Text = WebHelpers.FormatString(ogia.family);
@@ -272,8 +273,9 @@ namespace EMR.IPD
                 lbl_age_menopause.Text = WebHelpers.FormatString(ogia.age_menopause);
                 lbl_previous_gyn_diseases.Text = WebHelpers.FormatString(ogia.previous_gyn_diseases);
                 //4.
-                ViewState[grid_obs_history.ID] = WebHelpers.DataBind(grid_obs_history, WebHelpers.GetJSONToDataTable(ogia.obs_history));
+                WebHelpers.DataBind(grid_obs_history, WebHelpers.GetJSONToDataTable(ogia.obs_history));
                 WebHelpers.DisabledGridView(grid_obs_history, true);
+                grid_obs_history.Columns[grid_obs_history.Columns.Count - 1].Visible = true;
                 //III.
                 lbl_general_appearance.Text = WebHelpers.FormatString(ogia.general_appearance);
                 lbl_edema.Text = WebHelpers.GetBool(ogia.edema, "Yes", "No");
@@ -481,7 +483,7 @@ namespace EMR.IPD
                 prt_age_menopause.Text = (ogia.age_menopause ?? "—").ToString();
                 prt_previous_gyn_diseases.Text = (ogia.previous_gyn_diseases ?? "—").ToString();
 
-                WebHelpers.DataBind(prt_obs_history, WebHelpers.GetJSONToDataTable(ogia.obs_history));
+                WebHelpers.LoadDataGridView(prt_obs_history, WebHelpers.GetJSONToDataTable(ogia.obs_history), Ogia.OBS_HISTORY);
 
                 lbl_general_appearance.Text = ogia.general_appearance;
 
@@ -702,7 +704,7 @@ namespace EMR.IPD
                 ogia.user_name = (string)Session["UserID"];
 
                 UpdateData(ogia);
-                WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+                WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             }
         }
         protected void btnSave_Click(object sender, EventArgs e)
@@ -723,7 +725,7 @@ namespace EMR.IPD
                 dynamic result = Ogia.Delete((string)Session["UserID"], Request.QueryString["docid"])[0];
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
                     string pid = Request["pid"];
                     string vpid = Request["vpid"];

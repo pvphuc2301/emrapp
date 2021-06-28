@@ -10,6 +10,7 @@ using Telerik.Web.UI;
 using Telerik.Web.UI.ImageEditor;
 using System.Web.Script.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace EMR
 {
@@ -22,16 +23,18 @@ namespace EMR
         
         protected void Page_Load(object sender, EventArgs e)
         {
-            WebHelpers.CheckSession(this);
+            if(!WebHelpers.CheckSession(this)) return;
             if (!IsPostBack)
             {
                 Initial();
             }
+            
         }
        
         #region Binding Data
         private void BindingDataForm(Ena ena, bool state)
         {
+            
             if (state)
             {
                 BindingDataFormEdit(ena);
@@ -45,6 +48,8 @@ namespace EMR
         {
             try
             {
+                WebHelpers.VisibleControl(true, undo, redo, pencilWrapper);
+                image1.Src = JObject.Parse(ena.skin_anno_data).dataURI;
                 //Triage Date Time
                 WebHelpers.BindDateTimePicker(dtpk_triage_time, ena.triage_time);
 
@@ -174,11 +179,10 @@ namespace EMR
 
                 //Assessment System
 
-                ViewState[grid_AssessmentSystem.ID] = WebHelpers.DataBind(grid_AssessmentSystem, WebHelpers.GetJSONToDataTable(ena.assessment_system));
-                WebHelpers.DisabledGridView(grid_AssessmentSystem, false);
+                ViewState[grid_AssessmentSystem.ID] = WebHelpers.BindingDataGridView(grid_AssessmentSystem, WebHelpers.GetJSONToDataTable(ena.assessment_system), Ena.ASSESSMENT_SYSTEM_COL, btn_grid_AssessmentSystem_add);
 
-                ViewState[gridDirectMedication.ID] = WebHelpers.DataBind(gridDirectMedication, WebHelpers.GetJSONToDataTable(ena.direct_medication));
-                WebHelpers.DisabledGridView(gridDirectMedication, false);
+                ViewState[gridDirectMedication.ID] = WebHelpers.BindingDataGridView(gridDirectMedication, WebHelpers.GetJSONToDataTable(ena.direct_medication), Ena.DIRECT_MEDICATION_COL, btn_gridDirectMedication_add);
+
                 //Discharged
 
                 WebHelpers.BindDateTimePicker(dtpk_discharge_date_time, ena.discharge_date_time);
@@ -201,8 +205,7 @@ namespace EMR
                 WebHelpers.BindDateTimePicker(dtpk_noticed_time, ena.noticed_time);
 
                 //Nursing notes
-                ViewState[grid_NursingNotes.ID] = WebHelpers.DataBind(grid_NursingNotes, WebHelpers.GetJSONToDataTable(ena.nursing_note));
-                WebHelpers.DisabledGridView(grid_NursingNotes, false);
+                ViewState[grid_NursingNotes.ID] = WebHelpers.BindingDataGridView(grid_NursingNotes, WebHelpers.GetJSONToDataTable(ena.nursing_note), Ena.NURSING_NOTE_COL, btn_grid_NursingNotes_add);
 
                 WebHelpers.AddScriptFormEdit(Page, ena);
             }
@@ -214,6 +217,8 @@ namespace EMR
         {
             try
             {
+                WebHelpers.VisibleControl(false, undo, redo, pencilWrapper);
+                image1.Src = JObject.Parse(ena.skin_anno_data).dataURI;
                 lbl_triage_time.Text = WebHelpers.FormatDateTime(ena.triage_time, "dd-MM-yyyy HH:mm");
                 lbl_triage_area.Text = WebHelpers.FormatString(ena.triage_area);
                 lbl_chief_complaint.Text = WebHelpers.FormatString(ena.chief_complaint);
@@ -303,16 +308,10 @@ namespace EMR
                 //
 
                 //DataBind(grid_AssessmentSystem, WebHelpers.GetJSONToDataTable(ena.assessment_system));
-
-                ViewState[grid_AssessmentSystem.ID] = WebHelpers.DataBind(grid_AssessmentSystem, WebHelpers.GetJSONToDataTable(ena.assessment_system));
-                WebHelpers.DisabledGridView(grid_AssessmentSystem, true);
-                WebHelpers.VisibleControl(false, btn_grid_AssessmentSystem_add, btn_gridDirectMedication_add, btn_grid_NursingNotes_add);
-                //grid_AssessmentSystem.Columns[grid_AssessmentSystem.Columns.Count - 1].Visible = false;
+                WebHelpers.LoadDataGridView(grid_AssessmentSystem, WebHelpers.GetJSONToDataTable(ena.assessment_system), Ena.ASSESSMENT_SYSTEM_COL, btn_grid_AssessmentSystem_add);
 
                 //Direct Medication & IV fluids Order
-                ViewState[gridDirectMedication.ID] = WebHelpers.DataBind(gridDirectMedication, WebHelpers.GetJSONToDataTable(ena.direct_medication));
-                WebHelpers.DisabledGridView(gridDirectMedication, true);
-                //gridDirectMedication.Columns[gridDirectMedication.Columns.Count - 1].Visible = false;
+                WebHelpers.LoadDataGridView(gridDirectMedication, WebHelpers.GetJSONToDataTable(ena.direct_medication), Ena.DIRECT_MEDICATION_COL, btn_gridDirectMedication_add);
 
                 //Discharged
                 lbl_discharge_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.discharge_date_time));
@@ -328,9 +327,7 @@ namespace EMR
                 lbl_noticed_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.noticed_time));
 
                 //PHIẾU GHI CHÚ ĐIỀU DƯỠNG / NURSING NOTES
-                ViewState[grid_NursingNotes.ID] = WebHelpers.DataBind(grid_NursingNotes, WebHelpers.GetJSONToDataTable(ena.nursing_note));
-                WebHelpers.DisabledGridView(grid_NursingNotes, true);
-                //grid_NursingNotes.Columns[grid_NursingNotes.Columns.Count - 1].Visible = false;
+                WebHelpers.LoadDataGridView(grid_NursingNotes, WebHelpers.GetJSONToDataTable(ena.nursing_note), Iina.SKIN_ANNO, btn_grid_NursingNotes_add);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
 
@@ -369,7 +366,7 @@ namespace EMR
                 ena.user_name = (string)Session["UserID"];
 
                 UpdateData(ena);
-                WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+                WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             }
         }
         protected void btnSave_Click(object sender, EventArgs e)
@@ -378,8 +375,7 @@ namespace EMR
             {
                 ena = new Ena(DataHelpers.varDocId);
                 ena.status = DocumentStatus.DRAFT;
-                ena.user_name = (string)Session["UserID"];
-
+                
                 UpdateData(ena);
             }
         }
@@ -389,7 +385,7 @@ namespace EMR
                 dynamic result = Ena.Delete((string)Session["UserID"], Request.QueryString["docid"])[0];
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
                     string pid = Request["pid"];
                     string vpid = Request["vpid"];
@@ -457,14 +453,14 @@ namespace EMR
         #endregion
         private void UploadFile(string base64String)
         {
-            //Clear changes and remove uploaded image from Cache
-            RadImageEditor1.ResetChanges();
+            ////Clear changes and remove uploaded image from Cache
+            //RadImageEditor1.ResetChanges();
 
-            byte[] bytes = Convert.FromBase64String(base64String);
+            //byte[] bytes = Convert.FromBase64String(base64String);
 
-            ms = new MemoryStream(bytes);
+            //ms = new MemoryStream(bytes);
 
-            ViewState[RadImageEditor1.ID] = ms;
+            //ViewState[RadImageEditor1.ID] = ms;
 
             //using (ms = new MemoryStream(bytes))
             //{
@@ -515,12 +511,12 @@ namespace EMR
 
         protected void RadImageEditor1_ImageChanged(object sender, ImageEditorEventArgs args)
         {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                args.Image.Image.Save(ms, args.Image.Image.RawFormat);
+            //using (MemoryStream ms = new MemoryStream())
+            //{
+            //    args.Image.Image.Save(ms, args.Image.Image.RawFormat);
                 
-                ViewState[RadImageEditor1.ID] = ms;
-            }
+            //    ViewState[RadImageEditor1.ID] = ms;
+            //}
         }
 
         #region Methods
@@ -534,10 +530,13 @@ namespace EMR
             {
                 Ena ena = new Ena(Request.QueryString["docId"]);
 
+                ena.skin_anno_data = WebHelpers.getImageDefault(ena.skin_anno_data);
+
                 prt_barcode.Text = Patient.Instance().visible_patient_id;
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
                 prt_barcode.Text = Patient.Instance().visible_patient_id;
+
                 if (ena.status == DocumentStatus.FINAL)
                 {
                     BindingDataForm(ena, WebHelpers.LoadFormControl(form1, ena, ControlState.View, (string)Session["location"]));
@@ -554,6 +553,7 @@ namespace EMR
                 WebHelpers.SendError(Page, ex);
             }
         }
+
         private void UpdateData(Ena ena)
         {
             try
@@ -601,7 +601,6 @@ namespace EMR
                 ena.pain_duration = txt_pain_duration.Value;
                 ena.pain_radiation = txt_pain_radiation.Value;
                 ena.pain_score = txt_pain_score.Value;
-
 
                 ena.allergy = txt_allergy.Value;
                 ena.current_medication = txt_current_medication.Value;
@@ -725,17 +724,21 @@ namespace EMR
                 // nursing notes
                 ena.nursing_note = WebHelpers.GetDataGridView(grid_NursingNotes, Ena.NURSING_NOTE_COL);
 
+                ena.skin_anno_data = "{\"dataURI\":\"data:image/png;base64,"+ StringBase64.Value + "\"}";
+
+                ena.user_name = (string)Session["UserID"];
+
                 dynamic result = ena.Update()[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
                     Initial();
+                    WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
                 }
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
         }
         #endregion
+        
     }
 }

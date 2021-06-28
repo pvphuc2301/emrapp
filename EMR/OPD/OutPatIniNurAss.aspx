@@ -30,6 +30,8 @@
     <title></title>
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
+    <link href="../styles/sweetalert.min.css" rel="stylesheet" />
+    <link href="../styles/alertify.css" rel="stylesheet" />
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
@@ -270,7 +272,8 @@
                                                 <div class="col-sm-6 mb-2 ">
                                                     <div class="d-flex no-block">
                                                         <label for="bmi" class="control-label mb-1 mr-2">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
-                                                        <div class="form-group d-inline-block">
+                                                        <asp:Label runat="server" ID="lbl_vs_bmi"></asp:Label>
+                                                        <div class="form-group d-inline-block" runat="server" id="vs_bmi_wrapper">
                                                             <input  id="txt_vs_bmi" data-type="number" style="width: 120px; height: 23.2px;" runat="server" disabled="disabled" class="form-control text-right" />
                                                             <span class="append">(Kg/m <sup>2</sup>)</span>
                                                         </div>
@@ -336,11 +339,11 @@
                                                         <a href="javascript:void(0)" data-clear="rad_allergy" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare5" />
                                                         </a>
-                                                        <asp:CustomValidator ID="CustomValidator3" CssClass="text-danger" ValidationGroup="Group1"
+                                                        <%--<asp:CustomValidator ID="CustomValidator3" CssClass="text-danger" ValidationGroup="Group1"
                                                             OnServerValidate="CustomValidatorAllergy_ServerValidate"
                                                             Display="Dynamic"
                                                             ErrorMessage="Dị ứng/ Allergy is required"
-                                                            runat="server" />
+                                                            runat="server" />--%>
                                                     </div>
 
                                                     <div class="form-group allergy_field">
@@ -375,7 +378,7 @@
                                                         <a href="javascript:void(0)" data-clear="rad_mental_status" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare6" />
                                                         </a>
-                                                        <asp:CustomValidator ID="CustomValidator1" runat="server" ValidationGroup="Group1" ErrorMessage="Trạng thái tinh thần/ Appropriate response is required" CssClass="text-danger" OnServerValidate="CustomValidatorMentalStatus_ServerValidate"></asp:CustomValidator>
+                                                        <%--<asp:CustomValidator ID="CustomValidator1" runat="server" ValidationGroup="Group1" ErrorMessage="Trạng thái tinh thần/ Appropriate response is required" CssClass="text-danger" OnServerValidate="CustomValidatorMentalStatus_ServerValidate"></asp:CustomValidator>--%>
                                                     </div>
 
                                                     <div class="form-group mental_status_note_field">
@@ -442,7 +445,7 @@
                                                         <a href="javascript:void(0)" data-clear="rad_fall_risk" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare22" />
                                                         </a>
-                                                        <asp:CustomValidator ID="CustomValidator4" ValidationGroup="Group1" runat="server" ErrorMessage="Tầm soát nguy cơ té ngã/ Fall risk MORSE SCALE is required" CssClass="text-danger" OnServerValidate="CustomValidatorFallRisk_ServerValidate"></asp:CustomValidator>
+                                                        <%--<asp:CustomValidator ID="CustomValidator4" ValidationGroup="Group1" runat="server" ErrorMessage="Tầm soát nguy cơ té ngã/ Fall risk MORSE SCALE is required" CssClass="text-danger" OnServerValidate="CustomValidatorFallRisk_ServerValidate"></asp:CustomValidator>--%>
                                                     </div>
                                                     <div class="form-group fall_risk_assistance_field">
                                                         <webUI:TextField runat="server" ID="txt_fall_risk_assistance" />
@@ -551,7 +554,9 @@
 
                                                         <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect" >Save</asp:LinkButton>
 
-                                                        <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal"  class="btn btn-danger waves-effect">Delete</div>
+                                                        <%--<asp:LinkButton ValidationGroup="Group1" OnClick="btnDelete_Click" ID="btnDelete" runat="server" CssClass="btn btn-primary waves-effect" >Delete</asp:LinkButton>--%>
+
+                                                        <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal" class="btn btn-danger waves-effect">Delete</div>
 
                                                         <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
@@ -575,7 +580,9 @@
                                                 </div>
                                             </ModalBody>
                                         </webUI:PopupModal>
+
                                         <Button:PopupShowDelay runat="server" ID="PopupShowDelay" />
+
                                     </div>
                                 </div>
                             </div>
@@ -592,8 +599,110 @@
     <script src="../scripts/contenteditable.min.js"></script>
     <script src="../scripts/checkValidFields.js"></script>
     <script src="../scripts/waves.js"></script>
+    <script src="../scripts/sweetalert.min.js"></script>
+    <script src="../scripts/alertify.js"></script>
 
     <script>
+        /**
+ * This javascript file checks for the brower/browser tab action.
+ * It is based on the file menstioned by Daniel Melo.
+ * Reference: http://stackoverflow.com/questions/1921941/close-kill-the-session-when-the-browser-or-tab-is-closed
+ */
+        var validNavigation = false;
+
+        function wireUpEvents() {
+            /**
+             * For a list of events that triggers onbeforeunload on IE
+             * check http://msdn.microsoft.com/en-us/library/ms536907(VS.85).aspx
+             *
+             * onbeforeunload for IE and chrome
+             * check http://stackoverflow.com/questions/1802930/setting-onbeforeunload-on-body-element-in-chrome-and-ie-using-jquery
+             */
+            var dont_confirm_leave = 0; //set dont_confirm_leave to 1 when you want the user to be able to leave without confirmation
+            var leave_message = 'You sure you want to leave?';
+            function goodbye(e) {
+                if (!validNavigation) {
+                    if (dont_confirm_leave !== 1) {
+                        if (!e) e = window.event;
+                        //e.cancelBubble is supported by IE - this will kill the bubbling process.
+                        e.cancelBubble = true;
+                        e.returnValue = leave_message;
+                        //e.stopPropagation works in Firefox.
+                        if (e.stopPropagation) {
+                            e.stopPropagation();
+                            e.preventDefault();
+                        }
+                        //return works for Chrome and Safari
+                        return leave_message;
+                    }
+                }
+            }
+
+            window.onbeforeunload = goodbye;
+
+            // Attach the event keypress to exclude the F5 refresh
+            $(document).bind('keypress', function (e) {
+                if (e.keyCode == 116) {
+                    validNavigation = true;
+                }
+            });
+
+            // Attach the event click for all links in the page
+            $("a").bind("click", function () {
+                validNavigation = true;
+            });
+
+            // Attach the event submit for all forms in the page
+            $("form").bind("submit", function () {
+                validNavigation = true;
+            });
+
+            // Attach the event click for all inputs in the page
+            $("input[type=submit]").bind("click", function () {
+                validNavigation = true;
+            });
+
+        }
+
+        // Wire up the events as soon as the DOM tree is ready
+        $(document).ready(function () {
+            wireUpEvents();
+        });
+    </script>
+
+    <script>
+        
+
+        //function comfirmDelete() {
+
+        ////    swal({
+        ////        title: "Are you sure?",
+        ////        text: "You will not be able to recover this imaginary file!",
+        ////        type: "warning",
+        ////        showCancelButton: true,
+        ////        confirmButtonColor: "#DD6B55",
+        ////        confirmButtonText: "Yes, delete it!",
+        ////        closeOnConfirm: false
+        ////    }, function (isConfirm) {
+        ////            if (isConfirm) { swal("Done!", "It was succesfully deleted!", "success"); }
+        ////            else { return false; }
+        ////        //$.ajax({
+        ////        //    url: "OutPatIniNurAss.aspx/btnDelete_Click",
+        ////        //    type: "POST",
+        ////        //    data: '{"value":""}',
+        ////        //    contentType: 'application/json; charset=utf-8',
+        ////        //    dataType: "json",
+        ////        //    success: function () {
+        ////        //        swal("Done!", "It was succesfully deleted!", "success");
+        ////        //        __doPostBack()';
+        ////        //    },
+        ////        //    error: function (xhr, ajaxOptions, thrownError) {
+        ////        //        swal("Error deleting!", "Please try again", "error");
+        ////        //    }
+        ////        //});
+        ////    });
+        //}
+
         formGroup_init();
         checkboxRadiobutton_init();
         InputFilter();

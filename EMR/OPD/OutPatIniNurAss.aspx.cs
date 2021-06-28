@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
@@ -16,11 +17,21 @@ namespace EMR
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            WebHelpers.CheckSession(this);
+            if (!WebHelpers.CheckSession(this)) { return; }
 
             if (!IsPostBack)
             {
+
                 Initial();
+            }
+
+            PostBackEvent();
+        }
+
+        private void PostBackEvent()
+        {
+            switch (Request["__EVENTTARGET"])
+            {
             }
         }
 
@@ -40,6 +51,8 @@ namespace EMR
         {
             try
             {
+                Session["isEditing"] = true;
+                txt_amend_reason.Text = "";
                 //I.
                 txt_vs_temperature.Value = oina.vs_temperature;
                 txt_vs_heart_rate.Value = oina.vs_heart_rate;
@@ -74,91 +87,143 @@ namespace EMR
 
                 WebHelpers.BindDateTimePicker(dtpk_assessment_date_time, oina.assessment_date_time);
 
+                WebHelpers.AddScriptFormEdit(Page, oina);
+                
             }
             catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
-
-            
         }
         private void BindingDataFormView(Oina oina)
         {
-            lbl_fall_risk.Text = oina.fall_risk ? "Có, cung cấp phương tiện hỗ trợ/ Yes, provide assistance: " + WebHelpers.GetValue(oina.fall_risk_assistance) : "Không có nguy cơ/ No risk";
-            lbl_mental_status.Text = oina.mental_status ? "Có/ Yes" : "Không, ghi rõ/ No, specify:";
-            lbl_paint_score_description.Text = WebHelpers.GetValue(oina.paint_score_description);
-            lbl_chief_complaint.Text = WebHelpers.GetValue(oina.chief_complaint);
-            
-            if (oina.allergy != null)
+            try
             {
-                lbl_allergy.Text = oina.allergy ? "Có, ghi rõ/ Yes, specify: " + WebHelpers.GetValue(oina.allergy_note) : "Không/ No";
+
+                lbl_fall_risk.Text = WebHelpers.FormatString(WebHelpers.GetBool(oina.fall_risk, $"Có, cung cấp phương tiện hỗ trợ/ Yes, provide assistance: {WebHelpers.FormatString(oina.fall_risk_assistance)}", "Không có nguy cơ/ No risk"));
+
+                lbl_mental_status.Text = WebHelpers.FormatString(WebHelpers.GetBool(oina.mental_status, "Có/ Yes", $"Không, ghi rõ/ No, specify: {WebHelpers.FormatString(oina.mental_status_note)}"));
+                lbl_paint_score_description.Text = WebHelpers.FormatString(oina.paint_score_description);
+                lbl_chief_complaint.Text = WebHelpers.FormatString(oina.chief_complaint);
+
+                lbl_allergy.Text = WebHelpers.FormatString(WebHelpers.GetBool(oina.allergy, $"Có, ghi rõ/ Yes, specify: {WebHelpers.FormatString(oina.allergy_note)}"));
+                
+                lbl_mental_status.Text = WebHelpers.FormatString(WebHelpers.GetBool(oina.mental_status, "Có/ Yes", $"Không, ghi rõ/ No, specify: {WebHelpers.FormatString(oina.mental_status_note)}"));
+
+                lbl_nutrition_status_description.Text = WebHelpers.FormatString(oina.nutrition_status_description);
+                lbl_housing_description.Text = WebHelpers.FormatString(oina.housing_description);
+                lbl_prioritization_description.Text = WebHelpers.FormatString(oina.prioritization_description);
+                //
+                lbl_vs_temperature.Text = WebHelpers.FormatString(oina.vs_temperature) + " °C";
+                lbl_vs_heart_rate.Text = WebHelpers.FormatString(oina.vs_heart_rate) + " / phút (m)";
+                lbl_vs_weight.Text = WebHelpers.FormatString(oina.vs_weight) + " kg";
+                lbl_vs_height.Text = WebHelpers.FormatString(oina.vs_height) + " cm";
+                lbl_vs_respiratory_rate.Text = WebHelpers.FormatString(oina.vs_respiratory_rate) + " / phút (min)";
+                lbl_vs_bmi.Text = WebHelpers.FormatString(oina.vs_BMI) + "(Kg/m <sup>2</sup>)";
+                lbl_vs_blood_pressure.Text = WebHelpers.FormatString(oina.vs_blood_pressure) + " mmHg";
+                lbl_pulse.Text = WebHelpers.FormatString(oina.pulse) + " cm";
+                lbl_vs_spo2.Text = WebHelpers.FormatString(oina.vs_spO2) + " %";
+                lbl_assessment_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(oina.assessment_date_time, "dd-MM-yyyy HH:mm"));
             }
-
-            if (oina.mental_status != null)
-            {
-                lbl_mental_status.Text = oina.mental_status ? "Có/ Yes" : "Không, ghi rõ/ No, specify: " + WebHelpers.GetValue(oina.mental_status_note);
-            }
-
-            lbl_nutrition_status_description.Text = WebHelpers.GetValue(oina.nutrition_status_description);
-            lbl_housing_description.Text = WebHelpers.GetValue(oina.housing_description);
-            lbl_prioritization_description.Text = WebHelpers.GetValue(oina.prioritization_description);
-
-            lbl_vs_temperature.Text = WebHelpers.GetValue(oina.vs_temperature) + " °C";
-            lbl_vs_heart_rate.Text = WebHelpers.GetValue(oina.vs_heart_rate) + " / phút (m)";
-            lbl_vs_weight.Text = WebHelpers.GetValue(oina.vs_weight) + " kg";
-            lbl_vs_height.Text = WebHelpers.GetValue(oina.vs_height) + " cm";
-            lbl_vs_respiratory_rate.Text = WebHelpers.GetValue(oina.vs_respiratory_rate) + " / phút (min)";
-            txt_vs_bmi.Value = WebHelpers.GetValue(oina.vs_BMI);
-            lbl_vs_blood_pressure.Text = WebHelpers.GetValue(oina.vs_blood_pressure) + " mmHg";
-            lbl_pulse.Text = WebHelpers.GetValue(oina.pulse) + " cm";
-            lbl_vs_spo2.Text = WebHelpers.GetValue(oina.vs_spO2) + " %";
-            lbl_assessment_date_time.Text = WebHelpers.FormatDateTime(oina.assessment_date_time, "dd-MM-yyyy HH:mm");
+            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
 
         }
+
         private void BindingDataFormPrint(Oina oina)
         {
-            Patient patient = Patient.Instance();
-            prt_fullname.Text = $"{patient.GetFullName()} ({patient.GetTitle()})";
-            prt_DOB.Text = $"{WebHelpers.FormatDateTime(patient.date_of_birth)} | {patient.GetGender()}";
-            prt_barcode.Text = prt_vpid.Text = patient.visible_patient_id;
+            try
+            {
+                Patient patient = Patient.Instance();
+                prt_fullname.Text = $"{patient.GetFullName()} ({patient.GetTitle()})";
+                prt_DOB.Text = $"{WebHelpers.FormatDateTime(patient.date_of_birth)} | {patient.GetGender()}";
+                prt_barcode.Text = prt_vpid.Text = patient.visible_patient_id;
 
-            prt_vs_temperature.Text = oina.vs_temperature;
-            prt_vs_weight.Text = oina.vs_weight;
-            prt_vs_height.Text = oina.vs_height;
-            prt_vs_BMI.Text = oina.vs_BMI;
-            prt_pulse.Text = oina.vs_heart_rate;
-            prt_vs_respiratory_rate.Text = oina.vs_respiratory_rate;
-            prt_vs_blood_pressure.Text = oina.vs_blood_pressure;
-            prt_vs_spO2.Text = oina.vs_spO2;
+                prt_vs_temperature.Text = oina.vs_temperature;
+                prt_vs_weight.Text = oina.vs_weight;
+                prt_vs_height.Text = oina.vs_height;
+                prt_vs_BMI.Text = oina.vs_BMI;
+                prt_pulse.Text = oina.vs_heart_rate;
+                prt_vs_respiratory_rate.Text = oina.vs_respiratory_rate;
+                prt_vs_blood_pressure.Text = oina.vs_blood_pressure;
+                prt_vs_spO2.Text = oina.vs_spO2;
 
-            prt_chief_complaint.Text = oina.chief_complaint;
-            prt_allergy.Text = oina.allergy ? "Có, ghi rõ/ Yes, specify: " + oina.allergy_note : "Không";
+                prt_chief_complaint.Text = oina.chief_complaint;
+                prt_allergy.Text = oina.allergy ? "Có, ghi rõ/ Yes, specify: " + oina.allergy_note : "Không";
 
-            prt_mental_status.Text = WebHelpers.CreateOptions(new Option { Text= "Có/ Yes", Value = true }, new Option { Text = "Không, ghi rõ/ No, specify: " + oina.mental_status_note, Value = false }, oina.mental_status, "display: grid; grid-template-columns: 80px 1fr");
+                prt_mental_status.Text = WebHelpers.CreateOptions(new Option { Text = "Có/ Yes", Value = true }, new Option { Text = "Không, ghi rõ/ No, specify: " + oina.mental_status_note, Value = false }, oina.mental_status, "display: grid; grid-template-columns: 80px 1fr");
 
-            prt_paint_score_code.Value = oina.paint_score_code;
+                prt_paint_score_code.Value = oina.paint_score_code;
 
-            prt_fall_risk.Value = oina.fall_risk ? "Nếu có, cung cấp phương tiện hỗ trợ/ If yes, provide assistance: " + oina.fall_risk_assistance : "Không có nguy cơ/ No risk";
+                prt_fall_risk.Value = oina.fall_risk ? "Nếu có, cung cấp phương tiện hỗ trợ/ If yes, provide assistance: " + oina.fall_risk_assistance : "Không có nguy cơ/ No risk";
 
-            prt_nutrition_status_code.Value = oina.nutrition_status_description;
+                prt_nutrition_status_code.Value = oina.nutrition_status_description;
 
-            prt_housing.Text = WebHelpers.CreateOptions(Oina.HOUSING_CODE, (string)oina.housing_code, "display: grid; grid-template-columns: 1fr 1fr");
+                prt_housing.Text = WebHelpers.CreateOptions(Oina.HOUSING_CODE, (string)oina.housing_code, "display: grid; grid-template-columns: 1fr 1fr");
+
+                prt_prioritization_code.Value = oina.prioritization_description;
+            }
+            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
             
-            prt_prioritization_code.Value = oina.prioritization_description;
             
         }
         #endregion
 
         #region Events
+        protected void btnComplete_Click(object sender, EventArgs e)
+        {
+            if (Page.IsValid)
+            {
+                Oina oina = new Oina(Request.QueryString["docId"]);
+                oina.status = DocumentStatus.FINAL;
+
+                UpdateData(oina);
+                WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+            }
+        }
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+            if (Page.IsValid)
+            {
+                Oina oina = new Oina(Request.QueryString["docId"]);
+                oina.status = DocumentStatus.DRAFT;
+
+                UpdateData(oina);
+            }
+        }
+
+        //[WebMethod(EnableSession=true)] 
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            //string UserId = Convert.ToString(HttpContext.Current.Session["UserId"]);
+            
+            //string DocId = Convert.ToString(HttpContext.Current.Request.QueryString["docId"]);
+            //docid;
+            try
+            {
+                dynamic result = Oina.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
+
+                if (result.Status == System.Net.HttpStatusCode.OK)
+                {
+                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+                    
+                    //string UserId = Convert.ToString(HttpContext.Current.Session["UserId"]);
+
+                    string pid = Request["pid"];
+                    string vpid = Request["vpid"];
+                    
+                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                }
+            } catch(Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
+        }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            Oina oina = new Oina(Request["docid"]);
-            string emp_id = (string)Session["emp_id"];
-
-            if (WebHelpers.CanOpenForm(Page, oina.document_id, oina.status, emp_id, (string)Session["location"]))
+            if (WebHelpers.CanOpenForm(Page, Request["docid"], DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"]))
             {
-                
-                txt_amend_reason.Text = "";
+                Oina oina = new Oina(Request["docid"]);
+
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
@@ -169,32 +234,10 @@ namespace EMR
                 //get access button
             }
         }
-        protected void btnComplete_Click(object sender, EventArgs e)
-        {
-            if (Page.IsValid)
-            {
-                Oina oina = new Oina(DataHelpers.varDocId);
-                oina.status = DocumentStatus.FINAL;
-
-                oina.user_name = (string)Session["UserID"];
-
-                UpdateData(oina);
-            }
-        }
-        protected void btnSave_Click(object sender, EventArgs e)
-        {
-            if (Page.IsValid)
-            {
-                Oina oina = new Oina(DataHelpers.varDocId);
-
-                oina.user_name = (string)Session["UserID"];
-                oina.status = DocumentStatus.DRAFT;
-
-                UpdateData(oina);
-            }
-        }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+            
             Initial();
         }
         protected void btnPrint_Click(object sender, EventArgs e)
@@ -203,32 +246,14 @@ namespace EMR
             BindingDataFormPrint(oina);
             ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
         }
-        protected void btnDelete_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                dynamic result = Oina.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
-
-                if (result.Status == System.Net.HttpStatusCode.OK)
-                {
-                    string pid = Request["pid"];
-                    string vpid = Request["vpid"];
-
-                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
-                }
-            } catch(Exception ex)
-            {
-                WebHelpers.SendError(Page, ex);
-            }
-        }
         #endregion
 
         #region METHODS
         private void Initial()
         {
-            if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
-            if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
-            if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
+            //if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
+            //if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
+            //if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
 
             try
             {
@@ -272,39 +297,27 @@ namespace EMR
                 oina.chief_complaint = txt_chief_complaint.Value;
                 //2.
                 oina.allergy = WebHelpers.GetData(form1, new HtmlInputRadioButton(),"rad_allergy_");
-                if (oina.allergy != null)
-                {
-                    if (oina.allergy)
-                    {
-                        oina.allergy_note = txt_allergy_note.Value;
-                    }
-                }
+                oina.allergy_note = WebHelpers.GetBool(oina.allergy, txt_allergy_note.Value, null);
                 //3.
                 oina.mental_status = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_mental_status_");
-                oina.mental_status_note = txt_mental_status_note.Value;
+                oina.mental_status_note = WebHelpers.GetBool(oina.mental_status, txt_mental_status_note.Value, null);
                 //4.
                 oina.paint_score_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_paint_score_code_", Oina.PAINT_SCORE_CODE);
-                if (oina.paint_score_code != null) oina.paint_score_description = Oina.PAINT_SCORE_CODE[oina.paint_score_code];
+                oina.paint_score_description = WebHelpers.GetDicDesc(oina.paint_score_code, Oina.PAINT_SCORE_CODE);
                 //5.
                 oina.fall_risk = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_fall_risk_");
-                if (oina.fall_risk != null)
-                {
-                    if (oina.fall_risk)
-                    {
-                        oina.fall_risk_assistance = txt_fall_risk_assistance.Value;
-                    }
-                }
+                oina.fall_risk_assistance = WebHelpers.GetBool(oina.fall_risk, txt_fall_risk_assistance.Value, null);
 
                 oina.nutrition_status_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_nutrition_status_code_", Oina.NUTRITION_STATUS_CODE);
-                if (oina.nutrition_status_code != null) oina.nutrition_status_description = Oina.NUTRITION_STATUS_CODE[oina.nutrition_status_code];
+                oina.nutrition_status_description = WebHelpers.GetDicDesc(oina.nutrition_status_code, Oina.NUTRITION_STATUS_CODE);
 
                 oina.housing_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_housing_code_", Oina.HOUSING_CODE);
-                if (oina.housing_code != null) oina.housing_description = Oina.HOUSING_CODE[oina.housing_code];
+                oina.housing_description = WebHelpers.GetDicDesc(oina.housing_code, Oina.HOUSING_CODE);
 
                 oina.prioritization_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_prioritization_code_", Oina.PRIORITIZATION_CODE);
-                if (oina.prioritization_code != null) oina.prioritization_description = Oina.PRIORITIZATION_CODE[oina.prioritization_code];
+                oina.prioritization_description = WebHelpers.GetDicDesc(oina.prioritization_code, Oina.PRIORITIZATION_CODE);
 
-                oina.assessment_date_time = DataHelpers.ConvertSQLDateTime(oina.assessment_date_time);
+                oina.assessment_date_time = DataHelpers.ConvertSQLDateTime(dtpk_assessment_date_time.SelectedDate);
 
                 oina.user_name = (string)Session["UserID"];
 
@@ -312,9 +325,7 @@ namespace EMR
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
-
+                    WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
                     Initial();
                 }
             }

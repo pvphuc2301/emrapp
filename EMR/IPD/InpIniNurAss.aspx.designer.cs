@@ -4308,6 +4308,60 @@ namespace EMR
         protected global::EMR.TextField txt_t_location_3;
 
         /// <summary>
+        /// pain_annotation_img control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage pain_annotation_img;
+
+        /// <summary>
+        /// pain_annotation_base64 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField pain_annotation_base64;
+
+        /// <summary>
+        /// pain_annotation_undo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl pain_annotation_undo;
+
+        /// <summary>
+        /// pain_annotation_redo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl pain_annotation_redo;
+
+        /// <summary>
+        /// pain_annotation_pencilWrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl pain_annotation_pencilWrapper;
+
+        /// <summary>
+        /// pain_annotation_canvas control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl pain_annotation_canvas;
+
+        /// <summary>
         /// lbl_using_pain_killer control.
         /// </summary>
         /// <remarks>
@@ -4621,6 +4675,60 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btn_grid_skin_anno_add;
+
+        /// <summary>
+        /// skin_anno_data_img control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage skin_anno_data_img;
+
+        /// <summary>
+        /// skin_anno_data_base64 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField skin_anno_data_base64;
+
+        /// <summary>
+        /// skin_anno_data_undo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl skin_anno_data_undo;
+
+        /// <summary>
+        /// skin_anno_data_redo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl skin_anno_data_redo;
+
+        /// <summary>
+        /// skin_anno_data_pencil_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl skin_anno_data_pencil_wrapper;
+
+        /// <summary>
+        /// skin_anno_data_canvas control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl skin_anno_data_canvas;
 
         /// <summary>
         /// UpdatePanel2 control.

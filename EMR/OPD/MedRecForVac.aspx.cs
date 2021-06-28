@@ -25,6 +25,16 @@ namespace EMR.OPD
         #region Binding Data
         private void BindingDataForm(Mrfv mrfv, bool state)
         {
+            vs_temperature.Text = mrfv.vs_temperature;
+            vs_heart_rate.Text = mrfv.vs_heart_rate;
+            vs_weight.Text = mrfv.vs_weight;
+            vs_respiratory_rate.Text = mrfv.vs_respiratory_rate;
+            vs_height.Text = mrfv.vs_height;
+            vs_blood_pressure.Text = mrfv.vs_blood_pressure;
+            vs_BMI.Text = mrfv.vs_BMI;
+            vs_spO2.Text = mrfv.vs_spO2;
+            vs_pulse.Text = mrfv.vs_pulse;
+
             if (state)
             {
                 BindingDataFormEdit(mrfv);
@@ -38,6 +48,7 @@ namespace EMR.OPD
         {
             try
             {
+                txt_amend_reason.Text = "";
                 txt_chief_complaint.Value = mrfv.chief_complaint;
                 txt_cur_med_history.Value = mrfv.cur_med_history;
                 txt_cur_medications.Value = mrfv.cur_medications;
@@ -47,6 +58,9 @@ namespace EMR.OPD
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_allergy_" + mrfv.allergy);
                 txt_allergy_note.Value = WebHelpers.GetBool(mrfv.allergy, mrfv.allergy_text, "");
 
+                //
+                WebHelpers.VisibleControl(true, btnUpdateVitalSigns);
+                
                 txt_scr_before_vacc_1.Value = mrfv.scr_before_vacc_1;
                 txt_scr_before_vacc_2.Value = mrfv.scr_before_vacc_2;
                 txt_scr_before_vacc_3.Value = mrfv.scr_before_vacc_3;
@@ -94,7 +108,9 @@ namespace EMR.OPD
                 }
 
                 //vital signs
-
+                WebHelpers.VisibleControl(false, btnUpdateVitalSigns);
+                
+                //
                 lbl_scr_before_vacc_1.Text = WebHelpers.GetValue(mrfv.scr_before_vacc_1);
                 lbl_scr_before_vacc_2.Text = WebHelpers.GetValue(mrfv.scr_before_vacc_2);
                 lbl_scr_before_vacc_3.Text = WebHelpers.GetValue(mrfv.scr_before_vacc_3);
@@ -105,9 +121,7 @@ namespace EMR.OPD
                 lbl_scr_before_vacc_8.Text = WebHelpers.GetValue(mrfv.scr_before_vacc_8);
 
                 // Appointed Vaccine
-                ViewState[grid_appointed_vaccine.ID] = WebHelpers.DataBind(grid_appointed_vaccine, WebHelpers.GetJSONToDataTable(mrfv.appointed_vaccine));
-                WebHelpers.DisabledGridView(grid_appointed_vaccine, true);
-                WebHelpers.VisibleControl(false, btn_grid_appointed_vaccine_add);
+                WebHelpers.LoadDataGridView(grid_appointed_vaccine, WebHelpers.GetJSONToDataTable(mrfv.appointed_vaccine), Mrfv.APPOINTED_VACCINE, btn_grid_appointed_vaccine_add);
 
                 lbl_additional_investigations.Text = WebHelpers.GetValue(mrfv.additional_investigations);
 
@@ -232,7 +246,7 @@ namespace EMR.OPD
                 mrfv.user_name = (string)Session["UserID"];
 
                 UpdateData(mrfv);
-                WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+                WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             }
         }
         protected void btnSave_Click(object sender, EventArgs e)
@@ -250,11 +264,11 @@ namespace EMR.OPD
         {
             try
             {
-                dynamic result = Mrfv.Delete((string)Session["UserId"], Request.QueryString["docId"]);
+                dynamic result = Mrfv.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
 
-                if (result[0].Status == System.Net.HttpStatusCode.OK)
+                if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
                     string pid = Request["pid"];
                     string vpid = Request["vpid"];
@@ -273,7 +287,6 @@ namespace EMR.OPD
             {
                 Mrfv mrfv = new Mrfv(Request.QueryString["docId"]);
 
-                txt_amend_reason.Text = "";
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
@@ -286,6 +299,7 @@ namespace EMR.OPD
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             Initial();
         }
         protected void btnPrint_Click(object sender, EventArgs e)
@@ -316,7 +330,6 @@ namespace EMR.OPD
                 WebHelpers.SendError(Page, ex);
             }
         }
-
         #endregion
 
         #region Functions
@@ -411,10 +424,8 @@ namespace EMR.OPD
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
-
                     Initial();
+                    WebHelpers.Notification(Page, "Success notification");
                 }
             }
             catch (Exception ex) {
@@ -422,5 +433,10 @@ namespace EMR.OPD
             }
         }
         #endregion
+
+        protected void btnUpdateVitalSigns_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

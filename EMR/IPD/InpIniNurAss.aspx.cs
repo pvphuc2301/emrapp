@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,7 +15,7 @@ namespace EMR
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            WebHelpers.CheckSession(this);
+            if(!WebHelpers.CheckSession(this)) return;
             if (!IsPostBack)
             {
                 Initial();
@@ -218,6 +219,12 @@ namespace EMR
 
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_using_pain_killer_" + iina.using_pain_killer);
 
+                WebHelpers.VisibleControl(true, pain_annotation_undo, pain_annotation_redo, pain_annotation_pencilWrapper);
+
+                pain_annotation_img.Src = JObject.Parse(iina.pain_annotation).dataURI;
+
+                skin_anno_data_img.Src = JObject.Parse(iina.skin_anno_data).dataURI;
+
                 txt_pain_killer_name.Value = iina.pain_killer_name;
                 txt_pa_comment.Value = iina.pa_comment;
 
@@ -226,7 +233,7 @@ namespace EMR
 
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_wounds_", WebHelpers.GetJSONToDataTable(iina.wounds));
 
-                ViewState[grid_skin_anno.ID] = WebHelpers.DataBind(grid_skin_anno, WebHelpers.GetJSONToDataTable(iina.skin_anno));
+                ViewState[grid_skin_anno.ID] = WebHelpers.BindingDataGridView(grid_skin_anno, WebHelpers.GetJSONToDataTable(iina.skin_anno), Iina.SKIN_ANNO, btn_grid_skin_anno_add);
 
                 WebHelpers.DataBind(form1, select_sensory_code, Iina.SENSORY_CODE, iina.sensory_code);
                 WebHelpers.DataBind(form1, select_moisture_code, Iina.MOISTURE_CODE, iina.moisture_code);
@@ -286,7 +293,7 @@ namespace EMR
 
                 WebHelpers.BindDateTimePicker(dtpk_assess_date_time, iina.assess_date_time);
 
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "localStorage_setItem", $"window.sessionStorage.setItem('{iina}', '{JsonConvert.SerializeObject(iina)}');", true);
+                WebHelpers.AddScriptFormEdit(Page, iina);
             }
             catch (Exception ex)
             {
@@ -295,224 +302,229 @@ namespace EMR
         }
         private void BindingDataFormView(Iina iina)
         {
-            lbl_residence_desc.Text = WebHelpers.FormatString(iina.residence_desc) + (iina.residence_code == "OTH" ? WebHelpers.FormatString(iina.residence_other) : "");
-            lbl_language_desc.Text = WebHelpers.FormatString(iina.language_desc) + (iina.language_code == "OTH" ? WebHelpers.FormatString(iina.language_other) : "");
-            lbl_req_interpreter.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.req_interpreter));
-            lbl_religion_code.Text = WebHelpers.FormatString(iina.religion_desc) + (iina.religion_code == "OTH" ? WebHelpers.FormatString(iina.religion_other) : "");
-            lbl_spiritual_couns.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.spiritual_couns));
-            lbl_occupation.Text = WebHelpers.FormatString(iina.occupation);
-            lbl_living_status_desc.Text = WebHelpers.FormatString(iina.living_status_desc) + (iina.living_status_code == "OTH" ? WebHelpers.FormatString(iina.living_status_note) : "");
-            lbl_hospital_concern_desc.Text = WebHelpers.FormatString(iina.hospital_concern_desc) + (iina.hospital_concern_code == "OTH" ? WebHelpers.FormatString(iina.hospital_concern_other) : "");
-            lbl_accompanied.Text = WebHelpers.FormatString(iina.accompanied);
-            lbl_relationship.Text = WebHelpers.FormatString(iina.relationship);
-            //B
-            lbl_admit_from_desc.Text = WebHelpers.FormatString(iina.admit_from_desc) + (iina.admit_from_code == "OTH" ? WebHelpers.FormatString(iina.admit_from_other) : "");
-            lbl_arrived.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.arrived));
-            lbl_admission_reason.Text = WebHelpers.FormatString(iina.admission_reason);
-            lbl_previous_admission.Text = WebHelpers.FormatString(iina.previous_admission);
-            lbl_past_med_history.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.past_med_history));
-            lbl_past_sur_history.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.past_sur_history));
-            
-            lbl_substance_abuse.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.substance_abuse));
-
-            lbl_previous_document.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.previous_document, "Có, ghi rõ/ Yes, specify: " + WebHelpers.FormatString(iina.previous_document_note)));
-            lbl_cur_home_medication.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.cur_home_medication, "Có/ Yes (Tham khảo đơn thuốc đính kèm)/ If, yes please refer to the prescription attached"));
-            lbl_allergy.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.allergy, "Có (ghi rõ)/ Yes (specify): " + iina.allergy_note));
-            lbl_high_risk_patient.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.high_risk_patient));
-            //C
-            //1
-            lbl_vs_temperature.Text = WebHelpers.FormatString(iina.vs_temperature) + "";
-            lbl_vs_weight.Text = WebHelpers.FormatString(iina.vs_weight);
-            lbl_vs_height.Text = WebHelpers.FormatString(iina.vs_height);
-            lbl_vs_BMI.Text = WebHelpers.FormatString(iina.vs_BMI);
-            lbl_vs_heart_rate.Text = WebHelpers.FormatString(iina.vs_heart_rate);
-            lbl_vs_respiratory_rate.Text = WebHelpers.FormatString(iina.vs_respiratory_rate);
-            lbl_vs_blood_pressure.Text = WebHelpers.FormatString(iina.vs_blood_pressure);
-            lbl_vs_spO2.Text = WebHelpers.FormatString(iina.vs_spO2);
-            lbl_vs_pulse.Text = WebHelpers.FormatString(iina.vs_pulse);
-            //2
-            lbl_respiratory_system.Text = WebHelpers.FormatString( WebHelpers.DisplayCheckBox(iina.respiratory_system));
-            lbl_cough.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.cough));
-            lbl_pro_cough.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.cough, "Có đờm/ Productive (ghi rõ màu/ tính chất/ số lượng)/ (Specify color/ nature/ amount)" + iina.pro_cough_note, "Không có đờm/ Unproductive cough"));
-            
-            //3
-            lbl_pulse_desc.Text = WebHelpers.FormatString(iina.pulse_desc);
-            lbl_presence.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.presence));
-            lbl_extremities.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.extremities));
-            //4
-            lbl_oriented.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.oriented));
-            lbl_mental_status.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.mental_status));
-            lbl_hearing_code.Text = WebHelpers.FormatString(iina.hearing_desc);
-
-            lbl_vision_code.Text = WebHelpers.FormatString(iina.vision_desc) + (iina.vision_code == "OTH" ? WebHelpers.FormatString(iina.vision_other) : "");
-            lbl_speech_code.Text = WebHelpers.FormatString(iina.speech_desc);
-            //5
-            lbl_diet_desc.Text = WebHelpers.FormatString(iina.diet_desc);
-            lbl_diet_pre_desc.Text = WebHelpers.FormatString(iina.diet_pre_desc);
-            lbl_ng_tube.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.ng_tube, "Ống thông/ NG Tube"));
-            cb_gastrostomy_true.Disabled = true;
-            if (iina.gastrostomy != null) cb_gastrostomy_true.Checked = iina.gastrostomy;
-            cb_size_true.Disabled = true;
-            if (iina.size != null) cb_size_true.Checked = iina.size;
-            lbl_size_note.Text = WebHelpers.FormatString(iina.size_note);
-            lbl_food_dislike.Text = WebHelpers.FormatString(iina.food_dislike);
-            lbl_last_date_changed.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(iina.last_date_changed));
-
-            lbl_bowel_elimination_desc.Text = WebHelpers.FormatString(iina.bowel_elimination_desc);
-            lbl_stool_consistency_desc.Text = WebHelpers.FormatString(iina.stool_consistency_desc);
-            lbl_gas_presence_desc.Text = WebHelpers.FormatString(iina.gas_presence_desc);
-            //6
-            lbl_bmi_out_range.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.bmi_out_range));
-            lbl_loss_weight.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.loss_weight));
-            lbl_reduce_dietary.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.reduce_dietary));
-            lbl_severely_ill.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.severely_ill));
-            //table 2
-            if(iina.bmi_out_range || iina.loss_weight || iina.reduce_dietary || iina.severely_ill)
+            try
             {
-                //Nutrition status
-                //
-                cb_nutrition_normal_true.Visible = false;
-                if (iina.nutrition_normal != null) cb_nutrition_normal_true.Checked = iina.nutrition_normal;
-                lbl_nutrition_score1.Text = WebHelpers.DisplayCheckBox(iina.nutrition_score1);
-                lbl_nutrition_score2.Text = WebHelpers.DisplayCheckBox(iina.nutrition_score2);
-                lbl_nutrition_score3.Text = WebHelpers.DisplayCheckBox(iina.nutrition_score3);
-                nutrition_score.Text = WebHelpers.FormatString(Convert.ToString(iina.nutrition_score));
-                //
-                //Severity of disease
+                lbl_residence_desc.Text = WebHelpers.FormatString(iina.residence_desc) + (iina.residence_code == "OTH" ? WebHelpers.FormatString(iina.residence_other) : "");
+                lbl_language_desc.Text = WebHelpers.FormatString(iina.language_desc) + (iina.language_code == "OTH" ? WebHelpers.FormatString(iina.language_other) : "");
+                lbl_req_interpreter.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.req_interpreter));
+                lbl_religion_code.Text = WebHelpers.FormatString(iina.religion_desc) + (iina.religion_code == "OTH" ? WebHelpers.FormatString(iina.religion_other) : "");
+                lbl_spiritual_couns.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.spiritual_couns));
+                lbl_occupation.Text = WebHelpers.FormatString(iina.occupation);
+                lbl_living_status_desc.Text = WebHelpers.FormatString(iina.living_status_desc) + (iina.living_status_code == "OTH" ? WebHelpers.FormatString(iina.living_status_note) : "");
+                lbl_hospital_concern_desc.Text = WebHelpers.FormatString(iina.hospital_concern_desc) + (iina.hospital_concern_code == "OTH" ? WebHelpers.FormatString(iina.hospital_concern_other) : "");
+                lbl_accompanied.Text = WebHelpers.FormatString(iina.accompanied);
+                lbl_relationship.Text = WebHelpers.FormatString(iina.relationship);
+                //B
+                lbl_admit_from_desc.Text = WebHelpers.FormatString(iina.admit_from_desc) + (iina.admit_from_code == "OTH" ? WebHelpers.FormatString(iina.admit_from_other) : "");
+                lbl_arrived.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.arrived));
+                lbl_admission_reason.Text = WebHelpers.FormatString(iina.admission_reason);
+                lbl_previous_admission.Text = WebHelpers.FormatString(iina.previous_admission);
+                lbl_past_med_history.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.past_med_history));
+                lbl_past_sur_history.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.past_sur_history));
 
-                cb_nutrition_requiredment_true.Visible = false;
-                //if (iina.nutrition_normal != null) cb_nutrition_normal_true.Checked = iina.nutrition_normal;
-                lbl_severity_score1.Text = WebHelpers.DisplayCheckBox(iina.severity_score1);
-                lbl_severity_score2.Text = WebHelpers.DisplayCheckBox(iina.severity_score2);
-                lbl_severity_score3.Text = WebHelpers.DisplayCheckBox(iina.severity_score3);
-                severity_score.Text = WebHelpers.FormatString(Convert.ToString(iina.severity_score));
+                lbl_substance_abuse.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.substance_abuse));
+
+                lbl_previous_document.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.previous_document, "Có, ghi rõ/ Yes, specify: " + WebHelpers.FormatString(iina.previous_document_note)));
+                lbl_cur_home_medication.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.cur_home_medication, "Có/ Yes (Tham khảo đơn thuốc đính kèm)/ If, yes please refer to the prescription attached"));
+                lbl_allergy.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.allergy, "Có (ghi rõ)/ Yes (specify): " + iina.allergy_note));
+                lbl_high_risk_patient.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.high_risk_patient));
+                //C
+                //1
+                lbl_vs_temperature.Text = WebHelpers.FormatString(iina.vs_temperature) + "";
+                lbl_vs_weight.Text = WebHelpers.FormatString(iina.vs_weight);
+                lbl_vs_height.Text = WebHelpers.FormatString(iina.vs_height);
+                lbl_vs_BMI.Text = WebHelpers.FormatString(iina.vs_BMI);
+                lbl_vs_heart_rate.Text = WebHelpers.FormatString(iina.vs_heart_rate);
+                lbl_vs_respiratory_rate.Text = WebHelpers.FormatString(iina.vs_respiratory_rate);
+                lbl_vs_blood_pressure.Text = WebHelpers.FormatString(iina.vs_blood_pressure);
+                lbl_vs_spO2.Text = WebHelpers.FormatString(iina.vs_spO2);
+                lbl_vs_pulse.Text = WebHelpers.FormatString(iina.vs_pulse);
+                //2
+                lbl_respiratory_system.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.respiratory_system));
+                lbl_cough.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.cough));
+                lbl_pro_cough.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.cough, "Có đờm/ Productive (ghi rõ màu/ tính chất/ số lượng)/ (Specify color/ nature/ amount)" + iina.pro_cough_note, "Không có đờm/ Unproductive cough"));
+
+                //3
+                lbl_pulse_desc.Text = WebHelpers.FormatString(iina.pulse_desc);
+                lbl_presence.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.presence));
+                lbl_extremities.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.extremities));
+                //4
+                lbl_oriented.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.oriented));
+                lbl_mental_status.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.mental_status));
+                lbl_hearing_code.Text = WebHelpers.FormatString(iina.hearing_desc);
+
+                lbl_vision_code.Text = WebHelpers.FormatString(iina.vision_desc) + (iina.vision_code == "OTH" ? WebHelpers.FormatString(iina.vision_other) : "");
+                lbl_speech_code.Text = WebHelpers.FormatString(iina.speech_desc);
+                //5
+                lbl_diet_desc.Text = WebHelpers.FormatString(iina.diet_desc);
+                lbl_diet_pre_desc.Text = WebHelpers.FormatString(iina.diet_pre_desc);
+                lbl_ng_tube.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.ng_tube, "Ống thông/ NG Tube"));
+                cb_gastrostomy_true.Disabled = true;
+                if (iina.gastrostomy != null) cb_gastrostomy_true.Checked = iina.gastrostomy;
+                cb_size_true.Disabled = true;
+                if (iina.size != null) cb_size_true.Checked = iina.size;
+                lbl_size_note.Text = WebHelpers.FormatString(iina.size_note);
+                lbl_food_dislike.Text = WebHelpers.FormatString(iina.food_dislike);
+                lbl_last_date_changed.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(iina.last_date_changed));
+
+                lbl_bowel_elimination_desc.Text = WebHelpers.FormatString(iina.bowel_elimination_desc);
+                lbl_stool_consistency_desc.Text = WebHelpers.FormatString(iina.stool_consistency_desc);
+                lbl_gas_presence_desc.Text = WebHelpers.FormatString(iina.gas_presence_desc);
+                //6
+                lbl_bmi_out_range.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.bmi_out_range));
+                lbl_loss_weight.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.loss_weight));
+                lbl_reduce_dietary.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.reduce_dietary));
+                lbl_severely_ill.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.severely_ill));
+                //table 2
+                if (ShowFinalScreening(iina))
+                {
+                    //Nutrition status
+                    //
+                    cb_nutrition_normal_true.Visible = false;
+                    if (iina.nutrition_normal != null) cb_nutrition_normal_true.Checked = iina.nutrition_normal;
+                    lbl_nutrition_score1.Text = WebHelpers.DisplayCheckBox(iina.nutrition_score1);
+                    lbl_nutrition_score2.Text = WebHelpers.DisplayCheckBox(iina.nutrition_score2);
+                    lbl_nutrition_score3.Text = WebHelpers.DisplayCheckBox(iina.nutrition_score3);
+                    nutrition_score.Text = WebHelpers.FormatString(Convert.ToString(iina.nutrition_score));
+                    //
+                    //Severity of disease
+
+                    cb_nutrition_requiredment_true.Visible = false;
+                    //if (iina.nutrition_normal != null) cb_nutrition_normal_true.Checked = iina.nutrition_normal;
+                    lbl_severity_score1.Text = WebHelpers.DisplayCheckBox(iina.severity_score1);
+                    lbl_severity_score2.Text = WebHelpers.DisplayCheckBox(iina.severity_score2);
+                    lbl_severity_score3.Text = WebHelpers.DisplayCheckBox(iina.severity_score3);
+                    severity_score.Text = WebHelpers.FormatString(Convert.ToString(iina.severity_score));
+                    //
+                    //Age
+                    //
+                    WebHelpers.VisibleControl(false, cb_younger_70_true, cb_older_70_true);
+                    if (iina.younger_70 != null) cb_younger_70_true.Checked = iina.younger_70;
+                    if (iina.older_70 != null) cb_older_70_true.Checked = iina.older_70;
+                    age_score.Text = WebHelpers.FormatString(Convert.ToString(iina.age_score));
+                    //
+                    //Total score
+                    //
+                    total_score.Text = WebHelpers.FormatString(iina.total_score);
+                }
                 //
-                //Age
+                //7
+                lbl_urination.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.urination));
+                WebHelpers.VisibleControl(false, cb_inter_catheter_true, cb_ind_catheter_true, cb_sup_catheter_true);
+                if (iina.inter_catheter != null) { cb_inter_catheter_true.Checked = iina.inter_catheter; }
+                if (iina.ind_catheter != null) { cb_ind_catheter_true.Checked = iina.ind_catheter; }
+                lbl_ind_catheter_size.Text = WebHelpers.FormatString(iina.ind_catheter_size);
+                lbl_ind_catheter_date.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(iina.ind_catheter_date));
+                if (iina.sup_catheter != null) { cb_sup_catheter_true.Checked = iina.sup_catheter; }
+                lbl_sup_catheter_size.Text = WebHelpers.FormatString(iina.sup_catheter_size);
+                lbl_last_sup_catheter_date.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(iina.last_sup_catheter_date));
                 //
-                WebHelpers.VisibleControl(false, cb_younger_70_true, cb_older_70_true);
-                if (iina.younger_70 != null) cb_younger_70_true.Checked = iina.younger_70;
-                if (iina.older_70 != null) cb_older_70_true.Checked = iina.older_70;
-                age_score.Text = WebHelpers.FormatString(Convert.ToString(iina.age_score));
-                //
-                //Total score
-                //
+                lbl_menstruation_code.Text = $"{WebHelpers.FormatString(iina.menstruation_desc)} {WebHelpers.FormatString(iina.cycle_day)} Ngày đầu của kỳ kinh cuối/ Last menstrual period started {WebHelpers.FormatString(iina.last_mens_period)}";
+
+                lbl_not_pregnancy.Text = $"{WebHelpers.FormatString(WebHelpers.GetBool(iina.not_pregnancy))} Đã từng mang thai trước đây/ Previous pregnancy: {WebHelpers.FormatString(WebHelpers.GetBool(iina.pre_pregnancy))} PARA {WebHelpers.FormatString(iina.para)} Hiện đang mang thai/ Current pregnancy: {WebHelpers.FormatString(WebHelpers.GetBool(iina.cur_pregnancy))} {WebHelpers.FormatString(iina.pregnancy_week)} tuần/ week";
+
+                lbl_contraception_code.Text = $"{WebHelpers.FormatString(iina.contraception_desc)} {WebHelpers.FormatString(iina.contraception_other)}";
+
+                //8
+                lbl_mus_history.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.mus_history));
+                lbl_paralysis.Text = "Liệt/ (1/2 người/2 chi/4 chi)/ Paralysis (Hemi/Para/Tetra): " + WebHelpers.FormatString(WebHelpers.GetBool(iina.paralysis)) + WebHelpers.FormatString(iina.paralysis_note);
+                lbl_amputation.Text = $"Đoạn chi/ Amputation: {WebHelpers.FormatString(WebHelpers.GetBool(iina.amputation))} {WebHelpers.FormatString(iina.ambulation_note)}";
+                lbl_contracture.Text = $"Cơ bắp co rút/ Contracture: {WebHelpers.FormatString(WebHelpers.GetBool(iina.contracture))} {WebHelpers.FormatString(iina.contracture_note)}";
+                lbl_prosthesis.Text = $"Lắp bộ phận giả/ Prosthesis: {WebHelpers.FormatString(WebHelpers.GetBool(iina.prosthesis))} {WebHelpers.FormatString(iina.prosthesis_note)}";
+                //9
+                lbl_cur_in_pain.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.cur_in_pain));
+                lbl_p_location_1.Text = WebHelpers.FormatString(iina.p_location_1);
+                lbl_p_location_2.Text = WebHelpers.FormatString(iina.p_location_2);
+                lbl_p_location_3.Text = WebHelpers.FormatString(iina.p_location_3);
+
+                lbl_q_location_1.Text = WebHelpers.FormatString(iina.q_location_1);
+                lbl_q_location_2.Text = WebHelpers.FormatString(iina.q_location_2);
+                lbl_q_location_3.Text = WebHelpers.FormatString(iina.q_location_3);
+
+                lbl_r_location_1.Text = WebHelpers.FormatString(iina.r_location_1);
+                lbl_r_location_2.Text = WebHelpers.FormatString(iina.r_location_2);
+                lbl_r_location_3.Text = WebHelpers.FormatString(iina.r_location_3);
+
+                lbl_s_location_1.Text = WebHelpers.FormatString(iina.s_location_1);
+                lbl_s_location_2.Text = WebHelpers.FormatString(iina.s_location_2);
+                lbl_s_location_3.Text = WebHelpers.FormatString(iina.s_location_3);
+
+                lbl_t_location_1.Text = WebHelpers.FormatString(iina.t_location_1);
+                lbl_t_location_2.Text = WebHelpers.FormatString(iina.t_location_2);
+                lbl_t_location_3.Text = WebHelpers.FormatString(iina.t_location_3);
+
+                lbl_using_pain_killer.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.using_pain_killer));
+                lbl_pain_killer_name.Text = WebHelpers.FormatString(iina.pain_killer_name);
+                lbl_pa_comment.Text = WebHelpers.FormatString(iina.pa_comment);
+
+                //10
+
+                lbl_condition.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.condition));
+
+                lbl_wounds.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.wounds));
+
+                WebHelpers.LoadDataGridView(grid_skin_anno, WebHelpers.GetJSONToDataTable(iina.skin_anno), Iina.SKIN_ANNO, btn_grid_skin_anno_add);
+
+                lbl_sensory_code.Text = WebHelpers.FormatString(iina.sensory_desc);
+                lbl_moisture_code.Text = WebHelpers.FormatString(iina.moisture_desc);
+                lbl_activity_code.Text = WebHelpers.FormatString(iina.activity_desc);
+                lbl_mobility_code.Text = WebHelpers.FormatString(iina.mobility_desc);
+                lbl_nutrition_code.Text = WebHelpers.FormatString(iina.nutrition_desc);
+                lbl_friction_code.Text = WebHelpers.FormatString(iina.friction_desc);
+
                 total_score.Text = WebHelpers.FormatString(iina.total_score);
+                pres_sore_risk_desc.Text = WebHelpers.FormatString(iina.pres_sore_risk_desc);
+                lbl_preven_action.Text = WebHelpers.FormatString(iina.preven_action);
+
+                //11 - Checked
+                lbl_bathing_desc.Text = WebHelpers.FormatString(iina.bathing_desc);
+                lbl_oral_care_desc.Text = WebHelpers.FormatString(iina.oral_care_desc);
+                lbl_dentures_desc.Text = WebHelpers.FormatString(iina.dentures_desc);
+                lbl_toilet_use_desc.Text = WebHelpers.FormatString(iina.toilet_use_desc);
+                lbl_dressing_desc.Text = WebHelpers.FormatString(iina.dressing_desc);
+                lbl_eating_desc.Text = WebHelpers.FormatString(iina.eating_desc);
+                lbl_turning_bed_desc.Text = WebHelpers.FormatString(iina.turning_bed_desc);
+                lbl_ambulation_desc.Text = WebHelpers.FormatString(iina.ambulation_desc);
+                lbl_sleep_desc.Text = WebHelpers.FormatString(iina.sleep_desc);
+                lbl_medication_used.Text = WebHelpers.FormatString(iina.medication_used);
+                //12 - Checked
+                lbl_fall_history_desc.Text = WebHelpers.FormatString(iina.fall_history_desc);
+                lbl_secon_diagnosis_desc.Text = WebHelpers.FormatString(iina.secon_diagnosis_desc);
+                lbl_ambula_aids_desc.Text = WebHelpers.FormatString(iina.ambula_aids_desc);
+                lbl_intra_therapy_desc.Text = WebHelpers.FormatString(iina.intra_therapy_desc);
+                lbl_gait_trans_desc.Text = WebHelpers.FormatString(iina.gait_trans_desc);
+                lbl_fr_mental_status_desc.Text = WebHelpers.FormatString(iina.fr_mental_status_desc);
+                fr_total_score.Text = WebHelpers.FormatString(iina.fr_total_score);
+                //D.
+                lbl_involvement.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.involvement));
+                lbl_req_med_equipment.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.req_med_equipment));
+                lbl_req_foll_care.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.req_foll_care));
+                lbl_suicidal_referral.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.suicidal_referral));
+                lbl_ref_physiotherapist.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.ref_physiotherapist));
+                lbl_ref_speech_therapist.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.ref_speech_therapist));
+                lbl_ref_dietician.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.ref_dietician));
+                lbl_ref_psychologist.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.ref_psychologist));
+                lbl_ref_other_hospital.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.ref_other_hospital));
+                lbl_support_at_home.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.support_at_home));
+                lbl_req_transportation.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.req_transportation));
+                lbl_stairs_climb_home.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.stairs_climb_home));
+                //E
+                lbl_dis_planning.Text = WebHelpers.FormatString(iina.dis_planning);
+                //F
+                lbl_dis_management.Text = WebHelpers.FormatString(iina.dis_management);
+                lbl_assess_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(iina.assess_date_time, "dd-MM-yyyy HH:mm"));
+
+                final_screening_field.Visible = iina.bmi_out_range || iina.loss_weight || iina.reduce_dietary || iina.severely_ill;
             }
-            //
-            //7
-            lbl_urination.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.urination));
-            WebHelpers.VisibleControl(false, cb_inter_catheter_true, cb_ind_catheter_true, cb_sup_catheter_true);
-            if (iina.inter_catheter != null) { cb_inter_catheter_true.Checked = iina.inter_catheter; }
-            if (iina.ind_catheter != null) { cb_ind_catheter_true.Checked = iina.ind_catheter; }
-            lbl_ind_catheter_size.Text = WebHelpers.FormatString(iina.ind_catheter_size);
-            lbl_ind_catheter_date.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(iina.ind_catheter_date));
-            if (iina.sup_catheter != null) { cb_sup_catheter_true.Checked = iina.sup_catheter; }
-            lbl_sup_catheter_size.Text = WebHelpers.FormatString(iina.sup_catheter_size);
-            lbl_last_sup_catheter_date.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(iina.last_sup_catheter_date));
-            //
-            lbl_menstruation_code.Text = $"{WebHelpers.FormatString(iina.menstruation_desc)} {WebHelpers.FormatString(iina.cycle_day)} Ngày đầu của kỳ kinh cuối/ Last menstrual period started {WebHelpers.FormatString(iina.last_mens_period)}";
-
-            lbl_not_pregnancy.Text = $"{WebHelpers.FormatString(WebHelpers.GetBool(iina.not_pregnancy))} Đã từng mang thai trước đây/ Previous pregnancy: {WebHelpers.FormatString(WebHelpers.GetBool(iina.pre_pregnancy))} PARA {WebHelpers.FormatString(iina.para)} Hiện đang mang thai/ Current pregnancy: {WebHelpers.FormatString(WebHelpers.GetBool(iina.cur_pregnancy))} {WebHelpers.FormatString(iina.pregnancy_week)} tuần/ week";
-
-            lbl_contraception_code.Text = $"{WebHelpers.FormatString(iina.contraception_desc)} {WebHelpers.FormatString(iina.contraception_other)}";
-
-            //8
-            lbl_mus_history.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.mus_history));
-            lbl_paralysis.Text = "Liệt/ (1/2 người/2 chi/4 chi)/ Paralysis (Hemi/Para/Tetra): " + WebHelpers.FormatString(WebHelpers.GetBool(iina.paralysis)) + WebHelpers.FormatString(iina.paralysis_note);
-            lbl_amputation.Text = $"Đoạn chi/ Amputation: {WebHelpers.FormatString(WebHelpers.GetBool(iina.amputation))} {WebHelpers.FormatString(iina.ambulation_note)}";
-            lbl_contracture.Text = $"Cơ bắp co rút/ Contracture: {WebHelpers.FormatString(WebHelpers.GetBool(iina.contracture))} {WebHelpers.FormatString(iina.contracture_note)}";
-            lbl_prosthesis.Text = $"Lắp bộ phận giả/ Prosthesis: {WebHelpers.FormatString(WebHelpers.GetBool(iina.prosthesis))} {WebHelpers.FormatString(iina.prosthesis_note)}";
-            //9
-            lbl_cur_in_pain.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.cur_in_pain));
-            lbl_p_location_1.Text = WebHelpers.FormatString(iina.p_location_1);
-            lbl_p_location_2.Text = WebHelpers.FormatString(iina.p_location_2);
-            lbl_p_location_3.Text = WebHelpers.FormatString(iina.p_location_3);
-
-            lbl_q_location_1.Text = WebHelpers.FormatString(iina.q_location_1);
-            lbl_q_location_2.Text = WebHelpers.FormatString(iina.q_location_2);
-            lbl_q_location_3.Text = WebHelpers.FormatString(iina.q_location_3);
-
-            lbl_r_location_1.Text = WebHelpers.FormatString(iina.r_location_1);
-            lbl_r_location_2.Text = WebHelpers.FormatString(iina.r_location_2);
-            lbl_r_location_3.Text = WebHelpers.FormatString(iina.r_location_3);
-
-            lbl_s_location_1.Text = WebHelpers.FormatString(iina.s_location_1);
-            lbl_s_location_2.Text = WebHelpers.FormatString(iina.s_location_2);
-            lbl_s_location_3.Text = WebHelpers.FormatString(iina.s_location_3);
-
-            lbl_t_location_1.Text = WebHelpers.FormatString(iina.t_location_1);
-            lbl_t_location_2.Text = WebHelpers.FormatString(iina.t_location_2);
-            lbl_t_location_3.Text = WebHelpers.FormatString(iina.t_location_3);
-
-            lbl_using_pain_killer.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.using_pain_killer));
-            lbl_pain_killer_name.Text = WebHelpers.FormatString(iina.pain_killer_name);
-            lbl_pa_comment.Text = WebHelpers.FormatString(iina.pa_comment);
-
-            //10
-
-            lbl_condition.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.condition));
+            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
             
-            lbl_wounds.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.wounds));
-
-            ViewState[grid_skin_anno.ID] = WebHelpers.DataBind(grid_skin_anno, WebHelpers.GetJSONToDataTable(iina.skin_anno));
-
-            WebHelpers.DisabledGridView(grid_skin_anno, true);
-            grid_skin_anno.Columns[grid_skin_anno.Columns.Count - 1].Visible = false;
-            WebHelpers.VisibleControl(false, btn_grid_skin_anno_add);
-
-            lbl_sensory_code.Text = WebHelpers.FormatString(iina.sensory_desc);
-            lbl_moisture_code.Text = WebHelpers.FormatString(iina.moisture_desc);
-            lbl_activity_code.Text = WebHelpers.FormatString(iina.activity_desc);
-            lbl_mobility_code.Text = WebHelpers.FormatString(iina.mobility_desc);
-            lbl_nutrition_code.Text = WebHelpers.FormatString(iina.nutrition_desc);
-            lbl_friction_code.Text = WebHelpers.FormatString(iina.friction_desc);
-
-            total_score.Text = WebHelpers.FormatString(iina.total_score);
-            pres_sore_risk_desc.Text = WebHelpers.FormatString(iina.pres_sore_risk_desc);
-            lbl_preven_action.Text = WebHelpers.FormatString(iina.preven_action);
-
-            //11 - Checked
-            lbl_bathing_desc.Text = WebHelpers.FormatString(iina.bathing_desc);
-            lbl_oral_care_desc.Text = WebHelpers.FormatString(iina.oral_care_desc);
-            lbl_dentures_desc.Text = WebHelpers.FormatString(iina.dentures_desc);
-            lbl_toilet_use_desc.Text = WebHelpers.FormatString(iina.toilet_use_desc);
-            lbl_dressing_desc.Text = WebHelpers.FormatString(iina.dressing_desc);
-            lbl_eating_desc.Text = WebHelpers.FormatString(iina.eating_desc);
-            lbl_turning_bed_desc.Text = WebHelpers.FormatString(iina.turning_bed_desc);
-            lbl_ambulation_desc.Text = WebHelpers.FormatString(iina.ambulation_desc);
-            lbl_sleep_desc.Text = WebHelpers.FormatString(iina.sleep_desc);
-            lbl_medication_used.Text = WebHelpers.FormatString(iina.medication_used);
-            //12 - Checked
-            lbl_fall_history_desc.Text = WebHelpers.FormatString(iina.fall_history_desc);
-            lbl_secon_diagnosis_desc.Text = WebHelpers.FormatString(iina.secon_diagnosis_desc);
-            lbl_ambula_aids_desc.Text = WebHelpers.FormatString(iina.ambula_aids_desc);
-            lbl_intra_therapy_desc.Text = WebHelpers.FormatString(iina.intra_therapy_desc);
-            lbl_gait_trans_desc.Text = WebHelpers.FormatString(iina.gait_trans_desc);
-            lbl_fr_mental_status_desc.Text = WebHelpers.FormatString(iina.fr_mental_status_desc);
-            fr_total_score.Text = WebHelpers.FormatString(iina.fr_total_score);
-            //D.
-            lbl_involvement.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.involvement));
-            lbl_req_med_equipment.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.req_med_equipment));
-            lbl_req_foll_care.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.req_foll_care));
-            lbl_suicidal_referral.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.suicidal_referral));
-            lbl_ref_physiotherapist.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.ref_physiotherapist));
-            lbl_ref_speech_therapist.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.ref_speech_therapist));
-            lbl_ref_dietician.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.ref_dietician));
-            lbl_ref_psychologist.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.ref_psychologist));
-            lbl_ref_other_hospital.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.ref_other_hospital));
-            lbl_support_at_home.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.support_at_home));
-            lbl_req_transportation.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.req_transportation));
-            lbl_stairs_climb_home.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.stairs_climb_home));
-            //E
-            lbl_dis_planning.Text = WebHelpers.FormatString(iina.dis_planning);
-            //F
-            lbl_dis_management.Text = WebHelpers.FormatString(iina.dis_management);
-            lbl_assess_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(iina.assess_date_time, "dd-MM-yyyy HH:mm"));
-
-            final_screening_field.Visible = iina.bmi_out_range || iina.loss_weight || iina.reduce_dietary || iina.severely_ill;
         }
         private void BindingDataFormPrint(Iina iina)
         {
+            try
+            {
+
+            }catch(Exception ex) { WebHelpers.SendError(Page, ex); }
             //Patient patient = Patient.Instance();
             //prt_fullname.Text = $"{patient.GetFullName()} ({patient.GetTitle()})";
             //prt_DOB.Text = $"{WebHelpers.FormatDateTime(patient.date_of_birth)} | {patient.GetGender()}";
@@ -546,6 +558,52 @@ namespace EMR
         #endregion
 
         #region Events
+        protected void btnComplete_Click(object sender, EventArgs e)
+        {
+            if (Page.IsValid)
+            {
+
+                Iina iina = new Iina(DataHelpers.varDocId);
+                iina.status = DocumentStatus.FINAL;
+                iina.user_name = (string)Session["UserID"];
+
+                UpdateData(iina);
+                WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+            }
+        }
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+            if (Page.IsValid)
+            {
+                Iina iina = new Iina(DataHelpers.varDocId);
+
+                iina.user_name = (string)Session["UserID"];
+                iina.status = DocumentStatus.DRAFT;
+
+                UpdateData(iina);
+            }
+        }
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                dynamic result = Iina.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
+
+                if (result.Status == System.Net.HttpStatusCode.OK)
+                {
+                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+
+                    string pid = Request["pid"];
+                    string vpid = Request["vpid"];
+
+                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                }
+            }
+            catch (Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
+        }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
             if (WebHelpers.CanOpenForm(Page, (string)Request.QueryString["docId"], DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"]))
@@ -563,34 +621,9 @@ namespace EMR
                 //get access button
             }
         }
-        protected void btnComplete_Click(object sender, EventArgs e)
-        {
-            if (Page.IsValid)
-            {
-
-                Iina iina = new Iina(DataHelpers.varDocId);
-                iina.status = DocumentStatus.FINAL;
-
-                iina.user_name = (string)Session["UserID"];
-                iina.amend_reason = txt_amend_reason.Text;
-                UpdateData(iina);
-            }
-        }
-        protected void btnSave_Click(object sender, EventArgs e)
-        {
-            if (Page.IsValid)
-            {
-                Iina iina = new Iina(DataHelpers.varDocId);
-
-                iina.user_name = (string)Session["UserID"];
-                iina.status = DocumentStatus.DRAFT;
-
-                UpdateData(iina);
-            }
-        }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             Initial();
         }
         protected void btnPrint_Click(object sender, EventArgs e)
@@ -598,25 +631,6 @@ namespace EMR
             Iina iina = new Iina(Request["docid"]);
             BindingDataFormPrint(iina);
             ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
-        }
-        protected void btnDelete_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                dynamic result = Iina.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
-
-                if (result.Status == System.Net.HttpStatusCode.OK)
-                {
-                    string pid = Request["pid"];
-                    string vpid = Request["vpid"];
-
-                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
-                }
-            }
-            catch (Exception ex)
-            {
-                WebHelpers.SendError(Page, ex);
-            }
         }
         protected void btn_grid_skin_anno_add_Click(object sender, EventArgs e)
         {
@@ -639,6 +653,10 @@ namespace EMR
             {
                 Iina iina = new Iina(Request.QueryString["docId"]);
 
+                iina.pain_annotation = WebHelpers.getImageDefault(iina.pain_annotation);
+
+                iina.skin_anno_data = WebHelpers.getImageDefault(iina.skin_anno_data);
+
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
                 //prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (iina.status == DocumentStatus.FINAL)
@@ -652,12 +670,20 @@ namespace EMR
                 }
 
                 WebHelpers.getAccessButtons(form1, iina.status, (string)Session["access_authorize"], (string)Session["location"]);
-                final_screening_field.Visible = iina.bmi_out_range || iina.loss_weight || iina.reduce_dietary || iina.severely_ill;
+
+                final_screening_field.Visible = ShowFinalScreening(iina);
             }
             catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
+        }
+        private bool ShowFinalScreening(Iina iina)
+        {
+            if(iina.loss_weight != null) { if (iina.loss_weight) return true; }
+            else if(iina.reduce_dietary != null) { if (iina.reduce_dietary) return true; }
+            else if (iina.severely_ill != null) { if (iina.severely_ill) return true; }
+            return false;
         }
         private string GetPresSoreRiskCode(int score)
         {
@@ -712,6 +738,7 @@ namespace EMR
         {
             try
             {
+                iina.amend_reason = txt_amend_reason.Text;
                 iina.residence_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_residence_code_", Iina.RESIDENCE_CODE);
                 iina.residence_desc = WebHelpers.GetDicDesc(iina.residence_code, Iina.RESIDENCE_CODE);
                 
@@ -1020,6 +1047,10 @@ namespace EMR
                 iina.dis_planning = txt_dis_planning.Value;
                 iina.dis_management = txt_dis_management.Value;
                 iina.assess_date_time = DataHelpers.ConvertSQLDateTime(dtpk_assess_date_time.SelectedDate);
+
+                iina.pain_annotation = "{\"dataURI\":\"data:image/png;base64," + pain_annotation_base64.Value + "\"}";
+
+                iina.skin_anno_data = "{\"dataURI\":\"data:image/png;base64," + skin_anno_data_base64.Value + "\"}";
 
                 dynamic result = iina.Update()[0];
 

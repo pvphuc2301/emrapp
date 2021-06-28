@@ -12,7 +12,7 @@ namespace EMR
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            WebHelpers.CheckSession(this);
+            if(!WebHelpers.CheckSession(this)) return;
             if (!IsPostBack)
             {
                 Initial();
@@ -36,7 +36,6 @@ namespace EMR
             try
             {
                 txt_amend_reason.Text = "";
-
                 txt_chief_complaint.Value = iima.chief_complaint;
                 txt_cur_med_history.Value = iima.cur_med_history;
                 txt_cur_medication.Value = iima.cur_medication;
@@ -82,6 +81,8 @@ namespace EMR
                 txt_associated_conditions.Value = iima.associated_conditions;
                 txt_treatment_plan.Value = iima.treatment_plan;
                 txt_discharge_plan.Value = iima.discharge_plan;
+
+                WebHelpers.AddScriptFormEdit(Page, iima);
             }
             catch (Exception ex)
             {
@@ -91,98 +92,201 @@ namespace EMR
         }
         private void BindingDataFormView(Iima iima)
         {
-            //I
-            lbl_chief_complaint.Text = WebHelpers.GetValue(iima.chief_complaint);
-            //II
-            //1
-            lbl_cur_med_history.Text = WebHelpers.GetValue(iima.cur_med_history);
-            lbl_cur_medication.Text = WebHelpers.GetValue(iima.cur_medication);
-            //2
-            lbl_personal.Text = WebHelpers.GetValue(iima.personal);
-            lbl_habits_smoking.Text = WebHelpers.GetValue(WebHelpers.GetBool(iima.habits_smoking,$"Có, ghi số gói trong năm/ Yes, specify pack years: {iima.habits_smoking_pack}"));
-            lbl_habits_alcohol.Text = WebHelpers.GetValue(WebHelpers.GetBool(iima.habits_alcohol, $"Có, ghi rõ/ Yes, specify {iima.habits_alcohol_note}"));
-            lbl_habits_drugs.Text = WebHelpers.GetValue(WebHelpers.GetBool(iima.habits_drugs, $"Có, ghi rõ/ Yes, specify {iima.habits_drugs_note}"));
-            lbl_habits_physical_exercise.Text = WebHelpers.GetValue(WebHelpers.GetBool(iima.habits_physical_exercise, $"Có, ghi rõ/ Yes, specify {iima.habits_phy_exer_note}"));
-            lbl_habits_other.Text = WebHelpers.GetValue(iima.habits_other);
-            lbl_allergy.Text = WebHelpers.GetValue(WebHelpers.GetBool(iima.allergy, $"Có, ghi rõ/ Yes, specify: {iima.allergy_note}"));
-            lbl_family.Text = WebHelpers.GetValue(iima.family);
-            lbl_immunization.Text = WebHelpers.GetValue(iima.immunization);
-            //
-            WebHelpers.VisibleControl(false, btnUpdateVitalSign);
-            vs_temperature.Text = WebHelpers.FormatString(iima.vs_temperature);
-            vs_heart_rate.Text = WebHelpers.FormatString(iima.vs_heart_rate);
-            vs_weight.Text = WebHelpers.FormatString(iima.vs_weight);
-            vs_respiratory_rate.Text = WebHelpers.FormatString(iima.vs_respiratory_rate);
-            vs_height.Text = WebHelpers.FormatString(iima.vs_height);
-            vs_blood_pressure.Text = WebHelpers.FormatString(iima.vs_blood_pressure);
-            vs_bmi.Text = WebHelpers.FormatString(iima.vs_BMI);
-            vs_spo2.Text = WebHelpers.FormatString(iima.vs_spO2);
-            vs_pulse.Text = WebHelpers.FormatString(iima.vs_pulse);
-            lbl_physical_exam.Text = WebHelpers.GetValue(iima.physical_exam);
-            lbl_psy_consul_required.Text = WebHelpers.GetValue(WebHelpers.GetBool(iima.psy_consul_required));
-            //IV
-            lbl_laboratory_result.Text = WebHelpers.GetValue(iima.laboratory_result);
-            lbl_add_investigation.Text = WebHelpers.GetValue(iima.add_investigation);
-            //V
-            lbl_initial_diagnosis.Text = WebHelpers.GetValue(iima.initial_diagnosis);
-            lbl_diagnosis.Text = WebHelpers.GetValue(iima.diagnosis);
-            lbl_diff_diagnosis.Text = WebHelpers.GetValue(iima.diff_diagnosis);
-            lbl_associated_conditions.Text = WebHelpers.GetValue(iima.associated_conditions);
-            lbl_treatment_plan.Text = WebHelpers.GetValue(iima.treatment_plan);
-            lbl_discharge_plan.Text = WebHelpers.GetValue(iima.discharge_plan);
+            try
+            {
+                //I
+                lbl_chief_complaint.Text = WebHelpers.GetValue(iima.chief_complaint);
+                //II
+                //1
+                lbl_cur_med_history.Text = WebHelpers.GetValue(iima.cur_med_history);
+                lbl_cur_medication.Text = WebHelpers.GetValue(iima.cur_medication);
+                //2
+                lbl_personal.Text = WebHelpers.GetValue(iima.personal);
+                lbl_habits_smoking.Text = WebHelpers.GetValue(WebHelpers.GetBool(iima.habits_smoking, $"Có, ghi số gói trong năm/ Yes, specify pack years: {iima.habits_smoking_pack}"));
+                lbl_habits_alcohol.Text = WebHelpers.GetValue(WebHelpers.GetBool(iima.habits_alcohol, $"Có, ghi rõ/ Yes, specify {iima.habits_alcohol_note}"));
+                lbl_habits_drugs.Text = WebHelpers.GetValue(WebHelpers.GetBool(iima.habits_drugs, $"Có, ghi rõ/ Yes, specify {iima.habits_drugs_note}"));
+                lbl_habits_physical_exercise.Text = WebHelpers.GetValue(WebHelpers.GetBool(iima.habits_physical_exercise, $"Có, ghi rõ/ Yes, specify {iima.habits_phy_exer_note}"));
+                lbl_habits_other.Text = WebHelpers.GetValue(iima.habits_other);
+                lbl_allergy.Text = WebHelpers.GetValue(WebHelpers.GetBool(iima.allergy, $"Có, ghi rõ/ Yes, specify: {iima.allergy_note}"));
+                lbl_family.Text = WebHelpers.GetValue(iima.family);
+                lbl_immunization.Text = WebHelpers.GetValue(iima.immunization);
+                //
+                WebHelpers.VisibleControl(false, btnUpdateVitalSign);
+                vs_temperature.Text = WebHelpers.FormatString(iima.vs_temperature);
+                vs_heart_rate.Text = WebHelpers.FormatString(iima.vs_heart_rate);
+                vs_weight.Text = WebHelpers.FormatString(iima.vs_weight);
+                vs_respiratory_rate.Text = WebHelpers.FormatString(iima.vs_respiratory_rate);
+                vs_height.Text = WebHelpers.FormatString(iima.vs_height);
+                vs_blood_pressure.Text = WebHelpers.FormatString(iima.vs_blood_pressure);
+                vs_bmi.Text = WebHelpers.FormatString(iima.vs_BMI);
+                vs_spo2.Text = WebHelpers.FormatString(iima.vs_spO2);
+                vs_pulse.Text = WebHelpers.FormatString(iima.vs_pulse);
+                lbl_physical_exam.Text = WebHelpers.GetValue(iima.physical_exam);
+                lbl_psy_consul_required.Text = WebHelpers.GetValue(WebHelpers.GetBool(iima.psy_consul_required));
+                //IV
+                lbl_laboratory_result.Text = WebHelpers.GetValue(iima.laboratory_result);
+                lbl_add_investigation.Text = WebHelpers.GetValue(iima.add_investigation);
+                //V
+                lbl_initial_diagnosis.Text = WebHelpers.GetValue(iima.initial_diagnosis);
+                lbl_diagnosis.Text = WebHelpers.GetValue(iima.diagnosis);
+                lbl_diff_diagnosis.Text = WebHelpers.GetValue(iima.diff_diagnosis);
+                lbl_associated_conditions.Text = WebHelpers.GetValue(iima.associated_conditions);
+                lbl_treatment_plan.Text = WebHelpers.GetValue(iima.treatment_plan);
+                lbl_discharge_plan.Text = WebHelpers.GetValue(iima.discharge_plan);
+            }
+            catch(Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
         }
         private void BindingDataFormPrint(Iima iima)
         {
-            //Patient patient = Patient.Instance();
-            //prt_fullname.Text = $"{patient.GetFullName()} ({patient.GetTitle()})";
-            //prt_DOB.Text = $"{WebHelpers.FormatDateTime(patient.date_of_birth)} | {patient.GetGender()}";
-            //prt_barcode.Text = prt_vpid.Text = patient.visible_patient_id;
-
-            //prt_vs_temperature.Text = oina.vs_temperature;
-            //prt_vs_weight.Text = oina.vs_weight;
-            //prt_vs_height.Text = oina.vs_height;
-            //prt_vs_BMI.Text = oina.vs_BMI;
-            //prt_pulse.Text = oina.vs_heart_rate;
-            //prt_vs_respiratory_rate.Text = oina.vs_respiratory_rate;
-            //prt_vs_blood_pressure.Text = oina.vs_blood_pressure;
-            //prt_vs_spO2.Text = oina.vs_spO2;
-
-            //prt_chief_complaint.Text = oina.chief_complaint;
-            //prt_allergy.Text = oina.allergy ? "Có, ghi rõ/ Yes, specify: " + oina.allergy_note : "Không";
-
-            //prt_mental_status.Text = WebHelpers.CreateOptions(new Option { Text = "Có/ Yes", Value = true }, new Option { Text = "Không, ghi rõ/ No, specify: " + oina.mental_status_note, Value = false }, oina.mental_status, "display: grid; grid-template-columns: 80px 1fr");
-
-            //prt_paint_score_code.Value = oina.paint_score_code;
-
-            //prt_fall_risk.Value = oina.fall_risk ? "Nếu có, cung cấp phương tiện hỗ trợ/ If yes, provide assistance: " + oina.fall_risk_assistance : "Không có nguy cơ/ No risk";
-
-            //prt_nutrition_status_code.Value = oina.nutrition_status_description;
-
-            //prt_housing.Text = WebHelpers.CreateOptions(Oina.HOUSING_CODE, (string)oina.housing_code, "display: grid; grid-template-columns: 1fr 1fr");
-
-            //prt_prioritization_code.Value = oina.prioritization_description;
-
+            try
+            {
+                prt_chief_complaint.Text = iima.chief_complaint;
+                prt_cur_med_history.Text = iima.cur_med_history;
+                prt_cur_medication.Text = iima.cur_medication;
+                prt_personal.Text = iima.personal;
+                if (iima.habits_smoking != null)
+                {
+                    if (iima.habits_smoking = true)
+                    {
+                        prt_habits_smoking_True.Text = "☒";
+                        prt_habits_smoking_False.Text = "❏";
+                    }
+                    if (iima.habits_smoking = false)
+                    {
+                        prt_habits_smoking_True.Text = "❏";
+                        prt_habits_smoking_False.Text = "☒";
+                    }
+                }
+                if (iima.habits_smoking == null)
+                {
+                    prt_habits_smoking_True.Text = "❏";
+                    prt_habits_smoking_False.Text = "❏";
+                }
+                lbl_habits_smoking_pack.Text = iima.habits_smoking_pack;
+                if (iima.habits_alcohol != null)
+                {
+                    if (iima.habits_alcohol = true)
+                    {
+                        prt_habits_alcohol_True.Text = "☒";
+                        prt_habits_alcohol_False.Text = "❏";
+                    }
+                    if (iima.habits_alcohol = false)
+                    {
+                        prt_habits_alcohol_True.Text = "❏";
+                        prt_habits_alcohol_False.Text = "☒";
+                    }
+                }
+                if (iima.habits_alcohol == null)
+                {
+                    prt_habits_alcohol_True.Text = "❏";
+                    prt_habits_alcohol_False.Text = "❏";
+                }
+                prt_habits_alcohol_note.Text = iima.habits_alcohol_note;
+                if (iima.habits_drugs != null)
+                {
+                    if (iima.habits_drugs = true)
+                    {
+                        prt_habits_drugs_True.Text = "☒";
+                        prt_habits_drugs_False.Text = "❏";
+                    }
+                    if (iima.habits_drugs = false)
+                    {
+                        prt_habits_drugs_True.Text = "❏";
+                        prt_habits_drugs_False.Text = "☒";
+                    }
+                }
+                if (iima.habits_drugs == null)
+                {
+                    prt_habits_drugs_True.Text = "❏";
+                    prt_habits_drugs_False.Text = "❏";
+                }
+                prt_habits_drugs_note.Text = iima.habits_drugs_note;
+                if (iima.habits_physical_exercise != null)
+                {
+                    if (iima.habits_physical_exercise = true)
+                    {
+                        prt_habits_physical_exercise_True.Text = "☒";
+                        prt_habits_physical_exercise_False.Text = "❏";
+                    }
+                    if (iima.habits_drugs = false)
+                    {
+                        prt_habits_physical_exercise_True.Text = "❏";
+                        prt_habits_physical_exercise_False.Text = "☒";
+                    }
+                }
+                if (iima.habits_drugs == null)
+                {
+                    prt_habits_physical_exercise_True.Text = "❏";
+                    prt_habits_physical_exercise_False.Text = "❏";
+                }
+                prt_habits_phy_exer_note.Text = iima.habits_phy_exer_note;
+                prt_habits_other.Text = iima.habits_other;
+                if (iima.allergy != null)
+                {
+                    if (iima.allergy = true)
+                    {
+                        prt_allergy_True.Text = "☒";
+                        prt_allergy_False.Text = "❏";
+                    }
+                    if (iima.allergy = false)
+                    {
+                        prt_allergy_True.Text = "❏";
+                        prt_allergy_False.Text = "☒";
+                    }
+                }
+                if (iima.allergy == null)
+                {
+                    prt_allergy_True.Text = "❏";
+                    prt_allergy_False.Text = "❏";
+                }
+                prt_allergy_note.Text = iima.allergy_note;
+                prt_family.Text = iima.family;
+                prt_immunization.Text = iima.immunization;
+                prt_vs_temperature.Text = iima.vs_temperature;
+                prt_vs_heart_rate.Text = iima.vs_heart_rate;
+                prt_vs_weight.Text = iima.vs_weight;
+                prt_vs_height.Text = iima.vs_height;
+                prt_vs_respiratory_rate.Text = iima.vs_respiratory_rate;
+                prt_vs_BMI.Text = iima.vs_BMI;
+                prt_vs_blood_pressure.Text = iima.vs_blood_pressure;
+                prt_vs_spO2.Text = iima.vs_spO2;
+                //prt_vs_pulse.Text = iima.vs_pulse;
+                prt_physical_exam.Text = iima.physical_exam;
+                if (iima.psy_consul_required != null)
+                {
+                    if (iima.psy_consul_required = true)
+                    {
+                        prt_psy_consul_required_True.Text = "☒";
+                        prt_psy_consul_required_False.Text = "❏";
+                    }
+                    if (iima.psy_consul_required = false)
+                    {
+                        prt_psy_consul_required_True.Text = "❏";
+                        prt_psy_consul_required_False.Text = "☒";
+                    }
+                }
+                if (iima.psy_consul_required == null)
+                {
+                    prt_psy_consul_required_True.Text = "❏";
+                    prt_psy_consul_required_False.Text = "❏";
+                }
+                prt_laboratory_result.Text = iima.laboratory_result;
+                //prt_add_investigation.Text = iima.add_investigation;
+                prt_initial_diagnosis.Text = iima.initial_diagnosis;
+                //prt_diagnosis.Text = iima.diagnosis;
+                prt_diff_diagnosis.Text = iima.diff_diagnosis;
+                prt_associated_conditions.Text = iima.associated_conditions;
+                prt_treatment_plan.Text = iima.treatment_plan;
+                prt_discharge_plan.Text = iima.discharge_plan;
+            }
+            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
         }
         #endregion
 
         #region Events
-        protected void btnAmend_Click(object sender, EventArgs e)
-        {
-            Iima iima = new Iima(Request["docid"]);
-            string emp_id = (string)Session["emp_id"];
-
-            if (WebHelpers.CanOpenForm(Page, iima.document_id, iima.status, emp_id, (string)Session["location"]))
-            {
-                WebHelpers.VisibleControl(false, btnAmend, btnPrint);
-                WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
-
-                //load form control
-                WebHelpers.LoadFormControl(form1, iima, ControlState.Edit, (string)Session["location"]);
-                //binding data
-                BindingDataFormEdit(iima);
-                //get access button
-            }
-        }
         protected void btnComplete_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
@@ -190,10 +294,10 @@ namespace EMR
 
                 Iima iima = new Iima(DataHelpers.varDocId);
                 iima.status = DocumentStatus.FINAL;
-
                 iima.user_name = (string)Session["UserID"];
-                iima.amend_reason = txt_amend_reason.Text;
+
                 UpdateData(iima);
+                WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             }
         }
         protected void btnSave_Click(object sender, EventArgs e)
@@ -208,16 +312,6 @@ namespace EMR
                 UpdateData(iima);
             }
         }
-        protected void btnCancel_Click(object sender, EventArgs e)
-        {
-            Initial();
-        }
-        protected void btnPrint_Click(object sender, EventArgs e)
-        {
-            Iima iima = new Iima(Request["docid"]);
-            BindingDataFormPrint(iima);
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
-        }
         protected void btnDelete_Click(object sender, EventArgs e)
         {
             try
@@ -226,11 +320,43 @@ namespace EMR
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
+                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+
                     string pid = Request["pid"];
                     string vpid = Request["vpid"];
 
                     Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
                 }
+            }
+            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
+        }
+        protected void btnAmend_Click(object sender, EventArgs e)
+        {
+            if (WebHelpers.CanOpenForm(Page, Request["docid"], DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"]))
+            {
+                Iima iima = new Iima(Request["docid"]);
+
+                WebHelpers.VisibleControl(false, btnAmend, btnPrint);
+                WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
+
+                //load form control
+                WebHelpers.LoadFormControl(form1, iima, ControlState.Edit, (string)Session["location"]);
+                //binding data
+                BindingDataFormEdit(iima);
+                //get access button
+            }
+        }
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+            Initial();
+        }
+        protected void btnPrint_Click(object sender, EventArgs e)
+        {
+            try { 
+                Iima iima = new Iima(Request["docid"]);
+                BindingDataFormPrint(iima);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }

@@ -32,29 +32,34 @@ namespace Emr_client.Emr
 
         protected void cmdLogin_Click(object sender, System.EventArgs e)
         {
-            bool isLogin = false;// string current_session = "";
-
-            isLogin = IsAuthenticated(UserName.Value, Password.Value);
-
-            string pp = EncodePassword(Password.Value);
-
-            if (pp == "06C86B4053CDB66C7D0A58BF2BB82542" | pp == "06c86b4053cdb66c7d0a58bf2bb82542")
-                isLogin = true;
-            //TODO Lab 16: Login users and generate an auth. cookie
-            if (isLogin)
+            try
             {
-                Session["UserID"] = UserName.Value;
-                put_session_value(UserName.Value, Password.Value);
-                //  HttpContext current_ss = HttpContext.Current;
-                //Session["current_session"] = current_ss.Session.SessionID;
-                Insert_EMR_Account(UserName.Value, Convert.ToString(Session["company_code"]));
-                if (string.IsNullOrEmpty(Request.QueryString["ReturnUrl"]))
-                    Response.Redirect("dashboard.aspx");
+                bool isLogin = false;// string current_session = "";
+
+                isLogin = IsAuthenticated(UserName.Value, Password.Value);
+
+                string pp = EncodePassword(Password.Value);
+
+                if (pp == "06C86B4053CDB66C7D0A58BF2BB82542" | pp == "06c86b4053cdb66c7d0a58bf2bb82542")
+                    isLogin = true;
+                //TODO Lab 16: Login users and generate an auth. cookie
+                if (isLogin)
+                {
+                    Session["UserID"] = UserName.Value;
+                    put_session_value(UserName.Value, Password.Value);
+                    //  HttpContext current_ss = HttpContext.Current;
+                    //Session["current_session"] = current_ss.Session.SessionID;
+                    Insert_EMR_Account(UserName.Value, Convert.ToString(Session["company_code"]));
+                    if (string.IsNullOrEmpty(Request.QueryString["ReturnUrl"]))
+                        Response.Redirect("dashboard.aspx");
+                    else
+                        FormsAuthentication.RedirectFromLoginPage(UserName.Value, false);
+                }
                 else
-                    FormsAuthentication.RedirectFromLoginPage(UserName.Value, false);
+                    lblInfo.Text = "Login Failed!";
             }
-            else
-                lblInfo.Text = "Login Failed!";
+            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
+            
         }
         
         public void put_session_value(string varUserAccount, string varUserPW)

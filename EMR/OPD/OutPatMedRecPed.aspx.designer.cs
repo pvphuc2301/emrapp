@@ -393,6 +393,15 @@ namespace EMR
         protected global::EMR.UserControls.PatientInfo PatientInfo;
 
         /// <summary>
+        /// lbl_chief_complaint control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_chief_complaint;
+
+        /// <summary>
         /// chief_complaint_wrapper control.
         /// </summary>
         /// <remarks>
@@ -411,13 +420,13 @@ namespace EMR
         protected global::EMR.TextField txt_chief_complaint;
 
         /// <summary>
-        /// lbl_chief_complaint control.
+        /// lbl_medical_history control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_chief_complaint;
+        protected global::System.Web.UI.WebControls.Label lbl_medical_history;
 
         /// <summary>
         /// medical_history_wrapper control.
@@ -438,13 +447,13 @@ namespace EMR
         protected global::EMR.TextField txt_medical_history;
 
         /// <summary>
-        /// lbl_medical_history control.
+        /// lbl_current_medication control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_medical_history;
+        protected global::System.Web.UI.WebControls.Label lbl_current_medication;
 
         /// <summary>
         /// current_medication_wrapper control.
@@ -465,13 +474,13 @@ namespace EMR
         protected global::EMR.TextField txt_current_medication;
 
         /// <summary>
-        /// lbl_current_medication control.
+        /// lbl_personal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_current_medication;
+        protected global::System.Web.UI.WebControls.Label lbl_personal;
 
         /// <summary>
         /// personal_wrapper control.
@@ -490,15 +499,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.TextField txt_personal;
-
-        /// <summary>
-        /// lbl_personal control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_personal;
 
         /// <summary>
         /// lbl_allergy control.
@@ -544,15 +544,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.icons.XSquare XSquare38;
-
-        /// <summary>
-        /// CustomValidator2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator2;
 
         /// <summary>
         /// txt_allergy_note control.
@@ -717,6 +708,15 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label lbl_physical_examination;
 
         /// <summary>
+        /// lbl_laboratory_indications_results control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_laboratory_indications_results;
+
+        /// <summary>
         /// laboratory_indications_results_wrapper control.
         /// </summary>
         /// <remarks>
@@ -733,15 +733,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.TextField txt_laboratory_indications_results;
-
-        /// <summary>
-        /// lbl_laboratory_indications_results control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_laboratory_indications_results;
 
         /// <summary>
         /// initial_diagnosis_wrapper control.
@@ -951,15 +942,6 @@ namespace EMR
         protected global::EMR.icons.XSquare XSquare3;
 
         /// <summary>
-        /// CustomValidator1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator1;
-
-        /// <summary>
         /// txt_spec_opinion_requested_note control.
         /// </summary>
         /// <remarks>
@@ -1030,15 +1012,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.icons.XSquare XSquare1;
-
-        /// <summary>
-        /// CustomValidator3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator3;
 
         /// <summary>
         /// dtpk_date_next_appointment control.

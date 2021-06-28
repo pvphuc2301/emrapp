@@ -22,6 +22,13 @@
     <title></title>
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
+    <link href="../styles/sweetalert.min.css" rel="stylesheet" />
+    <link href="../styles/alertify.css" rel="stylesheet" />
+    <style>
+        canvas {
+            border: 2px solid #000;
+        }
+    </style>
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
@@ -2047,6 +2054,26 @@ applicable for children and pregnant</span>)
                                                 </div>
 
                                                 <div class="col-md-12 mb-2 gt-2-a">
+                                                    <label></label>
+                                                    <img src="" id="pain_annotation_img" runat="server" style="display: none;" />
+                                                        <asp:HiddenField runat="server" ID="pain_annotation_base64" />
+
+                                                        <div style="width: 500px;">
+                                                            <div id="controllers">
+                                                                <span runat="server" class="controller btn btn-secondary" id="pain_annotation_undo">undo</span>
+                                                                <span runat="server" class="controller btn btn-secondary" id="pain_annotation_redo">redo</span>
+                                                                <div runat="server" id="pain_annotation_pencilWrapper"  class=" btn btn-secondary">
+                                                                    <svg id="pain_annotation_pencil" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                    </svg>
+                                                                </div>
+                                                                <%--<span class="controller btn btn-secondary" id="note">note</span>--%>
+                                                            </div>
+                                                            <canvas id="pain_annotation_canvas" runat="server"></canvas>
+                                                        </div>
+                                                    </div>
+
+                                                <div class="col-md-12 mb-2 gt-2-a">
                                                     <label class="control-label mb-1 mr-2">Sử dụng thuốc giảm đau/ <span class="text-primary">Using painkiller:</span></label>
 
                                                     <asp:Label runat="server" ID="lbl_using_pain_killer"></asp:Label>
@@ -2226,6 +2253,35 @@ applicable for children and pregnant</span>)
                                                             <asp:AsyncPostBackTrigger ControlID="btn_grid_skin_anno_add" EventName="Click" />
                                                         </Triggers>
                                                     </asp:UpdatePanel>
+                                                </div>
+
+
+                                                <div class="col-md-12 mb-2">
+                                                    <img src="" id="skin_anno_data_img" runat="server" style="display: none;" />
+                                                        <asp:HiddenField runat="server" ID="skin_anno_data_base64" />
+
+                                                        <div style="width: 500px;">
+                                                            <div id="controllers1">
+                                                                <span runat="server" class="controller btn btn-secondary" id="skin_anno_data_undo">undo</span>
+                                                                <span runat="server" class="controller btn btn-secondary" id="skin_anno_data_redo">redo</span>
+                                                                <div runat="server" id="skin_anno_data_pencil_wrapper"  class=" btn btn-secondary">
+                                                                    <svg id="skin_anno_data_pencil" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                    </svg>
+                                                                </div>
+                                                                <%--<span class="controller btn btn-secondary" id="note">note</span>--%>
+                                                            </div>
+                                                            <canvas id="skin_anno_data_canvas" runat="server"></canvas>
+                                                            <%--<div>
+                                                                <div style="display: flex; align-items: center;">
+                                                                    2
+                                                                    <webUI:TextField runat="server" ID="TextField1" />
+                                                                    <div class="btn btn-outline-secondary ml-1">
+                                                                        <icon:Trash runat="server" ID="Trash" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>--%>
+                                                        </div>
                                                 </div>
 
                                                 <div class="col-md-12 mb-2">
@@ -3383,7 +3439,270 @@ applicable for children and pregnant</span>)
     <script src="../scripts/contenteditable.min.js"></script>
     <script src="../scripts/checkValidFields.js"></script>
     <script src="../scripts/waves.js"></script>
+    <script src="../scripts/sweetalert.min.js"></script>
+    <script src="../scripts/alertify.js"></script>
+
     <script>
+        function load_pain_annotation_Image() {
+            const pain_annotation_canvas = document.querySelector('#pain_annotation_canvas');
+
+            const ctx = pain_annotation_canvas.getContext("2d");
+            pain_annotation_canvas.height = 500;
+            pain_annotation_canvas.width = 500;
+            ctx.strokeStyle = "red";
+            
+            let pain_annotation_img = new Image();
+
+            pain_annotation_img.onload = function () {
+                ctx.drawImage(pain_annotation_img, 0, 0);
+
+                ctx.beginPath();
+                ctx.moveTo(119, 220);
+                ctx.lineTo(119, 220);
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = '#ff0000';
+                ctx.lineCap = 'round';
+                ctx.stroke();
+            }
+
+            pain_annotation_img.src = document.getElementById("pain_annotation_img").src;
+
+            var pain_annotation_history = {
+                redo_list: [],
+                undo_list: [],
+                saveState: function (canvas, list, keep_redo) {
+                    keep_redo = keep_redo || false;
+                    if (!keep_redo) {
+                        this.redo_list = [];
+                    }
+
+                    (list || this.undo_list).push(canvas.toDataURL());
+                },
+                undo: function (canvas, ctx) {
+                    this.restoreState(canvas, ctx, this.undo_list, this.redo_list);
+                },
+                redo: function (canvas, ctx) {
+                    this.restoreState(canvas, ctx, this.redo_list, this.undo_list);
+                },
+                restoreState: function (canvas, ctx, pop, push) {
+                    if (pop.length) {
+                        this.saveState(canvas, push, true);
+                        var restore_state = pop.pop();
+                        var img = document.createElement("img");
+                        img.src = restore_state;
+
+                        img.onload = function () {
+                            ctx.clearRect(0, 0, canvas.width, 400);
+                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
+                        }
+                    }
+                }
+            }
+
+            var pain_annotation_pencil = {
+                options: {
+                    stroke_color: "red",
+                    dim: 4
+                },
+                init: function (canvas, ctx) {
+                    this.canvas = canvas;
+                    this.ctx = ctx;
+                    this.ctx.strokeColor = this.options.stroke_color;
+                    this.drawing = false;
+                    this.addCanvasEvents();
+                },
+                addCanvasEvents: function () {
+                    this.canvas.addEventListener('mousedown', this.start.bind(this));
+                    this.canvas.addEventListener('mousemove', this.stroke.bind(this));
+                    this.canvas.addEventListener('mouseup', this.stop.bind(this));
+                    this.canvas.addEventListener('mouseout', this.stop.bind(this));
+                },
+                start: function (e) {
+                    if (currentAct != act.PEN) return;
+                    this.ctx.beginPath();
+                    pain_annotation_history.saveState(this.canvas);
+                    this.drawing = true;
+                },
+                stroke: function (e) {
+                    if (currentAct != act.PEN) return;
+
+                    if (this.drawing) {
+                        let rect = pain_annotation_canvas.getBoundingClientRect();
+
+                        var x = e.clientX - rect.left;
+                        var y = e.clientY - rect.top;
+
+                        this.ctx.lineTo(x, y);
+                        this.ctx.stroke(); // draw line
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(x, y);
+                    }
+                },
+                stop: function (e) {
+                    if (currentAct != act.PEN) return;
+
+                    if (this.drawing) {
+                        this.drawing = false;
+                        this.ctx.beginPath();
+                    }
+                    var image = document.getElementById("pain_annotation_canvas").toDataURL("image/png");
+                    image = image.replace('data:image/png;base64,', '');
+
+                    document.getElementById("pain_annotation_base64").value = image;
+                }
+            };
+
+            const act = { PEN: 1, NOTE: 2 };
+            Object.freeze(act);
+
+            let currentAct;
+
+            $('#pain_annotation_pencil').click(function () {
+                currentAct = act.PEN;
+                pain_annotation_pencil.init(pain_annotation_canvas, ctx);
+            });
+
+            $('#pain_annotation_undo').click(function () {
+                pain_annotation_history.undo(pain_annotation_canvas, ctx);
+            });
+
+            $('#pain_annotation_redo').click(function () {
+                pain_annotation_history.redo(pain_annotation_canvas, ctx);
+            });
+        };
+
+        function load_skin_anno_data_Image() {
+            const skin_anno_data_canvas = document.querySelector('#skin_anno_data_canvas');
+
+            const ctx = skin_anno_data_canvas.getContext("2d");
+            skin_anno_data_canvas.height = 500;
+            skin_anno_data_canvas.width = 500;
+            ctx.strokeStyle = "red";
+
+            let skin_anno_data_img = new Image();
+
+            skin_anno_data_img.onload = function () {
+                ctx.drawImage(skin_anno_data_img, 0, 0);
+
+                ctx.beginPath();
+                ctx.moveTo(119, 220);
+                ctx.lineTo(119, 220);
+                ctx.lineWidth = 3;
+                ctx.strokeStyle = '#ff0000';
+                ctx.lineCap = 'round';
+                ctx.stroke();
+            }
+
+            skin_anno_data_img.src = document.getElementById("skin_anno_data_img").src;
+
+            var skin_anno_data_history = {
+                redo_list: [],
+                undo_list: [],
+                saveState: function (canvas, list, keep_redo) {
+                    keep_redo = keep_redo || false;
+                    if (!keep_redo) {
+                        this.redo_list = [];
+                    }
+
+                    (list || this.undo_list).push(canvas.toDataURL());
+                },
+                undo: function (canvas, ctx) {
+                    this.restoreState(canvas, ctx, this.undo_list, this.redo_list);
+                },
+                redo: function (canvas, ctx) {
+                    this.restoreState(canvas, ctx, this.redo_list, this.undo_list);
+                },
+                restoreState: function (canvas, ctx, pop, push) {
+                    if (pop.length) {
+                        this.saveState(canvas, push, true);
+                        var restore_state = pop.pop();
+                        var img = document.createElement("img");
+                        img.src = restore_state;
+
+                        img.onload = function () {
+                            ctx.clearRect(0, 0, canvas.width, 400);
+                            ctx.drawImage(img, 0, 0, canvas.width, canvas.height, 0, 0, canvas.width, canvas.height);
+                        }
+                    }
+                }
+            }
+
+            var skin_anno_data_pencil = {
+                options: {
+                    stroke_color: "red",
+                    dim: 4
+                },
+                init: function (canvas, ctx) {
+                    this.canvas = canvas;
+                    this.ctx = ctx;
+                    this.ctx.strokeColor = this.options.stroke_color;
+                    this.drawing = false;
+                    this.addCanvasEvents();
+                },
+                addCanvasEvents: function () {
+                    this.canvas.addEventListener('mousedown', this.start.bind(this));
+                    this.canvas.addEventListener('mousemove', this.stroke.bind(this));
+                    this.canvas.addEventListener('mouseup', this.stop.bind(this));
+                    this.canvas.addEventListener('mouseout', this.stop.bind(this));
+                },
+                start: function (e) {
+                    if (currentAct != act.PEN) return;
+                    this.ctx.beginPath();
+                    skin_anno_data_history.saveState(this.canvas);
+                    this.drawing = true;
+                },
+                stroke: function (e) {
+                    if (currentAct != act.PEN) return;
+
+                    if (this.drawing) {
+                        let rect = skin_anno_data_canvas.getBoundingClientRect();
+
+                        var x = e.clientX - rect.left;
+                        var y = e.clientY - rect.top;
+
+                        this.ctx.lineTo(x, y);
+                        this.ctx.stroke(); // draw line
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(x, y);
+                    }
+                },
+                stop: function (e) {
+                    if (currentAct != act.PEN) return;
+
+                    if (this.drawing) {
+                        this.drawing = false;
+                        this.ctx.beginPath();
+                    }
+                    var image = document.getElementById("skin_anno_data_canvas").toDataURL("image/png");
+                    image = image.replace('data:image/png;base64,', '');
+
+                    document.getElementById("skin_anno_data_base64").value = image;
+                }
+            };
+
+            const act = { PEN: 1, NOTE: 2 };
+            Object.freeze(act);
+
+            let currentAct;
+
+            $('#skin_anno_data_pencil').click(function () {
+                currentAct = act.PEN;
+                skin_anno_data_pencil.init(skin_anno_data_canvas, ctx);
+            });
+
+            $('#skin_anno_data_undo').click(function () {
+                skin_anno_data_history.undo(skin_anno_data_canvas, ctx);
+            });
+
+            $('#skin_anno_data_redo').click(function () {
+                skin_anno_data_history.redo(skin_anno_data_canvas, ctx);
+            });
+        };
+    </script>
+
+    <script>
+        load_pain_annotation_Image();
+        load_skin_anno_data_Image();
         formGroup_init();
         checkboxRadiobutton_init();
         InputFilter();
@@ -3397,6 +3716,8 @@ applicable for children and pregnant</span>)
             formGroup_init();
             checkboxRadiobutton_init();
             InputFilter();
+            load_pain_annotation_Image();
+            load_skin_anno_data_Image();
         }
 
     </script>

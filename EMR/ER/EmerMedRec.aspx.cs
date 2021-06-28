@@ -20,6 +20,60 @@ namespace EMR.ER
             {
                 Initial();
             }
+            PostBackEventHandler();
+        }
+
+        private void PostBackEventHandler()
+        {
+            switch (Request["__EVENTTARGET"])
+            {
+                case "hos_req_change":
+                    hos_req_change(Request["__EVENTARGUMENT"]);
+                    break;
+                case "emergency_surgery_change":
+                    emergency_surgery_change(Request["__EVENTARGUMENT"]);
+                    break;
+                case "transfer_hospital_change":
+                    transfer_hospital_change(Request["__EVENTARGUMENT"]);
+                    break;
+                case "specialist_opinion_change":
+                    specialist_opinion_change(Request["__EVENTARGUMENT"]);
+                    break;
+                case "discharge_change":
+                    discharge_change(Request["__EVENTARGUMENT"]);
+                    break;
+            }
+        }
+
+        private void discharge_change(string value)
+        {
+            if (value == "clear") { rad_discharge_True.Checked = rad_discharge_False.Checked = false; }
+            WebHelpers.VisibleControl(rad_discharge_True.Checked, discharge_field, discharge_field1, discharge_field2);
+        }
+
+        private void specialist_opinion_change(string value)
+        {
+            if (value == "clear") { rad_specialist_opinion_True.Checked = rad_specialist_opinion_False.Checked = false; }
+            WebHelpers.VisibleControl(rad_specialist_opinion_True.Checked, specialist_opinion_field, specialist_opinion_field1, specialist_opinion_field2);
+        }
+
+        private void transfer_hospital_change(string value)
+        {
+            if (value == "clear") { rad_transfer_hospital_True.Checked = rad_transfer_hospital_False.Checked = false; }
+                WebHelpers.VisibleControl(rad_transfer_hospital_True.Checked, transfer_hos_field, transfer_hos_field1, transfer_hos_field2);
+        }
+
+        private void emergency_surgery_change(string value)
+        {
+            if (value == "clear")
+            { rad_emergency_surgery_True.Checked = rad_emergency_surgery_False.Checked = false; }
+            WebHelpers.VisibleControl(rad_emergency_surgery_True.Checked, emr_sur_field, emr_sur_field1, emr_sur_field2);
+        }
+
+        private void hos_req_change(string value)
+        {
+            if(value == "clear") { rad_hospitalisation_required_False.Checked = rad_hospitalisation_required_True.Checked = false; }
+            hos_req_field.Visible = rad_hospitalisation_required_True.Checked;
         }
 
         #region Binding Data
@@ -38,6 +92,7 @@ namespace EMR.ER
         {
             try
             {
+                txt_amend_reason.Text = "";
                 WebHelpers.BindDateTimePicker(dtpk_evaluation_time, emr.evaluation_time);
                 txt_chief_complaint.Value = emr.chief_complaint;
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_chief_complaint_code_" + emr.chief_complaint_code);
@@ -62,9 +117,11 @@ namespace EMR.ER
                 WebHelpers.BindDateTimePicker(dtpk_time_contaced, emr.time_contaced);
                 WebHelpers.BindDateTimePicker(dtpk_time_provided, emr.time_provided);
                 txt_spec_opinion_summarised.Value = emr.spec_opinion_summarised;
-                ViewState[grid_Treatment.ID] = WebHelpers.DataBind(grid_Treatment, WebHelpers.GetJSONToDataTable(emr.treatment));
-                ViewState[grid_progress_note.ID] = WebHelpers.DataBind(grid_progress_note, WebHelpers.GetJSONToDataTable(emr.progress_note));
-                WebHelpers.VisibleControl(true, btn_grid_progress_note_add, btn_grid_Treatment_add);
+                
+                ViewState[grid_Treatment.ID] = WebHelpers.BindingDataGridView(grid_Treatment, WebHelpers.GetJSONToDataTable(emr.treatment), EmergencyMedicalRecord.Treatment, btn_grid_Treatment_add);
+
+                ViewState[grid_progress_note.ID] = WebHelpers.BindingDataGridView(grid_progress_note, WebHelpers.GetJSONToDataTable(emr.progress_note), EmergencyMedicalRecord.ProgressNote, btn_grid_progress_note_add);
+
                 txt_conclusions.Value = emr.conclusions;
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_discharge_" + emr.discharge);
                 txt_prescription.Value = emr.prescription;
@@ -131,11 +188,9 @@ namespace EMR.ER
 
                 lbl_spec_opinion_summarised.Text = WebHelpers.FormatString(emr.spec_opinion_summarised);
 
-                WebHelpers.DataBind(grid_Treatment, WebHelpers.GetJSONToDataTable(emr.treatment));
-                WebHelpers.DisabledGridView(grid_Treatment, true);
+                WebHelpers.LoadDataGridView(grid_Treatment, WebHelpers.GetJSONToDataTable(emr.treatment), Iina.SKIN_ANNO, btn_grid_Treatment_add);
 
-                WebHelpers.DataBind(grid_progress_note, WebHelpers.GetJSONToDataTable(emr.progress_note));
-                WebHelpers.DisabledGridView(grid_progress_note, true);
+                WebHelpers.LoadDataGridView(grid_progress_note, WebHelpers.GetJSONToDataTable(emr.progress_note), Iina.SKIN_ANNO, btn_grid_progress_note_add);
 
                 WebHelpers.VisibleControl(false, btn_grid_Treatment_add, btn_grid_progress_note_add);
 
@@ -542,10 +597,9 @@ namespace EMR.ER
             {
                 EmergencyMedicalRecord emr = new EmergencyMedicalRecord(DataHelpers.varDocId);
                 emr.status = DocumentStatus.FINAL;
-                emr.user_name = (string)Session["UserID"];
 
                 UpdateData(emr);
-                WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+                WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             }
         }
         protected void btnSave_Click(object sender, EventArgs e)
@@ -554,7 +608,6 @@ namespace EMR.ER
             {
                 emr = new EmergencyMedicalRecord(DataHelpers.varDocId);
                 emr.status = DocumentStatus.DRAFT;
-                emr.user_name = (string)Session["UserID"];
 
                 UpdateData(emr);
             }
@@ -567,7 +620,8 @@ namespace EMR.ER
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    WebHelpers.clearSessionDoc(Request.QueryString["docId"]);
+                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+                    
                     string pid = Request["pid"];
                     string vpid = Request["vpid"];
 
@@ -585,7 +639,6 @@ namespace EMR.ER
             {
                 EmergencyMedicalRecord emr = new EmergencyMedicalRecord(Request.QueryString["docId"]);
 
-                txt_amend_reason.Text = "";
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
@@ -599,17 +652,14 @@ namespace EMR.ER
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             Initial();
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
         }
         protected void btnPrint_Click(object sender, EventArgs e)
         {
-            try
-            {
-                EmergencyMedicalRecord emr = new EmergencyMedicalRecord(Request.QueryString["docId"]);
-                BindingDataFormPrint(emr);
+            EmergencyMedicalRecord emr = new EmergencyMedicalRecord(Request.QueryString["docId"]);
+            BindingDataFormPrint(emr);
 
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
-            }
-            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
         }
         protected void gridTreatment_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -846,21 +896,152 @@ namespace EMR.ER
                 emr.txt_patient_discharge = txt_patient_discharge.Value;
 
                 emr.icd_10 = txt_icd_10.Value;
+                emr.user_name = (string)Session["UserID"];
 
                 dynamic result = emr.Update()[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
-
                     Initial();
+                    WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
                 }
             }
             catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
+        }
+        #endregion
+
+        #region Validation
+        protected void chief_complaint_code_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_chief_complaint_code_E.Checked || rad_chief_complaint_code_L.Checked || rad_chief_complaint_code_N.Checked || rad_chief_complaint_code_R.Checked || rad_chief_complaint_code_U.Checked;
+        }
+        protected void habits_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = cb_habits_A.Checked || cb_habits_D.Checked || cb_habits_O.Checked || cb_habits_S.Checked;
+        }
+
+        protected void required_code_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_required_code_True.Checked || rad_required_code_False.Checked;
+        }
+        protected void specialist_opinion_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_specialist_opinion_True.Checked || rad_specialist_opinion_False.Checked;
+        }
+        protected void discharge_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_discharge_True.Checked || rad_discharge_False.Checked;
+        }
+        protected void referred_to_OPD_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_referred_to_OPD_True.Checked || rad_referred_to_OPD_False.Checked;
+        }
+        protected void hos_req_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_hospitalisation_required_True.Checked || rad_hospitalisation_required_False.Checked;
+        }
+        protected void emergency_surgery_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_emergency_surgery_True.Checked || rad_emergency_surgery_False.Checked;
+        }
+        protected void transfer_hospital_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_transfer_hospital_True.Checked || rad_transfer_hospital_False.Checked;
+        }
+        protected void patient_discharge_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = cb_patient_discharge_IMP.Checked || cb_patient_discharge_UNC.Checked || cb_patient_discharge_UNS.Checked;
+        }
+        protected void chief_complaint_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_chief_complaint.Value);
+        }
+        protected void history_of_present_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_history_of_present.Value);
+        }
+        protected void home_medications_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_home_medications.Value);
+        }
+        protected void allergies_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_allergies.Value);
+        }
+        protected void relevant_family_history_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_relevant_family_history.Value);
+        }
+        protected void finding_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_finding.Value);
+        }
+        protected void investigations_results_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_investigations_results.Value);
+        }
+        protected void initial_diagnosis_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_initial_diagnosis.Value);
+        }
+        protected void diferential_diagnosis_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_diferential_diagnosis.Value);
+        }
+        protected void associated_conditions_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_associated_conditions.Value);
+        }
+        protected void conclusions_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_conclusions.Value);
+        }
+        protected void prescription_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_prescription.Value);
+        }
+        protected void specify_care_instructions_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_specify_care_instructions.Value);
+        }
+        protected void reason_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_reason.Value);
+        }
+        protected void ward_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_ward.Value);
+        }
+        protected void pre_operative_diagnosis_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_pre_operative_diagnosis.Value);
+        }
+        protected void brief_summary_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_brief_summary.Value);
+        }
+        protected void reason_for_transfer_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_reason_for_transfer.Value);
+        }
+        protected void status_before_transfer_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_status_before_transfer.Value);
+        }
+        protected void icd_10_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_icd_10.Value);
+        }
+        protected void past_med_his_surs_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_past_med_his_surs.Value);
+        }
+        protected void past_med_his_meds_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_past_med_his_meds.Value);
         }
         #endregion
 

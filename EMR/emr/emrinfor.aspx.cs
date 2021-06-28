@@ -51,17 +51,20 @@ namespace EMR
 
                 new Patient(varPID);
                 
-                DateTime dob;
-
-                DateTime.TryParse(Convert.ToString(DataHelpers.patient.date_of_birth), out dob);
-
-                lblPatientInfo.InnerHtml = "<strong>" + DataHelpers.patient.first_name_e + " " + DataHelpers.patient.last_name_e + " (" + DataHelpers.patient.title_e + ")</strong>, <small>DOB</small> " + dob.ToString("dd/MM/yyyy") + " (" + DataHelpers.CalculateAge(dob) + "y) <small>SEX</small> " + DataHelpers.patient.gender_l + " <small>PID</small> <strong>" + DataHelpers.patient.visible_patient_id + "</strong>";
+                Patient patient = Patient.Instance();
+                
+                lblPatientInfo.InnerHtml = $"{patient.GetFullName()} ({patient.GetTitle()}), DOB {WebHelpers.FormatDateTime(patient.date_of_birth)} ({patient.GetAge()} y) SEX {patient.GetGender()} PID {patient.visible_patient_id}";
 
                 MainContent.ContentUrl = string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", varPID, varVPID);
 
                 FetchImage();
             }
+            
+            PostBackEventHandler();
+        }
 
+        private void PostBackEventHandler()
+        {
             switch (Request["__EVENTTARGET"])
             {
                 case "location_Change":
@@ -71,7 +74,7 @@ namespace EMR
                 case "lblURL_click":
                     dynamic args = JObject.Parse(Request["__EVENTARGUMENT"]);
 
-                    if(WebHelpers.CanOpenForm(Page, (string)args.varDocID, (string)args.docStatus, (string)Session["emp_id"], (string)Session["location"]))
+                    if (WebHelpers.CanOpenForm(Page, (string)args.varDocID, (string)args.docStatus, (string)Session["emp_id"], (string)Session["location"]))
                     {
                         MainContent.ContentUrl = Return_Doc_URL(args.varModelId, args.varDocID, args.varVPID);
                     }
@@ -79,8 +82,6 @@ namespace EMR
                     break;
 
             }
-            
-            //if (Convert.ToString(Session["company_code"]) == "AIH")            
         }
 
         private void BindLocation()
