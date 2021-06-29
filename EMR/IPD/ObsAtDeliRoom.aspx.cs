@@ -42,6 +42,7 @@ namespace EMR
         {
             try
             {
+                txt_amend_reason.Text = "";
                 WebHelpers.BindDateTimePicker(dtpk_admis_delivery, oadr.admis_delivery);
                 txt_obs_name.Value = oadr.obs_name;
                 txt_obs_initial.Value = oadr.obs_initial;
@@ -166,8 +167,6 @@ namespace EMR
                 lbl_delivery_mode_desc.Text = WebHelpers.FormatString(oadr.delivery_mode_desc);
                 lbl_interven_reason.Text = WebHelpers.FormatString(oadr.interven_reason);
 
-
-
                 lbl_pre_intact.Text = WebHelpers.FormatString(WebHelpers.GetBool(oadr.pre_intact, "True", "No"));
 
                 if (oadr.pre_lacera != null)
@@ -201,6 +200,7 @@ namespace EMR
         {
             try
             {
+                prt_vpid.Text = Patient.Instance().visible_patient_id;
                 prt_hour.Text = oadr.admis_delivery.ToString("HH");
                 prt_minute.Text = oadr.admis_delivery.ToString("mm");
                 prt_date.Text = oadr.admis_delivery.ToString("dd/MM/yyyy");
@@ -457,8 +457,7 @@ namespace EMR
             {
                 oadr = new Oadr(DataHelpers.varDocId);
                 oadr.status = DocumentStatus.FINAL;
-                oadr.user_name = (string)Session["UserID"];
-
+                
                 UpdateData(oadr);
                 WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             }
@@ -469,8 +468,7 @@ namespace EMR
             {
                 oadr = new Oadr(Request.QueryString["docId"]);
                 oadr.status = DocumentStatus.DRAFT;
-                oadr.user_name = (string)Session["UserID"];
-
+                
                 UpdateData(oadr);
             }
         }
@@ -500,7 +498,6 @@ namespace EMR
             {
                 Oadr oadr = new Oadr(Request.QueryString["docId"]);
                 
-                txt_amend_reason.Text = "";
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
@@ -521,6 +518,7 @@ namespace EMR
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             Initial();
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
         }
         protected void btn_grid_operations_add_Click(object sender, EventArgs e)
         {
@@ -669,12 +667,13 @@ namespace EMR
                 //
                 oadr.treatment_plan = txt_treatment_plan.Value;
 
+                oadr.user_name = (string)Session["UserID"];
+
                 dynamic result = oadr.Update()[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
+                    WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
 
                     Initial();
                 }

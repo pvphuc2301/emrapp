@@ -219,7 +219,6 @@ namespace EMR
                 if (mc.status == DocumentStatus.FINAL)
                 {
                     BindingDataForm(mc, WebHelpers.LoadFormControl(form1, mc, ControlState.View, (string)Session["location"]));
-
                 }
                 else if (mc.status == DocumentStatus.DRAFT)
                 {

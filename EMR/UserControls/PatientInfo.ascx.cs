@@ -48,8 +48,8 @@ namespace EMR.UserControls
         public void LoadPatientVisitInfo(bool vi_laganue)
         {
             try {
-                lblVisitCode.InnerText = PatientVisit.Instance().visit_code;
-                lblVisitDate.InnerText = WebHelpers.FormatDateTime(PatientVisit.Instance().actual_visit_date_time, "dd/MM/yyyy HH:mm:ss");
+                //lblVisitCode.InnerText = PatientVisit.Instance().visit_code;
+                //lblVisitDate.InnerText = WebHelpers.FormatDateTime(PatientVisit.Instance().actual_visit_date_time, "dd/MM/yyyy HH:mm:ss");
             }
             catch(Exception ex)
             {

@@ -15,11 +15,11 @@ namespace EMR.UserControls.PrintTemplate
         {
             if (!string.IsNullOrEmpty(dateTime))
             {
-                prt_hour.Text = System.DateTime.Parse(dateTime.ToString()).Hour.ToString();
-                prt_minute.Text = System.DateTime.Parse(dateTime.ToString()).Minute.ToString();
-                prt_day.Text = System.DateTime.Parse(dateTime.ToString()).Day.ToString();
-                prt_month.Text = System.DateTime.Parse(dateTime.ToString()).Month.ToString();
-                prt_year.Text = System.DateTime.Parse(dateTime.ToString()).Year.ToString();
+                //prt_hour.Text = System.DateTime.Parse(dateTime.ToString()).Hour.ToString();
+                //prt_minute.Text = System.DateTime.Parse(dateTime.ToString()).Minute.ToString();
+                //prt_day.Text = System.DateTime.Parse(dateTime.ToString()).Day.ToString();
+                //prt_month.Text = System.DateTime.Parse(dateTime.ToString()).Month.ToString();
+                //prt_year.Text = System.DateTime.Parse(dateTime.ToString()).Year.ToString();
             }
 
         }

@@ -273,5 +273,26 @@ function leaveEditFormEvent() {
     //}
 }
 
+function ShowInfo(text) {
+    swal({
+        title: "Info",
+        text: text,
+        type: "info"
+    });
+}
+
+function notification(text, type) {
+    alertify.set({ delay: 1700 });
+    switch (type) {
+        case "success":
+            alertify.success(text);
+            break;
+        case "info":
+            alertify.log(text);
+            break;
+    }
+    
+}
+
 //Auto Call
 InputFilter();

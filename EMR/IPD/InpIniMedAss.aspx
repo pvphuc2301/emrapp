@@ -24,6 +24,8 @@
     <title></title>
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
+    <link href="../styles/sweetalert.min.css" rel="stylesheet" />
+    <link href="../styles/alertify.css" rel="stylesheet" />
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
@@ -38,7 +40,7 @@
                                     <div class="header-info">
                                         <img src="../images/AIH_PI_FULL.png" />
                                         <div class="header-info-title">
-                                            <h4></h4>
+                                            <h4>BỆNH ÁN NỘI TRÚ</h4>
                                             <h5>INPATIENT INITIAL MEDICAL ASSESSMENT</h5>
                                         </div>
                                         <div style="font-size: 13.3333px">
@@ -46,12 +48,11 @@
                                                 <asp:Label ID="lbPatientName" runat="server"></asp:Label>MAI MAI MÃI1
                                             </div>
                                             <div>
-                                                <asp:Label ID="lbBirthday" runat="server" Text='<%# Eval("date_of_birth") %>'></asp:Label>
-                                                |
-                                    <asp:Label ID="lbSex" runat="server"></asp:Label>
+                                                <asp:Label ID="prt_dob" runat="server" Text='<%# Eval("date_of_birth") %>'></asp:Label>
                                             </div>
                                             <div>
-                                                <asp:Label ID="lbPID" runat="server" Font-Bold="true"></asp:Label>
+                                                <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
+                                                <asp:Label ID="prt_pid" runat="server" Font-Bold="true"></asp:Label>
                                             </div>
                                         </div>
                                     </div>
@@ -704,7 +705,7 @@
                                                         <div class="col-md-12 gt-2-a">
                                                             <label class="control-label">Dấu hiệu sinh tồn/ <span class="text-primary">Vital signs</span></label>
                                                             <div>
-                                                                <asp:LinkButton runat="server" ID="btnUpdateVitalSign" OnClick="btnUpdateVitalSign_Click" CssClass="btn btn-sm btn-secondary waves-effect">Update</asp:LinkButton>
+                                                                <asp:LinkButton runat="server" ID="btnUpdateVitalSign" OnClick="btnUpdateVitalSign_Click" OnClientClick="ShowInfo();return;" CssClass="btn btn-sm btn-secondary waves-effect">Update</asp:LinkButton>
                                                             <asp:UpdateProgress runat="server" AssociatedUpdatePanelID="updatepnl_vital_sign">
                                                                 <ProgressTemplate>
                                                                     <div class="loader1 ml-2">
@@ -940,7 +941,8 @@
     <script src="../scripts/contenteditable.min.js"></script>
     <script src="../scripts/checkValidFields.js"></script>
     <script src="../scripts/waves.js"></script>
-
+    <script src="../scripts/sweetalert.min.js"></script>
+    <script src="../scripts/alertify.js"></script>
     <script>
         formGroup_init();
         checkboxRadiobutton_init();

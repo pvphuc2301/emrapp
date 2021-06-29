@@ -81,13 +81,12 @@ namespace EMR
                 txt_associated_conditions.Value = iima.associated_conditions;
                 txt_treatment_plan.Value = iima.treatment_plan;
                 txt_discharge_plan.Value = iima.discharge_plan;
-
+                WebHelpers.VisibleControl(true, btnUpdateVitalSign);
                 WebHelpers.AddScriptFormEdit(Page, iima);
             }
             catch (Exception ex)
             {
-                Session["PageNotFound"] = ex;
-                Response.Redirect("../Other/PageNotFound.aspx", false);
+                WebHelpers.SendError(Page, ex);
             }
         }
         private void BindingDataFormView(Iima iima)
@@ -143,6 +142,9 @@ namespace EMR
         {
             try
             {
+                prt_dob.Text = WebHelpers.FormatDateTime(Patient.Instance().date_of_birth) + " | " + Patient.Instance().GetGender();
+                prt_barcode.Text = prt_pid.Text = Patient.Instance().visible_patient_id;
+                
                 prt_chief_complaint.Text = iima.chief_complaint;
                 prt_cur_med_history.Text = iima.cur_med_history;
                 prt_cur_medication.Text = iima.cur_medication;
@@ -291,11 +293,9 @@ namespace EMR
         {
             if (Page.IsValid)
             {
-
                 Iima iima = new Iima(DataHelpers.varDocId);
                 iima.status = DocumentStatus.FINAL;
-                iima.user_name = (string)Session["UserID"];
-
+                
                 UpdateData(iima);
                 WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             }
@@ -305,8 +305,6 @@ namespace EMR
             if (Page.IsValid)
             {
                 Iima iima = new Iima(DataHelpers.varDocId);
-
-                iima.user_name = (string)Session["UserID"];
                 iima.status = DocumentStatus.DRAFT;
 
                 UpdateData(iima);
@@ -332,19 +330,24 @@ namespace EMR
         }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            if (WebHelpers.CanOpenForm(Page, Request["docid"], DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"]))
+            try
             {
-                Iima iima = new Iima(Request["docid"]);
+                if (WebHelpers.CanOpenForm(Page, (string)Request.QueryString["docId"], DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"]))
+                {
+                    Iima iima = new Iima(Request["docid"]);
 
-                WebHelpers.VisibleControl(false, btnAmend, btnPrint);
-                WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
+                    WebHelpers.VisibleControl(false, btnAmend, btnPrint);
+                    WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
-                //load form control
-                WebHelpers.LoadFormControl(form1, iima, ControlState.Edit, (string)Session["location"]);
-                //binding data
-                BindingDataFormEdit(iima);
-                //get access button
+                    //load form control
+                    WebHelpers.LoadFormControl(form1, iima, ControlState.Edit, (string)Session["location"]);
+                    //binding data
+                    BindingDataFormEdit(iima);
+                    //get access button
+                }
             }
+            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
+            
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
@@ -362,7 +365,7 @@ namespace EMR
         }
         protected void btnUpdateVitalSign_Click(object sender, EventArgs e)
         {
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "alert('Đang chờ anh Long up api 😂')", true);
+            //ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "alert('Đang chờ anh Long up api 😂')", true);
 
             //dynamic response = Iima.UpdateVitalSign(Request.QueryString["docId"]);
             //if (response.Status == System.Net.HttpStatusCode.OK)
@@ -384,7 +387,7 @@ namespace EMR
                 Iima iima = new Iima(Request.QueryString["docId"]);
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-                //prt_barcode.Text = Patient.Instance().visible_patient_id;
+                prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (iima.status == DocumentStatus.FINAL)
                 {
                     BindingDataForm(iima, WebHelpers.LoadFormControl(form1, iima, ControlState.View, (string)Session["location"]));
@@ -452,13 +455,12 @@ namespace EMR
                 iima.associated_conditions = txt_associated_conditions.Value;
                 iima.treatment_plan = txt_treatment_plan.Value;
                 iima.discharge_plan = txt_discharge_plan.Value;
-
+                iima.user_name = (string)Session["UserID"];
                 dynamic result = iima.Update()[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
+                    WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
 
                     Initial();
                 }

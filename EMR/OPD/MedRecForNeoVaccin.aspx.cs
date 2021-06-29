@@ -14,6 +14,7 @@ namespace EMR.OPD
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!WebHelpers.CheckSession(this)) return;
+            
             if (!IsPostBack)
             {
                 Initial();
@@ -251,6 +252,7 @@ namespace EMR.OPD
 
         }
         #endregion
+
         #region Events
         protected void btnComplete_Click(object sender, EventArgs e)
         {
@@ -365,7 +367,6 @@ namespace EMR.OPD
                 if (mrnv.status == DocumentStatus.FINAL)
                 {
                     BindingDataForm(mrnv, WebHelpers.LoadFormControl(form1, mrnv, ControlState.View, (string)Session["location"]));
-
                 }
                 else if (mrnv.status == DocumentStatus.DRAFT)
                 {

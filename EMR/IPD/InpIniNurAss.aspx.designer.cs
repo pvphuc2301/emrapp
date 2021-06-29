@@ -834,15 +834,6 @@ namespace EMR
         protected global::EMR.icons.XSquare XSquare10;
 
         /// <summary>
-        /// CustomValidator11 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator11;
-
-        /// <summary>
         /// txt_past_med_history_note control.
         /// </summary>
         /// <remarks>
@@ -895,15 +886,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.icons.XSquare XSquare11;
-
-        /// <summary>
-        /// CustomValidator10 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator10;
 
         /// <summary>
         /// txt_past_sur_history_note control.
@@ -1014,15 +996,6 @@ namespace EMR
         protected global::EMR.icons.XSquare XSquare14;
 
         /// <summary>
-        /// CustomValidator12 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator12;
-
-        /// <summary>
         /// txt_previous_document_note control.
         /// </summary>
         /// <remarks>
@@ -1077,15 +1050,6 @@ namespace EMR
         protected global::EMR.icons.XSquare XSquare15;
 
         /// <summary>
-        /// CustomValidator5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator5;
-
-        /// <summary>
         /// lbl_allergy control.
         /// </summary>
         /// <remarks>
@@ -1129,15 +1093,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.icons.XSquare XSquare16;
-
-        /// <summary>
-        /// CustomValidator3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator3;
 
         /// <summary>
         /// txt_allergy_note control.
@@ -1581,15 +1536,6 @@ namespace EMR
         protected global::EMR.icons.XSquare XSquare12;
 
         /// <summary>
-        /// CustomValidator4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator4;
-
-        /// <summary>
         /// lbl_pro_cough control.
         /// </summary>
         /// <remarks>
@@ -1633,15 +1579,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.icons.XSquare XSquare17;
-
-        /// <summary>
-        /// CustomValidator13 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator13;
 
         /// <summary>
         /// txt_pro_cough_note control.
@@ -2346,15 +2283,6 @@ namespace EMR
         protected global::EMR.icons.XSquare XSquare24;
 
         /// <summary>
-        /// CustomValidator9 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator9;
-
-        /// <summary>
         /// cb_gastrostomy_true control.
         /// </summary>
         /// <remarks>
@@ -2425,15 +2353,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadDatePicker dpk_last_date_changed;
-
-        /// <summary>
-        /// RequiredFieldValidator4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator4;
 
         /// <summary>
         /// lbl_food_dislike control.
@@ -2697,15 +2616,6 @@ namespace EMR
         protected global::EMR.icons.XSquare XSquare28;
 
         /// <summary>
-        /// CustomValidator2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator2;
-
-        /// <summary>
         /// lbl_loss_weight control.
         /// </summary>
         /// <remarks>
@@ -2749,15 +2659,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.icons.XSquare XSquare29;
-
-        /// <summary>
-        /// CustomValidator8 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator8;
 
         /// <summary>
         /// lbl_reduce_dietary control.
@@ -3381,15 +3282,6 @@ namespace EMR
         protected global::Telerik.Web.UI.RadDatePicker dpk_ind_catheter_date;
 
         /// <summary>
-        /// RequiredFieldValidator3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
-
-        /// <summary>
         /// cb_sup_catheter_true control.
         /// </summary>
         /// <remarks>
@@ -3451,15 +3343,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadDatePicker dpk_last_sup_catheter_date;
-
-        /// <summary>
-        /// RequiredFieldValidator5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator5;
 
         /// <summary>
         /// lbl_menstruation_code control.
@@ -3892,15 +3775,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.icons.XSquare XSquare43;
-
-        /// <summary>
-        /// CustomValidator6 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator6;
 
         /// <summary>
         /// lbl_p_location_1 control.
@@ -4414,15 +4288,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.icons.XSquare XSquare44;
-
-        /// <summary>
-        /// CustomValidator15 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator15;
 
         /// <summary>
         /// lbl_pain_killer_name control.
@@ -6036,15 +5901,6 @@ namespace EMR
         protected global::EMR.icons.XSquare XSquare48;
 
         /// <summary>
-        /// CustomValidator7 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator7;
-
-        /// <summary>
         /// lbl_req_med_equipment control.
         /// </summary>
         /// <remarks>
@@ -6223,15 +6079,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.icons.XSquare XSquare47;
-
-        /// <summary>
-        /// CustomValidator1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator1;
 
         /// <summary>
         /// lbl_ref_physiotherapist control.
@@ -6459,15 +6306,6 @@ namespace EMR
         protected global::EMR.icons.XSquare XSquare56;
 
         /// <summary>
-        /// CustomValidator14 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator14;
-
-        /// <summary>
         /// lbl_support_at_home control.
         /// </summary>
         /// <remarks>
@@ -6682,15 +6520,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadDateTimePicker dtpk_assess_date_time;
-
-        /// <summary>
-        /// RequiredFieldValidator1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
 
         /// <summary>
         /// btnComplete control.

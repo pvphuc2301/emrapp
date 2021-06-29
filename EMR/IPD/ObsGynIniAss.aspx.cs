@@ -39,6 +39,7 @@ namespace EMR.IPD
         {
             try
             {
+                txt_amend_reason.Text = "";
                 if (string.IsNullOrEmpty(ogia.obs_history)) { ogia.obs_history = Ogia.OBS_HISTORY_TEMPLATE; }
 
                 is_obs_gyn_change(ogia.is_obs_gyn);
@@ -701,8 +702,7 @@ namespace EMR.IPD
             {
                 Ogia ogia = new Ogia(DataHelpers.varDocId);
                 ogia.status = DocumentStatus.FINAL;
-                ogia.user_name = (string)Session["UserID"];
-
+                
                 UpdateData(ogia);
                 WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             }
@@ -713,7 +713,6 @@ namespace EMR.IPD
             {
                 Ogia ogia = new Ogia(DataHelpers.varDocId);
                 ogia.status = DocumentStatus.DRAFT;
-                ogia.user_name = (string)Session["UserID"];
 
                 UpdateData(ogia);
             }
@@ -744,7 +743,6 @@ namespace EMR.IPD
             {
                 Ogia ogia = new Ogia(Request.QueryString["docId"]);
 
-                txt_amend_reason.Text = "";
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
@@ -845,7 +843,8 @@ namespace EMR.IPD
                     ogia.obs_feat_amniotic = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_obs_feat_amniotic_", Ogia.OBS_FEAT_AMNIOTIC);
                     ogia.obs_color_amniotic = txt_obs_color_amniotic.Value;
                     ogia.obs_presentation_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_obs_presentation_code_", Ogia.OBS_PRESENTATION_CODE);
-                    if (ogia.obs_presentation_code != null) ogia.obs_presentation_desc = Ogia.OBS_PRESENTATION_CODE[ogia.obs_presentation_code];
+                    ogia.obs_presentation_desc = WebHelpers.GetDicDesc(ogia.obs_presentation_code, Ogia.OBS_PRESENTATION_CODE);
+                    
                     if (ogia.obs_presentation_code == "O")
                     { ogia.obs_presentation_other = txt_obs_presentation_other.Value; }
 
@@ -966,13 +965,14 @@ namespace EMR.IPD
                 ogia.associated_conditions = txt_associated_conditions.Value;
                 ogia.treatment_plan = txt_treatment_plan.Value;
                 ogia.discharge_plan = txt_discharge_plan.Value;
+                ogia.user_name = (string)Session["UserID"];
 
                 dynamic result = ogia.Update()[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
+                    WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
+
                     Initial();
                 }
             }

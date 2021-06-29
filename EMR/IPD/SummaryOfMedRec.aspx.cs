@@ -12,7 +12,7 @@ namespace EMR
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            WebHelpers.CheckSession(this);
+            if (!WebHelpers.CheckSession(this)) { return; }
 
             if (!IsPostBack)
             {
@@ -34,45 +34,73 @@ namespace EMR
         }
         private void BindingDataFormEdit(Somr somr)
         {
-            Patient patient = Patient.Instance();
-            WebHelpers.BindDateTimePicker(dpk_form_date, somr.form_date);
-            WebHelpers.BindDateTimePicker(dpk_to_date, somr.to_date);
-            txt_chief_complaint.Value = somr.chief_complaint;
-            txt_diagnosis.Value = somr.diagnosis;
-            txt_clinical_evolution.Value = somr.clinical_evolution;
-            txt_result_para_clinical.Value = somr.result_para_clinical;
-            txt_treatment.Value = somr.treatment;
-            txt_eval_treatment.Value = somr.eval_treatment;
-            txt_treatment_prognosis.Value = somr.treatment_prognosis;
+            try
+            {
+                txt_amend_reason.Text = "";
+
+                Patient patient = Patient.Instance();
+                WebHelpers.BindDateTimePicker(dpk_form_date, somr.form_date);
+                WebHelpers.BindDateTimePicker(dpk_to_date, somr.to_date);
+                txt_chief_complaint.Value = somr.chief_complaint;
+                txt_diagnosis.Value = somr.diagnosis;
+                txt_clinical_evolution.Value = somr.clinical_evolution;
+                txt_result_para_clinical.Value = somr.result_para_clinical;
+                txt_treatment.Value = somr.treatment;
+                txt_eval_treatment.Value = somr.eval_treatment;
+                txt_treatment_prognosis.Value = somr.treatment_prognosis;
+
+                WebHelpers.AddScriptFormEdit(Page, somr);
+            }
+            catch(Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
+            
         }
         private void BindingDataFormView(Somr somr)
         {
-            lbl_form_date.Text = WebHelpers.FormatDateTime(somr.form_date);
-            lbl_to_date.Text = WebHelpers.FormatDateTime(somr.to_date);
-            lbl_chief_complaint.Text = WebHelpers.GetValue(somr.chief_complaint);
-            lbl_diagnosis.Text = WebHelpers.GetValue(somr.diagnosis);
-            lbl_clinical_evolution.Text = WebHelpers.GetValue(somr.clinical_evolution);
-            lbl_result_para_clinical.Text = WebHelpers.GetValue(somr.result_para_clinical);
-            lbl_treatment.Text = WebHelpers.GetValue(somr.treatment);
-            lbl_eval_treatment.Text = WebHelpers.GetValue(somr.eval_treatment);
-            lbl_treatment_prognosis.Text = WebHelpers.GetValue(somr.treatment_prognosis);
+            try
+            {
+                lbl_form_date.Text = WebHelpers.FormatDateTime(somr.form_date);
+                lbl_to_date.Text = WebHelpers.FormatDateTime(somr.to_date);
+                lbl_chief_complaint.Text = WebHelpers.GetValue(somr.chief_complaint);
+                lbl_diagnosis.Text = WebHelpers.GetValue(somr.diagnosis);
+                lbl_clinical_evolution.Text = WebHelpers.GetValue(somr.clinical_evolution);
+                lbl_result_para_clinical.Text = WebHelpers.GetValue(somr.result_para_clinical);
+                lbl_treatment.Text = WebHelpers.GetValue(somr.treatment);
+                lbl_eval_treatment.Text = WebHelpers.GetValue(somr.eval_treatment);
+                lbl_treatment_prognosis.Text = WebHelpers.GetValue(somr.treatment_prognosis);
+            }
+            catch (Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
+            
             //
         }
         private void BindingDataFormPrint(Somr somr)
         {
-            Patient patient = Patient.Instance();
-            prt_fullname.Text = string.Format("{0} ({1})", patient.GetFullName(), patient.GetTitle());
-            prt_dob.Text = string.Format("{0} | {1}", WebHelpers.FormatDateTime(patient.date_of_birth), patient.GetGender());
-            prt_vpid.Text = prt_barcode.Text = patient.visible_patient_id;
+            try
+            {
+                Patient patient = Patient.Instance();
+                prt_fullname.Text = string.Format("{0} ({1})", patient.GetFullName(), patient.GetTitle());
+                prt_dob.Text = string.Format("{0} | {1}", WebHelpers.FormatDateTime(patient.date_of_birth), patient.GetGender());
+                prt_vpid.Text = prt_barcode.Text = patient.visible_patient_id;
 
-            prt_form_date.Text = WebHelpers.FormatDateTime(somr.form_date);
-            prt_to_date.Text = WebHelpers.FormatDateTime(somr.to_date);
+                prt_form_date.Text = WebHelpers.FormatDateTime(somr.form_date);
+                prt_to_date.Text = WebHelpers.FormatDateTime(somr.to_date);
 
-            prt_chief_complaint.Text = somr.chief_complaint;
-            prt_diagnosis.Text = somr.diagnosis;
-            prt_clinical_evolution.Text = somr.clinical_evolution;
-            prt_result_para_clinical.Text = somr.result_para_clinical;
-            prt_treatment_prognosis.Text = somr.treatment_prognosis;
+                prt_chief_complaint.Text = somr.chief_complaint;
+                prt_diagnosis.Text = somr.diagnosis;
+                prt_clinical_evolution.Text = somr.clinical_evolution;
+                prt_result_para_clinical.Text = somr.result_para_clinical;
+                prt_treatment_prognosis.Text = somr.treatment_prognosis;
+            }
+            catch (Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
+            
         }
         #endregion
 
@@ -83,8 +111,7 @@ namespace EMR
             {
                 Somr somr = new Somr(DataHelpers.varDocId);
                 somr.status = DocumentStatus.FINAL;
-                somr.user_name = (string)Session["UserID"];
-
+                
                 UpdateData(somr);
                 WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             }
@@ -95,7 +122,6 @@ namespace EMR
             {
                 Somr somr = new Somr(DataHelpers.varDocId);
                 somr.status = DocumentStatus.DRAFT;
-                somr.user_name = (string)Session["UserID"];
 
                 UpdateData(somr);
             }
@@ -105,9 +131,7 @@ namespace EMR
             if (WebHelpers.CanOpenForm(Page, Request.QueryString["docId"], DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"]))
             {
                 Somr somr = new Somr(Request.QueryString["docId"]);
-                string emp_id = (string)Session["emp_id"];
 
-                txt_amend_reason.Text = "";
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
@@ -131,6 +155,8 @@ namespace EMR
                 dynamic result = Disc.Delete((string)Session["UserID"], Request.QueryString["docid"])[0];
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
+                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+
                     string pid = Request["pid"];
                     string vpid = Request["vpid"];
 
@@ -141,10 +167,13 @@ namespace EMR
         }
         protected void btnPrint_Click(object sender, EventArgs e)
         {
-            Somr somr = new Somr(Request.QueryString["docId"]);
-            BindingDataFormPrint(somr);
+            try { 
+                Somr somr = new Somr(Request.QueryString["docId"]);
+                BindingDataFormPrint(somr);
             
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
+            }
+            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }
 
         #endregion
@@ -152,30 +181,32 @@ namespace EMR
         #region Functions
         public void UpdateData(Somr somr)
         {
-            somr.amend_reason = txt_amend_reason.Text;
-            somr.form_date = DataHelpers.ConvertSQLDateTime(dpk_form_date.SelectedDate);
-            somr.to_date = DataHelpers.ConvertSQLDateTime(dpk_to_date.SelectedDate);
-            somr.chief_complaint = txt_chief_complaint.Value;
-            somr.diagnosis = txt_diagnosis.Value;
-            somr.clinical_evolution = txt_clinical_evolution.Value;
-            somr.result_para_clinical = txt_result_para_clinical.Value;
-            somr.treatment = txt_treatment.Value;
-            somr.eval_treatment = txt_eval_treatment.Value;
-            somr.treatment_prognosis = txt_treatment_prognosis.Value;
-
-            dynamic result = somr.Update()[0];
-
-            if (result.Status == System.Net.HttpStatusCode.OK)
+            try
             {
-                Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
+                somr.amend_reason = txt_amend_reason.Text;
+                somr.form_date = DataHelpers.ConvertSQLDateTime(dpk_form_date.SelectedDate);
+                somr.to_date = DataHelpers.ConvertSQLDateTime(dpk_to_date.SelectedDate);
+                somr.chief_complaint = txt_chief_complaint.Value;
+                somr.diagnosis = txt_diagnosis.Value;
+                somr.clinical_evolution = txt_clinical_evolution.Value;
+                somr.result_para_clinical = txt_result_para_clinical.Value;
+                somr.treatment = txt_treatment.Value;
+                somr.eval_treatment = txt_eval_treatment.Value;
+                somr.treatment_prognosis = txt_treatment_prognosis.Value;
+                somr.user_name = (string)Session["UserID"];
 
-                Initial();
+                dynamic result = somr.Update()[0];
+
+                if (result.Status == System.Net.HttpStatusCode.OK)
+                {
+                    WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
+
+                    Initial();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Session["PageNotFound"] = result;
-                Response.Redirect("../Other/PageNotFound.aspx", false);
+                WebHelpers.SendError(Page, ex);
             }
         }
         public void Initial()

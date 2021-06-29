@@ -334,11 +334,50 @@ namespace EMR
         }
         private void BindingDataFormPrint(Ena ena)
         {
-            try {
+            try
+            {
                 Patient patient = Patient.Instance();
-                prt_pid.Text = prt_vpid.Text = prt_barcode.Text = patient.visible_patient_id;
+                //prt_pid.Text = prt_vpid.Text = prt_barcode.Text = patient.visible_patient_id;
+                prtdate.Text = $"Ngày/Date: ___/___/20___ Giờ/ Triage Time ___:___ Khu vực/ Triage Area #:";
+                prt_fullname.Text = $"Họ tên/ Patient Name {patient.GetFullName()}";
+                prt_dob.Text = $"Ngày sinh/ DOB:___/___/___";
+                prt_nationality.Text = $"Quốc tịch/ Nationality:";
+                prt_address.Text = $"Chỗ ở hiện tại/ Home Address:";
+                prt_contact.Text = $"Người liên lạc/ Contact: ";
+                prt_relationship.Text = $"Quan hệ/ Relationship: ";
+                prt_telephone.Text = $"Số điện thoại/ Telephone: ";
+                prt_chieft_complaint.Text = $"Than phiền chính/ Chieft complaint: ";
+                prt_chieft_complaint_code.Text = WebHelpers.CreateOptions(Ena.TRIAGE_CODE, ena.triage_code, "display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr");
 
-                prt_fullname.Text = patient.GetFullName();
+                prt_mode_of_arrival.Text = "Đến khoa bằng/ Mode of arrival " + WebHelpers.CreateOptions(Ena.ARRIVAL_MODE_CODE, ena.arrival_mode_code, "display: grid; grid-template-columns: 1fr 1fr 1fr");
+                prt_past_medical_history.Text = ena.past_medical_history;
+
+                prt_vital_signs.Text = "Dấu sinh hiệu/ Vital signs: Huyết áp/BP:___ /___mmHg Mạch/ Pulse:___lần/phút/bpm Nhiệt độ/Temp:___0C (Gồm trẻ em/Including child aged >= 3 tuổi/years old) Nhịp thở/Resp: ___ lần/phút/min. Độ bão hòa oxy/O2Sat: ___%";
+
+                prt_loc_avpu.Text = WebHelpers.CreateOptions(Ena.LOC_AVPU_CODE, ena.loc_avpu, "display: grid; grid-template-columns: 1fr 1fr 1fr 1fr");
+
+                prt_pain_assess.Text = "Đánh giá đau/ Pain assess. Khởi phát/ Onset______Vị trí/ Location______Kéo dài/Duration_______Hướng lan/Radiation_______";
+
+                prt_pain_scale.Text = ena.pain_score;
+
+                prt_weight.Text = $"Cân nặng/ Weight: {ena.vs_weight} kg Chiều cao/ Height: {ena.vs_height}cm";
+                prt_pulse.Text = $"Vòng đầu/ Head circumsference: {ena.vs_head_circum} cm";
+                prt_allergy.Text = $"Dị ứng/ Allergy {ena.allergy}";
+                prt_medications_used.Text = $"Thuốc đã dùng/ Medications used: {ena.past_medical_history}";
+
+                prt_skin_integrity.Text = WebHelpers.CreateOptions(Ena.SKIN_INTEGRITY_CODE, "", "");
+
+                prt_com_dis_src.Text = WebHelpers.CreateOptions(Ena.COM_DIS_SRC_CODE, ena.com_dis_src, "");
+
+                prt_discharge_plan.Text = WebHelpers.CreateOptions(Ena.DISCHARGE_PLAN_CODE, ena.discharge_plan, "");
+                prt_caregiver_after_discharge.Text = $"Người chăm sóc sau khi xuất viện/ People who will look after patient after discharge {ena.caregiver_after_discharge}";
+
+                prt_btc_language.Text = $"1. Trở ngại về ngôn ngữ/ Language Barriers:" + WebHelpers.CreateOptions(new Option {Text="Không/ No", Value=false}, new Option { Text = "Có, Giải thích/ Yes Explain " }, ena.btc_language, "display: grid") + (ena.btc_language ? ena.btc_language_note : "");
+
+                //ena.btc_cognitive.Text = $"2. Trở ngại về nhận thức/ Cognitive Barriers: {ena.btc_cognitive}";
+                //ena.btc_sensory.Text = $"3. Trở ngại về Giác quan/ Sensory Barriers: {ena.}";
+                //ena.btc_religious.Text = $"1. Trở ngại về ngôn ngữ/ Language Barriers: {ena.btc_language}";
+                //ena.btc_cultural.Text = $"1. Trở ngại về ngôn ngữ/ Language Barriers: {ena.btc_language}";
 
                 //prt_diagnosis.Text = uusr.diagnosis;
                 //prt_left_kidney.Text = uusr.left_kidney;

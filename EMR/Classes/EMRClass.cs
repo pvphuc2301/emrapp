@@ -38,6 +38,7 @@ namespace EMR
         private static PatientVisit instance = null;
         public static PatientVisit Instance()
         {
+            if (instance == null) new PatientVisit("99e90407-1973-11e9-8101-d89ef30928eb");
             return instance;
         }
 
@@ -4994,13 +4995,13 @@ namespace EMR
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI("api/emr/log/" + docid);
+                    dynamic response1 = WebHelpers.PostAPI($"api/emr/log/{DataHelpers._LOCATION}/{docid}");
                     message[1] = response1;
                 }
 

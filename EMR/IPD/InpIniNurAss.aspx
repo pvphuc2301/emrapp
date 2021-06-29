@@ -471,7 +471,7 @@
                                                                 <icon:xsquare runat="server" ID="XSquare10" />
                                                             </a>
                                                         </div>
-                                                        <asp:CustomValidator ID="CustomValidator11" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="past_med_history_ServerValidate"></asp:CustomValidator>
+                                                        <%--<asp:CustomValidator ID="CustomValidator11" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="past_med_history_ServerValidate"></asp:CustomValidator>--%>
                                                         <div class="form-group past_med_history_note_field d-inline-block w-n">
                                                             <webUI:TextField runat="server" ID="txt_past_med_history_note" />
                                                         </div>
@@ -499,7 +499,7 @@
                                                                 <icon:xsquare runat="server" ID="XSquare11" />
                                                             </a>
                                                         </div>
-                                                        <asp:CustomValidator ID="CustomValidator10" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="past_sur_history_ServerValidate"></asp:CustomValidator>
+                                                        <%--<asp:CustomValidator ID="CustomValidator10" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="past_sur_history_ServerValidate"></asp:CustomValidator>--%>
                                                         <div class="form-group past_sur_history_note_field d-inline-block w-n">
                                                             <webUI:TextField runat="server" ID="txt_past_sur_history_note" />
                                                         </div>
@@ -547,7 +547,7 @@
                                                                 <icon:xsquare runat="server" ID="XSquare14" />
                                                             </a>
                                                         </div>
-                                                        <asp:CustomValidator ID="CustomValidator12" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="previous_document_ServerValidate"></asp:CustomValidator>
+                                                        <%--<asp:CustomValidator ID="CustomValidator12" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="previous_document_ServerValidate"></asp:CustomValidator>--%>
                                                         <div class="form-group previous_document_note_field d-inline-block">
                                                             <webUI:TextField runat="server" ID="txt_previous_document_note" />
                                                         </div>
@@ -571,7 +571,7 @@
                                                             <a href="javascript:void(0)" data-clear="rad_cur_home_medication" onclick="clear_radiobutton(this)">
                                                                 <icon:xsquare runat="server" ID="XSquare15" />
                                                             </a>
-                                                            <asp:CustomValidator ID="CustomValidator5" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="cur_home_medication_ServerValidate"></asp:CustomValidator>
+                                                            <%--<asp:CustomValidator ID="CustomValidator5" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="cur_home_medication_ServerValidate"></asp:CustomValidator>--%>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -593,18 +593,19 @@
                                                             <a href="javascript:void(0)" data-clear="rad_allergy" onclick="clear_radiobutton(this)">
                                                                 <icon:xsquare runat="server" ID="XSquare16" />
                                                             </a>
-                                                            <asp:CustomValidator ID="CustomValidator3" CssClass="text-danger" ValidationGroup="Group1"
+                                                            <%--<asp:CustomValidator ID="CustomValidator3" CssClass="text-danger" ValidationGroup="Group1"
                                                                 OnServerValidate="allergy_ServerValidate"
                                                                 Display="Dynamic"
                                                                 ErrorMessage="Dị ứng/ Allergy is required"
                                                                 runat="server" />
-                                                        </div>
+                                                        </div>--%>
 
                                                         <div class="form-group allergy_note_field w-n d-inline-block">
                                                             <webUI:TextField runat="server" ID="txt_allergy_note" />
                                                         </div>
                                                     </div>
                                                 </div>
+                                            </div>
                                             </div>
 
                                             <div class="row">
@@ -785,7 +786,7 @@ applicable for children and pregnant</span>)
                                                                     <a href="javascript:void(0)" data-clear="rad_cough" onclick="clear_radiobutton(this)">
                                                                         <icon:xsquare runat="server" ID="XSquare12" />
                                                                     </a>
-                                                                    <asp:CustomValidator ID="CustomValidator4" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="rad_cough_ServerValidate"></asp:CustomValidator>
+                                                                    <%--<asp:CustomValidator ID="CustomValidator4" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="rad_cough_ServerValidate"></asp:CustomValidator>--%>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -806,7 +807,7 @@ applicable for children and pregnant</span>)
                                                                     </a>
                                                                 </div>
 
-                                                                <asp:CustomValidator ID="CustomValidator13" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="pro_cough_ServerValidate"></asp:CustomValidator>
+                                                                <%--<asp:CustomValidator ID="CustomValidator13" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="pro_cough_ServerValidate"></asp:CustomValidator>--%>
 
                                                                 <div class="form-group pro_cough_note_field d-inline-block w-n">
                                                                     <webUI:TextField runat="server" ID="txt_pro_cough_note" />
@@ -1142,7 +1143,7 @@ applicable for children and pregnant</span>)
                                                                     </a>
                                                                 </div>
 
-                                                                <asp:CustomValidator ID="CustomValidator9" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="ng_tube_ServerValidate"></asp:CustomValidator>
+                                                                <%--<asp:CustomValidator ID="CustomValidator9" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="ng_tube_ServerValidate"></asp:CustomValidator>--%>
                                                             </div>
 
                                                             <label class="custom-control custom-checkbox d-inline-block">
@@ -1168,8 +1169,8 @@ applicable for children and pregnant</span>)
                                                             <div class="d-inline-block" runat="server" id="last_date_changed_wrapper">
                                                                 <telerik:RadDatePicker CssClass="ml-2" runat="server" ID="dpk_last_date_changed" Width="120px" />
 
-                                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator4" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="dpk_last_date_changed" ErrorMessage="field is required"
-                                                                    ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                                                                <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator4" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="dpk_last_date_changed" ErrorMessage="field is required"
+                                                                    ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>--%>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1301,7 +1302,7 @@ applicable for children and pregnant</span>)
                                                                             <a href="javascript:void(0)" data-clear="rad_bmi_out_range" onclick="clear_radiobutton(this)">
                                                                                 <icon:xsquare runat="server" ID="XSquare28" />
                                                                             </a>
-                                                                            <asp:CustomValidator ID="CustomValidator2" CssClass="text-danger" ValidationGroup="Group1" OnServerValidate="bmi_out_range_ServerValidate" Display="Dynamic" ErrorMessage="field is required" runat="server" />
+                                                                            <%--<asp:CustomValidator ID="CustomValidator2" CssClass="text-danger" ValidationGroup="Group1" OnServerValidate="bmi_out_range_ServerValidate" Display="Dynamic" ErrorMessage="field is required" runat="server" />--%>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1320,7 +1321,7 @@ applicable for children and pregnant</span>)
                                                                                 <icon:xsquare runat="server" ID="XSquare29" />
                                                                             </a>
                                                                         </div>
-                                                                        <asp:CustomValidator ID="CustomValidator8" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="loss_weight_ServerValidate"></asp:CustomValidator>
+                                                                        <%--<asp:CustomValidator ID="CustomValidator8" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="loss_weight_ServerValidate"></asp:CustomValidator>--%>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-12">
@@ -1664,8 +1665,8 @@ applicable for children and pregnant</span>)
                                                                 <asp:Label runat="server" ID="lbl_ind_catheter_date"></asp:Label>
                                                                 <div runat="server" id="ind_catheter_date_wrapper" class="d-inline-block">
                                                                     <telerik:RadDatePicker runat="server" ID="dpk_ind_catheter_date" Width="120px" />
-                                                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="dpk_ind_catheter_date" ErrorMessage="field is required"
-                                                                        ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                                                                    <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator3" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="dpk_ind_catheter_date" ErrorMessage="field is required"
+                                                                        ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>--%>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1686,8 +1687,8 @@ applicable for children and pregnant</span>)
                                                             <asp:Label runat="server" ID="lbl_last_sup_catheter_date"></asp:Label>
                                                             <div runat="server" id="last_sup_catheter_date_wrapper" class="d-inline-block">
                                                                 <telerik:RadDatePicker runat="server" ID="dpk_last_sup_catheter_date" Width="120px" />
-                                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator5" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="dpk_last_sup_catheter_date" ErrorMessage="field is required"
-                                                                    ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                                                                <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator5" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="dpk_last_sup_catheter_date" ErrorMessage="field is required"
+                                                                    ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>--%>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1922,7 +1923,7 @@ applicable for children and pregnant</span>)
                                                             <a href="javascript:void(0)" data-clear="rad_cur_in_pain" onclick="clear_radiobutton(this)">
                                                                 <icon:xsquare runat="server" ID="XSquare43" />
                                                             </a>
-                                                            <asp:CustomValidator ID="CustomValidator6" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="cur_in_pain_ServerValidate"></asp:CustomValidator>
+                                                            <%--<asp:CustomValidator ID="CustomValidator6" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="cur_in_pain_ServerValidate"></asp:CustomValidator>--%>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -2094,7 +2095,7 @@ applicable for children and pregnant</span>)
                                                             <a href="javascript:void(0)" data-clear="rad_using_pain_killer" onclick="clear_radiobutton(this)">
                                                                 <icon:xsquare runat="server" ID="XSquare44" />
                                                             </a>
-                                                            <asp:CustomValidator ID="CustomValidator15" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="this field is requested" CssClass="text-danger" OnServerValidate="using_pain_killer_ServerValidate"></asp:CustomValidator>
+                                                            <%--<asp:CustomValidator ID="CustomValidator15" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="this field is requested" CssClass="text-danger" OnServerValidate="using_pain_killer_ServerValidate"></asp:CustomValidator>--%>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -3040,7 +3041,7 @@ applicable for children and pregnant</span>)
                                                                 <icon:xsquare runat="server" ID="XSquare48" />
                                                             </a>
                                                         </div>
-                                                        <asp:CustomValidator ID="CustomValidator7" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="involvement_ServerValidate"></asp:CustomValidator>
+                                                        <%--<asp:CustomValidator ID="CustomValidator7" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="involvement_ServerValidate"></asp:CustomValidator>--%>
                                                     </div>
                                                 </div>
                                             </div>
@@ -3140,11 +3141,11 @@ applicable for children and pregnant</span>)
                                                             <a href="javascript:void(0)" data-clear="rad_alone_reduce_functional" onclick="clear_radiobutton(this)">
                                                                 <icon:xsquare runat="server" ID="XSquare47" />
                                                             </a>
-                                                            <asp:CustomValidator ID="CustomValidator1" CssClass="text-danger" ValidationGroup="Group1"
+                                                            <%--<asp:CustomValidator ID="CustomValidator1" CssClass="text-danger" ValidationGroup="Group1"
                                                                 OnServerValidate="alone_reduce_functional_ServerValidate"
                                                                 Display="Dynamic"
                                                                 ErrorMessage=" is required"
-                                                                runat="server" />
+                                                                runat="server" />--%>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -3271,7 +3272,7 @@ applicable for children and pregnant</span>)
                                                                 <icon:xsquare runat="server" ID="XSquare56" />
                                                             </a>
                                                         </div>
-                                                        <asp:CustomValidator ID="CustomValidator14" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="rad_ref_other_hospital_ServerValidate"></asp:CustomValidator>
+                                                        <%--<asp:CustomValidator ID="CustomValidator14" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="rad_ref_other_hospital_ServerValidate"></asp:CustomValidator>--%>
                                                     </div>
                                                 </div>
                                             </div>
@@ -3383,8 +3384,8 @@ applicable for children and pregnant</span>)
                                                 <asp:Label runat="server" ID="lbl_assess_date_time"></asp:Label>
                                                 <div class="form-group d-inline-block" runat="server" id="assess_date_time_wrapper">
                                                     <telerik:RadDateTimePicker runat="server" ID="dtpk_assess_date_time" Width="200px" />
-                                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="dtpk_assess_date_time" ErrorMessage="field is required"
-                                                        ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                                                    <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator1" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="dtpk_assess_date_time" ErrorMessage="field is required"
+                                                        ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>--%>
                                                 </div>
                                             </div>
 
@@ -3399,7 +3400,7 @@ applicable for children and pregnant</span>)
 
                                                         <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                        <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                        <asp:LinkButton OnClientClick="return false;" runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                         <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                                     </div>
@@ -3701,6 +3702,7 @@ applicable for children and pregnant</span>)
     </script>
 
     <script>
+
         load_pain_annotation_Image();
         load_skin_anno_data_Image();
         formGroup_init();

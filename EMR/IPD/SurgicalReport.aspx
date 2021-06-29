@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SurgicalReport.aspx.cs" Inherits="EMR.IPD.SurgicalReport" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="SurgicalReport.aspx.cs" ValidateRequest="false" Inherits="EMR.IPD.SurgicalReport" %>
 
 <%@ Register Src="~/UserControls/PrintTemplate/Signature1.ascx" TagPrefix="webUI" TagName="Signature1" %>
 <%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="uc1" TagName="PatientInfo" %>
@@ -11,7 +11,7 @@
 <%@ Register Src="~/UserControls/Barcode.ascx" TagPrefix="webUI" TagName="Barcode" %>
 <%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="webUI" TagName="TextField" %>
 <%@ Register Src="~/UserControls/AmendReason.ascx" TagPrefix="aih" TagName="AmendReason" %>
-<%@ Register Src="~/UserControls/PopupModal.ascx" TagPrefix="WebUI" TagName="PopupModal" %>
+<%@ Register Src="~/UserControls/PopupModal.ascx" TagPrefix="webUI" TagName="PopupModal" %>
 <%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="icon" TagName="ExclamationTriangle" %>
 <%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="webUI" TagName="PopupShowDelay" %>
 
@@ -22,6 +22,8 @@
     <title></title>
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
+    <link href="../styles/sweetalert.min.css" rel="stylesheet" />
+    <link href="../styles/alertify.css" rel="stylesheet" />
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
@@ -379,7 +381,7 @@
                                                 <label></label>
                                                 <asp:Label runat="server" ID="lbl_preo_diagnosis"></asp:Label>
                                                 <div class="form-group" runat="server" id="preo_diagnosis_wrapper">
-                                                    <WebUI:TextField runat="server" id="txt_preo_diagnosis" />
+                                                    <webUI:TextField runat="server" id="txt_preo_diagnosis" />
                                                 </div>
                                             </div>
                                         </div>
@@ -392,7 +394,7 @@
                                                 <label></label>
                                                 <asp:Label runat="server" ID="lbl_post_diagnosis"></asp:Label>
                                                 <div class="form-group" runat="server" id="post_diagnosis_wrapper">
-                                                    <WebUI:TextField runat="server" id="txt_post_diagnosis" />
+                                                    <webUI:TextField runat="server" id="txt_post_diagnosis" />
 
                                                 </div>
                                             </div>
@@ -400,13 +402,13 @@
 
                                         <div class="row mb-2">
                                             <div class="col-md-12 mb-2">
-                                                <label class="control-label mb-1 font-bold">6. Phương pháp phẫu thuật/ <span class="text-primary">Postoperative diagnosis:</span></label>
+                                                <label class="control-label mb-1 font-bold">6. Phương pháp phẫu thuật/ <span class="text-primary">Procedure:</span></label>
                                             </div>
                                             <div class="col-md-12 gt-2-a">
                                                 <label></label>
                                                 <asp:Label runat="server" ID="lbl_name_procedure"></asp:Label>
                                                 <div class="form-group" runat="server" id="name_procedure_wrapper">
-                                                    <WebUI:TextField runat="server" id="txt_name_procedure" />
+                                                    <webUI:TextField runat="server" id="txt_name_procedure" />
                                                 </div>
                                             </div>
                                         </div>
@@ -419,7 +421,7 @@
                                                 <label></label>
                                                 <asp:Label runat="server" ID="lbl_anesthesia"></asp:Label>
                                                 <div class="form-group" runat="server" id="anesthesia_wrapper">
-                                                    <WebUI:TextField runat="server" id="txt_anesthesia" />
+                                                    <webUI:TextField runat="server" id="txt_anesthesia" />
 
                                                 </div>
                                             </div>
@@ -433,7 +435,7 @@
                                                 <label></label>
                                                 <asp:Label runat="server" ID="lbl_surgeon"></asp:Label>
                                                 <div class="form-group" runat="server" id="surgeon_wrapper">
-                                                    <WebUI:TextField runat="server" id="txt_surgeon" />
+                                                    <webUI:TextField runat="server" id="txt_surgeon" />
 
                                                 </div>
                                             </div>
@@ -447,7 +449,7 @@
                                                 <label></label>
                                                 <asp:Label runat="server" ID="lbl_assistant_surgeon"></asp:Label>
                                                 <div class="form-group" runat="server" id="assistant_surgeon_wrapper">
-                                                    <WebUI:TextField runat="server" id="txt_assistant_surgeon" />
+                                                    <webUI:TextField runat="server" id="txt_assistant_surgeon" />
 
                                                 </div>
                                             </div>
@@ -461,7 +463,7 @@
                                                 <label></label>
                                                 <asp:Label runat="server" ID="lbl_anesthesiologist"></asp:Label>
                                                 <div class="form-group" runat="server" id="anesthesiologist_wrapper">
-                                                    <WebUI:TextField runat="server" id="txt_anesthesiologist" />
+                                                    <webUI:TextField runat="server" id="txt_anesthesiologist" />
 
                                                 </div>
                                             </div>
@@ -475,7 +477,7 @@
                                                 <label></label>
                                                 <asp:Label runat="server" ID="lbl_anesthetic_nurse"></asp:Label>
                                                 <div class="form-group" runat="server" id="anesthetic_nurse_wrapper">
-                                                    <WebUI:TextField runat="server" id="txt_anesthetic_nurse" />
+                                                    <webUI:TextField runat="server" id="txt_anesthetic_nurse" />
 
                                                 </div>
                                             </div>
@@ -489,7 +491,7 @@
                                                 <label></label>
                                                 <asp:Label runat="server" ID="lbl_scrub_nurse"></asp:Label>
                                                 <div class="form-group" runat="server" id="scrub_nurse_wrapper">
-                                                    <WebUI:TextField runat="server" id="txt_scrub_nurse" />
+                                                    <webUI:TextField runat="server" id="txt_scrub_nurse" />
 
                                                 </div>
                                             </div>
@@ -503,23 +505,21 @@
                                                 <label></label>
                                                 <asp:Label runat="server" ID="lbl_circulating_nurse"></asp:Label>
                                                 <div class="form-group" runat="server" id="circulating_nurse_wrapper">
-                                                    <WebUI:TextField runat="server" id="txt_circulating_nurse" />
+                                                    <webUI:TextField runat="server" id="txt_circulating_nurse" />
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row mb-2">
                                             <div class="col-md-12 mb-2">
-                                                <div class="form-group">
-                                                    <label class="control-label mb-1 font-bold">14. Ước lượng lượng máu mất/ <span class="text-primary">Estimated bloodloss:</span></label>
-                                                </div>
-                                                <div class="col-md-12 gt-2-a">
-                                                    <label></label>
-                                                    <asp:Label runat="server" ID="lbl_estimated_bloodloss"></asp:Label>
-                                                    <div class="form-group" runat="server" id="estimated_bloodloss_wrapper">
-                                                        <WebUI:TextField runat="server" id="txt_estimated_bloodloss" />
+                                                <label class="control-label mb-1 font-bold">14. Ước lượng lượng máu mất/ <span class="text-primary">Estimated bloodloss:</span></label>
+                                            </div>
+                                            <div class="col-md-12 gt-2-a">
+                                                <label></label>
+                                                <asp:Label runat="server" ID="lbl_estimated_bloodloss"></asp:Label>
+                                                <div class="form-group" runat="server" id="estimated_bloodloss_wrapper">
+                                                    <webUI:TextField runat="server" id="txt_estimated_bloodloss" />
 
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -532,7 +532,7 @@
                                                 <label></label>
                                                 <asp:Label runat="server" ID="lbl_biopsy_pathology"></asp:Label>
                                                 <div class="form-group" runat="server" id="biopsy_pathology_wrapper">
-                                                    <WebUI:TextField runat="server" id="txt_biopsy_pathology" />
+                                                    <webUI:TextField runat="server" id="txt_biopsy_pathology" />
                                                 </div>
                                             </div>
                                         </div>
@@ -545,7 +545,7 @@
                                                 <label></label>
                                                 <asp:Label runat="server" ID="lbl_complications"></asp:Label>
                                                 <div class="form-group" runat="server" id="complications_wrapper">
-                                                    <WebUI:TextField runat="server" id="txt_complications" />
+                                                    <webUI:TextField runat="server" id="txt_complications" />
                                                 </div>
                                             </div>
                                         </div>
@@ -558,7 +558,7 @@
                                                 <label></label>
                                                 <asp:Label runat="server" ID="lbl_procedure_chart"></asp:Label>
                                                 <div class="form-group" runat="server" id="procedure_chart_wrapper">
-                                                    <WebUI:TextField runat="server" id="txt_procedure_chart" />
+                                                    <webUI:TextField runat="server" id="txt_procedure_chart" />
                                                 </div>
                                             </div>
                                         </div>
@@ -571,7 +571,7 @@
                                                 <label></label>
                                                 <asp:Label runat="server" ID="lbl_procedure_narrative"></asp:Label>
                                                 <div class="form-group" runat="server" id="procedure_narrative_wrapper">
-                                                    <WebUI:TextField runat="server" id="txt_procedure_narrative" />
+                                                    <webUI:TextField runat="server" id="txt_procedure_narrative" />
                                                 </div>
                                             </div>
                                         </div>
@@ -607,7 +607,7 @@
                                             </ModalBody>
                                         </WebUI:PopupModal>
 
-                                        <WebUI:PopupShowDelay runat="server" ID="PopupShowDelay" />
+                                        <webUI:PopupShowDelay runat="server" ID="PopupShowDelay" />
                                     </div>
                                 </div>
                             </div>
@@ -623,6 +623,9 @@
     <script src="../scripts/myScript.js"></script>
     <script src="../scripts/contenteditable.min.js"></script>
     <script src="../scripts/waves.js"></script>
+    <script src="../scripts/sweetalert.min.js"></script>
+    <script src="../scripts/alertify.js"></script>
+
     <script type="text/javascript">
 
         function beforeAsyncPostBack() {

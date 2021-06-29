@@ -16,7 +16,7 @@ namespace EMR
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            WebHelpers.CheckSession(this);
+            if (!WebHelpers.CheckSession(this)) { return; }
             
             if (!IsPostBack)
             {
@@ -40,6 +40,7 @@ namespace EMR
         {
             try
             {
+                txt_amend_reason.Text = "";
                 txt_diagnosis.Value = uusr.diagnosis;
                 txt_left_kidney.Value = uusr.left_kidney;
                 txt_right_kidney.Value = uusr.right_kidney;
@@ -49,7 +50,7 @@ namespace EMR
                 txt_conclusion.Value = uusr.conclusion;
                 txt_recommendation.Value = uusr.recommendation;
 
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "localStorage_setItem", $"window.sessionStorage.setItem('{uusr}', '{JsonConvert.SerializeObject(uusr)}');leaveEditFormEvent();", true);
+                WebHelpers.AddScriptFormEdit(Page, uusr);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
         }
@@ -90,15 +91,14 @@ namespace EMR
         }
         #endregion
 
-        #region Actions
+        #region Events
         protected void btnComplete_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
                 uusr = new Uusr(DataHelpers.varDocId);
                 uusr.status = DocumentStatus.FINAL;
-                uusr.user_name = (string)Session["UserID"];
-
+                
                 UpdateData(uusr);
                 WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             }
@@ -109,8 +109,7 @@ namespace EMR
             {
                 uusr = new Uusr(DataHelpers.varDocId);
                 uusr.status = DocumentStatus.DRAFT;
-                uusr.user_name = (string)Session["UserID"];
-
+                
                 UpdateData(uusr);
             }
         }
@@ -139,7 +138,6 @@ namespace EMR
             {
                 Uusr uusr = new Uusr(Request.QueryString["docId"]);
 
-                txt_amend_reason.Text = "";
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
@@ -152,14 +150,19 @@ namespace EMR
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             Initial();
         }
         protected void btnPrint_Click(object sender, EventArgs e)
         {
-            uusr = new Uusr(Request.QueryString["docId"]);
-            BindingDataFormPrint(uusr);
+            try
+            {
+                uusr = new Uusr(Request.QueryString["docId"]);
+                BindingDataFormPrint(uusr);
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
+            }
+            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }
         #endregion
 
@@ -205,13 +208,12 @@ namespace EMR
                 uusr.post_void_resi_volume = txt_post_void_resi_volume.Value;
                 uusr.conclusion = txt_conclusion.Value;
                 uusr.recommendation = txt_recommendation.Value;
-
+                uusr.user_name = (string)Session["UserID"];
                 dynamic result = uusr.Update()[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
+                    WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
 
                     Initial();
                 }

@@ -35,21 +35,16 @@ namespace EMR
             if (!IsPostBack)
             {
                 LoadPatientInfo();
+                if(Request.QueryString["blocked"] != null)
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "document_block", "setTimeout(()=>{ sweetAlert(\"Denied!\", \"This document is blocked by " + Request.QueryString["blocked"] + "\", \"error\");},0);", true);
+                }
             }
             PostBackEvent();
         }
 
         private void PostBackEvent()
         {
-            if (Request["__EVENTTARGET"] == "goToPage")
-            {
-                dynamic args = JsonConvert.DeserializeObject<dynamic>(Request["__EVENTARGUMENT"]);
-
-                string apiString = string.Format("api/patient/encounter-history/{0}?pageIndex={1}&pageSize={2}&keyword={3}", args.varPID, args.pageIndex, args.pageSize, args.userName);
-
-                UpdateRadGrid(RadGrid1, apiString, args);
-                RadGrid1.DataBind();
-            }
         }
 
         public void LoadPatientInfo()
@@ -62,21 +57,6 @@ namespace EMR
             lblPhone.InnerText = patient.contact_phone_number;
             lblName.InnerText = patient.GetFullName();
             lblRelationship.InnerText = patient.relationship_type_rcd;
-        }
-
-        protected void RadGrid1_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
-        {
-            dynamic args = new System.Dynamic.ExpandoObject();
-            args.varPID = 1;
-            args.pageIndex = 1;
-            args.pageSize = 4;
-            args.totalRows = -1;
-            args.totalPages = -1;
-            args.userName = "my.nguyen";
-
-            string apiString = $"api/patient/encounter-history/{DataHelpers._LOCATION}/{varPID}?pageIndex={args.pageIndex}&pageSize={args.pageSize}&keyword={args.userName}";
-
-            UpdateRadGrid(RadGrid1, apiString, args);
         }
 
         protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
@@ -171,21 +151,6 @@ namespace EMR
                         }
                     }
                 }
-
-                //for (int i = 0; i <db.Rows.Count; i++)
-                //{
-                //    if(db.Rows[i].Field<string>("status") == DocumentStatus.DRAFT)
-                //    {
-                //        DataHelpers.varDocId = db.Rows[i].Field<string>("document_id");
-                //        isDraft = true;
-                //        break;
-                //    }
-                //}
-
-                //if (!isDraft)
-                //{
-                    
-                //}
             }
         }
 
@@ -229,70 +194,82 @@ namespace EMR
             }
         }
 
-        private void UpdateRadGrid(RadGrid radGrid, string apiString, dynamic args)
+        protected void RadGrid1_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
+            string apiString = $"api/patient/encounter-history/{DataHelpers._LOCATION}/{varPID}";
+
             dynamic response = WebHelpers.GetAPI(apiString);
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                JObject json = JObject.Parse(response.Data);
-                string strJSON = "";
-                strJSON += json["items"];
-
-                radGrid.DataSource = WebHelpers.GetJSONToDataTable(strJSON);
-                
-                args.pageIndex = Int32.Parse(json["pageIndex"].ToString());
-                args.pageSize = Int32.Parse(json["pageSize"].ToString());
-                args.totalRows = Int32.Parse(json["totalRows"].ToString());
-                args.totalPages = Int32.Parse(json["totalPages"].ToString());
-
-                HtmlGenericControl li = new HtmlGenericControl("li");
-
-                li.Attributes.Add("class", args.pageIndex == 1 ? "page-item disabled" : "page-item");
-
-                HtmlGenericControl anchor = new HtmlGenericControl("a");
-                anchor.InnerText = "Previous";
-                anchor.Attributes.Add("onclick", string.Format("goToPage('{0}', {1}, {2}, '{3}')", args.varPID, 1, args.pageSize, args.userName));
-                anchor.Attributes.Add("class", "page-link");
-                anchor.Attributes.Add("href", "javascript:void(0)");
-
-                li.Controls.Add(anchor);
-
-                pagination1.Controls.Add(li);
-                
-                for (int i = 0; i < int.Parse(Convert.ToString(args.totalPages)); i++)
-                {
-                    li = new HtmlGenericControl("li");
-                    li.Attributes.Add("class", args.pageIndex == (i + 1) ? "page-item active" : "page-item");
-
-                    anchor = new HtmlGenericControl("a");
-
-                    anchor.Attributes.Add("onclick", string.Format("goToPage('{0}', {1}, {2}, '{3}')", varPID, (i + 1), args.pageSize, args.userName));
-                    anchor.InnerText = (i + 1).ToString();
-                    anchor.Attributes.Add("class", "page-link");
-                    anchor.Attributes.Add("href", "javascript:void(0)");
-
-                    li.Controls.Add(anchor);
-
-                    pagination1.Controls.Add(li);
-                }
-
-                li = new HtmlGenericControl("li");
-                li.Attributes.Add("class", args.pageIndex == args.totalPages ? "page-item disabled" : "page-item");
-
-                anchor = new HtmlGenericControl("a");
-
-                anchor.InnerText = "Next";
-
-                anchor.Attributes.Add("onclick", string.Format("goToPage('{0}', {1}, {2}, '{3}')", args.varPID, args.totalPages, args.pageSize, args.userName));
-
-                anchor.Attributes.Add("class", "page-link");
-                anchor.Attributes.Add("href", "javascript:void(0)");
-
-                li.Controls.Add(anchor);
-
-                pagination1.Controls.Add(li);
+                RadGrid1.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
             }
         }
+
+        //private void UpdateRadGrid(RadGrid radGrid, string apiString, dynamic args)
+        //{
+        //    dynamic response = WebHelpers.GetAPI(apiString);
+
+        //    if (response.Status == System.Net.HttpStatusCode.OK)
+        //    {
+        //        JObject json = JObject.Parse(response.Data);
+        //        string strJSON = "";
+        //        strJSON += json["items"];
+
+        //        radGrid.DataSource = WebHelpers.GetJSONToDataTable(strJSON);
+
+        //        args.pageIndex = Int32.Parse(json["pageIndex"].ToString());
+        //        args.pageSize = Int32.Parse(json["pageSize"].ToString());
+        //        args.totalRows = Int32.Parse(json["totalRows"].ToString());
+        //        args.totalPages = Int32.Parse(json["totalPages"].ToString());
+
+        //        HtmlGenericControl li = new HtmlGenericControl("li");
+
+        //        li.Attributes.Add("class", args.pageIndex == 1 ? "page-item disabled" : "page-item");
+
+        //        HtmlGenericControl anchor = new HtmlGenericControl("a");
+        //        anchor.InnerText = "Previous";
+        //        anchor.Attributes.Add("onclick", string.Format("goToPage('{0}', {1}, {2}, '{3}')", args.varPID, 1, args.pageSize, args.userName));
+        //        anchor.Attributes.Add("class", "page-link");
+        //        anchor.Attributes.Add("href", "javascript:void(0)");
+
+        //        li.Controls.Add(anchor);
+
+        //        pagination1.Controls.Add(li);
+
+        //        for (int i = 0; i < int.Parse(Convert.ToString(args.totalPages)); i++)
+        //        {
+        //            li = new HtmlGenericControl("li");
+        //            li.Attributes.Add("class", args.pageIndex == (i + 1) ? "page-item active" : "page-item");
+
+        //            anchor = new HtmlGenericControl("a");
+
+        //            anchor.Attributes.Add("onclick", string.Format("goToPage('{0}', {1}, {2}, '{3}')", varPID, (i + 1), args.pageSize, args.userName));
+        //            anchor.InnerText = (i + 1).ToString();
+        //            anchor.Attributes.Add("class", "page-link");
+        //            anchor.Attributes.Add("href", "javascript:void(0)");
+
+        //            li.Controls.Add(anchor);
+
+        //            pagination1.Controls.Add(li);
+        //        }
+
+        //        li = new HtmlGenericControl("li");
+        //        li.Attributes.Add("class", args.pageIndex == args.totalPages ? "page-item disabled" : "page-item");
+
+        //        anchor = new HtmlGenericControl("a");
+
+        //        anchor.InnerText = "Next";
+
+        //        anchor.Attributes.Add("onclick", string.Format("goToPage('{0}', {1}, {2}, '{3}')", args.varPID, args.totalPages, args.pageSize, args.userName));
+
+        //        anchor.Attributes.Add("class", "page-link");
+        //        anchor.Attributes.Add("href", "javascript:void(0)");
+
+        //        li.Controls.Add(anchor);
+
+        //        pagination1.Controls.Add(li);
+        //    }
+        //}
     }
 }

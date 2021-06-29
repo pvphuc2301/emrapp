@@ -458,7 +458,7 @@
                                                     <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                                                         <ContentTemplate>
                                                             <div class="mb-2">
-                                                                <asp:LinkButton OnClick="btnUpdateVitalSigns_Click" runat="server" OnClientClick="showALert();return false;" CssClass="btn btn-secondary waves-effect" ID="btnUpdateVitalSigns">
+                                                                <asp:LinkButton OnClick="btnUpdateVitalSigns_Click" runat="server" OnClientClick="notification('pending api','info'); return false;" CssClass="btn btn-secondary waves-effect" ID="btnUpdateVitalSigns">
                                                                     <icon:ArrowRepeat runat="server" ID="ArrowRepeat" />Update
                                                                 </asp:LinkButton>
                                                             </div>
@@ -912,10 +912,6 @@
     <script src="../scripts/sweetalert.min.js"></script>
     <script src="../scripts/alertify.js"></script>
     <script type="text/javascript">
-
-        function showALert() {
-            sweetAlert("Pending!", "Api chưa có.", "error");
-        }
 
         checkboxRadiobutton_init();
         function beforeAsyncPostBack() {

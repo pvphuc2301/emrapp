@@ -35,6 +35,7 @@ namespace EMR.IPD
         {
             try
             {
+                txt_amend_reason.Text = "";
                 WebHelpers.BindDateTimePicker(dpk_procedure_date, surr.procedure_date);
                 txt_start_time.Text = surr.start_time;
                 txt_finish_time.Text = surr.finish_time;
@@ -43,6 +44,7 @@ namespace EMR.IPD
                 txt_name_procedure.Value = surr.name_procedure;
                 txt_surgeon.Value = surr.surgeon;
                 txt_assistant_surgeon.Value = surr.assistant_surgeon;
+                txt_anesthesiologist.Value = surr.anesthesiologist;
                 txt_anesthesia.Value = surr.anesthesia;
                 txt_anesthetic_nurse.Value = surr.anesthetic_nurse;
                 txt_scrub_nurse.Value = surr.scrub_nurse;
@@ -53,7 +55,7 @@ namespace EMR.IPD
                 txt_procedure_chart.Value = surr.procedure_chart;
                 txt_procedure_narrative.Value = surr.procedure_narrative;
 
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "localStorage_setItem", $"window.sessionStorage.setItem('{surr}', '{JsonConvert.SerializeObject(surr)}');leaveEditFormEvent();", true);
+                WebHelpers.AddScriptFormEdit(Page, surr);
             }
             catch(Exception ex)
             {
@@ -64,13 +66,19 @@ namespace EMR.IPD
         {
             try
             {
+                //3
                 lbl_procedure_date.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(surr.procedure_date));
                 lbl_start_time.Text = WebHelpers.FormatString(surr.start_time);
                 lbl_finish_time.Text = WebHelpers.FormatString(surr.finish_time);
+                //4
                 lbl_preo_diagnosis.Text = WebHelpers.FormatString(surr.preo_diagnosis);
+                //5
                 lbl_post_diagnosis.Text = WebHelpers.FormatString(surr.post_diagnosis);
+                //6
                 lbl_name_procedure.Text = WebHelpers.FormatString(surr.name_procedure);
+                //7
                 lbl_anesthesia.Text = WebHelpers.FormatString(surr.anesthesia);
+                //8
                 lbl_surgeon.Text = WebHelpers.FormatString(surr.surgeon);
                 lbl_assistant_surgeon.Text = WebHelpers.FormatString(surr.assistant_surgeon);
                 lbl_anesthesiologist.Text = WebHelpers.FormatString(surr.anesthesiologist);
@@ -131,8 +139,7 @@ namespace EMR.IPD
             {
                 Surr surr = new Surr(DataHelpers.varDocId);
                 surr.status = DocumentStatus.FINAL;
-                surr.user_name = (string)Session["UserID"];
-
+                
                 UpdateData(surr);
                 WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             }
@@ -143,8 +150,7 @@ namespace EMR.IPD
             {
                 Surr surr = new Surr(DataHelpers.varDocId);
                 surr.status = DocumentStatus.DRAFT;
-                surr.user_name = (string)Session["UserID"];
-
+                
                 UpdateData(surr);
             }
         }
@@ -174,7 +180,6 @@ namespace EMR.IPD
             {
                 Surr surr = new Surr(Request.QueryString["docId"]);
 
-                txt_amend_reason.Text = "";
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
@@ -232,28 +237,46 @@ namespace EMR.IPD
         {
             try
             {
+                //3
                 surr.procedure_date = DataHelpers.ConvertSQLDateTime(dpk_procedure_date.SelectedDate);
                 surr.start_time = txt_start_time.Text;
                 surr.finish_time = txt_finish_time.Text;
+                //4
                 surr.preo_diagnosis = txt_preo_diagnosis.Value;
+                //5
                 surr.post_diagnosis = txt_post_diagnosis.Value;
+                //6
+                surr.name_procedure = txt_name_procedure.Value;
+                //7
                 surr.anesthesia = txt_anesthesia.Value;
+                //8
                 surr.surgeon = txt_surgeon.Value;
+                //9
                 surr.assistant_surgeon = txt_assistant_surgeon.Value;
+                //10
                 surr.anesthesiologist = txt_anesthesiologist.Value;
+                //11
                 surr.anesthetic_nurse = txt_anesthetic_nurse.Value;
+                //12
                 surr.scrub_nurse = txt_scrub_nurse.Value;
+                //13
+                surr.circulating_nurse = txt_circulating_nurse.Value;
+                //14
                 surr.estimated_bloodloss = txt_estimated_bloodloss.Value;
+                //15
                 surr.biopsy_pathology = txt_biopsy_pathology.Value;
+                //16
                 surr.complications = txt_complications.Value;
+                //
                 surr.procedure_narrative = txt_procedure_narrative.Value;
+
+                surr.user_name = (string)Session["UserID"];
 
                 dynamic result = surr.Update()[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
+                    WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
 
                     Initial();
                 }

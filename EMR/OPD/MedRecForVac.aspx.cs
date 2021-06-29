@@ -243,8 +243,7 @@ namespace EMR.OPD
             {
                 Mrfv  mrfv = new Mrfv(DataHelpers.varDocId);
                 mrfv.status = DocumentStatus.FINAL;
-                mrfv.user_name = (string)Session["UserID"];
-
+                
                 UpdateData(mrfv);
                 WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             }
@@ -255,7 +254,6 @@ namespace EMR.OPD
             {
                 Mrfv mrfv = new Mrfv(DataHelpers.varDocId);
                 mrfv.status = DocumentStatus.DRAFT;
-                mrfv.user_name = (string)Session["UserID"];
 
                 UpdateData(mrfv);
             }
@@ -299,8 +297,8 @@ namespace EMR.OPD
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             Initial();
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
         }
         protected void btnPrint_Click(object sender, EventArgs e)
         {
@@ -375,6 +373,7 @@ namespace EMR.OPD
         {
             try
             {
+
                 mrfv.amend_reason = txt_amend_reason.Text;
                 mrfv.chief_complaint = txt_chief_complaint.Value;
                 mrfv.cur_med_history = txt_cur_med_history.Value;
@@ -419,13 +418,14 @@ namespace EMR.OPD
                 
                 mrfv.pecific_edu_req = txt_pecific_edu_req.Value;
                 mrfv.next_appointment = txt_next_appointment.Value;
+                mrfv.user_name = (string)Session["UserID"];
 
                 dynamic result = mrfv.Update()[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
                     Initial();
-                    WebHelpers.Notification(Page, "Success notification");
+                    WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
                 }
             }
             catch (Exception ex) {

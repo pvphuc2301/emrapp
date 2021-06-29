@@ -45,8 +45,8 @@
                                     <div class="header-info" style="display: flex; align-items: center;">
                                         <img style="width: 200px" src="../images/AIH_PI_FULL.png" />
                                         <div class="header-info-title">
-                                            <h4>KẾT QUẢ SIÊU ÂM HỆ TIẾT NIỆU</h4>
-                                            <h5>ULTRASOUND OF URINARY SYSTEM REPORT</h5>
+                                            <h4>PHÂN LOẠI CẤP CỨU & ĐÁNH GIÁ ĐIỀU DƯỠNG</h4>
+                                            <h5>EMERGENCY TRIAGE AND NURSING ASSESSMENT RECORD</h5>
                                         </div>
                                         <div>
                                             <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
@@ -62,21 +62,105 @@
                                 <td class="report-content-cell">
                                     <div class="main" runat="server" id="print_content">
 
-                                        <div class="d-grid" style="grid-template-columns: 2fr 1fr">
-                                            <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px;">
-                                                <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Title="Họ tên" SubTitle="Full Name:" runat="server" />
-                                                <p>
-                                                    <asp:Label runat="server" CssClass="font-bold" ID="prt_fullname"></asp:Label>
-                                                </p>
-                                            </div>
-
-                                            <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px;">
-                                                <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Title="PID:" runat="server" />
-                                                <p>
-                                                    <asp:Label runat="server" ID="prt_pid"></asp:Label>
-                                                </p>
+                                        <div>
+                                            <asp:Label runat="server" ID="prtdate"></asp:Label>
+                                        </div>
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr; grid-gap: 5px;">
+                                            <asp:Label runat="server" ID="prt_fullname"></asp:Label>
+                                            <div>
+                                                <asp:Label runat="server" ID="prt_dob"></asp:Label>
+                                                <asp:Label runat="server" ID="prt_nationality"></asp:Label>
                                             </div>
                                         </div>
+
+                                        <div>
+                                            <asp:Label runat="server" ID="prt_address"></asp:Label>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 2fr 1fr; grid-gap: 5px;">
+                                            <asp:Label runat="server" ID="prt_contact"></asp:Label>
+                                            <div>
+                                                <asp:Label runat="server" ID="prt_relationship"></asp:Label>
+                                                <asp:Label runat="server" ID="prt_telephone"></asp:Label>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <asp:Label runat="server" ID="prt_chieft_complaint"></asp:Label>
+                                        </div>
+
+                                        <div>
+                                            <asp:Label runat="server" ID="prt_chieft_complaint_code"></asp:Label>
+                                        </div>
+
+                                        <div>
+                                            <asp:Label runat="server" ID="prt_mode_of_arrival"></asp:Label>
+                                        </div>
+
+                                        <div>
+                                            <asp:Label runat="server" ID="prt_past_medical_history"></asp:Label>
+                                        </div>
+
+                                        <div>
+                                            <asp:Label runat="server" ID="prt_vital_signs"></asp:Label>
+                                        </div>
+
+                                        <div>
+                                            <asp:Label runat="server" ID="prt_loc_avpu"></asp:Label>
+                                        </div>
+
+                                        <div>
+                                            <asp:Label runat="server" ID="prt_pain_assess"></asp:Label>
+                                        </div>
+
+                                        <div>
+                                            <asp:Label runat="server" ID="prt_pain_scale"></asp:Label>
+                                        </div>
+
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr">
+                                            <div>
+                                                <asp:Label runat="server" ID="prt_weight"></asp:Label><br />
+                                                <asp:Label runat="server" ID="prt_pulse"></asp:Label>
+                                            </div>
+                                            <asp:Label runat="server" ID="prt_allergy"></asp:Label>
+                                        </div>
+
+                                        <div>
+                                            <asp:Label runat="server" ID="prt_medications_used"></asp:Label>
+                                        </div>
+
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr">
+                                            <div>
+                                                <div>SKIN INEGRITY</div>
+                                                <div>
+                                                    <img src="#" alt="Alternate Text" />
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_skin_integrity"></asp:Label>
+                                            </div>
+                                            <div>
+                                                <div>TẦM SOÁT BỆNH LÂY NHIỄM</div>
+                                                <div>Communicable disease screening</div>
+                                                <asp:Label runat="server" ID="prt_com_dis_src"></asp:Label>
+                                            </div>
+                                            <div>
+                                                <div>Kế hoạch xuất viện</div>
+                                                <div>Discharge Planning</div>
+                                                <asp:Label runat="server" ID="prt_discharge_plan"></asp:Label><br />
+                                                <asp:Label runat="server" ID="prt_caregiver_after_discharge"></asp:Label>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <div>TRỞ NGẠI TRONG CHĂM SÓC/ BARRIER TO CARE</div>
+                                            <div style="display: grid; grid-template-columns: auto auto">
+                                                <asp:Label runat="server" ID="prt_btc_language"></asp:Label>
+                                            </div>
+                                            <asp:Label runat="server" ID="prt_btc_cognitive"></asp:Label>
+                                            <asp:Label runat="server" ID="prt_btc_sensory"></asp:Label>
+                                            <asp:Label runat="server" ID="prt_btc_religious"></asp:Label>
+                                            <asp:Label runat="server" ID="btc_cultural"></asp:Label>
+                                        </div>
+
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px;">
                                             <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Title="Chẩn đoán/" SubTitle="Diagnosis:" runat="server" />

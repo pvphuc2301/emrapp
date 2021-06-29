@@ -536,7 +536,7 @@
 
                                                 <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
 
-                                                <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal" onclick="comfirmDelete()" class="btn btn-danger waves-effect">Delete</div>
+                                                <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal" class="btn btn-danger waves-effect">Delete</div>
 
                                                 <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
@@ -547,7 +547,7 @@
                                         </div>
                                     </div>
 
-                                    <%--<webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
+                                    <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
                                         <ModalBody>
                                             <div class="text-center">
                                                 <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
@@ -558,7 +558,7 @@
                                                 <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
                                             </div>
                                         </ModalBody>
-                                    </webUI:PopupModal>--%>
+                                    </webUI:PopupModal>
                                     <webUI:PopupShowDelay runat="server" ID="PopupShowDelay" />
                                         
                                     </div>
@@ -582,25 +582,6 @@
     <script type="text/javascript">
 
         formGroup_init();
-
-        function comfirmDelete() {
-            swal({
-                title: "Are you sure?",
-                text: "You will not be able to recover this document!",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonClass: "btn-danger",
-                confirmButtonText: "Yes, delete it!",
-                closeOnConfirm: false
-            }, function () {
-                    swal("Deleted!", "this document has been deleted.", "success");
-
-                });
-        }
-
-        function showALert() {
-            sweetAlert("Pending!", "Api chưa có.", "error");
-        }
 
         checkboxRadiobutton_init();
         function beforeAsyncPostBack() {

@@ -31,7 +31,8 @@
     <title>OBSTETRIC OBSERVATION AT DELIVERY ROOM</title>
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
-
+    <link href="../styles/sweetalert.min.css" rel="stylesheet" />
+    <link href="../styles/alertify.css" rel="stylesheet" />
 </head>
 <body>
     <form method="post" action="#" id="form2" runat="server">
@@ -431,40 +432,40 @@
                                                     <Columns>
                                                         <asp:TemplateField>
                                                             <HeaderTemplate>
-                                                                <div style="width: 170px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary pt-2 pb-2 ">Giờ, ngày/ Hour, date</div>
+                                                                <div style="width: 170px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class=" pt-2 pb-2 ">Giờ, ngày/ Hour, date</div>
                                                             </HeaderTemplate>
                                                             <ItemTemplate>
-                                                                <div style="width: 170px; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary pt-2 pb-2 ">
+                                                                <div style="width: 170px; font-size: 14.5px; font-family: Tahoma; text-align: center" class=" pt-2 pb-2 ">
                                                                     <asp:Label Style="text-align: center" Text='<%# Eval("date_time ", "{0: dd/MM/yyyy HH:mm tt} ") %>' runat="server" />
                                                                 </div>
                                                             </ItemTemplate>
                                                         </asp:TemplateField>
                                                         <asp:TemplateField>
                                                             <HeaderTemplate>
-                                                                <div style="width: 300px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary ">Phương pháp phẫu thuật và vô cảm/ Surgical and Anesthesia methods </div>
+                                                                <div style="width: 300px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class=" ">Phương pháp phẫu thuật và vô cảm/ Surgical and Anesthesia methods </div>
                                                             </HeaderTemplate>
                                                             <ItemTemplate>
-                                                                <div style="width: 300px; font-size: 14.5px; font-family: Tahoma; text-align: justify; margin: 5px" class="text-primary ">
+                                                                <div style="width: 300px; font-size: 14.5px; font-family: Tahoma; text-align: justify; margin: 5px" class=" ">
                                                                     <asp:Label runat="server" Text='<%# Eval("surgical_anesthesia") %>' />
                                                                 </div>
                                                             </ItemTemplate>
                                                         </asp:TemplateField>
                                                         <asp:TemplateField>
                                                             <HeaderTemplate>
-                                                                <div style="width: 180px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary ">Phẫu thuật viên/ Surgeon </div>
+                                                                <div style="width: 180px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class=" ">Phẫu thuật viên/ Surgeon </div>
                                                             </HeaderTemplate>
                                                             <ItemTemplate>
-                                                                <div style="width: 180px; text-align: justify; font-size: 14.5px; font-family: Tahoma; margin: 5px" class="text-primary ">
+                                                                <div style="width: 180px; text-align: justify; font-size: 14.5px; font-family: Tahoma; margin: 5px" class=" ">
                                                                     <asp:Label runat="server" Text='<%# Eval("surgeon ") %>' />
                                                                 </div>
                                                             </ItemTemplate>
                                                         </asp:TemplateField>
                                                         <asp:TemplateField>
                                                             <HeaderTemplate>
-                                                                <div style="width: 180px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary ">Phẫu thuật viên/ Surgeon </div>
+                                                                <div style="width: 180px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class=" ">Phẫu thuật viên/ Surgeon </div>
                                                             </HeaderTemplate>
                                                             <ItemTemplate>
-                                                                <div style="width: 180px; text-align: justify; font-size: 14.5px; font-family: Tahoma; margin: 5px" class="text-primary ">
+                                                                <div style="width: 180px; text-align: justify; font-size: 14.5px; font-family: Tahoma; margin: 5px" class=" ">
                                                                     <asp:Label runat="server" Text='<%# Eval("anesthesiologist ") %>' />
                                                                 </div>
                                                             </ItemTemplate>
@@ -1311,6 +1312,8 @@
     <script src="../scripts/myScript.js"></script>
     <script src="../scripts/contenteditable.min.js"></script>
     <script src="../scripts/waves.js"></script>
+    <script src="../scripts/sweetalert.min.js"></script>
+    <script src="../scripts/alertify.js"></script>
 
     <script type="text/javascript">
         checkboxRadiobutton_init();

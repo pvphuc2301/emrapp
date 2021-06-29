@@ -10,6 +10,7 @@
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/style-custom.css" rel="stylesheet" />
+    <link href="../styles/sweetalert.min.css" rel="stylesheet" />
 </head>
 <body>
     <form method="post" action="#" id="form2" runat="server">
@@ -131,9 +132,7 @@
 
                                 <div class="row mt-4">
                                     <div class="col-md-12">
-                                        <%--<asp:UpdatePanel ID="Upd1" runat="server" OnLoad="Upd_Load" UpdateMode="Conditional">
-                                            <ContentTemplate>--%>
-                                        <telerik:RadGrid ItemStyle-Height="32px" HeaderStyle-Height="32px" CssClass="table" BorderWidth="0" AutoGenerateColumns="false" ID="RadGrid1" runat="server" AllowPaging="True" OnNeedDataSource="RadGrid1_NeedDataSource" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand" OnItemDataBound="RadGrid1_ItemDataBound">
+                                        <telerik:RadGrid OnNeedDataSource="RadGrid1_NeedDataSource" ItemStyle-Height="32px" HeaderStyle-Height="32px" CssClass="table" BorderWidth="0" AutoGenerateColumns="false" ID="RadGrid1" runat="server" AllowPaging="True" OnItemCommand="RadGrid1_ItemCommand" OnItemDataBound="RadGrid1_ItemDataBound">
                                             <MasterTableView AutoGenerateColumns="False" DataKeyNames="patient_visit_id, visit_type_rcd, closure_date_time, allow_date_time">
                                                 <Columns>
                                                     <telerik:GridTemplateColumn ItemStyle-Width="100px">
@@ -162,8 +161,6 @@
                                             <ClientSettings EnableRowHoverStyle="true">
                                             </ClientSettings>
                                         </telerik:RadGrid>
-                                        <%--</ContentTemplate>    
-                                        </asp:UpdatePanel>--%>
                                     </div>
                                 </div>
 
@@ -249,7 +246,7 @@
     <script src="../scripts/myScript.js"></script>
     <script src="../scripts/contenteditable.min.js"></script>
     <script src="../scripts/waves.js"></script>
-
+    <script src="../scripts/sweetalert.min.js"></script>
     <script>
         function beforeAsyncPostBack() {
             var curtime = new Date();

@@ -53,7 +53,7 @@
                 </Columns>
             </MasterTableView>
             <ClientSettings EnableRowHoverStyle="true">
-            <Selecting AllowRowSelect="True"/>            
+            <Selecting AllowRowSelect="True"/>
             <Scrolling AllowScroll="True" ScrollHeight="400" UseStaticHeaders="True" SaveScrollPosition="true" FrozenColumnsCount="2" />
         </ClientSettings>
         </telerik:RadGrid>    

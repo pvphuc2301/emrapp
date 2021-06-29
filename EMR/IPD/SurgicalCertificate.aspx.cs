@@ -32,7 +32,7 @@ namespace EMR
         {
             try
             {
-
+                txt_amend_reason.Text = "";
                 WebHelpers.BindDateTimePicker(dpk_discharge_date, surc.discharge_date);
                 txt_preo_diagnosis.Value = surc.preo_diagnosis;
                 txt_name_of_procedure.Value = surc.name_of_procedure;
@@ -100,8 +100,7 @@ namespace EMR
             {
                 Surc surc = new Surc(Request.QueryString["docId"]);
                 surc.status = DocumentStatus.FINAL;
-                surc.user_name = (string)Session["UserID"];
-
+                
                 UpdateData(surc);
                 WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             }
@@ -112,7 +111,6 @@ namespace EMR
             {
                 Surc surc = new Surc(Request.QueryString["docId"]);
                 surc.status = DocumentStatus.DRAFT;
-                surc.user_name = (string)Session["UserID"];
 
                 UpdateData(surc);
             }
@@ -144,7 +142,6 @@ namespace EMR
             {
                 Surc surc = new Surc(Request.QueryString["docId"]);
 
-                txt_amend_reason.Text = "";
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
@@ -158,6 +155,7 @@ namespace EMR
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             Initial();
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
         }
         protected void btnPrint_Click(object sender, EventArgs e)
         {
@@ -205,6 +203,7 @@ namespace EMR
         {
             try
             {
+
                 surc.amend_reason = txt_amend_reason.Text;
                 surc.admission_date = DataHelpers.ConvertSQLDateTime(surc.admission_date);
                 surc.procedure_date = DataHelpers.ConvertSQLDateTime(surc.procedure_date);
@@ -215,12 +214,12 @@ namespace EMR
                 surc.blood_type = txt_blood_type.Value;
                 surc.rh = txt_rh.Value;
 
+                surc.user_name = (string)Session["UserID"];
                 dynamic result = surc.Update()[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
+                    WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
 
                     Initial();
                 }

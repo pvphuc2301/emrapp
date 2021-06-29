@@ -959,7 +959,7 @@
                                         <div class="row mb-2">
                                         <div class="col-md-12">
                                             <div class="form-actions">
-                                                <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
+                                                <asp:LinkButton ValidationGroup="Group1" runat="server"  OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
 
                                                 <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
 

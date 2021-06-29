@@ -254,9 +254,9 @@ namespace EMR
         protected void btnDelete_Click(object sender, EventArgs e)
         {
             try { 
-                dynamic result = Diss.Delete((string)Session["UserId"], Request.QueryString["docId"]);
+                dynamic result = Diss.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
 
-                if (result[0].Status == System.Net.HttpStatusCode.OK)
+                if (result.Status == System.Net.HttpStatusCode.OK)
                 {
                     WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 

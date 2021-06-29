@@ -24,6 +24,8 @@
     <title></title>
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
+    <link href="../styles/sweetalert.min.css" rel="stylesheet" />
+    <link href="../styles/alertify.css" rel="stylesheet" />
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
@@ -366,7 +368,8 @@
     <script src="../scripts/myScript.js"></script>
     <script src="../scripts/contenteditable.min.js"></script>
     <script src="../scripts/waves.js"></script>
-
+    <script src="../scripts/sweetalert.min.js"></script>
+    <script src="../scripts/alertify.js"></script>
     <script type="text/javascript">
 
         function beforeAsyncPostBack() {

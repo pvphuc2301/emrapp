@@ -15,6 +15,7 @@ namespace EMR
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            WebHelpers.Notification(Page, "Form print not finish yet!");
             if(!WebHelpers.CheckSession(this)) return;
             if (!IsPostBack)
             {
@@ -39,6 +40,7 @@ namespace EMR
         {
             try
             {
+                txt_amend_reason.Text = "";
                 //residence
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_residence_code_" + iina.residence_code);
                 txt_residence_other.Value = iina.residence_other;
@@ -221,10 +223,6 @@ namespace EMR
 
                 WebHelpers.VisibleControl(true, pain_annotation_undo, pain_annotation_redo, pain_annotation_pencilWrapper);
 
-                pain_annotation_img.Src = JObject.Parse(iina.pain_annotation).dataURI;
-
-                skin_anno_data_img.Src = JObject.Parse(iina.skin_anno_data).dataURI;
-
                 txt_pain_killer_name.Value = iina.pain_killer_name;
                 txt_pa_comment.Value = iina.pa_comment;
 
@@ -292,6 +290,12 @@ namespace EMR
                 txt_dis_management.Value = iina.dis_management;
 
                 WebHelpers.BindDateTimePicker(dtpk_assess_date_time, iina.assess_date_time);
+
+                pain_annotation_img.Src = JObject.Parse(iina.pain_annotation).dataURI;
+
+                skin_anno_data_img.Src = JObject.Parse(iina.skin_anno_data).dataURI;
+
+                WebHelpers.VisibleControl(true, pain_annotation_undo, skin_anno_data_undo, pain_annotation_redo, skin_anno_data_redo, pain_annotation_pencilWrapper, skin_anno_data_pencil_wrapper);
 
                 WebHelpers.AddScriptFormEdit(Page, iina);
             }
@@ -514,7 +518,16 @@ namespace EMR
                 lbl_dis_management.Text = WebHelpers.FormatString(iina.dis_management);
                 lbl_assess_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(iina.assess_date_time, "dd-MM-yyyy HH:mm"));
 
-                final_screening_field.Visible = iina.bmi_out_range || iina.loss_weight || iina.reduce_dietary || iina.severely_ill;
+
+                pain_annotation_img.Src = JObject.Parse(iina.pain_annotation).dataURI;
+
+                skin_anno_data_img.Src = JObject.Parse(iina.skin_anno_data).dataURI;
+
+                WebHelpers.VisibleControl(false, pain_annotation_undo, skin_anno_data_undo, pain_annotation_redo, skin_anno_data_redo, pain_annotation_pencilWrapper, skin_anno_data_pencil_wrapper);
+
+                //final_screening_field.Visible = iina.bmi_out_range || iina.loss_weight || iina.reduce_dietary || iina.severely_ill;
+
+                final_screening_field.Visible = ShowFinalScreening(iina);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
             
@@ -524,7 +537,8 @@ namespace EMR
             try
             {
 
-            }catch(Exception ex) { WebHelpers.SendError(Page, ex); }
+            }
+            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
             //Patient patient = Patient.Instance();
             //prt_fullname.Text = $"{patient.GetFullName()} ({patient.GetTitle()})";
             //prt_DOB.Text = $"{WebHelpers.FormatDateTime(patient.date_of_birth)} | {patient.GetGender()}";
@@ -565,8 +579,7 @@ namespace EMR
 
                 Iina iina = new Iina(DataHelpers.varDocId);
                 iina.status = DocumentStatus.FINAL;
-                iina.user_name = (string)Session["UserID"];
-
+                
                 UpdateData(iina);
                 WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             }
@@ -576,8 +589,6 @@ namespace EMR
             if (Page.IsValid)
             {
                 Iina iina = new Iina(DataHelpers.varDocId);
-
-                iina.user_name = (string)Session["UserID"];
                 iina.status = DocumentStatus.DRAFT;
 
                 UpdateData(iina);
@@ -606,11 +617,11 @@ namespace EMR
         }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
+
             if (WebHelpers.CanOpenForm(Page, (string)Request.QueryString["docId"], DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"]))
             {
                 Iina iina = new Iina(Request.QueryString["docId"]);
 
-                txt_amend_reason.Text = "";
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
@@ -623,8 +634,8 @@ namespace EMR
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             Initial();
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
         }
         protected void btnPrint_Click(object sender, EventArgs e)
         {
@@ -653,9 +664,9 @@ namespace EMR
             {
                 Iina iina = new Iina(Request.QueryString["docId"]);
 
-                iina.pain_annotation = WebHelpers.getImageDefault(iina.pain_annotation);
+                iina.pain_annotation = WebHelpers.getPainAnnotation(iina.pain_annotation);
 
-                iina.skin_anno_data = WebHelpers.getImageDefault(iina.skin_anno_data);
+                iina.skin_anno_data = WebHelpers.getSkinAnnoData(iina.skin_anno_data);
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
                 //prt_barcode.Text = Patient.Instance().visible_patient_id;
@@ -1052,14 +1063,14 @@ namespace EMR
 
                 iina.skin_anno_data = "{\"dataURI\":\"data:image/png;base64," + skin_anno_data_base64.Value + "\"}";
 
+                iina.user_name = (string)Session["UserID"];
+
                 dynamic result = iina.Update()[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    Message message = (Message)Page.LoadControl("~/UserControls/Message.ascx");
-                    message.Load(messagePlaceHolder, Message.CODE.MS001, Message.TYPE.SUCCESS, 2000);
-
                     Initial();
+                    WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
                 }
             }
             catch (Exception ex)

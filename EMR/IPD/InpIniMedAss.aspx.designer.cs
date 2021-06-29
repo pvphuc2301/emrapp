@@ -51,31 +51,31 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label lbPatientName;
 
         /// <summary>
-        /// lbBirthday control.
+        /// prt_dob control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbBirthday;
+        protected global::System.Web.UI.WebControls.Label prt_dob;
 
         /// <summary>
-        /// lbSex control.
+        /// prt_barcode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbSex;
+        protected global::EMR.UserControls.Barcode prt_barcode;
 
         /// <summary>
-        /// lbPID control.
+        /// prt_pid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbPID;
+        protected global::System.Web.UI.WebControls.Label prt_pid;
 
         /// <summary>
         /// print_content control.

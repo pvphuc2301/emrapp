@@ -10,7 +10,6 @@
 <%@ Register Src="~/icons/X.ascx" TagPrefix="icon" TagName="X" %>
 <%@ Register Src="~/icons/House.ascx" TagPrefix="icon" TagName="House" %>
 
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -26,6 +25,26 @@
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../style/style-custom.css" rel="stylesheet" />--%>
     <style>
+        .RadTreeView_Bootstrap .rtPlus, 
+        .RadTreeView_Bootstrap .rtMinus, 
+        .RadTreeView_Bootstrap .rtIn {
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+        .RadTreeView .rtPlus, 
+        .RadTreeView .rtMinus { top:5px !important; }
+        .RadTreeView .rtLines .rtLI:before, 
+        .RadTreeView .rtLines .rtOut:before { content: none !important; }
+        ul.rtUL > li.rtLI > ul.rtUL > li.rtLI { padding-left: 0 !important; }
+        ul.rtUL > li.rtLI > ul.rtUL > li.rtLI > div.rtOut > a.rtIn { border-radius: 0 !important; }
+        div.RadTreeView > ul.rtLines, 
+        ul.rtLines > li.rtLI > ul.rtUL { width: 100%; }
+        .RadTreeView_Bootstrap .rtOut.rtHover div.rtIn, 
+        .RadTreeView_Bootstrap .rtOut.rtSelected div.rtIn { background-color: transparent !important; border-color: transparent !important; }
+        .rtUL .rtLI { padding: 0; }
+        .rtUL .rtLI .rtOut a.rtIn { padding: 2px 9px; }
+        .rtUL .rtLI .rtOut { height: 25px }
+
 
 .tooltip1 {
             position: relative;
@@ -194,6 +213,7 @@
                 </div>
             </nav>
         </header>
+
         <%--        <asp:UpdatePanel ID="updatePanel_main" runat="server" UpdateMode="Always">
             <ContentTemplate>--%>
         
@@ -201,12 +221,12 @@
             Orientation="Vertical" Width="100%" Height="100%">
             <telerik:RadPane runat="server" ID="TopPane" Width="220" MinWidth="150" MaxWidth="550">
                 <!-- Sidebar scroll-->
-                        <asp:LinkButton CssClass="btn btn-outline-light waves-effect position-sticky waves-secondary text-dark w-100" ID="btnPatientSummary" OnClick="btnPatientSummary_Click" runat="server">Patient Summary</asp:LinkButton>
+                <asp:LinkButton CssClass="btn btn-outline-light waves-effect position-sticky waves-secondary text-dark w-100" ID="btnPatientSummary" OnClick="btnPatientSummary_Click" runat="server">Patient Summary</asp:LinkButton>
+                
                 <div style="overflow-x: hidden; height: calc(100vh - 51px);">
                     <nav class="sidebar-wrapper" style="position: initial; width: inherit">
                         <div class="sidebar-menu">
-                            <asp:UpdatePanel ID="updatePanel_main" runat="server" UpdateMode="Always">
-                                <ContentTemplate>
+                            
                                     <ul class="text-nowrap">
                                         <%--<li>
                                             <a href="../emr/emrinfor.aspx?pid=<%= varPID %>" class="bnt-link">Patient Summary</a>
@@ -214,8 +234,8 @@
 
                                         <%--Load Left Menu--%>
                                         <li>
-                                        <telerik:RadGrid ID="RadGrid1" runat="server" Width="100%" OnNeedDataSource="RadGrid1_NeedDataSource" OnItemCommand="RadGrid1_ItemCommand"
-                                            ShowHeader="false" OnSelectedIndexChanged="RadGrid1_SelectedIndexChanged" OnDetailTableDataBind="RadGrid1_DetailTableDataBind" AllowSorting="true" AllowFilteringByColumn="false"
+                                        <%--<telerik:RadGrid ID="RadGrid1" runat="server" Width="100%" OnNeedDataSource="RadGrid1_NeedDataSource"  OnItemCommand="RadGrid1_ItemCommand"
+                                            ShowHeader="false" OnSelectedIndexChanged="RadGrid1_SelectedIndexChanged" OnDetailTableDataBind="RadGrid1_DetailTableDataBind" AllowFilteringByColumn="false"
                                             AutoGenerateColumns="False" AllowMultiRowSelection="False" GridLines="None" EnableLinqExpressions="false" ShowFooter="false">
                                             <MasterTableView DataKeyNames="patient_visit_id" AllowMultiColumnSorting="True" Width="100%" Name="Master" TableLayout="Fixed"
                                                 ItemStyle-Font-Size="Small" AlternatingItemStyle-Font-Size="Small" ItemStyle-HorizontalAlign="Left"
@@ -229,12 +249,7 @@
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridTemplateColumn HeaderStyle-Width="99%" UniqueName="model_name">
                                                                 <ItemTemplate>
-                                                                    <%--<asp:HyperLink data-title='<%# ReturnForm_Name(Eval("status"),Eval("model_name"), "") %>' data-category='' data-visit='' data-author='<%# Eval("created_name_e") %>' CssClass="list-item d-inline-block" ID="lbURL" runat="server" NavigateUrl='<%# Return_Doc_URL(Eval("model_id"),Eval("document_id"), Eval("patient_visit_id")) %>'
-                                                                        Text='<%# ReturnForm_Name(Eval("status"),Eval("model_name"),Eval("created_name_e")) %>' Target="MainContent">
-                                                                    </asp:HyperLink>--%>
-
-                                                                    <a data-title='<%# ReturnForm_Name(Eval("status"),Eval("model_name"), "") %>' data-category='' data-visit='' data-author='<%# Eval("created_name_e") %>' class="list-item d-inline-block" runat="server" data-varpid='<%# varPID %>' data-varvpid='<%# varVPID %>' data-modelid='<%#Eval("model_id") %>' data-status='<%#Eval("status") %>' data-documentid='<%#Eval("document_id") %>' id="lblURL" href="javascript:void(0);" onclick="lblURL_click(this)"><%# ReturnForm_Name(Eval("status"),Eval("model_name"),Eval("created_name_e")) %></a>
-
+                                                                    <a data-modified-datetime='<%# Eval("modified_date_time") %>' data-modified-name='<%# Eval("modified_name_e") %>' data-title='<%# ReturnForm_Name(Eval("status"),Eval("model_name"), "") %>' data-category='' data-visit='' data-author='<%# Eval("created_name_e") %>' class="list-item d-inline-block" runat="server" data-varpid='<%# varPID %>' data-varvpid='<%# varVPID %>' data-modelid='<%#Eval("model_id") %>' data-status='<%#Eval("status") %>' data-documentid='<%#Eval("document_id") %>' id="lblURL" href="javascript:void(0);" onclick="lblURL_click(this)"><%# ReturnForm_Name(Eval("status"),Eval("model_name"),Eval("created_name_e")) %></a>
                                                                 </ItemTemplate>
                                                             </telerik:GridTemplateColumn>
                                                         </Columns>
@@ -258,7 +273,8 @@
                                                     OnColumnCreated="OnGridCreated"
                                                     OnDataBinding="OnGridCreated" OnDataSourceResolved="OnGridCreated" />
                                             </ClientSettings>
-                                        </telerik:RadGrid>
+                                        </telerik:RadGrid>--%>
+                                            <telerik:RadTreeView OnNodeClick="RadTreeView1_NodeClick" ID="RadTreeView1" runat="server" OnNodeExpand="RadTreeView1_NodeExpand"/>
                                         </li>
                                         <%--END Load Left Menu--%>
 
@@ -350,8 +366,7 @@
                                         </li>
                                         <%--End Load Scan Document--%>
                                     </ul>
-                                </ContentTemplate>
-                            </asp:UpdatePanel>
+                                
                         </div>
                     </nav>
                 </div>
@@ -391,6 +406,10 @@
                         <td>Visit</td>
                         <td class="visit"></td>
                     </tr>
+                    <tr>
+                        <td>Lasted updated</td>
+                        <td class="lastedUpdated"></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -398,23 +417,11 @@
 
     <script src="../scripts/jquery-3.2.1.min.js"></script>
     <script src="../scripts/bootstrap.min.js"></script>
-    <%--<script s"../../scripts/perfect-scrollbar.jquery.min.js"></script>--%>
-    <%--<script src="../scripts/custom.min.js"></script>--%>
     <script src="../scripts/myScript.js"></script>
-    <script src="../scripts/contenteditable.min.js"></script>
     <script src="../scripts/waves.js"></script>
     <script src="../scripts/sweetalert.min.js"></script>
 
     <script>
-
-        //window.addEventListener('load', function () {
-        //    console.log('All assets are loaded')
-        //})
-
-        //window.addEventListener('DOMContentLoaded', (event) => {
-        //    console.log('DOM fully loaded and parsed');
-        //});
-
         window.onload = function () {
             console.log('window loaded');
             let listItem = document.getElementsByClassName("list-item");
@@ -436,69 +443,50 @@
             //    tooltip1.style.opacity = 0;
             //});
         }
-
-        //document.onload = function () {
-        //    console.log('document loaded');
-        //}
-
-        //window.addEventListener('DOMContentLoaded', function () {
-        //    console.log('window - DOMContentLoaded - capture'); // 1st
-        //}, true);
-        //document.addEventListener('DOMContentLoaded', function () {
-        //    console.log('document - DOMContentLoaded - capture'); // 2nd
-        //}, true);
-        //document.addEventListener('DOMContentLoaded', function () {
-        //    console.log('document - DOMContentLoaded - bubble'); // 2nd
-        //});
-        //window.addEventListener('DOMContentLoaded', function () {
-        //    console.log('window - DOMContentLoaded - bubble'); // 3rd
-        //});
-
-        //window.addEventListener('load', function () {
-        //    console.log(document.getElementsByClassName("list-item"));
-
-        //}, true);
-        //document.addEventListener('load', function (e) {
-        //    /* Filter out load events not related to the document */
-        //    if (['style', 'script'].indexOf(e.target.tagName.toLowerCase()) < 0)
-        //        console.log('document - load - capture'); // DOES NOT HAPPEN
-        //}, true);
-        //document.addEventListener('load', function () {
-        //    console.log('document - load - bubble'); // DOES NOT HAPPEN
-        //});
-        //window.addEventListener('load', function () {
-        //    console.log('window - load - bubble'); // 4th
-        //    setTimeout(function () {
-        //        console.log(document.getElementsByClassName("list-item"));
-        //    }, 3000);
-        //});
-
-        //window.onload = function () {
-        //    console.log('window - onload'); // 4th
-
-        //};
-        //document.onload = function () {
-        //    console.log('document - onload'); // DOES NOT HAPPEN
-        //};
-
-        //function bodyOnloadHandler() {
-        //    console.log("body onload");
-        //}
     </script>
 
-    <script type="text/javascript">
+    <script>
 
-        function lblURL_click(args) {
+        function lblURL_click() {
 
-            let data = {
-                varModelId: args.getAttribute("data-modelID"),
-                varDocID: args.getAttribute("data-documentId"),
-                varPID: args.getAttribute("data-varPID"),
-                varVPID: args.getAttribute("data-varVPID"),
-                docStatus: args.getAttribute("data-status"),
+            //document.getElementById("RAD_SPLITTER_PANE_EXT_CONTENT_MainContent").src = $"/other/patientsummary.aspx?pid={}&vpid={}";
+
+            //let data = {
+            //    varModelId: args.getAttribute("data-modelID"),
+            //    varDocID: args.getAttribute("data-documentId"),
+            //    varPID: args.getAttribute("data-varPID"),
+            //    varVPID: args.getAttribute("data-varVPID"),
+            //    docStatus: args.getAttribute("data-status"),
+            //}
+
+            let temp = {
+                status: "",
+                docId: "",
             }
 
-            __doPostBack('lblURL_click', JSON.stringify(data));
+            $.ajax({
+                type: 'POST',
+                url: "emrinfor.aspx/lblURL_click",
+                data: JSON.stringify(temp),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (msg) {
+                    console.log(msg);
+                }
+            });
+
+            //$.ajax({
+            //    type: 'POST',
+            //    url: "emrinfor.aspx/lblURL_click",
+            //    data: JSON.stringify(history),
+            //    contentType: 'application/json; charset=utf-8',
+            //    dataType: 'json',
+            //    success: function (msg) {
+            //        console.log(msg);
+            //    }
+            //});
+
+            //__doPostBack('lblURL_click', JSON.stringify(data));
         }
 
         function OnGridCreated(sender, args) {
@@ -518,6 +506,7 @@
                         tooltip1.querySelector(".category").innerText = item.getAttribute("data-category");
                         tooltip1.querySelector(".author").innerText = item.getAttribute("data-author");
                         tooltip1.querySelector(".visit").innerText = item.getAttribute("data-visit");
+                        tooltip1.querySelector(".lastedUpdated").innerText = item.getAttribute("data-modified-name") + " " + item.getAttribute("data-modified-datetime");
                     })
 
                     item.addEventListener("mouseleave", function (e) {
