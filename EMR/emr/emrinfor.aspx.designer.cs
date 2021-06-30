@@ -258,13 +258,13 @@ namespace EMR
         protected global::Telerik.Web.UI.RadTreeView RadTreeView1;
 
         /// <summary>
-        /// RadGrid2 control.
+        /// RadTreeView2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid RadGrid2;
+        protected global::Telerik.Web.UI.RadTreeView RadTreeView2;
 
         /// <summary>
         /// LinkButton2 control.
@@ -276,13 +276,13 @@ namespace EMR
         protected global::System.Web.UI.WebControls.LinkButton LinkButton2;
 
         /// <summary>
-        /// RadGrid3 control.
+        /// RadTreeView3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid RadGrid3;
+        protected global::Telerik.Web.UI.RadTreeView RadTreeView3;
 
         /// <summary>
         /// RadSplitBar1 control.

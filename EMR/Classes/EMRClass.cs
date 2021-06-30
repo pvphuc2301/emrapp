@@ -131,6 +131,14 @@ namespace EMR
         {
             return string.Format("{0} {1} {2} {3}", this.address_line_l, this.address_subregion_l, this.address_region_l, this.address_country_l);
         }
+        public string getContact()
+        {
+            return contact_name_l;
+        }
+        public string getRelationship()
+        {
+            return relationship_type_rcd;
+        }
         public string GetGender()
         {
             return this.gender_l;

@@ -200,17 +200,17 @@ namespace Emr_client.Emr
                 else if (MISClass.In_Array(MAGroup, varType))
                 {
                     varGroup = "MA";
-                    varAccess = "MAFullAccess";
+                    varAccess = "View";
                 }
                 else if (MISClass.In_Array(CSOGroup, varType))
                 {
                     varGroup = "CSO";
-                    varAccess = "CSOAccess";
+                    varAccess = "ScanAccess";
                 }
                 else if (MISClass.In_Array(TechGroup, varType))
                 {
                     varGroup = "TECH";
-                    varAccess = "TechAccess";
+                    varAccess = "CLSAccess";
                 }
 
                 varCompanyCode = Convert.ToString(Session["company_code"]);

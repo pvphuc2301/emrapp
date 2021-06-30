@@ -37,7 +37,8 @@
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <div class="cssclsNoScreen">
+                <%----%>
+                <div class="cssclsNoScreen" style="overflow: scroll">
                     <table class="report-container">
                         <thead class="report-header">
                             <tr>
@@ -62,155 +63,384 @@
                                 <td class="report-content-cell">
                                     <div class="main" runat="server" id="print_content">
 
-                                        <div>
+                                        <div class="border p-2 mb-1">
                                             <asp:Label runat="server" ID="prtdate"></asp:Label>
                                         </div>
-                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr; grid-gap: 5px;">
-                                            <asp:Label runat="server" ID="prt_fullname"></asp:Label>
+
+                                        <div class="border p-2 mb-1">
+                                            <div class="d-grid" style="grid-template-columns: 1fr 1fr; grid-gap: 5px;">
+                                                <div>
+                                                    Họ tên/ <span class="text-primary">Patient Name</span><asp:Label runat="server" ID="prt_fullname"></asp:Label>
+                                                </div>
+                                                <div>
+                                                    Ngày sinh/ <span class="text-primary">DOB</span>:<asp:Label runat="server" ID="prt_dob"></asp:Label>
+                                                    Quốc tịch/ <span class="text-primary">Nationality</span>:<asp:Label runat="server" ID="prt_nationality"></asp:Label>
+                                                </div>
+                                            </div>
+
                                             <div>
-                                                <asp:Label runat="server" ID="prt_dob"></asp:Label>
-                                                <asp:Label runat="server" ID="prt_nationality"></asp:Label>
+                                                Chỗ ở hiện tại/ <span class="text-primary">Home Address</span>:<asp:Label runat="server" ID="prt_address"></asp:Label>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 1fr 1fr; grid-gap: 5px;">
+                                                <div>
+                                                    Người liên lạc/ <span class="text-primary">Contact</span>: <asp:Label runat="server" ID="prt_contact"></asp:Label>
+                                                </div>
+                                                <div>
+                                                    Quan hệ/ <span class="text-primary">Relationship</span>:<asp:Label runat="server" ID="prt_relationship"></asp:Label>
+                                                    Số điện thoại/ <span class="text-primary">Telephone</span>: <asp:Label runat="server" ID="prt_telephone"></asp:Label>
+                                                </div>
                                             </div>
                                         </div>
-
-                                        <div>
-                                            <asp:Label runat="server" ID="prt_address"></asp:Label>
+                                        
+                                        <div class="border p-2 mb-1">
+                                            Than phiền chính/ <span class="text-primary">Chieft complaint</span>: <asp:Label runat="server" ID="prt_chieft_complaint"></asp:Label>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 2fr 1fr; grid-gap: 5px;">
-                                            <asp:Label runat="server" ID="prt_contact"></asp:Label>
-                                            <div>
-                                                <asp:Label runat="server" ID="prt_relationship"></asp:Label>
-                                                <asp:Label runat="server" ID="prt_telephone"></asp:Label>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <asp:Label runat="server" ID="prt_chieft_complaint"></asp:Label>
-                                        </div>
-
-                                        <div>
+                                        <div class="border p-2 mb-1">
                                             <asp:Label runat="server" ID="prt_chieft_complaint_code"></asp:Label>
                                         </div>
 
-                                        <div>
+                                        <div class="border p-2 mb-1" style="display: grid; grid-template-columns: auto auto;">
+                                            <div>
+                                                Đến khoa bằng/ <span class="text-primary">Mode of arrival</span>
+                                            </div>
                                             <asp:Label runat="server" ID="prt_mode_of_arrival"></asp:Label>
                                         </div>
 
-                                        <div>
+                                        <div class="border p-2 mb-1">
                                             <asp:Label runat="server" ID="prt_past_medical_history"></asp:Label>
                                         </div>
 
-                                        <div>
+                                        <div class="border p-2 mb-1">
                                             <asp:Label runat="server" ID="prt_vital_signs"></asp:Label>
+                                            <div style="display: grid; grid-template-columns: auto auto">
+                                                <div>
+                                                    Tri giác/ <span class="text-primary">LOC-AVPU</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_loc_avpu"></asp:Label>
+                                            </div>
                                         </div>
 
-                                        <div>
-                                            <asp:Label runat="server" ID="prt_loc_avpu"></asp:Label>
-                                        </div>
-
-                                        <div>
+                                        <div class="border p-2 mb-1">
                                             <asp:Label runat="server" ID="prt_pain_assess"></asp:Label>
-                                        </div>
-
-                                        <div>
-                                            <asp:Label runat="server" ID="prt_pain_scale"></asp:Label>
+                                            <div>
+                                                <img src="../images/pain_score.png" width="300" />
+                                                <asp:Label runat="server" ID="prt_pain_scale"></asp:Label>
+                                            </div>
                                         </div>
 
                                         <div style="display: grid; grid-template-columns: 1fr 1fr">
-                                            <div>
+                                            <div class="border p-2 mb-1">
                                                 <asp:Label runat="server" ID="prt_weight"></asp:Label><br />
                                                 <asp:Label runat="server" ID="prt_pulse"></asp:Label>
                                             </div>
-                                            <asp:Label runat="server" ID="prt_allergy"></asp:Label>
+                                            <div class="border p-2 mb-1">
+                                                <asp:Label runat="server" ID="prt_allergy"></asp:Label>
+                                            </div>
                                         </div>
 
-                                        <div>
+                                        <div class="border p-2 mb-1">
                                             <asp:Label runat="server" ID="prt_medications_used"></asp:Label>
                                         </div>
 
-                                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr">
-                                            <div>
-                                                <div>SKIN INEGRITY</div>
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; page-break-inside: avoid !important;">
+                                            <div class="border p-2 mb-1">
+                                                <div class="text-center font-bold">SKIN INEGRITY</div>
                                                 <div>
-                                                    <img src="#" alt="Alternate Text" />
+                                                    <img src="#" runat="server" width="200" id="imageTemp" alt="Alternate Text" />
                                                 </div>
                                                 <asp:Label runat="server" ID="prt_skin_integrity"></asp:Label>
                                             </div>
-                                            <div>
-                                                <div>TẦM SOÁT BỆNH LÂY NHIỄM</div>
-                                                <div>Communicable disease screening</div>
+                                            <div class="border p-2 mb-1">
+                                                <div class="font-bold text-center">TẦM SOÁT BỆNH LÂY NHIỄM</div>
+                                                <div class="font-bold text-primary text-center">Communicable disease screening</div>
                                                 <asp:Label runat="server" ID="prt_com_dis_src"></asp:Label>
                                             </div>
-                                            <div>
-                                                <div>Kế hoạch xuất viện</div>
-                                                <div>Discharge Planning</div>
+                                            <div class="border p-2 mb-1">
+                                                <div class="font-bold text-center">Kế hoạch xuất viện</div>
+                                                <div class="font-bold text-center text-primary">Discharge Planning</div>
                                                 <asp:Label runat="server" ID="prt_discharge_plan"></asp:Label><br />
                                                 <asp:Label runat="server" ID="prt_caregiver_after_discharge"></asp:Label>
                                             </div>
                                         </div>
 
-                                        <div>
-                                            <div>TRỞ NGẠI TRONG CHĂM SÓC/ BARRIER TO CARE</div>
+                                        <div class="border p-2 mb-1">
+                                            <div class="font-bold">TRỞ NGẠI TRONG CHĂM SÓC/ BARRIER TO CARE</div>
                                             <div style="display: grid; grid-template-columns: auto auto">
+                                                1. Trở ngại về ngôn ngữ/ Language Barriers:
                                                 <asp:Label runat="server" ID="prt_btc_language"></asp:Label>
+                                                <asp:Label runat="server" ID="prt_btc_language_note"></asp:Label>
                                             </div>
-                                            <asp:Label runat="server" ID="prt_btc_cognitive"></asp:Label>
-                                            <asp:Label runat="server" ID="prt_btc_sensory"></asp:Label>
-                                            <asp:Label runat="server" ID="prt_btc_religious"></asp:Label>
-                                            <asp:Label runat="server" ID="btc_cultural"></asp:Label>
-                                        </div>
 
+                                            <div style="display: grid; grid-template-columns: auto auto">
+                                                2. Trở ngại về nhận thức/ Cognitive Barriers:
+                                                <asp:Label runat="server" ID="prt_btc_cognitive"></asp:Label>
+                                                <asp:Label runat="server" ID="prt_btc_cognitive_note"></asp:Label>
+                                            </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px;">
-                                            <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Title="Chẩn đoán/" SubTitle="Diagnosis:" runat="server" />
-                                            <asp:Label runat="server" ID="prt_diagnosis"></asp:Label>
-                                        </div>
+                                            <div style="display: grid; grid-template-columns: auto auto">
+                                                3. Trở ngại về Giác quan/ Sensory Barriers:
+                                                <asp:Label runat="server" ID="prt_btc_sensory"></asp:Label>
+                                                <asp:Label runat="server" ID="prt_btc_sensory_note"></asp:Label>
+                                            </div>
 
-                                        <webUI:PrtRowS1 FontBold="true" Order="❖" CssClass="text-inline" Title="Thận trái" SubTitle="Left kidney:" runat="server" />
-                                        <p style="margin-left: 13px;">
-                                            <asp:Label runat="server" ID="prt_left_kidney"></asp:Label>
-                                        </p>
+                                            <div style="display: grid; grid-template-columns: auto auto">
+                                                4. Trở ngại về Tôn giáo/ Religious Barriers:
+                                                <asp:Label runat="server" ID="prt_btc_religious"></asp:Label>
+                                                <asp:Label runat="server" ID="prt_btc_religious_note"></asp:Label>
+                                            </div>
 
-                                        <webUI:PrtRowS1 FontBold="true" Order="❖" CssClass="text-inline" Title="Thận phải" SubTitle="Right kidney" runat="server" />
-                                        <p style="margin-left: 13px;">
-                                            <asp:Label runat="server" ID="prt_right_kidney"></asp:Label>
-                                        </p>
-
-                                        <webUI:PrtRowS1 FontBold="true" Order="❖" CssClass="text-inline" Title="Bàng quang:" SubTitle="Urinary bladder" runat="server" />
-                                        <p style="margin-left: 13px;">
-                                            <asp:Label runat="server" ID="prt_urinary_bladder"></asp:Label>
-                                        </p>
-
-                                        <webUI:PrtRowS1 FontBold="true" Order="❖" CssClass="text-inline" Title="Tuyến tiền liệt:" SubTitle="Prostate" runat="server" />
-                                        <p style="margin-left: 13px;">
-                                            <asp:Label runat="server" ID="prt_prostate"></asp:Label>
-                                        </p>
-
-
-                                        <webUI:PrtRowS1 FontBold="true" Order="❖" CssClass="text-inline" Title="Nước tiểu tồn lưu:" SubTitle="Post void residual volume" runat="server" />
-                                        <p style="margin-left: 13px;">
-                                            <asp:Label runat="server" ID="prt_post_void_resi_volume"></asp:Label>
-                                        </p>
-
-
-                                        <webUI:PrtRowS1 FontBold="true" Order="❖" CssClass="text-inline" Title="KẾT LUẬN: " SubTitle="CONCLUSION" runat="server" />
-                                        <p style="margin-left: 13px;">
-                                            <asp:Label runat="server" ID="prt_conclusion"></asp:Label>
-                                        </p>
-
-                                        <webUI:PrtRowS1 FontBold="true" Order="❖" CssClass="text-inline" Title="ĐỀ NGHỊ: " SubTitle="RECOMMENDATION" runat="server" />
-                                        <p style="margin-left: 13px;">
-                                            <asp:Label runat="server" ID="prt_recommendation"></asp:Label>
-                                        </p>
-
-                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr">
-                                            <span></span>
-                                            <div class="text-center" style="break-inside: avoid;">
-                                                <div>Ngày/ Date: 25-02-2021</div>
-                                                <div class="font-bold">Bác sĩ/Physician</div>
+                                            <div style="display: grid; grid-template-columns: auto auto">
+                                                5. Trở ngại về Văn hóa/ Cultural Barriers:
+                                                <asp:Label runat="server" ID="prt_btc_cultural"></asp:Label>
+                                                <asp:Label runat="server" ID="prt_btc_cultural_note"></asp:Label>
                                             </div>
                                         </div>
+                                        
+                                        <div class="border p-2 mb-1">
+                                            <div class="font-bold">ĐÁNH GIÁ THỂ CHẤT CÁC CƠ QUAN/ <span class="text-primary">ASSESSMENT BY SYSTEM</span></div>
+                                            <div style="display: grid; grid-template-columns: 1fr 1fr">
+                                                <div>
+                                                    Số phòng/ <span class="text-primary">Room number</span>:<asp:Label runat="server" ID="prt_room_number"></asp:Label>
+                                                </div>
+                                                <div>
+                                                    Thời điểm đánh giá/ <span class="text-primary">Time of assessment</span>:<asp:Label runat="server" ID="prt_time_of_assess"></asp:Label>
+                                                </div>
+                                            </div>
+
+                                            <div style="display: grid; grid-template-columns: auto auto">
+                                                <div>
+                                                    Tổng trạng chung/ <span class="text-primary">General appearance</span>:
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_general_appearance"></asp:Label>
+                                            </div>
+
+                                            <div>
+                                                <asp:Label runat="server" ID="prt_neuro"></asp:Label>
+                                            </div>
+
+                                            <div style="margin-left: 20px;">
+                                                <asp:Label runat="server" ID="prt_alert"/>Tỉnh táo/ <span class="text-primary">Alert</span>
+                                                <asp:Label runat="server" ID="prt_coma"/>Hôn mê/ <span class="text-primary">Coma</span>
+                                                <asp:Label runat="server" ID="prt_other"/>Khác/ <span class="text-primary">Others</span>:
+                                                <asp:Label runat="server" ID="prt_str_others"/>
+                                            </div>
+
+                                            <div style="display: grid; grid-template-columns: auto auto">
+                                                <label>Hô hấp/ <span class="text-primary">Respiratory</span></label>
+                                                <asp:Label runat="server" ID="prt_respiratory"></asp:Label>
+                                            </div>
+
+                                            <div>
+                                                Tim mạch/ <span class="text-primary">Cardiovascular</span>: Nhịp tim/<span class="text-primary">Rhythm</span>
+                                                <asp:Label runat="server" ID="prt_rhythm_regular"></asp:Label>Đều/ <span class="text-primary">Regular</span>
+                                                <asp:Label runat="server" ID="prt_rhythm_inregular"></asp:Label>Không đều/ <span class="text-primary">Irregular</span>
+                                            </div>
+
+                                            <div>
+                                                <asp:Label runat="server" ID="Label1"></asp:Label>Ngưng tim/ Cardiac arrest
+                                                <asp:Label runat="server" ID="Label2"></asp:Label>Đau ngực/ Chest pain
+                                                <br />
+                                                <asp:Label runat="server" ID="Label3"></asp:Label>Khác/ Others:
+                                            </div>
+
+                                            <div>
+                                                Tâm lý/ <span class="text-primary">Psychosocial</span>:
+                                                <asp:Label runat="server" ID="prt_psychosocial"></asp:Label>Bình thường/ <span class="text-primary">Normal</span>
+                                                <br />
+                                                <asp:Label runat="server" ID="prt_psychosocial_others"></asp:Label>Khác/ Others: <asp:Label runat="server" ID="prt_psychosocial_str_others"/>
+                                            </div>
+
+
+                                            <div>
+                                                Các cơ quan khác/ Other systems:
+                                                <asp:Label runat="server" ID="prt_other_systems_normal"/>Bình thường/ Normal
+                                                <br />
+                                                <asp:Label runat="server" ID="prt_other_systems_abnormal" />Bất thường/ Abnormal, Ghi rõ/ Specify: <asp:Label runat="server" ID="prt_others_systems_str"/>
+                                            </div>
+
+                                           <div>
+                                               Sản-phụ:
+                                               <asp:Label runat="server" ID="prt_lmp"/>Kinh cuối/ LMP<asp:Label runat="server" ID="prt_lmp_note"/>
+                                               <br />
+                                               Tiền sử thai nghén/ Gravida/ PARA <asp:Label runat="server" ID="prt_para"/>Sẩy/Abortions<asp:Label runat="server" ID="prt_abortions"/>
+                                           </div>
+                                        </div>
+                                        
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr">
+                                            <div class="border p-2 mb-1">
+                                                <div>
+                                                    Điều dưỡng thực hiện/ Registered Nurse
+                                                    <asp:Label runat="server" ID="Label9"></asp:Label>
+                                                </div>
+                                                <div>
+                                                    Ký tên/ Signature: MSNV/ ID
+                                                </div>
+                                            </div>
+                                            <div class="border p-2 mb-1">
+                                                Giờ thông báo Bác sĩ/ Time notified to Doctor:
+                                                <asp:Label runat="server" ID="prt_noticed_time"></asp:Label>
+                                            </div>
+                                        </div>
+
+                                        <div style="page-break-inside: avoid !important;">
+                                            <table class="table-bordered mb-2" style="table-layout: fixed; width: 100%">
+                                            <tr>
+                                                <td class="p-2">Can thiệp <br /> <span class="text-primary">Procedure</span></td>
+                                                <td class="p-2">Thời gian <br /> <span class="text-primary">Time</span></td>
+                                                <td class="p-2">Ghi chú <br /> <span class="text-primary">Notes</span></td>
+                                                <td class="p-2">Ký tên <br /><span class="text-primary">Signature</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2">Đường huyết mao mạch/Capillary Blood glucose</td>
+                                                <td class="p-2">
+                                                    <asp:Label runat="server" ID="prt_vs_weight" />
+                                                </td>
+                                                <td class="p-2">
+                                                    <asp:Label runat="server" ID="Label24" />
+                                                </td>
+                                                <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="prt_vs_respiratory_rate" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2">Điện tim/ECG</td>
+                                                <td class="p-2">
+                                                    <asp:Label runat="server" ID="Label25" />
+                                                </td>
+                                                <td class="p-2">
+                                                   Bác sĩ đọc kết quả/ Reviewed by Dr. <asp:Label runat="server" ID="Label26" />
+                                                </td>
+                                                <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="Label27" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2">Thông tiểu/ Urine catheter</td>
+                                                <td class="p-2">
+                                                    <asp:Label runat="server" ID="Label28" />
+                                                </td>
+                                                <td class="p-2">
+                                                    <asp:Label runat="server" ID="Label29" />
+                                                </td>
+                                                <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="Label30" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2">Nẹp/ Bos bột/ Thay băng <br />
+                                                Splint/ Cast/ Dressing</td>
+                                                <td class="p-2">
+                                                    <asp:Label runat="server" ID="Label31" />
+                                                </td>
+                                                <td class="p-2">
+                                                    <asp:Label runat="server" ID="Label32" />
+                                                </td>
+                                                <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="Label33" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2">Khác/ Others</td>
+                                                <td class="p-2">
+                                                    <asp:Label runat="server" ID="Label34" />
+                                                </td>
+                                                <td class="p-2">
+                                                    <asp:Label runat="server" ID="Label35" />
+                                                </td>
+                                                <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="Label36" />
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        </div>
+
+
+                                        <div style="page-break-inside: avoid !important;">
+                                            <asp:GridView CssClass="mb-2" ShowHeaderWhenEmpty="true" ID="prt_assessment_system" runat="server" ShowHeader="true" AutoGenerateColumns="false">
+                                            <Columns>
+                                                <asp:BoundField ItemStyle-Width="150px" DataField="time" HeaderText="Time" />
+                                                <asp:BoundField ItemStyle-Width="150px" DataField="rrlp" HeaderText="RR Vp" />
+                                                <asp:BoundField ItemStyle-Width="150px" DataField="o2sat" HeaderText="O2Sat %" />
+                                                <asp:BoundField ItemStyle-Width="150px" DataField="hr" HeaderText="HR bpm" />
+                                                <asp:BoundField ItemStyle-Width="150px" DataField="bp" HeaderText="BP mmHg" />
+                                                <asp:BoundField ItemStyle-Width="150px" DataField="temp" HeaderText="Temp °C" />
+                                                <asp:BoundField ItemStyle-Width="150px" DataField="gcs" HeaderText="GCS" />
+                                                <asp:BoundField ItemStyle-Width="150px" DataField="pain" HeaderText="Pain /10" />
+                                                <asp:BoundField ItemStyle-Width="150px" DataField="ats" HeaderText="ATS scale" />
+                                                <asp:BoundField ItemStyle-Width="150px" DataField="intervention" HeaderText="Tái đánh giá & Can thiệp/ Re-Assessment & Intervention" />
+                                                <asp:BoundField ItemStyle-Width="150px" DataField="initial" HeaderText="Điều dưỡng/ RN's Initial" />
+                                            </Columns>
+                                        </asp:GridView>
+                                        </div>
+                                        
+                                        <div style="page-break-inside: avoid !important;">
+                                            <asp:GridView CssClass="mb-2" ShowHeaderWhenEmpty="true" ID="prt_direct_medication" OnRowCreated="prt_direct_medication_RowCreated" runat="server" ShowHeader="false" AutoGenerateColumns="false">
+                                                <Columns>
+                                                    <asp:BoundField ItemStyle-Width="150px" DataField="dir_med_time" />
+                                                    <asp:BoundField ItemStyle-Width="150px" DataField="dir_medication" />
+                                                    <asp:BoundField ItemStyle-Width="150px" DataField="dir_med_dose"  />
+                                                    <asp:BoundField ItemStyle-Width="150px" DataField="dir_med_route"  />
+                                                    <asp:BoundField ItemStyle-Width="150px" DataField="dir_med_rate"  />
+                                                    <asp:BoundField ItemStyle-Width="150px" DataField="dir_med_doctor" />
+                                                    <asp:BoundField ItemStyle-Width="150px" DataField="dir_med_comment" />
+                                                    <asp:BoundField ItemStyle-Width="150px" DataField="dir_med_time2"  />
+                                                    <asp:BoundField ItemStyle-Width="150px" DataField="dir_med_initial" />
+                                                </Columns>
+                                            </asp:GridView>
+                                        </div>
+
+                                        <div style="display: grid; grid-template-columns: 1fr 1fr; page-break-inside: avoid !important;">
+                                            <div class="border p-2 mb-1">
+                                                <div style="display: grid; grid-template-columns: 1fr 1fr">
+                                                    <div>
+                                                        Xuất viện/ Discharged
+                                                        <asp:Label runat="server" ID="prt_discharge_by"></asp:Label>
+                                                    </div>
+                                                    <div>
+                                                        bởi BS/ by Dr.
+                                                        <asp:Label runat="server" ID="prt_discharge_date_time"></asp:Label>
+                                                    </div>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_discharge_option"></asp:Label>
+                                                
+                                            </div>
+                                            <div class="border p-2 mb-1">
+                                                <div style="display: grid; grid-template-columns: 1fr 1fr">
+                                                    <div>
+                                                        Nhập viện/ Admited
+                                                        <asp:Label runat="server" ID="prt_admited_date_time"></asp:Label>
+                                                    </div>
+                                                    <div>
+                                                        bởi BS/ by Dr.
+                                                        <asp:Label runat="server" ID="prt_admited_by"></asp:Label>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <asp:Label runat="server" ID="prt_receiving_unit"></asp:Label>            
+                                                </div>
+                                                <div>
+                                                    <asp:Label runat="server" ID="prt_transfer_to"></asp:Label>            
+                                                </div>
+                                                <div>
+                                                    <asp:Label runat="server" ID="prt_transfer_by"></asp:Label>            
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div style="page-break-inside: avoid !important;">
+                                            <asp:GridView CssClass="mb-2" ShowHeaderWhenEmpty="true" ID="prt_nursing_note" OnRowCreated="prt_nursing_note_RowCreated" runat="server" ShowHeader="false" AutoGenerateColumns="false">
+                                                <Columns>
+                                                    <asp:BoundField ItemStyle-Width="150px" DataFormatString="{0:MM/dd/yyyy}"  DataField="date_time" />
+                                                    <asp:BoundField ItemStyle-Width="150px" DataFormatString="{0:HH/mm}" DataField="date_time" />
+                                                    <asp:BoundField ItemStyle-Width="150px" DataField="patient_condition"  />
+                                                    <asp:BoundField ItemStyle-Width="150px" DataField="patient_condition"  />
+                                                    <asp:BoundField ItemStyle-Width="150px" DataField="signature_name" />
+                                                </Columns>
+                                            </asp:GridView>
+                                        </div>
+                                    
                                     </div>
                                 </td>
                             </tr>

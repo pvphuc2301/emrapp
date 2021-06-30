@@ -1059,6 +1059,11 @@ namespace EMR
         {
             if (value == null) return null; return (bool)value ? returnTrue : returnFalse;
         }
+        public static string GetCheckedIcon(bool? value)
+        {
+            value = (value == null) ? false : value;
+            return GetBool(value, "☒", "❏");
+        }
         internal static bool CheckSession(Page _page, string redirecturl = "../login.aspx?ReturnUrl=", bool showDelay = true)
         {
             string UserID = (string)_page.Session["UserID"];

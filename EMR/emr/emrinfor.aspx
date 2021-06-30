@@ -280,7 +280,8 @@
 
                                         <%--Load LAB and IMG Document--%>
                                         <li>
-                                            <telerik:RadGrid ID="RadGrid2" runat="server" Width="100%" OnNeedDataSource="RadGrid2_NeedDataSource" OnItemDataBound="RadGrid2_ItemDataBound"
+                                            <telerik:RadTreeView OnNodeClick="RadTreeView2_NodeClick" ID="RadTreeView2" runat="server" OnNodeExpand="RadTreeView2_NodeExpand"/>
+                                            <%--<telerik:RadGrid ID="RadGrid2" runat="server" Width="100%" OnNeedDataSource="RadGrid2_NeedDataSource" OnItemDataBound="RadGrid2_ItemDataBound"
                                             ShowHeader="false" OnDetailTableDataBind="RadGrid2_DetailTableDataBind" AllowSorting="true" AllowFilteringByColumn="false"
                                             AutoGenerateColumns="False" AllowMultiRowSelection="False" GridLines="None" EnableLinqExpressions="false" ShowFooter="false">
                                             <MasterTableView DataKeyNames="document_type_rcd" AllowMultiColumnSorting="True" Width="100%" Name="Master" TableLayout="Fixed"
@@ -317,7 +318,7 @@
                                             <ClientSettings EnableRowHoverStyle="true">
                                                 <Selecting AllowRowSelect="True" />
                                             </ClientSettings>
-                                        </telerik:RadGrid>
+                                        </telerik:RadGrid>--%>
                                         </li>
                                         <%--End Load LAB and IMG Document--%>
 
@@ -328,7 +329,8 @@
                                             <span>Scan Document</span>
                                         </a>--%>
                                         <li>
-                                            <telerik:RadGrid ID="RadGrid3" runat="server" Width="100%" OnNeedDataSource="RadGrid3_NeedDataSource"
+                                            <telerik:RadTreeView OnNodeClick="RadTreeView3_NodeClick" ID="RadTreeView3" runat="server" OnNodeExpand="RadTreeView3_NodeExpand"/>
+                                            <%--<telerik:RadGrid ID="RadGrid3" runat="server" Width="100%" OnNeedDataSource="RadGrid3_NeedDataSource"
                                             ShowHeader="false" OnDetailTableDataBind="RadGrid3_DetailTableDataBind" AllowSorting="true" AllowFilteringByColumn="false"
                                             AutoGenerateColumns="False" AllowMultiRowSelection="False" GridLines="None" EnableLinqExpressions="false" ShowFooter="false">
                                             <MasterTableView DataKeyNames="patient_id,document_type_rcd" AllowMultiColumnSorting="True" Width="100%" Name="Master" TableLayout="Fixed"
@@ -362,7 +364,7 @@
                                                 <Selecting AllowRowSelect="True" />
                                                 <Scrolling AllowScroll="True" ScrollHeight="100%" UseStaticHeaders="True" SaveScrollPosition="true" />
                                             </ClientSettings>
-                                        </telerik:RadGrid>
+                                        </telerik:RadGrid>--%>
                                         </li>
                                         <%--End Load Scan Document--%>
                                     </ul>

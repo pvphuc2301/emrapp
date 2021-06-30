@@ -1019,8 +1019,9 @@ namespace EMR.IPD
                 Ogia ogia = new Ogia(Request.QueryString["docId"]);
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-               
+
                 prt_barcode.Text = Patient.Instance().visible_patient_id;
+
                 if (ogia.status == DocumentStatus.FINAL)
                 {
                     BindingDataForm(ogia, WebHelpers.LoadFormControl(form1, ogia, ControlState.View, (string)Session["location"]));

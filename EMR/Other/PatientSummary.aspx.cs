@@ -147,7 +147,6 @@ namespace EMR
                             {
                                 Response.Redirect(url, false);
                             }
-
                         }
                     }
                 }

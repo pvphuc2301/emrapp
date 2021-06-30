@@ -46,6 +46,8 @@ namespace EMR
             if (!IsPostBack)
             {
                 LoadRootNodes(RadTreeView1, TreeNodeExpandMode.ServerSideCallBack);
+                LoadRootLAB_RAD(RadTreeView2, TreeNodeExpandMode.ServerSideCallBack);
+                LoadRootScan(RadTreeView3, TreeNodeExpandMode.ServerSideCallBack);
 
                 BindLocation();
                 lblUserName.Text = (string)Session["UserName"];
@@ -64,6 +66,198 @@ namespace EMR
             
             PostBackEventHandler();
         }
+
+        #region Menu Lab RAD
+        private void LoadRootLAB_RAD(RadTreeView treeView, TreeNodeExpandMode expandMode)
+        {
+            string query = "SELECT document_type_rcd, document_type_name description FROM document_type ";
+            query += "WHERE (document_type_rcd = N'RAD' OR document_type_rcd = N'LAB') ";// AND (active_flag = 1) ";
+            query += "ORDER BY document_type_rcd";
+
+            string apiURL = $"api/emr/menu-visit/{DataHelpers._LOCATION}/{varPID}";
+            dynamic response = WebHelpers.GetAPI(apiURL);
+
+            DataTable mydataTable = new DataTable();
+            mydataTable = GetDataTable(query, ConnStringEMR);
+
+            //     if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                //       mydataTable = WebHelpers.GetJSONToDataTable(response.Data);
+
+                foreach (DataRow row in mydataTable.Rows)
+                {
+                    RadTreeNode node = new RadTreeNode();
+                    node.Text = row["description"].ToString();
+                    node.Value = row["document_type_rcd"].ToString();
+                    node.ExpandMode = expandMode;
+                    node.NavigateUrl = "";// row["visit_code"].ToString();
+                    node.Target = "MainContent";
+                    treeView.Nodes.Add(node);
+                }
+            }
+        }
+        protected void RadTreeView2_NodeExpand(object sender, RadTreeNodeEventArgs e)
+        {
+            PopulateLabRadOnDemand(e, TreeNodeExpandMode.ServerSideCallBack);
+        }
+        private void PopulateLabRadOnDemand(RadTreeNodeEventArgs e, TreeNodeExpandMode expandMode)
+        {
+            DataTable data = GetChildLabRad(varPID, e.Node.Value);// e.Node.Value);
+            //string ParentID = e.Node.Value;
+
+            foreach (DataRow row in data.Rows)
+            {
+                RadTreeNode node = new RadTreeNode();
+
+                node.Text = ReturnScan_Date(row["actual_visit_date_time"], row["caregiver_name_l"]);
+                node.Value = e.Node.Value; //varPID;// row["actual_visit_date_time"].ToString();
+                node.Attributes["docId"] = row["actual_visit_date_time"].ToString();
+                node.Attributes["modelId"] = row["patient_visit_id"].ToString();
+                // node.Attributes["status"] = row["status"].ToString();
+
+                //node.Attributes.Add("data-modified-datetime", row["modified_date_time"].ToString());
+                //node.Attributes.Add("data-modified-name", row["modified_name_l"].ToString());
+                //node.Attributes.Add("data-title", ReturnForm_Name(row["status"], row["model_name"], row["created_name_e"]));
+                //node.Attributes.Add("data-category", "");
+                //node.Attributes.Add("data-visit", "");
+                //node.Attributes.Add("data-author", row["created_name_e"].ToString());
+
+                node.CssClass = "list-item";
+                node.NavigateUrl = "javascript:void();";
+                node.Target = "MainContent";
+
+                e.Node.Nodes.Add(node);
+            }
+
+            e.Node.Expanded = true;
+        }
+        private DataTable GetChildLabRad(string PatientID, string ParentID)
+        {
+            DataHelpers.LoadPatientVisitInfomation(PatientID);
+            string apiURL = $"api/patient/menu-lab-visit/{DataHelpers._LOCATION}/" + PatientID;
+
+            if (ParentID == "RAD")
+                apiURL = $"api/patient/menu-rad-visit/{DataHelpers._LOCATION}/" + PatientID;
+
+            dynamic response = WebHelpers.GetAPI(apiURL);
+
+            DataTable mydataTable = new DataTable();
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                mydataTable = WebHelpers.GetJSONToDataTable(response.Data);
+            }
+            return mydataTable;
+        }
+        protected void RadTreeView2_NodeClick(object sender, RadTreeNodeEventArgs e)
+        {
+            DateTime tmpDate; string tmpD = "";
+
+            if (e.Node.Level != 0)
+            {
+                string docid = e.Node.Attributes["docId"];
+                string modelId = e.Node.Attributes["modelId"];
+
+                if (!string.IsNullOrEmpty(Convert.ToString(docid)))
+                {
+                    tmpDate = Convert.ToDateTime(docid);
+                    tmpD = string.Format("{0:yyyy-mm-dd}", tmpDate);// tmpDate.Year.ToString() + "-" + tmpDate.Month.ToString() + "-" + tmpDate.Day.ToString();
+                }
+                string tmp = $"../report/labtab.aspx?pid={varPID}&vid={modelId}&frd={tmpD}";
+                string ParentID = e.Node.Value;
+                if (ParentID == "RAD")
+                    tmp = $"../report/ImagingTab.aspx?pid={varPID}&vid={modelId}";
+
+                MainContent.ContentUrl = tmp;
+            }
+            else e.Node.NavigateUrl = "javascript:void();";
+        }
+        #endregion
+
+        #region Menu Scan
+        private void LoadRootScan(RadTreeView treeView, TreeNodeExpandMode expandMode)
+        {
+
+            string apiURL = "api/patient/document-type-list/" + Session["company_code"] + "/" + varPID;
+            dynamic response = WebHelpers.GetAPI(apiURL);
+
+            DataTable mydataTable = new DataTable();
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                mydataTable = WebHelpers.GetJSONToDataTable(response.Data);
+
+                foreach (DataRow row in mydataTable.Rows)
+                {
+                    RadTreeNode node = new RadTreeNode();
+                    node.Text = row["doc_type_name_l"].ToString();
+                    node.Value = row["document_type_rcd"].ToString();
+                    node.ExpandMode = expandMode;
+                    node.NavigateUrl = "";// row["visit_code"].ToString();
+                    node.Target = "MainContent";
+                    treeView.Nodes.Add(node);
+                }
+            }
+        }
+        protected void RadTreeView3_NodeExpand(object sender, RadTreeNodeEventArgs e)
+        {
+            PopulateScanOnDemand(e, TreeNodeExpandMode.ServerSideCallBack);
+        }
+        private void PopulateScanOnDemand(RadTreeNodeEventArgs e, TreeNodeExpandMode expandMode)
+        {
+            DataTable data = GetChildScan(varPID, e.Node.Value);
+            string ParentID = e.Node.Value;
+
+            foreach (DataRow row in data.Rows)
+            {
+                RadTreeNode node = new RadTreeNode();
+
+                node.Text = ReturnScan_Date(row["creation_date_time"], row["event_category_name_l"]);
+                node.Value = row["document_type_rcd"].ToString();
+                node.Attributes["docId"] = row["file_system_object_id"].ToString();
+                node.Attributes["modelId"] = row["document_page_id"].ToString();
+                //node.Attributes["status"] = row["status"].ToString();
+
+                node.CssClass = "list-item";
+
+                node.NavigateUrl = "javascript:void();";
+                node.Target = "MainContent";
+
+                e.Node.Nodes.Add(node);
+            }
+
+            e.Node.Expanded = true;
+        }
+        private DataTable GetChildScan(string PatientID, string ParentID)
+        {
+            string apiURL = $"api/patient/document-list/{DataHelpers._LOCATION}/" + PatientID + "/" + ParentID;
+            dynamic response = WebHelpers.GetAPI(apiURL);
+
+            DataTable mydataTable = new DataTable();
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                mydataTable = WebHelpers.GetJSONToDataTable(response.Data);
+            }
+            return mydataTable;
+        }
+        protected void RadTreeView3_NodeClick(object sender, RadTreeNodeEventArgs e)
+        {
+            if (e.Node.Level != 0)
+            {
+                string docid = e.Node.Attributes["docId"];
+                string modelId = e.Node.Attributes["modelId"];
+
+                //     if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], (string)Session["location"]))
+                {
+                    string apiURL = $"../emr/emrview.aspx?pf={docid}&dp={modelId}&action=view";
+                    MainContent.ContentUrl = apiURL;
+
+                }
+            }
+            else e.Node.NavigateUrl = "javascript:void();";
+        }
+        #endregion
 
         private void LoadRootNodes(RadTreeView treeView, TreeNodeExpandMode expandMode)
         {
@@ -428,14 +622,14 @@ namespace EMR
                 return myDataTable;
             }
         }
-        protected void RadGrid2_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
-        {
-            string query = "SELECT document_type_rcd, document_type_name description FROM document_type ";
-            query += "WHERE (document_type_rcd = N'RAD' OR document_type_rcd = N'LAB') ";// AND (active_flag = 1) ";
-            query += "ORDER BY document_type_rcd";
-            if (!string.IsNullOrEmpty(varPID) && !IsPostBack)
-                RadGrid2.DataSource = GetDataTable(query, ConnStringEMR);
-        }
+        //protected void RadGrid2_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
+        //{
+        //    string query = "SELECT document_type_rcd, document_type_name description FROM document_type ";
+        //    query += "WHERE (document_type_rcd = N'RAD' OR document_type_rcd = N'LAB') ";// AND (active_flag = 1) ";
+        //    query += "ORDER BY document_type_rcd";
+        //    if (!string.IsNullOrEmpty(varPID) && !IsPostBack)
+        //        RadGrid2.DataSource = GetDataTable(query, ConnStringEMR);
+        //}
 
         protected void RadGrid2_DetailTableDataBind(object source, Telerik.Web.UI.GridDetailTableDataBindEventArgs e)
         {
@@ -476,36 +670,36 @@ namespace EMR
                 }
             }
         }
-        protected void LinkButton1_Click(object sender, EventArgs e)
-        {
-            GridDataItem item1 = ((sender as LinkButton).NamingContainer as GridDataItem);
-            GridTableView gridTable = RadGrid2.MasterTableView;
+        //protected void LinkButton1_Click(object sender, EventArgs e)
+        //{
+        //    GridDataItem item1 = ((sender as LinkButton).NamingContainer as GridDataItem);
+        //    GridTableView gridTable = RadGrid2.MasterTableView;
 
-            foreach (GridDataItem item in gridTable.Items)
-            {
-                if (item.Expanded)
-                {
-                    foreach (GridTableView childItem in item.ChildItem.NestedTableViews)
-                    {
-                        childItem.BackColor = System.Drawing.Color.Blue; // set this color as per your skin
-                    }
-                }
-            }
+        //    foreach (GridDataItem item in gridTable.Items)
+        //    {
+        //        if (item.Expanded)
+        //        {
+        //            foreach (GridTableView childItem in item.ChildItem.NestedTableViews)
+        //            {
+        //                childItem.BackColor = System.Drawing.Color.Blue; // set this color as per your skin
+        //            }
+        //        }
+        //    }
 
-            item1.BackColor = System.Drawing.Color.Red;
-        }
-        protected void RadGrid3_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
-        {
-            if (!IsPostBack)
-            {
-                dynamic response = WebHelpers.GetAPI("api/patient/document-type-list/" + Session["company_code"] + "/" + varPID);
+        //    item1.BackColor = System.Drawing.Color.Red;
+        //}
+        //protected void RadGrid3_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
+        //{
+        //    if (!IsPostBack)
+        //    {
+        //        dynamic response = WebHelpers.GetAPI("api/patient/document-type-list/" + Session["company_code"] + "/" + varPID);
 
-                if (response.Status == System.Net.HttpStatusCode.OK)
-                {
-                    RadGrid3.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
-                }
-            }
-        }
+        //        if (response.Status == System.Net.HttpStatusCode.OK)
+        //        {
+        //            RadGrid3.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+        //        }
+        //    }
+        //}
 
         protected void RadGrid3_DetailTableDataBind(object source, Telerik.Web.UI.GridDetailTableDataBindEventArgs e)
         {

@@ -17,7 +17,7 @@ namespace EMR
     public partial class EmergencyTriageAndNursingAssessmentRecord : System.Web.UI.Page
     {
         #region Variables
-        Ena ena;
+        public Ena ena;
         MemoryStream ms;
         #endregion
         
@@ -336,29 +336,34 @@ namespace EMR
         {
             try
             {
+
                 Patient patient = Patient.Instance();
+                PatientVisit patientVisit = PatientVisit.Instance();
+
                 //prt_pid.Text = prt_vpid.Text = prt_barcode.Text = patient.visible_patient_id;
-                prtdate.Text = $"Ngày/Date: ___/___/20___ Giờ/ Triage Time ___:___ Khu vực/ Triage Area #:";
-                prt_fullname.Text = $"Họ tên/ Patient Name {patient.GetFullName()}";
-                prt_dob.Text = $"Ngày sinh/ DOB:___/___/___";
-                prt_nationality.Text = $"Quốc tịch/ Nationality:";
-                prt_address.Text = $"Chỗ ở hiện tại/ Home Address:";
-                prt_contact.Text = $"Người liên lạc/ Contact: ";
-                prt_relationship.Text = $"Quan hệ/ Relationship: ";
-                prt_telephone.Text = $"Số điện thoại/ Telephone: ";
-                prt_chieft_complaint.Text = $"Than phiền chính/ Chieft complaint: ";
+                prtdate.Text = $"Ngày/<span class='text-primary'>Date</span>: {WebHelpers.FormatDateTime(patientVisit.actual_visit_date_time)} Giờ/ <span class='text-primary'>Triage Time</span> {WebHelpers.FormatDateTime(ena.triage_time, "HH")}:{WebHelpers.FormatDateTime(ena.triage_time, "mm")} Khu vực/ <span class='text-primary'>Triage Area</span> #: {ena.triage_area}";
+                
+                prt_fullname.Text = patient.GetFullName();
+                prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth);
+                prt_nationality.Text = patient.GetNationality() ;
+                prt_address.Text = patient.GetAddress();
+                prt_contact.Text = patient.getContact();
+                prt_relationship.Text = patient.getRelationship();
+                prt_telephone.Text = patient.contact_phone_number;
+                prt_chieft_complaint.Text = ena.chief_complaint;
                 prt_chieft_complaint_code.Text = WebHelpers.CreateOptions(Ena.TRIAGE_CODE, ena.triage_code, "display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr");
 
-                prt_mode_of_arrival.Text = "Đến khoa bằng/ Mode of arrival " + WebHelpers.CreateOptions(Ena.ARRIVAL_MODE_CODE, ena.arrival_mode_code, "display: grid; grid-template-columns: 1fr 1fr 1fr");
-                prt_past_medical_history.Text = ena.past_medical_history;
+                prt_mode_of_arrival.Text = WebHelpers.CreateOptions(Ena.ARRIVAL_MODE_CODE, ena.arrival_mode_code, "display: grid; grid-template-columns: 1fr 1fr 1fr");
 
-                prt_vital_signs.Text = "Dấu sinh hiệu/ Vital signs: Huyết áp/BP:___ /___mmHg Mạch/ Pulse:___lần/phút/bpm Nhiệt độ/Temp:___0C (Gồm trẻ em/Including child aged >= 3 tuổi/years old) Nhịp thở/Resp: ___ lần/phút/min. Độ bão hòa oxy/O2Sat: ___%";
+                prt_past_medical_history.Text = "Tiền căn/ <span class='text-primary'>Past Medical History:</span>" + ena.past_medical_history;
+
+                prt_vital_signs.Text = $"Dấu sinh hiệu/ <span class='text-primary'>Vital signs</span>: Huyết áp/<span class='text-primary'>BP</span>:{ena.vs_blood_pressure}mmHg Mạch/ <span class='text-primary'>Pulse</span>:{ena.vs_head_circum}lần/phút/bpm Nhiệt độ/<span class='text-primary'>Temp</span>:{ena.vs_temperature}0C (Gồm trẻ em/<span class='text-primary'>Including child aged</span> >= 3 tuổi/<span class='text-primary'>years old</span>) Nhịp thở/<span class='text-primary'>Resp</span>: {ena.vs_respiratory_rate} lần/phút/min. Độ bão hòa oxy/<span class='text-primary'>O2Sat</span>: {ena.vs_spo2}%";
 
                 prt_loc_avpu.Text = WebHelpers.CreateOptions(Ena.LOC_AVPU_CODE, ena.loc_avpu, "display: grid; grid-template-columns: 1fr 1fr 1fr 1fr");
 
-                prt_pain_assess.Text = "Đánh giá đau/ Pain assess. Khởi phát/ Onset______Vị trí/ Location______Kéo dài/Duration_______Hướng lan/Radiation_______";
+                prt_pain_assess.Text = $"Đánh giá đau/ <span class='text-primary'>Pain assess</span>. Khởi phát/ <span class='text-primary'>Onset</span>{ena.pain_onset}Vị trí/ <span class='text-primary'>Location</span>{ena.pain_location}Kéo dài/<span class='text-primary'>Duration</span>{ena.pain_duration}Hướng lan/Radiation {ena.pain_radiation}";
 
-                prt_pain_scale.Text = ena.pain_score;
+                prt_pain_scale.Text = $"Điểm đau/ <span class='text-primary'>Pain scale:</span>{ena.pain_score}/10";
 
                 prt_weight.Text = $"Cân nặng/ Weight: {ena.vs_weight} kg Chiều cao/ Height: {ena.vs_height}cm";
                 prt_pulse.Text = $"Vòng đầu/ Head circumsference: {ena.vs_head_circum} cm";
@@ -372,25 +377,79 @@ namespace EMR
                 prt_discharge_plan.Text = WebHelpers.CreateOptions(Ena.DISCHARGE_PLAN_CODE, ena.discharge_plan, "");
                 prt_caregiver_after_discharge.Text = $"Người chăm sóc sau khi xuất viện/ People who will look after patient after discharge {ena.caregiver_after_discharge}";
 
-                prt_btc_language.Text = $"1. Trở ngại về ngôn ngữ/ Language Barriers:" + WebHelpers.CreateOptions(new Option {Text="Không/ No", Value=false}, new Option { Text = "Có, Giải thích/ Yes Explain " }, ena.btc_language, "display: grid") + (ena.btc_language ? ena.btc_language_note : "");
+                prt_btc_language.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, Giải thích/ Yes Explain " }, ena.btc_language, "display: grid;grid-template-columns:auto auto;");
+                prt_btc_language_note.Text = ena.btc_language_note;
 
-                //ena.btc_cognitive.Text = $"2. Trở ngại về nhận thức/ Cognitive Barriers: {ena.btc_cognitive}";
-                //ena.btc_sensory.Text = $"3. Trở ngại về Giác quan/ Sensory Barriers: {ena.}";
-                //ena.btc_religious.Text = $"1. Trở ngại về ngôn ngữ/ Language Barriers: {ena.btc_language}";
-                //ena.btc_cultural.Text = $"1. Trở ngại về ngôn ngữ/ Language Barriers: {ena.btc_language}";
+                prt_btc_cognitive.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, Giải thích/ Yes Explain " }, ena.btc_cognitive, "display: grid;grid-template-columns:auto auto;");
+                prt_btc_cognitive_note.Text = ena.btc_cognitive_note;
 
-                //prt_diagnosis.Text = uusr.diagnosis;
-                //prt_left_kidney.Text = uusr.left_kidney;
-                //prt_right_kidney.Text = uusr.right_kidney;
-                //prt_urinary_bladder.Text = uusr.urinary_bladder;
-                //prt_prostate.Text = uusr.prostate;
-                //prt_post_void_resi_volume.Text = uusr.post_void_resi_volume;
-                //prt_conclusion.Text = uusr.conclusion;
-                //prt_recommendation.Text = uusr.recommendation;
+                //prt_btc_sensory.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, Giải thích/ Yes Explain " }, ena.btc_sensory, "display: grid;grid-template-columns:auto auto;");
+                //prt_btc_sensory_note.Text = ena.btc_sensory_note;
+
+                //prt_btc_religious.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, Giải thích/ Yes Explain " }, ena.btc_religious, "display: grid;grid-template-columns:auto auto;") + (ena.btc_religious ? ena.btc_religious_note : "");
+                //prt_btc_religious_note.Text = ena.btc_religious_note;
+
+                //prt_btc_cultural.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, Giải thích/ Yes Explain " }, ena.btc_cultural, "display: grid;grid-template-columns:auto auto;");
+                //prt_btc_cultural_note.Text = ena.btc_cultural_note;
+
+                prt_room_number.Text = "";
+                prt_time_of_assess.Text = " ";
+
+                prt_general_appearance.Text = WebHelpers.CreateOptions(Ena.GENERAL_APPEARANCE_CODE, ena.general_appearance, "");
+                prt_neuro.Text = $"Thần kinh/ <span class='text-primary'>Neuro</span>: GCS: Mắt/<span class='text-primary'>E</span> {ena.eye} Lời nói/<span class='text-primary'>V</span> {ena.voice} Vận động/<span class='text-primary'>M</span> {ena.motion}";
+
+                prt_alert.Text = WebHelpers.GetCheckedIcon(ena.alert);
+                prt_coma.Text = WebHelpers.GetCheckedIcon(ena.coma);
+                prt_other.Text = WebHelpers.GetCheckedIcon(ena.others);
+                prt_str_others.Text = ena.str_others;
+
+
+                prt_rhythm_regular.Text = WebHelpers.GetCheckedIcon(ena.rhythm_regular);
+                prt_rhythm_inregular.Text = WebHelpers.GetCheckedIcon(ena.rhythm_inregular);
+
+                prt_psychosocial.Text = WebHelpers.GetCheckedIcon(ena.psychosocial);
+                prt_psychosocial_others.Text = WebHelpers.GetCheckedIcon(ena.psychosocial_others);
+                prt_psychosocial_str_others.Text = ena.psychosocial_str_others;
+
+                //
+                prt_other_systems_normal.Text = WebHelpers.GetCheckedIcon(ena.other_systems_normal);
+                prt_other_systems_abnormal.Text = WebHelpers.GetCheckedIcon(ena.other_systems_abnormal);
+                prt_others_systems_str.Text = WebHelpers.GetCheckedIcon(ena.others_systems_str);
+                //
+                prt_lmp.Text = WebHelpers.GetCheckedIcon(ena.lmp);
+                prt_lmp_note.Text = ena.lmP_note;
+                prt_para.Text = ena.para;
+                prt_abortions.Text = ena.abortions;
+
+                prt_respiratory.Text = ena.respiratory;
+
+                //
+                prt_noticed_time.Text = WebHelpers.FormatDateTime(ena.noticed_time, "dd-MM-yyyy HH:mm");
+
+                prt_assessment_system.DataSource = WebHelpers.GetJSONToDataTable(ena.assessment_system);
+                prt_assessment_system.DataBind();
+
+                prt_direct_medication.DataSource = WebHelpers.GetJSONToDataTable(ena.direct_medication);
+                prt_direct_medication.DataBind();
+
+                //
+                prt_discharge_by.Text = ena.discharge_by;
+                prt_discharge_date_time.Text = WebHelpers.FormatDateTime(ena.discharge_date_time);
+                prt_discharge_option.Text = WebHelpers.CreateOptions(Ena.DISCHARGE_OPTION_CODE, ena.discharge_option, "");
+
+                prt_admited_date_time.Text = WebHelpers.FormatDateTime(ena.admited_date_time);
+                prt_admited_by.Text = ena.admited_by;
+                prt_receiving_unit.Text = "Khoa tiếp nhận/ Receiving Unit: " + ena.receiving_unit;
+                prt_transfer_to.Text = $"Chuyển viện/ Transfer to: {ena.transfer_to}";
+                prt_transfer_by.Text = $"bởi BS/ by Dr. {ena.transfer_by}";
+
+                prt_nursing_note.DataSource = WebHelpers.GetJSONToDataTable(ena.nursing_note);
+                prt_nursing_note.DataBind();
+
             }
             catch (Exception ex)
             {
-
+                WebHelpers.SendError(Page, ex);
             }
         }
         #endregion
@@ -564,10 +623,12 @@ namespace EMR
             if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
             if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
             if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
-
             try
             {
                 Ena ena = new Ena(Request.QueryString["docId"]);
+                BindingDataFormPrint(ena);
+
+                imageTemp.Src = JObject.Parse(ena.skin_anno_data).dataURI;
 
                 ena.skin_anno_data = WebHelpers.getImageDefault(ena.skin_anno_data);
 
@@ -778,6 +839,163 @@ namespace EMR
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
         }
         #endregion
-        
+
+        protected void prt_direct_medication_RowCreated(object sender, GridViewRowEventArgs e)
+        {
+            if(e.Row.RowType == DataControlRowType.Header)
+            {
+                GridViewRow HeaderRow = new GridViewRow(1, 0, DataControlRowType.Header, DataControlRowState.Insert);
+
+                TableCell HeaderCell2 = new TableCell();
+
+                HeaderCell2.Text = "Giờ/ Time";
+
+                HeaderCell2.RowSpan = 2;
+
+                HeaderRow.Cells.Add(HeaderCell2);
+
+
+
+                HeaderCell2 = new TableCell();
+
+                HeaderCell2.Text = "Y lệnh thuốc & dịch truyền trực tiếp/ Direct Medication & IV fluids Order";
+
+                HeaderCell2.ColumnSpan = 4;
+
+                HeaderRow.Cells.Add(HeaderCell2);
+
+
+
+                HeaderCell2 = new TableCell();
+
+                HeaderCell2.Text = "BÁC SĨ/ DOCTOR";
+
+                HeaderCell2.RowSpan = 2;
+
+                HeaderRow.Cells.Add(HeaderCell2);
+
+
+                HeaderCell2 = new TableCell();
+
+                HeaderCell2.Text = "GHI CHÚ/ COMMENT";
+
+                HeaderCell2.RowSpan = 2;
+
+                HeaderRow.Cells.Add(HeaderCell2);
+
+
+
+                HeaderCell2 = new TableCell();
+
+                HeaderCell2.Text = "Giờ/ Time";
+
+                HeaderCell2.RowSpan = 2;
+
+                HeaderRow.Cells.Add(HeaderCell2);
+
+
+                HeaderCell2 = new TableCell();
+
+                HeaderCell2.Text = "Chữ kí/ Tên & MSNV Signature/ Name & ID";
+
+                HeaderCell2.RowSpan = 2;
+
+                HeaderRow.Cells.Add(HeaderCell2);
+
+
+                prt_direct_medication.Controls[0].Controls.AddAt(0, HeaderRow);
+
+                GridViewRow HeaderRow1 = new GridViewRow(0, 0, DataControlRowType.Header, DataControlRowState.Insert);
+
+
+                TableCell HeaderCell = new TableCell();
+
+                HeaderCell.Text = "Thuốc/ Medication Dịch truyền/ IV FLUIDS";
+
+                HeaderRow1.Cells.Add(HeaderCell);
+
+
+
+                HeaderCell = new TableCell();
+
+                HeaderCell.Text = "LIỀU/ DOSE";
+
+                HeaderRow1.Cells.Add(HeaderCell);
+
+
+
+                HeaderCell = new TableCell();
+
+                HeaderCell.Text = "ĐƯỜNG DÙNG/ ROUTE";
+
+                HeaderRow1.Cells.Add(HeaderCell);
+
+
+                HeaderCell = new TableCell();
+
+                HeaderCell.Text = "TỐC ĐỘ/ RATE";
+
+                HeaderRow1.Cells.Add(HeaderCell);
+
+                prt_direct_medication.Controls[0].Controls.AddAt(1, HeaderRow1);
+            }
+        }
+
+        protected void prt_nursing_note_RowCreated(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.Header)
+            {
+                GridViewRow HeaderRow = new GridViewRow(1, 0, DataControlRowType.Header, DataControlRowState.Insert);
+
+                TableCell HeaderCell2 = new TableCell();
+
+                HeaderCell2.Text = "PHIẾU GHI CHÚ ĐIỀU DƯỠNG <br/> <span class='text-primary text-center'> NURSING NOTES</span>";
+                HeaderCell2.CssClass = "p-2 text-center";
+                HeaderCell2.ColumnSpan = 5;
+
+                HeaderRow.Cells.Add(HeaderCell2);
+
+                prt_nursing_note.Controls[0].Controls.AddAt(0, HeaderRow);
+
+                GridViewRow HeaderRow1 = new GridViewRow(0, 0, DataControlRowType.Header, DataControlRowState.Insert);
+
+
+                TableCell HeaderCell = new TableCell();
+                
+                HeaderCell.Text = "NGÀY <br> <span class='text-primary text-center'>DATE</span>  <br/> dd/mm/yyyy";
+                HeaderCell.Width = 50;
+                HeaderCell.CssClass = "p-2 text-center";
+                HeaderRow1.Cells.Add(HeaderCell);
+
+                HeaderCell = new TableCell();
+
+                HeaderCell.Text = "GIỜ PHÚT <br/> <span class='text-primary text-center'>TIME </span> <br/> hh:mm";
+                HeaderCell.Width = 40;
+                HeaderCell.CssClass = "p-2 text-center";
+                HeaderRow1.Cells.Add(HeaderCell);
+
+                HeaderCell = new TableCell();
+
+                HeaderCell.Text = "THEO DÕI DIỄN TIẾN <br/> <span class='text-primary text-center'> PATIENT CONDITION </span>";
+                HeaderCell.Width = 100;
+                HeaderCell.CssClass = "p-2 text-center";
+                HeaderRow1.Cells.Add(HeaderCell);
+
+
+                HeaderCell = new TableCell();
+
+                HeaderCell.Text = "CAN THIỆP ĐIỀU DƯỠNG <br/> <span class='text-primary text-center'>NURSING INTERVENTION</span>";
+                HeaderCell.CssClass = "p-2 text-center";
+                HeaderRow1.Cells.Add(HeaderCell);
+
+                HeaderCell = new TableCell();
+                HeaderCell.CssClass = "p-2 text-center";
+                HeaderCell.Text = "KÝ/GHI TÊN ĐD <br/> <span class='text-primary text-center'>RN'S NAME & SIGNATURE</span>";
+
+                HeaderRow1.Cells.Add(HeaderCell);
+
+                prt_nursing_note.Controls[0].Controls.AddAt(1, HeaderRow1);
+            }
+        }
     }
 }
