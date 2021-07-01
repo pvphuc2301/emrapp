@@ -149,7 +149,7 @@ namespace EMR.ER
                 txt_patient_discharge.Value = emr.txt_patient_discharge;
                 txt_icd_10.Value = emr.icd_10;
 
-                WebHelpers.AddScriptFormEdit(Page, emr);
+                WebHelpers.AddScriptFormEdit(Page, emr, (string)Session["emp_id"]);
             }
             catch (Exception ex)
             {

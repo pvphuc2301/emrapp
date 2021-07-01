@@ -50,7 +50,7 @@ namespace EMR
                 txt_conclusion.Value = uusr.conclusion;
                 txt_recommendation.Value = uusr.recommendation;
 
-                WebHelpers.AddScriptFormEdit(Page, uusr);
+                WebHelpers.AddScriptFormEdit(Page, uusr, (string)Session["emp_id"]);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
         }

@@ -75,7 +75,7 @@ namespace EMR
                 //11. Lời khuyên và theo dõi
                 txt_treatment_plan.Value = mc.treatment_plan;
 
-                WebHelpers.AddScriptFormEdit(Page, mc);
+                WebHelpers.AddScriptFormEdit(Page, mc, (string)Session["emp_id"]);
             }
             catch (Exception ex)
             {

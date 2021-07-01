@@ -40,7 +40,7 @@ namespace EMR
                 txt_blood_type.Value = surc.blood_type;
                 txt_rh.Value = surc.rh;
 
-                WebHelpers.AddScriptFormEdit(Page, surc);
+                WebHelpers.AddScriptFormEdit(Page, surc, (string)Session["emp_id"]);
             }
             catch (Exception ex)
             {

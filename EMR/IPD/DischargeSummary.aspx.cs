@@ -126,7 +126,7 @@ namespace EMR
                 WebHelpers.BindDateTimePicker(dpk_signed_date, diss.signed_date);
                 txt_signed_doctor.Value = diss.signed_doctor;
 
-                WebHelpers.AddScriptFormEdit(Page, diss);
+                WebHelpers.AddScriptFormEdit(Page, diss, (string)Session["emp_id"]);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
             

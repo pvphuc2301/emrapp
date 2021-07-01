@@ -1,4 +1,5 @@
 let intervalID; let timeoutID;
+var comfirm_leave_page;
 
 function formGroup_init() {
     document.querySelectorAll('.form-group').forEach(e => {
@@ -251,26 +252,47 @@ function popupShowDelay(sessionTimeout) {
 //    });
 //}
 
-function leaveEditFormEvent() {
-    window.addEventListener('onbeforeunload', function () {
-        setTimeout(function () {
-            setTimeout(function () {
-                console.log('stayed');
-            }, 0);
-        }, 1);
-        console.log('leave');
-        return "You are leaving the page";
-    });
+function comfirm_leave_page(event) {
+    let doc_id = sessionStorage.getItem('doc_id');
+    let location = sessionStorage.getItem('location');
+    let emp_id = sessionStorage.getItem('emp_id');
+    let obj = JSON.parse(sessionStorage.getItem(doc_id));
 
-    //window.onbeforeunload = () => {
-    //    setTimeout(function () {
-    //        setTimeout(function () {
-    //            console.log('stayed');
-    //        }, 0);
-    //    }, 1);
-    //    console.log('leave');
-    //    return "You are leaving the page";
-    //}
+    setTimeout(function () {
+        setTimeout(function () {
+            $.get('http://172.16.0.78:8088/api/emr/check-session/' + location + '/' + obj.document_id + '/' + emp_id, function (data) { console.log(data) });
+        }, 2000);
+    }, 1);
+
+    console.log("leaving");
+
+    $.ajax({
+        url: 'http://172.16.0.78:8088/api/emr/clear-session/' + location + '/' + obj.document_id,
+        type: 'POST',
+        dataType: 'json',
+        data: "{}",
+        success: function (data, textStatus, xhr) {
+            console.log(data);
+        },
+        error: function (xhr, textStatus, errorThrown) {
+            console.log('Error in Operation');
+        }
+    });
+    event.returnValue = '';
+    return "You are leaving the page";
+}
+
+function editFormEvent(doc, location, emp_id) {
+    console.log('doc', doc);
+    let obj = JSON.parse(doc);
+    window.sessionStorage.setItem('doc_id', obj.document_id);
+    window.sessionStorage.setItem(obj.document_id, JSON.stringify(obj));
+    window.sessionStorage.setItem('location', location);
+    window.sessionStorage.setItem('emp_id', emp_id);
+
+    window.addEventListener('beforeunload', comfirm_leave_page, true);
+
+    console.log('comfirm_leave_page', comfirm_leave_page);
 }
 
 function ShowInfo(text) {

@@ -24,7 +24,7 @@ namespace EMR
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!WebHelpers.CheckSession(this)) return;
+            if (!WebHelpers.CheckSession(this, "", false)) return;
             //if (Session["PageOpenEMR"] != null)
             //{
             //    HttpContext current_ss = HttpContext.Current;
@@ -45,9 +45,13 @@ namespace EMR
 
             if (!IsPostBack)
             {
-                LoadRootNodes(RadTreeView1, TreeNodeExpandMode.ServerSideCallBack);
-                LoadRootLAB_RAD(RadTreeView2, TreeNodeExpandMode.ServerSideCallBack);
-                LoadRootScan(RadTreeView3, TreeNodeExpandMode.ServerSideCallBack);
+                PatientSummary.ContentUrl = $"~/Other/PatientSummary.aspx?pid={varPID}&vpid={varVPID}";
+                OrderList.ContentUrl = $"~/Phar/orderlist.aspx?pid={varPID}&vbid={varVPID}";
+                OpdPrescription.ContentUrl = $"~/Phar/opdpreslist.aspx?pid={varPID}";
+
+                //LoadRootNodes(RadTreeView1, TreeNodeExpandMode.ServerSideCallBack);
+                //LoadRootLAB_RAD(RadTreeView2, TreeNodeExpandMode.ServerSideCallBack);
+                //LoadRootScan(RadTreeView3, TreeNodeExpandMode.ServerSideCallBack);
 
                 BindLocation();
                 lblUserName.Text = (string)Session["UserName"];
@@ -59,7 +63,7 @@ namespace EMR
                 
                 lblPatientInfo.InnerHtml = $"{patient.GetFullName()} ({patient.GetTitle()}), DOB {WebHelpers.FormatDateTime(patient.date_of_birth)} ({patient.GetAge()} y) SEX {patient.GetGender()} PID {patient.visible_patient_id}";
 
-                MainContent.ContentUrl = string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", varPID, varVPID);
+                //MainContent.ContentUrl = string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", varPID, varVPID);
 
                 FetchImage();
             }
@@ -123,7 +127,7 @@ namespace EMR
                 //node.Attributes.Add("data-author", row["created_name_e"].ToString());
 
                 node.CssClass = "list-item";
-                node.NavigateUrl = "javascript:void();";
+                node.NavigateUrl = "javascript:void(0);";
                 node.Target = "MainContent";
 
                 e.Node.Nodes.Add(node);
@@ -168,9 +172,9 @@ namespace EMR
                 if (ParentID == "RAD")
                     tmp = $"../report/ImagingTab.aspx?pid={varPID}&vid={modelId}";
 
-                MainContent.ContentUrl = tmp;
+                //MainContent.ContentUrl = tmp;
             }
-            else e.Node.NavigateUrl = "javascript:void();";
+            else e.Node.NavigateUrl = "javascript:void(0);";
         }
         #endregion
 
@@ -220,7 +224,7 @@ namespace EMR
 
                 node.CssClass = "list-item";
 
-                node.NavigateUrl = "javascript:void();";
+                node.NavigateUrl = "javascript:void(0);";
                 node.Target = "MainContent";
 
                 e.Node.Nodes.Add(node);
@@ -251,11 +255,11 @@ namespace EMR
                 //     if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], (string)Session["location"]))
                 {
                     string apiURL = $"../emr/emrview.aspx?pf={docid}&dp={modelId}&action=view";
-                    MainContent.ContentUrl = apiURL;
+                    //MainContent.ContentUrl = apiURL;
 
                 }
             }
-            else e.Node.NavigateUrl = "javascript:void();";
+            else e.Node.NavigateUrl = "javascript:void(0);";
         }
         #endregion
 
@@ -327,7 +331,7 @@ namespace EMR
                 //    node.ExpandMode = expandMode;
                 //}
                 //   node.NavigateUrl = row["URL"].ToString() + "?id=" + ParentID;// row["CategoryID"].ToString();
-                node.NavigateUrl = "javascript:void();";
+                node.NavigateUrl = "javascript:void(0);";
                 //node.NavigateUrl = Return_Doc_URL(row["model_id"], row["document_id"], row["patient_visit_id"]);// '// row["model_name"].ToString();
                 node.Target = "MainContent";
 
@@ -364,7 +368,7 @@ namespace EMR
 
                     if (WebHelpers.CanOpenForm(Page, (string)args.varDocID, (string)args.docStatus, (string)Session["emp_id"], (string)Session["location"]))
                     {
-                        MainContent.ContentUrl = Return_Doc_URL(args.varModelId, args.varDocID, args.varVPID);
+                        //MainContent.ContentUrl = Return_Doc_URL(args.varModelId, args.varDocID, args.varVPID);
                     }
 
                     break;
@@ -828,7 +832,7 @@ namespace EMR
 
         protected void btnPatientSummary_Click(object sender, EventArgs e)
         {
-            MainContent.ContentUrl = $"../other/patientsummary.aspx?pid={varPID}&vpid={varVPID}";
+            //MainContent.ContentUrl = $"../other/patientsummary.aspx?pid={varPID}&vpid={varVPID}";
         }
 
         protected void RadTreeView1_NodeClick(object sender, RadTreeNodeEventArgs e)
@@ -848,12 +852,16 @@ namespace EMR
                     {
                         dynamic data = JObject.Parse(response.Data);
 
-                        MainContent.ContentUrl = $"/{data.url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}";
+                        //MainContent.ContentUrl = $"/{data.url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}";
 
                         //return string.Format("/{0}?modelId={1}&docId={2}&pId={3}&vpId={4}", data.url, varModelId, varDocID, varPID, varVPID);
                     }
                 }
             }
+        }
+
+        protected void RadTabStrip1_TabClick(object sender, RadTabStripEventArgs e)
+        {
         }
     }
 }

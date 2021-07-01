@@ -55,7 +55,7 @@ namespace EMR
                 txt_treatment_plan.Value = imani.treatment_plan;
                 txt_discharge_plan.Value = imani.discharge_plan;
 
-                WebHelpers.AddScriptFormEdit(Page, imani);
+                WebHelpers.AddScriptFormEdit(Page, imani, (string)Session["emp_id"]);
 
             }
             catch (Exception ex)

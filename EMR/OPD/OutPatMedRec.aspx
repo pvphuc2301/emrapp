@@ -21,8 +21,6 @@
 <%@ Register Src="~/icons/XSquare.ascx" TagPrefix="icon" TagName="XSquare" %>
 <%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="Button" TagName="PopupShowDelay" %>
 
-
-
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -249,7 +247,7 @@
                 </div>
 
                 <div class="cssclsNoPrint">
-                    <div style="overflow: scroll; height: calc(100vh - 52px); overflow-x: hidden;">
+                    <div style="overflow: scroll; height: 100vh; overflow-x: hidden;">
                         <asp:Panel runat="server" ID="messagePlaceHolder">
                             <div class="card" runat="server" id="amendReasonWraper">
                                 <div class="card-body">

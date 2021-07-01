@@ -200,6 +200,7 @@
     <Content Include="bin\zxing.dll" />
     <Content Include="Dashboard.aspx" />
     <Content Include="emrbyvisit\opdTab.aspx" />
+    <Content Include="emr\emr.aspx" />
     <Content Include="emr\emrinfor.aspx" />
     <Content Include="emr\emrview.aspx" />
     <Content Include="ER\EmerMedRec.aspx" />
@@ -213,6 +214,7 @@
     <Content Include="images\aih.ico" />
     <Content Include="IPD\ObsGynIniAss.aspx" />
     <Content Include="IPD\SurgicalReport.aspx" />
+    <Content Include="Other\index.aspx" />
     <Content Include="Other\PageException.aspx" />
     <Content Include="Print\Test.aspx" />
     <Content Include="Report\CompleteVisitReport.aspx" />
@@ -375,6 +377,13 @@
     <Compile Include="emrbyvisit\opdTab.aspx.designer.cs">
       <DependentUpon>opdTab.aspx</DependentUpon>
     </Compile>
+    <Compile Include="emr\emr.aspx.cs">
+      <DependentUpon>emr.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="emr\emr.aspx.designer.cs">
+      <DependentUpon>emr.aspx</DependentUpon>
+    </Compile>
     <Compile Include="emr\emrinfor.aspx.cs">
       <DependentUpon>emrinfor.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -451,6 +460,13 @@
     </Compile>
     <Compile Include="IPD\SurgicalReport.aspx.designer.cs">
       <DependentUpon>SurgicalReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Other\index.aspx.cs">
+      <DependentUpon>index.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Other\index.aspx.designer.cs">
+      <DependentUpon>index.aspx</DependentUpon>
     </Compile>
     <Compile Include="Other\PageException.aspx.cs">
       <DependentUpon>PageException.aspx</DependentUpon>
@@ -1160,7 +1176,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

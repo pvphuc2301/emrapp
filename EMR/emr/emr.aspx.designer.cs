@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EMR
+namespace EMR.emr
 {
 
 
-    public partial class emrinfor
+    public partial class emr
     {
 
         /// <summary>
@@ -22,15 +22,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-
-        /// <summary>
-        /// ScriptManager1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.ScriptManager ScriptManager1;
 
         /// <summary>
         /// lblPatientInfo control.
@@ -240,13 +231,13 @@ namespace EMR
         protected global::Telerik.Web.UI.RadMultiPage RadMultiPage1;
 
         /// <summary>
-        /// PatientSummary control.
+        /// EmrInfo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadPageView PatientSummary;
+        protected global::Telerik.Web.UI.RadPageView EmrInfo;
 
         /// <summary>
         /// OrderList control.

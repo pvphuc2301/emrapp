@@ -49,13 +49,13 @@ namespace EMR
                 txt_eval_treatment.Value = somr.eval_treatment;
                 txt_treatment_prognosis.Value = somr.treatment_prognosis;
 
-                WebHelpers.AddScriptFormEdit(Page, somr);
+                DataObj.Value = JsonConvert.SerializeObject(somr);
+                WebHelpers.AddScriptFormEdit(Page, somr, (string)Session["emp_id"]);
             }
             catch(Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
-            
         }
         private void BindingDataFormView(Somr somr)
         {
@@ -75,8 +75,6 @@ namespace EMR
             {
                 WebHelpers.SendError(Page, ex);
             }
-            
-            //
         }
         private void BindingDataFormPrint(Somr somr)
         {
@@ -100,7 +98,6 @@ namespace EMR
             {
                 WebHelpers.SendError(Page, ex);
             }
-            
         }
         #endregion
 
@@ -183,7 +180,6 @@ namespace EMR
         {
             try
             {
-                somr.amend_reason = txt_amend_reason.Text;
                 somr.form_date = DataHelpers.ConvertSQLDateTime(dpk_form_date.SelectedDate);
                 somr.to_date = DataHelpers.ConvertSQLDateTime(dpk_to_date.SelectedDate);
                 somr.chief_complaint = txt_chief_complaint.Value;
@@ -193,6 +189,12 @@ namespace EMR
                 somr.treatment = txt_treatment.Value;
                 somr.eval_treatment = txt_eval_treatment.Value;
                 somr.treatment_prognosis = txt_treatment_prognosis.Value;
+                
+                if (JsonConvert.SerializeObject(somr) == DataObj.Value) { 
+                    WebHelpers.Notification(Page, "Có thay đổi gì đâu mà bấm lưu?");  return; 
+                }
+                
+                somr.amend_reason = txt_amend_reason.Text;
                 somr.user_name = (string)Session["UserID"];
 
                 dynamic result = somr.Update()[0];
@@ -224,13 +226,11 @@ namespace EMR
                 if (somr.status == DocumentStatus.FINAL)
                 {
                     BindingDataForm(somr, WebHelpers.LoadFormControl(form1, somr, ControlState.View, (string)Session["location"]));
-
                 }
                 else if (somr.status == DocumentStatus.DRAFT)
                 {
                     BindingDataForm(somr, WebHelpers.LoadFormControl(form1, somr, ControlState.Edit, (string)Session["location"]));
                 }
-
                 WebHelpers.getAccessButtons(form1, somr.status, (string)Session["access_authorize"], (string)Session["location"]);
             }
             catch (Exception ex)

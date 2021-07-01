@@ -100,7 +100,7 @@ namespace EMR
                         txt_next_appointment.Value = pomr.txt_next_appointment;
                     }
                 }
-                WebHelpers.AddScriptFormEdit(Page, pomr);
+                WebHelpers.AddScriptFormEdit(Page, pomr, (string)Session["emp_id"]);
             }
             catch (Exception ex)
             {

@@ -114,7 +114,7 @@ namespace EMR
                 //5
                 txt_treatment_plan.Value = oadr.treatment_plan;
 
-                WebHelpers.AddScriptFormEdit(Page, oadr);
+                WebHelpers.AddScriptFormEdit(Page, oadr, (string)Session["emp_id"]);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
         }

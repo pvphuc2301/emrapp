@@ -55,7 +55,7 @@ namespace EMR.IPD
                 txt_procedure_chart.Value = surr.procedure_chart;
                 txt_procedure_narrative.Value = surr.procedure_narrative;
 
-                WebHelpers.AddScriptFormEdit(Page, surr);
+                WebHelpers.AddScriptFormEdit(Page, surr, (string)Session["emp_id"]);
             }
             catch(Exception ex)
             {

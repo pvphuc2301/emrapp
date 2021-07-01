@@ -207,7 +207,7 @@ namespace EMR
                 //Nursing notes
                 ViewState[grid_NursingNotes.ID] = WebHelpers.BindingDataGridView(grid_NursingNotes, WebHelpers.GetJSONToDataTable(ena.nursing_note), Ena.NURSING_NOTE_COL, btn_grid_NursingNotes_add);
 
-                WebHelpers.AddScriptFormEdit(Page, ena);
+                WebHelpers.AddScriptFormEdit(Page, ena, (string)Session["emp_id"]);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
             

@@ -66,7 +66,7 @@ namespace EMR
                 txt_notes.Value = disc.notes;
                 dpk_signature_date.SelectedDate = disc.signature_date;
 
-                WebHelpers.AddScriptFormEdit(Page, disc);
+                WebHelpers.AddScriptFormEdit(Page, disc, (string)Session["emp_id"]);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
             

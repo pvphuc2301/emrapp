@@ -85,7 +85,7 @@ namespace EMR.OPD
                 txt_pecific_edu_req.Value = mrfv.pecific_edu_req;
                 txt_next_appointment.Value = mrfv.next_appointment;
 
-                WebHelpers.AddScriptFormEdit(Page, mrfv);
+                WebHelpers.AddScriptFormEdit(Page, mrfv, (string)Session["emp_id"]);
                 
             } catch(Exception ex)
             {

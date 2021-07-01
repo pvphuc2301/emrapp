@@ -127,7 +127,7 @@ namespace EMR
                 txt_specific_education_required.Value = omr.specific_education_required;
                 txt_next_appointment.Value = omr.next_appointment;
 
-                WebHelpers.AddScriptFormEdit(Page, omr);
+                WebHelpers.AddScriptFormEdit(Page, omr, (string)Session["emp_id"]);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
             

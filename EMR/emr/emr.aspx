@@ -1,5 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="emrinfor.aspx.cs" Inherits="EMR.emrinfor" %>
-
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="emr.aspx.cs" Inherits="EMR.emr.emr" %>
 <%@ Register Src="~/icons/Envelope.ascx" TagPrefix="icon" TagName="Envelope" %>
 <%@ Register Src="~/icons/ChatRight.ascx" TagPrefix="icon" TagName="ChatRight" %>
 <%@ Register Src="~/icons/Person.ascx" TagPrefix="icon" TagName="Person" %>
@@ -11,6 +10,7 @@
 <%@ Register Src="~/icons/House.ascx" TagPrefix="icon" TagName="House" %>
 
 <!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
@@ -21,67 +21,14 @@
     <link href="../styles/telerik-custom.css" rel="stylesheet" />
     <link href="../styles/style-custom.css" rel="stylesheet" />
     <link href="../styles/sweetalert.min.css" rel="stylesheet" />
-    <%--<link href="../styles/style.css" rel="stylesheet" />
-    <link href="../styles/myStyle.css" rel="stylesheet" />
-    <link href="../style/style-custom.css" rel="stylesheet" />--%>
     <style>
-        
         #RadMultiPage1 {
             height: calc(100vh - 94px);
         }
-
-        .tooltip1 {
-            position: relative;
-        }
-
-        .tooltip__item {
-            position: fixed;
-            min-width: 100px;
-            padding: 20px;
-            visibility: hidden;
-            opacity: 0;
-            background: white;
-            transition: all .250s cubic-bezier(0, 0, 0.2, 1);
-            color: #484848;
-            border: 1px solid #cecece;
-            border-radius: 3px;
-            font-weight: 500;
-            box-shadow: 0 2px 1px #bcbcbc;
-            z-index: 1000;
-        }
-
-        /*.tooltip__item:before {
-            content: "";
-              display: block;
-              position: absolute;
-              width: 0;
-              height: 0;
-              border-style: solid;
-        }*/
-
-        .tooltip__initiator {
-            cursor: pointer;
-            z-index: 5;
-        }
-
-            .tooltip__initiator:hover ~ .tooltip__item {
-                /*transform: translate3d(0, -50%, 0);*/
-                visibility: visible;
-                opacity: 1;
-                transform: translate(5px, 50%) scale(1);
-            }
-
-        .tooltip__item {
-            top: 50%;
-            left: calc(100% + 1em);
-            transform: translate3d(15px, -50%, 0);
-        }
     </style>
 </head>
-<body onload="bodyOnloadHandler()">
+<body>
     <form id="form1" runat="server">
-        <asp:ScriptManager ID="ScriptManager1" runat="server" />
-
         <header class="topbar">
             <nav class="navbar top-navbar navbar-expand-md navbar-white bg-white border-bottom-2 border-darkgrey">
                 <!-- ============================================================== -->
@@ -198,10 +145,6 @@
                 </div>
             </nav>
         </header>
-        
-        <div class="progress">
-          <div class="progress-bar progress-bar-animated progress progress-bar-striped" role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
 
         <telerik:RadTabStrip runat="server" ID="RadTabStrip1"  MultiPageID="RadMultiPage1" SelectedIndex="0"
              OnTabClick="RadTabStrip1_TabClick" >
@@ -214,118 +157,10 @@
         </telerik:RadTabStrip>
 
         <telerik:RadMultiPage runat="server" ID="RadMultiPage1" SelectedIndex="0">
-            <telerik:RadPageView id="PatientSummary" runat="server"></telerik:RadPageView>
+            <telerik:RadPageView id="EmrInfo" ContentUrl="emrinfor.aspx" runat="server"></telerik:RadPageView>
             <telerik:RadPageView id="OrderList" runat="server"></telerik:RadPageView>
             <telerik:RadPageView id="OpdPrescription" runat="server"></telerik:RadPageView>
         </telerik:RadMultiPage>
-
-        <div id="tooltip__item" class="tooltip__item">
-            <table>
-                <tbody>
-                    <tr>
-                        <th colspan="2" class="title mb-2 font-bold"></th>
-                    </tr>
-                    <tr>
-                        <td style="width: 90px;">Category</td>
-                        <td class="category"></td>
-                    </tr>
-                    <tr>
-                        <td>Author</td>
-                        <td class="author"></td>
-                    </tr>
-                    <tr>
-                        <td>Visit</td>
-                        <td class="visit"></td>
-                    </tr>
-                    <tr>
-                        <td>Lasted updated</td>
-                        <td class="lastedUpdated"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
     </form>
-
-    <script src="../scripts/jquery-3.2.1.min.js"></script>
-    <script src="../scripts/bootstrap.min.js"></script>
-    <script src="../scripts/myScript.js"></script>
-    <script src="../scripts/waves.js"></script>
-    <script src="../scripts/sweetalert.min.js"></script>
-
-    <script>
-        window.onload = function () {
-            console.log('window loaded');
-            let listItem = document.getElementsByClassName("list-item");
-            let tooltip1 = document.getElementById("tooltip__item");
-
-            tooltip1.style.position = "fixed";
-
-            tooltip1.style.zIndex = 1000;
-            tooltip1.style.visibility = "visible";
-            tooltip1.style.opacity = 1;
-
-        }
-
-        window.
-    </script>
-
-    <script>
-
-        function lblURL_click() {
-
-            let temp = {
-                status: "",
-                docId: "",
-            }
-
-            $.ajax({
-                type: 'POST',
-                url: "emrinfor.aspx/lblURL_click",
-                data: JSON.stringify(temp),
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                success: function (msg) {
-                    console.log(msg);
-                }
-            });
-
-        }
-
-        function OnGridCreated(sender, args) {
-
-            let listItem = document.querySelectorAll(".list-item");
-            let tooltip1 = document.getElementById("tooltip__item");
-
-            if (listItem.length > 0) {
-
-                listItem.forEach(item => {
-                    item.addEventListener("mouseenter", function (e) {
-                        tooltip1.style.top = e.clientY + "px";
-                        tooltip1.style.left = e.clientX + "px";
-                        tooltip1.style.visibility = "visible";
-                        tooltip1.style.opacity = 1;
-                        tooltip1.querySelector(".title").innerText = item.getAttribute("data-title");
-                        tooltip1.querySelector(".category").innerText = item.getAttribute("data-category");
-                        tooltip1.querySelector(".author").innerText = item.getAttribute("data-author");
-                        tooltip1.querySelector(".visit").innerText = item.getAttribute("data-visit");
-                        tooltip1.querySelector(".lastedUpdated").innerText = item.getAttribute("data-modified-name") + " " + item.getAttribute("data-modified-datetime");
-                    })
-
-                    item.addEventListener("mouseleave", function (e) {
-
-                        tooltip1.style.visibility = "hidden";
-                        tooltip1.style.opacity = 0;
-                    })
-                })
-            }
-
-        }
-
-        function beforeAsyncPostBack() {
-            var curtime = new Date();
-        }
-
-        function afterAsyncPostBack() { }
-    </script>
 </body>
 </html>

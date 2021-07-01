@@ -171,7 +171,7 @@ namespace EMR.IPD
                 txt_treatment_plan.Value = ogia.treatment_plan;
                 txt_discharge_plan.Value = ogia.discharge_plan;
 
-                WebHelpers.AddScriptFormEdit(Page, ogia);
+                WebHelpers.AddScriptFormEdit(Page, ogia, (string)Session["emp_id"]);
             } catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);

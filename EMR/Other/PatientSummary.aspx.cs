@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
@@ -20,189 +21,31 @@ namespace EMR
         public bool showPopup = false;
         public bool isDraft = false;
         public string docId = "";
-        string varVbID = "";
-
+        public string varVPID = "";
+        public string ConnStringEMR = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-            DocumentList.Visible = false;
-
+            ConnClass ConnStr = new ConnClass();
             varPID = Request.QueryString["pid"];
-            varVbID = Request.QueryString["vpid"];
-
-            RadPageView1.ContentUrl = "~/phar/orderlist.aspx?pid=" + varPID + "&vbid=" + varVbID;
-            RadPageView3.ContentUrl = "~/phar/opdpreslist.aspx?pid=" + varPID;
+            varVPID = Request.QueryString["vpid"];
+            ConnStringEMR = ConnStr.SQL_EMRConnString;
+            //RadPageView1.ContentUrl = "~/phar/orderlist.aspx?pid=" + varPID + "&vbid=" + varVbID;
+            //RadPageView3.ContentUrl = "~/phar/opdpreslist.aspx?pid=" + varPID;
 
             if (!IsPostBack)
             {
-                LoadPatientInfo();
-                if(Request.QueryString["blocked"] != null)
-                {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "document_block", "setTimeout(()=>{ sweetAlert(\"Denied!\", \"This document is blocked by " + Request.QueryString["blocked"] + "\", \"error\");},0);", true);
-                }
+                MainContent.ContentUrl = $"index.aspx?pid={varPID}&vpid={varVPID}";
+
+                LoadRootNodes(RadTreeView1, TreeNodeExpandMode.ServerSideCallBack);
+                LoadRootLAB_RAD(RadTreeView2, TreeNodeExpandMode.ServerSideCallBack);
+                LoadRootScan(RadTreeView3, TreeNodeExpandMode.ServerSideCallBack);
+
             }
             PostBackEvent();
         }
 
         private void PostBackEvent()
         {
-        }
-
-        public void LoadPatientInfo()
-        {
-            Patient patient = Patient.Instance();
-
-            lblGender.InnerText = patient.GetGender();
-            lblAge.InnerText = WebHelpers.FormatDateTime(patient.date_of_birth);
-            lblAddress.InnerText = patient.GetAddress();
-            lblPhone.InnerText = patient.contact_phone_number;
-            lblName.InnerText = patient.GetFullName();
-            lblRelationship.InnerText = patient.relationship_type_rcd;
-        }
-
-        protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
-        {
-            switch (e.CommandName)
-            {
-                case "addNew":
-                    GridDataItem item = (e.Item as GridDataItem);
-                    DocumentList.Visible = true;
-                    string pvid = item.GetDataKeyValue("patient_visit_id").ToString();
-                    string visitType = item.GetDataKeyValue("visit_type_rcd").ToString();
-                    AddForm(pvid, visitType);
-                    break;
-            }
-            if (e.CommandName == "RowClick")
-            {
-                bool lastState = e.Item.Expanded;
-
-            }
-        }
-
-        protected void RadGrid1_ItemDataBound(object sender, GridItemEventArgs e)
-        {
-            if(e.Item is GridDataItem)
-            {
-                LinkButton btnAction = e.Item.FindControl("btnAddNew") as LinkButton;
-                
-                GridEditableItem editableItem = e.Item as GridEditableItem;
-
-                string closure_date_time = editableItem["closure_date_time"].Text;
-                string allow_date_time = ((GridDataItem)e.Item).GetDataKeyValue("allow_date_time").ToString();
-                
-                DateTime dateTime;
-                if (DateTime.TryParse(closure_date_time, out dateTime))
-                {
-                    btnAction.Text = "Update";
-                    btnAction.CssClass = "btn btn-sm btn-secondary waves-effect ";
-
-                    if (string.IsNullOrEmpty(allow_date_time))
-                    {
-                        btnAction.CssClass += "disabled";
-                        btnAction.Enabled = false;
-                    }
-                }
-            }
-        }
-
-        protected void btnSave_Click(object sender, EventArgs e)
-        {
-            string selectedItem = Request.Form.Get("ddlDocList");
-
-            string[] _params = selectedItem.Split('|');
-
-            string PVID = _params[2];
-            string modelID = _params[0];
-            string userName = (string)Session["UserID"];
-
-            dynamic response = WebHelpers.GetAPI(string.Format("api/emr/check-document-exists/{0}/{1}/{2}", DataHelpers._LOCATION, PVID, modelID));
-
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
-
-                dynamic response2 = WebHelpers.GetAPI(string.Format("api/emr/get-api/{0}/{1}",DataHelpers._LOCATION, modelID));
-
-                if(response2.Status == System.Net.HttpStatusCode.OK)
-                {
-                    dynamic data = JObject.Parse(response2.Data);
-
-                    string docId = Guid.NewGuid().ToString();
-
-                    var objTemp = new { document_id = docId, patient_visit_id = PVID, model_id = modelID, user_name = userName };
-
-                    DataHelpers.varDocId = docId;
-                    DataHelpers.varModelId = modelID;
-                    DataHelpers.varPVId = PVID;
-
-                    dynamic response3 = WebHelpers.PostAPI($"api/{data.api}/add/{DataHelpers._LOCATION}", objTemp);
-
-                    if (response3.Status == System.Net.HttpStatusCode.OK)
-                    {
-                        dynamic response4 = WebHelpers.PostAPI($"api/{data.api}/log/{DataHelpers._LOCATION}/{docId}");
-                        if(response4.Status == System.Net.HttpStatusCode.OK)
-                        {
-                            string url = $"../{_params[1]}?modelId={modelID}&docId={docId}&pId={varPID}&vpId={Request["vpid"]}&pvid={PVID}";
-
-                            if(WebHelpers.CanOpenForm(Page, docId, DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"]))
-                            {
-                                Response.Redirect(url, false);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        protected void btnOpen_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string selectedItem = Request.Form.Get("ddlDocList");
-
-                string[] _params = selectedItem.Split('|');
-                
-                Response.Redirect("../" + _params[1] + "?docId=" + DataHelpers.varDocId, false);
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-            }
-        }
-
-        private void AddForm(string pvid, string visitType)
-        {
-            string apiStr = "api/emr/list-form/" + pvid + "/" + visitType;
-
-            dynamic response = WebHelpers.GetAPI(apiStr);
-            
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
-                ddlDocList.Items.Clear();
-
-                foreach (DataRow row in db.Rows)
-                {
-                    ListItem item1 = new ListItem();
-
-                    item1.Value = row.Field<string>("model_id") + "|" + row.Field<string>("url") + "|" + pvid;
-                    item1.Text = row.Field<string>("model_name");
-
-                    ddlDocList.Items.Add(item1);
-                }
-                showPopup = true;
-            }
-        }
-
-        protected void RadGrid1_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
-        {
-            string apiString = $"api/patient/encounter-history/{DataHelpers._LOCATION}/{varPID}";
-
-            dynamic response = WebHelpers.GetAPI(apiString);
-
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                RadGrid1.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
-            }
         }
 
         //private void UpdateRadGrid(RadGrid radGrid, string apiString, dynamic args)
@@ -270,5 +113,373 @@ namespace EMR
         //        pagination1.Controls.Add(li);
         //    }
         //}
+
+        #region Menu Lab RAD
+        private void LoadRootLAB_RAD(RadTreeView treeView, TreeNodeExpandMode expandMode)
+        {
+            string query = "SELECT document_type_rcd, document_type_name description FROM document_type ";
+            query += "WHERE (document_type_rcd = N'RAD' OR document_type_rcd = N'LAB') ";// AND (active_flag = 1) ";
+            query += "ORDER BY document_type_rcd";
+
+            string apiURL = $"api/emr/menu-visit/{DataHelpers._LOCATION}/{varPID}";
+            dynamic response = WebHelpers.GetAPI(apiURL);
+
+            DataTable mydataTable = new DataTable();
+            mydataTable = GetDataTable(query, ConnStringEMR);
+
+            //     if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                //       mydataTable = WebHelpers.GetJSONToDataTable(response.Data);
+
+                foreach (DataRow row in mydataTable.Rows)
+                {
+                    RadTreeNode node = new RadTreeNode();
+                    node.Text = row["description"].ToString();
+                    node.Value = row["document_type_rcd"].ToString();
+                    node.ExpandMode = expandMode;
+                    node.NavigateUrl = "";// row["visit_code"].ToString();
+                    node.Target = "MainContent";
+                    treeView.Nodes.Add(node);
+                }
+            }
+        }
+        protected void RadTreeView2_NodeExpand(object sender, RadTreeNodeEventArgs e)
+        {
+            PopulateLabRadOnDemand(e, TreeNodeExpandMode.ServerSideCallBack);
+        }
+        private void PopulateLabRadOnDemand(RadTreeNodeEventArgs e, TreeNodeExpandMode expandMode)
+        {
+            DataTable data = GetChildLabRad(varPID, e.Node.Value);// e.Node.Value);
+            //string ParentID = e.Node.Value;
+
+            foreach (DataRow row in data.Rows)
+            {
+                RadTreeNode node = new RadTreeNode();
+
+                node.Text = ReturnScan_Date(row["actual_visit_date_time"], row["caregiver_name_l"]);
+                node.Value = e.Node.Value; //varPID;// row["actual_visit_date_time"].ToString();
+                node.Attributes["docId"] = row["actual_visit_date_time"].ToString();
+                node.Attributes["modelId"] = row["patient_visit_id"].ToString();
+                // node.Attributes["status"] = row["status"].ToString();
+
+                //node.Attributes.Add("data-modified-datetime", row["modified_date_time"].ToString());
+                //node.Attributes.Add("data-modified-name", row["modified_name_l"].ToString());
+                //node.Attributes.Add("data-title", ReturnForm_Name(row["status"], row["model_name"], row["created_name_e"]));
+                //node.Attributes.Add("data-category", "");
+                //node.Attributes.Add("data-visit", "");
+                //node.Attributes.Add("data-author", row["created_name_e"].ToString());
+
+                node.CssClass = "list-item";
+                node.NavigateUrl = "javascript:void(0);";
+                node.Target = "MainContent";
+
+                e.Node.Nodes.Add(node);
+            }
+
+            e.Node.Expanded = true;
+        }
+        private DataTable GetChildLabRad(string PatientID, string ParentID)
+        {
+            DataHelpers.LoadPatientVisitInfomation(PatientID);
+            string apiURL = $"api/patient/menu-lab-visit/{DataHelpers._LOCATION}/" + PatientID;
+
+            if (ParentID == "RAD")
+                apiURL = $"api/patient/menu-rad-visit/{DataHelpers._LOCATION}/" + PatientID;
+
+            dynamic response = WebHelpers.GetAPI(apiURL);
+
+            DataTable mydataTable = new DataTable();
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                mydataTable = WebHelpers.GetJSONToDataTable(response.Data);
+            }
+            return mydataTable;
+        }
+        protected void RadTreeView2_NodeClick(object sender, RadTreeNodeEventArgs e)
+        {
+            DateTime tmpDate; string tmpD = "";
+
+            if (e.Node.Level != 0)
+            {
+                string docid = e.Node.Attributes["docId"];
+                string modelId = e.Node.Attributes["modelId"];
+
+                if (!string.IsNullOrEmpty(Convert.ToString(docid)))
+                {
+                    tmpDate = Convert.ToDateTime(docid);
+                    tmpD = string.Format("{0:yyyy-mm-dd}", tmpDate);// tmpDate.Year.ToString() + "-" + tmpDate.Month.ToString() + "-" + tmpDate.Day.ToString();
+                }
+                string tmp = $"../report/labtab.aspx?pid={varPID}&vid={modelId}&frd={tmpD}";
+                string ParentID = e.Node.Value;
+                if (ParentID == "RAD")
+                    tmp = $"../report/ImagingTab.aspx?pid={varPID}&vid={modelId}";
+
+                MainContent.ContentUrl = tmp;
+            }
+            else e.Node.NavigateUrl = "javascript:void(0);";
+        }
+        #endregion
+
+        #region Menu Scan
+        private void LoadRootScan(RadTreeView treeView, TreeNodeExpandMode expandMode)
+        {
+
+            string apiURL = "api/patient/document-type-list/" + Session["company_code"] + "/" + varPID;
+            dynamic response = WebHelpers.GetAPI(apiURL);
+
+            DataTable mydataTable = new DataTable();
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                mydataTable = WebHelpers.GetJSONToDataTable(response.Data);
+
+                foreach (DataRow row in mydataTable.Rows)
+                {
+                    RadTreeNode node = new RadTreeNode();
+                    node.Text = row["doc_type_name_l"].ToString();
+                    node.Value = row["document_type_rcd"].ToString();
+                    node.ExpandMode = expandMode;
+                    node.NavigateUrl = "";// row["visit_code"].ToString();
+                    node.Target = "MainContent";
+                    treeView.Nodes.Add(node);
+                }
+            }
+        }
+        protected void RadTreeView3_NodeExpand(object sender, RadTreeNodeEventArgs e)
+        {
+            PopulateScanOnDemand(e, TreeNodeExpandMode.ServerSideCallBack);
+        }
+        private void PopulateScanOnDemand(RadTreeNodeEventArgs e, TreeNodeExpandMode expandMode)
+        {
+            DataTable data = GetChildScan(varPID, e.Node.Value);
+            string ParentID = e.Node.Value;
+
+            foreach (DataRow row in data.Rows)
+            {
+                RadTreeNode node = new RadTreeNode();
+
+                node.Text = ReturnScan_Date(row["creation_date_time"], row["event_category_name_l"]);
+                node.Value = row["document_type_rcd"].ToString();
+                node.Attributes["docId"] = row["file_system_object_id"].ToString();
+                node.Attributes["modelId"] = row["document_page_id"].ToString();
+                //node.Attributes["status"] = row["status"].ToString();
+
+                node.CssClass = "list-item";
+
+                node.NavigateUrl = "javascript:void(0);";
+                node.Target = "MainContent";
+
+                e.Node.Nodes.Add(node);
+            }
+
+            e.Node.Expanded = true;
+        }
+        private DataTable GetChildScan(string PatientID, string ParentID)
+        {
+            string apiURL = $"api/patient/document-list/{DataHelpers._LOCATION}/" + PatientID + "/" + ParentID;
+            dynamic response = WebHelpers.GetAPI(apiURL);
+
+            DataTable mydataTable = new DataTable();
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                mydataTable = WebHelpers.GetJSONToDataTable(response.Data);
+            }
+            return mydataTable;
+        }
+        protected void RadTreeView3_NodeClick(object sender, RadTreeNodeEventArgs e)
+        {
+            if (e.Node.Level != 0)
+            {
+                string docid = e.Node.Attributes["docId"];
+                string modelId = e.Node.Attributes["modelId"];
+
+                //     if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], (string)Session["location"]))
+                {
+                    string apiURL = $"../emr/emrview.aspx?pf={docid}&dp={modelId}&action=view";
+                    MainContent.ContentUrl = apiURL;
+
+                }
+            }
+            else e.Node.NavigateUrl = "javascript:void(0);";
+        }
+        #endregion
+        protected void RadTreeView1_NodeExpand(object sender, RadTreeNodeEventArgs e)
+        {
+            PopulateNodeOnDemand(e, TreeNodeExpandMode.ServerSideCallBack);
+        }
+        private DataTable GetChildNodes(string ParentID)
+        {
+            DataHelpers.LoadPatientVisitInfomation(ParentID);
+
+            dynamic response = WebHelpers.GetAPI($"api/emr/menu-form/{DataHelpers._LOCATION}/{ParentID}");
+
+            DataTable mydataTable = new DataTable();
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                mydataTable = WebHelpers.GetJSONToDataTable(response.Data);
+            }
+            return mydataTable;
+        }
+        public string ReturnForm_Name(object varStatus, object varFormName, object varDr)
+        {
+            string tmp = "";
+            tmp = varStatus.ToString() + "_" + varFormName.ToString() + " " + varDr.ToString();
+            return tmp;
+        }
+
+        private void PopulateNodeOnDemand(RadTreeNodeEventArgs e, TreeNodeExpandMode expandMode)
+        {
+            DataTable data = GetChildNodes(e.Node.Value);
+            string ParentID = e.Node.Value;
+
+            foreach (DataRow row in data.Rows)
+            {
+                RadTreeNode node = new RadTreeNode();
+
+                node.Text = ReturnForm_Name(row["status"], row["model_name"], row["created_name_e"]);
+                node.Value = row["model_name"].ToString();
+                node.Attributes["docId"] = row["document_id"].ToString();
+                node.Attributes["modelId"] = row["model_id"].ToString();
+                node.Attributes["status"] = row["status"].ToString();
+
+                //node.Attributes.Add("data-modified-datetime", row["modified_date_time"].ToString());
+                //node.Attributes.Add("data-modified-name", row["modified_name_l"].ToString());
+                //node.Attributes.Add("data-title", ReturnForm_Name(row["status"], row["model_name"], row["created_name_e"]));
+                //node.Attributes.Add("data-category", "");
+                //node.Attributes.Add("data-visit", "");
+                //node.Attributes.Add("data-author", row["created_name_e"].ToString());
+
+                node.CssClass = "list-item";
+
+                dynamic temp = new System.Dynamic.ExpandoObject();
+                temp.modelId = row["model_id"].ToString();
+                temp.docId = row["document_id"].ToString();
+                temp.pid = varPID;
+                temp.status = row["status"].ToString();
+                temp.vpid = varPID;
+
+                //node.Attributes.Add("onclick", "lblURL_click(__doPostBack('lblURL_click','" + JsonConvert.SerializeObject(temp) + "'))");
+
+                //if (Convert.ToInt32(row["ChildrenCount"]) > 0)
+                //{
+                //    node.ExpandMode = expandMode;
+                //}
+                //   node.NavigateUrl = row["URL"].ToString() + "?id=" + ParentID;// row["CategoryID"].ToString();
+                node.NavigateUrl = "javascript:void(0);";
+                //node.NavigateUrl = Return_Doc_URL(row["model_id"], row["document_id"], row["patient_visit_id"]);// '// row["model_name"].ToString();
+                node.Target = "MainContent";
+
+                e.Node.Nodes.Add(node);
+            }
+
+            e.Node.Expanded = true;
+        }
+        protected void RadTreeView1_NodeClick(object sender, RadTreeNodeEventArgs e)
+        {
+            if (e.Node.Level != 0)
+            {
+                string docid = e.Node.Attributes["docId"];
+                string modelId = e.Node.Attributes["modelId"];
+                string status = e.Node.Attributes["status"];
+
+                if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], (string)Session["location"]))
+                {
+                    string apiURL = $"api/emr/get-api/{DataHelpers._LOCATION}/{modelId}";
+                    dynamic response = WebHelpers.GetAPI(apiURL);
+
+                    if (response.Status == System.Net.HttpStatusCode.OK)
+                    {
+                        dynamic data = JObject.Parse(response.Data);
+
+                        MainContent.ContentUrl = $"/{data.url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}";
+
+                        //return string.Format("/{0}?modelId={1}&docId={2}&pId={3}&vpId={4}", data.url, varModelId, varDocID, varPID, varVPID);
+                    }
+                }
+            }
+        }
+
+        private void LoadRootNodes(RadTreeView treeView, TreeNodeExpandMode expandMode)
+        {
+
+            string apiURL = $"api/emr/menu-visit/{DataHelpers._LOCATION}/{varPID}";
+            dynamic response = WebHelpers.GetAPI(apiURL);
+
+            DataTable mydataTable = new DataTable();
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                mydataTable = WebHelpers.GetJSONToDataTable(response.Data);
+
+                foreach (DataRow row in mydataTable.Rows)
+                {
+                    RadTreeNode node = new RadTreeNode();
+                    node.Text = ReturnVisit_Date(row["actual_visit_date_time"], row["visit_type"], row["visit_code"]);
+                    node.Value = row["patient_visit_id"].ToString();
+                    node.ExpandMode = expandMode;
+                    node.NavigateUrl = "";// row["visit_code"].ToString();
+                    node.Target = "MainContent";
+                    treeView.Nodes.Add(node);
+                }
+            }
+        }
+        public string ReturnVisit_Date(object varDate, object varVisitType, object varVisitNo)
+        {
+            string tmp = ""; DateTime tmpDate;
+            if (!string.IsNullOrEmpty(Convert.ToString(varDate)))
+            {
+                tmpDate = Convert.ToDateTime(varDate);
+                tmp = tmpDate.Year.ToString() + "-" + tmpDate.Month.ToString() + "-" + tmpDate.Day.ToString();
+                tmp += " (" + varVisitType.ToString().Trim() + "-" + varVisitNo.ToString() + ")";
+            }
+            return tmp;
+        }
+        public DataTable GetDataTable(string query, string varConn)
+        {
+            //if (Convert.ToString(Session["company_code"]) == "AIH")
+            {
+                SqlConnection conn = new SqlConnection(varConn);
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = new SqlCommand(query, conn);
+
+                DataTable myDataTable = new DataTable();
+
+                conn.Open();
+                try
+                {
+                    adapter.Fill(myDataTable);
+                }
+                finally
+                {
+                    conn.Close();
+                }
+
+                return myDataTable;
+            }
+        }
+        public string ReturnScan_Date(object varDate, object varEvent)
+        {
+            string tmp = ""; DateTime tmpDate;
+            if (!string.IsNullOrEmpty(Convert.ToString(varDate)))
+            {
+                tmpDate = Convert.ToDateTime(varDate);
+                tmp = tmpDate.Year.ToString() + "-" + tmpDate.Month.ToString() + "-" + tmpDate.Day.ToString();
+                tmp += " " + varEvent.ToString().Trim();
+            }
+            return tmp;
+        }
+
+        protected void MainContent_PreRender(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void MainContent_Unload(object sender, EventArgs e)
+        {
+
+        }
     }
 }

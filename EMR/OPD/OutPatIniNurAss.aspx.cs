@@ -51,7 +51,6 @@ namespace EMR
         {
             try
             {
-                Session["isEditing"] = true;
                 txt_amend_reason.Text = "";
                 //I.
                 txt_vs_temperature.Value = oina.vs_temperature;
@@ -87,7 +86,7 @@ namespace EMR
 
                 WebHelpers.BindDateTimePicker(dtpk_assessment_date_time, oina.assessment_date_time);
 
-                WebHelpers.AddScriptFormEdit(Page, oina);
+                WebHelpers.AddScriptFormEdit(Page, oina, (string)Session["emp_id"]);
                 
             }
             catch (Exception ex)

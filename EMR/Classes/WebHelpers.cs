@@ -25,6 +25,11 @@ namespace EMR
     {
         public static string MESSAGE_SAVE_SUCCESS = "Your changes have been saved";
     }
+    public static class ScriptKey
+    {
+        public static string SHOW_POPUP = "script_show_popup";
+        public static string EDIT_DOC = "script_edit_document";
+    }
     #endregion
 
     public enum ControlState { View, Edit }
@@ -90,10 +95,11 @@ namespace EMR
             //}
         }
 
-        internal static void AddScriptFormEdit(Page page, dynamic obj)
+        internal static void AddScriptFormEdit(Page page, dynamic obj, string emp_id)
         {
-            page.Session["docId"] = obj.document_id;
-            ScriptManager.RegisterStartupScript(page, page.GetType(), "localStorage_setItem", "window.sessionStorage.setItem('\"" + obj.document_id + "\"', '\"" +JsonConvert.SerializeObject(obj) + "\"'); setTimeout(()=> { leaveEditFormEvent(); },0);", true);
+            if (string.IsNullOrEmpty(emp_id)) return;
+
+            ScriptManager.RegisterStartupScript(page, page.GetType(), DateTime.Now.Millisecond.ToString(), "if(document.readyState=='loading') { window.addEventListener('load', function() { editFormEvent('" + JsonConvert.SerializeObject(obj) + "', '" + DataHelpers._LOCATION + "', '" + emp_id + "') } ); } else { editFormEvent('" + JsonConvert.SerializeObject(obj) + "', '" + DataHelpers._LOCATION + "', '" + emp_id + "') }", true);
         }
 
         internal static dynamic CanOpenForm(Page page, string docid, string documentStatus, string emp_id, string location)
@@ -276,7 +282,7 @@ namespace EMR
         {
             if (!string.IsNullOrEmpty(docId))
             {
-                ScriptManager.RegisterStartupScript(page, page.GetType(), "localStorage_removeItem", "window.sessionStorage.removeItem('\"" + docId + "\"');", true);
+                ScriptManager.RegisterStartupScript(page, page.GetType(), "localStorage_removeItem", "window.sessionStorage.removeItem('\"" + docId + "\"'); console.log(comfirm_leave_page); window.removeEventListener('beforeunload', comfirm_leave_page, true);", true);
 
                 WebHelpers.PostAPI($"api/emr/clear-session/{DataHelpers._LOCATION}/{docId}");
             }
@@ -756,19 +762,7 @@ namespace EMR
                 return null;
             }
         }
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="form">
-        /// form control
-        /// </param>
-        /// <param name="disabled">
-        /// false: allow edit
-        /// true: do not allow edit
-        /// </param>
-        /// <param name="controls">
-        /// controls that not affected
-        /// </param>
+        
         public static void DisabledControl(HtmlForm form, bool disabled)
         {
             //int i = 0;
@@ -949,24 +943,6 @@ namespace EMR
                     break;
             }
         }
-
-        /// <summary>
-        /// { 
-        ///     "parameter1": "value1",
-        ///     "parameter2": "value2",
-        ///     "...": "value",
-        /// }
-        /// </summary>
-        /// <param name="url">a</param>
-        /// <param name="jsonContent">
-        /// </param>
-        /// <returns></returns>
-
-        /// <summary>
-        /// test
-        /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
 
         public static void DisabledDateTimePicker(RadDateTimePicker radDateTimePicker, bool disabled)
         {

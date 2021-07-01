@@ -162,8 +162,8 @@
                 </div>
 
                 <div class="cssclsNoPrint">
-                    <div style="overflow: scroll; height: calc(100vh - 52px); overflow-x: hidden;">
-
+                    <div style="overflow: scroll; height: 100vh; overflow-x: hidden;">
+                        <asp:HiddenField runat="server" ID="DataObj" />
                         <asp:Panel runat="server" ID="messagePlaceHolder">
                             <div class="card" runat="server" id="amendReasonWraper">
                                 <div class="card-body">

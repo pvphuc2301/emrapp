@@ -9,6 +9,7 @@ public class ConnClass
     public string SQL_HISConnString = @"Data Source=172.16.0.7;Initial Catalog=OrionHIS_PRO;User ID=sa;Password=P@ssword1;";
 
     public string SQL_EMRConnString = @"Server=172.16.0.88;Database=EMR_PRO;User Id=sa;Password=!aih@123$;";
+    public string SQL_AIHConnString = @"Server=172.16.0.88;Database=EMR_AIH;User Id=sa;Password=!aih@123$;";
     public string SQL_CSLConnString = @"Server=172.16.0.88;Database=Consult_cRepository;User Id=sa;Password=!aih@123$;";
 
     public string SQL_HCConnString = @"Server=172.16.0.80;Database=HEALTH_CHECK;User Id=sa;Password=AiHWS@123$;";

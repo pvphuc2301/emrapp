@@ -82,7 +82,7 @@ namespace EMR
                 txt_treatment_plan.Value = iima.treatment_plan;
                 txt_discharge_plan.Value = iima.discharge_plan;
                 WebHelpers.VisibleControl(true, btnUpdateVitalSign);
-                WebHelpers.AddScriptFormEdit(Page, iima);
+                WebHelpers.AddScriptFormEdit(Page, iima, (string)Session["emp_id"]);
             }
             catch (Exception ex)
             {

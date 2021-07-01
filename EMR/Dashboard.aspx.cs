@@ -158,6 +158,7 @@ namespace EMR
             string PVID = item.GetDataKeyValue("visible_patient_id").ToString();
 
             string url = string.Format("/emr/emrinfor.aspx?pid={0}&vbid={1}", PID, PVID);
+            //string url = string.Format("/emr/emr.aspx?pid={0}&vbid={1}", PID, PVID);
 
             Response.Redirect(url);
         }

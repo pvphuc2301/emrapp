@@ -297,7 +297,7 @@ namespace EMR
 
                 WebHelpers.VisibleControl(true, pain_annotation_undo, skin_anno_data_undo, pain_annotation_redo, skin_anno_data_redo, pain_annotation_pencilWrapper, skin_anno_data_pencil_wrapper);
 
-                WebHelpers.AddScriptFormEdit(Page, iina);
+                WebHelpers.AddScriptFormEdit(Page, iina, (string)Session["emp_id"]);
             }
             catch (Exception ex)
             {
