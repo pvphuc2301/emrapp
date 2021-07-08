@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -55,6 +56,7 @@ namespace EMR
                 txt_treatment_plan.Value = imani.treatment_plan;
                 txt_discharge_plan.Value = imani.discharge_plan;
 
+                DataObj.Value = JsonConvert.SerializeObject(imani);
                 WebHelpers.AddScriptFormEdit(Page, imani, (string)Session["emp_id"]);
 
             }
@@ -161,10 +163,7 @@ namespace EMR
                 {
                     WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
-                    string pid = Request["pid"];
-                    string vpid = Request["vpid"];
-
-                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                    Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
                 }
             }
             catch (Exception ex)
@@ -182,7 +181,7 @@ namespace EMR
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, imani, ControlState.Edit, (string)Session["location"]);
+                WebHelpers.LoadFormControl(form1, imani, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(imani);
                 //get access button
@@ -206,6 +205,10 @@ namespace EMR
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
 
         }
+        protected void btnHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
+        }
         #endregion
 
         #region Functions
@@ -223,12 +226,12 @@ namespace EMR
                 prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (imani.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(imani, WebHelpers.LoadFormControl(form1, imani, ControlState.View, (string)Session["location"]));
+                    BindingDataForm(imani, WebHelpers.LoadFormControl(form1, imani, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
 
                 }
                 else if (imani.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(imani, WebHelpers.LoadFormControl(form1, imani, ControlState.Edit, (string)Session["location"]));
+                    BindingDataForm(imani, WebHelpers.LoadFormControl(form1, imani, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
                 }
 
                 WebHelpers.getAccessButtons(form1, imani.status, (string)Session["access_authorize"], (string)Session["location"]);
@@ -260,6 +263,13 @@ namespace EMR
                 imani.associated_conditions = txt_associated_conditions.Value;
                 imani.treatment_plan = txt_treatment_plan.Value;
                 imani.discharge_plan = txt_discharge_plan.Value;
+
+                if (JsonConvert.SerializeObject(imani) == DataObj.Value)
+                {
+                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
+                }
+
+                imani.amend_reason = txt_amend_reason.Text;
                 imani.user_name = (string)Session["UserID"];
 
                 dynamic result = imani.Update()[0];

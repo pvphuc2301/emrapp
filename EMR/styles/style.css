@@ -3425,7 +3425,7 @@ fieldset:disabled a.btn {
     .show > .btn-primary.dropdown-toggle {
         color: #fff;
         background-color: rgb(17, 82, 147);
-        border-color: #f9663a
+        /*border-color: #f9663a*/
     }
 
         .btn-primary:not(:disabled):not(.disabled).active:focus,

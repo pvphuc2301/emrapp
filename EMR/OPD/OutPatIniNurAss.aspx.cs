@@ -21,7 +21,6 @@ namespace EMR
 
             if (!IsPostBack)
             {
-
                 Initial();
             }
 
@@ -30,9 +29,6 @@ namespace EMR
 
         private void PostBackEvent()
         {
-            switch (Request["__EVENTTARGET"])
-            {
-            }
         }
 
         #region Binding Data
@@ -62,7 +58,7 @@ namespace EMR
                 txt_vs_bmi.Value = oina.vs_BMI;
                 txt_vs_spo2.Value = oina.vs_spO2;
                 txt_pulse.Value = oina.pulse;
-
+                
                 //II.
                 //1.
                 txt_chief_complaint.Value = oina.chief_complaint;
@@ -86,6 +82,7 @@ namespace EMR
 
                 WebHelpers.BindDateTimePicker(dtpk_assessment_date_time, oina.assessment_date_time);
 
+                DataObj.Value = JsonConvert.SerializeObject(oina);
                 WebHelpers.AddScriptFormEdit(Page, oina, (string)Session["emp_id"]);
                 
             }
@@ -127,7 +124,6 @@ namespace EMR
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
 
         }
-
         private void BindingDataFormPrint(Oina oina)
         {
             try
@@ -189,14 +185,8 @@ namespace EMR
                 UpdateData(oina);
             }
         }
-
-        //[WebMethod(EnableSession=true)] 
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            //string UserId = Convert.ToString(HttpContext.Current.Session["UserId"]);
-            
-            //string DocId = Convert.ToString(HttpContext.Current.Request.QueryString["docId"]);
-            //docid;
             try
             {
                 dynamic result = Oina.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
@@ -204,13 +194,8 @@ namespace EMR
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
                     WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
-                    
-                    //string UserId = Convert.ToString(HttpContext.Current.Session["UserId"]);
 
-                    string pid = Request["pid"];
-                    string vpid = Request["vpid"];
-                    
-                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                    Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
                 }
             } catch(Exception ex)
             {
@@ -227,7 +212,7 @@ namespace EMR
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, oina, ControlState.Edit, (string)Session["location"]);
+                WebHelpers.LoadFormControl(form1, oina, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(oina);
                 //get access button
@@ -244,6 +229,10 @@ namespace EMR
             Oina oina = new Oina(Request["docid"]);
             BindingDataFormPrint(oina);
             ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
+        }
+        protected void btnHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
         }
         #endregion
 
@@ -262,12 +251,12 @@ namespace EMR
                 prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (oina.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(oina, WebHelpers.LoadFormControl(form1, oina, ControlState.View, (string)Session["location"]));
+                    BindingDataForm(oina, WebHelpers.LoadFormControl(form1, oina, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
 
                 }
                 else if (oina.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(oina, WebHelpers.LoadFormControl(form1, oina, ControlState.Edit, (string)Session["location"]));
+                    BindingDataForm(oina, WebHelpers.LoadFormControl(form1, oina, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
                 }
 
                 WebHelpers.getAccessButtons(form1, oina.status, (string)Session["access_authorize"], (string)Session["location"]);
@@ -281,8 +270,6 @@ namespace EMR
         {
             try
             {
-                oina.amend_reason = txt_amend_reason.Text;
-
                 oina.vs_temperature = txt_vs_temperature.Value;
                 oina.vs_heart_rate = txt_vs_heart_rate.Value;
                 oina.vs_weight = txt_vs_weight.Value;
@@ -291,7 +278,7 @@ namespace EMR
                 oina.vs_blood_pressure = txt_vs_blood_pressure.Value;
                 oina.vs_BMI = txt_vs_bmi.Value;
                 oina.vs_spO2 = txt_vs_spo2.Value;
-                oina.vs_heart_rate = txt_pulse.Value;
+                oina.pulse = txt_pulse.Value;
                 //1.
                 oina.chief_complaint = txt_chief_complaint.Value;
                 //2.
@@ -299,7 +286,7 @@ namespace EMR
                 oina.allergy_note = WebHelpers.GetBool(oina.allergy, txt_allergy_note.Value, null);
                 //3.
                 oina.mental_status = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_mental_status_");
-                oina.mental_status_note = WebHelpers.GetBool(oina.mental_status, txt_mental_status_note.Value, null);
+                oina.mental_status_note = WebHelpers.GetBool(oina.mental_status, null, txt_mental_status_note.Value);
                 //4.
                 oina.paint_score_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_paint_score_code_", Oina.PAINT_SCORE_CODE);
                 oina.paint_score_description = WebHelpers.GetDicDesc(oina.paint_score_code, Oina.PAINT_SCORE_CODE);
@@ -318,13 +305,20 @@ namespace EMR
 
                 oina.assessment_date_time = DataHelpers.ConvertSQLDateTime(dtpk_assessment_date_time.SelectedDate);
 
+                if (JsonConvert.SerializeObject(oina) == DataObj.Value)
+                {
+                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
+                }
+
+                //
+                oina.amend_reason = txt_amend_reason.Text;
                 oina.user_name = (string)Session["UserID"];
 
                 dynamic result = oina.Update()[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
+                    WebHelpers.Notification(Page, CONST_MESSAGE.MESSAGE_SAVE_SUCCESS);
                     Initial();
                 }
             }

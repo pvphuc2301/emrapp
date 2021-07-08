@@ -55,6 +55,7 @@ namespace EMR.IPD
                 txt_procedure_chart.Value = surr.procedure_chart;
                 txt_procedure_narrative.Value = surr.procedure_narrative;
 
+                DataObj.Value = JsonConvert.SerializeObject(surr);
                 WebHelpers.AddScriptFormEdit(Page, surr, (string)Session["emp_id"]);
             }
             catch(Exception ex)
@@ -102,28 +103,28 @@ namespace EMR.IPD
             {
                 Patient patient = Patient.Instance();
                 PatientVisit patientVisit = PatientVisit.Instance();
-                prt_pid.InnerText = patient.visible_patient_id;
-                prt_FullName.InnerText = patient.GetFullName();
-                prt_admission_date.InnerText = WebHelpers.FormatDateTime(patientVisit.actual_visit_date_time);
+                prt_pid.InnerHtml = patient.visible_patient_id;
+                prt_FullName.InnerHtml = patient.GetFullName();
+                prt_admission_date.InnerHtml = WebHelpers.FormatDateTime(patientVisit.actual_visit_date_time);
 
-                prt_procedure_date.InnerText = WebHelpers.FormatDateTime(surr.procedure_date);
-                prt_start_time.InnerText = surr.start_time;
-                prt_finish_time.InnerText = surr.finish_time;
-                prt_preo_diagnosis.InnerText = surr.preo_diagnosis;
-                prt_post_diagnosis.InnerText = surr.post_diagnosis;
-                prt_name_procedure.InnerText = surr.name_procedure;
-                prt_anesthesia.InnerText = surr.anesthesia;
-                prt_surgeon.InnerText = surr.surgeon;
-                prt_assistant_surgeon.InnerText = surr.assistant_surgeon;
-                prt_anesthesiologist.InnerText = surr.anesthesiologist;
-                prt_anesthetic_nurse.InnerText = surr.anesthetic_nurse;
-                prt_scrub_nurse.InnerText = surr.scrub_nurse;
-                prt_circulating_nurse.InnerText = surr.circulating_nurse;
-                prt_estimated_bloodloss.InnerText = surr.estimated_bloodloss;
-                prt_biopsy_pathology.InnerText = surr.biopsy_pathology;
-                prt_complications.InnerText = surr.complications;
-                prt_procedure_chart.InnerText = surr.procedure_chart;
-                prt_procedure_narrative.InnerText = surr.procedure_narrative;
+                prt_procedure_date.InnerHtml = WebHelpers.FormatDateTime(surr.procedure_date);
+                prt_start_time.InnerHtml = surr.start_time;
+                prt_finish_time.InnerHtml = surr.finish_time;
+                prt_preo_diagnosis.InnerHtml = surr.preo_diagnosis;
+                prt_post_diagnosis.InnerHtml = surr.post_diagnosis;
+                prt_name_procedure.InnerHtml = surr.name_procedure;
+                prt_anesthesia.InnerHtml = surr.anesthesia;
+                prt_surgeon.InnerHtml = surr.surgeon;
+                prt_assistant_surgeon.InnerHtml = surr.assistant_surgeon;
+                prt_anesthesiologist.InnerHtml = surr.anesthesiologist;
+                prt_anesthetic_nurse.InnerHtml = surr.anesthetic_nurse;
+                prt_scrub_nurse.InnerHtml = surr.scrub_nurse;
+                prt_circulating_nurse.InnerHtml = surr.circulating_nurse;
+                prt_estimated_bloodloss.InnerHtml = surr.estimated_bloodloss;
+                prt_biopsy_pathology.InnerHtml = surr.biopsy_pathology;
+                prt_complications.InnerHtml = surr.complications;
+                prt_procedure_chart.InnerHtml = surr.procedure_chart;
+                prt_procedure_narrative.InnerHtml = surr.procedure_narrative;
             }
             catch(Exception ex)
             {
@@ -163,10 +164,7 @@ namespace EMR.IPD
                 {
                     WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
-                    string pid = Request["pid"];
-                    string vpid = Request["vpid"];
-
-                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                    Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
                 }
             }
             catch (Exception ex)
@@ -184,7 +182,7 @@ namespace EMR.IPD
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, surr, ControlState.Edit, (string)Session["location"]);
+                WebHelpers.LoadFormControl(form1, surr, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(surr);
                 //get access button
@@ -201,6 +199,10 @@ namespace EMR.IPD
             BindingDataFormPrint(surr);
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
+        }
+        protected void btnHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
         }
         #endregion
 
@@ -219,11 +221,11 @@ namespace EMR.IPD
                 prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (surr.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(surr, WebHelpers.LoadFormControl(form1, surr, ControlState.View, (string)Session["location"]));
+                    BindingDataForm(surr, WebHelpers.LoadFormControl(form1, surr, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
                 }
                 else if (surr.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(surr, WebHelpers.LoadFormControl(form1, surr, ControlState.Edit, (string)Session["location"]));
+                    BindingDataForm(surr, WebHelpers.LoadFormControl(form1, surr, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
                 }
 
                 WebHelpers.getAccessButtons(form1, surr.status, (string)Session["access_authorize"], (string)Session["location"]);
@@ -268,8 +270,15 @@ namespace EMR.IPD
                 //16
                 surr.complications = txt_complications.Value;
                 //
+                surr.procedure_chart = txt_procedure_chart.Value;
                 surr.procedure_narrative = txt_procedure_narrative.Value;
 
+                if (JsonConvert.SerializeObject(surr) == DataObj.Value)
+                {
+                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
+                }
+
+                surr.amend_reason = txt_amend_reason.Text;
                 surr.user_name = (string)Session["UserID"];
 
                 dynamic result = surr.Update()[0];
@@ -290,3 +299,5 @@ namespace EMR.IPD
 
     }
 }
+
+

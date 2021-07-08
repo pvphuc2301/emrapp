@@ -231,6 +231,24 @@ namespace EMR
         protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_prioritization_code;
 
         /// <summary>
+        /// btnHome control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnHome;
+
+        /// <summary>
+        /// DataObj control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField DataObj;
+
+        /// <summary>
         /// messagePlaceHolder control.
         /// </summary>
         /// <remarks>
@@ -588,7 +606,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare5;
+        protected global::System.Web.UI.UserControl XSquare5;
 
         /// <summary>
         /// txt_allergy_note control.
@@ -660,7 +678,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare6;
+        protected global::System.Web.UI.UserControl XSquare6;
 
         /// <summary>
         /// txt_mental_status_note control.
@@ -741,7 +759,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare2;
+        protected global::System.Web.UI.UserControl XSquare2;
 
         /// <summary>
         /// lbl_paint_score_description control.
@@ -786,7 +804,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare22;
+        protected global::System.Web.UI.UserControl XSquare22;
 
         /// <summary>
         /// txt_fall_risk_assistance control.
@@ -849,7 +867,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare1;
+        protected global::System.Web.UI.UserControl XSquare1;
 
         /// <summary>
         /// lbl_nutrition_status_description control.
@@ -894,7 +912,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare3;
+        protected global::System.Web.UI.UserControl XSquare3;
 
         /// <summary>
         /// lbl_housing_description control.
@@ -939,7 +957,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare4;
+        protected global::System.Web.UI.UserControl XSquare4;
 
         /// <summary>
         /// lbl_prioritization_description control.

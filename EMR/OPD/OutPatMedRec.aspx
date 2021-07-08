@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OutPatMedRec.aspx.cs" Inherits="EMR.OutPatMedRec" ValidateRequest="false" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OutPatMedRec.aspx.cs" Inherits="EMR.OutPatMedRec" ValidateRequest="false" EnableEventValidation="false" %>
 
 <%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="webUI" TagName="PatientInfo" %>
 <%@ Register Src="~/UserControls/Alert.ascx" TagPrefix="uc1" TagName="Alert" %>
@@ -247,7 +247,12 @@
                 </div>
 
                 <div class="cssclsNoPrint">
-                    <div style="overflow: scroll; height: 100vh; overflow-x: hidden;">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                      <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
+                      <li>Outpatient Medical Record</li>
+                    </ul>
+                    <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
+                        <asp:HiddenField runat="server" ID="DataObj" />
                         <asp:Panel runat="server" ID="messagePlaceHolder">
                             <div class="card" runat="server" id="amendReasonWraper">
                                 <div class="card-body">
@@ -359,78 +364,93 @@
                                                                     <label class="control-label">Habits/ <span class="text-primary">Thói quen:</span></label>
                                                                 </legend>
 
-                                                                <div class="col-md-12">
+                                                                <div class="col-md-12 gt-2-a">
                                                                     <label class="control-label mb-2" style="width: 310px">Hút thuốc lá/ <span class="text-primary">Smoking:</span></label>
                                                                     <asp:Label runat="server" ID="lbl_habits_smoking" />
+                                                                    <div runat="server" id="habits_smoking_wrapper">
+                                                                        <div class="custom-control custom-radio d-inline-block">
+                                                                            <input type="radio" runat="server" id="rad_habits_smoking_false" name="rad_habits_smoking" class="custom-control-input" />
+                                                                            <label class="custom-control-label" for="rad_habits_smoking_false">Không/ <span class="text-primary">No</span></label>
+                                                                        </div>
+                                                                        <div class="custom-control custom-radio  d-inline-block">
+                                                                            <input disabled-for="habits_smoking_field" type="radio" runat="server" id="rad_habits_smoking_true" name="rad_habits_smoking" class="custom-control-input" />
+                                                                            <label class="custom-control-label" for="rad_habits_smoking_true">Có, ghi số gói trong năm/ <span class="text-primary">Yes, specify pack years:</span></label>
+                                                                            <a href="javascript:void(0)" data-clear="rad_habits_smoking" onclick="clear_radiobutton(this)">
+                                                                                <icon:XSquare runat="server" ID="XSquare7" />
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="form-group habits_smoking_field d-inline-block">
+                                                                            <input runat="server" id="txt_habits_smoking_pack" data-type="number" class="form-control w-5" />
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
 
-                                                                <div class="col-md-12" runat="server" id="habits_smoking_wrapper">
-                                                                    <div class="custom-control custom-radio d-inline-block">
-                                                                        <input type="radio" runat="server" id="rad_habits_smoking_false" name="rad_habits_smoking" class="custom-control-input" />
-                                                                        <label class="custom-control-label" for="rad_habits_smoking_false">Không/ <span class="text-primary">No</span></label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-radio  d-inline-block">
-                                                                        <input disabled-for="habits_smoking_field" type="radio" runat="server" id="rad_habits_smoking_true" name="rad_habits_smoking" class="custom-control-input" />
-                                                                        <label class="custom-control-label" for="rad_habits_smoking_true">Có, ghi số gói trong năm/ <span class="text-primary">Yes, specify pack years:</span></label>
-                                                                    </div>
-                                                                    <div class="form-group habits_smoking_field  d-inline-block">
-                                                                        <webUI:TextField runat="server" ID="txt_habits_smoking_pack" />
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-md-12">
+                                                                 <div class="col-md-12 gt-2-a">
                                                                     <label class="control-label mb-2" style="width: 310px">Uống rượu/ <span class="text-primary">Alcohol:</span></label>
                                                                     <asp:Label runat="server" ID="lbl_habits_alcohol" />
+                                                                     <div runat="server" id="habits_alcohol_wrapper">
+                                                                        <div class="custom-control custom-radio d-inline-block">
+                                                                            <input type="radio" runat="server" id="rad_habits_alcohol_false" name="rad_habits_alcohol" class="custom-control-input" />
+                                                                            <label class="custom-control-label" for="rad_habits_alcohol_false">Không/ <span class="text-primary">No</span></label>
+                                                                        </div>
+                                                                        <div class="custom-control custom-radio d-inline-block">
+                                                                            <input disabled-for="habits_alcohol_field" type="radio" runat="server" id="rad_habits_alcohol_true" name="rad_habits_alcohol" class="custom-control-input" />
+                                                                            <label class="custom-control-label" for="rad_habits_alcohol_true">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
+                                                                            <a href="javascript:void(0)" data-clear="rad_habits_alcohol" onclick="clear_radiobutton(this)">
+                                                                                <icon:XSquare runat="server" ID="XSquare6" />
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="form-group habits_alcohol_field mb-2">
+                                                                            <webUI:TextField runat="server" ID="txt_habits_alcohol_note" />
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-md-12" runat="server" id="habits_alcohol_wrapper">
-                                                                    <div class="custom-control custom-radio d-inline-block">
-                                                                        <input type="radio" runat="server" id="rad_habits_alcohol_false" name="rad_habits_alcohol" class="custom-control-input" />
-                                                                        <label class="custom-control-label" for="rad_habits_alcohol_false">Không/ <span class="text-primary">No</span></label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-radio d-inline-block">
-                                                                        <input disabled-for="habits_alcohol_field" type="radio" runat="server" id="rad_habits_alcohol_true" name="rad_habits_alcohol" class="custom-control-input" />
-                                                                        <label class="custom-control-label" for="rad_habits_alcohol_true">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
-                                                                    </div>
-                                                                    <div class="form-group habits_alcohol_field d-inline-block">
-                                                                        <webUI:TextField runat="server" ID="txt_habits_alcohol_note" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12">
+                                                                
+                                                                
+                                                                <div class="col-md-12 gt-2-a">
                                                                     <label class="control-label mb-2" style="width: 310px">Chất gây nghiện/ <span class="text-primary">Drugs:</span></label>
                                                                     <asp:Label runat="server" ID="lbl_habits_drugs" />
+                                                                    <div runat="server" id="habits_drugs_wrapper">
+                                                                        <div class="custom-control custom-radio d-inline-block">
+                                                                            <input type="radio" runat="server" id="rad_habits_drugs_false" name="rad_habits_drugs" class="custom-control-input" />
+                                                                            <label class="custom-control-label" for="rad_habits_drugs_false">Không/ <span class="text-primary">No</span></label>
+                                                                        </div>
+                                                                        <div class="custom-control custom-radio mb-1 d-inline-block">
+                                                                            <input disabled-for="habits_drugs_field" type="radio" runat="server" id="rad_habits_drugs_true" name="rad_habits_drugs" class="custom-control-input" />
+                                                                            <label class="custom-control-label" for="rad_habits_drugs_true">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
+                                                                            <a href="javascript:void(0)" data-clear="rad_habits_drugs" onclick="clear_radiobutton(this)">
+                                                                                <icon:XSquare runat="server" ID="XSquare5" />
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="form-group habits_drugs_field mb-2">
+                                                                            <webUI:TextField runat="server" ID="txt_habits_drugs_note" />
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-md-12" runat="server" id="habits_drugs_wrapper">
-                                                                    <div class="custom-control custom-radio d-inline-block">
-                                                                        <input type="radio" runat="server" id="rad_habits_drugs_false" name="rad_habits_drugs" class="custom-control-input" />
-                                                                        <label class="custom-control-label" for="rad_habits_drugs_false">Không/ <span class="text-primary">No</span></label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-radio mb-1 d-inline-block">
-                                                                        <input disabled-for="habits_drugs_field" type="radio" runat="server" id="rad_habits_drugs_true" name="rad_habits_drugs" class="custom-control-input" />
-                                                                        <label class="custom-control-label" for="rad_habits_drugs_true">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
-                                                                    </div>
-                                                                    <div class="form-group habits_drugs_field d-inline-block">
-                                                                        <webUI:TextField runat="server" ID="txt_habits_drugs_note" />
-                                                                    </div>
-                                                                </div>
+                                                                
 
-                                                                <div class="col-md-12">
-                                                                    <label class="control-label mb-2" style="width: 310px">Tập thể dục thường xuyên/ <span class="text-primary">Regular physical exercise:</span></label>
+                                                                <div class="col-md-12 gt-2-a">
+                                                                    <label class="control-label mb-2">Tập thể dục thường xuyên/ <span class="text-primary">Regular physical exercise:</span></label>
                                                                     <asp:Label runat="server" ID="lbl_habits_physical_exercise" />
+                                                                    <div runat="server" id="habits_physical_exercise_wrapper">
+                                                                        <div class="custom-control custom-radio d-inline-block">
+                                                                            <input type="radio" runat="server" id="rad_habits_physical_exercise_false" name="rad_habits_physical_exercise" class="custom-control-input" />
+                                                                            <label class="custom-control-label" for="rad_habits_physical_exercise_false">Không/ <span class="text-primary">No</span></label>
+                                                                        </div>
+                                                                        <div class="custom-control custom-radio d-inline-block">
+                                                                            <input disabled-for="habits_physical_exercise_field" type="radio" runat="server" id="rad_habits_physical_exercise_true" name="rad_habits_physical_exercise" class="custom-control-input" />
+                                                                            <label class="custom-control-label" for="rad_habits_physical_exercise_true">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
+                                                                            <a href="javascript:void(0)" data-clear="rad_habits_physical_exercise" onclick="clear_radiobutton(this)">
+                                                                                <icon:XSquare runat="server" ID="XSquare4" />
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="form-group mb-2 habits_physical_exercise_field">
+                                                                            <webUI:TextField runat="server" ID="txt_habits_phy_exer_note" />
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="col-md-12" runat="server" id="habits_physical_exercise_wrapper">
-                                                                    <div class="custom-control custom-radio d-inline-block">
-                                                                        <input type="radio" runat="server" id="rad_habits_physical_exercise_false" name="rad_habits_physical_exercise" class="custom-control-input" />
-                                                                        <label class="custom-control-label" for="rad_habits_physical_exercise_false">Không/ <span class="text-primary">No</span></label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-radio d-inline-block">
-                                                                        <input disabled-for="habits_physical_exercise_field" type="radio" runat="server" id="rad_habits_physical_exercise_true" name="rad_habits_physical_exercise" class="custom-control-input" />
-                                                                        <label class="custom-control-label" for="rad_habits_physical_exercise_true">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
-                                                                    </div>
-                                                                    <div class="form-group habits_physical_exercise_field d-inline-block">
-                                                                        <webUI:TextField runat="server" ID="txt_habits_phy_exer_note" />
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12 d-grid" style="grid-template-columns: 310px 1fr">
+                                                                
+                                                                <div class="col-md-12 gt-2-a">
                                                                     <label class="control-label mb-1">Khác, Ghi rõ/ <span class="text-primary">Other, Specify:</span></label>
                                                                     <asp:Label runat="server" ID="lbl_habits_other" />
                                                                     <div class="form-group" runat="server" id="habits_other_wrapper">
@@ -678,25 +698,27 @@
                                                 </div>
                                             </div>
 
+                                            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                                                <ContentTemplate>
                                             <div class="row mb-2">
                                                 <div class="col-md-12 gt-2-a">
                                                     <label class="control-label mb-1">Điều trị/ <span class="text-primary">Treatment:</span></label>
                                                     <asp:Label runat="server" ID="lbl_treatment_code" />
                                                     <div runat="server" id="treatment_code_wrapper" class="d-inline-block">
                                                         <div class="custom-control custom-radio d-inline-block">
-                                                            <input onchange="radioButtonChange(this)" disabled-for="current_medication_field" type="radio" runat="server" id="rad_treatment_code_opd" name="rad_treatment_code" class="custom-control-input" />
+                                                            <input onclick="__doPostBack('rad_treatment_code_change','opd')" type="radio" runat="server" id="rad_treatment_code_opd" name="rad_treatment_code" class="custom-control-input" />
                                                             <label class="custom-control-label" for="rad_treatment_code_opd">Ngoại trú/ <span class="text-primary">Ambulatory care</span></label>
                                                         </div>
 
                                                         <div class="custom-control custom-radio d-inline-block">
-                                                            <input onchange="radioButtonChange(this)" data-target="current_medication_field" type="radio" runat="server" id="rad_treatment_code_ipd" name="rad_treatment_code" class="custom-control-input" />
+                                                            <input onclick="__doPostBack('rad_treatment_code_change','ipd')" type="radio" runat="server" id="rad_treatment_code_ipd" name="rad_treatment_code" class="custom-control-input" />
                                                             <label class="custom-control-label" for="rad_treatment_code_ipd">Nhập viện/ <span class="text-primary">Admission</span></label>
                                                         </div>
 
                                                         <div class="custom-control custom-radio d-inline-block">
-                                                            <input onchange="radioButtonChange(this)" data-target="current_medication_field" type="radio" runat="server" id="rad_treatment_code_trf" name="rad_treatment_code" class="custom-control-input" />
+                                                            <input onclick="__doPostBack('rad_treatment_code_change','trf')" type="radio" runat="server" id="rad_treatment_code_trf" name="rad_treatment_code" class="custom-control-input" />
                                                             <label class="custom-control-label" for="rad_treatment_code_trf">Chuyển viện/ <span class="text-primary">Transfer</span></label>
-                                                            <a href="javascript:void(0)" data-clear="rad_treatment_code" onclick="clear_radiobutton(this)">
+                                                            <a href="javascript:void(0)" onclick="__doPostBack('rad_treatment_code_change','')">
                                                                 <icon:XSquare runat="server" ID="XSquare2" />
                                                             </a>
                                                         </div>
@@ -704,7 +726,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row mb-2 current_medication_field">
+                                            <div class="row mb-2" runat="server" id="current_medication_field">
                                                 <div class="col-md-12 gt-2-a">
                                                     <label class="control-label mb-1"><span class="text-primary">5. Current medications:</span></label>
                                                     <asp:Label runat="server" ID="lbl_medicine" />
@@ -714,6 +736,8 @@
                                                 </div>
                                             </div>
 
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
                                             <div class="row mb-2">
                                                 <div class="col-md-12 gt-2-a">
                                                     <label class="control-label mb-1">Yêu cầu ý kiến chuyên khoa/ <span class="text-primary">Specialized opinion requested:</span></label>
@@ -786,7 +810,7 @@
                                                 </div>
                                                 <div class="text-right">
                                                     <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
-                                                    <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
+                                                    <asp:LinkButton OnClick="btnDelete_Click" OnClientClick="window.removeEventListener('beforeunload',comfirm_leave_page,true);" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
                                                 </div>
                                             </ModalBody>
                                         </webUI:PopupModal>
@@ -810,8 +834,12 @@
     <script src="../scripts/alertify.js"></script>
 
     <script type="text/javascript">
+        var elem = window.parent.parent.document.getElementById("myProgress");
+        progress(elem);
 
         checkboxRadiobutton_init();
+
+        InputFilter("data-type='number'");
 
         function beforeAsyncPostBack() {
             var curtime = new Date();
@@ -819,6 +847,7 @@
 
         function afterAsyncPostBack() {
             checkboxRadiobutton_init();
+            InputFilter("data-type='number'");
         }
 
     </script>

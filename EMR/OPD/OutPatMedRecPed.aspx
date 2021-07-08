@@ -237,7 +237,13 @@
                     </table>
                 </div>
 
-                <div class="cssclsNoPrint" style="overflow: scroll; height: 100vh; overflow-x: hidden;">
+                <div class="cssclsNoPrint">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                      <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
+                      <li>Outpatient Medical Record - Pediatric</li>
+                    </ul>
+                    <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
+                        <asp:HiddenField runat="server" ID="DataObj" />
                     <asp:Panel runat="server" ID="messagePlaceHolder">
                         <div class="card" runat="server" id="amendReasonWraper">
                             <div class="card-body">
@@ -329,23 +335,25 @@
                                                 <label class="control-label">2. Tiền sử bệnh/ <span class="text-primary">Antecedent Medical History:</span></label>
                                             </legend>
 
-                                            <div class="col-md-12 mb-2">
-                                                <fieldset class="row mb-2">
-                                                    <legend>
-                                                        <label class="control-label">Bản thân/ <span class="text-primary">Personal:</span></label>
-                                                    </legend>
+                                            <div class="col-md-12 mb-2 gt-2-a">
+                                                <label class="control-label">Bản thân/ <span class="text-primary">Personal:</span></label>
+                                                <asp:Label runat="server" ID="lbl_personal" />
+                                                <div class="form-group " runat="server" id="personal_wrapper">
+                                                    <webUI:TextField runat="server" ID="txt_personal" />
+                                                </div>
+                                            </div>
 
-                                                    <div class="col-md-12 mb-2 gt-2-a">
-                                                            <label></label>
-                                                            <asp:Label runat="server" ID="lbl_personal" />
-                                                            <div class="form-group " runat="server" id="personal_wrapper">
-                                                                <webUI:TextField runat="server" ID="txt_personal" />
-                                                            </div>
-                                                        </div>
+                                            <div class="col-md-12 mb-2 gt-2-a">
+                                                <label class="control-label">Gia đình/ <span class="text-primary">Family:</span></label>
+                                                <div class="form-group " runat="server" id="family_wrapper">
+                                                    <webUI:TextField runat="server" ID="txt_family" />
+                                                </div>
+                                                    <asp:Label runat="server" ID="lbl_family" />
+                                            </div>
 
-                                                    <div class="col-md-12 gt-2-a">
-                                                        <label style="width: 160px" class="control-label mb-2">Tiền sử dị ứng/ <span class="text-primary">Allergy:</span></label>
-                                                        <asp:Label runat="server" ID="lbl_allergy" />
+                                            <div class="col-md-12 gt-2-a">
+                                                <label class="control-label mb-2">Tiền sử dị ứng/ <span class="text-primary">Allergy:</span></label>
+                                                <asp:Label runat="server" ID="lbl_allergy" />
 
                                                         <div runat="server" id="allergy_wrapper">
                                                             <div class="custom-control custom-radio d-inline-block">
@@ -364,7 +372,9 @@
                                                                 <webUI:TextField runat="server" ID="txt_allergy_note" />
                                                             </div>
                                                         </div>
-                                                    </div>
+                                            </div>
+
+                                            
                                                 </fieldset>
 
                                                 <fieldset class="row mb-2">
@@ -372,13 +382,13 @@
                                                         <label class="control-label">Gia đình/ <span class="text-primary">Family:</span></label>
                                                     </legend>
 
-                                                    <div class="col-md-12 mb-2 gt-2-a">
-                                                        <label></label>
+                                                    <%--<div class="col-md-12 mb-2 gt-2-a">
+                                                        <label class="control-label">Gia đình/ <span class="text-primary">Family:</span></label>
                                                         <div class="form-group " runat="server" id="family_wrapper">
                                                             <webUI:TextField runat="server" ID="txt_family" />
                                                         </div>
                                                             <asp:Label runat="server" ID="lbl_family" />
-                                                    </div>
+                                                    </div>--%>
                                                 </fieldset>
                                             </div>
                                         </fieldset>
@@ -526,25 +536,27 @@
                                             </div>
                                         </div>
 
+                                        <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+                                                <ContentTemplate>
                                         <div class="row mb-2">
                                             <div class="col-md-12 gt-2-a">
                                                 <label class="control-label mb-1">Điều trị/ <span class="text-primary">Treatment:</span></label>
                                                 <asp:Label runat="server" ID="lbl_treatment_code" />
                                                 <div runat="server" id="treatment_code_wrapper" class="d-inline-block">
                                                     <div class="custom-control custom-radio d-inline-block">
-                                                        <input onchange="radioButtonChange(this)" disabled-for="current_medication_field" type="radio" runat="server" id="rad_treatment_code_opd" name="rad_treatment_code" class="custom-control-input" />
+                                                        <input onclick="__doPostBack('rad_treatment_code_change','opd')" type="radio" runat="server" id="rad_treatment_code_opd" name="rad_treatment_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_treatment_code_opd">Ngoại trú/ <span class="text-primary">Ambulatory care</span></label>
                                                     </div>
 
                                                     <div class="custom-control custom-radio d-inline-block">
-                                                        <input onchange="radioButtonChange(this)" data-target="current_medication_field" type="radio" runat="server" id="rad_treatment_code_ipd" name="rad_treatment_code" class="custom-control-input" />
+                                                        <input onclick="__doPostBack('rad_treatment_code_change','ipd')" type="radio" runat="server" id="rad_treatment_code_ipd" name="rad_treatment_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_treatment_code_ipd">Nhập viện/ <span class="text-primary">Admission</span></label>
                                                     </div>
 
                                                     <div class="custom-control custom-radio d-inline-block">
-                                                        <input onchange="radioButtonChange(this)" data-target="current_medication_field" type="radio" runat="server" id="rad_treatment_code_trf" name="rad_treatment_code" class="custom-control-input" />
+                                                        <input onclick="__doPostBack('rad_treatment_code_change','trf')" type="radio" runat="server" id="rad_treatment_code_trf" name="rad_treatment_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_treatment_code_trf">Chuyển viện/ <span class="text-primary">Transfer</span></label>
-                                                        <a href="javascript:void(0)" data-clear="rad_treatment_code" onclick="clear_radiobutton(this)">
+                                                        <a href="javascript:void(0)" onclick="__doPostBack('rad_treatment_code_change','')">
                                                             <icon:XSquare runat="server" ID="XSquare2" />
                                                         </a>
                                                     </div>
@@ -552,7 +564,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="row mb-2 current_medication_field">
+                                        <div class="row mb-2" runat="server" id="current_medication_field">
                                             <div class="col-md-12 gt-2-a">
                                                 <label class="control-label mb-1"><span class="text-primary">5. Current medications:</span></label>
                                                 <asp:Label runat="server" ID="lbl_medicine" />
@@ -561,6 +573,19 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="row mb-2 " runat="server" id="tranfer_field">
+                                            <div class="col-md-12 gt-2-a">
+                                                <label class="control-label mb-1"></label>
+                                                <asp:Label runat="server" ID="lbl_tranfer" />
+                                                <div class="form-group " runat="server" id="tranfer_wrapper">
+                                                    <webUI:TextField runat="server" ID="txt_tranfer" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                                    </ContentTemplate>
+                                            </asp:UpdatePanel>
 
                                         <div class="row mb-2">
                                             <div class="col-md-12 gt-2-a">
@@ -653,7 +678,7 @@
                                             </div>
                                             <div class="text-right">
                                                 <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
-                                                <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
+                                                <asp:LinkButton OnClick="btnDelete_Click" OnClientClick="window.removeEventListener('beforeunload',comfirm_leave_page,true);" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
                                             </div>
                                         </ModalBody>
                                     </webUI:PopupModal>
@@ -664,6 +689,7 @@
                             </div>
                         </div>
                     </div>
+                        </div>
                 </div>
 
             </ContentTemplate>
@@ -678,6 +704,8 @@
     <script src="../scripts/alertify.js"></script>
 
     <script type="text/javascript">
+        var elem = window.parent.parent.document.getElementById("myProgress");
+        progress(elem);
 
         checkboxRadiobutton_init();
 

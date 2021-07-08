@@ -34,10 +34,11 @@ namespace EMR
             //else { Session["PageOpenEMR"] = true; }
             varPID = Request.QueryString["pid"]; // "97052A99-0134-11EB-B34D-D89EF37D444C";//  "C248E0FC-39B6-493F-A197-6CF2A96B37AD";//
             varVPID = Request.QueryString["vbid"]; //"3afc144a-86ca-11eb-9dfe-dca2660bc0a2";// ValueHiddenField.Value;
-            //varVisibleID = Request.QueryString["vbid"]; //"900031267";
-            //LoadPatientInfomation();
+                                                   //varVisibleID = Request.QueryString["vbid"]; //"900031267";
+                                                   //LoadPatientInfomation();
+
             
-            
+
             //
             ConnClass ConnStr = new ConnClass();
             ConnStringHIS = ConnStr.SQL_HISConnString;
@@ -820,11 +821,6 @@ namespace EMR
                 Response.Redirect(redirecturl);
         }
 
-        protected void Unnamed_Click(object sender, EventArgs e)
-        {
-
-        }
-
         protected void location_cli_Click(object sender, EventArgs e)
         {
 
@@ -862,6 +858,12 @@ namespace EMR
 
         protected void RadTabStrip1_TabClick(object sender, RadTabStripEventArgs e)
         {
+        }
+
+        protected void btnHome_Click(object sender, EventArgs e)
+        {
+            RadTabStrip1.Tabs[0].Selected = true;
+            RadMultiPage1.SelectedIndex = 0;
         }
     }
 }

@@ -861,6 +861,24 @@ namespace EMR
         protected global::System.Web.UI.WebControls.GridView prt_nursing_note;
 
         /// <summary>
+        /// btnHome control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnHome;
+
+        /// <summary>
+        /// DataObj control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField DataObj;
+
+        /// <summary>
         /// messagePlaceHolder control.
         /// </summary>
         /// <remarks>
@@ -1074,7 +1092,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare1;
+        protected global::System.Web.UI.UserControl XSquare1;
 
         /// <summary>
         /// arrival_mode_code_wrapper control.
@@ -1128,7 +1146,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare2;
+        protected global::System.Web.UI.UserControl XSquare2;
 
         /// <summary>
         /// lbl_past_medical_history control.
@@ -1734,13 +1752,13 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlImage image1;
 
         /// <summary>
-        /// StringBase64 control.
+        /// skin_anno_data_base64 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField StringBase64;
+        protected global::System.Web.UI.WebControls.HiddenField skin_anno_data_base64;
 
         /// <summary>
         /// undo control.
@@ -1929,7 +1947,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare;
+        protected global::System.Web.UI.UserControl XSquare;
 
         /// <summary>
         /// lbl_caregiver_after_discharge control.

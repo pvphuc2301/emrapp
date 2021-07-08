@@ -446,7 +446,12 @@
                 </div>
 
                 <div class="cssclsNoPrint">
-                    <div style="overflow: scroll; height: 100vh; overflow-x: hidden;">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                      <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
+                      <li>Inpatient Initial Medical Assessment</li>
+                    </ul>
+                    <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
+                        <asp:HiddenField runat="server" ID="DataObj" />
                         <asp:Panel runat="server" ID="messagePlaceHolder">
                             <div class="card" runat="server" id="amendReasonWraper">
                                 <div class="card-body">
@@ -591,7 +596,7 @@
                                                                                 <icon:xsquare runat="server" ID="XSquare4" />
                                                                             </a>
                                                                         </div>
-                                                                        <div class="form-group habits_alcohol_field w-n d-inline-block">
+                                                                        <div class="form-group habits_alcohol_field">
                                                                             <webUI:TextField runat="server" ID="txt_habits_alcohol_note" />
                                                                         </div>
                                                                     </div>
@@ -612,7 +617,7 @@
                                                                                 <icon:xsquare runat="server" ID="XSquare5" />
                                                                             </a>
                                                                         </div>
-                                                                        <div class="form-group habits_drugs_field w-n d-inline-block">
+                                                                        <div class="form-group habits_drugs_field">
                                                                             <webUI:TextField runat="server" ID="txt_habits_drugs_note" />
                                                                         </div>
                                                                     </div>
@@ -633,7 +638,7 @@
                                                                                 <icon:xsquare runat="server" ID="XSquare6" />
                                                                             </a>
                                                                         </div>
-                                                                        <div class="form-group habits_physical_exercise_field w-n d-inline-block">
+                                                                        <div class="form-group habits_physical_exercise_field">
                                                                             <webUI:TextField runat="server" ID="txt_habits_phy_exer_note" />
                                                                         </div>
                                                                     </div>
@@ -918,7 +923,7 @@
                                                 </div>
                                                 <div class="text-right">
                                                     <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
-                                                    <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
+                                                    <asp:LinkButton OnClick="btnDelete_Click" OnClientClick="window.removeEventListener('beforeunload',comfirm_leave_page,true);" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
                                                 </div>
                                             </ModalBody>
                                         </webUI:PopupModal>
@@ -946,7 +951,7 @@
     <script>
         formGroup_init();
         checkboxRadiobutton_init();
-        InputFilter();
+        InputFilter("data-type='number'");
 
         function beforeAsyncPostBack() {
             var curtime = new Date();
@@ -956,7 +961,7 @@
         function afterAsyncPostBack() {
             formGroup_init();
             checkboxRadiobutton_init();
-            InputFilter();
+            InputFilter("data-type='number'");
         }
 
     </script>

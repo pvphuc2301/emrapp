@@ -463,8 +463,12 @@
                 </div>
 
                 <div class="cssclsNoPrint">
-                    <div style="overflow: scroll; height: 100vh; overflow-x: hidden;">
-
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                      <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
+                      <li>Emergency Triage And Nursing Assessment Record</li>
+                    </ul>
+                    <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
+                        <asp:HiddenField runat="server" ID="DataObj" />
                         <asp:Panel runat="server" ID="messagePlaceHolder">
                             <div class="card" runat="server" id="amendReasonWraper">
                                 <div class="card-body">
@@ -648,7 +652,7 @@
                                                     <label class="control-label mb-1 mr-2">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
                                                     <asp:Label runat="server" ID="lbl_vs_blood_pressure" />
                                                     <div class="form-group d-inline-block" runat="server" id="vs_blood_pressure_wrapper">
-                                                        <input  id="txt_vs_blood_pressure" data-type="number" style="width: 160px" runat="server" class="form-control text-right" />
+                                                        <input  id="txt_vs_blood_pressure" data-type="number1" style="width: 160px" runat="server" class="form-control text-right" />
                                                         <span class="append">mmHg</span>
                                                     </div>
                                                 </div>
@@ -828,7 +832,7 @@
                                                             </telerik:RadImageEditor>
                                                         </telerik:RadAjaxPanel>--%>
                                                         <img src="" id="image1" runat="server" style="display: none;" />
-                                                        <asp:HiddenField runat="server" ID="StringBase64" />
+                                                        <asp:HiddenField runat="server" ID="skin_anno_data_base64" />
 
                                                         <div style="width: 500px;">
                                                             <div id="controllers">
@@ -1735,7 +1739,7 @@
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <div class="form-group">
-                                                                                <telerik:RadDateTimePicker ID="date_time" SelectedDate='<%# DBNull.Value.Equals((Eval("date_time"))) ? null : Eval("date_time") %>' Width="200px" runat="server" />
+                                                                                <telerik:RadDateTimePicker ID="date_time" SelectedDate='<%# DBNull.Value.Equals(Eval("date_time")) ? null : Eval("date_time") %>' Width="200px" runat="server" />
                                                                             </div>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
@@ -1806,7 +1810,7 @@
                                                     </div>
                                                     <div class="text-right">
                                                         <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
-                                                        <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
+                                                        <asp:LinkButton OnClick="btnDelete_Click" OnClientClick="window.removeEventListener('beforeunload',comfirm_leave_page,true);" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
                                                     </div>
                                                 </ModalBody>
                                             </webUI:PopupModal>
@@ -1873,7 +1877,7 @@
                     ctx.stroke();
                 }
 
-                img1.src = document.getElementById("image1").src;
+            img1.src = document.getElementById("skin_anno_data_base64").value;
 
                 let painting = false;
                 let pen = false;
@@ -1957,9 +1961,8 @@
                             this.ctx.beginPath();
                         }
                         var image = document.getElementById("canvas").toDataURL("image/png");
-                        image = image.replace('data:image/png;base64,', '');
-
-                        document.getElementById("StringBase64").value = image;
+                       
+                        document.getElementById("skin_anno_data_base64").value = image;
                     }
                 };
 
@@ -2064,9 +2067,15 @@
     </script>
 
     <script type="text/javascript">
+        var elem = window.parent.parent.document.getElementById("myProgress");
+        progress(elem);
+
+
         loadImage();
         checkboxRadiobutton_init();
         formGroup_init();
+        InputFilter("data-type='number'");
+        InputFilter("data-type='number1'", /^\d*\.?\/?\d*$/);
 
         function beforeAsyncPostBack() {
             var curtime = new Date();
@@ -2075,9 +2084,9 @@
         function afterAsyncPostBack() {
             checkboxRadiobutton_init();
             formGroup_init();
-            InputFilter();
+            InputFilter("data-type='number'");
+            InputFilter("data-type='number1'", /^\d*\.?\/?\d*$/);
             loadImage();
-
         }
 
     </script>

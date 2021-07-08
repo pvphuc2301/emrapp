@@ -93,7 +93,12 @@
                 </div>
 
                 <div class="cssclsNoPrint">
-                    <div style="overflow: scroll; height: 100vh; overflow-x: hidden;">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                      <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
+                      <li>US Urinary System Report</li>
+                    </ul>
+                    <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
+                        <asp:HiddenField runat="server" ID="DataObj" />
                         <asp:Panel runat="server" ID="messagePlaceHolder">
                             <div class="card" runat="server" id="amendReasonWraper">
                                 <div class="card-body">
@@ -3416,7 +3421,7 @@ applicable for children and pregnant</span>)
                                                     </div>
                                                     <div class="text-right">
                                                         <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
-                                                        <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
+                                                        <asp:LinkButton OnClick="btnDelete_Click" OnClientClick="window.removeEventListener('beforeunload',comfirm_leave_page,true);" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
                                                     </div>
                                                 </ModalBody>
                                             </webUI:PopupModal>
@@ -3466,7 +3471,15 @@ applicable for children and pregnant</span>)
                 ctx.stroke();
             }
 
-            pain_annotation_img.src = document.getElementById("pain_annotation_img").src;
+            //pain_annotation_img.src = document.getElementById("pain_annotation_img").src;
+            //console.log(document.getElementById("pain_annotation_base64").value);
+
+            //pain_annotation_img.src = JSON.parse(JSON.parse(sessionStorage.getItem(sessionStorage.getItem("doc_id"))).pain_annotation).dataURI;
+
+            pain_annotation_img.src = document.getElementById("pain_annotation_base64").value;
+
+            //document.getElementById("pain_annotation_base64").value;
+            //console.log('obj ', JSON.parse(JSON.parse(sessionStorage.getItem(sessionStorage.getItem("doc_id"))).pain_annotation).dataURI);
 
             var pain_annotation_history = {
                 redo_list: [],
@@ -3546,8 +3559,9 @@ applicable for children and pregnant</span>)
                         this.drawing = false;
                         this.ctx.beginPath();
                     }
+
                     var image = document.getElementById("pain_annotation_canvas").toDataURL("image/png");
-                    image = image.replace('data:image/png;base64,', '');
+                    //image = image.replace('data:image/png;base64,', '');
 
                     document.getElementById("pain_annotation_base64").value = image;
                 }
@@ -3594,7 +3608,7 @@ applicable for children and pregnant</span>)
                 ctx.stroke();
             }
 
-            skin_anno_data_img.src = document.getElementById("skin_anno_data_img").src;
+            skin_anno_data_img.src = document.getElementById("skin_anno_data_base64").value;
 
             var skin_anno_data_history = {
                 redo_list: [],
@@ -3675,8 +3689,7 @@ applicable for children and pregnant</span>)
                         this.ctx.beginPath();
                     }
                     var image = document.getElementById("skin_anno_data_canvas").toDataURL("image/png");
-                    image = image.replace('data:image/png;base64,', '');
-
+                    
                     document.getElementById("skin_anno_data_base64").value = image;
                 }
             };
@@ -3707,7 +3720,7 @@ applicable for children and pregnant</span>)
         load_skin_anno_data_Image();
         formGroup_init();
         checkboxRadiobutton_init();
-        InputFilter();
+        InputFilter("data-type='number'");
 
         function beforeAsyncPostBack() {
             var curtime = new Date();
@@ -3717,9 +3730,12 @@ applicable for children and pregnant</span>)
         function afterAsyncPostBack() {
             formGroup_init();
             checkboxRadiobutton_init();
-            InputFilter();
+            InputFilter("data-type='number'");
             load_pain_annotation_Image();
+
             load_skin_anno_data_Image();
+
+
         }
 
     </script>

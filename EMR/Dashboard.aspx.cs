@@ -10,6 +10,7 @@ using Telerik.Web.UI;
 using System.Data;
 using Newtonsoft.Json;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
 namespace EMR
 {
@@ -23,24 +24,29 @@ namespace EMR
         {
             if(!WebHelpers.CheckSession(this, "./login.aspx?ReturnUrl=", false)) return;
 
-            if (!IsPostBack)
-            {
-                lblUserName.Text = (string)Session["UserName"];
-                BindLocation();
-              //  RadGrid1.MasterTableView.CommandItemDisplay = GridCommandItemDisplay.None;// GridCommandItemDisplay.Top;
-              // RadGridHC.MasterTableView.CommandItemDisplay = GridCommandItemDisplay.None;
-            }
+            RegisterAsyncTask(new PageAsyncTask(LoadData));
 
-            specialty_id = Convert.ToString(Session["specialty_code"]);
+            //if (!IsPostBack)
+            //{
+            //    lblUserName.Text = (string)Session["UserName"];
+            //    BindLocation();
+            //  //  RadGrid1.MasterTableView.CommandItemDisplay = GridCommandItemDisplay.None;// GridCommandItemDisplay.Top;
+            //  // RadGridHC.MasterTableView.CommandItemDisplay = GridCommandItemDisplay.None;
+            //}
 
-            ConnClass ConnStr = new ConnClass();
-            ConnStringEMR = ConnStr.SQL_EMRConnString;
-            ConnStringHC = ConnStr.SQL_HCConnString;
-            PostBackEvent();
+            //specialty_id = Convert.ToString(Session["specialty_code"]);
+
+            //ConnClass ConnStr = new ConnClass();
+            //ConnStringEMR = ConnStr.SQL_EMRConnString;
+            //ConnStringHC = ConnStr.SQL_HCConnString;
+            //PostBackEvent();
+
+            PostBackEvent(sender, e);
         }
 
-        private void PostBackEvent()
+        private void PostBackEvent(object sender, EventArgs e)
         {
+            
             switch (Request["__EVENTTARGET"])
             {
                 case "location_Change":
@@ -49,6 +55,25 @@ namespace EMR
                     break;
             }
         }
+
+        private async Task LoadData()
+        {
+            if (!IsPostBack)
+            {
+                lblUserName.Text = (string)Session["UserName"];
+                BindLocation();
+                //  RadGrid1.MasterTableView.CommandItemDisplay = GridCommandItemDisplay.None;// GridCommandItemDisplay.Top;
+                // RadGridHC.MasterTableView.CommandItemDisplay = GridCommandItemDisplay.None;
+            }
+
+            specialty_id = Convert.ToString(Session["specialty_code"]);
+
+            ConnClass ConnStr = new ConnClass();
+            ConnStringEMR = ConnStr.SQL_EMRConnString;
+            ConnStringHC = ConnStr.SQL_HCConnString;
+            
+        }
+
 
         protected void RadGrid1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -97,22 +122,35 @@ namespace EMR
                 }
             }
         }
+
+        #region RadGrid1
         protected void RadGrid1_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            dynamic response = WebHelpers.GetAPI("api/Patient/outpatient-today-list?keyword="+ Session["UserID"] +"&pageIndex=1&pageSize=4");
+            RegisterAsyncTask(new PageAsyncTask(BindRadGrid1Async));
+        }
+        private async Task BindRadGrid1Async()
+        {
+            dynamic response = WebHelpers.GetAPI("api/Patient/outpatient-today-list?keyword=" + Session["UserID"] + "&pageIndex=1&pageSize=4");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 JObject json = JObject.Parse(response.Data);
                 string strJSON = "";
                 strJSON += json["items"];
-
-                (sender as RadGrid).DataSource = WebHelpers.GetJSONToDataTable(strJSON);
+                
+                RadGrid1.DataSource = WebHelpers.GetJSONToDataTable(strJSON);
             }
         }
+        #endregion
+
+        #region RadGrid2
         protected void RadGrid2_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            dynamic response = WebHelpers.GetAPI("api/Patient/appoinment-today-list?keyword="+ Session["UserID"] +"&pageIndex=1&pageSize=4");
+            RegisterAsyncTask(new PageAsyncTask(BindRadGrid2Async));
+        }
+        private async Task BindRadGrid2Async()
+        {
+            dynamic response = WebHelpers.GetAPI("api/Patient/appoinment-today-list?keyword=" + Session["UserID"] + "&pageIndex=1&pageSize=4");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -120,27 +158,8 @@ namespace EMR
                 string strJSON = "";
                 strJSON += json["items"];
 
-                (sender as RadGrid).DataSource = WebHelpers.GetJSONToDataTable(strJSON);
+                RadGrid2.DataSource = WebHelpers.GetJSONToDataTable(strJSON);
             }
-        }
-        protected void RadGrid3_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
-        {
-        }
-        protected void btnSearch_Click(object sender, EventArgs e)
-        {
-            dynamic response = WebHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=4&keyword=" + txt_pid.Value);
-
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                RadGrid5.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
-                RadGrid5.DataBind();
-            }
-        }
-        protected void RadGrid4_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
-        {
-        }        
-        public void RaisePostBackEvent(string eventArgument)
-        {
         }
         protected void RadGrid2_ItemDataBound(object sender, GridItemEventArgs e)
         {
@@ -151,7 +170,10 @@ namespace EMR
                 gridItem["date_of_birth"].Text = DataHelpers.CalculateAge(DateTime.Parse(gridItem["date_of_birth"].Text)).ToString();
             }
         }
-        protected void RadGrid_SelectedIndexChanged(object sender, EventArgs e)
+        #endregion
+
+        #region RadGrid5
+        protected void RadGrid5_SelectedIndexChanged(object sender, EventArgs e)
         {
             GridDataItem item = (GridDataItem)(sender as RadGrid).SelectedItems[0];
             string PID = item.GetDataKeyValue("patient_id").ToString();
@@ -162,6 +184,19 @@ namespace EMR
 
             Response.Redirect(url);
         }
+        #endregion
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            dynamic response = WebHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=4&keyword=" + txt_pid.Value);
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                RadGrid5.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+                RadGrid5.DataBind();
+            }
+        }
+        
         protected void btnLogout_ServerClick(object sender, EventArgs e)
         {
             Session.Abandon();// Session["UserID"] = "";
@@ -178,7 +213,7 @@ namespace EMR
             SQLAppClass SQL_Class = new SQLAppClass();
 
             string queryInsert = "INSERT INTO consult_complete_date (account_name, visible_patient_id, patient_visit_id ) ";
-            queryInsert += "VALUEs ('" + UserID + "','" + vid + "','" + pvid + "') ";
+            queryInsert += "VALUEs ('" + Session["UserID"] + "','" + vid + "','" + pvid + "') ";
             SQL_Class.RunQuery(queryInsert, ConnStringEMR);
 
             RadGrid1.MasterTableView.Rebind();
@@ -191,6 +226,8 @@ namespace EMR
         {
             RadGridHC.MasterTableView.Rebind();
         }
+
+        #region RadGridHC
         //Health check queue----------------------------------------------------------------------------------------------------------------------------
         public DataTable GetDataTable(string query)
         {
@@ -219,7 +256,7 @@ namespace EMR
 
             if (!string.IsNullOrEmpty(query))
             {
-                (sender as RadGrid).DataSource = GetDataTable(query);
+                RadGridHC.DataSource = GetDataTable(query);
             }
         }
         public string GetQueryHC(string varType)
@@ -320,17 +357,8 @@ namespace EMR
             Get_query = query_final;
             return Get_query;
         }
-
-        #region Sessions
-        private void goToLogInPage()
-        {
-            string redirecturl = "./login.aspx?ReturnUrl=";
-            redirecturl += Request.ServerVariables["script_name"] + "?";
-            redirecturl += Server.UrlEncode(Request.QueryString.ToString());
-            if (string.IsNullOrEmpty(UserID))
-                Response.Redirect(redirecturl);
-        }
         #endregion
+
         private void BindLocation()
         {
             lbl_location.Text = DataHelpers._LOCATION;
@@ -345,10 +373,6 @@ namespace EMR
                     location_aih.Visible = true;
                     break;
             }
-        }
-        protected void LinkButton1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

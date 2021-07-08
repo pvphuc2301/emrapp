@@ -420,6 +420,24 @@ namespace EMR.OPD
         protected global::System.Web.UI.WebControls.Label prt_signature1;
 
         /// <summary>
+        /// btnHome control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnHome;
+
+        /// <summary>
+        /// DataObj control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField DataObj;
+
+        /// <summary>
         /// messagePlaceHolder control.
         /// </summary>
         /// <remarks>
@@ -651,7 +669,7 @@ namespace EMR.OPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare2;
+        protected global::System.Web.UI.UserControl XSquare2;
 
         /// <summary>
         /// txt_allergy_note control.
@@ -1182,7 +1200,7 @@ namespace EMR.OPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare1;
+        protected global::System.Web.UI.UserControl XSquare1;
 
         /// <summary>
         /// lbl_spec_opinion_req control.
@@ -1227,7 +1245,7 @@ namespace EMR.OPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare3;
+        protected global::System.Web.UI.UserControl XSquare3;
 
         /// <summary>
         /// txt_spec_opinion_req_text control.

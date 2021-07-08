@@ -690,6 +690,24 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_create_date;
 
         /// <summary>
+        /// btnHome control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnHome;
+
+        /// <summary>
+        /// DataObj control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField DataObj;
+
+        /// <summary>
         /// messagePlaceHolder control.
         /// </summary>
         /// <remarks>
@@ -1074,7 +1092,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare38;
+        protected global::System.Web.UI.UserControl XSquare38;
 
         /// <summary>
         /// lbl_multiple_sex control.
@@ -1155,7 +1173,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare1;
+        protected global::System.Web.UI.UserControl XSquare1;
 
         /// <summary>
         /// txt_birth_defect_note control.
@@ -1236,7 +1254,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare2;
+        protected global::System.Web.UI.UserControl XSquare2;
 
         /// <summary>
         /// txt_intervention_note control.
@@ -1290,7 +1308,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare3;
+        protected global::System.Web.UI.UserControl XSquare3;
 
         /// <summary>
         /// CustomValidator1 control.
@@ -1434,7 +1452,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare4;
+        protected global::System.Web.UI.UserControl XSquare4;
 
         /// <summary>
         /// lbl_umbilical_length control.
@@ -1533,7 +1551,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare5;
+        protected global::System.Web.UI.UserControl XSquare5;
 
         /// <summary>
         /// CustomValidator2 control.
@@ -1731,7 +1749,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare6;
+        protected global::System.Web.UI.UserControl XSquare6;
 
         /// <summary>
         /// rad_vaginal_deli_code_s control.
@@ -1911,7 +1929,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare7;
+        protected global::System.Web.UI.UserControl XSquare7;
 
         /// <summary>
         /// lbl_preo_diagnosis control.
@@ -2046,7 +2064,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare8;
+        protected global::System.Web.UI.UserControl XSquare8;
 
         /// <summary>
         /// txt_sur_incident_note control.
@@ -2100,7 +2118,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare9;
+        protected global::System.Web.UI.UserControl XSquare9;
 
         /// <summary>
         /// txt_sur_complication_note control.

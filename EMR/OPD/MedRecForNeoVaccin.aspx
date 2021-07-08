@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MedRecForNeoVaccin.aspx.cs" Inherits="EMR.OPD.MedRecForNeoVaccin" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MedRecForNeoVaccin.aspx.cs" Inherits="EMR.OPD.MedRecForNeoVaccin" ValidateRequest="false" %>
 
 <%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="uc1" TagName="PatientInfo" %>
 <%@ Register Src="~/UserControls/Alert.ascx" TagPrefix="uc1" TagName="Alert" %>
@@ -248,43 +248,48 @@
 
                                         <div class="d-grid" style="grid-template-columns: 10px 1fr">
                                             <div></div>
-                                            <asp:Label Text="1. Sốc, phản ứng nặng sau lần tiêm chủng trước/<span class='text-primary'>Shock, severe reaction after previous vaccination: </span>" runat="server" ID="prt_scr_before_vacc_1"></asp:Label>
+                                            <asp:Label Text="1. Tình trạng sức khỏe chưa ổn định/ <span class='text-primary'>Unstable health condition:</span>" runat="server" ID="prt_scr_before_vacc_1"></asp:Label>
 
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 10px 1fr">
                                             <div></div>
-                                            <asp:Label Text="2. Đang mắc bệnh cấp tính hoặc bệnh mạn tính tiến triển/ <span class='text-primary'>Are suffering from an acute or progressive chronic disease</span>: " runat="server" ID="prt_scr_before_vacc_2"></asp:Label>
+                                            <asp:Label Text="2. Sốt/Hạ thân nhiệt (Sốt: nhiệt độ ≥ 37,5°C; Hạ thân nhiệt: nhiệt độ ≤ 35,5°C)/ <span class='text-primary'>Fever / Hypothermia (Fever:temperature ≥ 37.5 ° C; Hypothermia: temperature ≤ 35.5 ° C):</span>: " runat="server" ID="prt_scr_before_vacc_2"></asp:Label>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 10px 1fr">
                                             <div></div>
-                                            <asp:Label Text="3. Đang hoặc mới kết thúc đợt điều trị corticoid liều cao (prednison > 2mg/kg/ngày), hóa trị, xạ trị, dùng gammaglobulin/ <span class='text-primary'>At or just after a high-dose corticosteroid treatment (prednison > 2mg / kg / day), chemotherapy, radiationand gammaglobulin:</span> " runat="server" ID="prt_scr_before_vacc_3"></asp:Label>
+                                            <asp:Label Text="3. Khóc bé hoặc không khóc/ <span class='text-primary'>Cry or unable to cry:</span> " runat="server" ID="prt_scr_before_vacc_3"></asp:Label>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 10px 1fr">
                                             <div></div>
-                                            <asp:Label Text="4. Sốt/Hạ thân nhiệt (Sốt: nhiệt độ ≥ 38°C; Hạ thân nhiệt: nhiệt độ ≤ 35,5°C)/ <span class='text-primary'>Fever / Hypothermia (Fever:temperature ≥ 37.5 ° C; Hypothermia: temperature ≤ 35.5 ° C):</span> " runat="server" ID="prt_scr_before_vacc_4"></asp:Label>
+                                            <asp:Label Text="4. Da, môi không hồng/ Fever/ <span class='text-primary'>Skin and lips are not pink:</span> " runat="server" ID="prt_scr_before_vacc_4"></asp:Label>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 10px 1fr">
                                             <div></div>
-                                            <asp:Label Text="5. Nghe tim bất thường/ <span class='text-primary'>Hearing abnormalities:</span> " runat="server" ID="prt_scr_before_vacc_5"></asp:Label>
+                                            <asp:Label Text="5. Bú kém hoặc bỏ bú/ <span class='text-primary'>Poor breastfeeding or breastfeeding refusal:</span> " runat="server" ID="prt_scr_before_vacc_5"></asp:Label>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 10px 1fr">
                                             <div></div>
-                                            <asp:Label Text="6. Nhịp thở, nghe phổi bất thường/ <span class='text-primary'>Abnormal breathing, pulmonary listening:</span> " runat="server" ID="prt_scr_before_vacc_6"></asp:Label>
+                                            <asp:Label Text="6. Tuổi thai < 28 tuần/ <span class='text-primary'>Gestational age < 28 weeks:</span> " runat="server" ID="prt_scr_before_vacc_6"></asp:Label>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 10px 1fr">
                                             <div></div>
-                                            <asp:Label Text="7. Tri giác bất thường (li bì hoặc kích thích)/ <span class='text-primary'>Abnormal perception (li or stimulation):</span> " runat="server" ID="prt_scr_before_vacc_7"></asp:Label>
+                                            <asp:Label Text="7. Trẻ < 34 tuần tuổi/ <span class='text-primary'>Children < 34 weeks old:</span> " runat="server" ID="prt_scr_before_vacc_7"></asp:Label>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 10px 1fr">
                                             <div></div>
-                                            <asp:Label Text="8. Các chống chỉ định khác, nếu có ghi rõ/ <span class='text-primary'>Other contraindications, if yes specified:</span> " runat="server" ID="prt_scr_before_vacc_8"></asp:Label>
+                                            <asp:Label Text="Cân nặng của trẻ < 2000 g, mẹ có HBsAg (-)/ <span class='text-primary'>Child's weight < 2000g, his/her morther HbsAg (-):</span> " runat="server" ID="prt_scr_before_vacc_8"></asp:Label>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 10px 1fr">
+                                            <div></div>
+                                            <asp:Label Text="9. Các chống chỉ định khác, nếu có ghi rõ/<span class='text-primary'>Other contraindications, if yes specified:</span> " runat="server" ID="prt_scr_before_vacc_9"></asp:Label>
                                         </div>
 
                                         <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Order="IV." Title="Chỉ định và kết quả xét nghiệm/ " SubTitle="Laboratory indications and results" runat="server" />
@@ -400,8 +405,13 @@
                     </table>
                 </div>
 
-                <div class="cssclsNoPrint" style="overflow: scroll; height: 100vh; overflow-x: hidden;">
-
+                <div class="cssclsNoPrint">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                      <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
+                      <li>Medical Record For Neonatal Vaccination</li>
+                    </ul>
+                    <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
+                        <asp:HiddenField runat="server" ID="DataObj" />
                     <asp:Panel runat="server" ID="messagePlaceHolder">
                         <div class="card" runat="server" id="amendReasonWraper">
                             <div class="card-body">
@@ -536,9 +546,7 @@
                                                     <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                                                         <ContentTemplate>
                                                             <div class="mb-2">
-                                                                <asp:LinkButton OnClick="btnUpdateVitalSigns_Click" runat="server" OnClientClick="showALert();return false;" CssClass="btn btn-secondary waves-effect" ID="btnUpdateVitalSigns">
-                                                                    <icon:ArrowRepeat runat="server" ID="ArrowRepeat" />Update
-                                                                </asp:LinkButton>
+                                                                <asp:LinkButton OnClick="btnUpdateVitalSigns_Click" runat="server" CssClass="btn btn-sm btn-secondary waves-effect" ID="btnUpdateVitalSigns">Update</asp:LinkButton>
                                                             </div>
                                                             <div>
                                                                 <label class="control-label mb-1 mr-2">Nhiệt độ/ <span class="text-primary">Temperature:</span></label>
@@ -798,7 +806,7 @@
                                                             </ProgressTemplate>
                                                         </asp:UpdateProgress>
                                                         <div class="mt-2">
-                                                            <asp:LinkButton OnClick="btn_grid_appointed_vaccine_add_Click" runat="server" CssClass="btn btn-secondary waves-effect" ID="btn_grid_appointed_vaccine_add">+ Add Row</asp:LinkButton>
+                                                            <asp:LinkButton OnClick="btn_grid_appointed_vaccine_add_Click" runat="server" CssClass="btn btn-sm btn-secondary waves-effect" ID="btn_grid_appointed_vaccine_add">+ Add Row</asp:LinkButton>
                                                         </div>
                                                     </ContentTemplate>
                                                     <Triggers>
@@ -982,7 +990,7 @@
                                             </div>
                                             <div class="text-right">
                                                 <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
-                                                <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
+                                                <asp:LinkButton OnClick="btnDelete_Click" OnClientClick="window.removeEventListener('beforeunload',comfirm_leave_page,true);" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
                                             </div>
                                         </ModalBody>
                                     </webUI:PopupModal>
@@ -993,6 +1001,7 @@
                         </div>
                     </div>
                 </div>
+                    </div>
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>
@@ -1004,10 +1013,9 @@
     <script src="../scripts/sweetalert.min.js"></script>
     <script src="../scripts/alertify.js"></script>
     <script type="text/javascript">
+        var elem = window.parent.parent.document.getElementById("myProgress");
+        progress(elem);
 
-        function showALert(){
-            sweetAlert("Pending!", "Api chưa có.", "error");
-        }
 
         checkboxRadiobutton_init();
         formGroup_init();

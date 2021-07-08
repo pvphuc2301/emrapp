@@ -66,6 +66,7 @@ namespace EMR
                 txt_notes.Value = disc.notes;
                 dpk_signature_date.SelectedDate = disc.signature_date;
 
+                DataObj.Value = JsonConvert.SerializeObject(disc);
                 WebHelpers.AddScriptFormEdit(Page, disc, (string)Session["emp_id"]);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
@@ -132,10 +133,7 @@ namespace EMR
                 {
                     WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
-                    string pid = Request["pid"];
-                    string vpid = Request["vpid"];
-
-                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                    Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
                 }
             }
             catch (Exception ex)
@@ -153,7 +151,7 @@ namespace EMR
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, disc, ControlState.Edit, (string)Session["location"]);
+                WebHelpers.LoadFormControl(form1, disc, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(disc);
                 //get access button
@@ -171,6 +169,10 @@ namespace EMR
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
         }
+        protected void btnHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
+        }
         #endregion
 
         #region Methods
@@ -178,7 +180,7 @@ namespace EMR
         {
             try
             {
-                disc.amend_reason = txt_amend_reason.Text;
+                
                 disc.no_discharge = disc.no_discharge;
                 disc.disc_ward_code = select_disc_ward_code.Value;
                 disc.disc_ward_desc = WebHelpers.GetDicDesc(disc.disc_ward_code, Disc.DISC_WARD_CODE);
@@ -191,6 +193,12 @@ namespace EMR
                 disc.notes = txt_notes.Value;
                 disc.signature_date = DataHelpers.ConvertSQLDateTime(dpk_signature_date.SelectedDate);
 
+                if (JsonConvert.SerializeObject(disc) == DataObj.Value)
+                {
+                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
+                }
+
+                disc.amend_reason = txt_amend_reason.Text;
                 disc.user_name = (string)Session["UserID"];
 
                 dynamic result = disc.Update()[0];
@@ -221,11 +229,11 @@ namespace EMR
 
                 if (disc.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(disc, WebHelpers.LoadFormControl(form1, disc, ControlState.View, (string)Session["location"]));
+                    BindingDataForm(disc, WebHelpers.LoadFormControl(form1, disc, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
                 }
                 else if (disc.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(disc, WebHelpers.LoadFormControl(form1, disc, ControlState.Edit, (string)Session["location"]));
+                    BindingDataForm(disc, WebHelpers.LoadFormControl(form1, disc, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
                 }
 
                 WebHelpers.getAccessButtons(form1, disc.status, (string)Session["access_authorize"], (string)Session["location"]);

@@ -33,6 +33,15 @@ namespace EMR
         protected global::Telerik.Web.UI.RadScriptManager RadScriptManager2;
 
         /// <summary>
+        /// Upd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel Upd;
+
+        /// <summary>
         /// RadSplitter1 control.
         /// </summary>
         /// <remarks>
@@ -69,15 +78,6 @@ namespace EMR
         protected global::Telerik.Web.UI.RadTreeView RadTreeView2;
 
         /// <summary>
-        /// LinkButton2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton LinkButton2;
-
-        /// <summary>
         /// RadTreeView3 control.
         /// </summary>
         /// <remarks>
@@ -85,6 +85,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTreeView RadTreeView3;
+
+        /// <summary>
+        /// RadTreeView4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTreeView RadTreeView4;
 
         /// <summary>
         /// RadSplitBar1 control.

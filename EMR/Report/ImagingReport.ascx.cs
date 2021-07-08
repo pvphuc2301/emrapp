@@ -39,26 +39,48 @@ namespace EMR
 
                     var toltalRegion = jsonObject.total_region;
 
-                    lbl_diagnosis.InnerHtml = jsonObject.region_1;
+                    //lbl_diagnosis.InnerHtml = jsonObject.region_1;
+
+                    WebHelpers.VisibleControl(false, diagnosis_field, history_field, technique_field, findings_field, impression_field);
+
 
                     if (!string.IsNullOrEmpty(Convert.ToString(jsonObject.region_4)))
                     {
-                        lbl_technique.InnerHtml = jsonObject.region_2;
-                        lbl_findings.InnerHtml = jsonObject.region_3;
-                        lbl_impression.InnerHtml = jsonObject.region_4;
+                        //lbl_technique.InnerHtml = jsonObject.region_2;
+                        //lbl_findings.InnerHtml = jsonObject.region_3;
+                        //lbl_impression.InnerHtml = jsonObject.region_4;
+                        lbl_diagnosis.Text = jsonObject.region_1;
+                        lbl_technique.Text = jsonObject.region_2;
+                        lbl_findings.Text = jsonObject.region_3;
+                        lbl_impression.Text = jsonObject.region_4;
+
+                        WebHelpers.VisibleControl(true, diagnosis_field, technique_field, findings_field, impression_field);
                     }
                     else if (!string.IsNullOrEmpty(Convert.ToString(jsonObject.region_3)))
                     {
-                        lbl_technique.InnerHtml = jsonObject.region_2;
-                        lbl_findings.InnerHtml = jsonObject.region_3;
+                        //lbl_technique.InnerHtml = jsonObject.region_2;
+                        //lbl_findings.InnerHtml = jsonObject.region_3;
+                        lbl_history.Text = jsonObject.region_1;
+                        lbl_technique.Text = jsonObject.region_2;
+                        lbl_impression.Text = jsonObject.region_3;
+
+                        WebHelpers.VisibleControl(true, history_field, technique_field, impression_field);
                     }
                     else if (!string.IsNullOrEmpty(Convert.ToString(jsonObject.region_2)))
                     {
-                        lbl_technique.InnerHtml = jsonObject.region_2;
+                        //lbl_technique.InnerHtml = jsonObject.region_2;
+                        lbl_findings.Text = jsonObject.region_1;
+                        lbl_impression.Text = jsonObject.region_2;
+                        WebHelpers.VisibleControl(true, findings_field, impression_field);
+                    }
+                    else if (!string.IsNullOrEmpty(Convert.ToString(jsonObject.region_1)))
+                    {
+                        lbl_findings.Text = jsonObject.region_1;
+                        WebHelpers.VisibleControl(true, findings_field);
                     }
 
                     if (!string.IsNullOrEmpty(Convert.ToString(jsonObject.addendum)))
-                        lbl_addendum.InnerHtml = jsonObject.addendum;
+                    lbl_addendum.InnerHtml = jsonObject.addendum;
                 }
                 Session["radid"] = "";
             }

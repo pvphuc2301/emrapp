@@ -8,10 +8,10 @@
 </head>
 <body>
     <form id="form1" runat="server">
-<telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
+    <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
     <telerik:RadSkinManager ID="RadSkinManager1" runat="server" ShowChooser="false" />
-    <div class="demo-container no-bg">
-<telerik:RadAjaxLoadingPanel runat="server" ID="LoadingPanel1" Skin="MetroTouch">
+    <div class="demo-container no-bg" style="height: calc(100vh - 16px);overflow: hidden;">
+        <telerik:RadAjaxLoadingPanel runat="server" ID="LoadingPanel1" Skin="MetroTouch">
         </telerik:RadAjaxLoadingPanel>
         <telerik:RadAjaxManager runat="server" ID="RadAjaxManager1" EnablePageHeadUpdate="true">
             <AjaxSettings>
@@ -38,8 +38,7 @@
             }
             /* ]]> */
         </script>
-        <telerik:RadTabStrip RenderMode="Lightweight" runat="server" ID="RadTabStrip1"  MultiPageID="RadMultiPage1" SelectedIndex="0" Skin="Silk" 
-            OnClientTabSelecting="onTabSelecting" OnTabClick="RadTabStrip1_TabClick">
+            <telerik:RadTabStrip RenderMode="Lightweight" runat="server" ID="RadTabStrip1" MultiPageID="RadMultiPage1" SelectedIndex="0" OnClientTabSelecting="onTabSelecting" OnTabClick="RadTabStrip1_TabClick">
                 <Tabs>
                     <telerik:RadTab Text="BIOCHEMISTRY" Value="BIOCHEMISTRY" Width="200px"></telerik:RadTab>
                     <telerik:RadTab Text="HEMATOLOGY" Value="HEMATOLOGY" Width="200px"></telerik:RadTab>
@@ -47,12 +46,10 @@
                     <telerik:RadTab Text="All" Value="All" Width="200px"></telerik:RadTab>
                 </Tabs>
             </telerik:RadTabStrip>
-        <telerik:RadMultiPage runat="server" ID="RadMultiPage1" SelectedIndex="0" OnPageViewCreated="RadMultiPage1_PageViewCreated">
-            
-        </telerik:RadMultiPage>
 
-       
-            </div>  
+            <telerik:RadMultiPage runat="server" ID="RadMultiPage1" SelectedIndex="0" OnPageViewCreated="RadMultiPage1_PageViewCreated"></telerik:RadMultiPage>
+
+        </div>  
     </form>
 </body>
 </html>

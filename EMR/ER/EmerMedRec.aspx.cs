@@ -45,7 +45,7 @@ namespace EMR.ER
             }
         }
 
-        private void discharge_change(string value)
+        private void discharge_change(string value = "")
         {
             if (value == "clear") { rad_discharge_True.Checked = rad_discharge_False.Checked = false; }
             WebHelpers.VisibleControl(rad_discharge_True.Checked, discharge_field, discharge_field1, discharge_field2);
@@ -57,20 +57,20 @@ namespace EMR.ER
             WebHelpers.VisibleControl(rad_specialist_opinion_True.Checked, specialist_opinion_field, specialist_opinion_field1, specialist_opinion_field2);
         }
 
-        private void transfer_hospital_change(string value)
+        private void transfer_hospital_change(string value = "")
         {
             if (value == "clear") { rad_transfer_hospital_True.Checked = rad_transfer_hospital_False.Checked = false; }
                 WebHelpers.VisibleControl(rad_transfer_hospital_True.Checked, transfer_hos_field, transfer_hos_field1, transfer_hos_field2);
         }
 
-        private void emergency_surgery_change(string value)
+        private void emergency_surgery_change(string value = "")
         {
             if (value == "clear")
             { rad_emergency_surgery_True.Checked = rad_emergency_surgery_False.Checked = false; }
             WebHelpers.VisibleControl(rad_emergency_surgery_True.Checked, emr_sur_field, emr_sur_field1, emr_sur_field2);
         }
 
-        private void hos_req_change(string value)
+        private void hos_req_change(string value = "")
         {
             if(value == "clear") { rad_hospitalisation_required_False.Checked = rad_hospitalisation_required_True.Checked = false; }
             hos_req_field.Visible = rad_hospitalisation_required_True.Checked;
@@ -123,7 +123,9 @@ namespace EMR.ER
                 ViewState[grid_progress_note.ID] = WebHelpers.BindingDataGridView(grid_progress_note, WebHelpers.GetJSONToDataTable(emr.progress_note), EmergencyMedicalRecord.ProgressNote, btn_grid_progress_note_add);
 
                 txt_conclusions.Value = emr.conclusions;
+                //2
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_discharge_" + emr.discharge);
+                discharge_change();
                 txt_prescription.Value = emr.prescription;
                 txt_specify_care_instructions.Value = emr.specify_care_instructions;
                 WebHelpers.BindDateTimePicker(dtpk_discharge_time, emr.discharge_time);
@@ -131,6 +133,9 @@ namespace EMR.ER
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_referred_OPD_" + emr.referred_to_OPD);
                 txt_referred_to_OPD_text.Value = emr.referred_to_OPD_text;
                 //4
+                hos_req_change();
+                emergency_surgery_change();
+                transfer_hospital_change();
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_hospitalisation_required_" + emr.hospitalisation_required);
                 txt_reason.Value = emr.reason;
                 txt_ward.Value = emr.ward;
@@ -149,6 +154,7 @@ namespace EMR.ER
                 txt_patient_discharge.Value = emr.txt_patient_discharge;
                 txt_icd_10.Value = emr.icd_10;
 
+                DataObj.Value = JsonConvert.SerializeObject(emr);
                 WebHelpers.AddScriptFormEdit(Page, emr, (string)Session["emp_id"]);
             }
             catch (Exception ex)
@@ -209,6 +215,9 @@ namespace EMR.ER
                 lbl_pre_operative_diagnosis.Text = WebHelpers.FormatString(emr.pre_operative_diagnosis);
                 lbl_brief_summary.Text = WebHelpers.FormatString(emr.brief_summary);
                 lbl_time_of_leaving_emer_e.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(emr.time_of_leaving_emer_e));
+                hos_req_change();
+                emergency_surgery_change();
+                transfer_hospital_change();
                 lbl_transfer_hospital.Text = WebHelpers.FormatString(WebHelpers.GetBool(emr.transfer_hospital));
                 lbl_reason_for_transfer.Text = WebHelpers.FormatString(emr.reason_for_transfer);
                 lbl_status_before_transfer.Text = WebHelpers.FormatString(emr.status_before_transfer);
@@ -621,11 +630,8 @@ namespace EMR.ER
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
                     WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
-                    
-                    string pid = Request["pid"];
-                    string vpid = Request["vpid"];
 
-                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                    Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
                 }
             }
             catch (Exception ex)
@@ -643,7 +649,7 @@ namespace EMR.ER
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, emr, ControlState.Edit, (string)Session["location"]);
+                WebHelpers.LoadFormControl(form1, emr, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(emr);
                 //get access button
@@ -705,6 +711,10 @@ namespace EMR.ER
         {
             ViewState[((GridView)sender).ID] = WebHelpers.DeleteRow((DataTable)ViewState[((GridView)sender).ID], (GridView)sender, e.RowIndex);
         }
+        protected void btnHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
+        }
         #endregion
 
         #region Functions
@@ -722,12 +732,12 @@ namespace EMR.ER
                 //prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (mc.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(mc, WebHelpers.LoadFormControl(form1, mc, ControlState.View, (string)Session["location"]));
+                    BindingDataForm(mc, WebHelpers.LoadFormControl(form1, mc, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
 
                 }
                 else if (mc.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(mc, WebHelpers.LoadFormControl(form1, mc, ControlState.Edit, (string)Session["location"]));
+                    BindingDataForm(mc, WebHelpers.LoadFormControl(form1, mc, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
                 }
 
                 WebHelpers.getAccessButtons(form1, mc.status, (string)Session["access_authorize"], (string)Session["location"]);
@@ -741,7 +751,7 @@ namespace EMR.ER
         {
             try
             {
-                emr.amend_reason = txt_amend_reason.Text;
+                
                 emr.evaluation_time = DataHelpers.ConvertSQLDateTime(dtpk_evaluation_time.SelectedDate);
 
                 emr.chief_complaint = txt_chief_complaint.Value;
@@ -764,6 +774,7 @@ namespace EMR.ER
                     dtRow["desc"] = txt_habits_other.Value;
                     habits.Rows.Add(dtRow);
                 }
+
                 emr.habits = JsonConvert.SerializeObject(habits);
 
                 emr.home_medications = txt_home_medications.Value;
@@ -896,6 +907,13 @@ namespace EMR.ER
                 emr.txt_patient_discharge = txt_patient_discharge.Value;
 
                 emr.icd_10 = txt_icd_10.Value;
+
+                if (JsonConvert.SerializeObject(emr) == DataObj.Value)
+                {
+                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
+                }
+
+                emr.amend_reason = txt_amend_reason.Text;
                 emr.user_name = (string)Session["UserID"];
 
                 dynamic result = emr.Update()[0];
@@ -922,7 +940,6 @@ namespace EMR.ER
         {
             args.IsValid = cb_habits_A.Checked || cb_habits_D.Checked || cb_habits_O.Checked || cb_habits_S.Checked;
         }
-
         protected void required_code_ServerValidate(object source, ServerValidateEventArgs args)
         {
             args.IsValid = rad_required_code_True.Checked || rad_required_code_False.Checked;

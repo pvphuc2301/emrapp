@@ -70,6 +70,7 @@ namespace EMR
         {
             try
             {
+                txt_amend_reason.Text = "";
                 LoadDischargeReason(diss.disc_reason_code);
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_disc_reason_code_" + diss.disc_reason_code);
 
@@ -126,6 +127,7 @@ namespace EMR
                 WebHelpers.BindDateTimePicker(dpk_signed_date, diss.signed_date);
                 txt_signed_doctor.Value = diss.signed_doctor;
 
+                DataObj.Value = JsonConvert.SerializeObject(diss);
                 WebHelpers.AddScriptFormEdit(Page, diss, (string)Session["emp_id"]);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
@@ -240,7 +242,7 @@ namespace EMR
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, diss, ControlState.Edit, (string)Session["location"]);
+                WebHelpers.LoadFormControl(form1, diss, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(diss);
                 //get access button
@@ -260,10 +262,7 @@ namespace EMR
                 {
                     WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
-                    string pid = Request["pid"];
-                    string vpid = Request["vpid"];
-
-                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                    Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
                 }
             }
             catch(Exception ex)
@@ -277,6 +276,10 @@ namespace EMR
             BindingDataFormPrint(diss);
 
             ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
+        }
+        protected void btnHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
         }
         #endregion
 
@@ -295,12 +298,12 @@ namespace EMR
                 prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (diss.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(diss, WebHelpers.LoadFormControl(form1, diss, ControlState.View, (string)Session["location"]));
+                    BindingDataForm(diss, WebHelpers.LoadFormControl(form1, diss, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
 
                 }
                 else if (diss.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(diss, WebHelpers.LoadFormControl(form1, diss, ControlState.Edit, (string)Session["location"]));
+                    BindingDataForm(diss, WebHelpers.LoadFormControl(form1, diss, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
                 }
 
                 WebHelpers.getAccessButtons(form1, diss.status, (string)Session["access_authorize"], (string)Session["location"]);
@@ -314,8 +317,6 @@ namespace EMR
         {
             try
             {
-                diss.amend_reason = txt_amend_reason.Text;
-
                 diss.disc_reason_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_disc_reason_code_", Diss.DISC_REASON_CODE);
                 if (diss.disc_reason_code != null) diss.disc_reason_desc = Diss.DISC_REASON_CODE[diss.disc_reason_code];
 
@@ -377,7 +378,15 @@ namespace EMR
 
                 diss.signed_date = DataHelpers.ConvertSQLDateTime(dpk_signed_date.SelectedDate);
                 diss.signed_doctor = txt_signed_doctor.Value;
+                
+
+                if (JsonConvert.SerializeObject(diss) == DataObj.Value)
+                {
+                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
+                }
+
                 diss.user_name = (string)Session["UserID"];
+                diss.amend_reason = txt_amend_reason.Text;
 
                 dynamic result = diss.Update()[0];
 
@@ -396,16 +405,16 @@ namespace EMR
         private void LoadDischargeReason(string value)
         {
             WebHelpers.VisibleControl(false, disc_medication_field, transfer_field, follow_up_field, special_diet_field, next_consultation_field, dama_field);
-
-            if (value == "dama")
+            if(value == null) { return; }
+            if (value.ToUpper() == "DAMA")
             {
                 WebHelpers.VisibleControl(true, dama_field);
             }
-            else if (value == "transfer")
+            else if (value.ToUpper() == "TRANSFER")
             {
                 WebHelpers.VisibleControl(true, disc_medication_field, transfer_field);
             }
-            else if (value == "ama")
+            else if (value.ToUpper() == "AMA")
             {
                 WebHelpers.VisibleControl(true, next_consultation_field, special_diet_field, follow_up_field, disc_medication_field);
             }

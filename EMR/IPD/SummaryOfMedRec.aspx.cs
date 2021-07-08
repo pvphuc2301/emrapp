@@ -133,7 +133,7 @@ namespace EMR
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, somr, ControlState.Edit, (string)Session["location"]);
+                WebHelpers.LoadFormControl(form1, somr, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(somr);
                 //get access button
@@ -154,10 +154,7 @@ namespace EMR
                 {
                     WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
-                    string pid = Request["pid"];
-                    string vpid = Request["vpid"];
-
-                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                    Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
                 }
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
@@ -172,7 +169,10 @@ namespace EMR
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }
-
+        protected void btnHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
+        }
         #endregion
 
         #region Functions
@@ -191,7 +191,7 @@ namespace EMR
                 somr.treatment_prognosis = txt_treatment_prognosis.Value;
                 
                 if (JsonConvert.SerializeObject(somr) == DataObj.Value) { 
-                    WebHelpers.Notification(Page, "Có thay đổi gì đâu mà bấm lưu?");  return; 
+                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error");  return; 
                 }
                 
                 somr.amend_reason = txt_amend_reason.Text;
@@ -225,11 +225,11 @@ namespace EMR
                 prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (somr.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(somr, WebHelpers.LoadFormControl(form1, somr, ControlState.View, (string)Session["location"]));
+                    BindingDataForm(somr, WebHelpers.LoadFormControl(form1, somr, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
                 }
                 else if (somr.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(somr, WebHelpers.LoadFormControl(form1, somr, ControlState.Edit, (string)Session["location"]));
+                    BindingDataForm(somr, WebHelpers.LoadFormControl(form1, somr, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
                 }
                 WebHelpers.getAccessButtons(form1, somr.status, (string)Session["access_authorize"], (string)Session["location"]);
             }

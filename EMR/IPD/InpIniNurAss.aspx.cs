@@ -15,7 +15,6 @@ namespace EMR
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            WebHelpers.Notification(Page, "Form print not finish yet!");
             if(!WebHelpers.CheckSession(this)) return;
             if (!IsPostBack)
             {
@@ -41,6 +40,10 @@ namespace EMR
             try
             {
                 txt_amend_reason.Text = "";
+
+                pain_annotation_base64.Value = JsonConvert.DeserializeObject(iina.pain_annotation).dataURI;
+                skin_anno_data_base64.Value = JsonConvert.DeserializeObject(iina.skin_anno_data).dataURI;
+
                 //residence
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_residence_code_" + iina.residence_code);
                 txt_residence_other.Value = iina.residence_other;
@@ -297,6 +300,7 @@ namespace EMR
 
                 WebHelpers.VisibleControl(true, pain_annotation_undo, skin_anno_data_undo, pain_annotation_redo, skin_anno_data_redo, pain_annotation_pencilWrapper, skin_anno_data_pencil_wrapper);
 
+                DataObj.Value = JsonConvert.SerializeObject(iina);
                 WebHelpers.AddScriptFormEdit(Page, iina, (string)Session["emp_id"]);
             }
             catch (Exception ex)
@@ -308,6 +312,9 @@ namespace EMR
         {
             try
             {
+                pain_annotation_base64.Value = JsonConvert.DeserializeObject(iina.pain_annotation).dataURI;
+                skin_anno_data_base64.Value = JsonConvert.DeserializeObject(iina.skin_anno_data).dataURI;
+
                 lbl_residence_desc.Text = WebHelpers.FormatString(iina.residence_desc) + (iina.residence_code == "OTH" ? WebHelpers.FormatString(iina.residence_other) : "");
                 lbl_language_desc.Text = WebHelpers.FormatString(iina.language_desc) + (iina.language_code == "OTH" ? WebHelpers.FormatString(iina.language_other) : "");
                 lbl_req_interpreter.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.req_interpreter));
@@ -319,7 +326,7 @@ namespace EMR
                 lbl_accompanied.Text = WebHelpers.FormatString(iina.accompanied);
                 lbl_relationship.Text = WebHelpers.FormatString(iina.relationship);
                 //B
-                lbl_admit_from_desc.Text = WebHelpers.FormatString(iina.admit_from_desc) + (iina.admit_from_code == "OTH" ? WebHelpers.FormatString(iina.admit_from_other) : "");
+                lbl_admit_from_desc.Text = WebHelpers.FormatString(iina.admit_from_desc) + ": " + (iina.admit_from_code == "OTH" ? WebHelpers.FormatString(iina.admit_from_other) : "");
                 lbl_arrived.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.arrived));
                 lbl_admission_reason.Text = WebHelpers.FormatString(iina.admission_reason);
                 lbl_previous_admission.Text = WebHelpers.FormatString(iina.previous_admission);
@@ -604,10 +611,7 @@ namespace EMR
                 {
                     WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
-                    string pid = Request["pid"];
-                    string vpid = Request["vpid"];
-
-                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                    Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
                 }
             }
             catch (Exception ex)
@@ -626,7 +630,7 @@ namespace EMR
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, iina, ControlState.Edit, (string)Session["location"]);
+                WebHelpers.LoadFormControl(form1, iina, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(iina);
                 //get access button
@@ -672,12 +676,12 @@ namespace EMR
                 //prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (iina.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(iina, WebHelpers.LoadFormControl(form1, iina, ControlState.View, (string)Session["location"]));
+                    BindingDataForm(iina, WebHelpers.LoadFormControl(form1, iina, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
 
                 }
                 else if (iina.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(iina, WebHelpers.LoadFormControl(form1, iina, ControlState.Edit, (string)Session["location"]));
+                    BindingDataForm(iina, WebHelpers.LoadFormControl(form1, iina, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
                 }
 
                 WebHelpers.getAccessButtons(form1, iina.status, (string)Session["access_authorize"], (string)Session["location"]);
@@ -749,7 +753,6 @@ namespace EMR
         {
             try
             {
-                iina.amend_reason = txt_amend_reason.Text;
                 iina.residence_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_residence_code_", Iina.RESIDENCE_CODE);
                 iina.residence_desc = WebHelpers.GetDicDesc(iina.residence_code, Iina.RESIDENCE_CODE);
                 
@@ -1059,10 +1062,16 @@ namespace EMR
                 iina.dis_management = txt_dis_management.Value;
                 iina.assess_date_time = DataHelpers.ConvertSQLDateTime(dtpk_assess_date_time.SelectedDate);
 
-                iina.pain_annotation = "{\"dataURI\":\"data:image/png;base64," + pain_annotation_base64.Value + "\"}";
+                iina.pain_annotation = "{\"dataURI\":\"" + pain_annotation_base64.Value + "\"}";
 
-                iina.skin_anno_data = "{\"dataURI\":\"data:image/png;base64," + skin_anno_data_base64.Value + "\"}";
+                iina.skin_anno_data = "{\"dataURI\":\"" + skin_anno_data_base64.Value + "\"}";
 
+                if (JsonConvert.SerializeObject(iina) == DataObj.Value)
+                {
+                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES); return;
+                }
+
+                iina.amend_reason = txt_amend_reason.Text;
                 iina.user_name = (string)Session["UserID"];
 
                 dynamic result = iina.Update()[0];
@@ -1165,7 +1174,7 @@ namespace EMR
             }
             catch (Exception ex)
             {
-
+                WebHelpers.Notification(Page, "function severity_of_disease_change catched error" + ex.Message);
             }
         }
         protected void nutrition_status_change(string v)
@@ -1204,6 +1213,10 @@ namespace EMR
             {
                 final_screening_field.Visible = false;
             }
+        }
+        protected void btnHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
         }
         #endregion
 

@@ -39,80 +39,39 @@ namespace EMR
                 LoadRootNodes(RadTreeView1, TreeNodeExpandMode.ServerSideCallBack);
                 LoadRootLAB_RAD(RadTreeView2, TreeNodeExpandMode.ServerSideCallBack);
                 LoadRootScan(RadTreeView3, TreeNodeExpandMode.ServerSideCallBack);
+                LoadRootScan(RadTreeView4, TreeNodeExpandMode.ServerSideCallBack, "/" + (string)Session["company_code"]);
 
             }
             PostBackEvent();
+
+            LeftMenuAccess();
+        }
+
+        private void LeftMenuAccess()
+        {
+            WebHelpers.VisibleControl(false, RadTreeView1, RadTreeView2, RadTreeView3, RadTreeView4);
+            string get_access = (string)Session["access_authorize"];
+            switch (get_access)
+            {
+                case "FullAccess":
+                    WebHelpers.VisibleControl(true, RadTreeView1, RadTreeView2, RadTreeView3, RadTreeView4);
+                    break;
+                case "View":
+                    WebHelpers.VisibleControl(true, RadTreeView1, RadTreeView2, RadTreeView3, RadTreeView4);
+                    break;
+                case "ScanView":
+                    WebHelpers.VisibleControl(true, RadTreeView3, RadTreeView4);
+                    break;
+                case "CLSView":
+                    WebHelpers.VisibleControl(true, RadTreeView2);
+                    break;
+            }
         }
 
         private void PostBackEvent()
         {
         }
 
-        //private void UpdateRadGrid(RadGrid radGrid, string apiString, dynamic args)
-        //{
-        //    dynamic response = WebHelpers.GetAPI(apiString);
-
-        //    if (response.Status == System.Net.HttpStatusCode.OK)
-        //    {
-        //        JObject json = JObject.Parse(response.Data);
-        //        string strJSON = "";
-        //        strJSON += json["items"];
-
-        //        radGrid.DataSource = WebHelpers.GetJSONToDataTable(strJSON);
-
-        //        args.pageIndex = Int32.Parse(json["pageIndex"].ToString());
-        //        args.pageSize = Int32.Parse(json["pageSize"].ToString());
-        //        args.totalRows = Int32.Parse(json["totalRows"].ToString());
-        //        args.totalPages = Int32.Parse(json["totalPages"].ToString());
-
-        //        HtmlGenericControl li = new HtmlGenericControl("li");
-
-        //        li.Attributes.Add("class", args.pageIndex == 1 ? "page-item disabled" : "page-item");
-
-        //        HtmlGenericControl anchor = new HtmlGenericControl("a");
-        //        anchor.InnerText = "Previous";
-        //        anchor.Attributes.Add("onclick", string.Format("goToPage('{0}', {1}, {2}, '{3}')", args.varPID, 1, args.pageSize, args.userName));
-        //        anchor.Attributes.Add("class", "page-link");
-        //        anchor.Attributes.Add("href", "javascript:void(0)");
-
-        //        li.Controls.Add(anchor);
-
-        //        pagination1.Controls.Add(li);
-
-        //        for (int i = 0; i < int.Parse(Convert.ToString(args.totalPages)); i++)
-        //        {
-        //            li = new HtmlGenericControl("li");
-        //            li.Attributes.Add("class", args.pageIndex == (i + 1) ? "page-item active" : "page-item");
-
-        //            anchor = new HtmlGenericControl("a");
-
-        //            anchor.Attributes.Add("onclick", string.Format("goToPage('{0}', {1}, {2}, '{3}')", varPID, (i + 1), args.pageSize, args.userName));
-        //            anchor.InnerText = (i + 1).ToString();
-        //            anchor.Attributes.Add("class", "page-link");
-        //            anchor.Attributes.Add("href", "javascript:void(0)");
-
-        //            li.Controls.Add(anchor);
-
-        //            pagination1.Controls.Add(li);
-        //        }
-
-        //        li = new HtmlGenericControl("li");
-        //        li.Attributes.Add("class", args.pageIndex == args.totalPages ? "page-item disabled" : "page-item");
-
-        //        anchor = new HtmlGenericControl("a");
-
-        //        anchor.InnerText = "Next";
-
-        //        anchor.Attributes.Add("onclick", string.Format("goToPage('{0}', {1}, {2}, '{3}')", args.varPID, args.totalPages, args.pageSize, args.userName));
-
-        //        anchor.Attributes.Add("class", "page-link");
-        //        anchor.Attributes.Add("href", "javascript:void(0)");
-
-        //        li.Controls.Add(anchor);
-
-        //        pagination1.Controls.Add(li);
-        //    }
-        //}
 
         #region Menu Lab RAD
         private void LoadRootLAB_RAD(RadTreeView treeView, TreeNodeExpandMode expandMode)
@@ -222,10 +181,9 @@ namespace EMR
         #endregion
 
         #region Menu Scan
-        private void LoadRootScan(RadTreeView treeView, TreeNodeExpandMode expandMode)
+        private void LoadRootScan(RadTreeView treeView, TreeNodeExpandMode expandMode, string f_code = "")
         {
-
-            string apiURL = "api/patient/document-type-list/" + Session["company_code"] + "/" + varPID;
+            string apiURL = "api/patient/document-type-list" + f_code + "/" + varPID;
             dynamic response = WebHelpers.GetAPI(apiURL);
 
             DataTable mydataTable = new DataTable();
@@ -299,12 +257,13 @@ namespace EMR
                 {
                     string apiURL = $"../emr/emrview.aspx?pf={docid}&dp={modelId}&action=view";
                     MainContent.ContentUrl = apiURL;
-
                 }
             }
             else e.Node.NavigateUrl = "javascript:void(0);";
         }
         #endregion
+
+
         protected void RadTreeView1_NodeExpand(object sender, RadTreeNodeEventArgs e)
         {
             PopulateNodeOnDemand(e, TreeNodeExpandMode.ServerSideCallBack);
@@ -344,7 +303,12 @@ namespace EMR
                 node.Attributes["docId"] = row["document_id"].ToString();
                 node.Attributes["modelId"] = row["model_id"].ToString();
                 node.Attributes["status"] = row["status"].ToString();
-
+                node.Attributes["model_type_rcd"] = row["model_type_rcd"].ToString();
+                node.Attributes["created_name_l"] = row["created_name_l"].ToString();
+                node.Attributes["modified_date_time"] = row["modified_date_time"].ToString();
+                node.Attributes["modified_name_l"] = row["modified_name_l"].ToString();
+                node.Attributes["patient_visit_id"] = ParentID;
+                
                 //node.Attributes.Add("data-modified-datetime", row["modified_date_time"].ToString());
                 //node.Attributes.Add("data-modified-name", row["modified_name_l"].ToString());
                 //node.Attributes.Add("data-title", ReturnForm_Name(row["status"], row["model_name"], row["created_name_e"]));
@@ -384,7 +348,7 @@ namespace EMR
                 string docid = e.Node.Attributes["docId"];
                 string modelId = e.Node.Attributes["modelId"];
                 string status = e.Node.Attributes["status"];
-
+                
                 if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], (string)Session["location"]))
                 {
                     string apiURL = $"api/emr/get-api/{DataHelpers._LOCATION}/{modelId}";
@@ -393,6 +357,8 @@ namespace EMR
                     if (response.Status == System.Net.HttpStatusCode.OK)
                     {
                         dynamic data = JObject.Parse(response.Data);
+
+                        new PatientVisit(e.Node.Attributes["patient_visit_id"]);
 
                         MainContent.ContentUrl = $"/{data.url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}";
 
@@ -472,14 +438,11 @@ namespace EMR
             return tmp;
         }
 
-        protected void MainContent_PreRender(object sender, EventArgs e)
+        protected void RadTreeView4_NodeExpand(object sender, RadTreeNodeEventArgs e)
         {
 
         }
 
-        protected void MainContent_Unload(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }

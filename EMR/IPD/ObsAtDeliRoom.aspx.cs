@@ -481,10 +481,7 @@ namespace EMR
                 {
                     WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
-                    string pid = Request["pid"];
-                    string vpid = Request["vpid"];
-
-                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                    Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
                 }
             }
             catch (Exception ex)
@@ -502,7 +499,7 @@ namespace EMR
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form2, oadr, ControlState.Edit, (string)Session["location"]);
+                WebHelpers.LoadFormControl(form2, oadr, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(oadr);
                 //get access button
@@ -528,6 +525,10 @@ namespace EMR
         {
             ViewState[grid_operations.ID] = WebHelpers.DeleteRow((DataTable)ViewState[grid_operations.ID], grid_operations, e.RowIndex);
         }
+        protected void btnHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
+        }
         #endregion
 
         #region Functions
@@ -545,12 +546,12 @@ namespace EMR
                 prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (oadr.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(oadr, WebHelpers.LoadFormControl(form2, oadr, ControlState.View, (string)Session["location"]));
+                    BindingDataForm(oadr, WebHelpers.LoadFormControl(form2, oadr, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
 
                 }
                 else if (oadr.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(oadr, WebHelpers.LoadFormControl(form2, oadr, ControlState.Edit, (string)Session["location"]));
+                    BindingDataForm(oadr, WebHelpers.LoadFormControl(form2, oadr, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
                 }
 
                 WebHelpers.getAccessButtons(form2, oadr.status, (string)Session["access_authorize"], (string)Session["location"]);
@@ -564,7 +565,6 @@ namespace EMR
         {
             try
             {
-                oadr.amend_reason = txt_amend_reason.Text;
                 oadr.admis_delivery = DataHelpers.ConvertSQLDateTime(dtpk_admis_delivery.SelectedDate);
                 oadr.obs_name = txt_obs_name.Value;
                 oadr.obs_initial = txt_obs_initial.Value;
@@ -667,6 +667,12 @@ namespace EMR
                 //
                 oadr.treatment_plan = txt_treatment_plan.Value;
 
+                if (JsonConvert.SerializeObject(oadr) == DataObj.Value)
+                {
+                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES); return;
+                }
+
+                oadr.amend_reason = txt_amend_reason.Text;
                 oadr.user_name = (string)Session["UserID"];
 
                 dynamic result = oadr.Update()[0];

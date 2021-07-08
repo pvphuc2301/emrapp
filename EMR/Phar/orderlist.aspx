@@ -5,14 +5,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <link id="Link1" rel="stylesheet" type="text/css" href="order.css" runat="server" />
+    <%--<link id="Link1" rel="stylesheet" type="text/css" href="order.css" runat="server" />--%>
+    <link href="../styles/myStyle.css" rel="stylesheet" />
 </head>
-<%--<script src="../click_hover.js" type="text/javascript"></script>--%>      
 <body>
     <form id="form1" runat="server">
         <telerik:RadScriptManager ID="RadScriptManager1" runat="server">
 		<Scripts></Scripts>
 	</telerik:RadScriptManager>
+        <div style="overflow: scroll; overflow-x: hidden; height: 100vh; padding: 20px 10px;">
         <telerik:RadGrid ID="RadGrid1" runat="server" Width="100%" OnNeedDataSource="RadGrid1_NeedDataSource" AllowSorting="true"
             AllowPaging="true" AllowFilteringByColumn="false" ItemStyle-Font-Size="8" AlternatingItemStyle-Font-Size="8"
             AutoGenerateColumns="False" AllowMultiRowSelection="False" GridLines="None" EnableLinqExpressions="false" ShowFooter="false">
@@ -57,6 +58,7 @@
             <Scrolling AllowScroll="True" ScrollHeight="400" UseStaticHeaders="True" SaveScrollPosition="true" FrozenColumnsCount="2" />
         </ClientSettings>
         </telerik:RadGrid>    
+            </div>
         <asp:SqlDataSource ID="ShiftDataSource" runat="server" ConnectionString=""
         SelectCommand="SELECT pphuv.visible_patient_id, pname.first_name_e, pname.last_name_e, 
             pphuv.visible_patient_id + ' ' + pname.first_name_e + ' ' + pname.last_name_e AS full_name

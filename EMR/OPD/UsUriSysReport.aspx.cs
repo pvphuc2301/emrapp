@@ -50,6 +50,7 @@ namespace EMR
                 txt_conclusion.Value = uusr.conclusion;
                 txt_recommendation.Value = uusr.recommendation;
 
+                DataObj.Value = JsonConvert.SerializeObject(uusr);
                 WebHelpers.AddScriptFormEdit(Page, uusr, (string)Session["emp_id"]);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
@@ -121,10 +122,7 @@ namespace EMR
                 {
                     WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
-                    string pid = Request["pid"];
-                    string vpid = Request["vpid"];
-
-                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                    Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
                 }
             }
             catch (Exception ex)
@@ -142,7 +140,7 @@ namespace EMR
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form2, uusr, ControlState.Edit, (string)Session["location"]);
+                WebHelpers.LoadFormControl(form2, uusr, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(uusr);
                 //get access button
@@ -164,6 +162,10 @@ namespace EMR
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }
+        protected void btnHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
+        }
         #endregion
 
         #region Methods
@@ -181,11 +183,11 @@ namespace EMR
                 prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (uusr.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(uusr, WebHelpers.LoadFormControl(form2, uusr, ControlState.View, (string)Session["location"]));
+                    BindingDataForm(uusr, WebHelpers.LoadFormControl(form2, uusr, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
                 }
                 else if (uusr.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(uusr, WebHelpers.LoadFormControl(form2, uusr, ControlState.Edit, (string)Session["location"]));
+                    BindingDataForm(uusr, WebHelpers.LoadFormControl(form2, uusr, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
                 }
 
                 WebHelpers.getAccessButtons(form2, uusr.status, (string)Session["access_authorize"], (string)Session["location"]);
@@ -199,7 +201,7 @@ namespace EMR
         {
             try
             {
-                uusr.amend_reason = txt_amend_reason.Text;
+                
                 uusr.diagnosis = txt_diagnosis.Value;
                 uusr.left_kidney = txt_left_kidney.Value;
                 uusr.right_kidney = txt_right_kidney.Value;
@@ -208,7 +210,15 @@ namespace EMR
                 uusr.post_void_resi_volume = txt_post_void_resi_volume.Value;
                 uusr.conclusion = txt_conclusion.Value;
                 uusr.recommendation = txt_recommendation.Value;
+
+                if (JsonConvert.SerializeObject(uusr) == DataObj.Value)
+                {
+                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
+                }
+
+                uusr.amend_reason = txt_amend_reason.Text;
                 uusr.user_name = (string)Session["UserID"];
+
                 dynamic result = uusr.Update()[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)

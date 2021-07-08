@@ -199,8 +199,9 @@
     <Content Include="bin\Telerik.Windows.Zip.xml" />
     <Content Include="bin\zxing.dll" />
     <Content Include="Dashboard.aspx" />
+    <Content Include="DashboardTest.aspx" />
+    <Content Include="Emr.aspx" />
     <Content Include="emrbyvisit\opdTab.aspx" />
-    <Content Include="emr\emr.aspx" />
     <Content Include="emr\emrinfor.aspx" />
     <Content Include="emr\emrview.aspx" />
     <Content Include="ER\EmerMedRec.aspx" />
@@ -209,11 +210,15 @@
     <Content Include="icons\CheckCircle.ascx" />
     <Content Include="icons\Envelope.ascx" />
     <Content Include="icons\ExclamationTriangle.ascx" />
+    <Content Include="icons\GeoAlt.ascx" />
     <Content Include="icons\Pencil.ascx" />
     <Content Include="icons\X.ascx" />
+    <Content Include="images\admin-with-cogwheels.png" />
     <Content Include="images\aih.ico" />
     <Content Include="IPD\ObsGynIniAss.aspx" />
     <Content Include="IPD\SurgicalReport.aspx" />
+    <Content Include="Report\AllowUpdateEMR.aspx" />
+    <Content Include="Other\DemographicSearch.aspx" />
     <Content Include="Other\index.aspx" />
     <Content Include="Other\PageException.aspx" />
     <Content Include="Print\Test.aspx" />
@@ -370,19 +375,26 @@
       <DependentUpon>Dashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Classes\DataHelpers.cs" />
+    <Compile Include="DashboardTest.aspx.cs">
+      <DependentUpon>DashboardTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DashboardTest.aspx.designer.cs">
+      <DependentUpon>DashboardTest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Emr.aspx.cs">
+      <DependentUpon>Emr.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Emr.aspx.designer.cs">
+      <DependentUpon>Emr.aspx</DependentUpon>
+    </Compile>
     <Compile Include="emrbyvisit\opdTab.aspx.cs">
       <DependentUpon>opdTab.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="emrbyvisit\opdTab.aspx.designer.cs">
       <DependentUpon>opdTab.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="emr\emr.aspx.cs">
-      <DependentUpon>emr.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="emr\emr.aspx.designer.cs">
-      <DependentUpon>emr.aspx</DependentUpon>
     </Compile>
     <Compile Include="emr\emrinfor.aspx.cs">
       <DependentUpon>emrinfor.aspx</DependentUpon>
@@ -433,20 +445,6 @@
     <Compile Include="icons\ExclamationTriangle.ascx.designer.cs">
       <DependentUpon>ExclamationTriangle.ascx</DependentUpon>
     </Compile>
-    <Compile Include="icons\Pencil.ascx.cs">
-      <DependentUpon>Pencil.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="icons\Pencil.ascx.designer.cs">
-      <DependentUpon>Pencil.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="icons\X.ascx.cs">
-      <DependentUpon>X.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="icons\X.ascx.designer.cs">
-      <DependentUpon>X.ascx</DependentUpon>
-    </Compile>
     <Compile Include="IPD\ObsGynIniAss.aspx.cs">
       <DependentUpon>ObsGynIniAss.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -460,6 +458,20 @@
     </Compile>
     <Compile Include="IPD\SurgicalReport.aspx.designer.cs">
       <DependentUpon>SurgicalReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Report\AllowUpdateEMR.aspx.cs">
+      <DependentUpon>AllowUpdateEMR.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\AllowUpdateEMR.aspx.designer.cs">
+      <DependentUpon>AllowUpdateEMR.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Other\DemographicSearch.aspx.cs">
+      <DependentUpon>DemographicSearch.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Other\DemographicSearch.aspx.designer.cs">
+      <DependentUpon>DemographicSearch.aspx</DependentUpon>
     </Compile>
     <Compile Include="Other\index.aspx.cs">
       <DependentUpon>index.aspx</DependentUpon>
@@ -558,48 +570,6 @@
     </Compile>
     <Compile Include="icons\Gear.ascx.designer.cs">
       <DependentUpon>Gear.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="icons\House.ascx.cs">
-      <DependentUpon>House.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="icons\House.ascx.designer.cs">
-      <DependentUpon>House.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="icons\InfoCircle.ascx.cs">
-      <DependentUpon>InfoCircle.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="icons\InfoCircle.ascx.designer.cs">
-      <DependentUpon>InfoCircle.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="icons\Person.ascx.cs">
-      <DependentUpon>Person.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="icons\Person.ascx.designer.cs">
-      <DependentUpon>Person.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="icons\PlusCircle.ascx.cs">
-      <DependentUpon>PlusCircle.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="icons\PlusCircle.ascx.designer.cs">
-      <DependentUpon>PlusCircle.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="icons\Trash.ascx.cs">
-      <DependentUpon>Trash.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="icons\Trash.ascx.designer.cs">
-      <DependentUpon>Trash.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="icons\XSquare.ascx.cs">
-      <DependentUpon>XSquare.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="icons\XSquare.ascx.designer.cs">
-      <DependentUpon>XSquare.ascx</DependentUpon>
     </Compile>
     <Compile Include="IPD\DeliveryCertificate.aspx.cs">
       <DependentUpon>DeliveryCertificate.aspx</DependentUpon>
@@ -1176,7 +1146,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

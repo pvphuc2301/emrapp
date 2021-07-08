@@ -26,6 +26,8 @@
                                                 <telerik:RadTab Text="Medical Affair" Width="180px"></telerik:RadTab>
                                                 <telerik:RadTab Text="Technician" Width="180px"></telerik:RadTab>
                                                 <telerik:RadTab Text="CSO" Width="180px"></telerik:RadTab>
+                                                <telerik:RadTab Text="Admin" Width="180px"></telerik:RadTab>
+                                                <telerik:RadTab Text="Other" Width="180px"></telerik:RadTab>
                                             </Tabs>
                                         </telerik:RadTabStrip>
                                         <telerik:RadMultiPage runat="server" ID="RadMultiPage1"  SelectedIndex="0" >
@@ -37,33 +39,50 @@
                                                     <MasterTableView AutoGenerateColumns="False" DataKeyNames="user_name" AllowFilteringByColumn="true">
                                                         <Columns>
                                                             <telerik:GridBoundColumn SortExpression="user_name" HeaderText="User Name" DataField="user_name" 
-                                                                ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
-                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false">
+                                                                ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" FilterControlWidth="100%" 
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="true">
                                                             </telerik:GridBoundColumn>
 
                                                             <telerik:GridBoundColumn UniqueName="created_date_time" SortExpression="created_date_time" 
                                                                 HeaderText="created_date_time" DataField="created_date_time" ItemStyle-Wrap="false" 
                                                                 HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" 
-                                                                FilterDelay="4000" ShowFilterIcon="false">
+                                                                FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                             </telerik:GridBoundColumn>
+
+                                                            <telerik:GridTemplateColumn UniqueName="access_authorize" HeaderText="access_authorize" AllowFiltering="false"
+                                                                Visible="true" ItemStyle-HorizontalAlign="Center" DataType="System.Boolean" >
+                                                                <ItemTemplate>
+                                                                    <asp:Panel ID="Panel1" runat="server">
+                                                                        <asp:CheckBox ID="FullAccess" runat="server" Text="Full Accesss" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckFull(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="View" runat="server" Text="View" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckView(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="CLSAccess" runat="server" Text="CLS View" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckCLS(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="ScanAccess" runat="server" Text="Scan Accesss" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckScan(Eval("access_authorize")) %>' />
+                                                                    </asp:Panel>
+                                                                </ItemTemplate>
+                                                            </telerik:GridTemplateColumn>
 
                                                             <telerik:GridBoundColumn SortExpression="active_flag" HeaderText="active_flag" DataField="active_flag" 
                                                                 ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
-                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false">
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                             </telerik:GridBoundColumn>
 
                                                             <telerik:GridBoundColumn SortExpression="site_rcd" HeaderText="site_rcd" DataField="site_rcd" 
                                                                 ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
-                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false">
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                             </telerik:GridBoundColumn>
 
                                                             <telerik:GridBoundColumn SortExpression="lu_updated" HeaderText="lu_updated" DataField="lu_updated" 
                                                                 ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
-                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false">
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                             </telerik:GridBoundColumn>
                                                         </Columns>
                                                     </MasterTableView>
                                                     <ClientSettings EnableRowHoverStyle="true">
+                                                        <Selecting AllowRowSelect="True"/>
                                                     </ClientSettings>
                                                 </telerik:RadGrid></div>
                                             </telerik:RadPageView>
@@ -75,33 +94,50 @@
                                                     <MasterTableView AutoGenerateColumns="False" DataKeyNames="user_name">
                                                         <Columns>
                                                             <telerik:GridBoundColumn SortExpression="user_name" HeaderText="User Name" DataField="user_name" 
-                                                                ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
-                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true">
+                                                                ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" FilterControlWidth="100%" 
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="true">
                                                             </telerik:GridBoundColumn>
 
                                                             <telerik:GridBoundColumn UniqueName="created_date_time" SortExpression="created_date_time" 
                                                                 HeaderText="created_date_time" DataField="created_date_time" ItemStyle-Wrap="false" 
                                                                 HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" 
-                                                                FilterDelay="4000" ShowFilterIcon="true">
+                                                                FilterDelay="4000" ShowFilterIcon="false">
                                                             </telerik:GridBoundColumn>
+
+                                                            <telerik:GridTemplateColumn UniqueName="access_authorize" HeaderText="access_authorize" AllowFiltering="false"
+                                                                Visible="true" ItemStyle-HorizontalAlign="Center" DataType="System.Boolean">
+                                                                <ItemTemplate>
+                                                                    <asp:Panel ID="Panel1" runat="server">
+                                                                        <asp:CheckBox ID="FullAccess" runat="server" Text="Full Accesss" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckFull(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="View" runat="server" Text="View" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckView(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="CLSAccess" runat="server" Text="CLS View" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckCLS(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="ScanAccess" runat="server" Text="Scan Accesss" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckScan(Eval("access_authorize")) %>' />
+                                                                    </asp:Panel>
+                                                                </ItemTemplate>
+                                                            </telerik:GridTemplateColumn>
 
                                                             <telerik:GridBoundColumn SortExpression="active_flag" HeaderText="active_flag" DataField="active_flag" 
                                                                 ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
-                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true">
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                             </telerik:GridBoundColumn>
 
                                                             <telerik:GridBoundColumn SortExpression="site_rcd" HeaderText="site_rcd" DataField="site_rcd" 
                                                                 ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
-                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" >
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                             </telerik:GridBoundColumn>
 
                                                             <telerik:GridBoundColumn SortExpression="lu_updated" HeaderText="lu_updated" DataField="lu_updated" 
                                                                 ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
-                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true">
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                             </telerik:GridBoundColumn>
                                                         </Columns>
                                                     </MasterTableView>
                                                     <ClientSettings EnableRowHoverStyle="true">
+                                                        <Selecting AllowRowSelect="True"/>
                                                     </ClientSettings>
                                                 </telerik:RadGrid></div>
                                             </telerik:RadPageView>
@@ -113,33 +149,50 @@
                                                     <MasterTableView AutoGenerateColumns="False" DataKeyNames="user_name">
                                                         <Columns>
                                                             <telerik:GridBoundColumn SortExpression="user_name" HeaderText="User Name" DataField="user_name" 
-                                                                ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
-                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true">
+                                                                ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" FilterControlWidth="100%"  
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="true">
                                                             </telerik:GridBoundColumn>
 
                                                             <telerik:GridBoundColumn UniqueName="created_date_time" SortExpression="created_date_time" 
                                                                 HeaderText="created_date_time" DataField="created_date_time" ItemStyle-Wrap="false" 
                                                                 HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" 
-                                                                FilterDelay="4000" ShowFilterIcon="true">
+                                                                FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                             </telerik:GridBoundColumn>
+
+                                                            <telerik:GridTemplateColumn UniqueName="access_authorize" HeaderText="access_authorize" AllowFiltering="false"
+                                                                Visible="true" ItemStyle-HorizontalAlign="Center" DataType="System.Boolean">
+                                                                <ItemTemplate>
+                                                                    <asp:Panel ID="Panel1" runat="server">
+                                                                        <asp:CheckBox ID="FullAccess" runat="server" Text="Full Accesss" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckFull(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="View" runat="server" Text="View" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckView(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="CLSAccess" runat="server" Text="CLS View" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckCLS(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="ScanAccess" runat="server" Text="Scan Accesss" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckScan(Eval("access_authorize")) %>' />
+                                                                    </asp:Panel>
+                                                                </ItemTemplate>
+                                                            </telerik:GridTemplateColumn>
 
                                                             <telerik:GridBoundColumn SortExpression="active_flag" HeaderText="active_flag" DataField="active_flag" 
                                                                 ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
-                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true">
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                             </telerik:GridBoundColumn>
 
                                                             <telerik:GridBoundColumn SortExpression="site_rcd" HeaderText="site_rcd" DataField="site_rcd" 
                                                                 ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
-                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" >
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                             </telerik:GridBoundColumn>
 
                                                             <telerik:GridBoundColumn SortExpression="lu_updated" HeaderText="lu_updated" DataField="lu_updated" 
                                                                 ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
-                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true">
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                             </telerik:GridBoundColumn>
                                                         </Columns>
                                                     </MasterTableView>
                                                     <ClientSettings EnableRowHoverStyle="true">
+                                                        <Selecting AllowRowSelect="True"/>
                                                     </ClientSettings>
                                                 </telerik:RadGrid></div>
                                             </telerik:RadPageView>
@@ -151,33 +204,50 @@
                                                     <MasterTableView AutoGenerateColumns="False" DataKeyNames="user_name">
                                                         <Columns>
                                                             <telerik:GridBoundColumn SortExpression="user_name" HeaderText="User Name" DataField="user_name" 
-                                                                ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
-                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true">
+                                                                ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" FilterControlWidth="100%" 
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="true">
                                                             </telerik:GridBoundColumn>
 
                                                             <telerik:GridBoundColumn UniqueName="created_date_time" SortExpression="created_date_time" 
                                                                 HeaderText="created_date_time" DataField="created_date_time" ItemStyle-Wrap="false" 
                                                                 HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" 
-                                                                FilterDelay="4000" ShowFilterIcon="true">
+                                                                FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                             </telerik:GridBoundColumn>
+
+                                                            <telerik:GridTemplateColumn UniqueName="access_authorize" HeaderText="access_authorize" AllowFiltering="false"
+                                                                Visible="true" ItemStyle-HorizontalAlign="Center" DataType="System.Boolean">
+                                                                <ItemTemplate>
+                                                                    <asp:Panel ID="Panel1" runat="server">
+                                                                        <asp:CheckBox ID="FullAccess" runat="server" Text="Full Accesss" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckFull(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="View" runat="server" Text="View" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckView(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="CLSAccess" runat="server" Text="CLS View" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckCLS(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="ScanAccess" runat="server" Text="Scan Accesss" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckScan(Eval("access_authorize")) %>' />
+                                                                    </asp:Panel>
+                                                                </ItemTemplate>
+                                                            </telerik:GridTemplateColumn>
 
                                                             <telerik:GridBoundColumn SortExpression="active_flag" HeaderText="active_flag" DataField="active_flag" 
                                                                 ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
-                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true">
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                             </telerik:GridBoundColumn>
 
                                                             <telerik:GridBoundColumn SortExpression="site_rcd" HeaderText="site_rcd" DataField="site_rcd" 
                                                                 ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
-                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" >
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                             </telerik:GridBoundColumn>
 
                                                             <telerik:GridBoundColumn SortExpression="lu_updated" HeaderText="lu_updated" DataField="lu_updated" 
                                                                 ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
-                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true">
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                             </telerik:GridBoundColumn>
                                                         </Columns>
                                                     </MasterTableView>
                                                     <ClientSettings EnableRowHoverStyle="true">
+                                                        <Selecting AllowRowSelect="True"/>
                                                     </ClientSettings>
                                                 </telerik:RadGrid></div>
                                             </telerik:RadPageView>
@@ -189,33 +259,159 @@
                                                     <MasterTableView AutoGenerateColumns="False" DataKeyNames="user_name">
                                                         <Columns>
                                                             <telerik:GridBoundColumn SortExpression="user_name" HeaderText="User Name" DataField="user_name" 
-                                                                ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
-                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true">
+                                                                ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" FilterControlWidth="100%" 
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="true">
                                                             </telerik:GridBoundColumn>
 
                                                             <telerik:GridBoundColumn UniqueName="created_date_time" SortExpression="created_date_time" 
                                                                 HeaderText="created_date_time" DataField="created_date_time" ItemStyle-Wrap="false" 
                                                                 HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" 
-                                                                FilterDelay="4000" ShowFilterIcon="true">
+                                                                FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                             </telerik:GridBoundColumn>
 
+                                                            <telerik:GridTemplateColumn UniqueName="access_authorize" HeaderText="access_authorize" AllowFiltering="false"
+                                                                Visible="true" ItemStyle-HorizontalAlign="Center" DataType="System.Boolean">
+                                                                <ItemTemplate>
+                                                                    <asp:Panel ID="Panel1" runat="server">
+                                                                        <asp:CheckBox ID="FullAccess" runat="server" Text="Full Accesss" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckFull(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="View" runat="server" Text="View" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckView(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="CLSAccess" runat="server" Text="CLS View" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckCLS(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="ScanAccess" runat="server" Text="Scan Accesss" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckScan(Eval("access_authorize")) %>' />
+                                                                    </asp:Panel>
+                                                                </ItemTemplate>
+                                                            </telerik:GridTemplateColumn>
                                                             <telerik:GridBoundColumn SortExpression="active_flag" HeaderText="active_flag" DataField="active_flag" 
                                                                 ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
-                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true">
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                             </telerik:GridBoundColumn>
 
                                                             <telerik:GridBoundColumn SortExpression="site_rcd" HeaderText="site_rcd" DataField="site_rcd" 
                                                                 ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
-                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" >
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                             </telerik:GridBoundColumn>
 
                                                             <telerik:GridBoundColumn SortExpression="lu_updated" HeaderText="lu_updated" DataField="lu_updated" 
                                                                 ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
-                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true">
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                             </telerik:GridBoundColumn>
                                                         </Columns>
                                                     </MasterTableView>
                                                     <ClientSettings EnableRowHoverStyle="true">
+                                                        <Selecting AllowRowSelect="True"/>
+                                                    </ClientSettings>
+                                                </telerik:RadGrid></div>
+                                            </telerik:RadPageView>
+                                            <telerik:RadPageView runat="server" ID="RadPageView6">
+                                                <div class="table-responsive">
+                                                <telerik:RadGrid ItemStyle-Height="32px" HeaderStyle-Height="32px" CssClass="table" BorderWidth="0" 
+                                                    AutoGenerateColumns="false" ID="RadGrid6" runat="server" AllowPaging="True" Width="100%" 
+                                                    OnNeedDataSource="RadGrid6_NeedDataSource" AllowSorting="true">
+                                                    <MasterTableView AutoGenerateColumns="False" DataKeyNames="user_name" AllowFilteringByColumn="true">
+                                                        <Columns>
+                                                            <telerik:GridBoundColumn SortExpression="user_name" HeaderText="User Name" DataField="user_name" 
+                                                                ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" FilterControlWidth="100%" 
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="true">
+                                                            </telerik:GridBoundColumn>
+
+                                                            <telerik:GridBoundColumn UniqueName="created_date_time" SortExpression="created_date_time" 
+                                                                HeaderText="created_date_time" DataField="created_date_time" ItemStyle-Wrap="false" 
+                                                                HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" 
+                                                                FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
+                                                            </telerik:GridBoundColumn>
+
+                                                            <telerik:GridTemplateColumn UniqueName="access_authorize" HeaderText="access_authorize" AllowFiltering="false"
+                                                                Visible="true" ItemStyle-HorizontalAlign="Center" DataType="System.Boolean">
+                                                                <ItemTemplate>
+                                                                    <asp:Panel ID="Panel1" runat="server">
+                                                                        <asp:CheckBox ID="FullAccess" runat="server" Text="Full Accesss" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckFull(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="View" runat="server" Text="View" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckView(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="CLSAccess" runat="server" Text="CLS View" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckCLS(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="ScanAccess" runat="server" Text="Scan Accesss" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckScan(Eval("access_authorize")) %>' />
+                                                                    </asp:Panel>
+                                                                </ItemTemplate>
+                                                            </telerik:GridTemplateColumn>
+
+                                                            <telerik:GridBoundColumn SortExpression="active_flag" HeaderText="active_flag" DataField="active_flag" 
+                                                                ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
+                                                            </telerik:GridBoundColumn>
+
+                                                            <telerik:GridBoundColumn SortExpression="site_rcd" HeaderText="site_rcd" DataField="site_rcd" 
+                                                                ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
+                                                            </telerik:GridBoundColumn>
+
+                                                            <telerik:GridBoundColumn SortExpression="lu_updated" HeaderText="lu_updated" DataField="lu_updated" 
+                                                                ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
+                                                            </telerik:GridBoundColumn>
+                                                        </Columns>
+                                                    </MasterTableView>
+                                                    <ClientSettings EnableRowHoverStyle="true">
+                                                        <Selecting AllowRowSelect="True"/>
+                                                    </ClientSettings>
+                                                </telerik:RadGrid></div>
+                                            </telerik:RadPageView>
+                                            <telerik:RadPageView runat="server" ID="RadPageView7">
+                                                <div class="table-responsive">
+                                                <telerik:RadGrid ItemStyle-Height="32px" HeaderStyle-Height="32px" CssClass="table" BorderWidth="0" 
+                                                    AutoGenerateColumns="false" ID="RadGrid7" runat="server" AllowPaging="True" Width="100%" 
+                                                    OnNeedDataSource="RadGrid7_NeedDataSource" AllowSorting="true">
+                                                    <MasterTableView AutoGenerateColumns="False" DataKeyNames="user_name" AllowFilteringByColumn="true">
+                                                        <Columns>
+                                                            <telerik:GridBoundColumn SortExpression="user_name" HeaderText="User Name" DataField="user_name" 
+                                                                ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" FilterControlWidth="100%" 
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="true">
+                                                            </telerik:GridBoundColumn>
+
+                                                            <telerik:GridBoundColumn UniqueName="created_date_time" SortExpression="created_date_time" 
+                                                                HeaderText="created_date_time" DataField="created_date_time" ItemStyle-Wrap="false" 
+                                                                HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" 
+                                                                FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
+                                                            </telerik:GridBoundColumn>
+
+                                                            <telerik:GridTemplateColumn UniqueName="access_authorize" HeaderText="access_authorize" AllowFiltering="false"
+                                                                Visible="true" ItemStyle-HorizontalAlign="Center" DataType="System.Boolean">
+                                                                <ItemTemplate>
+                                                                    <asp:Panel ID="Panel1" runat="server">
+                                                                        <asp:CheckBox ID="FullAccess" runat="server" Text="Full Accesss" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckFull(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="View" runat="server" Text="View" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckView(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="CLSAccess" runat="server" Text="CLS View" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckCLS(Eval("access_authorize")) %>' />
+                                                                        <asp:CheckBox ID="ScanAccess" runat="server" Text="Scan Accesss" AutoPostBack="true" 
+                                                                            OnCheckedChanged="CheckedAccess" Checked='<%#CheckScan(Eval("access_authorize")) %>' />
+                                                                    </asp:Panel>
+                                                                </ItemTemplate>
+                                                            </telerik:GridTemplateColumn>
+
+                                                            <telerik:GridBoundColumn SortExpression="active_flag" HeaderText="active_flag" DataField="active_flag" 
+                                                                ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
+                                                            </telerik:GridBoundColumn>
+
+                                                            <telerik:GridBoundColumn SortExpression="site_rcd" HeaderText="site_rcd" DataField="site_rcd" 
+                                                                ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
+                                                            </telerik:GridBoundColumn>
+
+                                                            <telerik:GridBoundColumn SortExpression="lu_updated" HeaderText="lu_updated" DataField="lu_updated" 
+                                                                ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
+                                                                CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
+                                                            </telerik:GridBoundColumn>
+                                                        </Columns>
+                                                    </MasterTableView>
+                                                    <ClientSettings EnableRowHoverStyle="true">
+                                                        <Selecting AllowRowSelect="True"/>
                                                     </ClientSettings>
                                                 </telerik:RadGrid></div>
                                             </telerik:RadPageView>

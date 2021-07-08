@@ -132,13 +132,31 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Image Image10;
 
         /// <summary>
-        /// House1 control.
+        /// btnHome control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.House House1;
+        protected global::System.Web.UI.WebControls.LinkButton btnHome;
+
+        /// <summary>
+        /// House control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UserControl House;
+
+        /// <summary>
+        /// GeoAlt control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UserControl GeoAlt;
 
         /// <summary>
         /// lbl_location control.
@@ -192,7 +210,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.Person Person;
+        protected global::System.Web.UI.UserControl Person;
 
         /// <summary>
         /// Gear control.
@@ -210,7 +228,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.InfoCircle InfoCircle;
+        protected global::System.Web.UI.UserControl InfoCircle;
 
         /// <summary>
         /// btnLogout control.

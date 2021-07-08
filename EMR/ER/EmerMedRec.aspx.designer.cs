@@ -708,6 +708,24 @@ namespace EMR.ER
         protected global::System.Web.UI.WebControls.Label lbl_created_name_l;
 
         /// <summary>
+        /// btnHome control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnHome;
+
+        /// <summary>
+        /// DataObj control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField DataObj;
+
+        /// <summary>
         /// messagePlaceHolder control.
         /// </summary>
         /// <remarks>
@@ -877,6 +895,15 @@ namespace EMR.ER
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_chief_complaint_code_N;
+
+        /// <summary>
+        /// XSquare38 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UserControl XSquare38;
 
         /// <summary>
         /// CustomValidator1 control.
@@ -1281,7 +1308,7 @@ namespace EMR.ER
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare1;
+        protected global::System.Web.UI.UserControl XSquare1;
 
         /// <summary>
         /// txt_required_text control.
@@ -1533,7 +1560,7 @@ namespace EMR.ER
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare2;
+        protected global::System.Web.UI.UserControl XSquare2;
 
         /// <summary>
         /// CustomValidator4 control.
@@ -1848,7 +1875,7 @@ namespace EMR.ER
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare3;
+        protected global::System.Web.UI.UserControl XSquare3;
 
         /// <summary>
         /// CustomValidator5 control.
@@ -2037,7 +2064,7 @@ namespace EMR.ER
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare4;
+        protected global::System.Web.UI.UserControl XSquare4;
 
         /// <summary>
         /// txt_referred_to_OPD_text control.
@@ -2118,7 +2145,7 @@ namespace EMR.ER
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare9;
+        protected global::System.Web.UI.UserControl XSquare9;
 
         /// <summary>
         /// CustomValidator7 control.
@@ -2307,7 +2334,7 @@ namespace EMR.ER
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare6;
+        protected global::System.Web.UI.UserControl XSquare6;
 
         /// <summary>
         /// CustomValidator8 control.
@@ -2514,7 +2541,7 @@ namespace EMR.ER
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare5;
+        protected global::System.Web.UI.UserControl XSquare5;
 
         /// <summary>
         /// CustomValidator9 control.

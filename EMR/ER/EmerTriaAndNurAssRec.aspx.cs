@@ -49,7 +49,8 @@ namespace EMR
             try
             {
                 WebHelpers.VisibleControl(true, undo, redo, pencilWrapper);
-                image1.Src = JObject.Parse(ena.skin_anno_data).dataURI;
+
+                skin_anno_data_base64.Value = JsonConvert.DeserializeObject(ena.skin_anno_data).dataURI;
                 //Triage Date Time
                 WebHelpers.BindDateTimePicker(dtpk_triage_time, ena.triage_time);
 
@@ -207,6 +208,7 @@ namespace EMR
                 //Nursing notes
                 ViewState[grid_NursingNotes.ID] = WebHelpers.BindingDataGridView(grid_NursingNotes, WebHelpers.GetJSONToDataTable(ena.nursing_note), Ena.NURSING_NOTE_COL, btn_grid_NursingNotes_add);
 
+                DataObj.Value = JsonConvert.SerializeObject(ena);
                 WebHelpers.AddScriptFormEdit(Page, ena, (string)Session["emp_id"]);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
@@ -219,6 +221,7 @@ namespace EMR
             {
                 WebHelpers.VisibleControl(false, undo, redo, pencilWrapper);
                 image1.Src = JObject.Parse(ena.skin_anno_data).dataURI;
+                skin_anno_data_base64.Value = JsonConvert.DeserializeObject(ena.skin_anno_data).dataURI;
                 lbl_triage_time.Text = WebHelpers.FormatDateTime(ena.triage_time, "dd-MM-yyyy HH:mm");
                 lbl_triage_area.Text = WebHelpers.FormatString(ena.triage_area);
                 lbl_chief_complaint.Text = WebHelpers.FormatString(ena.chief_complaint);
@@ -485,10 +488,7 @@ namespace EMR
                 {
                     WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
-                    string pid = Request["pid"];
-                    string vpid = Request["vpid"];
-
-                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                    Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
                 }
             }
             catch (Exception ex)
@@ -507,7 +507,7 @@ namespace EMR
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, ena, ControlState.Edit, (string)Session["location"]);
+                WebHelpers.LoadFormControl(form1, ena, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(ena);
                 //get access button
@@ -547,6 +547,10 @@ namespace EMR
         protected void btn_grid_NursingNotes_add_Click(object sender, EventArgs e)
         {
             ViewState[grid_NursingNotes.ID] = WebHelpers.AddRow((DataTable)ViewState[grid_NursingNotes.ID], grid_NursingNotes, Ena.NURSING_NOTE_COL);
+        }
+        protected void btnHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
         }
         #endregion
         private void UploadFile(string base64String)
@@ -639,11 +643,11 @@ namespace EMR
 
                 if (ena.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(ena, WebHelpers.LoadFormControl(form1, ena, ControlState.View, (string)Session["location"]));
+                    BindingDataForm(ena, WebHelpers.LoadFormControl(form1, ena, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
                 }
                 else if (ena.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(ena, WebHelpers.LoadFormControl(form1, ena, ControlState.Edit, (string)Session["location"]));
+                    BindingDataForm(ena, WebHelpers.LoadFormControl(form1, ena, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
                 }
 
                 WebHelpers.getAccessButtons(form1, ena.status, (string)Session["access_authorize"], (string)Session["location"]);
@@ -824,8 +828,14 @@ namespace EMR
                 // nursing notes
                 ena.nursing_note = WebHelpers.GetDataGridView(grid_NursingNotes, Ena.NURSING_NOTE_COL);
 
-                ena.skin_anno_data = "{\"dataURI\":\"data:image/png;base64,"+ StringBase64.Value + "\"}";
+                ena.skin_anno_data = "{\"dataURI\":\""+ skin_anno_data_base64.Value + "\"}";
 
+                if (JsonConvert.SerializeObject(ena) == DataObj.Value)
+                {
+                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
+                }
+
+                ena.amend_reason = txt_amend_reason.Text;
                 ena.user_name = (string)Session["UserID"];
 
                 dynamic result = ena.Update()[0];

@@ -21,6 +21,32 @@ namespace EMR
             {
                 Initial();
             }
+            PostBackEventHandler();
+        }
+
+        private void PostBackEventHandler()
+        {
+            switch (Request["__EVENTTARGET"])
+            {
+                case "rad_treatment_code_change":
+                    rad_treatment_code_change((string)Request["__EVENTARGUMENT"]);
+                    break;
+
+            }
+        }
+
+        private void rad_treatment_code_change(string code)
+        {
+            if (code == null) { WebHelpers.VisibleControl(false, current_medication_field); return; }
+            switch (code.ToUpper())
+            {
+                case "OPD":
+                    WebHelpers.VisibleControl(true, current_medication_field);
+                    break;
+                default:
+                    WebHelpers.VisibleControl(false, current_medication_field);
+                    break;
+            }
         }
 
         #region Binding Data
@@ -119,6 +145,7 @@ namespace EMR
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_treatment_code_" + omr.treatment_code);
 
                 // 5.Current medications
+                rad_treatment_code_change(omr.treatment_code);
                 txt_medicine.Value = omr.medicine;
 
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_spec_opinion_requested_" + omr.spec_opinion_requested);
@@ -126,6 +153,8 @@ namespace EMR
 
                 txt_specific_education_required.Value = omr.specific_education_required;
                 txt_next_appointment.Value = omr.next_appointment;
+
+                DataObj.Value = JsonConvert.SerializeObject(omr);
 
                 WebHelpers.AddScriptFormEdit(Page, omr, (string)Session["emp_id"]);
             }
@@ -145,10 +174,14 @@ namespace EMR
                 {
                     habits_field.Visible = true;
 
-                    lbl_habits_smoking.Text = omr.habits_smoking != null && omr.habits_smoking ? "Có, ghi số gói trong năm/ Yes, specify pack years: " + WebHelpers.GetValue(omr.habits_smoking_pack) : "Không/ No";
-                    lbl_habits_alcohol.Text = omr.habits_alcohol != null && omr.habits_alcohol ? "Có, ghi rõ/ Yes, specify: " + WebHelpers.GetValue(omr.habits_alcohol_note) : "Không/ No";
-                    lbl_habits_drugs.Text = omr.habits_drugs != null && omr.habits_drugs ? "Có, ghi rõ/ Yes, specify: " + WebHelpers.GetValue(omr.habits_drugs_note) : "Không/ No";
-                    lbl_habits_physical_exercise.Text = omr.habits_physical_exercise != null && omr.habits_physical_exercise ? "Có, ghi rõ/ Yes, specify: " + WebHelpers.GetValue(omr.habits_phy_exer_note) : "Không/ No";
+                    lbl_habits_smoking.Text = WebHelpers.FormatString(WebHelpers.GetBool(omr.habits_smoking, "Có, ghi số gói trong năm/ Yes, specify pack years: " + omr.habits_smoking_pack));
+
+                    lbl_habits_alcohol.Text = WebHelpers.FormatString(WebHelpers.GetBool(omr.habits_alcohol, "Có, ghi rõ/ Yes, specify: " + omr.habits_alcohol_note));
+
+                    lbl_habits_drugs.Text = WebHelpers.FormatString(WebHelpers.GetBool(omr.habits_drugs, "Có, ghi rõ/ Yes, specify: " + omr.habits_drugs_note));
+
+                    lbl_habits_physical_exercise.Text = WebHelpers.FormatString(WebHelpers.GetBool(omr.habits_physical_exercise, "Có, ghi rõ/ Yes, specify: " + omr.habits_phy_exer_note));
+
                     lbl_habits_other.Text = WebHelpers.GetValue(omr.habits_other);
                 }
                 else
@@ -176,11 +209,9 @@ namespace EMR
 
                 lbl_physical_examination.Text = WebHelpers.FormatString(DataHelpers.FormatPhysicalExamination(omr.physical_examination));
 
-                if (omr.treatment_code == "OPD")
-                {
-                    lbl_medicine.Text = WebHelpers.FormatString(omr.medicine);
-                }
-
+                rad_treatment_code_change(omr.treatment_code);
+                if (omr.treatment_code == "OPD") { lbl_medicine.Text = WebHelpers.FormatString(omr.medicine); }
+                
                 lbl_psy_consult_required.Text = WebHelpers.FormatString(WebHelpers.GetBool(omr.psy_consult_required));
 
                 //IV.
@@ -301,11 +332,8 @@ namespace EMR
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
                     WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
-                    
-                    string pid = Request["pid"];
-                    string vpid = Request["vpid"];
 
-                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                    Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
                 }
             }
             catch(Exception ex)
@@ -323,7 +351,7 @@ namespace EMR
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, omr, ControlState.Edit, (string)Session["location"]);
+                WebHelpers.LoadFormControl(form1, omr, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(omr);
                 //get access button
@@ -353,6 +381,10 @@ namespace EMR
                 }
             } catch(Exception ex) { WebHelpers.SendError(Page, ex); }
         }
+        protected void btnHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
+        }
         #endregion
 
         #region Functions
@@ -360,8 +392,6 @@ namespace EMR
         {
             try
             {
-                omr.amend_reason = txt_amend_reason.Text;
-
                 //I.
                 omr.chief_complain = txt_chief_complain.Value;
                 //II.
@@ -370,6 +400,21 @@ namespace EMR
                 omr.current_medication = txt_current_medication.Value;
                 //2.
                 omr.personal = txt_personal.Value;
+
+                omr.habits_smoking = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_habits_smoking_");
+                omr.habits_smoking_pack = txt_habits_smoking_pack.Value;
+
+                omr.habits_alcohol = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_habits_alcohol_");
+                omr.habits_alcohol_note = txt_habits_alcohol_note.Value;
+
+                omr.habits_drugs = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_habits_drugs_");
+                omr.habits_drugs_note = txt_habits_drugs_note.Value;
+
+                omr.habits_physical_exercise = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_habits_physical_exercise_");
+                omr.habits_phy_exer_note = txt_habits_phy_exer_note.Value;
+
+                omr.habits_other = txt_habits_other.Value;
+
                 omr.family = txt_family.Value;
                 omr.allergy = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_allergy_");
                 omr.allergy_note = WebHelpers.GetBool(omr.allergy, txt_allergy_note.Value, null);
@@ -391,6 +436,7 @@ namespace EMR
                 omr.additional_investigation = txt_additional_investigation.Value;
                 //V.
                 omr.initial_diagnosis = txt_initial_diagnosis.Value;
+                omr.diagnosis = txt_diagnosis.Value;
                 omr.differential_diagnosis = txt_differential_diagnosis.Value;
                 omr.associated_conditions = txt_associated_conditions.Value;
 
@@ -399,15 +445,20 @@ namespace EMR
 
                 //5.
                 if (omr.treatment_code == "OPD") { omr.medicine = txt_medicine.Value; }
-                else if (omr.treatment_code == "TRF") { }
-
+                
                 omr.spec_opinion_requested = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_spec_opinion_requested_");
                 omr.spec_opinion_requested_note = WebHelpers.GetBool(omr.spec_opinion_requested, txt_spec_opinion_requested_note.Value, null);
 
                 omr.specific_education_required = txt_specific_education_required.Value;
 
                 omr.next_appointment = txt_next_appointment.Value;
-                
+
+                if (JsonConvert.SerializeObject(omr) == DataObj.Value)
+                {
+                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
+                }
+
+                omr.amend_reason = txt_amend_reason.Text;
                 omr.user_name = (string)Session["UserID"];
 
                 dynamic result = omr.Update()[0];
@@ -437,12 +488,12 @@ namespace EMR
                 prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (omr.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(omr, WebHelpers.LoadFormControl(form1, omr, ControlState.View, (string)Session["location"]));
+                    BindingDataForm(omr, WebHelpers.LoadFormControl(form1, omr, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
 
                 }
                 else if (omr.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(omr, WebHelpers.LoadFormControl(form1, omr, ControlState.Edit, (string)Session["location"]));
+                    BindingDataForm(omr, WebHelpers.LoadFormControl(form1, omr, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
                 }
 
                 WebHelpers.getAccessButtons(form1, omr.status, (string)Session["access_authorize"], (string)Session["location"]);

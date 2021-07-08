@@ -72,7 +72,7 @@ namespace EMR.IPD
                     //2
                     //External exam
                     WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_obs_pre_cicatrice_" + ogia.obs_pre_cicatrice);
-
+                    tetanus_vaccination_change(Convert.ToString(ogia.tetanus_vaccination));
                     txt_obs_uterine_shape.Value = ogia.obs_uterine_shape;
                     txt_obs_posture.Value = ogia.obs_posture;
                     txt_obs_fundal_height.Value = ogia.obs_fundal_height;
@@ -91,6 +91,10 @@ namespace EMR.IPD
                     WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_obs_mem_condition_code_" + ogia.obs_mem_condition_code);
 
                     obs_mem_condition_code_change(ogia.obs_mem_condition_code);
+
+                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_obs_mem_con_attri_code_" + ogia.obs_mem_con_attri_code);
+
+                WebHelpers.BindDateTimePicker(dtpk_obs_rup_of_mem_at, ogia.obs_rup_of_mem_at);
 
                     WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_obs_feat_amniotic_", WebHelpers.GetJSONToDataTable(ogia.obs_feat_amniotic));
 
@@ -145,8 +149,11 @@ namespace EMR.IPD
                 //III
                 //1 General exam
                 txt_general_appearance.Value = ogia.general_appearance;
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_edema_true_" + ogia.edema);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_edema_" + ogia.edema);
                 txt_edema_note.Value = ogia.edema_note;
+                
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_obs_rup_of_mem_code_" + ogia.obs_rup_of_mem_code);
+
                 txt_cardio_system.Value = ogia.cardio_system;
                 txt_respiratory_system.Value = ogia.respiratory_system;
                 txt_digestive_system.Value = ogia.digestive_system;
@@ -171,6 +178,7 @@ namespace EMR.IPD
                 txt_treatment_plan.Value = ogia.treatment_plan;
                 txt_discharge_plan.Value = ogia.discharge_plan;
 
+                DataObj.Value = JsonConvert.SerializeObject(ogia);
                 WebHelpers.AddScriptFormEdit(Page, ogia, (string)Session["emp_id"]);
             } catch (Exception ex)
             {
@@ -230,6 +238,7 @@ namespace EMR.IPD
                         lbl_obs_mem_con_attri_desc.Text = ogia.obs_mem_con_attri_desc;
                     }
 
+                lbl_obs_mem_condition_code.Text = WebHelpers.FormatString(ogia.obs_mem_condition_desc);
 
                     lbl_obs_feat_amniotic.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(ogia.obs_feat_amniotic));
 
@@ -280,6 +289,7 @@ namespace EMR.IPD
                 //III.
                 lbl_general_appearance.Text = WebHelpers.FormatString(ogia.general_appearance);
                 lbl_edema.Text = WebHelpers.GetBool(ogia.edema, "Yes", "No");
+
                 lbl_edema_note.Text = WebHelpers.FormatString(ogia.edema_note);
                 lbl_cardio_system.Text = WebHelpers.FormatString(ogia.cardio_system);
                 lbl_respiratory_system.Text = WebHelpers.FormatString(ogia.respiratory_system);
@@ -726,10 +736,7 @@ namespace EMR.IPD
                 {
                     WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
-                    string pid = Request["pid"];
-                    string vpid = Request["vpid"];
-
-                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                    Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
                 }
             }
             catch(Exception ex)
@@ -747,7 +754,7 @@ namespace EMR.IPD
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, ogia, ControlState.Edit, (string)Session["location"]);
+                WebHelpers.LoadFormControl(form1, ogia, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(ogia);
                 //get access button
@@ -767,7 +774,6 @@ namespace EMR.IPD
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }
-        
         private void PostBackEvent()
         {
             switch (Request["__EVENTTARGET"])
@@ -778,7 +784,22 @@ namespace EMR.IPD
                 case "is_obs_gyn_change":
                     is_obs_gyn_change(Request["__EVENTARGUMENT"]);
                     break;
+                case "rad_tetanus_vaccination_change":
+                    tetanus_vaccination_change(Request["__EVENTARGUMENT"]);
+                    break;
             }
+        }
+
+        private void tetanus_vaccination_change(string v)
+        {
+            if (string.IsNullOrEmpty(v)) { tetanus_vaccin_time_field.Visible = false; return; }
+
+            WebHelpers.VisibleControl(Convert.ToBoolean(v), tetanus_vaccin_time_field);
+        }
+
+        protected void btnHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
         }
         #endregion
 
@@ -787,7 +808,7 @@ namespace EMR.IPD
         {
             try
             {
-                ogia.amend_reason = txt_amend_reason.Text;
+                
                 //I
                 ogia.reason_admission = txt_reason_admission.Value;
                 //II
@@ -840,6 +861,11 @@ namespace EMR.IPD
                     ogia.obs_mem_con_attri_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_obs_mem_con_attri_code_", Ogia.OBS_MEM_CON_ATTRI_CODE);
                     ogia.obs_mem_con_attri_desc = WebHelpers.GetDicDesc(ogia.obs_mem_con_attri_code, Ogia.OBS_MEM_CON_ATTRI_CODE);
 
+                    ogia.obs_rup_of_mem_at = DataHelpers.ConvertSQLDateTime(dtpk_obs_rup_of_mem_at.SelectedDate);
+
+                    ogia.obs_rup_of_mem_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_obs_rup_of_mem_code_", Ogia.OBS_RUP_OF_MEM_CODE);
+                    ogia.obs_rup_of_mem_desc = WebHelpers.GetDicDesc(ogia.obs_rup_of_mem_code, Ogia.OBS_RUP_OF_MEM_CODE);
+                    
                     ogia.obs_feat_amniotic = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_obs_feat_amniotic_", Ogia.OBS_FEAT_AMNIOTIC);
                     ogia.obs_color_amniotic = txt_obs_color_amniotic.Value;
                     ogia.obs_presentation_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_obs_presentation_code_", Ogia.OBS_PRESENTATION_CODE);
@@ -941,7 +967,6 @@ namespace EMR.IPD
                 //III
                 //1
                 ogia.general_appearance = txt_general_appearance.Value;
-                ogia.edema = txt_edema_note.Value;
                 ogia.edema = cb_edema_true.Checked;
                 ogia.edema_note = txt_edema_note.Value;
                 ogia.cardio_system = txt_cardio_system.Value;
@@ -965,6 +990,13 @@ namespace EMR.IPD
                 ogia.associated_conditions = txt_associated_conditions.Value;
                 ogia.treatment_plan = txt_treatment_plan.Value;
                 ogia.discharge_plan = txt_discharge_plan.Value;
+                
+                if (JsonConvert.SerializeObject(ogia) == DataObj.Value)
+                {
+                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
+                }
+
+                ogia.amend_reason = txt_amend_reason.Text;
                 ogia.user_name = (string)Session["UserID"];
 
                 dynamic result = ogia.Update()[0];
@@ -981,15 +1013,16 @@ namespace EMR.IPD
                 WebHelpers.SendError(Page, ex);
             }
         }
-        private void obs_mem_condition_code_change(dynamic args)
+        private void obs_mem_condition_code_change(string args)
         {
             in_field.Visible = ru_field.Visible = false;
-            switch (args)
+            if (args == null) return;
+            switch (args.ToUpper())
             {
-                case "in":
+                case "IN":
                     in_field.Visible = true;
                     break;
-                case "ru":
+                case "RU":
                     ru_field.Visible = true;
                     break;
             }
@@ -1024,12 +1057,12 @@ namespace EMR.IPD
 
                 if (ogia.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(ogia, WebHelpers.LoadFormControl(form1, ogia, ControlState.View, (string)Session["location"]));
+                    BindingDataForm(ogia, WebHelpers.LoadFormControl(form1, ogia, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
 
                 }
                 else if (ogia.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(ogia, WebHelpers.LoadFormControl(form1, ogia, ControlState.Edit, (string)Session["location"]));
+                    BindingDataForm(ogia, WebHelpers.LoadFormControl(form1, ogia, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
                 }
 
                 WebHelpers.getAccessButtons(form1, ogia.status, (string)Session["access_authorize"], (string)Session["location"]);

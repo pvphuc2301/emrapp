@@ -85,6 +85,7 @@ namespace EMR.OPD
                 txt_pecific_edu_req.Value = mrfv.pecific_edu_req;
                 txt_next_appointment.Value = mrfv.next_appointment;
 
+                DataObj.Value = JsonConvert.SerializeObject(mrfv);
                 WebHelpers.AddScriptFormEdit(Page, mrfv, (string)Session["emp_id"]);
                 
             } catch(Exception ex)
@@ -268,10 +269,7 @@ namespace EMR.OPD
                 {
                     WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
-                    string pid = Request["pid"];
-                    string vpid = Request["vpid"];
-
-                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                    Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
                 }
             }
             catch(Exception ex)
@@ -289,7 +287,7 @@ namespace EMR.OPD
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, mrfv, ControlState.Edit, (string)Session["location"]);
+                WebHelpers.LoadFormControl(form1, mrfv, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(mrfv);
                 //get access button
@@ -328,6 +326,14 @@ namespace EMR.OPD
                 WebHelpers.SendError(Page, ex);
             }
         }
+        protected void btnHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
+        }
+        protected void btnUpdateVitalSigns_Click(object sender, EventArgs e)
+        {
+            WebHelpers.Notification(Page, "Pending API", "error");
+        }
         #endregion
 
         #region Functions
@@ -354,12 +360,12 @@ namespace EMR.OPD
                 prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (mrfv.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(mrfv, WebHelpers.LoadFormControl(form1, mrfv, ControlState.View, (string)Session["location"]));
+                    BindingDataForm(mrfv, WebHelpers.LoadFormControl(form1, mrfv, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
 
                 }
                 else if (mrfv.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(mrfv, WebHelpers.LoadFormControl(form1, mrfv, ControlState.Edit, (string)Session["location"]));
+                    BindingDataForm(mrfv, WebHelpers.LoadFormControl(form1, mrfv, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
                 }
 
                 WebHelpers.getAccessButtons(form1, mrfv.status, (string)Session["access_authorize"], (string)Session["location"]);
@@ -374,7 +380,6 @@ namespace EMR.OPD
             try
             {
 
-                mrfv.amend_reason = txt_amend_reason.Text;
                 mrfv.chief_complaint = txt_chief_complaint.Value;
                 mrfv.cur_med_history = txt_cur_med_history.Value;
                 mrfv.cur_medications = txt_cur_medications.Value;
@@ -418,6 +423,13 @@ namespace EMR.OPD
                 
                 mrfv.pecific_edu_req = txt_pecific_edu_req.Value;
                 mrfv.next_appointment = txt_next_appointment.Value;
+
+                if (JsonConvert.SerializeObject(mrfv) == DataObj.Value)
+                {
+                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
+                }
+
+                mrfv.amend_reason = txt_amend_reason.Text;
                 mrfv.user_name = (string)Session["UserID"];
 
                 dynamic result = mrfv.Update()[0];
@@ -434,9 +446,6 @@ namespace EMR.OPD
         }
         #endregion
 
-        protected void btnUpdateVitalSigns_Click(object sender, EventArgs e)
-        {
-
-        }
+        
     }
 }

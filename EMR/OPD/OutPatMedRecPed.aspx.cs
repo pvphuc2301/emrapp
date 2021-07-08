@@ -19,6 +19,7 @@ namespace EMR
             {
                 Initial();
             }
+            PostBackEventHandler();
         }
 
         #region Binding Data
@@ -79,8 +80,9 @@ namespace EMR
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_treatment_code_" + pomr.treatment_code);
 
                 // 5.Current medications
+                rad_treatment_code_change(pomr.treatment_code);
                 txt_medicine.Value = pomr.medicine;
-                //treatment = transfer
+                txt_tranfer.Value = pomr.tranfer;
 
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_spec_opinion_requested_" + pomr.spec_opinion_requested);
 
@@ -100,6 +102,7 @@ namespace EMR
                         txt_next_appointment.Value = pomr.txt_next_appointment;
                     }
                 }
+                DataObj.Value = JsonConvert.SerializeObject(pomr);
                 WebHelpers.AddScriptFormEdit(Page, pomr, (string)Session["emp_id"]);
             }
             catch (Exception ex)
@@ -112,62 +115,50 @@ namespace EMR
             try
             {
                 //1
-                lbl_chief_complaint.Text = WebHelpers.GetValue(pomr.chief_complaint);
-                lbl_current_medication.Text = WebHelpers.GetValue(pomr.current_medication);
+                lbl_chief_complaint.Text = WebHelpers.FormatString(pomr.chief_complaint);
+                lbl_current_medication.Text = WebHelpers.FormatString(pomr.current_medication);
                 //2
-                lbl_personal.Text = WebHelpers.GetValue(pomr.personal);
+                lbl_personal.Text = WebHelpers.FormatString(pomr.personal);
             
-                lbl_medical_history.Text = WebHelpers.GetValue(pomr.medical_history);
+                lbl_medical_history.Text = WebHelpers.FormatString(pomr.medical_history);
 
-                if (pomr.allergy != null)
-                {
-                    lbl_allergy.Text = pomr.allergy ? "Có, ghi rõ/ Yes, specify: " + WebHelpers.GetValue(pomr.allergy_note) : "Không/ No";
-                }
-                else
-                {
-                    pomr.allergy_note = "—";
-                }
+                lbl_allergy.Text = WebHelpers.FormatString(WebHelpers.GetBool(pomr.allergy, "Có, ghi rõ/ Yes, specify: " + pomr.allergy_note));
 
-                lbl_family.Text = WebHelpers.GetValue(pomr.family);
+                lbl_family.Text = WebHelpers.FormatString(pomr.family);
                 WebHelpers.VisibleControl(false, btnUpdateVitalSign);
-                vs_temperature.Text = WebHelpers.GetValue(pomr.vs_temperature);
-                vs_weight.Text = WebHelpers.GetValue(pomr.vs_weight);
-                vs_height.Text = WebHelpers.GetValue(pomr.vs_height);
-                vs_bmi.Text = WebHelpers.GetValue(pomr.vs_BMI);
-                vs_pulse.Text = WebHelpers.GetValue(pomr.vs_pulse);
-                vs_heart_rate.Text = WebHelpers.GetValue(pomr.vs_heart_rate);
-                vs_respiratory_rate.Text = WebHelpers.GetValue(pomr.vs_respiratory_rate);
-                vs_blood_pressure.Text = WebHelpers.GetValue(pomr.vs_blood_pressure);
-                vs_spo2.Text = WebHelpers.GetValue(pomr.vs_spO2);
+                vs_temperature.Text = WebHelpers.FormatString(pomr.vs_temperature);
+                vs_weight.Text = WebHelpers.FormatString(pomr.vs_weight);
+                vs_height.Text = WebHelpers.FormatString(pomr.vs_height);
+                vs_bmi.Text = WebHelpers.FormatString(pomr.vs_BMI);
+                vs_pulse.Text = WebHelpers.FormatString(pomr.vs_pulse);
+                vs_heart_rate.Text = WebHelpers.FormatString(pomr.vs_heart_rate);
+                vs_respiratory_rate.Text = WebHelpers.FormatString(pomr.vs_respiratory_rate);
+                vs_blood_pressure.Text = WebHelpers.FormatString(pomr.vs_blood_pressure);
+                vs_spo2.Text = WebHelpers.FormatString(pomr.vs_spO2);
 
                 lbl_physical_examination.Text = DataHelpers.FormatPhysicalExamination(pomr.physical_examination);
 
-                if (pomr.treatment_code != null)
+                rad_treatment_code_change(pomr.treatment_code);
+                if (pomr.treatment_code == "OPD")
                 {
-                    if (pomr.treatment_code == "OPD")
-                    {
-                        lbl_medicine.Text = WebHelpers.GetValue(pomr.medicine);
-                    }
-                }
-
-                lbl_laboratory_indications_results.Text = WebHelpers.GetValue(pomr.laboratory_indications_results);
-                lbl_initial_diagnosis.Text = WebHelpers.GetValue(pomr.initial_diagnosis);
-                lbl_differential_diagnosis.Text = WebHelpers.GetValue(pomr.differential_diagnosis);
-                lbl_associated_conditions.Text = WebHelpers.GetValue(pomr.associated_conditions);
-                lbl_treatment_code.Text = WebHelpers.GetValue(pomr.treatment_desc);
-
-                if (pomr.spec_opinion_requested != null)
+                    lbl_medicine.Text = WebHelpers.FormatString(pomr.medicine);
+                } else if (pomr.treatment_code == "TRF")
                 {
-                    lbl_spec_opinion_requested.Text = pomr.spec_opinion_requested ? "Có, ghi rõ/ Yes, specify: " + pomr.spec_opinion_requested_note : "Không/ No";
+                    lbl_tranfer.Text = WebHelpers.FormatString(pomr.tranfer);
                 }
-                else { lbl_spec_opinion_requested.Text = "—"; }
+                
+                lbl_laboratory_indications_results.Text = WebHelpers.FormatString(pomr.laboratory_indications_results);
+                lbl_initial_diagnosis.Text = WebHelpers.FormatString(pomr.initial_diagnosis);
+                lbl_differential_diagnosis.Text = WebHelpers.FormatString(pomr.differential_diagnosis);
+                lbl_associated_conditions.Text = WebHelpers.FormatString(pomr.associated_conditions);
+                lbl_treatment_code.Text = WebHelpers.FormatString(pomr.treatment_desc);
 
-                lbl_specific_education_required.Text = WebHelpers.GetValue(pomr.specific_education_required);
-            
-                if(pomr.bool_next_appointment != null)
-                {
-                    lbl_date_next_appointment.Text = pomr.bool_next_appointment ? "Calendar<br>" + WebHelpers.FormatDateTime(pomr.date_next_appointment) : "Text<br>" + WebHelpers.GetValue(pomr.txt_next_appointment);
-                }
+                lbl_spec_opinion_requested.Text = WebHelpers.FormatString(WebHelpers.GetBool(pomr.spec_opinion_requested, "Có, ghi rõ/ Yes, specify: " + pomr.spec_opinion_requested_note));
+                
+                lbl_specific_education_required.Text = WebHelpers.FormatString(pomr.specific_education_required);
+
+                lbl_date_next_appointment.Text = WebHelpers.FormatString(WebHelpers.GetBool(pomr.bool_next_appointment, "Calendar<br>" + WebHelpers.FormatDateTime(pomr.date_next_appointment), "Text<br>" + pomr.txt_next_appointment));
+
             }
             catch (Exception ex)
             {
@@ -281,10 +272,7 @@ namespace EMR
                 {
                     WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
-                    string pid = Request["pid"];
-                    string vpid = Request["vpid"];
-
-                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                    Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
                 }
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
@@ -299,7 +287,7 @@ namespace EMR
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, pomr, ControlState.Edit, (string)Session["location"]);
+                WebHelpers.LoadFormControl(form1, pomr, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(pomr);
                 //get access button
@@ -331,6 +319,10 @@ namespace EMR
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
             
         }
+        protected void btnHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
+        }
 
         #region METHODS
         public void Initial()
@@ -347,12 +339,12 @@ namespace EMR
                 prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (pomr.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(pomr, WebHelpers.LoadFormControl(form1, pomr, ControlState.View, (string)Session["location"]));
+                    BindingDataForm(pomr, WebHelpers.LoadFormControl(form1, pomr, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
 
                 }
                 else if (pomr.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(pomr, WebHelpers.LoadFormControl(form1, pomr, ControlState.Edit, (string)Session["location"]));
+                    BindingDataForm(pomr, WebHelpers.LoadFormControl(form1, pomr, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
                 }
 
                 WebHelpers.getAccessButtons(form1, pomr.status, (string)Session["access_authorize"], (string)Session["location"]);
@@ -366,8 +358,6 @@ namespace EMR
         {
             try
             {
-                pomr.amend_reason = txt_amend_reason.Text;
-
                 //I.
                 pomr.chief_complaint = txt_chief_complaint.Value;
                 //II.
@@ -402,7 +392,7 @@ namespace EMR
 
                 //5.
                 if (pomr.treatment_code == "OPD") { pomr.medicine = txt_medicine.Value; }
-                else if (pomr.treatment_code == "TRF") { }
+                else if (pomr.treatment_code == "TRF") { pomr.tranfer = txt_tranfer.Value; }
 
                 pomr.spec_opinion_requested = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_spec_opinion_requested_");
                 pomr.spec_opinion_requested_note = WebHelpers.GetBool(pomr.spec_opinion_requested, txt_spec_opinion_requested_note.Value, null);
@@ -411,18 +401,16 @@ namespace EMR
 
                 pomr.bool_next_appointment = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_bool_next_appointment_");
 
-                if (rad_bool_next_appointment_true.Checked)
-                {
-                    pomr.txt_next_appointment = null;
+                pomr.txt_next_appointment = WebHelpers.GetBool(pomr.bool_next_appointment, null, txt_next_appointment.Value);
 
-                    pomr.date_next_appointment = DataHelpers.ConvertSQLDateTime(dtpk_date_next_appointment.SelectedDate);
-                }
-                else if (rad_bool_next_appointment_false.Checked)
+                pomr.date_next_appointment = WebHelpers.GetBool(pomr.bool_next_appointment, DataHelpers.ConvertSQLDateTime(dtpk_date_next_appointment.SelectedDate), null);
+
+                if (JsonConvert.SerializeObject(pomr) == DataObj.Value)
                 {
-                    pomr.txt_next_appointment = txt_next_appointment.Value;
-                    pomr.date_next_appointment = null;
+                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
                 }
 
+                pomr.amend_reason = txt_amend_reason.Text;
                 pomr.user_name = (string)Session["UserID"];
 
                 dynamic result = pomr.Update()[0];
@@ -434,6 +422,30 @@ namespace EMR
                 }
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
+        }
+        private void PostBackEventHandler()
+        {
+            switch (Request["__EVENTTARGET"])
+            {
+                case "rad_treatment_code_change":
+                    rad_treatment_code_change((string)Request["__EVENTARGUMENT"]);
+                    break;
+
+            }
+        }
+        private void rad_treatment_code_change(string code)
+        {
+            WebHelpers.VisibleControl(false, current_medication_field, tranfer_field);
+            if(code == null) { return; }
+            switch (code.ToUpper())
+            {
+                case "OPD":
+                    WebHelpers.VisibleControl(true, current_medication_field);
+                    break;
+                case "TRF":
+                    WebHelpers.VisibleControl(true, tranfer_field);
+                    break;
+            }
         }
         #endregion
 

@@ -1,6 +1,27 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ImagingReport.ascx.cs" Inherits="EMR.ImagingReport" %>
+<style>
+    html body blockquote {
+        margin: 0;
+        margin-left: 2em;
+        border-left: 0;
+        border: 0;
+        padding: 0;
+    }
+
+    html body blockquote p {
+        font-family: Arial;
+        font-size: 10pt;
+        margin: 0pt 0pt 0pt 0pt;
+            margin-top: 0pt;
+            margin-bottom: 0pt;
+        margin-bottom: 0pt;
+        margin-top: 0pt;
+    }
+
+</style>
+
 <div class="recipeImage qsf-ib">
-<div class="scroll-sidebar h-100 w-100" style="overflow: scroll">
+<div class="scroll-sidebar w-100" style="overflow: scroll">
             <div style="width: 702px; margin: 0 auto;">
 
                 <table style="width: 100%;">
@@ -46,31 +67,36 @@
                                                 </tr>
 
                                             </table>
-
-                <div>
+                
+                <asp:Panel runat="server" ID="diagnosis_field">
                     <div class="bg-primary text-white">CHẨN ĐOÁN / DIAGNOSIS:</div>
-                    <div id="lbl_diagnosis" runat="server"></div>
-                </div>
+                    <asp:Label runat="server" ID="lbl_diagnosis"></asp:Label>
+                </asp:Panel>
 
-                <div>
+                <asp:Panel runat="server" ID="history_field">
+                    <div class="bg-primary text-white">TIỀN SỬ BỆNH / HISTORY:</div>
+                    <asp:Label runat="server" ID="lbl_history"></asp:Label>
+                </asp:Panel>
+
+                <asp:Panel runat="server" ID="technique_field">
                     <div class="bg-primary text-white">KỸ THUẬT / TECHNIQUE:</div>
-                    <div id="lbl_technique" runat="server"></div>
-                </div>
+                    <asp:Label runat="server" ID="lbl_technique"></asp:Label>
+                </asp:Panel>
 
-                <div>
+                <asp:Panel runat="server" ID="findings_field">
                     <div class="bg-primary text-white">MÔ TẢ / FINDINGS:</div>
-                    <p id="lbl_findings" runat="server"></p>
-                </div>        
+                    <asp:Label runat="server" ID="lbl_findings"></asp:Label>
+                </asp:Panel>
 
-                <div>
+                <asp:Panel runat="server" ID="impression_field">
                     <div class="bg-primary text-white">KẾT LUẬN/ IMPRESSION:</div>
-                    <div id="lbl_impression" runat="server"></div>
-                </div>
+                    <asp:Label runat="server" ID="lbl_impression"></asp:Label>
+                </asp:Panel>
 
-                <div>
+                <asp:Panel runat="server" ID="addendum_field">
                     <div class="bg-primary text-white">ADDENDUM:</div>
                     <p id="lbl_addendum" runat="server"></p>
-                </div>
+                </asp:Panel>
             </div>
         </div>
 </div>

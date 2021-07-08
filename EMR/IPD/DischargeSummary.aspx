@@ -152,7 +152,13 @@
                     </table>
                 </div>
 
-                <div class="cssclsNoPrint" style="overflow: scroll; height: 100vh; overflow-x: hidden;">
+                <div class="cssclsNoPrint">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                      <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
+                      <li>Discharge Summary</li>
+                    </ul>
+                    <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
+                        <asp:HiddenField runat="server" ID="DataObj" />
                     <asp:Panel runat="server" ID="messagePlaceHolder">
                         <div class="card" runat="server" id="amendReasonWraper">
                             <div class="card-body">
@@ -570,7 +576,7 @@
                                                         </div>
                                                         <div class="text-right">
                                                             <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
-                                                            <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
+                                                            <asp:LinkButton OnClick="btnDelete_Click" OnClientClick="window.removeEventListener('beforeunload',comfirm_leave_page,true);" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
                                                         </div>
                                                     </ModalBody>
                                                 </webUI:PopupModal>
@@ -582,6 +588,7 @@
                                     </div>
                         </div>
                     </div>
+                        </div>
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>
@@ -596,6 +603,8 @@
     <script src="../scripts/alertify.js"></script>
 
     <script type="text/javascript">
+        var elem = window.parent.parent.document.getElementById("myProgress");
+        progress(elem);
 
         function beforeAsyncPostBack() {
             var curtime = new Date();

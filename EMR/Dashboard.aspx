@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="EMR.Dashboard" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Dashboard.aspx.cs" Inherits="EMR.Dashboard" Async="true"%>
 
 <%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
 <%@ Register Src="~/icons/House.ascx" TagPrefix="icon" TagName="House" %>
@@ -137,6 +137,13 @@
 
                                                     </a>
                                                 </li>
+                                                <li>
+                                                    <a href="#">
+                                                        <i class="fa fa-book"></i>
+                                                        <span>Admin group</span>
+
+                                                    </a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -153,6 +160,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="input-group mb-3">
+                                                
                                                     <input type="text" maxlength="9" class="form-control" placeholder="Search for PID" aria-label="Search for PID" aria-describedby="basic-addon2" style="max-width: 240px;" runat="server" id="txt_pid" />
                                                     <div class="input-group-append">
 
@@ -170,7 +178,7 @@
                                                     </asp:UpdateProgress>
                                                 </div>
                                             <div class="table-responsive">
-                                                        <telerik:RadGrid OnSelectedIndexChanged="RadGrid_SelectedIndexChanged" CssClass="table" BorderWidth="0" AutoGenerateColumns="false" ID="RadGrid5" runat="server" AllowPaging="True" AllowSorting="true">
+                                                        <telerik:RadGrid OnSelectedIndexChanged="RadGrid5_SelectedIndexChanged" CssClass="table" BorderWidth="0" AutoGenerateColumns="false" ID="RadGrid5" runat="server" AllowPaging="True" AllowSorting="true">
                                                             <MasterTableView AutoGenerateColumns="False" DataKeyNames="patient_id, visible_patient_id" ClientDataKeyNames="patient_id">
                                                                 <Columns>
                                                                     <telerik:GridBoundColumn SortExpression="visible_patient_id" HeaderText="Patient ID" DataField="visible_patient_id" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" ItemStyle-Font-Bold="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true">
@@ -206,7 +214,12 @@
                                 <div class="card-header bg-white">
                                     <h4 class="card-title control-label m-0">
                                         <span class="text-primary">My Outpatient for Today</span>
+
+                                        <span style="padding-left: 600px">
+                                            <a href="#" onclick="javascript:window.open('../report/CompleteVisitReport.aspx?view=','mywin','left=60,top=20,width=1300,height=1000,toolbar=0,resizable=0');return false;">My Completed Health Check-up List</a>
+                                        </span>
                                     </h4>
+
                                 </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
@@ -318,7 +331,7 @@
                                                         <Selecting AllowRowSelect="True" />
                                                     </ClientSettings>
                                                 </telerik:RadGrid>--%>
-                                        <telerik:RadGrid CssClass="table" BorderWidth="0" OnSelectedIndexChanged="RadGrid_SelectedIndexChanged"
+                                        <telerik:RadGrid CssClass="table" BorderWidth="0"
                                             AutoGenerateColumns="false" ID="RadGrid1" runat="server" AllowPaging="True" OnItemDataBound="RadGrid1_ItemDataBound"
                                             AllowSorting="true" OnNeedDataSource="RadGrid1_NeedDataSource">
                                             <MasterTableView AutoGenerateColumns="False" ClientDataKeyNames="patient_id, visible_patient_id,patient_visit_id">
@@ -422,11 +435,11 @@
                                                 </Columns>
                                                 <CommandItemSettings ShowAddNewRecordButton="false" />
                                             </MasterTableView>
-                                            <ClientSettings EnableRowHoverStyle="true" Selecting-AllowRowSelect="true" EnablePostBackOnRowClick="true">
+                                            <ClientSettings EnableRowHoverStyle="true">
                                                 <Selecting AllowRowSelect="True" />
                                             </ClientSettings>
                                         </telerik:RadGrid>
-                                            </div>
+                                    </div>
                                 </div>
 
                                 <%--<div class="card-body" style="padding: 0">
@@ -733,7 +746,7 @@
                                             <div class="table-responsive">
                                                 <telerik:RadGrid CssClass="table" BorderWidth="0" OnSelectedIndexChanged="RadGrid1_SelectedIndexChanged"
                                                     AutoGenerateColumns="false" ID="RadGrid3" runat="server" AllowPaging="True"
-                                                    OnItemDataBound="RadGrid2_ItemDataBound" AllowSorting="true" OnNeedDataSource="RadGrid3_NeedDataSource">
+                                                    OnItemDataBound="RadGrid2_ItemDataBound" AllowSorting="true">
                                                     <MasterTableView AutoGenerateColumns="False" DataKeyNames="patient_id">
                                                         <Columns>
                                                             <telerik:GridBoundColumn
@@ -806,7 +819,7 @@
                                             <div class="table-responsive">
                                                 <telerik:RadGrid CssClass="table" BorderWidth="0" OnSelectedIndexChanged="RadGrid1_SelectedIndexChanged" AutoGenerateColumns="false"
                                                     ID="RadGrid4" runat="server" AllowPaging="True" OnItemDataBound="RadGrid2_ItemDataBound"
-                                                    AllowSorting="true" OnNeedDataSource="RadGrid4_NeedDataSource">
+                                                    AllowSorting="true" >
                                                     <MasterTableView AutoGenerateColumns="False" DataKeyNames="patient_id">
                                                         <Columns>
                                                             <telerik:GridBoundColumn
@@ -957,3 +970,4 @@
 
 </body>
 </html>
+

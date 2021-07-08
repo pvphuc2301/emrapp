@@ -307,6 +307,7 @@
                 </div>
 
                 <div class="cssclsNoPrint" style="overflow: scroll; height:100vh; overflow-x: hidden;">
+                    <asp:HiddenField runat="server" ID="DataObj" />
                     <asp:Panel runat="server" ID="messagePlaceHolder">
                         <div class="card" runat="server" id="amendReasonWraper">
                             <div class="card-body">
@@ -555,7 +556,7 @@
                                             </div>
                                             <div class="text-right">
                                                 <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
-                                                <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
+                                                <asp:LinkButton OnClick="btnDelete_Click" OnClientClick="window.removeEventListener('beforeunload',comfirm_leave_page,true);" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
                                             </div>
                                         </ModalBody>
                                     </webUI:PopupModal>
@@ -581,6 +582,7 @@
     <script src="../scripts/alertify.js"></script>
     <script type="text/javascript">
 
+        InputFilter("data-type='number'");
         formGroup_init();
 
         checkboxRadiobutton_init();
@@ -590,7 +592,7 @@
 
         function afterAsyncPostBack() {
             formGroup_init();
-            InputFilter();
+            InputFilter("data-type='number'");
         }
 
     </script>

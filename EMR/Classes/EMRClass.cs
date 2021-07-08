@@ -38,7 +38,6 @@ namespace EMR
         private static PatientVisit instance = null;
         public static PatientVisit Instance()
         {
-            if (instance == null) new PatientVisit("99e90407-1973-11e9-8101-d89ef30928eb");
             return instance;
         }
 
@@ -327,7 +326,7 @@ namespace EMR
         public static Dictionary<string, string> NURSING_NOTE_COL = new Dictionary<string, string>()
         {
             { "id", "" },
-            { "date_time", "" },
+            { "date_time", "DateTime" },
             { "patient_condition", "" },
             { "signature_name", "" },
         };
@@ -3149,13 +3148,13 @@ namespace EMR
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI(string.Format("api/emr/document-del/{0}/{1}", userName, docid));
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/{DataHelpers._LOCATION}/log/{docid}");
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
                     message[1] = response1;
                 }
 
@@ -3582,12 +3581,7 @@ namespace EMR
                 WebHelpers.BindingDatafield(db, this);
             }
         }
-        /// <summary>
-        /// returns: an array of messages
-        /// </summary>
-        /// <returns></returns>
-        /// 
-
+        
         public dynamic[] Update()
         {
             dynamic[] message = new dynamic[2];
@@ -3600,7 +3594,6 @@ namespace EMR
                 dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
                 message[1] = response2;
             }
-
             return message;
         }
 
@@ -3664,6 +3657,7 @@ namespace EMR
         public dynamic treatment_code { get; set; }
         public dynamic treatment_desc { get; set; }
         public dynamic medicine { get; set; }
+        public dynamic tranfer { get; set; }
         public dynamic spec_opinion_requested { get; set; }
         public dynamic spec_opinion_requested_note { get; set; }
         public dynamic specific_education_required { get; set; }
@@ -4256,6 +4250,12 @@ namespace EMR
         {
             { "FLAT", "Dẹt/Flat" },
             { "INFLAT", "Phồng/Inflattable" },
+        };
+
+        public static Dictionary<string, string> OBS_RUP_OF_MEM_CODE = new Dictionary<string, string>()
+        {
+            { "S", "Tự nhiên/ Spontaneous" },
+            { "I", "Can thiệp/ Interventional" },
         };
 
         #endregion

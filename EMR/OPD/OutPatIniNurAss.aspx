@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OutPatIniNurAss.aspx.cs" Inherits="EMR.OutPathIniNurAss" EnableEventValidation="false" ValidateRequest="false" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OutPatIniNurAss.aspx.cs" Inherits="EMR.OutPathIniNurAss"  ValidateRequest="false" %>
 
 <%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="webUI" TagName="PatientInfo" %>
 <%@ Register Src="~/UserControls/Alert.ascx" TagPrefix="uc1" TagName="Alert" %>
@@ -173,7 +173,12 @@
                 </div>
 
                 <div class="cssclsNoPrint">
-                    <div style="overflow: scroll; height: 100vh; overflow-x: hidden;">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                      <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
+                      <li>Outpatient Initial Nursing Assessment</li>
+                    </ul>
+                    <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
+                        <asp:HiddenField runat="server" ID="DataObj" />
                         <asp:Panel runat="server" ID="messagePlaceHolder">
                             <div class="card" runat="server" id="amendReasonWraper">
                                 <div class="card-body">
@@ -262,7 +267,7 @@
                                                     <label class="control-label mb-1 mr-2">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
                                                     <asp:Label runat="server" ID="lbl_vs_blood_pressure" />
                                                     <div class="form-group d-inline-block" runat="server" id="vs_blood_pressure_wrapper">
-                                                        <input  id="txt_vs_blood_pressure" data-type="number" style="width: 160px" runat="server" class="form-control text-right" />
+                                                        <input  id="txt_vs_blood_pressure" data-type="number1" style="width: 160px" runat="server" class="form-control text-right" />
                                                         <span class="append">mmHg</span>
                                                     </div>
                                                 </div>
@@ -554,7 +559,7 @@
 
                                                         <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect" >Save</asp:LinkButton>
 
-                                                        <%--<asp:LinkButton ValidationGroup="Group1" OnClick="btnDelete_Click" ID="btnDelete" runat="server" CssClass="btn btn-primary waves-effect" >Delete</asp:LinkButton>--%>
+                                                        <%--<asp:LinkButton ValidationGroup="Group1" OnClick="btnDelete_Click" OnClientClick="window.removeEventListener('beforeunload',comfirm_leave_page,true);" ID="btnDelete" runat="server" CssClass="btn btn-primary waves-effect" >Delete</asp:LinkButton>--%>
 
                                                         <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal" class="btn btn-danger waves-effect">Delete</div>
 
@@ -576,7 +581,7 @@
                                                 </div>
                                                 <div class="text-right">
                                                     <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
-                                                        <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
+                                                        <asp:LinkButton OnClick="btnDelete_Click" OnClientClick="window.removeEventListener('beforeunload',comfirm_leave_page,true);" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
                                                 </div>
                                             </ModalBody>
                                         </webUI:PopupModal>
@@ -603,119 +608,23 @@
     <script src="../scripts/alertify.js"></script>
 
     <script>
-        /**
- * This javascript file checks for the brower/browser tab action.
- * It is based on the file menstioned by Daniel Melo.
- * Reference: http://stackoverflow.com/questions/1921941/close-kill-the-session-when-the-browser-or-tab-is-closed
- */
-        var validNavigation = false;
-
-        function wireUpEvents() {
-            /**
-             * For a list of events that triggers onbeforeunload on IE
-             * check http://msdn.microsoft.com/en-us/library/ms536907(VS.85).aspx
-             *
-             * onbeforeunload for IE and chrome
-             * check http://stackoverflow.com/questions/1802930/setting-onbeforeunload-on-body-element-in-chrome-and-ie-using-jquery
-             */
-            var dont_confirm_leave = 0; //set dont_confirm_leave to 1 when you want the user to be able to leave without confirmation
-            var leave_message = 'You sure you want to leave?';
-            function goodbye(e) {
-                if (!validNavigation) {
-                    if (dont_confirm_leave !== 1) {
-                        if (!e) e = window.event;
-                        //e.cancelBubble is supported by IE - this will kill the bubbling process.
-                        e.cancelBubble = true;
-                        e.returnValue = leave_message;
-                        //e.stopPropagation works in Firefox.
-                        if (e.stopPropagation) {
-                            e.stopPropagation();
-                            e.preventDefault();
-                        }
-                        //return works for Chrome and Safari
-                        return leave_message;
-                    }
-                }
-            }
-
-            window.onbeforeunload = goodbye;
-
-            // Attach the event keypress to exclude the F5 refresh
-            $(document).bind('keypress', function (e) {
-                if (e.keyCode == 116) {
-                    validNavigation = true;
-                }
-            });
-
-            // Attach the event click for all links in the page
-            $("a").bind("click", function () {
-                validNavigation = true;
-            });
-
-            // Attach the event submit for all forms in the page
-            $("form").bind("submit", function () {
-                validNavigation = true;
-            });
-
-            // Attach the event click for all inputs in the page
-            $("input[type=submit]").bind("click", function () {
-                validNavigation = true;
-            });
-
-        }
-
-        // Wire up the events as soon as the DOM tree is ready
-        $(document).ready(function () {
-            wireUpEvents();
-        });
-    </script>
-
-    <script>
-        
-
-        //function comfirmDelete() {
-
-        ////    swal({
-        ////        title: "Are you sure?",
-        ////        text: "You will not be able to recover this imaginary file!",
-        ////        type: "warning",
-        ////        showCancelButton: true,
-        ////        confirmButtonColor: "#DD6B55",
-        ////        confirmButtonText: "Yes, delete it!",
-        ////        closeOnConfirm: false
-        ////    }, function (isConfirm) {
-        ////            if (isConfirm) { swal("Done!", "It was succesfully deleted!", "success"); }
-        ////            else { return false; }
-        ////        //$.ajax({
-        ////        //    url: "OutPatIniNurAss.aspx/btnDelete_Click",
-        ////        //    type: "POST",
-        ////        //    data: '{"value":""}',
-        ////        //    contentType: 'application/json; charset=utf-8',
-        ////        //    dataType: "json",
-        ////        //    success: function () {
-        ////        //        swal("Done!", "It was succesfully deleted!", "success");
-        ////        //        __doPostBack()';
-        ////        //    },
-        ////        //    error: function (xhr, ajaxOptions, thrownError) {
-        ////        //        swal("Error deleting!", "Please try again", "error");
-        ////        //    }
-        ////        //});
-        ////    });
-        //}
+        var elem = window.parent.parent.document.getElementById("myProgress");
+        progress(elem);
 
         formGroup_init();
         checkboxRadiobutton_init();
-        InputFilter();
+        InputFilter("data-type='number'");
+        InputFilter("data-type='number1'" , /^\d*\.?\/?\d*$/);
 
         function beforeAsyncPostBack() {
             var curtime = new Date();
-            console.log(curtime);
         }
 
         function afterAsyncPostBack() {
             formGroup_init();
             checkboxRadiobutton_init();
-            InputFilter();
+            InputFilter("data-type='number'");
+            InputFilter("data-type='number1'", /^\d*\.?\/?\d*$/);
         }
 
     </script>

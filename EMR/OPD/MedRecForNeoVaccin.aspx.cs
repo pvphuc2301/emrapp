@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -66,6 +67,7 @@ namespace EMR.OPD
                 txt_scr_before_vacc_6.Value = mrnv.scr_before_vacc_6;
                 txt_scr_before_vacc_7.Value = mrnv.scr_before_vacc_7;
                 txt_scr_before_vacc_8.Value = mrnv.scr_before_vacc_8;
+                txt_scr_before_vacc_9.Value = mrnv.scr_before_vacc_9;
 
                 ViewState[grid_appointed_vaccine.ID] = WebHelpers.BindingDataGridView(grid_appointed_vaccine, WebHelpers.GetJSONToDataTable(mrnv.appointed_vaccine), Mrnv.APPOINTED_VACCINE, btn_grid_appointed_vaccine_add);
 
@@ -82,6 +84,7 @@ namespace EMR.OPD
                 txt_pecific_edu_req.Value = mrnv.pecific_edu_req;
                 txt_next_appointment.Value = mrnv.next_appointment;
 
+                DataObj.Value = JsonConvert.SerializeObject(mrnv);
                 WebHelpers.AddScriptFormEdit(Page, mrnv, (string)Session["emp_id"]);
             }
             catch (Exception ex)
@@ -197,6 +200,7 @@ namespace EMR.OPD
                 prt_scr_before_vacc_6.Text += mrnv.scr_before_vacc_6;
                 prt_scr_before_vacc_7.Text += mrnv.scr_before_vacc_7;
                 prt_scr_before_vacc_8.Text += mrnv.scr_before_vacc_8;
+                prt_scr_before_vacc_9.Text += mrnv.scr_before_vacc_9;
 
                 DataTable tb = WebHelpers.GetJSONToDataTable(mrnv.appointed_vaccine);
                 if (tb != null)
@@ -285,10 +289,7 @@ namespace EMR.OPD
                 {
                     WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
-                    string pid = Request["pid"];
-                    string vpid = Request["vpid"];
-
-                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                    Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
                 }
             }
             catch (Exception ex)
@@ -306,7 +307,7 @@ namespace EMR.OPD
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, mrnv, ControlState.Edit, (string)Session["location"]);
+                WebHelpers.LoadFormControl(form1, mrnv, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(mrnv);
                 //get access button
@@ -331,7 +332,7 @@ namespace EMR.OPD
         }
         protected void btnUpdateVitalSigns_Click(object sender, EventArgs e)
         {
-
+            WebHelpers.Notification(Page, "Pending api", "error");
         }
         protected void grid_appointed_vaccine_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
@@ -347,6 +348,10 @@ namespace EMR.OPD
             {
                 WebHelpers.SendError(Page, ex);
             }
+        }
+        protected void btnHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
         }
         #endregion
 
@@ -366,11 +371,11 @@ namespace EMR.OPD
                 prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (mrnv.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(mrnv, WebHelpers.LoadFormControl(form1, mrnv, ControlState.View, (string)Session["location"]));
+                    BindingDataForm(mrnv, WebHelpers.LoadFormControl(form1, mrnv, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
                 }
                 else if (mrnv.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(mrnv, WebHelpers.LoadFormControl(form1, mrnv, ControlState.Edit, (string)Session["location"]));
+                    BindingDataForm(mrnv, WebHelpers.LoadFormControl(form1, mrnv, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
                 }
 
                 WebHelpers.getAccessButtons(form1, mrnv.status, (string)Session["access_authorize"], (string)Session["location"]);
@@ -384,7 +389,7 @@ namespace EMR.OPD
         {
             try
             {
-                mrnv.amend_reason = txt_amend_reason.Text;
+                
                 //I
                 mrnv.chief_complaint = txt_chief_complaint.Value;
                 //I
@@ -415,6 +420,7 @@ namespace EMR.OPD
                 mrnv.scr_before_vacc_6 = txt_scr_before_vacc_6.Value;
                 mrnv.scr_before_vacc_7 = txt_scr_before_vacc_7.Value;
                 mrnv.scr_before_vacc_8 = txt_scr_before_vacc_8.Value;
+                mrnv.scr_before_vacc_9 = txt_scr_before_vacc_9.Value;
                 //IV
                 mrnv.appointed_vaccine = WebHelpers.GetDataGridView(grid_appointed_vaccine, Mrnv.APPOINTED_VACCINE);
 
@@ -432,6 +438,13 @@ namespace EMR.OPD
 
                 mrnv.pecific_edu_req = txt_pecific_edu_req.Value;
                 mrnv.next_appointment = txt_next_appointment.Value;
+
+                if (JsonConvert.SerializeObject(mrnv) == DataObj.Value)
+                {
+                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
+                }
+
+                mrnv.amend_reason = txt_amend_reason.Text;
                 mrnv.user_name = (string)Session["UserID"];
 
                 dynamic result = mrnv.Update()[0];

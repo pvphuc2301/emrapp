@@ -826,8 +826,12 @@
                 </table>
             </div>
                 <div class="cssclsNoPrint">
-                    <div style="overflow: scroll; height: 100vh; overflow-x: hidden;">
-
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                      <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
+                      <li>Discharge Summary</li>
+                    </ul>
+                    <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
+                        <asp:HiddenField runat="server" ID="DataObj" />
                         <asp:Panel runat="server" ID="messagePlaceHolder">
                             <div class="card" runat="server" id="amendReasonWraper">
                                 <div class="card-body">
@@ -898,7 +902,7 @@
                                                                     <icon:xsquare runat="server" ID="XSquare24" />
                                                                 </a>
                                                             </div>
-                                                            <asp:CustomValidator ID="CustomValidator1" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="required" CssClass="text-danger" OnServerValidate="is_obs_gyn_ServerValidate"></asp:CustomValidator>
+                                                            <asp:CustomValidator ID="CustomValidator1" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="This field is required" CssClass="text-danger" OnServerValidate="is_obs_gyn_ServerValidate"></asp:CustomValidator>
                                                         </div>
                                                     </div>
                                                 
@@ -976,12 +980,12 @@
                                                             <div>
                                                                 <div runat="server" class="d-inline-block" id="tetanus_vaccination_wrapper">
                                                                     <div class="custom-control custom-radio d-inline-block">
-                                                                        <input type="radio" runat="server" id="rad_tetanus_vaccination_false" name="rad_tetanus_vaccination" class="custom-control-input" />
+                                                                        <input onclick="__doPostBack('rad_tetanus_vaccination_change','false')" type="radio" runat="server" id="rad_tetanus_vaccination_false" name="rad_tetanus_vaccination" class="custom-control-input" />
                                                                         <label class="custom-control-label" for="rad_tetanus_vaccination_false">Chưa/ <span class="text-primary">Not yet</span></label>
                                                                     </div>
 
                                                                     <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                        <input type="radio" disabled-for="tetanus_vaccin_time_field" id="rad_tetanus_vaccination_true" name="rad_tetanus_vaccination" class="custom-control-input" runat="server" />
+                                                                        <input type="radio" onclick="__doPostBack('rad_tetanus_vaccination_change','true')" id="rad_tetanus_vaccination_true" name="rad_tetanus_vaccination" class="custom-control-input" runat="server" />
                                                                         <label class="custom-control-label" for="rad_tetanus_vaccination_true">Có/ <span class="text-primary">Yes</span></label>
                                                                         <a href="javascript:void(0)" data-clear="rad_tetanus_vaccination" onclick="clear_radiobutton(this)">
                                                                             <icon:xsquare runat="server" ID="XSquare12" />
@@ -989,10 +993,15 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="form-group w-5 d-inline-block tetanus_vaccin_time_field ml-2" runat="server" id="tetanus_vaccin_time_wrapper">
+                                                                <div runat="server" id="tetanus_vaccin_time_field" class="form-group d-inline-block w-5 ml-2">
                                                                     <input runat="server" data-type="number" id="txt_tetanus_vaccin_time" class="form-control text-right" />
-                                                                    <span class="append">lần/ times</span>
+                                                                    <span class="append">ngày/ days</span>
                                                                 </div>
+
+                                                                <%--<div class="form-group w-5 d-inline-block tetanus_vaccin_time_field ml-2" runat="server" id="tetanus_vaccin_time_wrapper">
+                                                                    <input runat="server" data-type="number" id="" class="form-control text-right" />
+                                                                    <span class="append">lần/ times</span>
+                                                                </div>--%>
                                                             </div>
                                                         </div>
 
@@ -1625,7 +1634,7 @@
                                                                                     <div class="custom-control custom-radio d-inline-block ml-2">
                                                                                         <input type="radio" onclick="__doPostBack('obs_mem_condition_code_change','ru')" runat="server" id="rad_obs_mem_condition_code_ru" name="rad_obs_mem_condition_code" class="custom-control-input" />
                                                                                         <label class="custom-control-label" for="rad_obs_mem_condition_code_ru">Đã vỡ/ <span class="text-primary">Ruptured</span></label>
-                                                                                        <a href="javascript:void(0)" data-clear="rad_obs_mem_condition_code" onclick="clear_radiobutton(this)">
+                                                                                        <a href="javascript:void(0)" onclick="__doPostBack('obs_mem_condition_code_change','')">
                                                                                             <icon:xsquare runat="server" ID="XSquare38" />
                                                                                         </a>
                                                                                     </div>
@@ -1651,8 +1660,21 @@
                                                                         <div class="col-md-12 mb-2 gt-2-a" runat="server" id="ru_field">
                                                                             <label class="control-label mb-1">Ối vỡ lúc/ <span class="text-primary">Rupture of membrane at</span></label>
                                                                             <asp:Label runat="server" ID="lbl_obs_rup_of_mem_at"></asp:Label>
-                                                                            <div class="d-inline-block" runat="server" id="obs_rup_of_mem_at_wrapper">
-                                                                                <telerik:RadDateTimePicker runat="server" ID="dtpk_obs_rup_of_mem_at" Width="200px" CssClass="ml-2 edit" />
+                                                                            <div>
+                                                                                <div class="mb-2" runat="server" id="obs_rup_of_mem_at_wrapper">
+                                                                                    <telerik:RadDateTimePicker runat="server" ID="dtpk_obs_rup_of_mem_at" Width="200px" CssClass="ml-2 edit" />
+                                                                                </div>
+                                                                                <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                                    <input type="radio" runat="server" id="rad_obs_rup_of_mem_code_s" name="rad_obs_rup_of_mem_code" class="custom-control-input" />
+                                                                                    <label class="custom-control-label" for="rad_obs_rup_of_mem_code_s">Tự nhiên/ <span class="text-primary">Spontaneous</span></label>
+                                                                                </div>
+                                                                                <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                                    <input type="radio" runat="server" id="rad_obs_rup_of_mem_code_i" name="rad_obs_rup_of_mem_code" class="custom-control-input" />
+                                                                                    <label class="custom-control-label" for="rad_obs_rup_of_mem_code_i">Can thiệp/ <span class="text-primary">Interventional</span></label>
+                                                                                    <a href="javascript:void(0)" data-clear="rad_obs_rup_of_mem_code" onclick="clear_radiobutton(this)">
+                                                                                        <icon:xsquare runat="server" ID="XSquare7" />
+                                                                                    </a>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </ContentTemplate>
@@ -1902,7 +1924,7 @@
                                                 </div>
                                                 <div class="text-right">
                                                     <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
-                                                    <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
+                                                    <asp:LinkButton OnClick="btnDelete_Click" OnClientClick="window.removeEventListener('beforeunload',comfirm_leave_page,true);" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
                                                 </div>
                                             </ModalBody>
                                         </webUI:PopupModal>
@@ -1928,6 +1950,10 @@
     <script src="../scripts/alertify.js"></script>
 
     <script type="text/javascript">
+        var elem = window.parent.parent.document.getElementById("myProgress");
+        progress(elem);
+
+        InputFilter("data-type='number'");
 
         checkboxRadiobutton_init();
         formGroup_init();
@@ -1939,7 +1965,7 @@
         function afterAsyncPostBack() {
             checkboxRadiobutton_init();
             formGroup_init();
-            InputFilter();
+            InputFilter("data-type='number'");
         }
 
     </script>

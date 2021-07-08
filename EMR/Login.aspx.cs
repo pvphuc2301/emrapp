@@ -51,7 +51,7 @@ namespace Emr_client.Emr
                     //Session["current_session"] = current_ss.Session.SessionID;
                     Insert_EMR_Account(UserName.Value, Convert.ToString(Session["company_code"]));
                     if (string.IsNullOrEmpty(Request.QueryString["ReturnUrl"]))
-                        Response.Redirect("dashboard.aspx");
+                        Response.Redirect("Emr.aspx");
                     else
                         FormsAuthentication.RedirectFromLoginPage(UserName.Value, false);
                 }
@@ -205,12 +205,12 @@ namespace Emr_client.Emr
                 else if (MISClass.In_Array(CSOGroup, varType))
                 {
                     varGroup = "CSO";
-                    varAccess = "ScanAccess";
+                    varAccess = "ScanView";
                 }
                 else if (MISClass.In_Array(TechGroup, varType))
                 {
                     varGroup = "TECH";
-                    varAccess = "CLSAccess";
+                    varAccess = "CLSView";
                 }
 
                 varCompanyCode = Convert.ToString(Session["company_code"]);

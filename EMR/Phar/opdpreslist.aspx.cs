@@ -108,8 +108,8 @@ namespace AIHPortal.Phar
             query += "dbo.user_account_nl_view AS uac ON uac.person_id = pre.prescriber_employee_id INNER JOIN ";
             query += "dbo.employee_formatted_name_iview_nl_view AS efni ON efni.person_id = uac.person_id ";
             query += "WHERE (pre.patient_id = '" + Guid.Parse(varPID) + "') ";
-
-            //query += "AND (employee_nr = N'" + EmpID + "') ";
+            if (!ShowAll.Checked)
+                query += "AND (employee_nr = N'" + EmpID + "') ";
 
             // query += "WHERE (phu.visible_patient_id = '" + varVbID + "') ";
 
@@ -133,6 +133,10 @@ namespace AIHPortal.Phar
             if (Convert.ToString(varTargetName) == "OPD")
                 totalValue = String.Format("{0:#,#0}", varTargetValue);
             return totalValue;
+        }
+        protected void CheckedRequest(object sender, System.EventArgs e)
+        {
+            RadGrid1.MasterTableView.Rebind();
         }
     }
 }

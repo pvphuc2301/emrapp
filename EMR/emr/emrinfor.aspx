@@ -9,6 +9,8 @@
 <%@ Register Src="~/icons/BoxArrowInLeft.ascx" TagPrefix="icon" TagName="BoxArrowInLeft" %>
 <%@ Register Src="~/icons/X.ascx" TagPrefix="icon" TagName="X" %>
 <%@ Register Src="~/icons/House.ascx" TagPrefix="icon" TagName="House" %>
+<%@ Register Src="~/icons/GeoAlt.ascx" TagPrefix="icon" TagName="GeoAlt" %>
+
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -76,13 +78,18 @@
             left: calc(100% + 1em);
             transform: translate3d(15px, -50%, 0);
         }
+        .RadTabStrip .rtsTxt {
+            font-weight: 600;
+        }
     </style>
 </head>
 <body onload="bodyOnloadHandler()">
     <form id="form1" runat="server">
         <asp:ScriptManager ID="ScriptManager1" runat="server" />
-
-        <header class="topbar">
+        <div class="progress" style="position: fixed;top:0;left:0;right:0;z-index:1000;" >
+          <div id="myProgress" class="progress-bar progress-bar-animated progress progress-bar-striped" role="progressbar" style="width: 0%; height: 4px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <header class="topbar" style="border-bottom: 4px solid #edf1f5;">
             <nav class="navbar top-navbar navbar-expand-md navbar-white bg-white border-bottom-2 border-darkgrey">
                 <!-- ============================================================== -->
                 <!-- End Logo -->
@@ -95,7 +102,7 @@
                         <!-- This is  -->
                         <li class="nav-item"><a class="nav-link" runat="server" id="lblPatientInfo"></a></li>
                         <li class="nav-item ml-2">
-                            <a runat="server" href="~/Dashboard.aspx" class="nav-link btn-icon" title="close patient's details">
+                            <a runat="server" onclick="headerDisplay.style.display='';leftMenuWidth.style.width='180px';" href="~/Other/DemographicSearch.aspx" class="nav-link btn-icon" title="close patient's details">
                                 <icon:X runat="server"/>
                             </a>
                         </li>
@@ -103,7 +110,7 @@
                         <!-- Search -->
                         <!-- ============================================================== -->
                     </ul>
-                    <ul class="navbar-nav d-none d-lg-flex">                        
+                    <ul class="navbar-nav d-none d-lg-flex ml-2">                        
                         <li><a class="nav-link btn-link  waves-effect waves-primary" href="javascript:void(0)">
                             <asp:image ID="Image1" runat="server" Height="16" Width="16" Visible="false" /></a></li>
                         <li><a class="nav-link btn-link  waves-effect waves-primary" href="javascript:void(0)">
@@ -126,14 +133,11 @@
                             <asp:image ID="Image10" runat="server" Height="16" Width="16" Visible="false" /></a></li>
                     </ul>
                     <ul class="navbar-nav my-lg-0 ml-auto">
-                        <%--<li class="nav-item dropdown">
-                            <a class="nav-link btn-link  waves-effect waves-primary" href="javascript:void(0)">
-                                <icon:House runat="server" ID="House" />
-                            </a>
-                        </li>--%>
+                        <li class="nav-item dropdown"><asp:LinkButton CssClass="nav-link btn-link waves-effect waves-primary" runat="server" ID="btnHome" OnClick="btnHome_Click" ><icon:House runat="server" ID="House" /></asp:LinkButton>
+                        </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link btn-link  waves-effect waves-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                 <icon:House runat="server" ID="House1" />
+                                <span class="text-primary"><icon:GeoAlt runat="server" ID="GeoAlt" /></span>
                                 <asp:Label runat="server" ID="lbl_location"></asp:Label>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right animated flipInY" aria-labelledby="btnGroupDrop1">
@@ -163,9 +167,9 @@
 
                         <li class="nav-item dropdown">
                             <a class="nav-link btn-link  waves-effect waves-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <icon:Person runat="server"/>
+                                <span class="text-primary"><icon:Person runat="server"/></span>
                                 <asp:Label ID="lblUserName" runat="server">No Name</asp:Label>
-                                <span class="hidden-md-down">&nbsp;<icon:CaretDown runat="server" id="CaretDown" /></span>
+                                <span class="hidden-md-down text-primary">&nbsp;<icon:CaretDown runat="server" id="CaretDown" /></span>
                             </a>
 
                             <a class="nav-link btn-link dropdown-toggle waves-effect waves-primary d-lg-none" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -199,17 +203,13 @@
             </nav>
         </header>
         
-        <div class="progress">
-          <div class="progress-bar progress-bar-animated progress progress-bar-striped" role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-
         <telerik:RadTabStrip runat="server" ID="RadTabStrip1"  MultiPageID="RadMultiPage1" SelectedIndex="0"
-             OnTabClick="RadTabStrip1_TabClick" >
+             OnTabClick="RadTabStrip1_TabClick" Skin="Silk" >
             <Tabs>
                 <telerik:RadTab Text="Patient Summary" Value="PatientSummary" Width="200px"></telerik:RadTab>
                 <telerik:RadTab Text="Order Printing" Value="orderprint" Width="200px"></telerik:RadTab>
                 <telerik:RadTab Text="OPD Prescription" Value="opdprescription" Width="200px"></telerik:RadTab>
-                <telerik:RadTab Text="MAR Printing" Value="marprinting" Width="200px"></telerik:RadTab>
+                <%--<telerik:RadTab Text="MAR Printing" Value="marprinting" Width="200px"></telerik:RadTab>--%>
             </Tabs>
         </telerik:RadTabStrip>
 
@@ -266,30 +266,23 @@
 
         }
 
-        window.
+
     </script>
 
     <script>
+        let headerDisplay = window.parent.document.getElementById("header");
+        let leftMenuWidth = window.parent.document.getElementById("RadTabStrip2");
 
-        function lblURL_click() {
+        headerDisplay.style.display = "none";
+        leftMenuWidth.style.width = "0";
 
-            let temp = {
-                status: "",
-                docId: "",
-            }
 
-            $.ajax({
-                type: 'POST',
-                url: "emrinfor.aspx/lblURL_click",
-                data: JSON.stringify(temp),
-                contentType: 'application/json; charset=utf-8',
-                dataType: 'json',
-                success: function (msg) {
-                    console.log(msg);
-                }
-            });
 
-        }
+        //var i = 0;
+        //var progressWidth = 1;
+
+        var elem = document.getElementById("myProgress");
+        progress(elem);
 
         function OnGridCreated(sender, args) {
 

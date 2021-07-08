@@ -1014,6 +1014,24 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label lbl_create_date;
 
         /// <summary>
+        /// btnHome control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnHome;
+
+        /// <summary>
+        /// DataObj control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField DataObj;
+
+        /// <summary>
         /// messagePlaceHolder control.
         /// </summary>
         /// <remarks>
@@ -1146,7 +1164,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare24;
+        protected global::System.Web.UI.UserControl XSquare24;
 
         /// <summary>
         /// CustomValidator1 control.
@@ -1389,16 +1407,16 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare12;
+        protected global::System.Web.UI.UserControl XSquare12;
 
         /// <summary>
-        /// tetanus_vaccin_time_wrapper control.
+        /// tetanus_vaccin_time_field control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tetanus_vaccin_time_wrapper;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tetanus_vaccin_time_field;
 
         /// <summary>
         /// txt_tetanus_vaccin_time control.
@@ -1452,7 +1470,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare1;
+        protected global::System.Web.UI.UserControl XSquare1;
 
         /// <summary>
         /// lbl_gbs_bacteriuria control.
@@ -1497,7 +1515,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare2;
+        protected global::System.Web.UI.UserControl XSquare2;
 
         /// <summary>
         /// lbl_gbs_vaginal control.
@@ -1542,7 +1560,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare3;
+        protected global::System.Web.UI.UserControl XSquare3;
 
         /// <summary>
         /// lbl_ges_diabetes control.
@@ -1587,7 +1605,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare6;
+        protected global::System.Web.UI.UserControl XSquare6;
 
         /// <summary>
         /// lbl_other_ges_abnormal control.
@@ -1632,7 +1650,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare4;
+        protected global::System.Web.UI.UserControl XSquare4;
 
         /// <summary>
         /// txt_other_ges_abnormal_note control.
@@ -2415,7 +2433,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare8;
+        protected global::System.Web.UI.UserControl XSquare8;
 
         /// <summary>
         /// obstetrics_field1 control.
@@ -2928,7 +2946,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare38;
+        protected global::System.Web.UI.UserControl XSquare38;
 
         /// <summary>
         /// in_field control.
@@ -3010,6 +3028,33 @@ namespace EMR.IPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadDateTimePicker dtpk_obs_rup_of_mem_at;
+
+        /// <summary>
+        /// rad_obs_rup_of_mem_code_s control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_obs_rup_of_mem_code_s;
+
+        /// <summary>
+        /// rad_obs_rup_of_mem_code_i control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_obs_rup_of_mem_code_i;
+
+        /// <summary>
+        /// XSquare7 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UserControl XSquare7;
 
         /// <summary>
         /// lbl_obs_feat_amniotic control.
@@ -3135,7 +3180,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.icons.XSquare XSquare5;
+        protected global::System.Web.UI.UserControl XSquare5;
 
         /// <summary>
         /// txt_obs_presentation_other control.

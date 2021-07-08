@@ -15,6 +15,8 @@
 		<Scripts></Scripts>
 	</telerik:RadScriptManager>
 <div>
+    <asp:CheckBox ID="ShowAll" Text="Show All" runat="server" Font-Bold="true" Enabled="true" AutoPostBack="true" OnCheckedChanged="CheckedRequest" ></asp:CheckBox>
+
         <telerik:RadGrid ID="RadGrid1" runat="server" Width="100%" OnNeedDataSource="RadGrid1_NeedDataSource" AllowSorting="true"
             AllowPaging="true" AllowFilteringByColumn="false" ItemStyle-Font-Size="8" AlternatingItemStyle-Font-Size="8"
             AutoGenerateColumns="False" AllowMultiRowSelection="False" GridLines="None" EnableLinqExpressions="false" ShowFooter="false">

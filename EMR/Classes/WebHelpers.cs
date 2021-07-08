@@ -25,6 +25,11 @@ namespace EMR
     {
         public static string MESSAGE_SAVE_SUCCESS = "Your changes have been saved";
     }
+    public static class CONST_MESSAGE
+    {
+        public static string MESSAGE_SAVE_SUCCESS = "Your changes have been saved";
+        public static string SAVE_ERROR_NOCHANGES = "No changes have been made to the form. ";
+    }
     public static class ScriptKey
     {
         public static string SHOW_POPUP = "script_show_popup";
@@ -430,10 +435,10 @@ namespace EMR
             }
             return visible;
         }
-        internal static bool LoadFormControl(HtmlForm form1, dynamic obj, ControlState state, string session)
+        internal static bool LoadFormControl(HtmlForm form1, dynamic obj, ControlState state, string session, string access_authorize = "")
         {
             //1 - edit
-            bool visible = (state == ControlState.Edit && DataHelpers._LOCATION == session) ? true : false;
+            bool visible = (state == ControlState.Edit && DataHelpers._LOCATION == session && access_authorize == "FullAccess") ? true : false;
 
             foreach (var prop in obj.GetType().GetProperties())
             {
@@ -553,9 +558,10 @@ namespace EMR
             else return null;
         }
 
-        internal static void Notification(Page page, string message)
+        internal static void Notification(Page page, string message, string type = "success")
         {
-            ScriptManager.RegisterStartupScript(page, page.GetType(), "msg_error", "setTimeout(()=>{ alertify.set({ delay: 1700 });  alertify.success(\"" + message + "\");},0);", true);
+            string script_str = "setTimeout(()=>{ alertify.set({ delay: 1700 });  alertify." + type + "(\"" + message + "\");},0);";
+            ScriptManager.RegisterStartupScript(page, page.GetType(), "msg_error", script_str, true);
         }
 
         #region GridView
@@ -936,10 +942,8 @@ namespace EMR
 
             switch (access_authorize)
             {
-                case "TechAccess":
-                case "CSOAccess":
-                case "MAFullAccess":
-                    btnComplete.Enabled = false;
+                case "View":
+                    VisibleControl(false, btnAmend, btnPrint, btnComplete, btnSave, btnDelete);
                     break;
             }
         }

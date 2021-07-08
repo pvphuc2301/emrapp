@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -46,20 +48,33 @@ namespace EMR.Other
 
         protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
         {
-            switch (e.CommandName)
+            if(e.Item is GridDataItem)
             {
-                case "addNew":
-                    GridDataItem item = (e.Item as GridDataItem);
-                    //DocumentList.Visible = true;
-                    string pvid = item.GetDataKeyValue("patient_visit_id").ToString();
-                    string visitType = item.GetDataKeyValue("visit_type_rcd").ToString();
-                    AddForm(pvid, visitType);
-                    break;
-            }
-            if (e.CommandName == "RowClick")
-            {
-                bool lastState = e.Item.Expanded;
+                GridDataItem item = (e.Item as GridDataItem);
+                string pvid = item.GetDataKeyValue("patient_visit_id").ToString();
+                
+                string visitType = item.GetDataKeyValue("visit_type_rcd").ToString();
+                string visible_id = Request.QueryString["vpid"];
+                string visitCode = "";
+                string visitDate = "";
 
+                Label lbVisit_date_time = (Label)item["PatientInfor"].FindControl("lbActual_visit_date_time");
+                Label lbVisit_code = (Label)item["PatientInfor"].FindControl("lbVisit_code");
+                // Label lbVisit_code = (Label)item["PatientInfor"].FindControl("lbVisit_code");
+                visitDate = Convert.ToString(lbVisit_date_time.Text);
+                visitCode = Convert.ToString(lbVisit_code.Text);
+
+                switch (e.CommandName)
+                {
+                    case "addNew":
+                        DocumentList.Visible = true;
+                        AddForm(pvid, visitType);
+                        break;
+                    case "sendRequest":
+                        AddFormSend(pvid, visitType, visible_id, visitCode, visitDate);
+                        RadGrid1.Rebind();
+                        break;
+                }
             }
         }
         private void AddForm(string pvid, string visitType)
@@ -82,7 +97,7 @@ namespace EMR.Other
 
                     ddlDocList.Items.Add(item1);
                 }
-                
+                lbl_visit_type.Text = db.Rows[0].Field<string>("model_type_rcd");
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), ScriptKey.SHOW_POPUP, "setTimeout(()=> { $('#DocumentList').modal('show'); },0);", true);
 
             }
@@ -93,25 +108,124 @@ namespace EMR.Other
             {
                 LinkButton btnAction = e.Item.FindControl("btnAddNew") as LinkButton;
 
-                GridEditableItem editableItem = e.Item as GridEditableItem;
+                GridDataItem item = (e.Item as GridDataItem);
 
-                string closure_date_time = editableItem["closure_date_time"].Text;
+                string closure_date_time = item["closure_date_time"].Text;
                 string allow_date_time = ((GridDataItem)e.Item).GetDataKeyValue("allow_date_time").ToString();
 
-                //DateTime dateTime1 = DateTime.Parse(closure_date_time);
+                string request_date_time = Convert.ToString((item["PatientInfor"].FindControl("lbRequest_date_time") as Label).Text);
+                string check_send = Convert.ToString((item["PatientInfor"].FindControl("lbCheckSend") as Label).Text);
 
+                //DateTime dateTime;
                 if (DateTime.TryParse(closure_date_time, out DateTime dateTime))
                 {
-                    btnAction.Text = "Update";
-                    btnAction.CssClass = "btn btn-sm btn-secondary waves-effect ";
+                    btnAction.Text = "Send";
 
-                    if (string.IsNullOrEmpty(allow_date_time))
+                    btnAction.CssClass = "btn btn-sm btn-secondary waves-effect ";
+                    if (!string.IsNullOrEmpty(allow_date_time))
                     {
+                        btnAction.CssClass = "btn btn-sm btn-primary waves-effect";
+                        btnAction.Text = "Update";
+                        btnAction.Enabled = true;
+                    }
+                    else if (!string.IsNullOrEmpty(check_send) && check_send.ToLower() == "true" && string.IsNullOrEmpty(request_date_time))
+                    {
+                        btnAction.CssClass = "btn btn-sm btn-primary waves-effect";
+                        btnAction.CommandName = "sendRequest";
+                        //   btnAction.CssClass += "disabled";
+                        btnAction.Enabled = true;
+                    }
+                    else if (!string.IsNullOrEmpty(request_date_time) & string.IsNullOrEmpty(allow_date_time))
+                    {
+                        //   btnAction.CommandName = "sendRequest";
+                        btnAction.Text = "Pending";
+                        btnAction.CssClass += "disabled";
+                        btnAction.Enabled = false;
+                    }
+                    else// if (!string.IsNullOrEmpty(request_date_time) & string.IsNullOrEmpty(allow_date_time))
+                    {
+                        //   btnAction.CommandName = "sendRequest";
                         btnAction.CssClass += "disabled";
                         btnAction.Enabled = false;
                     }
                 }
+
+                if ((string)Session["access_authorize"] != "FullAccess") 
+                {
+                    btnAction.CssClass = "btn btn-sm btn-secondary waves-effect";
+                    btnAction.Enabled = false;
+                    (item["StatusSMS"].FindControl("CheckRequest") as CheckBox).Enabled = false;
+                }
             }
+        }
+        public MailAddress MailAddressFrom { get; set; }
+        public MailAddress MailAddressTo { get; set; }
+        private void AddFormSend(string pvid, string visitType, string visibleID, string visitCode, string visitDate)
+        {
+            string varToMail = "tuan.cao@aih.com.vn"; string[] qc_mail = new string[5];
+            string varUserName = Convert.ToString(Session["UserID"]);
+            string varFullName = Convert.ToString(Session["UserName"]);
+            string varEmail = Convert.ToString(Session["user_email"]);
+
+            string varUrl = "http://mis.aih.com.vn/portal/report/AllowUpdateEMR.aspx";
+
+            string apiString = $"api/patient/allow-doc-req/{pvid}/{varUserName}?full_name={varFullName}&email={varEmail}";
+
+            dynamic response = WebHelpers.PostAPI(apiString);
+
+            qc_mail[0] = "chung.nguyen@aih.com.vn";
+            qc_mail[1] = "long.do@aih.com.vn";
+            qc_mail[2] = "phut.phan@aih.com.vn";
+
+            var objMailForm = new MailAddress("itsystem@aih.com.vn", "itsystem@aih.com.vn");
+            MailAddressFrom = objMailForm;
+
+            var objMailTo = new MailAddress(varToMail);
+            MailAddressTo = objMailTo;
+
+            MailMessage objMail = new MailMessage(MailAddressFrom, MailAddressTo);
+
+            var msg_Body = "Kính gửi phòng KHTH,<br /> <br /> ";
+            msg_Body += "Kính gửi phòng KTTH cấp quyền cập nhật hồ sơ bệnh án của khách hàng: " + visibleID + ", ngày đến khám: " + visitDate + ", ";
+            msg_Body += "visit code: " + visitCode + ", visit type: " + visitType + " < br /> ";
+            msg_Body += "Vui lòng nhấn đường link phía dưới để xem chi tiết và phê duyệt: < br /> " + varUrl + "< br /> < br /> " + Session["UserName"] + "<br /> ";
+
+            objMail.Subject = "Yêu cầu cập nhật Hồ Sơ Bệnh Án từ:" + Session["UserName"];
+            objMail.Body = msg_Body;// "Content office 365";
+            objMail.IsBodyHtml = true;
+
+            objMail.BodyEncoding = System.Text.Encoding.UTF8;
+            objMail.CC.Add(qc_mail[0]);
+            objMail.CC.Add(qc_mail[1]);
+            objMail.CC.Add(qc_mail[2]);
+
+            SmtpClient smtpMail = new SmtpClient("smtp.office365.com");
+            smtpMail.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtpMail.EnableSsl = true;// chkEnable.Checked;
+            smtpMail.Port = 25;// Convert.ToInt32(spinPort.EditValue.ToString());
+                               //smtpMail.Credentials = new NetworkCredential(MailAddressFrom.Address, txtPassword.Text);
+            smtpMail.Credentials = new NetworkCredential(MailAddressFrom.Address, "AIH2@18!@");//"AIH2@18!@"
+                                                                                               //if (!string.IsNullOrEmpty(varFr) && !string.IsNullOrEmpty(varToMail))
+            smtpMail.Send(objMail);
+
+        }
+        protected void CheckedRequest(object sender, System.EventArgs e)
+        {
+            SQLAppClass SQL_Class = new SQLAppClass();
+
+            CheckBox chkBox = (sender as CheckBox);
+            Panel myPanel = chkBox.Parent as Panel;
+            GridDataItem item = myPanel.NamingContainer as GridDataItem;
+
+            string pvid = item.GetDataKeyValue("patient_visit_id").ToString();
+            string varCheck = "false";
+            if (chkBox.Checked)
+                varCheck = "true";
+            string apiString = $"api/patient/allow-doc-ckc/{pvid}/{varCheck}";
+
+            dynamic response = WebHelpers.PostAPI(apiString);
+
+            RadGrid1.Rebind();
         }
         protected void btnOpen_Click(object sender, EventArgs e)
         {
@@ -128,7 +242,6 @@ namespace EMR.Other
                 WebHelpers.SendError(Page, ex);
             }
         }
-
         protected void btnSave_Click(object sender, EventArgs e)
         {
             string selectedItem = Request.Form.Get("ddlDocList");
@@ -143,8 +256,6 @@ namespace EMR.Other
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                //DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
-
                 dynamic response2 = WebHelpers.GetAPI(string.Format("api/emr/get-api/{0}/{1}", DataHelpers._LOCATION, modelID));
 
                 if (response2.Status == System.Net.HttpStatusCode.OK)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -82,6 +83,8 @@ namespace EMR
                 txt_treatment_plan.Value = iima.treatment_plan;
                 txt_discharge_plan.Value = iima.discharge_plan;
                 WebHelpers.VisibleControl(true, btnUpdateVitalSign);
+
+                DataObj.Value = JsonConvert.SerializeObject(iima);
                 WebHelpers.AddScriptFormEdit(Page, iima, (string)Session["emp_id"]);
             }
             catch (Exception ex)
@@ -320,10 +323,7 @@ namespace EMR
                 {
                     WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
-                    string pid = Request["pid"];
-                    string vpid = Request["vpid"];
-
-                    Response.Redirect(string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", pid, vpid));
+                    Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
                 }
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
@@ -340,7 +340,7 @@ namespace EMR
                     WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                     //load form control
-                    WebHelpers.LoadFormControl(form1, iima, ControlState.Edit, (string)Session["location"]);
+                    WebHelpers.LoadFormControl(form1, iima, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
                     //binding data
                     BindingDataFormEdit(iima);
                     //get access button
@@ -373,6 +373,10 @@ namespace EMR
             //    Initial();
             //}
         }
+        protected void btnHome_Click(object sender, EventArgs e)
+        {
+            Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
+        }
         #endregion
 
         #region METHOD
@@ -390,12 +394,12 @@ namespace EMR
                 prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (iima.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(iima, WebHelpers.LoadFormControl(form1, iima, ControlState.View, (string)Session["location"]));
+                    BindingDataForm(iima, WebHelpers.LoadFormControl(form1, iima, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
 
                 }
                 else if (iima.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(iima, WebHelpers.LoadFormControl(form1, iima, ControlState.Edit, (string)Session["location"]));
+                    BindingDataForm(iima, WebHelpers.LoadFormControl(form1, iima, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
                 }
 
                 WebHelpers.getAccessButtons(form1, iima.status, (string)Session["access_authorize"], (string)Session["location"]);
@@ -409,7 +413,6 @@ namespace EMR
         {
             try { 
 
-                iima.amend_reason = txt_amend_reason.Text;
                 iima.chief_complaint = txt_chief_complaint.Value;
                 iima.cur_med_history = txt_cur_med_history.Value;
                 iima.cur_medication = txt_cur_medication.Value;
@@ -455,7 +458,15 @@ namespace EMR
                 iima.associated_conditions = txt_associated_conditions.Value;
                 iima.treatment_plan = txt_treatment_plan.Value;
                 iima.discharge_plan = txt_discharge_plan.Value;
+
+                if (JsonConvert.SerializeObject(iima) == DataObj.Value)
+                {
+                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
+                }
+
                 iima.user_name = (string)Session["UserID"];
+                iima.amend_reason = txt_amend_reason.Text;
+
                 dynamic result = iima.Update()[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)

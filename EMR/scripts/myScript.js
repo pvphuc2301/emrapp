@@ -1,3 +1,4 @@
+
 let intervalID; let timeoutID;
 var comfirm_leave_page;
 
@@ -147,14 +148,15 @@ function setInputFilter(textbox, inputFilter) {
     });
 }
 
-function InputFilter() {
+function InputFilter(type,regexp = /^\d*\.?\d*$/) {
     let temp = document.querySelectorAll('div[type="number"]');
-    let temp1 = document.querySelectorAll('input[data-type="number"]');
+    let temp1 = document.querySelectorAll("input[" + type + "]");
 
     temp1.forEach(e => {
         setInputFilter(e, function (value) {
             //return /^[0-9\.\-\/]+$/.test(value);
-            return /^\d*\.?\d*$/.test(value);
+            return regexp.test(value);
+            //return /^\d*\.?\/\d*$/.test(value);
         });
     });
 }
@@ -241,33 +243,22 @@ function popupShowDelay(sessionTimeout) {
     }, sessionTimeout * 60000 - 15000);
 }
 
-//function leaveEditFormEvent() {
-//    window.addEventListener("beforeunload", function (e) {
-//        var confirmationMessage = 'It looks like you have been editing something. '
-//            + 'If you leave before saving, your changes will be lost.';
-//        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
-//        console.log(confirmationMessage);
-
-//        return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
-//    });
-//}
-
 function comfirm_leave_page(event) {
     let doc_id = sessionStorage.getItem('doc_id');
     let location = sessionStorage.getItem('location');
     let emp_id = sessionStorage.getItem('emp_id');
-    let obj = JSON.parse(sessionStorage.getItem(doc_id));
+    //let obj = JSON.parse(sessionStorage.getItem(doc_id));
 
     setTimeout(function () {
         setTimeout(function () {
-            $.get('http://172.16.0.78:8088/api/emr/check-session/' + location + '/' + obj.document_id + '/' + emp_id, function (data) { console.log(data) });
+            $.get('http://172.16.0.78:8088/api/emr/check-session/' + location + '/' + doc_id + '/' + emp_id, function (data) { console.log(data) });
         }, 2000);
     }, 1);
 
     console.log("leaving");
 
     $.ajax({
-        url: 'http://172.16.0.78:8088/api/emr/clear-session/' + location + '/' + obj.document_id,
+        url: 'http://172.16.0.78:8088/api/emr/clear-session/' + location + '/' + doc_id,
         type: 'POST',
         dataType: 'json',
         data: "{}",
@@ -283,8 +274,12 @@ function comfirm_leave_page(event) {
 }
 
 function editFormEvent(doc, location, emp_id) {
-    console.log('doc', doc);
-    let obj = JSON.parse(doc);
+    doc = doc.replaceAll('"red"', "'red'");
+    doc = doc.replaceAll('"#000000"', "'#000000'");
+    let value = document.getElementById("DataObj").value;
+
+    let obj = JSON.parse(value);
+
     window.sessionStorage.setItem('doc_id', obj.document_id);
     window.sessionStorage.setItem(obj.document_id, JSON.stringify(obj));
     window.sessionStorage.setItem('location', location);
@@ -316,5 +311,52 @@ function notification(text, type) {
     
 }
 
+function progress(elem) {
+    elem.style.display = "";
+    let progressWidth = 1;
+    elem.style.width = "0%";
+    //let i = 0;
+    //if (i == 0) {
+    //    i = 1;
+    
+    //var width = 1;
+    var id = setInterval(frame, 100);
+    function frame() {
+        if (progressWidth >= 99) {
+            clearInterval(id);
+            //elem.style.display = "none";
+            setTimeout(() => { elem.style.display = "none"; }, 1000);
+            //i = 0;
+        } else {
+            progressWidth++;
+            elem.style.width = progressWidth + "%";
+        }
+    }
+
+    window.addEventListener("DOMContentLoaded", (e) => { progressWidth = 60; });
+
+    window.addEventListener('load', (e) => { progressWidth = 100; elem.style.width = progressWidth + "%"; });
+    //}
+}
+
+//function lblURL_click() {
+
+//    let temp = {
+//        status: "",
+//        docId: "",
+//    }
+
+//    $.ajax({
+//        type: 'POST',
+//        url: "emrinfor.aspx/lblURL_click",
+//        data: JSON.stringify(temp),
+//        contentType: 'application/json; charset=utf-8',
+//        dataType: 'json',
+//        success: function (msg) {
+//            console.log(msg);
+//        }
+//    });
+//}
+
 //Auto Call
-InputFilter();
+//InputFilter();
