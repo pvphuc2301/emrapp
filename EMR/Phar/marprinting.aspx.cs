@@ -41,7 +41,8 @@ namespace EMR.Print
                 else
                     FromDate.SelectedDate = DateTime.Today.Date;
             }
-
+            varVbID = PatientID.Text = lbPID.Text = Request.QueryString["vbid"];
+           // PatientID.Text = varVbID;
             if (!string.IsNullOrEmpty(PatientID.Text))
             {
                 varVbID = PatientID.Text;
@@ -252,7 +253,7 @@ namespace EMR.Print
                     orderID = DrOrderCombobox.SelectedValue;
 
                 varTo_Date = Convert.ToString(FromDate.SelectedDate.Value.AddDays(1));
-                if (!string.IsNullOrEmpty(varVbID))
+                if (!string.IsNullOrEmpty(varVbID))//&& !string.IsNullOrEmpty(orderID)
                 {
                     query_final = "EXEC AIH_MIS.dbo.aih_api_MAR_preview @fromDate='" + varFr_Date + "',@toDate='" + varTo_Date + "',";
                     query_final += "@visible_patient_id = '" + varVbID + "',@adminPrint = '" + admin_print + "',@allDr = '" + AllDoctor.Checked + "',";

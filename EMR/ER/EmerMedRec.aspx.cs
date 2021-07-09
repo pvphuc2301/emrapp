@@ -99,7 +99,7 @@ namespace EMR.ER
                 txt_history_of_present.Value = emr.history_of_present;
                 txt_past_med_his_meds.Value = emr.past_med_his_meds;
                 txt_past_med_his_surs.Value = emr.past_med_his_surs;
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_habits_" + emr.habits);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_habits_", WebHelpers.GetJSONToDataTable(emr.habits), "cde");
                 txt_habits_other.Value = emr.habits_other;
                 txt_home_medications.Value = emr.home_medications;
                 txt_allergies.Value = emr.allergies;
@@ -683,14 +683,7 @@ namespace EMR.ER
         }
         protected void btn_grid_Treatment_add_Click(object sender, EventArgs e)
         {
-            try
-            {
-                ViewState[grid_Treatment.ID] = WebHelpers.AddRow((DataTable)ViewState[grid_Treatment.ID], grid_Treatment, EmergencyMedicalRecord.Treatment);
-            }
-            catch (Exception ex)
-            {
-                WebHelpers.SendError(Page, ex);
-            }
+            ViewState[grid_Treatment.ID] = WebHelpers.AddRow((DataTable)ViewState[grid_Treatment.ID], grid_Treatment, EmergencyMedicalRecord.Treatment);
         }
         protected void grid_Treatment_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
@@ -698,14 +691,8 @@ namespace EMR.ER
         }
         protected void btn_grid_progress_note_add_Click(object sender, EventArgs e)
         {
-            try
-            {
-                ViewState[grid_progress_note.ID] = WebHelpers.AddRow((DataTable)ViewState[grid_progress_note.ID], grid_progress_note, EmergencyMedicalRecord.ProgressNote);
-            }
-            catch (Exception ex)
-            {
-                WebHelpers.SendError(Page, ex);
-            }
+            ViewState[grid_progress_note.ID] = WebHelpers.AddRow((DataTable)ViewState[grid_progress_note.ID], grid_progress_note, EmergencyMedicalRecord.ProgressNote);
+
         }
         protected void grid_progress_note_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {

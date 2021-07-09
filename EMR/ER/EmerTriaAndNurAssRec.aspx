@@ -16,7 +16,6 @@
 <%@ Register Src="~/icons/Trash.ascx" TagPrefix="icon" TagName="Trash" %>
 <%@ Register Src="~/icons/Pencil.ascx" TagPrefix="icon" TagName="Pencil" %>
 
-
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -30,6 +29,7 @@
         #canvas {
             border: 2px solid #000;
         }
+        
     </style>
 </head>
 <body>
@@ -37,7 +37,6 @@
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <%----%>
                 <div class="cssclsNoScreen" style="overflow: scroll">
                     <table class="report-container">
                         <thead class="report-header">
@@ -467,7 +466,7 @@
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                       <li>Emergency Triage And Nursing Assessment Record</li>
                     </ul>
-                    <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
+                    <div class="scroll-effect" style="overflow: scroll; height: calc(100vh - 43px); overflow: hidden;">
                         <asp:HiddenField runat="server" ID="DataObj" />
                         <asp:Panel runat="server" ID="messagePlaceHolder">
                             <div class="card" runat="server" id="amendReasonWraper">
@@ -1405,8 +1404,7 @@
                                                                             <div style="width: 105px" class="text-primary pt-2 pb-2">Time</div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox CssClass="form-control" Text='<%#Eval("time") %>' Width="105px" runat="server" ID="time" />
-                                                                            <%--<telerik:RadTimePicker Width="105px" ID="time" SelectedTime='<%# GetTimeSpan(Eval("time").ToString()) %>' runat="server" />--%>
+                                                                            <webUI:TextField CssClass="form-control" Value='<%#Eval("time") %>' Width="105px" ID="time" runat="server" />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1526,22 +1524,14 @@
                                                     <label class="control-label mb-1 font-bold">Y lệnh thuốc & dịch truyền trực tiếp/ <span class="text-primary">Direct Medication & IV fluids Order</span></label>
                                                     <asp:UpdatePanel ID="UpdatePanelDirectMedication" runat="server" UpdateMode="Always">
                                                         <ContentTemplate>
-                                                            <asp:GridView
-                                                                ShowHeaderWhenEmpty="true"
-                                                                 ShowHeader="true"
-                                                                ID="gridDirectMedication"
-                                                                runat="server"
-                                                                OnRowDeleting="gridDirectMedication_RowDeleting"
-                                                                OnRowDataBound="gridAssessmentSystem_RowDataBound"
-                                                                CssClass="tb-responsive table-bordered"
-                                                                AutoGenerateColumns="false">
+                                                            <asp:GridView ShowHeaderWhenEmpty="true" ShowHeader="true" ID="gridDirectMedication" runat="server" OnRowDeleting="gridDirectMedication_RowDeleting" OnRowDataBound="gridAssessmentSystem_RowDataBound" CssClass="tb-responsive table-bordered" AutoGenerateColumns="false">
                                                                 <Columns>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
                                                                             <div style="width: 105px" class="pt-2 pb-2">Thời gian/ <span class="text-primary">Time</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox CssClass="form-control" Text='<%#Eval("dir_med_time") %>' Width="105px" runat="server" ID="dir_med_time" />
+                                                                            <webUI:TextField CssClass="form-control" Value='<%#Eval("dir_med_time") %>' Width="105px" ID="dir_med_time" runat="server" />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1597,7 +1587,7 @@
                                                                             <div>Thời gian/ <span class="text-primary">Time</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <asp:TextBox CssClass="form-control" Text='<%#Eval("dir_med_time2") %>' Width="105px" runat="server" ID="dir_med_time2" />
+                                                                            <webUI:TextField TextMode="SingleLine" CssClass="form-control" Value='<%#Eval("dir_med_time2") %>' Width="105px" ID="dir_med_time2" runat="server" />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1723,15 +1713,7 @@
                                                 <div class="col-md-12">
                                                     <asp:UpdatePanel ID="updatePanel_NursingNotes" runat="server" UpdateMode="Always">
                                                         <ContentTemplate>
-                                                            <asp:GridView
-                                                                ID="grid_NursingNotes"
-                                                                runat="server"
-                                                                OnRowDeleting="grid_NursingNotes_RowDeleting"
-                                                                OnRowDataBound="gridAssessmentSystem_RowDataBound"
-                                                                ShowHeaderWhenEmpty="true"
-                                                                ShowHeader="true"
-                                                                CssClass="tb-responsive table-bordered"
-                                                                AutoGenerateColumns="false">
+                                                            <asp:GridView ID="grid_NursingNotes" runat="server" OnRowDeleting="grid_NursingNotes_RowDeleting" OnRowDataBound="gridAssessmentSystem_RowDataBound" ShowHeaderWhenEmpty="true" ShowHeader="true" CssClass="tb-responsive table-bordered" AutoGenerateColumns="false">
                                                                 <Columns>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
@@ -2076,7 +2058,7 @@
         formGroup_init();
         InputFilter("data-type='number'");
         InputFilter("data-type='number1'", /^\d*\.?\/?\d*$/);
-
+        
         function beforeAsyncPostBack() {
             var curtime = new Date();
         }
@@ -2086,6 +2068,7 @@
             formGroup_init();
             InputFilter("data-type='number'");
             InputFilter("data-type='number1'", /^\d*\.?\/?\d*$/);
+
             loadImage();
         }
 

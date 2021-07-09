@@ -42,10 +42,9 @@ namespace EMR.Other
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                RadGrid1.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+                (sender as RadGrid).DataSource = WebHelpers.GetJSONToDataTable(response.Data);
             }
         }
-
         protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
         {
             if(e.Item is GridDataItem)
@@ -281,8 +280,9 @@ namespace EMR.Other
 
                             if (WebHelpers.CanOpenForm(Page, docId, DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"]))
                             {
-                                Response.Redirect(url, false);
+                                new PatientVisit(PVID);
 
+                                Response.Redirect(url, false);
                             }
                         }
                     }
@@ -290,5 +290,28 @@ namespace EMR.Other
             }
         }
 
+        protected void RadGridPatientProblem_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            string apiString = $"api/patient/patient-problem/{varPID}";
+
+            dynamic response = WebHelpers.GetAPI(apiString);
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                (sender as RadGrid).DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+            }
+        }
+
+        protected void RadGridAllergy_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            string apiString = $"api/patient/patient-allergy-list/{varPID}";
+
+            dynamic response = WebHelpers.GetAPI(apiString);
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                (sender as RadGrid).DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+            }
+        }
     }
 }

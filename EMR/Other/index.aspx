@@ -14,11 +14,11 @@
 <body>
     <form id="form1" runat="server">
         <telerik:RadScriptManager ID="RadScriptManager1" runat="server"></telerik:RadScriptManager>
-        <div style="overflow: scroll; overflow-x: hidden; height: 100vh;">
+        <div class="scroll-effect" style="overflow: hidden; height: 100vh;">
         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <div class="card">
                             <div class="card-header bg-white">
                                 <h4 class="card-title control-label m-0">
@@ -77,6 +77,64 @@
                                 </div>
 
                             </div>
+                        </div>
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card">
+                            <telerik:RadTabStrip runat="server" ID="RadTabStrip1"  MultiPageID="RadMultiPage1" SelectedIndex="0"
+                  Skin="Silk" >
+                                <Tabs>
+                                    <telerik:RadTab Text="Allergy" Value="Allergy" Width="200px"></telerik:RadTab>
+                                    <telerik:RadTab Text="Vital Signs" Value="VitalSigns" Width="200px"></telerik:RadTab>
+                                    <telerik:RadTab Text="Problem List" Value="ProblemList" Width="200px"></telerik:RadTab>
+                                </Tabs>
+                            </telerik:RadTabStrip>
+                            <telerik:RadMultiPage runat="server" ID="RadMultiPage1" SelectedIndex="0">
+                                <telerik:RadPageView id="Allergy" runat="server">
+                                    <telerik:RadGrid CssClass="mb-2 mt-3" OnNeedDataSource="RadGridAllergy_NeedDataSource" ShowHeaderWhenEmpty="true" ID="RadGridAllergy" runat="server" ShowHeader="true" AutoGenerateColumns="false" Height="180px" AllowPaging="true">
+                                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="allergy_id">
+                                            <Columns>
+                                                <telerik:GridBoundColumn ItemStyle-Width="150px" DataField="allergy_name_e" HeaderText="allergy name e" />
+                                                <telerik:GridBoundColumn ItemStyle-Width="150px" DataField="allergy_name_l" HeaderText="allergy name l" />
+                                                <telerik:GridBoundColumn ItemStyle-Width="150px" DataField="lu_updated" HeaderText="last updated" />
+                                            </Columns>
+                                        </MasterTableView>
+                                        <ClientSettings>
+                                            <Scrolling AllowScroll="true" UseStaticHeaders="true" SaveScrollPosition="true"/>
+                                        </ClientSettings>
+                                    </telerik:RadGrid>
+                                </telerik:RadPageView>
+                                <telerik:RadPageView id="VitalSigns" runat="server">
+                                    <telerik:RadGrid CssClass="mb-2 mt-3" ShowHeaderWhenEmpty="true" ID="gridViewVitalSign" runat="server" ShowHeader="true" AutoGenerateColumns="false" Height="180px" AllowPaging="true">
+                                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="patient_visit_id, visit_type_rcd, closure_date_time, allow_date_time">
+                                            <Columns>
+                                                <telerik:GridBoundColumn ItemStyle-Width="150px" DataField="actual_visit_date_time" HeaderText="Date" />
+                                                <telerik:GridBoundColumn ItemStyle-Width="150px" DataField="actual_visit_date_time" HeaderText="Item" />
+                                                <telerik:GridBoundColumn ItemStyle-Width="150px" DataField="actual_visit_date_time" HeaderText="Value" />
+                                            </Columns>
+                                        </MasterTableView>
+                                        <ClientSettings>
+                                            <Scrolling AllowScroll="true" UseStaticHeaders="true" SaveScrollPosition="true"/>
+                                        </ClientSettings>
+                                    </telerik:RadGrid>
+                                </telerik:RadPageView>
+                                <telerik:RadPageView id="ProblemList" runat="server">
+                                    <telerik:RadGrid CssClass="mb-2 mt-3" OnNeedDataSource="RadGridPatientProblem_NeedDataSource" ShowHeaderWhenEmpty="true" ID="RadGridPatientProblem" runat="server" ShowHeader="true" AutoGenerateColumns="false" Height="180px" AllowPaging="true">
+                                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="patient_problem_id">
+                                            <Columns>
+                                                <telerik:GridBoundColumn DataFormatString="{0:dd/MM/yyyy HH:mm}" ItemStyle-Width="150px" DataField="entry_date_time" HeaderText="First data entry Date" />
+                                                <telerik:GridBoundColumn DataFormatString="{0:dd/MM/yyyy}" ItemStyle-Width="150px" DataField="onset_date_time" HeaderText="Onset Time" />
+                                                <telerik:GridBoundColumn DataField="description" HeaderText="Description" />
+                                                <%--<telerik:GridBoundColumn ItemStyle-Width="150px" DataField="actual_visit_date_time" HeaderText="Status" />--%>
+                                                <telerik:GridBoundColumn DataFormatString="{0:dd/MM/yyyy HH:mm}" ItemStyle-Width="150px" DataField="lu_updated" HeaderText="Last Updated Date" />
+                                            </Columns>
+                                        </MasterTableView>
+                                        <ClientSettings>
+                                            <Scrolling AllowScroll="true" UseStaticHeaders="true" SaveScrollPosition="true"/>
+                                        </ClientSettings>
+                                    </telerik:RadGrid>
+                                </telerik:RadPageView>
+                            </telerik:RadMultiPage>
                         </div>
                     </div>
                 </div>

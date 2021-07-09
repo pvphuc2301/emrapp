@@ -6,6 +6,13 @@ using System.Web;
 
 namespace EMR
 {
+    public class VitalSign
+    {
+        public static dynamic Update(string pvid, string type)
+        {
+            return WebHelpers.GetAPI($"api/emr/vital-sign/{DataHelpers._LOCATION}/{pvid}/{type}");
+        }
+    }
     public class EMRClass
     {
         public static Dictionary<string, dynamic> Settings = new Dictionary<string, dynamic>()
@@ -3582,6 +3589,104 @@ namespace EMR
             }
         }
         
+        public dynamic[] Update()
+        {
+            dynamic[] message = new dynamic[2];
+
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
+            message[0] = response1;
+
+            if (response1.Status == System.Net.HttpStatusCode.OK)
+            {
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                message[1] = response2;
+            }
+            return message;
+        }
+
+        public static dynamic[] Delete(string userName, string docid)
+        {
+            dynamic[] message = new dynamic[2];
+            try
+            {
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
+
+                message[0] = response;
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
+                    message[1] = response1;
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = System.Net.HttpStatusCode.NotFound;
+                response.Data = ex.Message;
+
+                message[0] = response;
+                return message;
+            }
+        }
+    }
+
+    public class Scoc
+    {
+        #region Properties
+        public static string api = "api/scoc";
+        public dynamic user_name { get; set; }
+        public dynamic document_id { get; set; }
+        public dynamic model_id { get; set; }
+        public dynamic patient_id { get; set; }
+        public dynamic status { get; set; }
+        public dynamic amend_reason { get; set; }
+        public dynamic created_user_id { get; set; }
+        public dynamic created_name_e { get; set; }
+        public dynamic created_name_l { get; set; }
+        public dynamic created_date_time { get; set; }
+        public dynamic modified_user_id { get; set; }
+        public dynamic modified_name_e { get; set; }
+        public dynamic modified_name_l { get; set; }
+        public dynamic modified_date_time { get; set; }
+        public dynamic submited_user_id { get; set; }
+        public dynamic submited_name_e { get; set; }
+        public dynamic submited_name_l { get; set; }
+        public dynamic submited_date_time { get; set; }
+        public dynamic signed_user_id { get; set; }
+        public dynamic signed_name_e { get; set; }
+        public dynamic signed_name_l { get; set; }
+        public dynamic signed_date_time { get; set; }
+        public dynamic delete_user_id { get; set; }
+        public dynamic delete_name_e { get; set; }
+        public dynamic delete_name_l { get; set; }
+        public dynamic delete_date_time { get; set; }
+        public dynamic document_type_rcd { get; set; }
+        public dynamic documentid { get; set; }
+        public dynamic allergy { get; set; }
+        public dynamic allergy_note { get; set; }
+        public dynamic remarkable { get; set; }
+        public dynamic past_history { get; set; }
+        public dynamic diagnosis { get; set; }
+        public dynamic cur_treatment { get; set; }
+        public dynamic cur_care_plans { get; set; }
+        public dynamic recommendation { get; set; }
+        #endregion
+
+        public Scoc(string document_id)
+        {
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
+
+                WebHelpers.BindingDatafield(db, this);
+            }
+        }
+
         public dynamic[] Update()
         {
             dynamic[] message = new dynamic[2];

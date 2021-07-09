@@ -81,10 +81,13 @@ namespace EMR
 
                 // 5.Current medications
                 rad_treatment_code_change(pomr.treatment_code);
+                if(string.IsNullOrEmpty(pomr.treatment_code)) { rad_treatment_code_opd.Checked = true; }
                 txt_medicine.Value = pomr.medicine;
                 txt_tranfer.Value = pomr.tranfer;
 
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_spec_opinion_requested_" + pomr.spec_opinion_requested);
+
+                if (pomr.spec_opinion_requested == null) { rad_spec_opinion_requested_false.Checked = true; }
 
                 txt_spec_opinion_requested_note.Value = WebHelpers.GetBool(pomr.spec_opinion_requested, pomr.spec_opinion_requested_note, "");
 

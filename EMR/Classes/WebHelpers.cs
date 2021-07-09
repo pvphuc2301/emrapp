@@ -40,8 +40,8 @@ namespace EMR
     public enum ControlState { View, Edit }
     public static class WebHelpers
     {
-        public static string URL = "http://172.16.0.78:8088/";
-        //public static string URL = "http://172.16.0.78:8082/";
+        public static string URL = "http://172.16.0.78:8088/"; //DEV
+        //public static string URL = "http://172.16.0.78:8082/";//UAT
 
         #region API
         public static dynamic PostAPI(string url, dynamic obj)
@@ -319,6 +319,26 @@ namespace EMR
                 }
             }
         }
+        internal static void DataBind(HtmlForm _from, HtmlInputCheckBox controlType, string cb_name, DataTable value, out int oth_index, string key = "code")
+        {
+            oth_index = -1;
+            if (value != null && cb_name != null)
+            {
+                int i = 0;
+                foreach (DataRow row in value.Rows)
+                {
+                    try
+                    {
+                        ((HtmlInputCheckBox)_from.FindControl(cb_name + row.Field<dynamic>(key).ToLower())).Checked = true;
+                        if (row.Field<dynamic>(key).ToLower() == "oth") oth_index = i;
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                    i++;
+                }
+            }
+        }
         public static string GetJSONFromTable(GridView gridView, DataTable table)
         {
             DataRow row;
@@ -575,7 +595,28 @@ namespace EMR
         {
             DisabledGridView(gridView, false);
             if (btnAdd != null) { WebHelpers.VisibleControl(true, btnAdd); }
-            if (dataSource != null) { return DataBind(gridView, dataSource); }
+            if (dataSource != null) {
+                DataTable _dataTable = new DataTable();
+                for (int i = 0; i < columns.Count; i++)
+                {
+                    var col = columns.ElementAt(i);
+
+                    _dataTable.Columns.Add(col.Key);
+                    if (!string.IsNullOrEmpty(col.Value))
+                    {
+                        switch (col.Value)
+                        {
+                            case "DateTime":
+                                _dataTable.Columns[i].DataType = typeof(DateTime);
+                                break;
+                        }
+                    }
+                }
+
+                _dataTable = dataSource;
+
+                return DataBind(gridView, _dataTable); 
+            }
             else { return AddRow(dataSource, gridView, columns); }
         }
 
@@ -629,7 +670,6 @@ namespace EMR
 
                         if (!_dataTable.Columns.Contains(col.Key))
                         {
-
                             _dataTable.Columns.Add(col.Key);
                             if (!string.IsNullOrEmpty(col.Value))
                             {

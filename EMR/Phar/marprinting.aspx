@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
     <title>PORTAL</title>    
-    <style type="text/css">
+<style type="text/css">
         body{
             margin:0px auto;
             width:100%;            
@@ -150,30 +150,7 @@
 <div id="headerView" runat="server">    
     <header id="pageHeader">
 
-        <table width="100%" border="0" cellspacing="0" cellpadding="0" id="EMenu" runat="server" height="30px" 
-            bgcolor="#007196" class="cssclsNoPrint" style="text-align:right">
-            <tr>
-                <td></td>            
-            </tr>
-            <tr style="text-align:right;">
-                <td>
-                    <ul id="menu" runat="server">
-                            <li class="sub">
-                                <a href="../phar/patientlist.aspx?lg=0">Vaccine Prescription</a>
-                            </li>
-                            <li class="sub">
-                                <a href="../phar/marprinting.aspx?lg=0">MAR Printing</a>
-                            </li>
-                            <li class="sub">
-                                <a href="../phar/opdpreslist.aspx?lg=0">OPD Presciption</a>
-                            </li>
-                        <li class="sub">
-                                <a href="../emr/orderlist.aspx?lg=0">Order Printing</a>
-                            </li>
-                    </ul>
-            </td>
-    </tr>                                   
-</table>
+        
         <table style="width:100%; border-collapse:collapse" >
             <tr style="text-align:center">
                 <td>                   
@@ -194,10 +171,10 @@
 					</tr>					  
 					  <tr>
 						<td><label>Mã số bệnh nhân/ PID:</label></td>
-						<td><asp:TextBox ID="PatientID" runat="server" AutoPostBack="true" TabIndex="1" Width="180px" 
-                            CssClass="cssclsNoPrint" OnTextChanged="ButtonText_Click">
+						<td><asp:TextBox ID="PatientID" runat="server" AutoPostBack="false" TabIndex="1" Width="180px" 
+                            CssClass="cssclsNoPrint" Visible="false">
                         </asp:TextBox>
-                            <asp:Label ID="lbPID" runat="server" CssClass="cssclsNoScreen"></asp:Label></td>
+                            <asp:Label ID="lbPID" runat="server"></asp:Label></td>
 						<td colspan="2"><div class="cssclsNoPrint">
                             From: <telerik:RadDatePicker ID="FromDate" runat="server" Width="180" TabIndex="2"></telerik:RadDatePicker>
 <%--                            To: <telerik:RadDatePicker ID="ToDate" runat="server" Width="180" TabIndex="3"></telerik:RadDatePicker>                            --%>
@@ -234,7 +211,7 @@
                             <asp:Label ID="Label1" runat="server" Font-Bold="false" Visible="false"></asp:Label>
                             <div class="cssclsNoPrint">
                             <telerik:RadComboBox ID="rcbMyList1" runat="server" RenderMode="Lightweight" Visible="true"
-                                DataTextField="patientDianosis" DataValueField="patientDianosis" Width="350px">  
+                                DataTextField="patientDianosis" DataValueField="patientDianosis" Width="500px" >  
                             <ItemTemplate> 
                                 <asp:CheckBox ID="CheckBox1" runat="server" Text='<%# Eval("patientDianosis") %>' /> 
                             </ItemTemplate> 

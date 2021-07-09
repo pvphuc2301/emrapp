@@ -503,10 +503,14 @@
     height: 10px;
 }
 
-::-webkit-scrollbar-thumb {
-    background-color: #ddd;
-    border-radius: 4px;
-}
+    ::-webkit-scrollbar:hover {
+        /*display: inherit;*/
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #ddd;
+        border-radius: 4px;
+    }
 
 .d-grid {
     display: grid;
@@ -669,4 +673,8 @@ form[data-form-state=edit] .form-view {
 
 .gt-60-fr {
     grid-template-columns: 60px 1fr;
+}
+
+.scroll-effect:hover {
+    overflow-y: visible !important;
 }

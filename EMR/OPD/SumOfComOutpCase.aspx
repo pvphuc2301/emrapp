@@ -11,6 +11,7 @@
 <%@ Register Src="~/UserControls/PrintTemplate/Date.ascx" TagPrefix="webUI" TagName="Date" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Line.ascx" TagPrefix="webUI" TagName="Line" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PatientLabel1.ascx" TagPrefix="webUI" TagName="PatientLabel1" %>
+<%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="webUI" TagName="PopupShowDelay" %>
 
 <!DOCTYPE html>
 
@@ -21,7 +22,7 @@
     <link href="../styles/myStyle.css" rel="stylesheet" />
 </head>
 <body>
-    <form method="post" action="#" id="form2" runat="server">
+    <form method="post" action="#" id="form1" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
@@ -160,9 +161,8 @@
                 </div>
 
                 <div class="cssclsNoPrint">
-
-                    <div style="overflow: scroll; height: calc(100vh - 52px); overflow-x: hidden;">
-
+                    <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
+                        <asp:HiddenField runat="server" ID="DataObj" />
                         <asp:Panel runat="server" ID="messagePlaceHolder">
                             <div class="card" runat="server" id="amendReasonWraper">
                                 <div class="card-body">
@@ -179,12 +179,7 @@
                                 </div>
                             </div>
 
-                            <asp:ValidationSummary
-                                ID="valSum"
-                                DisplayMode="BulletList"
-                                CssClass="validationSummary"
-                                runat="server" ValidationGroup="Group1"
-                                HeaderText="Please complete the highlighted field(s)." />
+                            <asp:ValidationSummary ID="valSum" DisplayMode="BulletList" CssClass="validationSummary" runat="server" ValidationGroup="Group1" HeaderText="Please complete the highlighted field(s)." />
                         </asp:Panel>
 
                         <webUI:PatientInfo runat="server" ID="PatientInfo1" />
@@ -202,30 +197,40 @@
                                             <div class="row">
                                                 <div class="col-md-12 mb-2">
                                                     <label class="control-label mb-2">Tình trạng dị ứng/ <span class="text-primary">Allergy profile:</span></label>
-                                                    <div class="custom-control custom-radio d-inline-block">
-                                                        <input type="radio" runat="server" id="rad_disc_reason_code_dama" disabled-for="dama_field" name="rad_disc_reason_code" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="rad_disc_reason_code_dama"><span class="text-primary">Không/ </span>No</label>
-                                                    </div>
-                                                    <div class="custom-control custom-radio d-inline-block ml-2">
-                                                        <input type="radio" runat="server" id="rad_disc_reason_code_transfer" disabled-for="allery_field" name="rad_disc_reason_code" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="rad_disc_reason_code_transfer">Có, ghi rõ/ <span class="text-primary">Yes, specify</span></label>
-                                                        <a href="javascript:void(0)" class="el-hide" data-clear="rad_disc_reason_code" onclick="clear_radiobutton(this)">
-                                                            <icon:XSquare runat="server" ID="XSquare38" />
-                                                        </a>
+                                                </div>
+                                                <div class="col-md-12 mb-2 gt-2-a">
+                                                    <label></label>
+                                                    <asp:Label runat="server" ID="lbl_allergy"></asp:Label>
+                                                    <div>
+                                                        <div runat="server" id="allergy_wrapper">
+                                                            <div class="custom-control custom-radio d-inline-block">
+                                                                <input type="radio" runat="server" id="rad_allergy_false" name="rad_allergy" class="custom-control-input" />
+                                                                <label class="custom-control-label" for="rad_allergy_false"><span class="text-primary">Không/ </span>No</label>
+                                                            </div>
+                                                            <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                <input type="radio" runat="server" id="rad_allergy_true" disabled-for="allery_field" name="rad_allergy" class="custom-control-input" />
+                                                                <label class="custom-control-label" for="rad_allergy_true">Có, ghi rõ/ <span class="text-primary">Yes, specify</span></label>
+                                                                <a href="javascript:void(0)" class="el-hide" data-clear="rad_allergy" onclick="clear_radiobutton(this)">
+                                                                    <icon:XSquare runat="server" ID="XSquare38" />
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 allery_field mb-2">
+                                                            <asp:Label runat="server" ID="lbl_allergy_note"></asp:Label>
+                                                            <div class="form-group" runat="server" id="allergy_note_wrapper">
+                                                                <webUI:TextField runat="server" ID="txt_allergy_note" />
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 allery_field mb-2">
-                                                    <div class="form-group">
-                                                        <webUI:TextField runat="server" ID="txt_admission_reason" />
-                                                    </div>
-                                                </div>
+                                                
                                             </div>
 
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
                                                     <div class="form-group has-error">
                                                         <label class="control-label mb-1">Các cận lâm sàng nổi bật/ <span class="text-primary">Remarkable para-clinical tests:</span></label>
-                                                        <webUI:TextField runat="server" ID="TextField1" />
+                                                        <webUI:TextField runat="server" ID="txt_remarkable" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -234,7 +239,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label mb-1">Tiền sử bệnh/ <span class="text-primary">Past history:</span></label>
-                                                        <webUI:TextField runat="server" ID="TextField2" />
+                                                        <webUI:TextField runat="server" ID="txt_past_history" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -243,7 +248,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label mb-1">Các chẩn đoán chính/<span class="text-primary">Significant diagnosis:</span></label>
-                                                        <webUI:TextField runat="server" ID="TextField3" />
+                                                        <webUI:TextField runat="server" ID="txt_diagnosis" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -252,7 +257,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label mb-1">Các thuốc đang dùng/<span class="text-primary">Current treatment and medications:</span></label>
-                                                        <webUI:TextField runat="server" ID="TextField4" />
+                                                        <webUI:TextField runat="server" ID="txt_cur_treatment" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -261,7 +266,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label mb-1">Kế hoạch điều trị/<span class="text-primary">Current care plans:</span></label>
-                                                        <webUI:TextField runat="server" ID="TextField5" />
+                                                        <webUI:TextField runat="server" ID="txt_cur_care_plans" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -270,38 +275,47 @@
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label class="control-label mb-1">Lời khuyên và theo dõi/<span class="text-primary">Recommendation and Follow-up:</span></label>
-                                                        <webUI:TextField runat="server" ID="TextField6" />
+                                                        <webUI:TextField runat="server" ID="txt_recommendation" />
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div class="form-actions mb-3">
-                                                <button type="button" onserverclick="btnComplete_Click" runat="server" validationgroup="Group1" id="btnComplete" class="btn btn-primary waves-effect">Complete</button>
+                                            <div class="row mb-2">
+                                                <div class="col-md-12">
+                                                    <div class="form-actions">
+                                                        <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete"  CssClass="btn btn-primary waves-effect" >Complete</asp:LinkButton>
 
-                                                <button type="button" onserverclick="btnSave_Click" runat="server" id="btnSave" validationgroup="Group1" class="btn btn-primary waves-effect">Save</button>
+                                                        <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect" >Save</asp:LinkButton>
 
-                                                <button type="button" id="btnDeleteModal" runat="server" class="btn btn-danger waves-effect" data-toggle="modal" data-target="#myModal">Delete</button>
+                                                        <%--<asp:LinkButton ValidationGroup="Group1" OnClick="btnDelete_Click" OnClientClick="window.removeEventListener('beforeunload',comfirm_leave_page,true);" ID="btnDelete" runat="server" CssClass="btn btn-primary waves-effect" >Delete</asp:LinkButton>--%>
 
-                                                <button type="button" onserverclick="btnAmend_Click" runat="server" id="btnAmend" class="btn btn-secondary waves-effect">Amend</button>
+                                                        <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal" class="btn btn-danger waves-effect">Delete</div>
 
-                                                <button type="button" onserverclick="btnPrint_Click" runat="server" id="btnPrint" class="btn btn-secondary waves-effect">Print</button>
+                                                        <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                <button type="button" onserverclick="btnCancel_Click" runat="server" id="btnCancel" class="btn btn-secondary waves-effect">Cancel</button>
+                                                        <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+
+                                                        <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
-                                                <ModalBody>
-                                                    <div class="text-center">
-                                                        <icon:ExclamationTriangle Size="80" runat="server" ID="ExclamationTriangle" />
-                                                        <h4 class="mt-4 mb-4">Delete document?
-                                                        </h4>
-                                                    </div>
-                                                    <div class="text-right">
-                                                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
-                                                        <button type="button" onserverclick="btnDelete_Click" runat="server" id="btnDelete" class="btn btn-danger waves-effect">Delete</button>
-                                                    </div>
-                                                </ModalBody>
-                                            </webUI:PopupModal>
+                                            <ModalBody>
+                                                <div class="text-center">
+                                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                                    <h4 class="mt-4 mb-4">Delete document?
+                                                    </h4>
+                                                </div>
+                                                <div class="text-right">
+                                                    <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
+                                                        <asp:LinkButton OnClick="btnDelete_Click" OnClientClick="window.removeEventListener('beforeunload',comfirm_leave_page,true);" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
+                                                </div>
+                                            </ModalBody>
+                                        </webUI:PopupModal>
+
+                                        <webUI:PopupShowDelay runat="server" ID="PopupShowDelay" />
+
                                         </div>
                                     </div>
                                 </div>
@@ -310,13 +324,6 @@
                     </div>
                 </div>
             </ContentTemplate>
-            <Triggers>
-                <asp:AsyncPostBackTrigger ControlID="btnPrint" />
-                <asp:AsyncPostBackTrigger ControlID="btnSave" />
-                <asp:AsyncPostBackTrigger ControlID="btnAmend" />
-                <asp:AsyncPostBackTrigger ControlID="btnCancel" />
-                <asp:AsyncPostBackTrigger ControlID="btnComplete" />
-            </Triggers>
         </asp:UpdatePanel>
     </form>
 

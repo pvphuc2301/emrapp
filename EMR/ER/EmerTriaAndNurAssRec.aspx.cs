@@ -133,7 +133,14 @@ namespace EMR
 
                 txt_str_others.Value = ena.str_others;
 
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_respiratory_" + ena.respiratory);
+                DataTable respiratory = WebHelpers.GetJSONToDataTable(ena.respiratory);
+
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_respiratory_", respiratory, out int oth_index, "cde");
+
+                if(oth_index != -1)
+                {
+                    txt_respiratory_oth.Value = respiratory.Rows[oth_index].Field<string>("desc").ToString();
+                }
 
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_rhythm_regular_" + ena.rhythm_regular);
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_rhythm_inregular_" + ena.rhythm_inregular);
@@ -190,7 +197,7 @@ namespace EMR
 
                 txt_discharge_by.Value = ena.discharge_by;
 
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_discharge_option_" + ena.discharge_option);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_discharge_option_", WebHelpers.GetJSONToDataTable(ena.discharge_option));
 
                 //Admited
                 WebHelpers.BindDateTimePicker(dtpk_admited_date_time, ena.admited_date_time);
@@ -417,7 +424,7 @@ namespace EMR
                 //
                 prt_other_systems_normal.Text = WebHelpers.GetCheckedIcon(ena.other_systems_normal);
                 prt_other_systems_abnormal.Text = WebHelpers.GetCheckedIcon(ena.other_systems_abnormal);
-                prt_others_systems_str.Text = WebHelpers.GetCheckedIcon(ena.others_systems_str);
+                prt_others_systems_str.Text = ena.others_systems_str;
                 //
                 prt_lmp.Text = WebHelpers.GetCheckedIcon(ena.lmp);
                 prt_lmp_note.Text = ena.lmP_note;

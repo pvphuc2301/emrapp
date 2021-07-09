@@ -23,14 +23,15 @@ namespace EMR
                 DisplayControl.InnerHtml = value;
             }
         }
+        public string TextMode {
+            get { return DisplayControl.Attributes["data-mode"]; } 
+            set { DisplayControl.Attributes["data-mode"] = value; } 
+        }
         public string Text { get { return Value; } set { Text = value; } }
         public string Width
         {
             get { return Width; }
-            set
-            {
-                DisplayControl.Style.Add("width", value);
-            }
+            set { DisplayControl.Style.Add("width", value); }
         }
         public string Title
         {

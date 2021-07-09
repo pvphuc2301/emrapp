@@ -149,14 +149,9 @@ function setInputFilter(textbox, inputFilter) {
 }
 
 function InputFilter(type,regexp = /^\d*\.?\d*$/) {
-    let temp = document.querySelectorAll('div[type="number"]');
-    let temp1 = document.querySelectorAll("input[" + type + "]");
-
-    temp1.forEach(e => {
+    document.querySelectorAll("[" + type + "]").forEach(e => {
         setInputFilter(e, function (value) {
-            //return /^[0-9\.\-\/]+$/.test(value);
             return regexp.test(value);
-            //return /^\d*\.?\/\d*$/.test(value);
         });
     });
 }
@@ -166,11 +161,13 @@ function CalculateBmi() {
     let vs_weight = document.getElementById('txt_vs_weight');
     let vs_bmi = document.getElementById('txt_vs_bmi');
     console.log(vs_height, vs_weight, vs_bmi);
+
     if (vs_height.value == "" || vs_weight.value == "") {
         vs_bmi.value = "";
     }
     else {
         vs_bmi.value = (vs_weight.value / ((vs_height.value / 100) * 2)).toFixed(2);
+        vs_bmi.innerText = vs_bmi.value;
     };
 }
 

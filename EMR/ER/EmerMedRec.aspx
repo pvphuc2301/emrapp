@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EmerMedRec.aspx.cs" Inherits="EMR.ER.EmerMedRec" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EmerMedRec.aspx.cs" Inherits="EMR.ER.EmerMedRec"  ValidateRequest="false" %>
 
 <%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="uc1" TagName="PatientInfo" %>
 <%@ Register Src="~/UserControls/Alert.ascx" TagPrefix="uc1" TagName="Alert" %>
@@ -1357,7 +1357,7 @@
                                                                     </div>
                                                                 </HeaderTemplate>
                                                                 <ItemTemplate>
-                                                                    <telerik:RadDateTimePicker Width="200px " ID="time" runat="server" SelectedDate='<%# DBNull.Value.Equals(Eval("time")) ? null : Eval("time") %>'></telerik:RadDateTimePicker>
+                                                                    <telerik:RadDateTimePicker Width="200px" ID="time" runat="server" SelectedDate='<%# DBNull.Value.Equals(Eval("time")) ? null : Eval("time") %>'></telerik:RadDateTimePicker>
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
                                                             <asp:TemplateField>

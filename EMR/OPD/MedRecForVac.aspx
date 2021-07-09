@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MedRecForVac.aspx.cs" Inherits="EMR.OPD.MedRecForVac" ValidateRequest="false" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MedRecForVac.aspx.cs" Inherits="EMR.OPD.MedRecForVac" ValidateRequest="false" EnableEventValidation="false" %>
 
 <%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="uc1" TagName="PatientInfo" %>
 <%@ Register Src="~/UserControls/Alert.ascx" TagPrefix="uc1" TagName="Alert" %>
@@ -463,9 +463,7 @@
                                                     <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                                                         <ContentTemplate>
                                                             <div class="mb-2">
-                                                                <asp:LinkButton OnClick="btnUpdateVitalSigns_Click" runat="server" CssClass="btn btn-secondary waves-effect" ID="btnUpdateVitalSigns">
-                                                                    <icon:ArrowRepeat runat="server" ID="ArrowRepeat" />Update
-                                                                </asp:LinkButton>
+                                                                <asp:LinkButton OnClick="btnUpdateVitalSigns_Click" runat="server" CssClass="btn btn-secondary waves-effect" ID="btnUpdateVitalSigns">Update</asp:LinkButton>
                                                             </div>
                                                             <div>
                                                                 <label class="control-label mb-1 mr-2">Nhiệt độ/ <span class="text-primary">Temperature:</span></label>

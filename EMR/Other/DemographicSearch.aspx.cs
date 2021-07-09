@@ -275,8 +275,8 @@ namespace EMR.Other
                 query += ",(" + query_time_dentis + ") AS dentis_date_time ";
             else if (varType == "OBG")
                 query += ",(" + query_time_obg + ") AS obg_date_time ";
-            else if (varType == "CLI")
-                query += ",(" + query_time_cli + ") AS cli_date_time ";
+            //else if (varType == "CLI")
+            //    query += ",(" + query_time_cli + ") AS cli_date_time ";
             else if (varType == "CON")
                 query += ",(" + query_time_conclusion + ") AS conclusion_date_time ";
 
@@ -309,7 +309,8 @@ namespace EMR.Other
             else if (varType == "OBG")
                 query_final += "AND OBG = 0 AND gender = 'F' AND obg_date_time IS NULL";
             else if (varType == "HCK" | varType == "ENC" | varType == "IME")
-                query_final += "AND Clinical_Exam = 0 OR cli_date_time IS NULL ";
+                query_final += "AND Clinical_Exam = 0";
+                //query_final += "AND Clinical_Exam = 0 OR cli_date_time IS NULL ";
             else
                 query_final = "";
 

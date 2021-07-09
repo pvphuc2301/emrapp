@@ -347,7 +347,8 @@ namespace EMR
             else if (varType == "OBG")
                 query_final += "AND OBG = 0 AND gender = 'F' AND obg_date_time IS NULL";
             else if (varType == "HCK" | varType == "ENC" | varType == "IME")
-                query_final += "AND Clinical_Exam = 0 OR cli_date_time IS NULL ";
+                query_final += "AND Clinical_Exam = 0 ";
+                //query_final += "AND Clinical_Exam = 0 OR cli_date_time IS NULL ";
             else
                 query_final = "";
 

@@ -97,36 +97,44 @@
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
          <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <div style="overflow: hidden; height: 100vh;">
+                <div style="overflow: hidden; height: 100vh; margin-top: 15px;">
                     <telerik:RadSplitter runat="server" ID="RadSplitter1" SplitBarsSize="2" 
     Orientation="Vertical" Width="100%" Height="100%">
                         <telerik:RadPane runat="server" ID="TopPane" Width="220" MinWidth="150" MaxWidth="550">
                         <!-- Sidebar scroll-->
                         <%--<asp:LinkButton CssClass="btn btn-outline-light waves-effect position-sticky waves-secondary text-dark w-100" ID="btnPatientSummary" OnClick="btnPatientSummary_Click" runat="server">Patient Summary</asp:LinkButton>--%>
-                            <div style="overflow-x: hidden; height: 100vh" id="menuLeft">
+                            <div class="scroll-effect" style="overflow: hidden; height: 100vh" id="menuLeft">
                                 <nav class="sidebar-wrapper" style="position: initial; width: inherit">
                                     <div class="sidebar-menu">
-                                        <%--class="text-nowrap"--%>
-                                        <ul >
-                                            <li><telerik:RadTreeView OnClientMouseOut="ClientMouseOut" OnClientMouseOver="ClientMouseOver" OnNodeClick="RadTreeView1_NodeClick" ViewStateMode="Enabled" ID="RadTreeView1" runat="server" OnNodeExpand="RadTreeView1_NodeExpand"/>
-
-                                                
+                                        <ul class="text-nowrap">
+                                            <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px; margin-top: 12px;">
+                                                <h5 class="font-bold text-primary ml-2">Complex Document</h5>
+                                                <%--<span>SUMMARY OF COMPLEX OUTPATIENT CASES</span>--%>
+                                                <%--<asp:LinkButton runat="server" CssClass="mb-2 btn btn-sm btn-primary" ID="btnAddComplexForm">Add new</asp:LinkButton>--%>
                                             </li>
+
+                                            <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px;">
+                                                <h5 class="font-bold text-primary ml-2">Document</h5>
+                                                <telerik:RadTreeView OnClientMouseOut="ClientMouseOut" OnClientMouseOver="ClientMouseOver" OnNodeClick="RadTreeView1_NodeClick" ViewStateMode="Enabled" ID="RadTreeView1" runat="server" OnNodeExpand="RadTreeView1_NodeExpand"/>
+                                            </li>
+
                                             <%--END Load Left Menu--%>
-                                            <hr />
+
                                             <%--Load LAB and IMG Document--%>
-                                            <li><telerik:RadTreeView OnNodeClick="RadTreeView2_NodeClick" ID="RadTreeView2" runat="server" OnNodeExpand="RadTreeView2_NodeExpand"/></li>
+                                            <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px;">
+                                                <h5 class="font-bold text-primary ml-2">Clinical Reports</h5>
+                                                <telerik:RadTreeView OnNodeClick="RadTreeView2_NodeClick" ID="RadTreeView2" runat="server" OnNodeExpand="RadTreeView2_NodeExpand"/></li>
                                             <hr />
                                             <%--End Load LAB and IMG Document--%>
 
                                             <%--Load Scan Document--%>
-                                            <li>
-                                                <span class="font-bold">General Scan</span>  
+                                            <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px;">
+                                                <h5 class="font-bold text-primary ml-2">General Scan</h5>
                                                 <telerik:RadTreeView OnNodeClick="RadTreeView3_NodeClick" ID="RadTreeView3" runat="server" OnNodeExpand="RadTreeView3_NodeExpand"/>
                                             </li>
-                                                <hr />
-                                            <li>
-                                                <span class="font-bold">Form Scan</span>  
+
+                                            <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px;">
+                                                <h5 class="font-bold text-primary ml-2">Form Scan</h5>
                                                 <telerik:RadTreeView OnNodeClick="RadTreeView3_NodeClick" ID="RadTreeView4" runat="server" OnNodeExpand="RadTreeView3_NodeExpand"/>
                                             </li>
                                             <%--End Load Scan Document--%>

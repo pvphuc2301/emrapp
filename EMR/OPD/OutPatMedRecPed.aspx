@@ -377,19 +377,19 @@
                                             
                                                 </fieldset>
 
-                                                <fieldset class="row mb-2">
+                                                <%--<fieldset class="row mb-2">
                                                     <legend>
                                                         <label class="control-label">Gia đình/ <span class="text-primary">Family:</span></label>
                                                     </legend>
 
-                                                    <%--<div class="col-md-12 mb-2 gt-2-a">
+                                                    <div class="col-md-12 mb-2 gt-2-a">
                                                         <label class="control-label">Gia đình/ <span class="text-primary">Family:</span></label>
                                                         <div class="form-group " runat="server" id="family_wrapper">
                                                             <webUI:TextField runat="server" ID="txt_family" />
                                                         </div>
                                                             <asp:Label runat="server" ID="lbl_family" />
-                                                    </div>--%>
-                                                </fieldset>
+                                                    </div>
+                                                </fieldset>--%>
                                             </div>
                                         </fieldset>
 
@@ -566,7 +566,7 @@
 
                                         <div class="row mb-2" runat="server" id="current_medication_field">
                                             <div class="col-md-12 gt-2-a">
-                                                <label class="control-label mb-1"><span class="text-primary">5. Current medications:</span></label>
+                                                <label class="control-label mb-1"></label>
                                                 <asp:Label runat="server" ID="lbl_medicine" />
                                                 <div class="form-group " runat="server" id="medicine_wrapper">
                                                     <webUI:TextField runat="server" ID="txt_medicine" />

@@ -699,15 +699,6 @@ namespace EMR.OPD
         protected global::System.Web.UI.WebControls.LinkButton btnUpdateVitalSigns;
 
         /// <summary>
-        /// ArrowRepeat control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UserControl ArrowRepeat;
-
-        /// <summary>
         /// vs_temperature control.
         /// </summary>
         /// <remarks>

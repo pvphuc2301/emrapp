@@ -209,7 +209,7 @@
                 <telerik:RadTab Text="Patient Summary" Value="PatientSummary" Width="200px"></telerik:RadTab>
                 <telerik:RadTab Text="Order Printing" Value="orderprint" Width="200px"></telerik:RadTab>
                 <telerik:RadTab Text="OPD Prescription" Value="opdprescription" Width="200px"></telerik:RadTab>
-                <%--<telerik:RadTab Text="MAR Printing" Value="marprinting" Width="200px"></telerik:RadTab>--%>
+                <telerik:RadTab Text="MAR Printing" Value="marprinting" Width="200px"></telerik:RadTab>
             </Tabs>
         </telerik:RadTabStrip>
 
@@ -217,6 +217,7 @@
             <telerik:RadPageView id="PatientSummary" runat="server"></telerik:RadPageView>
             <telerik:RadPageView id="OrderList" runat="server"></telerik:RadPageView>
             <telerik:RadPageView id="OpdPrescription" runat="server"></telerik:RadPageView>
+            <telerik:RadPageView id="MARPrinting" runat="server"></telerik:RadPageView>
         </telerik:RadMultiPage>
 
         <div id="tooltip__item" class="tooltip__item">

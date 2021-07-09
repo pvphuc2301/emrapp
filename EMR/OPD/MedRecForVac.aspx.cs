@@ -332,7 +332,15 @@ namespace EMR.OPD
         }
         protected void btnUpdateVitalSigns_Click(object sender, EventArgs e)
         {
-            WebHelpers.Notification(Page, "Pending API", "error");
+            try
+            {
+                dynamic response = VitalSign.Update(PatientVisit.Instance().patient_visit_id, PatientVisit.Instance().visit_type);
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    Initial();
+                }
+            }
+            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }
         #endregion
 

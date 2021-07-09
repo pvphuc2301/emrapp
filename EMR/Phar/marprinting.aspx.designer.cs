@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EMR.Print {
-    
-    
-    public partial class marprinting {
-        
+namespace EMR.Print
+{
+
+
+    public partial class marprinting
+    {
+
         /// <summary>
         /// Head1 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlHead Head1;
-        
+
         /// <summary>
         /// Link1 control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlLink Link1;
-        
+
         /// <summary>
         /// form1 control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
-        
+
         /// <summary>
         /// RadScriptManager1 control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadScriptManager RadScriptManager1;
-        
+
         /// <summary>
         /// lbError control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbError;
-        
+
         /// <summary>
         /// lbNoReviewed control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbNoReviewed;
-        
+
         /// <summary>
         /// listMedicine control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl listMedicine;
-        
+
         /// <summary>
         /// RadGrid1 control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid RadGrid1;
-        
+
         /// <summary>
         /// headerView control.
         /// </summary>
@@ -92,25 +94,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl headerView;
-        
-        /// <summary>
-        /// EMenu control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTable EMenu;
-        
-        /// <summary>
-        /// menu control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl menu;
-        
+
         /// <summary>
         /// lbFullName control.
         /// </summary>
@@ -119,7 +103,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbFullName;
-        
+
         /// <summary>
         /// PatientID control.
         /// </summary>
@@ -128,7 +112,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox PatientID;
-        
+
         /// <summary>
         /// lbPID control.
         /// </summary>
@@ -137,7 +121,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbPID;
-        
+
         /// <summary>
         /// FromDate control.
         /// </summary>
@@ -146,7 +130,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadDatePicker FromDate;
-        
+
         /// <summary>
         /// lbMASFromTo control.
         /// </summary>
@@ -155,7 +139,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbMASFromTo;
-        
+
         /// <summary>
         /// lbBirthday control.
         /// </summary>
@@ -164,7 +148,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbBirthday;
-        
+
         /// <summary>
         /// lbSex control.
         /// </summary>
@@ -173,7 +157,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbSex;
-        
+
         /// <summary>
         /// lbRoom control.
         /// </summary>
@@ -182,7 +166,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbRoom;
-        
+
         /// <summary>
         /// lbAge control.
         /// </summary>
@@ -191,7 +175,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbAge;
-        
+
         /// <summary>
         /// DrOrderCombobox control.
         /// </summary>
@@ -200,7 +184,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox DrOrderCombobox;
-        
+
         /// <summary>
         /// PrintAll control.
         /// </summary>
@@ -209,7 +193,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox PrintAll;
-        
+
         /// <summary>
         /// AllDoctor control.
         /// </summary>
@@ -218,7 +202,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox AllDoctor;
-        
+
         /// <summary>
         /// lbDoctor control.
         /// </summary>
@@ -227,7 +211,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbDoctor;
-        
+
         /// <summary>
         /// lbProblem control.
         /// </summary>
@@ -236,7 +220,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbProblem;
-        
+
         /// <summary>
         /// Label1 control.
         /// </summary>
@@ -245,7 +229,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label1;
-        
+
         /// <summary>
         /// rcbMyList1 control.
         /// </summary>
@@ -254,7 +238,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox rcbMyList1;
-        
+
         /// <summary>
         /// ButtonT control.
         /// </summary>
@@ -263,7 +247,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ButtonT;
-        
+
         /// <summary>
         /// PrevireDiv control.
         /// </summary>
@@ -272,7 +256,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl PrevireDiv;
-        
+
         /// <summary>
         /// Button1 control.
         /// </summary>
@@ -281,7 +265,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button1;
-        
+
         /// <summary>
         /// Div1 control.
         /// </summary>
@@ -290,7 +274,7 @@ namespace EMR.Print {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
-        
+
         /// <summary>
         /// lbPrintDate control.
         /// </summary>
