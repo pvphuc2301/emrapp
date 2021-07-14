@@ -1264,6 +1264,23 @@ namespace EMR
             }
             return result;
         }
+        internal static string DisplayCheckBox(DataTable dt, out int oth_index, string key = "code", string gap = "<br>")
+        {
+            oth_index = -1;
+            //if (_source.Rows.Count) return "";
+            string result = "";
+            int i = 0;
+            foreach (DataRow row in dt.Rows)
+            {
+                if (row.Field<dynamic>(key).ToLower() == "oth") oth_index = i;
+                else
+                {
+                    result += $"{row["desc"]}{gap}";
+                }
+                i++;
+            }
+            return result;
+        }
         internal static dynamic GetDicDesc(dynamic code, Dictionary<string, string> dictionary)
         {
             if (code != null) return dictionary[code];

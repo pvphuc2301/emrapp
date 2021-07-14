@@ -78,6 +78,7 @@ namespace EMR
             {
                 Patient patient = Patient.Instance();
                 PatientVisit patientVisit = PatientVisit.Instance();
+                prt_disc_ward_desc.Text = disc.disc_ward_desc;
 
                 prt_fullname.Text = patient.GetFullName();
                 prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth);
@@ -89,8 +90,8 @@ namespace EMR
                 //prt_to.Text
                 prt_no_health_insurance.Text = disc.no_health_insurance;
                 prt_address.Text = patient.GetAddress();
-                prt_admitted_time.dateTime = WebHelpers.FormatDateTime(patientVisit.actual_visit_date_time);
-                //prt_disc_date_time.dateTime = disc.disc_date_time;
+                prt_admitted_time.dateTime = Convert.ToString(patientVisit.actual_visit_date_time);
+                prt_disc_date_time.dateTime = Convert.ToString(disc.disc_date_time);
                 prt_diagnosis.Text = disc.diagnosis;
                 prt_treatment.Text = disc.disc_medication;
                 prt_followup_instruc.Text = disc.followup_instruc;
@@ -223,10 +224,10 @@ namespace EMR
 
                 Disc disc = new Disc(Request.QueryString["docId"]);
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-                prt_admitted_time.dateTime = WebHelpers.FormatDateTime(PatientVisit.Instance().actual_visit_date_time);
+                prt_admitted_time.dateTime = Convert.ToString(PatientVisit.Instance().actual_visit_date_time);
 
-                prt_disc_date_time.dateTime = WebHelpers.FormatDateTime(disc.disc_date_time);
-
+                prt_disc_date_time.dateTime = Convert.ToString(disc.disc_date_time);
+                prt_date.dateTime = prt_date1.dateTime = Convert.ToString(disc.signature_date);
                 if (disc.status == DocumentStatus.FINAL)
                 {
                     BindingDataForm(disc, WebHelpers.LoadFormControl(form1, disc, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));

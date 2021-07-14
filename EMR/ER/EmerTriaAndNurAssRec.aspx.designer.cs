@@ -1140,6 +1140,24 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_arrival_mode_code_AMB;
 
         /// <summary>
+        /// rad_arrival_mode_code_OTH control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_arrival_mode_code_OTH;
+
+        /// <summary>
+        /// rad_arrival_mode_code_STR control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_arrival_mode_code_STR;
+
+        /// <summary>
         /// XSquare2 control.
         /// </summary>
         /// <remarks>
@@ -1147,6 +1165,24 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UserControl XSquare2;
+
+        /// <summary>
+        /// arrival_mode_note_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl arrival_mode_note_wrapper;
+
+        /// <summary>
+        /// txt_arrival_mode_note control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_arrival_mode_note;
 
         /// <summary>
         /// lbl_past_medical_history control.
@@ -1365,13 +1401,31 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_blood_pressure;
 
         /// <summary>
+        /// lbl_vs_bmi control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_vs_bmi;
+
+        /// <summary>
+        /// vs_bmi_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl vs_bmi_wrapper;
+
+        /// <summary>
         /// txt_vs_bmi control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label txt_vs_bmi;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_bmi;
 
         /// <summary>
         /// lbl_vs_spo2 control.
@@ -2472,6 +2526,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_respiratory_spu;
 
         /// <summary>
+        /// respiratory_oth_field control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl respiratory_oth_field;
+
+        /// <summary>
         /// cb_respiratory_oth control.
         /// </summary>
         /// <remarks>
@@ -2481,6 +2544,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_respiratory_oth;
 
         /// <summary>
+        /// txt_respiratory_oth_field control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl txt_respiratory_oth_field;
+
+        /// <summary>
         /// txt_respiratory_oth control.
         /// </summary>
         /// <remarks>
@@ -2488,6 +2560,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.TextField txt_respiratory_oth;
+
+        /// <summary>
+        /// lbl_respiratory_oth control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_respiratory_oth;
 
         /// <summary>
         /// cb_rhythm_regular_true control.

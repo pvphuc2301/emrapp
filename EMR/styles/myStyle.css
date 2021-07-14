@@ -74,6 +74,10 @@
                 margin-bottom: 0;
             }
 
+    .cssclsNoScreen .text-primary {
+        color: #007297 !important;
+    }
+
             .cssclsNoScreen .header-info .header-info-title h5 {
                 color: #e20e5a;
                 font-size: 16.6667px;

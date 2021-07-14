@@ -173,7 +173,7 @@
                 </div>
 
                 <div class="cssclsNoPrint">
-                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0; border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                       <li>Outpatient Initial Nursing Assessment</li>
                     </ul>
@@ -352,7 +352,8 @@
                                                     </div>
 
                                                     <div class="form-group allergy_field">
-                                                        <webUI:TextField runat="server" ID="txt_allergy_note" />
+                                                        <webUI:TextField runat="server" ID="txt_allergy_note" TextMode="SingleLine" />
+                                                        <asp:CustomValidator ID="CustomValidator3" CssClass="text-danger" ValidationGroup="Group1" OnServerValidate="CustomValidatorAllergy_ServerValidate" Display="Dynamic" ErrorMessage="Too many characters. 256 allowed." runat="server" />
                                                     </div>
                                                 </div>
 
@@ -387,7 +388,8 @@
                                                     </div>
 
                                                     <div class="form-group mental_status_note_field">
-                                                        <webUI:TextField runat="server" ID="txt_mental_status_note" />
+                                                        <webUI:TextField runat="server" ID="txt_mental_status_note" TextMode="SingleLine" />
+                                                        <asp:CustomValidator ID="CustomValidator1" CssClass="text-danger" ValidationGroup="Group1" OnServerValidate="CustomValidatorMentalStatusNote_ServerValidate" Display="Dynamic" ErrorMessage="Too many characters. 256 allowed." runat="server" />
                                                     </div>
                                                     </div>
                                                 </div>
@@ -453,7 +455,8 @@
                                                         <%--<asp:CustomValidator ID="CustomValidator4" ValidationGroup="Group1" runat="server" ErrorMessage="Tầm soát nguy cơ té ngã/ Fall risk MORSE SCALE is required" CssClass="text-danger" OnServerValidate="CustomValidatorFallRisk_ServerValidate"></asp:CustomValidator>--%>
                                                     </div>
                                                     <div class="form-group fall_risk_assistance_field">
-                                                        <webUI:TextField runat="server" ID="txt_fall_risk_assistance" />
+                                                        <webUI:TextField runat="server" ID="txt_fall_risk_assistance"  TextMode="SingleLine"/>
+                                                        <asp:CustomValidator ID="CustomValidator2" CssClass="text-danger" ValidationGroup="Group1" OnServerValidate="CustomValidatorFallRiskAssistance_ServerValidate" Display="Dynamic" ErrorMessage="Too many characters. 256 allowed." runat="server" />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
@@ -614,7 +617,9 @@
         formGroup_init();
         checkboxRadiobutton_init();
         InputFilter("data-type='number'");
-        InputFilter("data-type='number1'" , /^\d*\.?\/?\d*$/);
+        InputFilter("data-type='number1'", /^\d*\.?\/?\d*$/);
+
+        $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
 
         function beforeAsyncPostBack() {
             var curtime = new Date();
@@ -625,6 +630,7 @@
             checkboxRadiobutton_init();
             InputFilter("data-type='number'");
             InputFilter("data-type='number1'", /^\d*\.?\/?\d*$/);
+            $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
         }
 
     </script>

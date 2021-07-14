@@ -48,7 +48,7 @@ namespace EMR
         {
             try
             {
-                WebHelpers.VisibleControl(true, undo, redo, pencilWrapper);
+                WebHelpers.VisibleControl(true, undo, redo, pencilWrapper, cb_alert_true, cb_coma_true, cb_others_true, cb_rhythm_regular_true, cb_rhythm_inregular_true, cb_rhythm_others_true, cb_psychosocial_true, cb_psychosocial_others_true, cb_other_systems_normal_true, cb_other_systems_abnormal_true);
 
                 skin_anno_data_base64.Value = JsonConvert.DeserializeObject(ena.skin_anno_data).dataURI;
                 //Triage Date Time
@@ -76,7 +76,7 @@ namespace EMR
                 txt_vs_respiratory_rate.Value = ena.vs_respiratory_rate;
                 txt_vs_height.Value = ena.vs_height;
                 txt_vs_blood_pressure.Value = ena.vs_blood_pressure;
-                txt_vs_bmi.Text = ena.vs_bmi;
+                txt_vs_bmi.Value = ena.vs_bmi;
                 txt_vs_spo2.Value = ena.vs_spo2;
                 txt_vs_head_circum.Value = ena.vs_head_circum;
 
@@ -132,7 +132,10 @@ namespace EMR
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_others_" + ena.others);
 
                 txt_str_others.Value = ena.str_others;
-
+                
+                WebHelpers.VisibleControl(true, txt_respiratory_oth_field);
+                WebHelpers.VisibleControl(false, lbl_respiratory_oth);
+                cb_respiratory_oth.Disabled = false;
                 DataTable respiratory = WebHelpers.GetJSONToDataTable(ena.respiratory);
 
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_respiratory_", respiratory, out int oth_index, "cde");
@@ -219,9 +222,8 @@ namespace EMR
                 WebHelpers.AddScriptFormEdit(Page, ena, (string)Session["emp_id"]);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
-            
-            
         }
+
         private void BindingDataFormView(Ena ena)
         {
             try
@@ -237,15 +239,15 @@ namespace EMR
                 lbl_past_medical_history.Text = WebHelpers.FormatString(ena.past_medical_history);
                 lbl_narrative.Text = WebHelpers.FormatString(ena.narrative);
 
-                lbl_vs_temperature.Text = WebHelpers.FormatString(ena.vs_temperature);
-                lbl_vs_weight.Text = WebHelpers.FormatString(ena.vs_weight);
-                lbl_vs_height.Text = WebHelpers.FormatString(ena.vs_height);
-                txt_vs_bmi.Text = WebHelpers.FormatString(ena.vs_bmi);
-                lbl_vs_heart_rate.Text = WebHelpers.FormatString(ena.vs_heart_rate);
-                lbl_vs_respiratory_rate.Text = WebHelpers.FormatString(ena.vs_respiratory_rate);
-                lbl_vs_blood_pressure.Text = WebHelpers.FormatString(ena.vs_blood_pressure);
-                lbl_vs_spo2.Text = WebHelpers.FormatString(ena.vs_spo2);
-                lbl_vs_head_circum.Text = WebHelpers.FormatString(ena.vs_head_circum);
+                lbl_vs_bmi.Text = WebHelpers.FormatString(ena.vs_bmi) + "&nbsp;(Kg/m <sup>2</sup>)";
+                lbl_vs_temperature.Text = WebHelpers.FormatString(ena.vs_temperature) + "&nbsp;°C";
+                lbl_vs_weight.Text = WebHelpers.FormatString(ena.vs_weight) + "&nbsp;kg";
+                lbl_vs_height.Text = WebHelpers.FormatString(ena.vs_height) + "&nbsp;cm";
+                lbl_vs_heart_rate.Text = WebHelpers.FormatString(ena.vs_heart_rate) + "&nbsp;/phút (m)";
+                lbl_vs_respiratory_rate.Text = WebHelpers.FormatString(ena.vs_respiratory_rate) + "&nbsp;/phút (m)";
+                lbl_vs_blood_pressure.Text = WebHelpers.FormatString(ena.vs_blood_pressure) + "&nbsp;mmHg"; 
+                lbl_vs_spo2.Text = WebHelpers.FormatString(ena.vs_spo2) + "&nbsp;%";
+                lbl_vs_head_circum.Text = WebHelpers.FormatString(ena.vs_head_circum) + "&nbsp;cm";
 
                 lbl_loc_avpu.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(ena.loc_avpu));
                 //Pain assess
@@ -295,8 +297,25 @@ namespace EMR
                 cb_other_systems_abnormal_true.Checked = ena.other_systems_abnormal;
                 if (cb_other_systems_abnormal_true.Checked) { lbl_others_systems_str.Text = ena.others_systems_str; }
                 //Sản-phụ
-                lbl_respiratory.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(ena.respiratory));
-                lbl_lmp.Text = WebHelpers.FormatString(ena.lmP_note);
+                WebHelpers.VisibleControl(false, txt_respiratory_oth_field);
+
+                DataTable respiratory = WebHelpers.GetJSONToDataTable(ena.respiratory);
+
+                lbl_respiratory.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(respiratory, out int oth_index, "cde"));
+
+                if(oth_index != -1)
+                {
+                    cb_respiratory_oth.Checked = cb_respiratory_oth.Disabled = true;
+                    WebHelpers.VisibleControl(true, lbl_respiratory_oth, respiratory_oth_field);
+                    lbl_respiratory_oth.Text = respiratory.Rows[oth_index].Field<string>("desc").ToString();
+                    
+                }
+                else
+                {
+                    WebHelpers.VisibleControl(false, lbl_respiratory_oth, respiratory_oth_field);
+                }
+                
+                lbl_lmp.Text = WebHelpers.FormatString(WebHelpers.GetBool(ena.lmp, "True", "False")) + " " + WebHelpers.FormatString(ena.lmP_note);
                 lbl_para.Text = WebHelpers.FormatString(ena.para);
                 lbl_abortions.Text = WebHelpers.FormatString(ena.abortions);
                 //Intervention Procedure
@@ -351,15 +370,16 @@ namespace EMR
                 PatientVisit patientVisit = PatientVisit.Instance();
 
                 //prt_pid.Text = prt_vpid.Text = prt_barcode.Text = patient.visible_patient_id;
-                prtdate.Text = $"Ngày/<span class='text-primary'>Date</span>: {WebHelpers.FormatDateTime(patientVisit.actual_visit_date_time)} Giờ/ <span class='text-primary'>Triage Time</span> {WebHelpers.FormatDateTime(ena.triage_time, "HH")}:{WebHelpers.FormatDateTime(ena.triage_time, "mm")} Khu vực/ <span class='text-primary'>Triage Area</span> #: {ena.triage_area}";
+                prtdate.Text = $"Ngày/<span class='text-primary'>Date</span>: {WebHelpers.FormatDateTime(patientVisit.actual_visit_date_time, "dd/MM/yyyy")} Giờ/ <span class='text-primary'>Triage Time</span> {WebHelpers.FormatDateTime(ena.triage_time, "HH")}:{WebHelpers.FormatDateTime(ena.triage_time, "mm")} Khu vực/ <span class='text-primary'>Triage Area</span> #: {ena.triage_area}";
                 
-                prt_fullname.Text = patient.GetFullName();
-                prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth);
-                prt_nationality.Text = patient.GetNationality() ;
-                prt_address.Text = patient.GetAddress();
-                prt_contact.Text = patient.getContact();
-                prt_relationship.Text = patient.getRelationship();
-                prt_telephone.Text = patient.contact_phone_number;
+                prt_fullname.Text = "&nbsp;" + patient.GetFullName();
+                prt_dob.Text = "&nbsp;" + WebHelpers.FormatDateTime(patient.date_of_birth, "dd/MM/yyyy");
+                prt_nationality.Text = "&nbsp;" + patient.GetNationality();
+
+                prt_address.Text = "&nbsp;" + patient.GetAddress();
+                prt_contact.Text = "&nbsp;" + patient.getContact();
+                prt_relationship.Text = "&nbsp;" + patient.getRelationship();
+                prt_telephone.Text = "&nbsp;" + patient.contact_phone_number;
                 prt_chieft_complaint.Text = ena.chief_complaint;
                 prt_chieft_complaint_code.Text = WebHelpers.CreateOptions(Ena.TRIAGE_CODE, ena.triage_code, "display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr");
 
@@ -697,7 +717,8 @@ namespace EMR
                 ena.vs_respiratory_rate = txt_vs_respiratory_rate.Value;
                 ena.vs_height = txt_vs_height.Value;
                 ena.vs_blood_pressure = txt_vs_blood_pressure.Value;
-                ena.vs_bmi = txt_vs_bmi.Text;
+                ena.vs_bmi = txt_vs_bmi.Value;
+              
                 ena.vs_spo2 = txt_vs_spo2.Value;
                 ena.vs_head_circum = txt_vs_head_circum.Value;
 

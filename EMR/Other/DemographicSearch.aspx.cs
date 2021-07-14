@@ -324,9 +324,10 @@ namespace EMR.Other
 
         protected void RadGrid5_ItemCommand(object sender, GridCommandEventArgs e)
         {
+            GridDataItem item = (e.Item as GridDataItem);
             if (e.CommandName.Equals("Open"))
             {
-                GridDataItem item = (GridDataItem)(sender as RadGrid).SelectedItems[0];
+                //GridDataItem item = (GridDataItem)(sender as RadGrid).SelectedItems[0];
                 string PID = item.GetDataKeyValue("patient_id").ToString();
                 string PVID = item.GetDataKeyValue("visible_patient_id").ToString();
                  
@@ -339,7 +340,7 @@ namespace EMR.Other
             }
             else if (e.CommandName.Equals("btnComplete"))
             {
-                GridDataItem item = (GridDataItem)(sender as RadGrid).SelectedItems[0];
+                //GridDataItem item = (GridDataItem)(sender as RadGrid).SelectedItems[0];
 
                 //Button btn = sender as Button;
                 //Panel myPanel = btn.Parent as Panel;

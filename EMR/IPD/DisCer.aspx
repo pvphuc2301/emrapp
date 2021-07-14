@@ -37,18 +37,19 @@
                         <thead class="report-header">
                             <tr>
                                 <th class="report-header-cell">
-                                    <div class="header-info">
-                                        <div class="text-center">
+                                    <div class="header-info" style="display: grid; grid-template-columns: 250px 1fr 150px">
+                                        <div class="text-center" style="line-height: 16.6667px;">
                                             <div>SỞ Y TẾ TP.HCM</div>
                                             <div class="text-primary">HCMC DOH</div>
                                             <div>BỆNH VIỆN QUỐC TẾ MỸ</div>
                                             <div class="text-primary">AMERICAN INTERNATIONAL HOSPITAL</div>
-                                            <div class="font-bold">KHOA/<span class="text-primary">DEPARTMENT:</span></div>
+                                            <div style="margin-top: 10px;" class="font-bold">KHOA/<span class="text-primary">DEPARTMENT:</span></div>
+                                            <asp:Label runat="server" ID="prt_disc_ward_desc"></asp:Label>
                                         </div>
-                                        <div>
+                                        <div class="text-center ml-2 mr-2">
                                             <div class="font-bold">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
                                             <div class="text-primary">SOCIALIST REPUBLIC OF VIETNAM</div>
-                                            <div class="font-bold">Độc lập - Tự do - Hạnh phúc</div>
+                                            <div style="margin-top: 10px;" class="font-bold">Độc lập - Tự do - Hạnh phúc</div>
                                             <div class="text-primary">Independence – Freedom – Happiness</div>
                                         </div>
                                         <div>
@@ -73,7 +74,7 @@
                                             <div class="text-primary">DISCHARGE CERTIFICATE</div>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 1fr 275px 139px">
+                                        <div class="d-grid" style="grid-template-columns: 325px 275px 139px">
                                             <div>
                                                 <webUI:Label runat="server" SubTitle="Patient's Name" Title="Họ tên người bệnh:" />
                                                 <asp:Label runat="server" ID="prt_fullname" />
@@ -90,7 +91,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr">
+                                        <div class="d-grid" style="grid-template-columns: 325px 1fr">
                                             <div>
                                                 <webUI:Label runat="server" SubTitle="Nationality" Title="Dân tộc:" />
                                                 <asp:Label CssClass="align-top" runat="server" ID="prt_nationality" />
@@ -101,7 +102,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr">
+                                        <div class="d-grid" style="grid-template-columns: 150px 1fr 1fr 1fr">
                                             <div>
                                                 <webUI:Label runat="server" SubTitle="Health Insurance" Title="BHYT:" />
                                             </div>
@@ -119,59 +120,51 @@
                                             </div>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 170px 1fr">
+                                        <div class="d-grid" style="grid-template-columns: 150px 1fr">
                                             <webUI:Label runat="server" SubTitle="Address" Title="Địa chỉ:" />
                                             <asp:Label CssClass="align-top" runat="server" ID="prt_address" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 170px 1fr">
+                                        <div class="d-grid" style="grid-template-columns: 150px 1fr">
                                             <webUI:Label runat="server" SubTitle="Admitted time" Title="Vào viện lúc:" />
                                             <webUI:DateTime runat="server" ID="prt_admitted_time" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 170px 1fr">
+                                        <div class="d-grid" style="grid-template-columns: 150px 1fr">
                                             <webUI:Label runat="server" SubTitle="Discharged time" Title="Ra viện lúc:" />
                                             <webUI:DateTime runat="server" ID="prt_disc_date_time" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 170px 1fr">
+                                        <div class="d-grid" style="grid-template-columns: 150px 1fr">
                                             <webUI:Label runat="server" SubTitle="Diagnosis" Title="Chẩn đoán:" />
-                                            <p>
-                                                <asp:Label CssClass="align-top" runat="server" ID="prt_diagnosis" />
-                                            </p>
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_diagnosis" />
                                         </div>
 
-                                        <div class="d-grid">
+                                        <div class="d-grid" style="grid-template-columns: 190px 1fr">
                                             <webUI:Label runat="server" SubTitle="Treatment" Title="Phương pháp điều trị:" />
-                                            <p>
-                                                <asp:Label CssClass="align-top" runat="server" ID="prt_treatment" />
-                                            </p>
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_treatment" />
                                         </div>
 
-                                        <div class="d-grid">
+                                        <div class="d-grid" style="grid-template-columns: 190px 1fr">
                                             <webUI:Label runat="server" SubTitle="Doctor’s recommendation" Title="Lời dặn của bác sĩ:" />
-                                            <p>
-                                                <asp:Label CssClass="align-top" runat="server" ID="prt_followup_instruc" />
-                                            </p>
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_followup_instruc" />
                                         </div>
 
-                                        <div class="d-grid">
+                                        <div class="d-grid" style="grid-template-columns: 80px 1fr">
                                             <webUI:Label runat="server" SubTitle="Notes" Title="Ghi chú:" />
-                                            <p>
-                                                <asp:Label CssClass="align-top" runat="server" ID="prt_notes" />
-                                            </p>
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_notes" />
                                         </div>
 
                                         <div class="d-grid grid-template-2 mt-4" style="page-break-inside: avoid;">
                                             <div class="text-center">
-                                                <webUI:Date runat="server" ID="Date" />
+                                                <webUI:Date runat="server" ID="prt_date" />
                                                 <div class="mt-2"><span class="font-bold">TỔNG GIÁM ĐỐC/ </span>CEO</div>
                                                 <div><span class="text-primary"><span class="font-bold">Họ tên, chữ ký, MSNV</span>/ Full name, Signature, ID</span></div>
                                                 <div style="height: 50px"></div>
                                             </div>
 
                                             <div class="text-center">
-                                                <webUI:Date runat="server" ID="Date1" />
+                                                <webUI:Date runat="server" ID="prt_date1" />
                                                 <div class="mt-2"><span class="font-bold">TRƯỞNG KHOA/ </span>HEAD OF DEPARTMENT</div>
                                                 <div><span class="text-primary"><span class="font-bold">Họ tên, chữ ký, MSNV</span>/ Full name, Signature, ID</span></div>
                                                 <div style="height: 50px"></div>
@@ -200,7 +193,7 @@
                 </div>
 
                 <div class="cssclsNoPrint" >
-                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd;border-radius:0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                       <li>Discharge certificate</li>
                     </ul>

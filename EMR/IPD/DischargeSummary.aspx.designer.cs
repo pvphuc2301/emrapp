@@ -321,6 +321,15 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_next_consult;
 
         /// <summary>
+        /// prt_last_updated control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_last_updated;
+
+        /// <summary>
         /// btnHome control.
         /// </summary>
         /// <remarks>

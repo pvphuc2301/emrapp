@@ -124,7 +124,6 @@
                                             <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px;">
                                                 <h5 class="font-bold text-primary ml-2">Clinical Reports</h5>
                                                 <telerik:RadTreeView OnNodeClick="RadTreeView2_NodeClick" ID="RadTreeView2" runat="server" OnNodeExpand="RadTreeView2_NodeExpand"/></li>
-                                            <hr />
                                             <%--End Load LAB and IMG Document--%>
 
                                             <%--Load Scan Document--%>

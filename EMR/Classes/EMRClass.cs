@@ -62,6 +62,10 @@ namespace EMR
         public dynamic specialty_name_e { get; set; }
         public dynamic specialty_name_l { get; set; }
         #endregion
+
+        public string getDept() {
+            return specialty_name_l;
+        }
     }
 
     public class Patient
@@ -356,7 +360,9 @@ namespace EMR
         {
             { "WHE", "Xe lăn/Wheel chair" },
             { "WAL", "Tự đến/Walk-in" },
+            { "OTH", "Khác/Other" },
             { "AMB", "Xe cấp cứu/Ambulance" },
+            { "STR", "Băng ca/Stretcher" },
         };
         public static Dictionary<string, string> TRIAGE_CODE = new Dictionary<string, string>()
         {
@@ -410,6 +416,7 @@ namespace EMR
             { "LAB", "Thở gắng sức/Labored" },
             { "SHA", "Thở nông/Shallow" },
             { "RET", "Co kéo/Retractions" },
+            { "OTH", "" },
         };
         public static Dictionary<string, string> DISCHARGE_OPTION_CODE = new Dictionary<string, string>()
         {
@@ -1089,7 +1096,6 @@ namespace EMR
 
         #region Properties
         public static string api = "api/diss";
-
         public dynamic document_id { get; set; }
         public dynamic user_name { get; set; }
         public dynamic status { get; set; }
@@ -1122,6 +1128,7 @@ namespace EMR
         public dynamic transfer_reason { get; set; }
         public dynamic signed_date { get; set; }
         public dynamic signed_doctor { get; set; }
+
         #endregion
 
         public static Dictionary<string, string> DISC_REASON_CODE = new Dictionary<string, string>()

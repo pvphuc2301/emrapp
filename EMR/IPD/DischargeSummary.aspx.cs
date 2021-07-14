@@ -200,6 +200,8 @@ namespace EMR
                     //13
                     prt_next_consult.Text = $"{WebHelpers.FormatDateTime(diss.next_consult_date)} {diss.next_consult_doctor}";
                 }
+
+                //prt_last_updated.Text = diss.
             }
             catch(Exception ex)
             {

@@ -113,9 +113,9 @@ namespace EMR
 
                 prt_patient_name.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
                 prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth);
-
+                
                 prt_gender.Text = WebHelpers.CreateOptions(new Option { Text = "Nam <div class='text-primary'>Male</div>", Value = "Male" }, new Option { Text = "Nữ<div class='text-primary'>Female</div>", Value = "Female" }, DataHelpers.patient.gender_e, "display: grid; grid-template-columns: 1fr 1fr; width: 300px");
-
+                prt_dept.Text = PatientVisit.Instance().getDept();
                 prt_pid.Text = DataHelpers.patient.visible_patient_id;
                 prt_date_of_visit.Text = WebHelpers.FormatDateTime(PatientVisit.Instance().actual_visit_date_time);
                 prt_chief_complain.Text = mc.chief_complain;
@@ -127,6 +127,9 @@ namespace EMR
                 prt_treatment.Text = mc.treatment;
                 prt_treatment_period.Text = mc.treatment_period;
                 prt_recommendation.Text = mc.recommendation;
+                
+                prt_date.Text = DateTime.Now.ToString("dd/MM/yyyy");
+                prt_attending_doctor.Text = (string)Session["UserName"];
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
             

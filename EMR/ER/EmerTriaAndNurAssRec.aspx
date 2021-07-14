@@ -29,7 +29,6 @@
         #canvas {
             border: 2px solid #000;
         }
-        
     </style>
 </head>
 <body>
@@ -37,7 +36,7 @@
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <div class="cssclsNoScreen" style="overflow: scroll">
+                <div class="cssclsNoScreen">
                     <table class="report-container">
                         <thead class="report-header">
                             <tr>
@@ -462,7 +461,7 @@
                 </div>
 
                 <div class="cssclsNoPrint">
-                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0; border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                       <li>Emergency Triage And Nursing Assessment Record</li>
                     </ul>
@@ -518,8 +517,8 @@
                                                 <div class="col-md-12 gt-2-a mb-2">
                                                     <label class="control-label">Khu vực/ <span class="text-primary">Triage Area #:</span></label>
                                                     <asp:Label runat="server" ID="lbl_triage_area"></asp:Label>
-                                                    <div runat="server" id="triage_area_wrapper" class="w-n">
-                                                        <webUI:TextField runat="server" ID="txt_triage_area" />
+                                                    <div runat="server" id="triage_area_wrapper">
+                                                        <webUI:TextField TextMode="SingleLine" runat="server" ID="txt_triage_area" />
                                                     </div>
                                                 </div>
                                             </fieldset>
@@ -527,12 +526,10 @@
                                             <fieldset class="row mb-2">
                                                 <div class="col-md-12 mb-2 gt-2-a">
                                                     <label class="control-label mb-1">Than phiền chính/ <span class="text-primary">Chief complaint:</span></label>
-
                                                     <div runat="server" id="lbl_triage_code">
                                                         <asp:Label runat="server" ID="lbl_chief_complaint"  CssClass="d-block"></asp:Label>
                                                         <asp:Label runat="server" ID="lbl_triage_desc"></asp:Label>
                                                     </div>
-
                                                     <div runat="server" id="chief_complaint_wrapper">
                                                         <div class="mb-2">
                                                             <webUI:TextField runat="server" ID="txt_chief_complaint" />
@@ -544,19 +541,19 @@
                                                             </div>
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_triage_code_2" runat="server" name="rad_triage_code" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_triage_code_2">Cấp cứu/ <span class="text-primary">Emergency</span></label>
+                                                                <label class="custom-control-label" for="rad_triage_code_2">2-Cấp cứu/ <span class="text-primary">Emergency</span></label>
                                                             </div>
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_triage_code_3" runat="server" name="rad_triage_code" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_triage_code_3">Khẩn trương/ <span class="text-primary">Urgent</span></label>
+                                                                <label class="custom-control-label" for="rad_triage_code_3">3-Khẩn trương/ <span class="text-primary">Urgent</span></label>
                                                             </div>
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_triage_code_4" runat="server" name="rad_triage_code" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_triage_code_4">Trì hoãn/ <span class="text-primary">Less Urgent</span></label>
+                                                                <label class="custom-control-label" for="rad_triage_code_4">4-Trì hoãn/ <span class="text-primary">Less Urgent</span></label>
                                                             </div>
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_triage_code_5" runat="server" name="rad_triage_code" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_triage_code_5">Không cấp cứu/ <span class="text-primary">Non-Urgent</span></label>
+                                                                <label class="custom-control-label" for="rad_triage_code_5">5-Không cấp cứu/ <span class="text-primary">Non-Urgent</span></label>
                                                                 <a href="javascript:void(0)" data-clear="rad_triage_code" onclick="clear_radiobutton(this)">
                                                                     <icon:xsquare runat="server" ID="XSquare1" />
                                                                 </a>
@@ -566,42 +563,58 @@
                                                 </div>
                                             </fieldset>
 
-                                            <fieldset class="row mb-2 gt-2-a" runat="server" id="arrival_mode_code_wrapper">
-                                                <label class="control-label mb-2">Đến khoa bằng/ <span class="text-primary">Mode of arrival:</span></label>
-                                                <asp:Label runat="server" ID="lbl_arrival_mode_desc"></asp:Label>
-                                                
-                                                <div>
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
-                                                        <input type="radio" id="rad_arrival_mode_code_WAL" runat="server" name="rad_arrival_mode_code" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="rad_arrival_mode_code_WAL">Tự đến/ <span class="text-primary">Walk-in</span></label>
-                                                    </div>
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
-                                                        <input type="radio" id="rad_arrival_mode_code_WHE" runat="server" name="rad_arrival_mode_code" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="rad_arrival_mode_code_WHE">Xe lăn/ <span class="text-primary">Wheel chair</span></label>
-                                                    </div>
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
-                                                        <input type="radio" id="rad_arrival_mode_code_AMB" runat="server" name="rad_arrival_mode_code" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="rad_arrival_mode_code_AMB">Xe cấp cứu/ <span class="text-primary">Ambulance</span></label>
-                                                        <a href="javascript:void(0)" data-clear="rad_arrival_mode_code" onclick="clear_radiobutton(this)">
-                                                            <icon:xsquare runat="server" ID="XSquare2" />
-                                                        </a>
+                                            <fieldset class="row mb-2" runat="server" id="arrival_mode_code_wrapper">
+                                                <div class="col-md-12 gt-2-a">
+                                                    <label class="control-label mb-2">Đến khoa bằng/ <span class="text-primary">Mode of arrival:</span></label>
+                                                    <asp:Label runat="server" ID="lbl_arrival_mode_desc"></asp:Label>
+                                                    <div>
+                                                        <div class="custom-control custom-radio d-inline-block mr-2">
+                                                            <input type="radio" id="rad_arrival_mode_code_WAL" runat="server" name="rad_arrival_mode_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_arrival_mode_code_WAL">Tự đến/ <span class="text-primary">Walk-in</span></label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio d-inline-block mr-2">
+                                                            <input type="radio" id="rad_arrival_mode_code_WHE" runat="server" name="rad_arrival_mode_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_arrival_mode_code_WHE">Xe lăn/ <span class="text-primary">Wheel chair</span></label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio d-inline-block mr-2">
+                                                            <input type="radio" id="rad_arrival_mode_code_AMB" runat="server" name="rad_arrival_mode_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_arrival_mode_code_AMB">Xe cấp cứu/ <span class="text-primary">Ambulance</span></label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio d-inline-block mr-2">
+                                                            <input type="radio" disabled-for="arrival_mode_note_field" id="rad_arrival_mode_code_OTH" runat="server" name="rad_arrival_mode_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_arrival_mode_code_OTH">Khác/ <span class="text-primary">Other</span></label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio d-inline-block mr-2">
+                                                            <input type="radio" id="rad_arrival_mode_code_STR" runat="server" name="rad_arrival_mode_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_arrival_mode_code_STR">Băng ca/ <span class="text-primary">Stretcher</span></label>
+                                                            <a href="javascript:void(0)" data-clear="rad_arrival_mode_code" onclick="clear_radiobutton(this)">
+                                                                <icon:xsquare runat="server" ID="XSquare2" />
+                                                            </a>
+                                                        </div>
+                                                        <div class="form-group arrival_mode_note_field" runat="server" id="arrival_mode_note_wrapper">
+                                                            <webUI:TextField runat="server" ID="txt_arrival_mode_note"  TextMode="SingleLine"/>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </fieldset>
 
                                             <fieldset class="row mb-2 gt-2-a">
                                                 <label class="col-md-12 control-label mb-1">Tiền căn/ <span class="text-primary">Past Medical History:</span></label>
-                                                <asp:Label runat="server" ID="lbl_past_medical_history"></asp:Label>
-                                                <div class="form-group" runat="server" id="past_medical_history_wrapper">
-                                                    <webUI:TextField runat="server" ID="txt_past_medical_history" />
+                                                <div class="col-md-12">
+                                                    <asp:Label runat="server" ID="lbl_past_medical_history"></asp:Label>
+                                                    <div class="form-group" runat="server" id="past_medical_history_wrapper">
+                                                        <webUI:TextField runat="server" ID="txt_past_medical_history" TextMode="SingleLine" />
+                                                    </div>
                                                 </div>
                                             </fieldset>
 
                                            <fieldset class="row mb-2 gt-2-a">
                                                 <label class="col-md-12 control-label mb-1">Quá trình bệnh lý/ <span class="text-primary">Narrative:</span></label>
-                                                <asp:Label runat="server" ID="lbl_narrative"></asp:Label>
-                                                <div class="form-group" runat="server" id="narrative_wrapper">
-                                                    <webUI:TextField runat="server" ID="txt_narrative" />
+                                               <div class="col-md-12">
+                                                    <asp:Label runat="server" ID="lbl_narrative"></asp:Label>
+                                                    <div class="form-group" runat="server" id="narrative_wrapper">
+                                                        <webUI:TextField runat="server" ID="txt_narrative" />
+                                                    </div>
                                                 </div>
                                             </fieldset>
 
@@ -628,7 +641,7 @@
                                                     <asp:Label runat="server" ID="lbl_vs_weight"/>
                                                     <div class="form-group d-inline-block" runat="server" id="vs_weight_wrapper">
                                                         <input onchange="CalculateBmi()" id="txt_vs_weight" data-type="number" style="width: 160px" runat="server" class="form-control text-right" />
-                                                        <span class="append">Kg</span>
+                                                        <span class="append">kg</span>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6 mb-2 d-flex no-block">
@@ -658,7 +671,11 @@
                                                 <div class="col-sm-6 mb-2 ">
                                                     <div class="d-flex no-block">
                                                         <label for="bmi" class="control-label mb-1 mr-2">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
-                                                        <asp:Label ID="txt_vs_bmi" runat="server"></asp:Label><span class="append">(Kg/m <sup>2</sup>)</span>
+                                                        <asp:Label runat="server" ID="lbl_vs_bmi"/>
+                                                        <div class="form-group d-inline-block" runat="server" id="vs_bmi_wrapper">
+                                                            <input  id="txt_vs_bmi" data-type="number1" style="width: 160px" runat="server" class="form-control text-right" disabled="disabled" />
+                                                            <span class="append">(Kg/m <sup>2</sup>)</span>
+                                                        </div> 
                                                     </div>
                                                     <p class="mt-1">
                                                         (Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not
@@ -678,17 +695,16 @@
                                                     <asp:Label runat="server" ID="lbl_vs_head_circum"/>
                                                     <div class="form-group d-inline-block" runat="server" id="vs_head_circum_wrapper">
                                                         <input id="txt_vs_head_circum"  data-type="number" style="width: 160px" runat="server" class="form-control text-right" />
-                                                        <span class="append">%</span>
+                                                        <span class="append">cm</span>
                                                     </div>
                                                 </div>
                                             </fieldset>
 
                                             <fieldset class="row mb-2 gt-2-a">
-                                                
                                                 <label class="col-md-12 control-label mb-1">Tri giác/ <span class="text-primary">LOC - AVPU</span></label>
-                                                <asp:Label runat="server" ID="lbl_loc_avpu"/>
-
-                                                <div class="col-md-12" runat="server" id="loc_avpu_wrapper">
+                                                <div class="col-md-12">
+                                                    <asp:Label runat="server" ID="lbl_loc_avpu"/>
+                                                    <div runat="server" id="loc_avpu_wrapper">
                                                     <label class="custom-control custom-checkbox d-inline-block mr-2">
                                                         <input type="checkbox" class="custom-control-input" runat="server" id="cb_loc_avpu_a" />
                                                         <span class="custom-control-label">Tỉnh/ <span class="text-primary">A-Alert</span></span>
@@ -709,11 +725,8 @@
                                                         <span class="custom-control-label">Không đáp ứng/ <span class="text-primary">U- Unresponsive</span></span>
                                                     </label>
                                                 </div>
+                                                </div>
                                             </fieldset>
-
-                                            <div class="row">
-                                                
-                                            </div>
 
                                             <fieldset class="row mb-2">
                                                 <label class="col-md-12 control-label mb-2 h5">Đánh giá đau/ <span class="text-primary">Pain assess:</span></label>
@@ -765,23 +778,29 @@
 
                                             <fieldset class="row mb-2 gt-2-a">
                                                 <label for="pain-scale" class="col-md-12 control-label mb-1">Dị ứng/ <span class="text-primary">Allergy:</span></label>
-                                                <asp:Label runat="server" ID="lbl_allergy"/>
-                                                <div class="form-group" runat="server" id="allergy_wrapper">
-                                                    <webUI:TextField runat="server" ID="txt_allergy" />
+                                                <div class="col-md-12">
+                                                    <asp:Label runat="server" ID="lbl_allergy"/>
+                                                    <div class="form-group" runat="server" id="allergy_wrapper">
+                                                        <webUI:TextField runat="server" ID="txt_allergy" />
+                                                    </div>
                                                 </div>
                                             </fieldset>
 
                                             <fieldset class="row mb-2 gt-2-a">
                                                 <label class="col-md-12 control-label mb-1">Thuốc đã dùng/ <span class="text-primary">Medications used:</span></label>
-                                                <asp:Label runat="server" ID="lbl_current_medication"/>
-                                                <div class="form-group" runat="server" id="current_medication_wrapper">
-                                                    <webUI:TextField runat="server" ID="txt_current_medication" />
+                                                <div class="col-md-12">
+                                                    <asp:Label runat="server" ID="lbl_current_medication"/>
+                                                    <div class="form-group" runat="server" id="current_medication_wrapper">
+                                                        <webUI:TextField runat="server" ID="txt_current_medication" />
+                                                    </div>
                                                 </div>
                                             </fieldset>
 
-                                            <fieldset class="row mb-2 gt-2-a">
-                                                <label class="col-md-12 control-label h5">Đánh giá loét/ <span class="text-primary">Skin Integrity</span></label>
-                                                <asp:Label runat="server" ID="lbl_skin_integrity"></asp:Label>
+                                            <fieldset class="row mb-2">
+                                                <label class="col-md-12 d-block control-label h5">Đánh giá loét/ <span class="text-primary">Skin Integrity</span></label>
+                                                <div class="col-md-12 gt-2-a">
+                                                    <label></label>
+                                                    <asp:Label runat="server" ID="lbl_skin_integrity"></asp:Label>
                                                 <div>
                                                     <div class="form-group d-inline-block align-top" runat="server" id="skin_integrity_wrapper">
                                                         <label class="custom-control custom-checkbox">
@@ -857,42 +876,44 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                                </div>
+                                                
                                             </fieldset>
 
                                             <fieldset class="row mb-2 gt-2-a">
-                                                    <label class="col-md-12 control-label mb-1">Tầm soát bệnh lây nhiễm/ <span class="text-primary">Communicable disease screening</span></label>
-                                                    <div>
-                                                        <asp:Label runat="server" ID="lbl_com_dis_src"/>
-                                                        <div runat="server" id="com_dis_src_wrapper">
-                                                            <label class="custom-control custom-checkbox d-inline-block mr-2">
-                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_com_dis_src_f" />
-                                                                <span class="custom-control-label">Sốt/ <span class="text-primary">Fever</span></span>
-                                                            </label>
+                                                <label class="col-md-12 control-label mb-1">Tầm soát bệnh lây nhiễm/ <span class="text-primary">Communicable disease screening</span></label>
+                                                <div class="col-md-12">
+                                                    <asp:Label runat="server" ID="lbl_com_dis_src"/>
+                                                    <div runat="server" id="com_dis_src_wrapper">
+                                                        <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_com_dis_src_f" />
+                                                            <span class="custom-control-label">Sốt/ <span class="text-primary">Fever</span></span>
+                                                        </label>
 
-                                                            <label class="custom-control custom-checkbox d-inline-block mr-2">
-                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_com_dis_src_c" />
-                                                                <span class="custom-control-label">Ho/ <span class="text-primary">Cough</span></span>
-                                                            </label>
+                                                        <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_com_dis_src_c" />
+                                                            <span class="custom-control-label">Ho/ <span class="text-primary">Cough</span></span>
+                                                        </label>
 
-                                                            <label class="custom-control custom-checkbox d-inline-block mr-2">
-                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_com_dis_src_r" />
-                                                                <span class="custom-control-label">Nổi mần/ <span class="text-primary">Rash</span></span>
-                                                            </label>
-                                                            <label class="custom-control custom-checkbox d-inline-block mr-2">
-                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_com_dis_src_s" />
-                                                                <span class="custom-control-label">Đau họng/ <span class="text-primary">Sore throat</span></span>
-                                                            </label>
-                                                            <label class="custom-control custom-checkbox d-inline-block">
-                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_com_dis_src_t" />
-                                                                <span class="custom-control-label">Đi khỏi Việt Nam trong vòng 15 ngày gần đây/ <span class="text-primary">Travel outside Vietnam in past 15 days</span></span>
-                                                            </label>
-                                                        </div>
+                                                        <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_com_dis_src_r" />
+                                                            <span class="custom-control-label">Nổi mần/ <span class="text-primary">Rash</span></span>
+                                                        </label>
+                                                        <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_com_dis_src_s" />
+                                                            <span class="custom-control-label">Đau họng/ <span class="text-primary">Sore throat</span></span>
+                                                        </label>
+                                                        <label class="custom-control custom-checkbox d-inline-block">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_com_dis_src_t" />
+                                                            <span class="custom-control-label">Đi khỏi Việt Nam trong vòng 15 ngày gần đây/ <span class="text-primary">Travel outside Vietnam in past 15 days</span></span>
+                                                        </label>
                                                     </div>
+                                                </div>
                                             </fieldset>
 
                                             <fieldset class="row mb-2 gt-2-a">
-                                                    <label class="col-md-12 control-label mb-1">Kế hoạch xuất viện/ <span class="text-primary">Discharge Planning</span></label>
-
+                                                <label class="col-md-12 control-label mb-1">Kế hoạch xuất viện/ <span class="text-primary">Discharge Planning</span></label>
+                                                <div class="col-md-12">
                                                     <asp:Label runat="server" ID="lbl_discharge_plan"/>
                                                     <div runat="server" id="discharge_plan_wrapper">
                                                         <label class="custom-control custom-checkbox d-inline-block mr-2">
@@ -910,6 +931,7 @@
                                                             <span class="custom-control-label">Nguy cơ ngã cao/ <span class="text-primary">high fall risk</span> Nơi cư trú sau khi xuất viện <span class="text-primary">Place of residence after discharge</span></span>
                                                         </label>
                                                     </div>
+                                                </div>
                                             </fieldset>
 
                                             <fieldset class="row mb-2">
@@ -959,11 +981,10 @@
                                                                 <icon:xsquare runat="server" />
                                                             </a>
                                                         </div>
-                                                        <div class="form-group btc_language_note_field w-n d-inline-block">
-                                                            <webUI:TextField runat="server" ID="txt_btc_language_note" />
+                                                        <div class="form-group btc_language_note_field mb-2">
+                                                            <webUI:TextField runat="server" ID="txt_btc_language_note" TextMode="SingleLine" />
                                                         </div>
                                                     </div>
-
                                                 </div>
 
                                                 <div class="col-md-12 gt-2-a">
@@ -982,7 +1003,7 @@
                                                                 <icon:xsquare runat="server" />
                                                             </a>
                                                         </div>
-                                                        <div class="form-group btc_cognitive_field w-n d-inline-block">
+                                                        <div class="form-group btc_cognitive_field mb-2">
                                                             <webUI:TextField runat="server" ID="txt_btc_cognitive_note" />
                                                         </div>
                                                     </div>
@@ -1004,7 +1025,7 @@
                                                                 <icon:xsquare runat="server" />
                                                             </a>
                                                         </div>
-                                                        <div class="form-group btc_sensory_field w-n d-inline-block">
+                                                        <div class="form-group btc_sensory_field mb-2">
                                                             <webUI:TextField runat="server" ID="txt_btc_sensory_note" />
                                                         </div>
                                                     </div>
@@ -1026,7 +1047,7 @@
                                                                 <icon:xsquare runat="server" />
                                                             </a>
                                                         </div>
-                                                        <div class="form-group btc_religious_field w-n d-inline-block">
+                                                        <div class="form-group btc_religious_field mb-2">
                                                             <webUI:TextField runat="server" ID="txt_btc_religious_note" />
                                                         </div>
                                                     </div>
@@ -1036,86 +1057,86 @@
                                                     <label class="control-label mb-1 mr-2">5. Trở ngại về Văn hóa/ <span class="text-primary">Cultural Barriers:</span></label>
                                                     <asp:Label runat="server" ID="lbl_btc_cultural"/>
                                                     <div runat="server" id="btc_cultural_wrapper">
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
-                                                        <input type="radio" id="rad_btc_cultural_false" name="rad_btc_cultural" class="custom-control-input" runat="server" />
-                                                        <label class="custom-control-label" for="rad_btc_cultural_false">Không/ <span class="text-primary">No</span></label>
-                                                    </div>
-                                                    <div class="custom-control custom-radio d-inline-block mr-2">
-                                                        <input disabled-for="btc_cultural_field" type="radio" id="rad_btc_cultural_true" name="rad_btc_cultural" class="custom-control-input" runat="server" />
-                                                        <label class="custom-control-label" for="rad_btc_cultural_true">Có, Giải thích/ <span class="text-primary">Yes, Explain:</span></label>
-                                                        <a href="javascript:void(0)" data-clear="rad_btc_cultural" onclick="clear_radiobutton(this)">
-                                                            <icon:xsquare runat="server" />
-                                                        </a>
-                                                    </div>
-                                                    <div class="form-group btc_cultural_field w-n d-inline-block">
-                                                        <webUI:TextField runat="server" ID="txt_btc_cultural_note" />
-                                                    </div>
+                                                        <div class="custom-control custom-radio d-inline-block mr-2">
+                                                            <input type="radio" id="rad_btc_cultural_false" name="rad_btc_cultural" class="custom-control-input" runat="server" />
+                                                            <label class="custom-control-label" for="rad_btc_cultural_false">Không/ <span class="text-primary">No</span></label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio d-inline-block mr-2">
+                                                            <input disabled-for="btc_cultural_field" type="radio" id="rad_btc_cultural_true" name="rad_btc_cultural" class="custom-control-input" runat="server" />
+                                                            <label class="custom-control-label" for="rad_btc_cultural_true">Có, Giải thích/ <span class="text-primary">Yes, Explain:</span></label>
+                                                            <a href="javascript:void(0)" data-clear="rad_btc_cultural" onclick="clear_radiobutton(this)">
+                                                                <icon:xsquare runat="server" />
+                                                            </a>
+                                                        </div>
+                                                        <div class="form-group btc_cultural_field mb-2">
+                                                            <webUI:TextField runat="server" ID="txt_btc_cultural_note" />
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </fieldset>
 
-                                            <div class="row mb-2">
-                                                <div class="col-md-12">
-                                                    <label class="control-label mb-2 h5">ĐÁNH GIÁ THỂ CHẤT CÁC CƠ QUAN/ <span class="text-primary">ASSESSMENT BY SYSTEM:</span></label>
-                                                </div>
+                                            <fieldset class="row mb-2">
+                                                <label class="col-md-12 control-label mb-2 h5">ĐÁNH GIÁ THỂ CHẤT CÁC CƠ QUAN/ <span class="text-primary">ASSESSMENT BY SYSTEM:</span></label>
 
-                                                <fieldset class="col-md-12 gt-2-a mb-2">
-                                                    <label class="col-md-12 control-label">Tổng trạng chung/ <span class="text-primary">General appearance:</span></label>
+                                                <div class="col-md-12 gt-2-a mb-2">
+                                                    <label class="control-label">Tổng trạng chung/ <span class="text-primary">General appearance:</span></label>
 
                                                     <asp:Label runat="server" ID="lbl_general_appearance"/>
                                                     <div runat="server" id="general_appearance_wrapper">
                                                         <label class="custom-control custom-checkbox d-inline-block mr-2">
-                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_general_appearance_p" />
-                                                                <span class="custom-control-label">Hồng hào/ <span class="text-primary">Pink</span></span>
-                                                            </label>
-                                                            <label class="custom-control custom-checkbox  d-inline-block mr-2">
-                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_general_appearance_c" />
-                                                                <span class="custom-control-label">Tím/ <span class="text-primary">Cyanosis</span></span>
-                                                            </label>
-                                                            <label class="custom-control custom-checkbox  d-inline-block">
-                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_general_appearance_t" />
-                                                                <span class="custom-control-label">Tái/ <span class="text-primary">Pallor</span></span>
-                                                            </label>
-                                                        </div>
-                                                    </fieldset>
-                                                
-                                                <fieldset class="col-md-12 gt-2-a mb-2">
-                                                    <label class="col-md-12 control-label mb-1">Thần kinh/ <span class="text-primary">Neuro:</span></label>
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_general_appearance_p" />
+                                                            <span class="custom-control-label">Hồng hào/ <span class="text-primary">Pink</span></span>
+                                                        </label>
+                                                        <label class="custom-control custom-checkbox  d-inline-block mr-2">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_general_appearance_c" />
+                                                            <span class="custom-control-label">Tím/ <span class="text-primary">Cyanosis</span></span>
+                                                        </label>
+                                                        <label class="custom-control custom-checkbox  d-inline-block">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_general_appearance_t" />
+                                                            <span class="custom-control-label">Tái/ <span class="text-primary">Pallor</span></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
 
+                                                <div class="col-md-12 gt-2-a mb-2">
+                                                    <label class="control-label">Thần kinh/ <span class="text-primary">Neuro:</span></label>
                                                     <div>
                                                         <label class="control-label mb-1 mr-2"><span class="text-primary">Glasgow coma scale/ GCS</span></label>
-                                                            <div class="d-inline-block">
-                                                                <label class="control-label mr-2">Mắt/ <span class="text-primary">E</span></label>
-                                                                <asp:Label runat="server" ID="lbl_eye"/>
-                                                                <div runat="server" id="eye_wrapper"  class="form-group w-4 d-inline-block">
-                                                                    <webUI:TextField runat="server" ID="txt_eye" />
-                                                                </div>
+                                                        <div class="d-inline-block">
+                                                            <label class="control-label mr-2">Mắt/ <span class="text-primary">E</span></label>
+                                                            <asp:Label runat="server" ID="lbl_eye"/>
+                                                            <div runat="server" id="eye_wrapper"  class="form-group w-4 d-inline-block">
+                                                                <webUI:TextField runat="server" ID="txt_eye" TextMode="SingleLine" />
                                                             </div>
+                                                        </div>
 
-                                                            <div class="d-inline-block">
-                                                                <label class="control-label mr-2">Lời nói/ <span class="text-primary">V</span></label>
-                                                                <asp:Label runat="server" ID="lbl_voice"/>
-                                                                <div runat="server" id="voice_wrapper" class="form-group w-4 d-inline-block">
-                                                                    <webUI:TextField runat="server" ID="txt_voice" />
-                                                                </div>
+                                                        <div class="d-inline-block">
+                                                            <label class="control-label mr-2">Lời nói/ <span class="text-primary">V</span></label>
+                                                            <asp:Label runat="server" ID="lbl_voice"/>
+                                                            <div runat="server" id="voice_wrapper" class="form-group w-4 d-inline-block">
+                                                                <webUI:TextField runat="server" ID="txt_voice" TextMode="SingleLine" />
                                                             </div>
+                                                        </div>
 
-                                                            <div class="d-inline-block">
-                                                                <label class="control-label mr-2">Vận động/ <span class="text-primary">M</span></label>
-                                                                <asp:Label runat="server" ID="lbl_motion"/>
-                                                                <div  runat="server" id="motion_wrapper" class="form-group w-4 d-inline-block">
-                                                                    <webUI:TextField runat="server" ID="txt_motion" />
-                                                                </div>
+                                                        <div class="d-inline-block">
+                                                            <label class="control-label mr-2">Vận động/ <span class="text-primary">M</span></label>
+                                                            <asp:Label runat="server" ID="lbl_motion"/>
+                                                            <div  runat="server" id="motion_wrapper" class="form-group w-4 d-inline-block">
+                                                                <webUI:TextField runat="server" ID="txt_motion" TextMode="SingleLine" />
                                                             </div>
+                                                        </div>
+
                                                         <div class="mt-2">
                                                             <label class="custom-control custom-checkbox d-inline-block mr-2">
                                                                 <input type="checkbox" class="custom-control-input" runat="server" id="cb_alert_true" />
                                                                 <span class="custom-control-label">Tỉnh táo/ <span class="text-primary">Alert</span></span>
                                                             </label>
+
                                                             <label class="custom-control custom-checkbox d-inline-block mr-2">
                                                                 <input type="checkbox" class="custom-control-input" runat="server" id="cb_coma_true" />
                                                                 <span class="custom-control-label">Hôn mê/ <span class="text-primary">Coma</span></span>
                                                             </label>
+
                                                             <div class="d-inline-block">
                                                                 <label class="custom-control custom-checkbox d-inline-block mr-2">
                                                                     <input disabled-for="str_others_field" type="checkbox" class="custom-control-input" id="cb_others_true" runat="server" />
@@ -1123,44 +1144,44 @@
                                                                 </label>
                                                                 <asp:Label runat="server" ID="lbl_str_others"></asp:Label>
                                                                 <div class="form-group str_others_field d-inline-block w-n" runat="server" id="str_others_wrapper">
-                                                                    <webUI:TextField runat="server" ID="txt_str_others" />
+                                                                    <webUI:TextField runat="server" ID="txt_str_others" TextMode="SingleLine"/>
                                                                 </div>
-                                                            </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </fieldset>
+                                                </div>
 
-                                                <fieldset class="row mb-2 gt-2-a">
-                                                    <label class="col-md-12 control-label">Hô hấp/ <span class="text-primary">Respiratory:</span></label>
+                                                <div class="col-md-12 gt-2-a mb-2">
+                                                    <label class="control-label">Hô hấp/ <span class="text-primary">Respiratory:</span></label>
+                                                    <div>
+                                                        <asp:Label runat="server" ID="lbl_respiratory"></asp:Label>
 
-                                                    <asp:Label runat="server" ID="lbl_respiratory"></asp:Label>
-                                                        <div class="col-md-12 mb-2" runat="server" id="respiratory_wrapper">
-                                                            <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                        <div class="mb-2" runat="server" id="respiratory_wrapper">
+                                                            <label class="custom-control custom-checkbox d-inline-block">
                                                                 <input type="checkbox" class="custom-control-input" runat="server" id="cb_respiratory_reg" />
                                                                 <span class="custom-control-label">Thở đều/ <span class="text-primary">Regular</span></span>
                                                             </label>
-                                                            <label class="custom-control custom-checkbox  d-inline-block mr-2">
+                                                            <label class="custom-control custom-checkbox  d-inline-block">
                                                                 <input type="checkbox" class="custom-control-input" runat="server" id="cb_respiratory_nre" />
                                                                 <span class="custom-control-label">Thở không đều/ <span class="text-primary">Inregular</span></span>
                                                             </label>
-                                                            <label class="custom-control custom-checkbox  d-inline-block mr-2">
+                                                            <label class="custom-control custom-checkbox  d-inline-block">
                                                                 <input type="checkbox" class="custom-control-input" runat="server" id="cb_respiratory_tac" />
                                                                 <span class="custom-control-label">Thở nhanh/ <span class="text-primary">Tachypneic</span></span>
                                                             </label>
-                                                            <label class="custom-control custom-checkbox  d-inline-block mr-2">
+                                                            <label class="custom-control custom-checkbox  d-inline-block">
                                                                 <input type="checkbox" class="custom-control-input" runat="server" id="cb_respiratory_sha" />
                                                                 <span class="custom-control-label">Thở nông/ <span class="text-primary">Shallow</span></span>
                                                             </label>
-                                                            <label class="custom-control custom-checkbox  d-inline-block mr-2">
+                                                            <label class="custom-control custom-checkbox  d-inline-block">
                                                                 <input type="checkbox" class="custom-control-input" runat="server" id="cb_respiratory_lab" />
                                                                 <span class="custom-control-label">Thở gắng sức/ <span class="text-primary">Labored</span></span>
                                                             </label>
-                                                            <label class="custom-control custom-checkbox  d-inline-block mr-2">
+                                                            <label class="custom-control custom-checkbox  d-inline-block">
                                                                 <input type="checkbox" class="custom-control-input" id="cb_respiratory_ret" runat="server" />
                                                                 <span class="custom-control-label">Co kéo/ <span class="text-primary">Retractions</span></span>
                                                             </label>
-                                                            <label class="custom-control custom-checkbox  d-inline-block mr-2">
+                                                            <label class="custom-control custom-checkbox  d-inline-block">
                                                                 <input type="checkbox" class="custom-control-input" runat="server" id="cb_respiratory_cou" />
                                                                 <span class="custom-control-label">Ho/ <span class="text-primary">Cough</span></span>
                                                             </label>
@@ -1168,138 +1189,141 @@
                                                                 <input type="checkbox" class="custom-control-input" runat="server" id="cb_respiratory_spu" />
                                                                 <span class="custom-control-label">Có đàm/ <span class="text-primary">Sputum</span></span>
                                                             </label>
-                                                            <div class="d-inline-block">
-                                                                <label class="custom-control custom-checkbox d-inline-block mr-2">
-                                                                    <input disabled-for="respiratory_oth_field" id="cb_respiratory_oth" type="checkbox" runat="server" class="custom-control-input" />
-                                                                    <span class="custom-control-label">Khác/ <span class="text-primary">Others:</span></span>
-                                                                </label>
-
-                                                                <div class="form-group respiratory_oth_field w-n d-inline-block">
-                                                                    <webUI:TextField runat="server" ID="txt_respiratory_oth" />
-                                                                </div>
-                                                            </div>
                                                         </div>
 
-                                                    </fieldset>
-
-                                                    <fieldset class="row mb-2 gt-2-a">
-                                                        <label class="col-md-12 control-label">Tim mạch/ <span class="text-primary">Cardiovascular:</span></label>
-                                                        <div class="col-md-12">
-                                                            <label class="control-label mr-2">Nhịp tim/ <span class="text-primary">Rhythm:</span></label>
-                                                            <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_regular_true" />
-                                                                <span class="custom-control-label">Đều/ <span class="text-primary">Regular</span></span>
-                                                            </label>
-                                                            <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_inregular_true" />
-                                                                <span class="custom-control-label">Không đều/ <span class="text-primary">Inregular</span></span>
-                                                            </label>
-                                                            <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                                <input disabled-for="rhythm_field" type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_others_true" />
+                                                        <div class="d-inline-block" runat="server" id="respiratory_oth_field">
+                                                            <label class="custom-control custom-checkbox d-inline-block">
+                                                                <input disabled-for="respiratory_oth_field" id="cb_respiratory_oth" type="checkbox" runat="server" class="custom-control-input" />
                                                                 <span class="custom-control-label">Khác/ <span class="text-primary">Others:</span></span>
                                                             </label>
-                                                            <asp:Label runat="server" ID="lbl_rhythm_str_others"></asp:Label>
-                                                            <div class="form-group rhythm_field d-inline-block w-n" runat="server" id="rhythm_str_others_wrapper">
-                                                                <webUI:TextField runat="server" ID="txt_rhythm_str_others" />
+
+                                                            <div runat="server" id="txt_respiratory_oth_field" class="form-group respiratory_oth_field w-n d-inline-block">
+                                                                <webUI:TextField runat="server" ID="txt_respiratory_oth" TextMode="SingleLine"/>
+                                                            </div>
+                                                            <asp:Label runat="server" ID="lbl_respiratory_oth"></asp:Label>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+
+                                                <div class="col-md-12 gt-2-a mb-2">
+                                                    <label class="control-label">Tim mạch/ <span class="text-primary">Cardiovascular:</span></label>
+                                                    <div>
+                                                        <label class="control-label mr-2">Nhịp tim/ <span class="text-primary">Rhythm:</span></label>
+                                                        <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_regular_true" />
+                                                            <span class="custom-control-label">Đều/ <span class="text-primary">Regular</span></span>
+                                                        </label>
+                                                        <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_inregular_true" />
+                                                            <span class="custom-control-label">Không đều/ <span class="text-primary">Inregular</span></span>
+                                                        </label>
+                                                        <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
+                                                            <input disabled-for="rhythm_field" type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_others_true" />
+                                                            <span class="custom-control-label">Khác/ <span class="text-primary">Others:</span></span>
+                                                        </label>
+                                                        <asp:Label runat="server" ID="lbl_rhythm_str_others"></asp:Label>
+                                                        <div class="form-group rhythm_field d-inline-block w-n" runat="server" id="rhythm_str_others_wrapper">
+                                                            <webUI:TextField runat="server" ID="txt_rhythm_str_others" TextMode="SingleLine"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 gt-2-a mb-2">
+                                                    <label class="control-label">Tâm lý/ <span class="text-primary">Psychosocial:</span></label>
+                                                    <div>
+                                                        <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_psychosocial_true" />
+                                                            <span class="custom-control-label">Bình thường/ <span class="text-primary">Normal</span></span>
+                                                        </label>
+                                                        <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
+                                                            <input disabled-for="psychosocial_str_others_field" type="checkbox" class="custom-control-input" runat="server" id="cb_psychosocial_others_true" />
+                                                            <span class="custom-control-label">Khác/ <span class="text-primary">Others</span></span>
+                                                        </label>
+
+                                                        <asp:Label runat="server" ID="lbl_psychosocial_str_others"></asp:Label>
+                                                        <div class="form-group psychosocial_str_others_field d-inline-block w-n" runat="server" id="psychosocial_str_others_wrapper">
+                                                            <webUI:TextField runat="server" ID="txt_psychosocial_str_others" TextMode="SingleLine" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 gt-2-a mb-2">
+                                                    <label class="control-label">Các cơ quan khác/ <span class="text-primary">Other systems:</span></label>
+                                                    <div>
+                                                        <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_other_systems_normal_true" />
+                                                            <span class="custom-control-label">Bình thường/ <span class="text-primary">Normal</span></span>
+                                                        </label>
+                                                        <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
+                                                            <input disabled-for="other_systems_field" type="checkbox" class="custom-control-input" runat="server" id="cb_other_systems_abnormal_true" />
+                                                            <span class="custom-control-label">Bất thường/ <span class="text-primary">Abnormal</span></span>
+                                                        </label>
+                                                        <asp:Label runat="server" ID="lbl_others_systems_str"></asp:Label>
+
+                                                        <div class="other_systems_field d-inline-block" runat="server" id="others_systems_str_wrapper">
+                                                            <label>Ghi rõ/ Specify</label>
+                                                            <div class="form-group d-inline-block w-n">
+                                                                <webUI:TextField runat="server" ID="txt_others_systems_str" TextMode="SingleLine" />
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                </div>
 
-                                                    </fieldset>
+                                                <div class="col-md-12 gt-2-a mb-2">
+                                                    <label class="control-label">Sản-phụ</label>
+                                                    <div class="mb-2">
+                                                        <div class="mb-2">
+                                                            <asp:Label runat="server" ID="lbl_lmp"></asp:Label>
+                                                            <div runat="server" id="lmp_wrapper">
+                                                                <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
+                                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_lmp_true" />
+                                                                    <span class="custom-control-label">Kinh cuối/ <span class="text-primary">LMP</span></span>
+                                                                </label>
 
-                                                    <fieldset class="row mb-2 gt-2-a">
-                                                        <label class="col-md-12 control-label">Tâm lý/ <span class="text-primary">Psychosocial:</span></label>
-                                                        <div class="col-md-12">
-                                                            <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_psychosocial_true" />
-                                                                <span class="custom-control-label">Bình thường/ <span class="text-primary">Normal</span></span>
-                                                            </label>
-                                                            <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                                <input disabled-for="psychosocial_str_others_field" type="checkbox" class="custom-control-input" runat="server" id="cb_psychosocial_others_true" />
-                                                                <span class="custom-control-label">Khác/ <span class="text-primary">Others</span></span>
-                                                            </label>
-
-                                                            <asp:Label runat="server" ID="lbl_psychosocial_str_others"></asp:Label>
-                                                            <div class="form-group psychosocial_str_others_field d-inline-block w-n" runat="server" id="psychosocial_str_others_wrapper">
-                                                                <webUI:TextField runat="server" ID="txt_psychosocial_str_others" />
-                                                            </div>
-                                                        </div>
-                                                    </fieldset>
-
-                                                    <fieldset class="row mb-2 gt-2-a">
-                                                        <label class="col-md-12 control-label mb-1">Các cơ quan khác/ <span class="text-primary">Other systems:</span></label>
-                                                        <div class="col-md-12">
-                                                            <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_other_systems_normal_true" />
-                                                                <span class="custom-control-label">Bình thường/ <span class="text-primary">Normal</span></span>
-                                                            </label>
-                                                            <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                                <input disabled-for="other_systems_field" type="checkbox" class="custom-control-input" runat="server" id="cb_other_systems_abnormal_true" />
-                                                                <span class="custom-control-label">Khác/ <span class="text-primary">Others</span></span>
-                                                            </label>
-                                                            <asp:Label runat="server" ID="lbl_others_systems_str"></asp:Label>
-                                                            <div class="form-group other_systems_field d-inline-block w-n" runat="server" id="others_systems_str_wrapper">
-                                                                <webUI:TextField runat="server" ID="txt_others_systems_str" />
-                                                            </div>
-                                                        </div>
-                                                    </fieldset>
-
-                                                    <fieldset class="row mb-2 gt-2-a">
-                                                        <label class="col-md-12 control-label d-block">Sản-phụ</label>
-
-                                                        <div class="col-md-12 mb-2">
-                                                            <div class="mb-2">
-                                                                <asp:Label runat="server" ID="lbl_lmp"></asp:Label>
-                                                                <div runat="server" id="lmp_wrapper">
-                                                                    <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_lmp_true" />
-                                                                        <span class="custom-control-label">Kinh cuối/ <span class="text-primary">LMP</span></span>
-                                                                    </label>
-
-                                                                    <div class="form-group w-n d-inline-block ">
-                                                                        <webUI:TextField runat="server" ID="txt_lmP_note" />
-                                                                    </div>
+                                                                <div class="form-group w-n d-inline-block">
+                                                                    <webUI:TextField runat="server" ID="txt_lmP_note" TextMode="SingleLine"/>
                                                                 </div>
                                                             </div>
-                                                            <div>
-                                                                <div class="d-inline-block mr-2">
-                                                                    <label class="control-label mr-2">Tiền sử thai nghén/ <span class="text-primary">Gravida/PARA:</span></label>
-                                                                    <asp:Label runat="server" ID="lbl_para"></asp:Label>
-                                                                    <div runat="server" id="para_wrapper" class="form-group d-inline-block w-n">
-                                                                        <webUI:TextField runat="server" ID="txt_para" />
-                                                                    </div>
+                                                        </div>
+                                                        <div>
+                                                            <div class="d-inline-block mr-2">
+                                                                <label class="control-label mr-2">Tiền sử thai nghén/ <span class="text-primary">Gravida/PARA:</span></label>
+                                                                <asp:Label runat="server" ID="lbl_para"></asp:Label>
+                                                                <div runat="server" id="para_wrapper" class="form-group d-inline-block w-n mb-2">
+                                                                    <webUI:TextField runat="server" ID="txt_para" TextMode="SingleLine"/>
                                                                 </div>
+                                                            </div>
 
-                                                                <div class="d-inline-block">
-                                                                    <label class="control-label d-inline-block mr-2">Sẩy/ <span class="text-primary">Abortions:</span></label>
-                                                                    <asp:Label runat="server" ID="lbl_abortions"></asp:Label>
-                                                                    <div runat="server" id="abortions_wrapper" class="form-group d-inline-block w-n">
-                                                                        <webUI:TextField runat="server" ID="txt_abortions" />
-                                                                    </div>
+                                                            <div class="d-inline-block">
+                                                                <label class="control-label d-inline-block mr-2">Sẩy/ <span class="text-primary">Abortions:</span></label>
+                                                                <asp:Label runat="server" ID="lbl_abortions"></asp:Label>
+                                                                <div runat="server" id="abortions_wrapper" class="form-group d-inline-block w-n mb-2">
+                                                                    <webUI:TextField runat="server" ID="txt_abortions" TextMode="SingleLine" />
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </fieldset>
-                                            </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
 
-                                            <div class="row mb-2">
+                                            <fieldset class="row mb-2">
                                                 <div class="col-md-12">
-                                                    <table class="table-responsive">
-                                                        <thead class="table-bordered">
+                                                    <table style="table-layout: fixed; width: 100%;">
+                                                        <tbody>
                                                             <tr>
-                                                                <th scope="col">
+                                                                <td class="pt-2 pb-2" style="width: 300px;">
                                                                     <div style="width: 300px;">Thủ thuật can thiệp/ <span class="text-primary">Intervention Procedure</span></div>
-                                                                </th>
-                                                                <th scope="col">
+                                                                </td>
+                                                                <td style="width: 210px;">
                                                                     <div>Thời gian/ <span class="text-primary">Time</span></div>
-                                                                </th>
-                                                                <th scope="col">
-                                                                    <div style="width: 300px;">Ghi chú/ <span class="text-primary">Notes</span></div>
-                                                                </th>
+                                                                </td>
+                                                                <td>
+                                                                    <div>Ghi chú/ <span class="text-primary">Notes</span></div>
+                                                                </td>
                                                             </tr>
-                                                        </thead>
-                                                        <tbody class="table-bordered">
                                                             <tr>
-                                                                <td class="pl-2">
+                                                                <td>
                                                                     <div>ĐHMM/Capillary Blood glucose </div>
                                                                 </td>
                                                                 <td>
@@ -1311,7 +1335,7 @@
                                                                 <td>
                                                                     <asp:Label runat="server" ID="lbl_blood_glucose_note"></asp:Label>
                                                                     <div runat="server" id="blood_glucose_note_wrapper">
-                                                                        <webUI:TextField runat="server" ID="txt_blood_glucose_note" />
+                                                                        <webUI:TextField runat="server" ID="txt_blood_glucose_note" TextMode="SingleLine" />
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -1327,7 +1351,7 @@
                                                                 <td>
                                                                     <asp:Label runat="server" ID="lbl_ecg_note"></asp:Label>
                                                                     <div runat="server" id="ecg_note_wrapper">
-                                                                        <webUI:TextField runat="server" ID="txt_ecg_note" />
+                                                                        <webUI:TextField runat="server" ID="txt_ecg_note" TextMode="SingleLine" />
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -1343,7 +1367,7 @@
                                                                 <td>
                                                                     <asp:Label runat="server" ID="lbl_urine_cath_note"></asp:Label>
                                                                     <div runat="server" id="urine_cath_note_wrapper">
-                                                                        <webUI:TextField runat="server" ID="txt_urine_cath_note" />
+                                                                        <webUI:TextField runat="server" ID="txt_urine_cath_note" TextMode="SingleLine" />
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -1360,7 +1384,7 @@
                                                                     <asp:Label runat="server" ID="lbl_splint_cast_dressing_note"></asp:Label>
                                                                     <div runat="server" id="splint_cast_dressing_note_wrapper">
 
-                                                                    <webUI:TextField runat="server" ID="txt_splint_cast_dressing_note" />
+                                                                    <webUI:TextField runat="server" ID="txt_splint_cast_dressing_note" TextMode="SingleLine" />
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -1376,35 +1400,28 @@
                                                                 <td>
                                                                     <asp:Label runat="server" ID="lbl_procedure_other_note"></asp:Label>
                                                                     <div runat="server" id="procedure_other_note_wrapper">
-                                                                        <webUI:TextField runat="server" ID="txt_procedure_other_note" />
+                                                                        <webUI:TextField runat="server" ID="txt_procedure_other_note" TextMode="SingleLine" />
                                                                     </div>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                            </div>
+                                            </fieldset>
+                                            
+                                            <fieldset class="row mb-2">
 
-                                            <div class="row mb-2">
                                                 <div class="col-md-12">
                                                     <asp:UpdatePanel ID="updatePanel_AssessmentSystem" runat="server" UpdateMode="Always">
                                                         <ContentTemplate>
-                                                            <asp:GridView
-                                                                ShowHeaderWhenEmpty="true"
-                                                                ID="grid_AssessmentSystem"
-                                                                runat="server"
-                                                                 ShowHeader="true"
-                                                                OnRowDeleting="grid_AssessmentSystem_RowDeleting"
-                                                                OnRowDataBound="gridAssessmentSystem_RowDataBound"
-                                                                CssClass="tb-responsive table-bordered"
-                                                                AutoGenerateColumns="false">
+                                                            <asp:GridView ShowHeaderWhenEmpty="true" ID="grid_AssessmentSystem" runat="server" ShowHeader="true" OnRowDeleting="grid_AssessmentSystem_RowDeleting" OnRowDataBound="gridAssessmentSystem_RowDataBound" CssClass="tb-responsive table-bordered" AutoGenerateColumns="false">
                                                                 <Columns>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
                                                                             <div style="width: 105px" class="text-primary pt-2 pb-2">Time</div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField CssClass="form-control" Value='<%#Eval("time") %>' Width="105px" ID="time" runat="server" />
+                                                                            <webUI:TextField CssClass="form-control" Value='<%#Eval("time") %>' Width="105px" ID="time" TextMode="SingleLine" runat="server" />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1412,7 +1429,7 @@
                                                                             <div style="width: 80px" class="text-primary">RR (l/p)</div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Value='<%#Eval("rrlp") %>' ID="rrlp" runat="server" />
+                                                                            <webUI:TextField Value='<%#Eval("rrlp") %>' ID="rrlp" runat="server" TextMode="SingleLine" />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1421,7 +1438,7 @@
                                                                             O2Sat (%)</span>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Value='<%#Eval("o2sat") %>' ID="o2sat" runat="server" />
+                                                                            <webUI:TextField Value='<%#Eval("o2sat") %>' ID="o2sat" runat="server" TextMode="SingleLine"/>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1430,7 +1447,7 @@
                                                                             HR (bpm)</span>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Value='<%#Eval("hr") %>' ID="hr" runat="server" />
+                                                                            <webUI:TextField Value='<%#Eval("hr") %>' ID="hr" runat="server" TextMode="SingleLine"/>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1439,7 +1456,7 @@
                                                                             BP (mmhg)</span>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Value='<%#Eval("bp") %>' ID="bp" runat="server" />
+                                                                            <webUI:TextField Value='<%#Eval("bp") %>' ID="bp" runat="server" TextMode="SingleLine"/>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1448,7 +1465,7 @@
                                                                             Temp (0C)</span>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Value='<%#Eval("temp") %>' ID="temp" runat="server" />
+                                                                            <webUI:TextField Value='<%#Eval("temp") %>' ID="temp" runat="server" TextMode="SingleLine"/>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1457,7 +1474,7 @@
                                                                             GCS</span>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Value='<%#Eval("gcs") %>' ID="gcs" runat="server" />
+                                                                            <webUI:TextField Value='<%#Eval("gcs") %>' ID="gcs" runat="server" TextMode="SingleLine"/>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1466,7 +1483,7 @@
                                                                             Pain/ 10</span>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Value='<%#Eval("pain") %>' ID="pain" runat="server" />
+                                                                            <webUI:TextField Value='<%#Eval("pain") %>' ID="pain" runat="server" TextMode="SingleLine"/>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1475,7 +1492,7 @@
                                                                             ATS scale</span>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Value='<%#Eval("ats") %>' ID="ats" runat="server" />
+                                                                            <webUI:TextField Value='<%#Eval("ats") %>' ID="ats" runat="server" TextMode="SingleLine"/>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1487,7 +1504,7 @@
                                                                             </div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Title='<%#Eval("intervention") %>' ID="intervention" Value='<%#Eval("intervention") %>' runat="server" />
+                                                                            <webUI:TextField Title='<%#Eval("intervention") %>' ID="intervention" Value='<%#Eval("intervention") %>' runat="server" TextMode="SingleLine"/>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1495,7 +1512,7 @@
                                                                             <div style="width: 200px" class="text-primary">RN's Initial</div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Value='<%#Eval("initial") %>' ID="initial" runat="server" />
+                                                                            <webUI:TextField Value='<%#Eval("initial") %>' ID="initial" runat="server" TextMode="SingleLine"/>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1507,7 +1524,6 @@
                                                                     </asp:TemplateField>
                                                                 </Columns>
                                                             </asp:GridView>
-                                                            <%--<aih:Spinner1 runat="server" ID="Spinner1" AssociatedUpdatePanelID="updatePanel_AssessmentSystem" />--%>
                                                             <div class="mt-2">
                                                                 <asp:Button ID="btn_grid_AssessmentSystem_add" runat="server" CssClass="btn btn-sm btn-outline-primary" OnClick="btn_grid_AssessmentSystem_add_Click" Text="Add row" />
                                                             </div>
@@ -1517,9 +1533,7 @@
                                                         </Triggers>
                                                     </asp:UpdatePanel>
                                                 </div>
-                                            </div>
-
-                                            <div class="row mb-2">
+                                            
                                                 <div class="col-md-12">
                                                     <label class="control-label mb-1 font-bold">Y lệnh thuốc & dịch truyền trực tiếp/ <span class="text-primary">Direct Medication & IV fluids Order</span></label>
                                                     <asp:UpdatePanel ID="UpdatePanelDirectMedication" runat="server" UpdateMode="Always">
@@ -1531,7 +1545,7 @@
                                                                             <div style="width: 105px" class="pt-2 pb-2">Thời gian/ <span class="text-primary">Time</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField CssClass="form-control" Value='<%#Eval("dir_med_time") %>' Width="105px" ID="dir_med_time" runat="server" />
+                                                                            <webUI:TextField CssClass="form-control" Value='<%#Eval("dir_med_time") %>' Width="105px" ID="dir_med_time" runat="server" TextMode="SingleLine" />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1539,7 +1553,7 @@
                                                                             <div style="width: 238px">Thuốc/ <span class="text-primary">Medication</span> - Dịch truyền/ <span class="text-primary">IV Fluids</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Value='<%#Eval("dir_medication") %>' ID="dir_medication" runat="server" />
+                                                                            <webUI:TextField Value='<%#Eval("dir_medication") %>' ID="dir_medication" runat="server" TextMode="SingleLine" />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1547,7 +1561,7 @@
                                                                             <div style="width: 100px">Liều dùng/ <span class="text-primary">Dose</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Value='<%#Eval("dir_med_dose") %>' ID="dir_med_dose" runat="server" />
+                                                                            <webUI:TextField Value='<%#Eval("dir_med_dose") %>' ID="dir_med_dose" runat="server" TextMode="SingleLine" />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1555,7 +1569,7 @@
                                                                             <div style="width: 114px">Đường dùng/ <span class="text-primary">Route</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Value='<%#Eval("dir_med_route") %>' ID="dir_med_route" runat="server" />
+                                                                            <webUI:TextField Value='<%#Eval("dir_med_route") %>' ID="dir_med_route" runat="server" TextMode="SingleLine" />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1563,7 +1577,7 @@
                                                                             <div style="width: 100px">Tốc độ/ <span class="text-primary">Rate</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Value='<%#Eval("dir_med_rate") %>' ID="dir_med_rate" runat="server" />
+                                                                            <webUI:TextField Value='<%#Eval("dir_med_rate") %>' ID="dir_med_rate" runat="server" TextMode="SingleLine" />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1571,7 +1585,7 @@
                                                                             <div style="width: 150px">Bác sĩ/ <span class="text-primary">Doctor</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Value='<%#Eval("dir_med_doctor") %>' ID="dir_med_doctor" runat="server" />
+                                                                            <webUI:TextField Value='<%#Eval("dir_med_doctor") %>' ID="dir_med_doctor" runat="server" TextMode="SingleLine" />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1579,7 +1593,7 @@
                                                                             <div style="width: 150px">Ghi chú/ <span class="text-primary">Comment</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Value='<%#Eval("dir_med_comment") %>' ID="dir_med_comment" runat="server" />
+                                                                            <webUI:TextField Value='<%#Eval("dir_med_comment") %>' ID="dir_med_comment" runat="server" TextMode="SingleLine" />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1600,9 +1614,7 @@
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField HeaderText="">
                                                                         <ItemTemplate>
-                                                                            <asp:LinkButton runat="server" CommandName="Delete" CssClass="btn btn-sm btn-outline-secondary" OnClientClick="return confirm('are you sure?')">
-                                                                                <icon:trash runat="server" ID="Trash" />
-                                                                            </asp:LinkButton>
+                                                                            <asp:LinkButton runat="server" CommandName="Delete" CssClass="btn btn-sm btn-outline-secondary" OnClientClick="return confirm('are you sure?')"><icon:trash runat="server" ID="Trash" /></asp:LinkButton>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                 </Columns>
@@ -1621,12 +1633,12 @@
                                                         </Triggers>
                                                     </asp:UpdatePanel>
                                                 </div>
-                                            </div>
+                                            
+                                            </fieldset>
 
                                             <fieldset class="row mb-2 gt-2-a">
-                                                <label class="control-label">Xuất viện/ <span class="text-primary">Discharged</span></label>
-                                                
-                                                <div>
+                                                <label class="col-md-12 control-label">Xuất viện/ <span class="text-primary">Discharged</span></label>
+                                                <div class="col-md-12">
                                                     <asp:Label runat="server" ID="lbl_discharge_date_time"></asp:Label>
                                                     <div runat="server" id="discharge_date_time_wrapper" class="d-inline-block mr-2">
                                                         <telerik:RadDateTimePicker runat="server" ID="dtpk_discharge_date_time" Width="200px" />
@@ -1635,10 +1647,10 @@
                                                         <label class="control-label d-inline-block mr-2">bởi BS/ <span class="text-primary">by Dr.</span></label>
                                                         <asp:Label runat="server" ID="lbl_discharge_by"></asp:Label>
                                                         <div class="form-group w-n d-inline-block mr-2" runat="server" id="discharge_by_wrapper">
-                                                            <webUI:TextField runat="server" ID="txt_discharge_by" />
+                                                            <webUI:TextField runat="server" ID="txt_discharge_by" TextMode="SingleLine"/>
                                                         </div>
                                                     </div>
-                                                    <asp:Label runat="server" ID="lbl_discharge_option"></asp:Label>
+                                                    <asp:Label CssClass="d-block" runat="server" ID="lbl_discharge_option"></asp:Label>
                                                     <div class="d-inline-block mt-2" runat="server" id="discharge_option_wrapper">
                                                         <label class="custom-control custom-checkbox d-inline-block mr-2">
                                                             <input type="checkbox" runat="server" id="cb_discharge_option_h" class="custom-control-input" />
@@ -1657,9 +1669,9 @@
                                             </fieldset>
 
                                             <fieldset class="row mb-2 gt-2-a">
-                                                <label class="control-label">Nhập viện/ <span class="text-primary">Admited</span></label>
+                                                <label class="col-md-12 control-label">Nhập viện/ <span class="text-primary">Admited</span></label>
                                                 
-                                                <div>
+                                                <div class="col-md-12">
                                                     <asp:Label runat="server" ID="lbl_admited_date_time"></asp:Label>
                                                     <div class="d-inline-block mr-2" runat="server" id="admited_date_time_wrapper">
                                                         <telerik:RadDateTimePicker runat="server" ID="dtpk_admited_date_time" Width="200px" />
@@ -1669,7 +1681,7 @@
                                                     <div class="d-inline-block mr-2" runat="server" id="admited_by_wrapper">
                                                         <label class="control-label mr-2">bởi BS/ <span class="text-primary">by Dr.</span></label>
                                                         <div class="form-group w-n d-inline-block">
-                                                            <webUI:TextField runat="server" ID="txt_admited_by" />
+                                                            <webUI:TextField runat="server" ID="txt_admited_by" TextMode="SingleLine" />
                                                         </div>
                                                     </div>
 
@@ -1677,39 +1689,41 @@
                                                     <div class="d-inline-block mt-2" runat="server" id="receiving_unit_wrapper">
                                                         <label class="control-label mr-2">Khoa tiếp nhận/ <span class="text-primary">Receiving Unit</span></label>
                                                         <div class="form-group w-n d-inline-block">
-                                                            <webUI:TextField runat="server" ID="txt_receiving_unit" />
+                                                            <webUI:TextField runat="server" ID="txt_receiving_unit" TextMode="SingleLine" />
                                                         </div>
                                                     </div>
                                                 </div>
                                             </fieldset>
 
                                             <fieldset class="row mb-2 gt-2-a">
-                                                    <label class="control-label">Chuyển viện/ <span class="text-primary">Transfer to</span></label>
-                                                <div>
+                                                <label class="col-md-12 control-label">Chuyển viện/ <span class="text-primary">Transfer to</span></label>
+                                                <div class="col-md-12">
                                                     <asp:Label runat="server" ID="lbl_transfer_to"></asp:Label>
                                                     <div class="d-inline-block mr-2 w-n" runat="server" id="transfer_to_wrapper">
-                                                        <webUI:TextField runat="server" ID="txt_transfer_to" />
+                                                        <webUI:TextField runat="server" ID="txt_transfer_to" TextMode="SingleLine" />
                                                     </div>
                                                     <div class="col-md-6 d-inline-block">
                                                         <label class="control-label mr-2">bởi BS/ <span class="text-primary">by Dr.</span></label>
                                                         <asp:Label runat="server" ID="lbl_transfer_by"></asp:Label>
                                                         <div class="d-inline-block mr-2 w-n" runat="server" id="transfer_by_wrapper">
-                                                            <webUI:TextField runat="server" ID="txt_transfer_by" />
+                                                            <webUI:TextField runat="server" ID="txt_transfer_by" TextMode="SingleLine" />
                                                         </div>
                                                     </div>
                                                 </div>
                                             </fieldset>
 
                                             <fieldset class="row mb-2 gt-2-a">
-                                                <label class="control-label">Giờ thông báo Bác sĩ/ <span class="text-primary">Time notified to Doctor</span></label>
-                                                <asp:Label runat="server" ID="lbl_noticed_time"></asp:Label>
-                                                <div class="d-inline-block mr-2" runat="server" id="noticed_time_wrapper">
-                                                    <telerik:RadDateTimePicker runat="server" ID="dtpk_noticed_time" Width="200px" />
+                                                <label class="col-md-12 control-label">Giờ thông báo Bác sĩ/ <span class="text-primary">Time notified to Doctor</span></label>
+                                                <div class="col-md-12">
+                                                    <asp:Label runat="server" ID="lbl_noticed_time"></asp:Label>
+                                                    <div class="d-inline-block mr-2" runat="server" id="noticed_time_wrapper">
+                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_noticed_time" Width="200px" />
+                                                    </div>
                                                 </div>
                                             </fieldset>
 
                                             <fieldset class="row mb-2">
-                                                <label class="control-label mb-2">PHIẾU GHI CHÚ ĐIỀU DƯỠNG/ <span class="text-primary">NURSING NOTES</span></label>
+                                                <label class="col-md-12 control-label mb-2">PHIẾU GHI CHÚ ĐIỀU DƯỠNG/ <span class="text-primary">NURSING NOTES</span></label>
                                                 <div class="col-md-12">
                                                     <asp:UpdatePanel ID="updatePanel_NursingNotes" runat="server" UpdateMode="Always">
                                                         <ContentTemplate>
@@ -1717,7 +1731,7 @@
                                                                 <Columns>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
-                                                                            <div style="width: 105px" class="pt-2 pb-2">Ngày/ <span class="text-primary">Date</span> - Giờ/ <span class="text-primary">Time</span></div>
+                                                                            <div style="width: 200px" class="pt-2 pb-2">Ngày/ <span class="text-primary">Date</span> - Giờ/ <span class="text-primary">Time</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <div class="form-group">
@@ -1730,7 +1744,7 @@
                                                                             <div style="width: 300px">Theo dõi diễn tiến/ <span class="text-primary">Patient's condition</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Value='<%#Eval("patient_condition") %>' ID="patient_condition" runat="server" />
+                                                                            <webUI:TextField Value='<%#Eval("patient_condition") %>' ID="patient_condition" runat="server" TextMode="SingleLine" />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1738,7 +1752,7 @@
                                                                             <div style="width: 300px">Ký/Ghi tên ĐD/ <span class="text-primary">Signature & RN's name</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Value='<%#Eval("signature_name") %>' ID="signature_name" runat="server" />
+                                                                            <webUI:TextField Value='<%#Eval("signature_name") %>' ID="signature_name" runat="server" TextMode="SingleLine" />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField HeaderText="">
@@ -1819,23 +1833,6 @@
 
     <script>
         function loadImage() {
-                //$("#btnSave").click(function () {
-
-                //    var image = document.getElementById("canvas").toDataURL("image/png");
-                //    image = image.replace('data:image/png;base64,', '');
-
-                //    $.ajax({
-                //        type: 'POST',
-                //        url: "Paint.aspx/GetImage",
-                //        data: '{ "imageData" : "' + image + '" }',
-                //        contentType: 'application/json; charset=utf-8',
-                //        dataType: 'json',
-                //        success: function (msg) {
-                //            console.log(msg);
-                //        }
-                //    });
-                //});
-
                 const canvas = document.querySelector('#canvas');
                 const histories = document.querySelector('#histories');
                 const ctx = canvas.getContext("2d");
@@ -2052,13 +2049,13 @@
         var elem = window.parent.parent.document.getElementById("myProgress");
         progress(elem);
 
-
         loadImage();
         checkboxRadiobutton_init();
         formGroup_init();
         InputFilter("data-type='number'");
         InputFilter("data-type='number1'", /^\d*\.?\/?\d*$/);
-        
+        $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
+
         function beforeAsyncPostBack() {
             var curtime = new Date();
         }
@@ -2068,7 +2065,7 @@
             formGroup_init();
             InputFilter("data-type='number'");
             InputFilter("data-type='number1'", /^\d*\.?\/?\d*$/);
-
+            $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
             loadImage();
         }
 

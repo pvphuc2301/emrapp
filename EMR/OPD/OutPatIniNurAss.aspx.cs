@@ -332,8 +332,18 @@ namespace EMR
         #region Validation
         protected void CustomValidatorAllergy_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            args.IsValid = rad_allergy_true.Checked || rad_allergy_false.Checked;
+            args.IsValid = txt_allergy_note.Value.Length <= 256;
         }
+        protected void CustomValidatorMentalStatusNote_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = txt_mental_status_note.Value.Length <= 256;
+        }
+        protected void CustomValidatorFallRiskAssistance_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = txt_fall_risk_assistance.Value.Length <= 256;
+        }
+        
+
         protected void CustomValidatorMentalStatus_ServerValidate(object source, ServerValidateEventArgs args)
         {
             args.IsValid = rad_mental_status_true.Checked || rad_mental_status_false.Checked;

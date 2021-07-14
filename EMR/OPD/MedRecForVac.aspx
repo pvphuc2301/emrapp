@@ -25,7 +25,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>MedRecForVac</title>
+    <title>Medical Record For Vaccination</title>
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/sweetalert.min.css" rel="stylesheet" />
@@ -46,8 +46,9 @@
                                         <div class="header-info-title">
                                             <h4>BỆNH ÁN TIÊM CHỦNG</h4>
                                             <h5>MEDICAL RECORD FOR VACCINATION</h5>
+                                            <div class="text-primary">(Áp dụng cho các đối tượng ≥1 tháng tuổi/ For person ≥ 1 month old)</div>
                                         </div>
-                                        <div style="width: 160px" class="text-center">
+                                        <div style="width: 140px" class="text-center">
                                             <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
                                             <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
                                         </div>
@@ -122,7 +123,7 @@
                                             <asp:Label Width="200px" runat="server" ID="prt_allergy"></asp:Label>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                        <div runat="server" id="prt_allergy_note_wrapper" class="d-grid" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FixedLeft="5" FontBold="true" Order="•" CssClass="text-inline" Title="Nếu có, nêu rõ/ " SubTitle="If yes, specify:" runat="server" />
                                             <asp:Label runat="server" ID="prt_allergy_note"></asp:Label>
                                         </div>
@@ -218,11 +219,11 @@
                                                 <td data-field="drug_name" class="text-center" style="width: 230px"><span class="font-bold">Tên vaccin</span>
                                                     <div class="text-primary">Drug names</div>
                                                 </td>
-                                                <td data-field="strength" class="text-center" style="width: 120px" data-align="center"><span class="font-bold">Hàm lượng</span><div class="text-primary">Strength</div>
+                                                <td data-field="strength" class="text-center" style="width: 110px" data-align="center"><span class="font-bold">Hàm lượng</span><div class="text-primary">Strength</div>
                                                 </td>
-                                                <td data-field="router" class="text-center" style="width: 120px" data-align="center"><span class="font-bold">Đường dùng</span><div class="text-primary">Route</div>
+                                                <td data-field="router" class="text-center" style="width: 110px" data-align="center"><span class="font-bold">Đường dùng</span><div class="text-primary">Route</div>
                                                 </td>
-                                                <td data-field="reason" class="text-center"><span class="font-bold">Hướng dẫn bổ sung/ Chỉ định sử dụng khi cần thiết kèm theo lý do</span><div class="text-primary">Additional instruction/ PRN order with reason</div>
+                                                <td data-field="reason" class="text-center"><span class="font-bold">Hướng dẫn bổ sung/ Chỉ định sử <br /> dụng khi cần thiết kèm theo lý do</span><div class="text-primary">Additional instruction/ PRN order with reason</div>
                                                 </td>
                                             </tr>
                                         </table>
@@ -232,19 +233,17 @@
                                             <asp:Label runat="server" ID="prt_additional_investigations"></asp:Label>
                                         </div>
 
-                                        <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Order="V" Title="Kết luận/ " SubTitle="Conclusion" runat="server" />
+                                        <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Order="V." Title="Kết luận/ " SubTitle="Conclusion" runat="server" />
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FixedLeft="5" FontBold="true" CssClass="text-inline" Order="●" Title="Chẩn đoán ban đầu/ " SubTitle="Initial diagnosis:" runat="server" />
                                             <asp:Label runat="server" ID="prt_initial_diagnosis"></asp:Label>
                                         </div>
 
-
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FixedLeft="5" FontBold="true" CssClass="text-inline" Order="●" Title="Chẩn đoán phân biệt/ " SubTitle="Differential diagnosis:" runat="server" />
                                             <asp:Label runat="server" ID="prt_differential_diagnosis"></asp:Label>
                                         </div>
-
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FixedLeft="5" FontBold="true" CssClass="text-inline" Order="●" Title="Bệnh kèm theo/ " SubTitle="Associated conditions:" runat="server" />
@@ -261,7 +260,7 @@
                                             <asp:Label Width="200px" runat="server" ID="prt_spec_opinion_req"></asp:Label>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                        <div runat="server" id="prt_spec_opinion_req_wrapper" class="d-grid" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FixedLeft="5" FontBold="true" CssClass="text-inline" Order="●" Title="Nếu có, nêu rõ/ " SubTitle="If yes, specify:" runat="server" />
                                             <asp:Label runat="server" ID="prt_spec_opinion_req_text"></asp:Label>
                                         </div>
@@ -273,7 +272,7 @@
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                            <webUI:PrtRowS1 FixedLeft="5" FontBold="true" CssClass="text-inline" Order="●" Title="Hẹn lần khám tới/ " SubTitle="Next appointment:" runat="server" />
+                                            <%--<webUI:PrtRowS1 FixedLeft="5" ID="prt_next_appointment" FontBold="true" Order="●" Title="Hẹn lần khám tới/ " SubTitle="Next appointment:" runat="server" />--%>
                                             <asp:Label runat="server" ID="prt_next_appointment"></asp:Label>
                                         </div>
 
@@ -283,12 +282,12 @@
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FixedLeft="5" Order="●" CssClass="text-inline" Title="Họ tên người tiêm chủng/ người giám hộ/ " SubTitle="Full name of patient/ guardian:" runat="server" />
-                                            <div class="prt-line-solid"></div>
+                                            <div style="line-height: 15px; height: 15px;" class="prt-line-solid"></div>
                                         </div>
 
                                         <div class="d-grid mb-2" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FixedLeft="5" Order="●" CssClass="text-inline" Title="Chữ ký người tiêm chủng/ người giám hộ/ " SubTitle="Signature of patient/ guardian:" runat="server" />
-                                            <div class="prt-line-solid"></div>
+                                            <div style="line-height: 15px; height: 15px;" class="prt-line-solid"></div>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 1fr 1fr">
@@ -323,7 +322,7 @@
                 </div>
 
                 <div class="cssclsNoPrint">
-                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0; border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                       <li>Medical Record For Vaccination</li>
                     </ul>
@@ -463,41 +462,41 @@
                                                     <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                                                         <ContentTemplate>
                                                             <div class="mb-2">
-                                                                <asp:LinkButton OnClick="btnUpdateVitalSigns_Click" runat="server" CssClass="btn btn-secondary waves-effect" ID="btnUpdateVitalSigns">Update</asp:LinkButton>
+                                                                <asp:LinkButton OnClick="btnUpdateVitalSigns_Click" runat="server" CssClass="btn btn-sm btn-secondary waves-effect" ID="btnUpdateVitalSigns">Update</asp:LinkButton>
                                                             </div>
                                                             <div>
                                                                 <label class="control-label mb-1 mr-2">Nhiệt độ/ <span class="text-primary">Temperature:</span></label>
-                                                                <asp:Label runat="server" ID="vs_temperature" />°C
+                                                                <asp:Label runat="server" ID="vs_temperature" />&nbsp;°C
                                                             </div>
 
                                                             <div>
                                                                 <label class="control-label mb-1 mr-2">Mạch/ <span class="text-primary">Heart Rate:</span></label>
-                                                                <asp:Label runat="server" ID="vs_heart_rate" />/phút (m)
+                                                                <asp:Label runat="server" ID="vs_heart_rate" />&nbsp;/phút (m)
                                                             </div>
 
                                                             <div>
                                                                 <label class="control-label mb-1 mr-2">Cân Nặng/ <span class="text-primary">Weight:</span></label>
-                                                                <asp:Label runat="server" ID="vs_weight" />Kg
+                                                                <asp:Label runat="server" ID="vs_weight" />&nbsp;Kg
                                                             </div>
 
                                                             <div>
                                                                 <label class="control-label mb-1 mr-2">Nhịp thở/ <span class="text-primary">Respiratory rate:</span></label>
-                                                                <asp:Label runat="server" ID="vs_respiratory_rate" />/phút (m)
+                                                                <asp:Label runat="server" ID="vs_respiratory_rate" />&nbsp;/phút (m)
                                                             </div>
 
                                                             <div>
                                                                 <label class="control-label mb-1 mr-2">Chiều cao/ <span class="text-primary">Height:</span></label>
-                                                                <asp:Label runat="server" ID="vs_height" />cm
+                                                                <asp:Label runat="server" ID="vs_height" />&nbsp;cm
                                                             </div>
 
                                                             <div>
                                                                 <label class="control-label mb-1 mr-2">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
-                                                                <asp:Label runat="server" ID="vs_blood_pressure" />mmHg
+                                                                <asp:Label runat="server" ID="vs_blood_pressure" />&nbsp;mmHg
                                                             </div>
 
                                                             <div>
                                                                 <label for="bmi" class="control-label mb-1 mr-2">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
-                                                                <asp:Label runat="server" ID="vs_BMI" />(Kg/m <sup>2</sup>)
+                                                                <asp:Label runat="server" ID="vs_BMI" />&nbsp;(Kg/m <sup>2</sup>)
                                                             <div>
                                                                 (Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not applicable for children and pregnant</span>)
                                                             </div>
@@ -505,12 +504,12 @@
 
                                                             <div>
                                                                 <label for="spO2" class="control-label mb-1 mr-2">Độ bão hòa Oxy/ <span class="text-primary">SpO2:</span></label>
-                                                                <asp:Label runat="server" ID="vs_spO2" />%
+                                                                <asp:Label runat="server" ID="vs_spO2" />&nbsp;%
                                                             </div>
 
                                                             <div>
                                                                 <label for="head-circumference" class="control-label mb-1 mr-2">Vòng đầu (trẻ em < 2 tuổi)/ <span class="text-primary">Head Circumference (children < 2 year old) </span></label>
-                                                                <asp:Label runat="server" ID="vs_pulse" />cm
+                                                                <asp:Label runat="server" ID="vs_pulse" />&nbsp;cm
                                                             </div>
                                                         </div>
                                                     </ContentTemplate>
@@ -665,7 +664,7 @@
                                                                         <div style="width: 180px">Tên vaccin/ <span class="text-primary">Drug names</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <webUI:TextField Value='<%#Eval("drug_name") %>' ID="drug_name" runat="server" />
+                                                                        <webUI:TextField Value='<%#Eval("drug_name") %>' ID="drug_name" runat="server" TextMode="SingleLine" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -673,7 +672,7 @@
                                                                         <div style="width: 130px">Hàm lượng/ <span class="text-primary">Strength</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <webUI:TextField Value='<%#Eval("strength") %>' ID="strength" runat="server" />
+                                                                        <webUI:TextField Value='<%#Eval("strength") %>' ID="strength" runat="server" TextMode="SingleLine" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -681,7 +680,7 @@
                                                                         <div style="width: 120px">Đường dùng/ <span class="text-primary">Route</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <webUI:TextField Value='<%#Eval("router") %>' ID="router" runat="server" />
+                                                                        <webUI:TextField Value='<%#Eval("router") %>' ID="router" runat="server" TextMode="SingleLine" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
@@ -689,7 +688,7 @@
                                                                         <div style="width: 300px">Hướng dẫn bổ sung/ Chỉ định sử dụng khi cần thiết kèm theo lý do/ <span class="text-primary">Additional instruction/ PRN order with reason</span></div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <webUI:TextField Value='<%#Eval("reason") %>' ID="reason" runat="server" />
+                                                                        <webUI:TextField Value='<%#Eval("reason") %>' ID="reason" runat="server" TextMode="SingleLine" />
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField HeaderText="">
@@ -708,7 +707,7 @@
                                                             </ProgressTemplate>
                                                         </asp:UpdateProgress>
                                                         <div class="mt-2">
-                                                            <asp:LinkButton OnClick="btn_grid_appointed_vaccine_add_Click" runat="server" CssClass="btn btn-secondary waves-effect" ID="btn_grid_appointed_vaccine_add">+ Add Row</asp:LinkButton>
+                                                            <asp:LinkButton OnClick="btn_grid_appointed_vaccine_add_Click" runat="server" CssClass="btn btn-sm btn-secondary waves-effect" ID="btn_grid_appointed_vaccine_add">+ Add Row</asp:LinkButton>
                                                         </div>
                                                     </ContentTemplate>
                                                     <Triggers>
@@ -919,7 +918,7 @@
 
         var elem = window.parent.parent.document.getElementById("myProgress");
         progress(elem);
-
+        $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
         checkboxRadiobutton_init();
         function beforeAsyncPostBack() {
             var curtime = new Date();
@@ -927,6 +926,7 @@
 
         function afterAsyncPostBack() {
             checkboxRadiobutton_init();
+            $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
         }
 
     </script>

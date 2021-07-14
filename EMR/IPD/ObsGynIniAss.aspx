@@ -937,14 +937,14 @@
                                                                     <label class="control-label mb-1">từ/ <span class="text-primary">from:</span></label>
                                                                     <asp:Label runat="server" ID="lbl_lmp_from" />
                                                                     <div class="form-group d-inline-block w-5 ml-2" runat="server" id="lmp_from_wrapper">
-                                                                        <webUI:TextField runat="server" ID="txt_lmp_from" />
+                                                                        <webUI:TextField runat="server" ID="txt_lmp_from" TextMode="SingleLine" />
                                                                     </div>
                                                                 </div>
                                                                 <div class="d-inline-block">
                                                                     <label class="control-label mb-1 ml-2">đến/ <span class="text-primary">to:</span></label>
                                                                     <asp:Label runat="server" ID="lbl_lmp_to" />
                                                                     <div class="form-group d-inline-block w-5 ml-2" runat="server" id="lmp_to_wrapper">
-                                                                        <webUI:TextField runat="server" ID="txt_lmp_to" />
+                                                                        <webUI:TextField runat="server" ID="txt_lmp_to" TextMode="SingleLine" />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -992,23 +992,18 @@
                                                                         </a>
                                                                     </div>
                                                                 </div>
-
-                                                                <div runat="server" id="tetanus_vaccin_time_field" class="form-group d-inline-block w-5 ml-2">
-                                                                    <input runat="server" data-type="number" id="txt_tetanus_vaccin_time" class="form-control text-right" />
-                                                                    <span class="append">ngày/ days</span>
+                                                                <div runat="server" id="tetanus_vaccin_time_wrapper">
+                                                                    <div runat="server" id="tetanus_vaccin_time_field" class="form-group d-inline-block w-5 ml-2">
+                                                                        <input runat="server" data-type="number" id="txt_tetanus_vaccin_time" class="form-control text-right" />
+                                                                        <span class="append">ngày/ days</span>
+                                                                    </div>
                                                                 </div>
-
-                                                                <%--<div class="form-group w-5 d-inline-block tetanus_vaccin_time_field ml-2" runat="server" id="tetanus_vaccin_time_wrapper">
-                                                                    <input runat="server" data-type="number" id="" class="form-control text-right" />
-                                                                    <span class="append">lần/ times</span>
-                                                                </div>--%>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-12 mb-2 gt-2-a">
                                                             <label class="control-label mb-1 d-block">Nhiễm Streptococcus nhóm B/ <span class="text-primary">GBS infection:</span></label>
                                                             <div>
-
                                                                 <label class="control-label mb-1">Con trước nhiễm trùng huyết do Streptococcus nhóm B/ <span class="text-primary">Previous infant with invasive GBS disease</span></label>
                                                                 <asp:Label runat="server" ID="lbl_gbs_disease" />
                                                                 <div class="form-group d-inline-block" runat="server" id="gbs_disease_wrapper">
@@ -1100,7 +1095,7 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group d-inline-block w-n other_ges_abnormal_note_field ml-2">
-                                                                    <webUI:TextField runat="server" ID="txt_other_ges_abnormal_note" />
+                                                                    <webUI:TextField runat="server" ID="txt_other_ges_abnormal_note" TextMode="SingleLine" />
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1226,7 +1221,6 @@
                                                         </legend>
                                                         <div class="col-md-12 mb-2">
                                                             <label class="control-label mb-1">Những bệnh phụ khoa đã mắc trước đây/ <span class="text-primary">Previous gynecological diseases</span></label>
-
                                                             <asp:UpdatePanel ID="updatePanel_obs_history" runat="server" UpdateMode="Always">
                                                                 <ContentTemplate>
                                                                     <asp:GridView
@@ -1251,7 +1245,7 @@
                                                                                     <div style="width: 123px">1</div>
                                                                                 </HeaderTemplate>
                                                                                 <ItemTemplate>
-                                                                                    <webUI:TextField Value='<%#Eval("grav_1") %>'  ID="grav_1" Width="123px" runat="server" />
+                                                                                    <webUI:TextField Value='<%#Eval("grav_1") %>'  ID="grav_1" Width="123px" runat="server" TextMode="SingleLine" />
                                                                                 </ItemTemplate>
                                                                             </asp:TemplateField>
                                                                             <asp:TemplateField>
@@ -1259,7 +1253,7 @@
                                                                                     <div style="width: 123px">2</div>
                                                                                 </HeaderTemplate>
                                                                                 <ItemTemplate>
-                                                                                    <webUI:TextField Value='<%#Eval("grav_2") %>' ID="grav_2" Width="123px" runat="server" />
+                                                                                    <webUI:TextField Value='<%#Eval("grav_2") %>' ID="grav_2" Width="123px" runat="server" TextMode="SingleLine" />
                                                                                 </ItemTemplate>
                                                                             </asp:TemplateField>
                                                                             <asp:TemplateField>
@@ -1267,7 +1261,7 @@
                                                                                     <div style="width: 123px">3</div>
                                                                                 </HeaderTemplate>
                                                                                 <ItemTemplate>
-                                                                                    <webUI:TextField Value='<%#Eval("grav_3") %>' ID="grav_3" Width="123px" runat="server" />
+                                                                                    <webUI:TextField Value='<%#Eval("grav_3") %>' ID="grav_3" Width="123px" runat="server" TextMode="SingleLine" />
                                                                                 </ItemTemplate>
                                                                             </asp:TemplateField>
                                                                             <asp:TemplateField>
@@ -1275,7 +1269,7 @@
                                                                                     <div style="width: 123px">4</div>
                                                                                 </HeaderTemplate>
                                                                                 <ItemTemplate>
-                                                                                    <webUI:TextField Value='<%#Eval("grav_4") %>' ID="grav_4" Width="123px" runat="server" />
+                                                                                    <webUI:TextField Value='<%#Eval("grav_4") %>' ID="grav_4" Width="123px" runat="server" TextMode="SingleLine" />
                                                                                 </ItemTemplate>
                                                                             </asp:TemplateField>
                                                                             <asp:TemplateField>
@@ -1283,7 +1277,7 @@
                                                                                     <div style="width: 123px">5</div>
                                                                                 </HeaderTemplate>
                                                                                 <ItemTemplate>
-                                                                                    <webUI:TextField Value='<%#Eval("grav_5") %>' ID="grav_5" Width="123px" runat="server" />
+                                                                                    <webUI:TextField Value='<%#Eval("grav_5") %>' ID="grav_5" Width="123px" runat="server" TextMode="SingleLine" />
                                                                                 </ItemTemplate>
                                                                             </asp:TemplateField>
                                                                             <asp:TemplateField>
@@ -1291,7 +1285,7 @@
                                                                                     <div style="width: 123px">6</div>
                                                                                 </HeaderTemplate>
                                                                                 <ItemTemplate>
-                                                                                    <webUI:TextField Value='<%#Eval("grav_6") %>' ID="grav_6" Width="123px" runat="server" />
+                                                                                    <webUI:TextField Value='<%#Eval("grav_6") %>' ID="grav_6" Width="123px" runat="server" TextMode="SingleLine" />
                                                                                 </ItemTemplate>
                                                                             </asp:TemplateField>
 
@@ -1340,7 +1334,7 @@
                                                                         </label>
                                                                         <asp:Label runat="server" ID="lbl_edema_note"></asp:Label>
                                                                         <div class="form-group d-inline-block w-n" runat="server" id="edema_note_wrapper">
-                                                                            <webUI:TextField runat="server" ID="txt_edema_note" />
+                                                                            <webUI:TextField runat="server" ID="txt_edema_note" TextMode="SingleLine" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1473,12 +1467,12 @@
                                                                     <div>
                                                                         <asp:Label runat="server" ID="lbl_obs_uterine_shape"></asp:Label>
                                                                         <div class="form-group mb-2" runat="server" id="obs_uterine_shape_wrapper">
-                                                                            <webUI:TextField runat="server" ID="txt_obs_uterine_shape" />
+                                                                            <webUI:TextField runat="server" ID="txt_obs_uterine_shape" TextMode="SingleLine"/>
                                                                         </div>
                                                                         <label class="control-label mb-1">Tư thế/ <span class="text-primary">Posture</span></label>
                                                                         <asp:Label runat="server" ID="lbl_obs_posture"></asp:Label>
                                                                         <div class="form-group d-inline-block w-n" runat="server" id="obs_posture_wrapper">
-                                                                            <webUI:TextField runat="server" ID="txt_obs_posture" />
+                                                                            <webUI:TextField runat="server" ID="txt_obs_posture" TextMode="SingleLine"/>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1504,7 +1498,7 @@
                                                                     <label class="control-label mb-1">Cơn gò tử cung/ <span class="text-primary">Uterine contraction</span></label>
                                                                     <asp:Label runat="server" ID="lbl_obs_uterine_con"></asp:Label>
                                                                     <div class="form-group" runat="server" id="obs_uterine_con_wrapper">
-                                                                        <webUI:TextField runat="server" ID="txt_obs_uterine_con" />
+                                                                        <webUI:TextField runat="server" ID="txt_obs_uterine_con" TextMode="SingleLine"/>
                                                                     </div>
                                                                 </div>
 
@@ -1519,7 +1513,7 @@
                                                                         <label class="control-label mb-1">Ngực/ <span class="text-primary">Breasts</span></label>
                                                                         <asp:Label runat="server" ID="lbl_obs_breasts"></asp:Label>
                                                                         <div class="form-group d-inline-block w-n" runat="server" id="obs_breasts_wrapper">
-                                                                            <webUI:TextField runat="server" ID="txt_obs_breasts" />
+                                                                            <webUI:TextField runat="server" ID="txt_obs_breasts" TextMode="SingleLine"/>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1572,7 +1566,7 @@
                                                                         <label class="control-label mb-1">Âm hộ/ <span class="text-primary">Vulva</span></label>
                                                                         <asp:Label runat="server" ID="lbl_obs_vulva"></asp:Label>
                                                                         <div class="form-group d-inline-block w-n ml-2" runat="server" id="obs_vulva_wrapper">
-                                                                            <webUI:TextField runat="server" ID="txt_obs_vulva" />
+                                                                            <webUI:TextField runat="server" ID="txt_obs_vulva" TextMode="SingleLine" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1583,7 +1577,7 @@
                                                                         <label class="control-label mb-1">Âm đạo/ <span class="text-primary">Vagina</span></label>
                                                                         <asp:Label runat="server" ID="lbl_obs_vagina"></asp:Label>
                                                                         <div class="form-group d-inline-block w-n ml-2" runat="server" id="obs_vagina_wrapper">
-                                                                            <webUI:TextField runat="server" ID="txt_obs_vagina" />
+                                                                            <webUI:TextField runat="server" ID="txt_obs_vagina" TextMode="SingleLine" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1594,7 +1588,7 @@
                                                                         <label class="control-label mb-1">Tầng sinh môn/ <span class="text-primary">Perineum</span></label>
                                                                         <asp:Label runat="server" ID="lbl_obs_perineum"></asp:Label>
                                                                         <div class="form-group d-inline-block w-n ml-2" runat="server" id="obs_perineum_wrapper">
-                                                                            <webUI:TextField runat="server" ID="txt_obs_perineum" />
+                                                                            <webUI:TextField runat="server" ID="txt_obs_perineum" TextMode="SingleLine" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1605,7 +1599,7 @@
                                                                         <label class="control-label mb-1">Cổ tử cung/ <span class="text-primary">Cervix</span></label>
                                                                         <asp:Label runat="server" ID="lbl_obs_cervix"></asp:Label>
                                                                         <div class="form-group d-inline-block w-n ml-2" runat="server" id="obs_cervix_wrapper">
-                                                                            <webUI:TextField runat="server" ID="txt_obs_cervix" />
+                                                                            <webUI:TextField runat="server" ID="txt_obs_cervix" TextMode="SingleLine" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1616,7 +1610,7 @@
                                                                         <label class="control-label mb-1">Phần phụ/ <span class="text-primary">Adnexa</span></label>
                                                                         <asp:Label runat="server" ID="lbl_obs_adnexa"></asp:Label>
                                                                         <div class="form-group d-inline-block w-n ml-2" runat="server" id="obs_adnexa_wrapper">
-                                                                            <webUI:TextField runat="server" ID="txt_obs_adnexa" />
+                                                                            <webUI:TextField runat="server" ID="txt_obs_adnexa" TextMode="SingleLine" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1659,11 +1653,16 @@
 
                                                                         <div class="col-md-12 mb-2 gt-2-a" runat="server" id="ru_field">
                                                                             <label class="control-label mb-1">Ối vỡ lúc/ <span class="text-primary">Rupture of membrane at</span></label>
-                                                                            <asp:Label runat="server" ID="lbl_obs_rup_of_mem_at"></asp:Label>
-                                                                            <div>
-                                                                                <div class="mb-2" runat="server" id="obs_rup_of_mem_at_wrapper">
+                                                                            <div runat="server" id="lbl_obs_rup_of_mem_code">
+                                                                                <asp:Label runat="server" ID="lbl_obs_rup_of_mem_at"></asp:Label>
+                                                                                <asp:Label runat="server" ID="lbl_obs_rup_of_mem_desc"></asp:Label>
+
+                                                                            </div>
+                                                                            <div runat="server" id="obs_rup_of_mem_at_wrapper">
+                                                                                <div class="mb-2" >
                                                                                     <telerik:RadDateTimePicker runat="server" ID="dtpk_obs_rup_of_mem_at" Width="200px" CssClass="ml-2 edit" />
                                                                                 </div>
+
                                                                                 <div class="custom-control custom-radio d-inline-block ml-2">
                                                                                     <input type="radio" runat="server" id="rad_obs_rup_of_mem_code_s" name="rad_obs_rup_of_mem_code" class="custom-control-input" />
                                                                                     <label class="custom-control-label" for="rad_obs_rup_of_mem_code_s">Tự nhiên/ <span class="text-primary">Spontaneous</span></label>
@@ -1702,7 +1701,7 @@
                                                                     <label class="control-label mb-1">Màu sắc nước ối/ <span class="text-primary">Color of amniotic fluid</span></label>
                                                                     <asp:Label runat="server" ID="lbl_obs_color_amniotic"></asp:Label>
                                                                     <div class="form-group d-inline-block w-n ml-2" runat="server" id="obs_color_amniotic_wrapper">
-                                                                        <webUI:TextField runat="server" ID="txt_obs_color_amniotic" />
+                                                                        <webUI:TextField runat="server" ID="txt_obs_color_amniotic" TextMode="SingleLine" />
                                                                     </div>
                                                                 </div>
 
@@ -1726,7 +1725,7 @@
                                                                             </a>
                                                                         </div>
                                                                         <div class="form-group obs_presentation_other_field d-inline-block ml-2 w-n">
-                                                                            <webUI:TextField runat="server" ID="txt_obs_presentation_other" />
+                                                                            <webUI:TextField runat="server" ID="txt_obs_presentation_other" TextMode="SingleLine" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1735,7 +1734,7 @@
                                                                     <label class="control-label mb-1">Vị trí ngôi thai/ <span class="text-primary">Fetal position</span></label>
                                                                     <asp:Label runat="server" ID="lbl_obs_fetal_position"></asp:Label>
                                                                     <div class="form-group d-inline-block w-n ml-2" runat="server" id="obs_fetal_position_wrapper">
-                                                                        <webUI:TextField runat="server" ID="txt_obs_fetal_position" />
+                                                                        <webUI:TextField runat="server" ID="txt_obs_fetal_position" TextMode="SingleLine" />
                                                                     </div>
                                                                 </div>
 
@@ -1743,7 +1742,7 @@
                                                                     <label class="control-label mb-1">Khám khung chậu/ <span class="text-primary">Pelvic exam</span></label>
                                                                     <asp:Label runat="server" ID="lbl_obs_pelvic_exam"></asp:Label>
                                                                     <div class="form-group d-inline-block w-n ml-2" runat="server" id="obs_pelvic_exam_wrapper">
-                                                                        <webUI:TextField runat="server" ID="txt_obs_pelvic_exam" />
+                                                                        <webUI:TextField runat="server" ID="txt_obs_pelvic_exam" TextMode="SingleLine" />
                                                                     </div>
                                                                 </div>
 
@@ -1770,7 +1769,7 @@
                                                                     <label class="control-label mb-1">Âm hộ/ <span class="text-primary">Vulva</span></label>
                                                                     <asp:Label runat="server" ID="lbl_gyn_vulva"></asp:Label>
                                                                     <div class="form-group d-inline-block w-n ml-2" runat="server" id="gyn_vulva_wrapper">
-                                                                        <webUI:TextField runat="server" ID="txt_gyn_vulva" />
+                                                                        <webUI:TextField runat="server" ID="txt_gyn_vulva" TextMode="SingleLine" />
                                                                     </div>
                                                                 </div>
 
@@ -1778,7 +1777,7 @@
                                                                     <label class="control-label mb-1">Tầng sinh môn/ <span class="text-primary">Perineum</span></label>
                                                                     <asp:Label runat="server" ID="lbl_gyn_perineum"></asp:Label>
                                                                     <div class="form-group d-inline-block w-n ml-2" runat="server" id="gyn_perineum_wrapper">
-                                                                        <webUI:TextField runat="server" ID="txt_gyn_perineum" />
+                                                                        <webUI:TextField runat="server" ID="txt_gyn_perineum" TextMode="SingleLine" />
                                                                     </div>
                                                                 </div>
 
@@ -1790,7 +1789,7 @@
                                                                     <label class="control-label mb-1">Âm đạo/ <span class="text-primary">Vagina</span></label>
                                                                     <asp:Label runat="server" ID="lbl_gyn_vagina"></asp:Label>
                                                                     <div class="form-group d-inline-block w-n ml-2" runat="server" id="gyn_vagina_wrapper">
-                                                                        <webUI:TextField runat="server" ID="txt_gyn_vagina" />
+                                                                        <webUI:TextField runat="server" ID="txt_gyn_vagina" TextMode="SingleLine" />
                                                                     </div>
                                                                 </div>
 
@@ -1798,7 +1797,7 @@
                                                                     <label class="control-label mb-1">Dịch tiết/ <span class="text-primary">Discharge</span></label>
                                                                     <asp:Label runat="server" ID="lbl_gyn_discharge"></asp:Label>
                                                                     <div class="form-group d-inline-block w-n ml-2" runat="server" id="gyn_discharge_wrapper">
-                                                                        <webUI:TextField runat="server" ID="txt_gyn_discharge" />
+                                                                        <webUI:TextField runat="server" ID="txt_gyn_discharge" TextMode="SingleLine" />
                                                                     </div>
                                                                 </div>
 
@@ -1806,7 +1805,7 @@
                                                                     <label class="control-label mb-1">Cổ tử cung/ <span class="text-primary">Cervix</span></label>
                                                                     <asp:Label runat="server" ID="lbl_gyn_cervix"></asp:Label>
                                                                     <div class="form-group d-inline-block w-n ml-2" runat="server" id="gyn_cervix_wrapper">
-                                                                        <webUI:TextField runat="server" ID="txt_gyn_cervix" />
+                                                                        <webUI:TextField runat="server" ID="txt_gyn_cervix" TextMode="SingleLine" />
                                                                     </div>
                                                                 </div>
 
@@ -1814,7 +1813,7 @@
                                                                     <label class="control-label mb-1">Phần phụ/ <span class="text-primary">Adnexa</span></label>
                                                                     <asp:Label runat="server" ID="lbl_gyn_adnexa"></asp:Label>
                                                                     <div class="form-group d-inline-block w-n ml-2" runat="server" id="gyn_adnexa_wrapper">
-                                                                        <webUI:TextField runat="server" ID="txt_gyn_adnexa" />
+                                                                        <webUI:TextField runat="server" ID="txt_gyn_adnexa" TextMode="SingleLine" />
                                                                     </div>
                                                                 </div>
 
@@ -1822,7 +1821,7 @@
                                                                     <label class="control-label mb-1">Các túi cùng/ <span class="text-primary">Douglas pouchs</span></label>
                                                                     <asp:Label runat="server" ID="lbl_gyn_douglas_pouchs"></asp:Label>
                                                                     <div class="form-group d-inline-block w-n ml-2" runat="server" id="gyn_douglas_pouchs_wrapper">
-                                                                        <webUI:TextField runat="server" ID="txt_gyn_douglas_pouchs" />
+                                                                        <webUI:TextField runat="server" ID="txt_gyn_douglas_pouchs" TextMode="SingleLine" />
                                                                     </div>
                                                                 </div>
                                                             </fieldset>
@@ -1954,6 +1953,7 @@
         progress(elem);
 
         InputFilter("data-type='number'");
+        $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
 
         checkboxRadiobutton_init();
         formGroup_init();
@@ -1966,6 +1966,7 @@
             checkboxRadiobutton_init();
             formGroup_init();
             InputFilter("data-type='number'");
+            $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
         }
 
     </script>

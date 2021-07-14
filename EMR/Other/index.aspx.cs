@@ -97,7 +97,7 @@ namespace EMR.Other
                     ddlDocList.Items.Add(item1);
                 }
                 lbl_visit_type.Text = db.Rows[0].Field<string>("model_type_rcd");
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), ScriptKey.SHOW_POPUP, "setTimeout(()=> { $('#DocumentList').modal('show'); },0);", true);
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), ScriptKey.SHOW_POPUP, "setTimeout(()=> { $('#DocumentList').modal({backdrop: 'static', keyboard: false}); },0);", true);
 
             }
         }
@@ -244,7 +244,6 @@ namespace EMR.Other
         protected void btnSave_Click(object sender, EventArgs e)
         {
             string selectedItem = Request.Form.Get("ddlDocList");
-
             string[] _params = selectedItem.Split('|');
 
             string PVID = _params[2];

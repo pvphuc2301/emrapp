@@ -1644,6 +1644,15 @@ namespace EMR.ER
         protected global::Telerik.Web.UI.RadDateTimePicker dtpk_time_contaced;
 
         /// <summary>
+        /// Fieldset1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Fieldset1;
+
+        /// <summary>
         /// lbl_time_provided control.
         /// </summary>
         /// <remarks>

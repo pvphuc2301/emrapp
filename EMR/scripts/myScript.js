@@ -157,6 +157,8 @@ function InputFilter(type,regexp = /^\d*\.?\d*$/) {
 }
 
 function CalculateBmi() {
+    console.log("calculate bmi");
+
     let vs_height = document.getElementById('txt_vs_height');
     let vs_weight = document.getElementById('txt_vs_weight');
     let vs_bmi = document.getElementById('txt_vs_bmi');
@@ -167,7 +169,7 @@ function CalculateBmi() {
     }
     else {
         vs_bmi.value = (vs_weight.value / ((vs_height.value / 100) * 2)).toFixed(2);
-        vs_bmi.innerText = vs_bmi.value;
+        /*vs_bmi.innerText = vs_bmi.value;*/
     };
 }
 

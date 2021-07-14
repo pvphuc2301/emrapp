@@ -48,8 +48,8 @@
                                         <div style="width: 175px;">
                                             <div runat="server" id="prt_fullname"></div>
                                             <div runat="server" id="prt_gender"></div>
-                                            <div class="d-block font-bold" runat="server" id="prt_DOB"></div>
-                                            <div runat="server" id="prt_vpid" class="d-block"></div>
+                                            <div class="d-block" runat="server" id="prt_DOB"></div>
+                                            <div runat="server" id="prt_vpid" class="d-block font-bold"></div>
                                             <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
                                         </div>
                                     </div>
@@ -73,52 +73,82 @@
                                             </div>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 200px auto; grid-gap: 5px">
+                                        <div class="gt-2-a">
                                             <webUI:PrtRowS1 FontBold="true" Order="1." Title="Lý do nhập viện:" SubTitle="Reason for admission" runat="server" />
                                             <asp:Label runat="server" ID="prt_admission_reason"></asp:Label>
-
+                                        </div>
+                                        
+                                        <div class="gt-2-a">
                                             <webUI:PrtRowS1 FontBold="true" Order="2." Title="Chẩn đoán:" SubTitle="Diagnosis" runat="server" />
                                             <asp:Label runat="server" ID="prt_icd10_diagnosis"></asp:Label>
+                                        </div>
 
+                                        <div class="gt-2-a">
                                             <webUI:PrtRowS1 FontBold="true" Order="3." Title="Bệnh sử:" SubTitle="Medical History" runat="server" />
                                             <asp:Label runat="server" ID="prt_cur_med_history"></asp:Label>
+                                        </div>
 
+                                        <div class="gt-2-a">
                                             <webUI:PrtRowS1 FontBold="true" Order="4." Title="Khám lâm sàng:" SubTitle="Physical findings on admission" runat="server" />
                                             <asp:Label runat="server" ID="prt_physical_finding"></asp:Label>
+                                        </div>
 
+                                        <div class="gt-2-a">
                                             <webUI:PrtRowS1 FontBold="true" Order="5." Title="Kết quả xét nghiệm:" SubTitle="Laboratory investigation results" runat="server" />
                                             <asp:Label runat="server" ID="prt_lab_result"></asp:Label>
+                                        </div>
 
+                                        <div class="gt-2-a">
                                             <webUI:PrtRowS1 FontBold="true" Order="6." Title="Các quy trình đã được thực hiện:" SubTitle="Procedures performed" runat="server" />
                                             <asp:Label runat="server" ID="prt_proce_performed"></asp:Label>
+                                        </div>
 
+                                        <div class="gt-2-a">
                                             <webUI:PrtRowS1 FontBold="true" Order="7." Title="Điều trị trong quá trình nằm viện:" SubTitle="Treatment during hospitalization" runat="server" />
                                             <asp:Label runat="server" ID="prt_treatment"></asp:Label>
+                                        </div>
 
+                                        <div class="gt-2-a">
                                             <webUI:PrtRowS1 FontBold="true" Order="8." Title="Diễn tiến trong quá trình nằm viện:" SubTitle="Evolution during hospitalization" runat="server" />
                                             <asp:Label runat="server" ID="prt_evolution"></asp:Label>
+                                        </div>
 
+                                        <div class="gt-2-a">
                                             <webUI:PrtRowS1 FontBold="true" Order="9." Title="Tình trạng của bệnh nhân khi xuất viện:" SubTitle="Patient’s condition on discharge" runat="server" />
                                             <asp:Label runat="server" ID="prt_disc_condition"></asp:Label>
+                                        </div>
 
+                                        <div class="gt-2-a">
                                             <webUI:PrtRowS1 FontBold="true" Order="10." Title="Thuốc khi xuất viện:" SubTitle="Discharge medications" runat="server" ID="prt_disc_medication_title" />
                                             <asp:Label runat="server" ID="prt_disc_medication"></asp:Label>
+                                        </div>
 
+                                        <div class="gt-2-a">
                                             <webUI:PrtRowS1 FontBold="true" Order="10." Title="Xuất viện trái lời khuyên bác sỹ:" SubTitle="Discharge against medical advice(DAMA)" runat="server" ID="prt_dama_title" />
                                             <asp:Label runat="server" ID="prt_dama"></asp:Label>
+                                        </div>
 
+                                        <div class="gt-2-a">
                                             <webUI:PrtRowS1 FontBold="true" Order="11." Title="Chuyển viện:" SubTitle="Transfer to another hospita" runat="server" ID="prt_trans_to_hospital_title" />
                                             <asp:Label runat="server" ID="prt_trans_to_hospital"></asp:Label>
+                                        </div>
 
+                                        <div class="gt-2-a">
                                             <webUI:PrtRowS1 FontBold="true" FixedLeft="30" Title="Nếu có, nêu rõ lý do:" SubTitle="If yes, specify the reaso" runat="server" ID="prt_transfer_reason_title" />
                                             <asp:Label runat="server" ID="prt_transfer_reason"></asp:Label>
+                                        </div>
 
+                                        <div class="gt-2-a">
                                             <webUI:PrtRowS1 FontBold="true" Order="11." Title="Hướng dẫn theo dõi (ghi rõ các dấu hiệu cần tái khám):" SubTitle="Follow-up instructions (signs and symptoms for immediate revisit)" runat="server" ID="prt_follow_up_instruc_title" />
                                             <asp:Label runat="server" ID="prt_follow_up_instruc"></asp:Label>
+                                        </div>
 
+                                        <div class="gt-2-a">
                                             <webUI:PrtRowS1 FontBold="true" Order="12." Title="Chế độ ăn uống:" SubTitle="Special diet" runat="server" ID="prt_special_diet_title" />
                                             <asp:Label runat="server" ID="prt_special_diet"></asp:Label>
+                                        </div>
 
+                                        <div class="gt-2-a">
                                             <webUI:PrtRowS1 FontBold="true" Order="13." Title="Ngày tái khám (ghi rõ ngày và tên bác sỹ):" SubTitle="Next consultation (specify date and with whom):" runat="server" ID="prt_next_consult_title" />
                                             <asp:Label runat="server" ID="prt_next_consult"></asp:Label>
                                         </div>
@@ -126,7 +156,7 @@
                                         <div class="d-grid" style="grid-template-columns: 1fr 1fr">
                                             <div></div>
                                             <div class="text-center" style="break-inside: avoid;">
-                                                <div>Ngày/ <span class="text-primary">Date</span>: 14-12-2019</div>
+                                                <div>Ngày/ <span class="text-primary">Date</span>: <asp:Label runat="server" ID="prt_last_updated"></asp:Label></div>
                                                 <div>Bác sỹ điều trị/ <span class="text-primary">Attending Physician</span>:</div>
                                             </div>
                                         </div>
@@ -153,7 +183,7 @@
                 </div>
 
                 <div class="cssclsNoPrint">
-                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0; border-bottom: 1px solid #ddd; border-radius:0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                       <li>Discharge Summary</li>
                     </ul>

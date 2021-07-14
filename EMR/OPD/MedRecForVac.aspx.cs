@@ -133,7 +133,7 @@ namespace EMR.OPD
 
                 if (mrfv.spec_opinion_req != null)
                 {
-                    lbl_spec_opinion_req.Text = mrfv.spec_opinion_req ? "Không/ No" : "Có, ghi rõ/ Yes, specify <br>" + WebHelpers.GetValue(mrfv.spec_opinion_req_text);
+                    lbl_spec_opinion_req.Text = WebHelpers.FormatString(WebHelpers.GetBool(mrfv.spec_opinion_req, "Có, ghi rõ/ Yes, specify <br>" + mrfv.spec_opinion_req_text, "Không/ No"));
                 }
 
                 lbl_pecific_edu_req.Text = WebHelpers.GetValue(mrfv.pecific_edu_req);
@@ -165,7 +165,13 @@ namespace EMR.OPD
 
                 if (mrfv.allergy != null)
                 {
-                    if (mrfv.allergy) { prt_allergy_note.Text = mrfv.allergy_text; } else { prt_allergy_note.Visible = false; }
+                    if (mrfv.allergy) {
+                        prt_allergy_note_wrapper.Visible = true;
+                        prt_allergy_note.Text = mrfv.allergy_text; 
+                    } 
+                    else {
+                        prt_allergy_note_wrapper.Visible = false; 
+                    }
                 }
 
                 prt_vs_temperature.Text = mrfv.vs_temperature;
@@ -203,7 +209,6 @@ namespace EMR.OPD
                             tr.Cells.Add(td);
                         }
                         prt_appointed_vaccine.Rows.Add(tr);
-
                     }
                 }
 
@@ -221,16 +226,17 @@ namespace EMR.OPD
                 {
                     if (mrfv.spec_opinion_req)
                     {
+                        prt_spec_opinion_req_wrapper.Visible = true;
                         prt_spec_opinion_req_text.Text = mrfv.spec_opinion_req_text;
                     }
                     else
                     {
-                        prt_spec_opinion_req_text.Visible = false;
+                        prt_spec_opinion_req_wrapper.Visible = false;
                     }
                 }
                 //
                 prt_specific_edu_req.Text = mrfv.pecific_edu_req;
-                prt_next_appointment.Text = mrfv.next_appointment;
+                prt_next_appointment.Text = $"● Hẹn lần khám tới/ <span class='text-primary'>Next appointment: </span>{mrfv.next_appointment.Replace("<font color=\"red\">", "").Replace("</font>", "").Replace("<font color=\"#000000\">", "").Replace("<font color=\"#ff0000\">", "")}";
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
             
@@ -337,10 +343,25 @@ namespace EMR.OPD
                 dynamic response = VitalSign.Update(PatientVisit.Instance().patient_visit_id, PatientVisit.Instance().visit_type);
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    Initial();
+                    dynamic vs = JsonConvert.DeserializeObject(response.Data);
+
+                    LoadVitalSigns(vs);
                 }
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
+        }
+
+        public void LoadVitalSigns(dynamic vs)
+        {
+            vs_temperature.Text = WebHelpers.FormatString(vs.vs_temperature);
+            vs_heart_rate.Text = WebHelpers.FormatString(vs.vs_heart_rate);
+            vs_weight.Text = WebHelpers.FormatString(vs.vs_weight);
+            vs_respiratory_rate.Text = WebHelpers.FormatString(vs.vs_respiratory_rate);
+            vs_height.Text = WebHelpers.FormatString(vs.vs_height);
+            vs_BMI.Text = WebHelpers.FormatString(vs.vs_BMI);
+            vs_blood_pressure.Text = WebHelpers.FormatString(vs.vs_blood_pressure);
+            vs_spO2.Text = WebHelpers.FormatString(vs.vs_spO2);
+            vs_pulse.Text = WebHelpers.FormatString(vs.vs_pulse);
         }
         #endregion
 
@@ -355,15 +376,8 @@ namespace EMR.OPD
             {
                 Mrfv mrfv = new Mrfv(Request.QueryString["docId"]);
 
-                vs_temperature.Text = mrfv.vs_temperature;
-                vs_heart_rate.Text = mrfv.vs_heart_rate;
-                vs_weight.Text = mrfv.vs_weight;
-                vs_height.Text = mrfv.vs_height;
-                vs_respiratory_rate.Text = mrfv.vs_respiratory_rate;
-                vs_BMI.Text = mrfv.vs_BMI;
-                vs_blood_pressure.Text = mrfv.vs_blood_pressure;
-                vs_spO2.Text = mrfv.vs_spO2;
-
+                LoadVitalSigns(mrfv);
+                
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
                 prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (mrfv.status == DocumentStatus.FINAL)

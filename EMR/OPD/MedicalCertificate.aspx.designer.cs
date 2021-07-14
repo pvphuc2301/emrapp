@@ -96,6 +96,15 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_gender;
 
         /// <summary>
+        /// prt_dept control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_dept;
+
+        /// <summary>
         /// prt_pid control.
         /// </summary>
         /// <remarks>
@@ -193,6 +202,24 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label prt_recommendation;
+
+        /// <summary>
+        /// prt_date control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_date;
+
+        /// <summary>
+        /// prt_attending_doctor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_attending_doctor;
 
         /// <summary>
         /// btnHome control.

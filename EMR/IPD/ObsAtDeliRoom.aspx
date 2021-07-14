@@ -800,7 +800,7 @@
                                                 <div class="col-md-12 gt-2-a">
                                                     <label  class="control-label mb-1">Can thiệp và kết quả/ <span class="text-primary">Intervention and results:</span></label>
                                                     <div>
-                                                        <label class="align-top">Intervention</label>
+                                                        <%--<label class="align-top">Intervention</label>--%>
                                                         <asp:Label runat="server" ID="lbl_intervention"></asp:Label>
                                                         <div  runat="server" id="intervention_wrapper">
                                                             <div class="d-inline-block">
@@ -818,7 +818,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="intervention_note_field">
-                                                                <label>Intervention note</label>
+                                                                <%--<label>Intervention note</label>--%>
                                                                 <div class="form-group">
                                                                     <webUI:TextField runat="server" ID="txt_intervention_note" />
                                                                 </div>
@@ -1271,7 +1271,7 @@
                                                     <div class="form-actions">
                                                         <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete"  CssClass="btn btn-primary waves-effect" >Complete</asp:LinkButton>
 
-                                                        <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect" >Save</asp:LinkButton>
+                                                        <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" OnClientClick="document.getElementById('btnSave').classList.add('disabled');" runat="server" CssClass="btn btn-primary waves-effect" >Save</asp:LinkButton>
 
                                                         <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal"  class="btn btn-danger waves-effect">Delete</div>
 
@@ -1321,6 +1321,7 @@
     <script type="text/javascript">
         checkboxRadiobutton_init();
         formGroup_init();
+        InputFilter("data-type='number'");
 
         function beforeAsyncPostBack() {
             var curtime = new Date();
@@ -1328,7 +1329,7 @@
 
         function afterAsyncPostBack() {
             formGroup_init();
-            InputFilter();
+            InputFilter("data-type='number'");
             checkboxRadiobutton_init();
         }
 

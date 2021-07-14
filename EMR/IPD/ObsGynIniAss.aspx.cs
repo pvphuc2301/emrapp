@@ -199,7 +199,7 @@ namespace EMR.IPD
                     lbl_lmp_to.Text = WebHelpers.FormatString(ogia.lmp_to);
                     lbl_ges_age_weeks.Text = $"{WebHelpers.FormatString(ogia.ges_age_weeks)} tuần/ weeks {WebHelpers.FormatString(ogia.ges_age_days)} ngày/ days";
                     lbl_prenatal_visit.Text = WebHelpers.FormatString(ogia.prenatal_visit);
-                    lbl_tetanus_vaccination.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.tetanus_vaccination, $"Có/ Yes {WebHelpers.FormatString(ogia.tetanus_vaccin_time)} lần/ times"));
+                    lbl_tetanus_vaccination.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.tetanus_vaccination, $"Có/ Yes {WebHelpers.FormatString(ogia.tetanus_vaccin_time)} lần/ times", "Chưa/ Not yet"));
                     lbl_gbs_disease.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.gbs_disease));
                     lbl_gbs_bacteriuria.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.gbs_bacteriuria));
 
@@ -233,7 +233,9 @@ namespace EMR.IPD
                     if(ogia.obs_mem_condition_code == "RU")
                     {
                         lbl_obs_rup_of_mem_at.Text = WebHelpers.FormatDateTime(ogia.obs_rup_of_mem_at);
-                    }else if(ogia.obs_mem_condition_code == "IN")
+                        lbl_obs_rup_of_mem_desc.Text = WebHelpers.FormatString(ogia.obs_rup_of_mem_desc);
+                    }
+                    else if(ogia.obs_mem_condition_code == "IN")
                     {
                         lbl_obs_mem_con_attri_desc.Text = ogia.obs_mem_con_attri_desc;
                     }
@@ -276,8 +278,8 @@ namespace EMR.IPD
                 lbl_family.Text = WebHelpers.FormatString(ogia.family);
                 //3
                 lbl_age_of_menarhce.Text = WebHelpers.FormatString(ogia.age_of_menarhce);
-                lbl_menstrual_cycle.Text = WebHelpers.FormatString(ogia.menstrual_cycle);
-                lbl_length_of_period.Text = WebHelpers.FormatString(ogia.length_of_period);
+                lbl_menstrual_cycle.Text = WebHelpers.FormatString(ogia.menstrual_cycle) + "&nbsp;ngày/ days";
+                lbl_length_of_period.Text = WebHelpers.FormatString(ogia.length_of_period) + "&nbsp;ngày/ days";
                 lbl_amount_mens_blood.Text = WebHelpers.FormatString(ogia.amount_mens_blood);
                 lbl_marriage_age.Text = WebHelpers.FormatString(ogia.marriage_age);
                 lbl_age_menopause.Text = WebHelpers.FormatString(ogia.age_menopause);
@@ -294,6 +296,7 @@ namespace EMR.IPD
                 lbl_cardio_system.Text = WebHelpers.FormatString(ogia.cardio_system);
                 lbl_respiratory_system.Text = WebHelpers.FormatString(ogia.respiratory_system);
                 lbl_digestive_system.Text = WebHelpers.FormatString(ogia.digestive_system);
+                lbl_nervous_system.Text = WebHelpers.FormatString(ogia.nervous_system);
                 lbl_uro_system.Text = WebHelpers.FormatString(ogia.uro_system);
                 lbl_mus_system.Text = WebHelpers.FormatString(ogia.mus_system);
                 lbl_otorhinolaryngology.Text = WebHelpers.FormatString(ogia.otorhinolaryngology);

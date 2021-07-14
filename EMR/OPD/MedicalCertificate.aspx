@@ -82,7 +82,10 @@
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 2fr 1fr">
-                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="155" Title="Khoa:" SubTitle="Dept" runat="server" />
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                <webUI:PrtRowS1 FontBold="true" FixedWidth="155" Title="Khoa:" SubTitle="Dept" runat="server" />
+                                                <asp:Label runat="server" ID="prt_dept" />
+                                            </div>
                                             <div class="d-grid" style="grid-template-columns: auto 1fr">
                                                 <webUI:PrtRowS1 FontBold="true" FixedWidth="95" Title="Mã BN:" SubTitle="Patient ID" runat="server" />
                                                 <asp:Label runat="server" ID="prt_pid" />
@@ -93,63 +96,64 @@
                                         <webUI:PrtRowS1 FontBold="true" Title="Đã đến khám và điều trị tại bệnh viện của chúng tôi, với những thông tin như sau:" SubTitle="Visited and received treatment at our hospital, with the following information" runat="server" />
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
-                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="260" Title="Ngày khám bệnh:" SubTitle="Date of visit" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="230" Title="Ngày khám bệnh:" SubTitle="Date of visit" runat="server" />
                                             <asp:Label runat="server" ID="prt_date_of_visit" />
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
-                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="260" Title="Lý do đến khám:" SubTitle="Chief complaint" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="230" Title="Lý do đến khám:" SubTitle="Chief complaint" runat="server" />
                                             <asp:Label runat="server" ID="prt_chief_complain" />
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
-                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="260" Title="Tóm tắt bệnh sử:" SubTitle="History of present illness" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="230" Title="Tóm tắt bệnh sử:" SubTitle="History of present illness" runat="server" />
                                             <asp:Label runat="server" ID="prt_history_present_illness" />
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
-                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="260" Title="Tiền sử bệnh:" SubTitle="Past history" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="230" Title="Tiền sử bệnh:" SubTitle="Past history" runat="server" />
                                             <asp:Label runat="server" ID="prt_past_history" />
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
-                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="260" Title="Đặc điểm lâm sàng:" SubTitle="Clinical findings" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="230" Title="Đặc điểm lâm sàng:" SubTitle="Clinical findings" runat="server" />
                                             <asp:Label runat="server" ID="prt_clinical_findings" />
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
-                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="260" Title="Cận lâm sàng được chỉ định:" SubTitle="Para-clinical investigations" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="230" Title="Cận lâm sàng được chỉ định:" SubTitle="Para-clinical investigations" runat="server" />
                                             <asp:Label runat="server" ID="prt_para_clinical_investigations" />
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
-                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="260" Title="Chẩn đoán:" SubTitle="Diagnosis" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="230" Title="Chẩn đoán:" SubTitle="Diagnosis" runat="server" />
                                             <asp:Label runat="server" ID="prt_diagnosis" />
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
-                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="260" Title="Phương pháp và thuốc điều trị:" SubTitle="Treatment and medications" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="230" Title="Phương pháp và thuốc điều trị:" SubTitle="Treatment and medications" runat="server" />
                                             <asp:Label runat="server" ID="prt_treatment" />
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
-                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="260" Title="Thời gian điều trị:" SubTitle="Treatment period" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="230" Title="Thời gian điều trị:" SubTitle="Treatment period" runat="server" />
                                             <asp:Label runat="server" ID="prt_treatment_period" />
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
-                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="260" Title="Lời khuyên và theo dõi:" SubTitle="Recommendation and Follow-up" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="230" Title="Lời khuyên và theo dõi:" SubTitle="Recommendation and Follow-up" runat="server" />
                                             <asp:Label runat="server" ID="prt_recommendation" />
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 1fr 1fr; grid-gap: 5px">
                                             <div></div>
                                             <div class="text-center avoid-page-break">
-                                                <div>Ngày/ <span class="text-primary">Date:</span> 08/06/2021</div>
+                                                <div>Ngày/ <span class="text-primary">Date:</span> <asp:Label runat="server" ID="prt_date"></asp:Label></div>
                                                 <div><span class="font-bold">BÁC SĨ ĐIỀU TRỊ</span></div>
                                                 <div><span class="text-primary">ATTENDING DOCTOR</span></div>
                                                 <div>(Họ tên, chữ ký & MSNV)</div>
-                                                <div><span class="text-primary">(Full name, Signature & ID)</span></div>
+                                                <div style="margin-bottom: 100px;"><span class="text-primary">(Full name, Signature & ID)</span></div>
+                                                <asp:Label runat="server" ID="prt_attending_doctor"></asp:Label>
                                             </div>
                                         </div>
                                     </div>
@@ -175,7 +179,7 @@
                 </div>
 
                 <div class="cssclsNoPrint">
-                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0; border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                       <li>Medical Certificate</li>
                     </ul>

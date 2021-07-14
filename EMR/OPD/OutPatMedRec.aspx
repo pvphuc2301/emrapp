@@ -105,7 +105,7 @@
 
                                         <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Order="1." Title="Dấu hiệu sinh tồn/ " SubTitle="Vital signs:" runat="server" />
 
-                                        <table class="table-bordered mb-2" style="table-layout: fixed; width: 100%">
+                                        <table class="table-bordered mb-2" style="table-layout: fixed; width: 100%; page-break-inside:avoid;">
                                             <tr>
                                                 <td class="p-2">Nhiệt độ/ Temperature (C degree)</td>
                                                 <td class="p-2 text-right" style="width: 100px;">
@@ -202,7 +202,7 @@
                                             <asp:Label runat="server" ID="prt_spec_opinion_requested" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 220px 1fr; grid-gap: 5px;">
+                                        <div runat="server" id="prt_spec_opinion_requested_note_wrapper" class="d-grid" style="grid-template-columns: 220px 1fr; grid-gap: 5px;">
                                             <webUI:PrtRowS1 FontBold="true" FixedLeft="10" Order="•" Title="Nếu có, nêu rõ:" SubTitle="If yes, specif" runat="server" />
                                             <asp:Label runat="server" ID="prt_spec_opinion_requested_note" />
                                         </div>
@@ -478,7 +478,8 @@
                                                                 </div>
                                                                 <%--<asp:CustomValidator ID="CustomValidator2" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="Tiền sử dị ứng/ allergy is requested" CssClass="text-danger" OnServerValidate="allergy_ServerValidate"></asp:CustomValidator>--%>
                                                                 <div class="form-group allergy_field">
-                                                                    <webUI:TextField runat="server" ID="txt_allergy_note" />
+                                                                    <webUI:TextField TextMode="SingleLine" runat="server" ID="txt_allergy_note" />
+                                                                    <asp:CustomValidator ID="CustomValidator2" CssClass="text-danger" ValidationGroup="Group1" OnServerValidate="CustomValidatorAllergyNote_ServerValidate" Display="Dynamic" ErrorMessage="Too many characters. 256 allowed." runat="server" />
                                                                 </div>
                                                             </div>
 
@@ -728,7 +729,8 @@
 
                                             <div class="row mb-2" runat="server" id="current_medication_field">
                                                 <div class="col-md-12 gt-2-a">
-                                                    <label class="control-label mb-1"><span class="text-primary">5. Current medications:</span></label>
+                                                    <%--<label class="control-label mb-1"><span class="text-primary">5. Current medications:</span></label>--%>
+                                                    <label class="control-label mb-1"></label>
                                                     <asp:Label runat="server" ID="lbl_medicine" />
                                                     <div class="form-group " runat="server" id="medicine_wrapper">
                                                         <webUI:TextField runat="server" ID="txt_medicine" />
@@ -757,7 +759,8 @@
                                                             <%--<asp:CustomValidator ID="CustomValidator1" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="Yêu cầu ý kiến chuyên khoa/ Specialized opinion requested" CssClass="text-danger" OnServerValidate="spec_opinion_requested_ServerValidate"></asp:CustomValidator>--%>
                                                         </div>
                                                         <div class="form-group spec_opinion_requested_field">
-                                                            <webUI:TextField runat="server" ID="txt_spec_opinion_requested_note" />
+                                                            <webUI:TextField runat="server" ID="txt_spec_opinion_requested_note" TextMode="SingleLine" />
+                                                            <asp:CustomValidator ID="CustomValidator1" CssClass="text-danger" ValidationGroup="Group1" OnServerValidate="CustomValidatorSpecOpinionRequestedNote_ServerValidate" Display="Dynamic" ErrorMessage="Too many characters. 256 allowed." runat="server" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -840,6 +843,7 @@
         checkboxRadiobutton_init();
 
         InputFilter("data-type='number'");
+        $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
 
         function beforeAsyncPostBack() {
             var curtime = new Date();
@@ -848,6 +852,7 @@
         function afterAsyncPostBack() {
             checkboxRadiobutton_init();
             InputFilter("data-type='number'");
+            $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
         }
 
     </script>

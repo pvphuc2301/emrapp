@@ -42,6 +42,15 @@ namespace EMR
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
+        /// prt_disc_ward_desc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_disc_ward_desc;
+
+        /// <summary>
         /// prt_vpid control.
         /// </summary>
         /// <remarks>
@@ -186,22 +195,22 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_notes;
 
         /// <summary>
-        /// Date control.
+        /// prt_date control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.PrintTemplate.Date Date;
+        protected global::EMR.UserControls.PrintTemplate.Date prt_date;
 
         /// <summary>
-        /// Date1 control.
+        /// prt_date1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.PrintTemplate.Date Date1;
+        protected global::EMR.UserControls.PrintTemplate.Date prt_date1;
 
         /// <summary>
         /// btnHome control.

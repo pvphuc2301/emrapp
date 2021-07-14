@@ -14,9 +14,13 @@ namespace EMR.UserControls.PrintTemplate
         {
             if(!string.IsNullOrEmpty(dateTime))
             {
-                prt_day.Text = System.DateTime.Parse(dateTime.ToString()).Day.ToString();
-                prt_month.Text = System.DateTime.Parse(dateTime.ToString()).Month.ToString();
-                prt_year.Text = System.DateTime.Parse(dateTime.ToString()).Year.ToString();
+                string day = System.DateTime.Parse(dateTime.ToString()).Day.ToString();
+                string month = System.DateTime.Parse(dateTime.ToString()).Month.ToString();
+                string year = System.DateTime.Parse(dateTime.ToString()).Year.ToString();
+                
+                prt_day.Text = (day.Length <= 1 ? "0" : "") + day;
+                prt_month.Text = (month.Length <= 1 ? "0" : "") + month;
+                prt_year.Text = year;
             }
         }
     }

@@ -168,6 +168,15 @@ namespace EMR.OPD
         protected global::System.Web.UI.WebControls.Label prt_allergy;
 
         /// <summary>
+        /// prt_allergy_note_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_allergy_note_wrapper;
+
+        /// <summary>
         /// prt_allergy_note control.
         /// </summary>
         /// <remarks>
@@ -382,6 +391,15 @@ namespace EMR.OPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label prt_spec_opinion_req;
+
+        /// <summary>
+        /// prt_spec_opinion_req_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_spec_opinion_req_wrapper;
 
         /// <summary>
         /// prt_spec_opinion_req_text control.

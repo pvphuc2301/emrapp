@@ -85,7 +85,7 @@
                   Skin="Silk" >
                                 <Tabs>
                                     <telerik:RadTab Text="Allergy" Value="Allergy" Width="200px"></telerik:RadTab>
-                                    <telerik:RadTab Text="Vital Signs" Value="VitalSigns" Width="200px"></telerik:RadTab>
+                                    <%--<telerik:RadTab Text="Vital Signs" Value="VitalSigns" Width="200px"></telerik:RadTab>--%>
                                     <telerik:RadTab Text="Problem List" Value="ProblemList" Width="200px"></telerik:RadTab>
                                 </Tabs>
                             </telerik:RadTabStrip>
@@ -219,7 +219,7 @@
                             </div>
                             <div class="modal-footer">
                                 <div id="btnClose" data-dismiss="modal" class="btn btn-default waves-effect">Close</div>
-                                <asp:LinkButton runat="server" ID="btnSave" OnClick="btnSave_Click" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
+                                <asp:LinkButton runat="server" ID="btnSave" OnClick="btnSave_Click" OnClientClick="document.getElementById('btnSave').classList.add('disabled');" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
                             </div>
                         </div>
                     </div>

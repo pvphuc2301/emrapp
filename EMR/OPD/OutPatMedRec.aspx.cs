@@ -285,7 +285,12 @@ namespace EMR
                 {
                     if (omr.spec_opinion_requested)
                     {
+                        prt_spec_opinion_requested_note_wrapper.Visible = true;
                         prt_spec_opinion_requested_note.Text = omr.spec_opinion_requested_note;
+                    }
+                    else
+                    {
+                        prt_spec_opinion_requested_note_wrapper.Visible = false;
                     }
                 }
 
@@ -517,6 +522,14 @@ namespace EMR
         protected void allergy_ServerValidate(object source, ServerValidateEventArgs args)
         {
             args.IsValid = rad_allergy_false.Checked || rad_allergy_true.Checked;
+        }
+        protected void CustomValidatorAllergyNote_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = txt_allergy_note.Value.Length <= 256;
+        }
+        protected void CustomValidatorSpecOpinionRequestedNote_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = txt_spec_opinion_requested_note.Value.Length <= 256;
         }
         #endregion
     }
