@@ -222,58 +222,58 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_head_circum;
 
         /// <summary>
-        /// prt_singleton_sex_code_M control.
+        /// prt_singleton_sex_code_m control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_singleton_sex_code_M;
+        protected global::System.Web.UI.WebControls.Label prt_singleton_sex_code_m;
 
         /// <summary>
-        /// prt_multiple_sex_M control.
+        /// prt_singleton_sex_code_f control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_multiple_sex_M;
+        protected global::System.Web.UI.WebControls.Label prt_singleton_sex_code_f;
 
         /// <summary>
-        /// prt_singleton_sex_code_F control.
+        /// prt_multiple_sex_m control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_singleton_sex_code_F;
+        protected global::System.Web.UI.WebControls.Label prt_multiple_sex_m;
 
         /// <summary>
-        /// prt_multiple_sex_F control.
+        /// prt_multiple_sex_f control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_multiple_sex_F;
+        protected global::System.Web.UI.WebControls.Label prt_multiple_sex_f;
 
         /// <summary>
-        /// prt_birth_defect_False control.
+        /// prt_birth_defect_false control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_birth_defect_False;
+        protected global::System.Web.UI.WebControls.Label prt_birth_defect_false;
 
         /// <summary>
-        /// prt_birth_defect_True control.
+        /// prt_birth_defect_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_birth_defect_True;
+        protected global::System.Web.UI.WebControls.Label prt_birth_defect_true;
 
         /// <summary>
         /// prt_birth_defect_note control.
@@ -294,22 +294,22 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_neonatal_status;
 
         /// <summary>
-        /// prt_intervention_False control.
+        /// prt_intervention_false control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_intervention_False;
+        protected global::System.Web.UI.WebControls.Label prt_intervention_false;
 
         /// <summary>
-        /// prt_intervention_True control.
+        /// prt_intervention_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_intervention_True;
+        protected global::System.Web.UI.WebControls.Label prt_intervention_true;
 
         /// <summary>
         /// prt_intervention_note control.
@@ -321,22 +321,22 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_intervention_note;
 
         /// <summary>
-        /// prt_placenta_deli_M control.
+        /// prt_placenta_deli_m control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_placenta_deli_M;
+        protected global::System.Web.UI.WebControls.Label prt_placenta_deli_m;
 
         /// <summary>
-        /// prt_placenta_deli_S control.
+        /// prt_placenta_deli_s control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_placenta_deli_S;
+        protected global::System.Web.UI.WebControls.Label prt_placenta_deli_s;
 
         /// <summary>
         /// prt_pdt_hour control.
@@ -384,22 +384,22 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_placenta_weight;
 
         /// <summary>
-        /// prt_umbilical_coil_False control.
+        /// prt_umbilical_coil_false control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_umbilical_coil_False;
+        protected global::System.Web.UI.WebControls.Label prt_umbilical_coil_false;
 
         /// <summary>
-        /// prt_umbilical_coil_True control.
+        /// prt_umbilical_coil_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_umbilical_coil_True;
+        protected global::System.Web.UI.WebControls.Label prt_umbilical_coil_true;
 
         /// <summary>
         /// prt_umbilical_length control.
@@ -420,22 +420,22 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_blood_loss;
 
         /// <summary>
-        /// prt_p_intervention_False control.
+        /// prt_p_intervention_false control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_p_intervention_False;
+        protected global::System.Web.UI.WebControls.Label prt_p_intervention_false;
 
         /// <summary>
-        /// prt_p_intervention_True control.
+        /// prt_p_intervention_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_p_intervention_True;
+        protected global::System.Web.UI.WebControls.Label prt_p_intervention_true;
 
         /// <summary>
         /// prt_p_intervention_note control.
@@ -492,49 +492,76 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_RR;
 
         /// <summary>
-        /// prt_delivery_mode_desc control.
+        /// prt_vaginal_deli_code_s control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_delivery_mode_desc;
+        protected global::System.Web.UI.WebControls.Label prt_vaginal_deli_code_s;
 
         /// <summary>
-        /// prt_dl_desc control.
+        /// prt_vaginal_deli_code_v control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_dl_desc;
+        protected global::System.Web.UI.WebControls.Label prt_vaginal_deli_code_v;
 
         /// <summary>
-        /// Label20 control.
+        /// prt_vaginal_deli_code_f control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label20;
+        protected global::System.Web.UI.WebControls.Label prt_vaginal_deli_code_f;
 
         /// <summary>
-        /// prt_pre_intact control.
+        /// prt_section_code_el control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_pre_intact;
+        protected global::System.Web.UI.WebControls.Label prt_section_code_el;
 
         /// <summary>
-        /// prt_pre_lacera control.
+        /// prt_section_code_em control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_pre_lacera;
+        protected global::System.Web.UI.WebControls.Label prt_section_code_em;
+
+        /// <summary>
+        /// prt_interven_reason control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_interven_reason;
+
+        /// <summary>
+        /// prt_pre_intact_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_pre_intact_true;
+
+        /// <summary>
+        /// prt_pre_lacera_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_pre_lacera_true;
 
         /// <summary>
         /// prt_pre_lacera_degree control.
@@ -546,13 +573,13 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_pre_lacera_degree;
 
         /// <summary>
-        /// prt_pre_episiotomy control.
+        /// prt_pre_episiotomy_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_pre_episiotomy;
+        protected global::System.Web.UI.WebControls.Label prt_pre_episiotomy_true;
 
         /// <summary>
         /// prt_pre_episiotomy_st control.
@@ -564,40 +591,40 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_pre_episiotomy_st;
 
         /// <summary>
-        /// prt_cervix_intact_True control.
+        /// prt_cervix_intact_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_cervix_intact_True;
+        protected global::System.Web.UI.WebControls.Label prt_cervix_intact_true;
 
         /// <summary>
-        /// prt_cervix_intact_False control.
+        /// prt_cervix_intact_false control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_cervix_intact_False;
+        protected global::System.Web.UI.WebControls.Label prt_cervix_intact_false;
 
         /// <summary>
-        /// Label22 control.
+        /// prt_preo_diagnosis control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label22;
+        protected global::System.Web.UI.WebControls.Label prt_preo_diagnosis;
 
         /// <summary>
-        /// Label23 control.
+        /// prt_post_diagnosis control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label23;
+        protected global::System.Web.UI.WebControls.Label prt_post_diagnosis;
 
         /// <summary>
         /// updatePanel2 control.
@@ -618,22 +645,22 @@ namespace EMR
         protected global::System.Web.UI.WebControls.GridView prt_operations;
 
         /// <summary>
-        /// prt_sur_incident_False control.
+        /// prt_sur_incident_false control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_sur_incident_False;
+        protected global::System.Web.UI.WebControls.Label prt_sur_incident_false;
 
         /// <summary>
-        /// prt_sur_incident_True control.
+        /// prt_sur_incident_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_sur_incident_True;
+        protected global::System.Web.UI.WebControls.Label prt_sur_incident_true;
 
         /// <summary>
         /// prt_sur_incident_note control.
@@ -645,22 +672,22 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_sur_incident_note;
 
         /// <summary>
-        /// prt_sur_complication_False control.
+        /// prt_sur_complication_false control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_sur_complication_False;
+        protected global::System.Web.UI.WebControls.Label prt_sur_complication_false;
 
         /// <summary>
-        /// prt_sur_complication_True control.
+        /// prt_sur_complication_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_sur_complication_True;
+        protected global::System.Web.UI.WebControls.Label prt_sur_complication_true;
 
         /// <summary>
         /// prt_sur_complication_note control.
@@ -1446,13 +1473,13 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_umbilical_coil_true;
 
         /// <summary>
-        /// XSquare4 control.
+        /// XSquare10 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UserControl XSquare4;
+        protected global::System.Web.UI.UserControl XSquare10;
 
         /// <summary>
         /// lbl_umbilical_length control.

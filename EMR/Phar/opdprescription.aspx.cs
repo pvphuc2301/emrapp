@@ -29,7 +29,7 @@ namespace EMR.Print
             {
                 LoadPatientInfomation(varPID);
                 load_visit_infor(varPV_ID);
-                //  load_vital_sign(varPV_ID);
+                load_vital_sign(varPV_ID);
                 Load_Allergy(varPV_ID);
                 Load_Dianosis(varPV_ID);
                 Load_Diagnosis_List(varPV_ID, varVbID);
@@ -113,12 +113,14 @@ namespace EMR.Print
         public void load_vital_sign(string varPV_ID)
         {
             string jsString = "";
-            if (visitType == "OPD")
-                jsString = "api/emr/vital-sign-opd/" + varPV_ID;
-            else if (visitType == "IPD")
-                jsString = "api/emr/vital-sign-ipd/" + varPV_ID;
+            //if (visitType == "OPD")
+            //    jsString = "api/emr/vital-sign-opd/" + varPV_ID;
+            //else if (visitType == "IPD")
+            //    jsString = "api/emr/vital-sign-ipd/" + varPV_ID;
 
-        //    string _jsonData = WebHelpers.GetAPI(jsString);
+            //    string _jsonData = WebHelpers.GetAPI(jsString);
+
+            jsString = $"api/emr/vital-sign/{DataHelpers._LOCATION}/{varPV_ID}/" + visitType;
             dynamic response = WebHelpers.GetAPI(jsString);
 
             if (response.Status == System.Net.HttpStatusCode.OK)
@@ -150,21 +152,30 @@ namespace EMR.Print
 
         public void load_visit_infor(string varPV_ID)
         {
-            //string _jsonData = WebHelpers.GetAPI("api/emr/patient-visit/" + varPV_ID);
-            dynamic response = WebHelpers.GetAPI("api/emr/patient-visit/" + varPV_ID);
+            string vsType = "";
+            string apiURL = $"api/emr/patient-visit/{DataHelpers._LOCATION}/" + varPV_ID;
+            dynamic response = WebHelpers.GetAPI(apiURL);//"api/emr/patient-visit/" + varPV_ID
+
+            DataTable mydataTable = new DataTable();
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic data = JObject.Parse(response.Data);
-                lbVisitDate.Text = data.actual_visit_date_time.ToString("dd-MM-yyyy");
+                mydataTable = WebHelpers.GetJSONToDataTable(response.Data);
+                //dynamic data = JObject.Parse(response.Data);
+                foreach (DataRow row in mydataTable.Rows)
+                {
+                    lbVisitDate.Text = row["actual_visit_date_time"].ToString();//.ToString("dd-MM-yyyy");
+                    vsType = row["visit_type_group_rcd"].ToString();
+                    break;
+                }                    
 
                 if (!string.IsNullOrEmpty(lbVisitDate.Text))
                 {
-                    DateTime vsDate = Convert.ToDateTime(data.actual_visit_date_time);
+                    DateTime vsDate = Convert.ToDateTime(lbVisitDate.Text);
                     if (vsDate.Month < 8 && vsDate.Year <= 2020)
                         oldVisit = true;
                 }
-                if (data.visit_type_group_rcd == "OPD")
+                if (vsType == "OPD")
                 {
                     lbSpecialty.Text = "Khoa Khám Bệnh/ OPD";
                     visitType = "OPD";
@@ -205,14 +216,16 @@ namespace EMR.Print
         {
            // string _jsonData = WebHelpers.GetAPI("api/emr/allergy/" + varPV_ID);
             dynamic response = WebHelpers.GetAPI("api/emr/allergy/" + varPV_ID);
+            lbAllergy.Text = "No/ Không có";
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 dynamic data = JObject.Parse(response.Data);
                 lbAllergy.Text = data.allergy;
             }
-            else
+            if (string.IsNullOrEmpty(lbAllergy.Text))
                 lbAllergy.Text = "No/ Không có";
+
         }
 
         protected void Load_Diagnosis_List(string varPV_ID, string varVbID)

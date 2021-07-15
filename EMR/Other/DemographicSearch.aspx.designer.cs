@@ -87,6 +87,33 @@ namespace EMR.Other
         protected global::Telerik.Web.UI.RadGrid RadGrid5;
 
         /// <summary>
+        /// DocumentList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DocumentList;
+
+        /// <summary>
+        /// lbl_visit_type control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_visit_type;
+
+        /// <summary>
+        /// radGridPidList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid radGridPidList;
+
+        /// <summary>
         /// RadGrid1 control.
         /// </summary>
         /// <remarks>

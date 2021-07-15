@@ -14,6 +14,8 @@ namespace EMR
             if (!WebHelpers.CheckSession(this, "./login.aspx?ReturnUrl=", false)) return;
             if (!IsPostBack)
             {
+                Session["PATIENT_INFO"] = new System.Dynamic.ExpandoObject();
+
                 BindLocation();
 
                 if ((string)Session["group_access"] == "ADM")

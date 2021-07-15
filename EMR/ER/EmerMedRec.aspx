@@ -32,80 +32,18 @@
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/sweetalert.min.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
-    <%--<style>
-        [type="checkbox"]:not(:checked),
-        [type="checkbox"]:checked {
-            position: absolute;
-            left: 0;
-            opacity: 0.01;
-        }
-
-            [type="checkbox"]:not(:checked) + label,
-            [type="checkbox"]:checked + label {
-                position: relative;
-                padding-left: 2.3em;
-                /*font-size: 1.05em;*/
-                /*line-height: 1.7;*/
-                /*cursor: pointer;*/
-            }
-
-                /* checkbox aspect */
-                [type="checkbox"]:not(:checked) + label:before,
-                [type="checkbox"]:checked + label:before {
-                    content: '❏';
-                    position: absolute;
-                    left: 0;
-                }
-
-                /* checked mark aspect */
-
-                [type="checkbox"]:checked + label:after {
-                    content: '☒';
-                    position: absolute;
-                    top: .48em;
-                    left: .12em;
-                    -webkit-transition: all .2s;
-                    transition: all .2s;
-                }
-
-                /* checked mark aspect changes */
-                [type="checkbox"]:not(:checked) + label:after {
-                    opacity: 0;
-                    -webkit-transform: scale(0) rotate(45deg);
-                    transform: scale(0) rotate(45deg);
-                }
-
-
-        [type="checkbox"]:disabled:not(:checked) + label:before,
-        [type="checkbox"]:disabled:checked + label:before {
-            box-shadow: none;
-            border-color: #bbb;
-        }
-
-        [type="checkbox"]:disabled:checked + label:after {
-            color: #777;
-        }
-
-        [type="checkbox"]:disabled + label {
-            color: #000000;
-        }
-    </style>
-    <style>
-        .alert {
-            display: flex;
-            align-items: center;
-        }
-
-        #MessagePlaceHolder {
-            left: 0;
-            right: 0;
-        }
-    </style>--%>
     <script>
         function changeValue(a, b) {
             document.getElementById(b).value = document.getElementById(a).innerHTML;
         }
     </script>
+    <style type="text/css">
+        table { page-break-after:auto }
+        tr    { page-break-inside:avoid; page-break-after:auto }
+        td    { page-break-inside:avoid; page-break-after:auto }
+        thead { display:table-header-group }
+        tfoot { display:table-footer-group }
+    </style>
 </head>
 
 <body>
@@ -163,16 +101,16 @@
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 ">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma">Giờ bắt đầu đánh giá</asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> / Starting time of the assessment: </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_evaluation_time"></asp:Label>
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">Giờ bắt đầu đánh giá</asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> / Starting time of the assessment: </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_evaluation_time"></asp:Label>
                                             </div>
                                         </div>
                                         <div class="row mb-2 " style="text-align: justify;">
                                             <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma"> Lý do đến khám/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Chief complaint/ Reason of consultation: </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_chief_complaint"></asp:Label>
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma"> Lý do đến khám/ </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Chief complaint/ Reason of consultation: </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_chief_complaint"></asp:Label>
                                             </div>
                                         </div>
 
@@ -183,48 +121,48 @@
                                                         <div class="col-2" style="margin-left: -15px;">
                                                             <div class="row">
                                                                 <div class="col-12">
-                                                                    <asp:Label Style="font-size: 25.5px; text-align: start" ID="lbl_chief_complaint_code_R" runat="server" />
-                                                                    <label for="lbl_chief_complaint_code_R " style="font-size: 16.5px; font-family: Tahoma; font-weight: bold; margin-left: 5px;">Hồi sức</label>
+                                                                    <asp:Label Style="font-size: 14.5px; text-align: start" ID="lbl_chief_complaint_code_R" runat="server" />
+                                                                    <label for="lbl_chief_complaint_code_R " style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left: 5px;">Hồi sức</label>
                                                                 </div>
                                                             </div>
-                                                            <div style="margin-left: 30px;"><span style="font-size: 16.5px; font-family: Tahoma; margin-top: -5px;" class="text-primary d-block mb-0 h4">Resuscitation</span></div>
+                                                            <div style="margin-left: 25px;"><span style="font-size: 14.5px; font-family: Tahoma;" class="text-primary d-block mb-0 h4">Resuscitation</span></div>
                                                         </div>
                                                         <div class="col-2">
                                                             <div class="row">
                                                                 <div class="col-12">
-                                                                    <asp:Label Style="font-size: 25.5px;" ID="lbl_chief_complaint_code_E" runat="server" />
+                                                                    <asp:Label Style="font-size: 14.5px;" ID="lbl_chief_complaint_code_E" runat="server" />
 
-                                                                    <label for="lbl_chief_complaint_code_E " style="font-size: 16.5px; font-family: Tahoma; font-weight: bold; margin-left: 5px;">Cấp cứu</label>
+                                                                    <label for="lbl_chief_complaint_code_E " style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left: 5px;">Cấp cứu</label>
                                                                 </div>
                                                             </div>
-                                                            <div style="margin-left: 35px;"><span style="font-size: 16.5px; font-family: Tahoma; margin-top: -5px;" class="text-primary d-block mb-0 h4">Emergency</span></div>
+                                                            <div style="margin-left: 25px;"><span style="font-size: 14.5px; font-family: Tahoma;" class="text-primary d-block mb-0 h4">Emergency</span></div>
                                                         </div>
                                                         <div class="col-3">
                                                             <div class="row">
                                                                 <div class="col-12">
-                                                                    <asp:Label Style="font-size: 25.5px;" ID="lbl_chief_complaint_code_U" runat="server" />
-                                                                    <label for="lbl_chief_complaint_code_U " style="font-size: 16.5px; font-family: Tahoma; font-weight: bold; margin-left: 5px;">Khẩn trương</label>
+                                                                    <asp:Label Style="font-size: 14.5px;" ID="lbl_chief_complaint_code_U" runat="server" />
+                                                                    <label for="lbl_chief_complaint_code_U " style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left: 5px;">Khẩn trương</label>
                                                                 </div>
                                                             </div>
-                                                            <div style="margin-left: 35px;"><span style="font-size: 16.5px; font-family: Tahoma; margin-top: -5px;" class="text-primary d-block mb-0 h4">Urgent</span></div>
+                                                            <div style="margin-left: 25px;"><span style="font-size: 14.5px; font-family: Tahoma" class="text-primary d-block mb-0 h4">Urgent</span></div>
                                                         </div>
                                                         <div class="col-2">
                                                             <div class="row">
                                                                 <div class="col-12">
-                                                                    <asp:Label Style="font-size: 25.5px;" ID="lbl_chief_complaint_code_L" runat="server" />
-                                                                    <label for="lbl_chief_complaint_code_L " style="font-size: 16.5px; font-family: Tahoma; font-weight: bold; margin-left: 5px;">Trì hoãn</label>
+                                                                    <asp:Label Style="font-size: 14.5px;" ID="lbl_chief_complaint_code_L" runat="server" />
+                                                                    <label for="lbl_chief_complaint_code_L " style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left: 5px;">Trì hoãn</label>
                                                                 </div>
                                                             </div>
-                                                            <div style="margin-left: 35px;"><span style="font-size: 16.5px; font-family: Tahoma; margin-top: -5px;" class="text-primary d-block mb-0 h4">Less urgent</span></div>
+                                                            <div style="margin-left: 25px;"><span style="font-size: 14.5px; font-family: Tahoma" class="text-primary d-block mb-0 h4">Less urgent</span></div>
                                                         </div>
                                                         <div class="col-3">
                                                             <div class="row">
                                                                 <div class="col-12">
-                                                                    <asp:Label Style="font-size: 25.5px;" ID="lbl_chief_complaint_code_N" runat="server" />
-                                                                    <label for="lbl_chief_complaint_code_N " style="font-size: 16.5px; font-family: Tahoma; font-weight: bold; margin-left: 5px;">Không cấp cứu</label>
+                                                                    <asp:Label Style="font-size: 14.5px;" ID="lbl_chief_complaint_code_N" runat="server" />
+                                                                    <label for="lbl_chief_complaint_code_N " style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left: 5px;">Không cấp cứu</label>
                                                                 </div>
                                                             </div>
-                                                            <div style="margin-left: 35px;"><span style="font-size: 16.5px; font-family: Tahoma; margin-top: -5px;" class="text-primary d-block mb-0 h4">Non-Urgent</span></div>
+                                                            <div style="margin-left: 25px;"><span style="font-size: 14.5px; font-family: Tahoma;" class="text-primary d-block mb-0 h4">Non-Urgent</span></div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -232,98 +170,98 @@
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma"> Bệnh sử </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> / History of present illness </asp:Label>
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma"> (HPI): </asp:Label>
-                                                <asp:Label Style="text-align: justify; font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_history_of_present"></asp:Label>
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma"> Bệnh sử </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> / History of present illness </asp:Label>
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma"> (HPI): </asp:Label>
+                                                <asp:Label Style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_history_of_present"></asp:Label>
 
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
-                                            <div class="col-12 ">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma"> Meds: </asp:Label>
-                                                <asp:Label Style="text-align: justify; font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_past_med_his_meds"></asp:Label>
+                                            <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                                <asp:Label Style="font-weight: bold;"> Meds: </asp:Label>
+                                                <asp:Label runat="server" ID="prt_past_med_his_meds"></asp:Label>
 
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
-                                            <div class="col-12 ">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma"> Surgical: </asp:Label>
-                                                <asp:Label Style="text-align: justify; font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_past_med_his_surs"></asp:Label>
+                                            <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                                <asp:Label Style="font-weight: bold;"> Surgical: </asp:Label>
+                                                <asp:Label  runat="server" ID="prt_past_med_his_surs"></asp:Label>
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 ">
                                                 <div class="row ">
                                                     <div class="col-3 ">
-                                                        <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma"> Thói quen </asp:Label>
-                                                        <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> / Habits </asp:Label>
+                                                        <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma"> Thói quen </asp:Label>
+                                                        <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> / Habits </asp:Label>
                                                     </div>
                                                     <div class="col-3 ">
-                                                        <asp:Label Style="font-size: 25.5px; font-family: Tahoma" runat="server" ID="lbl_habits_A"></asp:Label>
-                                                        <label for="lbl_chief_complaint_code_E " style="font-size: 16.5px; font-family: Tahoma;">Rượu</label>
-                                                        <label style="font-size: 16.5px; font-family: Tahoma;">/ Alcohol</label>
+                                                        <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="lbl_habits_A"></asp:Label>
+                                                        <label for="lbl_chief_complaint_code_E " style="font-size: 14.5px; font-family: Tahoma;">Rượu</label>
+                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ Alcohol</label>
                                                     </div>
                                                     <div class="col-3 ">
-                                                        <asp:Label Style="font-size: 25.5px; font-family: Tahoma" runat="server" ID="lbl_habits_S"></asp:Label>
-                                                        <label for="lbl_chief_complaint_code_E " style="font-size: 16.5px; font-family: Tahoma;">Thuốc lá</label>
-                                                        <label style="font-size: 16.5px; font-family: Tahoma;">/ Smoking</label>
+                                                        <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="lbl_habits_S"></asp:Label>
+                                                        <label for="lbl_chief_complaint_code_E " style="font-size: 14.5px; font-family: Tahoma;">Thuốc lá</label>
+                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ Smoking</label>
                                                     </div>
                                                     <div class="col-3 ">
-                                                        <asp:Label Style="font-size: 25.5px; font-family: Tahoma" runat="server" ID="lbl_habits_D"></asp:Label>
-                                                        <label for="lbl_chief_complaint_code_E " style="font-size: 16.5px; font-family: Tahoma;">Chất gây nghiện</label>
-                                                        <label style="font-size: 16.5px; font-family: Tahoma;">/ Drugs</label>
+                                                        <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="lbl_habits_D"></asp:Label>
+                                                        <label for="lbl_chief_complaint_code_E " style="font-size: 14.5px; font-family: Tahoma;">Chất gây nghiện</label>
+                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ Drugs</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="margin-left: 50px; text-align: justify">
-                                                <label for="lbl_chief_complaint_code_E " style="font-weight: bold; font-size: 16.5px; font-family: Tahoma">Khác ghi rõ</label>
-                                                <label style="font-size: 16.5px; font-family: Tahoma;">/ Other, specify: </label>
-                                                <asp:Label Style="text-align: justify; font-size: 16.5px; font-family: Tahoma" runat="server" ID="lbl_habits_other"></asp:Label>
+                                                <label for="lbl_chief_complaint_code_E " style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">Khác ghi rõ</label>
+                                                <label style="font-size: 14.5px; font-family: Tahoma;">/ Other, specify: </label>
+                                                <asp:Label Style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" ID="lbl_habits_other"></asp:Label>
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma"> Thuốc dùng tại nhà/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Home medications: </asp:Label>
-                                                <asp:Label Style="text-align: justify; font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_home_medications"></asp:Label>
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma"> Thuốc dùng tại nhà/ </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Home medications: </asp:Label>
+                                                <asp:Label Style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_home_medications"></asp:Label>
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma"> Tiền sử dị ứng/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Allergies: </asp:Label>
-                                                <asp:Label Style="text-align: justify; font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_allergies"></asp:Label>
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma"> Tiền sử dị ứng/ </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Allergies: </asp:Label>
+                                                <asp:Label Style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_allergies"></asp:Label>
                                             </div>
                                         </div>
 
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma"> Tiền sử bệnh người thân/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Relevant family history: </asp:Label>
-                                                <asp:Label Style="text-align: justify; font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_relevant_family_history"></asp:Label>
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma"> Tiền sử bệnh người thân/ </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Relevant family history: </asp:Label>
+                                                <asp:Label Style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_relevant_family_history"></asp:Label>
 
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma"> Khám lâm sàng liên quan/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Physical examination: </asp:Label>
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma"> Khám lâm sàng liên quan/ </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Physical examination: </asp:Label>
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 25px"> * Kết quả tìm thấy/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Findings (General and Diagnostic support): </asp:Label>
-                                                <asp:Label Style="text-align: justify; font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_finding"></asp:Label>
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 25px"> * Kết quả tìm thấy/ </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Findings (General and Diagnostic support): </asp:Label>
+                                                <asp:Label Style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_finding"></asp:Label>
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 25px"> * Yêu cầu khám chuyên khoa tâm lý/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Psychological assessment required: </asp:Label>
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 25px"> * Yêu cầu khám chuyên khoa tâm lý/ </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Psychological assessment required: </asp:Label>
                                             </div>
                                         </div>
 
@@ -331,178 +269,179 @@
                                             <div class="col-12 ">
                                                 <div class="row ">
                                                     <div class="col-2 " style="margin-left: 40px">
-                                                        <asp:Label Style="font-size: 25.5px;" ID="lbl_required_code_False" runat="server" />
-                                                        <label for="lbl_chief_complaint_code_E " style="font-size: 16.5px; font-family: Tahoma;">Không</label>
-                                                        <label style="font-size: 16.5px; font-family: Tahoma;">/ No</label>
+                                                        <asp:Label Style="font-size: 14.5px;" ID="lbl_required_code_False" runat="server" />
+                                                        <label for="lbl_chief_complaint_code_E " style="font-size: 14.5px; font-family: Tahoma;">Không</label>
+                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ No</label>
                                                     </div>
                                                     <div class="col ">
-                                                        <asp:Label Style="font-size: 25.5px;" ID="lbl_required_code_True" runat="server" />
-                                                        <label for="lbl_chief_complaint_code_E " style="font-size: 16.5px; font-family: Tahoma;">Có, ghi rõ</label>
-                                                        <label style="font-size: 16.5px; font-family: Tahoma;">/ Yes, specify: </label>
-                                                        <asp:Label Style="text-align: justify; font-size: 16.5px; font-family: Tahoma" runat="server" ID="lbl_required_text"></asp:Label>
+                                                        <asp:Label Style="font-size: 14.5px;" ID="lbl_required_code_True" runat="server" />
+                                                        <label for="lbl_chief_complaint_code_E " style="font-size: 14.5px; font-family: Tahoma;">Có, ghi rõ</label>
+                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ Yes, specify: </label>
+                                                        <asp:Label Style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" ID="lbl_required_text"></asp:Label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma"> Kết quả khảo sát/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Investigations Results (Labs, imaging...): </asp:Label>
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma"> Kết quả khảo sát/ </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Investigations Results (Labs, imaging...): </asp:Label>
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_investigations_results"></asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_investigations_results"></asp:Label>
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma"> Chẩn đoán sơ bộ/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Initial diagnosis: </asp:Label>
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma"> Chẩn đoán sơ bộ/ </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Initial diagnosis: </asp:Label>
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_initial_diagnosis"></asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_initial_diagnosis"></asp:Label>
                                             </div>
                                         </div>
 
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma"> Chẩn đoán phân biệt/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Diferential diagnosis: </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_diferential_diagnosis"></asp:Label>
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma"> Chẩn đoán phân biệt/ </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Diferential diagnosis: </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_diferential_diagnosis"></asp:Label>
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma"> Bệnh kèm theo/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Associated conditions: </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_associated_conditions"></asp:Label>
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma"> Bệnh kèm theo/ </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Associated conditions: </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_associated_conditions"></asp:Label>
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma"> Chẩn đoán xác định/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Comfirmed Diagnosis: </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_comfirmed_diagnosis"></asp:Label>
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma"> Chẩn đoán xác định/ </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Comfirmed Diagnosis: </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_comfirmed_diagnosis"></asp:Label>
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 ">
                                                 <div class="row ">
-                                                    <div class="col-7 ">
-                                                        <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma"> Ý kiến của bác sỹ chuyên khoa: </asp:Label>
-                                                        <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> / Specialist opinion: </asp:Label>
-                                                    </div>
-                                                    <div class="col-3 ">
-                                                        <asp:Label Style="font-size: 25.5px;" ID="lbl_specialist_opinion_False" runat="server" />
-                                                        <label for="lbl_specialist_opinion_False " style="font-size: 16.5px; font-family: Tahoma;">Không</label>
-                                                        <label style="font-size: 16.5px; font-family: Tahoma;">/ No</label>
+                                                    <div class="col-8 ">
+                                                        <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma"> Ý kiến của bác sỹ chuyên khoa: </asp:Label>
+                                                        <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> / Specialist opinion: </asp:Label>
                                                     </div>
                                                     <div class="col-2 ">
-                                                        <asp:Label disabled-for="lbl_specialist_opinion_field" Style="font-size: 25.5px;" ID="lbl_specialist_opinion_True" runat="server" />
-                                                        <label for="lbl_specialist_opinion_True " style="font-size: 16.5px; font-family: Tahoma;">Có</label>
-                                                        <label style="font-size: 16.5px; font-family: Tahoma;">/ Yes</label>
+                                                        <asp:Label Style="font-size: 14.5px;" ID="lbl_specialist_opinion_False" runat="server" />
+                                                        <label for="lbl_specialist_opinion_False " style="font-size: 14.5px; font-family: Tahoma;">Không</label>
+                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ No</label>
+                                                    </div>
+                                                    <div class="col-2 ">
+                                                        <asp:Label  Style="font-size: 14.5px;" ID="lbl_specialist_opinion_True" runat="server" />
+                                                        <label for="lbl_specialist_opinion_True " style="font-size: 14.5px; font-family: Tahoma;">Có</label>
+                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ Yes</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="row mb-2 lbl_specialist_opinion_field">
-                                            <div class="col-5">
-                                                <label class="d-block mb-0 h4" style="font-size: 16.5px; font-family: Tahoma; font-weight: 700; margin-left: 25px;">* Tên của bác sĩ chuyên khoa/ khoa:</label>
-                                                <span class="text-primary" style="margin-left: 16.5px; margin-left: 50px;">Name of the specialist/ Department</span>
+                                        <div runat="server" id="div_pecialistopinion">
+                                            <div class="row mb-2 ">
+                                                <div class="col-5">
+                                                    <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: 700; margin-left: 25px;">* Tên của bác sĩ chuyên khoa/ khoa:</label>
+                                                    <span class="text-primary" style="margin-left: 14.5px; margin-left: 50px;">Name of the specialist/ Department</span>
+                                                </div>
+                                                <div class="col-7">
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_name_of_specialist"></asp:Label>
+                                                </div>
                                             </div>
-                                            <div class="col-7">
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_name_of_specialist"></asp:Label>
+                                            <div class="row mb-2 ">
+                                                <div class="col-6">
+                                                    <asp:Label Style="font-weight: 700; font-size: 14.5px; font-family: Tahoma; margin-left: 25px;">* Giờ liên hệ/</asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma;">Time contaced:</asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_time_contaced"></asp:Label>
+                                                </div>
+                                                <div class="col-6">
+                                                    <asp:Label Style="font-weight: 700; font-size: 14.5px; font-family: Tahoma; margin-left: 25px;">* Giờ khám/</asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma;">Time provided:</asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_time_provided"></asp:Label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row mb-2 lbl_specialist_opinion_field">
-                                            <div class="col-5">
-                                                <asp:Label Style="font-weight: 700; font-size: 16.5px; font-family: Tahoma; margin-left: 25px;">* Giờ liên hệ/</asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma;">Time contaced:</asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_time_contaced"></asp:Label>
-                                            </div>
-                                            <div class="col-7">
-                                                <asp:Label Style="font-weight: 700; font-size: 16.5px; font-family: Tahoma; margin-left: 25px;">* Giờ khám/</asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma;">Time provided:</asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_time_provided"></asp:Label>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2 lbl_specialist_opinion_field">
-                                            <div class="col-12" style="text-align: justify;">
-                                                <asp:Label Style="font-weight: 700; font-size: 16.5px; font-family: Tahoma; margin-left: 25px;">* Tóm tắt ý kiến của bác sỹ chuyên khoa/</asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma;">Specialist opinion summarised:</asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_spec_opinion_summarised"></asp:Label>
+                                            <div class="row mb-2 ">
+                                                <div class="col-12" style="text-align: justify;">
+                                                    <asp:Label Style="font-weight: 700; font-size: 14.5px; font-family: Tahoma; margin-left: 25px;">* Tóm tắt ý kiến của bác sỹ chuyên khoa/</asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma;">Specialist opinion summarised:</asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_spec_opinion_summarised"></asp:Label>
+                                                </div>
                                             </div>
                                         </div>
 
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma"> Kế hoạch chăm sóc/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Care Plan </asp:Label>
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma"> Kế hoạch chăm sóc/ </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Care Plan </asp:Label>
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
-                                            <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 25px"> 1. Treatment in Emergency/ </asp:Label>
-                                            <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Điều trị tại khoa cấp cứu: </asp:Label>
+                                            <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 25px"> 1. Treatment in Emergency/ </asp:Label>
+                                            <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Điều trị tại khoa cấp cứu: </asp:Label>
                                         </div>
 
                                         <div class="row mb-2 ">
                                             <div class="col-md-12 ">
                                                 <asp:UpdatePanel ID="up1" runat="server" UpdateMode="Always">
                                                     <ContentTemplate>
-                                                        <asp:GridView ShowHeaderWhenEmpty="true " ID="lbl_Treatment" ShowHeader="true" runat="server" AutoGenerateColumns="false ">
+                                                        <asp:GridView ShowHeaderWhenEmpty="true " ID="lbl_Treatment" ShowHeader="true" runat="server" AutoGenerateColumns="false " Style="width: 100%">
                                                             <HeaderStyle />
                                                             <Columns>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <div style="width: 85px; font-weight: bold; font-size: 16.5px; font-family: Tahoma; text-align: center" class="text-primary pt-2 pb-2 ">Time </div>
+                                                                        <div style="width: 150px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary pt-2 pb-2 ">Time </div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <div style="font-size: 16.5px; font-family: Tahoma; text-align: center" class="text-primary pt-2 pb-2 ">
-                                                                            <asp:Label Style="text-align: center" Text='<%# Eval("time ", "{0:dd/MM/yyyy hh:mm tt} ") %>' runat="server" />
+                                                                        <div style="width: 150px; font-size: 14.5px; font-family: Tahoma; text-align: center;">
+                                                                            <asp:Label Style="text-align: center;" Text='<%# Eval("time ", "{0:dd/MM/yyyy HH:mm tt} ") %>' runat="server" />
                                                                         </div>
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <div style="width: 300px; font-weight: bold; font-size: 16.5px; font-family: Tahoma; text-align: center" class="text-primary ">Medication and Fluid </div>
+                                                                        <div style="width: 200px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary ">Medication and Fluid </div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <div style="width: 300px; font-size: 16.5px; font-family: Tahoma; text-align: justify; margin: 5px" class="text-primary ">
-                                                                            <asp:Label runat="server" Text='<%# Eval("medication ") %>' />
+                                                                        <div style="width: 200px; font-size: 14.5px; font-family: Tahoma; text-align: justify; margin: 5px" class="text-primary ">
+                                                                            <asp:Label runat="server" Text='<%# Eval("medication") %>' />
                                                                         </div>
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <div style="width: 150px; font-weight: bold; font-size: 16.5px; font-family: Tahoma; text-align: center" class="text-primary ">Dose </div>
+                                                                        <div style="width: 100px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary ">Dose </div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <div style="width: 150px; text-align: center; font-size: 16.5px; font-family: Tahoma" class="text-primary ">
-                                                                            <asp:Label runat="server" Text='<%# Eval("dose ") %>' />
+                                                                        <div style="width: 100px; text-align: center; font-size: 14.5px; font-family: Tahoma" class="text-primary ">
+                                                                            <asp:Label runat="server" Text='<%# Eval("dose") %>' />
                                                                         </div>
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <div style="width: 130px; font-weight: bold; font-size: 16.5px; font-family: Tahoma; text-align: center" class="text-primary ">Route </div>
+                                                                        <div style="width: 50px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center">Route </div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <div style="width: 130px; font-size: 16.5px; font-family: Tahoma; text-align: justify; margin: 5px" class="text-primary ">
-                                                                            <asp:Label runat="server" Text='<%# Eval("route ") %>' />
+                                                                        <div style="width: 50px; font-size: 14.5px; font-family: Tahoma; text-align: center; margin: 5px" class="text-primary ">
+                                                                            <asp:Label runat="server" Text='<%# Eval("route") %>' />
                                                                         </div>
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <div style="width: 328px; font-weight: bold; font-size: 16.5px; font-family: Tahoma; text-align: center" class="text-primary ">Comment </div>
+                                                                        <div style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary ">Comment </div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <div style="width: 328px; font-size: 16.5px; font-family: Tahoma; text-align: justify; margin: 5px">
-                                                                            <asp:Label runat="server" Text='<%# Eval("comment ") %>' />
+                                                                        <div style="font-size: 14.5px; font-family: Tahoma; text-align: justify; margin: 5px">
+                                                                            <asp:Label runat="server" Text='<%# Eval("comment") %>' />
                                                                         </div>
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
@@ -513,42 +452,44 @@
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
-                                            <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 30px"> Progress Note </asp:Label>
+                                            <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 30px"> Progress Note </asp:Label>
                                         </div>
-
                                         <div class="row mb-2 ">
                                             <div class="col-md-12 ">
-                                                <asp:UpdatePanel ID="updatePanel2" runat="server" UpdateMode="Always ">
+                                                <asp:UpdatePanel ID="up2" runat="server" UpdateMode="Always ">
                                                     <ContentTemplate>
-                                                        <asp:GridView ShowHeaderWhenEmpty="true " ID="lbl_progress_note" runat="server" AutoGenerateColumns="false ">
+                                                        <asp:GridView ShowHeaderWhenEmpty="true " ID="lbl_progress_note" ShowHeader="true" runat="server" AutoGenerateColumns="false " style="width:100%">
+                                                        
                                                             <Columns>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <div style="width: 130px; font-weight: bold; font-size: 16.5px; font-family: Tahoma; text-align: center" class="text-primary pt-2 pb-2 ">Time </div>
+                                                                        <div style="width: 150px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center">Time 
+
+                                                                        </div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <div style="width: 130px; font-size: 16.5px; font-family: Tahoma; text-align: center" class="text-primary pt-2 pb-2 ">
-                                                                            <asp:Label Style="text-align: center" Text='<%# Eval("time ", "{0: dd/MM/yyyy hh:mm tt} ") %>' runat="server" />
+                                                                        <div style="width: 150px; font-size: 14.5px; font-family: Tahoma; text-align: center" >
+                                                                            <asp:Label  Text='<%# Eval("time ", "{0: dd/MM/yyyy HH:mm tt} ") %>' runat="server" />
                                                                         </div>
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <div style="width: 445px; font-weight: bold; font-size: 16.5px; font-family: Tahoma; text-align: center" class="text-primary ">Progress </div>
+                                                                        <div style="width: 300px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary ">Progress </div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <div style="width: 445px; font-size: 16.5px; font-family: Tahoma; text-align: justify; margin: 5px" class="text-primary ">
-                                                                            <asp:Label runat="server" Text='<%# Eval("progress ") %>' />
+                                                                        <div style="width: 300px; font-size: 14.5px; font-family: Tahoma; text-align: justify; margin: 5px" class="text-primary ">
+                                                                            <asp:Label runat="server" Text='<%# Eval("progress") %>' />
                                                                         </div>
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <div style="width: 460px; font-weight: bold; font-size: 16.5px; font-family: Tahoma; text-align: center" class="text-primary ">Appropriate Order </div>
+                                                                        <div style= "font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary ">Appropriate Order </div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <div style="width: 460px; text-align: justify; font-size: 16.5px; font-family: Tahoma; margin: 5px" class="text-primary ">
-                                                                            <asp:Label runat="server" Text='<%# Eval("appropriate_order ") %>' />
+                                                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin: 5px" class="text-primary ">
+                                                                            <asp:Label runat="server" Text='<%# Eval("appropriate_order") %>' />
                                                                         </div>
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
@@ -560,71 +501,74 @@
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 25px"> * Kết luận sau điều trị/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Conclusions at termination of treatment: </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_conclusions"> </asp:Label>
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 25px"> * Kết luận sau điều trị/ </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Conclusions at termination of treatment: </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_conclusions"> </asp:Label>
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 ">
                                                 <div class="row ">
-                                                    <div class="col-7 " style="margin-left: 15px">
-                                                        <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma;"> 2. Xuất viện/ </asp:Label>
-                                                        <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Discharge: </asp:Label>
+                                                    <div class="col-8 " style="margin-left: 15px">
+                                                        <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma;"> 2. Xuất viện/ </asp:Label>
+                                                        <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Discharge: </asp:Label>
                                                     </div>
-                                                    <div class="col-3 " style="margin-left: -15px">
-                                                        <asp:Label Style="font-size: 25.5px;" ID="lbl_discharge_False" runat="server" />
-                                                        <label for="lbl_specialist_opinion_False " style="font-size: 16.5px; font-family: Tahoma;">Không</label>
-                                                        <label style="font-size: 16.5px; font-family: Tahoma;">/ No</label>
+                                                    <div class="col-2 " style="margin-left: -15px">
+                                                        <asp:Label Style="font-size: 14.5px;" ID="lbl_discharge_False" runat="server" />
+                                                        <label for="lbl_specialist_opinion_False " style="font-size: 14.5px; font-family: Tahoma;">Không</label>
+                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ No</label>
                                                     </div>
                                                     <div class="col-2 ">
-                                                        <asp:Label disabled-for="lbl_discharge_field" Style="font-size: 25.5px;" ID="lbl_discharge_True" runat="server" />
-                                                        <label for="lbl_specialist_opinion_True " style="font-size: 16.5px; font-family: Tahoma;">Có</label>
-                                                        <label style="font-size: 16.5px; font-family: Tahoma;">/ Yes</label>
+                                                        <asp:Label  Style="font-size: 14.5px;" ID="lbl_discharge_True" runat="server" />
+                                                        <label for="lbl_specialist_opinion_True " style="font-size: 14.5px; font-family: Tahoma;">Có</label>
+                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ Yes</label>
                                                         </input>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row mb-2 lbl_discharge_field ">
-                                            <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 25px"> * Toa thuốc/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Prescription: </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_prescription"> </asp:Label>
+                                        <div runat="server" id="div_discharge_field">
+                                            <div class="row mb-2  ">
+                                                <div class="col-12 " style="text-align: justify;">
+                                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 25px"> * Toa thuốc/ </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Prescription: </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_prescription"> </asp:Label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row mb-2 lbl_discharge_field ">
-                                            <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 25px"> * Ghi rõ các hướng dẫn chăm sóc tiếp theo/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Specify follow-up care instructions: </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_specify_care_instructions"> </asp:Label>
+                                            <div class="row mb-2  ">
+                                                <div class="col-12 " style="text-align: justify;">
+                                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 25px"> * Ghi rõ các hướng dẫn chăm sóc tiếp theo/ </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Specify follow-up care instructions: </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_specify_care_instructions"> </asp:Label>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="row mb-2 lbl_discharge_field ">
-                                            <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 25px"> * Giờ rời khỏi khoa cấp cứu/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Discharge Time: </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_discharge_time"> </asp:Label>
+                                            <div class="row mb-2  ">
+                                                <div class="col-12 " style="text-align: justify;">
+                                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 25px"> * Giờ rời khỏi khoa cấp cứu/ </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Discharge Time: </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_discharge_time"> </asp:Label>
+                                                </div>
                                             </div>
+                                           
                                         </div>
                                         <div class="row mb-2 ">
-                                            <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 25px"> 3. Khám ngoại trú/</asp:Label>
-                                            <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Referred to OPD: </asp:Label>
+                                            <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 25px"> 3. Khám ngoại trú/</asp:Label>
+                                            <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Referred to OPD: </asp:Label>
                                         </div>
                                         <div class="row mb-2 " style="margin-left: 35px">
                                             <div class="col-12 ">
                                                 <div class="row ">
                                                     <div class="col-3 ">
-                                                        <asp:Label Style="font-size: 25.5px;" ID="lbl_referred_to_OPD_False" runat="server" />
-                                                        <label for="lbl_specialist_opinion_False " style="font-size: 16.5px; font-family: Tahoma;">Không</label>
-                                                        <label style="font-size: 16.5px; font-family: Tahoma;">/ No</label>
+                                                        <asp:Label Style="font-size: 14.5px;" ID="lbl_referred_to_OPD_False" runat="server" />
+                                                        <label for="lbl_specialist_opinion_False " style="font-size: 14.5px; font-family: Tahoma;">Không</label>
+                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ No</label>
 
                                                     </div>
                                                     <div class="col-9 ">
-                                                        <asp:Label Style="font-size: 25.5px;" ID="lbl_referred_to_OPD_True" runat="server" />
-                                                        <label for="lbl_specialist_opinion_True " style="font-size: 16.5px; font-family: Tahoma;">Có, ghi rõ</label>
-                                                        <label style="font-size: 16.5px; font-family: Tahoma;">/ Yes, specify:</label>
-                                                        <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="lbl_referred_to_OPD_text"> </asp:Label>
+                                                        <asp:Label Style="font-size: 14.5px;" ID="lbl_referred_to_OPD_True" runat="server" />
+                                                        <label for="lbl_specialist_opinion_True " style="font-size: 14.5px; font-family: Tahoma;">Có, ghi rõ</label>
+                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ Yes, specify:</label>
+                                                        <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="lbl_referred_to_OPD_text"> </asp:Label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -633,166 +577,176 @@
                                         <div class="row mb-2 ">
                                             <div class="col-12 ">
                                                 <div class="row ">
-                                                    <div class="col-7 ">
-                                                        <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 15px"> 4. Yêu cầu nhập viện/</asp:Label>
-                                                        <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Hospitalisation required:: </asp:Label>
-                                                    </div>
-                                                    <div class="col-3 ">
-                                                        <asp:Label Style="font-size: 25.5px;" ID="lbl_hospitalisation_required_False" runat="server" />
-                                                        <label for="lbl_specialist_opinion_False " style="font-size: 16.5px; font-family: Tahoma;">Không</label>
-                                                        <label style="font-size: 16.5px; font-family: Tahoma;">/ No</label>
+                                                    <div class="col-8 ">
+                                                        <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 15px"> 4. Yêu cầu nhập viện/</asp:Label>
+                                                        <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Hospitalisation required:: </asp:Label>
                                                     </div>
                                                     <div class="col-2 ">
-                                                        <asp:Label disabled-for="lbl_hos_req_field" Style="font-size: 25.5px;" ID="lbl_hospitalisation_required_True" runat="server" />
-                                                        <label for="lbl_specialist_opinion_True " style="font-size: 16.5px; font-family: Tahoma;">Có</label>
-                                                        <label style="font-size: 16.5px; font-family: Tahoma;">/ Yes</label>
+                                                        <asp:Label Style="font-size: 14.5px;" ID="lbl_hospitalisation_required_False" runat="server" />
+                                                        <label for="lbl_specialist_opinion_False " style="font-size: 14.5px; font-family: Tahoma;">Không</label>
+                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ No</label>
+                                                    </div>
+                                                    <div class="col-2 ">
+                                                        <asp:Label  Style="font-size: 14.5px;" ID="lbl_hospitalisation_required_True" runat="server" />
+                                                        <label for="lbl_specialist_opinion_True " style="font-size: 14.5px; font-family: Tahoma;">Có</label>
+                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ Yes</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row mb-2 lbl_hos_req_field ">
-                                            <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 25px"> * Lý do/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Reason: </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_reason"> </asp:Label>
+                                        <div runat="server" id="div_hos_req_field">
+                                            <div class="row mb-2  ">
+                                                <div class="col-12 " style="text-align: justify;">
+                                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 25px"> * Lý do/ </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Reason: </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_reason"> </asp:Label>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2  ">
+                                                <div class="col-12 " style="text-align: justify;">
+                                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 25px"> * Tại khoa/ </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Ward: </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_ward"></asp:Label>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2  ">
+                                                <div class="col-12 " style="text-align: justify;">
+                                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 25px"> * Giờ rời khỏi khoa cấp cứu/ </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Time of leaving Emergency: </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_time_of_leaving_emergency"> </asp:Label>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="row mb-2 lbl_hos_req_field ">
-                                            <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 25px"> * Tại khoa/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Ward: </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_ward"></asp:Label>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2 lbl_hos_req_field ">
-                                            <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 25px"> * Giờ rời khỏi khoa cấp cứu/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Time of leaving Emergency: </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_time_of_leaving_emergency"> </asp:Label>
-                                            </div>
-                                        </div>
+                                        
+
                                         <div class="row mb-2 ">
                                             <div class="col-12 ">
                                                 <div class="row ">
-                                                    <div class="col-7 ">
-                                                        <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 15px"> 5. Nếu phẫu thuật cấp cứu/</asp:Label>
-                                                        <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> In case of emergency surgery: </asp:Label>
-                                                    </div>
-                                                    <div class="col-3 ">
-                                                        <asp:Label Style="font-size: 25.5px;" ID="lbl_emergency_surgery_False" runat="server" />
-                                                        <label for="lbl_specialist_opinion_False " style="font-size: 16.5px; font-family: Tahoma;">Không</label>
-                                                        <label style="font-size: 16.5px; font-family: Tahoma;">/ No</label>
+                                                    <div class="col-8 ">
+                                                        <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 15px"> 5. Nếu phẫu thuật cấp cứu/</asp:Label>
+                                                        <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> In case of emergency surgery: </asp:Label>
                                                     </div>
                                                     <div class="col-2 ">
-                                                        <asp:Label disabled-for="lbl_emr_sur_field " Style="font-size: 25.5px;" ID="lbl_emergency_surgery_True" runat="server" />
-                                                        <label for="lbl_specialist_opinion_True" style="font-size: 16.5px; font-family: Tahoma;">Có</label>
-                                                        <label style="font-size: 16.5px; font-family: Tahoma;">/ Yes</label>
+                                                        <asp:Label Style="font-size: 14.5px;" ID="lbl_emergency_surgery_False" runat="server" />
+                                                        <label for="lbl_specialist_opinion_False " style="font-size: 14.5px; font-family: Tahoma;">Không</label>
+                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ No</label>
+                                                    </div>
+                                                    <div class="col-2 ">
+                                                        <asp:Label disabled-for="lbl_emr_sur_field " Style="font-size: 14.5px;" ID="lbl_emergency_surgery_True" runat="server" />
+                                                        <label for="lbl_specialist_opinion_True" style="font-size: 14.5px; font-family: Tahoma;">Có</label>
+                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ Yes</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row mb-2 lbl_emr_sur_field ">
-                                            <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 25px"> * Chuẩn đoán trước phẫu thuật/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Pre-operative diagnosis: </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="lbl_preoperative_diagnosis"> </asp:Label>
+                                        <div runat="server" id="div_emr_sur_field">
+                                            <div class="row mb-2  ">
+                                                <div class="col-12 " style="text-align: justify;">
+                                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 25px"> * Chuẩn đoán trước phẫu thuật/ </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Pre-operative diagnosis: </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="lbl_preoperative_diagnosis"> </asp:Label>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2  ">
+                                                <div class="col-12 " style="text-align: justify;">
+                                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 25px"> * Tóm tắt bệnh án/ </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Brief summary: </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_brief_summary"> </asp:Label>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2  ">
+                                                <div class="col-12 " style="text-align: justify;">
+                                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 25px"> * Giờ rời khỏi khoa cấp cứu/ </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Time of leaving Emergency: </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_time_of_leaving_emer_e"> </asp:Label>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="row mb-2 lbl_emr_sur_field ">
-                                            <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 25px"> * Tóm tắt bệnh án/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Brief summary: </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_brief_summary"> </asp:Label>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2 lbl_emr_sur_field ">
-                                            <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 25px"> * Giờ rời khỏi khoa cấp cứu/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Time of leaving Emergency: </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_time_of_leaving_emer_e"> </asp:Label>
-                                            </div>
-                                        </div>
+                                        
                                         <div class="row mb-2 ">
                                             <div class="col-12 ">
                                                 <div class="row ">
-                                                    <div class="col-7 ">
-                                                        <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 15px">6. Nếu chuyển đến BV khác/</asp:Label>
-                                                        <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> In case of transfer to another hospital: </asp:Label>
-                                                    </div>
-                                                    <div class="col-3 ">
-                                                        <asp:Label Style="font-size: 25.5px;" ID="lbl_transfer_hospital_False" runat="server" />
-                                                        <label for="lbl_specialist_opinion_False " style="font-size: 16.5px; font-family: Tahoma;">Không</label>
-                                                        <label style="font-size: 16.5px; font-family: Tahoma;">/ No</label>
+                                                    <div class="col-8 ">
+                                                        <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 15px">6. Nếu chuyển đến BV khác/</asp:Label>
+                                                        <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> In case of transfer to another hospital: </asp:Label>
                                                     </div>
                                                     <div class="col-2 ">
-                                                        <asp:Label disabled-for="lbl_transfer_hos_field " Style="font-size: 25.5px;" ID="lbl_transfer_hospital_True" runat="server" />
-                                                        <label for="lbl_specialist_opinion_True " style="font-size: 16.5px; font-family: Tahoma;">Có</label>
-                                                        <label style="font-size: 16.5px; font-family: Tahoma;">/ Yes</label>
+                                                        <asp:Label Style="font-size: 14.5px;" ID="lbl_transfer_hospital_False" runat="server" />
+                                                        <label for="lbl_specialist_opinion_False " style="font-size: 14.5px; font-family: Tahoma;">Không</label>
+                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ No</label>
+                                                    </div>
+                                                    <div class="col-2 ">
+                                                        <asp:Label disabled-for="lbl_transfer_hos_field " Style="font-size: 14.5px;" ID="lbl_transfer_hospital_True" runat="server" />
+                                                        <label for="lbl_specialist_opinion_True " style="font-size: 14.5px; font-family: Tahoma;">Có</label>
+                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ Yes</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row mb-2 lbl_transfer_hos_field ">
-                                            <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 25px"> * Lý do chuyển viện/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> / Reason for transfer: </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_reason_for_transfer"> </asp:Label>
+                                        <div runat="server" id="div_transfer_hos_field">
+                                            <div class="row mb-2  ">
+                                                <div class="col-12 " style="text-align: justify;">
+                                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 25px"> * Lý do chuyển viện/ </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> / Reason for transfer: </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_reason_for_transfer"> </asp:Label>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2  ">
+                                                <div class="col-12 " style="text-align: justify;">
+                                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 25px"> * Tình trạng trước khi chuyển viện/ </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Status before transfer: </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_status_before_transfer"> </asp:Label>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-2  ">
+                                                <div class="col-12 " style="text-align: justify;">
+                                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 25px"> * Giờ rời khỏi khoa cấp cứu/ </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Time of leaving Emergency: </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_time_of_leaving_emer_a"> </asp:Label>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="row mb-2 lbl_transfer_hos_field ">
-                                            <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 25px"> * Tình trạng trước khi chuyển viện/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Status before transfer: </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_status_before_transfer"> </asp:Label>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2 lbl_transfer_hos_field ">
-                                            <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma; margin-left: 25px"> * Giờ rời khỏi khoa cấp cứu/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Time of leaving Emergency: </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_time_of_leaving_emer_a"> </asp:Label>
-                                            </div>
-                                        </div>
+                                        
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma"> Tình trạng bệnh nhân khi rời khoa Cấp Cứu/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> Patient's Condition at Discharge from Emergency: </asp:Label>
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma"> Tình trạng bệnh nhân khi rời khoa Cấp Cứu/ </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Patient's Condition at Discharge from Emergency: </asp:Label>
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="margin-left: 35px">
                                                 <div class="row ">
                                                     <div class="col-4 ">
-                                                        <asp:Label Style="font-size: 25.5px; font-family: Tahoma" runat="server" ID="lbl_patient_discharge_IMP"></asp:Label>
+                                                        <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="lbl_patient_discharge_IMP"></asp:Label>
 
-                                                        <label for="lbl_chief_complaint_code_E " style="font-size: 16.5px; font-family: Tahoma;">Có cải thiện</label>
-                                                        <label style="font-size: 16.5px; font-family: Tahoma;">/ Improved</label>
+                                                        <label for="lbl_chief_complaint_code_E " style="font-size: 14.5px; font-family: Tahoma;">Có cải thiện</label>
+                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ Improved</label>
                                                     </div>
                                                     <div class="col-4 ">
-                                                        <asp:Label Style="font-size: 25.5px; font-family: Tahoma" runat="server" ID="lbl_patient_discharge_UNC"></asp:Label>
+                                                        <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="lbl_patient_discharge_UNC"></asp:Label>
 
-                                                        <label for="lbl_chief_complaint_code_E " style="font-size: 16.5px; font-family: Tahoma;">Không thay đổi</label>
-                                                        <label style="font-size: 16.5px; font-family: Tahoma;">/ Unchanged</label>
+                                                        <label for="lbl_chief_complaint_code_E " style="font-size: 14.5px; font-family: Tahoma;">Không thay đổi</label>
+                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ Unchanged</label>
                                                     </div>
                                                     <div class="col-4 ">
-                                                        <asp:Label Style="font-size: 25.5px; font-family: Tahoma" runat="server" ID="lbl_patient_discharge_UNS"></asp:Label>
+                                                        <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="lbl_patient_discharge_UNS"></asp:Label>
 
-                                                        <label for="lbl_chief_complaint_code_E " style="font-size: 16.5px; font-family: Tahoma;">Không ổn định</label>
-                                                        <label style="font-size: 16.5px; font-family: Tahoma;">/ Unstable</label>
+                                                        <label for="lbl_chief_complaint_code_E " style="font-size: 14.5px; font-family: Tahoma;">Không ổn định</label>
+                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ Unstable</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify; margin-left: 35px">
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_patient_discharge"> </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_patient_discharge"> </asp:Label>
                                             </div>
                                         </div>
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify;">
-                                                <asp:Label Style="font-weight: bold; font-size: 16.5px; font-family: Tahoma"> Mã ICD-10/ </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> ICD-10 Code(S): </asp:Label>
-                                                <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="prt_icd_10"> </asp:Label>
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma"> Mã ICD-10/ </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> ICD-10 Code(S): </asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_icd_10"> </asp:Label>
                                             </div>
                                         </div>
                                         <br />
@@ -822,14 +776,14 @@
                                                     <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">
                                                         Doctor in charge/
                                                     </label>
-                                                    <asp:Label Style="font-size: 16.5px; font-family: Tahoma"> (name and signature): </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> (name and signature): </asp:Label>
                                                 </div>
                                                 <br />
                                                 <br />
                                                 <br />
                                                 <br />
                                                 <div class="col-12" style="text-align: center;">
-                                                    <asp:Label Style="font-size: 16.5px; font-family: Tahoma" runat="server" ID="lbl_created_name_l"> </asp:Label>
+                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="lbl_created_name_l"> </asp:Label>
 
                                                 </div>
                                             </div>
@@ -857,7 +811,7 @@
                 </div>
 
                 <div class="cssclsNoPrint">
-                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0; border-bottom:1px solid #ddd;border-radius:0;">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                       <li>Emergency Medical Assessment</li>
                     </ul>
@@ -895,7 +849,7 @@
                                     <div class="form-body">
                                         <div class="row mb-2">
                                             <div class="col-md-12">
-                                                <label class="control-label mb-1">Ngày, giờ bắt đầu đánh giá/ <span class="text-primary">Starting date, time of the assessmen: <span class="text-danger">*</span></label>
+                                                <label class="control-label mb-1"><span class="text-primary">Ngày, giờ bắt đầu đánh giá/ <span class="text-primary">Starting date, time of the assessmen: <span class="text-danger">*</span></span></label>
                                             </div>
                                             <div class="col-md-12 gt-2-a">
                                                 <label></label>
@@ -990,8 +944,10 @@
                                         </div>
 
                                         <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <label class="control-label mb-1">Meds<span class="text-danger">*</span></label></div>
                                             <div class="col-md-12 gt-2-a">
-                                                <label class="control-label mb-1">Meds<span class="text-danger">*</span></label>
+                                                <label></label>
                                                 <asp:Label runat="server" ID="lbl_past_med_his_meds"></asp:Label>
                                                 <div class="form-group" runat="server" id="past_med_his_meds_wrapper">
                                                     <webUI:TextField runat="server" ID="txt_past_med_his_meds" />
@@ -1001,8 +957,11 @@
                                         </div>
 
                                         <div class="row mb-2">
-                                            <div class="col-md-12 gt-2-a">
+                                            <div class="col-md-12">
                                                 <label class="control-label mb-1">Surgical<span class="text-danger">*</span></label>
+                                            </div>
+                                            <div class="col-md-12 gt-2-a">
+                                                <label></label>
                                                 <asp:Label runat="server" ID="lbl_past_med_his_surs"></asp:Label>
                                                 <div class="form-group" runat="server" id="past_med_his_surs_wrapper">
                                                     <webUI:TextField runat="server" ID="txt_past_med_his_surs" />
@@ -1019,25 +978,51 @@
                                                 <label></label>
                                                 <asp:Label runat="server" ID="lbl_habits"></asp:Label>
                                                 <div runat="server" id="habits_wrapper">
-                                                    <label class="custom-control custom-checkbox d-inline-block">
-                                                        <input type="checkbox" runat="server" id="cb_habits_A" class="custom-control-input" />
-                                                        <span class="custom-control-label">Alcohol/ <span class="text-primary">Rượu</span></span>
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input type="checkbox"
+                                                            runat="server" id="cb_habits_A"
+                                                            class="custom-control-input" />
+                                                        <span
+                                                            class="custom-control-label">Alcohol/
+                                                                                    <span
+                                                                                        class="text-primary">Rượu</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block">
-                                                        <input type="checkbox" runat="server" id="cb_habits_S" class="custom-control-input" /><span class="custom-control-label">Smoking/ <span class="text-primary">Thuốc</span></span>
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input type="checkbox"
+                                                            runat="server" id="cb_habits_S"
+                                                            class="custom-control-input" />
+                                                        <span
+                                                            class="custom-control-label">Smoking/
+                                                                                    <span
+                                                                                        class="text-primary">Thuốc</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block">
-                                                        <input type="checkbox" runat="server" id="cb_habits_D" class="custom-control-input" />
-                                                        <span class="custom-control-label">Chất gây nghiện/ <span class="text-primary">Drugs</span></span>
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input type="checkbox"
+                                                            runat="server" id="cb_habits_D"
+                                                            class="custom-control-input" />
+                                                        <span
+                                                            class="custom-control-label">Chất
+                                                                                    gây nghiện/ <span
+                                                                                        class="text-primary">Drugs</span></span>
                                                     </label>
-                                                    <label class="custom-control custom-checkbox d-inline-block">
-                                                        <input disabled-for="habit_other_field" type="checkbox" runat="server" id="cb_habits_O" class="custom-control-input" />
-                                                        <span class="custom-control-label">Khác, ghi rõ/ <span class="text-primary">Other, specify</span></span>
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input
+                                                            disabled-for="habit_other_field"
+                                                            type="checkbox" runat="server"
+                                                            id="cb_habits_O"
+                                                            class="custom-control-input" />
+                                                        <span
+                                                            class="custom-control-label">Khác,
+                                                                                    ghi rõ/ <span
+                                                                                        class="text-primary">Other,
+                                                                                        specify</span></span>
                                                     </label>
                                                     <div class="form-group habit_other_field">
                                                         <webUI:TextField runat="server" ID="txt_habits_other" />
                                                     </div>
                                                     <asp:CustomValidator ID="CustomValidator2" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="habits_ServerValidate"></asp:CustomValidator>
+                                                </div>
+                                                <div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1089,15 +1074,15 @@
 
                                         <div class="row mb-2">
                                             <div class="col-md-12">
-                                                <label class="control-label mb-1 h5">Khám lâm sàng liên quan/ <span class="text-primary">Physical examination:</span></label>
+                                                <label class="control-label mb-1">Khám lâm sàng liên quan/ <span class="text-primary">Physical examination:</span></label>
 
                                             </div>
                                         </div>
 
-                                        <fieldset class="row mb-2">
-                                            <legend>
-                                                <label class="control-label">Kết quả tìm thấy/ <span class="text-primary">Findings (General and Diagnostic support):</span></label>
-                                            </legend>
+                                        <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <label class="control-label mb-1"> Kết quả tìm thấy/ <span class="text-primary">Findings (General and Diagnostic support):</span></label>
+                                            </div>
                                             <div class="col-md-12 gt-2-a">
                                                 <label></label>
                                                 <asp:Label runat="server" ID="lbl_finding"></asp:Label>
@@ -1106,23 +1091,30 @@
                                                     <asp:CustomValidator ID="CustomValidator17" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="finding_ServerValidate"></asp:CustomValidator>
                                                 </div>
                                             </div>
-                                        </fieldset>
-                                    
-                                        <fieldset class="row mb-2">
-                                            <legend>
-                                                <label class="control-label">Yêu cầu khám chuyên khoa tâm lý/<span  class="text-primary">Psychological assessment required:</span></label>
-                                            </legend>
+                                        </div>
+
+                                        <div class="row mb-2">
+                                            <div class="col-md-12">
+                                                <label class="control-label mb-1">Yêu cầu khám chuyên khoa tâm lý/<span  class="text-primary">Psychological assessment required:</span></label>
+                                            </div>
                                             <div class="col-md-12 gt-2-a">
                                                 <label></label>
                                                 <asp:Label runat="server" ID="lbl_required_code"></asp:Label>
                                                 <div runat="server" id="required_code_wrapper">
                                                     <div class="custom-control custom-radio d-inline-block">
                                                         <input type="radio" id="rad_required_code_False" runat="server" name="rad_required_code" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="rad_required_code_False">Không/ <span class="text-primary">No</span></label>
+                                                        <label class="custom-control-label" for="rad_required_code_False">
+                                                            Không/
+                                                                                    <span
+                                                                                        class="text-primary">No</span></label>
                                                     </div>
                                                     <div class="custom-control custom-radio mb-1  d-inline-block">
                                                         <input disabled-for="required_code_field" type="radio" id="rad_required_code_True" runat="server" name="rad_required_code" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="rad_required_code_True">Có, ghi rõ/ <span class="text-primary">Yes, specify:</span></label>
+                                                        <label class="custom-control-label" for="rad_required_code_True">
+                                                            Có,
+                                                                                ghi rõ/ <span
+                                                                                    class="text-primary">Yes,
+                                                                                    specify:</span></label>
                                                         <a href="javascript:void(0)"  data-clear="rad_required_code" onclick="clear_radiobutton(this)">
                                                             <icon:XSquare runat="server" ID="XSquare1" />
                                                         </a>
@@ -1133,11 +1125,11 @@
                                                     <asp:CustomValidator ID="CustomValidator3" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="required_code_ServerValidate"></asp:CustomValidator>
                                                 </div>
                                             </div>
-                                        </fieldset>
-                                   
+                                        </div>
+
                                         <div class="row mb-2">
                                             <div class="col-md-12">
-                                                <label class="control-label mb-1 h5"> Kết quả khảo sát/ <span class="text-primary">Investigations Results (Labs, Imaging...):</span></label>
+                                                <label class="control-label mb-1"> Kết quả khảo sát/ <span class="text-primary">Investigations Results (Labs, Imaging...):</span></label>
                                             </div>
                                             <div class="col-md-12 gt-2-a">
                                                 <label></label>
@@ -1151,7 +1143,7 @@
 
                                         <div class="row mb-2">
                                             <div class="col-md-12">
-                                                <label class="control-label mb-1 h5">Chẩn đoán sơ bộ/ <span class="text-primary">Initial diagnosis:</span></label>
+                                                <label class="control-label mb-1">Chẩn đoán sơ bộ/ <span class="text-primary">Initial diagnosis:</span></label>
                                             </div>
                                             <div class="col-md-12 gt-2-a">
                                                 <label></label>
@@ -1162,10 +1154,11 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div class="row mb-2">
+                                    <div class="row mb-2">
                                         <div class="col-md-12">
-                                            <label class="control-label mb-1 h5">Chẩn đoán phân biệt/ <span class="text-primary">Differential diagnosis:</span></label>
+                                            <label class="control-label mb-1">Chẩn đoán phân biệt/ <span class="text-primary">Differential diagnosis:</span></label>
                                         </div>
                                         <div class="col-md-12 gt-2-a">
                                             <label></label>
@@ -1177,9 +1170,9 @@
                                         </div>
                                     </div>
 
-                                        <div class="row mb-2">
+                                    <div class="row mb-2">
                                         <div class="col-md-12">
-                                            <label class="control-label mb-1 h5"> Bệnh kèm theo/ <span class="text-primary">Associated conditions:</span></label>
+                                            <label class="control-label mb-1"> Bệnh kèm theo/ <span class="text-primary">Associated conditions:</span></label>
                                         </div>
                                         <div class="col-md-12 gt-2-a">
                                             <label></label>
@@ -1191,25 +1184,26 @@
                                         </div>
                                     </div>
 
-                                        <div class="row mb-2">
-                                            <div class="col-md-12">
-                                                <label class="control-label mb-1 h5">
-                                                    Chuẩn đoán xác định/ <span class="text-primary">Confirmed Diagnosis:</span></label>
-                                            </div>
-                                            <div class="col-md-12 gt-2-a">
-                                                <label></label>
-                                                <asp:Label runat="server" ID="lbl_comfirmed_diagnosis"></asp:Label>
-                                                <div class="form-group" runat="server" id="comfirmed_diagnosis_wrapper">
-                                                    <webUI:TextField runat="server" ID="txt_comfirmed_diagnosis" />
-                                                </div>
+                                    <div class="row mb-2">
+                                        <div class="col-md-12">
+                                            <label class="control-label mb-1">
+                                                Chuẩn đoán xác định/ <span class="text-primary">Confirmed Diagnosis:</span></label>
+                                        </div>
+                                        <div class="col-md-12 gt-2-a">
+                                            <label></label>
+                                            <asp:Label runat="server" ID="lbl_comfirmed_diagnosis"></asp:Label>
+                                            <div class="form-group" runat="server" id="comfirmed_diagnosis_wrapper">
+                                                <webUI:TextField runat="server" ID="txt_comfirmed_diagnosis" />
                                             </div>
                                         </div>
+                                    </div>
 
                                     <asp:UpdatePanel ID="UpdatePanel6" runat="server" UpdateMode="Conditional">
                                         <ContentTemplate>
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
-                                                    <label class="control-label mb-1 h5">Ý kiến của bác sĩ chuyên khoa/ <span class="text-primary">Specialist opinion:</span></label>
+                                                    <label class="control-label mb-1">
+                                                        Ý kiến của bác sĩ chuyên khoa/ <span class="text-primary">Specialist opinion:</span></label>
                                                 </div>
                                                 <div class="col-md-12 gt-2-a">
                                                     <label></label>
@@ -1217,11 +1211,15 @@
                                                     <div runat="server" id="specialist_opinion_wrapper">
                                                         <div class="custom-control custom-radio d-inline-block">
                                                             <input onclick="__doPostBack('specialist_opinion_change','')" type="radio" id="rad_specialist_opinion_False" runat="server" name="rad_specialist_opinion" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="rad_specialist_opinion_False">Không/ <span class="text-primary">No</span></label>
+                                                            <label class="custom-control-label" for="rad_specialist_opinion_False">
+                                                                Không/ <span class="text-primary">No</span></label>
                                                         </div>
                                                         <div class="custom-control custom-radio d-inline-block">
                                                             <input onclick="__doPostBack('specialist_opinion_change','')" disabled-for="specialist_opinion_field" type="radio" id="rad_specialist_opinion_True" runat="server" name="rad_specialist_opinion" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="rad_specialist_opinion_True">Có/ <span class="text-primary">Yes</span></label>
+                                                            <label class="custom-control-label" for="rad_specialist_opinion_True">
+                                                                Có/
+                                                                                        <span
+                                                                                            class="text-primary">Yes</span></label>
                                                             <input onclick="__doPostBack('specialist_opinion_change','clear')" hidden="hidden" type="checkbox" id="Radio5" runat="server" />
 
                                                         <label for="Radio5"><icon:XSquare runat="server" ID="XSquare2" /></label>
@@ -1231,10 +1229,11 @@
                                                 </div>
                                             </div>
 
-                                            <fieldset class="row mb-2" runat="server" id="specialist_opinion_field">
-                                                <legend>
-                                                    <label class="control-label">Tên của bác sĩ chuyên khoa/ Khoa/ <span class="text-primary">Name of the specialist/ Department:</span></label>
-                                                </legend>
+                                            <div class="row mb-2" runat="server" id="specialist_opinion_field">
+                                                <div class="col-md-12">
+                                                    <label class="control-label mb-1">
+                                                        Tên của bác sĩ chuyên khoa/ Khoa/ <span class="text-primary">Name of the specialist/ Department:</span></label>
+                                                </div>
                                                 <div class="col-md-12 gt-2-a">
                                                     <label></label>
                                                     <asp:Label runat="server" ID="lbl_name_of_specialist"></asp:Label>
@@ -1242,12 +1241,16 @@
                                                         <webUI:TextField runat="server" ID="txt_name_of_specialist" />
                                                     </div>
                                                 </div>
-                                            </fieldset>
-                                            
-                                            <fieldset class="row mb-2" runat="server" id="specialist_opinion_field1">
-                                                <legend>
-                                                    <label class="control-label">Giờ liên hệ/ <span class="text-primary">Time contacted:</span></label>
-                                                </legend>
+                                            </div>
+
+                                            <div class="row mb-2" runat="server" id="specialist_opinion_field1">
+                                                <div class="col-sm-6 col-md-6 col-lg-6 mb-2 d-lg-flex">
+                                                    <div class="w-sm-7">
+                                                        <label class="control-label mb-1">
+                                                            Giờ liên hệ/ <span class="text-primary">Time contacted:</span></label>
+
+                                                    </div>
+                                                </div>
                                                 <div class="col-md-12 gt-2-a">
                                                     <label></label>
                                                     <asp:Label runat="server" ID="lbl_time_contaced"></asp:Label>
@@ -1255,12 +1258,13 @@
                                                         <telerik:RadDateTimePicker runat="server" Width="200px" ID="dtpk_time_contaced" />
                                                     </div>
                                                 </div>
-                                            </fieldset>
 
-                                            <fieldset class="row mb-2" runat="server" id="Fieldset1">
-                                                <legend>
-                                                    <label class="control-label">Giờ khám/ <span class="text-primary">Time provided:</span></label>
-                                                </legend>
+                                                <div class="col-sm-6 col-md-6 col-lg-6 mb-2 d-lg-flex">
+                                                    <div class="w-sm-7">
+                                                        <label class="control-label mb-1">
+                                                            Giờ khám/ <span class="text-primary">Time provided:</span></label>
+                                                    </div>
+                                                </div>
                                                 <div class="col-md-12 gt-2-a">
                                                     <label></label>
                                                     <asp:Label runat="server" ID="lbl_time_provided"></asp:Label>
@@ -1268,12 +1272,13 @@
                                                         <telerik:RadDateTimePicker runat="server" Width="200px" ID="dtpk_time_provided" />
                                                     </div>
                                                 </div>
-                                            </fieldset>
+                                            </div>
 
-                                            <fieldset class="row mb-2" runat="server" id="specialist_opinion_field2">
-                                                <legend>
-                                                    <label class="control-label">Tóm tắt ý kiến của bác sĩ chuyên khoa/ <span class="text-primary">Specialist opinion summarised:</span></label>
-                                                </legend>
+                                            <div class="row mb-2" runat="server" id="specialist_opinion_field2">
+                                                <div class="col-md-12">
+                                                    <label class="control-label mb-1">
+                                                        Tóm tắt ý kiến của bác sĩ chuyên khoa/ <span class="text-primary">Specialist opinion summarised:</span></label>
+                                                </div>
                                                 <div class="col-md-12 gt-2-a">
                                                     <label></label>
                                                     <asp:Label runat="server" ID="lbl_spec_opinion_summarised"></asp:Label>
@@ -1281,21 +1286,20 @@
                                                         <webUI:TextField runat="server" ID="txt_spec_opinion_summarised" />
                                                     </div>
                                                 </div>
-                                            </fieldset>
+                                            </div>
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
-
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <label class="control-label mb-1 h5">Kế hoạch chăm sóc/ <span  class="text-primary">Care Plan:</span></label>
+                                            <label class="control-label mb-1"> Kế hoạch chăm sóc/ <span  class="text-primary">Care Plan:</span></label>
                                         </div>
                                     </div>
 
-                                    <fieldset class="row mb-2">
-                                        <legend>
-                                            <label class="control-label">1. Điều trị tại khoa cấp cứu/ <span class="text-primary">Treatment in Emergency</span></label>
-                                        </legend>
-                                        <div class="col-md-12 mb-2">
+                                    <div class="row mb-2">
+                                        <div class="col-md-12">
+                                            <label class="control-label mb-1"> 1. Điều trị tại khoa cấp cứu/ <span class="text-primary">Treatment in Emergency</span></label>
+                                        </div>
+                                        <div class="col-md-12">
                                             <asp:UpdatePanel ID="updatePanel_Treatment" runat="server" UpdateMode="Always">
                                                 <ContentTemplate>
                                                     <asp:GridView ShowHeaderWhenEmpty="true" ID="grid_Treatment" runat="server" OnRowDeleting="grid_Treatment_RowDeleting" OnRowDataBound="gridTreatment_RowDataBound" CssClass="tb-responsive table-bordered" AutoGenerateColumns="false">
@@ -1370,12 +1374,13 @@
                                                 </Triggers>
                                             </asp:UpdatePanel>
                                         </div>
+                                    </div>
 
+                                    <div class="row mb-2">
                                         <div class="col-md-12">
-                                            <label class="control-label mb-1">Progress Note</label>
+                                            <label class="control-label mb-2 font-bold pl-4"> Progress Note</label>
                                         </div>
-
-                                        <div class="col-md-12 mb-2">
+                                        <div class="col-md-12">
                                             <asp:UpdatePanel ID="updatePanel_ProgressNote" runat="server" UpdateMode="Always">
                                                 <ContentTemplate>
                                                     <asp:GridView ShowHeaderWhenEmpty="true" ID="grid_progress_note" runat="server" OnRowDeleting="grid_progress_note_RowDeleting" OnRowDataBound="gridTreatment_RowDataBound" CssClass="tb-responsive table-bordered" AutoGenerateColumns="false">
@@ -1435,22 +1440,21 @@
 
                                         </div>
 
+                                    </div>
+
+                                    <div class="row mb-2">
                                         <div class="col-md-12">
-                                            <fieldset class="row mb-2">
-                                                <legend>
-                                                    <label class="control-label">Kết  luận sau điều trị/ <span class="text-primary">Conclusions at termination of treatmen:</span></label>
-                                                </legend>
-                                                <div class="col-md-12 gt-2-a">
-                                                    <label></label>
-                                                    <asp:Label runat="server" ID="lbl_conclusions"></asp:Label>
-                                                    <div class="form-group" runat="server" id="conclusions_wrapper">
-                                                        <webUI:TextField runat="server" ID="txt_conclusions" />
-                                                        <asp:CustomValidator ID="CustomValidator22" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="conclusions_ServerValidate"></asp:CustomValidator>
-                                                    </div>
-                                                </div>
-                                            </fieldset>
+                                            <label class="control-label mb-1"> Kết  luận sau điều trị/ <span class="text-primary">Conclusions at termination of treatmen:</span></label>
                                         </div>
-                                    </fieldset>
+                                        <div class="col-md-12 gt-2-a">
+                                            <label></label>
+                                            <asp:Label runat="server" ID="lbl_conclusions"></asp:Label>
+                                            <div class="form-group" runat="server" id="conclusions_wrapper">
+                                                <webUI:TextField runat="server" ID="txt_conclusions" />
+                                                <asp:CustomValidator ID="CustomValidator22" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="conclusions_ServerValidate"></asp:CustomValidator>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                     <asp:UpdatePanel ID="UpdatePanel5" runat="server" UpdateMode="Conditional">
                                         <ContentTemplate>
@@ -1599,143 +1603,180 @@
 
                                     <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
                                         <ContentTemplate>
-                                            <fieldset class="row mb-2">
-                                                <legend>
-                                                    <label class="control-label">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label mb-1 font-bold">
                                                     5. Nếu phẫu thuật cấp cứu/ <span class="text-primary">In case of emergency surgery:</span></label>
-                                                </legend>
-                                                <div class="col-md-12">
-                                                    <p>
-                                                        Khi không có thời gian để ghi nhận đầy đủ bệnh sử và kết quả khám lâm sàng của bệnh nhân cần phẫ̃u thuật cấp cứu, vui lòng ghi rõ:
-                                                    <br />
-                                                        <span class="text-primary">When there is no time to record the complete history and physical examination of a patient requiring emergency surgery, indicate </span>
-                                                    </p>
-                                                </div>
-                                                <div class="col-md-12 gt-2-a">
-                                                    <label></label>
-                                                    <asp:Label runat="server" ID="lbl_emergency_surgery"></asp:Label>
-                                                    <div runat="server" id="emergency_surgery_wrapper">
-                                                        <div class="custom-control custom-radio d-inline-block">
-                                                            <input onclick="__doPostBack('emergency_surgery_change','')" type="radio" id="rad_emergency_surgery_False" runat="server" name="rad_emr_sur" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="rad_emergency_surgery_False">Không/ <span class="text-primary">No</span></label>
-                                                        </div>
-                                                        <div class="custom-control custom-radio mb-2 d-inline-block">
-                                                            <input onclick="__doPostBack('emergency_surgery_change','')" type="radio" id="rad_emergency_surgery_True" runat="server" name="rad_emr_sur" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="rad_emergency_surgery_True">Có, Giải thích/ <span class="text-primary">Yes, Explain</span></label>
-                                                            <input onclick="__doPostBack('emergency_surgery_change','clear')" type="checkbox" hidden="hidden" id="Radio2" runat="server" />
-                                                            <label for="Radio2"><icon:XSquare runat="server" ID="XSquare6" /></label>
-                                                        </div>
-                                                        <asp:CustomValidator ID="CustomValidator8" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="emergency_surgery_ServerValidate"></asp:CustomValidator>
+                                                <p>
+                                                    Khi không có thời gian để ghi nhận đầy đủ bệnh sử và kết quả khám lâm sàng của bệnh nhân cần phẫ̃u thuật cấp cứu, vui lòng ghi rõ:
+                                                <br />
+                                                    <span class="text-primary">When there is no time to record the complete history and physical examination of a patient requiring emergency surgery, indicate </span>
+                                                </p>
+                                            </div>
+                                            <div class="col-md-12 gt-2-a">
+                                                <label></label>
+                                                <asp:Label runat="server" ID="lbl_emergency_surgery"></asp:Label>
+                                                <div runat="server" id="emergency_surgery_wrapper">
+                                                    <div class="custom-control custom-radio d-inline-block">
+                                                        <input onclick="__doPostBack('emergency_surgery_change','')" type="radio" id="rad_emergency_surgery_False" runat="server" name="rad_emr_sur" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_emergency_surgery_False">
+                                                            Không/
+                                                                                    <span
+                                                                                        class="text-primary">No</span></label>
                                                     </div>
-                                                </div>
+                                                    <div class="custom-control custom-radio mb-2 d-inline-block">
+                                                        <input onclick="__doPostBack('emergency_surgery_change','')" type="radio" id="rad_emergency_surgery_True" runat="server" name="rad_emr_sur" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_emergency_surgery_True">
+                                                            Có,
+                                                                                        Giải
+                                                                                        thích/ <span
+                                                                                            class="text-primary">Yes,
+                                                                                            Explain</span></label>
 
-                                                <div class="col-md-12 gt-2-a par" runat="server" id="emr_sur_field">
-                                                    <label class="control-label">Chẩn đoán trước phẫu thuật/ <span class="text-primary">Pre-operative diagnosis:</span></label>
-                                                    <asp:Label runat="server" ID="lbl_pre_operative_diagnosis"></asp:Label>
-                                                    <div class="form-group" runat="server" id="pre_operative_diagnosis_wrapper">
-                                                        <webUI:TextField runat="server" ID="txt_pre_operative_diagnosis" />
-                                                        <asp:CustomValidator ID="CustomValidator27" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="pre_operative_diagnosis_ServerValidate"></asp:CustomValidator>
-                                                    </div>
-                                                </div>
+                                                        <input onclick="__doPostBack('emergency_surgery_change','clear')" type="checkbox" hidden="hidden" id="Radio2" runat="server" />
 
-                                                <div class="col-md-12 gt-2-a mb-2" runat="server" id="emr_sur_field1">
-                                                    <label class="control-label mb-1">Tóm tắt bệnh án/ <span class="text-primary">Brief summary:</span></label>
-                                                    <asp:Label runat="server" ID="lbl_brief_summary"></asp:Label>
-                                                    <div class="form-group" runat="server" id="brief_summary_wrapper">
-                                                        <webUI:TextField runat="server" ID="txt_brief_summary" />
-                                                        <asp:CustomValidator ID="CustomValidator28" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="brief_summary_ServerValidate"></asp:CustomValidator>
+                                                        <label for="Radio2"><icon:XSquare runat="server" ID="XSquare6" /></label>
+                                                        
                                                     </div>
+                                                    <asp:CustomValidator ID="CustomValidator8" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="emergency_surgery_ServerValidate"></asp:CustomValidator>
                                                 </div>
+                                            </div>
+                                        </div>
 
-                                                <div class="col-md-12 mb-2 gt-2-a" runat="server" id="emr_sur_field2">
-                                                    <label class="control-label mb-1">Giờ rời khỏi khoa cấp cứu/ <span class="text-primary">Time of leaving Emergency:</span></label>
-                                                    <asp:Label runat="server" ID="lbl_time_of_leaving_emer_e"></asp:Label>
-                                                    <div runat="server" id="time_of_leaving_emer_e_wrapper">
-                                                        <telerik:RadDateTimePicker runat="server" Width="200px" ID="dtpk_time_of_leaving_emer_e" />
-                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator24" Display="Dynamic" ValidationGroup="Group2" runat="server" ControlToValidate="dtpk_time_of_leaving_emer_e" ErrorMessage="Field is required."
-                                                    ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
-                                                    </div>
+                                        <div class="row par" runat="server" id="emr_sur_field">
+                                            <div class="col-md-12">
+                                                <label class="control-label mb-1">Chẩn đoán trước phẫu thuật/ <span class="text-primary">Pre-operative diagnosis:</span></label>
+                                            </div>
+                                            <div class="col-md-12 gt-2-a">
+                                                <label></label>
+                                                <asp:Label runat="server" ID="lbl_pre_operative_diagnosis"></asp:Label>
+                                                <div class="form-group" runat="server" id="pre_operative_diagnosis_wrapper">
+                                                    <webUI:TextField runat="server" ID="txt_pre_operative_diagnosis" />
+                                                    <asp:CustomValidator ID="CustomValidator27" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="pre_operative_diagnosis_ServerValidate"></asp:CustomValidator>
                                                 </div>
-                                            </fieldset>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-2 " runat="server" id="emr_sur_field1">
+                                            <div class="col-md-12">
+                                                <label class="control-label mb-1">Tóm tắt bệnh án/ <span class="text-primary">Brief summary:</span></label>
+                                            </div>
+                                            <div class="col-md-12 gt-2-a">
+                                                <label></label>
+                                                <asp:Label runat="server" ID="lbl_brief_summary"></asp:Label>
+                                                <div class="form-group" runat="server" id="brief_summary_wrapper">
+                                                    <webUI:TextField runat="server" ID="txt_brief_summary" />
+                                                    <asp:CustomValidator ID="CustomValidator28" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="brief_summary_ServerValidate"></asp:CustomValidator>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" runat="server" id="emr_sur_field2">
+                                            <div class="col-md-12 mb-2 gt-2-a">
+                                                <label class="control-label mb-1">Giờ rời khỏi khoa cấp cứu/ <span class="text-primary">Time of leaving Emergency:</span></label>
+                                                <asp:Label runat="server" ID="lbl_time_of_leaving_emer_e"></asp:Label>
+                                                <div runat="server" id="time_of_leaving_emer_e_wrapper">
+                                                    <telerik:RadDateTimePicker runat="server" Width="200px" ID="dtpk_time_of_leaving_emer_e" />
+                                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator24" Display="Dynamic" ValidationGroup="Group2" runat="server" ControlToValidate="dtpk_time_of_leaving_emer_e" ErrorMessage="Field is required."
+                                                ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                                                </div>
+                                            </div>
+                                        </div>
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
 
                                     <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
                                         <ContentTemplate>
-                                            <fieldset class="row mb-2">
-                                                <legend>
-                                                    <label class="control-label">6. Nếu chuyển đến BV khác/ <span class="text-primary">In case of transfer to another hospital:</span></label>
-                                                </legend>
-
-                                                <div class="col-md-12 gt-2-a">
-                                                    <label></label>
-                                                    <asp:Label runat="server" ID="lbl_transfer_hospital"></asp:Label>
-                                                    <div runat="server" id="transfer_hospital_wrapper">
-                                                        <div class="custom-control custom-radio d-inline-block">
-                                                            <input onclick="__doPostBack('transfer_hospital_change','')" type="radio" id="rad_transfer_hospital_False" runat="server" name="rad_transfer_hos" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="rad_transfer_hospital_False">
-                                                                Không/
-                                                                                        <span
-                                                                                            class="text-primary">No</span></label>
-                                                        </div>
-                                                        <div class="custom-control custom-radio mb-2 d-inline-block">
-                                                            <input onclick="__doPostBack('transfer_hospital_change','')"  type="radio" id="rad_transfer_hospital_True" runat="server" name="rad_transfer_hos" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="rad_transfer_hospital_True">Có, Giải thích/ <span class="text-primary">Yes, Explain</span></label>
-                                                            <input onclick="__doPostBack('transfer_hospital_change','clear')" hidden="hidden" type="checkbox" id="Radio3" runat="server" />
-
-                                                                <label for="Radio3"><icon:XSquare runat="server" ID="XSquare5" /></label>
-                                                        </div>
-                                                        <asp:CustomValidator ID="CustomValidator9" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="transfer_hospital_ServerValidate"></asp:CustomValidator>
-                                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label class="control-label mb-1 font-bold">
+                                                6. Nếu chuyển đến BV khác/ <span class="text-primary">In case of transfer to another hospital:</span></label>
+                                        </div>
+                                        <div class="col-md-12 gt-2-a">
+                                            <label></label>
+                                            <asp:Label runat="server" ID="lbl_transfer_hospital"></asp:Label>
+                                            <div runat="server" id="transfer_hospital_wrapper">
+                                                <div class="custom-control custom-radio d-inline-block">
+                                                    <input onclick="__doPostBack('transfer_hospital_change','')" type="radio" id="rad_transfer_hospital_False" runat="server" name="rad_transfer_hos" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="rad_transfer_hospital_False">
+                                                        Không/
+                                                                                <span
+                                                                                    class="text-primary">No</span></label>
                                                 </div>
+                                                <div class="custom-control custom-radio mb-2 d-inline-block">
+                                                    <input onclick="__doPostBack('transfer_hospital_change','')"  type="radio" id="rad_transfer_hospital_True" runat="server" name="rad_transfer_hos" class="custom-control-input" />
+                                                    <label class="custom-control-label" for="rad_transfer_hospital_True">Có, Giải thích/ <span class="text-primary">Yes, Explain</span></label>
+                                                    <input onclick="__doPostBack('transfer_hospital_change','clear')" hidden="hidden" type="checkbox" id="Radio3" runat="server" />
 
-                                                <div class="col-md-12 gt-2-a" runat="server" id="transfer_hos_field">
-                                                    <label class="control-label mb-1">Lý do chuyển viện/ <span class="text-primary">Reason for transfer:</span></label>
-                                                    <asp:Label runat="server" ID="lbl_reason_for_transfer"></asp:Label>
-                                                    <div class="form-group" runat="server" id="reason_for_transfer_wrapper">
-                                                        <webUI:TextField runat="server" ID="txt_reason_for_transfer" />
-                                                        <asp:CustomValidator ID="CustomValidator29" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="reason_for_transfer_ServerValidate"></asp:CustomValidator>
-                                                    </div>
+                                                        <label for="Radio3"><icon:XSquare runat="server" ID="XSquare5" /></label>
                                                 </div>
+                                                <asp:CustomValidator ID="CustomValidator9" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="transfer_hospital_ServerValidate"></asp:CustomValidator>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                                <div class="col-md-12 mb-2 gt-2-a" runat="server" id="transfer_hos_field1">
-                                                    <label class="control-label mb-1">Tình trạng trước khi chuyển viện/ <span class="text-primary">Status before transfer:</span></label>
-                                                    <asp:Label runat="server" ID="lbl_status_before_transfer"></asp:Label>
-                                                    <div class="form-group" runat="server" id="status_before_transfer_wrapper">
-                                                        <webUI:TextField runat="server" ID="txt_status_before_transfer" />
-                                                        <asp:CustomValidator ID="CustomValidator30" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="status_before_transfer_ServerValidate"></asp:CustomValidator>
-                                                    </div>
-                                                </div>
+                                    <div class="row mb-2" runat="server" id="transfer_hos_field">
+                                        <div class="col-md-12 gt-2-a">
+                                            <label class="control-label mb-1">Lý do chuyển viện/ <span class="text-primary">Reason for transfer:</span></label>
+                                            <asp:Label runat="server" ID="lbl_reason_for_transfer"></asp:Label>
+                                            <div class="form-group" runat="server" id="reason_for_transfer_wrapper">
+                                                <webUI:TextField runat="server" ID="txt_reason_for_transfer" />
+                                                <asp:CustomValidator ID="CustomValidator29" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="reason_for_transfer_ServerValidate"></asp:CustomValidator>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                                <div class="col-md-12 mb-2 gt-2-a" runat="server" id="transfer_hos_field2">
-                                                    <label class="control-label mb-1">Giờ rời khỏi khoa cấp cứu/ <span class="text-primary">Time of leaving Emergency:</span></label>
-                                                    <asp:Label runat="server" ID="lbl_time_of_leaving_emer_a"></asp:Label>
-                                                    <div runat="server" id="time_of_leaving_emer_a_wrapper">
-                                                        <telerik:RadDateTimePicker runat="server" Width="200px" ID="dtpk_time_of_leaving_emer_a" />
-                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator27" Display="Dynamic" ValidationGroup="Group2" runat="server" ControlToValidate="dtpk_time_of_leaving_emer_a" ErrorMessage="Field is required."
-                                                    ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
-                                                    </div>
-                                                </div>
-                                            </fieldset>
+                                    <div class="row mb-2" runat="server" id="transfer_hos_field1">
+                                        <div class="col-md-12 gt-2-a">
+                                            <label class="control-label mb-1">Tình trạng trước khi chuyển viện/ <span class="text-primary">Status before transfer:</span></label>
+                                            <asp:Label runat="server" ID="lbl_status_before_transfer"></asp:Label>
+                                            <div class="form-group" runat="server" id="status_before_transfer_wrapper">
+                                                <webUI:TextField runat="server" ID="txt_status_before_transfer" />
+                                                <asp:CustomValidator ID="CustomValidator30" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="status_before_transfer_ServerValidate"></asp:CustomValidator>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-2" runat="server" id="transfer_hos_field2">
+                                        <div class="col-md-12 mb-2 gt-2-a">
+                                            <label class="control-label mb-1">Giờ rời khỏi khoa cấp cứu/ <span class="text-primary">Time of leaving Emergency:</span></label>
+                                            <asp:Label runat="server" ID="lbl_time_of_leaving_emer_a"></asp:Label>
+                                            <div runat="server" id="time_of_leaving_emer_a_wrapper">
+                                                <telerik:RadDateTimePicker runat="server" Width="200px" ID="dtpk_time_of_leaving_emer_a" />
+                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator27" Display="Dynamic" ValidationGroup="Group2" runat="server" ControlToValidate="dtpk_time_of_leaving_emer_a" ErrorMessage="Field is required."
+                                            ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                                            </div>
+                                        </div>
+                                    </div>
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
 
-                                    <fieldset class="row mb-2">
-                                        <legend>
-                                            <label class="control-label">Tình trạng của bệnh nhân khi xuất viện/ <span class="text-primary">Patient's Condition at Discharge:</span></label>
-                                        </legend>
+                                    <div class="row mb-2">
                                         <div class="col-md-12 gt-2-a">
-                                            <label class="control-label mb-1"></label>
+                                            <label class="control-label mb-1">Tình trạng của bệnh nhân khi xuất viện/ <span class="text-primary">Patient's Condition at Discharge:</span></label>
+
                                             <asp:Label runat="server" ID="lbl_patient_discharge"></asp:Label>
 
                                             <div runat="server" id="patient_discharge_wrapper">
                                                 <label class="custom-control custom-checkbox d-inline-block">
-                                                    <input type="checkbox" runat="server" id="cb_patient_discharge_IMP" class="custom-control-input" />
-                                                    <span class="custom-control-label">Có cải thiện/ <span class="text-primary">Improved</span></span>
+                                                    <input type="checkbox"
+                                                        runat="server"
+                                                        id="cb_patient_discharge_IMP"
+                                                        class="custom-control-input" />
+                                                    <span
+                                                        class="custom-control-label">Có
+                                                                                cải thiện/ <span
+                                                                                    class="text-primary">Improved</span></span>
                                                 </label>
                                                 <label class="custom-control custom-checkbox d-inline-block">
-                                                    <input type="checkbox" runat="server" id="cb_patient_discharge_UNC" class="custom-control-input" />
-                                                    <span class="custom-control-label">Không thay đổi/ <span class="text-primary">Unchanged</span></span>
+                                                    <input type="checkbox"
+                                                        runat="server"
+                                                        id="cb_patient_discharge_UNC"
+                                                        class="custom-control-input" />
+                                                    <span
+                                                        class="custom-control-label">Không
+                                                                                thay đổi/ <span
+                                                                                    class="text-primary">Unchanged</span></span>
                                                 </label>
                                                 <label class="custom-control custom-checkbox d-inline-block">
                                                     <input type="checkbox" runat="server" id="cb_patient_discharge_UNS"
@@ -1745,27 +1786,29 @@
                                                 <asp:CustomValidator ID="CustomValidator10" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="patient_discharge_ServerValidate"></asp:CustomValidator>
                                             </div>
                                         </div>
+                                        </div>
 
-                                        <div class="col-md-12 gt-2-a">
-                                            <label></label>
-                                            <asp:Label runat="server" ID="lbl_txt_patient_discharge"></asp:Label>
-                                            <div class="form-group " runat="server" id="txt_patient_discharge_wrapper">
-                                                <webUI:TextField runat="server" ID="txt_patient_discharge" />
-                                                <asp:CustomValidator ID="CustomValidator31" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="patient_discharge_ServerValidate"></asp:CustomValidator>
+                                        <div class="row mb-2 ">
+                                            <div class="col-md-12 gt-2-a">
+                                                <label></label>
+                                                <asp:Label runat="server" ID="lbl_txt_patient_discharge"></asp:Label>
+                                                <div class="form-group " runat="server" id="txt_patient_discharge_wrapper">
+                                                    <webUI:TextField runat="server" ID="txt_patient_discharge" />
+                                                    <asp:CustomValidator ID="CustomValidator31" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="patient_discharge_ServerValidate"></asp:CustomValidator>
+                                                </div>
                                             </div>
                                         </div>
-                                    </fieldset>
 
-                                    <div class="row mb-2">
-                                        <div class="col-md-12 gt-2-a">
-                                            <label class="control-label mb-1">Mã ICD-10/ <span class="text-primary">ICD-10 Code(S):</span></label>
-                                            <asp:Label runat="server" ID="lbl_icd_10"></asp:Label>
-                                            <div class="form-group " runat="server" id="icd_10_wrapper">
-                                                <webUI:TextField runat="server" ID="txt_icd_10" />
-                                                <asp:CustomValidator ID="CustomValidator32" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="icd_10_ServerValidate"></asp:CustomValidator>
+                                        <div class="row mb-2">
+                                            <div class="col-md-12 gt-2-a">
+                                                <label class="control-label mb-1">Mã ICD-10/ <span class="text-primary">ICD-10 Code(S):</span></label>
+                                                <asp:Label runat="server" ID="lbl_icd_10"></asp:Label>
+                                                <div class="form-group " runat="server" id="icd_10_wrapper">
+                                                    <webUI:TextField runat="server" ID="txt_icd_10" />
+                                                    <asp:CustomValidator ID="CustomValidator32" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="icd_10_ServerValidate"></asp:CustomValidator>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
 
                                     <div class="row mb-2">
                                         <div class="col-md-12">

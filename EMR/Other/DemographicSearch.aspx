@@ -89,6 +89,46 @@
                             </div>
                         </div>
                     </div>
+                    <div id="DocumentList" runat="server" class="modal fade in" role="dialog" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Select document</h5>
+                                <div class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </div>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Select PID <asp:Label runat="server" ID="lbl_visit_type"></asp:Label>
+                                </p>
+                                <telerik:RadGrid OnItemCommand="radGridPidList_ItemCommand" CssClass="table" BorderWidth="0" AutoGenerateColumns="false" ShowHeader="false"
+                                    ID="radGridPidList" runat="server"
+                                     >
+                                    <MasterTableView DataKeyNames="patient_id,visible_patient_id">
+                                        <Columns>
+                                            <telerik:GridBoundColumn Visible="false"
+                                                SortExpression="patient_id" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" DataField="patient_id" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridTemplateColumn SortExpression="visible_patient_id" DataField="visible_patient_id">
+                                                <ItemTemplate>
+                                                    <asp:LinkButton runat="server" CommandName="selectPID"><%# Eval("visible_patient_id") %></asp:LinkButton>
+                                                </ItemTemplate>
+                                            </telerik:GridTemplateColumn>
+                                        </Columns>
+                                    </MasterTableView>
+                                    <ClientSettings EnableRowHoverStyle="true">
+                                        <Selecting AllowRowSelect="True" />
+                                    </ClientSettings>
+                                </telerik:RadGrid>
+                            </div>
+                            <div class="modal-footer">
+                                <div id="btnClose" data-dismiss="modal" class="btn btn-default waves-effect">Close</div>
+                                <%--<asp:LinkButton runat="server" ID="btnSave" OnClick="btnSave_Click" OnClientClick="document.getElementById('btnSave').classList.add('disabled');" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>--%>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 </ContentTemplate>
                 <Triggers>
                     <asp:AsyncPostBackTrigger ControlID="btnSearch" />
@@ -357,6 +397,8 @@
         </div>
     </form>
     <script src="../scripts/myScript.js"></script>
+    <script src="../scripts/jquery-3.2.1.min.js"></script>
+    <script src="../scripts/bootstrap.min.js"></script>
     <script>
         InputFilter("data-type='number'");
 
@@ -411,7 +453,6 @@
         function funfordefautenterkey1(btn, event) {
             
             if (event.keyCode == 13) {
-                console.log('sfsfd');
                 event.returnValue = false;
                 event.cancel = true;
                 btn.click();

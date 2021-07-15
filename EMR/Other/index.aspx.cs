@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -148,6 +149,23 @@ namespace EMR.Other
                         btnAction.Enabled = false;
                     }
                 }
+                else
+                {
+                    DateTime visit_date = DateTime.Parse(item["actual_visit_date_time"].Text.ToString());
+
+                    System.TimeSpan diff = DateTime.Now.Subtract(visit_date);
+                    System.TimeSpan diff1 = DateTime.Now - visit_date;
+
+                    int diff2 = int.Parse((DateTime.Now.Date - visit_date.Date).TotalDays.ToString());
+
+                    if(diff2 > 2)
+                    {
+                        e.Item.BackColor = Color.Red;
+                    } else if(diff2 == 2)
+                    {
+                        e.Item.BackColor = Color.Yellow;
+                    }
+                }
 
                 if ((string)Session["access_authorize"] != "FullAccess") 
                 {
@@ -228,6 +246,7 @@ namespace EMR.Other
         }
         protected void btnOpen_Click(object sender, EventArgs e)
         {
+
             try
             {
                 string selectedItem = Request.Form.Get("ddlDocList");
@@ -262,13 +281,67 @@ namespace EMR.Other
 
                     string docId = Guid.NewGuid().ToString();
 
-                    var objTemp = new { document_id = docId, patient_visit_id = PVID, model_id = modelID, user_name = userName };
-
                     DataHelpers.varDocId = docId;
                     DataHelpers.varModelId = modelID;
                     DataHelpers.varPVId = PVID;
 
-                    dynamic response3 = WebHelpers.PostAPI($"api/{data.api}/add/{DataHelpers._LOCATION}", objTemp);
+                    dynamic response3;
+
+                    if (data.api == "scoc")
+                    {
+                        var objTemp = new
+                        {
+                            document_id = docId,
+                            patient_visit_id = PVID,
+                            model_id = modelID,
+                            user_name = userName,
+                            patient_id = varPID,
+                            status = DocumentStatus.DRAFT,
+                            //amend_reason = null,
+                            created_user_id = (string)Session["UserId"],
+                            created_name_e = "",
+                            created_name_l = "",
+                            created_date_time = DataHelpers.ConvertSQLDateTime(DateTime.Now)
+                            //modified_user_id = null,
+                            //modified_name_e = null,
+                            //modified_name_l = null,
+                            //modified_date_time = null,
+                            //submited_user_id = null,
+                            //submited_name_e = null,
+                            //submited_name_l = null,
+                            //submited_date_time = null,
+                            //signed_user_id = null,
+                            //signed_name_e = null,
+                            //signed_name_l = null,
+                            //signed_date_time = null,
+                            //delete_user_id = null,
+                            //delete_name_e = null,
+                            //delete_name_l = null,
+                            //delete_date_time = null,
+                            //document_type_rcd = null,
+                            //documentid = null,
+                            //allergy = null,
+                            //allergy_note = null,
+                            //remarkable = null,
+                            //past_history = null,
+                            //diagnosis = null,
+                            //cur_treatment = null,
+                            //cur_care_plans = null,
+                            //recommendation = null
+                        };
+                        response3 = WebHelpers.PostAPI($"api/{data.api}/add/{DataHelpers._LOCATION}", objTemp);
+                    }
+                    else
+                    {
+                        var objTemp = new
+                        {
+                            document_id = docId,
+                            patient_visit_id = PVID,
+                            model_id = modelID,
+                            user_name = userName
+                        };
+                        response3 = WebHelpers.PostAPI($"api/{data.api}/add/{DataHelpers._LOCATION}", objTemp);
+                    }
 
                     if (response3.Status == System.Net.HttpStatusCode.OK)
                     {

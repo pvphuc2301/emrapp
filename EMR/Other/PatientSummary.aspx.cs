@@ -72,7 +72,6 @@ namespace EMR
         {
         }
 
-
         #region Menu Lab RAD
         private void LoadRootLAB_RAD(RadTreeView treeView, TreeNodeExpandMode expandMode)
         {
@@ -443,6 +442,51 @@ namespace EMR
 
         }
 
-        
+        protected void radGridComplexDoc_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            string apiURL = $"api/emr/menu-doc-complex/{DataHelpers._LOCATION}/{varPID}";
+            dynamic response = WebHelpers.GetAPI(apiURL);
+
+            DataTable mydataTable;
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                mydataTable = WebHelpers.GetJSONToDataTable(response.Data);
+
+                radGridComplexDoc.DataSource = mydataTable;
+            }
+        }
+
+        protected void radGridComplexDoc_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            GridDataItem item = (e.Item as GridDataItem);
+            if (e.CommandName.Equals("selectDoc"))
+            {
+                string docid = item.GetDataKeyValue("document_id").ToString();
+                string modelId = item.GetDataKeyValue("model_id").ToString();
+                string status = item.GetDataKeyValue("status").ToString();
+                string url = item.GetDataKeyValue("url").ToString();
+
+                if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], (string)Session["location"]))
+                {
+                    MainContent.ContentUrl = $"/{url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}";
+
+                    //string apiURL = $"api/emr/get-api/{DataHelpers._LOCATION}/{modelId}";
+
+                    //dynamic response = WebHelpers.GetAPI(apiURL);
+
+                    //if (response.Status == System.Net.HttpStatusCode.OK)
+                    //{
+                    //    dynamic data = JObject.Parse(response.Data);
+
+                    //    //new PatientVisit(e.Node.Attributes["patient_visit_id"]);
+
+                    //    MainContent.ContentUrl = $"/OPD/SumOfComOutpCase.aspx?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}";
+
+                    //    //return string.Format("/{0}?modelId={1}&docId={2}&pId={3}&vpId={4}", data.url, varModelId, varDocID, varPID, varVPID);
+                    //}
+                }
+            }
+        }
     }
 }

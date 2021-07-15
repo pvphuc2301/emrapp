@@ -327,16 +327,37 @@ namespace EMR.Other
             GridDataItem item = (e.Item as GridDataItem);
             if (e.CommandName.Equals("Open"))
             {
-                //GridDataItem item = (GridDataItem)(sender as RadGrid).SelectedItems[0];
                 string PID = item.GetDataKeyValue("patient_id").ToString();
                 string PVID = item.GetDataKeyValue("visible_patient_id").ToString();
-                 
-                string url = string.Format("/emr/emrinfor.aspx?pid={0}&vbid={1}", PID, PVID);
-                //string url = string.Format("/emr/emr.aspx?pid={0}&vbid={1}", PID, PVID);
 
-                Response.Redirect(url);
+                dynamic response = WebHelpers.GetAPI("api/Patient/check-primary/" + PID);
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic data = JObject.Parse(response.Data);
 
-                //Response.Redirect("RegistrerLearningCenter.aspx?RLCPK=" + e.CommandArgument.ToString());
+                    string script;
+                    
+                    if (data.primary_visible_patient_id != null)
+                    {
+                        dynamic PATIENT_INFO = (dynamic)Session["PATIENT_INFO"];
+                        
+                        response = WebHelpers.GetAPI("api/Patient/select-patient-linked/" + data.patient_id);
+                        if (response.Status == System.Net.HttpStatusCode.OK)
+                        {
+                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), ScriptKey.SHOW_POPUP, "setTimeout(()=> { $('#DocumentList').modal({backdrop: 'static', keyboard: false}); },0);", true);
+                            PATIENT_INFO.patientLinked = WebHelpers.GetJSONToDataTable(response.Data);
+                            radGridPidList.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+                            radGridPidList.DataBind();
+                            //&#128273;
+                            Session["PATIENT_INFO"] = PATIENT_INFO;
+                        }
+                    }
+                    else
+                    {
+                        string url = string.Format("/emr/emrinfor.aspx?pid={0}&vbid={1}", PID, PVID);
+                        Response.Redirect(url);
+                    }
+                }
             }
             else if (e.CommandName.Equals("btnComplete"))
             {
@@ -363,6 +384,17 @@ namespace EMR.Other
             args.IsValid = txt_pid.Value.Length >= 9;
         }
 
-        
+        protected void radGridPidList_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            GridDataItem item = (e.Item as GridDataItem);
+            if (e.CommandName.Equals("selectPID"))
+            {
+                string PID = item.GetDataKeyValue("patient_id").ToString();
+                string PVID = item.GetDataKeyValue("visible_patient_id").ToString();
+
+                string url = string.Format("/emr/emrinfor.aspx?pid={0}&vbid={1}", PID, PVID);
+                Response.Redirect(url);
+            } 
+        }
     }
 }

@@ -1524,7 +1524,7 @@
                                                         <div runat="server" id="gynecology_field1" class="col-md-12 mb-2">
                                                             <fieldset class="row mb-2">
                                                                 <legend>
-                                                                    <label class="control-label font-bold">Khám ngoài/ <span class="text-primary">External exam:</span></label>
+                                                                    <label class="control-label">Khám ngoài/ <span class="text-primary">External exam:</span></label>
                                                                 </legend>
 
                                                                 <div class="col-md-12 mb-2 gt-2-a">
@@ -1540,7 +1540,7 @@
                                                                     <label class="control-label mb-1">Lý do/ <span class="text-primary">Reason</span></label>
                                                                     <asp:Label runat="server" ID="lbl_gyn_reason"></asp:Label>
                                                                     <div class="form-group" runat="server" id="gyn_reason_wrapper">
-                                                                        <webUI:TextField runat="server" ID="txt_gyn_reason" />
+                                                                        <webUI:TextField runat="server" ID="txt_gyn_reason" TextMode="SingleLine" />
                                                                     </div>
                                                                 </div>
 
@@ -1548,7 +1548,7 @@
                                                                     <label class="control-label mb-1">Sờ nắn và đo ngoài tử cung/ <span class="text-primary">Uterine Height</span></label>
                                                                     <asp:Label runat="server" ID="lbl_gyn_uterine_height"></asp:Label>
                                                                     <div class="form-group" runat="server" id="gyn_uterine_height_wrapper">
-                                                                        <webUI:TextField runat="server" ID="txt_gyn_uterine_height" />
+                                                                        <webUI:TextField runat="server" ID="txt_gyn_uterine_height" TextMode="SingleLine" />
                                                                     </div>
                                                                 </div>
                                                             </fieldset>
@@ -1655,7 +1655,7 @@
                                                                             <label class="control-label mb-1">Ối vỡ lúc/ <span class="text-primary">Rupture of membrane at</span></label>
                                                                             <div runat="server" id="lbl_obs_rup_of_mem_code">
                                                                                 <asp:Label runat="server" ID="lbl_obs_rup_of_mem_at"></asp:Label>
-                                                                                <asp:Label runat="server" ID="lbl_obs_rup_of_mem_desc"></asp:Label>
+                                                                                <asp:Label runat="server" ID="lbl_obs_rup_of_mem_desc" CssClass="d-block"></asp:Label>
 
                                                                             </div>
                                                                             <div runat="server" id="obs_rup_of_mem_at_wrapper">

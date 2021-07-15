@@ -110,7 +110,7 @@
                         <!-- Search -->
                         <!-- ============================================================== -->
                     </ul>
-                    <ul class="navbar-nav d-none d-lg-flex ml-2">                        
+                    <ul class="navbar-nav d-none d-lg-flex ml-2">
                         <li><a class="nav-link btn-link  waves-effect waves-primary" href="javascript:void(0)">
                             <asp:image ID="Image1" runat="server" Height="16" Width="16" Visible="false" /></a></li>
                         <li><a class="nav-link btn-link  waves-effect waves-primary" href="javascript:void(0)">
@@ -135,11 +135,21 @@
                     <ul class="navbar-nav my-lg-0 ml-auto">
                         <li class="nav-item dropdown"><asp:LinkButton CssClass="nav-link btn-link waves-effect waves-primary" runat="server" ID="btnHome" OnClick="btnHome_Click" ><icon:House runat="server" ID="House" /></asp:LinkButton>
                         </li>
+
+                        <li runat="server" id="patientLinked" class="nav-item dropdown">
+                            <a class="nav-link btn-link  waves-effect waves-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#9903;
+                                <asp:Label runat="server" ID="Label1"></asp:Label>
+                            </a>
+                            <div runat="server" id="pidList" class="dropdown-menu dropdown-menu-right animated flipInY" aria-labelledby="btnGroupDrop1">
+                            </div>
+                        </li>
+
                         <li class="nav-item dropdown">
                             <a class="nav-link btn-link  waves-effect waves-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="text-primary"><icon:GeoAlt runat="server" ID="GeoAlt" /></span>
                                 <asp:Label runat="server" ID="lbl_location"></asp:Label>
                             </a>
+
                             <div class="dropdown-menu dropdown-menu-right animated flipInY" aria-labelledby="btnGroupDrop1">
                                 <a runat="server" onclick="__doPostBack('location_Change', 'AIH')" id="location_aih" class="dropdown-item disabled" href="javascript:void(0)">
                                     AIH

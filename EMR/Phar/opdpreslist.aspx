@@ -5,7 +5,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
-    <link id="Link1" rel="stylesheet" type="text/css" href="phar.css" runat="server" />
+        <link href="../styles/style.css" rel="stylesheet" />
+    <link href="../styles/myStyle.css" rel="stylesheet" />
+    <link href="../styles/style-custom.css" rel="stylesheet" />
 </head>
 <script src="../click_hover.js" type="text/javascript"></script>      
 <%--<body onload="clickMenu('menu')" >--%>
@@ -18,10 +20,10 @@
     <asp:CheckBox ID="ShowAll" Text="Show All" runat="server" Font-Bold="true" Enabled="true" AutoPostBack="true" OnCheckedChanged="CheckedRequest" ></asp:CheckBox>
 
         <telerik:RadGrid ID="RadGrid1" runat="server" Width="100%" OnNeedDataSource="RadGrid1_NeedDataSource" AllowSorting="true"
-            AllowPaging="true" AllowFilteringByColumn="false" ItemStyle-Font-Size="8" AlternatingItemStyle-Font-Size="8"
+            AllowPaging="true" AllowFilteringByColumn="false"
             AutoGenerateColumns="False" AllowMultiRowSelection="False" GridLines="None" EnableLinqExpressions="false" ShowFooter="false">
             <MasterTableView DataKeyNames="ph_prescription_id" AllowMultiColumnSorting="False" Width="100%" Name="Master" TableLayout="Fixed" 
-                ItemStyle-HorizontalAlign="Left" AlternatingItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Font-Size="10">
+                ItemStyle-HorizontalAlign="Left" AlternatingItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Center">
                 <Columns>
                     <telerik:GridTemplateColumn HeaderButtonType="TextButton" HeaderStyle-Width = "10%" DataField="visible_patient_id"
                         UniqueName="visible_patient_id" HeaderText="PID" SortExpression="visible_patient_id" HeaderStyle-HorizontalAlign="Left">

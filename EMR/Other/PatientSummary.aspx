@@ -13,6 +13,9 @@
     <link href="../styles/style-custom.css" rel="stylesheet" />
     <link href="../styles/sweetalert.min.css" rel="stylesheet" />
     <style>
+        .sidebar-wrapper .sidebar-menu ul li a {
+            padding: 0;
+        }
         .RadTreeView_Bootstrap .rtPlus, 
         .RadTreeView_Bootstrap .rtMinus, 
         .RadTreeView_Bootstrap .rtIn {
@@ -109,13 +112,29 @@
                                         <ul class="text-nowrap">
                                             <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px; margin-top: 12px;">
                                                 <h5 class="font-bold text-primary ml-2">Complex Document</h5>
-                                                <%--<span>SUMMARY OF COMPLEX OUTPATIENT CASES</span>--%>
-                                                <%--<asp:LinkButton runat="server" CssClass="mb-2 btn btn-sm btn-primary" ID="btnAddComplexForm">Add new</asp:LinkButton>--%>
+                                                <telerik:RadGrid OnNeedDataSource="radGridComplexDoc_NeedDataSource" OnItemCommand="radGridComplexDoc_ItemCommand" CssClass="table" BorderWidth="0" AutoGenerateColumns="false" ShowHeader="false"
+                                    ID="radGridComplexDoc" ItemStyle-Height="25px" runat="server"
+                                     >
+                                                    <MasterTableView DataKeyNames="document_id,model_id,status,url">
+                                                        <Columns>
+                                                            <telerik:GridTemplateColumn ItemStyle-BorderWidth="0" SortExpression="visible_patient_id" DataField="visible_patient_id" ItemStyle-Height="25px">
+                                                                <ItemTemplate>
+                                                                    <asp:LinkButton Height="25px" runat="server" CommandName="selectDoc"><%# Eval("status") %>_<%# Eval("model_name") %> 	&nbsp;<%# Eval("created_name_l") %></asp:LinkButton>
+                                                                </ItemTemplate>
+                                                            </telerik:GridTemplateColumn>
+                                                        </Columns>
+                                                    </MasterTableView>
+                                                    <ClientSettings EnableRowHoverStyle="true">
+                                                        <Selecting AllowRowSelect="True" />
+                                                    </ClientSettings>
+                                                </telerik:RadGrid>
+                                                <%--<asp:LinkButton runat="server" OnClick="sumofcomoutpcase_Click" ID="sumofcomoutpcase">SUMMARY OF COMPLEX OUTPATIENT CASES</asp:LinkButton>--%>
                                             </li>
 
                                             <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px;">
-                                                <h5 class="font-bold text-primary ml-2">Document</h5>
-                                                <telerik:RadTreeView OnClientMouseOut="ClientMouseOut" OnClientMouseOver="ClientMouseOver" OnNodeClick="RadTreeView1_NodeClick" ViewStateMode="Enabled" ID="RadTreeView1" runat="server" OnNodeExpand="RadTreeView1_NodeExpand"/>
+                                                <h5 class="font-bold text-primary ml-2">Form Document</h5>
+                                                
+                                                <telerik:RadTreeView OnClientMouseOut="ClientMouseOut" OnClientMouseOver="ClientMouseOver" OnNodeClick="RadTreeView1_NodeClick" ID="RadTreeView1" runat="server" OnNodeExpand="RadTreeView1_NodeExpand"/>
                                             </li>
 
                                             <%--END Load Left Menu--%>

@@ -164,7 +164,6 @@
                                                         </telerik:GridTemplateColumn>
 
                                                         <telerik:GridBoundColumn HeaderText="visit date" DataField="actual_visit_date_time" ItemStyle-Wrap="false" HeaderStyle-Wrap="false"/>
-
                                                         <telerik:GridBoundColumn HeaderText="closure date" DataField="closure_date_time" ItemStyle-Wrap="false" HeaderStyle-Wrap="false"/>
 
                                                         <telerik:GridBoundColumn HeaderText="group" DataField="visit_type_group_rcd" ItemStyle-Wrap="false" HeaderStyle-Wrap="false"/>
@@ -191,7 +190,7 @@
                                                     </telerik:GridTemplateColumn>
                                                     </Columns>
                                                 </MasterTableView>
-                                                <ClientSettings EnableRowHoverStyle="true">
+                                                <ClientSettings EnableRowHoverStyle="false">
                                                 </ClientSettings>
                                             </telerik:RadGrid>
                                         </div>

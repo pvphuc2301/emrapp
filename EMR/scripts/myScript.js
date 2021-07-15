@@ -168,7 +168,7 @@ function CalculateBmi() {
         vs_bmi.value = "";
     }
     else {
-        vs_bmi.value = (vs_weight.value / ((vs_height.value / 100) * 2)).toFixed(2);
+        vs_bmi.value = (vs_weight.value / ((vs_height.value / 100) * (vs_height.value / 100))).toFixed(1);
         /*vs_bmi.innerText = vs_bmi.value;*/
     };
 }

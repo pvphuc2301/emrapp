@@ -42,8 +42,6 @@ namespace EMR.IPD
                 txt_amend_reason.Text = "";
                 if (string.IsNullOrEmpty(ogia.obs_history)) { ogia.obs_history = Ogia.OBS_HISTORY_TEMPLATE; }
 
-                is_obs_gyn_change(ogia.is_obs_gyn);
-
                 //if (ogia.is_obs_gyn)
                 //{
                     txt_reason_admission.Value = ogia.reason_admission;
@@ -191,8 +189,6 @@ namespace EMR.IPD
                 lbl_reason_admission.Text = WebHelpers.FormatString(ogia.reason_admission);
                 lbl_is_obs_gyn.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.is_obs_gyn, "SẢN KHOA/ OBSTETRICS", "PHỤ KHOA/ GYNECOLOGY"));
 
-                is_obs_gyn_change(ogia.is_obs_gyn);
-
                 //if (ogia.is_obs_gyn)
                 //{
                     lbl_lmp_from.Text = WebHelpers.FormatString(ogia.lmp_from);
@@ -252,7 +248,7 @@ namespace EMR.IPD
                     lbl_obs_pelvic_exam.Text = WebHelpers.FormatString(ogia.obs_pelvic_exam);
                     lbl_obs_bishop_score.Text = WebHelpers.FormatString(ogia.obs_bishop_score) + " điểm/ points";
 
-                    WebHelpers.VisibleControl(false, gynecology_field, gynecology_field1, gynecology_field2);
+                    //WebHelpers.VisibleControl(false, gynecology_field, gynecology_field1, gynecology_field2);
                 //}
                 //else
                 //{
@@ -925,7 +921,7 @@ namespace EMR.IPD
                     ogia.gyn_douglas_pouchs = txt_gyn_douglas_pouchs.Value;
 
                     //set null
-                    ogia.obs_cur_medication = null;
+                    ogia.obs_rup_of_mem_at = ogia.obs_cur_medication = null;
                     ogia.obs_pre_cicatrice = null;
                     ogia.obs_uterine_shape = null;
                     ogia.obs_posture = null;
@@ -1053,7 +1049,7 @@ namespace EMR.IPD
             try
             {
                 Ogia ogia = new Ogia(Request.QueryString["docId"]);
-
+                is_obs_gyn_change(ogia.is_obs_gyn);
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
 
                 prt_barcode.Text = Patient.Instance().visible_patient_id;

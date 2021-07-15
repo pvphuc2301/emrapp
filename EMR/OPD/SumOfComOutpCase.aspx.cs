@@ -48,7 +48,7 @@ namespace EMR
         {
             try
             {
-                dynamic result = Oina.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
+                dynamic result = Scoc.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
@@ -107,7 +107,7 @@ namespace EMR
                 Scoc scoc = new Scoc(Request.QueryString["docId"]);
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-                //prt_barcode.Text = Patient.Instance().visible_patient_id;
+                prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (scoc.status == DocumentStatus.FINAL)
                 {
                     BindingDataForm(scoc, WebHelpers.LoadFormControl(form1, scoc, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
@@ -129,12 +129,23 @@ namespace EMR
         {
             try
             {
-                
+                scoc.allergy = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_allergy_");
+                scoc.allergy_note = txt_allergy_note.Value;
+                scoc.remarkable = txt_remarkable.Value;
+                scoc.past_history = txt_past_history.Value;
+                scoc.diagnosis = txt_diagnosis.Value;
+                scoc.cur_treatment = txt_cur_treatment.Value;
+                scoc.cur_care_plans = txt_cur_care_plans.Value;
+                scoc.recommendation = txt_recommendation.Value;
+                scoc.created_date_time = DataHelpers.ConvertSQLDateTime(scoc.created_date_time);
+
                 if (JsonConvert.SerializeObject(scoc) == DataObj.Value)
                 {
                     WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
                 }
-
+                scoc.modified_date_time = null;
+                scoc.signed_date_time = null;
+                scoc.submited_date_time = null;
                 //
                 scoc.amend_reason = txt_amend_reason.Text;
                 scoc.user_name = (string)Session["UserID"];
@@ -194,9 +205,12 @@ namespace EMR
             try
             {
                 lbl_allergy.Text = WebHelpers.FormatString(WebHelpers.GetBool(scoc.allergy, "Có, ghi rõ/ Yes, specify: " + scoc.allergy_note));
-
-
-
+                lbl_remarkable.Text = WebHelpers.FormatString(scoc.remarkable);
+                lbl_past_history.Text = WebHelpers.FormatString(scoc.past_history);
+                lbl_diagnosis.Text = WebHelpers.FormatString(scoc.diagnosis);
+                lbl_cur_treatment.Text = WebHelpers.FormatString(scoc.cur_treatment);
+                lbl_cur_care_plans.Text = WebHelpers.FormatString(scoc.cur_care_plans);
+                lbl_recommendation.Text = WebHelpers.FormatString(scoc.recommendation);
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
 
@@ -205,11 +219,34 @@ namespace EMR
         {
             try
             {
+                Patient patient = Patient.Instance();
+                prt_fullname.Text = patient.GetFullName();
+                //prt_date_of_discharge.Text = 
+                prt_gender.Text = patient.GetGender();
+                prt_patient_id.Text = prt_pid.Text = patient.visible_patient_id;
+                //prt_date_of_summary_report.Text = scoc.
+                prt_allergy.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, Yes", Value = true }, scoc.allergy, "display: grid;grid-template-columns:150px auto;");
+                if(scoc.allergy != null)
+                {
+                    if (scoc.allergy)
+                    {
+                        prt_allergy_note_wrapper.Visible = true;
+                        prt_allergy_note.Text = scoc.allergy_note;
+                    }
+                    else
+                    {
+                        prt_allergy_note_wrapper.Visible = false;
+                    }
+                }
                 
+                prt_remarkable.Text = scoc.remarkable;
+                past_history.Text = scoc.past_history;
+                prt_diagnosis.Text = scoc.diagnosis;
+                prt_cur_treatment.Text = scoc.cur_treatment;
+                prt_cur_care_plans.Text = scoc.cur_care_plans;
+                prt_recommendation.Text = scoc.recommendation;
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
-
-
         }
         #endregion
     }

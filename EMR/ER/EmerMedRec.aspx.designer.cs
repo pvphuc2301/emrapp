@@ -339,6 +339,15 @@ namespace EMR.ER
         protected global::System.Web.UI.WebControls.Label lbl_specialist_opinion_True;
 
         /// <summary>
+        /// div_pecialistopinion control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_pecialistopinion;
+
+        /// <summary>
         /// prt_name_of_specialist control.
         /// </summary>
         /// <remarks>
@@ -393,13 +402,13 @@ namespace EMR.ER
         protected global::System.Web.UI.WebControls.GridView lbl_Treatment;
 
         /// <summary>
-        /// updatePanel2 control.
+        /// up2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel updatePanel2;
+        protected global::System.Web.UI.UpdatePanel up2;
 
         /// <summary>
         /// lbl_progress_note control.
@@ -436,6 +445,15 @@ namespace EMR.ER
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_discharge_True;
+
+        /// <summary>
+        /// div_discharge_field control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_discharge_field;
 
         /// <summary>
         /// prt_prescription control.
@@ -510,6 +528,15 @@ namespace EMR.ER
         protected global::System.Web.UI.WebControls.Label lbl_hospitalisation_required_True;
 
         /// <summary>
+        /// div_hos_req_field control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_hos_req_field;
+
+        /// <summary>
         /// prt_reason control.
         /// </summary>
         /// <remarks>
@@ -555,6 +582,15 @@ namespace EMR.ER
         protected global::System.Web.UI.WebControls.Label lbl_emergency_surgery_True;
 
         /// <summary>
+        /// div_emr_sur_field control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_emr_sur_field;
+
+        /// <summary>
         /// lbl_preoperative_diagnosis control.
         /// </summary>
         /// <remarks>
@@ -598,6 +634,15 @@ namespace EMR.ER
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_transfer_hospital_True;
+
+        /// <summary>
+        /// div_transfer_hos_field control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_transfer_hos_field;
 
         /// <summary>
         /// prt_reason_for_transfer control.
@@ -1642,15 +1687,6 @@ namespace EMR.ER
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadDateTimePicker dtpk_time_contaced;
-
-        /// <summary>
-        /// Fieldset1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Fieldset1;
 
         /// <summary>
         /// lbl_time_provided control.

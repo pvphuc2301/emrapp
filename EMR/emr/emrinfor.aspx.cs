@@ -36,9 +36,6 @@ namespace EMR
             varVPID = Request.QueryString["vbid"]; //"3afc144a-86ca-11eb-9dfe-dca2660bc0a2";// ValueHiddenField.Value;
                                                    //varVisibleID = Request.QueryString["vbid"]; //"900031267";
                                                    //LoadPatientInfomation();
-
-            
-
             //
             ConnClass ConnStr = new ConnClass();
             ConnStringHIS = ConnStr.SQL_HISConnString;
@@ -62,6 +59,29 @@ namespace EMR
                 new Patient(varPID);
                 
                 Patient patient = Patient.Instance();
+
+                dynamic PATIENT_INFO = (dynamic)Session["PATIENT_INFO"];
+                
+                if(WebHelpers.IsPropertyExist(PATIENT_INFO, "patientLinked"))
+                {
+                    patientLinked.Visible = true;
+
+                    foreach (DataRow row in PATIENT_INFO.patientLinked.Rows)
+                    {
+                        string vpid = row.Field<string>("visible_patient_id");
+                        HtmlGenericControl a = new HtmlGenericControl();
+                        //a.Attributes["onclick"] = "__doPostBack('pid_Change', '" + vpid + "')";
+                        a.Attributes["class"] = "dropdown-item disabled";
+                        a.InnerText = vpid;
+
+                        pidList.Controls.Add(a);
+                    }
+
+                }
+                else
+                {
+                    patientLinked.Visible = false;
+                }
                 
                 lblPatientInfo.InnerHtml = $"{patient.GetFullName()} ({patient.GetTitle()}), DOB {WebHelpers.FormatDateTime(patient.date_of_birth)} ({patient.GetAge()} y) SEX {patient.GetGender()} PID {patient.visible_patient_id}";
 
@@ -374,7 +394,6 @@ namespace EMR
                     }
 
                     break;
-
             }
         }
 
@@ -811,7 +830,6 @@ namespace EMR
         {
             DataHelpers._LOCATION = location;
         }
-
         private void CheckUserID()
         {
             UserID = (string)Session["UserID"];

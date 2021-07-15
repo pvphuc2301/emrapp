@@ -6,7 +6,9 @@
 <head runat="server">
     <title></title>
     <%--<link id="Link1" rel="stylesheet" type="text/css" href="order.css" runat="server" />--%>
+    <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
+    <link href="../styles/style-custom.css" rel="stylesheet" />
 </head>
 <body>
     <form id="form1" runat="server">
@@ -15,10 +17,10 @@
 	</telerik:RadScriptManager>
         <div style="overflow: scroll; overflow-x: hidden; height: 100vh; padding: 20px 10px;">
         <telerik:RadGrid ID="RadGrid1" runat="server" Width="100%" OnNeedDataSource="RadGrid1_NeedDataSource" AllowSorting="true"
-            AllowPaging="true" AllowFilteringByColumn="false" ItemStyle-Font-Size="8" AlternatingItemStyle-Font-Size="8"
+            AllowPaging="true" AllowFilteringByColumn="false" 
             AutoGenerateColumns="False" AllowMultiRowSelection="False" GridLines="None" EnableLinqExpressions="false" ShowFooter="false">
             <MasterTableView AllowMultiColumnSorting="False" Width="100%" Name="Master" TableLayout="Fixed" 
-                ItemStyle-HorizontalAlign="Left" AlternatingItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Font-Size="10">                
+                ItemStyle-HorizontalAlign="Left" AlternatingItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Center">
                 <Columns>
                     <telerik:GridTemplateColumn HeaderButtonType="TextButton" HeaderStyle-Width = "15%" DataField="creation_date_time"
                         UniqueName="creation_date_time" HeaderText="Creation Date" SortExpression="creation_date_time" HeaderStyle-HorizontalAlign="Left"

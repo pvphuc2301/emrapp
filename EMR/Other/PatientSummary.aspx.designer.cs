@@ -60,6 +60,15 @@ namespace EMR
         protected global::Telerik.Web.UI.RadPane TopPane;
 
         /// <summary>
+        /// radGridComplexDoc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid radGridComplexDoc;
+
+        /// <summary>
         /// RadTreeView1 control.
         /// </summary>
         /// <remarks>

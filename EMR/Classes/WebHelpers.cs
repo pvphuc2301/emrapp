@@ -40,7 +40,7 @@ namespace EMR
     public enum ControlState { View, Edit }
     public static class WebHelpers
     {
-        public static string URL = "http://172.16.0.78:8088/"; //DEV
+        public static string URL = "http://172.16.0.78:8088/";//DEV
         //public static string URL = "http://172.16.0.78:8082/";//UAT
 
         #region API
