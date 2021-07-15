@@ -41,7 +41,7 @@
                                             <h4>KẾT QUẢ SIÊU ÂM HỆ TIẾT NIỆU</h4>
                                             <h5>ULTRASOUND OF URINARY SYSTEM REPORT</h5>
                                         </div>
-                                        <div>
+                                        <div style="text-align:center;font-family:Tahoma">
                                             <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
                                             <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
                                         </div>
@@ -71,52 +71,52 @@
                                             </div>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px;">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px; text-align:justify">
                                             <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Title="Chẩn đoán/" SubTitle="Diagnosis:" runat="server" />
                                             <asp:Label runat="server" ID="prt_diagnosis"></asp:Label>
                                         </div>
 
                                         <webUI:PrtRowS1 FontBold="true" Order="❖" CssClass="text-inline" Title="Thận trái" SubTitle="Left kidney:" runat="server" />
-                                        <p style="margin-left: 13px;">
+                                        <p style="margin-left: 13px; text-align:justify;">
                                             <asp:Label runat="server" ID="prt_left_kidney"></asp:Label>
                                         </p>
 
                                         <webUI:PrtRowS1 FontBold="true" Order="❖" CssClass="text-inline" Title="Thận phải" SubTitle="Right kidney" runat="server" />
-                                        <p style="margin-left: 13px;">
+                                        <p style="margin-left: 13px; text-align:justify;">
                                             <asp:Label runat="server" ID="prt_right_kidney"></asp:Label>
                                         </p>
 
                                         <webUI:PrtRowS1 FontBold="true" Order="❖" CssClass="text-inline" Title="Bàng quang:" SubTitle="Urinary bladder" runat="server" />
-                                        <p style="margin-left: 13px;">
+                                        <p style="margin-left: 13px; text-align:justify;">
                                             <asp:Label runat="server" ID="prt_urinary_bladder"></asp:Label>
                                         </p>
 
                                         <webUI:PrtRowS1 FontBold="true" Order="❖" CssClass="text-inline" Title="Tuyến tiền liệt:" SubTitle="Prostate" runat="server" />
-                                        <p style="margin-left: 13px;">
+                                        <p style="margin-left: 13px; text-align:justify;">
                                             <asp:Label runat="server" ID="prt_prostate"></asp:Label>
                                         </p>
 
 
                                         <webUI:PrtRowS1 FontBold="true" Order="❖" CssClass="text-inline" Title="Nước tiểu tồn lưu:" SubTitle="Post void residual volume" runat="server" />
-                                        <p style="margin-left: 13px;">
+                                        <p style="margin-left: 13px; text-align:justify;">
                                             <asp:Label runat="server" ID="prt_post_void_resi_volume"></asp:Label>
                                         </p>
 
 
-                                        <webUI:PrtRowS1 FontBold="true" Order="❖" CssClass="text-inline" Title="KẾT LUẬN: " SubTitle="CONCLUSION" runat="server" />
-                                        <p style="margin-left: 13px;">
+                                        <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Title="KẾT LUẬN: " SubTitle="CONCLUSION" runat="server" />
+                                        <p style="margin-left: 13px; text-align:justify;">
                                             <asp:Label runat="server" ID="prt_conclusion"></asp:Label>
                                         </p>
 
-                                        <webUI:PrtRowS1 FontBold="true" Order="❖" CssClass="text-inline" Title="ĐỀ NGHỊ: " SubTitle="RECOMMENDATION" runat="server" />
-                                        <p style="margin-left: 13px;">
+                                        <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Title="ĐỀ NGHỊ: " SubTitle="RECOMMENDATION" runat="server" />
+                                        <p style="margin-left: 13px; text-align:justify;">ss
                                             <asp:Label runat="server" ID="prt_recommendation"></asp:Label>
                                         </p>
 
                                         <div class="d-grid" style="grid-template-columns: 1fr 1fr">
                                             <span></span>
                                             <div class="text-center" style="break-inside: avoid;">
-                                                <div>Ngày/ Date: 25-02-2021</div>
+                                                <div>Ngày/ Date: </asp:Label></div>
                                                 <div class="font-bold">Bác sĩ/Physician</div>
                                             </div>
                                         </div>

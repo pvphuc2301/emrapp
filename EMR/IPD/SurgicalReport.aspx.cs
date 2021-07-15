@@ -125,6 +125,7 @@ namespace EMR.IPD
                 prt_complications.InnerHtml = surr.complications;
                 prt_procedure_chart.InnerHtml = surr.procedure_chart;
                 prt_procedure_narrative.InnerHtml = surr.procedure_narrative;
+                lbl_caregiver_name_l.InnerText = patientVisit.caregiver_name_l;
             }
             catch(Exception ex)
             {

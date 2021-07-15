@@ -24,6 +24,13 @@
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/sweetalert.min.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
+    <style type="text/css">
+        table { page-break-after:auto }
+        tr    { page-break-inside:avoid; page-break-after:auto }
+        td    { page-break-inside:avoid; page-break-after:auto }
+        thead { display:table-header-group }
+        tfoot { display:table-footer-group }
+    </style>
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
@@ -41,10 +48,15 @@
                                             <div style="color: #007297; font-size: 26.6667px; font-weight: bold; font-family: Tahoma">TƯỜNG TRÌNH PHẪU THUẬT</div>
                                             <div style="color: #e20e5a; font-size: 16.6667px; font-family: Tahoma;">SURGICAL REPORT</div>
                                         </div>
-                                        <div style="width: 200px; text-align: center">
-                                            <WebUI:Barcode runat="server" ID="prt_barcode" Text="900000488" Width="200" Height="40" />
-                                            <label runat="server" style="font-size: 14.5px; font-family: Tahoma;" id="prt_pid"></label>
+                                         <div style="width: 120px; text-align: center">
+
+                                            <webUI:Barcode runat="server" ID="prt_barcode" Text="900000488" Width="120" Height="24" />
+
+                                            <div>
+                                                <Label class="font-bold" id="prt_pid" runat="server"></Label>
+                                            </div>
                                         </div>
+
                                     </div>
                                     <div style="margin-bottom: 20px;">
                                         <span style="width: 190px; border-bottom-style: solid; border-bottom-color: #e20e5a; border-bottom-width: 5px; display: inline-block; font-size: 26.6667px;"></span>
@@ -116,126 +128,126 @@
                                             </div>
                                         </div>
 
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <label class="d-block h4" style="font-size: 14.5px; font-family: Tahoma; margin-bottom: 0px; padding-bottom: 0px; font-weight: bold">4. Chẩn đoán trước phẫu thuật:</label>
+                                        <div class="row" style="width:100%">
+                                            <div style="width:250px">
+                                                <label class="d-block h4" style="font-size: 14.5px; font-family: Tahoma; margin-left:10px;font-weight: bold">4. Chẩn đoán trước phẫu thuật:</label>
                                                 <span class="text-primary" style="margin-left: 25px; margin-top: 0px; padding-top: 0px; font-size: 14.5px;">Preoperative diagnosis</span>
                                             </div>
-                                            <div class="col-8">
+                                            <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_preo_diagnosis"></label>
                                             </div>
                                         </div>
                                         <div class="row mb-2">
-                                            <div class="col-4" style="padding-right: 0px; margin-right: 0px">
-                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">5. Chẩn đoán sau phẫu thuật:</label>
+                                            <div  style="width:250px">
+                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">5. Chẩn đoán sau phẫu thuật:</label>
                                                 <span class="text-primary" style="margin-left: 25px; font-size: 14.5px;">Postoperative diagnosis</span>
                                             </div>
-                                            <div class="col-8">
+                                            <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_post_diagnosis"></label>
                                             </div>
                                         </div>
 
                                         <div class="row mb-2">
-                                            <div class="col-4">
-                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">6. Phương pháp phẫu thuật:</label>
+                                            <div  style="width:250px">
+                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">6. Phương pháp phẫu thuật:</label>
                                                 <span class="text-primary" style="margin-left: 25px; font-size: 14.5px">Procedure</span>
                                             </div>
-                                            <div class="col-8">
+                                            <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_name_procedure"></label>
                                             </div>
                                         </div>
 
                                         <div class="row mb-2">
-                                            <div class="col-4">
-                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">7. Phương pháp vô cảm:</label>
+                                            <div  style="width:250px">
+                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">7. Phương pháp vô cảm:</label>
                                                 <span class="text-primary" style="margin-left: 25px; font-size: 14.5px">Anesthesia</span>
                                             </div>
-                                            <div class="col-8">
-                                                <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_anesthesia"></label>
+                                            <div style="width:470px">
+                                                <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left:10px" runat="server" id="prt_anesthesia"></label>
                                             </div>
                                         </div>
 
                                         <div class="row mb-2">
-                                            <div class="col-4">
-                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">8. Bác sĩ phẫu thuật:</label>
+                                            <div  style="width:250px">
+                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">8. Bác sĩ phẫu thuật:</label>
                                                 <span class="text-primary" style="margin-left: 25px; font-size: 14.5px">Surgeon</span>
                                             </div>
-                                            <div class="col-8">
+                                            <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_surgeon"></label>
                                             </div>
                                         </div>
 
                                         <div class="row mb-2">
-                                            <div class="col-4">
-                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">9. Phụ mổ:</label>
+                                            <div  style="width:250px">
+                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">9. Phụ mổ:</label>
                                                 <span class="text-primary" style="margin-left: 25px; font-size: 14.5px">Assistant surgeon</span>
                                             </div>
-                                            <div class="col-8">
+                                            <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_assistant_surgeon"></label>
                                             </div>
                                         </div>
 
                                         <div class="row mb-2">
-                                            <div class="col-4">
-                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">10. Bác sĩ gây mê:</label>
+                                            <div  style="width:250px">
+                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">10. Bác sĩ gây mê:</label>
                                                 <span class="text-primary" style="margin-left: 40px; font-size: 14.5px">Anesthesiologist</span>
                                             </div>
-                                            <div class="col-8">
+                                            <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_anesthesiologist"></label>
                                             </div>
 
                                         </div>
                                         <div class="row mb-2">
-                                            <div class="col-4">
-                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">11. Điều dưỡng gây mê:</label>
+                                            <div  style="width:250px">
+                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">11. Điều dưỡng gây mê:</label>
                                                 <span class="text-primary" style="margin-left: 40px; font-size: 14.5px">Anesthetic nurse</span>
                                             </div>
-                                            <div class="col-8">
+                                            <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_anesthetic_nurse"></label>
                                             </div>
                                         </div>
                                         <div class="row mb-2">
-                                            <div class="col-4">
-                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">12. Điều dưỡng vòng trong:</label>
+                                            <div  style="width:250px">
+                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">12. Điều dưỡng vòng trong:</label>
                                                 <span class="text-primary" style="margin-left: 40px; font-size: 14.5px">Scrub nurse</span>
                                             </div>
-                                            <div class="col-8">
+                                            <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_scrub_nurse"></label>
                                             </div>
                                         </div>
                                         <div class="row mb-2">
-                                            <div class="col-4">
-                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">13. Điều dưỡng vòng ngoài:</label>
+                                            <div  style="width:250px">
+                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">13. Điều dưỡng vòng ngoài:</label>
                                                 <span class="text-primary" style="margin-left: 40px; font-size: 14.5px">Circulating nurse</span>
                                             </div>
-                                            <div class="col-8">
+                                            <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_circulating_nurse"></label>
                                             </div>
                                         </div>
                                         <div class="row mb-2">
-                                            <div class="col-4">
-                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">14. Ước lượng lượng máu mất:</label>
+                                            <div  style="width:250px">
+                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">14. Ước lượng lượng máu mất:</label>
                                                 <span class="text-primary" style="margin-left: 40px; font-size: 14.5px">Estimated bloodloss</span>
                                             </div>
-                                            <div class="col-8">
+                                            <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_estimated_bloodloss"></label>
                                             </div>
                                         </div>
                                         <div class="row mb-2">
-                                            <div class="col-4">
-                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">15. Giải phẫu bệnh:</label>
+                                            <div  style="width:250px">
+                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">15. Giải phẫu bệnh:</label>
                                                 <span class="text-primary" style="margin-left: 40px; font-size: 14.5px">Biopsy pathology</span>
                                             </div>
-                                            <div class="col-8">
+                                            <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_biopsy_pathology"></label>
                                             </div>
                                         </div>
                                         <div class="row mb-2">
-                                            <div class="col-4">
-                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">16. Biến chứng:</label>
+                                            <div  style="width:250px">
+                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">16. Biến chứng:</label>
                                                 <span class="text-primary" style="margin-left: 40px; font-size: 14.5px">Complications</span>
                                             </div>
-                                            <div class="col-8">
+                                            <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_complications"></label>
                                             </div>
                                         </div>

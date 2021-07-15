@@ -31,77 +31,12 @@
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/sweetalert.min.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
-    <style>
-        /* Base for label styling */
-        [type="checkbox"]:not(:checked),
-        [type="checkbox"]:checked {
-            position: absolute;
-            left: 0;
-            opacity: 0.01;
-        }
-
-            [type="checkbox"]:not(:checked) + label,
-            [type="checkbox"]:checked + label {
-                position: relative;
-                padding-left: 2.3em;
-                font-size: 1.05em;
-                line-height: 1.7;
-                cursor: pointer;
-            }
-
-                /* checkbox aspect */
-                [type="checkbox"]:not(:checked) + label:before,
-                [type="checkbox"]:checked + label:before {
-                    content: '';
-                    position: absolute;
-                    left: 0;
-                    top: 0;
-                    width: 1.4em;
-                    height: 1.4em;
-                    border: 1px solid #aaa;
-                    background: #FFF;
-                    border-radius: .2em;
-                    box-shadow: inset 0 1px 3px rgba(0,0,0, .1), 0 0 0 rgba(203, 34, 237, .2);
-                    -webkit-transition: all .275s;
-                    transition: all .275s;
-                }
-
-                /* checked mark aspect */
-
-                [type="checkbox"]:checked + label:after {
-                    content: '✕';
-                    position: absolute;
-                    top: .48em;
-                    left: .12em;
-                    font-size: 1.375em;
-                    color: #CB22ED;
-                    line-height: 0;
-                    -webkit-transition: all .2s;
-                    transition: all .2s;
-                }
-
-                /* checked mark aspect changes */
-                [type="checkbox"]:not(:checked) + label:after {
-                    opacity: 0;
-                    -webkit-transform: scale(0) rotate(45deg);
-                    transform: scale(0) rotate(45deg);
-                }
-
-
-        [type="checkbox"]:disabled:not(:checked) + label:before,
-        [type="checkbox"]:disabled:checked + label:before {
-            box-shadow: none;
-            border-color: #bbb;
-            background-color: #e9e9e9;
-        }
-
-        [type="checkbox"]:disabled:checked + label:after {
-            color: #777;
-        }
-
-        [type="checkbox"]:disabled + label {
-            color: #000000;
-        }
+    <style type="text/css">
+        table { page-break-after:auto }
+        tr    { page-break-inside:avoid; page-break-after:auto }
+        td    { page-break-inside:avoid; page-break-after:auto }
+        thead { display:table-header-group }
+        tfoot { display:table-footer-group }
     </style>
     <script>
         function changeValue(a, b) {
@@ -200,7 +135,7 @@
                                             <asp:Label Width="200px" runat="server" ID="prt_allergy"></asp:Label>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr" runat="server" id="allergy_note">
                                             <webUI:PrtRowS1 FixedLeft="5" FontBold="true" Order="•" CssClass="text-inline" Title="Nếu có, nêu rõ/ " SubTitle="If yes, specify:" runat="server" />
                                             <asp:Label runat="server" ID="prt_allergy_note"></asp:Label>
                                         </div>
@@ -209,7 +144,7 @@
 
                                         <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Order="•" Title="Dấu hiệu sinh tồn/ " SubTitle="Vital signs" runat="server" />
 
-                                        <table class="table-bordered table-fixed mb-2">
+                                        <table class="table-bordered table-fixed mb-2"Style="width: 100%">
                                             <tr>
                                                 <td class="p-2">Nhiệt độ/ Temperature (C degree)</td>
                                                 <td class="p-2 text-right" style="width: 100px;">
@@ -296,26 +231,80 @@
 
                                         <webUI:PrtRowS1 FixedLeft="5" FontBold="true" CssClass="text-inline" Order="•" Title="Loại vắc xin tiêm chủng lần này/ " SubTitle="Appointed vaccine" runat="server" />
 
-                                        <table runat="server" id="prt_appointed_vaccine" class="table-bordered mb-2" style="table-layout: fixed; width: 100%; page-break-inside: avoid !important;">
+                                        <div class="row mb-2 ">
+                                            <div class="col-md-12 ">
+                                                <asp:UpdatePanel ID="up1" runat="server" UpdateMode="Always">
+                                                    <ContentTemplate>
+                                                        <asp:GridView ShowHeaderWhenEmpty="true " ID="prt_appointed_vaccine" ShowHeader="true" runat="server" AutoGenerateColumns="false " Style="width: 100%">
+                                                            <HeaderStyle />
+                                                            <Columns>
+                                                                <asp:TemplateField>
+                                                                    <HeaderTemplate>
+                                                                        <div style="width: 200px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary ">Tên vaccin <div class="text-primary">Drug names</div> </div>
+                                                                    </HeaderTemplate>
+                                                                    <ItemTemplate>
+                                                                        <div style="width: 200px; font-size: 14.5px; font-family: Tahoma; text-align: justify; margin: 5px" class="text-primary ">
+                                                                            <asp:Label runat="server" Text='<%# Eval("drug_name") %>' />
+                                                                        </div>
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+                                                                <asp:TemplateField>
+                                                                    <HeaderTemplate>
+                                                                        <div style="width: 100px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary ">Hàm lượng <div class="text-primary">Strength</div></div>
+                                                                    </HeaderTemplate>
+                                                                    <ItemTemplate>
+                                                                        <div style="width: 100px; text-align: center; font-size: 14.5px; font-family: Tahoma" class="text-primary ">
+                                                                            <asp:Label runat="server" Text='<%# Eval("strength") %>' />
+                                                                        </div>
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+                                                                <asp:TemplateField>
+                                                                    <HeaderTemplate>
+                                                                        <div style="width: 100px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center">Đường dùng <div class="text-primary">Route</div> </div>
+                                                                    </HeaderTemplate>
+                                                                    <ItemTemplate>
+                                                                        <div style="width: 100px; font-size: 14.5px; font-family: Tahoma; text-align: center; margin: 5px" class="text-primary ">
+                                                                            <asp:Label runat="server" Text='<%# Eval("router") %>' />
+                                                                        </div>
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+                                                                <asp:TemplateField>
+                                                                    <HeaderTemplate>
+                                                                        <div style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary ">Hướng dẫn bổ sung/ Chỉ định sử dụng khi cần thiết kèm theo lý do<div class="text-primary">Additional instruction/ PRN order with reason</div> </div>
+                                                                    </HeaderTemplate>
+                                                                    <ItemTemplate>
+                                                                        <div style="font-size: 14.5px; font-family: Tahoma; text-align: justify; margin: 5px">
+                                                                            <asp:Label runat="server" Text='<%# Eval("reason") %>' />
+                                                                        </div>
+                                                                    </ItemTemplate>
+                                                                </asp:TemplateField>
+                                                            </Columns>
+                                                        </asp:GridView>
+                                                    </ContentTemplate>
+                                                </asp:UpdatePanel>
+                                            </div>
+                                        </div>
+
+                                        <%--<table runat="server" id="prt_appointed_vaccine" class="table-bordered mb-2" style="table-layout: fixed; width: 100%; page-break-inside: avoid !important;">
                                             <tr>
                                                 <td data-field="drug_name" class="text-center" style="width: 230px"><span class="font-bold">Tên vaccin</span>
                                                     <div class="text-primary">Drug names</div>
                                                 </td>
-                                                <td data-field="strength" class="text-center" style="width: 120px" data-align="center"><span class="font-bold">Hàm lượng</span><div class="text-primary">Strength</div>
+                                                <td data-field="strength" class="text-center" style="width: 120px" data-align="center"><span class="font-bold">Hàm lượng</span>
                                                 </td>
                                                 <td data-field="router" class="text-center" style="width: 120px" data-align="center"><span class="font-bold">Đường dùng</span><div class="text-primary">Route</div>
                                                 </td>
                                                 <td data-field="reason" class="text-center"><span class="font-bold">Hướng dẫn bổ sung/ Chỉ định sử dụng khi cần thiết kèm theo lý do</span><div class="text-primary">Additional instruction/ PRN order with reason</div>
                                                 </td>
                                             </tr>
-                                        </table>
+                                        </table>--%>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FixedLeft="5" FontBold="true" CssClass="text-inline" Order="•" Title="Khảo sát bổ sung khác/ " SubTitle="Additional investigations:" runat="server" />
                                             <asp:Label runat="server" ID="prt_additional_investigations"></asp:Label>
                                         </div>
 
-                                        <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Order="V" Title="Kết luận/ " SubTitle="Conclusion" runat="server" />
+                                        <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Order="V." Title=" Kết luận/ " SubTitle="Conclusion" runat="server" />
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FixedLeft="5" FontBold="true" CssClass="text-inline" Order="●" Title="Chẩn đoán ban đầu/ " SubTitle="Initial diagnosis:" runat="server" />
@@ -339,12 +328,12 @@
                                             <asp:Label runat="server" ID="prt_treatment"></asp:Label>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr" >
                                             <webUI:PrtRowS1 CssClass="text-inline" FontBold="true" Order="❖" Title="Yêu cầu ý kiến chuyên khoa/ " SubTitle="Specialized opinion requested:" runat="server" />
                                             <asp:Label Width="200px" runat="server" ID="prt_spec_opinion_req"></asp:Label>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr" id="spec_opinion_req" runat="server" >
                                             <webUI:PrtRowS1 FixedLeft="5" FontBold="true" CssClass="text-inline" Order="●" Title="Nếu có, nêu rõ/ " SubTitle="If yes, specify:" runat="server" />
                                             <asp:Label runat="server" ID="prt_spec_opinion_req_text"></asp:Label>
                                         </div>
@@ -366,12 +355,12 @@
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FixedLeft="5" Order="●" CssClass="text-inline" Title="Họ tên người tiêm chủng/ người giám hộ/ " SubTitle="Full name of patient/ guardian:" runat="server" />
-                                            <div class="prt-line-solid"></div>
+                                            <div> <hr style="border-bottom: 0.25px solid black"></div>
                                         </div>
 
                                         <div class="d-grid mb-2" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FixedLeft="5" Order="●" CssClass="text-inline" Title="Chữ ký người tiêm chủng/ người giám hộ/ " SubTitle="Signature of patient/ guardian:" runat="server" />
-                                            <div class="prt-line-solid"></div>
+                                            <div> <hr style="border-bottom: 0.25px solid black"></div>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 1fr 1fr">
@@ -381,7 +370,7 @@
                                                 <div class="font-bold">(Họ tên, chữ ký & MSNV)</div>
                                                 <div class="font-bold text-primary">(Full name, Signature & ID)</div>
                                             </div>
-                                            <asp:Label runat="server" ID="prt_signature1"></asp:Label>
+                                            
                                         </div>
                                     </div>
                                 </td>
@@ -404,7 +393,6 @@
                         </tfoot>
                     </table>
                 </div>
-
                 <div class="cssclsNoPrint">
                     <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>

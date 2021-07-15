@@ -161,6 +161,7 @@ namespace EMR.OPD
         {
             try
             {
+                allergy_note.Visible= spec_opinion_req.Visible = false;
                 Patient patient = Patient.Instance();
                 PatientVisit patientVisit = PatientVisit.Instance();
 
@@ -180,9 +181,14 @@ namespace EMR.OPD
 
                 if (mrnv.allergy != null)
                 {
-                    if (mrnv.allergy) { prt_allergy_note.Text = mrnv.allergy_text; } else { prt_allergy_note.Visible = false; }
+                    if (mrnv.allergy == true) 
+                    { 
+                        prt_allergy_note.Text = mrnv.allergy_text;
+                        allergy_note.Visible = true;
+                    } 
+                    
                 }
-
+                //prt_allergy_note.Text = mrnv.allergy_text;
                 prt_vs_temperature.Text = mrnv.vs_temperature;
                 prt_vs_weight.Text = mrnv.vs_weight;
                 prt_vs_height.Text = mrnv.vs_height;
@@ -202,26 +208,9 @@ namespace EMR.OPD
                 prt_scr_before_vacc_8.Text += mrnv.scr_before_vacc_8;
                 prt_scr_before_vacc_9.Text += mrnv.scr_before_vacc_9;
 
-                DataTable tb = WebHelpers.GetJSONToDataTable(mrnv.appointed_vaccine);
-                if (tb != null)
-                {
-                    foreach (DataRow row in tb.Rows)
-                    {
-                        HtmlTableRow tr = new HtmlTableRow();
-                        HtmlTableCell td;
-                        for (int i = 0; i < prt_appointed_vaccine.Rows[0].Cells.Count; i++)
-                        {
-                            var temp = prt_appointed_vaccine.Rows[0].Cells[i];
-                            string colName = temp.Attributes["data-field"];
-                            td = new HtmlTableCell();
-                            td.InnerText = row[colName].ToString();
-                            if (temp.Attributes["data-align"] != null) td.Attributes.Add("class", "text-" + temp.Attributes["data-align"]);
-                            tr.Cells.Add(td);
-                        }
-                        prt_appointed_vaccine.Rows.Add(tr);
-
-                    }
-                }
+                string json_appointed_vaccine = mrnv.appointed_vaccine;
+                prt_appointed_vaccine.DataSource = JsonConvert.DeserializeObject<DataTable>(json_appointed_vaccine);
+                prt_appointed_vaccine.DataBind();
 
                 prt_additional_investigations.Text = mrnv.additional_investigations;
                 prt_initial_diagnosis.Text = mrnv.initial_diagnosis;
@@ -235,13 +224,10 @@ namespace EMR.OPD
 
                 if (mrnv.spec_opinion_req != null)
                 {
-                    if (mrnv.spec_opinion_req)
+                    if (mrnv.spec_opinion_req==true)
                     {
                         prt_spec_opinion_req_text.Text = mrnv.spec_opinion_req_text;
-                    }
-                    else
-                    {
-                        prt_spec_opinion_req_text.Visible = false;
+                        spec_opinion_req.Visible = true;
                     }
                 }
                 //

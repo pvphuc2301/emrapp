@@ -168,6 +168,15 @@ namespace EMR.OPD
         protected global::System.Web.UI.WebControls.Label prt_allergy;
 
         /// <summary>
+        /// allergy_note control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl allergy_note;
+
+        /// <summary>
         /// prt_allergy_note control.
         /// </summary>
         /// <remarks>
@@ -330,13 +339,22 @@ namespace EMR.OPD
         protected global::System.Web.UI.WebControls.Label prt_scr_before_vacc_9;
 
         /// <summary>
+        /// up1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel up1;
+
+        /// <summary>
         /// prt_appointed_vaccine control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTable prt_appointed_vaccine;
+        protected global::System.Web.UI.WebControls.GridView prt_appointed_vaccine;
 
         /// <summary>
         /// prt_additional_investigations control.
@@ -393,6 +411,15 @@ namespace EMR.OPD
         protected global::System.Web.UI.WebControls.Label prt_spec_opinion_req;
 
         /// <summary>
+        /// spec_opinion_req control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spec_opinion_req;
+
+        /// <summary>
         /// prt_spec_opinion_req_text control.
         /// </summary>
         /// <remarks>
@@ -418,15 +445,6 @@ namespace EMR.OPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label prt_next_appointment;
-
-        /// <summary>
-        /// prt_signature1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_signature1;
 
         /// <summary>
         /// btnHome control.

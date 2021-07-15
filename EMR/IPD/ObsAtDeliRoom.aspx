@@ -31,6 +31,13 @@
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/sweetalert.min.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
+    <style type="text/css">
+        table { page-break-after:auto }
+        tr    { page-break-inside:avoid; page-break-after:auto }
+        td    { page-break-inside:avoid; page-break-after:auto }
+        thead { display:table-header-group }
+        tfoot { display:table-footer-group }
+    </style>
 </head>
 <body>
     <form method="post" action="#" id="form2" runat="server">
@@ -49,7 +56,7 @@
                                             <h4>BỆNH ÁN NGOẠI TRÚ</h4>
                                             <h5>OBSTETRIC OBSERVATION AT DELIVERY ROOM</h5>
                                         </div>
-                                        <div style="width: 175px;">
+                                        <div style="width: 175px; text-align:center">
                                             <asp:Label CssClass="d-block" runat="server" ID="prt_fullname"></asp:Label>
                                             <asp:Label class="d-block" CssClass="d-block" runat="server" ID="prt_dob"></asp:Label>
                                             <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
@@ -65,352 +72,488 @@
                             <tr>
                                 <td class="report-content-cell">
                                     <div class="main" runat="server" id="print_content">
-
-                                        <div>
-                                            Nhập phòng sinh lúc/ Admission to Delivery room at:
-                                            &nbsp;<asp:Label ID="prt_hour" runat="server" />
-                                            giờ/ hour
-                                            &nbsp;<asp:Label ID="prt_minute" runat="server" />
-                                            phút/ minute, ngày/date:
-                                            &nbsp;<asp:Label ID="prt_date" runat="server" />
-                                        </div>
-
-                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr">
-                                            <div>
-                                                Người theo dõi/ Observer’s name:&nbsp;<asp:Label ID="prt_obs_name" Text="❏" runat="server" />
-                                            </div>
-                                            <div>
-                                                Chức danh/ Initial:&nbsp;<asp:Label ID="prt_obs_initial" Text="❏" runat="server" />
-                                            </div>
-                                        </div>
-
-
-                                        <div>
-                                            <label class="font-bold">1. Đặc điểm trẻ sơ sinh/ Neonatal features:</label>
-                                        </div>
-
-                                        <div>
-                                            - Sinh lúc/ Delivered at:
-                                            &nbsp;<asp:Label ID="prt_hour_d" runat="server" />&nbsp;
-                                            giờ/ hour,
-                                            &nbsp;<asp:Label ID="prt_minute_d" runat="server" />&nbsp;
-                                            phút/ minute, ngày/date:
-                                            &nbsp;<asp:Label ID="prt_date_d" runat="server" />
-                                        </div>
-
-                                        <div>
-                                            - Điểm số Apgar/ Apgar score: phút thứ nhất/ 1st minute:
-                                            &nbsp;<asp:Label ID="prt_apgar_score_1" runat="server" />
-                                            điểm/ points, phút thứ 5/ 5th minute:
-                                            &nbsp;<asp:Label ID="prt_apgar_score_5" runat="server" />
-                                            điểm/ points, phút thứ 10/ 10th minute:
-                                            &nbsp;<asp:Label ID="prt_apgar_score_10" runat="server" />
-                                            điểm/ points
-                                        </div>
-
-                                        <div>
-                                            - Cân nặng lúc sinh/ WOB:
-                                            &nbsp;<asp:Label ID="prt_weight_of_birth" runat="server" />
-                                            gram, Chiều dài/ Length:
-                                            &nbsp;<asp:Label ID="prt_length_of_birth" runat="server" />
-                                            cm, Vòng đầu/ Head circumference:
-                                            &nbsp;<asp:Label ID="prt_head_circum" runat="server" />
-                                            cm
-                                        </div>
-
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                            <label>Trẻ/ Newborn: </label>
-                                            <div>
-                                                <div class="d-grid" style="grid-template-columns: 130px 1fr">
-                                                    <label>- Đơn thai/Singleton: </label>
-                                                    <div class="d-grid" style="grid-template-columns: 130px 1fr">
-                                                        <div>
-                                                            <asp:Label ID="prt_singleton_sex_code_m" Text="❏" runat="server" />&nbsp;Nam/ Male
-                                                        </div>
-                                                        <div>
-                                                            <asp:Label ID="prt_singleton_sex_code_f" Text="❏" runat="server" />&nbsp;Nữ/ Female
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="d-grid" style="grid-template-columns: 130px 1fr">
-                                                    <label>- Đa thai/ Multiple: </label>
-                                                    <div class="d-grid" style="grid-template-columns: 130px 1fr">
-                                                        <div><asp:Label ID="prt_multiple_sex_m" Text="❏" runat="server" />&nbsp;Nam/ Male</div>
-                                                        <div><asp:Label ID="prt_multiple_sex_f" Text="❏" runat="server" />&nbsp;Nữ/ Female</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                            <label>- Dị tật bẩm sinh/ Birth defect:&nbsp;</label>
-                                            <div class="d-grid" style="grid-template-columns: 130px 1fr">
-                                                <div><asp:Label ID="prt_birth_defect_false" Text="❏" runat="server" />&nbsp;Không/ No</div>
-                                                <div><asp:Label ID="prt_birth_defect_true" Text="❏" runat="server" />&nbsp;Có, chi tiết/ Yes, specify:&nbsp;<asp:Label ID="prt_birth_defect_note" runat="server" /></div>
-                                            </div>
-                                        </div>
-
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                            <label>- Tình trạng trẻ sơ sinh sau sinh/ Neonatal status after birth:</label>
-                                            <div>&nbsp;<asp:Label ID="prt_neonatal_status" runat="server" /></div>
-                                        </div>
-
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                            <label>- Can thiệp và kết quả/ Intervention and results:</label>
-                                            <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                                <div><asp:Label ID="prt_intervention_false" Text="❏" runat="server" />&nbsp;Không/ No:</div>
-                                                <div>&nbsp;<asp:Label ID="prt_intervention_true" Text="❏" runat="server" />&nbsp;Có, chi tiết/ Yes, specify:<asp:Label ID="prt_intervention_note" runat="server" /></div>
-                                            </div>
-                                        </div>
-
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                            <label class="font-bold">2. Sổ nhau/ Placenta delivery:&nbsp;</label>
-                                            <div class="d-grid" style="grid-template-columns: 180px 1fr">
-                                                <div><asp:Label ID="prt_placenta_deli_m" Text="❏" runat="server" />&nbsp;Bằng tay/ Manual</div>
-                                                <div><asp:Label ID="prt_placenta_deli_s" Text="❏" runat="server" />&nbsp;Tự nhiên/ Spontaneous</div>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            - At
-                                            &nbsp;<asp:Label ID="prt_pdt_hour" runat="server" /> hour
-                                            &nbsp;<asp:Label ID="prt_pdt_minute" runat="server" /> minute
-                                            date &nbsp;<asp:Label ID="prt_pdt_date" runat="server" />
-                                        </div>
-
-                                        <div>
-                                            - Cách sổ nhau/ Placenta delivery mode: &nbsp;<asp:Label ID="prt_placenta_deli_mode" runat="server" />
-                                        </div>
-
-                                        <div>
-                                            - Cân nặng/ Weight: &nbsp;<asp:Label ID="prt_placenta_weight" runat="server" />&nbsp;gram
-                                        </div>
-
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                            <div>- Dây rốn quấn cổ/ Umbilical coil:&nbsp;</div>
-                                            <div class="d-grid" style="grid-template-columns: 130px 1fr">
-                                                <div>
-                                                    <asp:Label ID="prt_umbilical_coil_false" Text="❏" runat="server" />&nbsp;Không/ No
-                                                </div>
-                                                <div>
-                                                    <asp:Label ID="prt_umbilical_coil_true" Text="❏" runat="server" />&nbsp;Có/ Yes
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            - Chiều dài dây rốn/ Umbilical length: &nbsp;<asp:Label ID="prt_umbilical_length" runat="server" />&nbsp;cm
-                                        </div>
-
-                                        <div class="row mb-2">
-                                            <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                                <asp:Label>- Lượng máu mất sau khi sổ nhau/ Quantity of blood loss after placenta delivery: </asp:Label>
-                                                <asp:Label ID="prt_blood_loss" runat="server" />
-                                                <asp:Label> ml </asp:Label>
-                                            </div>
-                                        </div>
-
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                            <label>- Can thiệp và kết quả/ Intervention and results: </label>
-                                            <div class="d-grid" style="grid-template-columns: 130px 1fr">
-                                                <div><asp:Label ID="prt_p_intervention_false" Text="❏" runat="server" />&nbsp;Không/ No:</div>
-                                                <div><asp:Label ID="prt_p_intervention_true" Text="❏" runat="server" />Có, chi tiết/ Yes, specify: &nbsp;<asp:Label ID="prt_p_intervention_note" runat="server" /></div>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <label class="font-bold">3. Tình trạng sản phụ sau sinh/ Maternal status after delivery:</label>
-                                        </div>
-
-                                        <div>
-                                            SpO2: <asp:Label ID="prt_spO2" runat="server" />&nbsp;%
-                                        </div>
-
-                                        <div>
-                                            T°: <asp:Label ID="prt_temp" runat="server" />&nbsp;&#x2103
-                                        </div>
-
-                                        <div>
-                                            Huyết áp/ BP: <asp:Label ID="prt_BP" runat="server" />&nbsp;mmHg
-                                        </div>
-
-                                        <div>
-                                            Nhịp tim/ HR: <asp:Label ID="prt_HR" runat="server" />&nbsp;lần/phút/ bpm
-                                        </div>
-
-                                        <div>
-                                            Nhịp thở/ RR: <asp:Label ID="prt_RR" runat="server" />&nbsp;lần/phút/ bpm
-                                        </div>
-
-                                        <div>
-                                            <label class="font-bold">Tổng trạng chung/ General appearance:</label>
-                                        </div>
-
-                                        <div>
-                                            - Phương pháp sinh/ <label class="font-bold">Delivery mode:</label>
-                                        </div>
-
-                                        <div class="d-grid" style="margin-left: 20px; grid-template-columns: 1fr 1fr">
-                                            <div>
-                                                Sanh ngã âm đạo <label class="font-bold">Vaginal delivery:</label>
-                                                <div>
-                                                    <asp:Label ID="prt_vaginal_deli_code_s" Text="❏" runat="server" />&nbsp;Sanh tự nhiên/ Spontaneous
-                                                </div>
-                                                <div>
-                                                    <asp:Label ID="prt_vaginal_deli_code_v" Text="❏" runat="server" />&nbsp;Sanh hút/ Vacuum-assisted
-                                                </div>
-                                                <div>
-                                                    <asp:Label ID="prt_vaginal_deli_code_f" Text="❏" runat="server" />&nbsp;Sanh kềm/ Forceps-assisted
-                                                </div>
-                                            </div>
-                                            <div>
-                                                Sanh mổ <label class="font-bold">C-Section:</label>
-                                                <div>
-                                                    <asp:Label ID="prt_section_code_el" Text="❏" runat="server" />&nbsp;Mổ chương trình/ Elective
-                                                </div>
-                                                <div>
-                                                    <asp:Label ID="prt_section_code_em" Text="❏" runat="server" />&nbsp;Mổ cấp cứu/ Emergency
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div style="margin-left: 20px;"">
-                                            - Lí do can thiệp, nếu có/ Reason for intervention, if yes:&nbsp;<asp:Label ID="prt_interven_reason" runat="server" />
-                                        </div>
-
-                                        <div class="d-grid" style="grid-template-columns: 180px 1fr">
-                                            <label>- Tầng sinh môn/ Perineum:</label>
-                                            <div class="d-grid" style="grid-template-columns: 180px 1fr">
-                                                <div><asp:Label ID="prt_pre_intact_true" Text="❏" runat="server" />&nbsp;Nguyên vẹn/ Intact</div>
-                                                <div><asp:Label ID="prt_pre_lacera_true" Text="❏" runat="server" />&nbsp;Rách, độ/ Laceration, degree:<asp:Label ID="prt_pre_lacera_degree" runat="server" /></div>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <asp:Label ID="prt_pre_episiotomy_true" Text="❏" runat="server" />&nbsp;Cắt/ Episiotomy. Nếu có, cách khâu và loại chỉ/ If yes, suture and silk type&nbsp;<asp:Label ID="prt_pre_episiotomy_st" runat="server" />
-                                        </div>
-
-                                        <div class="d-grid" style="grid-template-columns: 180px 1fr">
-                                            <label>- Cổ tử cung/ Cervix:</label>
-                                            <div class="d-grid" style="grid-template-columns: 180px 1fr">
-                                                <div><asp:Label ID="prt_cervix_intact_true" Text="❏" runat="server" />&nbsp;Nguyên vẹn/ Intact</div>
-                                                <div><asp:Label ID="prt_cervix_intact_false" Text="❏" runat="server" />&nbsp;Rách/ Laceration</div>
-                                            </div>
-                                        </div>
-                                
-                                        <div>
-                                           <label class="font-bold">4. Thông tin phẫu thuật (nếu có)/ Operation details </label>(if possible):
-                                        </div>
-
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                            <label>- Chẩn đoán tiền phẫu/ Preoperative diagnosis:</label>
-                                            <div>&nbsp;<asp:Label ID="prt_preo_diagnosis" runat="server" /></div>
-                                        </div>
-
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                            <label>- Chẩn đoán hậu phẫu/ Postoperative diagnosis:</label>
-                                            <div>&nbsp;<asp:Label ID="prt_post_diagnosis" runat="server" /></div>
-                                        </div>
-                                        
                                         <div class="row mb-2 ">
-                                            <div class="col-md-12 ">
-                                                <asp:UpdatePanel ID="updatePanel2" runat="server" UpdateMode="Always ">
-                                                    <ContentTemplate>
-                                                        <asp:GridView ShowHeaderWhenEmpty="true " ID="prt_operations" runat="server" AutoGenerateColumns="false ">
-                                                            <Columns>
-                                                                <asp:TemplateField>
-                                                                    <HeaderTemplate>
-                                                                        <div style="width: 170px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class=" pt-2 pb-2 ">Giờ, ngày/ Hour, date</div>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <div style="width: 170px; font-size: 14.5px; font-family: Tahoma; text-align: center" class=" pt-2 pb-2 ">
-                                                                            <asp:Label Style="text-align: center" Text='<%# Eval("date_time ", "{0: dd/MM/yyyy HH:mm tt} ") %>' runat="server" />
-                                                                        </div>
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField>
-                                                                    <HeaderTemplate>
-                                                                        <div style="width: 300px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class=" ">Phương pháp phẫu thuật và vô cảm/ Surgical and Anesthesia methods </div>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <div style="width: 300px; font-size: 14.5px; font-family: Tahoma; text-align: justify; margin: 5px" class=" ">
-                                                                            <asp:Label runat="server" Text='<%# Eval("surgical_anesthesia") %>' />
-                                                                        </div>
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField>
-                                                                    <HeaderTemplate>
-                                                                        <div style="width: 180px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class=" ">Phẫu thuật viên/ Surgeon </div>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <div style="width: 180px; text-align: justify; font-size: 14.5px; font-family: Tahoma; margin: 5px" class=" ">
-                                                                            <asp:Label runat="server" Text='<%# Eval("surgeon ") %>' />
-                                                                        </div>
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField>
-                                                                    <HeaderTemplate>
-                                                                        <div style="width: 180px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class=" ">Phẫu thuật viên/ Surgeon </div>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <div style="width: 180px; text-align: justify; font-size: 14.5px; font-family: Tahoma; margin: 5px" class=" ">
-                                                                            <asp:Label runat="server" Text='<%# Eval("anesthesiologist ") %>' />
-                                                                        </div>
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                            </Columns>
-                                                        </asp:GridView>
-                                                    </ContentTemplate>
-                                                </asp:UpdatePanel>
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify">
+                                        <asp:Label>Nhập phòng sinh lúc/ </asp:Label>
+                                        <asp:Label>Admission to Delivery room at: </asp:Label>
+                                        <asp:Label runat="server" ID="prt_hour"></asp:Label>
+                                        <asp:Label>giờ/ hour </asp:Label>
+                                        <asp:Label runat="server" ID="prt_minute"></asp:Label>
+                                        <asp:Label>phút/ minute</asp:Label>
+                                        <asp:Label>, ngày/date: </asp:Label>
+                                        <asp:Label runat="server" ID="prt_date"></asp:Label>
+
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-6 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify">
+                                        <asp:Label>Người theo dõi/ </asp:Label>
+                                        <asp:Label>Observer’s name: </asp:Label>
+                                        <asp:Label runat="server" ID="prt_obs_name"></asp:Label>
+                                    </div>
+                                    <div class="col-6 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <asp:Label>Chức danh/ </asp:Label>
+                                        <asp:Label>Initial: </asp:Label>
+                                        <asp:Label runat="server" ID="prt_obs_initial"></asp:Label>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <asp:Label Style="font-weight: bold;">1. Đặc điểm trẻ sơ sinh/ Neonatal features: </asp:Label>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <asp:Label>- Sinh lúc/ Delivered at:</asp:Label>
+                                        <asp:Label runat="server" ID="prt_hour_d"></asp:Label>
+                                        <asp:Label>giờ/ hour </asp:Label>
+                                        <asp:Label runat="server" ID="prt_minute_d"></asp:Label>s
+                                        <asp:Label>phút/ minute</asp:Label>
+                                        <asp:Label>, ngày/date:  </asp:Label>
+                                        <asp:Label runat="server" ID="prt_date_d"></asp:Label>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12" style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <asp:Label>- Điểm số Apgar/ Apgar score: phút thứ nhất/ 1st minute: </asp:Label>
+                                        <asp:Label runat="server" ID="prt_apgar_score_1"></asp:Label>
+                                        <asp:Label> điểm/ points, phút thứ 5/ 5th minute: </asp:Label>
+                                        <asp:Label runat="server" ID="prt_apgar_score_5"></asp:Label>
+                                        <asp:Label> điểm/ points, phút thứ 10/ 10th minute:  </asp:Label>
+                                        <asp:Label runat="server" ID="prt_apgar_score_10"></asp:Label>
+                                        <asp:Label> điểm/ points</asp:Label>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12" style="font-size: 14.5px; font-family: Tahoma; text-align: justify">
+                                        <asp:Label>- Cân nặng lúc sinh/ WOB: </asp:Label>
+                                        <asp:Label runat="server" ID="prt_weight_of_birth"></asp:Label>
+                                        <asp:Label> gram, Chiều dài/ Length: </asp:Label>
+                                        <asp:Label runat="server" ID="prt_length_of_birth"></asp:Label>
+                                        <asp:Label> cm, Vòng đầu/ Head circumference:  </asp:Label>
+                                        <asp:Label runat="server" ID="prt_head_circum"></asp:Label>
+                                        <asp:Label> cm </asp:Label>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <asp:Label>- Trẻ/ Newborn: </asp:Label>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <asp:Label>- Đơn thai/Singleton: </asp:Label>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <asp:Label>- Đa thai/ Multiple: </asp:Label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-2">
+                                                <div class="row">
+                                                    <div class="col-12" style="font-size: 14.5px; font-family: Tahoma">
+                                                        <asp:Label ID="prt_singleton_sex_code_M" runat="server" />
+                                                        <asp:Label>- Nam/ Male: </asp:Label>
+                                                    </div>
+                                                    <div class="col-12" style="font-size: 14.5px; font-family: Tahoma">
+                                                        <asp:Label ID="prt_multiple_sex_M" runat="server" />
+                                                        <asp:Label>- Nam/ Male: </asp:Label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="row">
+                                                    <div class="col-12" style="font-size: 14.5px; font-family: Tahoma">
+                                                        <asp:Label ID="prt_singleton_sex_code_F" runat="server" />
+                                                        <asp:Label>- Nữ/ Female: </asp:Label>
+                                                    </div>
+                                                    <div class="col-12" style="font-size: 14.5px; font-family: Tahoma">
+                                                        <asp:Label ID="prt_multiple_sex_F" runat="server" />
+                                                        <asp:Label>- Nữ/ Female: </asp:Label>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-
-                                        <div class="d-grid" style="grid-template-columns: 180px 1fr">
-                                            <label>- Tai biến/ Incident:</label>
-                                            <div class="d-grid" style="grid-template-columns: 100px 1fr">
-                                                <div><asp:Label ID="prt_sur_incident_false" Text="❏" runat="server" />&nbsp;Không/ No</div>
-                                                <div><asp:Label ID="prt_sur_incident_true" Text="❏" runat="server" />&nbsp;Có, chi tiết/ Yes specify:<asp:Label ID="prt_sur_incident_note" runat="server" /></div>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <asp:Label>- Dị tật bẩm sinh/ Birth defect: </asp:Label>
+                                        <asp:Label ID="prt_birth_defect_False" runat="server" />
+                                        <asp:Label>Không/ No: </asp:Label>
+                                        <asp:Label ID="prt_birth_defect_True" runat="server" />
+                                        <asp:Label>Có, chi tiết/ Yes, specify: </asp:Label>
+                                        <asp:Label ID="prt_birth_defect_note" runat="server" />
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <asp:Label>- Tình trạng trẻ sơ sinh sau sinh/ Neonatal status after birth: </asp:Label>
+                                        <asp:Label ID="prt_neonatal_status" runat="server" />
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <asp:Label>- Can thiệp và kết quả/ Intervention and results: </asp:Label>
+                                        <asp:Label ID="prt_intervention_False" runat="server" />
+                                        <asp:Label>Không/ No: </asp:Label>
+                                        <asp:Label ID="prt_intervention_True" runat="server" />
+                                        <asp:Label>Có, chi tiết/ Yes, specify: </asp:Label>
+                                        <asp:Label ID="prt_intervention_note" runat="server" />
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <asp:Label Style="font-weight: bold;">2. Sổ nhau/ Placenta delivery: </asp:Label>
+                                            </div>
+                                            <div class="col-3">
+                                                <asp:Label ID="prt_placenta_deli_M" runat="server" />
+                                                <asp:Label>Bằng tay/ Manual </asp:Label>
+                                            </div>
+                                            <div class="col-4">
+                                                <asp:Label ID="prt_placenta_deli_S" runat="server" />
+                                                <asp:Label>Tự nhiên/ Spontaneous </asp:Label>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify">
+                                        <asp:Label>- Lúc/at </asp:Label>
+                                        <asp:Label runat="server" ID="prt_pdt_hour"></asp:Label>
+                                        <asp:Label>giờ/ hour </asp:Label>
+                                        <asp:Label runat="server" ID="prt_pdt_minute"></asp:Label>
+                                        <asp:Label>phút/ minute</asp:Label>
+                                        <asp:Label>, ngày/date: </asp:Label>
+                                        <asp:Label runat="server" ID="prt_pdt_date"></asp:Label>
 
-                                        <div class="d-grid" style="grid-template-columns: 180px 1fr">
-                                            <label>- Biến chứng/ Complication:</label>
-                                            <div class="d-grid" style="grid-template-columns: 100px 1fr">
-                                                <div><asp:Label ID="prt_sur_complication_false" Text="❏" runat="server" />&nbsp;Không/ No</div>
-                                                <div><asp:Label ID="prt_sur_complication_true" Text="❏" runat="server" />&nbsp;Có, chi tiết/ Yes specify:<asp:Label ID="prt_sur_complication_note" runat="server" /></div>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <asp:Label>- Cách sổ nhau/ Placenta delivery mode: </asp:Label>
+                                        <asp:Label ID="prt_placenta_deli_mode" runat="server" />
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <asp:Label>- Cân nặng/ Weight: </asp:Label>
+                                        <asp:Label ID="prt_placenta_weight" runat="server" />
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <asp:Label>- Dây rốn quấn cổ/ Umbilical coil: </asp:Label>
+                                            </div>
+                                            <div class="col-3">
+                                                <asp:Label ID="prt_umbilical_coil_False" runat="server" />
+                                                <asp:Label>Không/ No </asp:Label>
+                                            </div>
+                                            <div class="col-3">
+                                                <asp:Label ID="prt_umbilical_coil_True" runat="server" />
+                                                <asp:Label>Có/ Yes </asp:Label>
                                             </div>
                                         </div>
-
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                            <label class="font-bold">5. Kế hoạch điều trị/ Treatment plan:</label>
-                                            <div>&nbsp;<asp:Label ID="prt_treatment_plan" runat="server" /></div>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <asp:Label>- Chiều dài dây rốn/ Umbilical length: </asp:Label>
+                                        <asp:Label ID="prt_umbilical_length" runat="server" />
+                                        <asp:Label> cm </asp:Label>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <asp:Label>- Lượng máu mất sau khi sổ nhau/ Quantity of blood loss after placenta delivery: </asp:Label>
+                                        <asp:Label ID="prt_blood_loss" runat="server" />
+                                        <asp:Label> ml </asp:Label>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <asp:Label>- Can thiệp và kết quả/ Intervention and results: </asp:Label>
+                                        <asp:Label ID="prt_p_intervention_False" runat="server" />
+                                        <asp:Label>Không/ No: </asp:Label>
+                                        <asp:Label ID="prt_p_intervention_True" runat="server" />
+                                        <asp:Label>Có, chi tiết/ Yes, specify: </asp:Label>
+                                        <asp:Label ID="prt_p_intervention_note" runat="server" />
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <asp:Label Style="font-weight: bold;">3. Tình trạng sản phụ sau sinh/ Maternal status after delivery: </asp:Label>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <asp:Label>SpO2: </asp:Label>
+                                                <asp:Label ID="prt_spO2" runat="server" />
+                                                <asp:Label> % </asp:Label>
+                                            </div>
+                                            <div class="col-6">
+                                                <asp:Label>Nhiệt độ: </asp:Label>
+                                                <asp:Label ID="prt_temp" runat="server" />
+                                                <asp:Label> &#x2103 </asp:Label>
+                                            </div>
                                         </div>
-
-                                        <div class="row mb-2">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <asp:Label>Huyết áp/ BP: </asp:Label>
+                                                <asp:Label ID="prt_BP" runat="server" />
+                                                <asp:Label> mmHg </asp:Label>
+                                            </div>
+                                            <div class="col-6">
+                                                <asp:Label>Nhịp tim/ HR: </asp:Label>
+                                                <asp:Label ID="prt_HR" runat="server" />
+                                                <asp:Label> lần/phút/ bpm </asp:Label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <asp:Label>Nhịp thở/ RR: </asp:Label>
+                                                <asp:Label ID="prt_RR" runat="server" />
+                                                <asp:Label> lần/phút/ bpm  </asp:Label>
+                                            </div>
                                             <div class="col-6">
                                             </div>
-                                            <div class="col-6 mb-2">
-                                                <div class="col-12" style="text-align: center;">
-                                                    <label style="font-size: 14.5px; font-family: Tahoma">
-                                                        <span style="font-weight: bold">Ngày giờ/ Date & time: </span>
-                                                        <asp:Label ID="prt_create_date" runat="server" />
-                                                    </label>
-                                                </div>
-                                                <div class="col-12" style="text-align: center;">
-                                                    <div class="col-12" style="text-align: center;">
-                                                        <label style="font-size: 14.5px; font-family: Tahoma">
-                                                            <span style="font-weight: bold">Họ tên, chữ ký & MSNV/ </span>
-                                                            <span class="text-primary">Doctor’s name and ID</span>
-                                                        </label>
-                                                    </div>
-                                                    <div class="col-12" style="text-align: center;">
-                                                        <label style="font-size: 14.5px; font-family: Tahoma">
-                                                            <span class="text-primary">Chữ ký/ Signature </span>
-                                                        </label>
-                                                    </div>
-                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <asp:Label Style="font-weight: bold;">Tổng trạng chung/ General appearance: </asp:Label>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <asp:Label Style="font-weight: bold;">- Phương pháp sinh/ </asp:Label>
+                                                <asp:Label>Delivery mode </asp:Label>
+                                            </div>
+                                            <div class="col-7">
+                                                <asp:Label ID="prt_delivery_mode_desc" runat="server" />
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;" id="vaginal_deli_desc">
+                                        <div class="row">
+                                            <div class="col-5">
+                                            </div>
+                                            <div class="col-7">
+                                                <asp:Label ID="prt_dl_desc" runat="server" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <asp:Label>- Lí do can thiệp, nếu có/ Reason for intervention, if yes: </asp:Label>
+                                        <asp:Label ID="Label20" runat="server" />
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <asp:Label>- Tầng sinh môn/ Perineum: </asp:Label>
+                                            </div>
+                                            <div class="col-3">
+                                                <asp:Label ID="prt_pre_intact" runat="server" />
+                                                <asp:Label>Nguyên vẹn/ Intact</asp:Label>
+                                            </div>
+                                            <div class="col-5">
+                                                <asp:Label ID="prt_pre_lacera" runat="server" />
+                                                <asp:Label>Rách, độ/ Laceration, degree</asp:Label>
+                                                <asp:Label ID="prt_pre_lacera_degree" runat="server" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <div class="row">
+                                            <div class="col-4">
+                                            </div>
+                                            <div class="col-8">
+                                                <asp:Label ID="prt_pre_episiotomy" runat="server" />
+                                                <asp:Label>Cắt/ Episiotomy. Nếu có, cách khâu và loại chỉ/ If yes, suture and silk type</asp:Label>
+                                                <asp:Label ID="prt_pre_episiotomy_st" runat="server" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <asp:Label>- Cổ tử cung/ Cervix: </asp:Label>
+                                            </div>
+                                            <div class="col-3">
+                                                <asp:Label ID="prt_cervix_intact_True" runat="server" />
+                                                <asp:Label>Nguyên vẹn/ Intact</asp:Label>
+                                            </div>
+                                            <div class="col-5">
+                                                <asp:Label ID="prt_cervix_intact_False" runat="server" />
+                                                <asp:Label>Rách/ Laceration</asp:Label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <asp:Label Style="font-weight: bold;">4. Thông tin phẫu thuật (nếu có)/ Operation details (if possible): </asp:Label>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <asp:Label>- Chẩn đoán tiền phẫu/ Preoperative diagnosis: </asp:Label>
+                                        <asp:Label ID="prt_preo_diagnosis" runat="server" />
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <asp:Label>- Chẩn đoán hậu phẫu/ Postoperative diagnosis: </asp:Label>
+                                        <asp:Label ID="prt_post_diagnosis" runat="server" />
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-md-12 ">
+                                        <asp:UpdatePanel ID="updatePanel2" runat="server" UpdateMode="Always ">
+                                            <ContentTemplate>
+                                                <asp:GridView ShowHeaderWhenEmpty="true " ID="prt_operations" runat="server" AutoGenerateColumns="false" style="width:100%">
+                                                    <Columns>
+                                                        <asp:TemplateField>
+                                                            <HeaderTemplate>
+                                                                <div style="width: 140px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class=" pt-2 pb-2 ">Giờ, ngày/ Hour, date</div>
+                                                            </HeaderTemplate>
+                                                            <ItemTemplate>
+                                                                <div style="width: 140px; font-size: 14.5px; font-family: Tahoma; text-align: center" class=" pt-2 pb-2 ">
+                                                                    <asp:Label Style="text-align: center" Text='<%# Eval("date_time ", "{0: dd/MM/yyyy HH:mm tt} ") %>' runat="server" />
+                                                                </div>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:TemplateField>
+                                                            <HeaderTemplate>
+                                                                <div style="width: 250px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class=" ">Phương pháp phẫu thuật và vô cảm/ Surgical and Anesthesia methods </div>
+                                                            </HeaderTemplate>
+                                                            <ItemTemplate>
+                                                                <div style="width: 250px; font-size: 14.5px; font-family: Tahoma; text-align: justify; margin: 5px" class=" ">
+                                                                    <asp:Label runat="server" Text='<%# Eval("surgical_anesthesia") %>' />
+                                                                </div>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:TemplateField>
+                                                            <HeaderTemplate>
+                                                                <div style="width: 180px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class=" ">Phẫu thuật viên/ Surgeon </div>
+                                                            </HeaderTemplate>
+                                                            <ItemTemplate>
+                                                                <div style="width: 180px; text-align: justify; font-size: 14.5px; font-family: Tahoma; margin: 5px" class=" ">
+                                                                    <asp:Label runat="server" Text='<%# Eval("surgeon ") %>' />
+                                                                </div>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                        <asp:TemplateField>
+                                                            <HeaderTemplate>
+                                                                <div style="width: 180px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class=" ">Phẫu thuật viên/ Surgeon </div>
+                                                            </HeaderTemplate>
+                                                            <ItemTemplate>
+                                                                <div style="width: 180px; text-align: justify; font-size: 14.5px; font-family: Tahoma; margin: 5px" class=" ">
+                                                                    <asp:Label runat="server" Text='<%# Eval("anesthesiologist ") %>' />
+                                                                </div>
+                                                            </ItemTemplate>
+                                                        </asp:TemplateField>
+                                                    </Columns>
+                                                </asp:GridView>
+                                            </ContentTemplate>
+                                        </asp:UpdatePanel>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <asp:Label>- Tai biến/ Incident: </asp:Label>
+                                            </div>
+                                            <div class="col-2">
+                                                <asp:Label ID="prt_sur_incident_False" runat="server" />
+                                                <asp:Label>Không/ No</asp:Label>
+                                            </div>
+                                            <div class="col-7">
+                                                <asp:Label ID="prt_sur_incident_True" runat="server" />
+                                                <asp:Label>Có, chi tiết/ Yes, specify: </asp:Label>
+                                                <asp:Label ID="prt_sur_incident_note" runat="server" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <asp:Label>- Biến chứng/ Complication: </asp:Label>
+                                            </div>
+                                            <div class="col-2">
+                                                <asp:Label ID="prt_sur_complication_False" runat="server" />
+                                                <asp:Label>Không/ No</asp:Label>
+                                            </div>
+                                            <div class="col-7">
+                                                <asp:Label ID="prt_sur_complication_True" runat="server" />
+                                                <asp:Label>Có, chi tiết/ Yes, specify: </asp:Label>
+                                                <asp:Label ID="prt_sur_complication_note" runat="server" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <asp:Label Style="font-weight: bold;">5. Kế hoạch điều trị/ Treatment plan: </asp:Label>
+                                    </div>
+                                </div>
+                                <div class="row mb-2 ">
+                                    <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify;">
+                                        <asp:Label ID="prt_treatment_plan" runat="server" />
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row mb-2">
+                                    <div class="col-6">
+                                    </div>
+                                    <div class="col-6 mb-2">
+                                        <div class="col-12" style="text-align: center;">
+                                            <label style="font-size: 14.5px; font-family: Tahoma">
+                                                <span style="font-weight: bold">Ngày giờ/ Date & time: </span>
+                                                <asp:Label ID="prt_create_date" runat="server" />
+                                            </label>
+                                        </div>
+                                        <div class="col-12" style="text-align: center;">
+                                            <div class="col-12" style="text-align: center;">
+                                                <label style="font-size: 14.5px; font-family: Tahoma">
+                                                    <span style="font-weight: bold">Họ tên, chữ ký & MSNV/ </span>
+                                                    <span class="text-primary">Doctor’s name and ID</span>
+                                                </label>
+                                            </div>
+                                            <div class="col-12" style="text-align: center;">
+                                                <label style="font-size: 14.5px; font-family: Tahoma">
+                                                    <span class="text-primary">Chữ ký/ Signature </span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
                                     </div>
                                 </td>
                             </tr>
@@ -664,7 +807,7 @@
                                                 <div class="col-md-12 gt-2-a">
                                                     <label  class="control-label mb-1">Can thiệp và kết quả/ <span class="text-primary">Intervention and results:</span></label>
                                                     <div>
-                                                        <%--<label class="align-top">Intervention</label>--%>
+                                                        <label class="align-top">Intervention</label>
                                                         <asp:Label runat="server" ID="lbl_intervention"></asp:Label>
                                                         <div  runat="server" id="intervention_wrapper">
                                                             <div class="d-inline-block">
@@ -682,7 +825,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="intervention_note_field">
-                                                                <%--<label>Intervention note</label>--%>
+                                                                <label>Intervention note</label>
                                                                 <div class="form-group">
                                                                     <webUI:TextField runat="server" ID="txt_intervention_note" />
                                                                 </div>
@@ -751,21 +894,7 @@
                                                     <asp:Label runat="server" ID="lbl_umbilical_coil"></asp:Label>
                                                     <div runat="server" id="umbilical_coil_wrapper">
                                                         <div class="custom-control custom-radio d-inline-block">
-                                                            <input type="radio" id="rad_umbilical_coil_false" name="rad_umbilical_coil" class="custom-control-input" runat="server" />
-                                                            <label class="custom-control-label" for="rad_umbilical_coil_false">Không/ <span class="text-primary">No</span></label>
-                                                        </div>
-                                                        <div class="custom-control custom-radio d-inline-block">
-                                                            <input type="radio" id="rad_umbilical_coil_true" name="rad_umbilical_coil" class="custom-control-input" runat="server" />
-                                                            <label class="custom-control-label" for="rad_umbilical_coil_true">Có/ <span class="text-primary">Yes</span></label>
-                                                            <a href="javascript:void(0)" data-clear="rad_umbilical_coil" onclick="clear_radiobutton(this)">
-                                                                <icon:XSquare runat="server" ID="XSquare10" />
-                                                            </a>
-                                                        </div>
-                                                    </div>
-
-                                                    <%--<div runat="server" id="">
-                                                        <div class="custom-control custom-radio d-inline-block">
-                                                            <input type="radio" data-type="number" id="" name="rad_umbilical_coil" class="custom-control-input" runat="server" />
+                                                            <input type="radio" data-type="number" id="rad_umbilical_coil_false" name="rad_umbilical_coil" class="custom-control-input" runat="server" />
                                                             <label class="custom-control-label" for="rad_umbilical_coil_false">Không/ <span class="text-primary">No</span></label>
                                                         </div>
                                                         <div class="custom-control custom-radio d-inline-block">
@@ -775,7 +904,7 @@
                                                                 <icon:XSquare runat="server" ID="XSquare4" />
                                                             </a>
                                                         </div>
-                                                    </div>--%>
+                                                    </div>
                                                 </div>
 
                                                 <div class="col-md-12 gt-2-a">
@@ -1149,7 +1278,7 @@
                                                     <div class="form-actions">
                                                         <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete"  CssClass="btn btn-primary waves-effect" >Complete</asp:LinkButton>
 
-                                                        <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" OnClientClick="document.getElementById('btnSave').classList.add('disabled');" runat="server" CssClass="btn btn-primary waves-effect" >Save</asp:LinkButton>
+                                                        <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect" >Save</asp:LinkButton>
 
                                                         <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal"  class="btn btn-danger waves-effect">Delete</div>
 
@@ -1199,7 +1328,6 @@
     <script type="text/javascript">
         checkboxRadiobutton_init();
         formGroup_init();
-        InputFilter("data-type='number'");
 
         function beforeAsyncPostBack() {
             var curtime = new Date();
@@ -1207,7 +1335,7 @@
 
         function afterAsyncPostBack() {
             formGroup_init();
-            InputFilter("data-type='number'");
+            InputFilter();
             checkboxRadiobutton_init();
         }
 

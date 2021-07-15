@@ -42,6 +42,8 @@ namespace EMR.IPD
                 txt_amend_reason.Text = "";
                 if (string.IsNullOrEmpty(ogia.obs_history)) { ogia.obs_history = Ogia.OBS_HISTORY_TEMPLATE; }
 
+                is_obs_gyn_change(ogia.is_obs_gyn);
+
                 //if (ogia.is_obs_gyn)
                 //{
                     txt_reason_admission.Value = ogia.reason_admission;
@@ -189,13 +191,15 @@ namespace EMR.IPD
                 lbl_reason_admission.Text = WebHelpers.FormatString(ogia.reason_admission);
                 lbl_is_obs_gyn.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.is_obs_gyn, "SẢN KHOA/ OBSTETRICS", "PHỤ KHOA/ GYNECOLOGY"));
 
+                is_obs_gyn_change(ogia.is_obs_gyn);
+
                 //if (ogia.is_obs_gyn)
                 //{
                     lbl_lmp_from.Text = WebHelpers.FormatString(ogia.lmp_from);
                     lbl_lmp_to.Text = WebHelpers.FormatString(ogia.lmp_to);
                     lbl_ges_age_weeks.Text = $"{WebHelpers.FormatString(ogia.ges_age_weeks)} tuần/ weeks {WebHelpers.FormatString(ogia.ges_age_days)} ngày/ days";
                     lbl_prenatal_visit.Text = WebHelpers.FormatString(ogia.prenatal_visit);
-                    lbl_tetanus_vaccination.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.tetanus_vaccination, $"Có/ Yes {WebHelpers.FormatString(ogia.tetanus_vaccin_time)} lần/ times", "Chưa/ Not yet"));
+                    lbl_tetanus_vaccination.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.tetanus_vaccination, $"Có/ Yes {WebHelpers.FormatString(ogia.tetanus_vaccin_time)} lần/ times"));
                     lbl_gbs_disease.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.gbs_disease));
                     lbl_gbs_bacteriuria.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.gbs_bacteriuria));
 
@@ -229,9 +233,7 @@ namespace EMR.IPD
                     if(ogia.obs_mem_condition_code == "RU")
                     {
                         lbl_obs_rup_of_mem_at.Text = WebHelpers.FormatDateTime(ogia.obs_rup_of_mem_at);
-                        lbl_obs_rup_of_mem_desc.Text = WebHelpers.FormatString(ogia.obs_rup_of_mem_desc);
-                    }
-                    else if(ogia.obs_mem_condition_code == "IN")
+                    }else if(ogia.obs_mem_condition_code == "IN")
                     {
                         lbl_obs_mem_con_attri_desc.Text = ogia.obs_mem_con_attri_desc;
                     }
@@ -248,7 +250,7 @@ namespace EMR.IPD
                     lbl_obs_pelvic_exam.Text = WebHelpers.FormatString(ogia.obs_pelvic_exam);
                     lbl_obs_bishop_score.Text = WebHelpers.FormatString(ogia.obs_bishop_score) + " điểm/ points";
 
-                    //WebHelpers.VisibleControl(false, gynecology_field, gynecology_field1, gynecology_field2);
+                    WebHelpers.VisibleControl(false, gynecology_field, gynecology_field1, gynecology_field2);
                 //}
                 //else
                 //{
@@ -274,8 +276,8 @@ namespace EMR.IPD
                 lbl_family.Text = WebHelpers.FormatString(ogia.family);
                 //3
                 lbl_age_of_menarhce.Text = WebHelpers.FormatString(ogia.age_of_menarhce);
-                lbl_menstrual_cycle.Text = WebHelpers.FormatString(ogia.menstrual_cycle) + "&nbsp;ngày/ days";
-                lbl_length_of_period.Text = WebHelpers.FormatString(ogia.length_of_period) + "&nbsp;ngày/ days";
+                lbl_menstrual_cycle.Text = WebHelpers.FormatString(ogia.menstrual_cycle);
+                lbl_length_of_period.Text = WebHelpers.FormatString(ogia.length_of_period);
                 lbl_amount_mens_blood.Text = WebHelpers.FormatString(ogia.amount_mens_blood);
                 lbl_marriage_age.Text = WebHelpers.FormatString(ogia.marriage_age);
                 lbl_age_menopause.Text = WebHelpers.FormatString(ogia.age_menopause);
@@ -292,7 +294,6 @@ namespace EMR.IPD
                 lbl_cardio_system.Text = WebHelpers.FormatString(ogia.cardio_system);
                 lbl_respiratory_system.Text = WebHelpers.FormatString(ogia.respiratory_system);
                 lbl_digestive_system.Text = WebHelpers.FormatString(ogia.digestive_system);
-                lbl_nervous_system.Text = WebHelpers.FormatString(ogia.nervous_system);
                 lbl_uro_system.Text = WebHelpers.FormatString(ogia.uro_system);
                 lbl_mus_system.Text = WebHelpers.FormatString(ogia.mus_system);
                 lbl_otorhinolaryngology.Text = WebHelpers.FormatString(ogia.otorhinolaryngology);
@@ -322,7 +323,10 @@ namespace EMR.IPD
         {
             try
             {
+                Patient patient = Patient.Instance();
+
                 WebHelpers.VisibleControl(false, div_obs, div_gyn, div_for_obstetric, div_for_gyneacology);
+                prt_pid.InnerHtml = patient.visible_patient_id;
 
                 prt_reason_admission.Text = ogia.reason_admission;
 
@@ -354,7 +358,7 @@ namespace EMR.IPD
                 prt_prenatal_visit.Text = ogia.prenatal_visit;
                 if (ogia.tetanus_vaccination != null)
                 {
-                    if (ogia.tetanus_vaccination = true)
+                    if (ogia.tetanus_vaccination == true)
                     {
                         prt_tetanus_vaccination_True.Text = "☒";
                         prt_tetanus_vaccination_False.Text = "❏";
@@ -373,7 +377,7 @@ namespace EMR.IPD
                 prt_tetanus_vaccin_time.Text = ogia.tetanus_vaccin_time;
                 if (ogia.gbs_disease != null)
                 {
-                    if (ogia.gbs_disease = true)
+                    if (ogia.gbs_disease == true)
                     {
                         prt_gbs_disease_True.Text = "☒";
                         prt_gbs_disease_False.Text = "❏";
@@ -391,7 +395,7 @@ namespace EMR.IPD
                 }
                 if (ogia.gbs_bacteriuria != null)
                 {
-                    if (ogia.gbs_bacteriuria = true)
+                    if (ogia.gbs_bacteriuria == true)
                     {
                         prt_gbs_bacteriuria_True.Text = "☒";
                         prt_gbs_bacteriuria_False.Text = "❏";
@@ -409,7 +413,7 @@ namespace EMR.IPD
                 }
                 if (ogia.gbs_vaginal != null)
                 {
-                    if (ogia.gbs_vaginal = true)
+                    if (ogia.gbs_vaginal == true)
                     {
                         prt_gbs_vaginal_True.Text = "☒";
                         prt_gbs_vaginal_False.Text = "❏";
@@ -427,12 +431,12 @@ namespace EMR.IPD
                 }
                 if (ogia.ges_diabetes != null)
                 {
-                    if (ogia.ges_diabetes = true)
+                    if (ogia.ges_diabetes == true)
                     {
                         prt_ges_diabetes_True.Text = "☒";
                         prt_ges_diabetes_False.Text = "❏";
                     }
-                    if (ogia.ges_diabetes = false)
+                    else
                     {
                         prt_ges_diabetes_True.Text = "❏";
                         prt_ges_diabetes_False.Text = "☒";
@@ -445,12 +449,12 @@ namespace EMR.IPD
                 }
                 if (ogia.other_ges_abnormal != null)
                 {
-                    if (ogia.other_ges_abnormal = true)
+                    if (ogia.other_ges_abnormal == true)
                     {
                         prt_other_ges_abnormal_True.Text = "☒";
                         prt_other_ges_abnormal_False.Text = "❏";
                     }
-                    if (ogia.other_ges_abnormal = false)
+                    else
                     {
                         prt_other_ges_abnormal_True.Text = "❏";
                         prt_other_ges_abnormal_False.Text = "☒";
@@ -499,7 +503,7 @@ namespace EMR.IPD
 
                 if (ogia.edema != null)
                 {
-                    if (ogia.edema = true)
+                    if (ogia.edema == true)
                     {
                         prt_edema_True.Text = "☒";
                         prt_edema_False.Text = "❏";
@@ -531,7 +535,7 @@ namespace EMR.IPD
                 
                 if (ogia.psy_consul_required != null)
                 {
-                    if (ogia.psy_consul_required = true)
+                    if (ogia.psy_consul_required == true)
                     {
                         prt_psy_consul_required_True.Text = "☒";
                         prt_psy_consul_required_False.Text = "❏";
@@ -550,7 +554,7 @@ namespace EMR.IPD
                 }
                 if (ogia.obs_pre_cicatrice != null)
                 {
-                    if (ogia.obs_pre_cicatrice = true)
+                    if (ogia.obs_pre_cicatrice == true)
                     {
                         prt_obs_pre_cicatrice.Text = "☒";
                     }
@@ -567,6 +571,7 @@ namespace EMR.IPD
                 }
 
                 prt_obs_uterine_shape.Text = (ogia.obs_uterine_shape ?? "—").ToString();
+                prt_obs_posture.Text = (ogia.obs_posture ?? "—").ToString();
                 prt_obs_fundal_height.Text = (ogia.obs_fundal_height ?? "—").ToString();
                 prt_obs_abdominal_circum.Text = (ogia.obs_abdominal_circum ?? "—").ToString();
                 prt_obs_uterine_con.Text = ogia.obs_uterine_con;
@@ -606,7 +611,7 @@ namespace EMR.IPD
                     foreach (Obs_Feat_Amniotic locAvpu in Habits_Temps)
                     {
 
-                        string cde = locAvpu.cde;
+                        string cde = locAvpu.code;
                         if (cde != null)
                         {
                             if (cde == "N")
@@ -661,8 +666,8 @@ namespace EMR.IPD
                     prt_O_B.Text = "❏";
                     prt_O_O.Text = "❏";
                 }
-                lbl_obs_fetal_position.Text = ogia.obs_fetal_position;
-                lbl_obs_pelvic_exam.Text = ogia.obs_pelvic_exam;
+                prt_obs_fetal_position.Text = ogia.obs_fetal_position;
+                prt_obs_pelvic_exam.Text = ogia.obs_pelvic_exam;
                 if (ogia.gyn_abdo_sur_scars != null)
                 {
                     if (ogia.gyn_abdo_sur_scars != null)
@@ -921,7 +926,7 @@ namespace EMR.IPD
                     ogia.gyn_douglas_pouchs = txt_gyn_douglas_pouchs.Value;
 
                     //set null
-                    ogia.obs_rup_of_mem_at = ogia.obs_cur_medication = null;
+                    ogia.obs_cur_medication = null;
                     ogia.obs_pre_cicatrice = null;
                     ogia.obs_uterine_shape = null;
                     ogia.obs_posture = null;
@@ -1049,7 +1054,7 @@ namespace EMR.IPD
             try
             {
                 Ogia ogia = new Ogia(Request.QueryString["docId"]);
-                is_obs_gyn_change(ogia.is_obs_gyn);
+
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
 
                 prt_barcode.Text = Patient.Instance().visible_patient_id;
@@ -1082,7 +1087,7 @@ namespace EMR.IPD
 
         public class Obs_Feat_Amniotic
         {
-            public string cde { get; set; }
+            public string code { get; set; }
             public string desc { get; set; }
         }
         public class Multiple_Sex

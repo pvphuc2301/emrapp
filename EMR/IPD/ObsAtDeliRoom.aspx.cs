@@ -54,11 +54,6 @@ namespace EMR
                 txt_length_of_birth.Value = oadr.length_of_birth;
                 txt_head_circum.Value = oadr.head_circum;
 
-                //Newborn
-                WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_singleton_sex_code_" + oadr.singleton_sex_code);
-
-                WebHelpers.DataBind(form2, new HtmlInputCheckBox(), "cb_multiple_sex_", WebHelpers.GetJSONToDataTable(oadr.multiple_sex), "cde");
-
                 WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_birth_defect_" + oadr.birth_defect);
                 txt_birth_defect_note.Value = oadr.birth_defect_note;
 
@@ -76,7 +71,6 @@ namespace EMR
                 txt_placenta_deli_mode.Value = oadr.placenta_deli_mode;
                 txt_weight_of_birth.Value = oadr.weight_of_birth;
                 //
-                txt_placenta_weight.Value = oadr.placenta_weight;
                 WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_umbilical_coil_" + oadr.umbilical_coil);
                 txt_umbilical_length.Value = oadr.umbilical_length;
                 txt_blood_loss.Value = oadr.blood_loss;
@@ -221,151 +215,237 @@ namespace EMR
                 prt_weight_of_birth.Text = oadr.weight_of_birth;
                 prt_length_of_birth.Text = oadr.length_of_birth;
                 prt_head_circum.Text = oadr.head_circum;
-
-                Label singleton_sex = (Label)FindControl("prt_singleton_sex_code_" + oadr.singleton_sex_code);
-                if(singleton_sex != null)
+                if (oadr.singleton_sex_code != null)
                 {
-                    singleton_sex.Text = "☒";
-                }
-
-                DataTable dataTable = WebHelpers.GetJSONToDataTable(oadr.multiple_sex);
-                if(dataTable != null)
-                {
-                    foreach (DataRow row in WebHelpers.GetJSONToDataTable(oadr.multiple_sex).Rows)
+                    if (oadr.singleton_sex_code == "M")
                     {
-                        Label multiple_sex = (Label)FindControl("prt_multiple_sex_" + row.Field<string>("cde"));
-                        if (multiple_sex != null) { multiple_sex.Text = "☒"; }
+                        prt_singleton_sex_code_M.Text = "☒";
+                        prt_singleton_sex_code_F.Text = "❏";
+                    }
+                    if (oadr.singleton_sex_code == "F")
+                    {
+                        prt_singleton_sex_code_M.Text = "❏";
+                        prt_singleton_sex_code_F.Text = "☒";
                     }
                 }
-
-                string multiple_sex_temp = oadr.multiple_sex;
-                
-                Label prt_birth_defect = (Label)FindControl("prt_birth_defect_" + oadr.birth_defect);
-                if (prt_birth_defect != null)
+                if (oadr.singleton_sex_code == null && oadr.singleton_sex_code == "")
                 {
-                    prt_birth_defect.Text = "☒";
+                    prt_singleton_sex_code_M.Text = "❏";
+                    prt_singleton_sex_code_F.Text = "❏";
+                }
+                string multiple_sex_temp = oadr.multiple_sex;
+                if (multiple_sex_temp != null)
+                {
+                    List<Multiple_Sex> multiple_sex_temps = JsonConvert.DeserializeObject<List<Multiple_Sex>>(multiple_sex_temp);
+                    prt_multiple_sex_M.Text = "❏";
+                    prt_multiple_sex_F.Text = "❏";
+                    foreach (Multiple_Sex MS in multiple_sex_temps)
+                    {
+                        string cde = MS.cde;
+                        if (cde != null)
+                        {
+                            if (cde == "M")
+                            {
+                                prt_multiple_sex_M.Text = "☒";
+                            }
+                            if (cde == "F")
+                            {
+                                prt_multiple_sex_F.Text = "☒";
+                            }
+                        }
+                    }
+                }
+                if (multiple_sex_temp == null || multiple_sex_temp == "")
+                {
+                    prt_multiple_sex_M.Text = "❏";
+                    prt_multiple_sex_F.Text = "❏";
                 }
 
+                if (oadr.birth_defect != null)
+                {
+                    if (oadr.birth_defect = true)
+                    {
+                        prt_birth_defect_True.Text = "☒";
+                        prt_birth_defect_False.Text = "❏";
+                    }
+                    if (oadr.birth_defect = false)
+                    {
+                        prt_birth_defect_True.Text = "❏";
+                        prt_birth_defect_False.Text = "☒";
+                    }
+                }
+                if (oadr.birth_defect == null && oadr.birth_defect == "")
+                {
+                    prt_birth_defect_True.Text = "❏";
+                    prt_birth_defect_False.Text = "❏";
+                }
                 prt_birth_defect_note.Text = oadr.birth_defect_note;
                 prt_neonatal_status.Text = oadr.neonatal_status;
-
-                Label prt_intervention = (Label)FindControl("prt_intervention_" + oadr.intervention);
-                if (prt_intervention != null)
+                if (oadr.intervention != null)
                 {
-                    prt_intervention.Text = "☒";
+                    if (oadr.intervention = true)
+                    {
+                        prt_intervention_True.Text = "☒";
+                        prt_intervention_False.Text = "❏";
+                    }
+                    if (oadr.intervention = false)
+                    {
+                        prt_intervention_True.Text = "❏";
+                        prt_intervention_False.Text = "☒";
+                    }
                 }
-
+                if (oadr.intervention == null && oadr.intervention == "")
+                {
+                    prt_intervention_True.Text = "❏";
+                    prt_intervention_False.Text = "❏";
+                }
                 prt_intervention_note.Text = oadr.intervention_note;
-
-                Label prt_placenta_deli = (Label)FindControl("prt_placenta_deli_" + oadr.p_intervention);
-                if (prt_placenta_deli != null)
+                if (oadr.placenta_deli != null)
                 {
-                    prt_placenta_deli.Text = "☒";
+                    if (oadr.placenta_deli = true)
+                    {
+                        prt_placenta_deli_M.Text = "☒";
+                        prt_placenta_deli_S.Text = "❏";
+                    }
+                    if (oadr.placenta_deli = false)
+                    {
+                        prt_placenta_deli_M.Text = "❏";
+                        prt_placenta_deli_S.Text = "☒";
+                    }
                 }
-
+                if (oadr.placenta_deli == null && oadr.placenta_deli == "")
+                {
+                    prt_placenta_deli_M.Text = "❏";
+                    prt_placenta_deli_S.Text = "❏";
+                }
                 prt_pdt_hour.Text = oadr.pacental_deli_dt.ToString("HH");
                 prt_pdt_minute.Text = oadr.pacental_deli_dt.ToString("mm");
                 prt_pdt_date.Text = oadr.pacental_deli_dt.ToString("dd/MM/yyyy");
                 prt_placenta_deli_mode.Text = oadr.placenta_deli_mode;
-                prt_placenta_weight.Text = oadr.placenta_weight;
-
-                Label umbilical_coil = (Label)FindControl("prt_umbilical_coil_" + oadr.umbilical_coil);
-                if (umbilical_coil != null)
+                prt_placenta_weight.Text = oadr.placenta_weight+" gram";
+                if (oadr.umbilical_coil != null)
                 {
-                    umbilical_coil.Text = "☒";
+                    if (oadr.umbilical_coil = true)
+                    {
+                        prt_umbilical_coil_True.Text = "☒";
+                        prt_umbilical_coil_False.Text = "❏";
+                    }
+                    if (oadr.umbilical_coil = false)
+                    {
+                        prt_umbilical_coil_True.Text = "❏";
+                        prt_umbilical_coil_False.Text = "☒";
+                    }
                 }
-
+                if (oadr.umbilical_coil == null || oadr.umbilical_coil == "")
+                {
+                    prt_umbilical_coil_True.Text = "❏";
+                    prt_umbilical_coil_False.Text = "❏";
+                }
                 prt_umbilical_length.Text = oadr.umbilical_length;
                 prt_blood_loss.Text = oadr.blood_loss;
-
-                Label prt_p_intervention = (Label)FindControl("prt_p_intervention_" + oadr.p_intervention);
-                if (prt_p_intervention != null)
+                if (oadr.p_intervention != null)
                 {
-                    prt_p_intervention.Text = "☒";
+                    if (oadr.p_intervention = true)
+                    {
+                        prt_p_intervention_True.Text = "☒";
+                        prt_p_intervention_False.Text = "❏";
+                    }
+                    if (oadr.p_intervention = false)
+                    {
+                        prt_p_intervention_True.Text = "❏";
+                        prt_p_intervention_False.Text = "☒";
+                    }
                 }
-
+                if (oadr.p_intervention == null && oadr.p_intervention == "")
+                {
+                    prt_p_intervention_True.Text = "❏";
+                    prt_p_intervention_False.Text = "❏";
+                }
                 prt_p_intervention_note.Text = oadr.p_intervention_note;
                 prt_spO2.Text = oadr.spO2;
                 prt_temp.Text = oadr.temp;
                 prt_BP.Text = oadr.bp;
                 prt_HR.Text = oadr.hr;
                 prt_RR.Text = oadr.rr;
-
-                Label prt_vaginal_deli_code = (Label)FindControl("prt_vaginal_deli_code_" + oadr.vaginal_deli_code);
-                if (prt_vaginal_deli_code != null)
+                if (oadr.delivery_mode_code != null)
                 {
-                    prt_vaginal_deli_code.Text = "☒";
+                    if (oadr.delivery_mode_code == "S")
+                    {
+                        prt_delivery_mode_desc.Text = oadr.delivery_mode_desc;
+                        prt_dl_desc.Text = oadr.section_desc;
+                    }
+                    if (oadr.delivery_mode_code == "V")
+                    {
+                        prt_delivery_mode_desc.Text = oadr.delivery_mode_desc;
+                        prt_dl_desc.Text = oadr.vaginal_deli_desc;
+
+                    }
                 }
-
-                Label prt_section_code = (Label)FindControl("prt_section_code_" + oadr.section_code);
-                if (prt_section_code != null)
-                {
-                    prt_section_code.Text = "☒";
-                }
-
-                prt_interven_reason.Text = oadr.interven_reason;
-
-
-                prt_preo_diagnosis.Text = oadr.preo_diagnosis;
-                prt_post_diagnosis.Text = oadr.post_diagnosis;
-
-                Label prt_pre_intact = (Label)FindControl("prt_pre_intact_" + oadr.pre_intact);
-                if (prt_pre_intact != null)
+                if (oadr.pre_intact = true)
                 {
                     prt_pre_intact.Text = "☒";
                 }
-
-                Label prt_pre_lacera = (Label)FindControl("prt_pre_lacera_" + oadr.pre_lacera);
-                if (prt_pre_lacera != null)
+                if (oadr.pre_intact = false)
+                {
+                    prt_pre_intact.Text = "❏";
+                }
+                if (oadr.pre_lacera = true)
                 {
                     prt_pre_lacera.Text = "☒";
-
-                    if (oadr.pre_lacera)
-                    {
-                        prt_pre_lacera_degree.Text = oadr.pre_lacera_degree;
-                    }
+                    prt_pre_lacera_degree.Text = oadr.pre_lacera_degree;
                 }
-
-                Label prt_pre_episiotomy = (Label)FindControl("prt_pre_episiotomy_" + oadr.pre_episiotomy);
-                if (prt_pre_lacera != null)
+                if (oadr.pre_lacera = false)
+                {
+                    prt_pre_lacera.Text = "❏";
+                }
+                if (oadr.pre_episiotomy = true)
                 {
                     prt_pre_episiotomy.Text = "☒";
-                    if (oadr.pre_episiotomy)
-                    {
-                        prt_pre_episiotomy_st.Text = oadr.pre_episiotomy_st;
-                    }
+                    prt_pre_episiotomy_st.Text = oadr.pre_episiotomy_st;
                 }
-
-                Label prt_cervix_intact = (Label)FindControl("prt_cervix_intact_" + oadr.cervix_intact);
-                if (prt_cervix_intact != null)
+                if (oadr.pre_episiotomy = false)
                 {
-                    prt_cervix_intact.Text = "☒";
+                    prt_pre_episiotomy.Text = "❏";
                 }
-
-
-                WebHelpers.LoadDataGridView(prt_operations, WebHelpers.GetJSONToDataTable(oadr.operations), Oadr.OPERATION);
-
-                Label prt_sur_incident = (Label)FindControl("prt_sur_incident_" + oadr.sur_incident);
-                if (prt_sur_incident != null)
+                if (oadr.cervix_intact = true)
                 {
-                    prt_sur_incident.Text = "☒";
-                    if (oadr.sur_incident)
-                    {
-                        prt_sur_incident_note.Text = oadr.sur_incident_note;
-                    }
+                    prt_cervix_intact_True.Text = "☒";
+                    prt_cervix_intact_False.Text = "❏";
                 }
-
-                Label prt_sur_complication = (Label)FindControl("prt_sur_complication_" + oadr.sur_complication);
-
-                if (prt_sur_complication != null)
+                if (oadr.cervix_intact = false)
                 {
-                    prt_sur_complication.Text = "☒";
-                    if (oadr.sur_complication)
-                    {
-                        prt_sur_complication_note.Text = oadr.sur_complication_note;
-                    }
+                    prt_cervix_intact_True.Text = "❏";
+                    prt_cervix_intact_False.Text = "☒";
                 }
+                prt_preo_diagnosis.Text = oadr.preo_diagnosis;
+                prt_post_diagnosis.Text = oadr.post_diagnosis;
+                string json_operations = oadr.operations;
+                prt_operations.DataSource = JsonConvert.DeserializeObject<DataTable>(json_operations);
+                prt_operations.DataBind();
+                if (oadr.sur_incident = true)
+                {
+                    prt_sur_incident_True.Text = "☒";
+                    prt_sur_incident_note.Text = oadr.sur_incident_note;
+                    prt_sur_incident_False.Text = "❏";
 
+                }
+                if (oadr.sur_incident = false)
+                {
+                    prt_sur_incident_False.Text = "☒";
+                    prt_sur_incident_True.Text = "❏";
+
+                }
+                if (oadr.sur_complication = true)
+                {
+                    prt_sur_complication_True.Text = "☒";
+                    prt_sur_complication_note.Text = oadr.sur_complication_note;
+                    prt_sur_complication_False.Text = "❏";
+                }
+                if (oadr.sur_complication = false)
+                {
+                    prt_sur_complication_False.Text = "☒";
+                    prt_sur_complication_True.Text = "❏";
+                }
                 prt_treatment_plan.Text = oadr.treatment_plan;
                 prt_create_date.Text = DateTime.Now.ToString("dd/MM/yyyy");
 
@@ -526,6 +606,7 @@ namespace EMR
                 //
                 oadr.placenta_deli_mode = txt_placenta_deli_mode.Value;
                 oadr.placenta_weight = txt_placenta_weight.Value;
+                //
                 oadr.umbilical_coil = WebHelpers.GetData(form2, new HtmlInputRadioButton(), "rad_umbilical_coil_");
                 oadr.umbilical_length = txt_umbilical_length.Value;
                 oadr.blood_loss = txt_blood_loss.Value;

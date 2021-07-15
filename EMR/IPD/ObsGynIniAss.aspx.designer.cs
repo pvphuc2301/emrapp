@@ -51,13 +51,13 @@ namespace EMR.IPD
         protected global::EMR.UserControls.Barcode prt_barcode;
 
         /// <summary>
-        /// Label5 control.
+        /// prt_pid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label5;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_pid;
 
         /// <summary>
         /// Line control.
@@ -103,15 +103,6 @@ namespace EMR.IPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label prt_is_obs_gyn_False;
-
-        /// <summary>
-        /// Label2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
 
         /// <summary>
         /// div_obs control.
@@ -618,13 +609,13 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label prt_obs_uterine_shape;
 
         /// <summary>
-        /// Label36 control.
+        /// prt_obs_posture control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label36;
+        protected global::System.Web.UI.WebControls.Label prt_obs_posture;
 
         /// <summary>
         /// prt_obs_fundal_height control.
@@ -807,22 +798,22 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label prt_obs_presentation_other;
 
         /// <summary>
-        /// Label48 control.
+        /// prt_obs_fetal_position control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label48;
+        protected global::System.Web.UI.WebControls.Label prt_obs_fetal_position;
 
         /// <summary>
-        /// Label49 control.
+        /// prt_obs_pelvic_exam control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label49;
+        protected global::System.Web.UI.WebControls.Label prt_obs_pelvic_exam;
 
         /// <summary>
         /// div_for_gyneacology control.
@@ -1408,15 +1399,6 @@ namespace EMR.IPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UserControl XSquare12;
-
-        /// <summary>
-        /// tetanus_vaccin_time_wrapper control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tetanus_vaccin_time_wrapper;
 
         /// <summary>
         /// tetanus_vaccin_time_field control.
@@ -3012,15 +2994,6 @@ namespace EMR.IPD
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl ru_field;
 
         /// <summary>
-        /// lbl_obs_rup_of_mem_code control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lbl_obs_rup_of_mem_code;
-
-        /// <summary>
         /// lbl_obs_rup_of_mem_at control.
         /// </summary>
         /// <remarks>
@@ -3028,15 +3001,6 @@ namespace EMR.IPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_obs_rup_of_mem_at;
-
-        /// <summary>
-        /// lbl_obs_rup_of_mem_desc control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_obs_rup_of_mem_desc;
 
         /// <summary>
         /// obs_rup_of_mem_at_wrapper control.
