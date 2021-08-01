@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using Telerik.Web.UI;
 
 namespace EMR.IPD
 {
@@ -179,6 +180,7 @@ namespace EMR.IPD
                 txt_discharge_plan.Value = ogia.discharge_plan;
 
                 DataObj.Value = JsonConvert.SerializeObject(ogia);
+                Session["docid"] = ogia.document_id;
                 WebHelpers.AddScriptFormEdit(Page, ogia, (string)Session["emp_id"]);
             } catch (Exception ex)
             {
@@ -199,7 +201,11 @@ namespace EMR.IPD
                     lbl_lmp_to.Text = WebHelpers.FormatString(ogia.lmp_to);
                     lbl_ges_age_weeks.Text = $"{WebHelpers.FormatString(ogia.ges_age_weeks)} tuần/ weeks {WebHelpers.FormatString(ogia.ges_age_days)} ngày/ days";
                     lbl_prenatal_visit.Text = WebHelpers.FormatString(ogia.prenatal_visit);
-                    lbl_tetanus_vaccination.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.tetanus_vaccination, $"Có/ Yes {WebHelpers.FormatString(ogia.tetanus_vaccin_time)} lần/ times"));
+                
+                tetanus_vaccination_change(Convert.ToString(ogia.tetanus_vaccination));
+
+                lbl_tetanus_vaccination.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.tetanus_vaccination, $"Có/ Yes {WebHelpers.FormatString(ogia.tetanus_vaccin_time)} lần/ times", "Chưa/ Not yet"));
+
                     lbl_gbs_disease.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.gbs_disease));
                     lbl_gbs_bacteriuria.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.gbs_bacteriuria));
 
@@ -238,7 +244,9 @@ namespace EMR.IPD
                         lbl_obs_mem_con_attri_desc.Text = ogia.obs_mem_con_attri_desc;
                     }
 
-                lbl_obs_mem_condition_code.Text = WebHelpers.FormatString(ogia.obs_mem_condition_desc);
+                    lbl_obs_mem_condition_code.Text = WebHelpers.FormatString(ogia.obs_mem_condition_desc);
+                
+                    lbl_obs_rup_of_mem_code.Text = WebHelpers.FormatString(ogia.obs_rup_of_mem_desc);
 
                     lbl_obs_feat_amniotic.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(ogia.obs_feat_amniotic));
 
@@ -250,7 +258,6 @@ namespace EMR.IPD
                     lbl_obs_pelvic_exam.Text = WebHelpers.FormatString(ogia.obs_pelvic_exam);
                     lbl_obs_bishop_score.Text = WebHelpers.FormatString(ogia.obs_bishop_score) + " điểm/ points";
 
-                    WebHelpers.VisibleControl(false, gynecology_field, gynecology_field1, gynecology_field2);
                 //}
                 //else
                 //{
@@ -294,6 +301,7 @@ namespace EMR.IPD
                 lbl_cardio_system.Text = WebHelpers.FormatString(ogia.cardio_system);
                 lbl_respiratory_system.Text = WebHelpers.FormatString(ogia.respiratory_system);
                 lbl_digestive_system.Text = WebHelpers.FormatString(ogia.digestive_system);
+                lbl_nervous_system.Text = WebHelpers.FormatString(ogia.nervous_system);
                 lbl_uro_system.Text = WebHelpers.FormatString(ogia.uro_system);
                 lbl_mus_system.Text = WebHelpers.FormatString(ogia.mus_system);
                 lbl_otorhinolaryngology.Text = WebHelpers.FormatString(ogia.otorhinolaryngology);
@@ -326,8 +334,8 @@ namespace EMR.IPD
                 Patient patient = Patient.Instance();
 
                 WebHelpers.VisibleControl(false, div_obs, div_gyn, div_for_obstetric, div_for_gyneacology);
-                prt_pid.InnerHtml = patient.visible_patient_id;
-
+                prt_vpid.Text = patient.visible_patient_id;
+                WebHelpers.gen_BarCode(patient.visible_patient_id, BarCode);
                 prt_reason_admission.Text = ogia.reason_admission;
 
                 if (ogia.is_obs_gyn != null)
@@ -524,7 +532,9 @@ namespace EMR.IPD
                 prt_cardio_system.Text = ogia.cardio_system;
                 prt_respiratory_system.Text = ogia.respiratory_system;
                 prt_digestive_system.Text = ogia.digestive_system;
+
                 prt_nervous_system.Text = ogia.nervous_system;
+
                 prt_uro_system.Text = ogia.uro_system;
                 prt_mus_system.Text = ogia.mus_system;
                 prt_otorhinolaryngology.Text = ogia.otorhinolaryngology;
@@ -758,7 +768,7 @@ namespace EMR.IPD
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, ogia, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
+                WebHelpers.LoadFormControl(form1, ogia, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(ogia);
                 //get access button
@@ -768,16 +778,7 @@ namespace EMR.IPD
         {
             Initial();
         }
-        protected void btnPrint_Click(object sender, EventArgs e)
-        {
-            try { 
-                Ogia ogia = new Ogia(Request.QueryString["docId"]);
-                BindingDataFormPrint(ogia);
 
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
-            }
-            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
-        }
         private void PostBackEvent()
         {
             switch (Request["__EVENTTARGET"])
@@ -791,12 +792,16 @@ namespace EMR.IPD
                 case "rad_tetanus_vaccination_change":
                     tetanus_vaccination_change(Request["__EVENTARGUMENT"]);
                     break;
+
             }
         }
 
         private void tetanus_vaccination_change(string v)
         {
-            if (string.IsNullOrEmpty(v)) { tetanus_vaccin_time_field.Visible = false; return; }
+            if (string.IsNullOrEmpty(v)) {
+                rad_tetanus_vaccination_false.Checked = rad_tetanus_vaccination_true.Checked = tetanus_vaccin_time_field.Visible = false; 
+                return;
+            }
 
             WebHelpers.VisibleControl(Convert.ToBoolean(v), tetanus_vaccin_time_field);
         }
@@ -976,6 +981,7 @@ namespace EMR.IPD
                 ogia.cardio_system = txt_cardio_system.Value;
                 ogia.respiratory_system = txt_respiratory_system.Value;
                 ogia.digestive_system = txt_digestive_system.Value;
+
                 ogia.nervous_system = txt_nervous_system.Value;
                 ogia.uro_system = txt_uro_system.Value;
                 ogia.mus_system = txt_mus_system.Value;
@@ -1053,28 +1059,106 @@ namespace EMR.IPD
 
             try
             {
-                Ogia ogia = new Ogia(Request.QueryString["docId"]);
+                Ogia ogia;
 
+                if (Request.QueryString["docIdLog"] != null)
+                {
+                    ogia = new Ogia(Request.QueryString["docIdLog"], true);
+                    currentLog.Visible = true;
+
+                    string item = (string)Session["viewLogInfo"];
+
+                    RadLabel2.Text = $"You are viewing an old version of this document ( { item })";
+                }
+                else
+                {
+                    ogia = new Ogia(Request.QueryString["docId"]);
+                    currentLog.Visible = false;
+                }
+
+                loadRadGridHistoryLog();
+                
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-
-                prt_barcode.Text = Patient.Instance().visible_patient_id;
 
                 if (ogia.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(ogia, WebHelpers.LoadFormControl(form1, ogia, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
-
+                    BindingDataForm(ogia, WebHelpers.LoadFormControl(form1, ogia, ControlState.View, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
+                    BindingDataFormPrint(ogia);
                 }
                 else if (ogia.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(ogia, WebHelpers.LoadFormControl(form1, ogia, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
+                    BindingDataForm(ogia, WebHelpers.LoadFormControl(form1, ogia, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
                 }
 
-                WebHelpers.getAccessButtons(form1, ogia.status, (string)Session["access_authorize"], (string)Session["location"]);
+                WebHelpers.getAccessButtons(form1, ogia.status, (string)Session["access_authorize"], (string)Session["location"], Request.QueryString["docIdLog"] != null);
             }
             catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
+        }
+        private void loadRadGridHistoryLog()
+        {
+            DataTable dt = Ogia.Logs(Request.QueryString["docId"]);
+            RadGrid1.DataSource = dt;
+            DateTime last_updated_date_time = new DateTime();
+            string last_updated_doctor = "";
+
+            if (dt.Rows.Count == 1)
+            {
+                last_updated_doctor = dt.Rows[0].Field<string>("created_name_l");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
+            }
+            else if (dt.Rows.Count > 1)
+            {
+                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_l");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
+            }
+
+            Session["signature_date"] = last_updated_date_time;
+            Session["signature_doctor"] = last_updated_doctor;
+            RadLabel1.Text = $"Last updated by {last_updated_doctor} on " + WebHelpers.FormatDateTime(last_updated_date_time, "dd-MM-yyyy HH:mm");
+            RadGrid1.DataBind();
+        }
+        protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            GridDataItem item = (e.Item as GridDataItem);
+            if (e.CommandName.Equals("Open"))
+            {
+                string doc_log_id = item.GetDataKeyValue("document_log_id").ToString();
+
+                string url = $"/IPD/ObsGynIniAss.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}&docIdLog={doc_log_id}";
+
+                Session["viewLogInfo"] = (item.FindControl("RadLabel1") as RadLabel).Text;
+
+                Response.Redirect(url);
+            }
+        }
+
+        protected void RadButton1_Click(object sender, EventArgs e)
+        {
+            string url = $"/IPD/ObsGynIniAss.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}";
+            Response.Redirect(url);
+        }
+        protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
+        {
+            string result = "Amended by";
+            if (Convert.ToString(status) == DocumentStatus.FINAL && string.IsNullOrEmpty(Convert.ToString(amend_reason)))
+            {
+                result = "Submitted by";
+            }
+
+            if (Convert.ToString(status) == DocumentStatus.DRAFT) result = "Saved by";
+
+            if (string.IsNullOrEmpty(Convert.ToString(modified_name)))
+            {
+                result += $" {created_name} on {created_date_time}";
+            }
+            else
+            {
+                result += $" {modified_name} on {modified_date_time}";
+            }
+            return result;
         }
         #endregion
 
@@ -1094,6 +1178,12 @@ namespace EMR.IPD
         {
             public string cde { get; set; }
             public string desc { get; set; }
+        }
+
+        protected void clearSession_Click(object sender, EventArgs e)
+        {
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+
         }
     }
 }

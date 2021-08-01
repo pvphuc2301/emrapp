@@ -1,11 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using Telerik.Web.UI;
 
 namespace EMR
 {
@@ -14,7 +16,9 @@ namespace EMR
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!WebHelpers.CheckSession(this)) return;
-            if (!IsPostBack) { Initial(); }
+            if (!IsPostBack) { 
+                Initial(); 
+            }
             PostBackEvent();
         }
         
@@ -128,10 +132,10 @@ namespace EMR
                 txt_signed_doctor.Value = diss.signed_doctor;
 
                 DataObj.Value = JsonConvert.SerializeObject(diss);
+                Session["docid"] = diss.document_id;
                 WebHelpers.AddScriptFormEdit(Page, diss, (string)Session["emp_id"]);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
-            
         }
         private void BindingDataFormPrint(Diss diss)
         {
@@ -139,12 +143,11 @@ namespace EMR
             {
                 Patient patient = Patient.Instance();
                 PatientVisit patientVisit = PatientVisit.Instance();
-
+                WebHelpers.gen_BarCode(Patient.Instance().visible_patient_id, BarCode);
                 prt_fullname.InnerText = string.Format("{0} - {1}", patient.GetFullName(), patient.gender_l);
                 prt_DOB.InnerText = "DOB: " + WebHelpers.FormatDateTime(patient.date_of_birth);
                 prt_vpid.InnerText = string.Format("{0} - {1} - {2}", patient.visible_patient_id, patientVisit.visit_type, patientVisit.visit_code);
-                prt_barcode.Text = patient.visible_patient_id;
-
+                
                 prt_date_of_hospital.Text = WebHelpers.FormatDateTime(diss.date_of_hospital);
 
                 prt_date_of_discharge.Text = WebHelpers.FormatDateTime(diss.date_of_discharge);
@@ -201,7 +204,10 @@ namespace EMR
                     prt_next_consult.Text = $"{WebHelpers.FormatDateTime(diss.next_consult_date)} {diss.next_consult_doctor}";
                 }
 
-                //prt_last_updated.Text = diss.
+                DateTime signature_date = (DateTime)Session["signature_date"];
+                prt_signature_date.Text = signature_date.ToString("dd-MM-yyyy");
+                prt_signature_doctor.Text = (string)Session["signature_doctor"];
+
             }
             catch(Exception ex)
             {
@@ -244,7 +250,7 @@ namespace EMR
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, diss, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
+                WebHelpers.LoadFormControl(form1, diss, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(diss);
                 //get access button
@@ -272,13 +278,6 @@ namespace EMR
                 WebHelpers.SendError(Page, ex);
             }
         }
-        protected void btnPrint_Click(object sender, EventArgs e)
-        {
-            Diss diss = new Diss(Request.QueryString["docId"]);
-            BindingDataFormPrint(diss);
-
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
-        }
         protected void btnHome_Click(object sender, EventArgs e)
         {
             Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
@@ -294,26 +293,106 @@ namespace EMR
 
             try
             {
-                Diss diss = new Diss(Request.QueryString["docId"]);
+                Diss diss;
+                if (Request.QueryString["docIdLog"] != null)
+                {
+                    diss = new Diss(Request.QueryString["docIdLog"], true);
+                    currentLog.Visible = true;
 
+                    string item = (string)Session["viewLogInfo"];
+
+                    RadLabel2.Text = $"You are viewing an old version of this document ( { item })";
+                }
+                else
+                {
+                    diss = new Diss(Request.QueryString["docId"]);
+                    currentLog.Visible = false;
+                }
+
+
+                loadRadGridHistoryLog();
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-                prt_barcode.Text = Patient.Instance().visible_patient_id;
+
                 if (diss.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(diss, WebHelpers.LoadFormControl(form1, diss, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
-
+                    BindingDataForm(diss, WebHelpers.LoadFormControl(form1, diss, ControlState.View, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
+                    BindingDataFormPrint(diss);
                 }
                 else if (diss.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(diss, WebHelpers.LoadFormControl(form1, diss, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
+                    BindingDataForm(diss, WebHelpers.LoadFormControl(form1, diss, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
                 }
 
-                WebHelpers.getAccessButtons(form1, diss.status, (string)Session["access_authorize"], (string)Session["location"]);
+                WebHelpers.getAccessButtons(form1, diss.status, (string)Session["access_authorize"], (string)Session["location"], Request.QueryString["docIdLog"] != null);
             }
             catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
+        }
+        private void loadRadGridHistoryLog()
+        {
+            DataTable dt = Diss.Logs(Request.QueryString["docId"]);
+            RadGrid1.DataSource = dt;
+            DateTime last_updated_date_time = new DateTime();
+            string last_updated_doctor = "";
+
+            if (dt.Rows.Count == 1)
+            {
+                last_updated_doctor = dt.Rows[0].Field<string>("created_name_l");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
+            }
+            else if (dt.Rows.Count > 1)
+            {
+                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_l");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
+            }
+
+            Session["signature_date"] = last_updated_date_time;
+            Session["signature_doctor"] = last_updated_doctor;
+            RadLabel1.Text = $"Last updated by {last_updated_doctor} on " + WebHelpers.FormatDateTime(last_updated_date_time, "dd-MM-yyyy HH:mm");
+            RadGrid1.DataBind();
+        }
+
+        protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
+        {
+            string result = "Amended by";
+            if (Convert.ToString(status) == DocumentStatus.FINAL && string.IsNullOrEmpty(Convert.ToString(amend_reason)))
+            {
+                result = "Submitted by";
+            }
+
+            if (Convert.ToString(status) == DocumentStatus.DRAFT) result = "Saved by";
+
+            if (string.IsNullOrEmpty(Convert.ToString(modified_name)))
+            {
+                result += $" {created_name} on {created_date_time}";
+            }
+            else
+            {
+                result += $" {modified_name} on {modified_date_time}";
+            }
+            return result;
+        }
+        protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            GridDataItem item = (e.Item as GridDataItem);
+            if (e.CommandName.Equals("Open"))
+            {
+                string doc_log_id = item.GetDataKeyValue("document_log_id").ToString();
+
+                string url = $"/IPD/DischargeSummary.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}&docIdLog={doc_log_id}";
+
+                Session["viewLogInfo"] = (item.FindControl("RadLabel1") as RadLabel).Text;
+
+                Response.Redirect(url);
+            }
+        }
+
+        protected void RadButton1_Click(object sender, EventArgs e)
+        {
+            string url = $"/IPD/DischargeSummary.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}";
+            Response.Redirect(url);
         }
         public void UpdateData(Diss diss)
         {
@@ -448,5 +527,10 @@ namespace EMR
             LoadDischargeReason("TRANSFER");
         }
         #endregion
+
+        protected void clearSession_Click(object sender, EventArgs e)
+        {
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+        }
     }
 }

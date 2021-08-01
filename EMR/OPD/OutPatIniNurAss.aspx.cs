@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
@@ -10,6 +11,9 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using Telerik.Web.UI;
+using ZXing;
+using ZXing.Common;
 
 namespace EMR
 {
@@ -29,6 +33,13 @@ namespace EMR
 
         private void PostBackEvent()
         {
+            switch (Request["__EVENTTARGET"])
+            {
+                //case "clearSession":
+                //    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+                //    break;
+
+            }
         }
 
         #region Binding Data
@@ -76,13 +87,14 @@ namespace EMR
                 //6.
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_nutrition_status_code_" + oina.nutrition_status_code);
                 //III.
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_housing_code_" + oina.housing_code);
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_housing_code_" + oina.housing_code, "aln");
                 //IV.
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_prioritization_code_" + oina.prioritization_code);
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_prioritization_code_" + oina.prioritization_code, "wa");
 
                 WebHelpers.BindDateTimePicker(dtpk_assessment_date_time, oina.assessment_date_time);
 
                 DataObj.Value = JsonConvert.SerializeObject(oina);
+                Session["docid"] = oina.document_id;
                 WebHelpers.AddScriptFormEdit(Page, oina, (string)Session["emp_id"]);
                 
             }
@@ -115,11 +127,12 @@ namespace EMR
                 lbl_vs_weight.Text = WebHelpers.FormatString(oina.vs_weight) + " kg";
                 lbl_vs_height.Text = WebHelpers.FormatString(oina.vs_height) + " cm";
                 lbl_vs_respiratory_rate.Text = WebHelpers.FormatString(oina.vs_respiratory_rate) + " / phút (min)";
-                lbl_vs_bmi.Text = WebHelpers.FormatString(oina.vs_BMI) + "(Kg/m <sup>2</sup>)";
+                lbl_vs_bmi.Text = WebHelpers.FormatString(oina.vs_BMI) + " (Kg/m <sup>2</sup>)";
                 lbl_vs_blood_pressure.Text = WebHelpers.FormatString(oina.vs_blood_pressure) + " mmHg";
                 lbl_pulse.Text = WebHelpers.FormatString(oina.pulse) + " cm";
                 lbl_vs_spo2.Text = WebHelpers.FormatString(oina.vs_spO2) + " %";
                 lbl_assessment_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(oina.assessment_date_time, "dd-MM-yyyy HH:mm"));
+
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
 
@@ -131,7 +144,9 @@ namespace EMR
                 Patient patient = Patient.Instance();
                 prt_fullname.Text = $"{patient.GetFullName()} ({patient.GetTitle()})";
                 prt_DOB.Text = $"{WebHelpers.FormatDateTime(patient.date_of_birth)} | {patient.GetGender()}";
-                prt_barcode.Text = prt_vpid.Text = patient.visible_patient_id;
+                prt_vpid.Text = patient.visible_patient_id;
+
+                WebHelpers.gen_BarCode(patient.visible_patient_id, BarCode);
 
                 prt_vs_temperature.Text = oina.vs_temperature;
                 prt_vs_weight.Text = oina.vs_weight;
@@ -142,24 +157,33 @@ namespace EMR
                 prt_vs_blood_pressure.Text = oina.vs_blood_pressure;
                 prt_vs_spO2.Text = oina.vs_spO2;
 
-                prt_chief_complaint.Text = oina.chief_complaint;
+                var lable = new HtmlGenericControl("lable");
+
+                lable.InnerHtml = oina.chief_complaint;
+                lable.InnerText = oina.chief_complaint;
+
+                string a = lable.InnerHtml.Replace("&lt;font color=&quot;red&quot;&gt;", "");
+                a = a.Replace("&lt;/font&gt;&lt;br&gt;", "");
+
+                prt_chief_complaint.Text = a;
                 prt_allergy.Text = oina.allergy ? "Có, ghi rõ/ Yes, specify: " + oina.allergy_note : "Không";
 
-                prt_mental_status.Text = WebHelpers.CreateOptions(new Option { Text = "Có/ Yes", Value = true }, new Option { Text = "Không, ghi rõ/ No, specify: " + oina.mental_status_note, Value = false }, oina.mental_status, "display: grid; grid-template-columns: 80px 1fr");
+                prt_mental_status.Text = WebHelpers.CreateOptions(new Option { Text = "Có/ Yes", Value = true }, new Option { Text = "No, ghi rõ/ No, specify: " + oina.mental_status_note, Value = false }, oina.mental_status, "display: grid; grid-template-columns: 80px 1fr");
 
-                prt_paint_score_code.Value = oina.paint_score_code;
+                prt_paint_score_code.Text = oina.paint_score_code;
 
-                prt_fall_risk.Value = oina.fall_risk ? "Nếu có, cung cấp phương tiện hỗ trợ/ If yes, provide assistance: " + oina.fall_risk_assistance : "Không có nguy cơ/ No risk";
+                prt_fall_risk.Text = WebHelpers.GetBool(oina.fall_risk, "Có, cung cấp phương tiện hỗ trợ/ Yes, provide assistance: " + oina.fall_risk_assistance, "Không có nguy cơ/ No risk");
 
-                prt_nutrition_status_code.Value = oina.nutrition_status_description;
+                prt_nutrition_status_code.Text = oina.nutrition_status_description;
 
                 prt_housing.Text = WebHelpers.CreateOptions(Oina.HOUSING_CODE, (string)oina.housing_code, "display: grid; grid-template-columns: 1fr 1fr");
 
-                prt_prioritization_code.Value = oina.prioritization_description;
+                DateTime signature_date = (DateTime)Session["signature_date"];
+
+                prt_signature_date.Text = signature_date.ToString("dd-MM-yyyy");
+                prt_prioritization_code.Text = oina.prioritization_description;
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
-            
-            
         }
         #endregion
 
@@ -212,7 +236,7 @@ namespace EMR
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, oina, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
+                WebHelpers.LoadFormControl(form1, oina, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(oina);
                 //get access button
@@ -224,12 +248,7 @@ namespace EMR
             
             Initial();
         }
-        protected void btnPrint_Click(object sender, EventArgs e)
-        {
-            Oina oina = new Oina(Request["docid"]);
-            BindingDataFormPrint(oina);
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
-        }
+
         protected void btnHome_Click(object sender, EventArgs e)
         {
             Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
@@ -245,21 +264,39 @@ namespace EMR
 
             try
             {
-                Oina oina = new Oina(Request.QueryString["docId"]);
+                Oina oina;
 
+                if (Request.QueryString["docIdLog"] != null)
+                {
+                    oina = new Oina(Request.QueryString["docIdLog"], true);
+                    currentLog.Visible = true;
+
+                    string item = (string)Session["viewLogInfo"];
+
+                    RadLabel2.Text = $"You are viewing an old version of this document ( { item })";
+                }
+                else
+                {
+                    oina = new Oina(Request.QueryString["docId"]);
+                    currentLog.Visible = false;
+                }
+
+                loadRadGridHistoryLog();
+
+                WebHelpers.setBmi(bmiStr, oina.vs_BMI);
+                
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-                prt_barcode.Text = Patient.Instance().visible_patient_id;
                 if (oina.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(oina, WebHelpers.LoadFormControl(form1, oina, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
-
+                    BindingDataForm(oina, WebHelpers.LoadFormControl(form1, oina, ControlState.View, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
+                    BindingDataFormPrint(oina);
                 }
                 else if (oina.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(oina, WebHelpers.LoadFormControl(form1, oina, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
+                    BindingDataForm(oina, WebHelpers.LoadFormControl(form1, oina, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
                 }
 
-                WebHelpers.getAccessButtons(form1, oina.status, (string)Session["access_authorize"], (string)Session["location"]);
+                WebHelpers.getAccessButtons(form1, oina.status, (string)Session["access_authorize"], (string)Session["location"], Request.QueryString["docIdLog"] != null);
             }
             catch (Exception ex)
             {
@@ -327,6 +364,73 @@ namespace EMR
                 WebHelpers.SendError(Page, ex);
             }
         }
+
+        protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
+        {
+            string result = "Amended by";
+            if (Convert.ToString(status) == DocumentStatus.FINAL && string.IsNullOrEmpty(Convert.ToString(amend_reason)))
+            {
+                result = "Submitted by";
+            }
+
+            if (Convert.ToString(status) == DocumentStatus.DRAFT) result = "Saved by";
+
+            if (string.IsNullOrEmpty(Convert.ToString(modified_name)))
+            {
+                result += $" {created_name} on {created_date_time}";
+            }
+            else
+            {
+                result += $" {modified_name} on {modified_date_time}";
+            }
+            return result;
+        }
+        protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            GridDataItem item = (e.Item as GridDataItem);
+            if (e.CommandName.Equals("Open"))
+            {
+                string doc_log_id = item.GetDataKeyValue("document_log_id").ToString();
+
+                string url = $"/OPD/OutPatIniNurAss.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}";
+
+                if (doc_log_id != Request.QueryString["docId"])
+                {
+                    url += $"&docIdLog={doc_log_id}";
+                    Session["viewLogInfo"] = (item.FindControl("RadLabel1") as RadLabel).Text;
+                }
+
+                Response.Redirect(url);
+            }
+        }
+        protected void RadButton1_Click(object sender, EventArgs e)
+        {
+            string url = $"/OPD/OutPatIniNurAss.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}";
+            Response.Redirect(url);
+        }
+        private void loadRadGridHistoryLog()
+        {
+            DataTable dt = Oina.Logs(Request.QueryString["docId"]);
+            RadGrid1.DataSource = dt;
+            DateTime last_updated_date_time = new DateTime();
+            string last_updated_doctor = "";
+
+            if (dt.Rows.Count == 1)
+            {
+                last_updated_doctor = dt.Rows[0].Field<string>("created_name_l");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
+            }
+            else if (dt.Rows.Count > 1)
+            {
+                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_l");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
+            }
+
+            Session["signature_date"] = last_updated_date_time;
+            Session["signature_doctor"] = last_updated_doctor;
+            RadLabel1.Text = $"Last updated by {last_updated_doctor} on " + WebHelpers.FormatDateTime(last_updated_date_time, "dd-MM-yyyy HH:mm");
+            RadGrid1.DataBind();
+        }
         #endregion
 
         #region Validation
@@ -343,16 +447,20 @@ namespace EMR
             args.IsValid = txt_fall_risk_assistance.Value.Length <= 256;
         }
         
-
         protected void CustomValidatorMentalStatus_ServerValidate(object source, ServerValidateEventArgs args)
         {
             args.IsValid = rad_mental_status_true.Checked || rad_mental_status_false.Checked;
         }
+
         protected void CustomValidatorFallRisk_ServerValidate(object source, ServerValidateEventArgs args)
         {
             args.IsValid = rad_fall_risk_true.Checked || rad_fall_risk_false.Checked;
         }
         #endregion
 
+        protected void clearSession_Click(object sender, EventArgs e)
+        {
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+        }
     }
 }

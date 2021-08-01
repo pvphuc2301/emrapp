@@ -71,12 +71,12 @@
                                         <img src="../images/AIH_PI_FULL.png" />
                                         <div class="header-info-title">
                                             <h4>BỆNH ÁN SƠ SINH NỘI TRÚ</h4>
-                                            <h5>INITIAL MEDICAL ASSESSMENT FOR NEONATAL INPATIENTS</h5>
+                                            <h5 style="font-size:13px;">INITIAL MEDICAL ASSESSMENT FOR NEONATAL INPATIENTS</h5>
                                         </div>
-                                        <div style="width: 175px; text-align: center">
+                                        <div style="width: 150px; text-align: left; font-size: 11px">
                                             <asp:Label runat="server" ID="prt_fullname" CssClass="d-block"></asp:Label>
                                             <asp:Label runat="server" ID="prt_dob" CssClass="d-block"></asp:Label>
-                                            <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
+                                            <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
                                             <asp:Label runat="server" ID="prt_vpid" CssClass="d-block"></asp:Label>
                                         </div>
                                     </div>
@@ -89,226 +89,117 @@
                             <tr>
                                 <td class="report-content-cell">
                                     <div class="main">
-                                        <div class="row mb-2">
-                                            <div class="col-12" >
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma">I. Lí do nhập viện:</label>
-                                                <span class="text-primary" style="margin-left: 20px;">Admission reason</span>
-                                            </div>
-                                            <div class="col-12" style="font-size: 14.5px; font-family: Tahoma;text-align:justify">
-                                                <asp:Label runat="server" ID="prt_admission_reason"></asp:Label>
-                                            </div>
+
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="I. " Title="Admission reason:" SubTitle="Lí do nhập viện" runat="server" />
+                                            <asp:Label runat="server" ID="prt_admission_reason"></asp:Label>
                                         </div>
 
-                                        <div class="row mb-2">
-                                            <div class="col-12" >
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma">II. Bệnh sử:</label>
-                                                <span class="text-primary" style="margin-left: 25px;">Medical History</span>
-                                            </div>
+                                        <webUI:PrtRowS1 FontBold="true" Order="II. " Title="Medical History:" SubTitle="Bệnh sử" runat="server" />
+
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="1. " Title="Current Medical History:" SubTitle="Bệnh sử hiện tại" runat="server" />
+                                            <asp:Label runat="server" ID="prt_cur_med_history"></asp:Label>
                                         </div>
 
-                                        <div class="row mb-2">
-                                            <div class="col-12" >
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma">1. Bệnh sử hiện tại:</label>
-                                                <span class="text-primary" style="margin-left: 20px;">Current Medical History:</span>
-                                            </div>
-                                            <div class="col-12" style="font-size: 14.5px; font-family: Tahoma;text-align:justify">
-                                                <asp:Label runat="server" ID="prt_cur_med_history"></asp:Label>
-                                            </div>
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="❖ " Title="Current medications:" SubTitle="Thuốc đang sử dụng" runat="server" />
+                                            <asp:Label runat="server" ID="prt_cur_medication"></asp:Label>
                                         </div>
 
-                                        <div class="row mb-2">
-                                            <div class="col-12" style="font-size: 14.5px; font-family: Tahoma">
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma; margin-left: 20px">❖ Thuốc đang sử dụng: </label>
-                                                <span class="text-primary" style="padding-left: 40px;">Current medications:</span>
-                                            </div>
-                                            <div class="col-12" style="font-size: 14.5px; font-family: Tahoma;text-align:justify">
-                                                <asp:Label runat="server" ID="prt_cur_medication"></asp:Label>
-                                            </div>
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="2. " Title="Antecedent Medical History:" SubTitle="Tiền sử bệnh" runat="server" />
+                                            <asp:Label runat="server" ID="Label1"></asp:Label>
                                         </div>
 
-                                        <div class="row mb-2">
-                                            <div class="col-12" >
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma">2. Tiền sử bệnh: </label>
-                                                <span class="text-primary" style="margin-left: 20px;">Antecedent Medical History</span>
-                                            </div>
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="❖ " Title="Delivery:" SubTitle="Quá trình sanh" runat="server" />
+                                            <asp:Label runat="server" ID="prt_delivery"></asp:Label>
                                         </div>
 
-                                        <div class="row mb-2">
-                                            <div class="col-12" style="font-size: 14.5px; font-family: Tahoma">
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma; margin-left: 20px">❖ Quá trình sanh: </label>
-                                                <span class="text-primary" style="padding-left: 40px;">Delivery</span>
-                                            </div>
-                                            <div class="col-12" style="font-size: 14.5px; font-family: Tahoma;text-align:justify">
-                                                <asp:Label runat="server" ID="prt_delivery"></asp:Label>
-                                            </div>
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="❖ " Title="Postnatal nutrition:" SubTitle="Chế độ dinh dưỡng" runat="server" />
+                                            <asp:Label runat="server" ID="prt_post_nutrition"></asp:Label>
                                         </div>
 
-                                        <div class="row mb-2">
-                                            <div class="col-12" style="font-size: 14.5px; font-family: Tahoma">
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma; margin-left: 20px">❖ Chế độ dinh dưỡng: </label>
-                                                <span class="text-primary" style="padding-left: 40px;">Postnatal nutrition</span>
-                                            </div>
-                                            <div class="col-12" style="font-size: 14.5px; font-family: Tahoma;text-align:justify">
-                                                <asp:Label runat="server" ID="prt_post_nutrition"></asp:Label>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div class="col-12" >
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma">3. Tiền sử sản khoa: </label>
-                                                <span class="text-primary" style="margin-left: 20px;">Maternal medical history</span>
-                                            </div>
-                                            <div class="col-12" style="font-size: 14.5px; font-family: Tahoma;text-align:justify">
-                                                <asp:Label runat="server" ID="prt_mater_med_history"></asp:Label>
-                                            </div>
-
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="3. " Title="Maternal medical history:" SubTitle="Tiền sử sản khoa" runat="server" />
+                                            <asp:Label runat="server" ID="prt_mater_med_history"></asp:Label>
                                         </div>
 
-                                        <div class="row mb-2">
-                                            <div class="col-12" >
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma">III. Khám bệnh: </label>
-                                                <span class="text-primary" style="margin-left: 30px;">Physical Examination</span>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-4" style="margin-left: 10px">
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma">● Cân nặng hiện tại (gr): </label>
-                                                <span class="text-primary" style="margin-left: 20px;">Weight</span>
-                                            </div>
-                                            <div class="col-4">
-                                                <asp:Label runat="server" ID="prt_exam_weight"> </asp:Label>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div class="col-4" style="margin-left: 10px">
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma">● Chiều dài (cm): </label>
-                                                <span class="text-primary" style="margin-left: 20px;">Length</span>
-                                            </div>
-                                            <div class="col-4">
-                                                <asp:Label runat="server" ID="prt_exam_length"></asp:Label>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div class="col-4" style="margin-left: 10px">
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma">● Vòng đầu (cm): </label>
-                                                <span class="text-primary" style="margin-left: 20px;">Head Circumference</span>
-                                            </div>
-                                            <div class="col-4">
-                                                <asp:Label runat="server" ID="prt_exam_head_circum"></asp:Label>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div class="col-4" style="margin-left: 10px">
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma">● Mạch (lần/phút): </label>
-                                                <span class="text-primary" style="margin-left: 20px;">HR (per minute)</span>
-                                            </div>
-                                            <div class="col-4">
-                                                <asp:Label runat="server" ID="prt_exam_hr"></asp:Label>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div class="col-4" style="margin-left: 10px">
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma">● Nhịp thở/phút: </label>
-                                                <span class="text-primary" style="margin-left: 25px;">RR (per minute)</span>
-                                            </div>
-                                            <div class="col-4">
-                                                <asp:Label runat="server" ID="prt_exam_rr"></asp:Label>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2" >
-                                            <div  class="col-12" style="font-size: 14.5px; font-family: Tahoma;text-align:justify">
-                                                <asp:Label runat="server" ID="prt_physical_exam"></asp:Label>
-                                            </div>
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="III. " Title="Physical Examination:" SubTitle="Khám bệnh" runat="server" />
+                                            <asp:Label runat="server" ID="Label2"></asp:Label>
                                         </div>
 
-                                        <div class="row mb-2">
-                                            <div class="col-12">
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma">IV. Chỉ định và kết quả xét nghiệm: </label>
-                                                <span class="text-primary" style="margin-left: 30px;">Laboratory indications and results</span>
-                                            </div>
-                                            <div class="col-12" style="font-size: 14.5px; font-family: Tahoma;text-align:justify">
-                                                <asp:Label runat="server" ID="prt_laboratory"></asp:Label>
-                                            </div>
+                                        <div class="d-grid" style="grid-template-columns: 200px 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="●. " Title="Weight:" SubTitle="Cân nặng hiện tại (gr)" runat="server" />
+                                            <asp:Label runat="server" ID="prt_exam_weight"></asp:Label>
                                         </div>
-                                        <div class="row mb-2"style="font-size: 14.5px; font-family: Tahoma">
-                                            <div class="col-4">
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma">V. Kết luận: </label>
-                                                <span class="text-primary" style="margin-left: 20px;">Conclusion</span>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2" >
-                                            <div style="width:190px;margin-left: 25px">
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma">● Chẩn đoán ban đầu: </label>
-                                                <span class="text-primary" style="margin-left: 20px;">Initial diagnosis</span>
-                                            </div>
-                                            <div style="width:515px;font-size: 14.5px; font-family: Tahoma;text-align:justify">
-                                                <asp:Label runat="server" ID="prt_initial_diagnosis"></asp:Label>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2"style="font-size: 14.5px; font-family: Tahoma;">
-                                            <div style="width:190px;margin-left: 25px;">
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma">● Chẩn đoán phân biệt: </label>
-                                                <span class="text-primary" style="margin-left: 20px;">Differential diagnosis</span>
-                                            </div>
-                                            <div style="width:515px;font-size: 14.5px; font-family: Tahoma;text-align:justify">
-                                                <asp:Label runat="server" ID="prt_diff_diagnosis"></asp:Label>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div style="width:190px;margin-left: 25px;font-size: 14.5px; font-family: Tahoma">
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma">● Bệnh kèm theo: </label>
-                                                <span class="text-primary" style="margin-left: 20px;">Associated conditions</span>
-                                            </div>
-                                            <div style="width:515px;font-size: 14.5px; font-family: Tahoma;text-align:justify">
-                                                <asp:Label runat="server" ID="prt_associated_conditions"></asp:Label>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div class="col-12">
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma">VI. Kế hoạch điều trị: </label>
-                                                <span class="text-primary" style="margin-left: 25px;">Treatment Plan</span>
-                                            </div>
-                                            <div class="col-12" style="text-align: justify;font-size: 14.5px; font-family: Tahoma">
-                                                <asp:Label runat="server" ID="prt_treatment_plan"></asp:Label>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div class="col-12">
-                                                <label class="d-block mb-0 h4" style="font-weight: bold;font-size: 14.5px; font-family: Tahoma">VII. Kế hoạch xuất viện: </label>
-                                                <span class="text-primary" style="margin-left: 35px;">Discharge plan</span>
-                                            </div>
-                                            <div class="col-12" style="text-align: justify;font-size: 14.5px; font-family: Tahoma">
-                                                <asp:Label runat="server" ID="prt_discharge_plan"></asp:Label>
-                                            </div>
-                                        </div>
-                                        <br />
 
-                                        <div class="row mb-2" style="font-size: 14.5px; font-family: Tahoma">
-                                            <div class="col-5">
-                                            </div>
-                                            <div class="col-7 mb-2">
-                                                <div class="col-12" style="text-align: center;">
-                                                    <label style="font-size: 14.5px; font-family: Tahoma;">
-                                                        Ngày/Date
-                                            <asp:Label runat="server" ID="lbl_date">
+                                        <div class="d-grid" style="grid-template-columns: 200px 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="●. " Title="Length:" SubTitle="Chiều dài (cm)" runat="server" />
+                                            <asp:Label runat="server" ID="prt_exam_length"></asp:Label>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 200px 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="●. " Title="Head Circumference:" SubTitle="Vòng đầu (cm)" runat="server" />
+                                            <asp:Label runat="server" ID="prt_exam_head_circum"></asp:Label>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 200px 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="●. " Title="HR (per minute):" SubTitle="Mạch (lần/phút)" runat="server" />
+                                            <asp:Label runat="server" ID="prt_exam_hr"></asp:Label>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 200px 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="●. " Title="RR (per minute):" SubTitle="Nhịp thở/phút" runat="server" />
+                                            <asp:Label runat="server" ID="prt_exam_rr"></asp:Label>
+                                        </div>
+
+                                        <asp:Label runat="server" ID="prt_physical_exam"></asp:Label>
+
+                                        <webUI:PrtRowS1 FontBold="true" Order="IV. " Title="Laboratory indications and results:" SubTitle="Chỉ định và kết quả xét nghiệm" runat="server" />
+                                        
+                                        <div style="margin-left: 20px">
+                                            <asp:Label runat="server" ID="prt_laboratory"></asp:Label>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="V. " Title="Conclusion:" SubTitle="Kết luận" runat="server" />
+                                            <asp:Label runat="server" ID="Label3"></asp:Label>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 200px 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="●. " Title="Initial diagnosis:" SubTitle="Chẩn đoán ban đầu" runat="server" />
+                                            <asp:Label runat="server" ID="prt_initial_diagnosis"></asp:Label>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 200px 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="●. " Title="Differential diagnosis:" SubTitle="Chẩn đoán phân biệt" runat="server" />
+                                            <asp:Label runat="server" ID="prt_diff_diagnosis"></asp:Label>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 200px 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="●. " Title="Associated conditions:" SubTitle="Bệnh kèm theo" runat="server" />
+                                            <asp:Label runat="server" ID="prt_associated_conditions"></asp:Label>
+                                        </div>
+
+                                        <webUI:PrtRowS1 FontBold="true" Order="VI. " Title="Treatment Plan:" SubTitle="Kế hoạch điều trị" runat="server" />
+
+                                        <div style="margin-left: 20px"><asp:Label runat="server" ID="prt_treatment_plan"></asp:Label></div>
+                                        
+                                        <webUI:PrtRowS1 FontBold="true" Order="VII. " Title="Discharge plan:" SubTitle="Kế hoạch xuất viện" runat="server" />
+
+                                        <div style="margin-left: 20px"><asp:Label runat="server" ID="prt_discharge_plan"></asp:Label></div>
+                                        
+                                        <div class="d-flex justify-content-between">
+                                            <div></div>
+                                            <div class="text-center">
+                                                <asp:Label runat="server" ID="prt_signature_date">
                                             </asp:Label>
-                                                    </label>
-                                                    <label style="font-size: 14.5px; font-family: Tahoma;">
-                                                        tháng/month
-                                            <asp:Label runat="server" ID="lbl_month">
-                                            </asp:Label>
-                                                    </label>
-                                                    <label style="font-size: 14.5px; font-family: Tahoma;">
-                                                        năm/year
-                                            <asp:Label runat="server" ID="lbl_year">
-                                            </asp:Label>
-                                                    </label>
-                                                </div>
-                                                <div class="col-12" style="text-align: center;">
-                                                    <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">
-                                                        Họ tên bác sĩ và mã số nhân viên/
-                                            <span class="text-primary" style="font-size: 14.5px">Doctor’s name and ID</span>
-                                                    </label>
-                                                </div>
+                                                <div class="font-bold">Doctor’s name and ID</div>
+                                                <div>Họ tên bác sĩ và mã số nhân viên</div>
                                             </div>
                                         </div>
                                     </div>
@@ -333,27 +224,66 @@
                     </table>
                 </div>
 
+                <telerik:RadWindowManager RenderMode="Lightweight"  
+                                  EnableShadow="true"  
+                                  Behaviors="Close, Move, Resize,Maximize" ID="RadWindowManager" DestroyOnClose="true"
+                                  RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
+            <Windows>
+                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History"   runat="server">
+                    <ContentTemplate>
+                        <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
+                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
+                                <Columns>
+                                    <telerik:GridTemplateColumn Display="false" HeaderStyle-Width="0" ItemStyle-Width="0" ItemStyle-Wrap="false">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="RadLinkButton1" runat="server" CommandName="Open" Text=""></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+
+                                    <telerik:GridTemplateColumn>
+                                        <ItemTemplate>
+                                            <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
+</telerik:RadLabel>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+                                </Columns>
+                            </MasterTableView>
+                            <ClientSettings>
+                                <Selecting AllowRowSelect="true" />
+                                <ClientEvents OnRowDblClick="RowDblClick" />
+                            </ClientSettings>
+                        </telerik:RadGrid>
+                    </ContentTemplate>
+                </telerik:RadWindow>
+            </Windows>
+        </telerik:RadWindowManager>
+
                 <div class="cssclsNoPrint" style="overflow: scroll; height: 100vh; overflow-x: hidden;">
-                    <asp:HiddenField runat="server" ID="DataObj" />
-                    <asp:Panel runat="server" ID="messagePlaceHolder">
-                        <div class="card" runat="server" id="amendReasonWraper">
-                            <div class="card-body">
-                                <h5>Lý do thay đổi/ <span class="text-primary">amend reason: </span>
-                                    <br />
-                                    <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
-                                <div class="form-group mb-2">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd; border-radius: 0;">
+                      <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
+                      <li>Initial Medical Assessment For Neonatal Inpatients</li>
+                    </ul>
+                    <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
+                        <asp:HiddenField runat="server" ID="DataObj" />
+                        <asp:Panel runat="server" ID="messagePlaceHolder">
+                            <div class="card" runat="server" id="amendReasonWraper">
+                                <div class="card-body">
+                                    <h5>Lý do thay đổi/ <span class="text-primary">amend reason: </span>
+                                        <br />
+                                        <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
+                                    <div class="form-group mb-2">
 
-                                    <asp:TextBox runat="server" TextMode="MultiLine" ID="txt_amend_reason" CssClass="form-control" />
+                                        <asp:TextBox runat="server" TextMode="MultiLine" ID="txt_amend_reason" CssClass="form-control" />
 
-                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
-                                        ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
+                                            ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <asp:ValidationSummary ID="valSum" DisplayMode="BulletList" CssClass="validationSummary" runat="server" ValidationGroup="Group1" HeaderText="Please complete the highlighted field(s)." />
-                    </asp:Panel>
-                    <uc1:PatientInfo runat="server" ID="PatientInfo" />
+                            <asp:ValidationSummary ID="valSum" DisplayMode="BulletList" CssClass="validationSummary" runat="server" ValidationGroup="Group1" HeaderText="Please complete the highlighted field(s)." />
+                        </asp:Panel>
+                        <uc1:PatientInfo runat="server" ID="PatientInfo" />
 
                     <div class="row">
                         <div class="col-md-12">
@@ -364,6 +294,23 @@
                                 </div>
                                 <div class="card-body collapse show" id="collapseOne">
                                     <div class="form-body">
+
+                                        <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel2">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile"  OnClick="RadButton1_Click" ID="RadButton1" runat="server" CssClass="btn-sm" Text="View Latest Version"  />
+                                                    </div>
+
+                                                    <div class="alert alert-info d-flex align-items-center">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel1">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile" AutoPostBack="false" ID="Button1" runat="server" OnClientClicked="showWindow" CssClass="btn-sm" Text="View History"  />
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         <div class="row mb-2">
                                             <div class="col-md-12">
                                                 <label class="control-label mb-2 h5">I. Admission reason/<span class="text-primary">Lí do nhập viện:</span></label>
@@ -465,7 +412,7 @@
                                                 <label class="control-label mb-1">HR (per minute)/ <span class="text-primary">Mạch:</span></label>
                                                 <asp:Label runat="server" ID="lbl_exam_hr"></asp:Label>
                                                 <div class="form-group w-5" runat="server" id="exam_hr_wrapper">
-                                                    <input id="txt_exam_hr" data-type="number" runat="server" class="form-control text-right" />
+                                                    <input id="txt_exam_hr" runat="server" class="form-control text-right" />
                                                     <span class="append">lần/phút</span>
                                                 </div>
                                             </div>
@@ -568,7 +515,7 @@
 
                                                     <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                    <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                    <asp:LinkButton runat="server" OnClientClick="window.print(); return false" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                     <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                                 </div>
@@ -594,8 +541,9 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
+            </div>
+            <asp:LinkButton runat="server" OnClick="clearSession_Click" ID="clearSession"></asp:LinkButton>
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>
@@ -621,6 +569,30 @@
             formGroup_init();
             InputFilter("data-type='number'");
         }
+
+        function showWindow(sender, eventArgs) {
+            var oWnd = $find("<%=RadWindow1.ClientID%>");
+            oWnd.show();
+        }
+
+
+       function RowDblClick(sender, eventArgs) {
+            console.log('sdfsdf');
+
+           var grid = $find("<%= RadGrid1.ClientID %>");
+           var masterTable = grid.get_masterTableView();
+           var item = eventArgs.get_itemIndexHierarchical();
+
+           var row = masterTable.get_dataItems()[item];
+
+           var button = row.findElement("RadLinkButton1");
+           button.click();
+
+           //console.log(row);
+        }
+        let physical_exam = document.getElementById("lbl_physical_exam").innerText;
+        console.log(physical_exam.replace(/\n/g, "<br />"));
+        //document.getElementById("lbl_physical_exam").innerHTML = document.getElementById("lbl_physical_exam").innerText.replace(/\n/g, "<br />");
 
     </script>
 </body>

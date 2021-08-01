@@ -43,17 +43,11 @@
                                             <h4>BỆNH ÁN NỘI TRÚ</h4>
                                             <h5>INPATIENT INITIAL MEDICAL ASSESSMENT</h5>
                                         </div>
-                                        <div style="font-size: 13.3333px">
-                                            <div>
-                                                <asp:Label ID="lbPatientName" runat="server"></asp:Label>MAI MAI MÃI1
-                                            </div>
-                                            <div>
-                                                <asp:Label ID="prt_dob" runat="server" Text='<%# Eval("date_of_birth") %>'></asp:Label>
-                                            </div>
-                                            <div>
-                                                <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
-                                                <asp:Label ID="prt_pid" runat="server" Font-Bold="true"></asp:Label>
-                                            </div>
+                                        <div style="width: 150px; text-align: left; font-size: 11px">
+                                            <asp:Label CssClass="d-block" runat="server" ID="prt_fullname"></asp:Label>
+                                            <asp:Label class="d-block" CssClass="d-block" runat="server" ID="prt_dob"></asp:Label>
+                                            <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
+                                            <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
                                         </div>
                                     </div>
                                     <webUI:Line runat="server" />
@@ -71,13 +65,13 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-2 " style="text-align: justify;">
+                            <%--<div class="row mb-2 " style="text-align: justify;">
                                 <div class="col-12 " style="text-align: justify;">
                                     <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">I. Lý do đến khám/ </asp:Label>
                                     <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Reason for admission: </asp:Label>
                                     <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="Label2"></asp:Label>
                                 </div>
-                            </div>
+                            </div>--%>
                             <div class="row mb-2 ">
                                 <div class="col-12 " style="text-align: justify;">
                                     <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">II. Bệnh sử/ </asp:Label>
@@ -445,8 +439,42 @@
                     </table>
                 </div>
 
+                <telerik:RadWindowManager RenderMode="Lightweight"  
+                                  EnableShadow="true"  
+                                  Behaviors="Close, Move, Resize,Maximize" ID="RadWindowManager" DestroyOnClose="true"
+                                  RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
+            <Windows>
+                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History"   runat="server">
+                    <ContentTemplate>
+                        <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
+                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
+                                <Columns>
+                                    <telerik:GridTemplateColumn Display="false" HeaderStyle-Width="0" ItemStyle-Width="0" ItemStyle-Wrap="false">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="RadLinkButton1" runat="server" CommandName="Open" Text=""></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+
+                                    <telerik:GridTemplateColumn>
+                                        <ItemTemplate>
+                                            <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
+</telerik:RadLabel>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+                                </Columns>
+                            </MasterTableView>
+                            <ClientSettings>
+                                <Selecting AllowRowSelect="true" />
+                                <ClientEvents OnRowDblClick="RowDblClick" />
+                            </ClientSettings>
+                        </telerik:RadGrid>
+                    </ContentTemplate>
+                </telerik:RadWindow>
+            </Windows>
+        </telerik:RadWindowManager>
+
                 <div class="cssclsNoPrint">
-                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                       <li>Inpatient Initial Medical Assessment</li>
                     </ul>
@@ -482,6 +510,23 @@
                                     </div>
                                     <div class="card-body collapse show" id="collapseOne">
                                         <div class="form-body">
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel2">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile"  OnClick="RadButton1_Click" ID="RadButton1" runat="server" CssClass="btn-sm" Text="View Latest Version"  />
+                                                    </div>
+
+                                                    <div class="alert alert-info d-flex align-items-center">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel1">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile" AutoPostBack="false" ID="Button1" runat="server" OnClientClicked="showWindow" CssClass="btn-sm" Text="View History"  />
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
                                                     <label class="control-label h4">I. Lí do nhập viện/ <span class="text-primary">Reason for admission:</span></label>
@@ -710,7 +755,7 @@
                                                         <div class="col-md-12 gt-2-a">
                                                             <label class="control-label">Dấu hiệu sinh tồn/ <span class="text-primary">Vital signs</span></label>
                                                             <div>
-                                                                <asp:LinkButton runat="server" ID="btnUpdateVitalSign" OnClick="btnUpdateVitalSign_Click" OnClientClick="ShowInfo();return;" CssClass="btn btn-sm btn-secondary waves-effect">Update</asp:LinkButton>
+                                                                <asp:LinkButton runat="server" ID="btnUpdateVitalSign" OnClick="btnUpdateVitalSign_Click" CssClass="btn btn-sm btn-secondary waves-effect">Update</asp:LinkButton>
                                                             <asp:UpdateProgress runat="server" AssociatedUpdatePanelID="updatepnl_vital_sign">
                                                                 <ProgressTemplate>
                                                                     <div class="loader1 ml-2">
@@ -726,37 +771,37 @@
                                                             <div>
                                                                 <div>
                                                                     <label class="control-label mb-1 mr-2">Nhiệt độ/ <span class="text-primary">Temperature:</span></label>
-                                                                    <asp:Label runat="server" ID="vs_temperature" />
+                                                                    <asp:Label runat="server" ID="vs_temperature" />&nbsp;°C
                                                                 </div>
 
                                                                 <div >
                                                                     <label class="control-label mb-1 mr-2">Mạch/ <span class="text-primary">Heart Rate:</span></label>
-                                                                    <asp:Label runat="server" ID="vs_heart_rate" />/phút (m)
+                                                                    <asp:Label runat="server" ID="vs_heart_rate" />&nbsp;/phút (m)
                                                                 </div>
 
                                                                 <div >
                                                                     <label class="control-label mb-1 mr-2">Cân Nặng/ <span class="text-primary">Weight:</span></label>
-                                                                    <asp:Label runat="server" ID="vs_weight" />Kg
+                                                                    <asp:Label runat="server" ID="vs_weight" />&nbsp;Kg
                                                                 </div>
 
                                                                 <div >
                                                                     <label class="control-label mb-1 mr-2">Nhịp thở/ <span class="text-primary">Respiratory rate:</span></label>
-                                                                    <asp:Label runat="server" ID="vs_respiratory_rate" />/phút (m)
+                                                                    <asp:Label runat="server" ID="vs_respiratory_rate" />&nbsp;/phút (m)
                                                                 </div>
 
                                                                 <div >
                                                                     <label class="control-label mb-1 mr-2">Chiều cao/ <span class="text-primary">Height:</span></label>
-                                                                    <asp:Label runat="server" ID="vs_height" />cm
+                                                                    <asp:Label runat="server" ID="vs_height" />&nbsp;cm
                                                                 </div>
 
                                                                 <div >
                                                                     <label class="control-label mb-1 mr-2">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
-                                                                    <asp:Label runat="server" ID="vs_blood_pressure" />mmHg
+                                                                    <asp:Label runat="server" ID="vs_blood_pressure" />&nbsp;mmHg
                                                                 </div>
 
                                                                 <div >
                                                                     <label for="bmi" class="control-label mb-1 mr-2">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
-                                                                    <asp:Label runat="server" ID="vs_bmi" />(Kg/m <sup>2</sup>)
+                                                                    <asp:Label runat="server" ID="vs_bmi" />&nbsp;(Kg/m <sup>2</sup>)
                                                     <div>
                                                         (Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not applicable for children and pregnant</span>)
                                                     </div>
@@ -764,12 +809,12 @@
 
                                                                 <div >
                                                                     <label for="spO2" class="control-label mb-1 mr-2">Độ bão hòa Oxy/ <span class="text-primary">SpO2:</span></label>
-                                                                    <asp:Label runat="server" ID="vs_spo2" />%
+                                                                    <asp:Label runat="server" ID="vs_spo2" />&nbsp;%
                                                                 </div>
 
                                                                 <div >
                                                                     <label for="head-circumference" class="control-label mb-1 mr-2">Vòng đầu (trẻ em < 2 tuổi)/ <span class="text-primary">Head Circumference (children < 2 year old) </span></label>
-                                                                    <asp:Label runat="server" ID="vs_pulse" />cm
+                                                                    <asp:Label runat="server" ID="vs_pulse" />&nbsp;cm
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -907,7 +952,7 @@
 
                                                     <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                    <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                    <asp:LinkButton runat="server" OnClientClick="window.print(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                     <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                                 </div>
@@ -936,6 +981,8 @@
                         </div>
                     </div>
                 </div>
+                <asp:LinkButton runat="server" OnClick="clearSession_Click" ID="clearSession"></asp:LinkButton>
+
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>
@@ -963,6 +1010,27 @@
             checkboxRadiobutton_init();
             InputFilter("data-type='number'");
         }
+
+        function showWindow(sender, eventArgs) {
+            var oWnd = $find("<%=RadWindow1.ClientID%>");
+            oWnd.show();
+        }
+
+
+       function RowDblClick(sender, eventArgs) {
+            console.log('sdfsdf');
+
+           var grid = $find("<%= RadGrid1.ClientID %>");
+           var masterTable = grid.get_masterTableView();
+           var item = eventArgs.get_itemIndexHierarchical();
+
+           var row = masterTable.get_dataItems()[item];
+
+           var button = row.findElement("RadLinkButton1");
+           button.click();
+
+           //console.log(row);
+       }
 
     </script>
 

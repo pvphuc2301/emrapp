@@ -51,7 +51,6 @@
                                 </asp:UpdateProgress>
                             </div>
 
-                            <asp:CustomValidator runat="server" id="cusCustom" controltovalidate="txt_pid" onservervalidate="txt_pid_ServerValidate" CssClass="text-danger" errormessage="Minimum pid length is 5" />
                             <div class="table-responsive">
                                 <telerik:RadGrid CssClass="table" OnItemCommand="RadGrid5_ItemCommand" BorderWidth="0" AutoGenerateColumns="false" ID="RadGrid5" runat="server" AllowPaging="false" AllowSorting="false">
                                     <ClientSettings>
@@ -137,12 +136,12 @@
 
             <div class="card">
                 <div class="card-header bg-white">
-                    <div style="width: 100%; display: grid; grid-template-columns: 1fr 1fr">
+                    <div style="width: 100%; display: grid; grid-template-columns: 1fr auto">
                         <h4 class="card-title control-label m-0">
                             <span class="text-primary">My Outpatient for Today</span>
                         </h4>
                         <h4>
-                            <a href="#" onclick="javascript:window.open('../report/CompleteVisitReport.aspx?view=','mywin','left=60,top=20,width=1300,height=1000,toolbar=0,resizable=0');return false;">My Completed Outpatient for Today</a>
+                            <a href="#" style="text-decoration: underline" onclick="javascript:window.open('../report/CompleteVisitReport.aspx?view=','mywin','left=60,top=20,width=1300,height=1000,toolbar=0,resizable=0');return false;"><i>Completed List</i></a>
                         </h4>
                     </div>
                 </div>
@@ -272,14 +271,14 @@
 
             <div class="card">
                 <div class="card-header bg-white">
-                    <div style="width: 100%; display: grid; grid-template-columns: 1fr 1fr">
+                    <div style="width: 100%; display: grid; grid-template-columns: 1fr auto">
                         <h4 class="card-title control-label m-0">
                             <span class="text-primary">
                                 <asp:LinkButton ID="btn_my_hc" runat="server" Text="My Health Check-up for Today" OnClick="cmd_refresh_hc"></asp:LinkButton>
                             </span>
                         </h4>
                         <h4>
-                            <a href="#" onclick="javascript:window.open('../report/CompleteVisitReport.aspx?view=hc','mywin','left=60,top=20,width=1300,height=1000,toolbar=0,resizable=0');return false;">My Completed Health Check-up List</a>
+                            <a href="#" style="text-decoration: underline" onclick="javascript:window.open('../report/CompleteVisitReport.aspx?view=hc','mywin','left=60,top=20,width=1300,height=1000,toolbar=0,resizable=0');return false;"> <i>Completed List</i></a>
                         </h4>
                     </div>
                 </div>
@@ -457,7 +456,8 @@
                 event.cancel = true;
                 btn.click();
             }
-        } 
+        }
+
     </script>
 
 </body>

@@ -77,20 +77,27 @@ namespace EMR.Other
                 }
             }
         }
+
         private void AddForm(string pvid, string visitType)
         {
             string apiStr = "api/emr/list-form/" + pvid + "/" + visitType;
 
             dynamic response = WebHelpers.GetAPI(apiStr);
-
+            
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
                 ddlDocList.Items.Clear();
 
+                ListItem item1 = new ListItem();
+                item1.Text = "—— Please select form document ——";
+                item1.Value = "";
+
+                ddlDocList.Items.Add(item1);
+
                 foreach (DataRow row in db.Rows)
                 {
-                    ListItem item1 = new ListItem();
+                    item1 = new ListItem();
 
                     item1.Value = row.Field<string>("model_id") + "|" + row.Field<string>("url") + "|" + pvid;
                     item1.Text = row.Field<string>("model_name");
@@ -102,6 +109,7 @@ namespace EMR.Other
 
             }
         }
+
         protected void RadGrid1_ItemDataBound(object sender, GridItemEventArgs e)
         {
             if (e.Item is GridDataItem)
@@ -262,22 +270,27 @@ namespace EMR.Other
         }
         protected void btnSave_Click(object sender, EventArgs e)
         {
+            
             string selectedItem = Request.Form.Get("ddlDocList");
-            string[] _params = selectedItem.Split('|');
 
-            string PVID = _params[2];
-            string modelID = _params[0];
-            string userName = (string)Session["UserID"];
+                string[] _params = selectedItem.Split('|');
 
-            dynamic response = WebHelpers.GetAPI(string.Format("api/emr/check-document-exists/{0}/{1}/{2}", DataHelpers._LOCATION, PVID, modelID));
+                string PVID = _params[2];
+                string modelID = _params[0];
+                string userName = (string)Session["UserID"];
 
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                dynamic response2 = WebHelpers.GetAPI(string.Format("api/emr/get-api/{0}/{1}", DataHelpers._LOCATION, modelID));
+            new PatientVisit(PVID);
+            //dynamic response = WebHelpers.GetAPI(string.Format("api/emr/check-document-exists/{0}/{1}/{2}", DataHelpers._LOCATION, PVID, modelID));
 
-                if (response2.Status == System.Net.HttpStatusCode.OK)
+            dynamic response = WebHelpers.GetAPI(string.Format("api/emr/get-api/{0}/{1}", DataHelpers._LOCATION, modelID));
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic data = JObject.Parse(response2.Data);
+                    //dynamic response2 = WebHelpers.GetAPI(string.Format("api/emr/get-api/{0}/{1}", DataHelpers._LOCATION, modelID));
+
+                    //if (response2.Status == System.Net.HttpStatusCode.OK)
+                    //{
+                    dynamic data = JObject.Parse(response.Data);
 
                     string docId = Guid.NewGuid().ToString();
 
@@ -289,47 +302,53 @@ namespace EMR.Other
 
                     if (data.api == "scoc")
                     {
-                        var objTemp = new
+                        string apiURL = $"api/emr/menu-doc-complex/{DataHelpers._LOCATION}/{varPID}";
+                        response = WebHelpers.GetAPI(apiURL);
+
+                        DataTable mydataTable;
+
+                        if (response.Status == System.Net.HttpStatusCode.OK)
                         {
-                            document_id = docId,
-                            patient_visit_id = PVID,
-                            model_id = modelID,
-                            user_name = userName,
-                            patient_id = varPID,
-                            status = DocumentStatus.DRAFT,
-                            //amend_reason = null,
-                            created_user_id = (string)Session["UserId"],
-                            created_name_e = "",
-                            created_name_l = "",
-                            created_date_time = DataHelpers.ConvertSQLDateTime(DateTime.Now)
-                            //modified_user_id = null,
-                            //modified_name_e = null,
-                            //modified_name_l = null,
-                            //modified_date_time = null,
-                            //submited_user_id = null,
-                            //submited_name_e = null,
-                            //submited_name_l = null,
-                            //submited_date_time = null,
-                            //signed_user_id = null,
-                            //signed_name_e = null,
-                            //signed_name_l = null,
-                            //signed_date_time = null,
-                            //delete_user_id = null,
-                            //delete_name_e = null,
-                            //delete_name_l = null,
-                            //delete_date_time = null,
-                            //document_type_rcd = null,
-                            //documentid = null,
-                            //allergy = null,
-                            //allergy_note = null,
-                            //remarkable = null,
-                            //past_history = null,
-                            //diagnosis = null,
-                            //cur_treatment = null,
-                            //cur_care_plans = null,
-                            //recommendation = null
-                        };
-                        response3 = WebHelpers.PostAPI($"api/{data.api}/add/{DataHelpers._LOCATION}", objTemp);
+                            mydataTable = WebHelpers.GetJSONToDataTable(response.Data);
+
+                            if (mydataTable.Rows.Count > 0)
+                            {
+
+                                string url = $"../{_params[1]}?modelId={modelID}&docId={mydataTable.Rows[0].Field<string>("document_id")}&pId={varPID}&vpId={Request["vpid"]}&pvid={PVID}";
+
+                                Response.Redirect(url, false);
+                            }
+                            else
+                            {
+
+                                var objTemp = new
+                                {
+                                    document_id = docId,
+                                    patient_visit_id = PVID,
+                                    model_id = modelID,
+                                    user_name = userName,
+                                    patient_id = varPID,
+                                    status = DocumentStatus.DRAFT,
+                                    created_user_id = (string)Session["UserId"],
+                                    created_name_e = "",
+                                    created_name_l = "",
+                                    created_date_time = DataHelpers.ConvertSQLDateTime(DateTime.Now)
+                                };
+                                
+                                response3 = WebHelpers.PostAPI($"api/{data.api}/add/{DataHelpers._LOCATION}", objTemp);
+
+                                if (response3.Status == System.Net.HttpStatusCode.OK)
+                                {
+                                    dynamic response4 = WebHelpers.PostAPI($"api/{data.api}/log/{DataHelpers._LOCATION}/{docId}");
+                                    if (response4.Status == System.Net.HttpStatusCode.OK)
+                                    {
+                                        string url = $"../{_params[1]}?modelId={modelID}&docId={docId}&pId={varPID}&vpId={Request["vpid"]}&pvid={PVID}";
+
+                                        Response.Redirect(url, false);
+                                    }
+                                }
+                            }
+                        }
                     }
                     else
                     {
@@ -340,26 +359,25 @@ namespace EMR.Other
                             model_id = modelID,
                             user_name = userName
                         };
+
                         response3 = WebHelpers.PostAPI($"api/{data.api}/add/{DataHelpers._LOCATION}", objTemp);
-                    }
 
-                    if (response3.Status == System.Net.HttpStatusCode.OK)
-                    {
-                        dynamic response4 = WebHelpers.PostAPI($"api/{data.api}/log/{DataHelpers._LOCATION}/{docId}");
-                        if (response4.Status == System.Net.HttpStatusCode.OK)
+                        if (response3.Status == System.Net.HttpStatusCode.OK)
                         {
-                            string url = $"../{_params[1]}?modelId={modelID}&docId={docId}&pId={varPID}&vpId={Request["vpid"]}&pvid={PVID}";
-
-                            if (WebHelpers.CanOpenForm(Page, docId, DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"]))
+                            dynamic response4 = WebHelpers.PostAPI($"api/{data.api}/log/{DataHelpers._LOCATION}/{docId}");
+                            if (response4.Status == System.Net.HttpStatusCode.OK)
                             {
-                                new PatientVisit(PVID);
+                                string url = $"../{_params[1]}?modelId={modelID}&docId={docId}&pId={varPID}&vpId={Request["vpid"]}&pvid={PVID}";
 
-                                Response.Redirect(url, false);
+                                if (WebHelpers.CanOpenForm(Page, docId, DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"]))
+                                {
+                                    Session["Transaction"] = "Add";
+                                    Response.Redirect(url, false);
+                                }
                             }
                         }
                     }
                 }
-            }
         }
 
         protected void RadGridPatientProblem_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -385,5 +403,6 @@ namespace EMR.Other
                 (sender as RadGrid).DataSource = WebHelpers.GetJSONToDataTable(response.Data);
             }
         }
+
     }
 }

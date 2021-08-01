@@ -30,6 +30,13 @@
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/sweetalert.min.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
+    <style type="text/css">
+        table { page-break-after:auto }
+        tr    { page-break-inside:avoid; page-break-after:auto }
+        td    { page-break-inside:avoid; page-break-after:auto }
+        thead { display:table-header-group }
+        tfoot { display:table-footer-group }
+    </style>
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
@@ -46,10 +53,10 @@
                                         <div class="header-info-title">
                                             <h4>BỆNH ÁN TIÊM CHỦNG</h4>
                                             <h5>MEDICAL RECORD FOR VACCINATION</h5>
-                                            <div class="text-primary">(Áp dụng cho các đối tượng ≥1 tháng tuổi/ For person ≥ 1 month old)</div>
+                                            <div class="text-primary" style="font-size: 12.5px;">(Áp dụng cho các đối tượng ≥1 tháng tuổi/ For person ≥ 1 month old)</div>
                                         </div>
                                         <div style="width: 140px" class="text-center">
-                                            <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
+                                            <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
                                             <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
                                         </div>
                                     </div>
@@ -132,7 +139,7 @@
 
                                         <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Order="•" Title="Dấu hiệu sinh tồn/ " SubTitle="Vital signs" runat="server" />
 
-                                        <table class="table-bordered table-fixed mb-2">
+                                        <table class="table-bordered mb-2" style="table-layout: fixed; width: 100%;">
                                             <tr>
                                                 <td class="p-2">Nhiệt độ/ Temperature (C degree)</td>
                                                 <td class="p-2 text-right" style="width: 100px;">
@@ -214,19 +221,44 @@
 
                                         <webUI:PrtRowS1 FixedLeft="5" FontBold="true" CssClass="text-inline" Order="•" Title="Loại vắc xin tiêm chủng lần này/ " SubTitle="Appointed vaccine" runat="server" />
 
-                                        <table runat="server" id="prt_appointed_vaccine" class="table-bordered mb-2" style="table-layout: fixed; width: 100%; page-break-inside: avoid !important;">
-                                            <tr>
-                                                <td data-field="drug_name" class="text-center" style="width: 230px"><span class="font-bold">Tên vaccin</span>
-                                                    <div class="text-primary">Drug names</div>
-                                                </td>
-                                                <td data-field="strength" class="text-center" style="width: 110px" data-align="center"><span class="font-bold">Hàm lượng</span><div class="text-primary">Strength</div>
-                                                </td>
-                                                <td data-field="router" class="text-center" style="width: 110px" data-align="center"><span class="font-bold">Đường dùng</span><div class="text-primary">Route</div>
-                                                </td>
-                                                <td data-field="reason" class="text-center"><span class="font-bold">Hướng dẫn bổ sung/ Chỉ định sử <br /> dụng khi cần thiết kèm theo lý do</span><div class="text-primary">Additional instruction/ PRN order with reason</div>
-                                                </td>
-                                            </tr>
-                                        </table>
+                                        <asp:GridView ShowHeaderWhenEmpty="true" ID="prt_appointed_vaccine" runat="server" CssClass="table-bordered" AutoGenerateColumns="false">
+                                            <Columns>
+                                                <asp:TemplateField>
+                                                    <HeaderTemplate>
+                                                        <div style="width: 180px">Tên vaccin/ <span class="text-primary">Drug names</span></div>
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:Label runat="server" Text='<%#Eval("drug_name") %>' ID="drug_name"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <HeaderTemplate>
+                                                        <div style="width: 130px">Hàm lượng/ <span class="text-primary">Strength</span></div>
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:Label runat="server" Text='<%#Eval("strength") %>' ID="strength"></asp:Label>
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <HeaderTemplate>
+                                                        <div style="width: 120px">Đường dùng/ <span class="text-primary">Route</span></div>
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:Label runat="server" Text='<%#Eval("router") %>' ID="router"></asp:Label>
+                                                        
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                                <asp:TemplateField>
+                                                    <HeaderTemplate>
+                                                        <div style="width: 300px">Hướng dẫn bổ sung/ Chỉ định sử dụng khi cần thiết kèm theo lý do/ <span class="text-primary">Additional instruction/ PRN order with reason</span></div>
+                                                    </HeaderTemplate>
+                                                    <ItemTemplate>
+                                                        <asp:Label runat="server" Text='<%#Eval("reason") %>' ID="reason"></asp:Label>
+                                                        
+                                                    </ItemTemplate>
+                                                </asp:TemplateField>
+                                            </Columns>
+                                        </asp:GridView>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FixedLeft="5" FontBold="true" CssClass="text-inline" Order="•" Title="Khảo sát bổ sung khác/ " SubTitle="Additional investigations:" runat="server" />
@@ -321,6 +353,40 @@
                     </table>
                 </div>
 
+                <telerik:RadWindowManager RenderMode="Lightweight"  
+                                  EnableShadow="true"  
+                                  Behaviors="Close, Move, Resize,Maximize" ID="RadWindowManager" DestroyOnClose="true"
+                                  RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
+            <Windows>
+                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History"   runat="server">
+                    <ContentTemplate>
+                        <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
+                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
+                                <Columns>
+                                    <telerik:GridTemplateColumn Display="false" HeaderStyle-Width="0" ItemStyle-Width="0" ItemStyle-Wrap="false">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="RadLinkButton1" runat="server" CommandName="Open" Text=""></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+
+                                    <telerik:GridTemplateColumn>
+                                        <ItemTemplate>
+                                            <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
+</telerik:RadLabel>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+                                </Columns>
+                            </MasterTableView>
+                            <ClientSettings>
+                                <Selecting AllowRowSelect="true" />
+                                <ClientEvents OnRowDblClick="RowDblClick" />
+                            </ClientSettings>
+                        </telerik:RadGrid>
+                    </ContentTemplate>
+                </telerik:RadWindow>
+            </Windows>
+        </telerik:RadWindowManager>
+
                 <div class="cssclsNoPrint">
                     <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0; border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
@@ -360,6 +426,23 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-body collapse show" id="collapseOne">
+
+                                        <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel2">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile" OnClick="RadButton1_Click"  ID="RadButton1" runat="server" CssClass="btn-sm" Text="View Latest Version"  />
+                                                    </div>
+
+                                                    <div class="alert alert-info d-flex align-items-center">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel1">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile" AutoPostBack="false" ID="Button1" runat="server" OnClientClicked="showWindow" CssClass="btn-sm" Text="View History"  />
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         <div class="row mb-2">
                                             <div class="col-md-12">
                                                 <label class="control-label mb-2 h4">I. Lý do đến khám/ <span class="text-primary">Chief complaint:</span></label>
@@ -876,7 +959,7 @@
 
                                                 <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                <asp:LinkButton runat="server" OnClientClick="window.print(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                 <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                             </div>
@@ -902,7 +985,8 @@
                         </div>
                     </div>
                 </div>
-                    </div>
+                </div>
+                <asp:LinkButton runat="server" OnClick="clearSession_Click" ID="clearSession"></asp:LinkButton>
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>
@@ -916,6 +1000,8 @@
     <script src="../scripts/alertify.js"></script>
     <script type="text/javascript">
 
+
+
         var elem = window.parent.parent.document.getElementById("myProgress");
         progress(elem);
         $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
@@ -927,6 +1013,26 @@
         function afterAsyncPostBack() {
             checkboxRadiobutton_init();
             $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
+        }
+
+        function showWindow(sender, eventArgs) {
+            var oWnd = $find("<%=RadWindow1.ClientID%>");
+            oWnd.show();
+        }
+
+        function RowDblClick(sender, eventArgs) {
+            console.log('sdfsdf');
+
+            var grid = $find("<%= RadGrid1.ClientID %>");
+            var masterTable = grid.get_masterTableView();
+            var item = eventArgs.get_itemIndexHierarchical();
+
+            var row = masterTable.get_dataItems()[item];
+
+            var button = row.findElement("RadLinkButton1");
+            button.click();
+
+            //console.log(row);
         }
 
     </script>

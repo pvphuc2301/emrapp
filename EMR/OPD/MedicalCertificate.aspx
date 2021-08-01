@@ -20,7 +20,6 @@
 <%@ Register Src="~/UserControls/PrintTemplate/PrtRowS2.ascx" TagPrefix="webUI" TagName="PrtRowS2" %>
 <%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="webUI" TagName="PopupShowDelay" %>
 
-
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -36,6 +35,7 @@
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
         <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
+
                 <div class="cssclsNoScreen" style="font-family: Tahoma !important; font-size: 13.3048px !important;">
                     <table class="report-container">
                         <thead class="report-header">
@@ -47,8 +47,8 @@
                                             <h4>GIẤY CHỨNG NHẬN ĐIỀU TRỊ</h4>
                                             <h5>MEDICAL CERTIFICATE</h5>
                                         </div>
-                                        <div style="width: 175px;">
-                                            <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
+                                        <div style="width: 150px; text-align: center; font-size: 11px">
+                                            <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
                                             <asp:Label runat="server" ID="prt_vpid" CssClass="d-block"></asp:Label>
                                         </div>
                                     </div>
@@ -147,13 +147,13 @@
 
                                         <div class="d-grid" style="grid-template-columns: 1fr 1fr; grid-gap: 5px">
                                             <div></div>
-                                            <div class="text-center avoid-page-break">
+                                            <div class="text-center" style="break-inside: avoid !important; page-break-inside: avoid !important">
                                                 <div>Ngày/ <span class="text-primary">Date:</span> <asp:Label runat="server" ID="prt_date"></asp:Label></div>
                                                 <div><span class="font-bold">BÁC SĨ ĐIỀU TRỊ</span></div>
                                                 <div><span class="text-primary">ATTENDING DOCTOR</span></div>
                                                 <div>(Họ tên, chữ ký & MSNV)</div>
                                                 <div style="margin-bottom: 100px;"><span class="text-primary">(Full name, Signature & ID)</span></div>
-                                                <asp:Label runat="server" ID="prt_attending_doctor"></asp:Label>
+                                                <asp:Label runat="server" ID="prt_signature_doctor"></asp:Label>
                                             </div>
                                         </div>
                                     </div>
@@ -178,6 +178,40 @@
                     </table>
                 </div>
 
+                <telerik:RadWindowManager RenderMode="Lightweight"  
+                                  EnableShadow="true"  
+                                  Behaviors="Close, Move, Resize,Maximize" ID="RadWindowManager" DestroyOnClose="true"
+                                  RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
+            <Windows>
+                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History"   runat="server">
+                    <ContentTemplate>
+                        <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
+                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
+                                <Columns>
+                                    <telerik:GridTemplateColumn Display="false" HeaderStyle-Width="0" ItemStyle-Width="0" ItemStyle-Wrap="false">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="RadLinkButton1" runat="server" CommandName="Open" Text=""></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+
+                                    <telerik:GridTemplateColumn>
+                                        <ItemTemplate>
+                                            <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
+</telerik:RadLabel>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+                                </Columns>
+                            </MasterTableView>
+                            <ClientSettings>
+                                <Selecting AllowRowSelect="true" />
+                                <ClientEvents OnRowDblClick="RowDblClick" />
+                            </ClientSettings>
+                        </telerik:RadGrid>
+                    </ContentTemplate>
+                </telerik:RadWindow>
+            </Windows>
+        </telerik:RadWindowManager>
+
                 <div class="cssclsNoPrint">
                     <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0; border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
@@ -185,27 +219,28 @@
                     </ul>
                     <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
                         <asp:HiddenField runat="server" ID="DataObj" />
-                    <asp:Panel runat="server" ID="messagePlaceHolder">
-                        <div class="card" runat="server" id="amendReasonWraper">
-                            <div class="card-body">
-                                <h5>Lý do thay đổi/ <span class="text-primary">amend reason: </span>
-                                    <br />
-                                    <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
-                                <div class="form-group mb-2">
+                        <asp:Panel runat="server" ID="messagePlaceHolder">
+                            <div class="card" runat="server" id="amendReasonWraper">
+                                <div class="card-body">
+                                    <h5>Lý do thay đổi/ <span class="text-primary">amend reason: </span>
+                                        <br />
+                                        <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
+                                    <div class="form-group mb-2">
 
-                                    <asp:TextBox runat="server" Text="MultiLine" ID="txt_amend_reason" CssClass="form-control" />
+                                        <asp:TextBox runat="server" TextMode="MultiLine" ID="txt_amend_reason" CssClass="form-control" />
 
-                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
-                                        ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
+                                            ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <asp:ValidationSummary ID="valSum" DisplayMode="BulletList" CssClass="validationSummary" runat="server" ValidationGroup="Group1" HeaderText="Please complete the highlighted field(s)." />
-                    </asp:Panel>
-                    <uc1:PatientInfo runat="server" ID="PatientInfo" />
+                            <asp:ValidationSummary ID="valSum" DisplayMode="BulletList" CssClass="validationSummary" runat="server" ValidationGroup="Group1" HeaderText="Please complete the highlighted field(s)." />
+                        </asp:Panel>
 
-                    <div class="row">
+                        <uc1:PatientInfo runat="server" ID="PatientInfo" />
+
+                        <div class="row">
                         <div class="col-lg-12">
                             <div class="card">
                                 <div class="card-header">
@@ -214,6 +249,23 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-body collapse show" id="collapseOne">
+
+                                        <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel2">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile"  OnClick="RadButton1_Click" ID="RadButton1" runat="server" CssClass="btn-sm" Text="View Latest Version"  />
+                                                    </div>
+
+                                                    <div class="alert alert-info d-flex align-items-center">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel1">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile" AutoPostBack="false" ID="Button1" runat="server" OnClientClicked="showWindow" CssClass="btn-sm" Text="View History"  />
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         <fieldset class="row mb-2">
                                             <legend>
                                                 <label class="control-label">Lý do đến khám/ <span class="text-primary">Chief complaint:</span></label>
@@ -345,7 +397,7 @@
 
                                                 <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                <asp:LinkButton runat="server" OnClientClick="window.print(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                 <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                             </div>
@@ -370,8 +422,9 @@
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
-                </div>
+                <asp:LinkButton runat="server" OnClick="clearSession_Click" ID="clearSession"></asp:LinkButton>
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>
@@ -394,6 +447,27 @@
 
         function afterAsyncPostBack() {
         }
+
+        function showWindow(sender, eventArgs) {
+            var oWnd = $find("<%=RadWindow1.ClientID%>");
+            oWnd.show();
+        }
+
+
+       function RowDblClick(sender, eventArgs) {
+           console.log('sdfsdf');
+
+           var grid = $find("<%= RadGrid1.ClientID %>");
+           var masterTable = grid.get_masterTableView();
+           var item = eventArgs.get_itemIndexHierarchical();
+
+           var row = masterTable.get_dataItems()[item];
+
+           var button = row.findElement("RadLinkButton1");
+           button.click();
+
+           //console.log(row);
+       }
     </script>
 </body>
 </html>

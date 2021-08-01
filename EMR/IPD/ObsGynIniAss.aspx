@@ -49,10 +49,8 @@
                                         <h5>OBSTETRIC & GYNECOLOGICAL INITIAL ASSESSMENT</h5>
                                     </div>
                                     <div style="text-align:center">
-                                        <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
-                                        <div>
-                                            <Label class="font-bold" ID="prt_pid" runat="server"></Label>
-                                        </div>
+                                        <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
+                                        <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
                                     </div>
                                 </div>
                                 <webUI:Line runat="server" ID="Line" />
@@ -799,8 +797,43 @@
                     </tfoot>
                 </table>
             </div>
+
+                <telerik:RadWindowManager RenderMode="Lightweight"  
+                                  EnableShadow="true"  
+                                  Behaviors="Close, Move, Resize,Maximize" ID="RadWindowManager" DestroyOnClose="true"
+                                  RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
+            <Windows>
+                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History"   runat="server">
+                    <ContentTemplate>
+                        <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
+                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
+                                <Columns>
+                                    <telerik:GridTemplateColumn Display="false" HeaderStyle-Width="0" ItemStyle-Width="0" ItemStyle-Wrap="false">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="RadLinkButton1" runat="server" CommandName="Open" Text=""></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+
+                                    <telerik:GridTemplateColumn>
+                                        <ItemTemplate>
+                                            <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
+</telerik:RadLabel>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+                                </Columns>
+                            </MasterTableView>
+                            <ClientSettings>
+                                <Selecting AllowRowSelect="true" />
+                                <ClientEvents OnRowDblClick="RowDblClick" />
+                            </ClientSettings>
+                        </telerik:RadGrid>
+                    </ContentTemplate>
+                </telerik:RadWindow>
+            </Windows>
+        </telerik:RadWindowManager>
+
                 <div class="cssclsNoPrint">
-                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                       <li>Discharge Summary</li>
                     </ul>
@@ -841,6 +874,23 @@
                                     </div>
                                     <div class="card-body collapse show" id="collapseOne">
                                         <div class="form-body">
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel2">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile"  OnClick="RadButton1_Click" ID="RadButton1" runat="server" CssClass="btn-sm" Text="View Latest Version"  />
+                                                    </div>
+
+                                                    <div class="alert alert-info d-flex align-items-center">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel1">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile" AutoPostBack="false" ID="Button1" runat="server" OnClientClicked="showWindow" CssClass="btn-sm" Text="View History"  />
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <div class="row mb-2">
                                                 <label class="col-md-12 control-label mb-1 h4">I. Lý do nhập viện/ <span class="text-primary">Reason for admission:</span></label>
                                                 <div class="col-md-12 gt-2-a">
@@ -961,16 +1011,18 @@
                                                                     <div class="custom-control custom-radio d-inline-block ml-2">
                                                                         <input type="radio" onclick="__doPostBack('rad_tetanus_vaccination_change','true')" id="rad_tetanus_vaccination_true" name="rad_tetanus_vaccination" class="custom-control-input" runat="server" />
                                                                         <label class="custom-control-label" for="rad_tetanus_vaccination_true">Có/ <span class="text-primary">Yes</span></label>
-                                                                        <a href="javascript:void(0)" data-clear="rad_tetanus_vaccination" onclick="clear_radiobutton(this)">
-                                                                            <icon:xsquare runat="server" ID="XSquare12" />
-                                                                        </a>
+                                                                        <input onclick="__doPostBack('rad_tetanus_vaccination_change','')" hidden="hidden" type="checkbox" id="Radio4" runat="server" />
+                                                        <label for="Radio4"><icon:XSquare runat="server" ID="XSquare9" /></label>
                                                                     </div>
                                                                 </div>
 
-                                                                <div runat="server" id="tetanus_vaccin_time_field" class="form-group d-inline-block w-5 ml-2">
-                                                                    <input runat="server" data-type="number" id="txt_tetanus_vaccin_time" class="form-control text-right" />
-                                                                    <span class="append">ngày/ days</span>
+                                                                <div runat="server" id="tetanus_vaccin_time_field">
+                                                                    <div runat="server" id="tetanus_vaccin_time_wrapper" class="form-group d-inline-block w-5">
+                                                                        <input runat="server" data-type="number" id="txt_tetanus_vaccin_time" class="form-control text-right" />
+                                                                        <span class="append">lần/ times</span>
+                                                                    </div>
                                                                 </div>
+
 
                                                                 <%--<div class="form-group w-5 d-inline-block tetanus_vaccin_time_field ml-2" runat="server" id="tetanus_vaccin_time_wrapper">
                                                                     <input runat="server" data-type="number" id="" class="form-control text-right" />
@@ -1225,7 +1277,7 @@
                                                                                     <div style="width: 123px">1</div>
                                                                                 </HeaderTemplate>
                                                                                 <ItemTemplate>
-                                                                                    <webUI:TextField Value='<%#Eval("grav_1") %>'  ID="grav_1" Width="123px" runat="server" />
+                                                                                    <webUI:TextField Value='<%#Eval("grav_1") %>'  ID="grav_1" Width="123px" runat="server" TextMode="SingleLine" />
                                                                                 </ItemTemplate>
                                                                             </asp:TemplateField>
                                                                             <asp:TemplateField>
@@ -1233,7 +1285,7 @@
                                                                                     <div style="width: 123px">2</div>
                                                                                 </HeaderTemplate>
                                                                                 <ItemTemplate>
-                                                                                    <webUI:TextField Value='<%#Eval("grav_2") %>' ID="grav_2" Width="123px" runat="server" />
+                                                                                    <webUI:TextField Value='<%#Eval("grav_2") %>' ID="grav_2" Width="123px" runat="server" TextMode="SingleLine" />
                                                                                 </ItemTemplate>
                                                                             </asp:TemplateField>
                                                                             <asp:TemplateField>
@@ -1241,7 +1293,7 @@
                                                                                     <div style="width: 123px">3</div>
                                                                                 </HeaderTemplate>
                                                                                 <ItemTemplate>
-                                                                                    <webUI:TextField Value='<%#Eval("grav_3") %>' ID="grav_3" Width="123px" runat="server" />
+                                                                                    <webUI:TextField Value='<%#Eval("grav_3") %>' ID="grav_3" Width="123px" runat="server" TextMode="SingleLine" />
                                                                                 </ItemTemplate>
                                                                             </asp:TemplateField>
                                                                             <asp:TemplateField>
@@ -1249,7 +1301,7 @@
                                                                                     <div style="width: 123px">4</div>
                                                                                 </HeaderTemplate>
                                                                                 <ItemTemplate>
-                                                                                    <webUI:TextField Value='<%#Eval("grav_4") %>' ID="grav_4" Width="123px" runat="server" />
+                                                                                    <webUI:TextField Value='<%#Eval("grav_4") %>' ID="grav_4" Width="123px" runat="server" TextMode="SingleLine" />
                                                                                 </ItemTemplate>
                                                                             </asp:TemplateField>
                                                                             <asp:TemplateField>
@@ -1257,7 +1309,7 @@
                                                                                     <div style="width: 123px">5</div>
                                                                                 </HeaderTemplate>
                                                                                 <ItemTemplate>
-                                                                                    <webUI:TextField Value='<%#Eval("grav_5") %>' ID="grav_5" Width="123px" runat="server" />
+                                                                                    <webUI:TextField Value='<%#Eval("grav_5") %>' ID="grav_5" Width="123px" runat="server" TextMode="SingleLine" />
                                                                                 </ItemTemplate>
                                                                             </asp:TemplateField>
                                                                             <asp:TemplateField>
@@ -1265,7 +1317,7 @@
                                                                                     <div style="width: 123px">6</div>
                                                                                 </HeaderTemplate>
                                                                                 <ItemTemplate>
-                                                                                    <webUI:TextField Value='<%#Eval("grav_6") %>' ID="grav_6" Width="123px" runat="server" />
+                                                                                    <webUI:TextField Value='<%#Eval("grav_6") %>' ID="grav_6" Width="123px" runat="server" TextMode="SingleLine" />
                                                                                 </ItemTemplate>
                                                                             </asp:TemplateField>
 
@@ -1314,7 +1366,7 @@
                                                                         </label>
                                                                         <asp:Label runat="server" ID="lbl_edema_note"></asp:Label>
                                                                         <div class="form-group d-inline-block w-n" runat="server" id="edema_note_wrapper">
-                                                                            <webUI:TextField runat="server" ID="txt_edema_note" />
+                                                                            <webUI:TextField runat="server" ID="txt_edema_note"  TextMode="SingleLine" />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -1633,21 +1685,27 @@
 
                                                                         <div class="col-md-12 mb-2 gt-2-a" runat="server" id="ru_field">
                                                                             <label class="control-label mb-1">Ối vỡ lúc/ <span class="text-primary">Rupture of membrane at</span></label>
-                                                                            <asp:Label runat="server" ID="lbl_obs_rup_of_mem_at"></asp:Label>
                                                                             <div>
-                                                                                <div class="mb-2" runat="server" id="obs_rup_of_mem_at_wrapper">
-                                                                                    <telerik:RadDateTimePicker runat="server" ID="dtpk_obs_rup_of_mem_at" Width="200px" CssClass="ml-2 edit" />
-                                                                                </div>
-                                                                                <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                                    <input type="radio" runat="server" id="rad_obs_rup_of_mem_code_s" name="rad_obs_rup_of_mem_code" class="custom-control-input" />
-                                                                                    <label class="custom-control-label" for="rad_obs_rup_of_mem_code_s">Tự nhiên/ <span class="text-primary">Spontaneous</span></label>
-                                                                                </div>
-                                                                                <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                                    <input type="radio" runat="server" id="rad_obs_rup_of_mem_code_i" name="rad_obs_rup_of_mem_code" class="custom-control-input" />
-                                                                                    <label class="custom-control-label" for="rad_obs_rup_of_mem_code_i">Can thiệp/ <span class="text-primary">Interventional</span></label>
-                                                                                    <a href="javascript:void(0)" data-clear="rad_obs_rup_of_mem_code" onclick="clear_radiobutton(this)">
-                                                                                        <icon:xsquare runat="server" ID="XSquare7" />
-                                                                                    </a>
+                                                                                <asp:Label runat="server" ID="lbl_obs_rup_of_mem_at"></asp:Label>
+
+                                                                                <div>
+                                                                                    <div class="mb-2" runat="server" id="obs_rup_of_mem_at_wrapper">
+                                                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_obs_rup_of_mem_at" Width="200px" CssClass="ml-2 edit" />
+                                                                                    </div>
+                                                                                    <asp:Label runat="server" ID="lbl_obs_rup_of_mem_code"></asp:Label>
+                                                                                    <div runat="server" id="obs_rup_of_mem_code_wrapper">
+                                                                                        <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                                            <input type="radio" runat="server" id="rad_obs_rup_of_mem_code_s" name="rad_obs_rup_of_mem_code" class="custom-control-input" />
+                                                                                            <label class="custom-control-label" for="rad_obs_rup_of_mem_code_s">Tự nhiên/ <span class="text-primary">Spontaneous</span></label>
+                                                                                        </div>
+                                                                                        <div class="custom-control custom-radio d-inline-block ml-2">
+                                                                                            <input type="radio" runat="server" id="rad_obs_rup_of_mem_code_i" name="rad_obs_rup_of_mem_code" class="custom-control-input" />
+                                                                                            <label class="custom-control-label" for="rad_obs_rup_of_mem_code_i">Can thiệp/ <span class="text-primary">Interventional</span></label>
+                                                                                            <a href="javascript:void(0)" data-clear="rad_obs_rup_of_mem_code" onclick="clear_radiobutton(this)">
+                                                                                                <icon:xsquare runat="server" ID="XSquare7" />
+                                                                                            </a>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -1884,7 +1942,7 @@
 
                                                     <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                    <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                    <asp:LinkButton runat="server" OnClientClick="window.print(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                     <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                                 </div>
@@ -1911,6 +1969,8 @@
                         </div>
                     </div>
                 </div>
+                <asp:LinkButton runat="server" OnClick="clearSession_Click" ID="clearSession"></asp:LinkButton>
+
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>
@@ -1926,7 +1986,7 @@
     <script type="text/javascript">
         var elem = window.parent.parent.document.getElementById("myProgress");
         progress(elem);
-
+        $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
         InputFilter("data-type='number'");
 
         checkboxRadiobutton_init();
@@ -1940,8 +2000,29 @@
             checkboxRadiobutton_init();
             formGroup_init();
             InputFilter("data-type='number'");
+            $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
         }
 
+        function showWindow(sender, eventArgs) {
+            var oWnd = $find("<%=RadWindow1.ClientID%>");
+            oWnd.show();
+        }
+
+
+       function RowDblClick(sender, eventArgs) {
+            console.log('sdfsdf');
+
+           var grid = $find("<%= RadGrid1.ClientID %>");
+           var masterTable = grid.get_masterTableView();
+           var item = eventArgs.get_itemIndexHierarchical();
+
+           var row = masterTable.get_dataItems()[item];
+
+           var button = row.findElement("RadLinkButton1");
+           button.click();
+
+           //console.log(row);
+       }
     </script>
 </body>
 </html>

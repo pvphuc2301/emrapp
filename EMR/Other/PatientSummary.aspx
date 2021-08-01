@@ -98,14 +98,13 @@
 <body>
     <form method="post" action="#" id="form2" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
+
          <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                 <div style="overflow: hidden; height: 100vh; margin-top: 15px;">
                     <telerik:RadSplitter runat="server" ID="RadSplitter1" SplitBarsSize="2" 
     Orientation="Vertical" Width="100%" Height="100%">
                         <telerik:RadPane runat="server" ID="TopPane" Width="220" MinWidth="150" MaxWidth="550">
-                        <!-- Sidebar scroll-->
-                        <%--<asp:LinkButton CssClass="btn btn-outline-light waves-effect position-sticky waves-secondary text-dark w-100" ID="btnPatientSummary" OnClick="btnPatientSummary_Click" runat="server">Patient Summary</asp:LinkButton>--%>
                             <div class="scroll-effect" style="overflow: hidden; height: 100vh" id="menuLeft">
                                 <nav class="sidebar-wrapper" style="position: initial; width: inherit">
                                     <div class="sidebar-menu">
@@ -137,6 +136,8 @@
                                                 <telerik:RadTreeView OnClientMouseOut="ClientMouseOut" OnClientMouseOver="ClientMouseOver" OnNodeClick="RadTreeView1_NodeClick" ID="RadTreeView1" runat="server" OnNodeExpand="RadTreeView1_NodeExpand"/>
                                             </li>
 
+                                            <asp:LinkButton runat="server" OnClick="btnRefresh1_Click" ID="btnRefresh1"></asp:LinkButton>
+
                                             <%--END Load Left Menu--%>
 
                                             <%--Load LAB and IMG Document--%>
@@ -153,7 +154,7 @@
 
                                             <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px;">
                                                 <h5 class="font-bold text-primary ml-2">Form Scan</h5>
-                                                <telerik:RadTreeView OnNodeClick="RadTreeView3_NodeClick" ID="RadTreeView4" runat="server" OnNodeExpand="RadTreeView3_NodeExpand"/>
+                                                <telerik:RadTreeView OnNodeClick="RadTreeView3_NodeClick" ID="RadTreeView4" runat="server"  OnNodeExpand="RadTreeView4_NodeExpand"/>
                                             </li>
                                             <%--End Load Scan Document--%>
                                         </ul>
@@ -162,6 +163,7 @@
                             </div>
                         </telerik:RadPane>
                         <telerik:RadSplitBar CollapseMode="none" Visible="true" runat="server" ID="RadSplitBar1" ResizeStep="3" />
+
                         <telerik:RadPane ID="MainContent" runat="server"></telerik:RadPane>
                     </telerik:RadSplitter>
                 </div>

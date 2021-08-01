@@ -83,6 +83,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Telerik.ReportViewer.Html5.WebForms, Version=15.1.21.616, Culture=neutral, PublicKeyToken=a9d7983dfcc261be, processorArchitecture=MSIL" />
     <Reference Include="Telerik.Web.Design, Version=2021.2.511.45, Culture=neutral, PublicKeyToken=121fae78165ba3d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\lib\RCAJAX\2021.2.511.45\Telerik.Web.Design.dll</HintPath>
@@ -208,6 +209,7 @@
     <Content Include="images\aih.ico" />
     <Content Include="IPD\ObsGynIniAss.aspx" />
     <Content Include="IPD\SurgicalReport.aspx" />
+    <Content Include="Other\Test.aspx" />
     <Content Include="Report\AllowUpdateEMR.aspx" />
     <Content Include="Other\DemographicSearch.aspx" />
     <Content Include="Other\index.aspx" />
@@ -450,6 +452,13 @@
     </Compile>
     <Compile Include="IPD\SurgicalReport.aspx.designer.cs">
       <DependentUpon>SurgicalReport.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Other\Test.aspx.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Other\Test.aspx.designer.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
     </Compile>
     <Compile Include="Report\AllowUpdateEMR.aspx.cs">
       <DependentUpon>AllowUpdateEMR.aspx</DependentUpon>
@@ -1138,7 +1147,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

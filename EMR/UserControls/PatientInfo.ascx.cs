@@ -49,7 +49,7 @@ namespace EMR.UserControls
         {
             try {
                 lblVisitCode.InnerText = PatientVisit.Instance().visit_code;
-                lblVisitDate.InnerText = WebHelpers.FormatDateTime(PatientVisit.Instance().actual_visit_date_time, "dd/MM/yyyy HH:mm:ss");
+                lblVisitDate.InnerText = WebHelpers.FormatDateTime(PatientVisit.Instance().actual_visit_date_time);
             }
             catch(Exception ex)
             {

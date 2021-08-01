@@ -38,7 +38,7 @@
                             <tr>
                                 <th class="report-header-cell">
                                     <div class="header-info" style="display: grid; grid-template-columns: 250px 1fr 150px">
-                                        <div class="text-center" style="line-height: 16.6667px;">
+                                        <div class="text-center align-top" style="line-height: 16.6667px; height: 90px; background: blue;">
                                             <div>SỞ Y TẾ TP.HCM</div>
                                             <div class="text-primary">HCMC DOH</div>
                                             <div>BỆNH VIỆN QUỐC TẾ MỸ</div>
@@ -46,13 +46,13 @@
                                             <div style="margin-top: 10px;" class="font-bold">KHOA/<span class="text-primary">DEPARTMENT:</span></div>
                                             <asp:Label runat="server" ID="prt_disc_ward_desc"></asp:Label>
                                         </div>
-                                        <div class="text-center ml-2 mr-2">
+                                        <div class="text-center ml-2 mr-2  align-top" style="height: 90px">
                                             <div class="font-bold">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</div>
                                             <div class="text-primary">SOCIALIST REPUBLIC OF VIETNAM</div>
                                             <div style="margin-top: 10px;" class="font-bold">Độc lập - Tự do - Hạnh phúc</div>
                                             <div class="text-primary">Independence – Freedom – Happiness</div>
                                         </div>
-                                        <div>
+                                        <div class="align-top" style="height: 90px">
                                             <div>MS: 01/BV-01</div>
                                             <div>Số lưu trữ/ <span class="text-primary">No:</span></div>
                                             <div>
@@ -192,6 +192,40 @@
                     </table>
                 </div>
 
+                <telerik:RadWindowManager RenderMode="Lightweight"  
+                                  EnableShadow="true"  
+                                  Behaviors="Close, Move, Resize,Maximize" ID="RadWindowManager" DestroyOnClose="true"
+                                  RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
+            <Windows>
+                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History"   runat="server">
+                    <ContentTemplate>
+                        <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
+                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
+                                <Columns>
+                                    <telerik:GridTemplateColumn Display="false" HeaderStyle-Width="0" ItemStyle-Width="0" ItemStyle-Wrap="false">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="RadLinkButton1" runat="server" CommandName="Open" Text=""></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+
+                                    <telerik:GridTemplateColumn>
+                                        <ItemTemplate>
+                                            <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
+</telerik:RadLabel>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+                                </Columns>
+                            </MasterTableView>
+                            <ClientSettings>
+                                <Selecting AllowRowSelect="true" />
+                                <ClientEvents OnRowDblClick="RowDblClick" />
+                            </ClientSettings>
+                        </telerik:RadGrid>
+                    </ContentTemplate>
+                </telerik:RadWindow>
+            </Windows>
+        </telerik:RadWindowManager>
+
                 <div class="cssclsNoPrint" >
                     <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd;border-radius:0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
@@ -231,6 +265,23 @@
                         </div>
                         <div class="card-body collapse show" id="collapseOne">
                             <div class="form-body">
+
+                                <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel2">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile"  OnClick="RadButton1_Click" ID="RadButton1" runat="server" CssClass="btn-sm" Text="View Latest Version"  />
+                                                    </div>
+
+                                                    <div class="alert alert-info d-flex align-items-center">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel1">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile" AutoPostBack="false" ID="Button1" runat="server" OnClientClicked="showWindow" CssClass="btn-sm" Text="View History"  />
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                 <div class="row">
                                     <div class="col-md-12 mb-2 gt-2-a">
                                         <label class="control-label mb-1">Khoa xuất viện/ <span class="text-primary">Discharge ward <span class="text-danger">*</span>:</span></label>
@@ -334,7 +385,7 @@
 
                                             <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                            <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                            <asp:LinkButton runat="server" OnClientClick="window.print(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                             <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                         </div>
@@ -360,6 +411,7 @@
                     </div>
                         </div>
                 </div>
+                <asp:LinkButton runat="server" OnClick="clearSession_Click" ID="clearSession"></asp:LinkButton>
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>
@@ -383,6 +435,26 @@
         function afterAsyncPostBack() {
         }
 
+        function showWindow(sender, eventArgs) {
+            var oWnd = $find("<%=RadWindow1.ClientID%>");
+            oWnd.show();
+        }
+
+
+       function RowDblClick(sender, eventArgs) {
+            console.log('sdfsdf');
+
+           var grid = $find("<%= RadGrid1.ClientID %>");
+           var masterTable = grid.get_masterTableView();
+           var item = eventArgs.get_itemIndexHierarchical();
+
+           var row = masterTable.get_dataItems()[item];
+
+           var button = row.findElement("RadLinkButton1");
+           button.click();
+
+           //console.log(row);
+       }
     </script>
 </body>
 </html>

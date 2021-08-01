@@ -22,9 +22,7 @@
 <%@ Register Src="~/UserControls/PrintTemplate/PrtRowS2.ascx" TagPrefix="webUI" TagName="PrtRowS2" %>
 <%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="webUI" TagName="PopupShowDelay" %>
 
-
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
@@ -49,10 +47,10 @@
                                             <h4>PHIẾU ĐÁNH GIÁ ĐIỀU<br />DƯỠNG BỆNH NGOẠI TRÚ</h4>
                                             <h5>OUTPATIENT INITIAL NURSING ASSESSMENT</h5>
                                         </div>
-                                        <div style="width: 175px;">
+                                        <div style="width: 150px; text-align: left; font-size: 11px">
                                             <asp:Label runat="server" ID="prt_fullname" CssClass="d-block"></asp:Label>
                                             <asp:Label CssClass="d-block" runat="server" ID="prt_DOB"></asp:Label>
-                                            <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
+                                            <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
                                             <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
                                         </div>
                                     </div>
@@ -102,51 +100,63 @@
                                         </table>
 
                                         <webUI:PrtRowS1 FontBold="true" Order="II." Title="ĐÁNH GIÁ:" SubTitle="ASSESSMENT" runat="server" />
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; ">
                                             <webUI:PrtRowS1 FontBold="true" Order="1." FixedWidth="152" Title="Lý do đến khám:" SubTitle="Chief complaint"  runat="server" />
                                             <asp:Label runat="server" ID="prt_chief_complaint" />
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                        <webUI:PrtRowS1 FontBold="true" Order="2." FixedWidth="152" Title="Dị ứng:" SubTitle="Allergy" runat="server"  />
+                                            <webUI:PrtRowS1 FontBold="true" Order="2." FixedWidth="152" Title="Dị ứng:" SubTitle="Allergy" runat="server"  />
                                             <asp:Label runat="server" ID="prt_allergy"/>
                                         </div>
 
                                         <webUI:PrtRowS1 FontBold="true" Order="3." Title="Trạng thái tinh thần" SubTitle="Mental status" runat="server" />
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                            <webUI:PrtRowS1 FixedLeft="30" FixedWidth="152" Title="Đáp ứng phù hợp" SubTitle="Appropriate response" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" FixedLeft="30" FixedWidth="152" Title="Đáp ứng phù hợp" SubTitle="Appropriate response" runat="server" />
                                             <asp:Label runat="server" ID="prt_mental_status" />
                                         </div>
 
-                                        <webUI:PrtRowS1 FontBold="true" Order="4." FixedWidth="152" Title="Thang điểm đau:" SubTitle="Pain Score" ID="prt_paint_score_code" runat="server" Value="0" />
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="4." FixedWidth="152" Title="Thang điểm đau:" SubTitle="Pain Score"  runat="server" />
+                                            <asp:Label CssClass="d-grid" runat="server" ID="prt_paint_score_code" />
+                                        </div>
 
                                         <div class="text-center mb-2">
                                             <img src="../images/pain_score.png" />
                                         </div>
 
-                                        <webUI:PrtRowS1 FontBold="true" Order="5." FixedWidth="235" Title="Tầm soát nguy cơ té ngã:" SubTitle="Fall Risk Morse Scale" Value="Không có nguy cơ/ No risk" runat="server" ID="prt_fall_risk" />
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="5." FixedWidth="235" Title="Tầm soát nguy cơ té ngã:" SubTitle="Fall Risk Morse Scale" runat="server" />
+                                            <asp:Label CssClass="d-grid" runat="server" ID="prt_fall_risk" />
+                                        </div>
 
-                                        <webUI:PrtRowS1 FontBold="true" Order="6." FixedWidth="235" Title="Đánh giá tình trạng dinh dưỡng:" SubTitle="Nutritional Status Screening" Value="Không ghi nhận/ N/A" ID="prt_nutrition_status_code" runat="server" />
-
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="6." FixedWidth="235" Title="Đánh giá tình trạng dinh dưỡng:" SubTitle="Nutritional Status Screening" runat="server" />
+                                            <asp:Label CssClass="d-grid" runat="server" ID="prt_nutrition_status_code" />
+                                        </div>
+                                        
                                         <webUI:PrtRowS1 FontBold="true" Order="III." Title="ĐÁNH GIÁ CÁC YẾU TỐ XÃ HỘI CỦA NGƯỜI BỆNH(DUY NHẤT CHO LẦN KHÁM ĐẦU TIÊN):" SubTitle="SOCIAL FACTORS ASSESSMENT(ONLY FOR THE FIRST VISIT)" runat="server" />
-
+                                            
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FontBold="true" FixedLeft="30" FixedWidth="152" Title="Tình trạng sinh sống:" SubTitle="Housing" runat="server" />
-                                            
                                             <asp:Label CssClass="d-grid" runat="server" ID="prt_housing" />
                                         </div>
 
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                            <webUI:PrtRowS1 FontBold="true" Order="IV." FixedWidth="152" Title="MỨC ĐỘ ƯU TIÊN:" SubTitle="PRIORITIZATION" runat="server" />
+                                            <asp:Label runat="server" ID="prt_prioritization_code" />
+                                        </div>
 
-                                        <webUI:PrtRowS1 FontBold="true" Order="IV." FixedWidth="152" ID="prt_prioritization_code" Title="MỨC ĐỘ ƯU TIÊN:" SubTitle="PRIORITIZATION" Value="Có thể chờ khám trong khoảng thời gian xác định" runat="server" />
-
-                                        <div class="d-grid mt-4" style="grid-template-columns: 1fr 1fr">
+                                        <div class="d-grid mt-4" style="grid-template-columns: 1fr auto">
                                             <div></div>
                                             <div class="text-center">
-                                                <div>Ngày/ Date: 13-04-2021 13:28</div>
+                                                <div>Ngày/ Date: <asp:Label runat="server" ID="prt_signature_date" /></div>
                                                 <div><span class="font-bold">ĐIỀU DƯỠNG ĐÁNH GIÁ</span></div>
-                                                <div>Assessment done by Nurse</div>
+                                                <div style="margin-bottom: 100px;">Assessment done by Nurse</div>
+
                                             </div>
                                         </div>
 
@@ -171,6 +181,40 @@
                         </tfoot>
                     </table>
                 </div>
+
+                <telerik:RadWindowManager RenderMode="Lightweight"  
+                                  EnableShadow="true"  
+                                  Behaviors="Close, Move, Resize,Maximize" ID="RadWindowManager" DestroyOnClose="true"
+                                  RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
+            <Windows>
+                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History"   runat="server">
+                    <ContentTemplate>
+                        <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
+                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
+                                <Columns>
+                                    <telerik:GridTemplateColumn Display="false" HeaderStyle-Width="0" ItemStyle-Width="0" ItemStyle-Wrap="false">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="RadLinkButton1" runat="server" CommandName="Open" Text=""></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+
+                                    <telerik:GridTemplateColumn>
+                                        <ItemTemplate>
+                                            <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
+</telerik:RadLabel>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+                                </Columns>
+                            </MasterTableView>
+                            <ClientSettings>
+                                <Selecting AllowRowSelect="true" />
+                                <ClientEvents OnRowDblClick="RowDblClick" />
+                            </ClientSettings>
+                        </telerik:RadGrid>
+                    </ContentTemplate>
+                </telerik:RadWindow>
+            </Windows>
+        </telerik:RadWindowManager>
 
                 <div class="cssclsNoPrint">
                     <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0; border-bottom: 1px solid #ddd; border-radius: 0;">
@@ -210,6 +254,22 @@
 
                                     <div class="card-body collapse show" id="collapseOne">
                                         <div class="form-body mb-4">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel2">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile" OnClick="RadButton1_Click" ID="RadButton1" runat="server" CssClass="btn-sm" Text="View Latest Version"  />
+                                                    </div>
+
+                                                    <div class="alert alert-info d-flex align-items-center">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel1">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile" AutoPostBack="false" ID="Button1" runat="server" OnClientClicked="showWindow" CssClass="btn-sm" Text="View History"  />
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <div class="row">
                                                 <div class="col-md-12 mb-2">
                                                     <label class="control-label h5">I. DẤU HIỆU SINH TỒN/ <span class="text-primary">VITAL SIGNS</span></label>
@@ -282,6 +342,7 @@
                                                             <input  id="txt_vs_bmi" data-type="number" style="width: 120px; height: 23.2px;" runat="server" disabled="disabled" class="form-control text-right" />
                                                             <span class="append">(Kg/m <sup>2</sup>)</span>
                                                         </div>
+                                                        <asp:Label runat="server" ID="bmiStr"></asp:Label>
                                                     </div>
                                                     <p class="mt-1">
                                                         (Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not
@@ -293,7 +354,7 @@
                                                     <asp:Label runat="server" ID="lbl_vs_spo2"/>
                                                     <div class="form-group d-inline-block" runat="server" id="vs_spo2_wrapper">
                                                         <input  id="txt_vs_spo2"  data-type="number" style="width: 160px" runat="server" class="form-control text-right" />
-                                                        <span class="append">%</span>
+                                                        <span class="append">cm</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -304,7 +365,7 @@
                                                     <asp:Label runat="server" ID="lbl_pulse"/>
                                                     <div class="form-group d-inline-block" runat="server" id="pulse_wrapper">
                                                         <input id="txt_pulse"  data-type="number" style="width: 160px" runat="server" class="form-control text-right" />
-                                                        <span class="append">%</span>
+                                                        <span class="append">cm</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -380,7 +441,7 @@
 
                                                     <div class="custom-control custom-radio  d-inline-block ml-2">
                                                         <input onchange="radioButtonChange(this)" disabled-for="mental_status_note_field" type="radio" runat="server" id="rad_mental_status_false" name="rad_mental_status" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="rad_mental_status_false">Không, ghi rõ/ <span class="text-primary">No, specify:</span></label>
+                                                        <label class="custom-control-label" for="rad_mental_status_false">No, ghi rõ/ <span class="text-primary">No, specify:</span></label>
                                                         <a href="javascript:void(0)" data-clear="rad_mental_status" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare6" />
                                                         </a>
@@ -448,10 +509,11 @@
                                                     </div>
                                                     <div class="custom-control custom-radio mb-1">
                                                         <input disabled-for="fall_risk_assistance_field" onchange="radioButtonChange(this)" type="radio" runat="server" id="rad_fall_risk_true" name="rad_fall_risk" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="rad_fall_risk_true">Nếu có, cung cấp phương tiện hỗ trợ/ <span class="text-primary">If yes, provide assistance</span></label>
+                                                        <label class="custom-control-label" for="rad_fall_risk_true">có, cung cấp phương tiện hỗ trợ/ <span class="text-primary">Yes, provide assistance:</span></label>
                                                         <a href="javascript:void(0)" data-clear="rad_fall_risk" onclick="clear_radiobutton(this)">
                                                             <icon:xsquare runat="server" ID="XSquare22" />
                                                         </a>
+                                                        
                                                         <%--<asp:CustomValidator ID="CustomValidator4" ValidationGroup="Group1" runat="server" ErrorMessage="Tầm soát nguy cơ té ngã/ Fall risk MORSE SCALE is required" CssClass="text-danger" OnServerValidate="CustomValidatorFallRisk_ServerValidate"></asp:CustomValidator>--%>
                                                     </div>
                                                     <div class="form-group fall_risk_assistance_field">
@@ -568,7 +630,7 @@
 
                                                         <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                        <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                        <asp:LinkButton runat="server" OnClientClick="window.print(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                         <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                                     </div>
@@ -597,6 +659,8 @@
                         </div>
                     </div>
                 </div>
+
+                <asp:LinkButton runat="server" OnClick="clearSession_Click" ID="clearSession"></asp:LinkButton>
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>
@@ -618,6 +682,7 @@
         checkboxRadiobutton_init();
         InputFilter("data-type='number'");
         InputFilter("data-type='number1'", /^\d*\.?\/?\d*$/);
+        if (document.getElementById('txt_vs_bmi') != null) setbmiStr(document.getElementById('txt_vs_bmi').value);
 
         $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
 
@@ -630,7 +695,28 @@
             checkboxRadiobutton_init();
             InputFilter("data-type='number'");
             InputFilter("data-type='number1'", /^\d*\.?\/?\d*$/);
+            if (document.getElementById('txt_vs_bmi') != null) setbmiStr(document.getElementById('txt_vs_bmi').value);
             $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
+        }
+
+        function showWindow(sender, eventArgs) {
+            var oWnd = $find("<%=RadWindow1.ClientID%>");
+            oWnd.show();
+        }
+
+        function RowDblClick(sender, eventArgs) {
+            console.log('sdfsdf');
+
+            var grid = $find("<%= RadGrid1.ClientID %>");
+            var masterTable = grid.get_masterTableView();
+            var item = eventArgs.get_itemIndexHierarchical();
+
+            var row = masterTable.get_dataItems()[item];
+
+            var button = row.findElement("RadLinkButton1");
+            button.click();
+
+            //console.log(row);
         }
 
     </script>

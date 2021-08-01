@@ -42,22 +42,22 @@ namespace EMR.IPD
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
-        /// prt_barcode control.
+        /// BarCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.Barcode prt_barcode;
+        protected global::System.Web.UI.WebControls.PlaceHolder BarCode;
 
         /// <summary>
-        /// prt_pid control.
+        /// prt_vpid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_pid;
+        protected global::System.Web.UI.WebControls.Label prt_vpid;
 
         /// <summary>
         /// Line control.
@@ -1005,6 +1005,33 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label lbl_create_date;
 
         /// <summary>
+        /// RadWindowManager control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadWindowManager RadWindowManager;
+
+        /// <summary>
+        /// RadWindow1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadWindow RadWindow1;
+
+        /// <summary>
+        /// RadGrid1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid RadGrid1;
+
+        /// <summary>
         /// btnHome control.
         /// </summary>
         /// <remarks>
@@ -1075,6 +1102,51 @@ namespace EMR.IPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.UserControls.PatientInfo PatientInfo1;
+
+        /// <summary>
+        /// currentLog control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl currentLog;
+
+        /// <summary>
+        /// RadLabel2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadLabel RadLabel2;
+
+        /// <summary>
+        /// RadButton1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton RadButton1;
+
+        /// <summary>
+        /// RadLabel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadLabel RadLabel1;
+
+        /// <summary>
+        /// Button1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton Button1;
 
         /// <summary>
         /// lbl_reason_admission control.
@@ -1392,13 +1464,22 @@ namespace EMR.IPD
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_tetanus_vaccination_true;
 
         /// <summary>
-        /// XSquare12 control.
+        /// Radio4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UserControl XSquare12;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox Radio4;
+
+        /// <summary>
+        /// XSquare9 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UserControl XSquare9;
 
         /// <summary>
         /// tetanus_vaccin_time_field control.
@@ -1408,6 +1489,15 @@ namespace EMR.IPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl tetanus_vaccin_time_field;
+
+        /// <summary>
+        /// tetanus_vaccin_time_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tetanus_vaccin_time_wrapper;
 
         /// <summary>
         /// txt_tetanus_vaccin_time control.
@@ -3021,6 +3111,24 @@ namespace EMR.IPD
         protected global::Telerik.Web.UI.RadDateTimePicker dtpk_obs_rup_of_mem_at;
 
         /// <summary>
+        /// lbl_obs_rup_of_mem_code control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_obs_rup_of_mem_code;
+
+        /// <summary>
+        /// obs_rup_of_mem_code_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl obs_rup_of_mem_code_wrapper;
+
+        /// <summary>
         /// rad_obs_rup_of_mem_code_s control.
         /// </summary>
         /// <remarks>
@@ -3757,5 +3865,14 @@ namespace EMR.IPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.UserControls.PopupShowDelay PopupShowDelay;
+
+        /// <summary>
+        /// clearSession control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton clearSession;
     }
 }

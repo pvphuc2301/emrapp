@@ -71,6 +71,7 @@
             .cssclsNoScreen .header-info .header-info-title h4 {
                 color: #007297;
                 font-size: 20.6963px;
+                font-weight: bold;
                 margin-bottom: 0;
             }
 
@@ -80,7 +81,7 @@
 
             .cssclsNoScreen .header-info .header-info-title h5 {
                 color: #e20e5a;
-                font-size: 16.6667px;
+                font-size: 14.6667px;
                 margin-bottom: 0;
             }
 
@@ -571,9 +572,12 @@
 @page {
     padding-top: 0;
     padding-bottom: 0;
-    page-break-before: none;
-    page-break-after: none;
     page-break-inside: avoid;
+
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 50px;
+    margin-right: 50px;
 }
 
 .input-group-text {

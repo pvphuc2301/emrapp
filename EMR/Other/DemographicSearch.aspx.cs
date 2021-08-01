@@ -157,7 +157,13 @@ namespace EMR.Other
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            dynamic response = WebHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=4&keyword=" + txt_pid.Value);
+            string pid = "000000000" + txt_pid.Value;
+
+            pid = "9" + pid.Substring(pid.Length - 8, 8);
+
+            txt_pid.Value = pid;
+
+            dynamic response = WebHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=4&keyword=" + pid);
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -377,11 +383,6 @@ namespace EMR.Other
 
                 RadGrid1.MasterTableView.Rebind();
             }
-        }
-
-        protected void txt_pid_ServerValidate(object source, ServerValidateEventArgs args)
-        {
-            args.IsValid = txt_pid.Value.Length >= 9;
         }
 
         protected void radGridPidList_ItemCommand(object sender, GridCommandEventArgs e)

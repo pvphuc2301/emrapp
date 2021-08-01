@@ -110,6 +110,11 @@
                         <!-- Search -->
                         <!-- ============================================================== -->
                     </ul>
+
+                    <a class="nav-link btn-link dropdown-toggle waves-effect waves-primary d-lg-none" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <icon:Person runat="server" id="Person1" /><asp:Label runat="server" ID="lblPID" CssClass="ml-2"></asp:Label>
+                    </a>
+
                     <ul class="navbar-nav d-none d-lg-flex ml-2">
                         <li><a class="nav-link btn-link  waves-effect waves-primary" href="javascript:void(0)">
                             <asp:image ID="Image1" runat="server" Height="16" Width="16" Visible="false" /></a></li>
@@ -132,6 +137,7 @@
                         <li><a class="nav-link btn-link  waves-effect waves-primary" href="javascript:void(0)">
                             <asp:image ID="Image10" runat="server" Height="16" Width="16" Visible="false" /></a></li>
                     </ul>
+
                     <ul class="navbar-nav my-lg-0 ml-auto">
                         <li class="nav-item dropdown"><asp:LinkButton CssClass="nav-link btn-link waves-effect waves-primary" runat="server" ID="btnHome" OnClick="btnHome_Click" ><icon:House runat="server" ID="House" /></asp:LinkButton>
                         </li>
@@ -182,9 +188,9 @@
                                 <span class="hidden-md-down text-primary">&nbsp;<icon:CaretDown runat="server" id="CaretDown" /></span>
                             </a>
 
-                            <a class="nav-link btn-link dropdown-toggle waves-effect waves-primary d-lg-none" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <%--<a class="nav-link btn-link dropdown-toggle waves-effect waves-primary d-lg-none" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <icon:Person runat="server" id="Person" />
-                            </a>
+                            </a>--%>
 
                             <div class="dropdown-menu dropdown-menu-right animated flipInY" aria-labelledby="btnGroupDrop1" style="width: 253px;">
                                 <a class="dropdown-item" href="javascript:void(0)">

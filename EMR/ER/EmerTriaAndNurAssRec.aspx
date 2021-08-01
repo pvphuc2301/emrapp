@@ -460,6 +460,37 @@
                     </table>
                 </div>
 
+                <telerik:RadWindowManager RenderMode="Lightweight" EnableShadow="true" Behaviors="Close, Move, Resize,Maximize" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
+            <Windows>
+                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History"   runat="server">
+                    <ContentTemplate>
+                        <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
+                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
+                                <Columns>
+                                    <telerik:GridTemplateColumn Display="false" HeaderStyle-Width="0" ItemStyle-Width="0" ItemStyle-Wrap="false">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="RadLinkButton1" runat="server" CommandName="Open" Text=""></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+
+                                    <telerik:GridTemplateColumn>
+                                        <ItemTemplate>
+                                            <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
+</telerik:RadLabel>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+                                </Columns>
+                            </MasterTableView>
+                            <ClientSettings>
+                                <Selecting AllowRowSelect="true" />
+                                <ClientEvents OnRowDblClick="RowDblClick" />
+                            </ClientSettings>
+                        </telerik:RadGrid>
+                    </ContentTemplate>
+                </telerik:RadWindow>
+            </Windows>
+        </telerik:RadWindowManager>
+
                 <div class="cssclsNoPrint">
                     <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0; border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
@@ -501,6 +532,22 @@
                                     </div>
                                     <div class="card-body collapse show" id="collapseOne">
                                         <div class="form-body">
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel2">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile"  ID="RadButton1" runat="server" CssClass="btn-sm" Text="View Latest Version"  />
+                                                    </div>
+
+                                                    <div class="alert alert-info d-flex align-items-center">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel1">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile" AutoPostBack="false" ID="Button1" runat="server" OnClientClicked="showWindow" CssClass="btn-sm" Text="View History"  />
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                             <fieldset class="row mb-2">
                                                 <div class="col-md-12 gt-2-a mb-2">
@@ -675,7 +722,8 @@
                                                         <div class="form-group d-inline-block" runat="server" id="vs_bmi_wrapper">
                                                             <input  id="txt_vs_bmi" data-type="number1" style="width: 160px" runat="server" class="form-control text-right" disabled="disabled" />
                                                             <span class="append">(Kg/m <sup>2</sup>)</span>
-                                                        </div> 
+                                                        </div>
+                                                        <asp:Label runat="server" ID="bmiStr"></asp:Label>
                                                     </div>
                                                     <p class="mt-1">
                                                         (Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not
@@ -1525,7 +1573,7 @@
                                                                 </Columns>
                                                             </asp:GridView>
                                                             <div class="mt-2">
-                                                                <asp:Button ID="btn_grid_AssessmentSystem_add" runat="server" CssClass="btn btn-sm btn-outline-primary" OnClick="btn_grid_AssessmentSystem_add_Click" Text="Add row" />
+                                                                <asp:Button ID="btn_grid_AssessmentSystem_add" runat="server" CssClass="btn btn-sm btn-secondary" OnClick="btn_grid_AssessmentSystem_add_Click" Text="+ Add Row" />
                                                             </div>
                                                         </ContentTemplate>
                                                         <Triggers>
@@ -1625,7 +1673,7 @@
                                                                 </ProgressTemplate>
                                                             </asp:UpdateProgress>
                                                             <div class="mt-2">
-                                                                <asp:Button ID="btn_gridDirectMedication_add" runat="server" CssClass="btn btn-sm btn-outline-primary" OnClick="btn_gridDirectMedication_add_Click" Text="Add Row" />
+                                                                <asp:Button ID="btn_gridDirectMedication_add" runat="server" CssClass="btn btn-sm btn-secondary" OnClick="btn_gridDirectMedication_add_Click" Text="+ Add Row" />
                                                             </div>
                                                         </ContentTemplate>
                                                         <Triggers>
@@ -1770,7 +1818,7 @@
                                                                 </ProgressTemplate>
                                                             </asp:UpdateProgress>
                                                             <div class="mt-2">
-                                                                <asp:Button ID="btn_grid_NursingNotes_add" runat="server" CssClass="btn btn-sm btn-outline-primary" OnClick="btn_grid_NursingNotes_add_Click" Text="Add row" />
+                                                                <asp:Button ID="btn_grid_NursingNotes_add" runat="server" CssClass="btn btn-sm btn-secondary" OnClick="btn_grid_NursingNotes_add_Click" Text="+ Add Row" />
                                                             </div>
                                                         </ContentTemplate>
                                                         <Triggers>
@@ -1819,6 +1867,8 @@
                         </div>
                     </div>
                 </div>
+                <asp:LinkButton runat="server" OnClick="clearSession_Click" ID="clearSession"></asp:LinkButton>
+
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>
@@ -2054,10 +2104,31 @@
         formGroup_init();
         InputFilter("data-type='number'");
         InputFilter("data-type='number1'", /^\d*\.?\/?\d*$/);
+        if (document.getElementById('txt_vs_bmi') != null) { setbmiStr(document.getElementById('txt_vs_bmi').value); }
         $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
 
         function beforeAsyncPostBack() {
             var curtime = new Date();
+        }
+
+        function showWindow(sender, eventArgs) {
+            var oWnd = $find("<%=RadWindow1.ClientID%>");
+            oWnd.show();
+        }
+
+        function RowDblClick(sender, eventArgs) {
+            console.log('sdfsdf');
+
+            var grid = $find("<%= RadGrid1.ClientID %>");
+            var masterTable = grid.get_masterTableView();
+            var item = eventArgs.get_itemIndexHierarchical();
+
+            var row = masterTable.get_dataItems()[item];
+
+            var button = row.findElement("RadLinkButton1");
+            button.click();
+
+            //console.log(row);
         }
 
         function afterAsyncPostBack() {
@@ -2065,10 +2136,32 @@
             formGroup_init();
             InputFilter("data-type='number'");
             InputFilter("data-type='number1'", /^\d*\.?\/?\d*$/);
+
+            if (document.getElementById('txt_vs_bmi') != null) { setbmiStr(document.getElementById('txt_vs_bmi').value); }
             $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
             loadImage();
         }
 
+        function showWindow(sender, eventArgs) {
+            var oWnd = $find("<%=RadWindow1.ClientID%>");
+            oWnd.show();
+        }
+
+
+        function RowDblClick(sender, eventArgs) {
+            console.log('sdfsdf');
+
+            var grid = $find("<%= RadGrid1.ClientID %>");
+           var masterTable = grid.get_masterTableView();
+           var item = eventArgs.get_itemIndexHierarchical();
+
+           var row = masterTable.get_dataItems()[item];
+
+           var button = row.findElement("RadLinkButton1");
+           button.click();
+
+           //console.log(row);
+       }
     </script>
 
     

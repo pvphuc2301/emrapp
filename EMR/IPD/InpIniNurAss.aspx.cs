@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using Telerik.Web.UI;
 
 namespace EMR
 {
@@ -39,6 +40,8 @@ namespace EMR
         {
             try
             {
+
+
                 txt_amend_reason.Text = "";
 
                 pain_annotation_base64.Value = JsonConvert.DeserializeObject(iina.pain_annotation).dataURI;
@@ -54,6 +57,7 @@ namespace EMR
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_req_interpreter_" + iina.req_interpreter);
                 //
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_religion_code_" + iina.religion_code);
+                txt_religion_other.Value = iina.religion_other;
                 //
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_spiritual_couns_" + iina.spiritual_couns);
                 txt_occupation.Value = iina.occupation;
@@ -69,6 +73,7 @@ namespace EMR
                 txt_relationship.Value = iina.relationship;
                 //
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_admit_from_code_" + iina.admit_from_code);
+                txt_admit_from_other.Value = iina.admit_from_other;
                 //
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_arrived_code_", WebHelpers.GetJSONToDataTable(iina.arrived));
                 //
@@ -144,11 +149,19 @@ namespace EMR
                 //WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_nutrition_normal_" + iina.nutrition_normal);
                 //WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_nutrition_score1_" + iina.nutrition_score1);
 
+                if(iina.nutrition_normal != null)
+                {
+                    cb_nutrition_normal_true.Checked = iina.nutrition_normal;
+                }
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_nutrition_score1_", WebHelpers.GetJSONToDataTable(iina.nutrition_score1));
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_nutrition_score2_", WebHelpers.GetJSONToDataTable(iina.nutrition_score2));
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_nutrition_score3_", WebHelpers.GetJSONToDataTable(iina.nutrition_score3));
                 nutrition_score.Text = iina.nutrition_score;
-
+                
+                if (iina.normal_nutrition_req != null)
+                {
+                    cb_normal_nutrition_req_true.Checked = (bool)iina.normal_nutrition_req;
+                }
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_severity_score1_", WebHelpers.GetJSONToDataTable(iina.severity_score1));
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_severity_score2_", WebHelpers.GetJSONToDataTable(iina.severity_score2));
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_severity_score3_", WebHelpers.GetJSONToDataTable(iina.severity_score3));
@@ -252,12 +265,15 @@ namespace EMR
 
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_bathing_code_" + iina.bathing_code);
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_oral_care_code_" + iina.oral_care_code);
+                txt_oral_care_note.Value = iina.oral_care_note;
+
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_dentures_code_" + iina.dentures_code);
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_toilet_use_code_" + iina.toilet_use_code);
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_dressing_code_" + iina.dressing_code);
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_eating_code_" + iina.eating_code);
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_turning_bed_code_" + iina.turning_bed_code);
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_ambulation_code_" + iina.ambulation_code);
+                if (rad_ambulation_code_na.Checked) { txt_ambulation_note.Value = iina.ambulation_note; }
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_sleep_code_" + iina.sleep_code);
 
                 txt_medication_used.Value = iina.medication_used;
@@ -298,9 +314,11 @@ namespace EMR
 
                 skin_anno_data_img.Src = JObject.Parse(iina.skin_anno_data).dataURI;
 
-                WebHelpers.VisibleControl(true, pain_annotation_undo, skin_anno_data_undo, pain_annotation_redo, skin_anno_data_redo, pain_annotation_pencilWrapper, skin_anno_data_pencil_wrapper);
+                WebHelpers.VisibleControl(true, pain_annotation_undo, skin_anno_data_undo, pain_annotation_redo, skin_anno_data_redo, pain_annotation_pencilWrapper, skin_anno_data_pencil_wrapper, cb_older_70_true, cb_younger_70_true);
 
                 DataObj.Value = JsonConvert.SerializeObject(iina);
+
+                Session["docid"] = iina.document_id;
                 WebHelpers.AddScriptFormEdit(Page, iina, (string)Session["emp_id"]);
             }
             catch (Exception ex)
@@ -341,15 +359,15 @@ namespace EMR
                 lbl_high_risk_patient.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.high_risk_patient));
                 //C
                 //1
-                lbl_vs_temperature.Text = WebHelpers.FormatString(iina.vs_temperature) + "";
-                lbl_vs_weight.Text = WebHelpers.FormatString(iina.vs_weight);
-                lbl_vs_height.Text = WebHelpers.FormatString(iina.vs_height);
-                lbl_vs_BMI.Text = WebHelpers.FormatString(iina.vs_BMI);
-                lbl_vs_heart_rate.Text = WebHelpers.FormatString(iina.vs_heart_rate);
-                lbl_vs_respiratory_rate.Text = WebHelpers.FormatString(iina.vs_respiratory_rate);
-                lbl_vs_blood_pressure.Text = WebHelpers.FormatString(iina.vs_blood_pressure);
-                lbl_vs_spO2.Text = WebHelpers.FormatString(iina.vs_spO2);
-                lbl_vs_pulse.Text = WebHelpers.FormatString(iina.vs_pulse);
+                lbl_vs_temperature.Text = WebHelpers.FormatString(iina.vs_temperature) + " °C";
+                lbl_vs_weight.Text = WebHelpers.FormatString(iina.vs_weight) + " Kg";
+                lbl_vs_height.Text = WebHelpers.FormatString(iina.vs_height) + " cm";
+                lbl_vs_BMI.Text = WebHelpers.FormatString(iina.vs_BMI) + " Kg/m <sup>2</sup>";
+                lbl_vs_heart_rate.Text = WebHelpers.FormatString(iina.vs_heart_rate) + " /phút (m)";
+                lbl_vs_respiratory_rate.Text = WebHelpers.FormatString(iina.vs_respiratory_rate) + " /phút (m)";
+                lbl_vs_blood_pressure.Text = WebHelpers.FormatString(iina.vs_blood_pressure) + " mmHg";
+                lbl_vs_spO2.Text = WebHelpers.FormatString(iina.vs_spO2) + " %";
+                lbl_vs_pulse.Text = WebHelpers.FormatString(iina.vs_pulse) + " cm";
                 //2
                 lbl_respiratory_system.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.respiratory_system));
                 lbl_cough.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.cough));
@@ -399,8 +417,7 @@ namespace EMR
                     nutrition_score.Text = WebHelpers.FormatString(Convert.ToString(iina.nutrition_score));
                     //
                     //Severity of disease
-
-                    cb_nutrition_requiredment_true.Visible = false;
+                    cb_normal_nutrition_req_true.Visible = false;
                     //if (iina.nutrition_normal != null) cb_nutrition_normal_true.Checked = iina.nutrition_normal;
                     lbl_severity_score1.Text = WebHelpers.DisplayCheckBox(iina.severity_score1);
                     lbl_severity_score2.Text = WebHelpers.DisplayCheckBox(iina.severity_score2);
@@ -630,7 +647,7 @@ namespace EMR
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, iina, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
+                WebHelpers.LoadFormControl(form1, iina, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(iina);
                 //get access button
@@ -666,25 +683,45 @@ namespace EMR
 
             try
             {
-                Iina iina = new Iina(Request.QueryString["docId"]);
+                Iina iina;
+
+                if (Request.QueryString["docIdLog"] != null)
+                {
+                    iina = new Iina(Request.QueryString["docIdLog"], true);
+                    currentLog.Visible = true;
+
+                    string item = (string)Session["viewLogInfo"];
+
+                    RadLabel2.Text = $"You are viewing an old version of this document ( { item })";
+                }
+                else
+                {
+                    iina = new Iina(Request.QueryString["docId"]);
+                    currentLog.Visible = false;
+                }
+
+                loadRadGridHistoryLog();
+                
+
+                WebHelpers.setBmi(bmiStr, iina.vs_BMI);
 
                 iina.pain_annotation = WebHelpers.getPainAnnotation(iina.pain_annotation);
 
                 iina.skin_anno_data = WebHelpers.getSkinAnnoData(iina.skin_anno_data);
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-                //prt_barcode.Text = Patient.Instance().visible_patient_id;
+
                 if (iina.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(iina, WebHelpers.LoadFormControl(form1, iina, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
-
+                    BindingDataForm(iina, WebHelpers.LoadFormControl(form1, iina, ControlState.View, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
+                    BindingDataFormPrint(iina);
                 }
                 else if (iina.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(iina, WebHelpers.LoadFormControl(form1, iina, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
+                    BindingDataForm(iina, WebHelpers.LoadFormControl(form1, iina, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
                 }
 
-                WebHelpers.getAccessButtons(form1, iina.status, (string)Session["access_authorize"], (string)Session["location"]);
+                WebHelpers.getAccessButtons(form1, iina.status, (string)Session["access_authorize"], (string)Session["location"], Request.QueryString["docIdLog"] != null);
 
                 final_screening_field.Visible = ShowFinalScreening(iina);
             }
@@ -692,6 +729,68 @@ namespace EMR
             {
                 WebHelpers.SendError(Page, ex);
             }
+        }
+        private void loadRadGridHistoryLog()
+        {
+            DataTable dt = Iina.Logs(Request.QueryString["docId"]);
+            RadGrid1.DataSource = dt;
+            DateTime last_updated_date_time = new DateTime();
+            string last_updated_doctor = "";
+
+            if (dt.Rows.Count == 1)
+            {
+                last_updated_doctor = dt.Rows[0].Field<string>("created_name_l");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
+            }
+            else if (dt.Rows.Count > 1)
+            {
+                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_l");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
+            }
+
+            Session["signature_doctor"] = last_updated_doctor;
+            RadLabel1.Text = $"Last updated by {last_updated_doctor} on " + WebHelpers.FormatDateTime(last_updated_date_time, "dd-MM-yyyy HH:mm");
+            RadGrid1.DataBind();
+        }
+
+        protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
+        {
+            string result = "Amended by";
+            if (Convert.ToString(status) == DocumentStatus.FINAL && string.IsNullOrEmpty(Convert.ToString(amend_reason)))
+            {
+                result = "Submitted by";
+            }
+
+            if (Convert.ToString(status) == DocumentStatus.DRAFT) result = "Saved by";
+
+            if (string.IsNullOrEmpty(Convert.ToString(modified_name)))
+            {
+                result += $" {created_name} on {created_date_time}";
+            }
+            else
+            {
+                result += $" {modified_name} on {modified_date_time}";
+            }
+            return result;
+        }
+        protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            GridDataItem item = (e.Item as GridDataItem);
+            if (e.CommandName.Equals("Open"))
+            {
+                string doc_log_id = item.GetDataKeyValue("document_log_id").ToString();
+
+                string url = $"/IPD/InpIniNurAss.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}&docIdLog={doc_log_id}";
+
+                Session["viewLogInfo"] = (item.FindControl("RadLabel1") as RadLabel).Text;
+
+                Response.Redirect(url);
+            }
+        }
+        protected void RadButton1_Click(object sender, EventArgs e)
+        {
+            string url = $"/IPD/InpIniNurAss.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}";
+            Response.Redirect(url);
         }
         private bool ShowFinalScreening(Iina iina)
         {
@@ -766,7 +865,7 @@ namespace EMR
                 //
                 iina.religion_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_religion_code_", Iina.RELIGION_CODE);
                 iina.religion_desc = WebHelpers.GetDicDesc(iina.religion_code, Iina.RELIGION_CODE);
-                //iina.religion_other =
+                iina.religion_other = txt_religion_other.Value;
                 //
                 iina.spiritual_couns = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_spiritual_couns_");
                 //
@@ -787,6 +886,7 @@ namespace EMR
                 //B. BỆNH SỬ/ MEDICAL HISTORY
                 iina.admit_from_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_admit_from_code_", Iina.ADMIT_FROM_CODE);
                 iina.admit_from_desc = WebHelpers.GetDicDesc(iina.admit_from_code, Iina.ADMIT_FROM_CODE);
+                
                 if(iina.admit_from_code == "OTH") iina.admit_from_other = txt_admit_from_other.Value;
 
                 iina.arrived = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_arrived_code_", Iina.ARRIVED);
@@ -845,6 +945,7 @@ namespace EMR
 
                 iina.vision_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_vision_code_", Iina.VISION_CODE);
                 iina.vision_desc = WebHelpers.GetDicDesc(iina.vision_code, Iina.VISION_CODE);
+                iina.vision_other = txt_vision_other.Value;
 
                 iina.speech_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_speech_code_", Iina.SPEECH_CODE);
                 iina.speech_desc = WebHelpers.GetDicDesc(iina.speech_code, Iina.SPEECH_CODE);
@@ -876,7 +977,7 @@ namespace EMR
                 iina.reduce_dietary = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_reduce_dietary_");
                 iina.severely_ill = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_severely_ill_");
                 //table 2
-                iina.nutrition_normal = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_nutrition_normal_", true);
+                iina.nutrition_normal = cb_nutrition_normal_true.Checked;
                 iina.nutrition_score1 = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_nutrition_score1_", Iina.NUTRITION_SCORE1_CODE);
                 iina.nutrition_score1 = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_nutrition_score1_", Iina.NUTRITION_SCORE1_CODE);
                 iina.nutrition_score2 = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_nutrition_score2_", Iina.NUTRITION_SCORE2_CODE);
@@ -884,6 +985,7 @@ namespace EMR
                 iina.nutrition_score = nutrition_score.Text;
                 //
                 // mising Điểm = 0 / Score = 0
+                iina.normal_nutrition_req = cb_normal_nutrition_req_true.Checked;
                 iina.severity_score1 = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_severity_score1_", Iina.SEVERITY_SCORE1_CODE);
                 iina.severity_score2 = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_severity_score2_", Iina.SEVERITY_SCORE2_CODE);
                 iina.severity_score3 = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_severity_score3_", Iina.SEVERITY_SCORE3_CODE);
@@ -1001,6 +1103,7 @@ namespace EMR
 
                 iina.oral_care_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_oral_care_code_", Iina.ORAL_CARE_CODE);
                 iina.oral_care_desc = WebHelpers.GetDicDesc(iina.oral_care_code, Iina.ORAL_CARE_CODE);
+                iina.oral_care_note = txt_oral_care_note.Value;
 
                 iina.dentures_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_dentures_code_", Iina.DENTURES_CODE);
                 iina.dentures_desc = WebHelpers.GetDicDesc(iina.dentures_code, Iina.DENTURES_CODE);
@@ -1019,6 +1122,8 @@ namespace EMR
 
                 iina.ambulation_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_ambulation_code_", Iina.AMBULATION_CODE);
                 iina.ambulation_desc = WebHelpers.GetDicDesc(iina.ambulation_code, Iina.AMBULATION_CODE);
+
+                iina.ambulation_note = txt_ambulation_note.Value;
 
                 iina.sleep_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_sleep_code_", Iina.SLEEP_CODE);
                 iina.sleep_desc = WebHelpers.GetDicDesc(iina.sleep_code, Iina.SLEEP_CODE);
@@ -1068,7 +1173,7 @@ namespace EMR
 
                 if (JsonConvert.SerializeObject(iina) == DataObj.Value)
                 {
-                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES); return;
+                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
                 }
 
                 iina.amend_reason = txt_amend_reason.Text;
@@ -1281,7 +1386,12 @@ namespace EMR
         {
             args.IsValid = rad_using_pain_killer_true.Checked || rad_using_pain_killer_false.Checked;
         }
-        
+
         #endregion
+
+        protected void clearSession_Click(object sender, EventArgs e)
+        {
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+        }
     }
 }

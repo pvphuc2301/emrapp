@@ -1,11 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using Telerik.Web.UI;
 
 namespace EMR
 {
@@ -39,7 +41,7 @@ namespace EMR
             if (Page.IsValid)
             {
                 Scoc scoc = new Scoc(Request.QueryString["docId"]);
-                scoc.status = DocumentStatus.DRAFT;
+                //scoc.status = DocumentStatus.DRAFT;
 
                 UpdateData(scoc);
             }
@@ -68,11 +70,11 @@ namespace EMR
             {
                 Scoc scoc = new Scoc(Request["docid"]);
 
-                WebHelpers.VisibleControl(false, btnAmend, btnPrint);
-                WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
+                //WebHelpers.VisibleControl(false, btnAmend, btnPrint);
+                //WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, scoc, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
+                WebHelpers.LoadFormControl(form1, scoc, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(scoc);
                 //get access button
@@ -104,26 +106,111 @@ namespace EMR
 
             try
             {
-                Scoc scoc = new Scoc(Request.QueryString["docId"]);
+                Scoc scoc;
+
+                if (Request.QueryString["docIdLog"] != null)
+                {
+                    scoc = new Scoc(Request.QueryString["docIdLog"], true);
+                    currentLog.Visible = true;
+
+                    string item = (string)Session["viewLogInfo"];
+
+                    RadLabel2.Text = $"You are viewing an old version of this document ( { item })";
+                }
+                else
+                {
+                    scoc = new Scoc(Request.QueryString["docId"]);
+                    currentLog.Visible = false;
+                }
+
+                if ((string)Session["Transaction"] == "Add" || (string)Session["Transaction"] == "Complete")
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), ScriptKey.SHOW_POPUP, "setTimeout(()=> { RefreshClick() },0);", true);
+
+                    Session["Transaction"] = string.Empty;
+                }
+                loadRadGridHistoryLog();
+                
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-                prt_barcode.Text = Patient.Instance().visible_patient_id;
-                if (scoc.status == DocumentStatus.FINAL)
-                {
-                    BindingDataForm(scoc, WebHelpers.LoadFormControl(form1, scoc, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
 
-                }
-                else if (scoc.status == DocumentStatus.DRAFT)
-                {
-                    BindingDataForm(scoc, WebHelpers.LoadFormControl(form1, scoc, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
-                }
+                //if (scoc.status == DocumentStatus.FINAL)
+                //{
+                //    BindingDataFormPrint(scoc);
+                //    BindingDataForm(scoc, WebHelpers.LoadFormControl(form1, scoc, ControlState.View, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
 
-                WebHelpers.getAccessButtons(form1, scoc.status, (string)Session["access_authorize"], (string)Session["location"]);
+                //}
+                //else if (scoc.status == DocumentStatus.DRAFT)
+                //{
+                    BindingDataForm(scoc, WebHelpers.LoadFormControl(form1, scoc, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
+                //}
+
+                WebHelpers.getAccessButtons(form1, scoc.status, (string)Session["access_authorize"], (string)Session["location"], Request.QueryString["docIdLog"] != null);
+
+                WebHelpers.VisibleControl(false, btnComplete, btnDeleteModal, btnPrint, btnAmend);
+                btnSave.Visible = true;
+
             }
             catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
+        }
+        private void loadRadGridHistoryLog()
+        {
+            DataTable dt = Scoc.Logs(Request.QueryString["docId"]);
+            RadGrid1.DataSource = dt;
+            if (dt.Rows.Count > 1)
+            {
+                Session["signature_doctor"] = dt.Rows[0].Field<string>("modified_name_l");
+                RadLabel1.Text = $"Last updated by {dt.Rows[0].Field<string>("modified_name_l")} on " + WebHelpers.FormatDateTime(dt.Rows[0].Field<DateTime>("modified_date_time"), "dd-MM-yyyy HH:mm");
+            }
+            else
+            {
+                Session["signature_doctor"] = dt.Rows[0].Field<string>("created_name_l");
+                RadLabel1.Text = $"Last updated by {dt.Rows[0].Field<string>("created_name_l")} on " + WebHelpers.FormatDateTime(dt.Rows[0].Field<DateTime>("created_date_time"), "dd-MM-yyyy HH:mm");
+            }
+            RadGrid1.DataBind();
+        }
+
+        protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
+        {
+            string result = "Amended by";
+            if (Convert.ToString(status) == DocumentStatus.FINAL && string.IsNullOrEmpty(Convert.ToString(amend_reason)))
+            {
+                result = "Submitted by";
+            }
+
+            if (Convert.ToString(status) == DocumentStatus.DRAFT) result = "Saved by";
+
+            if (string.IsNullOrEmpty(Convert.ToString(modified_name)))
+            {
+                result += $" {created_name} on {created_date_time}";
+            }
+            else
+            {
+                result += $" {modified_name} on {modified_date_time}";
+            }
+            return result;
+        }
+        protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            GridDataItem item = (e.Item as GridDataItem);
+            if (e.CommandName.Equals("Open"))
+            {
+                string doc_log_id = item.GetDataKeyValue("document_log_id").ToString();
+
+                string url = $"/OPD/SumOfComOutpCase.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}&docIdLog={doc_log_id}";
+
+                Session["viewLogInfo"] = (item.FindControl("RadLabel1") as RadLabel).Text;
+
+                Response.Redirect(url);
+            }
+        }
+        protected void RadButton1_Click(object sender, EventArgs e)
+        {
+            string url = $"/OPD/SumOfComOutpCase.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}";
+            Response.Redirect(url);
         }
         private void UpdateData(Scoc scoc)
         {
@@ -192,6 +279,7 @@ namespace EMR
                 txt_recommendation.Value = scoc.recommendation;
 
                 DataObj.Value = JsonConvert.SerializeObject(scoc);
+                Session["docid"] = scoc.document_id;
                 WebHelpers.AddScriptFormEdit(Page, scoc, (string)Session["emp_id"]);
 
             }
@@ -221,8 +309,9 @@ namespace EMR
             {
                 Patient patient = Patient.Instance();
                 prt_fullname.Text = patient.GetFullName();
-                //prt_date_of_discharge.Text = 
-                prt_gender.Text = patient.GetGender();
+                prt_pid.Text = patient.visible_patient_id; 
+                
+
                 prt_patient_id.Text = prt_pid.Text = patient.visible_patient_id;
                 //prt_date_of_summary_report.Text = scoc.
                 prt_allergy.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, Yes", Value = true }, scoc.allergy, "display: grid;grid-template-columns:150px auto;");
@@ -249,5 +338,11 @@ namespace EMR
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }
         #endregion
+
+        protected void clearSession_Click(object sender, EventArgs e)
+        {
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+
+        }
     }
 }

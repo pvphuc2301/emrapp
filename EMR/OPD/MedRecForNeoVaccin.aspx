@@ -60,8 +60,8 @@
                                             <h4>BỆNH ÁN TIÊM CHỦNG</h4>
                                             <h5>MEDICAL RECORD FOR NEONATAL VACCINATION</h5>
                                         </div>
-                                        <div style="width: 160px" class="text-center">
-                                            <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
+                                        <div style="width: 150px; text-align: center">
+                                            <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
                                             <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
                                         </div>
                                     </div>
@@ -183,48 +183,48 @@
 
                                         <div class="d-grid" style="grid-template-columns: 10px 1fr">
                                             <div></div>
-                                            <asp:Label Text="1. Tình trạng sức khỏe chưa ổn định/ <span class='text-primary'>Unstable health condition:</span>" runat="server" ID="prt_scr_before_vacc_1"></asp:Label>
+                                            <asp:Label Text="" runat="server" ID="prt_scr_before_vacc_1"></asp:Label>
 
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 10px 1fr">
                                             <div></div>
-                                            <asp:Label Text="2. Sốt/Hạ thân nhiệt (Sốt: nhiệt độ ≥ 37,5°C; Hạ thân nhiệt: nhiệt độ ≤ 35,5°C)/ <span class='text-primary'>Fever / Hypothermia (Fever:temperature ≥ 37.5 ° C; Hypothermia: temperature ≤ 35.5 ° C):</span>: " runat="server" ID="prt_scr_before_vacc_2"></asp:Label>
+                                            <asp:Label Text="" runat="server" ID="prt_scr_before_vacc_2"></asp:Label>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 10px 1fr">
                                             <div></div>
-                                            <asp:Label Text="3. Khóc bé hoặc không khóc/ <span class='text-primary'>Cry or unable to cry:</span> " runat="server" ID="prt_scr_before_vacc_3"></asp:Label>
+                                            <asp:Label Text="" runat="server" ID="prt_scr_before_vacc_3"></asp:Label>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 10px 1fr">
                                             <div></div>
-                                            <asp:Label Text="4. Da, môi không hồng/ Fever/ <span class='text-primary'>Skin and lips are not pink:</span> " runat="server" ID="prt_scr_before_vacc_4"></asp:Label>
+                                            <asp:Label Text="" runat="server" ID="prt_scr_before_vacc_4"></asp:Label>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 10px 1fr">
                                             <div></div>
-                                            <asp:Label Text="5. Bú kém hoặc bỏ bú/ <span class='text-primary'>Poor breastfeeding or breastfeeding refusal:</span> " runat="server" ID="prt_scr_before_vacc_5"></asp:Label>
+                                            <asp:Label Text="" runat="server" ID="prt_scr_before_vacc_5"></asp:Label>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 10px 1fr">
                                             <div></div>
-                                            <asp:Label Text="6. Tuổi thai < 28 tuần/ <span class='text-primary'>Gestational age < 28 weeks:</span> " runat="server" ID="prt_scr_before_vacc_6"></asp:Label>
+                                            <asp:Label Text="" runat="server" ID="prt_scr_before_vacc_6"></asp:Label>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 10px 1fr">
                                             <div></div>
-                                            <asp:Label Text="7. Trẻ < 34 tuần tuổi/ <span class='text-primary'>Children < 34 weeks old:</span> " runat="server" ID="prt_scr_before_vacc_7"></asp:Label>
+                                            <asp:Label Text="" runat="server" ID="prt_scr_before_vacc_7"></asp:Label>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 10px 1fr">
                                             <div></div>
-                                            <asp:Label Text="Cân nặng của trẻ < 2000 g, mẹ có HBsAg (-)/ <span class='text-primary'>Child's weight < 2000g, his/her morther HbsAg (-):</span> " runat="server" ID="prt_scr_before_vacc_8"></asp:Label>
+                                            <asp:Label Text="" runat="server" ID="prt_scr_before_vacc_8"></asp:Label>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 10px 1fr">
                                             <div></div>
-                                            <asp:Label Text="9. Các chống chỉ định khác, nếu có ghi rõ/<span class='text-primary'>Other contraindications, if yes specified:</span> " runat="server" ID="prt_scr_before_vacc_9"></asp:Label>
+                                            <asp:Label Text="" runat="server" ID="prt_scr_before_vacc_9"></asp:Label>
                                         </div>
 
                                         <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Order="IV." Title="Chỉ định và kết quả xét nghiệm/ " SubTitle="Laboratory indications and results" runat="server" />
@@ -235,42 +235,54 @@
                                             <div class="col-md-12 ">
                                                 <asp:UpdatePanel ID="up1" runat="server" UpdateMode="Always">
                                                     <ContentTemplate>
-                                                        <asp:GridView ShowHeaderWhenEmpty="true " ID="prt_appointed_vaccine" ShowHeader="true" runat="server" AutoGenerateColumns="false " Style="width: 100%">
+                                                        <asp:GridView ShowHeaderWhenEmpty="true " ID="prt_appointed_vaccine" ShowHeader="true" runat="server" AutoGenerateColumns="false" Style="width: 100%">
                                                             <HeaderStyle />
                                                             <Columns>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <div style="width: 200px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary ">Tên vaccin <div class="text-primary">Drug names</div> </div>
+                                                                        <div class="text-center" style="width: 200px;">
+                                                                            <span class="font-bold">Tên vaccin</span>
+                                                                            <div class="text-primary">Drug names</div>
+                                                                        </div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <div style="width: 200px; font-size: 14.5px; font-family: Tahoma; text-align: justify; margin: 5px" class="text-primary ">
+                                                                        <div style="width: 200px; margin: 5px">
                                                                             <asp:Label runat="server" Text='<%# Eval("drug_name") %>' />
                                                                         </div>
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <div style="width: 100px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary ">Hàm lượng <div class="text-primary">Strength</div></div>
+                                                                        <div style="width: 100px;" class="text-center">
+                                                                            <span class="font-bold">Hàm lượng</span>
+                                                                            <div class="text-primary">Strength</div>
+                                                                        </div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <div style="width: 100px; text-align: center; font-size: 14.5px; font-family: Tahoma" class="text-primary ">
+                                                                        <div style="width: 100px;">
                                                                             <asp:Label runat="server" Text='<%# Eval("strength") %>' />
                                                                         </div>
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <div style="width: 100px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center">Đường dùng <div class="text-primary">Route</div> </div>
+                                                                        <div style="width: 100px;"class="text-center">
+                                                                            <span class="font-bold">Đường dùng</span>
+                                                                            <div class="text-primary">Route</div>
+                                                                        </div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
-                                                                        <div style="width: 100px; font-size: 14.5px; font-family: Tahoma; text-align: center; margin: 5px" class="text-primary ">
+                                                                        <div style="width: 100px; margin: 5px" class="text-center">
                                                                             <asp:Label runat="server" Text='<%# Eval("router") %>' />
                                                                         </div>
                                                                     </ItemTemplate>
                                                                 </asp:TemplateField>
                                                                 <asp:TemplateField>
                                                                     <HeaderTemplate>
-                                                                        <div style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary ">Hướng dẫn bổ sung/ Chỉ định sử dụng khi cần thiết kèm theo lý do<div class="text-primary">Additional instruction/ PRN order with reason</div> </div>
+                                                                        <div class="text-center">
+                                                                            <span class="font-bold">Hướng dẫn bổ sung/ Chỉ định sử <br /> dụng khi cần thiết kèm theo lý do</span>
+                                                                                <div class="text-primary">Additional instruction/ PRN order with reason</div>
+                                                                        </div>
                                                                     </HeaderTemplate>
                                                                     <ItemTemplate>
                                                                         <div style="font-size: 14.5px; font-family: Tahoma; text-align: justify; margin: 5px">
@@ -393,8 +405,43 @@
                         </tfoot>
                     </table>
                 </div>
+
+                <telerik:RadWindowManager RenderMode="Lightweight"  
+                                  EnableShadow="true"  
+                                  Behaviors="Close, Move, Resize,Maximize" ID="RadWindowManager" DestroyOnClose="true"
+                                  RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
+            <Windows>
+                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History"   runat="server">
+                    <ContentTemplate>
+                        <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
+                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
+                                <Columns>
+                                    <telerik:GridTemplateColumn Display="false" HeaderStyle-Width="0" ItemStyle-Width="0" ItemStyle-Wrap="false">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="RadLinkButton1" runat="server" CommandName="Open" Text=""></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+
+                                    <telerik:GridTemplateColumn>
+                                        <ItemTemplate>
+                                            <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
+</telerik:RadLabel>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+                                </Columns>
+                            </MasterTableView>
+                            <ClientSettings>
+                                <Selecting AllowRowSelect="true" />
+                                <ClientEvents OnRowDblClick="RowDblClick" />
+                            </ClientSettings>
+                        </telerik:RadGrid>
+                    </ContentTemplate>
+                </telerik:RadWindow>
+            </Windows>
+        </telerik:RadWindowManager>
+
                 <div class="cssclsNoPrint">
-                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                       <li>Medical Record For Neonatal Vaccination</li>
                     </ul>
@@ -432,6 +479,23 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-body collapse show" id="collapseOne">
+
+                                        <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel2">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile"  OnClick="RadButton1_Click" ID="RadButton1" runat="server" CssClass="btn-sm" Text="View Latest Version"  />
+                                                    </div>
+
+                                                    <div class="alert alert-info d-flex align-items-center">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel1">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile" AutoPostBack="false" ID="Button1" runat="server" OnClientClicked="showWindow" CssClass="btn-sm" Text="View History"  />
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         <div class="row mb-2">
                                             <div class="col-md-12">
                                                 <label class="control-label mb-2 h4">I. Lý do đến khám/ <span class="text-primary">Chief complaint:</span></label>
@@ -538,37 +602,37 @@
                                                             </div>
                                                             <div>
                                                                 <label class="control-label mb-1 mr-2">Nhiệt độ/ <span class="text-primary">Temperature:</span></label>
-                                                                <asp:Label runat="server" ID="vs_temperature" />°C
+                                                                <asp:Label runat="server" ID="vs_temperature" />&nbsp;°C
                                                             </div>
 
                                                             <div>
                                                                 <label class="control-label mb-1 mr-2">Mạch/ <span class="text-primary">Heart Rate:</span></label>
-                                                                <asp:Label runat="server" ID="vs_heart_rate" />/phút (m)
+                                                                <asp:Label runat="server" ID="vs_heart_rate" />&nbsp;/phút (m)
                                                             </div>
 
                                                             <div>
                                                                 <label class="control-label mb-1 mr-2">Cân Nặng/ <span class="text-primary">Weight:</span></label>
-                                                                <asp:Label runat="server" ID="vs_weight" />Kg
+                                                                <asp:Label runat="server" ID="vs_weight" />&nbsp;Kg
                                                             </div>
 
                                                             <div>
                                                                 <label class="control-label mb-1 mr-2">Nhịp thở/ <span class="text-primary">Respiratory rate:</span></label>
-                                                                <asp:Label runat="server" ID="vs_respiratory_rate" />/phút (m)
+                                                                <asp:Label runat="server" ID="vs_respiratory_rate" />&nbsp;/phút (m)
                                                             </div>
 
                                                             <div>
                                                                 <label class="control-label mb-1 mr-2">Chiều cao/ <span class="text-primary">Height:</span></label>
-                                                                <asp:Label runat="server" ID="vs_height" />cm
+                                                                <asp:Label runat="server" ID="vs_height" />&nbsp;cm
                                                             </div>
 
                                                             <div>
                                                                 <label class="control-label mb-1 mr-2">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
-                                                                <asp:Label runat="server" ID="vs_blood_pressure" />mmHg
+                                                                <asp:Label runat="server" ID="vs_blood_pressure" />&nbsp;mmHg
                                                             </div>
 
                                                             <div>
                                                                 <label for="bmi" class="control-label mb-1 mr-2">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
-                                                                <asp:Label runat="server" ID="vs_BMI" />(Kg/m <sup>2</sup>)
+                                                                <asp:Label runat="server" ID="vs_BMI" />&nbsp;(Kg/m <sup>2</sup>)
                                                             <div>
                                                                 (Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not applicable for children and pregnant</span>)
                                                             </div>
@@ -576,12 +640,12 @@
 
                                                             <div>
                                                                 <label for="spO2" class="control-label mb-1 mr-2">Độ bão hòa Oxy/ <span class="text-primary">SpO2:</span></label>
-                                                                <asp:Label runat="server" ID="vs_spO2" />%
+                                                                <asp:Label runat="server" ID="vs_spO2" />&nbsp;%
                                                             </div>
 
                                                             <div>
                                                                 <label for="head-circumference" class="control-label mb-1 mr-2">Vòng đầu (trẻ em < 2 tuổi)/ <span class="text-primary">Head Circumference (children < 2 year old) </span></label>
-                                                                <asp:Label runat="server" ID="vs_pulse" />cm
+                                                                <asp:Label runat="server" ID="vs_pulse" />&nbsp;cm
                                                             </div>
                                                         </div>
                                                     </ContentTemplate>
@@ -963,7 +1027,7 @@
 
                                                 <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                <asp:LinkButton runat="server" OnClientClick="window.print(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                 <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                             </div>
@@ -990,6 +1054,8 @@
                     </div>
                 </div>
                     </div>
+                <asp:LinkButton runat="server" OnClick="clearSession_Click" ID="clearSession"></asp:LinkButton>
+
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>
@@ -1015,6 +1081,27 @@
         function afterAsyncPostBack() {
             checkboxRadiobutton_init();
         }
+        function showWindow(sender, eventArgs) {
+            var oWnd = $find("<%=RadWindow1.ClientID%>");
+            oWnd.show();
+        }
+
+
+        function RowDblClick(sender, eventArgs) {
+            console.log('sdfsdf');
+
+            var grid = $find("<%= RadGrid1.ClientID %>");
+           var masterTable = grid.get_masterTableView();
+           var item = eventArgs.get_itemIndexHierarchical();
+
+           var row = masterTable.get_dataItems()[item];
+
+           var button = row.findElement("RadLinkButton1");
+           button.click();
+
+           //console.log(row);
+       }
+
 
     </script>
 </body>

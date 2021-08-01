@@ -204,25 +204,43 @@
                 <div id="DocumentList" runat="server" class="modal fade in" role="dialog" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
-                            <div class="modal-header">
+                            <%--<div class="modal-header">
                                 <h5 class="modal-title" id="exampleModalLongTitle">Select document</h5>
                                 <div class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </div>
-                            </div>
+                            </div>--%>
                             <div class="modal-body">
                                 <p>
                                     Visit type <asp:Label runat="server" ID="lbl_visit_type"></asp:Label>
                                 </p>
                                 <select id="ddlDocList" runat="server" class="custom-select"></select>
+                                <span class="text-danger" id="ddlDocList_error"></span>
                             </div>
                             <div class="modal-footer">
                                 <div id="btnClose" data-dismiss="modal" class="btn btn-default waves-effect">Close</div>
-                                <asp:LinkButton runat="server" ID="btnSave" OnClick="btnSave_Click" OnClientClick="document.getElementById('btnSave').classList.add('disabled');" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
+                                <asp:LinkButton ValidationGroup="Group1" runat="server" ID="btnSave" OnClick="btnSave_Click" OnClientClick="return ddDocList_select();" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div id="Div1" runat="server" class="modal fade in" role="dialog" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <p>
+                                    Form Summary Of Complex Outpatient Case is exist!<asp:Label runat="server" ID="Label1"></asp:Label>
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <div data-dismiss="modal" class="btn btn-default waves-effect">Close</div>
+                                <asp:LinkButton runat="server"  ID="LinkButton1" OnClick="btnSave_Click" OnClientClick="document.getElementById('btnSave').classList.add('disabled');" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </ContentTemplate>
         </asp:UpdatePanel>
         </div>
@@ -230,5 +248,17 @@
 
     <script src="../scripts/jquery-3.2.1.min.js"></script>
     <script src="../scripts/bootstrap.min.js"></script>
+
+    <script>
+
+        function ddDocList_select() {
+            if (document.getElementById('ddlDocList').value == "") {
+                document.getElementById('ddlDocList_error').innerText = "Please select form document!";
+                return false;
+            }
+            document.getElementById('btnSave').classList.add('disabled');
+            return true;
+        }
+    </script>
 </body>
 </html>

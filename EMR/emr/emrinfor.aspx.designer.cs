@@ -42,6 +42,24 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlAnchor lblPatientInfo;
 
         /// <summary>
+        /// Person1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UserControl Person1;
+
+        /// <summary>
+        /// lblPID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPID;
+
+        /// <summary>
         /// Image1 control.
         /// </summary>
         /// <remarks>
@@ -229,15 +247,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.icons.CaretDown CaretDown;
-
-        /// <summary>
-        /// Person control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UserControl Person;
 
         /// <summary>
         /// Gear control.

@@ -1,5 +1,7 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="InpIniNurAss.aspx.cs" Inherits="EMR.InpIniNurAss" ValidateRequest="false" %>
 
+<%@ Register Assembly="Telerik.ReportViewer.Html5.WebForms, Version=15.1.21.616, Culture=neutral, PublicKeyToken=a9d7983dfcc261be" Namespace="Telerik.ReportViewer.Html5.WebForms" TagPrefix="telerik" %>
+
 <%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="webUI" TagName="PatientInfo" %>
 <%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="webUI" TagName="TextField" %>
 <%@ Register Src="~/icons/XSquare.ascx" TagPrefix="icon" TagName="xsquare" %>
@@ -35,67 +37,45 @@
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
         <asp:UpdatePanel ID="UpPrintForm" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <div class="cssclsNoScreen">
-                    <table class="report-container">
-                        <thead class="report-header">
-                            <tr>
-                                <th class="report-header-cell">
-                                    <div class="header-info">
-                                        <img src="../images/AIH_PI_FULL.png" />
-                                        <div class="header-info-title">
-                                            <h4></h4>
-                                            <h5>INPATIENT INITIAL NURSING ASSESSMENT</h5>
-                                            <div style="font-size: 12px" class="text-primary">
-                                                <%--( Áp dụng cho các đối tượng ≥1 tháng tuổi/ For person ≥ 1 month old)--%>
-                                            </div>
-                                        </div>
-                                        <div style="font-size: 13.3333px">
-                                            <div>
-                                                <asp:Label ID="lbPatientName" runat="server"></asp:Label>MAI MAI MÃI1
-                                            </div>
-                                            <div>
-                                                <asp:Label ID="lbBirthday" runat="server" Text='<%# Eval("date_of_birth") %>'></asp:Label>
-                                                |
-                                    <asp:Label ID="lbSex" runat="server"></asp:Label>
-                                            </div>
-                                            <div>
-                                                <asp:Label ID="lbPID" runat="server" Font-Bold="true"></asp:Label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <webUI:Line runat="server" />
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="report-content">
-                            <tr>
-                                <td class="report-content-cell">
-                                    <div class="main" runat="server" id="print_content">
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                        <tfoot class="report-footer">
-                            <tr>
-                                <td class="report-footer-cell">
-                                    <img style="width: 100%" src="../images/bottomline.png" />
-                                    <div class="footer-info">
-                                        <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
-                                        <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>
-                                        <div>Tel: 028 3910 9999</div>
-                                        <div>www.aih.com.vn</div>
-                                    </div>
-                                </td>
-                                <td class="report-footer-space"></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
+
+                <telerik:RadWindowManager RenderMode="Lightweight"  
+                                  EnableShadow="true"  
+                                  Behaviors="Close, Move, Resize,Maximize" ID="RadWindowManager" DestroyOnClose="true"
+                                  RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
+            <Windows>
+                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History"   runat="server">
+                    <ContentTemplate>
+                        <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
+                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
+                                <Columns>
+                                    <telerik:GridTemplateColumn Display="false" HeaderStyle-Width="0" ItemStyle-Width="0" ItemStyle-Wrap="false">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="RadLinkButton1" runat="server" CommandName="Open" Text=""></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+
+                                    <telerik:GridTemplateColumn>
+                                        <ItemTemplate>
+                                            <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
+</telerik:RadLabel>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+                                </Columns>
+                            </MasterTableView>
+                            <ClientSettings>
+                                <Selecting AllowRowSelect="true" />
+                                <ClientEvents OnRowDblClick="RowDblClick" />
+                            </ClientSettings>
+                        </telerik:RadGrid>
+                    </ContentTemplate>
+                </telerik:RadWindow>
+            </Windows>
+        </telerik:RadWindowManager>
 
                 <div class="cssclsNoPrint">
-                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
-                      <li>US Urinary System Report</li>
+                      <li>Inpatient Initial Nursing Assessment</li>
                     </ul>
                     <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
                         <asp:HiddenField runat="server" ID="DataObj" />
@@ -130,6 +110,22 @@
                                     </div>
                                     <div class="card-body collapse show" id="collapseOne">
                                         <div class="form-body">
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel2">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile"  OnClick="RadButton1_Click" ID="RadButton1" runat="server" CssClass="btn-sm" Text="View Latest Version"  />
+                                                    </div>
+
+                                                    <div class="alert alert-info d-flex align-items-center">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel1">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile" AutoPostBack="false" ID="Button1" runat="server" OnClientClicked="showWindow" CssClass="btn-sm" Text="View History"  />
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
@@ -240,7 +236,7 @@
                                                         </div>
 
                                                         <div class="form-group religion_other_field w-n d-inline-block">
-                                                            <webUI:TextField runat="server" ID="TextField3" />
+                                                            <webUI:TextField runat="server" ID="txt_religion_other" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -704,7 +700,7 @@
                                                     <label class="control-label mr-2 mb-1">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
                                                     <asp:Label runat="server" ID="lbl_vs_blood_pressure"></asp:Label>
                                                     <div class="form-group w-5 d-inline-block" runat="server" id="vs_blood_pressure_wrapper">
-                                                        <input data-type="number" id="txt_vs_blood_pressure" runat="server" class="form-control text-right" />
+                                                        <input data-type="number1" id="txt_vs_blood_pressure" runat="server" class="form-control text-right" />
                                                         <span class="append">mmHg</span>
                                                     </div>
                                                 </div>
@@ -715,6 +711,7 @@
                                                         <input runat="server" id="txt_vs_bmi" class="form-control text-right" disabled="disabled" />
                                                         <span class="append">(Kg/m <sup>2</sup>)</span>
                                                     </div>
+                                                    <asp:Label runat="server" ID="bmiStr"></asp:Label>
                                                     <div>
                                                         (Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not
 applicable for children and pregnant</span>)
@@ -1466,7 +1463,7 @@ applicable for children and pregnant</span>)
                                                                             <div class="col-md-12 gt-2-a">
                                                                                 <label class="control-label mb-1 d-block">Điểm = 0/ <span class="text-primary">Score = 0</span></label>
                                                                                 <label class="custom-control custom-checkbox">
-                                                                                    <input type="checkbox" id="cb_nutrition_requiredment_true" class="custom-control-input" runat="server" />
+                                                                                    <input type="checkbox" id="cb_normal_nutrition_req_true" class="custom-control-input" runat="server" />
                                                                                     <span class="custom-control-label">Yêu cầu dinh dưỡng đặc biệt/ <span class="text-primary">Normal nutritional requirements</span></span>
                                                                                 </label>
                                                                             </div>
@@ -2472,18 +2469,20 @@ applicable for children and pregnant</span>)
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-group w-6 d-inline-block">
-                                                                    <input runat="server" id="Text1" class="form-control text-right" />
+                                                                    <input runat="server" id="txt_oral_care_note" class="form-control text-right" />
                                                                     <span class="append">lần/ngày (times/day)</span>
                                                                 </div>
                                                             </div>
 
-
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_oral_care_code_oth" runat="server" name="rad_oral_care_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_oral_care_code_oth">.</label>
+                                                                <a href="javascript:void(0)" data-clear="rad_oral_care_code" onclick="clearRadioButton(this)">
+                                                                    <icon:xsquare runat="server" ID="XSquare3" />
+                                                                </a>
                                                             </div>
 
-                                                            <div class="custom-control custom-radio d-inline-block">
+                                                            <%--<div class="custom-control custom-radio d-inline-block">
                                                                 <input type="radio" id="rad_oral_care_code_db" runat="server" name="rad_oral_care_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_oral_care_code_db">
                                                                     Tự tắm tại giường/ <span class="text-primary">Dependent in bed</span>
@@ -2491,7 +2490,7 @@ applicable for children and pregnant</span>)
                                                                 <a href="javascript:void(0)" data-clear="rad_oral_care_code" onclick="clearRadioButton(this)">
                                                                     <icon:xsquare runat="server" ID="XSquare3" />
                                                                 </a>
-                                                            </div>
+                                                            </div>--%>
                                                         </div>
                                                     </fieldset>
                                                 </div>
@@ -2736,7 +2735,7 @@ applicable for children and pregnant</span>)
                                                             </div>
 
                                                             <div class="custom-control custom-radio d-inline-block">
-                                                                <input type="radio" id="rad_ambulation_code_na" runat="server" name="rad_ambulation_code" class="custom-control-input" />
+                                                                <input type="radio" id="rad_ambulation_code_na" runat="server" name="rad_ambulation_code" class="custom-control-input" disabled-for="ambulation_note_field" />
                                                                 <label class="custom-control-label" for="rad_ambulation_code_na">
                                                                     Cần hỗ trợ (ghi rõ)/ <span class="text-primary">Need assistance (specify)</span>
                                                                 </label>
@@ -2744,6 +2743,11 @@ applicable for children and pregnant</span>)
                                                                     <icon:xsquare runat="server" ID="XSquare37" />
                                                                 </a>
                                                             </div>
+
+                                                        <div class="form-group ambulation_note_field w-n d-inline-block">
+                                                            <webUI:TextField runat="server" ID="txt_ambulation_note" />
+                                                        </div>
+
                                                         </div>
                                                     </fieldset>
                                                 </div>
@@ -3405,7 +3409,7 @@ applicable for children and pregnant</span>)
 
                                                         <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                        <asp:LinkButton OnClientClick="return false;" runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                        <asp:LinkButton OnClientClick="window.print(); return false;" runat="server" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                         <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                                     </div>
@@ -3427,7 +3431,6 @@ applicable for children and pregnant</span>)
                                             </webUI:PopupModal>
 
                                             <icon:PopupShowDelay runat="server" ID="PopupShowDelay" />
-
                                         </div>
                                     </div>
                                 </div>
@@ -3435,6 +3438,7 @@ applicable for children and pregnant</span>)
                         </div>
                     </div>
                 </div>
+                <asp:LinkButton runat="server" OnClick="clearSession_Click" ID="clearSession"></asp:LinkButton>
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>
@@ -3721,6 +3725,8 @@ applicable for children and pregnant</span>)
         formGroup_init();
         checkboxRadiobutton_init();
         InputFilter("data-type='number'");
+        InputFilter("data-type='number1'", /^\d*\.?\/?\d*$/);
+        if (document.getElementById('txt_vs_bmi') != null) { setbmiStr(document.getElementById('txt_vs_bmi').value); }
 
         function beforeAsyncPostBack() {
             var curtime = new Date();
@@ -3731,11 +3737,33 @@ applicable for children and pregnant</span>)
             formGroup_init();
             checkboxRadiobutton_init();
             InputFilter("data-type='number'");
+            InputFilter("data-type='number1'", /^\d*\.?\/?\d*$/);
+            if (document.getElementById('txt_vs_bmi') != null) { setbmiStr(document.getElementById('txt_vs_bmi').value); }
+
             load_pain_annotation_Image();
 
             load_skin_anno_data_Image();
+        }
+
+        function showWindow(sender, eventArgs) {
+            var oWnd = $find("<%=RadWindow1.ClientID%>");
+            oWnd.show();
+        }
 
 
+       function RowDblClick(sender, eventArgs) {
+            console.log('sdfsdf');
+
+           var grid = $find("<%= RadGrid1.ClientID %>");
+           var masterTable = grid.get_masterTableView();
+           var item = eventArgs.get_itemIndexHierarchical();
+
+           var row = masterTable.get_dataItems()[item];
+
+           var button = row.findElement("RadLinkButton1");
+           button.click();
+
+           //console.log(row);
         }
 
     </script>

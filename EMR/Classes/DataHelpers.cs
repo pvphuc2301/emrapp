@@ -37,16 +37,7 @@ namespace EMR
             if (value == null) return null;
             try
             {
-                string[] temp = value.ToString().Split('•');
-
-                string result = "";
-
-                for (int i = 1; i < temp.Length; i++)
-                {
-                    result += "•" + temp[i];
-                    if (temp[i].Substring(temp[i].Length - 4, 4) != "<br>")
-                        result += "<br>";
-                }
+                string result = value.Replace("\n", "<br>");
 
                 return result;
             }

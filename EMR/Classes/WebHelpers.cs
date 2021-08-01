@@ -40,7 +40,7 @@ namespace EMR
     public enum ControlState { View, Edit }
     public static class WebHelpers
     {
-        public static string URL = "http://172.16.0.78:8088/";//DEV
+        public static string URL = "http://172.16.0.88:8080/";//DEV
         //public static string URL = "http://172.16.0.78:8082/";//UAT
 
         #region API
@@ -62,25 +62,25 @@ namespace EMR
             {
                 dataStream.Write(byteArray, 0, byteArray.Length);
             }
-
+            
             long length = 0;
             //try
             //{
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-                {
-                    length = response.ContentLength;
-                    WebResponse response1 = request.GetResponse();
-                    Stream dataStream = response1.GetResponseStream();
-                    StreamReader reader = new StreamReader(dataStream);
-                    var responseFromServer = reader.ReadToEnd();
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                length = response.ContentLength;
+                WebResponse response1 = request.GetResponse();
+                Stream dataStream = response1.GetResponseStream();
+                StreamReader reader = new StreamReader(dataStream);
+                var responseFromServer = reader.ReadToEnd();
 
-                    reader.Close();
-                    dataStream.Close();
-                    response.Close();
+                reader.Close();
+                dataStream.Close();
+                response.Close();
 
-                    result.Status = response.StatusCode;
-                    return result;
-                }
+                result.Status = response.StatusCode;
+                return result;
+            }
             //}
             //catch (WebException ex)
             //{
@@ -251,13 +251,22 @@ namespace EMR
 
             return settings.GetType().GetProperty(name) != null;
         }
-        internal static void DataBind(HtmlForm _form, HtmlInputRadioButton controlType, string controlID)
+        internal static void DataBind(HtmlForm _form, HtmlInputRadioButton controlType, string controlID, string defaultValue = null)
         {
             dynamic control = _form.FindControl(controlID);
             
             if (control != null)
             {
                 ((HtmlInputRadioButton)control).Checked = true;
+                return;
+            }
+            if(defaultValue != null)
+            {
+                control = _form.FindControl(controlID + defaultValue);
+                if (control != null)
+                {
+                    ((HtmlInputRadioButton)control).Checked = true;
+                }
             }
         }
         internal static void DataBind(HtmlForm _form, HtmlSelect select, Dictionary<string, string> dictionary, string selectedItem)
@@ -282,7 +291,21 @@ namespace EMR
                 item1.Selected = true;
             }
         }
+        public static void gen_BarCode(string varTextCode, Control BarCode)
+        {
+            System.Web.UI.WebControls.Image image = new System.Web.UI.WebControls.Image();
+            BarcodeLib.Barcode code128 = new BarcodeLib.Barcode();
+            System.Drawing.Image barcode = code128.Encode(BarcodeLib.TYPE.CODE39, varTextCode);
+            System.IO.MemoryStream ms = new System.IO.MemoryStream();
+            barcode.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            ms.ToArray();
 
+            image.ImageUrl = "data:image/jpeg;base64," + Convert.ToBase64String(ms.ToArray());
+            image.Width = 100;
+            image.Height = 15;
+            BarCode.Controls.Clear();
+            BarCode.Controls.Add(image);
+        }
         internal static void clearSessionDoc(Page page, string docId)
         {
             if (!string.IsNullOrEmpty(docId))
@@ -302,6 +325,20 @@ namespace EMR
                 ((HtmlInputCheckBox)control).Checked = true;
             }
         }
+
+        internal static void setBmi(Label label, dynamic vs_BMI)
+        {
+            if(!string.IsNullOrEmpty(vs_BMI))
+            {
+                label.ForeColor = Color.Red;
+                vs_BMI = double.Parse(vs_BMI);
+
+                if (vs_BMI < 18.5) { label.Text = "Chỉ số cơ thể dưới chuẩn/ Lower than standard"; }
+                else if (vs_BMI < 24.9) { label.ForeColor = Color.Black; }
+                else if (vs_BMI >= 25) { label.Text = "Chỉ số cơ thể thừa cân/ Over than standard"; }
+            }
+        }
+
         internal static void DataBind(HtmlForm _from, HtmlInputCheckBox controlType, string cb_name, DataTable value, string key = "code")
         {
             if (value != null && cb_name != null)
@@ -386,7 +423,8 @@ namespace EMR
         internal static string FormatString(dynamic value, string defaultValue = "—", string CssClass = "font-bold")
         {
             if (value == null || Convert.ToString(value) == "") return defaultValue;
-            return $"<span class='{CssClass}'>{Convert.ToString(value)}</span>";
+            return Convert.ToString(value);
+            //return $"<span class='{CssClass}'>{Convert.ToString(value)}</span>";
         }
 
         internal static void SendError(Page page, Exception ex)
@@ -455,10 +493,10 @@ namespace EMR
             }
             return visible;
         }
-        internal static bool LoadFormControl(HtmlForm form1, dynamic obj, ControlState state, string session, string access_authorize = "")
+        internal static bool LoadFormControl(HtmlForm form1, dynamic obj, ControlState state, string session, bool IsViewLog, string access_authorize = "")
         {
             //1 - edit
-            bool visible = (state == ControlState.Edit && DataHelpers._LOCATION == session && access_authorize == "FullAccess") ? true : false;
+            bool visible = (state == ControlState.Edit && DataHelpers._LOCATION == session && access_authorize == "FullAccess" && IsViewLog == false) ? true : false;
 
             foreach (var prop in obj.GetType().GetProperties())
             {
@@ -952,7 +990,7 @@ namespace EMR
                 }
             }
         }
-        internal static void getAccessButtons(HtmlForm form, string docStatus, string access_authorize, string location)
+        internal static void getAccessButtons(HtmlForm form, string docStatus, string access_authorize, string location, bool IsViewLog)
         {
             LinkButton btnComplete = (LinkButton)form.FindControl("btnComplete");
             Control btnSave = form.FindControl("btnSave");
@@ -963,7 +1001,7 @@ namespace EMR
             
             VisibleControl(false, btnCancel);
 
-            if (DataHelpers._LOCATION != location)
+            if (DataHelpers._LOCATION != location || IsViewLog)
             {
                 VisibleControl(false, btnComplete, btnSave, btnDelete, btnAmend, btnPrint);
                 return;
@@ -1214,6 +1252,9 @@ namespace EMR
                     if (control is TextField || control is TextBox)
                     {
                         table.Rows[gridView.Rows.Count - 1][control.ID] = control.Text;
+                    } else if(control is RadDateTimePicker)
+                    {
+                        table.Rows[gridView.Rows.Count - 1][control.ID] = control.SelectedDate;
                     }
                 }
                 catch (Exception ex) { }

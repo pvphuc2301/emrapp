@@ -42,49 +42,31 @@ namespace EMR
         protected global::System.Web.UI.UpdatePanel UpPrintForm;
 
         /// <summary>
-        /// lbPatientName control.
+        /// RadWindowManager control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbPatientName;
+        protected global::Telerik.Web.UI.RadWindowManager RadWindowManager;
 
         /// <summary>
-        /// lbBirthday control.
+        /// RadWindow1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbBirthday;
+        protected global::Telerik.Web.UI.RadWindow RadWindow1;
 
         /// <summary>
-        /// lbSex control.
+        /// RadGrid1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbSex;
-
-        /// <summary>
-        /// lbPID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbPID;
-
-        /// <summary>
-        /// print_content control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl print_content;
+        protected global::Telerik.Web.UI.RadGrid RadGrid1;
 
         /// <summary>
         /// btnHome control.
@@ -157,6 +139,51 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.UserControls.PatientInfo PatientInfo2;
+
+        /// <summary>
+        /// currentLog control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl currentLog;
+
+        /// <summary>
+        /// RadLabel2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadLabel RadLabel2;
+
+        /// <summary>
+        /// RadButton1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton RadButton1;
+
+        /// <summary>
+        /// RadLabel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadLabel RadLabel1;
+
+        /// <summary>
+        /// Button1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton Button1;
 
         /// <summary>
         /// lbl_residence_desc control.
@@ -375,13 +402,13 @@ namespace EMR
         protected global::System.Web.UI.UserControl XSquare6;
 
         /// <summary>
-        /// TextField3 control.
+        /// txt_religion_other control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField TextField3;
+        protected global::EMR.TextField txt_religion_other;
 
         /// <summary>
         /// lbl_spiritual_couns control.
@@ -1390,6 +1417,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_bmi;
+
+        /// <summary>
+        /// bmiStr control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label bmiStr;
 
         /// <summary>
         /// lbl_vs_spO2 control.
@@ -2922,13 +2958,13 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label nutrition_score;
 
         /// <summary>
-        /// cb_nutrition_requiredment_true control.
+        /// cb_normal_nutrition_req_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_nutrition_requiredment_true;
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_normal_nutrition_req_true;
 
         /// <summary>
         /// lbl_severity_score1 control.
@@ -4956,13 +4992,13 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_oral_care_code_ab;
 
         /// <summary>
-        /// Text1 control.
+        /// txt_oral_care_note control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText Text1;
+        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_oral_care_note;
 
         /// <summary>
         /// rad_oral_care_code_oth control.
@@ -4972,15 +5008,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_oral_care_code_oth;
-
-        /// <summary>
-        /// rad_oral_care_code_db control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_oral_care_code_db;
 
         /// <summary>
         /// XSquare3 control.
@@ -5404,6 +5431,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UserControl XSquare37;
+
+        /// <summary>
+        /// txt_ambulation_note control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_ambulation_note;
 
         /// <summary>
         /// lbl_sleep_code control.
@@ -6619,5 +6655,14 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.UserControls.PopupShowDelay PopupShowDelay;
+
+        /// <summary>
+        /// clearSession control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton clearSession;
     }
 }

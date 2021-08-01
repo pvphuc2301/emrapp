@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Telerik.Web.UI;
 
 namespace EMR
 {
@@ -19,6 +21,9 @@ namespace EMR
         #region Binding Data
         private void BindingDataForm(Surc surc, bool state)
         {
+            admission_date.Text = WebHelpers.FormatDateTime(surc.admission_date);
+            procedure_date.Text = WebHelpers.FormatDateTime(surc.procedure_date);
+
             if (state)
             {
                 BindingDataFormEdit(surc);
@@ -41,6 +46,7 @@ namespace EMR
                 txt_rh.Value = surc.rh;
 
                 DataObj.Value = JsonConvert.SerializeObject(surc);
+                Session["docid"] = surc.document_id;
                 WebHelpers.AddScriptFormEdit(Page, surc, (string)Session["emp_id"]);
             }
             catch (Exception ex)
@@ -71,11 +77,11 @@ namespace EMR
             {
                 Patient patient = Patient.Instance();
 
-                prt_vpid.Text = prt_vpid1.Text = prt_barcode.Text = patient.visible_patient_id;
+                prt_vpid.Text = prt_vpid1.Text = patient.visible_patient_id;
 
                 prt_fullname.Text = patient.GetFullName();
                 prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth);
-
+                WebHelpers.gen_BarCode(patient.visible_patient_id, BarCode);
                 prt_gender.Text = WebHelpers.CreateOptions(new Option { Text = "Nam <div class='text-primary'>Male</div>", Value = "Male" }, new Option { Text = "Nữ<div class='text-primary'>Female</div>", Value = "Female" }, DataHelpers.patient.gender_e, "display: grid; grid-template-columns: 1fr 1fr; width: 250px");
 
                 prt_address.Text = patient.GetAddress();
@@ -144,7 +150,7 @@ namespace EMR
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, surc, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
+                WebHelpers.LoadFormControl(form1, surc, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(surc);
                 //get access button
@@ -155,16 +161,7 @@ namespace EMR
             Initial();
             WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
         }
-        protected void btnPrint_Click(object sender, EventArgs e)
-        {
-            try { 
-                Surc surc = new Surc(Request.QueryString["docId"]);
-                BindingDataFormPrint(surc);
 
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
-            }
-            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
-        }
         protected void btnHome_Click(object sender, EventArgs e)
         {
             Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
@@ -180,26 +177,106 @@ namespace EMR
 
             try
             {
-                Surc surc = new Surc(DataHelpers.varDocId);
+                Surc surc;
+                if (Request.QueryString["docIdLog"] != null)
+                {
+                    surc = new Surc(Request.QueryString["docIdLog"], true);
+                    currentLog.Visible = true;
 
+                    string item = (string)Session["viewLogInfo"];
+
+                    RadLabel2.Text = $"You are viewing an old version of this document ( { item })";
+                }
+                else
+                {
+                    surc = new Surc(Request.QueryString["docId"]);
+                    currentLog.Visible = false;
+                }
+
+
+                loadRadGridHistoryLog();
+                
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-                prt_barcode.Text = Patient.Instance().visible_patient_id;
+
                 if (surc.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(surc, WebHelpers.LoadFormControl(form1, surc, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
-
+                    BindingDataForm(surc, WebHelpers.LoadFormControl(form1, surc, ControlState.View, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
+                    BindingDataFormPrint(surc);
                 }
                 else if (surc.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(surc, WebHelpers.LoadFormControl(form1, surc, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
+                    BindingDataForm(surc, WebHelpers.LoadFormControl(form1, surc, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
                 }
 
-                WebHelpers.getAccessButtons(form1, surc.status, (string)Session["access_authorize"], (string)Session["location"]);
+                WebHelpers.getAccessButtons(form1, surc.status, (string)Session["access_authorize"], (string)Session["location"], Request.QueryString["docIdLog"] != null);
             }
             catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
+        }
+        private void loadRadGridHistoryLog()
+        {
+            DataTable dt = Surc.Logs(Request.QueryString["docId"]);
+            RadGrid1.DataSource = dt;
+            DateTime last_updated_date_time = new DateTime();
+            string last_updated_doctor = "";
+
+            if (dt.Rows.Count == 1)
+            {
+                last_updated_doctor = dt.Rows[0].Field<string>("created_name_l");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
+            }
+            else if (dt.Rows.Count > 1)
+            {
+                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_l");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
+            }
+
+            Session["signature_date"] = last_updated_date_time;
+            Session["signature_doctor"] = last_updated_doctor;
+            RadLabel1.Text = $"Last updated by {last_updated_doctor} on " + WebHelpers.FormatDateTime(last_updated_date_time, "dd-MM-yyyy HH:mm");
+            RadGrid1.DataBind();
+        }
+
+        protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
+        {
+            string result = "Amended by";
+            if (Convert.ToString(status) == DocumentStatus.FINAL && string.IsNullOrEmpty(Convert.ToString(amend_reason)))
+            {
+                result = "Submitted by";
+            }
+
+            if (Convert.ToString(status) == DocumentStatus.DRAFT) result = "Saved by";
+
+            if (string.IsNullOrEmpty(Convert.ToString(modified_name)))
+            {
+                result += $" {created_name} on {created_date_time}";
+            }
+            else
+            {
+                result += $" {modified_name} on {modified_date_time}";
+            }
+            return result;
+        }
+        protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            GridDataItem item = (e.Item as GridDataItem);
+            if (e.CommandName.Equals("Open"))
+            {
+                string doc_log_id = item.GetDataKeyValue("document_log_id").ToString();
+
+                string url = $"/IPD/SurgicalCertificate.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}&docIdLog={doc_log_id}";
+
+                Session["viewLogInfo"] = (item.FindControl("RadLabel1") as RadLabel).Text;
+
+                Response.Redirect(url);
+            }
+        }
+        protected void RadButton1_Click(object sender, EventArgs e)
+        {
+            string url = $"/IPD/SurgicalCertificate.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}";
+            Response.Redirect(url);
         }
         public void UpdateData(Surc surc)
         {
@@ -237,8 +314,13 @@ namespace EMR
                 WebHelpers.SendError(Page, ex);
             }
         }
+
         #endregion
 
+        protected void clearSession_Click(object sender, EventArgs e)
+        {
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
 
+        }
     }
 }

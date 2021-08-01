@@ -54,6 +54,10 @@ namespace EMR
                 txt_length_of_birth.Value = oadr.length_of_birth;
                 txt_head_circum.Value = oadr.head_circum;
 
+                WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_singleton_sex_code_" + oadr.singleton_sex_code);
+                
+                WebHelpers.DataBind(form2, new HtmlInputCheckBox(), "cb_multiple_sex_", WebHelpers.GetJSONToDataTable(oadr.multiple_sex), "cde");
+
                 WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_birth_defect_" + oadr.birth_defect);
                 txt_birth_defect_note.Value = oadr.birth_defect_note;
 
@@ -69,7 +73,7 @@ namespace EMR
                 WebHelpers.BindDateTimePicker(dtpk_pacental_deli_dt, oadr.pacental_deli_dt);
                 //
                 txt_placenta_deli_mode.Value = oadr.placenta_deli_mode;
-                txt_weight_of_birth.Value = oadr.weight_of_birth;
+                txt_placenta_weight.Value = oadr.placenta_weight;
                 //
                 WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_umbilical_coil_" + oadr.umbilical_coil);
                 txt_umbilical_length.Value = oadr.umbilical_length;
@@ -77,7 +81,7 @@ namespace EMR
                 //
                 WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_p_intervention_" + oadr.p_intervention);
                 txt_p_intervention_note.Value = oadr.p_intervention_note;
-                //
+                //3
                 txt_spO2.Value = oadr.spO2;
                 txt_temp.Value = oadr.temp;
                 txt_bp.Value = oadr.bp;
@@ -114,6 +118,7 @@ namespace EMR
                 //5
                 txt_treatment_plan.Value = oadr.treatment_plan;
 
+                Session["docid"] = oadr.document_id;
                 WebHelpers.AddScriptFormEdit(Page, oadr, (string)Session["emp_id"]);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
@@ -201,14 +206,25 @@ namespace EMR
             try
             {
                 prt_vpid.Text = Patient.Instance().visible_patient_id;
-                prt_hour.Text = oadr.admis_delivery.ToString("HH");
-                prt_minute.Text = oadr.admis_delivery.ToString("mm");
-                prt_date.Text = oadr.admis_delivery.ToString("dd/MM/yyyy");
+                WebHelpers.gen_BarCode(Patient.Instance().visible_patient_id, BarCode);
+                
+                if(oadr.admis_delivery != null)
+                {
+                    prt_hour.Text = oadr.admis_delivery.ToString("HH");
+                    prt_minute.Text = oadr.admis_delivery.ToString("mm");
+                    prt_date.Text = oadr.admis_delivery.ToString("dd/MM/yyyy");
+                }
+
                 prt_obs_name.Text = oadr.obs_name;
                 prt_obs_initial.Text = oadr.obs_initial;
-                prt_hour_d.Text = oadr.delivery_at.ToString("HH");
-                prt_minute_d.Text = oadr.delivery_at.ToString("mm");
-                prt_date_d.Text = oadr.delivery_at.ToString("dd/MM/yyyy");
+
+                if(oadr.delivery_at != null)
+                {
+                    prt_hour_d.Text = oadr.delivery_at.ToString("HH");
+                    prt_minute_d.Text = oadr.delivery_at.ToString("mm");
+                    prt_date_d.Text = oadr.delivery_at.ToString("dd/MM/yyyy");
+                }
+
                 prt_apgar_score_1.Text = oadr.apgar_score_1;
                 prt_apgar_score_5.Text = oadr.apgar_score_5;
                 prt_apgar_score_10.Text = oadr.apgar_score_10;
@@ -318,29 +334,29 @@ namespace EMR
                     prt_placenta_deli_M.Text = "❏";
                     prt_placenta_deli_S.Text = "❏";
                 }
-                prt_pdt_hour.Text = oadr.pacental_deli_dt.ToString("HH");
-                prt_pdt_minute.Text = oadr.pacental_deli_dt.ToString("mm");
-                prt_pdt_date.Text = oadr.pacental_deli_dt.ToString("dd/MM/yyyy");
+
+                if(oadr.pacental_deli_dt != null)
+                {
+                    prt_pdt_hour.Text = oadr.pacental_deli_dt.ToString("HH");
+                    prt_pdt_minute.Text = oadr.pacental_deli_dt.ToString("mm");
+                    prt_pdt_date.Text = oadr.pacental_deli_dt.ToString("dd/MM/yyyy");
+                }
+
                 prt_placenta_deli_mode.Text = oadr.placenta_deli_mode;
                 prt_placenta_weight.Text = oadr.placenta_weight+" gram";
+                
                 if (oadr.umbilical_coil != null)
                 {
                     if (oadr.umbilical_coil = true)
                     {
                         prt_umbilical_coil_True.Text = "☒";
-                        prt_umbilical_coil_False.Text = "❏";
                     }
-                    if (oadr.umbilical_coil = false)
+                    else
                     {
-                        prt_umbilical_coil_True.Text = "❏";
                         prt_umbilical_coil_False.Text = "☒";
                     }
                 }
-                if (oadr.umbilical_coil == null || oadr.umbilical_coil == "")
-                {
-                    prt_umbilical_coil_True.Text = "❏";
-                    prt_umbilical_coil_False.Text = "❏";
-                }
+
                 prt_umbilical_length.Text = oadr.umbilical_length;
                 prt_blood_loss.Text = oadr.blood_loss;
                 if (oadr.p_intervention != null)
@@ -447,8 +463,9 @@ namespace EMR
                     prt_sur_complication_True.Text = "❏";
                 }
                 prt_treatment_plan.Text = oadr.treatment_plan;
-                prt_create_date.Text = DateTime.Now.ToString("dd/MM/yyyy");
+                DateTime signature_date = (DateTime)Session["signature_date"];
 
+                prt_create_date.Text = signature_date.ToString("dd/MM/yyyy");
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }
@@ -503,19 +520,13 @@ namespace EMR
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form2, oadr, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
+                WebHelpers.LoadFormControl(form2, oadr, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(oadr);
                 //get access button
             }
         }
-        protected void btnPrint_Click(object sender, EventArgs e)
-        {
-            oadr = new Oadr(Request.QueryString["docId"]);
-            BindingDataFormPrint(oadr);
 
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
-        }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             Initial();
@@ -544,26 +555,106 @@ namespace EMR
 
             try
             {
-                Oadr oadr = new Oadr(Request.QueryString["docId"]);
+                Oadr oadr;
 
+                if (Request.QueryString["docIdLog"] != null)
+                {
+                    oadr = new Oadr(Request.QueryString["docIdLog"], true);
+                    currentLog.Visible = true;
+
+                    string item = (string)Session["viewLogInfo"];
+
+                    RadLabel2.Text = $"You are viewing an old version of this document ( { item })";
+                }
+                else
+                {
+                    oadr = new Oadr(Request.QueryString["docId"]);
+                    currentLog.Visible = false;
+                }
+
+                loadRadGridHistoryLog();
+               
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-                prt_barcode.Text = Patient.Instance().visible_patient_id;
+                
                 if (oadr.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(oadr, WebHelpers.LoadFormControl(form2, oadr, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
-
+                    BindingDataForm(oadr, WebHelpers.LoadFormControl(form2, oadr, ControlState.View, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
+                    BindingDataFormPrint(oadr);
                 }
                 else if (oadr.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(oadr, WebHelpers.LoadFormControl(form2, oadr, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
+                    BindingDataForm(oadr, WebHelpers.LoadFormControl(form2, oadr, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
                 }
 
-                WebHelpers.getAccessButtons(form2, oadr.status, (string)Session["access_authorize"], (string)Session["location"]);
+                WebHelpers.getAccessButtons(form2, oadr.status, (string)Session["access_authorize"], (string)Session["location"], Request.QueryString["docIdLog"] != null);
             }
             catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
+        }
+        private void loadRadGridHistoryLog()
+        {
+            DataTable dt = Oadr.Logs(Request.QueryString["docId"]);
+            RadGrid1.DataSource = dt;
+            DateTime last_updated_date_time = new DateTime();
+            string last_updated_doctor = "";
+
+            if (dt.Rows.Count == 1)
+            {
+                last_updated_doctor = dt.Rows[0].Field<string>("created_name_l");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
+            }
+            else if (dt.Rows.Count > 1)
+            {
+                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_l");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
+            }
+
+            Session["signature_date"] = last_updated_date_time;
+            Session["signature_doctor"] = last_updated_doctor;
+            RadLabel1.Text = $"Last updated by {last_updated_doctor} on " + WebHelpers.FormatDateTime(last_updated_date_time, "dd-MM-yyyy HH:mm");
+            RadGrid1.DataBind();
+        }
+
+        protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
+        {
+            string result = "Amended by";
+            if (Convert.ToString(status) == DocumentStatus.FINAL && string.IsNullOrEmpty(Convert.ToString(amend_reason)))
+            {
+                result = "Submitted by";
+            }
+
+            if (Convert.ToString(status) == DocumentStatus.DRAFT) result = "Saved by";
+
+            if (string.IsNullOrEmpty(Convert.ToString(modified_name)))
+            {
+                result += $" {created_name} on {created_date_time}";
+            }
+            else
+            {
+                result += $" {modified_name} on {modified_date_time}";
+            }
+            return result;
+        }
+        protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            GridDataItem item = (e.Item as GridDataItem);
+            if (e.CommandName.Equals("Open"))
+            {
+                string doc_log_id = item.GetDataKeyValue("document_log_id").ToString();
+
+                string url = $"/IPD/ObsAtDeliRoom.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}&docIdLog={doc_log_id}";
+
+                Session["viewLogInfo"] = (item.FindControl("RadLabel1") as RadLabel).Text;
+
+                Response.Redirect(url);
+            }
+        }
+        protected void RadButton1_Click(object sender, EventArgs e)
+        {
+            string url = $"/IPD/ObsAtDeliRoom.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}";
+            Response.Redirect(url);
         }
         public void UpdateData(Oadr oadr)
         {
@@ -708,6 +799,12 @@ namespace EMR
         {
             public string cde { get; set; }
             public string desc { get; set; }
+        }
+
+        protected void clearSession_Click(object sender, EventArgs e)
+        {
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+
         }
     }
 }

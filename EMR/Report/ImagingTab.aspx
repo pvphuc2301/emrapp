@@ -11,11 +11,10 @@
 </head>
 <body>
     <form id="form1" runat="server">
-<telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
+    <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
     <telerik:RadSkinManager ID="RadSkinManager1" runat="server" ShowChooser="false" />
     <div class="demo-container no-bg">
-<telerik:RadAjaxLoadingPanel runat="server" ID="LoadingPanel1" Skin="MetroTouch">
-        </telerik:RadAjaxLoadingPanel>
+        <telerik:RadAjaxLoadingPanel runat="server" ID="LoadingPanel1" Skin="MetroTouch"></telerik:RadAjaxLoadingPanel>
         <telerik:RadAjaxManager runat="server" ID="RadAjaxManager1" EnablePageHeadUpdate="true">
             <AjaxSettings>
                 <telerik:AjaxSetting AjaxControlID="RadTabStrip1">
@@ -41,15 +40,12 @@
             }
             /* ]]> */
         </script>
-        <telerik:RadTabStrip RenderMode="Lightweight" OnClientTabSelecting="onTabSelecting" ID="RadTabStrip1" SelectedIndex="0" 
-            runat="server" MultiPageID="RadMultiPage1" Skin="MetroTouch" Width="100%" Align="Justify" Orientation="HorizontalTop"
-            OnTabClick="RadTabStrip1_TabClick">
+        <telerik:RadTabStrip RenderMode="Lightweight" OnClientTabSelecting="onTabSelecting" ID="RadTabStrip1" SelectedIndex="0" runat="server" MultiPageID="RadMultiPage1" Skin="MetroTouch" Width="100%" Align="Justify" Orientation="HorizontalTop" OnTabClick="RadTabStrip1_TabClick">
         </telerik:RadTabStrip>
         <div class="recipeImage qsf-ib">
-        <telerik:RadMultiPage ID="RadMultiPage1" runat="server" SelectedIndex="0" 
-            OnPageViewCreated="RadMultiPage1_PageViewCreated">
-        </telerik:RadMultiPage>
-            </div>
+            <telerik:RadMultiPage ID="RadMultiPage1" runat="server" SelectedIndex="0" OnPageViewCreated="RadMultiPage1_PageViewCreated">
+            </telerik:RadMultiPage>
+        </div>
     </div>  
     </form>
 </body>

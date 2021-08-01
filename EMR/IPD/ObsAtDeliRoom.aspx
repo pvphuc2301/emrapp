@@ -59,7 +59,7 @@
                                         <div style="width: 175px; text-align:center">
                                             <asp:Label CssClass="d-block" runat="server" ID="prt_fullname"></asp:Label>
                                             <asp:Label class="d-block" CssClass="d-block" runat="server" ID="prt_dob"></asp:Label>
-                                            <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
+                                            <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
                                             <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
                                         </div>
                                     </div>
@@ -138,7 +138,7 @@
                                 <div class="row mb-2 ">
                                     <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
                                         <div class="row">
-                                            <div class="col-2">
+                                            <div class="col-3">
                                                 <asp:Label>- Trẻ/ Newborn: </asp:Label>
                                             </div>
                                             <div class="col-3">
@@ -252,11 +252,11 @@
                                                 <asp:Label>- Dây rốn quấn cổ/ Umbilical coil: </asp:Label>
                                             </div>
                                             <div class="col-3">
-                                                <asp:Label ID="prt_umbilical_coil_False" runat="server" />
+                                                <asp:Label ID="prt_umbilical_coil_False" runat="server" Text="❏" />
                                                 <asp:Label>Không/ No </asp:Label>
                                             </div>
                                             <div class="col-3">
-                                                <asp:Label ID="prt_umbilical_coil_True" runat="server" />
+                                                <asp:Label ID="prt_umbilical_coil_True" runat="server" Text="❏"/>
                                                 <asp:Label>Có/ Yes </asp:Label>
                                             </div>
                                         </div>
@@ -576,8 +576,42 @@
                     </table>
                 </div>
 
+                <telerik:RadWindowManager RenderMode="Lightweight"  
+                                  EnableShadow="true"  
+                                  Behaviors="Close, Move, Resize,Maximize" ID="RadWindowManager" DestroyOnClose="true"
+                                  RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
+            <Windows>
+                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History"   runat="server">
+                    <ContentTemplate>
+                        <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
+                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
+                                <Columns>
+                                    <telerik:GridTemplateColumn Display="false" HeaderStyle-Width="0" ItemStyle-Width="0" ItemStyle-Wrap="false">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="RadLinkButton1" runat="server" CommandName="Open" Text=""></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+
+                                    <telerik:GridTemplateColumn>
+                                        <ItemTemplate>
+                                            <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
+</telerik:RadLabel>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+                                </Columns>
+                            </MasterTableView>
+                            <ClientSettings>
+                                <Selecting AllowRowSelect="true" />
+                                <ClientEvents OnRowDblClick="RowDblClick" />
+                            </ClientSettings>
+                        </telerik:RadGrid>
+                    </ContentTemplate>
+                </telerik:RadWindow>
+            </Windows>
+        </telerik:RadWindowManager>
+
                 <div class="cssclsNoPrint">
-                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                       <li>Obstetric Observation At Delivery Room</li>
                     </ul>
@@ -593,7 +627,7 @@
 
                                         <asp:TextBox runat="server" TextMode="MultiLine" ID="txt_amend_reason" CssClass="form-control" />
 
-                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group2" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
                                             ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                     </div>
                                 </div>
@@ -603,7 +637,7 @@
                                 ID="valSum"
                                 DisplayMode="BulletList"
                                 CssClass="validationSummary"
-                                runat="server" ValidationGroup="Group1"
+                                runat="server" ValidationGroup="Group2"
                                 HeaderText="Please complete the highlighted field(s)." />
                         </asp:Panel>
 
@@ -618,6 +652,23 @@
                                     </div>
                                     <div class="card-body collapse show" id="collapseOne">
                                         <div class="form-body">
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel2">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile"  OnClick="RadButton1_Click" ID="RadButton1" runat="server" CssClass="btn-sm" Text="View Latest Version"  />
+                                                    </div>
+
+                                                    <div class="alert alert-info d-flex align-items-center">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel1">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile" AutoPostBack="false" ID="Button1" runat="server" OnClientClicked="showWindow" CssClass="btn-sm" Text="View History"  />
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                             <div class="row mb-2">
                                                 <div class="col-md-12 mb-2">
                                                     <label class="h5">VI. Theo dõi thai phụ tại phòng sinh/ <span class="text-primary">Observation at delivery room</span></label>
@@ -629,7 +680,7 @@
                                                         <asp:Label  runat="server"  id="lbl_admis_delivery"></asp:Label>
                                                         <div class="form-group d-inline-block" runat="server" id="admis_delivery_wrapper">
                                                             <telerik:RadDateTimePicker runat="server" ID="dtpk_admis_delivery" Width="200px" />
-                                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="dtpk_admis_delivery" ErrorMessage="Please enter amend reason"
+                                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" Display="Dynamic" ValidationGroup="Group2" runat="server" ControlToValidate="dtpk_admis_delivery" ErrorMessage="Please enter amend reason"
                                         ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                                         </div>
                                                     </div>
@@ -662,7 +713,7 @@
                                                     <asp:Label runat="server" ID="lbl_delivery_at"></asp:Label>
                                                     <div class="form-group d-inline-block" runat="server" id="delivery_at_wrapper">
                                                         <telerik:RadDateTimePicker runat="server" ID="dtpk_delivery_at" Width="200px" />
-                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="dtpk_delivery_at" ErrorMessage="Please enter amend reason"
+                                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator3" Display="Dynamic" ValidationGroup="Group2" runat="server" ControlToValidate="dtpk_delivery_at" ErrorMessage="Please enter amend reason"
                                     ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                                     </div>
                                                 </div>
@@ -858,14 +909,14 @@
                                                                 </a>
                                                             </div>
 
-                                                            <asp:CustomValidator ID="CustomValidator1" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="Placenta delivery is required" CssClass="text-danger" OnServerValidate="placenta_deli_ServerValidate"></asp:CustomValidator>
+                                                            <asp:CustomValidator ID="CustomValidator1" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Placenta delivery is required" CssClass="text-danger" OnServerValidate="placenta_deli_ServerValidate"></asp:CustomValidator>
                                                         </div>
                                                         <label class="control-label mb-1">vào lúc/ At</label>
                                                         <asp:Label runat="server" ID="lbl_pacental_deli_dt"></asp:Label>
                                                         <div class="d-inline-block mb-2" runat="server" id="pacental_deli_dt_wrapper">
                                                             <div class="form-group d-inline-block">
                                                                 <telerik:RadDateTimePicker runat="server" ID="dtpk_pacental_deli_dt" Width="200px" />
-                                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator4" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="dtpk_pacental_deli_dt" ErrorMessage="vào lúc/ At is required"
+                                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator4" Display="Dynamic" ValidationGroup="Group2" runat="server" ControlToValidate="dtpk_pacental_deli_dt" ErrorMessage="vào lúc/ At is required"
                                     ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                                             </div>
                                                         </div>
@@ -940,7 +991,7 @@
                                                                 <icon:XSquare runat="server" ID="XSquare5" />
                                                             </a>
                                                         </div>
-                                                        <asp:CustomValidator ID="CustomValidator2" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="Can thiệp và kết quả/ Intervention and results is required" CssClass="text-danger" OnServerValidate="p_intervention_ServerValidate"></asp:CustomValidator>
+                                                        <asp:CustomValidator ID="CustomValidator2" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Can thiệp và kết quả/ Intervention and results is required" CssClass="text-danger" OnServerValidate="p_intervention_ServerValidate"></asp:CustomValidator>
                                                         <div class="form-group p_intervention_note_field">
                                                             <webUI:TextField runat="server" ID="txt_p_intervention_note" />
                                                         </div>
@@ -1159,7 +1210,7 @@
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <div class="form-group">
-                                                                                <telerik:RadDateTimePicker ID="date_time" SelectedDate='<%# DBNull.Value.Equals((Eval("date_time"))) ? null : Eval("date_time") %>' Width="200px" runat="server" />
+                                                                                <telerik:RadDateTimePicker ID="date_time" SelectedDate='<%# DBNull.Value.Equals(Eval("date_time")) ? null : Eval("date_time") %>' Width="200px" runat="server" />
                                                                             </div>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
@@ -1168,7 +1219,7 @@
                                                                             <div style="width: 300px">Phương pháp phẫu thuật và vô cảm/ <span class="text-primary">Surgical and Anesthesia methods</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Value='<%#Eval("surgical_anesthesia") %>' DataKey="surgical_anesthesia" runat="server" />
+                                                                            <webUI:TextField Value='<%#Eval("surgical_anesthesia") %>' ID="surgical_anesthesia" runat="server" />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1176,7 +1227,7 @@
                                                                             <div style="width: 300px">Phẫu thuật viên/ <span class="text-primary">Surgeon</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Value='<%#Eval("surgeon") %>' DataKey="surgeon" runat="server" />
+                                                                            <webUI:TextField Value='<%#Eval("surgeon") %>' ID="surgeon" runat="server" />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
@@ -1184,7 +1235,7 @@
                                                                             <div style="width: 300px">Bác sĩ gây mê/ <span class="text-primary">Anesthesiologist</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
-                                                                            <webUI:TextField Value='<%#Eval("anesthesiologist") %>' DataKey="anesthesiologist" runat="server" />
+                                                                            <webUI:TextField Value='<%#Eval("anesthesiologist") %>' ID="anesthesiologist" runat="server" />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField HeaderText="">
@@ -1276,7 +1327,7 @@
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
                                                     <div class="form-actions">
-                                                        <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete"  CssClass="btn btn-primary waves-effect" >Complete</asp:LinkButton>
+                                                        <asp:LinkButton ValidationGroup="Group2" runat="server" OnClick="btnComplete_Click" ID="btnComplete"  CssClass="btn btn-primary waves-effect" >Complete</asp:LinkButton>
 
                                                         <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect" >Save</asp:LinkButton>
 
@@ -1284,7 +1335,7 @@
 
                                                         <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                        <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                        <asp:LinkButton runat="server" OnClientClick="window.print(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                         <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                                     </div>
@@ -1314,6 +1365,8 @@
                         </div>
                     </div>
                 </div>
+                <asp:LinkButton runat="server" OnClick="clearSession_Click" ID="clearSession"></asp:LinkButton>
+
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>
@@ -1339,6 +1392,26 @@
             checkboxRadiobutton_init();
         }
 
+        function showWindow(sender, eventArgs) {
+            var oWnd = $find("<%=RadWindow1.ClientID%>");
+            oWnd.show();
+        }
+
+
+       function RowDblClick(sender, eventArgs) {
+            console.log('sdfsdf');
+
+           var grid = $find("<%= RadGrid1.ClientID %>");
+           var masterTable = grid.get_masterTableView();
+           var item = eventArgs.get_itemIndexHierarchical();
+
+           var row = masterTable.get_dataItems()[item];
+
+           var button = row.findElement("RadLinkButton1");
+           button.click();
+
+           //console.log(row);
+       }
     </script>
 
 </body>

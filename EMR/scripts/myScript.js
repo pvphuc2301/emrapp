@@ -1,4 +1,4 @@
-
+﻿
 let intervalID; let timeoutID;
 var comfirm_leave_page;
 
@@ -157,20 +157,34 @@ function InputFilter(type,regexp = /^\d*\.?\d*$/) {
 }
 
 function CalculateBmi() {
-    console.log("calculate bmi");
-
     let vs_height = document.getElementById('txt_vs_height');
     let vs_weight = document.getElementById('txt_vs_weight');
     let vs_bmi = document.getElementById('txt_vs_bmi');
-    console.log(vs_height, vs_weight, vs_bmi);
-
+    
     if (vs_height.value == "" || vs_weight.value == "") {
         vs_bmi.value = "";
+        setbmiStr("");
     }
     else {
         vs_bmi.value = (vs_weight.value / ((vs_height.value / 100) * (vs_height.value / 100))).toFixed(1);
-        /*vs_bmi.innerText = vs_bmi.value;*/
+        setbmiStr(vs_bmi.value);
     };
+}
+
+function setbmiStr(vs_bmi) {
+    let bmi_status = "";
+    let vs_bmi_str = document.getElementById('bmiStr');
+    if (vs_bmi != "") {
+        vs_bmi_str.style.color = "red";
+    
+        if (parseFloat(vs_bmi) < 18.5) { bmi_status = "Chỉ số cơ thể dưới chuẩn/ Lower than standard"; }
+        else if (parseFloat(vs_bmi) < 24.9) { vs_bmi_str.style.color = "black"; }
+        else if (parseFloat(vs_bmi) >= 25) { bmi_status = "Chỉ số cơ thể thừa cân/ Over than standard"; }
+
+    }
+    
+    /*vs_bmi_str.value = bmi_status;*/
+    vs_bmi_str.innerText = bmi_status;
 }
 
 function radioButtonChange(eventArgs) {
@@ -250,24 +264,31 @@ function comfirm_leave_page(event) {
 
     setTimeout(function () {
         setTimeout(function () {
-            $.get('http://172.16.0.78:8088/api/emr/check-session/' + location + '/' + doc_id + '/' + emp_id, function (data) { console.log(data) });
+            $.get('http://172.16.0.88:8080/api/emr/check-session/' + location + '/' + doc_id + '/' + emp_id, function (data) { console.log(data) });
         }, 2000);
     }, 1);
 
     console.log("leaving");
+    
+    __doPostBack("clearSession", "");
+    document.getElementById("clearSession").click();
 
-    $.ajax({
-        url: 'http://172.16.0.78:8088/api/emr/clear-session/' + location + '/' + doc_id,
-        type: 'POST',
-        dataType: 'json',
-        data: "{}",
-        success: function (data, textStatus, xhr) {
-            console.log(data);
-        },
-        error: function (xhr, textStatus, errorThrown) {
-            console.log('Error in Operation');
-        }
-    });
+    //console.log(document.getElementById("clearSession"));
+
+    //$.post('http://172.16.0.88:8080/api/emr/clear-session/' + location + '/' + doc_id);
+
+    //$.ajax({
+    //    url: 'http://172.16.0.88:8080/api/emr/clear-session/' + location + '/' + doc_id,
+    //    type: 'POST',
+    //    dataType: 'application/json',
+    //    data: "{}",
+    //    success: function (data, textStatus, xhr) {
+    //        console.log(data);
+    //    },
+    //    error: function (xhr, textStatus, errorThrown) {
+    //        console.log('Error in Operation');
+    //    }
+    //});
     event.returnValue = '';
     return "You are leaving the page";
 }
@@ -275,6 +296,7 @@ function comfirm_leave_page(event) {
 function editFormEvent(doc, location, emp_id) {
     doc = doc.replaceAll('"red"', "'red'");
     doc = doc.replaceAll('"#000000"', "'#000000'");
+
     let value = document.getElementById("DataObj").value;
 
     let obj = JSON.parse(value);
@@ -336,6 +358,11 @@ function progress(elem) {
 
     window.addEventListener('load', (e) => { progressWidth = 100; elem.style.width = progressWidth + "%"; });
     //}
+}
+
+function RefreshClick() {
+    console.log("btn " + window.parent.document.getElementById("btnRefresh1"));
+    window.parent.document.getElementById("btnRefresh1").click();
 }
 
 //function lblURL_click() {

@@ -14,6 +14,7 @@
 <%@ Register Src="~/UserControls/PopupModal.ascx" TagPrefix="webUI" TagName="PopupModal" %>
 <%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="icon" TagName="ExclamationTriangle" %>
 <%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="webUI" TagName="PopupShowDelay" %>
+<%@ Register Src="~/UserControls/PrintTemplate/Line.ascx" TagPrefix="webUI" TagName="Line" %>
 
 <!DOCTYPE html>
 
@@ -42,26 +43,18 @@
                         <thead class="report-header">
                             <tr>
                                 <th class="report-header-cell">
-                                    <div class="header-info" style="display: flex; align-items: center;">
-                                        <img style="width: 200px" src="../images/AIH_PI_FULL.png" />
-                                        <div style="flex-grow: 1; text-align: center;">
-                                            <div style="color: #007297; font-size: 26.6667px; font-weight: bold; font-family: Tahoma">TƯỜNG TRÌNH PHẪU THUẬT</div>
-                                            <div style="color: #e20e5a; font-size: 16.6667px; font-family: Tahoma;">SURGICAL REPORT</div>
+                                    <div class="header-info">
+                                        <img  src="../images/AIH_PI_FULL.png" />
+                                        <div class="header-info-title">
+                                            <h4>TƯỜNG TRÌNH PHẪU THUẬT</h4>
+                                            <h5>SURGICAL REPORT</h5>
                                         </div>
-                                         <div style="width: 120px; text-align: center">
-
-                                            <webUI:Barcode runat="server" ID="prt_barcode" Text="900000488" Width="120" Height="24" />
-
-                                            <div>
-                                                <Label class="font-bold" id="prt_pid" runat="server"></Label>
-                                            </div>
+                                         <div style="width: 150px; text-align: left; font-size: 11px">
+                                             <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
+                                            <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
                                         </div>
-
                                     </div>
-                                    <div style="margin-bottom: 20px;">
-                                        <span style="width: 190px; border-bottom-style: solid; border-bottom-color: #e20e5a; border-bottom-width: 5px; display: inline-block; font-size: 26.6667px;"></span>
-                                        <span style="display: inline-block; border-bottom-style: solid; border-bottom-color: #007297; border-bottom-width: 5px; width: calc(100% - 191px); margin-left: -5px;"></span>
-                                    </div>
+                                    <webUI:Line runat="server" ID="Line" />
                                 </th>
                             </tr>
                         </thead>
@@ -128,13 +121,17 @@
                                             </div>
                                         </div>
 
-                                        <div class="row" style="width:100%">
-                                            <div style="width:250px">
-                                                <label class="d-block h4" style="font-size: 14.5px; font-family: Tahoma; margin-left:10px;font-weight: bold">4. Chẩn đoán trước phẫu thuật:</label>
-                                                <span class="text-primary" style="margin-left: 25px; margin-top: 0px; padding-top: 0px; font-size: 14.5px;">Preoperative diagnosis</span>
-                                            </div>
-                                            <div style="width:470px">
-                                                <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_preo_diagnosis"></label>
+                                        <div class="row mb-2">
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <div style="width:250px">
+                                                        <label class="d-block h4" style="font-size: 14.5px; font-family: Tahoma;font-weight: bold;margin-left:10px">4. Chẩn đoán trước phẫu thuật:</label>
+                                                        <span class="text-primary" style="margin-left: 25px; font-size: 14.5px;">Preoperative diagnosis</span>
+                                                    </div>
+                                                    <div style="width:470px">
+                                                        <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_preo_diagnosis"></label>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row mb-2">
@@ -291,7 +288,7 @@
                                                 <br />
                                                 <br />
                                                 <div class="col-12" style="text-align: center;">
-                                                    <label class="control-label " style="font-size: 14.5px; font-family: Tahoma;" runat="server" id="lbl_caregiver_name_l"></label>
+                                                    <label class="control-label " style="font-size: 14.5px; font-family: Tahoma;" runat="server" id="prt_signature_doctor"></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -317,8 +314,42 @@
                     </table>
                 </div>
 
+                <telerik:RadWindowManager RenderMode="Lightweight"  
+                                  EnableShadow="true"  
+                                  Behaviors="Close, Move, Resize,Maximize" ID="RadWindowManager" DestroyOnClose="true"
+                                  RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
+            <Windows>
+                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History"   runat="server">
+                    <ContentTemplate>
+                        <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
+                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
+                                <Columns>
+                                    <telerik:GridTemplateColumn Display="false" HeaderStyle-Width="0" ItemStyle-Width="0" ItemStyle-Wrap="false">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="RadLinkButton1" runat="server" CommandName="Open" Text=""></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+
+                                    <telerik:GridTemplateColumn>
+                                        <ItemTemplate>
+                                            <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
+</telerik:RadLabel>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+                                </Columns>
+                            </MasterTableView>
+                            <ClientSettings>
+                                <Selecting AllowRowSelect="true" />
+                                <ClientEvents OnRowDblClick="RowDblClick" />
+                            </ClientSettings>
+                        </telerik:RadGrid>
+                    </ContentTemplate>
+                </telerik:RadWindow>
+            </Windows>
+        </telerik:RadWindowManager>
+
                 <div class="cssclsNoPrint">
-                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                       <li>Surgical Report</li>
                     </ul>
@@ -354,6 +385,23 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="form-body">
+
+                                        <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel2">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile"  OnClick="RadButton1_Click" ID="RadButton1" runat="server" CssClass="btn-sm" Text="View Latest Version"  />
+                                                    </div>
+
+                                                    <div class="alert alert-info d-flex align-items-center">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel1">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile" AutoPostBack="false" ID="Button1" runat="server" OnClientClicked="showWindow" CssClass="btn-sm" Text="View History"  />
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         <div class="row">
                                             <div class="col-md-12 mb-2">
                                                 <label class="control-label mb-1 font-bold">3. Ngày phẫu thuật/ <span class="text-primary">Procedure Date:</span></label>
@@ -605,7 +653,7 @@
 
                                                     <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                    <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                    <asp:LinkButton runat="server" OnClientClick="window.print(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                     <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                                 </div>
@@ -633,6 +681,7 @@
                     </div>
                 </div>
                     </div>
+                <asp:LinkButton runat="server" OnClick="clearSession_Click" ID="clearSession"></asp:LinkButton>
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>
@@ -656,6 +705,24 @@
         function afterAsyncPostBack() {
         }
 
+        function showWindow(sender, eventArgs) {
+            var oWnd = $find("<%=RadWindow1.ClientID%>");
+            oWnd.show();
+        }
+
+
+       function RowDblClick(sender, eventArgs) {
+            console.log('sdfsdf');
+
+           var grid = $find("<%= RadGrid1.ClientID %>");
+           var masterTable = grid.get_masterTableView();
+           var item = eventArgs.get_itemIndexHierarchical();
+
+           var row = masterTable.get_dataItems()[item];
+
+           var button = row.findElement("RadLinkButton1");
+           button.click();
+       }
     </script>
 </body>
 </html>

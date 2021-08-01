@@ -29,6 +29,13 @@
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/sweetalert.min.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
+    <style type="text/css">
+        table { page-break-after:auto }
+        tr    { page-break-inside:avoid; page-break-after:auto }
+        td    { page-break-inside:avoid; page-break-after:auto }
+        thead { display:table-header-group }
+        tfoot { display:table-footer-group }
+    </style>
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
@@ -46,10 +53,10 @@
                                             <h4>BỆNH ÁN NGOẠI TRÚ NHI</h4>
                                             <h5>PEDIATRIC OUTPATIENT MEDICAL RECORD</h5>
                                         </div>
-                                        <div style="width: 175px;">
+                                        <div style="width: 150px; text-align: left; font-size: 11px">
                                             <asp:Label CssClass="d-block" runat="server" ID="prt_fullname"></asp:Label>
                                             <asp:Label class="d-block" CssClass="d-block" runat="server" ID="prt_dob"></asp:Label>
-                                            <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
+                                            <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
                                             <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
                                         </div>
                                     </div>
@@ -102,7 +109,7 @@
                                             <asp:Label runat="server" ID="prt_allergy" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px" runat="server" id="prt_allergy_note_wrapper">
                                             <webUI:PrtRowS1 FontBold="true" FixedLeft="10" Order="•" Title="Nếu có, nêu rõ:" SubTitle="If yes, specify" runat="server" />
                                             <asp:Label runat="server" ID="prt_allergy_note" />
                                         </div>
@@ -193,7 +200,7 @@
                                             <asp:Label runat="server" ID="prt_spec_opinion_requested" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 220px 1fr; grid-gap: 5px;">
+                                        <div class="d-grid" style="grid-template-columns: 220px 1fr; grid-gap: 5px;" runat="server" id="prt_spec_opinion_requested_note_wrapper">
                                             <webUI:PrtRowS1 FontBold="true" FixedLeft="10" Order="•" Title="Nếu có, nêu rõ:" SubTitle="If yes, specif" runat="server" />
                                             <asp:Label runat="server" ID="prt_spec_opinion_requested_note" />
                                         </div>
@@ -212,7 +219,8 @@
                                             <div></div>
                                             <div class="text-center" style="break-inside: avoid;">
                                                 <div class="font-bold">BÁC SĨ ĐIỀU TRỊ</div>
-                                                <div>ATTENDING DOCTOR</div>
+                                                <div style="margin-bottom: 100px;">ATTENDING DOCTOR</div>
+                                                <asp:Label runat="server" ID="prt_signature_doctor" />
                                             </div>
                                         </div>
                                     </div>
@@ -237,8 +245,42 @@
                     </table>
                 </div>
 
+                <telerik:RadWindowManager RenderMode="Lightweight"  
+                                  EnableShadow="true"  
+                                  Behaviors="Close, Move, Resize,Maximize" ID="RadWindowManager" DestroyOnClose="true"
+                                  RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
+            <Windows>
+                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History"   runat="server">
+                    <ContentTemplate>
+                        <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
+                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
+                                <Columns>
+                                    <telerik:GridTemplateColumn Display="false" HeaderStyle-Width="0" ItemStyle-Width="0" ItemStyle-Wrap="false">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="RadLinkButton1" runat="server" CommandName="Open" Text=""></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+
+                                    <telerik:GridTemplateColumn>
+                                        <ItemTemplate>
+                                            <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
+</telerik:RadLabel>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+                                </Columns>
+                            </MasterTableView>
+                            <ClientSettings>
+                                <Selecting AllowRowSelect="true" />
+                                <ClientEvents OnRowDblClick="RowDblClick" />
+                            </ClientSettings>
+                        </telerik:RadGrid>
+                    </ContentTemplate>
+                </telerik:RadWindow>
+            </Windows>
+        </telerik:RadWindowManager>
+
                 <div class="cssclsNoPrint">
-                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                       <li>Outpatient Medical Record - Pediatric</li>
                     </ul>
@@ -279,6 +321,22 @@
                                 </div>
                                 <div class="card-body collapse show" id="collapseOne">
                                     <div class="form-body">
+
+                                        <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel2">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile"  OnClick="RadButton1_Click" ID="RadButton1" runat="server" CssClass="btn-sm" Text="View Latest Version"  />
+                                                    </div>
+
+                                                    <div class="alert alert-info d-flex align-items-center">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel1">
+</telerik:RadLabel>
+                                                        <telerik:RadButton  RenderMode="Mobile" AutoPostBack="false" ID="Button1" runat="server" OnClientClicked="showWindow" CssClass="btn-sm" Text="View History"  />
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                         <div class="row mb-2">
                                                 <div class="col-md-12">
@@ -418,59 +476,60 @@
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div class="row">
-                                                        <div class="col-md-12 gt-2-a">
-                                                            <label></label>
+                                                    <div class="col-md-12 gt-2-a">
+                                                        <label></label>
+
+                                                        <div>
+                                                            <div>
+                                                                <label class="control-label mb-1 mr-2">Nhiệt độ/ <span class="text-primary">Temperature:</span></label>
+                                                                <asp:Label runat="server" ID="vs_temperature" />&nbsp;°C
+                                                            </div>
+                                                            <div>
+                                                                <label class="control-label mb-1 mr-2">Mạch/ <span class="text-primary">Heart Rate:</span></label>
+                                                                <asp:Label runat="server" ID="vs_heart_rate" />&nbsp;/phút (m)
+                                                            </div>
+                                                            <div>
+                                                                <label class="control-label mb-1 mr-2">Cân Nặng/ <span class="text-primary">Weight:</span></label>
+                                                                <asp:Label runat="server" ID="vs_weight" />&nbsp;Kg
+                                                            </div>
 
                                                             <div>
-                                                                <div>
-                                                                    <label class="control-label mb-1 mr-2">Nhiệt độ/ <span class="text-primary">Temperature:</span></label>
-                                                                    <asp:Label runat="server" ID="vs_temperature" />
-                                                                </div>
-                                                                <div>
-                                                                    <label class="control-label mb-1 mr-2">Mạch/ <span class="text-primary">Heart Rate:</span></label>
-                                                                    <asp:Label runat="server" ID="vs_heart_rate" />/phút (m)
-                                                                </div>
-                                                                <div>
-                                                                    <label class="control-label mb-1 mr-2">Cân Nặng/ <span class="text-primary">Weight:</span></label>
-                                                                    <asp:Label runat="server" ID="vs_weight" />Kg
-                                                                </div>
+                                                                <label class="control-label mb-1 mr-2">Nhịp thở/ <span class="text-primary">Respiratory rate:</span></label>
+                                                                <asp:Label runat="server" ID="vs_respiratory_rate" />&nbsp;/phút (m)
+                                                            </div>
 
-                                                                <div>
-                                                                    <label class="control-label mb-1 mr-2">Nhịp thở/ <span class="text-primary">Respiratory rate:</span></label>
-                                                                    <asp:Label runat="server" ID="vs_respiratory_rate" />/phút (m)
-                                                                </div>
+                                                            <div>
+                                                                <label class="control-label mb-1 mr-2">Chiều cao/ <span class="text-primary">Height:</span></label>
+                                                                <asp:Label runat="server" ID="vs_height" />&nbsp;cm
+                                                            </div>
 
-                                                                <div>
-                                                                    <label class="control-label mb-1 mr-2">Chiều cao/ <span class="text-primary">Height:</span></label>
-                                                                    <asp:Label runat="server" ID="vs_height" />cm
-                                                                </div>
+                                                            <div>
+                                                                <label class="control-label mb-1 mr-2">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
+                                                                <asp:Label runat="server" ID="vs_blood_pressure" />&nbsp;mmHg
+                                                            </div>
 
-                                                                <div>
-                                                                    <label class="control-label mb-1 mr-2">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
-                                                                    <asp:Label runat="server" ID="vs_blood_pressure" />mmHg
-                                                                </div>
+                                                            <div>
+                                                                <label for="bmi" class="control-label mb-1 mr-2">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
+                                                                <asp:Label runat="server" ID="vs_bmi" />&nbsp;(Kg/m <sup>2</sup>)
+                                        <div>
+                                            (Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not applicable for children and pregnant</span>)
+                                        </div>
+                                                            </div>
 
-                                                                <div>
-                                                                    <label for="bmi" class="control-label mb-1 mr-2">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
-                                                                    <asp:Label runat="server" ID="vs_bmi" />(Kg/m <sup>2</sup>)
-                                            <div>
-                                                (Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not applicable for children and pregnant</span>)
-                                            </div>
-                                                                </div>
+                                                            <div>
+                                                                <label for="spO2" class="control-label mb-1 mr-2">Độ bão hòa Oxy/ <span class="text-primary">SpO2:</span></label>
+                                                                <asp:Label runat="server" ID="vs_spo2" />&nbsp;%
+                                                            </div>
 
-                                                                <div>
-                                                                    <label for="spO2" class="control-label mb-1 mr-2">Độ bão hòa Oxy/ <span class="text-primary">SpO2:</span></label>
-                                                                    <asp:Label runat="server" ID="vs_spo2" />%
-                                                                </div>
-
-                                                                <div>
-                                                                    <label for="head-circumference" class="control-label mb-1 mr-2">Vòng đầu (trẻ em < 2 tuổi)/ <span class="text-primary">Head Circumference (children < 2 year old) </span></label>
-                                                                    <asp:Label runat="server" ID="vs_pulse" />cm
-                                                                </div>
+                                                            <div>
+                                                                <label for="head-circumference" class="control-label mb-1 mr-2">Vòng đầu (trẻ em < 2 tuổi)/ <span class="text-primary">Head Circumference (children < 2 year old) </span></label>
+                                                                <asp:Label runat="server" ID="vs_pulse" />&nbsp;cm
                                                             </div>
                                                         </div>
                                                     </div>
+                                                </div>
                                             </ContentTemplate>
                                             <Triggers>
                                                 <asp:AsyncPostBackTrigger ControlID="btnUpdateVitalSign" />
@@ -556,9 +615,8 @@
                                                     <div class="custom-control custom-radio d-inline-block">
                                                         <input onclick="__doPostBack('rad_treatment_code_change','trf')" type="radio" runat="server" id="rad_treatment_code_trf" name="rad_treatment_code" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_treatment_code_trf">Chuyển viện/ <span class="text-primary">Transfer</span></label>
-                                                        <a href="javascript:void(0)" onclick="__doPostBack('rad_treatment_code_change','')">
-                                                            <icon:XSquare runat="server" ID="XSquare2" />
-                                                        </a>
+                                                        <input onclick="__doPostBack('rad_treatment_code_change','')" hidden="hidden" type="checkbox" id="Radio3" runat="server" />
+                                                        <label for="Radio3"><icon:XSquare runat="server" ID="XSquare5" /></label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -663,7 +721,7 @@
 
                                                     <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                    <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                    <asp:LinkButton runat="server" OnClientClick="window.print(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                     <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                             </div>
@@ -689,12 +747,12 @@
                             </div>
                         </div>
                     </div>
-                        </div>
                 </div>
-
+                <asp:LinkButton runat="server" OnClick="clearSession_Click" ID="clearSession"></asp:LinkButton>
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>
+
     <script src="../scripts/jquery-3.2.1.min.js"></script>
     <script src="../scripts/bootstrap.min.js"></script>
     <script src="../scripts/myScript.js"></script>
@@ -717,6 +775,26 @@
             checkboxRadiobutton_init();
         }
 
+        function showWindow(sender, eventArgs) {
+            var oWnd = $find("<%=RadWindow1.ClientID%>");
+            oWnd.show();
+        }
+
+
+       function RowDblClick(sender, eventArgs) {
+            console.log('sdfsdf');
+
+           var grid = $find("<%= RadGrid1.ClientID %>");
+           var masterTable = grid.get_masterTableView();
+           var item = eventArgs.get_itemIndexHierarchical();
+
+           var row = masterTable.get_dataItems()[item];
+
+           var button = row.findElement("RadLinkButton1");
+           button.click();
+
+           //console.log(row);
+       }
     </script>
 
 </body>

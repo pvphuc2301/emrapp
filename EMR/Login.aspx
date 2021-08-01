@@ -3,8 +3,6 @@
 <%@ Register Src="~/UserControls/Spinner1.ascx" TagPrefix="webUI" TagName="Spinner1" %>
 <%@ Register Src="~/icons/Eye.ascx" TagPrefix="webUI" TagName="Eye" %>
 
-
-
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">

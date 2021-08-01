@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using Telerik.Web.UI;
 
 namespace EMR.OPD
 {
@@ -32,7 +33,7 @@ namespace EMR.OPD
             vs_height.Text = mrfv.vs_height;
             vs_blood_pressure.Text = mrfv.vs_blood_pressure;
             vs_BMI.Text = mrfv.vs_BMI;
-            vs_spO2.Text = mrfv.vs_spO2;
+            vs_spO2.Text = mrfv.vs_SpO2;
             vs_pulse.Text = mrfv.vs_pulse;
 
             if (state)
@@ -55,7 +56,7 @@ namespace EMR.OPD
                 txt_personal.Value = mrfv.personal;
                 txt_family.Value = mrfv.family;
 
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_allergy_" + mrfv.allergy);
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_allergy_" + mrfv.allergy, "false");
                 txt_allergy_note.Value = WebHelpers.GetBool(mrfv.allergy, mrfv.allergy_text, "");
 
                 //
@@ -77,15 +78,16 @@ namespace EMR.OPD
                 txt_differential_diagnosis.Value = mrfv.differential_diagnosis;
                 txt_associated_conditions.Value = mrfv.associated_conditions;
 
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_treatment_code_" + mrfv.treatment_code);
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_treatment_code_" + mrfv.treatment_code, "opd");
 
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_spec_opinion_req_" + mrfv.spec_opinion_req);
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_spec_opinion_req_" + mrfv.spec_opinion_req, "false");
                 txt_spec_opinion_req_text.Value = WebHelpers.GetBool(mrfv.spec_opinion_req, mrfv.spec_opinion_req_text, "");
 
                 txt_pecific_edu_req.Value = mrfv.pecific_edu_req;
                 txt_next_appointment.Value = mrfv.next_appointment;
 
                 DataObj.Value = JsonConvert.SerializeObject(mrfv);
+                Session["docid"] = mrfv.document_id;
                 WebHelpers.AddScriptFormEdit(Page, mrfv, (string)Session["emp_id"]);
                 
             } catch(Exception ex)
@@ -148,8 +150,10 @@ namespace EMR.OPD
             {
                 Patient patient = Patient.Instance();
                 PatientVisit patientVisit = PatientVisit.Instance();
+                WebHelpers.gen_BarCode(patient.visible_patient_id, BarCode);
 
-                prt_barcode.Text = prt_vpid.Text = patient.visible_patient_id;
+                prt_vpid.Text = patient.visible_patient_id;
+
                 prt_fullname.Text = patient.GetFullName();
                 prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth);
                 prt_gender.Text = patient.gender_l;
@@ -181,8 +185,8 @@ namespace EMR.OPD
                 prt_pulse.Text = mrfv.vs_pulse;
                 prt_vs_respiratory_rate.Text = mrfv.vs_respiratory_rate;
                 prt_vs_blood_pressure.Text = mrfv.vs_blood_pressure;
-                prt_vs_spO2.Text = mrfv.vs_spO2;
-
+                prt_vs_spO2.Text = mrfv.vs_SpO2;
+                
                 prt_scr_before_vacc_1.Text += mrfv.scr_before_vacc_1;
                 prt_scr_before_vacc_2.Text += mrfv.scr_before_vacc_2;
                 prt_scr_before_vacc_3.Text += mrfv.scr_before_vacc_3;
@@ -192,25 +196,27 @@ namespace EMR.OPD
                 prt_scr_before_vacc_7.Text += mrfv.scr_before_vacc_7;
                 prt_scr_before_vacc_8.Text += mrfv.scr_before_vacc_8;
 
-                DataTable tb = WebHelpers.GetJSONToDataTable(mrfv.appointed_vaccine);
-                if (tb != null)
-                {
-                    foreach (DataRow row in tb.Rows)
-                    {
-                        HtmlTableRow tr = new HtmlTableRow();
-                        HtmlTableCell td;
-                        for (int i = 0; i < prt_appointed_vaccine.Rows[0].Cells.Count; i++)
-                        {
-                            var temp = prt_appointed_vaccine.Rows[0].Cells[i];
-                            string colName = temp.Attributes["data-field"];
-                            td = new HtmlTableCell();
-                            td.InnerText = row[colName].ToString();
-                            if (temp.Attributes["data-align"] != null) td.Attributes.Add("class", "text-" + temp.Attributes["data-align"]);
-                            tr.Cells.Add(td);
-                        }
-                        prt_appointed_vaccine.Rows.Add(tr);
-                    }
-                }
+                //DataTable tb = WebHelpers.GetJSONToDataTable(mrfv.appointed_vaccine);
+                prt_appointed_vaccine.DataSource = WebHelpers.GetJSONToDataTable(mrfv.appointed_vaccine);
+                prt_appointed_vaccine.DataBind();
+                //if (tb != null)
+                //{
+                //    foreach (DataRow row in tb.Rows)
+                //    {
+                //        HtmlTableRow tr = new HtmlTableRow();
+                //        HtmlTableCell td;
+                //        for (int i = 0; i < prt_appointed_vaccine.Rows[0].Cells.Count; i++)
+                //        {
+                //            var temp = prt_appointed_vaccine.Rows[0].Cells[i];
+                //            string colName = temp.Attributes["data-field"];
+                //            td = new HtmlTableCell();
+                //            td.InnerText = row[colName].ToString();
+                //            if (temp.Attributes["data-align"] != null) td.Attributes.Add("class", "text-" + temp.Attributes["data-align"]);
+                //            tr.Cells.Add(td);
+                //        }
+                //        prt_appointed_vaccine.Rows.Add(tr);
+                //    }
+                //}
 
                 prt_additional_investigations.Text = mrfv.additional_investigations;
                 prt_initial_diagnosis.Text = mrfv.initial_diagnosis;
@@ -220,7 +226,6 @@ namespace EMR.OPD
                 prt_treatment.Text = WebHelpers.CreateOptions(Mrfv.TREATMENT_CODE, mrfv.treatment_code, "display: grid; grid-template-columns: 1fr 1fr 1fr");
                 //
                 prt_spec_opinion_req.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class='text-primary'>No</span>", Value = false }, new Option { Text = "Có/ <span class='text-primary'>Yes</span>", Value = true }, mrfv.spec_opinion_req, "display: grid; grid-template-columns: 1fr 1fr");
-
 
                 if (mrfv.spec_opinion_req != null)
                 {
@@ -236,7 +241,7 @@ namespace EMR.OPD
                 }
                 //
                 prt_specific_edu_req.Text = mrfv.pecific_edu_req;
-                prt_next_appointment.Text = $"● Hẹn lần khám tới/ <span class='text-primary'>Next appointment: </span>{mrfv.next_appointment.Replace("<font color=\"red\">", "").Replace("</font>", "").Replace("<font color=\"#000000\">", "").Replace("<font color=\"#ff0000\">", "")}";
+                prt_next_appointment.Text = $"● Hẹn lần khám tới/ <span class='text-primary'>Next appointment: </span>{mrfv.next_appointment}";
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
             
@@ -293,7 +298,7 @@ namespace EMR.OPD
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, mrfv, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
+                WebHelpers.LoadFormControl(form1, mrfv, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(mrfv);
                 //get access button
@@ -304,19 +309,7 @@ namespace EMR.OPD
             Initial();
             WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
         }
-        protected void btnPrint_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Mrfv mrfv = new Mrfv(Request.QueryString["docId"]);
-                BindingDataFormPrint(mrfv);
 
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
-
-            }
-            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
-            
-        }
         protected void grid_appointed_vaccine_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             ViewState[((GridView)sender).ID] = WebHelpers.DeleteRow((DataTable)ViewState[((GridView)sender).ID], (GridView)sender, e.RowIndex);
@@ -345,7 +338,15 @@ namespace EMR.OPD
                 {
                     dynamic vs = JsonConvert.DeserializeObject(response.Data);
 
-                    LoadVitalSigns(vs);
+                    vs_temperature.Text = WebHelpers.FormatString(vs.vs_temperature);
+                    vs_heart_rate.Text = WebHelpers.FormatString(vs.vs_heart_rate);
+                    vs_weight.Text = WebHelpers.FormatString(vs.vs_weight);
+                    vs_respiratory_rate.Text = WebHelpers.FormatString(vs.vs_respiratory_rate);
+                    vs_height.Text = WebHelpers.FormatString(vs.vs_height);
+                    vs_BMI.Text = WebHelpers.FormatString(vs.vs_BMI);
+                    vs_blood_pressure.Text = WebHelpers.FormatString(vs.vs_blood_pressure);
+                    vs_spO2.Text = WebHelpers.FormatString(vs.vs_spO2);
+                    vs_pulse.Text = WebHelpers.FormatString(vs.pulse);
                 }
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
@@ -360,7 +361,7 @@ namespace EMR.OPD
             vs_height.Text = WebHelpers.FormatString(vs.vs_height);
             vs_BMI.Text = WebHelpers.FormatString(vs.vs_BMI);
             vs_blood_pressure.Text = WebHelpers.FormatString(vs.vs_blood_pressure);
-            vs_spO2.Text = WebHelpers.FormatString(vs.vs_spO2);
+            vs_spO2.Text = WebHelpers.FormatString(vs.vs_SpO2);
             vs_pulse.Text = WebHelpers.FormatString(vs.vs_pulse);
         }
         #endregion
@@ -374,28 +375,111 @@ namespace EMR.OPD
 
             try
             {
-                Mrfv mrfv = new Mrfv(Request.QueryString["docId"]);
+                Mrfv mrfv;
+                
+                if (Request.QueryString["docIdLog"] != null)
+                {
+                    mrfv = new Mrfv(Request.QueryString["docIdLog"], true);
+                    currentLog.Visible = true;
 
+                    string item = (string)Session["viewLogInfo"];
+
+                    RadLabel2.Text = $"You are viewing an old version of this document ( { item })";
+                }
+                else
+                {
+                    mrfv = new Mrfv(Request.QueryString["docId"]);
+                    currentLog.Visible = false;
+                }
+
+
+                loadRadGridHistoryLog();
+                
                 LoadVitalSigns(mrfv);
                 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-                prt_barcode.Text = Patient.Instance().visible_patient_id;
+
                 if (mrfv.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(mrfv, WebHelpers.LoadFormControl(form1, mrfv, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
+                    BindingDataForm(mrfv, WebHelpers.LoadFormControl(form1, mrfv, ControlState.View, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
+                    BindingDataFormPrint(mrfv);
 
                 }
                 else if (mrfv.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(mrfv, WebHelpers.LoadFormControl(form1, mrfv, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
+                    BindingDataForm(mrfv, WebHelpers.LoadFormControl(form1, mrfv, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
                 }
 
-                WebHelpers.getAccessButtons(form1, mrfv.status, (string)Session["access_authorize"], (string)Session["location"]);
+                WebHelpers.getAccessButtons(form1, mrfv.status, (string)Session["access_authorize"], (string)Session["location"], Request.QueryString["docIdLog"] != null);
             }
             catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
+        }
+        private void loadRadGridHistoryLog()
+        {
+            DataTable dt = Mrfv.Logs(Request.QueryString["docId"]);
+            RadGrid1.DataSource = dt;
+            DateTime last_updated_date_time = new DateTime();
+            string last_updated_doctor = "";
+
+            if (dt.Rows.Count == 1)
+            {
+                last_updated_doctor = dt.Rows[0].Field<string>("created_name_l");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
+            }
+            else if (dt.Rows.Count > 1)
+            {
+                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_l");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
+            }
+
+            Session["signature_date"] = last_updated_date_time;
+            Session["signature_doctor"] = last_updated_doctor;
+            RadLabel1.Text = $"Last updated by {last_updated_doctor} on " + WebHelpers.FormatDateTime(last_updated_date_time, "dd-MM-yyyy HH:mm");
+            RadGrid1.DataBind();
+        }
+
+        protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
+        {
+            string result = "Amended by";
+            if (Convert.ToString(status) == DocumentStatus.FINAL && string.IsNullOrEmpty(Convert.ToString(amend_reason)))
+            {
+                result = "Submitted by";
+            }
+
+            if (Convert.ToString(status) == DocumentStatus.DRAFT) result = "Saved by";
+
+            if (string.IsNullOrEmpty(Convert.ToString(modified_name)))
+            {
+                result += $" {created_name} on {created_date_time}";
+            }
+            else
+            {
+                result += $" {modified_name} on {modified_date_time}";
+            }
+            return result;
+        }
+        protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            GridDataItem item = (e.Item as GridDataItem);
+            if (e.CommandName.Equals("Open"))
+            {
+                string doc_log_id = item.GetDataKeyValue("document_log_id").ToString();
+
+                string url = $"/OPD/MedRecForVac.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}&docIdLog={doc_log_id}";
+
+                Session["viewLogInfo"] = (item.FindControl("RadLabel1") as RadLabel).Text;
+
+                Response.Redirect(url);
+            }
+        }
+
+        protected void RadButton1_Click(object sender, EventArgs e)
+        {
+            string url = $"/OPD/MedRecForVac.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}";
+            Response.Redirect(url);
         }
         public void UpdateData(Mrfv mrfv)
         {
@@ -418,7 +502,7 @@ namespace EMR.OPD
                 mrfv.vs_respiratory_rate = vs_respiratory_rate.Text;
                 mrfv.vs_BMI = vs_BMI.Text;
                 mrfv.vs_blood_pressure = vs_blood_pressure.Text;
-                mrfv.vs_spO2 = vs_spO2.Text;
+                mrfv.vs_SpO2 = vs_spO2.Text;
                 mrfv.vs_pulse = vs_pulse.Text;
 
                 mrfv.scr_before_vacc_1 = txt_scr_before_vacc_1.Value;
@@ -466,8 +550,12 @@ namespace EMR.OPD
                 WebHelpers.SendError(Page, ex);
             }
         }
+
         #endregion
 
-        
+        protected void clearSession_Click(object sender, EventArgs e)
+        {
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+        }
     }
 }

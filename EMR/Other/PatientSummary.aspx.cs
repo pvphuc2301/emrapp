@@ -205,11 +205,11 @@ namespace EMR
         }
         protected void RadTreeView3_NodeExpand(object sender, RadTreeNodeEventArgs e)
         {
-            PopulateScanOnDemand(e, TreeNodeExpandMode.ServerSideCallBack);
+            PopulateScanOnDemand("",e, TreeNodeExpandMode.ServerSideCallBack);
         }
-        private void PopulateScanOnDemand(RadTreeNodeEventArgs e, TreeNodeExpandMode expandMode)
+        private void PopulateScanOnDemand(string f_code,RadTreeNodeEventArgs e, TreeNodeExpandMode expandMode)
         {
-            DataTable data = GetChildScan(varPID, e.Node.Value);
+            DataTable data = GetChildScan(f_code, varPID, e.Node.Value);
             string ParentID = e.Node.Value;
 
             foreach (DataRow row in data.Rows)
@@ -232,9 +232,9 @@ namespace EMR
 
             e.Node.Expanded = true;
         }
-        private DataTable GetChildScan(string PatientID, string ParentID)
+        private DataTable GetChildScan(string f_code, string PatientID, string ParentID)
         {
-            string apiURL = $"api/patient/document-list/{DataHelpers._LOCATION}/" + PatientID + "/" + ParentID;
+            string apiURL = $"api/patient/document-list{f_code}/" + PatientID + "/" + ParentID;
             dynamic response = WebHelpers.GetAPI(apiURL);
 
             DataTable mydataTable = new DataTable();
@@ -261,7 +261,6 @@ namespace EMR
             else e.Node.NavigateUrl = "javascript:void(0);";
         }
         #endregion
-
 
         protected void RadTreeView1_NodeExpand(object sender, RadTreeNodeEventArgs e)
         {
@@ -299,6 +298,7 @@ namespace EMR
 
                 node.Text = ReturnForm_Name(row["status"], row["model_name"], row["created_name_e"]);
                 node.Value = row["model_name"].ToString();
+
                 node.Attributes["docId"] = row["document_id"].ToString();
                 node.Attributes["modelId"] = row["model_id"].ToString();
                 node.Attributes["status"] = row["status"].ToString();
@@ -347,10 +347,19 @@ namespace EMR
                 string docid = e.Node.Attributes["docId"];
                 string modelId = e.Node.Attributes["modelId"];
                 string status = e.Node.Attributes["status"];
+
+                string preDocid = (string)Session["docid"];
+
+                if (!string.IsNullOrEmpty(preDocid)) {
+                    string apiUri = $"api/emr/clear-session/{DataHelpers._LOCATION}/{preDocid}";
+                    WebHelpers.PostAPI(apiUri);
+                    Session["docid"] = string.Empty;
+                }
                 
                 if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], (string)Session["location"]))
                 {
                     string apiURL = $"api/emr/get-api/{DataHelpers._LOCATION}/{modelId}";
+
                     dynamic response = WebHelpers.GetAPI(apiURL);
 
                     if (response.Status == System.Net.HttpStatusCode.OK)
@@ -439,7 +448,7 @@ namespace EMR
 
         protected void RadTreeView4_NodeExpand(object sender, RadTreeNodeEventArgs e)
         {
-
+            PopulateScanOnDemand("/" + DataHelpers._LOCATION, e, TreeNodeExpandMode.ServerSideCallBack);
         }
 
         protected void radGridComplexDoc_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -487,6 +496,11 @@ namespace EMR
                     //}
                 }
             }
+        }
+
+        protected void btnRefresh1_Click(object sender, EventArgs e)
+        {
+            LoadRootNodes(RadTreeView1, TreeNodeExpandMode.ServerSideCallBack);
         }
     }
 }

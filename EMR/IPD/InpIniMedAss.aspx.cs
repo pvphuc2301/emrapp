@@ -1,11 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using Telerik.Web.UI;
 
 namespace EMR
 {
@@ -85,6 +87,7 @@ namespace EMR
                 WebHelpers.VisibleControl(true, btnUpdateVitalSign);
 
                 DataObj.Value = JsonConvert.SerializeObject(iima);
+                Session["docid"] = iima.document_id;
                 WebHelpers.AddScriptFormEdit(Page, iima, (string)Session["emp_id"]);
             }
             catch (Exception ex)
@@ -146,8 +149,8 @@ namespace EMR
             try
             {
                 prt_dob.Text = WebHelpers.FormatDateTime(Patient.Instance().date_of_birth) + " | " + Patient.Instance().GetGender();
-                prt_barcode.Text = prt_pid.Text = Patient.Instance().visible_patient_id;
-                
+                prt_vpid.Text = Patient.Instance().visible_patient_id;
+                WebHelpers.gen_BarCode(Patient.Instance().visible_patient_id, BarCode);
                 prt_chief_complaint.Text = iima.chief_complaint;
                 prt_cur_med_history.Text = iima.cur_med_history;
                 prt_cur_medication.Text = iima.cur_medication;
@@ -278,6 +281,7 @@ namespace EMR
                     prt_psy_consul_required_True.Text = "❏";
                     prt_psy_consul_required_False.Text = "❏";
                 }
+
                 prt_laboratory_result.Text = iima.laboratory_result;
                 //prt_add_investigation.Text = iima.add_investigation;
                 prt_initial_diagnosis.Text = iima.initial_diagnosis;
@@ -286,6 +290,7 @@ namespace EMR
                 prt_associated_conditions.Text = iima.associated_conditions;
                 prt_treatment_plan.Text = iima.treatment_plan;
                 prt_discharge_plan.Text = iima.discharge_plan;
+
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
         }
@@ -340,7 +345,7 @@ namespace EMR
                     WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                     //load form control
-                    WebHelpers.LoadFormControl(form1, iima, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]);
+                    WebHelpers.LoadFormControl(form1, iima, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]);
                     //binding data
                     BindingDataFormEdit(iima);
                     //get access button
@@ -354,24 +359,30 @@ namespace EMR
             WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
             Initial();
         }
-        protected void btnPrint_Click(object sender, EventArgs e)
+        protected void btnUpdateVitalSign_Click(object sender, EventArgs e)
         {
-            try { 
-                Iima iima = new Iima(Request["docid"]);
-                BindingDataFormPrint(iima);
-                ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
+            try
+            {
+                dynamic response = VitalSign.Update(PatientVisit.Instance().patient_visit_id, PatientVisit.Instance().visit_type);
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic vs = JsonConvert.DeserializeObject(response.Data);
+LoadVitalSigns(vs);
+                }
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }
-        protected void btnUpdateVitalSign_Click(object sender, EventArgs e)
+        public void LoadVitalSigns(dynamic vs)
         {
-            //ScriptManager.RegisterStartupScript(this, this.GetType(), "key", "alert('Đang chờ anh Long up api 😂')", true);
-
-            //dynamic response = Iima.UpdateVitalSign(Request.QueryString["docId"]);
-            //if (response.Status == System.Net.HttpStatusCode.OK)
-            //{
-            //    Initial();
-            //}
+            vs_temperature.Text = WebHelpers.FormatString(vs.vs_temperature);
+            vs_heart_rate.Text = WebHelpers.FormatString(vs.vs_heart_rate);
+            vs_weight.Text = WebHelpers.FormatString(vs.vs_weight);
+            vs_respiratory_rate.Text = WebHelpers.FormatString(vs.vs_respiratory_rate);
+            vs_height.Text = WebHelpers.FormatString(vs.vs_height);
+            vs_bmi.Text = WebHelpers.FormatString(vs.vs_BMI);
+            vs_blood_pressure.Text = WebHelpers.FormatString(vs.vs_blood_pressure);
+            vs_spo2.Text = WebHelpers.FormatString(vs.vs_spO2);
+            vs_pulse.Text = WebHelpers.FormatString(vs.pulse);
         }
         protected void btnHome_Click(object sender, EventArgs e)
         {
@@ -388,26 +399,105 @@ namespace EMR
 
             try
             {
-                Iima iima = new Iima(Request.QueryString["docId"]);
+                Iima iima;
 
+                if (Request.QueryString["docIdLog"] != null)
+                {
+                    iima = new Iima(Request.QueryString["docIdLog"], true);
+                    currentLog.Visible = true;
+
+                    string item = (string)Session["viewLogInfo"];
+
+                    RadLabel2.Text = $"You are viewing an old version of this document ( { item })";
+                }
+                else
+                {
+                    iima = new Iima(Request.QueryString["docId"]);
+                    currentLog.Visible = false;
+                }
+
+                loadRadGridHistoryLog();
+                
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-                prt_barcode.Text = Patient.Instance().visible_patient_id;
+                
                 if (iima.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(iima, WebHelpers.LoadFormControl(form1, iima, ControlState.View, (string)Session["location"], (string)Session["access_authorize"]));
-
+                    BindingDataForm(iima, WebHelpers.LoadFormControl(form1, iima, ControlState.View, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
+                    BindingDataFormPrint(iima);
                 }
                 else if (iima.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(iima, WebHelpers.LoadFormControl(form1, iima, ControlState.Edit, (string)Session["location"], (string)Session["access_authorize"]));
+                    BindingDataForm(iima, WebHelpers.LoadFormControl(form1, iima, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
                 }
 
-                WebHelpers.getAccessButtons(form1, iima.status, (string)Session["access_authorize"], (string)Session["location"]);
+                WebHelpers.getAccessButtons(form1, iima.status, (string)Session["access_authorize"], (string)Session["location"], Request.QueryString["docIdLog"] != null);
             }
             catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
+        }
+        private void loadRadGridHistoryLog()
+        {
+            DataTable dt =  Iima.Logs(Request.QueryString["docId"]);
+            RadGrid1.DataSource = dt;
+            DateTime last_updated_date_time = new DateTime();
+            string last_updated_doctor = "";
+
+            if (dt.Rows.Count == 1)
+            {
+                last_updated_doctor = dt.Rows[0].Field<string>("created_name_l");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
+            }
+            else if (dt.Rows.Count > 1)
+            {
+                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_l");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
+            }
+
+            Session["signature_doctor"] = last_updated_doctor;
+            RadLabel1.Text = $"Last updated by {last_updated_doctor} on " + WebHelpers.FormatDateTime(last_updated_date_time, "dd-MM-yyyy HH:mm");
+            RadGrid1.DataBind();
+        }
+
+        protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
+        {
+            string result = "Amended by";
+            if (Convert.ToString(status) == DocumentStatus.FINAL && string.IsNullOrEmpty(Convert.ToString(amend_reason)))
+            {
+                result = "Submitted by";
+            }
+
+            if (Convert.ToString(status) == DocumentStatus.DRAFT) result = "Saved by";
+
+            if (string.IsNullOrEmpty(Convert.ToString(modified_name)))
+            {
+                result += $" {created_name} on {created_date_time}";
+            }
+            else
+            {
+                result += $" {modified_name} on {modified_date_time}";
+            }
+            return result;
+        }
+        protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            GridDataItem item = (e.Item as GridDataItem);
+            if (e.CommandName.Equals("Open"))
+            {
+                string doc_log_id = item.GetDataKeyValue("document_log_id").ToString();
+
+                string url = $"/IPD/InpIniMedAss.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}&docIdLog={doc_log_id}";
+
+                Session["viewLogInfo"] = (item.FindControl("RadLabel1") as RadLabel).Text;
+
+                Response.Redirect(url);
+            }
+        }
+        protected void RadButton1_Click(object sender, EventArgs e)
+        {
+            string url = $"/IPD/InpIniMedAss.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}";
+            Response.Redirect(url);
         }
         public void UpdateData(Iima iima)
         {
@@ -482,5 +572,11 @@ namespace EMR
             }
         }
         #endregion
+
+        protected void clearSession_Click(object sender, EventArgs e)
+        {
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+
+        }
     }
 }

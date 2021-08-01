@@ -2,12 +2,12 @@
 <div class="row">
     <div class="col-lg-12" id="accordionExample">
         <div class="card">
-            <div class="card-header">
-                <h4 class="text-primary">Patient details</h4>
+            <%--<div class="card-header">
+                <h4 class="text-primary">Thông tin bệnh nhân/ Patient Details</h4>
                 <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapsePatientInfo" aria-expanded="true" aria-controls="collapseOne"></a>
-            </div>
+            </div>--%>
             <div class="card-body collapse show" id="collapsePatientInfo" aria-labelledby="headingPatientInfo">
-                <h5 class="box-title">Patient Info</h5>
+                <h5 class="box-title">Thông tin bệnh nhân/ Patient Detail</h5>
                 <hr style="margin: 8px 0 12px 0;" />
                 <div class="row">
                     <div class="col-sm-6" style="display: flex">
@@ -87,7 +87,7 @@
                 <!--/row-->
                 <!--/row-->
                 <!-- Header: Patient Visit Info -->
-                <h5 class="box-title">Visit Info</h5>
+                <h5 class="box-title">Thông tin lần khám/ Visit Detail <span class="text-danger">*</span></h5>
                 <hr style="margin: 8px 0 12px 0;" />
 
                 <div class="row">

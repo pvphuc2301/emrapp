@@ -2497,12 +2497,12 @@ pre {
 }
 
 .table-bordered {
-    border: 1px solid #dee2e6
+    border: 1px solid #343a40
 }
 
     .table-bordered td,
     .table-bordered th {
-        border: 1px solid #dee2e6
+        border: 1px solid #343a40
     }
 
     .table-bordered thead td,
