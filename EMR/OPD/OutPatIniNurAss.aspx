@@ -36,7 +36,7 @@
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
         <asp:UpdatePanel ID="UpPrintForm" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <div class="cssclsNoScreen" style="font-family: Tahoma !important; font-size: 13.3048px !important;">
+                <div class="cssclsNoScreen1" style="font-family: Tahoma !important; font-size: 13.3048px !important;">
                     <table class="report-container">
                         <thead class="report-header">
                             <tr>
@@ -63,7 +63,11 @@
                             <tr>
                                 <td class="report-content-cell">
                                     <div class="main">
-                                        <webUI:PrtRowS1 Order="I." FontBold="true" Title="DẤU HIỆU SINH TỒN:" SubTitle="VITAL SIGNS" runat="server" />
+
+                                        <div>
+                                            <webUI:PrtRowS1 Order="I." FontBold="true" Title="DẤU HIỆU SINH TỒN:" SubTitle="VITAL SIGNS" runat="server" />
+                                        </div>
+
                                         <table class="table-bordered mb-2" style="table-layout: fixed; width: 100%">
                                             <tr>
                                                 <td class="p-2">Nhiệt độ/ Temperature (C degree)</td>
@@ -99,8 +103,10 @@
                                             </tr>
                                         </table>
 
-                                        <webUI:PrtRowS1 FontBold="true" Order="II." Title="ĐÁNH GIÁ:" SubTitle="ASSESSMENT" runat="server" />
-
+                                        <div>
+                                            <webUI:PrtRowS1 FontBold="true" Order="II." Title="ĐÁNH GIÁ:" SubTitle="ASSESSMENT" runat="server" />
+                                        </div>
+                                        
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; ">
                                             <webUI:PrtRowS1 FontBold="true" Order="1." FixedWidth="152" Title="Lý do đến khám:" SubTitle="Chief complaint"  runat="server" />
                                             <asp:Label runat="server" ID="prt_chief_complaint" />
@@ -111,7 +117,9 @@
                                             <asp:Label runat="server" ID="prt_allergy"/>
                                         </div>
 
-                                        <webUI:PrtRowS1 FontBold="true" Order="3." Title="Trạng thái tinh thần" SubTitle="Mental status" runat="server" />
+                                        <div>
+                                            <webUI:PrtRowS1 FontBold="true" Order="3." Title="Trạng thái tinh thần" SubTitle="Mental status" runat="server" />
+                                        </div>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FontBold="true" FixedLeft="30" FixedWidth="152" Title="Đáp ứng phù hợp" SubTitle="Appropriate response" runat="server" />
@@ -137,7 +145,9 @@
                                             <asp:Label CssClass="d-grid" runat="server" ID="prt_nutrition_status_code" />
                                         </div>
                                         
-                                        <webUI:PrtRowS1 FontBold="true" Order="III." Title="ĐÁNH GIÁ CÁC YẾU TỐ XÃ HỘI CỦA NGƯỜI BỆNH(DUY NHẤT CHO LẦN KHÁM ĐẦU TIÊN):" SubTitle="SOCIAL FACTORS ASSESSMENT(ONLY FOR THE FIRST VISIT)" runat="server" />
+                                        <div>
+                                            <webUI:PrtRowS1 FontBold="true" Order="III." Title="ĐÁNH GIÁ CÁC YẾU TỐ XÃ HỘI CỦA NGƯỜI BỆNH(DUY NHẤT CHO LẦN KHÁM ĐẦU TIÊN):" SubTitle="SOCIAL FACTORS ASSESSMENT(ONLY FOR THE FIRST VISIT)" runat="server" />
+                                        </div>
                                             
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
@@ -156,7 +166,6 @@
                                                 <div>Ngày/ Date: <asp:Label runat="server" ID="prt_signature_date" /></div>
                                                 <div><span class="font-bold">ĐIỀU DƯỠNG ĐÁNH GIÁ</span></div>
                                                 <div style="margin-bottom: 100px;">Assessment done by Nurse</div>
-
                                             </div>
                                         </div>
 
@@ -659,7 +668,6 @@
                         </div>
                     </div>
                 </div>
-
                 <asp:LinkButton runat="server" OnClick="clearSession_Click" ID="clearSession"></asp:LinkButton>
             </ContentTemplate>
         </asp:UpdatePanel>
