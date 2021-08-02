@@ -99,11 +99,12 @@ namespace EMR
                 Patient patient = Patient.Instance();
                 prt_vpid.Text = patient.visible_patient_id;
                 WebHelpers.gen_BarCode(patient.visible_patient_id, BarCode);
-                prt_patient_name.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
+                prt_patient_name.Text = $"{patient.GetFullName()} ({patient.GetTitle()})";
+
                 prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth);
                 
                 prt_gender.Text = WebHelpers.CreateOptions(new Option { Text = "Nam <div class='text-primary'>Male</div>", Value = "Male" }, new Option { Text = "Nữ<div class='text-primary'>Female</div>", Value = "Female" }, DataHelpers.patient.gender_e, "display: grid; grid-template-columns: 1fr 1fr; width: 300px");
-                prt_dept.Text = PatientVisit.Instance().getDept();
+                //prt_dept.Text = PatientVisit.Instance().getDept();
                 prt_pid.Text = DataHelpers.patient.visible_patient_id;
                 prt_date_of_visit.Text = WebHelpers.FormatDateTime(PatientVisit.Instance().actual_visit_date_time);
                 prt_chief_complain.Text = mc.chief_complain;
@@ -115,9 +116,12 @@ namespace EMR
                 prt_treatment.Text = mc.treatment;
                 prt_treatment_period.Text = mc.treatment_period;
                 prt_recommendation.Text = mc.recommendation;
-                
-                prt_date.Text = DateTime.Now.ToString("dd/MM/yyyy");
-                prt_signature_doctor.Text = (string)Session["signature_doctor"];
+
+                DateTime signature_date = (DateTime)Session["signature_date"];
+                string signature_name = (string)Session["signature_name"];
+
+                prt_date.Text = WebHelpers.FormatDateTime(signature_date, "dd/MM/yyyy");
+                prt_signature_doctor.Text = signature_name;
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
             
@@ -283,16 +287,17 @@ namespace EMR
 
             if (dt.Rows.Count == 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("created_name_l");
+                last_updated_doctor = dt.Rows[0].Field<string>("created_name_e");
                 last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
             }
             else if (dt.Rows.Count > 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_l");
-                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
+                last_updated_doctor = dt.Rows[0].Field<string>("submited_name_e");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("submited_date_time");
             }
 
-            Session["signature_doctor"] = last_updated_doctor;
+            Session["signature_date"] = last_updated_date_time;
+            Session["signature_name"] = last_updated_doctor;
             RadLabel1.Text = $"Last updated by {last_updated_doctor} on " + WebHelpers.FormatDateTime(last_updated_date_time, "dd-MM-yyyy HH:mm");
             RadGrid1.DataBind();
         }

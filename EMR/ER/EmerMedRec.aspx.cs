@@ -196,7 +196,7 @@ namespace EMR.ER
             try
             {
                 
-                lbl_evaluation_time.Text = WebHelpers.FormatDateTime(emr.evaluation_time);
+                lbl_evaluation_time.Text = WebHelpers.FormatDateTime(emr.evaluation_time, "dd-MMM-yyyy HH:mm");
                 lbl_chief_complaint.Text = WebHelpers.FormatString(emr.chief_complaint);
                 lbl_chief_complaint_desc.Text = WebHelpers.FormatString(emr.chief_complaint_desc);
                 lbl_history_of_present.Text = WebHelpers.FormatString(emr.history_of_present);
@@ -237,18 +237,18 @@ namespace EMR.ER
                 lbl_discharge.Text = WebHelpers.FormatString(WebHelpers.GetBool(emr.discharge));
                 lbl_prescription.Text = WebHelpers.FormatString(emr.prescription);
                 lbl_specify_care_instructions.Text = WebHelpers.FormatString(emr.specify_care_instructions);
-                lbl_discharge_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(emr.discharge_time));
-                lbl_referred_to_OPD.Text = WebHelpers.FormatString(WebHelpers.GetBool(emr.referred_to_OPD)) + "<br/>" + WebHelpers.FormatString(emr.referred_to_OPD_text);
+                lbl_discharge_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(emr.discharge_time, "dd-MMM-yyyy HH:mm"));
+                lbl_referred_to_OPD.Text = WebHelpers.FormatString(WebHelpers.GetBool(emr.referred_to_OPD, "Yes,specify/ Có, ghi rõ" + "<br/>" + WebHelpers.FormatString(emr.referred_to_OPD_text)));
                 
 
                 lbl_hospitalisation_required.Text = WebHelpers.FormatString(WebHelpers.GetBool(emr.hospitalisation_required));
                 lbl_reason.Text = WebHelpers.FormatString(emr.reason);
                 lbl_ward.Text = WebHelpers.FormatString(emr.ward);
-                lbl_time_of_leaving_emergency.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(emr.time_of_leaving_emergency));
+                lbl_time_of_leaving_emergency.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(emr.time_of_leaving_emergency, "dd-MMM-yyyy HH:mm"));
                 lbl_emergency_surgery.Text = WebHelpers.FormatString(WebHelpers.GetBool(emr.emergency_surgery));
                 lbl_pre_operative_diagnosis.Text = WebHelpers.FormatString(emr.pre_operative_diagnosis);
                 lbl_brief_summary.Text = WebHelpers.FormatString(emr.brief_summary);
-                lbl_time_of_leaving_emer_e.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(emr.time_of_leaving_emer_e));
+                lbl_time_of_leaving_emer_e.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(emr.time_of_leaving_emer_e, "dd-MMM-yyyy HH:mm"));
 
                 if (emr.hospitalisation_required != null)
                 {
@@ -274,7 +274,7 @@ namespace EMR.ER
                 lbl_transfer_hospital.Text = WebHelpers.FormatString(WebHelpers.GetBool(emr.transfer_hospital));
                 lbl_reason_for_transfer.Text = WebHelpers.FormatString(emr.reason_for_transfer);
                 lbl_status_before_transfer.Text = WebHelpers.FormatString(emr.status_before_transfer);
-                lbl_time_of_leaving_emer_a.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(emr.time_of_leaving_emer_a));
+                lbl_time_of_leaving_emer_a.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(emr.time_of_leaving_emer_a, "dd-MMM-yyyy HH:mm"));
                 lbl_patient_discharge.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(emr.patient_discharge));
                 lbl_txt_patient_discharge.Text = WebHelpers.FormatString(emr.txt_patient_discharge);
                 lbl_icd_10.Text = WebHelpers.FormatString(emr.icd_10);
@@ -677,7 +677,7 @@ namespace EMR.ER
                 prt_fullname.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
                 prt_dob.Text = WebHelpers.FormatDateTime(DataHelpers.patient.date_of_birth) + "| " + DataHelpers.patient.gender_l;
                 prt_vpid.Text = DataHelpers.patient.visible_patient_id;
-                prt_evaluation_time.Text = WebHelpers.FormatDateTime(emr.evaluation_time, "dd/MM/yyyy HH:mm tt");
+                prt_evaluation_time.Text = WebHelpers.FormatDateTime(emr.evaluation_time, "HH:mm");
                 //WebHelpers.FormatDateTime(emr.evaluation_time, "dd/MM/yyyy HH:mm tt");
 
                 prt_chief_complaint.Text = emr.chief_complaint;
@@ -715,6 +715,7 @@ namespace EMR.ER
 
                     }
                 }
+
                 if (emr.chief_complaint_code == null || emr.chief_complaint_code == "")
                 {
 
@@ -734,12 +735,9 @@ namespace EMR.ER
                 if (habits_temp != null)
                 {
                     List<Habits_Temp> Habits_Temps = JsonConvert.DeserializeObject<List<Habits_Temp>>(habits_temp);
-                    lbl_habits_A.Text = "❏";
-                    lbl_habits_S.Text = "❏";
-                    lbl_habits_D.Text = "❏";
+
                     foreach (Habits_Temp locAvpu in Habits_Temps)
                     {
-
                         string cde = locAvpu.cde;
                         if (cde != null)
                         {
@@ -756,9 +754,9 @@ namespace EMR.ER
                                 lbl_habits_D.Text = "☒";
                             }
                         }
-
                     }
                 }
+
                 if (habits_temp == null && habits_temp == "")
                 {
                     lbl_habits_A.Text = "❏";
@@ -824,11 +822,11 @@ namespace EMR.ER
                 prt_name_of_specialist.Text = emr.name_of_specialist;
                 if (emr.time_contaced != null)
                 {
-                    prt_time_contaced.Text = emr.time_contaced.ToString("dd/MM/yyyy HH:mm tt");
+                    prt_time_contaced.Text = emr.time_contaced.ToString("HH:mm");
                 }
                 if (emr.time_provided != null)
                 {
-                    prt_time_provided.Text = emr.time_provided.ToString("dd/MM/yyyy HH:mm tt");
+                    prt_time_provided.Text = emr.time_provided.ToString("HH:mm");
                 }
                 prt_spec_opinion_summarised.Text = emr.spec_opinion_summarised;
 
@@ -866,7 +864,7 @@ namespace EMR.ER
                 prt_specify_care_instructions.Text = emr.specify_care_instructions;
                 if (emr.discharge_time != null)
                 {
-                    prt_discharge_time.Text = WebHelpers.FormatDateTime(emr.discharge_time, "dd/MM/yyyy HH:mm tt");
+                    prt_discharge_time.Text = WebHelpers.FormatDateTime(emr.discharge_time, "HH:mm");
                 }
                 if (emr.referred_to_OPD != null)
                 {
@@ -918,7 +916,7 @@ namespace EMR.ER
 
                 if (emr.discharge_time != null)
                 {
-                    prt_time_of_leaving_emergency.Text = WebHelpers.FormatDateTime(emr.time_of_leaving_emergency, "dd/MM/yyyy HH:mm tt");
+                    prt_time_of_leaving_emergency.Text = WebHelpers.FormatDateTime(emr.time_of_leaving_emergency, "HH:mm");
                 }
                 if (emr.emergency_surgery != null)
                 {
@@ -948,7 +946,7 @@ namespace EMR.ER
 
                 if (emr.time_of_leaving_emer_e != null)
                 {
-                    prt_time_of_leaving_emer_e.Text = WebHelpers.FormatDateTime(emr.time_of_leaving_emer_e, "dd/MM/yyyy HH:mm tt");
+                    prt_time_of_leaving_emer_e.Text = WebHelpers.FormatDateTime(emr.time_of_leaving_emer_e, "HH:mm");
                 }
                 if (emr.transfer_hospital != null)
                 {
@@ -977,15 +975,15 @@ namespace EMR.ER
                 prt_status_before_transfer.Text = emr.status_before_transfer;
                 if (emr.time_of_leaving_emer_a != null)
                 {
-                    prt_time_of_leaving_emer_a.Text = WebHelpers.FormatDateTime(emr.time_of_leaving_emer_a, "dd/MM/yyyy HH:mm tt");
+                    prt_time_of_leaving_emer_a.Text = WebHelpers.FormatDateTime(emr.time_of_leaving_emer_a, "HH:mm");
                 }
                 string patient_discharge_temp = emr.patient_discharge;
                 if (patient_discharge_temp != null && patient_discharge_temp != "")
                 {
                     List<PDT> patient_discharge_temps = JsonConvert.DeserializeObject<List<PDT>>(patient_discharge_temp);
-                    lbl_patient_discharge_IMP.Text = "❏";
-                    lbl_patient_discharge_UNC.Text = "❏";
-                    lbl_patient_discharge_UNS.Text = "❏";
+                    prt_patient_discharge_IMP.Text = "❏";
+                    prt_patient_discharge_UNC.Text = "❏";
+                    prt_patient_discharge_UNS.Text = "❏";
                     foreach (PDT PDTS in patient_discharge_temps)
                     {
 
@@ -994,15 +992,15 @@ namespace EMR.ER
                         {
                             if (cde == "IMP")
                             {
-                                lbl_patient_discharge_IMP.Text = "☒";
+                                prt_patient_discharge_IMP.Text = "☒";
                             }
                             if (cde == "UNC")
                             {
-                                lbl_patient_discharge_UNC.Text = "☒";
+                                prt_patient_discharge_UNC.Text = "☒";
                             }
                             if (cde == "UNS")
                             {
-                                lbl_patient_discharge_UNS.Text = "☒";
+                                prt_patient_discharge_UNS.Text = "☒";
                             }
                         }
 
@@ -1010,13 +1008,12 @@ namespace EMR.ER
                 }
                 if (patient_discharge_temp == null || patient_discharge_temp == "")
                 {
-                    lbl_patient_discharge_IMP.Text = "❏";
-                    lbl_patient_discharge_UNC.Text = "❏";
-                    lbl_patient_discharge_UNS.Text = "❏";
+                    prt_patient_discharge_IMP.Text = "❏";
+                    prt_patient_discharge_UNC.Text = "❏";
+                    prt_patient_discharge_UNS.Text = "❏";
                 }
 
                 txt_patient_discharge.Value = emr.txt_patient_discharge;
-                lbl_patient_discharge.Text = emr.txt_patient_discharge;
                 prt_patient_discharge.Text = emr.txt_patient_discharge;
                 prt_icd_10.Text = emr.icd_10;
 
@@ -1029,6 +1026,7 @@ namespace EMR.ER
                     lbl_month.Text = signature_date.ToString("MM");
                     lbl_year.Text = signature_date.ToString("yyyy");
                 }
+
                 lbl_created_name_l.Text = signature_doctor;
             }
             catch (Exception ex)
@@ -1190,13 +1188,13 @@ namespace EMR.ER
 
             if (dt.Rows.Count == 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("created_name_l");
+                last_updated_doctor = dt.Rows[0].Field<string>("created_name_e");
                 last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
             }
             else if (dt.Rows.Count > 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_l");
-                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
+                last_updated_doctor = dt.Rows[0].Field<string>("submited_name_e");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("submited_date_time");
             }
 
             Session["signature_date"] = last_updated_date_time;

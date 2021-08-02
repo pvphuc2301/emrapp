@@ -205,267 +205,268 @@ namespace EMR
         {
             try
             {
-                prt_vpid.Text = Patient.Instance().visible_patient_id;
-                WebHelpers.gen_BarCode(Patient.Instance().visible_patient_id, BarCode);
+                //prt_vpid.Text = Patient.Instance().visible_patient_id;
+                //WebHelpers.gen_BarCode(Patient.Instance().visible_patient_id, BarCode);
                 
-                if(oadr.admis_delivery != null)
-                {
-                    prt_hour.Text = oadr.admis_delivery.ToString("HH");
-                    prt_minute.Text = oadr.admis_delivery.ToString("mm");
-                    prt_date.Text = oadr.admis_delivery.ToString("dd/MM/yyyy");
-                }
+                //if(oadr.admis_delivery != null)
+                //{
+                //    prt_hour.Text = oadr.admis_delivery.ToString("HH");
+                //    prt_minute.Text = oadr.admis_delivery.ToString("mm");
+                //    prt_date.Text = oadr.admis_delivery.ToString("dd-MMM-yyyy");
+                //}
 
-                prt_obs_name.Text = oadr.obs_name;
-                prt_obs_initial.Text = oadr.obs_initial;
+                //prt_obs_name.Text = oadr.obs_name;
+                //prt_obs_initial.Text = oadr.obs_initial;
 
-                if(oadr.delivery_at != null)
-                {
-                    prt_hour_d.Text = oadr.delivery_at.ToString("HH");
-                    prt_minute_d.Text = oadr.delivery_at.ToString("mm");
-                    prt_date_d.Text = oadr.delivery_at.ToString("dd/MM/yyyy");
-                }
+                //if(oadr.delivery_at != null)
+                //{
+                //    prt_hour_d.Text = oadr.delivery_at.ToString("HH");
+                //    prt_minute_d.Text = oadr.delivery_at.ToString("mm");
+                //    prt_date_d.Text = oadr.delivery_at.ToString("dd-MMM-yyyy");
+                //}
 
-                prt_apgar_score_1.Text = oadr.apgar_score_1;
-                prt_apgar_score_5.Text = oadr.apgar_score_5;
-                prt_apgar_score_10.Text = oadr.apgar_score_10;
-                prt_weight_of_birth.Text = oadr.weight_of_birth;
-                prt_length_of_birth.Text = oadr.length_of_birth;
-                prt_head_circum.Text = oadr.head_circum;
-                if (oadr.singleton_sex_code != null)
-                {
-                    if (oadr.singleton_sex_code == "M")
-                    {
-                        prt_singleton_sex_code_M.Text = "☒";
-                        prt_singleton_sex_code_F.Text = "❏";
-                    }
-                    if (oadr.singleton_sex_code == "F")
-                    {
-                        prt_singleton_sex_code_M.Text = "❏";
-                        prt_singleton_sex_code_F.Text = "☒";
-                    }
-                }
-                if (oadr.singleton_sex_code == null && oadr.singleton_sex_code == "")
-                {
-                    prt_singleton_sex_code_M.Text = "❏";
-                    prt_singleton_sex_code_F.Text = "❏";
-                }
-                string multiple_sex_temp = oadr.multiple_sex;
-                if (multiple_sex_temp != null)
-                {
-                    List<Multiple_Sex> multiple_sex_temps = JsonConvert.DeserializeObject<List<Multiple_Sex>>(multiple_sex_temp);
-                    prt_multiple_sex_M.Text = "❏";
-                    prt_multiple_sex_F.Text = "❏";
-                    foreach (Multiple_Sex MS in multiple_sex_temps)
-                    {
-                        string cde = MS.cde;
-                        if (cde != null)
-                        {
-                            if (cde == "M")
-                            {
-                                prt_multiple_sex_M.Text = "☒";
-                            }
-                            if (cde == "F")
-                            {
-                                prt_multiple_sex_F.Text = "☒";
-                            }
-                        }
-                    }
-                }
-                if (multiple_sex_temp == null || multiple_sex_temp == "")
-                {
-                    prt_multiple_sex_M.Text = "❏";
-                    prt_multiple_sex_F.Text = "❏";
-                }
+                //prt_apgar_score_1.Text = oadr.apgar_score_1;
+                //prt_apgar_score_5.Text = oadr.apgar_score_5;
+                //prt_apgar_score_10.Text = oadr.apgar_score_10;
+                //prt_weight_of_birth.Text = oadr.weight_of_birth;
+                //prt_length_of_birth.Text = oadr.length_of_birth;
+                //prt_head_circum.Text = oadr.head_circum;
+                //if (oadr.singleton_sex_code != null)
+                //{
+                //    if (oadr.singleton_sex_code == "M")
+                //    {
+                //        prt_singleton_sex_code_M.Text = "☒";
+                //        prt_singleton_sex_code_F.Text = "❏";
+                //    }
+                //    if (oadr.singleton_sex_code == "F")
+                //    {
+                //        prt_singleton_sex_code_M.Text = "❏";
+                //        prt_singleton_sex_code_F.Text = "☒";
+                //    }
+                //}
+                //if (oadr.singleton_sex_code == null && oadr.singleton_sex_code == "")
+                //{
+                //    prt_singleton_sex_code_M.Text = "❏";
+                //    prt_singleton_sex_code_F.Text = "❏";
+                //}
+                //string multiple_sex_temp = oadr.multiple_sex;
+                //if (multiple_sex_temp != null)
+                //{
+                //    List<Multiple_Sex> multiple_sex_temps = JsonConvert.DeserializeObject<List<Multiple_Sex>>(multiple_sex_temp);
+                //    prt_multiple_sex_M.Text = "❏";
+                //    prt_multiple_sex_F.Text = "❏";
+                //    foreach (Multiple_Sex MS in multiple_sex_temps)
+                //    {
+                //        string cde = MS.cde;
+                //        if (cde != null)
+                //        {
+                //            if (cde == "M")
+                //            {
+                //                prt_multiple_sex_M.Text = "☒";
+                //            }
+                //            if (cde == "F")
+                //            {
+                //                prt_multiple_sex_F.Text = "☒";
+                //            }
+                //        }
+                //    }
+                //}
+                //if (multiple_sex_temp == null || multiple_sex_temp == "")
+                //{
+                //    prt_multiple_sex_M.Text = "❏";
+                //    prt_multiple_sex_F.Text = "❏";
+                //}
 
-                if (oadr.birth_defect != null)
-                {
-                    if (oadr.birth_defect = true)
-                    {
-                        prt_birth_defect_True.Text = "☒";
-                        prt_birth_defect_False.Text = "❏";
-                    }
-                    if (oadr.birth_defect = false)
-                    {
-                        prt_birth_defect_True.Text = "❏";
-                        prt_birth_defect_False.Text = "☒";
-                    }
-                }
-                if (oadr.birth_defect == null && oadr.birth_defect == "")
-                {
-                    prt_birth_defect_True.Text = "❏";
-                    prt_birth_defect_False.Text = "❏";
-                }
-                prt_birth_defect_note.Text = oadr.birth_defect_note;
-                prt_neonatal_status.Text = oadr.neonatal_status;
-                if (oadr.intervention != null)
-                {
-                    if (oadr.intervention = true)
-                    {
-                        prt_intervention_True.Text = "☒";
-                        prt_intervention_False.Text = "❏";
-                    }
-                    if (oadr.intervention = false)
-                    {
-                        prt_intervention_True.Text = "❏";
-                        prt_intervention_False.Text = "☒";
-                    }
-                }
-                if (oadr.intervention == null && oadr.intervention == "")
-                {
-                    prt_intervention_True.Text = "❏";
-                    prt_intervention_False.Text = "❏";
-                }
-                prt_intervention_note.Text = oadr.intervention_note;
-                if (oadr.placenta_deli != null)
-                {
-                    if (oadr.placenta_deli = true)
-                    {
-                        prt_placenta_deli_M.Text = "☒";
-                        prt_placenta_deli_S.Text = "❏";
-                    }
-                    if (oadr.placenta_deli = false)
-                    {
-                        prt_placenta_deli_M.Text = "❏";
-                        prt_placenta_deli_S.Text = "☒";
-                    }
-                }
-                if (oadr.placenta_deli == null && oadr.placenta_deli == "")
-                {
-                    prt_placenta_deli_M.Text = "❏";
-                    prt_placenta_deli_S.Text = "❏";
-                }
+                //if (oadr.birth_defect != null)
+                //{
+                //    if (oadr.birth_defect = true)
+                //    {
+                //        prt_birth_defect_True.Text = "☒";
+                //        prt_birth_defect_False.Text = "❏";
+                //    }
+                //    if (oadr.birth_defect = false)
+                //    {
+                //        prt_birth_defect_True.Text = "❏";
+                //        prt_birth_defect_False.Text = "☒";
+                //    }
+                //}
+                //if (oadr.birth_defect == null && oadr.birth_defect == "")
+                //{
+                //    prt_birth_defect_True.Text = "❏";
+                //    prt_birth_defect_False.Text = "❏";
+                //}
+                //prt_birth_defect_note.Text = oadr.birth_defect_note;
+                //prt_neonatal_status.Text = oadr.neonatal_status;
+                //if (oadr.intervention != null)
+                //{
+                //    if (oadr.intervention = true)
+                //    {
+                //        prt_intervention_True.Text = "☒";
+                //        prt_intervention_False.Text = "❏";
+                //    }
+                //    if (oadr.intervention = false)
+                //    {
+                //        prt_intervention_True.Text = "❏";
+                //        prt_intervention_False.Text = "☒";
+                //    }
+                //}
+                //if (oadr.intervention == null && oadr.intervention == "")
+                //{
+                //    prt_intervention_True.Text = "❏";
+                //    prt_intervention_False.Text = "❏";
+                //}
+                //prt_intervention_note.Text = oadr.intervention_note;
+                //if (oadr.placenta_deli != null)
+                //{
+                //    if (oadr.placenta_deli = true)
+                //    {
+                //        prt_placenta_deli_M.Text = "☒";
+                //        prt_placenta_deli_S.Text = "❏";
+                //    }
+                //    if (oadr.placenta_deli = false)
+                //    {
+                //        prt_placenta_deli_M.Text = "❏";
+                //        prt_placenta_deli_S.Text = "☒";
+                //    }
+                //}
+                //if (oadr.placenta_deli == null && oadr.placenta_deli == "")
+                //{
+                //    prt_placenta_deli_M.Text = "❏";
+                //    prt_placenta_deli_S.Text = "❏";
+                //}
 
-                if(oadr.pacental_deli_dt != null)
-                {
-                    prt_pdt_hour.Text = oadr.pacental_deli_dt.ToString("HH");
-                    prt_pdt_minute.Text = oadr.pacental_deli_dt.ToString("mm");
-                    prt_pdt_date.Text = oadr.pacental_deli_dt.ToString("dd/MM/yyyy");
-                }
+                //if(oadr.pacental_deli_dt != null)
+                //{
+                //    prt_pdt_hour.Text = oadr.pacental_deli_dt.ToString("HH");
+                //    prt_pdt_minute.Text = oadr.pacental_deli_dt.ToString("mm");
+                //    prt_pdt_date.Text = oadr.pacental_deli_dt.ToString("dd/MM/yyyy");
+                //}
 
-                prt_placenta_deli_mode.Text = oadr.placenta_deli_mode;
-                prt_placenta_weight.Text = oadr.placenta_weight+" gram";
+                //prt_placenta_deli_mode.Text = oadr.placenta_deli_mode;
+                //prt_placenta_weight.Text = oadr.placenta_weight+" gram";
                 
-                if (oadr.umbilical_coil != null)
-                {
-                    if (oadr.umbilical_coil = true)
-                    {
-                        prt_umbilical_coil_True.Text = "☒";
-                    }
-                    else
-                    {
-                        prt_umbilical_coil_False.Text = "☒";
-                    }
-                }
+                //if (oadr.umbilical_coil != null)
+                //{
+                //    if (oadr.umbilical_coil = true)
+                //    {
+                //        prt_umbilical_coil_True.Text = "☒";
+                //    }
+                //    else
+                //    {
+                //        prt_umbilical_coil_False.Text = "☒";
+                //    }
+                //}
 
-                prt_umbilical_length.Text = oadr.umbilical_length;
-                prt_blood_loss.Text = oadr.blood_loss;
-                if (oadr.p_intervention != null)
-                {
-                    if (oadr.p_intervention = true)
-                    {
-                        prt_p_intervention_True.Text = "☒";
-                        prt_p_intervention_False.Text = "❏";
-                    }
-                    if (oadr.p_intervention = false)
-                    {
-                        prt_p_intervention_True.Text = "❏";
-                        prt_p_intervention_False.Text = "☒";
-                    }
-                }
-                if (oadr.p_intervention == null && oadr.p_intervention == "")
-                {
-                    prt_p_intervention_True.Text = "❏";
-                    prt_p_intervention_False.Text = "❏";
-                }
-                prt_p_intervention_note.Text = oadr.p_intervention_note;
-                prt_spO2.Text = oadr.spO2;
-                prt_temp.Text = oadr.temp;
-                prt_BP.Text = oadr.bp;
-                prt_HR.Text = oadr.hr;
-                prt_RR.Text = oadr.rr;
-                if (oadr.delivery_mode_code != null)
-                {
-                    if (oadr.delivery_mode_code == "S")
-                    {
-                        prt_delivery_mode_desc.Text = oadr.delivery_mode_desc;
-                        prt_dl_desc.Text = oadr.section_desc;
-                    }
-                    if (oadr.delivery_mode_code == "V")
-                    {
-                        prt_delivery_mode_desc.Text = oadr.delivery_mode_desc;
-                        prt_dl_desc.Text = oadr.vaginal_deli_desc;
+                //prt_umbilical_length.Text = oadr.umbilical_length;
+                //prt_blood_loss.Text = oadr.blood_loss;
+                //if (oadr.p_intervention != null)
+                //{
+                //    if (oadr.p_intervention = true)
+                //    {
+                //        prt_p_intervention_True.Text = "☒";
+                //        prt_p_intervention_False.Text = "❏";
+                //    }
+                //    if (oadr.p_intervention = false)
+                //    {
+                //        prt_p_intervention_True.Text = "❏";
+                //        prt_p_intervention_False.Text = "☒";
+                //    }
+                //}
+                //if (oadr.p_intervention == null && oadr.p_intervention == "")
+                //{
+                //    prt_p_intervention_True.Text = "❏";
+                //    prt_p_intervention_False.Text = "❏";
+                //}
+                //prt_p_intervention_note.Text = oadr.p_intervention_note;
+                //prt_spO2.Text = oadr.spO2;
+                //prt_temp.Text = oadr.temp;
+                //prt_BP.Text = oadr.bp;
+                //prt_HR.Text = oadr.hr;
+                //prt_RR.Text = oadr.rr;
+                //if (oadr.delivery_mode_code != null)
+                //{
+                //    if (oadr.delivery_mode_code == "S")
+                //    {
+                //        prt_delivery_mode_desc.Text = oadr.delivery_mode_desc;
+                //        prt_dl_desc.Text = oadr.section_desc;
+                //    }
+                //    if (oadr.delivery_mode_code == "V")
+                //    {
+                //        prt_delivery_mode_desc.Text = oadr.delivery_mode_desc;
+                //        prt_dl_desc.Text = oadr.vaginal_deli_desc;
 
-                    }
-                }
-                if (oadr.pre_intact = true)
-                {
-                    prt_pre_intact.Text = "☒";
-                }
-                if (oadr.pre_intact = false)
-                {
-                    prt_pre_intact.Text = "❏";
-                }
-                if (oadr.pre_lacera = true)
-                {
-                    prt_pre_lacera.Text = "☒";
-                    prt_pre_lacera_degree.Text = oadr.pre_lacera_degree;
-                }
-                if (oadr.pre_lacera = false)
-                {
-                    prt_pre_lacera.Text = "❏";
-                }
-                if (oadr.pre_episiotomy = true)
-                {
-                    prt_pre_episiotomy.Text = "☒";
-                    prt_pre_episiotomy_st.Text = oadr.pre_episiotomy_st;
-                }
-                if (oadr.pre_episiotomy = false)
-                {
-                    prt_pre_episiotomy.Text = "❏";
-                }
-                if (oadr.cervix_intact = true)
-                {
-                    prt_cervix_intact_True.Text = "☒";
-                    prt_cervix_intact_False.Text = "❏";
-                }
-                if (oadr.cervix_intact = false)
-                {
-                    prt_cervix_intact_True.Text = "❏";
-                    prt_cervix_intact_False.Text = "☒";
-                }
-                prt_preo_diagnosis.Text = oadr.preo_diagnosis;
-                prt_post_diagnosis.Text = oadr.post_diagnosis;
-                string json_operations = oadr.operations;
-                prt_operations.DataSource = JsonConvert.DeserializeObject<DataTable>(json_operations);
-                prt_operations.DataBind();
-                if (oadr.sur_incident = true)
-                {
-                    prt_sur_incident_True.Text = "☒";
-                    prt_sur_incident_note.Text = oadr.sur_incident_note;
-                    prt_sur_incident_False.Text = "❏";
+                //    }
+                //}
+                //if (oadr.pre_intact = true)
+                //{
+                //    prt_pre_intact.Text = "☒";
+                //}
+                //if (oadr.pre_intact = false)
+                //{
+                //    prt_pre_intact.Text = "❏";
+                //}
+                //if (oadr.pre_lacera = true)
+                //{
+                //    prt_pre_lacera.Text = "☒";
+                //    prt_pre_lacera_degree.Text = oadr.pre_lacera_degree;
+                //}
+                //if (oadr.pre_lacera = false)
+                //{
+                //    prt_pre_lacera.Text = "❏";
+                //}
+                //if (oadr.pre_episiotomy = true)
+                //{
+                //    prt_pre_episiotomy.Text = "☒";
+                //    prt_pre_episiotomy_st.Text = oadr.pre_episiotomy_st;
+                //}
+                //if (oadr.pre_episiotomy = false)
+                //{
+                //    prt_pre_episiotomy.Text = "❏";
+                //}
+                //if (oadr.cervix_intact = true)
+                //{
+                //    prt_cervix_intact_True.Text = "☒";
+                //    prt_cervix_intact_False.Text = "❏";
+                //}
+                //if (oadr.cervix_intact = false)
+                //{
+                //    prt_cervix_intact_True.Text = "❏";
+                //    prt_cervix_intact_False.Text = "☒";
+                //}
+                //prt_preo_diagnosis.Text = oadr.preo_diagnosis;
+                //prt_post_diagnosis.Text = oadr.post_diagnosis;
+                //string json_operations = oadr.operations;
+                //prt_operations.DataSource = JsonConvert.DeserializeObject<DataTable>(json_operations);
+                //prt_operations.DataBind();
+                //if (oadr.sur_incident = true)
+                //{
+                //    prt_sur_incident_True.Text = "☒";
+                //    prt_sur_incident_note.Text = oadr.sur_incident_note;
+                //    prt_sur_incident_False.Text = "❏";
 
-                }
-                if (oadr.sur_incident = false)
-                {
-                    prt_sur_incident_False.Text = "☒";
-                    prt_sur_incident_True.Text = "❏";
+                //}
+                //if (oadr.sur_incident = false)
+                //{
+                //    prt_sur_incident_False.Text = "☒";
+                //    prt_sur_incident_True.Text = "❏";
 
-                }
-                if (oadr.sur_complication = true)
-                {
-                    prt_sur_complication_True.Text = "☒";
-                    prt_sur_complication_note.Text = oadr.sur_complication_note;
-                    prt_sur_complication_False.Text = "❏";
-                }
-                if (oadr.sur_complication = false)
-                {
-                    prt_sur_complication_False.Text = "☒";
-                    prt_sur_complication_True.Text = "❏";
-                }
-                prt_treatment_plan.Text = oadr.treatment_plan;
-                DateTime signature_date = (DateTime)Session["signature_date"];
+                //}
+                //if (oadr.sur_complication = true)
+                //{
+                //    prt_sur_complication_True.Text = "☒";
+                //    prt_sur_complication_note.Text = oadr.sur_complication_note;
+                //    prt_sur_complication_False.Text = "❏";
+                //}
+                //if (oadr.sur_complication = false)
+                //{
+                //    prt_sur_complication_False.Text = "☒";
+                //    prt_sur_complication_True.Text = "❏";
+                //}
+                //prt_treatment_plan.Text = oadr.treatment_plan;
+                //DateTime signature_date = (DateTime)Session["signature_date"];
 
-                prt_create_date.Text = signature_date.ToString("dd/MM/yyyy");
+                //prt_signature_name.Text = (string)Session["signature_name"];
+                //prt_signature_date.Text = signature_date.ToString("dd/MM/yyyy");
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }
@@ -602,17 +603,17 @@ namespace EMR
 
             if (dt.Rows.Count == 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("created_name_l");
+                last_updated_doctor = dt.Rows[0].Field<string>("created_name_e");
                 last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
             }
             else if (dt.Rows.Count > 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_l");
-                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
+                last_updated_doctor = dt.Rows[0].Field<string>("submited_name_e");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("submited_date_time");
             }
 
             Session["signature_date"] = last_updated_date_time;
-            Session["signature_doctor"] = last_updated_doctor;
+            Session["signature_name"] = last_updated_doctor;
             RadLabel1.Text = $"Last updated by {last_updated_doctor} on " + WebHelpers.FormatDateTime(last_updated_date_time, "dd-MM-yyyy HH:mm");
             RadGrid1.DataBind();
         }

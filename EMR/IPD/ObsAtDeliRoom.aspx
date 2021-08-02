@@ -37,6 +37,17 @@
         td    { page-break-inside:avoid; page-break-after:auto }
         thead { display:table-header-group }
         tfoot { display:table-footer-group }
+
+        @page {
+    padding-top: 0;
+    padding-bottom: 0;
+    page-break-inside: avoid;
+
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
     </style>
 </head>
 <body>
@@ -45,7 +56,7 @@
 
         <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <div class="cssclsNoScreen">
+                <%--<div class="cssclsNoScreen">
                     <table class="report-container">
                         <thead class="report-header">
                             <tr>
@@ -71,7 +82,7 @@
                         <tbody class="report-content">
                             <tr>
                                 <td class="report-content-cell">
-                                    <div class="main" runat="server" id="print_content">
+                                    <div class="main" runat="server">
                                         <div class="row mb-2 ">
                                     <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; text-align: justify">
                                         <asp:Label>Nhập phòng sinh lúc/ </asp:Label>
@@ -488,11 +499,11 @@
                                                 <asp:Label>- Tai biến/ Incident: </asp:Label>
                                             </div>
                                             <div class="col-2">
-                                                <asp:Label ID="prt_sur_incident_False" runat="server" />
+                                                <asp:Label ID="prt_sur_incident_False" Text="❏" runat="server" />
                                                 <asp:Label>Không/ No</asp:Label>
                                             </div>
                                             <div class="col-7">
-                                                <asp:Label ID="prt_sur_incident_True" runat="server" />
+                                                <asp:Label ID="prt_sur_incident_True"  Text="❏" runat="server" />
                                                 <asp:Label>Có, chi tiết/ Yes, specify: </asp:Label>
                                                 <asp:Label ID="prt_sur_incident_note" runat="server" />
                                             </div>
@@ -506,11 +517,11 @@
                                                 <asp:Label>- Biến chứng/ Complication: </asp:Label>
                                             </div>
                                             <div class="col-2">
-                                                <asp:Label ID="prt_sur_complication_False" runat="server" />
+                                                <asp:Label ID="prt_sur_complication_False"  Text="❏" runat="server" />
                                                 <asp:Label>Không/ No</asp:Label>
                                             </div>
                                             <div class="col-7">
-                                                <asp:Label ID="prt_sur_complication_True" runat="server" />
+                                                <asp:Label ID="prt_sur_complication_True"  Text="❏" runat="server" />
                                                 <asp:Label>Có, chi tiết/ Yes, specify: </asp:Label>
                                                 <asp:Label ID="prt_sur_complication_note" runat="server" />
                                             </div>
@@ -535,7 +546,7 @@
                                         <div class="col-12" style="text-align: center;">
                                             <label style="font-size: 14.5px; font-family: Tahoma">
                                                 <span style="font-weight: bold">Ngày giờ/ Date & time: </span>
-                                                <asp:Label ID="prt_create_date" runat="server" />
+                                                <asp:Label ID="prt_signature_date" runat="server" />
                                             </label>
                                         </div>
                                         <div class="col-12" style="text-align: center;">
@@ -547,7 +558,8 @@
                                             </div>
                                             <div class="col-12" style="text-align: center;">
                                                 <label style="font-size: 14.5px; font-family: Tahoma">
-                                                    <span class="text-primary">Chữ ký/ Signature </span>
+                                                    <span class="text-primary"></span>
+                                                     <asp:Label ID="prt_signature_name" runat="server" />
                                                 </label>
                                             </div>
                                         </div>
@@ -574,7 +586,7 @@
                             </tr>
                         </tfoot>
                     </table>
-                </div>
+                </div>--%>
 
                 <telerik:RadWindowManager RenderMode="Lightweight"  
                                   EnableShadow="true"  
@@ -610,12 +622,12 @@
             </Windows>
         </telerik:RadWindowManager>
 
-                <div class="cssclsNoPrint">
-                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd; border-radius: 0;">
+                <div class="cssclsNoPrint1">
+                    <ul class="breadcrumb cssclsNoPrint" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                       <li>Obstetric Observation At Delivery Room</li>
                     </ul>
-                    <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
+                    <div id="print_content" style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
                         <asp:HiddenField runat="server" ID="DataObj" />
                         <asp:Panel runat="server" ID="messagePlaceHolder">
                             <div class="card" runat="server" id="amendReasonWraper">
@@ -653,7 +665,7 @@
                                     <div class="card-body collapse show" id="collapseOne">
                                         <div class="form-body">
 
-                                            <div class="row">
+                                            <div class="row cssclsNoPrint">
                                                 <div class="col-md-12">
                                                     <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
                                                         <telerik:RadLabel runat="server" ID="RadLabel2">
@@ -1189,8 +1201,7 @@
                                                         <webUI:TextField runat="server" ID="txt_post_diagnosis" />
                                                     </div>
                                                 </div>
-                                                <div class="col-md-12 gt-2-a mb-2">
-                                                    <label  class="control-label"></label>
+                                                <div class="col-md-12 mb-2">
                                                     <div  class="mb-2 table-responsive">
                                                         <asp:UpdatePanel ID="updatePanel_operations" runat="server" UpdateMode="Always">
                                                         <ContentTemplate>
@@ -1216,7 +1227,7 @@
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
-                                                                            <div style="width: 300px">Phương pháp phẫu thuật và vô cảm/ <span class="text-primary">Surgical and Anesthesia methods</span></div>
+                                                                            <div style="width: 220px">Phương pháp phẫu thuật và vô cảm/ <span class="text-primary">Surgical and Anesthesia methods</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <webUI:TextField Value='<%#Eval("surgical_anesthesia") %>' ID="surgical_anesthesia" runat="server" />
@@ -1224,7 +1235,7 @@
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
-                                                                            <div style="width: 300px">Phẫu thuật viên/ <span class="text-primary">Surgeon</span></div>
+                                                                            <div style="width: 180px">Phẫu thuật viên/ <span class="text-primary">Surgeon</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <webUI:TextField Value='<%#Eval("surgeon") %>' ID="surgeon" runat="server" />
@@ -1232,7 +1243,7 @@
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
-                                                                            <div style="width: 300px">Bác sĩ gây mê/ <span class="text-primary">Anesthesiologist</span></div>
+                                                                            <div style="width: 210px">Bác sĩ gây mê/ <span class="text-primary">Anesthesiologist</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <webUI:TextField Value='<%#Eval("anesthesiologist") %>' ID="anesthesiologist" runat="server" />
@@ -1324,7 +1335,7 @@
                                                 </div>
                                             </fieldset>
 
-                                            <div class="row mb-2">
+                                            <div class="row mb-2 cssclsNoPrint">
                                                 <div class="col-md-12">
                                                     <div class="form-actions">
                                                         <asp:LinkButton ValidationGroup="Group2" runat="server" OnClick="btnComplete_Click" ID="btnComplete"  CssClass="btn btn-primary waves-effect" >Complete</asp:LinkButton>
@@ -1335,7 +1346,7 @@
 
                                                         <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                        <asp:LinkButton runat="server" OnClientClick="window.print(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                        <asp:LinkButton runat="server" OnClientClick="printDiv(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                         <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                                     </div>
@@ -1411,7 +1422,19 @@
            button.click();
 
            //console.log(row);
-       }
+        }
+
+        function printDiv() {
+            var printContents = document.getElementById("print_content").innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
+
     </script>
 
 </body>

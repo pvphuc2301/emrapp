@@ -30,13 +30,21 @@
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/sweetalert.min.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
+    <style type="text/css">
+        table { page-break-after:auto }
+        tr    { page-break-inside:avoid; page-break-after:auto }
+        td    { page-break-inside:avoid; page-break-after:auto }
+        thead { display:table-header-group }
+        tfoot { display:table-footer-group }
+    </style>
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
         <asp:UpdatePanel ID="UpPrintForm" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <div class="cssclsNoScreen1" style="font-family: Tahoma !important; font-size: 13.3048px !important;">
+                
+<div class="cssclsNoScreen" style="font-family: Tahoma !important; font-size: 13.3048px !important;">
                     <table class="report-container">
                         <thead class="report-header">
                             <tr>
@@ -63,11 +71,7 @@
                             <tr>
                                 <td class="report-content-cell">
                                     <div class="main">
-
-                                        <div>
-                                            <webUI:PrtRowS1 Order="I." FontBold="true" Title="DẤU HIỆU SINH TỒN:" SubTitle="VITAL SIGNS" runat="server" />
-                                        </div>
-
+                                        <webUI:PrtRowS1 Order="I." FontBold="true" Title="DẤU HIỆU SINH TỒN:" SubTitle="VITAL SIGNS" runat="server" />
                                         <table class="table-bordered mb-2" style="table-layout: fixed; width: 100%">
                                             <tr>
                                                 <td class="p-2">Nhiệt độ/ Temperature (C degree)</td>
@@ -103,72 +107,54 @@
                                             </tr>
                                         </table>
 
-                                        <div>
-                                            <webUI:PrtRowS1 FontBold="true" Order="II." Title="ĐÁNH GIÁ:" SubTitle="ASSESSMENT" runat="server" />
-                                        </div>
-                                        
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr; ">
+                                        <webUI:PrtRowS1 FontBold="true" Order="II." Title="ĐÁNH GIÁ:" SubTitle="ASSESSMENT" runat="server" />
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FontBold="true" Order="1." FixedWidth="152" Title="Lý do đến khám:" SubTitle="Chief complaint"  runat="server" />
                                             <asp:Label runat="server" ID="prt_chief_complaint" />
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                            <webUI:PrtRowS1 FontBold="true" Order="2." FixedWidth="152" Title="Dị ứng:" SubTitle="Allergy" runat="server"  />
+                                        <webUI:PrtRowS1 FontBold="true" Order="2." FixedWidth="152" Title="Dị ứng:" SubTitle="Allergy" runat="server"  />
                                             <asp:Label runat="server" ID="prt_allergy"/>
                                         </div>
 
-                                        <div>
-                                            <webUI:PrtRowS1 FontBold="true" Order="3." Title="Trạng thái tinh thần" SubTitle="Mental status" runat="server" />
-                                        </div>
+                                        <webUI:PrtRowS1 FontBold="true" Order="3." Title="Trạng thái tinh thần" SubTitle="Mental status" runat="server" />
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                            <webUI:PrtRowS1 FontBold="true" FixedLeft="30" FixedWidth="152" Title="Đáp ứng phù hợp" SubTitle="Appropriate response" runat="server" />
+                                            <webUI:PrtRowS1 FixedLeft="30" FixedWidth="152" Title="Đáp ứng phù hợp" SubTitle="Appropriate response" runat="server" />
                                             <asp:Label runat="server" ID="prt_mental_status" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                            <webUI:PrtRowS1 FontBold="true" Order="4." FixedWidth="152" Title="Thang điểm đau:" SubTitle="Pain Score"  runat="server" />
-                                            <asp:Label CssClass="d-grid" runat="server" ID="prt_paint_score_code" />
-                                        </div>
+                                        <webUI:PrtRowS1 FontBold="true" Order="4." FixedWidth="152" Title="Thang điểm đau:" SubTitle="Pain Score" ID="prt_paint_score_code" runat="server" />
 
-                                        <div class="text-center mb-2">
+                                        <div class="text-center">
                                             <img src="../images/pain_score.png" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                            <webUI:PrtRowS1 FontBold="true" Order="5." FixedWidth="235" Title="Tầm soát nguy cơ té ngã:" SubTitle="Fall Risk Morse Scale" runat="server" />
-                                            <asp:Label CssClass="d-grid" runat="server" ID="prt_fall_risk" />
-                                        </div>
+                                        <webUI:PrtRowS1 FontBold="true" Order="5." FixedWidth="235" Title="Tầm soát nguy cơ té ngã:" SubTitle="Fall Risk Morse Scale" Value="Không có nguy cơ/ No risk" runat="server" ID="prt_fall_risk" />
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                            <webUI:PrtRowS1 FontBold="true" Order="6." FixedWidth="235" Title="Đánh giá tình trạng dinh dưỡng:" SubTitle="Nutritional Status Screening" runat="server" />
-                                            <asp:Label CssClass="d-grid" runat="server" ID="prt_nutrition_status_code" />
-                                        </div>
-                                        
-                                        <div>
-                                            <webUI:PrtRowS1 FontBold="true" Order="III." Title="ĐÁNH GIÁ CÁC YẾU TỐ XÃ HỘI CỦA NGƯỜI BỆNH(DUY NHẤT CHO LẦN KHÁM ĐẦU TIÊN):" SubTitle="SOCIAL FACTORS ASSESSMENT(ONLY FOR THE FIRST VISIT)" runat="server" />
-                                        </div>
-                                            
+                                        <webUI:PrtRowS1 FontBold="true" Order="6." FixedWidth="235" Title="Đánh giá tình trạng dinh dưỡng:" SubTitle="Nutritional Status Screening" Value="Không ghi nhận/ N/A" ID="prt_nutrition_status_code" runat="server" />
+
+                                        <webUI:PrtRowS1 FontBold="true" Order="III." Title="ĐÁNH GIÁ CÁC YẾU TỐ XÃ HỘI CỦA NGƯỜI BỆNH(DUY NHẤT CHO LẦN KHÁM ĐẦU TIÊN):" SubTitle="SOCIAL FACTORS ASSESSMENT(ONLY FOR THE FIRST VISIT)" runat="server" />
+
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FontBold="true" FixedLeft="30" FixedWidth="152" Title="Tình trạng sinh sống:" SubTitle="Housing" runat="server" />
+                                            
                                             <asp:Label CssClass="d-grid" runat="server" ID="prt_housing" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                            <webUI:PrtRowS1 FontBold="true" Order="IV." FixedWidth="152" Title="MỨC ĐỘ ƯU TIÊN:" SubTitle="PRIORITIZATION" runat="server" />
-                                            <asp:Label runat="server" ID="prt_prioritization_code" />
-                                        </div>
+                                        <webUI:PrtRowS1 FontBold="true" Order="IV." FixedWidth="152" ID="prt_prioritization_code" Title="MỨC ĐỘ ƯU TIÊN:" SubTitle="PRIORITIZATION" Value="Có thể chờ khám trong khoảng thời gian xác định" runat="server" />
 
-                                        <div class="d-grid mt-4" style="grid-template-columns: 1fr auto">
+                                        <div class="d-grid" style="grid-template-columns: 1fr auto">
                                             <div></div>
                                             <div class="text-center">
-                                                <div>Ngày/ Date: <asp:Label runat="server" ID="prt_signature_date" /></div>
+                                                <asp:Label runat="server" ID="prt_signature_date" />
                                                 <div><span class="font-bold">ĐIỀU DƯỠNG ĐÁNH GIÁ</span></div>
-                                                <div style="margin-bottom: 100px;">Assessment done by Nurse</div>
+                                                <div style="margin-bottom: 80px;">Assessment done by Nurse</div>
+                                                <asp:Label runat="server" ID="prt_signature_name" />
                                             </div>
                                         </div>
-
                                     </div>
                                 </td>
                             </tr>
@@ -363,7 +349,7 @@
                                                     <asp:Label runat="server" ID="lbl_vs_spo2"/>
                                                     <div class="form-group d-inline-block" runat="server" id="vs_spo2_wrapper">
                                                         <input  id="txt_vs_spo2"  data-type="number" style="width: 160px" runat="server" class="form-control text-right" />
-                                                        <span class="append">cm</span>
+                                                        <span class="append">%</span>
                                                     </div>
                                                 </div>
                                             </div>

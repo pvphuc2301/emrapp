@@ -53,7 +53,7 @@ namespace EMR.Other
                 GridDataItem item = (e.Item as GridDataItem);
                 string pvid = item.GetDataKeyValue("patient_visit_id").ToString();
                 
-                string visitType = item.GetDataKeyValue("visit_type_rcd").ToString();
+                string visitType = item.GetDataKeyValue("visit_type_group_rcd").ToString();
                 string visible_id = Request.QueryString["vpid"];
                 string visitCode = "";
                 string visitDate = "";
@@ -80,6 +80,7 @@ namespace EMR.Other
 
         private void AddForm(string pvid, string visitType)
         {
+            if(visitType != "OPD") { visitType = "IPD"; }
             string apiStr = "api/emr/list-form/" + pvid + "/" + visitType;
 
             dynamic response = WebHelpers.GetAPI(apiStr);

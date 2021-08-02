@@ -30,6 +30,19 @@
         canvas {
             border: 2px solid #000;
         }
+
+        @media print {
+                 #scrollableDiv{
+                  width: 100%;
+                  height: 100%;
+                 }
+                   .visible-print{
+                     display: block;
+                     width: auto;
+                     height: auto;
+                     overflow: visible;  
+                    }
+               }
     </style>
 </head>
 <body>
@@ -72,12 +85,12 @@
             </Windows>
         </telerik:RadWindowManager>
 
-                <div class="cssclsNoPrint">
-                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd; border-radius: 0;">
+                <div class="cssclsNoPrint1">
+                    <ul class="breadcrumb cssclsNoPrint" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                       <li>Inpatient Initial Nursing Assessment</li>
                     </ul>
-                    <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
+                    <div id="print_content" style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
                         <asp:HiddenField runat="server" ID="DataObj" />
                         <asp:Panel runat="server" ID="messagePlaceHolder">
                             <div class="card" runat="server" id="amendReasonWraper">
@@ -100,7 +113,7 @@
 
                         <webUI:PatientInfo runat="server" ID="PatientInfo2" />
 
-                        <div class="row">
+                        <div class="row visible-print" >
                             <div class="col-lg-12">
                                 <div class="card mt-2">
                                     <div class="card-header">
@@ -111,7 +124,7 @@
                                     <div class="card-body collapse show" id="collapseOne">
                                         <div class="form-body">
 
-                                            <div class="row">
+                                            <div class="row cssclsNoPrint">
                                                 <div class="col-md-12">
                                                     <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
                                                         <telerik:RadLabel runat="server" ID="RadLabel2">
@@ -2058,10 +2071,10 @@ applicable for children and pregnant</span>)
 
                                                 <div class="col-md-12 mb-2 gt-2-a">
                                                     <label></label>
-                                                    <img src="" id="pain_annotation_img" runat="server" style="display: none;" />
+                                                    <img src="" id="pain_annotation_img" runat="server"  class="cssclsNoScreen" />
                                                         <asp:HiddenField runat="server" ID="pain_annotation_base64" />
 
-                                                        <div style="width: 500px;">
+                                                        <div class="cssclsNoPrint"  style="width: 500px;">
                                                             <div id="controllers">
                                                                 <span runat="server" class="controller btn btn-secondary" id="pain_annotation_undo">undo</span>
                                                                 <span runat="server" class="controller btn btn-secondary" id="pain_annotation_redo">redo</span>
@@ -2260,10 +2273,10 @@ applicable for children and pregnant</span>)
 
 
                                                 <div class="col-md-12 mb-2">
-                                                    <img src="" id="skin_anno_data_img" runat="server" style="display: none;" />
+                                                    <img class="cssclsNoScreen" src="" id="skin_anno_data_img" runat="server" />
                                                         <asp:HiddenField runat="server" ID="skin_anno_data_base64" />
 
-                                                        <div style="width: 500px;">
+                                                        <div class="cssclsNoPrint"  style="width: 500px;">
                                                             <div id="controllers1">
                                                                 <span runat="server" class="controller btn btn-secondary" id="skin_anno_data_undo">undo</span>
                                                                 <span runat="server" class="controller btn btn-secondary" id="skin_anno_data_redo">redo</span>
@@ -3398,7 +3411,7 @@ applicable for children and pregnant</span>)
                                                 </div>
                                             </div>
 
-                                            <div class="row mb-2">
+                                            <div class="row mb-2 cssclsNoPrint">
                                                 <div class="col-md-12">
                                                     <div class="form-actions">
                                                         <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
@@ -3409,7 +3422,7 @@ applicable for children and pregnant</span>)
 
                                                         <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                        <asp:LinkButton OnClientClick="window.print(); return false;" runat="server" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                        <asp:LinkButton OnClientClick="printDiv(); return false;" runat="server" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                         <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                                     </div>
@@ -3766,6 +3779,17 @@ applicable for children and pregnant</span>)
            //console.log(row);
         }
 
+
+        function printDiv() {
+            var printContents = document.getElementById("print_content").innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
     </script>
 
 </body>

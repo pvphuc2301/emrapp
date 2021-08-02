@@ -167,7 +167,7 @@ namespace EMR
                 
                 lbl_specific_education_required.Text = WebHelpers.FormatString(pomr.specific_education_required);
 
-                lbl_date_next_appointment.Text = WebHelpers.FormatString(WebHelpers.GetBool(pomr.bool_next_appointment, "Calendar<br>" + WebHelpers.FormatDateTime(pomr.date_next_appointment), "Text<br>" + pomr.txt_next_appointment));
+                lbl_date_next_appointment.Text = WebHelpers.FormatString(WebHelpers.GetBool(pomr.bool_next_appointment, "Calendar<br>" + WebHelpers.FormatDateTime(pomr.date_next_appointment), "Text<br>" + WebHelpers.FormatString(pomr.txt_next_appointment)));
 
             }
             catch (Exception ex)
@@ -181,7 +181,7 @@ namespace EMR
                 Patient patient = Patient.Instance();
                 PatientVisit patientVisit = PatientVisit.Instance();
                 prt_fullname.Text = patient.GetFullName() + " " + patient.title_l;
-                prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth) + " | " + patient.GetGender();
+                prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth) + $" | ({ patient.GetGender() })";
                 prt_vpid.Text =  patient.visible_patient_id;
                 WebHelpers.gen_BarCode(patient.visible_patient_id, BarCode);
                 prt_day_of_visit.Text = WebHelpers.FormatDateTime(patientVisit.actual_visit_date_time);
@@ -256,7 +256,7 @@ namespace EMR
                     prt_next_appointment.Text = pomr.bool_next_appointment ? WebHelpers.FormatDateTime(pomr.date_next_appointment) : pomr.txt_next_appointment;
                 }
 
-                prt_signature_doctor.Text = (string)Session["signature_doctor"];
+                prt_signature_doctor.Text = (string)Session["signature_name"];
             }
             catch (Exception ex)
             {
@@ -510,17 +510,17 @@ namespace EMR
 
             if (dt.Rows.Count == 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("created_name_l");
+                last_updated_doctor = dt.Rows[0].Field<string>("created_name_e");
                 last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
             }
             else if (dt.Rows.Count > 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_l");
-                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
+                last_updated_doctor = dt.Rows[0].Field<string>("submited_name_e");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("submited_date_time");
             }
 
-            Session["signature_doctor"] = last_updated_doctor;
-            RadLabel1.Text = $"Last updated by {last_updated_doctor} on " + WebHelpers.FormatDateTime(last_updated_date_time, "dd-MM-yyyy HH:mm");
+            Session["signature_name"] = last_updated_doctor;
+            RadLabel1.Text = $"Last updated by {last_updated_doctor} on " + WebHelpers.FormatDateTime(last_updated_date_time, "dd-MMM-yyyy HH:mm");
             RadGrid1.DataBind();
         }
 

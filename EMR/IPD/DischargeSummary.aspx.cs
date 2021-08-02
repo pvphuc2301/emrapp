@@ -39,8 +39,8 @@ namespace EMR
             try
             {
                 lbl_disc_reason_desc.Text = WebHelpers.FormatString(diss.disc_reason_desc);
-                lbl_date_of_hospital.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(diss.date_of_hospital));
-                lbl_date_of_discharge.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(diss.date_of_discharge));
+                lbl_date_of_hospital.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(diss.date_of_hospital, "dd-MMM-yyyy"));
+                lbl_date_of_discharge.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(diss.date_of_discharge, "dd-MMM-yyyy"));
                 lbl_admission_reason.Text = WebHelpers.FormatString(diss.admission_reason);
                 lbl_icd10_diagnosis.Text = WebHelpers.FormatString(diss.icd10_diagnosis);
                 lbl_associated_diagnosis.Text = WebHelpers.FormatString(diss.associated_diagnosis);
@@ -56,13 +56,13 @@ namespace EMR
                 lbl_disc_medication.Text = WebHelpers.FormatString(diss.disc_medication);
                 lbl_follow_up_instruc.Text = WebHelpers.FormatString(diss.follow_up_instruc);
                 lbl_special_diet.Text = WebHelpers.FormatString(diss.special_diet);
-                lbl_next_consult_date.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(diss.next_consult_date));
+                lbl_next_consult_date.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(diss.next_consult_date, "dd-MMM-yyyy"));
                 lbl_next_consult_doctor.Text = WebHelpers.FormatString(diss.next_consult_doctor);
                 lbl_dama.Text = WebHelpers.FormatString(diss.dama);
                 lbl_dama_note.Text = WebHelpers.FormatString(diss.dama_note);
                 lbl_transfer_reason.Text = WebHelpers.FormatString(diss.transfer_reason);
                 lbl_trans_to_hospital.Text = WebHelpers.FormatString(diss.trans_to_hospital);
-                lbl_signed_date.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(diss.signed_date));
+                lbl_signed_date.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(diss.signed_date, "dd-MMM-yyyy"));
                 lbl_signed_doctor.Text = WebHelpers.FormatString(diss.signed_doctor);
 
                 LoadDischargeReason(diss.disc_reason_code);
@@ -205,6 +205,7 @@ namespace EMR
                 }
 
                 DateTime signature_date = (DateTime)Session["signature_date"];
+
                 prt_signature_date.Text = signature_date.ToString("dd-MM-yyyy");
                 prt_signature_doctor.Text = (string)Session["signature_doctor"];
 
@@ -339,13 +340,13 @@ namespace EMR
 
             if (dt.Rows.Count == 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("created_name_l");
+                last_updated_doctor = dt.Rows[0].Field<string>("created_name_e");
                 last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
             }
             else if (dt.Rows.Count > 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_l");
-                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
+                last_updated_doctor = dt.Rows[0].Field<string>("submited_name_e");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("submited_date_time");
             }
 
             Session["signature_date"] = last_updated_date_time;

@@ -307,7 +307,7 @@ namespace EMR
 
                 prt_next_appointment.Text = omr.next_appointment;
 
-                prt_signature_doctor.Text = (string)Session["signature_doctor"];
+                prt_signature_doctor.Text = (string)Session["signature_name"];
             }
             catch(Exception ex)
             {
@@ -554,23 +554,23 @@ namespace EMR
 
         private void loadRadGridHistoryLog()
         {
-            DataTable dt = Oina.Logs(Request.QueryString["docId"]);
+            DataTable dt = Omr.Logs(Request.QueryString["docId"]);
             RadGrid1.DataSource = dt;
             DateTime last_updated_date_time = new DateTime();
             string last_updated_doctor = "";
 
             if (dt.Rows.Count == 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("created_name_l");
+                last_updated_doctor = dt.Rows[0].Field<string>("created_name_e");
                 last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
             }
             else if (dt.Rows.Count > 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_l");
-                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
+                last_updated_doctor = dt.Rows[0].Field<string>("submited_name_e");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("submited_date_time");
             }
 
-            Session["signature_doctor"] = last_updated_doctor;
+            Session["signature_name"] = last_updated_doctor;
             RadLabel1.Text = $"Last updated by {last_updated_doctor} on " + WebHelpers.FormatDateTime(last_updated_date_time, "dd-MM-yyyy HH:mm");
             RadGrid1.DataBind();
         }

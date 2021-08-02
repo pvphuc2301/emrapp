@@ -154,7 +154,7 @@ namespace EMR.OPD
 
                 prt_vpid.Text = patient.visible_patient_id;
 
-                prt_fullname.Text = patient.GetFullName();
+                prt_fullname.Text = patient.GetFullName() + $" ({patient.GetTitle()})";
                 prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth);
                 prt_gender.Text = patient.gender_l;
                 prt_day_of_visit.Text = WebHelpers.FormatDateTime(patientVisit.actual_visit_date_time);
@@ -182,7 +182,7 @@ namespace EMR.OPD
                 prt_vs_weight.Text = mrfv.vs_weight;
                 prt_vs_height.Text = mrfv.vs_height;
                 prt_vs_BMI.Text = mrfv.vs_BMI;
-                prt_pulse.Text = mrfv.vs_pulse;
+                prt_pulse.Text = mrfv.vs_heart_rate;
                 prt_vs_respiratory_rate.Text = mrfv.vs_respiratory_rate;
                 prt_vs_blood_pressure.Text = mrfv.vs_blood_pressure;
                 prt_vs_spO2.Text = mrfv.vs_SpO2;
@@ -426,13 +426,13 @@ namespace EMR.OPD
 
             if (dt.Rows.Count == 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("created_name_l");
+                last_updated_doctor = dt.Rows[0].Field<string>("created_name_e");
                 last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
             }
             else if (dt.Rows.Count > 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_l");
-                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
+                last_updated_doctor = dt.Rows[0].Field<string>("submited_name_e");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("submited_date_time");
             }
 
             Session["signature_date"] = last_updated_date_time;

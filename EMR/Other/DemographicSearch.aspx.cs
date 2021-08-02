@@ -222,10 +222,10 @@ namespace EMR.Other
             string TableName = RadGridHC.MasterTableView.Name;
             string query = GetQueryHC(specialty_id);
 
-            if (!string.IsNullOrEmpty(query))
-            {
-                RadGridHC.DataSource = GetDataTable(query);
-            }
+            //if (!string.IsNullOrEmpty(query))
+            //{
+            //    RadGridHC.DataSource = GetDataTable(query);
+            //}
         }
         public string GetQueryHC(string varType)
         {

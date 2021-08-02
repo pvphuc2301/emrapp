@@ -152,7 +152,7 @@
                                     <div class="col-md-12">
                                         <div class="table-responsive">
                                             <telerik:RadGrid OnNeedDataSource="RadGrid1_NeedDataSource" ItemStyle-Height="32px" HeaderStyle-Height="32px" Width="100%" OnItemCommand="RadGrid1_ItemCommand" OnItemDataBound="RadGrid1_ItemDataBound" CssClass="table" BorderWidth="0" AutoGenerateColumns="false" ID="RadGrid1" runat="server" AllowPaging="True">
-                                                <MasterTableView AutoGenerateColumns="False" DataKeyNames="patient_visit_id, visit_type_rcd, closure_date_time, allow_date_time">
+                                                <MasterTableView AutoGenerateColumns="False" DataKeyNames="patient_visit_id, visit_type_group_rcd, visit_type_rcd, closure_date_time, allow_date_time">
                                                     <Columns>
                                                         <telerik:GridTemplateColumn ItemStyle-Width="100px">
                                                             <HeaderTemplate>

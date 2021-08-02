@@ -192,7 +192,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_paint_score_code;
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_paint_score_code;
 
         /// <summary>
         /// prt_fall_risk control.
@@ -201,7 +201,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_fall_risk;
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_fall_risk;
 
         /// <summary>
         /// prt_nutrition_status_code control.
@@ -210,7 +210,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_nutrition_status_code;
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_nutrition_status_code;
 
         /// <summary>
         /// prt_housing control.
@@ -228,7 +228,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_prioritization_code;
+        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 prt_prioritization_code;
 
         /// <summary>
         /// prt_signature_date control.
@@ -238,6 +238,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label prt_signature_date;
+
+        /// <summary>
+        /// prt_signature_name control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_signature_name;
 
         /// <summary>
         /// RadWindowManager control.

@@ -681,31 +681,31 @@ namespace EMR.ER
         protected global::System.Web.UI.WebControls.Label prt_time_of_leaving_emer_a;
 
         /// <summary>
-        /// lbl_patient_discharge_IMP control.
+        /// prt_patient_discharge_IMP control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_patient_discharge_IMP;
+        protected global::System.Web.UI.WebControls.Label prt_patient_discharge_IMP;
 
         /// <summary>
-        /// lbl_patient_discharge_UNC control.
+        /// prt_patient_discharge_UNC control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_patient_discharge_UNC;
+        protected global::System.Web.UI.WebControls.Label prt_patient_discharge_UNC;
 
         /// <summary>
-        /// lbl_patient_discharge_UNS control.
+        /// prt_patient_discharge_UNS control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_patient_discharge_UNS;
+        protected global::System.Web.UI.WebControls.Label prt_patient_discharge_UNS;
 
         /// <summary>
         /// prt_patient_discharge control.

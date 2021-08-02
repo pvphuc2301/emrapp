@@ -26,7 +26,7 @@ namespace EMR.UserControls
                     lblLastName.InnerText = patient.last_name_l;
                     lblGender.InnerText = patient.gender_l;
                     lblDoB.InnerText = WebHelpers.FormatDateTime(patient.date_of_birth) + " (" + DataHelpers.CalculateAge(patient.date_of_birth) + "t)";
-                    lblPatientAddress.InnerText = patient.address_line_l;
+                    lblPatientAddress.InnerText = patient.GetAddress();
                     lblContactPerson.InnerText = patient.contact_name_l;
                 }
                 else
@@ -35,7 +35,7 @@ namespace EMR.UserControls
                     lblLastName.InnerText = patient.last_name_e;
                     lblGender.InnerText = patient.gender_e;
                     lblDoB.InnerText = WebHelpers.FormatDateTime(patient.date_of_birth) + " (" + DataHelpers.CalculateAge(patient.date_of_birth) + "y)";
-                    lblPatientAddress.InnerText = patient.address_line_e;
+                    lblPatientAddress.InnerText = patient.GetAddress();
                     lblContactPerson.InnerText = patient.contact_name_e;
                 }
             }

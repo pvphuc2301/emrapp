@@ -37,7 +37,7 @@
                         <thead class="report-header">
                             <tr>
                                 <th class="report-header-cell">
-                                    <div class="header-info" style="display: grid; grid-template-columns: 250px 1fr 150px">
+                                    <div class="header-info" style="padding-top: 120px; display: grid; grid-template-columns: 250px 1fr 150px">
                                         <div class="text-center align-top" style="line-height: 16.6667px; height: 90px; background: blue;">
                                             <div>SỞ Y TẾ TP.HCM</div>
                                             <div class="text-primary">HCMC DOH</div>

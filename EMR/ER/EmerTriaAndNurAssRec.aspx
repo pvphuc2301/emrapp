@@ -36,7 +36,7 @@
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <div class="cssclsNoScreen">
+                <%--<div class="cssclsNoScreen" style="display: none !important;">
                     <table class="report-container">
                         <thead class="report-header">
                             <tr>
@@ -458,7 +458,7 @@
                             </tr>
                         </tfoot>
                     </table>
-                </div>
+                </div>--%>
 
                 <telerik:RadWindowManager RenderMode="Lightweight" EnableShadow="true" Behaviors="Close, Move, Resize,Maximize" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
             <Windows>
@@ -491,12 +491,12 @@
             </Windows>
         </telerik:RadWindowManager>
 
-                <div class="cssclsNoPrint">
-                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0; border-bottom: 1px solid #ddd; border-radius: 0;">
+                <div class="cssclsNoPrint1">
+                    <ul class="breadcrumb cssclsNoPrint" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0; border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                       <li>Emergency Triage And Nursing Assessment Record</li>
                     </ul>
-                    <div class="scroll-effect" style="overflow: scroll; height: calc(100vh - 43px); overflow: hidden;">
+                    <div  id="print_content" class="scroll-effect" style="overflow: scroll; height: calc(100vh - 43px); overflow: hidden;">
                         <asp:HiddenField runat="server" ID="DataObj" />
                         <asp:Panel runat="server" ID="messagePlaceHolder">
                             <div class="card" runat="server" id="amendReasonWraper">
@@ -521,6 +521,7 @@
                                 runat="server" ValidationGroup="Group1"
                                 HeaderText="Please complete the highlighted field(s)." />
                         </asp:Panel>
+
                         <uc1:PatientInfo runat="server" ID="PatientInfo1" />
 
                         <div class="row">
@@ -533,7 +534,7 @@
                                     <div class="card-body collapse show" id="collapseOne">
                                         <div class="form-body">
 
-                                            <div class="row">
+                                            <div class="row cssclsNoPrint">
                                                 <div class="col-md-12">
                                                     <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
                                                         <telerik:RadLabel runat="server" ID="RadLabel2">
@@ -897,10 +898,10 @@
                                                                 </Tools>
                                                             </telerik:RadImageEditor>
                                                         </telerik:RadAjaxPanel>--%>
-                                                        <img src="" id="image1" runat="server" style="display: none;" />
+                                                        <img src="" id="image1" runat="server" class="cssclsNoScreen" />
                                                         <asp:HiddenField runat="server" ID="skin_anno_data_base64" />
 
-                                                        <div style="width: 500px;">
+                                                        <div class="cssclsNoPrint" style="width: 500px;">
                                                             <div id="controllers">
                                                                 <span runat="server" class="controller btn btn-secondary" id="undo">undo</span>
                                                                 <span runat="server" class="controller btn btn-secondary" id="redo">redo</span>
@@ -1828,7 +1829,7 @@
                                                 </div>
                                             </fieldset>
 
-                                            <div class="row mb-2">
+                                            <div class="row mb-2 cssclsNoPrint">
                                                 <div class="col-md-12">
                                                     <div class="form-actions">
                                                         <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
@@ -1839,7 +1840,7 @@
 
                                                         <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                        <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                        <asp:LinkButton runat="server" OnClientClick="printDiv(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                         <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                                     </div>
@@ -1890,7 +1891,6 @@
                 canvas.width = 500;
                 ctx.strokeStyle = "red";
                 let imageTemp = document.getElementById("image1");
-
 
                 let img1 = new Image();
 
@@ -2161,7 +2161,18 @@
            button.click();
 
            //console.log(row);
-       }
+        }
+
+        function printDiv() {
+            var printContents = document.getElementById("print_content").innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+
+            window.print();
+
+            document.body.innerHTML = originalContents;
+        }
     </script>
 
     

@@ -270,12 +270,12 @@ namespace EMR.IPD
 
             if (dt.Rows.Count == 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("created_name_l");
+                last_updated_doctor = dt.Rows[0].Field<string>("created_name_e");
                 last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
             }
             else if (dt.Rows.Count > 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_l");
+                last_updated_doctor = dt.Rows[0].Field<string>("submited_name_e");
                 last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
             }
 

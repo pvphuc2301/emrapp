@@ -72,7 +72,7 @@ namespace EMR
                 vs_blood_pressure.Text = iima.vs_blood_pressure;
                 vs_spo2.Text = iima.vs_spO2;
                 vs_pulse.Text = iima.vs_pulse;
-                txt_physical_exam.Value = iima.physical_exam;
+                txt_physical_exam.Value = DataHelpers.FormatPhysicalExamination(iima.physical_exam);
 
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), $"rad_psy_consul_required_" + iima.psy_consul_required);
                 
@@ -262,7 +262,7 @@ namespace EMR
                 prt_vs_blood_pressure.Text = iima.vs_blood_pressure;
                 prt_vs_spO2.Text = iima.vs_spO2;
                 //prt_vs_pulse.Text = iima.vs_pulse;
-                prt_physical_exam.Text = iima.physical_exam;
+                prt_physical_exam.Text = DataHelpers.FormatPhysicalExamination(iima.physical_exam);
                 if (iima.psy_consul_required != null)
                 {
                     if (iima.psy_consul_required = true)
@@ -446,13 +446,13 @@ LoadVitalSigns(vs);
 
             if (dt.Rows.Count == 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("created_name_l");
+                last_updated_doctor = dt.Rows[0].Field<string>("created_name_e");
                 last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
             }
             else if (dt.Rows.Count > 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_l");
-                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
+                last_updated_doctor = dt.Rows[0].Field<string>("submited_name_e");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("submited_date_time");
             }
 
             Session["signature_doctor"] = last_updated_doctor;

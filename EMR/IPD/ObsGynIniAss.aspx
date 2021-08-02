@@ -25,11 +25,11 @@
     <link href="../styles/sweetalert.min.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
     <style type="text/css">
-        table { page-break-after:auto }
+        /*table { page-break-after:auto }
         tr    { page-break-inside:avoid; page-break-after:auto }
         td    { page-break-inside:avoid; page-break-after:auto }
         thead { display:table-header-group }
-        tfoot { display:table-footer-group }
+        tfoot { display:table-footer-group }*/
     </style>
 </head>
 <body>
@@ -287,7 +287,7 @@
                                             <asp:Label Style="font-weight: bold;">4. Tiền căn sản khoa/ Obstetric history: </asp:Label>
                                         </div>
                                     </div>
-                                    <div class="row mb-2 " >
+                                    <div class="row mb-2 " style="page-break-inside: avoid" >
                                         <div class="col-md-12 " style="font-size: 14.5px; font-family: Tahoma">
                                             <asp:UpdatePanel ID="updatePanel4" runat="server" UpdateMode="Always">
                                                 <ContentTemplate>
@@ -300,7 +300,7 @@
                                                         <Columns>
                                                             <asp:TemplateField>
                                                                 <HeaderTemplate>
-                                                                    <div class="w-s pt-2 pb-2" style="font-weight: bold; margin: 5px">
+                                                                    <div class="w-s pt-2 pb-2" style=" font-weight: bold; margin: 5px">
                                                                         Lần mang thai thứ/ <span class="text-primary">gravidity</span>
                                                                     </div>
                                                                 </HeaderTemplate>

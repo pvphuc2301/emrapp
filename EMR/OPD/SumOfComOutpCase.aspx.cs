@@ -123,12 +123,6 @@ namespace EMR
                     currentLog.Visible = false;
                 }
 
-                if ((string)Session["Transaction"] == "Add" || (string)Session["Transaction"] == "Complete")
-                {
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), ScriptKey.SHOW_POPUP, "setTimeout(()=> { RefreshClick() },0);", true);
-
-                    Session["Transaction"] = string.Empty;
-                }
                 loadRadGridHistoryLog();
                 
 
@@ -160,16 +154,23 @@ namespace EMR
         {
             DataTable dt = Scoc.Logs(Request.QueryString["docId"]);
             RadGrid1.DataSource = dt;
-            if (dt.Rows.Count > 1)
+            DateTime last_updated_date_time = new DateTime();
+            string last_updated_doctor = "";
+
+            if (dt.Rows.Count == 1)
             {
-                Session["signature_doctor"] = dt.Rows[0].Field<string>("modified_name_l");
-                RadLabel1.Text = $"Last updated by {dt.Rows[0].Field<string>("modified_name_l")} on " + WebHelpers.FormatDateTime(dt.Rows[0].Field<DateTime>("modified_date_time"), "dd-MM-yyyy HH:mm");
+                last_updated_doctor = dt.Rows[0].Field<string>("created_name_e");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
             }
-            else
+            else if (dt.Rows.Count > 1)
             {
-                Session["signature_doctor"] = dt.Rows[0].Field<string>("created_name_l");
-                RadLabel1.Text = $"Last updated by {dt.Rows[0].Field<string>("created_name_l")} on " + WebHelpers.FormatDateTime(dt.Rows[0].Field<DateTime>("created_date_time"), "dd-MM-yyyy HH:mm");
+                last_updated_doctor = dt.Rows[0].Field<string>("submited_name_e");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("submited_date_time");
             }
+
+            //Session["signature_date"] = last_updated_date_time;
+            //Session["signature_name"] = last_updated_doctor;
+            RadLabel1.Text = $"Last updated by {last_updated_doctor} on " + WebHelpers.FormatDateTime(last_updated_date_time, "dd-MM-yyyy HH:mm");
             RadGrid1.DataBind();
         }
 

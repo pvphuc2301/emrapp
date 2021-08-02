@@ -236,7 +236,7 @@ namespace EMR
 
                 skin_anno_data_base64.Value = JsonConvert.DeserializeObject(ena.skin_anno_data).dataURI;
 
-                lbl_triage_time.Text = WebHelpers.FormatDateTime(ena.triage_time, "dd-MM-yyyy HH:mm");
+                lbl_triage_time.Text = WebHelpers.FormatDateTime(ena.triage_time, "dd-MMM-yyyy HH:mm");
 
                 lbl_triage_area.Text = WebHelpers.FormatString(ena.triage_area);
 
@@ -304,30 +304,30 @@ namespace EMR
 
                 lbl_btc_cultural.Text = WebHelpers.FormatString(WebHelpers.GetBool(ena.btc_cultural, $"Có, Giải thích/Yes Explain {WebHelpers.FormatString(ena.btc_cultural_note)}"));
 
-                lbl_general_appearance.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(ena.general_appearance, "cde"));
+                lbl_general_appearance.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(ena.general_appearance));
                 lbl_eye.Text = WebHelpers.FormatString(ena.eye);
                 lbl_voice.Text = WebHelpers.FormatString(ena.voice);
                 lbl_motion.Text = WebHelpers.FormatString(ena.motion);
 
-                WebHelpers.VisibleControl(false, cb_alert_true, cb_coma_true, cb_others_true);
+                cb_alert_true.Disabled = cb_coma_true.Disabled = cb_others_true.Disabled = true;
                 cb_alert_true.Checked = ena.alert;
                 cb_coma_true.Checked = ena.coma;
                 cb_others_true.Checked = ena.others;
                 lbl_str_others.Text = WebHelpers.FormatString(ena.str_others);
-
                 //Cardiovascular
-                WebHelpers.VisibleControl(false, cb_rhythm_regular_true, cb_rhythm_inregular_true, cb_rhythm_others_true);
+                cb_rhythm_regular_true.Disabled = cb_rhythm_inregular_true.Disabled = cb_rhythm_others_true.Disabled = true;
                 cb_rhythm_regular_true.Checked = ena.rhythm_regular;
                 cb_rhythm_inregular_true.Checked = ena.rhythm_inregular;
                 cb_rhythm_others_true.Checked = ena.rhythm_others;
                 lbl_rhythm_str_others.Text = ena.rhythm_str_others;
                 //Psychosocial
-                WebHelpers.VisibleControl(false, cb_psychosocial_true, cb_psychosocial_others_true);
+                cb_psychosocial_true.Disabled = cb_psychosocial_others_true.Disabled = true;
                 cb_psychosocial_true.Checked = ena.psychosocial;
                 cb_psychosocial_others_true.Checked = ena.psychosocial_others;
                 if (cb_psychosocial_others_true.Checked) { lbl_psychosocial_str_others.Text = WebHelpers.FormatString(ena.psychosocial_str_others); }
                 //Other systems
-                WebHelpers.VisibleControl(false, cb_other_systems_normal_true, cb_other_systems_abnormal_true);
+                
+                cb_other_systems_normal_true.Disabled = cb_other_systems_abnormal_true.Disabled = true;
                 cb_other_systems_normal_true.Checked = ena.other_systems_normal;
                 cb_other_systems_abnormal_true.Checked = ena.other_systems_abnormal;
                 if (cb_other_systems_abnormal_true.Checked) { lbl_others_systems_str.Text = ena.others_systems_str; }
@@ -354,19 +354,19 @@ namespace EMR
                 lbl_para.Text = WebHelpers.FormatString(ena.para);
                 lbl_abortions.Text = WebHelpers.FormatString(ena.abortions);
                 //Intervention Procedure
-                lbl_blood_glucose_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.blood_glucose_date_time));
+                lbl_blood_glucose_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.blood_glucose_date_time, "dd-MMM-yyyy HH:mm"));
                 lbl_blood_glucose_note.Text = WebHelpers.FormatString(ena.blood_glucose_note);
 
-                lbl_ecg_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.ecg_date_time));
+                lbl_ecg_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.ecg_date_time, "dd-MMM-yyyy HH:mm"));
                 lbl_ecg_note.Text = WebHelpers.FormatString(ena.ecg_note);
 
-                lbl_urine_cath_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.urine_cath_date_time));
+                lbl_urine_cath_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.urine_cath_date_time, "dd-MMM-yyyy HH:mm"));
                 lbl_urine_cath_note.Text = WebHelpers.FormatString(ena.urine_cath_note);
 
-                lbl_splint_cast_dressing_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.splint_cast_dressing_date_time));
+                lbl_splint_cast_dressing_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.splint_cast_dressing_date_time, "dd-MMM-yyyy HH:mm"));
                 lbl_splint_cast_dressing_note.Text = WebHelpers.FormatString(ena.splint_cast_dressing_note);
 
-                lbl_procedure_other_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.procedure_other_date_time));
+                lbl_procedure_other_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.procedure_other_date_time, "dd-MMM-yyyy HH:mm"));
                 lbl_procedure_other_note.Text = WebHelpers.FormatString(ena.procedure_other_note);
 
                 //
@@ -378,23 +378,23 @@ namespace EMR
                 WebHelpers.LoadDataGridView(gridDirectMedication, WebHelpers.GetJSONToDataTable(ena.direct_medication), Ena.DIRECT_MEDICATION_COL, btn_gridDirectMedication_add);
 
                 //Discharged
-                lbl_discharge_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.discharge_date_time));
+                lbl_discharge_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.discharge_date_time, "dd-MMM-yyyy HH:mm"));
 
                 lbl_discharge_by.Text = WebHelpers.FormatString(ena.discharge_by);
 
                 lbl_discharge_option.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(ena.discharge_option));
 
-                lbl_admited_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.admited_date_time));
+                lbl_admited_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.admited_date_time, "dd-MMM-yyyy HH:mm"));
 
-                lbl_admited_by.Text = WebHelpers.FormatString(ena.admited_by);
+                lbl_admited_by.Text = "bởi BS/ by Dr." + WebHelpers.FormatString(ena.admited_by);
 
-                lbl_receiving_unit.Text = WebHelpers.FormatString(ena.receiving_unit);
+                lbl_receiving_unit.Text = "Khoa tiếp nhận/ Receiving Unit " + WebHelpers.FormatString(ena.receiving_unit);
 
                 lbl_transfer_to.Text = WebHelpers.FormatString(ena.transfer_to);
 
                 lbl_transfer_by.Text = WebHelpers.FormatString(ena.transfer_by);
 
-                lbl_noticed_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.noticed_time));
+                lbl_noticed_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.noticed_time, "dd-MMM-yyyy HH:mm"));
 
                 //PHIẾU GHI CHÚ ĐIỀU DƯỠNG / NURSING NOTES
                 WebHelpers.LoadDataGridView(grid_NursingNotes, WebHelpers.GetJSONToDataTable(ena.nursing_note), Iina.SKIN_ANNO, btn_grid_NursingNotes_add);
@@ -411,48 +411,48 @@ namespace EMR
                 PatientVisit patientVisit = PatientVisit.Instance();
 
                 //prt_pid.Text = prt_vpid.Text = prt_barcode.Text = patient.visible_patient_id;
-                prtdate.Text = $"Ngày/<span class='text-primary'>Date</span>: {WebHelpers.FormatDateTime(patientVisit.actual_visit_date_time, "dd/MM/yyyy")} Giờ/ <span class='text-primary'>Triage Time</span> {WebHelpers.FormatDateTime(ena.triage_time, "HH")}:{WebHelpers.FormatDateTime(ena.triage_time, "mm")} Khu vực/ <span class='text-primary'>Triage Area</span> #: {ena.triage_area}";
+                //prtdate.Text = $"Ngày/<span class='text-primary'>Date</span>: {WebHelpers.FormatDateTime(patientVisit.actual_visit_date_time, "dd/MM/yyyy")} Giờ/ <span class='text-primary'>Triage Time</span> {WebHelpers.FormatDateTime(ena.triage_time, "HH")}:{WebHelpers.FormatDateTime(ena.triage_time, "mm")} Khu vực/ <span class='text-primary'>Triage Area</span> #: {ena.triage_area}";
                 
-                prt_fullname.Text = "&nbsp;" + patient.GetFullName();
-                prt_dob.Text = "&nbsp;" + WebHelpers.FormatDateTime(patient.date_of_birth, "dd/MM/yyyy");
-                prt_nationality.Text = "&nbsp;" + patient.GetNationality();
+                //prt_fullname.Text = "&nbsp;" + patient.GetFullName();
+                //prt_dob.Text = "&nbsp;" + WebHelpers.FormatDateTime(patient.date_of_birth, "dd/MM/yyyy");
+                //prt_nationality.Text = "&nbsp;" + patient.GetNationality();
 
-                prt_address.Text = "&nbsp;" + patient.GetAddress();
-                prt_contact.Text = "&nbsp;" + patient.getContact();
-                prt_relationship.Text = "&nbsp;" + patient.getRelationship();
-                prt_telephone.Text = "&nbsp;" + patient.contact_phone_number;
-                prt_chieft_complaint.Text = ena.chief_complaint;
-                prt_chieft_complaint_code.Text = WebHelpers.CreateOptions(Ena.TRIAGE_CODE, ena.triage_code, "display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr");
+                //prt_address.Text = "&nbsp;" + patient.GetAddress();
+                //prt_contact.Text = "&nbsp;" + patient.getContact();
+                //prt_relationship.Text = "&nbsp;" + patient.getRelationship();
+                //prt_telephone.Text = "&nbsp;" + patient.contact_phone_number;
+                //prt_chieft_complaint.Text = ena.chief_complaint;
+                //prt_chieft_complaint_code.Text = WebHelpers.CreateOptions(Ena.TRIAGE_CODE, ena.triage_code, "display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr");
 
-                prt_mode_of_arrival.Text = WebHelpers.CreateOptions(Ena.ARRIVAL_MODE_CODE, ena.arrival_mode_code, "display: grid; grid-template-columns: 1fr 1fr 1fr");
+                //prt_mode_of_arrival.Text = WebHelpers.CreateOptions(Ena.ARRIVAL_MODE_CODE, ena.arrival_mode_code, "display: grid; grid-template-columns: 1fr 1fr 1fr");
 
-                prt_past_medical_history.Text = "Tiền căn/ <span class='text-primary'>Past Medical History:</span>" + ena.past_medical_history;
+                //prt_past_medical_history.Text = "Tiền căn/ <span class='text-primary'>Past Medical History:</span>" + ena.past_medical_history;
 
-                prt_vital_signs.Text = $"Dấu sinh hiệu/ <span class='text-primary'>Vital signs</span>: Huyết áp/<span class='text-primary'>BP</span>:{ena.vs_blood_pressure}mmHg Mạch/ <span class='text-primary'>Pulse</span>:{ena.vs_head_circum}lần/phút/bpm Nhiệt độ/<span class='text-primary'>Temp</span>:{ena.vs_temperature}0C (Gồm trẻ em/<span class='text-primary'>Including child aged</span> >= 3 tuổi/<span class='text-primary'>years old</span>) Nhịp thở/<span class='text-primary'>Resp</span>: {ena.vs_respiratory_rate} lần/phút/min. Độ bão hòa oxy/<span class='text-primary'>O2Sat</span>: {ena.vs_spo2}%";
+                //prt_vital_signs.Text = $"Dấu sinh hiệu/ <span class='text-primary'>Vital signs</span>: Huyết áp/<span class='text-primary'>BP</span>:{ena.vs_blood_pressure}mmHg Mạch/ <span class='text-primary'>Pulse</span>:{ena.vs_head_circum}lần/phút/bpm Nhiệt độ/<span class='text-primary'>Temp</span>:{ena.vs_temperature}0C (Gồm trẻ em/<span class='text-primary'>Including child aged</span> >= 3 tuổi/<span class='text-primary'>years old</span>) Nhịp thở/<span class='text-primary'>Resp</span>: {ena.vs_respiratory_rate} lần/phút/min. Độ bão hòa oxy/<span class='text-primary'>O2Sat</span>: {ena.vs_spo2}%";
 
-                prt_loc_avpu.Text = WebHelpers.CreateOptions(Ena.LOC_AVPU_CODE, ena.loc_avpu, "display: grid; grid-template-columns: 1fr 1fr 1fr 1fr");
+                //prt_loc_avpu.Text = WebHelpers.CreateOptions(Ena.LOC_AVPU_CODE, ena.loc_avpu, "display: grid; grid-template-columns: 1fr 1fr 1fr 1fr");
 
-                prt_pain_assess.Text = $"Đánh giá đau/ <span class='text-primary'>Pain assess</span>. Khởi phát/ <span class='text-primary'>Onset</span>{ena.pain_onset}Vị trí/ <span class='text-primary'>Location</span>{ena.pain_location}Kéo dài/<span class='text-primary'>Duration</span>{ena.pain_duration}Hướng lan/Radiation {ena.pain_radiation}";
+                //prt_pain_assess.Text = $"Đánh giá đau/ <span class='text-primary'>Pain assess</span>. Khởi phát/ <span class='text-primary'>Onset</span>{ena.pain_onset}Vị trí/ <span class='text-primary'>Location</span>{ena.pain_location}Kéo dài/<span class='text-primary'>Duration</span>{ena.pain_duration}Hướng lan/Radiation {ena.pain_radiation}";
 
-                prt_pain_scale.Text = $"Điểm đau/ <span class='text-primary'>Pain scale:</span>{ena.pain_score}/10";
+                //prt_pain_scale.Text = $"Điểm đau/ <span class='text-primary'>Pain scale:</span>{ena.pain_score}/10";
 
-                prt_weight.Text = $"Cân nặng/ Weight: {ena.vs_weight} kg Chiều cao/ Height: {ena.vs_height}cm";
-                prt_pulse.Text = $"Vòng đầu/ Head circumsference: {ena.vs_head_circum} cm";
-                prt_allergy.Text = $"Dị ứng/ Allergy {ena.allergy}";
-                prt_medications_used.Text = $"Thuốc đã dùng/ Medications used: {ena.past_medical_history}";
+                //prt_weight.Text = $"Cân nặng/ Weight: {ena.vs_weight} kg Chiều cao/ Height: {ena.vs_height}cm";
+                //prt_pulse.Text = $"Vòng đầu/ Head circumsference: {ena.vs_head_circum} cm";
+                //prt_allergy.Text = $"Dị ứng/ Allergy {ena.allergy}";
+                //prt_medications_used.Text = $"Thuốc đã dùng/ Medications used: {ena.past_medical_history}";
 
-                prt_skin_integrity.Text = WebHelpers.CreateOptions(Ena.SKIN_INTEGRITY_CODE, "", "");
+                //prt_skin_integrity.Text = WebHelpers.CreateOptions(Ena.SKIN_INTEGRITY_CODE, "", "");
 
-                prt_com_dis_src.Text = WebHelpers.CreateOptions(Ena.COM_DIS_SRC_CODE, ena.com_dis_src, "");
+                //prt_com_dis_src.Text = WebHelpers.CreateOptions(Ena.COM_DIS_SRC_CODE, ena.com_dis_src, "");
 
-                prt_discharge_plan.Text = WebHelpers.CreateOptions(Ena.DISCHARGE_PLAN_CODE, ena.discharge_plan, "");
-                prt_caregiver_after_discharge.Text = $"Người chăm sóc sau khi xuất viện/ People who will look after patient after discharge {ena.caregiver_after_discharge}";
+                //prt_discharge_plan.Text = WebHelpers.CreateOptions(Ena.DISCHARGE_PLAN_CODE, ena.discharge_plan, "");
+                //prt_caregiver_after_discharge.Text = $"Người chăm sóc sau khi xuất viện/ People who will look after patient after discharge {ena.caregiver_after_discharge}";
 
-                prt_btc_language.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, Giải thích/ Yes Explain " }, ena.btc_language, "display: grid;grid-template-columns:auto auto;");
-                prt_btc_language_note.Text = ena.btc_language_note;
+                //prt_btc_language.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, Giải thích/ Yes Explain " }, ena.btc_language, "display: grid;grid-template-columns:auto auto;");
+                //prt_btc_language_note.Text = ena.btc_language_note;
 
-                prt_btc_cognitive.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, Giải thích/ Yes Explain " }, ena.btc_cognitive, "display: grid;grid-template-columns:auto auto;");
-                prt_btc_cognitive_note.Text = ena.btc_cognitive_note;
+                //prt_btc_cognitive.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, Giải thích/ Yes Explain " }, ena.btc_cognitive, "display: grid;grid-template-columns:auto auto;");
+                //prt_btc_cognitive_note.Text = ena.btc_cognitive_note;
 
                 //prt_btc_sensory.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, Giải thích/ Yes Explain " }, ena.btc_sensory, "display: grid;grid-template-columns:auto auto;");
                 //prt_btc_sensory_note.Text = ena.btc_sensory_note;
@@ -463,59 +463,59 @@ namespace EMR
                 //prt_btc_cultural.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, Giải thích/ Yes Explain " }, ena.btc_cultural, "display: grid;grid-template-columns:auto auto;");
                 //prt_btc_cultural_note.Text = ena.btc_cultural_note;
 
-                prt_room_number.Text = "";
-                prt_time_of_assess.Text = " ";
+                //prt_room_number.Text = "";
+                //prt_time_of_assess.Text = " ";
 
-                prt_general_appearance.Text = WebHelpers.CreateOptions(Ena.GENERAL_APPEARANCE_CODE, ena.general_appearance, "");
-                prt_neuro.Text = $"Thần kinh/ <span class='text-primary'>Neuro</span>: GCS: Mắt/<span class='text-primary'>E</span> {ena.eye} Lời nói/<span class='text-primary'>V</span> {ena.voice} Vận động/<span class='text-primary'>M</span> {ena.motion}";
+                //prt_general_appearance.Text = WebHelpers.CreateOptions(Ena.GENERAL_APPEARANCE_CODE, ena.general_appearance, "");
+                //prt_neuro.Text = $"Thần kinh/ <span class='text-primary'>Neuro</span>: GCS: Mắt/<span class='text-primary'>E</span> {ena.eye} Lời nói/<span class='text-primary'>V</span> {ena.voice} Vận động/<span class='text-primary'>M</span> {ena.motion}";
 
-                prt_alert.Text = WebHelpers.GetCheckedIcon(ena.alert);
-                prt_coma.Text = WebHelpers.GetCheckedIcon(ena.coma);
-                prt_other.Text = WebHelpers.GetCheckedIcon(ena.others);
-                prt_str_others.Text = ena.str_others;
+                //prt_alert.Text = WebHelpers.GetCheckedIcon(ena.alert);
+                //prt_coma.Text = WebHelpers.GetCheckedIcon(ena.coma);
+                //prt_other.Text = WebHelpers.GetCheckedIcon(ena.others);
+                //prt_str_others.Text = ena.str_others;
 
 
-                prt_rhythm_regular.Text = WebHelpers.GetCheckedIcon(ena.rhythm_regular);
-                prt_rhythm_inregular.Text = WebHelpers.GetCheckedIcon(ena.rhythm_inregular);
+                //prt_rhythm_regular.Text = WebHelpers.GetCheckedIcon(ena.rhythm_regular);
+                //prt_rhythm_inregular.Text = WebHelpers.GetCheckedIcon(ena.rhythm_inregular);
 
-                prt_psychosocial.Text = WebHelpers.GetCheckedIcon(ena.psychosocial);
-                prt_psychosocial_others.Text = WebHelpers.GetCheckedIcon(ena.psychosocial_others);
-                prt_psychosocial_str_others.Text = ena.psychosocial_str_others;
+                //prt_psychosocial.Text = WebHelpers.GetCheckedIcon(ena.psychosocial);
+                //prt_psychosocial_others.Text = WebHelpers.GetCheckedIcon(ena.psychosocial_others);
+                //prt_psychosocial_str_others.Text = ena.psychosocial_str_others;
 
-                //
-                prt_other_systems_normal.Text = WebHelpers.GetCheckedIcon(ena.other_systems_normal);
-                prt_other_systems_abnormal.Text = WebHelpers.GetCheckedIcon(ena.other_systems_abnormal);
-                prt_others_systems_str.Text = ena.others_systems_str;
-                //
-                prt_lmp.Text = WebHelpers.GetCheckedIcon(ena.lmp);
-                prt_lmp_note.Text = ena.lmP_note;
-                prt_para.Text = ena.para;
-                prt_abortions.Text = ena.abortions;
+                ////
+                //prt_other_systems_normal.Text = WebHelpers.GetCheckedIcon(ena.other_systems_normal);
+                //prt_other_systems_abnormal.Text = WebHelpers.GetCheckedIcon(ena.other_systems_abnormal);
+                //prt_others_systems_str.Text = ena.others_systems_str;
+                ////
+                //prt_lmp.Text = WebHelpers.GetCheckedIcon(ena.lmp);
+                //prt_lmp_note.Text = ena.lmP_note;
+                //prt_para.Text = ena.para;
+                //prt_abortions.Text = ena.abortions;
 
-                prt_respiratory.Text = ena.respiratory;
+                //prt_respiratory.Text = ena.respiratory;
 
-                //
-                prt_noticed_time.Text = WebHelpers.FormatDateTime(ena.noticed_time, "dd-MM-yyyy HH:mm");
+                ////
+                //prt_noticed_time.Text = WebHelpers.FormatDateTime(ena.noticed_time, "dd-MM-yyyy HH:mm");
 
-                prt_assessment_system.DataSource = WebHelpers.GetJSONToDataTable(ena.assessment_system);
-                prt_assessment_system.DataBind();
+                //prt_assessment_system.DataSource = WebHelpers.GetJSONToDataTable(ena.assessment_system);
+                //prt_assessment_system.DataBind();
 
-                prt_direct_medication.DataSource = WebHelpers.GetJSONToDataTable(ena.direct_medication);
-                prt_direct_medication.DataBind();
+                //prt_direct_medication.DataSource = WebHelpers.GetJSONToDataTable(ena.direct_medication);
+                //prt_direct_medication.DataBind();
 
-                //
-                prt_discharge_by.Text = ena.discharge_by;
-                prt_discharge_date_time.Text = WebHelpers.FormatDateTime(ena.discharge_date_time);
-                prt_discharge_option.Text = WebHelpers.CreateOptions(Ena.DISCHARGE_OPTION_CODE, ena.discharge_option, "");
+                ////
+                //prt_discharge_by.Text = ena.discharge_by;
+                //prt_discharge_date_time.Text = WebHelpers.FormatDateTime(ena.discharge_date_time);
+                //prt_discharge_option.Text = WebHelpers.CreateOptions(Ena.DISCHARGE_OPTION_CODE, ena.discharge_option, "");
 
-                prt_admited_date_time.Text = WebHelpers.FormatDateTime(ena.admited_date_time);
-                prt_admited_by.Text = ena.admited_by;
-                prt_receiving_unit.Text = "Khoa tiếp nhận/ Receiving Unit: " + ena.receiving_unit;
-                prt_transfer_to.Text = $"Chuyển viện/ Transfer to: {ena.transfer_to}";
-                prt_transfer_by.Text = $"bởi BS/ by Dr. {ena.transfer_by}";
+                //prt_admited_date_time.Text = WebHelpers.FormatDateTime(ena.admited_date_time);
+                //prt_admited_by.Text = ena.admited_by;
+                //prt_receiving_unit.Text = "Khoa tiếp nhận/ Receiving Unit: " + ena.receiving_unit;
+                //prt_transfer_to.Text = $"Chuyển viện/ Transfer to: {ena.transfer_to}";
+                //prt_transfer_by.Text = $"bởi BS/ by Dr. {ena.transfer_by}";
 
-                prt_nursing_note.DataSource = WebHelpers.GetJSONToDataTable(ena.nursing_note);
-                prt_nursing_note.DataBind();
+                //prt_nursing_note.DataSource = WebHelpers.GetJSONToDataTable(ena.nursing_note);
+                //prt_nursing_note.DataBind();
 
             }
             catch (Exception ex)
@@ -584,13 +584,6 @@ namespace EMR
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             Initial();
-        }
-        protected void btnPrint_Click(object sender, EventArgs e)
-        {
-            ena = new Ena(Request.QueryString["docId"]);
-            BindingDataFormPrint(ena);
-
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
         }
         protected void grid_AssessmentSystem_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
@@ -712,16 +705,14 @@ namespace EMR
                 
                 WebHelpers.setBmi(bmiStr, ena.vs_bmi);
 
-                BindingDataFormPrint(ena);
-
-                imageTemp.Src = JObject.Parse(ena.skin_anno_data).dataURI;
+                //imageTemp.Src = JObject.Parse(ena.skin_anno_data).dataURI;
 
                 ena.skin_anno_data = WebHelpers.getImageDefault(ena.skin_anno_data);
 
-                prt_barcode.Text = Patient.Instance().visible_patient_id;
+                //prt_barcode.Text = Patient.Instance().visible_patient_id;
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-                prt_barcode.Text = Patient.Instance().visible_patient_id;
+                //prt_barcode.Text = Patient.Instance().visible_patient_id;
 
                 if (ena.status == DocumentStatus.FINAL)
                 {
@@ -749,13 +740,13 @@ namespace EMR
 
             if (dt.Rows.Count == 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("created_name_l");
+                last_updated_doctor = dt.Rows[0].Field<string>("created_name_e");
                 last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
             }
             else if (dt.Rows.Count > 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_l");
-                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
+                last_updated_doctor = dt.Rows[0].Field<string>("submited_name_e");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("submited_date_time");
             }
 
             Session["signature_doctor"] = last_updated_doctor;
@@ -1066,7 +1057,7 @@ namespace EMR
                 HeaderRow.Cells.Add(HeaderCell2);
 
 
-                prt_direct_medication.Controls[0].Controls.AddAt(0, HeaderRow);
+                //prt_direct_medication.Controls[0].Controls.AddAt(0, HeaderRow);
 
                 GridViewRow HeaderRow1 = new GridViewRow(0, 0, DataControlRowType.Header, DataControlRowState.Insert);
 
@@ -1100,7 +1091,7 @@ namespace EMR
 
                 HeaderRow1.Cells.Add(HeaderCell);
 
-                prt_direct_medication.Controls[0].Controls.AddAt(1, HeaderRow1);
+                //prt_direct_medication.Controls[0].Controls.AddAt(1, HeaderRow1);
             }
         }
         protected void prt_nursing_note_RowCreated(object sender, GridViewRowEventArgs e)
@@ -1117,7 +1108,7 @@ namespace EMR
 
                 HeaderRow.Cells.Add(HeaderCell2);
 
-                prt_nursing_note.Controls[0].Controls.AddAt(0, HeaderRow);
+                //prt_nursing_note.Controls[0].Controls.AddAt(0, HeaderRow);
 
                 GridViewRow HeaderRow1 = new GridViewRow(0, 0, DataControlRowType.Header, DataControlRowState.Insert);
 
@@ -1156,7 +1147,7 @@ namespace EMR
 
                 HeaderRow1.Cells.Add(HeaderCell);
 
-                prt_nursing_note.Controls[0].Controls.AddAt(1, HeaderRow1);
+                //prt_nursing_note.Controls[0].Controls.AddAt(1, HeaderRow1);
             }
         }
         protected void clearSession_Click(object sender, EventArgs e)

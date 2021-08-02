@@ -166,22 +166,24 @@ namespace EMR
                 a = a.Replace("&lt;/font&gt;&lt;br&gt;", "");
 
                 prt_chief_complaint.Text = a;
-                prt_allergy.Text = oina.allergy ? "Có, ghi rõ/ Yes, specify: " + oina.allergy_note : "Không";
+
+                prt_allergy.Text = WebHelpers.GetBool(oina.allergy, "Có, ghi rõ/ Yes, specify: " + oina.allergy_note , "Không");
 
                 prt_mental_status.Text = WebHelpers.CreateOptions(new Option { Text = "Có/ Yes", Value = true }, new Option { Text = "No, ghi rõ/ No, specify: " + oina.mental_status_note, Value = false }, oina.mental_status, "display: grid; grid-template-columns: 80px 1fr");
 
-                prt_paint_score_code.Text = oina.paint_score_code;
+                prt_paint_score_code.Value = oina.paint_score_code;
 
-                prt_fall_risk.Text = WebHelpers.GetBool(oina.fall_risk, "Có, cung cấp phương tiện hỗ trợ/ Yes, provide assistance: " + oina.fall_risk_assistance, "Không có nguy cơ/ No risk");
+                prt_fall_risk.Value = WebHelpers.GetBool(oina.fall_risk, "Có, cung cấp phương tiện hỗ trợ/ Yes, provide assistance: " + oina.fall_risk_assistance, "Không có nguy cơ/ No risk");
 
-                prt_nutrition_status_code.Text = oina.nutrition_status_description;
+                prt_nutrition_status_code.Value = oina.nutrition_status_description;
 
                 prt_housing.Text = WebHelpers.CreateOptions(Oina.HOUSING_CODE, (string)oina.housing_code, "display: grid; grid-template-columns: 1fr 1fr");
 
                 DateTime signature_date = (DateTime)Session["signature_date"];
-
-                prt_signature_date.Text = signature_date.ToString("dd-MM-yyyy");
-                prt_prioritization_code.Text = oina.prioritization_description;
+                
+                prt_signature_date.Text = "Ngày/ Date: " + WebHelpers.FormatDateTime(oina.assessment_date_time, "dd-MMM-yyyy HH:mm");
+                prt_signature_name.Text = (string)Session["signature_name"];
+                prt_prioritization_code.Value = oina.prioritization_description;
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
         }
@@ -417,17 +419,17 @@ namespace EMR
 
             if (dt.Rows.Count == 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("created_name_l");
+                last_updated_doctor = dt.Rows[0].Field<string>("created_name_e");
                 last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
             }
             else if (dt.Rows.Count > 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_l");
-                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
+                last_updated_doctor = dt.Rows[0].Field<string>("submited_name_e");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("submited_date_time");
             }
 
             Session["signature_date"] = last_updated_date_time;
-            Session["signature_doctor"] = last_updated_doctor;
+            Session["signature_name"] = last_updated_doctor;
             RadLabel1.Text = $"Last updated by {last_updated_doctor} on " + WebHelpers.FormatDateTime(last_updated_date_time, "dd-MM-yyyy HH:mm");
             RadGrid1.DataBind();
         }
