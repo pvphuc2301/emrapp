@@ -1,7 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ObsGynIniAss.aspx.cs" Inherits="EMR.IPD.ObsGynIniAss" ValidateRequest="false" %>
 
 <%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="webUI" TagName="PopupShowDelay" %>
-<%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="webUI" TagName="PatientInfo" %>
 <%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="webUI" TagName="TextField" %>
 <%@ Register Src="~/icons/XSquare.ascx" TagPrefix="icon" TagName="xsquare" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrintWindow.ascx" TagPrefix="webUI" TagName="PrintWindow" %>
@@ -798,35 +797,29 @@
                 </table>
             </div>
 
-                <telerik:RadWindowManager RenderMode="Lightweight"  
-                                  EnableShadow="true"  
-                                  Behaviors="Close, Move, Resize,Maximize" ID="RadWindowManager" DestroyOnClose="true"
-                                  RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
+                <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
             <Windows>
-                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History"   runat="server">
+                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History" runat="server">
                     <ContentTemplate>
                         <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
                             <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
                                 <Columns>
-                                    <telerik:GridTemplateColumn Display="false" HeaderStyle-Width="0" ItemStyle-Width="0" ItemStyle-Wrap="false">
-                                        <ItemTemplate>
-                                            <asp:LinkButton ID="RadLinkButton1" runat="server" CommandName="Open" Text=""></asp:LinkButton>
-                                        </ItemTemplate>
-                                    </telerik:GridTemplateColumn>
-
                                     <telerik:GridTemplateColumn>
                                         <ItemTemplate>
                                             <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
 </telerik:RadLabel>
+                                           
+                                            <asp:HyperLink CssClass="btn-link" Text="View Log" runat="server" NavigateUrl='<%# GetLogUrl(Eval("document_log_id")) %>'></asp:HyperLink>
                                         </ItemTemplate>
                                     </telerik:GridTemplateColumn>
                                 </Columns>
                             </MasterTableView>
+                            <SelectedItemStyle CssClass="SelectedStyle" />
                             <ClientSettings>
                                 <Selecting AllowRowSelect="true" />
-                                <ClientEvents OnRowDblClick="RowDblClick" />
                             </ClientSettings>
                         </telerik:RadGrid>
+
                     </ContentTemplate>
                 </telerik:RadWindow>
             </Windows>
@@ -863,7 +856,115 @@
                                 HeaderText="Please complete the highlighted field(s)." />
                         </asp:Panel>
 
-                        <webUI:PatientInfo runat="server" ID="PatientInfo1" />
+                        <div class="row">
+    <div class="col-lg-12" id="accordionExample">
+        <div class="card">
+            <div class="card-body collapse show" id="collapsePatientInfo" aria-labelledby="headingPatientInfo">
+                <h5 class="box-title">Thông tin bệnh nhân/ Patient Detail</h5>
+                <hr style="margin: 8px 0 12px 0;" />
+                <div class="row">
+                    <div class="col-sm-6" style="display: flex">
+                        <div class="w-5 text-sm-right">
+                            <label class="control-label text-sm-right mr-3">First Name:</label>
+                        </div>
+                        <div class="flex-grow-1">
+                            <asp:Label runat="server" ID="lblFirstName" CssClass="control-label text-sm-right"></asp:Label>
+                        </div>
+                    </div>
+
+                    <!--/span-->
+                    <div class="col-sm-6" style="display: flex">
+                        <div class="w-5 text-sm-right">
+                            <label class="control-label text-sm-right mr-3">Last Name:</label>
+                        </div>
+                        <div class="flex-grow-1">
+                            <asp:Label runat="server" ID="lblLastName" CssClass="control-label text-sm-right"></asp:Label>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+                <div class="row">
+                    <div class="col-sm-6" style="display: flex">
+                        <div class="w-5 text-sm-right">
+                            <label class="control-label text-sm-right mr-3">Gender:</label>
+                        </div>
+                        <div class="flex-grow-1">
+                            <asp:Label runat="server" ID="lblGender" CssClass="control-label text-sm-right"></asp:Label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" style="display: flex">
+                        <div class="w-5 text-sm-right">
+                            <label class="control-label text-sm-right mr-3">Date of Birth:</label>
+                        </div>
+                        <div class="flex-grow-1">
+                            <asp:Label runat="server" ID="lblDoB" CssClass="control-label text-sm-right"></asp:Label>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row">
+                    <div class="col-sm-6" style="display: flex">
+                        <div class="w-5 text-sm-right">
+                            <label class="control-label text-sm-right mr-3">Contact Person:</label>
+                        </div>
+                        <div class="flex-grow-1">
+                            <asp:Label runat="server" ID="lblContactPerson" CssClass="control-label text-sm-right"></asp:Label>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6" style="display: flex">
+                        <div class="w-5 text-sm-right">
+                            <label class="control-label text-sm-right mr-3">Relationship:</label>
+
+                        </div>
+                        <div class="flex-grow-1">
+                            <asp:Label runat="server" ID="lblRelationship" CssClass="control-label text-sm-right"></asp:Label>
+                        </div>
+                    </div>
+
+                </div>
+                <!--/row-->
+                <div class="row">
+                    <div class="col-lg-6 d-sm-flex">
+                        <div class="w-5 text-sm-right">
+                            <label class="control-label text-sm-right mr-3">Address:</label>
+                        </div>
+                        <div class="flex-grow-1">
+                            <asp:Label runat="server" ID="lblPatientAddress" CssClass="control-label text-sm-right"></asp:Label>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+                <!--/row-->
+                <!-- Header: Patient Visit Info -->
+                <h5 class="box-title">Thông tin lần khám/ Visit Detail <span class="text-danger">*</span></h5>
+                <hr style="margin: 8px 0 12px 0;" />
+
+                <div class="row">
+                    <div class="col-sm-6" style="display: flex">
+                        <div class="w-5 text-sm-right">
+                            <label class="control-label text-sm-right mr-3">Encounter:</label>
+                        </div>
+                        <div class="flex-grow-1">
+                            <asp:Label runat="server" ID="lblVisitCode" CssClass="control-label text-sm-right"></asp:Label>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6" style="display: flex">
+                        <div class="w-5 text-sm-right">
+                            <label class="control-label text-sm-right mr-3">Admit Date:</label>
+                        </div>
+                        <div class="flex-grow-1">
+                            <asp:Label runat="server" ID="lblVisitDate" CssClass="control-label text-sm-right"></asp:Label>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
                         <div class="row">
                             <div class="col-md-12">
@@ -878,15 +979,14 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
-                                                        <telerik:RadLabel runat="server" ID="RadLabel2">
-</telerik:RadLabel>
-                                                        <telerik:RadButton  RenderMode="Mobile"  OnClick="RadButton1_Click" ID="RadButton1" runat="server" CssClass="btn-sm" Text="View Latest Version"  />
+                                                        <span class="mr-2">You are viewing an old version of this document</span>
+                                                        <asp:HyperLink OnLoad="LinkViewLastestVersion_Load" ID="LinkViewLastestVersion" CssClass="btn-link" Text="View Latest Version" runat="server" ></asp:HyperLink>
                                                     </div>
-
+                                            
                                                     <div class="alert alert-info d-flex align-items-center">
                                                         <telerik:RadLabel runat="server" ID="RadLabel1">
-</telerik:RadLabel>
-                                                        <telerik:RadButton  RenderMode="Mobile" AutoPostBack="false" ID="Button1" runat="server" OnClientClicked="showWindow" CssClass="btn-sm" Text="View History"  />
+            </telerik:RadLabel>
+                                                        <a class="btn-link" href="#" onclick="showWindow()">View History</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2003,26 +2103,10 @@
             $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
         }
 
-        function showWindow(sender, eventArgs) {
+        function showWindow() {
             var oWnd = $find("<%=RadWindow1.ClientID%>");
             oWnd.show();
         }
-
-
-       function RowDblClick(sender, eventArgs) {
-            console.log('sdfsdf');
-
-           var grid = $find("<%= RadGrid1.ClientID %>");
-           var masterTable = grid.get_masterTableView();
-           var item = eventArgs.get_itemIndexHierarchical();
-
-           var row = masterTable.get_dataItems()[item];
-
-           var button = row.findElement("RadLinkButton1");
-           button.click();
-
-           //console.log(row);
-       }
     </script>
 </body>
 </html>

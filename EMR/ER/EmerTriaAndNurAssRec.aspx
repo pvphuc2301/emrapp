@@ -1,5 +1,4 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EmerTriaAndNurAssRec.aspx.cs" Inherits="EMR.EmergencyTriageAndNursingAssessmentRecord" ValidateRequest="false" %>
-<%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="uc1" TagName="PatientInfo" %>
 <%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="webUI" TagName="TextField" %>
 <%@ Register Src="~/UserControls/AmendReason.ascx" TagPrefix="webUI" TagName="AmendReason" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrintWindow.ascx" TagPrefix="webUI" TagName="PrintWindow" %>
@@ -460,36 +459,32 @@
                     </table>
                 </div>--%>
 
-                <telerik:RadWindowManager RenderMode="Lightweight" EnableShadow="true" Behaviors="Close, Move, Resize,Maximize" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
-            <Windows>
-                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History"   runat="server">
-                    <ContentTemplate>
-                        <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
-                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
-                                <Columns>
-                                    <telerik:GridTemplateColumn Display="false" HeaderStyle-Width="0" ItemStyle-Width="0" ItemStyle-Wrap="false">
-                                        <ItemTemplate>
-                                            <asp:LinkButton ID="RadLinkButton1" runat="server" CommandName="Open" Text=""></asp:LinkButton>
-                                        </ItemTemplate>
-                                    </telerik:GridTemplateColumn>
+                <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="520" Height="400">
+                    <Windows>
+                        <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History" runat="server">
+                            <ContentTemplate>
+                                <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
+                                    <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
+                                        <Columns>
+                                            <telerik:GridTemplateColumn>
+                                                <ItemTemplate>
+                                                    <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
+        </telerik:RadLabel>
+                                                    <asp:HyperLink CssClass="btn-link" Text="View Log" runat="server" NavigateUrl='<%# GetLogUrl(Eval("document_log_id")) %>'></asp:HyperLink>
+                                                </ItemTemplate>
+                                            </telerik:GridTemplateColumn>
+                                        </Columns>
+                                    </MasterTableView>
+                                    <SelectedItemStyle CssClass="SelectedStyle" />
+                                    <ClientSettings>
+                                        <Selecting AllowRowSelect="true" />
+                                    </ClientSettings>
+                                </telerik:RadGrid>
 
-                                    <telerik:GridTemplateColumn>
-                                        <ItemTemplate>
-                                            <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
-</telerik:RadLabel>
-                                        </ItemTemplate>
-                                    </telerik:GridTemplateColumn>
-                                </Columns>
-                            </MasterTableView>
-                            <ClientSettings>
-                                <Selecting AllowRowSelect="true" />
-                                <ClientEvents OnRowDblClick="RowDblClick" />
-                            </ClientSettings>
-                        </telerik:RadGrid>
-                    </ContentTemplate>
-                </telerik:RadWindow>
-            </Windows>
-        </telerik:RadWindowManager>
+                            </ContentTemplate>
+                        </telerik:RadWindow>
+                    </Windows>
+                </telerik:RadWindowManager>
 
                 <div class="cssclsNoPrint1">
                     <ul class="breadcrumb cssclsNoPrint" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0; border-bottom: 1px solid #ddd; border-radius: 0;">
@@ -514,15 +509,10 @@
                                 </div>
                             </div>
 
-                            <asp:ValidationSummary
-                                ID="valSum"
-                                DisplayMode="BulletList"
-                                CssClass="validationSummary"
-                                runat="server" ValidationGroup="Group1"
-                                HeaderText="Please complete the highlighted field(s)." />
+                            <asp:ValidationSummary ID="valSum" DisplayMode="BulletList" CssClass="validationSummary" runat="server" ValidationGroup="Group1" HeaderText="Please complete the highlighted field(s)." />
                         </asp:Panel>
 
-                        <uc1:PatientInfo runat="server" ID="PatientInfo1" />
+                        <asp:PlaceHolder runat="server" ID="uc_patientinfo_wrapper"/>
 
                         <div class="row">
                             <div class="col-md-12">
@@ -537,15 +527,14 @@
                                             <div class="row cssclsNoPrint">
                                                 <div class="col-md-12">
                                                     <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
-                                                        <telerik:RadLabel runat="server" ID="RadLabel2">
-</telerik:RadLabel>
-                                                        <telerik:RadButton  RenderMode="Mobile"  ID="RadButton1" runat="server" CssClass="btn-sm" Text="View Latest Version"  />
+                                                        <span class="mr-2">You are viewing an old version of this document</span>
+                                                        <asp:HyperLink OnLoad="LinkViewLastestVersion_Load" ID="LinkViewLastestVersion" CssClass="btn-link" Text="View Latest Version" runat="server" ></asp:HyperLink>
                                                     </div>
 
                                                     <div class="alert alert-info d-flex align-items-center">
                                                         <telerik:RadLabel runat="server" ID="RadLabel1">
 </telerik:RadLabel>
-                                                        <telerik:RadButton  RenderMode="Mobile" AutoPostBack="false" ID="Button1" runat="server" OnClientClicked="showWindow" CssClass="btn-sm" Text="View History"  />
+                                                        <a class="btn-link" href="#" onclick="showWindow()">View History</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2142,25 +2131,9 @@
             loadImage();
         }
 
-        function showWindow(sender, eventArgs) {
+        function showWindow() {
             var oWnd = $find("<%=RadWindow1.ClientID%>");
             oWnd.show();
-        }
-
-
-        function RowDblClick(sender, eventArgs) {
-            console.log('sdfsdf');
-
-            var grid = $find("<%= RadGrid1.ClientID %>");
-           var masterTable = grid.get_masterTableView();
-           var item = eventArgs.get_itemIndexHierarchical();
-
-           var row = masterTable.get_dataItems()[item];
-
-           var button = row.findElement("RadLinkButton1");
-           button.click();
-
-           //console.log(row);
         }
 
         function printDiv() {

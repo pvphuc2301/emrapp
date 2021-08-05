@@ -15,7 +15,7 @@ namespace EMR.Print
     {
         private string ConnStringHIS = ""; private string visitType = "";
         public string varPID = ""; private string varPV_ID = ""; private string varPharID = ""; private string varVbID = ""; private bool oldVisit = false;
-
+        public string loc { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             ConnClass ConnStr = new ConnClass();
@@ -120,7 +120,7 @@ namespace EMR.Print
 
             //    string _jsonData = WebHelpers.GetAPI(jsString);
 
-            jsString = $"api/emr/vital-sign/{DataHelpers._LOCATION}/{varPV_ID}/" + visitType;
+            jsString = $"api/emr/vital-sign/{loc}/{varPV_ID}/" + visitType;
             dynamic response = WebHelpers.GetAPI(jsString);
 
             if (response.Status == System.Net.HttpStatusCode.OK)
@@ -153,7 +153,7 @@ namespace EMR.Print
         public void load_visit_infor(string varPV_ID)
         {
             string vsType = "";
-            string apiURL = $"api/emr/patient-visit/{DataHelpers._LOCATION}/" + varPV_ID;
+            string apiURL = $"api/emr/patient-visit/{loc}/" + varPV_ID;
             dynamic response = WebHelpers.GetAPI(apiURL);//"api/emr/patient-visit/" + varPV_ID
 
             DataTable mydataTable = new DataTable();

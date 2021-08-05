@@ -23,18 +23,22 @@ namespace EMR
         public string docId = "";
         public string varVPID = "";
         public string ConnStringEMR = "";
+        PatientVisitInfo patientVisitInfo;
+
+        protected string loc;
         protected void Page_Load(object sender, EventArgs e)
         {
             ConnClass ConnStr = new ConnClass();
             varPID = Request.QueryString["pid"];
             varVPID = Request.QueryString["vpid"];
+            loc = Request.QueryString["loc"];
             ConnStringEMR = ConnStr.SQL_EMRConnString;
             //RadPageView1.ContentUrl = "~/phar/orderlist.aspx?pid=" + varPID + "&vbid=" + varVbID;
             //RadPageView3.ContentUrl = "~/phar/opdpreslist.aspx?pid=" + varPID;
 
             if (!IsPostBack)
             {
-                MainContent.ContentUrl = $"index.aspx?pid={varPID}&vpid={varVPID}";
+                MainContent.ContentUrl = $"index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}";
 
                 LoadRootNodes(RadTreeView1, TreeNodeExpandMode.ServerSideCallBack);
                 LoadRootLAB_RAD(RadTreeView2, TreeNodeExpandMode.ServerSideCallBack);
@@ -79,7 +83,7 @@ namespace EMR
             query += "WHERE (document_type_rcd = N'RAD' OR document_type_rcd = N'LAB') ";// AND (active_flag = 1) ";
             query += "ORDER BY document_type_rcd";
 
-            string apiURL = $"api/emr/menu-visit/{DataHelpers._LOCATION}/{varPID}";
+            string apiURL = $"api/emr/menu-visit/{loc}/{varPID}";
             dynamic response = WebHelpers.GetAPI(apiURL);
 
             DataTable mydataTable = new DataTable();
@@ -138,11 +142,14 @@ namespace EMR
         }
         private DataTable GetChildLabRad(string PatientID, string ParentID)
         {
-            DataHelpers.LoadPatientVisitInfomation(PatientID);
-            string apiURL = $"api/patient/menu-lab-visit/{DataHelpers._LOCATION}/" + PatientID;
+            //DataHelpers.LoadPatientVisitInfomation(PatientID);
+
+            patientVisitInfo = new PatientVisitInfo(PatientID, loc);
+
+            string apiURL = $"api/patient/menu-lab-visit/{loc}/" + PatientID;
 
             if (ParentID == "RAD")
-                apiURL = $"api/patient/menu-rad-visit/{DataHelpers._LOCATION}/" + PatientID;
+                apiURL = $"api/patient/menu-rad-visit/{loc}/" + PatientID;
 
             dynamic response = WebHelpers.GetAPI(apiURL);
 
@@ -252,7 +259,7 @@ namespace EMR
                 string docid = e.Node.Attributes["docId"];
                 string modelId = e.Node.Attributes["modelId"];
 
-                //     if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], (string)Session["location"]))
+                //     if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], loc))
                 {
                     string apiURL = $"../emr/emrview.aspx?pf={docid}&dp={modelId}&action=view";
                     MainContent.ContentUrl = apiURL;
@@ -268,9 +275,11 @@ namespace EMR
         }
         private DataTable GetChildNodes(string ParentID)
         {
-            DataHelpers.LoadPatientVisitInfomation(ParentID);
+            //DataHelpers.LoadPatientVisitInfomation(ParentID);
 
-            dynamic response = WebHelpers.GetAPI($"api/emr/menu-form/{DataHelpers._LOCATION}/{ParentID}");
+            patientVisitInfo = new PatientVisitInfo(ParentID, loc);
+
+            dynamic response = WebHelpers.GetAPI($"api/emr/menu-form/{loc}/{ParentID}");
 
             DataTable mydataTable = new DataTable();
 
@@ -349,16 +358,16 @@ namespace EMR
                 string status = e.Node.Attributes["status"];
 
                 string preDocid = (string)Session["docid"];
-
+                
                 if (!string.IsNullOrEmpty(preDocid)) {
-                    string apiUri = $"api/emr/clear-session/{DataHelpers._LOCATION}/{preDocid}";
+                    string apiUri = $"api/emr/clear-session/{loc}/{preDocid}";
                     WebHelpers.PostAPI(apiUri);
-                    Session["docid"] = string.Empty;
+                    //Session["docid"] = string.Empty;
                 }
                 
-                if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], (string)Session["location"]))
+                if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], loc))
                 {
-                    string apiURL = $"api/emr/get-api/{DataHelpers._LOCATION}/{modelId}";
+                    string apiURL = $"api/emr/get-api/{loc}/{modelId}";
 
                     dynamic response = WebHelpers.GetAPI(apiURL);
 
@@ -366,11 +375,11 @@ namespace EMR
                     {
                         dynamic data = JObject.Parse(response.Data);
 
-                        new PatientVisit(e.Node.Attributes["patient_visit_id"]);
+                        patientVisitInfo = new PatientVisitInfo(e.Node.Attributes["patient_visit_id"], loc);
+                        
+                        MainContent.ContentUrl = $"/{data.url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}&pvid={patientVisitInfo.patient_visit_id}&loc={loc}";
 
-                        MainContent.ContentUrl = $"/{data.url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}";
-
-                        //return string.Format("/{0}?modelId={1}&docId={2}&pId={3}&vpId={4}", data.url, varModelId, varDocID, varPID, varVPID);
+                        //return string.Format("/{0}?modelId={1}&docId={2}&pId={3}&vpId={4}", data.url, varModelID, varDocID, varPID, varVPID);
                     }
                 }
             }
@@ -379,7 +388,7 @@ namespace EMR
         private void LoadRootNodes(RadTreeView treeView, TreeNodeExpandMode expandMode)
         {
 
-            string apiURL = $"api/emr/menu-visit/{DataHelpers._LOCATION}/{varPID}";
+            string apiURL = $"api/emr/menu-visit/{loc}/{varPID}";
             dynamic response = WebHelpers.GetAPI(apiURL);
 
             DataTable mydataTable = new DataTable();
@@ -448,12 +457,12 @@ namespace EMR
 
         protected void RadTreeView4_NodeExpand(object sender, RadTreeNodeEventArgs e)
         {
-            PopulateScanOnDemand("/" + DataHelpers._LOCATION, e, TreeNodeExpandMode.ServerSideCallBack);
+            PopulateScanOnDemand("/" + loc, e, TreeNodeExpandMode.ServerSideCallBack);
         }
 
         protected void radGridComplexDoc_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            string apiURL = $"api/emr/menu-doc-complex/{DataHelpers._LOCATION}/{varPID}";
+            string apiURL = $"api/emr/menu-doc-complex/{loc}/{varPID}";
             dynamic response = WebHelpers.GetAPI(apiURL);
 
             DataTable mydataTable;
@@ -476,7 +485,7 @@ namespace EMR
                 string status = item.GetDataKeyValue("status").ToString();
                 string url = item.GetDataKeyValue("url").ToString();
 
-                if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], (string)Session["location"]))
+                if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], loc))
                 {
                     MainContent.ContentUrl = $"/{url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}";
 
@@ -492,7 +501,7 @@ namespace EMR
 
                     //    MainContent.ContentUrl = $"/OPD/SumOfComOutpCase.aspx?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}";
 
-                    //    //return string.Format("/{0}?modelId={1}&docId={2}&pId={3}&vpId={4}", data.url, varModelId, varDocID, varPID, varVPID);
+                    //    //return string.Format("/{0}?modelId={1}&docId={2}&pId={3}&vpId={4}", data.url, varModelID, varDocID, varPID, varVPID);
                     //}
                 }
             }

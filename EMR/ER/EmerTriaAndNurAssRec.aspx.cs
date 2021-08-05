@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EMR.UserControls;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -17,13 +18,40 @@ namespace EMR
     public partial class EmergencyTriageAndNursingAssessmentRecord : System.Web.UI.Page
     {
         #region Variables
-        public Ena ena;
-        MemoryStream ms;
+        Ena ena;
+        PatientInfo patientInfo;
+        PatientVisitInfo patientVisitInfo;
+        public string PAGE_URL { get; set; }
+        public string loc { get; set; } 
+        public string locChanged { get; set; }
+        public string varDocID { get; set; }
+        public string varDocIdLog { get; set; }
+        public string varModelID { get; set; }
+        public string varPVID { get; set; }
+        public string varVPID { get; set; }
+        public string varPID { get; set; }
         #endregion
-        
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!WebHelpers.CheckSession(this)) return;
+
+            varDocID = Request.QueryString["docId"];
+            varDocIdLog = Request.QueryString["docIdLog"];
+            varModelID = Request.QueryString["modelId"];
+            varPVID = Request.QueryString["pvId"];
+            varVPID = Request.QueryString["vpId"];
+            varPID = Request.QueryString["pId"];
+            loc = Request.QueryString["loc"];
+
+            PAGE_URL = $"/ER/EmerTriaAndNurAssRec.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+
+            patientInfo = new PatientInfo(varPID);
+            patientVisitInfo = new PatientVisitInfo(varPVID, loc);
+
+            var UCPatientInfo = (UCPatientInfo)Page.LoadControl("~/UserControls/UCPatientInfo.ascx");
+            UCPatientInfo.Initial(uc_patientinfo_wrapper, patientInfo, patientVisitInfo);
+            
             if (!IsPostBack)
             {
                 Initial();
@@ -33,7 +61,6 @@ namespace EMR
         #region Binding Data
         private void BindingDataForm(Ena ena, bool state)
         {
-            
             if (state)
             {
                 BindingDataFormEdit(ena);
@@ -222,7 +249,7 @@ namespace EMR
                 DataObj.Value = JsonConvert.SerializeObject(ena);
 
                 Session["docid"] = ena.document_id;
-                WebHelpers.AddScriptFormEdit(Page, ena, (string)Session["emp_id"]);
+                WebHelpers.AddScriptFormEdit(Page, ena, (string)Session["emp_id"], loc);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
         }
@@ -406,18 +433,16 @@ namespace EMR
         {
             try
             {
-
-                Patient patient = Patient.Instance();
-                PatientVisit patientVisit = PatientVisit.Instance();
-
+                patientInfo = new PatientInfo(varPID);
+                patientVisitInfo = new PatientVisitInfo(varPVID, loc);
                 //prt_pid.Text = prt_vpid.Text = prt_barcode.Text = patient.visible_patient_id;
                 //prtdate.Text = $"Ngày/<span class='text-primary'>Date</span>: {WebHelpers.FormatDateTime(patientVisit.actual_visit_date_time, "dd/MM/yyyy")} Giờ/ <span class='text-primary'>Triage Time</span> {WebHelpers.FormatDateTime(ena.triage_time, "HH")}:{WebHelpers.FormatDateTime(ena.triage_time, "mm")} Khu vực/ <span class='text-primary'>Triage Area</span> #: {ena.triage_area}";
                 
-                //prt_fullname.Text = "&nbsp;" + patient.GetFullName();
+                //prt_fullname.Text = "&nbsp;" + patient.FullName;
                 //prt_dob.Text = "&nbsp;" + WebHelpers.FormatDateTime(patient.date_of_birth, "dd/MM/yyyy");
                 //prt_nationality.Text = "&nbsp;" + patient.GetNationality();
 
-                //prt_address.Text = "&nbsp;" + patient.GetAddress();
+                //prt_address.Text = "&nbsp;" + patient.Address;
                 //prt_contact.Text = "&nbsp;" + patient.getContact();
                 //prt_relationship.Text = "&nbsp;" + patient.getRelationship();
                 //prt_telephone.Text = "&nbsp;" + patient.contact_phone_number;
@@ -530,19 +555,19 @@ namespace EMR
         {
             if (Page.IsValid)
             {
-                ena = new Ena(DataHelpers.varDocId);
+                ena = new Ena(varDocID, loc);
                 ena.status = DocumentStatus.FINAL;
                 ena.user_name = (string)Session["UserID"];
 
                 UpdateData(ena);
-                WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+                WebHelpers.clearSessionDoc(Page, varDocID, loc);
             }
         }
         protected void btnSave_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
-                ena = new Ena(DataHelpers.varDocId);
+                ena = new Ena(varDocID, loc);
                 ena.status = DocumentStatus.DRAFT;
                 
                 UpdateData(ena);
@@ -551,10 +576,10 @@ namespace EMR
         protected void btnDelete_Click(object sender, EventArgs e)
         {
             try {
-                dynamic result = Ena.Delete((string)Session["UserID"], Request.QueryString["docid"])[0];
+                dynamic result = Ena.Delete((string)Session["UserID"], varDocID, loc)[0];
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+                    WebHelpers.clearSessionDoc(Page, varDocID, loc);
 
                     Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
                 }
@@ -566,16 +591,16 @@ namespace EMR
         }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            if (WebHelpers.CanOpenForm(Page, (string)Request.QueryString["docId"], DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"]))
+            if (WebHelpers.CanOpenForm(Page, (string)varDocID, DocumentStatus.DRAFT, (string)Session["emp_id"], loc))
             {
-                Ena ena = new Ena(Request.QueryString["docId"]);
+                Ena ena = new Ena(varDocID, loc);
 
                 txt_amend_reason.Text = "";
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, ena, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]);
+                WebHelpers.LoadFormControl(form1, ena, ControlState.Edit, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(ena);
                 //get access button
@@ -611,7 +636,7 @@ namespace EMR
         }
         protected void btnHome_Click(object sender, EventArgs e)
         {
-            Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
+            Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
         }
         #endregion
         private void UploadFile(string base64String)
@@ -679,25 +704,19 @@ namespace EMR
         #region Methods
         private void Initial()
         {
-            if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
-            if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
-            if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
+
             try
             {
                 Ena ena;
 
-                if (Request.QueryString["docIdLog"] != null)
+                if (varDocIdLog != null)
                 {
-                    ena = new Ena(Request.QueryString["docIdLog"], true);
+                    ena = new Ena(varDocIdLog, true, loc);
                     currentLog.Visible = true;
-
-                    string item = (string)Session["viewLogInfo"];
-
-                    RadLabel2.Text = $"You are viewing an old version of this document ( { item })";
                 }
                 else
                 {
-                    ena = new Ena(Request.QueryString["docId"]);
+                    ena = new Ena(varDocID, loc);
                     currentLog.Visible = false;
                 }
 
@@ -716,15 +735,15 @@ namespace EMR
 
                 if (ena.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(ena, WebHelpers.LoadFormControl(form1, ena, ControlState.View, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
+                    BindingDataForm(ena, WebHelpers.LoadFormControl(form1, ena, ControlState.View, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
                     BindingDataFormPrint(ena);
                 }
                 else if (ena.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(ena, WebHelpers.LoadFormControl(form1, ena, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
+                    BindingDataForm(ena, WebHelpers.LoadFormControl(form1, ena, ControlState.Edit, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
                 }
 
-                WebHelpers.getAccessButtons(form1, ena.status, (string)Session["access_authorize"], (string)Session["location"], Request.QueryString["docIdLog"] != null);
+                WebHelpers.getAccessButtons(form1, ena.status, (string)Session["access_authorize"], loc == locChanged, varDocIdLog != null);
             }
             catch (Exception ex)
             {
@@ -733,7 +752,7 @@ namespace EMR
         }
         private void loadRadGridHistoryLog()
         {
-            DataTable dt = Ena.Logs(Request.QueryString["docId"]);
+            DataTable dt = Ena.Logs(varDocID, loc);
             RadGrid1.DataSource = dt;
             DateTime last_updated_date_time = new DateTime();
             string last_updated_doctor = "";
@@ -752,6 +771,18 @@ namespace EMR
             Session["signature_doctor"] = last_updated_doctor;
             RadLabel1.Text = $"Last updated by {last_updated_doctor} on " + WebHelpers.FormatDateTime(last_updated_date_time, "dd-MM-yyyy HH:mm");
             RadGrid1.DataBind();
+        }
+        protected string GetLogUrl(object doc_log_id)
+        {
+            return PAGE_URL + $"&docIdLog={doc_log_id}";
+        }
+        public string GetDocIdLink(string args)
+        {
+            return PAGE_URL;
+        }
+        protected void LinkViewLastestVersion_Load(object sender, EventArgs e)
+        {
+            (sender as HyperLink).NavigateUrl = PAGE_URL;
         }
         protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
         {
@@ -780,9 +811,9 @@ namespace EMR
             {
                 string doc_log_id = item.GetDataKeyValue("document_log_id").ToString();
 
-                string url = $"/ER/EmerTriaAndNurAssRec.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}";
+                string url = $"/ER/EmerTriaAndNurAssRec.aspx?modelId={Request.QueryString["modelId"]}&docId={varDocID}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}";
 
-                if(doc_log_id != Request.QueryString["docId"])
+                if(doc_log_id != varDocID)
                 {
                     url += $"&docIdLog={doc_log_id}";
                     Session["viewLogInfo"] = (item.FindControl("RadLabel1") as RadLabel).Text;
@@ -793,8 +824,7 @@ namespace EMR
         }
         protected void RadButton1_Click(object sender, EventArgs e)
         {
-            string url = $"/ER/EmerTriaAndNurAssRec.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}";
-            Response.Redirect(url);
+            Response.Redirect(PAGE_URL);
         }
         private void UpdateData(Ena ena)
         {
@@ -983,7 +1013,7 @@ namespace EMR
                 ena.amend_reason = txt_amend_reason.Text;
                 ena.user_name = (string)Session["UserID"];
 
-                dynamic result = ena.Update()[0];
+                dynamic result = ena.Update(loc)[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
@@ -1152,7 +1182,7 @@ namespace EMR
         }
         protected void clearSession_Click(object sender, EventArgs e)
         {
-            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+            WebHelpers.clearSessionDoc(Page, varDocID, loc);
         }
     }
 }

@@ -9,13 +9,16 @@ namespace EMR
 {
     public partial class Emr : System.Web.UI.Page
     {
+        public string loc;
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!WebHelpers.CheckSession(this, "./login.aspx?ReturnUrl=", false)) return;
+            if (string.IsNullOrEmpty(loc)) loc = "AIH";
+            if (!WebHelpers.CheckSession(this, $"./login.aspx?loc={loc}&ReturnUrl=", false)) return;
+            loc = Request.QueryString["loc"];
+            if(string.IsNullOrEmpty(loc)) loc = "AIH";
             if (!IsPostBack)
             {
-                Session["PATIENT_INFO"] = new System.Dynamic.ExpandoObject();
-
+                DemographicSearch.ContentUrl = $"~/Other/DemographicSearch.aspx?loc={loc}";
                 BindLocation();
 
                 if ((string)Session["group_access"] == "ADM")
@@ -38,7 +41,7 @@ namespace EMR
             switch (Request["__EVENTTARGET"])
             {
                 case "location_Change":
-                    DataHelpers._LOCATION = Request["__EVENTARGUMENT"];
+                    //DataHelpers._LOCATION = Request["__EVENTARGUMENT"];
                     Response.Redirect(Request.RawUrl);
                     break;
             }
@@ -51,18 +54,18 @@ namespace EMR
 
         private void BindLocation()
         {
-            lbl_location.Text = DataHelpers._LOCATION;
-            switch (DataHelpers._LOCATION)
-            {
-                case "AIH":
-                    location_cli.Visible = true;
-                    location_aih.Visible = false;
-                    break;
-                case "CLI":
-                    location_cli.Visible = false;
-                    location_aih.Visible = true;
-                    break;
-            }
+            lbl_location.Text = Request.QueryString["loc"];
+            //switch (DataHelpers._LOCATION)
+            //{
+            //    case "AIH":
+            //        location_cli.Visible = true;
+            //        location_aih.Visible = false;
+            //        break;
+            //    case "CLI":
+            //        location_cli.Visible = false;
+            //        location_aih.Visible = true;
+            //        break;
+            //}
         }
     }
 }

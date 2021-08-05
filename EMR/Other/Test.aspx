@@ -20,7 +20,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <uc1:TextField runat="server" ID="TextField" />
+        <div contenteditable="true" id="pre"></div>
     </form>
 
     <script src="../scripts/jquery-3.2.1.min.js"></script>
@@ -30,16 +30,30 @@
     <script src="../scripts/waves.js"></script>
     <script src="../scripts/sweetalert.min.js"></script>
     <script src="../scripts/alertify.js"></script>
+
+
+
     <script>
+
+        //console.log(document.querySelectorAll('[contenteditable=true]'));
+
+        $("div[contentEditable]").keydown = function (e) {
+            console.log($("div[contentEditable]").innerHTML);
+
+        }
+
+        document.querySelectorAll('[contenteditable=true]')[0].addEventListener("input", function () {
+
+        });
 
         function format(e, t) { document.execCommand(e, !1, t) }
 
         window.addEventListener("load", function () {
             let t, o;
             
-            document.onkeyup = function (e) { (13 === e.keyCode || 32 === e.keyCode && window.getSelection().anchorNode.textContent.includes(t)) && (format("foreColor", "black"), format("insertText", "")) },
+            //document.onkeyup = function (e) { (13 === e.keyCode || 32 === e.keyCode && window.getSelection().anchorNode.textContent.includes(t)) && (format("foreColor", "black"), format("insertText", "")) },
 
-                document.onkeydown = function (e) { o = "red" === window.getSelection().focusNode.parentNode.color, 32 === e.keyCode && o && (e.preventDefault(), format("foreColor", "black"), format("insertText", " ")) }
+            //    document.onkeydown = function (e) { o = "red" === window.getSelection().focusNode.parentNode.color, 32 === e.keyCode && o && (e.preventDefault(), format("foreColor", "black"), format("insertText", " ")) }
 
             document.addEventListener('paste', (event) => {
                 let paste = (event.clipboardData || window.clipboardData).getData('text');
@@ -63,6 +77,8 @@
 
                 selection.getRangeAt(0).insertNode(text);
 
+                $("div[contentEditable]").blur()
+
                 event.preventDefault();
             });
 
@@ -78,5 +94,6 @@
         });
 
     </script>
+
 </body>
 </html>

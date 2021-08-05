@@ -1,6 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="MedicalCertificate.aspx.cs" Inherits="EMR.MedicalCertificate" ValidateRequest="false" %>
 
-<%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="uc1" TagName="PatientInfo" %>
 <%@ Register Src="~/UserControls/Alert.ascx" TagPrefix="uc1" TagName="Alert" %>
 <%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="webUI" TagName="TextField" %>
 <%@ Register Src="~/UserControls/PromptButton.ascx" TagPrefix="Button" TagName="Prompt" %>
@@ -62,9 +61,11 @@
                                 <td class="report-content-cell">
                                     <div class="main">
 
-                                        <webUI:PrtRowS1 FontBold="true" Title="BỆNH VIỆN QUỐC TẾ MỸ CHỨNG NHẬN:" SubTitle="AMERICAN INTERNATIONAL HOSPITAL CERTIFIES THAT" runat="server" />
+                                        <div style="margin-bottom: 6px;">
+                                            <webUI:PrtRowS1 FontBold="true" Title="BỆNH VIỆN QUỐC TẾ MỸ CHỨNG NHẬN:" SubTitle="AMERICAN INTERNATIONAL HOSPITAL CERTIFIES THAT" runat="server" />
+                                        </div>
 
-                                        <div class="d-grid mt-1" style="grid-template-columns: 2fr 1fr">
+                                        <div class="d-grid mt-1" style="grid-template-columns: 2fr 1fr; margin-bottom: 6px;">
                                             <div class="d-grid" style="grid-template-columns: auto 1fr">
                                                 <webUI:PrtRowS1 FontBold="true" FixedWidth="155" Title="Họ tên bệnh nhân:" SubTitle="Patient's Name" runat="server" />
                                                 <asp:Label runat="server" ID="prt_patient_name" />
@@ -76,12 +77,12 @@
                                             </div>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; margin-bottom: 6px;">
                                             <webUI:PrtRowS1 FontBold="true" FixedWidth="155" Title="Giới tính:" SubTitle="Gender" runat="server" />
                                             <asp:Label runat="server" ID="prt_gender" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 2fr 1fr">
+                                        <div class="d-grid" style="grid-template-columns: 2fr 1fr; margin-bottom: 6px;">
                                             <div class="d-grid" style="grid-template-columns: auto 1fr">
                                                 <webUI:PrtRowS1 FontBold="true" FixedWidth="155" Title="Khoa:" SubTitle="Dept" runat="server" Value="Khoa khám bệnh" />
                                                 <asp:Label runat="server" ID="prt_dept" />
@@ -93,54 +94,56 @@
 
                                         </div>
 
-                                        <webUI:PrtRowS1 FontBold="true" Title="Đã đến khám và điều trị tại bệnh viện của chúng tôi, với những thông tin như sau:" SubTitle="Visited and received treatment at our hospital, with the following information" runat="server" />
+                                        <div style="margin-bottom: 6px;">
+                                            <webUI:PrtRowS1 FontBold="true" Title="Đã đến khám và điều trị tại bệnh viện của chúng tôi, với những thông tin như sau:" SubTitle="Visited and received treatment at our hospital, with the following information" runat="server" />
+                                        </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px; margin-bottom: 6px;">
                                             <webUI:PrtRowS1 FontBold="true" FixedWidth="210" Title="Ngày khám bệnh:" SubTitle="Date of visit" runat="server" />
                                             <asp:Label runat="server" ID="prt_date_of_visit" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px; margin-bottom: 6px;">
                                             <webUI:PrtRowS1 FontBold="true" FixedWidth="210" Title="Lý do đến khám:" SubTitle="Chief complaint" runat="server" />
                                             <asp:Label runat="server" ID="prt_chief_complain" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px; margin-bottom: 6px;">
                                             <webUI:PrtRowS1 FontBold="true" FixedWidth="210" Title="Tóm tắt bệnh sử:" SubTitle="History of present illness" runat="server" />
                                             <asp:Label runat="server" ID="prt_history_present_illness" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px; margin-bottom: 6px;">
                                             <webUI:PrtRowS1 FontBold="true" FixedWidth="210" Title="Tiền sử bệnh:" SubTitle="Past history" runat="server" />
                                             <asp:Label runat="server" ID="prt_past_history" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px; margin-bottom: 6px;">
                                             <webUI:PrtRowS1 FontBold="true" FixedWidth="210" Title="Đặc điểm lâm sàng:" SubTitle="Clinical findings" runat="server" />
                                             <asp:Label runat="server" ID="prt_clinical_findings" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px; margin-bottom: 6px;">
                                             <webUI:PrtRowS1 FontBold="true" FixedWidth="210" Title="Cận lâm sàng được chỉ định:" SubTitle="Para-clinical investigations" runat="server" />
                                             <asp:Label runat="server" ID="prt_para_clinical_investigations" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px; margin-bottom: 6px;">
                                             <webUI:PrtRowS1 FontBold="true" FixedWidth="210" Title="Chẩn đoán:" SubTitle="Diagnosis" runat="server" />
                                             <asp:Label runat="server" ID="prt_diagnosis" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px; margin-bottom: 6px;">
                                             <webUI:PrtRowS1 FontBold="true" FixedWidth="230" Title="Phương pháp và thuốc điều trị:" SubTitle="Treatment and medications" runat="server" />
                                             <asp:Label runat="server" ID="prt_treatment" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px; margin-bottom: 6px;">
                                             <webUI:PrtRowS1 FontBold="true" FixedWidth="230" Title="Thời gian điều trị:" SubTitle="Treatment period" runat="server" />
                                             <asp:Label runat="server" ID="prt_treatment_period" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px; margin-bottom: 6px;">
                                             <webUI:PrtRowS1 FontBold="true" FixedWidth="230" Title="Lời khuyên và theo dõi:" SubTitle="Recommendation and Follow-up" runat="server" />
                                             <asp:Label runat="server" ID="prt_recommendation" />
                                         </div>
@@ -178,35 +181,29 @@
                     </table>
                 </div>
 
-                <telerik:RadWindowManager RenderMode="Lightweight"  
-                                  EnableShadow="true"  
-                                  Behaviors="Close, Move, Resize,Maximize" ID="RadWindowManager" DestroyOnClose="true"
-                                  RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
+                <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
             <Windows>
-                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History"   runat="server">
+                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History" runat="server">
                     <ContentTemplate>
                         <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
                             <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
                                 <Columns>
-                                    <telerik:GridTemplateColumn Display="false" HeaderStyle-Width="0" ItemStyle-Width="0" ItemStyle-Wrap="false">
-                                        <ItemTemplate>
-                                            <asp:LinkButton ID="RadLinkButton1" runat="server" CommandName="Open" Text=""></asp:LinkButton>
-                                        </ItemTemplate>
-                                    </telerik:GridTemplateColumn>
-
                                     <telerik:GridTemplateColumn>
                                         <ItemTemplate>
                                             <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
 </telerik:RadLabel>
+                                           
+                                            <asp:HyperLink CssClass="btn-link" Text="View Log" runat="server" NavigateUrl='<%# GetLogUrl(Eval("document_log_id")) %>'></asp:HyperLink>
                                         </ItemTemplate>
                                     </telerik:GridTemplateColumn>
                                 </Columns>
                             </MasterTableView>
+                            <SelectedItemStyle CssClass="SelectedStyle" />
                             <ClientSettings>
                                 <Selecting AllowRowSelect="true" />
-                                <ClientEvents OnRowDblClick="RowDblClick" />
                             </ClientSettings>
                         </telerik:RadGrid>
+
                     </ContentTemplate>
                 </telerik:RadWindow>
             </Windows>
@@ -238,7 +235,115 @@
                             <asp:ValidationSummary ID="valSum" DisplayMode="BulletList" CssClass="validationSummary" runat="server" ValidationGroup="Group1" HeaderText="Please complete the highlighted field(s)." />
                         </asp:Panel>
 
-                        <uc1:PatientInfo runat="server" ID="PatientInfo" />
+                        <div class="row">
+                            <div class="col-lg-12" id="accordionExample">
+                                <div class="card">
+                                    <div class="card-body collapse show" id="collapsePatientInfo" aria-labelledby="headingPatientInfo">
+                                        <h5 class="box-title">Thông tin bệnh nhân/ Patient Detail</h5>
+                                        <hr style="margin: 8px 0 12px 0;" />
+                                        <div class="row">
+                                            <div class="col-sm-6" style="display: flex">
+                                                <div class="w-5 text-sm-right">
+                                                    <label class="control-label text-sm-right mr-3">First Name:</label>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <asp:Label runat="server" ID="lblFirstName" CssClass="control-label text-sm-right"></asp:Label>
+                                                </div>
+                                            </div>
+
+                                            <!--/span-->
+                                            <div class="col-sm-6" style="display: flex">
+                                                <div class="w-5 text-sm-right">
+                                                    <label class="control-label text-sm-right mr-3">Last Name:</label>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <asp:Label runat="server" ID="lblLastName" CssClass="control-label text-sm-right"></asp:Label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/row-->
+                                        <div class="row">
+                                            <div class="col-sm-6" style="display: flex">
+                                                <div class="w-5 text-sm-right">
+                                                    <label class="control-label text-sm-right mr-3">Gender:</label>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <asp:Label runat="server" ID="lblGender" CssClass="control-label text-sm-right"></asp:Label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6" style="display: flex">
+                                                <div class="w-5 text-sm-right">
+                                                    <label class="control-label text-sm-right mr-3">Date of Birth:</label>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <asp:Label runat="server" ID="lblDoB" CssClass="control-label text-sm-right"></asp:Label>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                        </div>
+                                        <!--/row-->
+                                        <div class="row">
+                                            <div class="col-sm-6" style="display: flex">
+                                                <div class="w-5 text-sm-right">
+                                                    <label class="control-label text-sm-right mr-3">Contact Person:</label>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <asp:Label runat="server" ID="lblContactPerson" CssClass="control-label text-sm-right"></asp:Label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6" style="display: flex">
+                                                <div class="w-5 text-sm-right">
+                                                    <label class="control-label text-sm-right mr-3">Relationship:</label>
+
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <asp:Label runat="server" ID="lblRelationship" CssClass="control-label text-sm-right"></asp:Label>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <!--/row-->
+                                        <div class="row">
+                                            <div class="col-lg-6 d-sm-flex">
+                                                <div class="w-5 text-sm-right">
+                                                    <label class="control-label text-sm-right mr-3">Address:</label>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <asp:Label runat="server" ID="lblPatientAddress" CssClass="control-label text-sm-right"></asp:Label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/row-->
+                                        <!--/row-->
+                                        <!-- Header: Patient Visit Info -->
+                                        <h5 class="box-title">Thông tin lần khám/ Visit Detail <span class="text-danger">*</span></h5>
+                                        <hr style="margin: 8px 0 12px 0;" />
+
+                                        <div class="row">
+                                            <div class="col-sm-6" style="display: flex">
+                                                <div class="w-5 text-sm-right">
+                                                    <label class="control-label text-sm-right mr-3">Encounter:</label>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <asp:Label runat="server" ID="lblVisitCode" CssClass="control-label text-sm-right"></asp:Label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6" style="display: flex">
+                                                <div class="w-5 text-sm-right">
+                                                    <label class="control-label text-sm-right mr-3">Admit Date:</label>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <asp:Label runat="server" ID="lblVisitDate" CssClass="control-label text-sm-right"></asp:Label>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="row">
                         <div class="col-lg-12">
@@ -251,21 +356,19 @@
                                     <div class="form-body collapse show" id="collapseOne">
 
                                         <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
-                                                        <telerik:RadLabel runat="server" ID="RadLabel2">
-</telerik:RadLabel>
-                                                        <telerik:RadButton  RenderMode="Mobile"  OnClick="RadButton1_Click" ID="RadButton1" runat="server" CssClass="btn-sm" Text="View Latest Version"  />
-                                                    </div>
-
-                                                    <div class="alert alert-info d-flex align-items-center">
-                                                        <telerik:RadLabel runat="server" ID="RadLabel1">
-</telerik:RadLabel>
-                                                        <telerik:RadButton  RenderMode="Mobile" AutoPostBack="false" ID="Button1" runat="server" OnClientClicked="showWindow" CssClass="btn-sm" Text="View History"  />
-                                                    </div>
+                                            <div class="col-md-12">
+                                                <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
+                                                    <span class="mr-2">You are viewing an old version of this document</span>
+                                                    <asp:HyperLink OnLoad="LinkViewLastestVersion_Load" ID="LinkViewLastestVersion" CssClass="btn-link" Text="View Latest Version" runat="server" ></asp:HyperLink>
+                                                </div>
+                                            
+                                                <div class="alert alert-info d-flex align-items-center">
+                                                    <telerik:RadLabel runat="server" ID="RadLabel1">
+        </telerik:RadLabel>
+                                                    <a class="btn-link" href="#" onclick="showWindow()">View History</a>
                                                 </div>
                                             </div>
-
+                                        </div>
                                         <fieldset class="row mb-2">
                                             <legend>
                                                 <label class="control-label">Lý do đến khám/ <span class="text-primary">Chief complaint:</span></label>
@@ -448,26 +551,11 @@
         function afterAsyncPostBack() {
         }
 
-        function showWindow(sender, eventArgs) {
+        function showWindow() {
             var oWnd = $find("<%=RadWindow1.ClientID%>");
             oWnd.show();
         }
 
-
-       function RowDblClick(sender, eventArgs) {
-           console.log('sdfsdf');
-
-           var grid = $find("<%= RadGrid1.ClientID %>");
-           var masterTable = grid.get_masterTableView();
-           var item = eventArgs.get_itemIndexHierarchical();
-
-           var row = masterTable.get_dataItems()[item];
-
-           var button = row.findElement("RadLinkButton1");
-           button.click();
-
-           //console.log(row);
-       }
     </script>
 </body>
 </html>

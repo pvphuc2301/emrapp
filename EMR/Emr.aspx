@@ -139,7 +139,7 @@
                 </telerik:RadTabStrip>
             <div>
                 <telerik:RadMultiPage runat="server" ID="RadMultiPage2" SelectedIndex="0" CssClass="innerMultiPage">
-                    <telerik:RadPageView id="DemographicSearch" ContentUrl="~/Other/DemographicSearch.aspx" runat="server"></telerik:RadPageView>
+                    <telerik:RadPageView id="DemographicSearch" runat="server"></telerik:RadPageView>
                     <telerik:RadPageView runat="server" ContentUrl="~/Other/AdminGroup.aspx" ID="RadPageView1"></telerik:RadPageView>
                     <telerik:RadPageView runat="server" ContentUrl="~/Report/AllowUpdateEMR.aspx" ID="PageView2"></telerik:RadPageView>
                 </telerik:RadMultiPage>

@@ -22,15 +22,11 @@ namespace EMR.Print
 
         public void Initial()
         {
-            if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
-            if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
-            if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
-
             // Get du lieu tu API to Object
-            Omr omr1 = new Omr(DataHelpers.varDocId);
+            //Omr omr1 = new Omr(varDocID, loc);
 
             // Fill du lieu tu Object to Controls.
-            loadDataToOMRControls(omr1);
+            //loadDataToOMRControls(omr1);
         }
 
         public void loadDataToOMRControls(Omr omr1)

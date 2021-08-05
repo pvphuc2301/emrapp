@@ -20,6 +20,7 @@ namespace Emr_client.Emr
     public partial class Login : System.Web.UI.Page
     {
         public string ConnStringEMR = "";
+        public string varLocation;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -51,7 +52,7 @@ namespace Emr_client.Emr
                     //Session["current_session"] = current_ss.Session.SessionID;
                     Insert_EMR_Account(UserName.Value, Convert.ToString(Session["company_code"]));
                     if (string.IsNullOrEmpty(Request.QueryString["ReturnUrl"]))
-                        Response.Redirect("Emr.aspx");
+                        Response.Redirect($"Emr.aspx?loc={varLocation}");
                     else
                         FormsAuthentication.RedirectFromLoginPage(UserName.Value, false);
                 }
@@ -81,7 +82,7 @@ namespace Emr_client.Emr
                     Session["company_code"] = Convert.ToString(data.company_code);
                     Session["specialty_code"] = Convert.ToString(data.specialty_code);
                     Session["location"] = Convert.ToString(data.company_code);
-                    
+                    varLocation = Convert.ToString(data.company_code);
                     //  Session["upw"] = varUserPW;
                     //edit by mr. Phut
 
@@ -89,12 +90,8 @@ namespace Emr_client.Emr
 
                     if(response1.Status == System.Net.HttpStatusCode.OK)
                     {
-                        EMRClass.Settings["EMR_DOCUMENT_SESSION"] = JObject.Parse(response1.Data);
-
-                        Session.Timeout = EMRClass.Settings["EMR_DOCUMENT_SESSION"].paramater_value;
+                        Session.Timeout = JObject.Parse(response1.Data).paramater_value;
                     }
-
-                    DataHelpers._LOCATION = $"{Convert.ToString(data.company_code)}";
                 }
             }
         }

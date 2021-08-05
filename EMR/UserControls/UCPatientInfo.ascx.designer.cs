@@ -11,7 +11,7 @@ namespace EMR.UserControls
 {
 
 
-    public partial class PatientInfo
+    public partial class UCPatientInfo
     {
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace EMR.UserControls
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblFirstName;
+        protected global::System.Web.UI.WebControls.Label lblFirstName;
 
         /// <summary>
         /// lblLastName control.
@@ -30,7 +30,7 @@ namespace EMR.UserControls
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblLastName;
+        protected global::System.Web.UI.WebControls.Label lblLastName;
 
         /// <summary>
         /// lblGender control.
@@ -39,7 +39,7 @@ namespace EMR.UserControls
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblGender;
+        protected global::System.Web.UI.WebControls.Label lblGender;
 
         /// <summary>
         /// lblDoB control.
@@ -48,7 +48,7 @@ namespace EMR.UserControls
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblDoB;
+        protected global::System.Web.UI.WebControls.Label lblDoB;
 
         /// <summary>
         /// lblContactPerson control.
@@ -57,7 +57,7 @@ namespace EMR.UserControls
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblContactPerson;
+        protected global::System.Web.UI.WebControls.Label lblContactPerson;
 
         /// <summary>
         /// lblRelationship control.
@@ -66,7 +66,7 @@ namespace EMR.UserControls
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblRelationship;
+        protected global::System.Web.UI.WebControls.Label lblRelationship;
 
         /// <summary>
         /// lblPatientAddress control.
@@ -75,7 +75,7 @@ namespace EMR.UserControls
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblPatientAddress;
+        protected global::System.Web.UI.WebControls.Label lblPatientAddress;
 
         /// <summary>
         /// lblVisitCode control.
@@ -84,7 +84,7 @@ namespace EMR.UserControls
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblVisitCode;
+        protected global::System.Web.UI.WebControls.Label lblVisitCode;
 
         /// <summary>
         /// lblVisitDate control.
@@ -93,6 +93,6 @@ namespace EMR.UserControls
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblVisitDate;
+        protected global::System.Web.UI.WebControls.Label lblVisitDate;
     }
 }

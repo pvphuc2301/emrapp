@@ -34,7 +34,7 @@ namespace EMR
         }
         public static string FormatPhysicalExamination(string value)
         {
-            if (value == null) return null;
+            if (string.IsNullOrEmpty(value)) return null;
             try
             {
                 string result = value.Replace("\n", "<br>");
@@ -50,58 +50,58 @@ namespace EMR
         /// <summary>
         /// Khai bao bien su dung toan Project EMR
         /// </summary>
-        public static string varDocType;  // Document Type: OPD/ IPD/ERO/ OTHER
-        public static string varModelId;  // Document Model ID
-        public static string varDocId;// Document ID
-        public static string varPVId; // Patient Visit ID
-        public static string varUseName = "chung.nguyen"; // UseName: get username AD login hien tai
-        public static string varDocumentStatus;// Document Status: kiem tra trang thai Document
-        public static string varNotifications;// Thong bao ket qua xu ly: thanh cong/ fail
-        public static string _LOCATION;
+        //public static string varDocType;  // Document Type: OPD/ IPD/ERO/ OTHER
+        //public static string varModelID;  // Document Model ID
+        //public static string varDocID;// Document ID
+        //public static string varPVID; // Patient Visit ID
+        //public static string varUseName = "chung.nguyen"; // UseName: get username AD login hien tai
+        //public static string varDocumentStatus;// Document Status: kiem tra trang thai Document
+        //public static string varNotifications;// Thong bao ket qua xu ly: thanh cong/ fail
+        //public static string _LOCATION;
 
-        public static PatientInfo patient;
-        public static PatientInfo LoadPatientInfomation(string varPID)//object sender, EventArgs e
-        {
-            try
-            {
-                dynamic response = WebHelpers.GetAPI("api/emr/demographic/" + varPID);
+        //public static PatientInfo patient;
+        //public static PatientInfo LoadPatientInfomation(string varPID)//object sender, EventArgs e
+        //{
+        //    try
+        //    {
+        //        dynamic response = WebHelpers.GetAPI("api/emr/demographic/" + varPID);
 
-                if (response.Status == System.Net.HttpStatusCode.OK)
-                {
-                    patient = new PatientInfo();
-                    dynamic data = JObject.Parse(response.Data);
-                    DataTable tbl = WebHelpers.GetJSONToDataTable(response.Data);
-                    WebHelpers.BindingDatafield(tbl, patient);
-                    // Gan bien trung gian ( Global)
-                    // DataHelpers.patient = this.patient;
-                }
+        //        if (response.Status == System.Net.HttpStatusCode.OK)
+        //        {
+        //            patient = new PatientInfo();
+        //            dynamic data = JObject.Parse(response.Data);
+        //            DataTable tbl = WebHelpers.GetJSONToDataTable(response.Data);
+        //            WebHelpers.BindingDatafield(tbl, patient);
+        //            // Gan bien trung gian ( Global)
+        //            // DataHelpers.patient = this.patient;
+        //        }
 
-                return patient;
-            }
-            catch(Exception ex)
-            {
-                return null;
-            }
+        //        return patient;
+        //    }
+        //    catch(Exception ex)
+        //    {
+        //        return null;
+        //    }
             
-        }
+        //}
 
-        public static PatientVisitInfo patientVisit;
+        //public static PatientVisitInfo patientVisit;
 
-        public static void LoadPatientVisitInfomation(string varPVId)
-        {
-            dynamic response = WebHelpers.GetAPI("api/emr/patient-visit/" + varPVId);
+        //public static void LoadPatientVisitInfomation(string varPVID)
+        //{
+        //    dynamic response = WebHelpers.GetAPI("api/emr/patient-visit/" + varPVID);
 
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                patientVisit = new PatientVisitInfo();
-                dynamic data = JObject.Parse(response.Data);
-                DataTable tbl = WebHelpers.GetJSONToDataTable(response.Data);
-                WebHelpers.BindingDatafield(tbl, patientVisit);
+        //    if (response.Status == System.Net.HttpStatusCode.OK)
+        //    {
+        //        patientVisit = new PatientVisitInfo();
+        //        dynamic data = JObject.Parse(response.Data);
+        //        DataTable tbl = WebHelpers.GetJSONToDataTable(response.Data);
+        //        WebHelpers.BindingDatafield(tbl, patientVisit);
 
-                // Gan bien trung gian ( Global)
-                // DataHelpers.patientVisit = this.patientVisit;
-            }
-        }
+        //        // Gan bien trung gian ( Global)
+        //        // DataHelpers.patientVisit = this.patientVisit;
+        //    }
+        //}
 
         internal static int? ConvertToInt(string value)
         {

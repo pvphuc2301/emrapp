@@ -20,13 +20,24 @@
                 <div class="row">
                     <div class="col-md-5">
                         <div class="card">
-                            <div class="card-header bg-white">
-                                <h4 class="card-title control-label m-0">
-                                    <span class="text-primary">Demographics</span>
-                                </h4>
-                            </div>
-
                             <div class="card-body">
+                                <div class="row col-12 mb-2">
+                                    <h4 class="card-title control-label m-0">
+                                        <span class="text-primary">Demographics</span>
+                                    </h4>
+                                </div>
+
+                                <div class="row col-12">
+                                    <div >
+                                        <asp:Label Font-Bold="true" runat="server" ID="lbl_demographics_title"></asp:Label>
+                                    </div>
+                                    <lable class="flex-grow-1" runat="server" id="Lable1"></lable>
+                                </div>
+
+                                <div class="row col-12 bg-info">
+                                    Demographics
+                                </div>
+
                                 <div class="row col-12">
                                     <div class=" w-sm-6 d-flex">
                                         Gender
@@ -53,6 +64,10 @@
                                         Phone
                                     </div>
                                     <div class="flex-grow-1" runat="server" id="lblPhone"></div>
+                                </div>
+
+                                <div class="row col-12 bg-info">
+                                    Next of Kin / Person to Contact
                                 </div>
 
                                 <div class="row col-12">

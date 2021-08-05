@@ -19,7 +19,7 @@ namespace EMR
         public string ConnStringHIS = ""; public string ConnStringEMR = ""; string ConnStringHC = "";
         public string UserID; string specialty_id = "";string Fr_Date = ""; string To_Date = "";
         public string current_session = "";
-        
+        public string loc { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!WebHelpers.CheckSession(this, "./login.aspx?ReturnUrl=", false)) return;
@@ -50,7 +50,7 @@ namespace EMR
             switch (Request["__EVENTTARGET"])
             {
                 case "location_Change":
-                    DataHelpers._LOCATION = Request["__EVENTARGUMENT"];
+                    loc = Request["__EVENTARGUMENT"];
                     Response.Redirect(Request.RawUrl);
                     break;
             }
@@ -362,8 +362,8 @@ namespace EMR
 
         private void BindLocation()
         {
-            lbl_location.Text = DataHelpers._LOCATION;
-            switch (DataHelpers._LOCATION)
+            lbl_location.Text = loc;
+            switch (loc)
             {
                 case "AIH":
                     location_cli.Visible = true;

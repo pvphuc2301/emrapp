@@ -18,10 +18,12 @@ namespace EMR.Other
         public string ConnStringHIS = ""; public string ConnStringEMR = ""; string ConnStringHC = "";
         public string UserID; string specialty_id = ""; string Fr_Date = ""; string To_Date = "";
         public string current_session = "";
-
+        public string loc { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!WebHelpers.CheckSession(this, "../login.aspx?ReturnUrl=", false)) return;
+            
+            loc = Request.QueryString["loc"];
 
             if (!IsPostBack)
             {
@@ -33,6 +35,7 @@ namespace EMR.Other
             //{
             //    btnSearch_Click(sender, e);
             //}
+            
             specialty_id = Convert.ToString(Session["specialty_code"]);
 
             ConnClass ConnStr = new ConnClass();
@@ -46,7 +49,7 @@ namespace EMR.Other
             switch (Request["__EVENTTARGET"])
             {
                 case "location_Change":
-                    DataHelpers._LOCATION = Request["__EVENTARGUMENT"];
+                    //DataHelpers._LOCATION = Request["__EVENTARGUMENT"];
                     Response.Redirect(Request.RawUrl);
                     break;
             }
@@ -148,7 +151,7 @@ namespace EMR.Other
             string PID = item.GetDataKeyValue("patient_id").ToString();
             string PVID = item.GetDataKeyValue("visible_patient_id").ToString();
 
-            string url = string.Format("/emr/emrinfor.aspx?pid={0}&vbid={1}", PID, PVID);
+            string url = $"/emr/emrinfor.aspx?pid={PID}&vbid={PVID}&loc={loc}";
             //string url = string.Format("/emr/emr.aspx?pid={0}&vbid={1}", PID, PVID);
 
             Response.Redirect(url);
@@ -345,22 +348,22 @@ namespace EMR.Other
                     
                     if (data.primary_visible_patient_id != null)
                     {
-                        dynamic PATIENT_INFO = (dynamic)Session["PATIENT_INFO"];
+                        //dynamic PATIENT_INFO = (dynamic)Session["PATIENT_INFO"];
                         
                         response = WebHelpers.GetAPI("api/Patient/select-patient-linked/" + data.patient_id);
                         if (response.Status == System.Net.HttpStatusCode.OK)
                         {
                             ScriptManager.RegisterStartupScript(Page, Page.GetType(), ScriptKey.SHOW_POPUP, "setTimeout(()=> { $('#DocumentList').modal({backdrop: 'static', keyboard: false}); },0);", true);
-                            PATIENT_INFO.patientLinked = WebHelpers.GetJSONToDataTable(response.Data);
+                            //PATIENT_INFO.patientLinked = WebHelpers.GetJSONToDataTable(response.Data);
                             radGridPidList.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
                             radGridPidList.DataBind();
                             //&#128273;
-                            Session["PATIENT_INFO"] = PATIENT_INFO;
+                            //Session["PATIENT_INFO"] = PATIENT_INFO;
                         }
                     }
                     else
                     {
-                        string url = string.Format("/emr/emrinfor.aspx?pid={0}&vbid={1}", PID, PVID);
+                        string url = $"/emr/emrinfor.aspx?pid={PID}&vbid={PVID}&loc={loc}";
                         Response.Redirect(url);
                     }
                 }
@@ -393,7 +396,7 @@ namespace EMR.Other
                 string PID = item.GetDataKeyValue("patient_id").ToString();
                 string PVID = item.GetDataKeyValue("visible_patient_id").ToString();
 
-                string url = string.Format("/emr/emrinfor.aspx?pid={0}&vbid={1}", PID, PVID);
+                string url = $"/emr/emrinfor.aspx?pid={PID}&vbid={PVID}&loc={loc}";
                 Response.Redirect(url);
             } 
         }

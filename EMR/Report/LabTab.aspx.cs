@@ -14,10 +14,10 @@ namespace EMR.Report
     {
         public string[] lab_report_id = new string[50];
         public string[] lab_report_name = new string[50];
-        public int count_report = 0; string varPvID ="";string varPID = "";string varFrDate = "";
+        public int count_report = 0; string varPVID ="";string varPID = "";string varFrDate = "";
         protected void Page_Init(object sender, System.EventArgs e)
         {
-            varPvID = Request.QueryString["vid"];
+            varPVID = Request.QueryString["vid"];
             varPID = Request.QueryString["pid"];
             varFrDate = Request.QueryString["frd"];
             if (!Page.IsPostBack)
@@ -87,7 +87,7 @@ namespace EMR.Report
             pageView.ID = tab.Value;
             //  pageView.CssClass = "contentWrapper" + tab.Index;
             Session["cat"] = tab.Value;
-           // Session["pvid"] = varPvID;
+           // Session["pvid"] = varPVID;
           //  Session["pid"] = varPID;
             RadMultiPage1.PageViews.Add(pageView);
             tab.PageViewID = pageView.ID;

@@ -102,7 +102,7 @@
                         <!-- This is  -->
                         <li class="nav-item"><a class="nav-link" runat="server" id="lblPatientInfo"></a></li>
                         <li class="nav-item ml-2">
-                            <a runat="server" onclick="headerDisplay.style.display='';leftMenuWidth.style.width='180px';" href="~/Other/DemographicSearch.aspx" class="nav-link btn-icon" title="close patient's details">
+                            <a runat="server" id="linkDemographicSearch" onclick="headerDisplay.style.display='';leftMenuWidth.style.width='180px';" class="nav-link btn-icon" title="close patient's details">
                                 <icon:X runat="server"/>
                             </a>
                         </li>

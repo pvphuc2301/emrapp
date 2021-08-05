@@ -243,7 +243,6 @@
     <Content Include="IPD\IniMedAssForNeoInp.aspx" />
     <Content Include="IPD\InpIniMedAss.aspx" />
     <Content Include="IPD\InpIniNurAss.aspx" />
-    <Content Include="IPD\InpatientMedicalRecord.aspx" />
     <Content Include="IPD\ObsAtDeliRoom.aspx" />
     <Content Include="IPD\SummaryOfMedRec.aspx" />
     <Content Include="IPD\SurgicalCertificate.aspx" />
@@ -316,6 +315,7 @@
     <Content Include="UserControls\PrintTemplate\Signature1.ascx" />
     <Content Include="UserControls\PrintTemplate\Signature2.ascx" />
     <Content Include="UserControls\TextField1.ascx" />
+    <Content Include="UserControls\UCPatientInfo.ascx" />
     <Content Include="zxing.dll" />
     <Content Include="Print\Print.rar" />
     <Content Include="bin\EMR.dll.config" />
@@ -613,13 +613,6 @@
     <Compile Include="IPD\InpIniNurAss.aspx.designer.cs">
       <DependentUpon>InpIniNurAss.aspx</DependentUpon>
     </Compile>
-    <Compile Include="IPD\InpatientMedicalRecord.aspx.cs">
-      <DependentUpon>InpatientMedicalRecord.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="IPD\InpatientMedicalRecord.aspx.designer.cs">
-      <DependentUpon>InpatientMedicalRecord.aspx</DependentUpon>
-    </Compile>
     <Compile Include="IPD\ObsAtDeliRoom.aspx.cs">
       <DependentUpon>ObsAtDeliRoom.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -909,13 +902,6 @@
     <Compile Include="UserControls\Message.ascx.designer.cs">
       <DependentUpon>Message.ascx</DependentUpon>
     </Compile>
-    <Compile Include="UserControls\PatientInfo.ascx.cs">
-      <DependentUpon>PatientInfo.ascx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="UserControls\PatientInfo.ascx.designer.cs">
-      <DependentUpon>PatientInfo.ascx</DependentUpon>
-    </Compile>
     <Compile Include="UserControls\PopupException.ascx.cs">
       <DependentUpon>PopupException.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1073,6 +1059,13 @@
     <Compile Include="UserControls\TextField1.ascx.designer.cs">
       <DependentUpon>TextField1.ascx</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\UCPatientInfo.ascx.cs">
+      <DependentUpon>UCPatientInfo.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="UserControls\UCPatientInfo.ascx.designer.cs">
+      <DependentUpon>UCPatientInfo.ascx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\RadSpell\de-DE.tdf" />
@@ -1090,7 +1083,6 @@
     <Content Include="UserControls\Barcode.ascx" />
     <Content Include="UserControls\Checkbox\Checkbox.ascx" />
     <Content Include="UserControls\Message.ascx" />
-    <Content Include="UserControls\PatientInfo.ascx" />
     <Content Include="UserControls\PopupModal.ascx" />
     <Content Include="UserControls\PrintTemplate\DateTime.ascx" />
     <Content Include="UserControls\PrintTemplate\Label.ascx" />
@@ -1146,7 +1138,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

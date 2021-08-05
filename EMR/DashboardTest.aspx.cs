@@ -9,6 +9,7 @@ namespace EMR
 {
     public partial class DashboardTest : System.Web.UI.Page
     {
+        public string loc { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -25,7 +26,7 @@ namespace EMR
             switch (Request["__EVENTTARGET"])
             {
                 case "location_Change":
-                    DataHelpers._LOCATION = Request["__EVENTARGUMENT"];
+                    loc = Request["__EVENTARGUMENT"];
                     Response.Redirect(Request.RawUrl);
                     break;
             }
@@ -38,8 +39,8 @@ namespace EMR
 
         private void BindLocation()
         {
-            lbl_location.Text = DataHelpers._LOCATION;
-            switch (DataHelpers._LOCATION)
+            lbl_location.Text = loc;
+            switch (loc)
             {
                 case "AIH":
                     location_cli.Visible = true;

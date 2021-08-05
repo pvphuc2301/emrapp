@@ -1,6 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="DischargeSummary.aspx.cs" Inherits="EMR.DischargeSummary" ValidateRequest="false" %>
 
-<%@ Register Src="~/UserControls/PatientInfo.ascx" TagPrefix="uc1" TagName="PatientInfo" %>
 <%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="aih" TagName="TextField" %>
 <%@ Register Src="~/UserControls/AmendReason.ascx" TagPrefix="aih" TagName="AmendReason" %>
 <%@ Register Src="~/icons/XSquare.ascx" TagPrefix="icon" TagName="xsquare" %>
@@ -183,35 +182,29 @@
                     </table>
                 </div>
 
-                <telerik:RadWindowManager RenderMode="Lightweight"  
-                                  EnableShadow="true"  
-                                  Behaviors="Close, Move, Resize,Maximize" ID="RadWindowManager" DestroyOnClose="true"
-                                  RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
+                <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
             <Windows>
-                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History"   runat="server">
+                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History" runat="server">
                     <ContentTemplate>
                         <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
                             <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
                                 <Columns>
-                                    <telerik:GridTemplateColumn Display="false" HeaderStyle-Width="0" ItemStyle-Width="0" ItemStyle-Wrap="false">
-                                        <ItemTemplate>
-                                            <asp:LinkButton ID="RadLinkButton1" runat="server" CommandName="Open" Text=""></asp:LinkButton>
-                                        </ItemTemplate>
-                                    </telerik:GridTemplateColumn>
-
                                     <telerik:GridTemplateColumn>
                                         <ItemTemplate>
                                             <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
 </telerik:RadLabel>
+                                           
+                                            <asp:HyperLink CssClass="btn-link" Text="View Log" runat="server" NavigateUrl='<%# GetLogUrl(Eval("document_log_id")) %>'></asp:HyperLink>
                                         </ItemTemplate>
                                     </telerik:GridTemplateColumn>
                                 </Columns>
                             </MasterTableView>
+                            <SelectedItemStyle CssClass="SelectedStyle" />
                             <ClientSettings>
                                 <Selecting AllowRowSelect="true" />
-                                <ClientEvents OnRowDblClick="RowDblClick" />
                             </ClientSettings>
                         </telerik:RadGrid>
+
                     </ContentTemplate>
                 </telerik:RadWindow>
             </Windows>
@@ -224,452 +217,560 @@
                     </ul>
                     <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
                         <asp:HiddenField runat="server" ID="DataObj" />
-                    <asp:Panel runat="server" ID="messagePlaceHolder">
-                        <div class="card" runat="server" id="amendReasonWraper">
-                            <div class="card-body">
-                                <h5>Lý do thay đổi/ <span class="text-primary">amend reason: </span>
-                                    <br />
-                                    <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
-                                <div class="form-group mb-2">
+                        <asp:Panel runat="server" ID="messagePlaceHolder">
+                            <div class="card" runat="server" id="amendReasonWraper">
+                                <div class="card-body">
+                                    <h5>Lý do thay đổi/ <span class="text-primary">amend reason: </span>
+                                        <br />
+                                        <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
+                                    <div class="form-group mb-2">
 
-                                    <asp:TextBox runat="server" TextMode="MultiLine" ID="txt_amend_reason" CssClass="form-control" />
+                                        <asp:TextBox runat="server" TextMode="MultiLine" ID="txt_amend_reason" CssClass="form-control" />
 
-                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
-                                        ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                                        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
+                                            ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <asp:ValidationSummary ID="valSum" DisplayMode="BulletList" CssClass="validationSummary" runat="server" ValidationGroup="Group1" HeaderText="Please complete the highlighted field(s)." />
+                        </asp:Panel>
+         
+                        <div class="row">
+    <div class="col-lg-12" id="accordionExample">
+        <div class="card">
+            <div class="card-body collapse show" id="collapsePatientInfo" aria-labelledby="headingPatientInfo">
+                <h5 class="box-title">Thông tin bệnh nhân/ Patient Detail</h5>
+                <hr style="margin: 8px 0 12px 0;" />
+                <div class="row">
+                    <div class="col-sm-6" style="display: flex">
+                        <div class="w-5 text-sm-right">
+                            <label class="control-label text-sm-right mr-3">First Name:</label>
+                        </div>
+                        <div class="flex-grow-1">
+                            <asp:Label runat="server" ID="lblFirstName" CssClass="control-label text-sm-right"></asp:Label>
+                        </div>
+                    </div>
+
+                    <!--/span-->
+                    <div class="col-sm-6" style="display: flex">
+                        <div class="w-5 text-sm-right">
+                            <label class="control-label text-sm-right mr-3">Last Name:</label>
+                        </div>
+                        <div class="flex-grow-1">
+                            <asp:Label runat="server" ID="lblLastName" CssClass="control-label text-sm-right"></asp:Label>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+                <div class="row">
+                    <div class="col-sm-6" style="display: flex">
+                        <div class="w-5 text-sm-right">
+                            <label class="control-label text-sm-right mr-3">Gender:</label>
+                        </div>
+                        <div class="flex-grow-1">
+                            <asp:Label runat="server" ID="lblGender" CssClass="control-label text-sm-right"></asp:Label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" style="display: flex">
+                        <div class="w-5 text-sm-right">
+                            <label class="control-label text-sm-right mr-3">Date of Birth:</label>
+                        </div>
+                        <div class="flex-grow-1">
+                            <asp:Label runat="server" ID="lblDoB" CssClass="control-label text-sm-right"></asp:Label>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+                <!--/row-->
+                <div class="row">
+                    <div class="col-sm-6" style="display: flex">
+                        <div class="w-5 text-sm-right">
+                            <label class="control-label text-sm-right mr-3">Contact Person:</label>
+                        </div>
+                        <div class="flex-grow-1">
+                            <asp:Label runat="server" ID="lblContactPerson" CssClass="control-label text-sm-right"></asp:Label>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6" style="display: flex">
+                        <div class="w-5 text-sm-right">
+                            <label class="control-label text-sm-right mr-3">Relationship:</label>
+
+                        </div>
+                        <div class="flex-grow-1">
+                            <asp:Label runat="server" ID="lblRelationship" CssClass="control-label text-sm-right"></asp:Label>
+                        </div>
+                    </div>
+
+                </div>
+                <!--/row-->
+                <div class="row">
+                    <div class="col-lg-6 d-sm-flex">
+                        <div class="w-5 text-sm-right">
+                            <label class="control-label text-sm-right mr-3">Address:</label>
+                        </div>
+                        <div class="flex-grow-1">
+                            <asp:Label runat="server" ID="lblPatientAddress" CssClass="control-label text-sm-right"></asp:Label>
+                        </div>
+                    </div>
+                </div>
+                <!--/row-->
+                <!--/row-->
+                <!-- Header: Patient Visit Info -->
+                <h5 class="box-title">Thông tin lần khám/ Visit Detail <span class="text-danger">*</span></h5>
+                <hr style="margin: 8px 0 12px 0;" />
+
+                <div class="row">
+                    <div class="col-sm-6" style="display: flex">
+                        <div class="w-5 text-sm-right">
+                            <label class="control-label text-sm-right mr-3">Encounter:</label>
+                        </div>
+                        <div class="flex-grow-1">
+                            <asp:Label runat="server" ID="lblVisitCode" CssClass="control-label text-sm-right"></asp:Label>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6" style="display: flex">
+                        <div class="w-5 text-sm-right">
+                            <label class="control-label text-sm-right mr-3">Admit Date:</label>
+                        </div>
+                        <div class="flex-grow-1">
+                            <asp:Label runat="server" ID="lblVisitDate" CssClass="control-label text-sm-right"></asp:Label>
+                        </div>
+                    </div>
+                    <!--/span-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card mt-2">
+                                    <div class="card-header">
+                                        <h4 class="text-primary">Discharge Summary</h4>
+                                        <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"></a>
+                                    </div>
+                                    <div class="card-body collapse show" id="collapseOne">
+                                        <div class="form-body">
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
+                                                        <span class="mr-2">You are viewing an old version of this document</span>
+                                                        <asp:HyperLink OnLoad="LinkViewLastestVersion_Load" ID="LinkViewLastestVersion" CssClass="btn-link" Text="View Latest Version" runat="server" ></asp:HyperLink>
+                                                    </div>
+                                            
+                                                    <div class="alert alert-info d-flex align-items-center">
+                                                        <telerik:RadLabel runat="server" ID="RadLabel1">
+            </telerik:RadLabel>
+                                                        <a class="btn-link" href="#" onclick="showWindow()">View History</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-2">
+                                                <div class="col-md-12">
+                                                    <label class="control-label mb-1" style="width: 150px">Lý do xuất viện/ <span class="text-primary">Discharge Reason </span><span class="text-danger">*</span></label>
+                                                    <asp:Label CssClass="align-top" runat="server" ID="lbl_disc_reason_desc" />
+                                                    <div class="d-inline-block align-top" runat="server" id="disc_reason_code_wrapper">
+
+                                                        <div class="custom-control custom-radio d-inline-block ml-2">
+                                                            <input onclick="__doPostBack('discReasonCode_Change', 'ama')" type="radio" runat="server" id="rad_disc_reason_code_ama" name="rad_disc_reason_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_disc_reason_code_ama"><span class="text-primary">Normal</span></label>
+                                                        </div>
+
+                                                        <div class="custom-control custom-radio d-inline-block ml-2">
+                                                            <input onclick="__doPostBack('discReasonCode_Change', 'dama')" type="radio" runat="server" id="rad_disc_reason_code_dama" name="rad_disc_reason_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_disc_reason_code_dama"><span class="text-primary">Dama</span></label>
+                                                        </div>
+
+                                                        <div class="custom-control custom-radio d-inline-block ml-2">
+                                                            <input onclick="__doPostBack('discReasonCode_Change', 'transfer')" type="radio" runat="server" id="rad_disc_reason_code_transfer" name="rad_disc_reason_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_disc_reason_code_transfer"><span class="text-primary">Transfer</span></label>
+                                                            <a href="javascript:void(0)" data-clear="rad_disc_reason_code" onclick="clear_radiobutton(this)">
+                                                                <icon:xsquare runat="server" ID="XSquare38" />
+                                                            </a>
+                                                        </div>
+                                                        <asp:CustomValidator ID="CustomValidator1" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="Discharge Reason is required" CssClass="text-danger" OnServerValidate="disc_reason_code_ServerValidate"></asp:CustomValidator>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <fieldset class="row mb-2">
+                                                <div class="col-md-12 mb-2">
+                                                    <label class="control-label mb-1" style="width: 150px">Ngày nhập viện/ <span class="text-primary">Date of hospitalization:</span></label>
+                                                    <asp:Label CssClass="align-top" runat="server" ID="lbl_date_of_hospital" />
+                                                    <span runat="server" id="date_of_hospital_wrapper">
+                                                        <telerik:RadDatePicker runat="server" ID="dpk_date_of_hospital" CssClass="align-top" Width="120px" />
+                                                    </span>
+                                                </div>
+
+                                                <div class="col-md-12 mb-2">
+                                                    <label class="control-label mb-1" style="width: 150px">Ngày xuất viện/ <span class="text-primary">Date of discharge:</span></label>
+                                                    <asp:Label CssClass="align-top" runat="server" ID="lbl_date_of_discharge" />
+                                                    <span runat="server" id="date_of_discharge_wrapper">
+                                                        <telerik:RadDatePicker CssClass="align-top" runat="server" ID="dpk_date_of_discharge" Width="120px" />
+                                                    </span>
+                                                </div>
+                                            </fieldset>
+
+                                            <fieldset class="row mb-2">
+                                                <legend>
+                                                    <label class="control-label mb-2">1. Lý do nhập viện/ <span class="text-primary">Reason for admission:</span></label>
+                                                </legend>
+
+                                                <div class="col-md-12">
+                                                    <label style="width: 150px"></label>
+                                                    <div class="d-inline-block align-top" style="width: calc(100% - 154px)">
+                                                        <asp:Label runat="server" ID="lbl_admission_reason" />
+                                                        <div runat="server" id="admission_reason_wrapper">
+                                                            <aih:TextField runat="server" ID="txt_admission_reason" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                            <fieldset class="row mb-2">
+                                                <legend>
+                                                    <label class="control-label mb-2">2. Chẩn đoán chính/ <span class="text-primary">Main diagnosis:</span></label>
+                                                </legend>
+                                                <div class="col-md-12 mb-2">
+                                                    <label style="width: 150px" class="control-label mb-1">Phân loại bệnh theo ICD-10/ <span class="text-primary">ICD-10 Code:</span></label>
+                                                    <div class="d-inline-block align-top" style="width: calc(100% - 154px)">
+                                                        <asp:Label runat="server" ID="lbl_icd10_diagnosis" />
+                                                        <div runat="server" id="icd10_diagnosis_wrapper">
+                                                            <aih:TextField runat="server" ID="txt_icd10_diagnosis" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-2">
+                                                    <label class="control-label mb-1" style="width: 150px">Chẩn đoán kết hợp/ <span class="text-primary">Associated diagnosis:</span></label>
+                                                    <div class="d-inline-block align-top" style="width: calc(100% - 154px)">
+                                                        <asp:Label runat="server" ID="lbl_associated_diagnosis" />
+                                                        <div class="form-group" runat="server" id="associated_diagnosis_wrapper">
+                                                            <aih:TextField runat="server" ID="txt_associated_diagnosis" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                            <fieldset class="row mb-2">
+                                                <legend>
+                                                    <label class="control-label mb-2">3. Bệnh sử/ <span class="text-primary">Medical History:</span></label>
+                                                </legend>
+                                                <div class="col-md-12 mb-2">
+                                                    <label class="control-label mb-1" style="width: 150px">Bệnh sử hiện tại/ <span class="text-primary">Current Medical History:</span></label>
+                                                    <div class="d-inline-block align-top" style="width: calc(100% - 154px)">
+                                                        <asp:Label runat="server" ID="lbl_cur_med_history" />
+                                                        <div runat="server" id="cur_med_history_wrapper">
+                                                            <aih:TextField runat="server" ID="txt_cur_med_history" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-2">
+                                                    <label class="control-label mb-1" style="width: 150px">Tiền sử bệnh/ <span class="text-primary">Antecedent Medical History:</span></label>
+                                                    <div class="d-inline-block align-top" style="width: calc(100% - 154px)">
+                                                        <asp:Label runat="server" ID="lbl_ant_med_history" />
+                                                        <div runat="server" id="ant_med_history_wrapper">
+                                                            <aih:TextField runat="server" ID="txt_ant_med_history" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                            <fieldset class="row mb-2">
+                                                <legend>
+                                                    <label class="control-label mb-2">4. Dấu hiệu lâm sàng lúc nhập viện/ <span class="text-primary">Physical findings on admission:</span></label>
+                                                </legend>
+                                                <div class="col-md-12">
+                                                    <label style="width: 150px"></label>
+                                                    <div class="d-inline-block" style="width: calc(100% - 154px)">
+                                                        <asp:Label runat="server" ID="lbl_physical_finding" />
+                                                        <div runat="server" id="physical_finding_wrapper">
+                                                            <aih:TextField runat="server" ID="txt_physical_finding" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                            <fieldset class="row mb-2">
+                                                <legend>
+                                                    <label class="control-label mb-2">5. Kết quả xét nghiệm/ <span class="text-primary">Laboratory investigation results:</span></label>
+                                                </legend>
+                                                <div class="col-md-12 mb-2">
+                                                    <label style="width: 150px"></label>
+                                                    <div class="d-inline-block" style="width: calc(100% - 154px)">
+                                                        <asp:Label runat="server" ID="lbl_lab_result" />
+                                                        <div runat="server" id="lab_result_wrapper">
+                                                            <aih:TextField runat="server" ID="txt_lab_result" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-2">
+                                                    <label class="control-label mb-1" style="width: 150px">Giải phẫu bệnh/ <span class="text-primary">Pathology:</span></label>
+                                                    <asp:Label runat="server" CssClass="align-top" ID="lbl_patho_result_desc" />
+                                                    <div class="d-inline-block align-top" runat="server" id="patho_result_code_wrapper">
+                                                        <div class="custom-control custom-radio d-inline-block ml-2">
+                                                            <input type="radio" runat="server" id="rad_patho_result_code_be" name="rad_patho_result_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_patho_result_code_be">Lành tính/ <span class="text-primary">Benign</span></label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio  d-inline-block ml-2">
+                                                            <input type="radio" runat="server" id="rad_patho_result_code_ma" name="rad_patho_result_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_patho_result_code_ma">Ác tính/ <span class="text-primary">Malignant</span></label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio d-inline-block ml-2">
+                                                            <input type="radio" runat="server" id="rad_patho_result_code_uc" name="rad_patho_result_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_patho_result_code_uc">Chưa xác định/ <span class="text-primary">Unconfirmed</span></label>
+                                                            <a href="javascript:void(0)" data-clear="rad_patho_result_code" onclick="clear_radiobutton(this)">
+                                                                <icon:xsquare runat="server" ID="XSquare2" />
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                            <fieldset class="row mb-2">
+                                                <legend>
+                                                    <label class="control-label mb-2">6. Các quy trình đã được thực hiện/ <span class="text-primary">Procedures performed:</span></label>
+                                                </legend>
+
+                                                <div class="col-md-12">
+                                                    <label style="width: 150px"></label>
+                                                    <div class="d-inline-block" style="width: calc(100% - 154px)">
+                                                        <asp:Label runat="server" ID="lbl_proce_performed" />
+                                                        <div runat="server" id="proce_performed_wrapper">
+                                                            <aih:TextField runat="server" ID="txt_proce_performed" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                            <fieldset class="row mb-2">
+                                                <legend>
+                                                    <label class="control-label mb-2">7. Điều trị trong quá trình nằm viện/ <span class="text-primary">Treatment during hospitalization:</span></label>
+                                                </legend>
+                                                <div class="col-md-12">
+                                                    <label style="width: 150px"></label>
+                                                    <div class="d-inline-block" style="width: calc(100% - 154px)">
+                                                        <asp:Label runat="server" ID="lbl_treatment" />
+                                                        <div runat="server" id="treatment_wrapper">
+                                                            <aih:TextField runat="server" ID="txt_treatment" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                            <fieldset class="row mb-2">
+                                                <legend>
+                                                    <label class="control-label mb-2">8. Diễn tiến trong quá trình nằm viện/ <span class="text-primary">Evolution during hospitalization:</span></label>
+                                                </legend>
+                                                <div class="col-md-12">
+                                                    <label style="width: 150px"></label>
+                                                    <div class="d-inline-block" style="width: calc(100% - 154px)">
+                                                        <asp:Label runat="server" ID="lbl_evolution" />
+                                                        <div runat="server" id="evolution_wrapper">
+                                                            <aih:TextField runat="server" ID="txt_evolution" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                            <fieldset class="row mb-2">
+                                                <legend>
+                                                    <label class="control-label mb-2">9. Tình trạng của bệnh nhân khi xuất viện/ <span class="text-primary">Patient’s condition on discharge:</span></label>
+                                                </legend>
+                                                <div class="col-md-12">
+                                                    <label style="width: 150px"></label>
+                                                    <div class="d-inline-block" style="width: calc(100% - 154px)">
+                                                        <asp:Label runat="server" ID="lbl_disc_condition" />
+                                                        <div runat="server" id="disc_condition_wrapper">
+                                                            <aih:TextField runat="server" ID="txt_disc_condition" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                            <fieldset class="row mb-2" runat="server" id="disc_medication_field">
+                                                <legend>
+                                                    <label class="control-label mb-2">10. Thuốc khi xuất viện/ <span class="text-primary">Discharge medications:</span></label>
+                                                </legend>
+                                                <div class="col-md-12">
+                                                    <label style="width: 150px"></label>
+                                                    <div class="d-inline-block" style="width: calc(100% - 154px)">
+                                                        <asp:Label runat="server" ID="lbl_disc_medication" />
+                                                        <div runat="server" id="disc_medication_wrapper">
+                                                            <aih:TextField runat="server" ID="txt_disc_medication" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                            <fieldset class="row mb-2" runat="server" id="follow_up_field">
+                                                <legend>
+                                                    <label class="control-label mb-2">11. Hướng dẫn theo dõi (ghi rõ các dấu hiệu cần tái khám ngay)/ <span class="text-primary">Follow-up instructions (signs and symptoms for immediate revisit):</span></label>
+                                                </legend>
+                                                <div class="col-md-12">
+                                                    <label style="width: 150px"></label>
+                                                    <div class="d-inline-block" style="width: calc(100% - 154px)">
+                                                        <asp:Label runat="server" ID="lbl_follow_up_instruc" />
+                                                        <div runat="server" id="follow_up_instruc_wrapper">
+                                                            <aih:TextField runat="server" ID="txt_follow_up_instruc" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                            <fieldset class="row mb-2" runat="server" id="special_diet_field">
+                                                <legend>
+                                                    <label class="control-label mb-2">12. Chế độ ăn uống/ <span class="text-primary">Special Diet:</span></label>
+                                                </legend>
+                                                <div class="col-md-12">
+                                                    <label style="width: 150px"></label>
+                                                    <div class="d-inline-block" style="width: calc(100% - 154px)">
+                                                        <asp:Label runat="server" ID="lbl_special_diet" />
+                                                        <div runat="server" id="special_diet_wrapper">
+                                                            <aih:TextField runat="server" ID="txt_special_diet" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                            <fieldset class="row mb-2" runat="server" id="next_consultation_field">
+                                                <legend>
+                                                    <label class="control-label mb-2">13. Ngày tái khám (ghi rõ ngày và tên Bác sĩ)/ <span class="text-primary">Next consultation (specify date and with whom):</span></label>
+                                                </legend>
+                                                <div class="col-md-12">
+                                                    <label style="width: 150px"></label>
+                                                    <div class="d-inline-block" style="width: calc(100% - 154px)">
+                                                        <asp:Label runat="server" ID="lbl_next_consult_date" />
+                                                        <span runat="server" id="next_consult_date_wrapper">
+                                                            <telerik:RadDatePicker Width="120px" ID="dpk_next_consult_date" runat="server"></telerik:RadDatePicker>
+                                                        </span>
+                                                        <asp:Label runat="server" ID="lbl_next_consult_doctor" />
+                                                        <div class="form-group d-inline-block w-n mb-2" runat="server" id="next_consult_doctor_wrapper">
+                                                            <aih:TextField runat="server" ID="txt_next_consult_doctor" />
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                            <fieldset class="row mb-2 dama_field" runat="server" id="dama_field">
+                                                <legend>
+                                                    <label class="control-label mb-2">10. Xuất viện trái với lời khuyên bác sỹ/ <span class="text-primary">Discharge against medical advice (DAMA):</span></label>
+                                                </legend>
+                                                <div class="col-md-12 mb-2">
+                                                    <label style="width: 150px"></label>
+                                                    <div class="d-inline-block" style="width: calc(100% - 154px)">
+                                                        <asp:Label runat="server" ID="lbl_dama" />
+                                                        <div runat="server" id="dama_wrapper">
+                                                            <aih:TextField runat="server" ID="txt_dama" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-2">
+                                                    <label class="control-label mb-1" style="width: 150px">
+                                                        Nếu có, nêu rõ lí do/ <span class="text-primary">If yes, specify the reason
+        :</span></label>
+                                                    <div class="d-inline-block" style="width: calc(100% - 154px)">
+                                                        <asp:Label CssClass="align-top" runat="server" ID="lbl_dama_note" />
+                                                        <div runat="server" id="dama_note_wrapper">
+                                                            <aih:TextField runat="server" ID="txt_dama_note" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                            <fieldset class="row mb-2" runat="server" id="transfer_field">
+                                                <legend>
+                                                    <label class="control-label mb-2">11. Chuyển viện/ <span class="text-primary">Transfer to another hospital:</span></label>
+                                                </legend>
+                                                <div class="col-md-12 mb-2">
+                                                    <label style="width: 150px"></label>
+                                                    <div class="d-inline-block" style="width: calc(100% - 154px)">
+                                                        <asp:Label runat="server" ID="lbl_trans_to_hospital" />
+                                                        <div runat="server" id="trans_to_hospital_wrapper">
+                                                            <aih:TextField runat="server" ID="txt_trans_to_hospital" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12 mb-2">
+                                                    <label class="control-label mb-1" style="width: 150px">
+                                                        Nếu có, nêu rõ lí do/ <span class="text-primary">If yes, specify the reason
+        :</span></label>
+                                                    <div class="d-inline-block" style="width: calc(100% - 154px)">
+                                                        <asp:Label runat="server" ID="lbl_transfer_reason" />
+                                                        <div runat="server" id="transfer_reason_wrapper">
+                                                            <aih:TextField runat="server" ID="txt_transfer_reason" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                            <fieldset class="row mb-2">
+                                                <div class="col-md-12 mb-2">
+                                                    <label class="control-label" style="width: 150px">Ngày/ <span class="text-primary">Date</span></label>
+                                                    <asp:Label runat="server" ID="lbl_signed_date" />
+                                                    <span runat="server" id="signed_date_wrapper">
+                                                        <telerik:RadDatePicker Width="120px" ID="dpk_signed_date" runat="server"></telerik:RadDatePicker>
+                                                    </span>
+
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <label class="control-label" style="width: 150px">Họ tên bác sỹ và mã số nhân viên/ <span class="text-primary">Doctor’s Name and ID</span></label>
+                                                    <div class="d-inline-block w-n align-top">
+                                                        <asp:Label runat="server" ID="lbl_signed_doctor" />
+                                                        <div runat="server" id="signed_doctor_wrapper">
+                                                            <aih:TextField runat="server" ID="txt_signed_doctor" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </fieldset>
+
+                                            <div class="row mb-2">
+                                                <div class="col-md-12">
+                                                    <div class="form-actions">
+                                                        <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
+
+                                                            <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
+
+                                                            <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal" class="btn btn-danger waves-effect">Delete</div>
+
+                                                            <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
+
+                                                            <asp:LinkButton runat="server" OnClientClick="window.print(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+
+                                                            <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
+                                                <ModalBody>
+                                                    <div class="text-center">
+                                                        <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                                        <h4 class="mt-4 mb-4">Delete document?</h4>
+                                                    </div>
+                                                    <div class="text-right">
+                                                        <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
+                                                        <asp:LinkButton OnClick="btnDelete_Click" OnClientClick="window.removeEventListener('beforeunload',comfirm_leave_page,true);" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
+                                                    </div>
+                                                </ModalBody>
+                                            </webUI:PopupModal>
+
+                                            <webUI:PopupShowDelay runat="server" ID="PopupShowDelay" />
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
-                        <asp:ValidationSummary ID="valSum" DisplayMode="BulletList" CssClass="validationSummary" runat="server" ValidationGroup="Group1" HeaderText="Please complete the highlighted field(s)." />
-                    </asp:Panel>
-         
-                    <uc1:PatientInfo runat="server" ID="PatientInfo1" />
-
-                    <div class="row">
-                        <div class="col-md-12">
-                                    <div class="card mt-2">
-                                        <div class="card-header">
-                                            <h4 class="text-primary">Discharge Summary</h4>
-                                            <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"></a>
-                                        </div>
-                                        <div class="card-body collapse show" id="collapseOne">
-                                            <div class="form-body">
-
-                                                <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
-                                                        <telerik:RadLabel runat="server" ID="RadLabel2">
-</telerik:RadLabel>
-                                                        <telerik:RadButton  RenderMode="Mobile"  OnClick="RadButton1_Click" ID="RadButton1" runat="server" CssClass="btn-sm" Text="View Latest Version"  />
-                                                    </div>
-
-                                                    <div class="alert alert-info d-flex align-items-center">
-                                                        <telerik:RadLabel runat="server" ID="RadLabel1">
-</telerik:RadLabel>
-                                                        <telerik:RadButton  RenderMode="Mobile" AutoPostBack="false" ID="Button1" runat="server" OnClientClicked="showWindow" CssClass="btn-sm" Text="View History"  />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                                <div class="row mb-2">
-                                                    <div class="col-md-12">
-                                                        <label class="control-label mb-1" style="width: 150px">Lý do xuất viện/ <span class="text-primary">Discharge Reason </span><span class="text-danger">*</span></label>
-                                                        <asp:Label CssClass="align-top" runat="server" ID="lbl_disc_reason_desc" />
-                                                        <div class="d-inline-block align-top" runat="server" id="disc_reason_code_wrapper">
-
-                                                            <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                <input onclick="__doPostBack('discReasonCode_Change', 'ama')" type="radio" runat="server" id="rad_disc_reason_code_ama" name="rad_disc_reason_code" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_disc_reason_code_ama"><span class="text-primary">Normal</span></label>
-                                                            </div>
-
-                                                            <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                <input onclick="__doPostBack('discReasonCode_Change', 'dama')" type="radio" runat="server" id="rad_disc_reason_code_dama" name="rad_disc_reason_code" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_disc_reason_code_dama"><span class="text-primary">Dama</span></label>
-                                                            </div>
-
-                                                            <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                <input onclick="__doPostBack('discReasonCode_Change', 'transfer')" type="radio" runat="server" id="rad_disc_reason_code_transfer" name="rad_disc_reason_code" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_disc_reason_code_transfer"><span class="text-primary">Transfer</span></label>
-                                                                <a href="javascript:void(0)" data-clear="rad_disc_reason_code" onclick="clear_radiobutton(this)">
-                                                                    <icon:xsquare runat="server" ID="XSquare38" />
-                                                                </a>
-                                                            </div>
-                                                            <asp:CustomValidator ID="CustomValidator1" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="Discharge Reason is required" CssClass="text-danger" OnServerValidate="disc_reason_code_ServerValidate"></asp:CustomValidator>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <fieldset class="row mb-2">
-                                                    <div class="col-md-12 mb-2">
-                                                        <label class="control-label mb-1" style="width: 150px">Ngày nhập viện/ <span class="text-primary">Date of hospitalization:</span></label>
-                                                        <asp:Label CssClass="align-top" runat="server" ID="lbl_date_of_hospital" />
-                                                        <span runat="server" id="date_of_hospital_wrapper">
-                                                            <telerik:RadDatePicker runat="server" ID="dpk_date_of_hospital" CssClass="align-top" Width="120px" />
-                                                        </span>
-                                                    </div>
-
-                                                    <div class="col-md-12 mb-2">
-                                                        <label class="control-label mb-1" style="width: 150px">Ngày xuất viện/ <span class="text-primary">Date of discharge:</span></label>
-                                                        <asp:Label CssClass="align-top" runat="server" ID="lbl_date_of_discharge" />
-                                                        <span runat="server" id="date_of_discharge_wrapper">
-                                                            <telerik:RadDatePicker CssClass="align-top" runat="server" ID="dpk_date_of_discharge" Width="120px" />
-                                                        </span>
-                                                    </div>
-                                                </fieldset>
-
-                                                <fieldset class="row mb-2">
-                                                    <legend>
-                                                        <label class="control-label mb-2">1. Lý do nhập viện/ <span class="text-primary">Reason for admission:</span></label>
-                                                    </legend>
-
-                                                    <div class="col-md-12">
-                                                        <label style="width: 150px"></label>
-                                                        <div class="d-inline-block align-top" style="width: calc(100% - 154px)">
-                                                            <asp:Label runat="server" ID="lbl_admission_reason" />
-                                                            <div runat="server" id="admission_reason_wrapper">
-                                                                <aih:TextField runat="server" ID="txt_admission_reason" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-
-                                                <fieldset class="row mb-2">
-                                                    <legend>
-                                                        <label class="control-label mb-2">2. Chẩn đoán chính/ <span class="text-primary">Main diagnosis:</span></label>
-                                                    </legend>
-                                                    <div class="col-md-12 mb-2">
-                                                        <label style="width: 150px" class="control-label mb-1">Phân loại bệnh theo ICD-10/ <span class="text-primary">ICD-10 Code:</span></label>
-                                                        <div class="d-inline-block align-top" style="width: calc(100% - 154px)">
-                                                            <asp:Label runat="server" ID="lbl_icd10_diagnosis" />
-                                                            <div runat="server" id="icd10_diagnosis_wrapper">
-                                                                <aih:TextField runat="server" ID="txt_icd10_diagnosis" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12 mb-2">
-                                                        <label class="control-label mb-1" style="width: 150px">Chẩn đoán kết hợp/ <span class="text-primary">Associated diagnosis:</span></label>
-                                                        <div class="d-inline-block align-top" style="width: calc(100% - 154px)">
-                                                            <asp:Label runat="server" ID="lbl_associated_diagnosis" />
-                                                            <div class="form-group" runat="server" id="associated_diagnosis_wrapper">
-                                                                <aih:TextField runat="server" ID="txt_associated_diagnosis" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-
-                                                <fieldset class="row mb-2">
-                                                    <legend>
-                                                        <label class="control-label mb-2">3. Bệnh sử/ <span class="text-primary">Medical History:</span></label>
-                                                    </legend>
-                                                    <div class="col-md-12 mb-2">
-                                                        <label class="control-label mb-1" style="width: 150px">Bệnh sử hiện tại/ <span class="text-primary">Current Medical History:</span></label>
-                                                        <div class="d-inline-block align-top" style="width: calc(100% - 154px)">
-                                                            <asp:Label runat="server" ID="lbl_cur_med_history" />
-                                                            <div runat="server" id="cur_med_history_wrapper">
-                                                                <aih:TextField runat="server" ID="txt_cur_med_history" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12 mb-2">
-                                                        <label class="control-label mb-1" style="width: 150px">Tiền sử bệnh/ <span class="text-primary">Antecedent Medical History:</span></label>
-                                                        <div class="d-inline-block align-top" style="width: calc(100% - 154px)">
-                                                            <asp:Label runat="server" ID="lbl_ant_med_history" />
-                                                            <div runat="server" id="ant_med_history_wrapper">
-                                                                <aih:TextField runat="server" ID="txt_ant_med_history" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-
-                                                <fieldset class="row mb-2">
-                                                    <legend>
-                                                        <label class="control-label mb-2">4. Dấu hiệu lâm sàng lúc nhập viện/ <span class="text-primary">Physical findings on admission:</span></label>
-                                                    </legend>
-                                                    <div class="col-md-12">
-                                                        <label style="width: 150px"></label>
-                                                        <div class="d-inline-block" style="width: calc(100% - 154px)">
-                                                            <asp:Label runat="server" ID="lbl_physical_finding" />
-                                                            <div runat="server" id="physical_finding_wrapper">
-                                                                <aih:TextField runat="server" ID="txt_physical_finding" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-
-                                                <fieldset class="row mb-2">
-                                                    <legend>
-                                                        <label class="control-label mb-2">5. Kết quả xét nghiệm/ <span class="text-primary">Laboratory investigation results:</span></label>
-                                                    </legend>
-                                                    <div class="col-md-12 mb-2">
-                                                        <label style="width: 150px"></label>
-                                                        <div class="d-inline-block" style="width: calc(100% - 154px)">
-                                                            <asp:Label runat="server" ID="lbl_lab_result" />
-                                                            <div runat="server" id="lab_result_wrapper">
-                                                                <aih:TextField runat="server" ID="txt_lab_result" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12 mb-2">
-                                                        <label class="control-label mb-1" style="width: 150px">Giải phẫu bệnh/ <span class="text-primary">Pathology:</span></label>
-                                                        <asp:Label runat="server" CssClass="align-top" ID="lbl_patho_result_desc" />
-                                                        <div class="d-inline-block align-top" runat="server" id="patho_result_code_wrapper">
-                                                            <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                <input type="radio" runat="server" id="rad_patho_result_code_be" name="rad_patho_result_code" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_patho_result_code_be">Lành tính/ <span class="text-primary">Benign</span></label>
-                                                            </div>
-                                                            <div class="custom-control custom-radio  d-inline-block ml-2">
-                                                                <input type="radio" runat="server" id="rad_patho_result_code_ma" name="rad_patho_result_code" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_patho_result_code_ma">Ác tính/ <span class="text-primary">Malignant</span></label>
-                                                            </div>
-                                                            <div class="custom-control custom-radio d-inline-block ml-2">
-                                                                <input type="radio" runat="server" id="rad_patho_result_code_uc" name="rad_patho_result_code" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_patho_result_code_uc">Chưa xác định/ <span class="text-primary">Unconfirmed</span></label>
-                                                                <a href="javascript:void(0)" data-clear="rad_patho_result_code" onclick="clear_radiobutton(this)">
-                                                                    <icon:xsquare runat="server" ID="XSquare2" />
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-
-                                                <fieldset class="row mb-2">
-                                                    <legend>
-                                                        <label class="control-label mb-2">6. Các quy trình đã được thực hiện/ <span class="text-primary">Procedures performed:</span></label>
-                                                    </legend>
-
-                                                    <div class="col-md-12">
-                                                        <label style="width: 150px"></label>
-                                                        <div class="d-inline-block" style="width: calc(100% - 154px)">
-                                                            <asp:Label runat="server" ID="lbl_proce_performed" />
-                                                            <div runat="server" id="proce_performed_wrapper">
-                                                                <aih:TextField runat="server" ID="txt_proce_performed" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-
-                                                <fieldset class="row mb-2">
-                                                    <legend>
-                                                        <label class="control-label mb-2">7. Điều trị trong quá trình nằm viện/ <span class="text-primary">Treatment during hospitalization:</span></label>
-                                                    </legend>
-                                                    <div class="col-md-12">
-                                                        <label style="width: 150px"></label>
-                                                        <div class="d-inline-block" style="width: calc(100% - 154px)">
-                                                            <asp:Label runat="server" ID="lbl_treatment" />
-                                                            <div runat="server" id="treatment_wrapper">
-                                                                <aih:TextField runat="server" ID="txt_treatment" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-
-                                                <fieldset class="row mb-2">
-                                                    <legend>
-                                                        <label class="control-label mb-2">8. Diễn tiến trong quá trình nằm viện/ <span class="text-primary">Evolution during hospitalization:</span></label>
-                                                    </legend>
-                                                    <div class="col-md-12">
-                                                        <label style="width: 150px"></label>
-                                                        <div class="d-inline-block" style="width: calc(100% - 154px)">
-                                                            <asp:Label runat="server" ID="lbl_evolution" />
-                                                            <div runat="server" id="evolution_wrapper">
-                                                                <aih:TextField runat="server" ID="txt_evolution" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-
-                                                <fieldset class="row mb-2">
-                                                    <legend>
-                                                        <label class="control-label mb-2">9. Tình trạng của bệnh nhân khi xuất viện/ <span class="text-primary">Patient’s condition on discharge:</span></label>
-                                                    </legend>
-                                                    <div class="col-md-12">
-                                                        <label style="width: 150px"></label>
-                                                        <div class="d-inline-block" style="width: calc(100% - 154px)">
-                                                            <asp:Label runat="server" ID="lbl_disc_condition" />
-                                                            <div runat="server" id="disc_condition_wrapper">
-                                                                <aih:TextField runat="server" ID="txt_disc_condition" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-
-                                                <fieldset class="row mb-2" runat="server" id="disc_medication_field">
-                                                    <legend>
-                                                        <label class="control-label mb-2">10. Thuốc khi xuất viện/ <span class="text-primary">Discharge medications:</span></label>
-                                                    </legend>
-                                                    <div class="col-md-12">
-                                                        <label style="width: 150px"></label>
-                                                        <div class="d-inline-block" style="width: calc(100% - 154px)">
-                                                            <asp:Label runat="server" ID="lbl_disc_medication" />
-                                                            <div runat="server" id="disc_medication_wrapper">
-                                                                <aih:TextField runat="server" ID="txt_disc_medication" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-
-                                                <fieldset class="row mb-2" runat="server" id="follow_up_field">
-                                                    <legend>
-                                                        <label class="control-label mb-2">11. Hướng dẫn theo dõi (ghi rõ các dấu hiệu cần tái khám ngay)/ <span class="text-primary">Follow-up instructions (signs and symptoms for immediate revisit):</span></label>
-                                                    </legend>
-                                                    <div class="col-md-12">
-                                                        <label style="width: 150px"></label>
-                                                        <div class="d-inline-block" style="width: calc(100% - 154px)">
-                                                            <asp:Label runat="server" ID="lbl_follow_up_instruc" />
-                                                            <div runat="server" id="follow_up_instruc_wrapper">
-                                                                <aih:TextField runat="server" ID="txt_follow_up_instruc" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-
-                                                <fieldset class="row mb-2" runat="server" id="special_diet_field">
-                                                    <legend>
-                                                        <label class="control-label mb-2">12. Chế độ ăn uống/ <span class="text-primary">Special Diet:</span></label>
-                                                    </legend>
-                                                    <div class="col-md-12">
-                                                        <label style="width: 150px"></label>
-                                                        <div class="d-inline-block" style="width: calc(100% - 154px)">
-                                                            <asp:Label runat="server" ID="lbl_special_diet" />
-                                                            <div runat="server" id="special_diet_wrapper">
-                                                                <aih:TextField runat="server" ID="txt_special_diet" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-
-                                                <fieldset class="row mb-2" runat="server" id="next_consultation_field">
-                                                    <legend>
-                                                        <label class="control-label mb-2">13. Ngày tái khám (ghi rõ ngày và tên Bác sĩ)/ <span class="text-primary">Next consultation (specify date and with whom):</span></label>
-                                                    </legend>
-                                                    <div class="col-md-12">
-                                                        <label style="width: 150px"></label>
-                                                        <div class="d-inline-block" style="width: calc(100% - 154px)">
-                                                            <asp:Label runat="server" ID="lbl_next_consult_date" />
-                                                            <span runat="server" id="next_consult_date_wrapper">
-                                                                <telerik:RadDatePicker Width="120px" ID="dpk_next_consult_date" runat="server"></telerik:RadDatePicker>
-                                                            </span>
-                                                            <asp:Label runat="server" ID="lbl_next_consult_doctor" />
-                                                            <div class="form-group d-inline-block w-n mb-2" runat="server" id="next_consult_doctor_wrapper">
-                                                                <aih:TextField runat="server" ID="txt_next_consult_doctor" />
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-
-                                                <fieldset class="row mb-2 dama_field" runat="server" id="dama_field">
-                                                    <legend>
-                                                        <label class="control-label mb-2">10. Xuất viện trái với lời khuyên bác sỹ/ <span class="text-primary">Discharge against medical advice (DAMA):</span></label>
-                                                    </legend>
-                                                    <div class="col-md-12 mb-2">
-                                                        <label style="width: 150px"></label>
-                                                        <div class="d-inline-block" style="width: calc(100% - 154px)">
-                                                            <asp:Label runat="server" ID="lbl_dama" />
-                                                            <div runat="server" id="dama_wrapper">
-                                                                <aih:TextField runat="server" ID="txt_dama" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12 mb-2">
-                                                        <label class="control-label mb-1" style="width: 150px">
-                                                            Nếu có, nêu rõ lí do/ <span class="text-primary">If yes, specify the reason
-            :</span></label>
-                                                        <div class="d-inline-block" style="width: calc(100% - 154px)">
-                                                            <asp:Label CssClass="align-top" runat="server" ID="lbl_dama_note" />
-                                                            <div runat="server" id="dama_note_wrapper">
-                                                                <aih:TextField runat="server" ID="txt_dama_note" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-
-                                                <fieldset class="row mb-2" runat="server" id="transfer_field">
-                                                    <legend>
-                                                        <label class="control-label mb-2">11. Chuyển viện/ <span class="text-primary">Transfer to another hospital:</span></label>
-                                                    </legend>
-                                                    <div class="col-md-12 mb-2">
-                                                        <label style="width: 150px"></label>
-                                                        <div class="d-inline-block" style="width: calc(100% - 154px)">
-                                                            <asp:Label runat="server" ID="lbl_trans_to_hospital" />
-                                                            <div runat="server" id="trans_to_hospital_wrapper">
-                                                                <aih:TextField runat="server" ID="txt_trans_to_hospital" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12 mb-2">
-                                                        <label class="control-label mb-1" style="width: 150px">
-                                                            Nếu có, nêu rõ lí do/ <span class="text-primary">If yes, specify the reason
-            :</span></label>
-                                                        <div class="d-inline-block" style="width: calc(100% - 154px)">
-                                                            <asp:Label runat="server" ID="lbl_transfer_reason" />
-                                                            <div runat="server" id="transfer_reason_wrapper">
-                                                                <aih:TextField runat="server" ID="txt_transfer_reason" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-
-                                                <fieldset class="row mb-2">
-                                                    <div class="col-md-12 mb-2">
-                                                        <label class="control-label" style="width: 150px">Ngày/ <span class="text-primary">Date</span></label>
-                                                        <asp:Label runat="server" ID="lbl_signed_date" />
-                                                        <span runat="server" id="signed_date_wrapper">
-                                                            <telerik:RadDatePicker Width="120px" ID="dpk_signed_date" runat="server"></telerik:RadDatePicker>
-                                                        </span>
-
-                                                    </div>
-
-                                                    <div class="col-md-12">
-                                                        <label class="control-label" style="width: 150px">Họ tên bác sỹ và mã số nhân viên/ <span class="text-primary">Doctor’s Name and ID</span></label>
-                                                        <div class="d-inline-block w-n align-top">
-                                                            <asp:Label runat="server" ID="lbl_signed_doctor" />
-                                                            <div runat="server" id="signed_doctor_wrapper">
-                                                                <aih:TextField runat="server" ID="txt_signed_doctor" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </fieldset>
-
-                                                <div class="row mb-2">
-                                                    <div class="col-md-12">
-                                                        <div class="form-actions">
-                                                            <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
-
-                                                                <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
-
-                                                                <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal" class="btn btn-danger waves-effect">Delete</div>
-
-                                                                <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
-
-                                                                <asp:LinkButton runat="server" OnClientClick="window.print(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
-
-                                                                <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
-                                                    <ModalBody>
-                                                        <div class="text-center">
-                                                            <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                                            <h4 class="mt-4 mb-4">Delete document?</h4>
-                                                        </div>
-                                                        <div class="text-right">
-                                                            <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
-                                                            <asp:LinkButton OnClick="btnDelete_Click" OnClientClick="window.removeEventListener('beforeunload',comfirm_leave_page,true);" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
-                                                        </div>
-                                                    </ModalBody>
-                                                </webUI:PopupModal>
-
-                                                <webUI:PopupShowDelay runat="server" ID="PopupShowDelay" />
-
-                                            </div>
-                                        </div>
-                                    </div>
-                        </div>
                     </div>
-                        </div>
                 </div>
                 <asp:LinkButton runat="server" OnClick="clearSession_Click" ID="clearSession"></asp:LinkButton>
 
@@ -680,10 +781,66 @@
     <script src="../scripts/jquery-3.2.1.min.js"></script>
     <script src="../scripts/bootstrap.min.js"></script>
     <script src="../scripts/myScript.js"></script>
-    <script src="../scripts/contenteditable.min.js"></script>
+    <%--<script src="../scripts/contenteditable.min.js"></script>--%>
     <script src="../scripts/waves.js"></script>
     <script src="../scripts/sweetalert.min.js"></script>
     <script src="../scripts/alertify.js"></script>
+
+    <script>
+
+
+
+        document.getElementById("<%# txt_signed_doctor.ClientID %>").addEventListener("input", function () {
+            console.log("change value");
+        });
+
+
+        function format(e, t) { document.execCommand(e, !1, t) }
+
+        window.addEventListener("load", function () {
+            let t, o;
+
+            document.onkeyup = function (e) { (13 === e.keyCode || 32 === e.keyCode && window.getSelection().anchorNode.textContent.includes(t)) && (format("foreColor", "black"), format("insertText", "")) },
+
+                document.onkeydown = function (e) { o = "red" === window.getSelection().focusNode.parentNode.color, 32 === e.keyCode && o && (e.preventDefault(), format("foreColor", "black"), format("insertText", " ")) }
+
+            document.addEventListener('paste', (event) => {
+                let paste = (event.clipboardData || window.clipboardData).getData('text');
+
+                paste = paste.trim();
+
+                const selection = window.getSelection();
+                if (!selection.rangeCount) return false;
+                selection.deleteFromDocument();
+
+                let text;
+
+                if (window.getSelection().focusNode.parentNode.color == "red") {
+                    text = this.document.createTextNode(paste);
+                }
+                else {
+                    text = document.createElement("font");
+                    text.color = 'red';
+                    text.innerText = paste;
+                }
+
+                selection.getRangeAt(0).insertNode(text);
+
+                event.preventDefault();
+            });
+
+            document.body.addEventListener('dragover', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }, false);
+
+            document.body.addEventListener('drop', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }, false);
+        });
+
+    </script>
 
     <script type="text/javascript">
         var elem = window.parent.parent.document.getElementById("myProgress");
@@ -696,26 +853,11 @@
         function afterAsyncPostBack() {
         }
 
-        function showWindow(sender, eventArgs) {
+        function showWindow() {
             var oWnd = $find("<%=RadWindow1.ClientID%>");
             oWnd.show();
         }
 
-
-       function RowDblClick(sender, eventArgs) {
-            console.log('sdfsdf');
-
-           var grid = $find("<%= RadGrid1.ClientID %>");
-           var masterTable = grid.get_masterTableView();
-           var item = eventArgs.get_itemIndexHierarchical();
-
-           var row = masterTable.get_dataItems()[item];
-
-           var button = row.findElement("RadLinkButton1");
-           button.click();
-
-           //console.log(row);
-       }
     </script>
 </body>
 </html>

@@ -852,13 +852,13 @@ namespace EMR.ER
         protected global::System.Web.UI.WebControls.ValidationSummary valSum;
 
         /// <summary>
-        /// PatientInfo control.
+        /// uc_patientinfo_wrapper control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.PatientInfo PatientInfo;
+        protected global::System.Web.UI.WebControls.PlaceHolder uc_patientinfo_wrapper;
 
         /// <summary>
         /// currentLog control.
@@ -870,22 +870,13 @@ namespace EMR.ER
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl currentLog;
 
         /// <summary>
-        /// RadLabel2 control.
+        /// LinkViewLastestVersion control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadLabel RadLabel2;
-
-        /// <summary>
-        /// RadButton1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadButton RadButton1;
+        protected global::System.Web.UI.WebControls.HyperLink LinkViewLastestVersion;
 
         /// <summary>
         /// RadLabel1 control.
@@ -895,15 +886,6 @@ namespace EMR.ER
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadLabel RadLabel1;
-
-        /// <summary>
-        /// Button1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadButton Button1;
 
         /// <summary>
         /// lbl_evaluation_time control.

@@ -13,16 +13,57 @@ namespace EMR.OPD
 {
     public partial class MedRecForNeoVaccin : System.Web.UI.Page
     {
+        Mrnv mrnv;
+        PatientInfo patientInfo;
+        PatientVisitInfo patientVisitInfo;
+        public string PAGE_URL { get; set; }
+        public string loc { get; set; }
+        public string locChanged { get; set; }
+        public string varDocID { get; set; }
+        public string varDocIdLog { get; set; }
+        public string varModelID { get; set; }
+        public string varPVID { get; set; }
+        public string varVPID { get; set; }
+        public string varPID { get; set; }
+
+        public string SignatureDate { get; set; }
+        public string SignatureName { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!WebHelpers.CheckSession(this)) return;
-            
+            varDocID = Request.QueryString["docId"];
+            varDocIdLog = Request.QueryString["docIdLog"];
+            varModelID = Request.QueryString["modelId"];
+            varPVID = Request.QueryString["pvId"];
+            varVPID = Request.QueryString["vpId"];
+            varPID = Request.QueryString["pId"];
+            loc = Request.QueryString["loc"];
+
+            PAGE_URL = $"/OPD/MedRecForNeoVaccin.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+
             if (!IsPostBack)
             {
                 Initial();
             }
-        }
 
+        }
+        private void LoadPatientInfo()
+        {
+            lblFirstName.Text = patientInfo.first_name_l;
+            lblLastName.Text = patientInfo.last_name_l;
+            lblGender.Text = patientInfo.gender_l;
+
+            WebHelpers.ConvertDateTime(patientInfo.DOB, out bool isValid, out string DOB, "dd-MM-yyyy");
+            lblDoB.Text = DOB + " (" + patientInfo.Age + "t)";
+
+            lblPatientAddress.Text = patientInfo.Address;
+            lblContactPerson.Text = patientInfo.Contact;
+
+            lblVisitCode.Text = patientVisitInfo.VisitCode;
+
+            WebHelpers.ConvertDateTime(patientVisitInfo.ActualVisitDateTime, out bool isValid1, out string ActualVisitDateTime, "dd-MM-yyyy");
+            lblVisitDate.Text = ActualVisitDateTime;
+        }
         #region Binding Data
         private void BindingDataForm(Mrnv mrnv, bool state)
         {
@@ -47,7 +88,10 @@ namespace EMR.OPD
                 txt_family.Value = mrnv.family;
 
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_allergy_" + mrnv.allergy, "false");
-                txt_allergy_note.Value = WebHelpers.GetBool(mrnv.allergy, mrnv.allergy_text, "");
+                if (rad_allergy_true.Checked)
+                {
+                    txt_allergy_note.Value = mrnv.allergy_text;
+                }
 
                 vs_temperature.Text = mrnv.vs_temperature;
                 vs_heart_rate.Text = mrnv.vs_heart_rate;
@@ -58,6 +102,7 @@ namespace EMR.OPD
                 vs_BMI.Text = mrnv.vs_BMI;
                 vs_spO2.Text = mrnv.vs_SpO2;
                 vs_pulse.Text = mrnv.vs_pulse;
+
                 WebHelpers.VisibleControl(true, btnUpdateVitalSigns);
 
                 txt_scr_before_vacc_1.Value = mrnv.scr_before_vacc_1;
@@ -80,14 +125,15 @@ namespace EMR.OPD
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_treatment_code_" + mrnv.treatment_code);
 
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_spec_opinion_req_" + mrnv.spec_opinion_req);
-                txt_spec_opinion_req_text.Value = WebHelpers.GetBool(mrnv.spec_opinion_req, mrnv.spec_opinion_req_text, "");
-
+                if (rad_spec_opinion_req_true.Checked)
+                    txt_spec_opinion_req_text.Value = WebHelpers.GetBool(mrnv.spec_opinion_req, mrnv.spec_opinion_req_text, "");
+                //
                 txt_pecific_edu_req.Value = mrnv.pecific_edu_req;
                 txt_next_appointment.Value = mrnv.next_appointment;
                 //next_appointment
                 DataObj.Value = JsonConvert.SerializeObject(mrnv);
                 Session["docid"] = mrnv.document_id;
-                WebHelpers.AddScriptFormEdit(Page, mrnv, (string)Session["emp_id"]);
+                WebHelpers.AddScriptFormEdit(Page, mrnv, (string)Session["emp_id"], loc);
             }
             catch (Exception ex)
             {
@@ -109,10 +155,7 @@ namespace EMR.OPD
                 lbl_personal.Text = WebHelpers.FormatString(mrnv.personal);
                 lbl_family.Text = WebHelpers.FormatString(mrnv.family);
 
-                if (mrnv.allergy != null)
-                {
-                    lbl_allergy.Text = mrnv.allergy ? "Có, ghi rõ/ Yes, specify <br>" + WebHelpers.FormatString(mrnv.allergy_text) : "Không/ No";
-                }
+                lbl_allergy.Text = WebHelpers.GetBool(mrnv.allergy, "Có, ghi rõ/ Yes, specify <br>" + WebHelpers.FormatString(mrnv.allergy_text));
 
                 //vital signs
                 vs_temperature.Text = WebHelpers.FormatString(mrnv.vs_temperature);
@@ -145,11 +188,8 @@ namespace EMR.OPD
                 lbl_associated_conditions.Text = WebHelpers.FormatString(mrnv.associated_conditions);
                 lbl_treatment_desc.Text = WebHelpers.FormatString(mrnv.treatment_desc);
                 lbl_next_appointment.Text = WebHelpers.FormatString(mrnv.next_appointment);
-                
-                if (mrnv.spec_opinion_req != null)
-                {
-                    lbl_spec_opinion_req.Text = WebHelpers.GetBool(mrnv.spec_opinion_req, "Có, ghi rõ/ Yes, specify <br>" + WebHelpers.FormatString(mrnv.spec_opinion_req_text));
-                }
+
+                lbl_spec_opinion_req.Text = WebHelpers.GetBool(mrnv.spec_opinion_req, "Có, ghi rõ/ Yes, specify <br>" + WebHelpers.FormatString(mrnv.spec_opinion_req_text));
 
                 lbl_pecific_edu_req.Text = WebHelpers.FormatString(mrnv.pecific_edu_req);
                 lbl_next_appointment.Text = WebHelpers.FormatString(mrnv.next_appointment);
@@ -164,18 +204,19 @@ namespace EMR.OPD
         {
             try
             {
-                allergy_note.Visible= spec_opinion_req.Visible = false;
-                Patient patient = Patient.Instance();
-                PatientVisit patientVisit = PatientVisit.Instance();
+                patientInfo = new PatientInfo(varPID);
+                patientVisitInfo = new PatientVisitInfo(varPVID, loc);
 
-                prt_vpid.Text = patient.visible_patient_id;
-                WebHelpers.gen_BarCode(patient.visible_patient_id, BarCode);
+                allergy_note.Visible = spec_opinion_req.Visible = false;
+                
+                prt_vpid.Text = patientInfo.visible_patient_id;
+                WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
 
-                prt_fullname.Text = patient.GetFullName();
-                prt_dob.Text = WebHelpers.FormatDateTime(patient.date_of_birth);
-                prt_gender.Text = patient.gender_l;
-                prt_day_of_visit.Text = WebHelpers.FormatDateTime(patientVisit.actual_visit_date_time);
-                prt_pid.Text = patient.visible_patient_id;
+                prt_fullname.Text = patientInfo.FullName;
+                prt_dob.Text = WebHelpers.FormatDateTime(patientInfo.date_of_birth);
+                prt_gender.Text = patientInfo.Gender;
+                prt_day_of_visit.Text = WebHelpers.FormatDateTime(patientVisitInfo.actual_visit_date_time);
+                prt_pid.Text = patientInfo.visible_patient_id;
                 prt_chief_complaint.Text = mrnv.chief_complaint;
                 prt_cur_med_history.Text = mrnv.cur_med_history;
                 prt_cur_medications.Text = mrnv.cur_medications;
@@ -184,9 +225,11 @@ namespace EMR.OPD
 
                 prt_allergy.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class='text-primary'>No</span>", Value = false }, new Option { Text = "Có/ <span class='text-primary'>Yes</span>", Value = true }, mrnv.allergy, "display: grid; grid-template-columns: 1fr 1fr");
 
+
+
                 if (mrnv.allergy != null)
                 {
-                    if (mrnv.allergy == true) 
+                    if (mrnv.allergy)
                     { 
                         prt_allergy_note.Text = mrnv.allergy_text;
                         allergy_note.Visible = true;
@@ -229,7 +272,7 @@ namespace EMR.OPD
 
                 if (mrnv.spec_opinion_req != null)
                 {
-                    if (mrnv.spec_opinion_req==true)
+                    if (mrnv.spec_opinion_req)
                     {
                         prt_spec_opinion_req_text.Text = mrnv.spec_opinion_req_text;
                         spec_opinion_req.Visible = true;
@@ -253,18 +296,18 @@ namespace EMR.OPD
         {
             if (Page.IsValid)
             {
-                Mrnv mrnv = new Mrnv(Request.QueryString["docId"]);
+                Mrnv mrnv = new Mrnv(Request.QueryString["docId"], loc);
                 mrnv.status = DocumentStatus.FINAL;
                 
                 UpdateData(mrnv);
-                WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+                WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
             }
         }
         protected void btnSave_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
-                Mrnv mrnv = new Mrnv(Request.QueryString["docId"]);
+                Mrnv mrnv = new Mrnv(Request.QueryString["docId"], loc);
                 mrnv.status = DocumentStatus.DRAFT;
 
                 UpdateData(mrnv);
@@ -274,13 +317,12 @@ namespace EMR.OPD
         {
             try
             {
-                dynamic result = Mrnv.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
+                dynamic result = Mrnv.Delete((string)Session["UserId"], Request.QueryString["docId"], loc)[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
-
-                    Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
+                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
+                    Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
                 }
             }
             catch (Exception ex)
@@ -290,15 +332,17 @@ namespace EMR.OPD
         }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            if (WebHelpers.CanOpenForm(Page, Request.QueryString["docId"], DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"]))
+            if (WebHelpers.CanOpenForm(Page, Request.QueryString["docId"], DocumentStatus.DRAFT, (string)Session["emp_id"], loc 
+                
+                ))
             {
-                Mrnv mrnv = new Mrnv(Request.QueryString["docId"]);
+                Mrnv mrnv = new Mrnv(Request.QueryString["docId"], loc);
 
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, mrnv, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]);
+                WebHelpers.LoadFormControl(form1, mrnv, ControlState.Edit, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(mrnv);
                 //get access button
@@ -306,7 +350,7 @@ namespace EMR.OPD
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
             Initial();
         }
 
@@ -314,7 +358,8 @@ namespace EMR.OPD
         {
             try
             {
-                dynamic response = VitalSign.Update(PatientVisit.Instance().patient_visit_id, PatientVisit.Instance().visit_type);
+                patientVisitInfo = new PatientVisitInfo(varPVID, loc);
+                dynamic response = VitalSign.Update(patientVisitInfo.patient_visit_id, patientVisitInfo.visit_type, loc);
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
                     dynamic vs = JsonConvert.DeserializeObject(response.Data);
@@ -353,58 +398,50 @@ namespace EMR.OPD
         }
         protected void btnHome_Click(object sender, EventArgs e)
         {
-            Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
+            Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
         }
         #endregion
 
         #region Functions
         public void Initial()
         {
-            //if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
-            //if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
-            //if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
-
             try
             {
-                Mrnv mrnv;
-                if (Request.QueryString["docIdLog"] != null)
+                patientInfo = new PatientInfo(varPID);
+                patientVisitInfo = new PatientVisitInfo(varPVID, loc);
+
+                if (varDocIdLog != null)
                 {
-                    mrnv = new Mrnv(Request.QueryString["docIdLog"], true);
+                    mrnv = new Mrnv(varDocIdLog, true, loc);
                     currentLog.Visible = true;
 
-                    string item = (string)Session["viewLogInfo"];
-
-                    RadLabel2.Text = $"You are viewing an old version of this document ( { item })";
                 }
                 else
                 {
-                    mrnv = new Mrnv(Request.QueryString["docId"]);
+                    mrnv = new Mrnv(varDocID, loc);
                     currentLog.Visible = false;
                 }
 
+                LoadPatientInfo();
                 loadRadGridHistoryLog();
                 
-                //if ((string)Session["Transaction"] == "Add")
-                //{
-                //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), ScriptKey.SHOW_POPUP, "setTimeout(()=> { RefreshClick() },0);", true);
-                //    mrnv.treatment_code = "OPD";
-                //    mrnv.treatment_desc = WebHelpers.GetDicDesc(mrnv.treatment_code, Mrnv.TREATMENT_CODE);
-                //    mrnv.spec_opinion_req = false;
-                //}
-
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
 
                 if (mrnv.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(mrnv, WebHelpers.LoadFormControl(form1, mrnv, ControlState.View, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
-                    BindingDataFormPrint(mrnv);
+                    BindingDataForm(mrnv, WebHelpers.LoadFormControl(form1, mrnv, ControlState.View, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
                 }
                 else if (mrnv.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(mrnv, WebHelpers.LoadFormControl(form1, mrnv, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
+                    BindingDataForm(mrnv, WebHelpers.LoadFormControl(form1, mrnv, ControlState.Edit, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
                 }
 
-                WebHelpers.getAccessButtons(form1, mrnv.status, (string)Session["access_authorize"], (string)Session["location"], Request.QueryString["docIdLog"] != null);
+                WebHelpers.getAccessButtons(form1, mrnv.status, (string)Session["access_authorize"], loc == locChanged, varDocIdLog != null);
+
+                if (btnPrint.Visible)
+                {
+                    BindingDataFormPrint(mrnv);
+                }
             }
             catch (Exception ex)
             {
@@ -414,46 +451,69 @@ namespace EMR.OPD
 
         private void loadRadGridHistoryLog()
         {
-            DataTable dt = Mrnv.Logs(Request.QueryString["docId"]);
+            DataTable dt = Mrnv.Logs(varDocID, loc);
             RadGrid1.DataSource = dt;
-            DateTime last_updated_date_time = new DateTime();
+            string last_updated_date_time = "";
             string last_updated_doctor = "";
 
             if (dt.Rows.Count == 1)
             {
                 last_updated_doctor = dt.Rows[0].Field<string>("created_name_e");
-                last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
+
+                WebHelpers.ConvertDateTime(dt.Rows[0].Field<DateTime>("created_date_time"), out bool isValid, out last_updated_date_time);
+
+                if (isValid)
+                {
+                    SignatureDate = last_updated_date_time;
+                }
             }
             else if (dt.Rows.Count > 1)
             {
                 last_updated_doctor = dt.Rows[0].Field<string>("submited_name_e");
-                last_updated_date_time = dt.Rows[0].Field<DateTime>("submited_date_time");
+                WebHelpers.ConvertDateTime(dt.Rows[0].Field<DateTime>("created_date_time"), out bool isValid, out last_updated_date_time);
+
+                if (isValid)
+                {
+                    SignatureDate = last_updated_date_time;
+                }
             }
 
-            Session["signature_doctor"] = last_updated_doctor;
-            RadLabel1.Text = $"Last updated by {last_updated_doctor} on " + WebHelpers.FormatDateTime(last_updated_date_time, "dd-MM-yyyy HH:mm");
+            SignatureName = last_updated_doctor;
+
+            RadLabel1.Text = $"Last updated by <i>{last_updated_doctor}</i> on <b><i>{Convert.ToDateTime(last_updated_date_time).ToString("dd-MMM-yyyy HH:mm tt")}</i></b>";
             RadGrid1.DataBind();
         }
-
+        protected string GetLogUrl(object doc_log_id)
+        {
+            return PAGE_URL + $"&docIdLog={doc_log_id}";
+        }
         protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
         {
             string result = "Amended by";
+            object name = "";
+            object time = "";
+
             if (Convert.ToString(status) == DocumentStatus.FINAL && string.IsNullOrEmpty(Convert.ToString(amend_reason)))
             {
-                result = "Submitted by";
+                result = "Submitted";
             }
 
-            if (Convert.ToString(status) == DocumentStatus.DRAFT) result = "Saved by";
+            if (Convert.ToString(status) == DocumentStatus.DRAFT) result = "Saved";
 
             if (string.IsNullOrEmpty(Convert.ToString(modified_name)))
             {
-                result += $" {created_name} on {created_date_time}";
+                name = created_name;
+                time = created_date_time;
             }
             else
             {
-                result += $" {modified_name} on {modified_date_time}";
+                name = modified_name;
+                time = created_date_time;
             }
-            return result;
+
+            WebHelpers.ConvertDateTime(time, out bool isValid, out string dateTime, "dd-MMM-yyyy HH:mm tt");
+
+            return $"{result} by <i>{name}</i> on <i>{dateTime}</i>";
         }
         protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
         {
@@ -462,17 +522,18 @@ namespace EMR.OPD
             {
                 string doc_log_id = item.GetDataKeyValue("document_log_id").ToString();
 
-                string url = $"/OPD/MedRecForNeoVaccin.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}&docIdLog={doc_log_id}";
-
-                Session["viewLogInfo"] = (item.FindControl("RadLabel1") as RadLabel).Text;
+                string url = PAGE_URL + $"&docIdLog={doc_log_id}";
 
                 Response.Redirect(url);
             }
         }
+        protected void LinkViewLastestVersion_Load(object sender, EventArgs e)
+        {
+            (sender as HyperLink).NavigateUrl = PAGE_URL;
+        }
         protected void RadButton1_Click(object sender, EventArgs e)
         {
-            string url = $"/OPD/MedRecForNeoVaccin.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}";
-            Response.Redirect(url);
+            Response.Redirect(PAGE_URL);
         }
         public void UpdateData(Mrnv mrnv)
         {
@@ -536,7 +597,7 @@ namespace EMR.OPD
                 mrnv.amend_reason = txt_amend_reason.Text;
                 mrnv.user_name = (string)Session["UserID"];
 
-                dynamic result = mrnv.Update()[0];
+                dynamic result = mrnv.Update(loc)[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
@@ -554,7 +615,7 @@ namespace EMR.OPD
 
         protected void clearSession_Click(object sender, EventArgs e)
         {
-            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+            WebHelpers.clearSessionDoc(Page, varDocID, loc);
         }
     }
 }

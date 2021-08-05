@@ -565,17 +565,16 @@
     }
 
     .prt-row-s1 .prt-subtitle, .prt-row-s2 .prt-subtitle, .prt-gender .prt-subtitle {
-        color: rgb(17, 82, 147) !important;
+        color: #007297 !important;
     }
-
 
 @page {
     padding-top: 0;
     padding-bottom: 0;
     page-break-inside: avoid;
 
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 13px;
+    margin-bottom: 13px;
     margin-left: 50px;
     margin-right: 50px;
 }
@@ -686,3 +685,12 @@ form[data-form-state=edit] .form-view {
 .scroll-effect:hover {
     overflow-y: visible !important;
 }
+
+.SelectedStyle > td {
+    background-color: #cdeefd !important;
+    border-color: #b8e7fc !important;
+}
+
+    .SelectedStyle > td > a {
+        color: #1976d2 !important;
+    }

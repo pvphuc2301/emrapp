@@ -12,12 +12,12 @@ namespace EMR.Report
 {
     public partial class LabReport : System.Web.UI.UserControl
     {
-        public string varPvID = ""; string varPID = "";string varTabValue = "";string varFrDate = ""; string frDate = ""; string toDate = "";
+        public string varPVID = ""; string varPID = "";string varTabValue = "";string varFrDate = ""; string frDate = ""; string toDate = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             RadGrid1.MasterTableView.HierarchyDefaultExpanded = true;
-            //  varPvID = (string)Session["pvid"]; 
-            varPvID = Request.QueryString["vid"];
+            //  varPVID = (string)Session["pvid"]; 
+            varPVID = Request.QueryString["vid"];
             varPID = Request.QueryString["pid"];
             varTabValue = (string)Session["cat"];
             varFrDate = Request.QueryString["frd"];                       
@@ -76,7 +76,7 @@ namespace EMR.Report
         {
             if (!string.IsNullOrEmpty(varTabValue))
             {                
-                string api_url = "api/patient/menu-lab-orderable/" + varPID + "/" + varPvID + "/" + varTabValue;
+                string api_url = "api/patient/menu-lab-orderable/" + varPID + "/" + varPVID + "/" + varTabValue;
                 if (varTabValue == "All")
                 {
                     frDate = from_date.SelectedDate.Value.Year.ToString() + "-" + from_date.SelectedDate.Value.Month.ToString() + "-" + from_date.SelectedDate.Value.Day.ToString();

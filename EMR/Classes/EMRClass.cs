@@ -8,9 +8,9 @@ namespace EMR
 {
     public class VitalSign
     {
-        public static dynamic Update(string pvid, string type)
+        public static dynamic Update(string pvid, string type, string loc)
         {
-            return WebHelpers.GetAPI($"api/emr/vital-sign/{DataHelpers._LOCATION}/{pvid}/{type}");
+            return WebHelpers.GetAPI($"api/emr/vital-sign/{loc}/{pvid}/{type}");
         }
     }
     public class EMRClass
@@ -27,25 +27,18 @@ namespace EMR
         public dynamic FixWidth { get; set; }
     }
     
-    public class PatientVisit
+    public class PatientVisitInfo
     {
-        public PatientVisit(string patient_visit_id)
+        public PatientVisitInfo(string patient_visit_id, string loc)
         {
-            dynamic response = WebHelpers.GetAPI($"api/emr/patient-visit/{DataHelpers._LOCATION}/{patient_visit_id}");
+            dynamic response = WebHelpers.GetAPI($"api/emr/patient-visit/{loc}/{patient_visit_id}");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 DataTable tbl = WebHelpers.GetJSONToDataTable(response.Data);
-                WebHelpers.BindingDatafield(tbl, this);
-                instance = this;
-            }
-        }
 
-        private static readonly object _lock = new object();
-        private static PatientVisit instance = null;
-        public static PatientVisit Instance()
-        {
-            return instance;
+                WebHelpers.BindingDatafield(tbl, this);
+            }
         }
 
         #region Properties
@@ -66,25 +59,20 @@ namespace EMR
         public string getDept() {
             return specialty_name_l;
         }
+        public string VisitCode { get { return visit_code; } }
+        public DateTime? ActualVisitDateTime { get { return actual_visit_date_time; } }
     }
 
-    public class Patient
+    public class PatientInfo
     {
-        public Patient(string visible_patient_id) {
-            dynamic response = WebHelpers.GetAPI("api/emr/demographic/" + visible_patient_id);
+        public PatientInfo(string patient_id) {
+            dynamic response = WebHelpers.GetAPI("api/emr/demographic/" + patient_id);
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 DataTable tbl = WebHelpers.GetJSONToDataTable(response.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                instance = this;
             }
-        }
-
-        private static Patient instance = null;
-        public static Patient Instance()
-        {
-            return instance;
         }
 
         #region Properties
@@ -133,25 +121,42 @@ namespace EMR
         {
            return DataHelpers.CalculateAge(date_of_birth);
         }
-        public string GetFullName()
-        {
-            return this.first_name_l + " " + this.last_name_l;
+        public int Age { 
+            get {
+                int age = -1;
+                DateTime result = WebHelpers.ConvertDateTime(date_of_birth, out bool isValid, out string dob);
+                if (isValid)
+                {
+                    age = DataHelpers.CalculateAge(result);
+                }
+                return age;
+            } 
         }
-        public string GetAddress()
+        public string FirstName { get { return first_name_l; } }
+        public string LastName { get { return last_name_l; } }
+        public string FullName 
         {
-            return string.Format("{0} {1} {2} {3}", this.address_line_l, this.address_subregion_l, this.address_region_l, this.address_country_l);
+            get
+            {
+                return this.first_name_l + " " + this.last_name_l;
+            }
         }
-        public string getContact()
+        public string Address
         {
-            return contact_name_l;
+            get { 
+                return string.Format("{0} {1} {2} {3}", this.address_line_l, this.address_subregion_l, this.address_region_l, this.address_country_l);
+            }
         }
-        public string getRelationship()
+        public string Contact { get { return contact_name_l; } }
+        public DateTime DOB { get { return date_of_birth; } }
+        public string Relationship
         {
-            return relationship_type_rcd;
+            get { return relationship_type_rcd; }
         }
-        public string GetGender()
+        public string Gender
         {
-            return this.gender_l;
+            get { return gender_l; }
+            
         }
         public string GetNationality()
         {
@@ -161,9 +166,11 @@ namespace EMR
         {
             return occupation_l;
         }
-        public string GetTitle()
+        public string Title
         {
-            return this.title_l;
+            get { 
+                return title_l;
+            }
         }
         #endregion
     }
@@ -438,9 +445,9 @@ namespace EMR
 
         Ena() { }
 
-        public Ena(dynamic document_id)
+        public Ena(dynamic document_id, string loc)
         {
-            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{loc}/{document_id}");
 
             if(response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -646,9 +653,9 @@ namespace EMR
             this.nursing_note = nursing_note;
             this.skin_anno_data = skin_anno_data;
     }
-        public static DataTable Logs(string document_id)
+        public static DataTable Logs(string document_id, string loc)
         {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
             DataTable db = new DataTable();
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
@@ -656,41 +663,41 @@ namespace EMR
             }
             return db;
         }
-        public Ena(string document_id, bool viewLog)
+        public Ena(string document_id, bool viewLog, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
-        public dynamic[] Update()
+        public dynamic[] Update(string loc)
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
             message[0] = response1;
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                message[1] = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                message[1] = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
             }
             return message;
         }
-        public static dynamic[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid, string loc)
         {
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
                     message[1] = response1;
                 }
 
@@ -940,9 +947,9 @@ namespace EMR
             this.treatment_plan = treatment_plan;
         }
 
-        public Oadr(string document_id)
+        public Oadr(string document_id, string loc)
         {
-            dynamic response = WebHelpers.GetAPI(api + "/get/" + DataHelpers._LOCATION + "/" + document_id);
+            dynamic response = WebHelpers.GetAPI(api + "/get/" + loc + "/" + document_id);
 
             if(response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -954,9 +961,9 @@ namespace EMR
 
         #endregion
 
-        public static DataTable Logs(string document_id)
+        public static DataTable Logs(string document_id, string loc)
         {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
             DataTable db = new DataTable();
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
@@ -964,46 +971,46 @@ namespace EMR
             }
             return db;
         }
-        public Oadr(string document_id, bool viewLog)
+        public Oadr(string document_id, bool viewLog, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
 
         #region METHODS
-        public dynamic[] Update()
+        public dynamic[] Update(string loc)
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
                 message[1] = response2;
             }
 
             return message;
         }
-        public static dynamic[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid, string loc)
         {
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
                     message[1] = response1;
                 }
 
@@ -1078,9 +1085,9 @@ namespace EMR
             this.notes = notes;
             this.signature_date = signature_date;
         }
-        public Disc(dynamic document_id)
+        public Disc(dynamic document_id, string loc)
         {
-            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{loc}/{document_id}");
 
             if(response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -1090,9 +1097,9 @@ namespace EMR
             }
         }
 
-        public static DataTable Logs(string document_id)
+        public static DataTable Logs(string document_id, string loc)
         {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
             DataTable db = new DataTable();
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
@@ -1100,45 +1107,45 @@ namespace EMR
             }
             return db;
         }
-        public Disc(string document_id, bool viewLog)
+        public Disc(string document_id, bool viewLog, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
         #region METHODS
-        public dynamic[] Update()
+        public dynamic[] Update(string loc)
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
                 message[1] = response2;
             }
 
             return message;
         }
-        public static dynamic[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid, string loc)
         {
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
                     message[1] = response1;
                 }
 
@@ -1279,9 +1286,9 @@ namespace EMR
             this.signed_date = signed_date;
             this.signed_doctor = signed_doctor;
         }
-        public Diss(dynamic document_id)
+        public Diss(dynamic document_id, string loc)
         {
-            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{loc}/{document_id}");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -1291,9 +1298,9 @@ namespace EMR
                 WebHelpers.BindingDatafield(db, this);
             }
         }
-        public static DataTable Logs(string document_id)
+        public static DataTable Logs(string document_id, string loc)
         {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
             DataTable db = new DataTable();
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
@@ -1301,45 +1308,45 @@ namespace EMR
             }
             return db;
         }
-        public Diss(string document_id, bool viewLog)
+        public Diss(string document_id, bool viewLog, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
         #region METHODS
-        public dynamic[] Update()
+        public dynamic[] Update(string loc)
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
                 message[1] = response2;
             }
 
             return message;
         }
-        public static dynamic[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid, string loc)
         {
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
                     message[1] = response1;
                 }
 
@@ -1405,9 +1412,9 @@ namespace EMR
             this.recommendation = recommendation;
         }
       
-        public Uusr(dynamic document_id)
+        public Uusr(dynamic document_id, string loc)
         {
-            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{loc}/{document_id}");
 
             if(response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -1416,9 +1423,9 @@ namespace EMR
                 WebHelpers.BindingDatafield(db, this);
             }
         }
-        public static DataTable Logs(string document_id)
+        public static DataTable Logs(string document_id, string loc)
         {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
             DataTable db = new DataTable();
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
@@ -1426,45 +1433,45 @@ namespace EMR
             }
             return db;
         }
-        public Uusr(string document_id, bool viewLog)
+        public Uusr(string document_id, bool viewLog, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
         #region METHODS
-        public dynamic[] Update()
+        public dynamic[] Update(string loc)
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
                 message[1] = response2;
             }
 
             return message;
         }
-        public static dynamic[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid, string loc)
         {
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
                     message[1] = response1;
                 }
 
@@ -1529,9 +1536,9 @@ namespace EMR
             this.rh = rh;
         }
 
-        public Surc(dynamic document_id)
+        public Surc(dynamic document_id, string loc)
         {
-            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{loc}/{document_id}");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -1540,9 +1547,9 @@ namespace EMR
                 WebHelpers.BindingDatafield(db, this);
             }
         }
-        public static DataTable Logs(string document_id)
+        public static DataTable Logs(string document_id, string loc)
         {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
             DataTable db = new DataTable();
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
@@ -1550,45 +1557,45 @@ namespace EMR
             }
             return db;
         }
-        public Surc(string document_id, bool viewLog)
+        public Surc(string document_id, bool viewLog, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
         #region METHODS
-        public dynamic[] Update()
+        public dynamic[] Update(string loc)
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
                 message[1] = response2;
             }
 
             return message;
         }
-        public static dynamic[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid, string loc)
         {
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
                     message[1] = response1;
                 }
 
@@ -1656,9 +1663,9 @@ namespace EMR
             this.treatment_prognosis = treatment_prognosis;
         }
 
-        public Somr(dynamic document_id)
+        public Somr(dynamic document_id, string loc)
         {
-            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{loc}/{document_id}");
 
             if(response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -1673,9 +1680,9 @@ namespace EMR
             }
         }
 
-        public static DataTable Logs(string document_id)
+        public static DataTable Logs(string document_id, string loc)
         {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
             DataTable db = new DataTable();
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
@@ -1683,35 +1690,35 @@ namespace EMR
             }
             return db;
         }
-        public Somr(string document_id, bool viewLog)
+        public Somr(string document_id, bool viewLog, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
 
         #region METHODS
-        public dynamic[] Update()
+        public dynamic[] Update(string loc)
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
                 message[1] = response2;
             }
 
             return message;
         }
-        public static dynamic[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid, string loc)
         {
             dynamic[] message = new dynamic[2];
             try
@@ -2875,9 +2882,9 @@ namespace EMR
             { "type", "" },
         };
         #endregion
-        public Iina(dynamic document_id)
+        public Iina(dynamic document_id, string loc)
         {
-            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{loc}/{document_id}");
 
             if(response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -2889,9 +2896,9 @@ namespace EMR
 
             }
         }
-        public static DataTable Logs(string document_id)
+        public static DataTable Logs(string document_id, string loc)
         {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
             DataTable db = new DataTable();
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
@@ -2899,46 +2906,46 @@ namespace EMR
             }
             return db;
         }
-        public Iina(string document_id, bool viewLog)
+        public Iina(string document_id, bool viewLog, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
         #region METHODS
-        public dynamic[] Update()
+        public dynamic[] Update(string loc)
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
                 message[1] = response2;
             }
 
             return message;
         }
 
-        public static dynamic[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid, string loc)
         {
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
                     message[1] = response1;
                 }
 
@@ -3089,9 +3096,9 @@ namespace EMR
             this.discharge_plan = discharge_plan;
         }
 
-        public Iima(dynamic document_id)
+        public Iima(dynamic document_id, string loc)
         {
-            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{loc}/{document_id}");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -3100,9 +3107,9 @@ namespace EMR
                 WebHelpers.BindingDatafield(db, this);
             }
         }
-        public static DataTable Logs(string document_id)
+        public static DataTable Logs(string document_id, string loc)
         {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
             DataTable db = new DataTable();
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
@@ -3110,46 +3117,46 @@ namespace EMR
             }
             return db;
         }
-        public Iima(string document_id, bool viewLog)
+        public Iima(string document_id, bool viewLog, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
 
         #region METHODS
-        public dynamic[] Update()
+        public dynamic[] Update(string loc)
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
                 message[1] = response2;
             }
 
             return message;
         }
-        public static dynamic[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid, string loc)
         {
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
                     message[1] = response1;
                 }
 
@@ -3166,7 +3173,7 @@ namespace EMR
             }
         }
 
-        public static dynamic UpdateVitalSign(string document_id)
+        public static dynamic UpdateVitalSign(string document_id, string loc)
         {
             return WebHelpers.PostAPI($"{api}/update-vital-sign/{document_id}");
         }
@@ -3317,9 +3324,9 @@ namespace EMR
             { "router", "" },
             { "reason", "" },
         };
-        public Mrfv(dynamic document_id)
+        public Mrfv(dynamic document_id, string loc)
         {
-            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{loc}/{document_id}");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -3328,9 +3335,9 @@ namespace EMR
                 WebHelpers.BindingDatafield(db, this);
             }
         }
-        public static DataTable Logs(string document_id)
+        public static DataTable Logs(string document_id, string loc)
         {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
             DataTable db = new DataTable();
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
@@ -3338,45 +3345,45 @@ namespace EMR
             }
             return db;
         }
-        public Mrfv(string document_id, bool viewLog)
+        public Mrfv(string document_id, bool viewLog, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
         #region METHODS
-        public dynamic[] Update()
+        public dynamic[] Update(string loc)
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
                 message[1] = response2;
             }
 
             return message;
         }
-        public static dynamic[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid, string loc)
         {
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
                     message[1] = response1;
                 }
 
@@ -3543,9 +3550,9 @@ namespace EMR
         };
 
 
-        public Mrnv(dynamic document_id)
+        public Mrnv(dynamic document_id, string loc)
         {
-            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{loc}/{document_id}");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -3554,9 +3561,9 @@ namespace EMR
                 WebHelpers.BindingDatafield(db, this);
             }
         }
-        public static DataTable Logs(string document_id)
+        public static DataTable Logs(string document_id, string loc)
         {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
             DataTable db = new DataTable();
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
@@ -3564,45 +3571,45 @@ namespace EMR
             }
             return db;
         }
-        public Mrnv(string document_id, bool viewLog)
+        public Mrnv(string document_id, bool viewLog, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
         #region METHODS
-        public dynamic[] Update()
+        public dynamic[] Update(string loc)
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
                 message[1] = response2;
             }
 
             return message;
         }
-        public static dynamic[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid, string loc)
         {
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
                     message[1] = response1;
                 }
 
@@ -3812,9 +3819,9 @@ namespace EMR
             this.amend_reason = amend_reason;
         }
 
-        public Oina(string document_id)
+        public Oina(string document_id, string loc)
         {
-            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{loc}/{document_id}");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -3823,9 +3830,9 @@ namespace EMR
                 WebHelpers.BindingDatafield(db, this);
             }
         }
-        public static DataTable Logs(string document_id)
+        public static DataTable Logs(string document_id, string loc)
         {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
             DataTable db = new DataTable();
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
@@ -3833,44 +3840,44 @@ namespace EMR
             }
             return db;
         }
-        public Oina(string document_id, bool viewLog)
+        public Oina(string document_id, bool viewLog, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
-        public dynamic[] Update()
+        public dynamic[] Update(string loc)
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
                 message[1] = response2;
             }
             return message;
         }
 
-        public static dynamic[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid, string loc)
         {
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
                     message[1] = response1;
                 }
 
@@ -3930,9 +3937,9 @@ namespace EMR
         public dynamic recommendation { get; set; }
         #endregion
 
-        public Scoc(string document_id)
+        public Scoc(string document_id, string loc)
         {
-            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{loc}/{document_id}");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -3941,9 +3948,9 @@ namespace EMR
                 WebHelpers.BindingDatafield(db, this);
             }
         }
-        public static DataTable Logs(string document_id)
+        public static DataTable Logs(string document_id, string loc)
         {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
             DataTable db = new DataTable();
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
@@ -3951,44 +3958,44 @@ namespace EMR
             }
             return db;
         }
-        public Scoc(string document_id, bool viewLog)
+        public Scoc(string document_id, bool viewLog, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
-        public dynamic[] Update()
+        public dynamic[] Update(string loc)
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
                 message[1] = response2;
             }
             return message;
         }
 
-        public static dynamic[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid, string loc)
         {
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
                     message[1] = response1;
                 }
 
@@ -4079,9 +4086,9 @@ namespace EMR
             { "IPD", "Nhập viện/Admission" },
             { "TRF", "Chuyển viện/Transfer" },
         };
-        public static DataTable Logs(string document_id)
+        public static DataTable Logs(string document_id, string loc)
         {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
             DataTable db = new DataTable();
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
@@ -4089,20 +4096,20 @@ namespace EMR
             }
             return db;
         }
-        public POMR(string document_id, bool viewLog)
+        public POMR(string document_id, bool viewLog, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
-        public POMR(string document_id)
+        public POMR(string document_id, string loc)
         {
-            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{loc}/{document_id}");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -4113,33 +4120,33 @@ namespace EMR
         }
 
         //
-        public dynamic[] Update()
+        public dynamic[] Update(string loc)
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
                 message[1] = response2;
             }
 
             return message;
         }
-        public static dynamic[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid, string loc)
         {
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
                     message[1] = response1;
                 }
 
@@ -4155,114 +4162,114 @@ namespace EMR
                 return message;
             }
         }
-        public static dynamic UpdateVitalSign(string document_id) { 
-            return WebHelpers.PostAPI($"{api}/update-vital-sign/{DataHelpers._LOCATION}/{document_id}");
+        public static dynamic UpdateVitalSign(string document_id, string loc) { 
+            return WebHelpers.PostAPI($"{api}/update-vital-sign/{loc}/{document_id}");
         }
     }
 
     #endregion
 
-    public partial class PatientInfo
-    {
-        #region Properties
-        public string p_info;
-        public int p_age;
-        public dynamic patient_id { get; set; }
-        public dynamic hospital_code { get; set; }
-        public dynamic visible_patient_id { get; set; }
-        public dynamic primary_patient_id { get; set; }
-        public dynamic primary_hospital_code { get; set; }
-        public dynamic primary_visible_patient_id { get; set; }
-        public dynamic title_e { get; set; }
-        public dynamic title_l { get; set; }
-        public dynamic first_name_e { get; set; }
-        public dynamic first_name_l { get; set; }
-        public dynamic last_name_e { get; set; }
-        public dynamic last_name_l { get; set; }
-        public dynamic date_of_birth { get; set; }
-        public dynamic gender_e { get; set; }
-        public dynamic gender_l { get; set; }
-        public dynamic national_id { get; set; }
-        public dynamic passport { get; set; }
-        public dynamic home_email { get; set; }
-        public dynamic business_email { get; set; }
-        public dynamic occupation_e { get; set; }
-        public dynamic occupation_l { get; set; }
-        public dynamic nationality_e { get; set; }
-        public dynamic nationality_l { get; set; }
-        public dynamic religion_e { get; set; }
-        public dynamic religion_l { get; set; }
-        public dynamic address_line_e { get; set; }
-        public dynamic address_line_l { get; set; }
-        public dynamic address_subregion_e { get; set; }
-        public dynamic address_subregion_l { get; set; }
-        public dynamic address_region_e { get; set; }
-        public dynamic address_region_l { get; set; }
-        public dynamic address_country_e { get; set; }
-        public dynamic address_country_l { get; set; }
-        public dynamic contact_name_e { get; set; }
-        public dynamic contact_name_l { get; set; }
-        public dynamic relationship_type_rcd { get; set; }
-        public dynamic contact_phone_number { get; set; }
-        public dynamic lu_updated { get; set; }
+    //public partial class PatientInfo
+    //{
+    //    #region Properties
+    //    public string p_info;
+    //    public int p_age;
+    //    public dynamic patient_id { get; set; }
+    //    public dynamic hospital_code { get; set; }
+    //    public dynamic visible_patient_id { get; set; }
+    //    public dynamic primary_patient_id { get; set; }
+    //    public dynamic primary_hospital_code { get; set; }
+    //    public dynamic primary_visible_patient_id { get; set; }
+    //    public dynamic title_e { get; set; }
+    //    public dynamic title_l { get; set; }
+    //    public dynamic first_name_e { get; set; }
+    //    public dynamic first_name_l { get; set; }
+    //    public dynamic last_name_e { get; set; }
+    //    public dynamic last_name_l { get; set; }
+    //    public dynamic date_of_birth { get; set; }
+    //    public dynamic gender_e { get; set; }
+    //    public dynamic gender_l { get; set; }
+    //    public dynamic national_id { get; set; }
+    //    public dynamic passport { get; set; }
+    //    public dynamic home_email { get; set; }
+    //    public dynamic business_email { get; set; }
+    //    public dynamic occupation_e { get; set; }
+    //    public dynamic occupation_l { get; set; }
+    //    public dynamic nationality_e { get; set; }
+    //    public dynamic nationality_l { get; set; }
+    //    public dynamic religion_e { get; set; }
+    //    public dynamic religion_l { get; set; }
+    //    public dynamic address_line_e { get; set; }
+    //    public dynamic address_line_l { get; set; }
+    //    public dynamic address_subregion_e { get; set; }
+    //    public dynamic address_subregion_l { get; set; }
+    //    public dynamic address_region_e { get; set; }
+    //    public dynamic address_region_l { get; set; }
+    //    public dynamic address_country_e { get; set; }
+    //    public dynamic address_country_l { get; set; }
+    //    public dynamic contact_name_e { get; set; }
+    //    public dynamic contact_name_l { get; set; }
+    //    public dynamic relationship_type_rcd { get; set; }
+    //    public dynamic contact_phone_number { get; set; }
+    //    public dynamic lu_updated { get; set; }
 
-        #endregion
-        public PatientInfo() { }
-        public PatientInfo(string _patient_id) {
-            this.patient_id = _patient_id;
-        }
+    //    #endregion
+    //    public PatientInfo() { }
+    //    public PatientInfo(string _patient_id) {
+    //        this.patient_id = _patient_id;
+    //    }
         
-        public string ShowPatientInfo(bool vi_laganue)
-        {
-            p_age = DataHelpers.CalculateAge(DateTime.Parse(date_of_birth.ToString()));
-            if (vi_laganue)
-            {
-                p_info = "(" + title_l + "), DOB: " + date_of_birth + p_age + " Sex " + gender_l + " PID:" + visible_patient_id;
-            }
-            else
-            {
-                p_info = "(" + title_e + "), DOB: " + date_of_birth + p_age + " Sex " + gender_e + " PID:" + visible_patient_id;
-            }
-            return p_info;
-        }
+    //    public string ShowPatientInfo(bool vi_laganue)
+    //    {
+    //        p_age = DataHelpers.CalculateAge(DateTime.Parse(date_of_birth.ToString()));
+    //        if (vi_laganue)
+    //        {
+    //            p_info = "(" + title_l + "), DOB: " + date_of_birth + p_age + " Sex " + gender_l + " PID:" + visible_patient_id;
+    //        }
+    //        else
+    //        {
+    //            p_info = "(" + title_e + "), DOB: " + date_of_birth + p_age + " Sex " + gender_e + " PID:" + visible_patient_id;
+    //        }
+    //        return p_info;
+    //    }
 
-    }
+    //}
 
-    public class PatientVisitInfo
-    {
+    //public class PatientVisitInfo
+    //{
 
-        public dynamic patient_visit_id { get; set; }
+    //    public dynamic patient_visit_id { get; set; }
 
-        public dynamic patient_id { get; set; }
+    //    public dynamic patient_id { get; set; }
 
-        public dynamic associated_visit_id { get; set; }
+    //    public dynamic associated_visit_id { get; set; }
 
-        public dynamic visit_type_group_rcd { get; set; }
-
-
-        public dynamic visit_type { get; set; }
+    //    public dynamic visit_type_group_rcd { get; set; }
 
 
-        public dynamic visit_code { get; set; }
-
-        public dynamic actual_visit_date_time { get; set; }
-
-        public dynamic closure_date_time { get; set; }
+    //    public dynamic visit_type { get; set; }
 
 
-        public dynamic caregiver_name_e { get; set; }
+    //    public dynamic visit_code { get; set; }
+
+    //    public dynamic actual_visit_date_time { get; set; }
+
+    //    public dynamic closure_date_time { get; set; }
 
 
-        public dynamic caregiver_name_l { get; set; }
+    //    public dynamic caregiver_name_e { get; set; }
 
 
-        public dynamic specialty_name_e { get; set; }
+    //    public dynamic caregiver_name_l { get; set; }
 
 
-        public dynamic specialty_name_l { get; set; }
+    //    public dynamic specialty_name_e { get; set; }
 
 
-    }
+    //    public dynamic specialty_name_l { get; set; }
+
+
+    //}
 
     public class Omr
     {
@@ -4324,24 +4331,24 @@ namespace EMR
         };
 
         #region Methods
-        public dynamic[] Update()
+        public dynamic[] Update(string loc)
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
                 message[1] = response2;
             }
 
             return message;
         }
-        public static DataTable Logs(string document_id)
+        public static DataTable Logs(string document_id, string loc)
         {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
             DataTable db = new DataTable();
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
@@ -4349,29 +4356,29 @@ namespace EMR
             }
             return db;
         }
-        public Omr(string document_id, bool viewLog)
+        public Omr(string document_id, bool viewLog, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
-        public static dynamic[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid, string loc)
         {
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
                     message[1] = response1;
                 }
 
@@ -4388,9 +4395,9 @@ namespace EMR
             }
         }
 
-        public static dynamic UpdateVitalSign(string document_id)
+        public static dynamic UpdateVitalSign(string document_id, string loc)
         {
-            return WebHelpers.PostAPI($"{api}/update-vital-sign/{DataHelpers._LOCATION}/{document_id}");
+            return WebHelpers.PostAPI($"{api}/update-vital-sign/{loc}/{document_id}");
         }
         #endregion
 
@@ -4402,17 +4409,17 @@ namespace EMR
         /// Get document by document_id
         /// </summary>
         /// <param name="document_id"></param>
-        public Omr(dynamic document_id)
+        public Omr(dynamic document_id, string loc)
         {
 
             DataTable tbl = new DataTable();
-            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{loc}/{document_id}");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(response.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
         // Constructor for API Delete
@@ -4681,9 +4688,9 @@ namespace EMR
         #endregion
         Ogia() { }
 
-        public Ogia(dynamic document_id)
+        public Ogia(dynamic document_id, string loc)
         {
-            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{loc}/{document_id}");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -4692,9 +4699,9 @@ namespace EMR
                 WebHelpers.BindingDatafield(db, this);
             }
         }
-        public static DataTable Logs(string document_id)
+        public static DataTable Logs(string document_id, string loc)
         {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
             DataTable db = new DataTable();
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
@@ -4702,15 +4709,15 @@ namespace EMR
             }
             return db;
         }
-        public Ogia(string document_id, bool viewLog)
+        public Ogia(string document_id, bool viewLog, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
         public Ogia(dynamic document_id, dynamic user_name)
@@ -4920,33 +4927,33 @@ namespace EMR
             this.treatment_plan = treatment_plan_;
             this.discharge_plan = discharge_plan_;
         }
-        public dynamic[] Update()
+        public dynamic[] Update(string loc)
         {
             dynamic[] message = new dynamic[2];
             
-            dynamic response = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
+            dynamic response = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
             message[0] = response;
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
                 message[1] = response1;
             }
             return message;
         }
         
-        public static dynamic[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid, string loc)
         {
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
                     message[1] = response1;
                 }
 
@@ -4999,9 +5006,9 @@ namespace EMR
         /// Get document by document_id
         /// </summary>
         /// <param name="document_id"></param>
-        public MC(dynamic document_id)
+        public MC(dynamic document_id, string loc)
         {
-            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{loc}/{document_id}");
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
@@ -5009,9 +5016,9 @@ namespace EMR
                 WebHelpers.BindingDatafield(db, this);
             }
         }
-        public static DataTable Logs(string document_id)
+        public static DataTable Logs(string document_id, string loc)
         {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
             DataTable db = new DataTable();
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
@@ -5019,15 +5026,15 @@ namespace EMR
             }
             return db;
         }
-        public MC(string document_id, bool viewLog)
+        public MC(string document_id, bool viewLog, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
         // Constructor for API Inssert
@@ -5084,17 +5091,17 @@ namespace EMR
             this.treatment_plan = _treatment_plan;
         }
 
-        public dynamic[] Update()
+        public dynamic[] Update(string loc)
         {
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
+                dynamic response = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
                     message[1] = response1;
                 }
                 return message;
@@ -5110,18 +5117,18 @@ namespace EMR
             }
         }
 
-        public static dynamic[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid, string loc)
         {
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
                     message[1] = response1;
                 }
 
@@ -5270,17 +5277,17 @@ namespace EMR
         /// Get document by document_id
         /// </summary>
         /// <param name="document_id"></param>
-        public EmergencyMedicalRecord(dynamic document_id)
+        public EmergencyMedicalRecord(dynamic document_id, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic response = WebHelpers.GetAPI($"api/emr/get/{DataHelpers._LOCATION}/" + document_id);
+            dynamic response = WebHelpers.GetAPI($"api/emr/get/{loc}/" + document_id);
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 // this = new OutpatientMedicalRecord();
                 tbl = WebHelpers.GetJSONToDataTable(response.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
         public EmergencyMedicalRecord(dynamic document_id, dynamic use_name)
@@ -5445,9 +5452,9 @@ namespace EMR
             this.delete_date_time = _delete_date_time;
             this.document_type_rcd = _document_type_rcd;
         }
-        public static DataTable Logs(string document_id)
+        public static DataTable Logs(string document_id, string loc)
         {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
             DataTable db = new DataTable();
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
@@ -5455,44 +5462,44 @@ namespace EMR
             }
             return db;
         }
-        public EmergencyMedicalRecord(string document_id, bool viewLog)
+        public EmergencyMedicalRecord(string document_id, bool viewLog, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
-        public dynamic[] Update()
+        public dynamic[] Update(string loc)
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI($"api/emr/edit/{DataHelpers._LOCATION}", this);
+            dynamic response1 = WebHelpers.PostAPI($"api/emr/edit/{loc}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI($"api/emr/log/{DataHelpers._LOCATION}/{document_id}");
+                dynamic response2 = WebHelpers.PostAPI($"api/emr/log/{loc}/{document_id}");
                 message[1] = response2;
             }
 
             return message;
         }
-        public static dynamic[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid, string loc)
         {
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"api/emr/log/{DataHelpers._LOCATION}/{docid}");
+                    dynamic response1 = WebHelpers.PostAPI($"api/emr/log/{loc}/{docid}");
                     message[1] = response1;
                 }
 
@@ -5660,9 +5667,9 @@ namespace EMR
 
 
         Imani() { }
-        public Imani(dynamic document_id)
+        public Imani(dynamic document_id, string loc)
         {
-            dynamic response = WebHelpers.GetAPI($"{api}/get/{DataHelpers._LOCATION}/{document_id}");
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{loc}/{document_id}");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -5677,9 +5684,9 @@ namespace EMR
             this.user_name = user_name;
         }
 
-        public static DataTable Logs(string document_id)
+        public static DataTable Logs(string document_id, string loc)
         {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
             DataTable db = new DataTable();
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
@@ -5687,44 +5694,44 @@ namespace EMR
             }
             return db;
         }
-        public Imani(string document_id, bool viewLog)
+        public Imani(string document_id, bool viewLog, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
-        public dynamic[] Update()
+        public dynamic[] Update(string loc)
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
                 message[1] = response2;
             }
 
             return message;
         }
-        public static dynamic[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid, string loc)
         {
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
                     message[1] = response1;
                 }
 
@@ -5887,9 +5894,9 @@ namespace EMR
             this.document_type_rcd = document_type_rcd;
         }
 
-        public Surr(string document_id)
+        public Surr(string document_id, string loc)
         {
-            dynamic response = WebHelpers.GetAPI($"api/surr/get/{DataHelpers._LOCATION}/{document_id}");
+            dynamic response = WebHelpers.GetAPI($"api/surr/get/{loc}/{document_id}");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
@@ -5898,9 +5905,9 @@ namespace EMR
                 WebHelpers.BindingDatafield(db, this);
             }
         }
-        public static DataTable Logs(string document_id)
+        public static DataTable Logs(string document_id, string loc)
         {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
             DataTable db = new DataTable();
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
@@ -5908,46 +5915,46 @@ namespace EMR
             }
             return db;
         }
-        public Surr(string document_id, bool viewLog)
+        public Surr(string document_id, bool viewLog, string loc)
         {
             DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{DataHelpers._LOCATION}/{document_id}");
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                DataHelpers.varDocumentStatus = this.status;
+                
             }
         }
         #region METHODS
 
-        public dynamic[] Update()
+        public dynamic[] Update(string loc)
         {
             dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{DataHelpers._LOCATION}", this);
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
             message[0] = response1;
 
             if (response1.Status == System.Net.HttpStatusCode.OK)
             {
-                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{document_id}");
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
                 message[1] = response2;
             }
 
             return message;
         }
-        public static dynamic[] Delete(string userName, string docid)
+        public static dynamic[] Delete(string userName, string docid, string loc)
         {
             dynamic[] message = new dynamic[2];
             try
             {
-                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{DataHelpers._LOCATION}/{userName}/{docid}");
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
 
                 message[0] = response;
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{DataHelpers._LOCATION}/{docid}");
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
                     message[1] = response1;
                 }
 

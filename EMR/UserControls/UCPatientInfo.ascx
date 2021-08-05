@@ -1,11 +1,7 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="PatientInfo.ascx.cs" Inherits="EMR.UserControls.PatientInfo" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="UCPatientInfo.ascx.cs" Inherits="EMR.UserControls.UCPatientInfo" %>
 <div class="row">
     <div class="col-lg-12" id="accordionExample">
         <div class="card">
-            <%--<div class="card-header">
-                <h4 class="text-primary">Thông tin bệnh nhân/ Patient Details</h4>
-                <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapsePatientInfo" aria-expanded="true" aria-controls="collapseOne"></a>
-            </div>--%>
             <div class="card-body collapse show" id="collapsePatientInfo" aria-labelledby="headingPatientInfo">
                 <h5 class="box-title">Thông tin bệnh nhân/ Patient Detail</h5>
                 <hr style="margin: 8px 0 12px 0;" />
@@ -15,7 +11,7 @@
                             <label class="control-label text-sm-right mr-3">First Name:</label>
                         </div>
                         <div class="flex-grow-1">
-                            <label class="control-label text-sm-right" runat="server" id="lblFirstName">John</label>
+                            <asp:Label runat="server" ID="lblFirstName" CssClass="control-label text-sm-right"></asp:Label>
                         </div>
                     </div>
 
@@ -25,7 +21,7 @@
                             <label class="control-label text-sm-right mr-3">Last Name:</label>
                         </div>
                         <div class="flex-grow-1">
-                            <label class="control-label text-sm-right" runat="server" id="lblLastName"></label>
+                            <asp:Label runat="server" ID="lblLastName" CssClass="control-label text-sm-right"></asp:Label>
                         </div>
                     </div>
                 </div>
@@ -36,7 +32,7 @@
                             <label class="control-label text-sm-right mr-3">Gender:</label>
                         </div>
                         <div class="flex-grow-1">
-                            <label class="control-label text-sm-right" runat="server" id="lblGender"></label>
+                            <asp:Label runat="server" ID="lblGender" CssClass="control-label text-sm-right"></asp:Label>
                         </div>
                     </div>
                     <div class="col-sm-6" style="display: flex">
@@ -44,7 +40,7 @@
                             <label class="control-label text-sm-right mr-3">Date of Birth:</label>
                         </div>
                         <div class="flex-grow-1">
-                            <label class="control-label text-sm-right" runat="server" id="lblDoB"></label>
+                            <asp:Label runat="server" ID="lblDoB" CssClass="control-label text-sm-right"></asp:Label>
                         </div>
                     </div>
                     <!--/span-->
@@ -56,7 +52,7 @@
                             <label class="control-label text-sm-right mr-3">Contact Person:</label>
                         </div>
                         <div class="flex-grow-1">
-                            <label class="control-label text-sm-right" runat="server" id="lblContactPerson"></label>
+                            <asp:Label runat="server" ID="lblContactPerson" CssClass="control-label text-sm-right"></asp:Label>
                         </div>
                     </div>
 
@@ -66,7 +62,7 @@
 
                         </div>
                         <div class="flex-grow-1">
-                            <label class="control-label text-sm-right" runat="server" id="lblRelationship"></label>
+                            <asp:Label runat="server" ID="lblRelationship" CssClass="control-label text-sm-right"></asp:Label>
                         </div>
                     </div>
 
@@ -78,11 +74,9 @@
                             <label class="control-label text-sm-right mr-3">Address:</label>
                         </div>
                         <div class="flex-grow-1">
-                            <%--<label class="control-label text-sm-right" id="lblPatientAddress"><%=patient.address_line_l%></label>--%>
-                            <label class="control-label text-sm-right" runat="server" id="lblPatientAddress"></label>
+                            <asp:Label runat="server" ID="lblPatientAddress" CssClass="control-label text-sm-right"></asp:Label>
                         </div>
                     </div>
-
                 </div>
                 <!--/row-->
                 <!--/row-->
@@ -96,7 +90,7 @@
                             <label class="control-label text-sm-right mr-3">Encounter:</label>
                         </div>
                         <div class="flex-grow-1">
-                            <label runat="server" id="lblVisitCode" class="control-label text-sm-right"></label>
+                            <asp:Label runat="server" ID="lblVisitCode" CssClass="control-label text-sm-right"></asp:Label>
                         </div>
                     </div>
 
@@ -105,7 +99,7 @@
                             <label class="control-label text-sm-right mr-3">Admit Date:</label>
                         </div>
                         <div class="flex-grow-1">
-                            <label class="control-label text-sm-right" runat="server" id="lblVisitDate"></label>
+                            <asp:Label runat="server" ID="lblVisitDate" CssClass="control-label text-sm-right"></asp:Label>
                         </div>
                     </div>
                     <!--/span-->

@@ -100,19 +100,20 @@ namespace EMR
             //}
         }
 
-        internal static void AddScriptFormEdit(Page page, dynamic obj, string emp_id)
+        internal static void AddScriptFormEdit(Page page, dynamic obj, string emp_id, string loc)
         {
             if (string.IsNullOrEmpty(emp_id)) return;
 
-            ScriptManager.RegisterStartupScript(page, page.GetType(), DateTime.Now.Millisecond.ToString(), "if(document.readyState=='loading') { window.addEventListener('load', function() { editFormEvent('" + JsonConvert.SerializeObject(obj) + "', '" + DataHelpers._LOCATION + "', '" + emp_id + "') } ); } else { editFormEvent('" + JsonConvert.SerializeObject(obj) + "', '" + DataHelpers._LOCATION + "', '" + emp_id + "') }", true);
+            ScriptManager.RegisterStartupScript(page, page.GetType(), DateTime.Now.Millisecond.ToString(), "if(document.readyState=='loading') { window.addEventListener('load', function() { editFormEvent('" + JsonConvert.SerializeObject(obj) + "', '" + loc + "', '" + emp_id + "') } ); } else { editFormEvent('" + JsonConvert.SerializeObject(obj) + "', '" + loc + "', '" + emp_id + "') }", true);
         }
 
-        internal static dynamic CanOpenForm(Page page, string docid, string documentStatus, string emp_id, string location)
+        internal static dynamic CanOpenForm(Page page, string docid, string documentStatus, string emp_id, string location, string loc = "")
         {
-            if (location != DataHelpers._LOCATION && documentStatus == DocumentStatus.FINAL) return true;
+            loc = location;
+            if (location != loc && documentStatus == DocumentStatus.FINAL) return true;
             if (documentStatus == DocumentStatus.DRAFT)
             {
-                dynamic result = WebHelpers.GetAPI($"api/emr/check-session/{DataHelpers._LOCATION}/{docid}/{emp_id}");
+                dynamic result = WebHelpers.GetAPI($"api/emr/check-session/{loc}/{docid}/{emp_id}");
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
@@ -306,13 +307,13 @@ namespace EMR
             BarCode.Controls.Clear();
             BarCode.Controls.Add(image);
         }
-        internal static void clearSessionDoc(Page page, string docId)
+        internal static void clearSessionDoc(Page page, string docId, string loc)
         {
             if (!string.IsNullOrEmpty(docId))
             {
                 ScriptManager.RegisterStartupScript(page, page.GetType(), "localStorage_removeItem", "window.sessionStorage.removeItem('\"" + docId + "\"'); console.log(comfirm_leave_page); window.removeEventListener('beforeunload', comfirm_leave_page, true);", true);
 
-                WebHelpers.PostAPI($"api/emr/clear-session/{DataHelpers._LOCATION}/{docId}");
+                WebHelpers.PostAPI($"api/emr/clear-session/{loc}/{docId}");
             }
         }
 
@@ -376,6 +377,12 @@ namespace EMR
                 }
             }
         }
+
+        internal static void RefreshMenu(Page page)
+        {
+            ScriptManager.RegisterStartupScript(page, page.GetType(), "refresh_menu", "setTimeout(()=> { RefreshClick(); },0);", true);
+        }
+
         public static string GetJSONFromTable(GridView gridView, DataTable table)
         {
             DataRow row;
@@ -427,6 +434,29 @@ namespace EMR
             //return $"<span class='{CssClass}'>{Convert.ToString(value)}</span>";
         }
 
+        internal static string TextToHtmlTag(string value, bool check = true)
+        {
+            if (!string.IsNullOrEmpty(value))
+            {
+                value = value.Replace("\n", "<br>");
+                
+                if (check) {
+                    value = value.Replace("&lt;", "<");
+                    value = value.Replace("&quot;", "\"");
+                    value = value.Replace("&gt;", ">");
+                }
+                else
+                {
+                    value = value.Replace("&lt;font color=&quot;red&quot;&gt;", "");
+                    value = value.Replace("&lt;/font&gt;", "");
+                    value = value.Replace("&lt;font color=&quot;#000000&quot;&gt;", "");
+                }
+                
+                return value;
+            }
+            return value;
+        }
+
         internal static void SendError(Page page, Exception ex)
         {
             //PopupException popupException = (PopupException)page.LoadControl("~/UserControls/PopupException.ascx");
@@ -439,6 +469,22 @@ namespace EMR
             //popupException.Text = message;
             
             ScriptManager.RegisterStartupScript(page, page.GetType(), "msg_error", "setTimeout(()=>{ sweetAlert(\"Error!\", \"" + message + "\", \"error\");},0);", true);
+        }
+
+        internal static DateTime ConvertDateTime(object time, out bool isValid, out string dateTime, string DateTimeFormat = "yyyy-MM-dd HH:mm tt")
+        {
+            if (DateTime.TryParse(Convert.ToString(time), out DateTime validDateTime))
+            {
+                isValid = true;
+                dateTime = validDateTime.ToString(DateTimeFormat);
+                return validDateTime;
+            }
+            else
+            {
+                isValid = false;
+                dateTime = $"{Convert.ToString(time)} is not a valid datetime";
+                return new DateTime(1,1,1,0,0,0,DateTimeKind.Utc);
+            }
         }
 
         internal static void DisabledControl(bool disabled,params dynamic[] options)
@@ -493,10 +539,10 @@ namespace EMR
             }
             return visible;
         }
-        internal static bool LoadFormControl(HtmlForm form1, dynamic obj, ControlState state, string session, bool IsViewLog, string access_authorize = "")
+        internal static bool LoadFormControl(HtmlForm form1, dynamic obj, ControlState state, bool IsViewLog, bool isLocationChanged, string access_authorize = "")
         {
             //1 - edit
-            bool visible = (state == ControlState.Edit && DataHelpers._LOCATION == session && access_authorize == "FullAccess" && IsViewLog == false) ? true : false;
+            bool visible = (state == ControlState.Edit && !isLocationChanged && access_authorize == "FullAccess" && IsViewLog == false) ? true : false;
 
             foreach (var prop in obj.GetType().GetProperties())
             {
@@ -564,10 +610,13 @@ namespace EMR
             return option;
         }
 
-        internal static string FormatDateTime(DateTime? dateTime, string format = "dd-MM-yyyy")
+        internal static string FormatDateTime(dynamic dateTime, string format = "dd-MM-yyyy", string defaultValue = "")
         {
-            if (dateTime == null) return "";
-            return ((DateTime)dateTime).ToString(format);
+            WebHelpers.ConvertDateTime(dateTime, out bool isValid, out string result, format);
+            if (isValid)
+                return result;
+            else 
+                return defaultValue;
         }
 
         public static string GetDataTableToJSON(DataTable dataTable)
@@ -990,7 +1039,7 @@ namespace EMR
                 }
             }
         }
-        internal static void getAccessButtons(HtmlForm form, string docStatus, string access_authorize, string location, bool IsViewLog)
+        internal static void getAccessButtons(HtmlForm form, string docStatus, string access_authorize, bool IsLocChanged, bool IsViewLog)
         {
             LinkButton btnComplete = (LinkButton)form.FindControl("btnComplete");
             Control btnSave = form.FindControl("btnSave");
@@ -1001,7 +1050,7 @@ namespace EMR
             
             VisibleControl(false, btnCancel);
 
-            if (DataHelpers._LOCATION != location || IsViewLog)
+            if (IsLocChanged || IsViewLog)
             {
                 VisibleControl(false, btnComplete, btnSave, btnDelete, btnAmend, btnPrint);
                 return;
@@ -1076,14 +1125,11 @@ namespace EMR
         }
         public static void BindDateTimePicker(RadDateTimePicker radDateTimePicker, dynamic datetime)
         {
-            try
+            DateTime result = ConvertDateTime(datetime, out bool isValid, out string datetime1);
+            if (isValid)
             {
-                if (datetime != null)
-                {
-                    radDateTimePicker.SelectedDate = datetime;
-                }
+                radDateTimePicker.SelectedDate = result;
             }
-            catch (Exception ex) { }
         }
         internal static void DataBind(RadDateTimePicker radDateTimePicker, dynamic datetime)
         {
@@ -1115,7 +1161,8 @@ namespace EMR
         }
         public static string GetBool(bool? value, string returnTrue = "Có/ Yes", string returnFalse = "Không/ No")
         {
-            if (value == null) return null; return (bool)value ? returnTrue : returnFalse;
+            if (value == null) return null; 
+            return (bool)value ? returnTrue : returnFalse;
         }
         public static string GetCheckedIcon(bool? value)
         {
@@ -1144,7 +1191,7 @@ namespace EMR
                         return false;
 
                     default:
-                        ScriptManager.RegisterStartupScript(_page, _page.GetType(), "session_timeout", "setTimeout(()=> {popupShowDelay(\"" + EMRClass.Settings["EMR_DOCUMENT_SESSION"].paramater_value + "\");},0);", true);
+                        //ScriptManager.RegisterStartupScript(_page, _page.GetType(), "session_timeout", "setTimeout(()=> {popupShowDelay(\"" + EMRClass.Settings["EMR_DOCUMENT_SESSION"].paramater_value + "\");},0);", true);
                         break;
                 }
             }
@@ -1244,6 +1291,7 @@ namespace EMR
         }
         private static DataTable UpdateLastRow(GridView gridView, DataTable table)
         {
+            if (gridView.Rows.Count <= 1) return table;
             for (int i = 0; i < gridView.Rows[gridView.Rows.Count - 1].Cells.Count; i++)
             {
                 try
@@ -1254,7 +1302,11 @@ namespace EMR
                         table.Rows[gridView.Rows.Count - 1][control.ID] = control.Text;
                     } else if(control is RadDateTimePicker)
                     {
-                        table.Rows[gridView.Rows.Count - 1][control.ID] = control.SelectedDate;
+                        DateTime? date = control.SelectedDate;
+                        if(date != null)
+                        {
+                            table.Rows[gridView.Rows.Count - 1][control.ID] = control.SelectedDate;
+                        }
                     }
                 }
                 catch (Exception ex) { }

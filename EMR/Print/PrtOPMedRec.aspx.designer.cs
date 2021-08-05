@@ -114,15 +114,6 @@ namespace EMR.Print
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl AmendReasonPlaceHolder;
 
         /// <summary>
-        /// PatientInfo control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.UserControls.PatientInfo PatientInfo;
-
-        /// <summary>
         /// txtChiefComplaint control.
         /// </summary>
         /// <remarks>

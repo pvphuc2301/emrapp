@@ -124,7 +124,21 @@ function clear_radiobutton(el) {
 }
 
 function changeValue(a, b) {
-    document.getElementById(b).value = document.getElementById(a).innerHTML;
+
+    let value = document.getElementById(a).innerHTML;
+
+    value = value.replaceAll("style=\"color: rgb(0, 0, 0);\"", "");
+    value = value.replaceAll("style=\"\"", "");
+    document.getElementById(a).innerHTML = value;
+
+    value = value.replaceAll("<br>", "\n");
+    //value = value.replaceAll("<", "&lt;");
+    //value = value.replaceAll(">", "&gt;");
+    //value = value.replaceAll("\"", "&quot;");
+
+    console.log(value);
+
+    document.getElementById(b).value = value;
 }
 
 function changeValue1(a, b) {
@@ -294,17 +308,17 @@ function comfirm_leave_page(event) {
 }
 
 function editFormEvent(doc, location, emp_id) {
-    doc = doc.replaceAll('"red"', "'red'");
-    doc = doc.replaceAll('"#000000"', "'#000000'");
+    //doc = doc.replaceAll('"red"', "'red'");
+    //doc = doc.replaceAll('"#000000"', "'#000000'");
 
-    let value = document.getElementById("DataObj").value;
+    //let value = document.getElementById("DataObj").value;
 
-    let obj = JSON.parse(value);
+    //let obj = JSON.parse(value);
 
-    window.sessionStorage.setItem('doc_id', obj.document_id);
-    window.sessionStorage.setItem(obj.document_id, JSON.stringify(obj));
-    window.sessionStorage.setItem('location', location);
-    window.sessionStorage.setItem('emp_id', emp_id);
+    //window.sessionStorage.setItem('doc_id', obj.document_id);
+    //window.sessionStorage.setItem(obj.document_id, JSON.stringify(obj));
+    //window.sessionStorage.setItem('location', location);
+    //window.sessionStorage.setItem('emp_id', emp_id);
 
     window.addEventListener('beforeunload', comfirm_leave_page, true);
 

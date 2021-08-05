@@ -105,8 +105,6 @@ namespace EMR
         {
             DisplayControl.InnerHtml = InputControl.Value;
             DisplayControl.Attributes.Add("onblur", string.Format("changeValue('{0}', '{1}')", DisplayControl.ClientID, InputControl.ClientID));
-
-            
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using EMR.UserControls;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,13 +15,42 @@ namespace EMR.ER
     public partial class EmerMedRec : System.Web.UI.Page
     {
         EmergencyMedicalRecord emr;
+        PatientInfo patientInfo;
+        PatientVisitInfo patientVisitInfo;
+        public string PAGE_URL { get; set; }
+        public string loc { get; set; }
+        public string locChanged { get; set; }
+        public string varDocID { get; set; }
+        public string varDocIdLog { get; set; }
+        public string varModelID { get; set; }
+        public string varPVID { get; set; }
+        public string varVPID { get; set; }
+        public string varPID { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!WebHelpers.CheckSession(this)) return;
+
+            varDocID = Request.QueryString["docId"];
+            varModelID = Request.QueryString["modelId"];
+            varPVID = Request.QueryString["pvId"];
+            varVPID = Request.QueryString["vpId"];
+            varPID = Request.QueryString["pId"];
+            loc = Request.QueryString["loc"];
+
+            PAGE_URL = $"/ER/EmerMedRec.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+
+            patientInfo = new PatientInfo(varPID);
+            patientVisitInfo = new PatientVisitInfo(varPVID, loc);
+
+            var UCPatientInfo = (UCPatientInfo)Page.LoadControl("~/UserControls/UCPatientInfo.ascx");
+
+            UCPatientInfo.Initial(uc_patientinfo_wrapper, patientInfo, patientVisitInfo);
+
             if (!IsPostBack)
             {
                 Initial();
             }
+
             PostBackEventHandler();
         }
         private void PostBackEventHandler()
@@ -182,9 +212,9 @@ namespace EMR.ER
                 //
                 txt_icd_10.Value = emr.icd_10;
 
-                DataObj.Value = JsonConvert.SerializeObject(emr);
+                //DataObj.Value = JsonConvert.SerializeObject(emr);
                 Session["docid"] = emr.document_id;
-                WebHelpers.AddScriptFormEdit(Page, emr, (string)Session["emp_id"]);
+                WebHelpers.AddScriptFormEdit(Page, emr, (string)Session["emp_id"], loc);
             }
             catch (Exception ex)
             {
@@ -670,13 +700,15 @@ namespace EMR.ER
 
             try
             {
+                patientInfo = new PatientInfo(varPID);
+
                 div_pecialistopinion.Visible = div_discharge_field.Visible = div_hos_req_field.Visible = div_emr_sur_field.Visible = div_transfer_hos_field.Visible = false;
-                Patient patient = Patient.Instance();
+        
                 div_pecialistopinion.Visible = div_discharge_field.Visible = div_hos_req_field.Visible = div_emr_sur_field.Visible = div_transfer_hos_field.Visible = false;
-                WebHelpers.gen_BarCode(patient.visible_patient_id, BarCode);
-                prt_fullname.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
-                prt_dob.Text = WebHelpers.FormatDateTime(DataHelpers.patient.date_of_birth) + "| " + DataHelpers.patient.gender_l;
-                prt_vpid.Text = DataHelpers.patient.visible_patient_id;
+                WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
+                prt_fullname.Text = patientInfo.FullName;
+                prt_dob.Text = WebHelpers.FormatDateTime(patientInfo.date_of_birth) + "| " + patientInfo.Gender;
+                prt_vpid.Text = patientInfo.visible_patient_id;
                 prt_evaluation_time.Text = WebHelpers.FormatDateTime(emr.evaluation_time, "HH:mm");
                 //WebHelpers.FormatDateTime(emr.evaluation_time, "dd/MM/yyyy HH:mm tt");
 
@@ -1040,18 +1072,18 @@ namespace EMR.ER
         {
             if (Page.IsValid)
             {
-                EmergencyMedicalRecord emr = new EmergencyMedicalRecord(Request.QueryString["docId"]);
+                EmergencyMedicalRecord emr = new EmergencyMedicalRecord(varDocID, loc);
                 emr.status = DocumentStatus.FINAL;
 
                 UpdateData(emr);
-                WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+                WebHelpers.clearSessionDoc(Page, varDocID, loc);
             }
         }
         protected void btnSave_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
-                emr = new EmergencyMedicalRecord(DataHelpers.varDocId);
+                emr = new EmergencyMedicalRecord(varDocID, loc);
                 emr.status = DocumentStatus.DRAFT;
 
                 UpdateData(emr);
@@ -1061,13 +1093,12 @@ namespace EMR.ER
         {
             try
             {
-                dynamic result = EmergencyMedicalRecord.Delete((string)Session["UserId"], Request.QueryString["docId"])[0];
+                dynamic result = EmergencyMedicalRecord.Delete((string)Session["UserId"], Request.QueryString["docId"], loc)[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
-
-                    Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
+                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
+                    Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
                 }
             }
             catch (Exception ex)
@@ -1077,15 +1108,15 @@ namespace EMR.ER
         }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            if (WebHelpers.CanOpenForm(Page, Request.QueryString["docId"], DocumentStatus.DRAFT, (string)Session["emp_id"], (string)Session["location"]))
+            if (WebHelpers.CanOpenForm(Page, varDocID, DocumentStatus.DRAFT, (string)Session["emp_id"], loc))
             {
-                EmergencyMedicalRecord emr = new EmergencyMedicalRecord(Request.QueryString["docId"]);
+                EmergencyMedicalRecord emr = new EmergencyMedicalRecord(varDocID, loc);
 
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
                 
                 //load form control
-                WebHelpers.LoadFormControl(form1, emr, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]);
+                WebHelpers.LoadFormControl(form1, emr, ControlState.Edit, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]);
                 //binding data
                 BindingDataFormEdit(emr);
                 //get access button
@@ -1094,7 +1125,7 @@ namespace EMR.ER
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             Initial();
-            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+            WebHelpers.clearSessionDoc(Page, varDocID, loc);
         }
         protected void gridTreatment_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -1129,32 +1160,24 @@ namespace EMR.ER
         }
         protected void btnHome_Click(object sender, EventArgs e)
         {
-            Response.Redirect($"../other/index.aspx?pid={Request["pid"]}&vpid={Request["vpid"]}");
+            Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
         }
         #endregion
 
         #region Functions
         public void Initial()
         {
-            if (Request.QueryString["modelId"] != null) DataHelpers.varModelId = Request.QueryString["modelId"];
-            if (Request.QueryString["docId"] != null) DataHelpers.varDocId = Request.QueryString["docId"];
-            if (Request.QueryString["pvId"] != null) DataHelpers.varPVId = Request.QueryString["pvId"];
-
             try
             {
                 EmergencyMedicalRecord emr;
-                if (Request.QueryString["docIdLog"] != null)
+                if (varDocIdLog != null)
                 {
-                    emr = new EmergencyMedicalRecord(Request.QueryString["docIdLog"], true);
+                    emr = new EmergencyMedicalRecord(varDocIdLog, true, loc);
                     currentLog.Visible = true;
-
-                    string item = (string)Session["viewLogInfo"];
-
-                    RadLabel2.Text = $"You are viewing an old version of this document ( { item })";
                 }
                 else
                 {
-                    emr = new EmergencyMedicalRecord(Request.QueryString["docId"]);
+                    emr = new EmergencyMedicalRecord(varDocID, loc);
                     currentLog.Visible = false;
                 }
 
@@ -1163,16 +1186,15 @@ namespace EMR.ER
 
                 if (emr.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(emr, WebHelpers.LoadFormControl(form1, emr, ControlState.View, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
+                    BindingDataForm(emr, WebHelpers.LoadFormControl(form1, emr, ControlState.View, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
                     BindingDataFormPrint(emr);
-
                 }
                 else if (emr.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(emr, WebHelpers.LoadFormControl(form1, emr, ControlState.Edit, (string)Session["location"], Request.QueryString["docIdLog"] != null, (string)Session["access_authorize"]));
+                    BindingDataForm(emr, WebHelpers.LoadFormControl(form1, emr, ControlState.Edit, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
                 }
 
-                WebHelpers.getAccessButtons(form1, emr.status, (string)Session["access_authorize"], (string)Session["location"], Request.QueryString["docIdLog"] != null);
+                WebHelpers.getAccessButtons(form1, emr.status, (string)Session["access_authorize"], loc == locChanged, varDocIdLog != null);
             }
             catch (Exception ex)
             {
@@ -1181,7 +1203,7 @@ namespace EMR.ER
         }
         private void loadRadGridHistoryLog()
         {
-            DataTable dt = EmergencyMedicalRecord.Logs(Request.QueryString["docId"]);
+            DataTable dt = EmergencyMedicalRecord.Logs(varDocID, loc);
             RadGrid1.DataSource = dt;
             DateTime last_updated_date_time = new DateTime();
             string last_updated_doctor = "";
@@ -1202,7 +1224,6 @@ namespace EMR.ER
             RadLabel1.Text = $"Last updated by {last_updated_doctor} on " + WebHelpers.FormatDateTime(last_updated_date_time, "dd-MM-yyyy HH:mm");
             RadGrid1.DataBind();
         }
-
         protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
         {
             string result = "Amended by";
@@ -1230,17 +1251,22 @@ namespace EMR.ER
             {
                 string doc_log_id = item.GetDataKeyValue("document_log_id").ToString();
 
-                string url = $"/ER/EmerMedRec.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}&docIdLog={doc_log_id}";
-
-                Session["viewLogInfo"] = (item.FindControl("RadLabel1") as RadLabel).Text;
+                string url = PAGE_URL + $"&docIdLog={doc_log_id}";
 
                 Response.Redirect(url);
             }
         }
-
+        protected string GetLogUrl(object doc_log_id)
+        {
+            return PAGE_URL + $"&docIdLog={doc_log_id}";
+        }
+        protected void LinkViewLastestVersion_Load(object sender, EventArgs e)
+        {
+            (sender as HyperLink).NavigateUrl = PAGE_URL;
+        }
         protected void RadButton1_Click(object sender, EventArgs e)
         {
-            string url = $"/ER/EmerMedRec.aspx?modelId={Request.QueryString["modelId"]}&docId={Request.QueryString["docId"]}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}";
+            string url = $"/ER/EmerMedRec.aspx?modelId={Request.QueryString["modelId"]}&docId={varDocID}&pId={Request.QueryString["modelId"]}&vpId={Request.QueryString["vpId"]}";
             Response.Redirect(url);
         }
         private void UpdateData(EmergencyMedicalRecord emr)
@@ -1408,7 +1434,7 @@ namespace EMR.ER
                 emr.amend_reason = txt_amend_reason.Text;
                 emr.user_name = (string)Session["UserID"];
 
-                dynamic result = emr.Update()[0];
+                dynamic result = emr.Update(loc)[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
@@ -1567,7 +1593,7 @@ namespace EMR.ER
 
         protected void clearSession_Click(object sender, EventArgs e)
         {
-            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"]);
+            WebHelpers.clearSessionDoc(Page, varDocID, loc);
         }
     }
 }
