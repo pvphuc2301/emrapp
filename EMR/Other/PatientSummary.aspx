@@ -132,7 +132,7 @@
 
                                             <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px;">
                                                 <h5 class="font-bold text-primary ml-2">Form Document</h5>
-                                                
+                                                <asp:HiddenField runat="server" ID="TempDocId" />
                                                 <telerik:RadTreeView OnClientMouseOut="ClientMouseOut" OnClientMouseOver="ClientMouseOver" OnNodeClick="RadTreeView1_NodeClick" ID="RadTreeView1" runat="server" OnNodeExpand="RadTreeView1_NodeExpand"/>
                                             </li>
 
@@ -209,16 +209,13 @@
         function beforeAsyncPostBack() {
             var curtime = new Date();
             _scrollTop = document.querySelector("#menuLeft").scrollTop;
-            console.log('before ',_scrollTop);
         }
 
         //let scroll = document.querySelector("#menuLeft");
 
         function afterAsyncPostBack() {
             $('#DocumentList').modal('show');
-            console.log('after',_scrollTop);
-            //scroll.scrollTo(0, screenTop);
-
+            
             $("#menuLeft").scrollTop(_scrollTop);
         }
 
@@ -233,8 +230,7 @@
 
             if (node.get_attributes().getAttribute("status")) {
                 let RadSplitBar1 = document.getElementById("RadSplitBar1");
-                console.log(node.get_attributes().getAttribute("status"));
-
+                
                 tooltip1.style.top = (ele.clientY + 50) + "px";
                 tooltip1.style.left = RadSplitBar1.offsetLeft + "px";
                 tooltip1.style.visibility = "visible";

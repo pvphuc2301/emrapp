@@ -41,7 +41,7 @@ namespace EMR
             varPID = Request.QueryString["pId"];
             loc = Request.QueryString["loc"];
 
-            PAGE_URL = $"/OPD/SumOfComOutpCase.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+            PAGE_URL = $"/OPD/SumOfComOutpCase.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&modelId={varModelID}&docId={varDocID}";
 
             if (!IsPostBack)
             {
@@ -131,7 +131,7 @@ namespace EMR
             {
                 Scoc scoc;
                 patientInfo = new PatientInfo(varPID);
-                patientVisitInfo = new PatientVisitInfo(varPVID, loc);
+                //patientVisitInfo = new PatientVisitInfo(varPVID, loc);
                 if (varDocIdLog != null)
                 {
                     scoc = new Scoc(varDocIdLog, true, loc);
@@ -214,7 +214,15 @@ namespace EMR
 
             SignatureName = last_updated_doctor;
 
-            RadLabel1.Text = $"Last updated by <i>{last_updated_doctor}</i> on <b><i>{Convert.ToDateTime(last_updated_date_time).ToString("dd-MMM-yyyy HH:mm tt")}</i></b>";
+            if (!string.IsNullOrEmpty(last_updated_date_time))
+            {
+                RadLabel1.Text = $"Last updated by <i>{last_updated_doctor}</i> on <b><i>{Convert.ToDateTime(last_updated_date_time).ToString("dd-MMM-yyyy HH:mm tt")}</i></b>";
+            }
+            else
+            {
+                RadLabel1.Text = $"Last updated by <i>{last_updated_doctor}</i> on <b><i></i></b>";
+            }
+            
             RadGrid1.DataBind();
         }
         protected void LinkViewLastestVersion_Load(object sender, EventArgs e)
@@ -327,13 +335,13 @@ namespace EMR
                 txt_amend_reason.Text = "";
                 //I.
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_allergy_" + scoc.allergy);
-                txt_allergy_note.Value = scoc.allergy_note;
-                txt_remarkable.Value = scoc.remarkable;
-                txt_past_history.Value = scoc.past_history;
-                txt_diagnosis.Value = scoc.diagnosis;
-                txt_cur_treatment.Value = scoc.cur_treatment;
-                txt_cur_care_plans.Value = scoc.cur_care_plans;
-                txt_recommendation.Value = scoc.recommendation;
+                txt_allergy_note.Value = WebHelpers.TextToHtmlTag(scoc.allergy_note);
+                txt_remarkable.Value = WebHelpers.TextToHtmlTag(scoc.remarkable);
+                txt_past_history.Value = WebHelpers.TextToHtmlTag(scoc.past_history);
+                txt_diagnosis.Value = WebHelpers.TextToHtmlTag(scoc.diagnosis);
+                txt_cur_treatment.Value = WebHelpers.TextToHtmlTag(scoc.cur_treatment);
+                txt_cur_care_plans.Value = WebHelpers.TextToHtmlTag(scoc.cur_care_plans);
+                txt_recommendation.Value = WebHelpers.TextToHtmlTag(scoc.recommendation);
 
                 DataObj.Value = JsonConvert.SerializeObject(scoc);
                 Session["docid"] = scoc.document_id;
@@ -349,13 +357,13 @@ namespace EMR
         {
             try
             {
-                lbl_allergy.Text = WebHelpers.FormatString(WebHelpers.GetBool(scoc.allergy, "Có, ghi rõ/ Yes, specify: " + scoc.allergy_note));
-                lbl_remarkable.Text = WebHelpers.FormatString(scoc.remarkable);
-                lbl_past_history.Text = WebHelpers.FormatString(scoc.past_history);
-                lbl_diagnosis.Text = WebHelpers.FormatString(scoc.diagnosis);
-                lbl_cur_treatment.Text = WebHelpers.FormatString(scoc.cur_treatment);
-                lbl_cur_care_plans.Text = WebHelpers.FormatString(scoc.cur_care_plans);
-                lbl_recommendation.Text = WebHelpers.FormatString(scoc.recommendation);
+                lbl_allergy.Text = WebHelpers.TextToHtmlTag(WebHelpers.GetBool(scoc.allergy, "Có, ghi rõ/ Yes, specify: " + scoc.allergy_note));
+                lbl_remarkable.Text = WebHelpers.TextToHtmlTag(scoc.remarkable);
+                lbl_past_history.Text = WebHelpers.TextToHtmlTag(scoc.past_history);
+                lbl_diagnosis.Text = WebHelpers.TextToHtmlTag(scoc.diagnosis);
+                lbl_cur_treatment.Text = WebHelpers.TextToHtmlTag(scoc.cur_treatment);
+                lbl_cur_care_plans.Text = WebHelpers.TextToHtmlTag(scoc.cur_care_plans);
+                lbl_recommendation.Text = WebHelpers.TextToHtmlTag(scoc.recommendation);
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
 
@@ -378,7 +386,7 @@ namespace EMR
                     if (scoc.allergy)
                     {
                         prt_allergy_note_wrapper.Visible = true;
-                        prt_allergy_note.Text = scoc.allergy_note;
+                        prt_allergy_note.Text = WebHelpers.TextToHtmlTag(scoc.allergy_note);
                     }
                     else
                     {
@@ -386,12 +394,12 @@ namespace EMR
                     }
                 }
                 
-                prt_remarkable.Text = scoc.remarkable;
-                past_history.Text = scoc.past_history;
-                prt_diagnosis.Text = scoc.diagnosis;
-                prt_cur_treatment.Text = scoc.cur_treatment;
-                prt_cur_care_plans.Text = scoc.cur_care_plans;
-                prt_recommendation.Text = scoc.recommendation;
+                prt_remarkable.Text = WebHelpers.TextToHtmlTag(scoc.remarkable);
+                past_history.Text = WebHelpers.TextToHtmlTag(scoc.past_history);
+                prt_diagnosis.Text = WebHelpers.TextToHtmlTag(scoc.diagnosis);
+                prt_cur_treatment.Text = WebHelpers.TextToHtmlTag(scoc.cur_treatment);
+                prt_cur_care_plans.Text = WebHelpers.TextToHtmlTag(scoc.cur_care_plans);
+                prt_recommendation.Text = WebHelpers.TextToHtmlTag(scoc.recommendation);
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }

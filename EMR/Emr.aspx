@@ -128,6 +128,7 @@
                             </div>
                         </nav>
                     </header>
+        
         <div style="display: grid; grid-template-columns: auto 1fr; height:100vh;">
             <telerik:RadTabStrip RenderMode="Lightweight" runat="server" ID="RadTabStrip2"  MultiPageID="RadMultiPage2"
                     Orientation="VerticalLeft" Skin="Silk" Width="190px" SelectedIndex="0">

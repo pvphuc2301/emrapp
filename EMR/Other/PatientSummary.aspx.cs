@@ -28,10 +28,16 @@ namespace EMR
         protected string loc;
         protected void Page_Load(object sender, EventArgs e)
         {
-            ConnClass ConnStr = new ConnClass();
+
+            if (!WebHelpers.CheckSession(this)) { return; }
+
             varPID = Request.QueryString["pid"];
             varVPID = Request.QueryString["vpid"];
             loc = Request.QueryString["loc"];
+
+
+            ConnClass ConnStr = new ConnClass();
+
             ConnStringEMR = ConnStr.SQL_EMRConnString;
             //RadPageView1.ContentUrl = "~/phar/orderlist.aspx?pid=" + varPID + "&vbid=" + varVbID;
             //RadPageView3.ContentUrl = "~/phar/opdpreslist.aspx?pid=" + varPID;
@@ -357,12 +363,15 @@ namespace EMR
                 string modelId = e.Node.Attributes["modelId"];
                 string status = e.Node.Attributes["status"];
 
-                string preDocid = (string)Session["docid"];
+                //string preDocid = (string)Session["docid"];
                 
-                if (!string.IsNullOrEmpty(preDocid)) {
-                    string apiUri = $"api/emr/clear-session/{loc}/{preDocid}";
-                    WebHelpers.PostAPI(apiUri);
-                    //Session["docid"] = string.Empty;
+                if(!string.IsNullOrEmpty(TempDocId.Value))
+                {
+                    if(TempDocId.Value != docid)
+                    {
+                        string apiUri = $"api/emr/clear-session/{loc}/{TempDocId.Value}";
+                        WebHelpers.PostAPI(apiUri);
+                    }
                 }
                 
                 if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], loc))
@@ -376,11 +385,15 @@ namespace EMR
                         dynamic data = JObject.Parse(response.Data);
 
                         patientVisitInfo = new PatientVisitInfo(e.Node.Attributes["patient_visit_id"], loc);
-                        
+                        TempDocId.Value = docid;
                         MainContent.ContentUrl = $"/{data.url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}&pvid={patientVisitInfo.patient_visit_id}&loc={loc}";
 
                         //return string.Format("/{0}?modelId={1}&docId={2}&pId={3}&vpId={4}", data.url, varModelID, varDocID, varPID, varVPID);
                     }
+                }
+                else
+                {
+                    MainContent.ContentUrl = $"index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}";
                 }
             }
         }
@@ -487,8 +500,8 @@ namespace EMR
 
                 if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], loc))
                 {
-                    MainContent.ContentUrl = $"/{url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}";
-
+                    MainContent.ContentUrl = $"/{url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}&loc={loc}";
+                    
                     //string apiURL = $"api/emr/get-api/{DataHelpers._LOCATION}/{modelId}";
 
                     //dynamic response = WebHelpers.GetAPI(apiURL);
@@ -509,7 +522,7 @@ namespace EMR
 
         protected void btnRefresh1_Click(object sender, EventArgs e)
         {
-            LoadRootNodes(RadTreeView1, TreeNodeExpandMode.ServerSideCallBack);
+
         }
     }
 }

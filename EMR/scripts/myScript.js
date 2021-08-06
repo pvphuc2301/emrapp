@@ -136,8 +136,6 @@ function changeValue(a, b) {
     //value = value.replaceAll(">", "&gt;");
     //value = value.replaceAll("\"", "&quot;");
 
-    console.log(value);
-
     document.getElementById(b).value = value;
 }
 
@@ -257,7 +255,6 @@ function popupShowDelay(sessionTimeout) {
     clearTimeout(timeoutID);
 
     timeoutID = setTimeout(() => {
-        console.log('show delay');
         $('#PopupShowDelay').modal({ backdrop: 'static', keyboard: false });
 
         let _countDownTimer = 14;
@@ -278,12 +275,10 @@ function comfirm_leave_page(event) {
 
     setTimeout(function () {
         setTimeout(function () {
-            $.get('http://172.16.0.88:8080/api/emr/check-session/' + location + '/' + doc_id + '/' + emp_id, function (data) { console.log(data) });
+            $.get('http://172.16.0.88:8080/api/emr/check-session/' + location + '/' + doc_id + '/' + emp_id, function (data) {  });
         }, 2000);
     }, 1);
 
-    console.log("leaving");
-    
     __doPostBack("clearSession", "");
     document.getElementById("clearSession").click();
 
@@ -322,7 +317,6 @@ function editFormEvent(doc, location, emp_id) {
 
     window.addEventListener('beforeunload', comfirm_leave_page, true);
 
-    console.log('comfirm_leave_page', comfirm_leave_page);
 }
 
 function ShowInfo(text) {
@@ -375,7 +369,6 @@ function progress(elem) {
 }
 
 function RefreshClick() {
-    console.log("btn " + window.parent.document.getElementById("btnRefresh1"));
     window.parent.document.getElementById("btnRefresh1").click();
 }
 

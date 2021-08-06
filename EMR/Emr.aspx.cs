@@ -9,13 +9,13 @@ namespace EMR
 {
     public partial class Emr : System.Web.UI.Page
     {
-        public string loc;
+        public string loc; string UserID = "";
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(loc)) loc = "AIH";
+            loc = (string)Session["company_code"];
+
             if (!WebHelpers.CheckSession(this, $"./login.aspx?loc={loc}&ReturnUrl=", false)) return;
-            loc = Request.QueryString["loc"];
-            if(string.IsNullOrEmpty(loc)) loc = "AIH";
+            
             if (!IsPostBack)
             {
                 DemographicSearch.ContentUrl = $"~/Other/DemographicSearch.aspx?loc={loc}";

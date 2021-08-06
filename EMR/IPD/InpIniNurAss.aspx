@@ -3841,7 +3841,7 @@ applicable for children and pregnant</span>)
 
         function beforeAsyncPostBack() {
             var curtime = new Date();
-            console.log(curtime);
+            
         }
 
         function afterAsyncPostBack() {
@@ -3856,27 +3856,10 @@ applicable for children and pregnant</span>)
             load_skin_anno_data_Image();
         }
 
-        function showWindow(sender, eventArgs) {
+        function showWindow() {
             var oWnd = $find("<%=RadWindow1.ClientID%>");
             oWnd.show();
         }
-
-
-       function RowDblClick(sender, eventArgs) {
-            console.log('sdfsdf');
-
-           var grid = $find("<%= RadGrid1.ClientID %>");
-           var masterTable = grid.get_masterTableView();
-           var item = eventArgs.get_itemIndexHierarchical();
-
-           var row = masterTable.get_dataItems()[item];
-
-           var button = row.findElement("RadLinkButton1");
-           button.click();
-
-           //console.log(row);
-        }
-
 
         function printDiv() {
             var printContents = document.getElementById("print_content").innerHTML;

@@ -291,7 +291,8 @@
         //
         if (document.querySelector("#RequiredFieldValidator").value) {
         let errors = document.querySelector("#RequiredFieldValidator").value
-            console.log(errors);
+
+            (errors);
 
             if (errors.includes("pro_cough_error")) {
         document.querySelector("#pro_cough_error").innerHTML = "this field is required.";

@@ -65,26 +65,26 @@ namespace EMR
             {
                 txt_amend_reason.Text = "";
 
-                txt_admission_reason.Value = imani.admission_reason;
-                txt_cur_med_history.Value = imani.cur_med_history;
-                txt_cur_medication.Value = imani.cur_medication;
-                txt_delivery.Value = imani.delivery;
-                txt_post_nutrition.Value = imani.post_nutrition;
-                txt_mater_med_history.Value = imani.mater_med_history;
-                txt_exam_weight.Value = imani.exam_weight;
-                txt_exam_length.Value = imani.exam_length;
-                txt_exam_head_circum.Value = imani.exam_head_circum;
-                txt_exam_hr.Value = imani.exam_hr;
-                txt_exam_rr.Value = imani.exam_rr;
-                txt_physical_exam.Value = DataHelpers.FormatPhysicalExamination(imani.physical_exam);
-                txt_laboratory.Value = imani.laboratory;
-                txt_initial_diagnosis.Value = imani.initial_diagnosis;
-                txt_diff_diagnosis.Value = imani.diff_diagnosis;
-                txt_associated_conditions.Value = imani.associated_conditions;
-                txt_treatment_plan.Value = imani.treatment_plan;
-                txt_discharge_plan.Value = imani.discharge_plan;
+                txt_admission_reason.Value = WebHelpers.TextToHtmlTag(imani.admission_reason);
+                txt_cur_med_history.Value = WebHelpers.TextToHtmlTag(imani.cur_med_history);
+                txt_cur_medication.Value = WebHelpers.TextToHtmlTag(imani.cur_medication);
+                txt_delivery.Value = WebHelpers.TextToHtmlTag(imani.delivery);
+                txt_post_nutrition.Value = WebHelpers.TextToHtmlTag(imani.post_nutrition);
+                txt_mater_med_history.Value = WebHelpers.TextToHtmlTag(imani.mater_med_history);
+                txt_exam_weight.Value = WebHelpers.TextToHtmlTag(imani.exam_weight);
+                txt_exam_length.Value = WebHelpers.TextToHtmlTag(imani.exam_length);
+                txt_exam_head_circum.Value = WebHelpers.TextToHtmlTag(imani.exam_head_circum);
+                txt_exam_hr.Value = WebHelpers.TextToHtmlTag(imani.exam_hr);
+                txt_exam_rr.Value = WebHelpers.TextToHtmlTag(imani.exam_rr);
+                txt_physical_exam.Value = WebHelpers.TextToHtmlTag(imani.physical_exam);
+                txt_laboratory.Value = WebHelpers.TextToHtmlTag(imani.laboratory);
+                txt_initial_diagnosis.Value = WebHelpers.TextToHtmlTag(imani.initial_diagnosis);
+                txt_diff_diagnosis.Value = WebHelpers.TextToHtmlTag(imani.diff_diagnosis);
+                txt_associated_conditions.Value = WebHelpers.TextToHtmlTag(imani.associated_conditions);
+                txt_treatment_plan.Value = WebHelpers.TextToHtmlTag(imani.treatment_plan);
+                txt_discharge_plan.Value = WebHelpers.TextToHtmlTag(imani.discharge_plan);
 
-                DataObj.Value = JsonConvert.SerializeObject(imani);
+                //DataObj.Value = JsonConvert.SerializeObject(imani);
 
                 WebHelpers.AddScriptFormEdit(Page, imani, (string)Session["emp_id"], loc);
 
@@ -98,25 +98,25 @@ namespace EMR
         {
             try
             {
-                lbl_admission_reason.Text = WebHelpers.FormatString(imani.admission_reason);
-                lbl_cur_med_history.Text = WebHelpers.FormatString(imani.cur_med_history);
-                lbl_cur_medication.Text = WebHelpers.FormatString(imani.cur_medication);
-                lbl_delivery.Text = WebHelpers.FormatString(imani.delivery);
-                lbl_post_nutrition.Text = WebHelpers.FormatString(imani.post_nutrition);
-                lbl_mater_med_history.Text = WebHelpers.FormatString(imani.mater_med_history);
-                lbl_exam_weight.Text = WebHelpers.FormatString(imani.exam_weight);
-                lbl_exam_length.Text = WebHelpers.FormatString(imani.exam_length);
-                lbl_exam_head_circum.Text = WebHelpers.FormatString(imani.exam_head_circum);
-                lbl_exam_hr.Text = WebHelpers.FormatString(imani.exam_hr);
-                lbl_exam_rr.Text = WebHelpers.FormatString(imani.exam_rr);
-                lbl_physical_exam.Text = WebHelpers.FormatString(DataHelpers.FormatPhysicalExamination(imani.physical_exam));
+                lbl_admission_reason.Text = WebHelpers.TextToHtmlTag(imani.admission_reason);
+                lbl_cur_med_history.Text = WebHelpers.TextToHtmlTag(imani.cur_med_history);
+                lbl_cur_medication.Text = WebHelpers.TextToHtmlTag(imani.cur_medication);
+                lbl_delivery.Text = WebHelpers.TextToHtmlTag(imani.delivery);
+                lbl_post_nutrition.Text = WebHelpers.TextToHtmlTag(imani.post_nutrition);
+                lbl_mater_med_history.Text = WebHelpers.TextToHtmlTag(imani.mater_med_history);
+                lbl_exam_weight.Text = WebHelpers.TextToHtmlTag(imani.exam_weight);
+                lbl_exam_length.Text = WebHelpers.TextToHtmlTag(imani.exam_length);
+                lbl_exam_head_circum.Text = WebHelpers.TextToHtmlTag(imani.exam_head_circum);
+                lbl_exam_hr.Text = WebHelpers.TextToHtmlTag(imani.exam_hr);
+                lbl_exam_rr.Text = WebHelpers.TextToHtmlTag(imani.exam_rr);
+                lbl_physical_exam.Text = WebHelpers.TextToHtmlTag(imani.physical_exam);
 
-                lbl_laboratory.Text = WebHelpers.FormatString(imani.laboratory);
-                lbl_initial_diagnosis.Text = WebHelpers.FormatString(imani.initial_diagnosis);
-                lbl_diff_diagnosis.Text = WebHelpers.FormatString(imani.diff_diagnosis);
-                lbl_associated_conditions.Text = WebHelpers.FormatString(imani.associated_conditions);
-                lbl_treatment_plan.Text = WebHelpers.FormatString(imani.treatment_plan);
-                lbl_discharge_plan.Text = WebHelpers.FormatString(imani.discharge_plan);
+                lbl_laboratory.Text = WebHelpers.TextToHtmlTag(imani.laboratory);
+                lbl_initial_diagnosis.Text = WebHelpers.TextToHtmlTag(imani.initial_diagnosis);
+                lbl_diff_diagnosis.Text = WebHelpers.TextToHtmlTag(imani.diff_diagnosis);
+                lbl_associated_conditions.Text = WebHelpers.TextToHtmlTag(imani.associated_conditions);
+                lbl_treatment_plan.Text = WebHelpers.TextToHtmlTag(imani.treatment_plan);
+                lbl_discharge_plan.Text = WebHelpers.TextToHtmlTag(imani.discharge_plan);
 
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
@@ -146,24 +146,24 @@ namespace EMR
                 prt_signature_date.Text = $"Ngày/date {signatureDate} tháng/month {signatureMonth} năm/year {signatureYear}";
 
                 WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
-                prt_admission_reason.Text = imani.admission_reason;
-                prt_cur_med_history.Text = imani.cur_med_history;
-                prt_cur_medication.Text = imani.cur_medication;
-                prt_delivery.Text = imani.delivery;
-                prt_post_nutrition.Text = imani.post_nutrition;
-                prt_mater_med_history.Text = imani.mater_med_history;
+                prt_admission_reason.Text = WebHelpers.TextToHtmlTag(imani.admission_reason);
+                prt_cur_med_history.Text = WebHelpers.TextToHtmlTag(imani.cur_med_history);
+                prt_cur_medication.Text = WebHelpers.TextToHtmlTag(imani.cur_medication);
+                prt_delivery.Text = WebHelpers.TextToHtmlTag(imani.delivery);
+                prt_post_nutrition.Text = WebHelpers.TextToHtmlTag(imani.post_nutrition);
+                prt_mater_med_history.Text = WebHelpers.TextToHtmlTag(imani.mater_med_history);
                 prt_exam_weight.Text = imani.exam_weight;
                 prt_exam_length.Text = imani.exam_length;
                 prt_exam_head_circum.Text = imani.exam_head_circum;
                 prt_exam_hr.Text = imani.exam_hr;
                 prt_exam_rr.Text = imani.exam_rr;
-                prt_physical_exam.Text = DataHelpers.FormatPhysicalExamination(imani.physical_exam);
-                prt_laboratory.Text = imani.laboratory;
-                prt_initial_diagnosis.Text = imani.initial_diagnosis;
-                prt_diff_diagnosis.Text = imani.diff_diagnosis;
-                prt_associated_conditions.Text = imani.associated_conditions;
-                prt_treatment_plan.Text = imani.treatment_plan;
-                prt_discharge_plan.Text = imani.discharge_plan;
+                prt_physical_exam.Text = WebHelpers.TextToHtmlTag(imani.physical_exam);
+                prt_laboratory.Text = WebHelpers.TextToHtmlTag(imani.laboratory);
+                prt_initial_diagnosis.Text = WebHelpers.TextToHtmlTag(imani.initial_diagnosis);
+                prt_diff_diagnosis.Text = WebHelpers.TextToHtmlTag(imani.diff_diagnosis);
+                prt_associated_conditions.Text = WebHelpers.TextToHtmlTag(imani.associated_conditions);
+                prt_treatment_plan.Text = WebHelpers.TextToHtmlTag(imani.treatment_plan);
+                prt_discharge_plan.Text = WebHelpers.TextToHtmlTag(imani.discharge_plan);
 
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }

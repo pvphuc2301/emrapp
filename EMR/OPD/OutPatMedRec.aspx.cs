@@ -287,7 +287,7 @@ namespace EMR
                 patientInfo = new PatientInfo(varPID);
                 patientVisitInfo = new PatientVisitInfo(varPVID, loc);
 
-                prt_fullname.Text = patientInfo.FullName + " " + patientInfo.Title;
+                prt_fullname.Text = patientInfo.FullName + $" ({patientInfo.Title})";
                 prt_dob.Text = WebHelpers.FormatDateTime(patientInfo.date_of_birth) + " | " + patientInfo.Gender;
                 prt_vpid.Text = patientInfo.visible_patient_id;
                 WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);

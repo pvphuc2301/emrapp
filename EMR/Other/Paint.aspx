@@ -585,7 +585,7 @@
                         contentType: 'application/json; charset=utf-8',
                         dataType: 'json',
                         success: function (msg) {
-                            console.log(msg);
+                            
                         }
                     });
                 });
@@ -739,7 +739,7 @@
                         this.ctx.beginPath();
 
                         let his = JSON.stringify(history);
-                        console.log(his);
+                        
 
                         $.ajax({
                             type: 'POST',
@@ -748,7 +748,7 @@
                             contentType: 'application/json; charset=utf-8',
                             dataType: 'json',
                             success: function () {
-                                console.log('done');
+                                
                                 swal("Done!", "It was succesfully deleted!", "success");
                             },
                             error: function (xhr, ajaxOptions, thrownError) {

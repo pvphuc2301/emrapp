@@ -115,7 +115,14 @@ namespace EMR.Other
                 else
                     updateAccess(user_name, "NA");
             }
-           
+            else if (chkBox.ID == "AllowAccess")
+            {
+                if (chkBox.Checked)
+                    updateAccess(user_name, "true");
+                else
+                    updateAccess(user_name, "false");
+            }
+
             if (RadMultiPage1.SelectedPageView.ID == "RadPageView1")
                 RadGrid1.Rebind();
             else if (RadMultiPage1.SelectedPageView.ID == "RadPageView2")
@@ -140,6 +147,12 @@ namespace EMR.Other
 
             string query = "UPDATE account set access_authorize = '" + varAccess + "', lu_updated = '" + varUpdatedDate + "', lu_user_id = '" + updatedUser + "' ";
             query += "WHERE user_name = '" + varUserName + "' ";
+
+            if (varAccess == "true" | varAccess == "false")
+            {
+                query = "UPDATE account set active_authorize = '" + varAccess + "', lu_updated = '" + varUpdatedDate + "', lu_user_id = '" + updatedUser + "' ";
+                query += "WHERE user_name = '" + varUserName + "' ";
+            }
 
             SQL_Class.RunQuery(query, ConnStringEMR);
         }
@@ -201,6 +214,18 @@ namespace EMR.Other
                     return true;
                 else
                     return false;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool CheckAllow(object pBool)
+        {
+            //  pBool = true;
+            if (!string.IsNullOrEmpty(Convert.ToString(pBool)))
+            {
+                return (bool)pBool ? true : false;
             }
             else
             {

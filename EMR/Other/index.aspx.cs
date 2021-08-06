@@ -198,7 +198,7 @@ namespace EMR.Other
         public MailAddress MailAddressTo { get; set; }
         private void AddFormSend(string pvid, string visitType, string visibleID, string visitCode, string visitDate)
         {
-            string varToMail = "tuan.cao@aih.com.vn"; string[] qc_mail = new string[5];
+            string varToMail = "trang.tranthi@aih.com.vn"; string[] qc_mail = new string[5];
             string varUserName = Convert.ToString(Session["UserID"]);
             string varFullName = Convert.ToString(Session["UserName"]);
             string varEmail = Convert.ToString(Session["user_email"]);
@@ -220,6 +220,11 @@ namespace EMR.Other
             MailAddressTo = objMailTo;
 
             MailMessage objMail = new MailMessage(MailAddressFrom, MailAddressTo);
+
+            if (!string.IsNullOrEmpty(varEmail))
+            {
+                objMail.CC.Add(varEmail);
+            }
 
             var msg_Body = "Kính gửi phòng KHTH,<br /> <br /> ";
             msg_Body += "Kính gửi phòng KTTH cấp quyền cập nhật hồ sơ bệnh án của khách hàng: " + visibleID + ", ngày đến khám: " + visitDate + ", ";
@@ -323,6 +328,7 @@ namespace EMR.Other
                             {
                                 //string url = $"../{_params[1]}?modelId={modelID}&docId={mydataTable.Rows[0].Field<string>("document_id")}&pId={varPID}&vpId={Request["vpid"]}&pvid={PVID}";
                             string url = $"../{_params[1]}?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={PVID}&modelId={modelID}&docId={mydataTable.Rows[0].Field<string>("document_id")}";
+
                             Response.Redirect(url, false);
                             }
                             else

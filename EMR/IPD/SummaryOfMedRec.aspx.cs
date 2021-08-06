@@ -67,13 +67,13 @@ namespace EMR
 
                 WebHelpers.BindDateTimePicker(dpk_form_date, somr.form_date);
                 WebHelpers.BindDateTimePicker(dpk_to_date, somr.to_date);
-                txt_chief_complaint.Value = somr.chief_complaint;
-                txt_diagnosis.Value = somr.diagnosis;
-                txt_clinical_evolution.Value = somr.clinical_evolution;
-                txt_result_para_clinical.Value = somr.result_para_clinical;
-                txt_treatment.Value = somr.treatment;
-                txt_eval_treatment.Value = somr.eval_treatment;
-                txt_treatment_prognosis.Value = somr.treatment_prognosis;
+                txt_chief_complaint.Value = WebHelpers.TextToHtmlTag(somr.chief_complaint);
+                txt_diagnosis.Value = WebHelpers.TextToHtmlTag(somr.diagnosis);
+                txt_clinical_evolution.Value = WebHelpers.TextToHtmlTag(somr.clinical_evolution);
+                txt_result_para_clinical.Value = WebHelpers.TextToHtmlTag(somr.result_para_clinical);
+                txt_treatment.Value = WebHelpers.TextToHtmlTag(somr.treatment);
+                txt_eval_treatment.Value = WebHelpers.TextToHtmlTag(somr.eval_treatment);
+                txt_treatment_prognosis.Value = WebHelpers.TextToHtmlTag(somr.treatment_prognosis);
 
                 DataObj.Value = JsonConvert.SerializeObject(somr);
                 Session["docid"] = somr.document_id;
@@ -90,13 +90,13 @@ namespace EMR
             {
                 lbl_form_date.Text = WebHelpers.FormatDateTime(somr.form_date);
                 lbl_to_date.Text = WebHelpers.FormatDateTime(somr.to_date);
-                lbl_chief_complaint.Text = WebHelpers.GetValue(somr.chief_complaint);
-                lbl_diagnosis.Text = WebHelpers.GetValue(somr.diagnosis);
-                lbl_clinical_evolution.Text = WebHelpers.GetValue(somr.clinical_evolution);
-                lbl_result_para_clinical.Text = WebHelpers.GetValue(somr.result_para_clinical);
-                lbl_treatment.Text = WebHelpers.GetValue(somr.treatment);
-                lbl_eval_treatment.Text = WebHelpers.GetValue(somr.eval_treatment);
-                lbl_treatment_prognosis.Text = WebHelpers.GetValue(somr.treatment_prognosis);
+                lbl_chief_complaint.Text = WebHelpers.TextToHtmlTag(somr.chief_complaint);
+                lbl_diagnosis.Text = WebHelpers.TextToHtmlTag(somr.diagnosis);
+                lbl_clinical_evolution.Text = WebHelpers.TextToHtmlTag(somr.clinical_evolution);
+                lbl_result_para_clinical.Text = WebHelpers.TextToHtmlTag(somr.result_para_clinical);
+                lbl_treatment.Text = WebHelpers.TextToHtmlTag(somr.treatment);
+                lbl_eval_treatment.Text = WebHelpers.TextToHtmlTag(somr.eval_treatment);
+                lbl_treatment_prognosis.Text = WebHelpers.TextToHtmlTag(somr.treatment_prognosis);
             }
             catch (Exception ex)
             {
@@ -115,13 +115,13 @@ namespace EMR
                 prt_form_date.Text = WebHelpers.FormatDateTime(somr.form_date);
                 prt_to_date.Text = WebHelpers.FormatDateTime(somr.to_date);
                 
-                prt_eval_treatment.Text = somr.eval_treatment;
-                prt_chief_complaint.Text = somr.chief_complaint;
-                prt_diagnosis.Text = somr.diagnosis;
-                prt_clinical_evolution.Text = somr.clinical_evolution;
-                prt_result_para_clinical.Text = somr.result_para_clinical;
-                prt_treatment.Text = somr.treatment;
-                prt_treatment_prognosis.Text = somr.treatment_prognosis;
+                prt_eval_treatment.Text = WebHelpers.TextToHtmlTag(somr.eval_treatment);
+                prt_chief_complaint.Text = WebHelpers.TextToHtmlTag(somr.chief_complaint);
+                prt_diagnosis.Text = WebHelpers.TextToHtmlTag(somr.diagnosis);
+                prt_clinical_evolution.Text = WebHelpers.TextToHtmlTag(somr.clinical_evolution);
+                prt_result_para_clinical.Text = WebHelpers.TextToHtmlTag(somr.result_para_clinical);
+                prt_treatment.Text = WebHelpers.TextToHtmlTag(somr.treatment);
+                prt_treatment_prognosis.Text = WebHelpers.TextToHtmlTag(somr.treatment_prognosis);
 
                 string signature_date = WebHelpers.FormatDateTime(SignatureName, "dd-MM-yyyy", "");
 
@@ -143,7 +143,7 @@ namespace EMR
                 somr.status = DocumentStatus.FINAL;
                 
                 UpdateData(somr);
-                WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
+                WebHelpers.clearSessionDoc(Page, varDocID, loc);
             }
         }
         protected void btnSave_Click(object sender, EventArgs e)
@@ -158,9 +158,9 @@ namespace EMR
         }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            if (WebHelpers.CanOpenForm(Page, Request.QueryString["docId"], DocumentStatus.DRAFT, (string)Session["emp_id"], loc))
+            if (WebHelpers.CanOpenForm(Page, varDocID, DocumentStatus.DRAFT, (string)Session["emp_id"], loc))
             {
-                Somr somr = new Somr(Request.QueryString["docId"], loc);
+                Somr somr = new Somr(varDocID, loc);
 
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
@@ -175,17 +175,17 @@ namespace EMR
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
+            WebHelpers.clearSessionDoc(Page, varDocID, loc);
             Initial();
         }
         protected void btnDelete_Click(object sender, EventArgs e)
         {
             try
             {
-                dynamic result = Disc.Delete((string)Session["UserID"], Request.QueryString["docid"], loc)[0];
+                dynamic result = Disc.Delete((string)Session["UserID"], varDocID, loc)[0];
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
+                    WebHelpers.clearSessionDoc(Page, varDocID, loc);
                     Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
                 }
             }
@@ -291,7 +291,7 @@ namespace EMR
         }
         private void loadRadGridHistoryLog()
         {
-            DataTable dt = Somr.Logs(Request.QueryString["docId"], loc);
+            DataTable dt = Somr.Logs(varDocID, loc);
             RadGrid1.DataSource = dt;
             string last_updated_date_time = "";
             string last_updated_doctor = "";

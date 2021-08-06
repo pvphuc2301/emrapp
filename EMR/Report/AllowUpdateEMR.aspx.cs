@@ -18,7 +18,7 @@ namespace EMR.Report
 {
     public partial class AllowUpdateEMR : System.Web.UI.Page
     {
-        public string varPID = "";string UserID = "";
+        public string varPID = "";string UserID = ""; bool active_authorize = false;
         public bool showPopup = false;
         public bool isDraft = false;
         public string docId = "";
@@ -31,6 +31,8 @@ namespace EMR.Report
             redirecturl += Server.UrlEncode(Request.QueryString.ToString());
             if (string.IsNullOrEmpty(UserID))
                 Response.Redirect(redirecturl);
+
+            active_authorize = Convert.ToBoolean(Session["active_authorize"]);
         }
         protected void RadGrid1_ItemDataBound(object sender, GridItemEventArgs e)
         {
@@ -95,13 +97,16 @@ namespace EMR.Report
         }
         protected void RadGrid1_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            string apiString = $"api/patient/allow-doc-req-list";
-
-            dynamic response = WebHelpers.GetAPI(apiString);
-
-            if (response.Status == System.Net.HttpStatusCode.OK)
+            if (active_authorize)
             {
-                RadGrid1.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+                string apiString = $"api/patient/allow-doc-req-list";
+
+                dynamic response = WebHelpers.GetAPI(apiString);
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    RadGrid1.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+                }
             }
         }
         protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
@@ -110,36 +115,35 @@ namespace EMR.Report
             string pvid = item.GetDataKeyValue("patient_visit_id").ToString();
             string visitType = item.GetDataKeyValue("visit_type_rcd").ToString();
             string visible_id = Request.QueryString["vpid"];
-            string visitCode = "";
-            string visitDate = "";
 
             Label lbVisit_date_time = (Label)item["PatientInfor"].FindControl("lbActual_visit_date_time");
             Label lbVisit_code = (Label)item["PatientInfor"].FindControl("lbVisit_code");
-            // Label lbVisit_code = (Label)item["PatientInfor"].FindControl("lbVisit_code");
-            visitDate = Convert.ToString(lbVisit_date_time.Text);
-            visitCode = Convert.ToString(lbVisit_code.Text);
+            Label lbRequest_email = (Label)item["PatientInfor"].FindControl("request_email");
+            string visitDate = Convert.ToString(lbVisit_date_time.Text);
+            string visitCode = Convert.ToString(lbVisit_code.Text);
+            string r_email = Convert.ToString(lbRequest_email.Text);
 
             switch (e.CommandName)
             {                
                 case "sendAllow":
-                    AddFormSend(pvid, visitType, visible_id, visitCode, visitDate,"Allow");
+                    AddFormSend(pvid, visitType, visible_id, visitCode, visitDate, r_email, "Allow");
                     RadGrid1.Rebind();
                     break;
                 case "sendDeny":
-                    AddFormSend(pvid, visitType, visible_id, visitCode, visitDate, "Deny");
+                    AddFormSend(pvid, visitType, visible_id, visitCode, visitDate, r_email, "Deny");
                     RadGrid1.Rebind();
                     break;
                 case "sendClose":
-                    AddFormSend(pvid, visitType, visible_id, visitCode, visitDate, "Close");
+                    AddFormSend(pvid, visitType, visible_id, visitCode, visitDate, r_email, "Close");
                     RadGrid1.Rebind();
                     break;
             }           
         }
         public MailAddress MailAddressFrom { get; set; }
         public MailAddress MailAddressTo { get; set; }
-        private void AddFormSend(string pvid, string visitType, string visibleID, string visitCode, string visitDate, string varRequest)
+        private void AddFormSend(string pvid, string visitType, string visibleID, string visitCode, string visitDate, string varTo_Email, string varRequest)
         {
-            string varToMail = "tuan.cao@aih.com.vn"; string[] qc_mail = new string[5];
+            string varToMail = varTo_Email;string[] qc_mail = new string[5];// "tuan.cao@aih.com.vn"; 
             string varUserName = Convert.ToString(Session["UserID"]);
             string varFullName = Convert.ToString(Session["UserName"]);
             string varEmail = Convert.ToString(Session["user_email"]);

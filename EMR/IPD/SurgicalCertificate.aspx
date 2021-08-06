@@ -79,7 +79,16 @@
                                         <div class="d-grid" style="grid-template-columns: 2fr 1fr">
                                             <div class="d-grid" style="grid-template-columns: 160px 1fr">
                                                 <webUI:PrtRowS1 FontBold="true" FixedLeft="13" Title="Giới tính:" SubTitle="Gender" runat="server" />
-                                                <asp:Label runat="server" ID="prt_gender" />
+                                                <div style='display: grid; grid-template-columns: 1fr 1fr; width: 300px'>
+                                                    <div style='display: grid; grid-template-columns: auto 1fr;'>
+                                                        <asp:Label runat="server" ID="prt_male" Text="❏"></asp:Label>
+                                                        <span class='ml-1'>Nam <div class='text-primary'>Male</div></span>
+                                                    </div>
+                                                    <div style='display: grid; grid-template-columns: auto 1fr;'>
+                                                        <asp:Label runat="server" ID="prt_female" Text="❏"></asp:Label>
+                                                        <span class='ml-1'>Nữ <div class='text-primary'>Female</div></span>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="d-grid" style="grid-template-columns: 130px 1fr">
                                                 <webUI:PrtRowS1 FontBold="true" ID="PrtRowS1" Title="Mã người bệnh:" SubTitle="Patient ID" runat="server" />

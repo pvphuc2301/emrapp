@@ -81,16 +81,16 @@ namespace EMR.OPD
             try
             {
                 txt_amend_reason.Text = "";
-                txt_chief_complaint.Value = mrnv.chief_complaint;
-                txt_cur_med_history.Value = mrnv.cur_med_history;
-                txt_cur_medications.Value = mrnv.cur_medications;
-                txt_personal.Value = mrnv.personal;
-                txt_family.Value = mrnv.family;
+                txt_chief_complaint.Value = WebHelpers.TextToHtmlTag(mrnv.chief_complaint);
+                txt_cur_med_history.Value = WebHelpers.TextToHtmlTag(mrnv.cur_med_history);
+                txt_cur_medications.Value = WebHelpers.TextToHtmlTag(mrnv.cur_medications);
+                txt_personal.Value = WebHelpers.TextToHtmlTag(mrnv.personal);
+                txt_family.Value = WebHelpers.TextToHtmlTag(mrnv.family);
 
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_allergy_" + mrnv.allergy, "false");
                 if (rad_allergy_true.Checked)
                 {
-                    txt_allergy_note.Value = mrnv.allergy_text;
+                    txt_allergy_note.Value = WebHelpers.TextToHtmlTag(mrnv.allergy_text);
                 }
 
                 vs_temperature.Text = mrnv.vs_temperature;
@@ -105,22 +105,22 @@ namespace EMR.OPD
 
                 WebHelpers.VisibleControl(true, btnUpdateVitalSigns);
 
-                txt_scr_before_vacc_1.Value = mrnv.scr_before_vacc_1;
-                txt_scr_before_vacc_2.Value = mrnv.scr_before_vacc_2;
-                txt_scr_before_vacc_3.Value = mrnv.scr_before_vacc_3;
-                txt_scr_before_vacc_4.Value = mrnv.scr_before_vacc_4;
-                txt_scr_before_vacc_5.Value = mrnv.scr_before_vacc_5;
-                txt_scr_before_vacc_6.Value = mrnv.scr_before_vacc_6;
-                txt_scr_before_vacc_7.Value = mrnv.scr_before_vacc_7;
-                txt_scr_before_vacc_8.Value = mrnv.scr_before_vacc_8;
-                txt_scr_before_vacc_9.Value = mrnv.scr_before_vacc_9;
+                txt_scr_before_vacc_1.Value = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_1);
+                txt_scr_before_vacc_2.Value = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_2);
+                txt_scr_before_vacc_3.Value = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_3);
+                txt_scr_before_vacc_4.Value = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_4);
+                txt_scr_before_vacc_5.Value = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_5);
+                txt_scr_before_vacc_6.Value = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_6);
+                txt_scr_before_vacc_7.Value = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_7);
+                txt_scr_before_vacc_8.Value = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_8);
+                txt_scr_before_vacc_9.Value = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_9);
 
                 ViewState[grid_appointed_vaccine.ID] = WebHelpers.BindingDataGridView(grid_appointed_vaccine, WebHelpers.GetJSONToDataTable(mrnv.appointed_vaccine), Mrnv.APPOINTED_VACCINE, btn_grid_appointed_vaccine_add);
 
-                txt_additional_investigations.Value = mrnv.additional_investigations;
-                txt_initial_diagnosis.Value = mrnv.initial_diagnosis;
-                txt_differential_diagnosis.Value = mrnv.differential_diagnosis;
-                txt_associated_conditions.Value = mrnv.associated_conditions;
+                txt_additional_investigations.Value = WebHelpers.TextToHtmlTag(mrnv.additional_investigations);
+                txt_initial_diagnosis.Value = WebHelpers.TextToHtmlTag(mrnv.initial_diagnosis);
+                txt_differential_diagnosis.Value = WebHelpers.TextToHtmlTag(mrnv.differential_diagnosis);
+                txt_associated_conditions.Value = WebHelpers.TextToHtmlTag(mrnv.associated_conditions);
 
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_treatment_code_" + mrnv.treatment_code);
 
@@ -128,8 +128,8 @@ namespace EMR.OPD
                 if (rad_spec_opinion_req_true.Checked)
                     txt_spec_opinion_req_text.Value = WebHelpers.GetBool(mrnv.spec_opinion_req, mrnv.spec_opinion_req_text, "");
                 //
-                txt_pecific_edu_req.Value = mrnv.pecific_edu_req;
-                txt_next_appointment.Value = mrnv.next_appointment;
+                txt_pecific_edu_req.Value = WebHelpers.TextToHtmlTag(mrnv.pecific_edu_req);
+                txt_next_appointment.Value = WebHelpers.TextToHtmlTag(mrnv.next_appointment);
                 //next_appointment
                 DataObj.Value = JsonConvert.SerializeObject(mrnv);
                 Session["docid"] = mrnv.document_id;
@@ -146,53 +146,53 @@ namespace EMR.OPD
             {
 
                 //I
-                lbl_chief_complaint.Text = WebHelpers.FormatString(mrnv.chief_complaint);
+                lbl_chief_complaint.Text = WebHelpers.TextToHtmlTag(mrnv.chief_complaint);
                 //II
                 //1
-                lbl_cur_med_history.Text = WebHelpers.FormatString(mrnv.cur_med_history);
-                lbl_cur_medications.Text = WebHelpers.FormatString(mrnv.cur_medications);
+                lbl_cur_med_history.Text = WebHelpers.TextToHtmlTag(mrnv.cur_med_history);
+                lbl_cur_medications.Text = WebHelpers.TextToHtmlTag(mrnv.cur_medications);
                 //2
-                lbl_personal.Text = WebHelpers.FormatString(mrnv.personal);
-                lbl_family.Text = WebHelpers.FormatString(mrnv.family);
+                lbl_personal.Text = WebHelpers.TextToHtmlTag(mrnv.personal);
+                lbl_family.Text = WebHelpers.TextToHtmlTag(mrnv.family);
 
-                lbl_allergy.Text = WebHelpers.GetBool(mrnv.allergy, "Có, ghi rõ/ Yes, specify <br>" + WebHelpers.FormatString(mrnv.allergy_text));
+                lbl_allergy.Text = WebHelpers.GetBool(mrnv.allergy, "Có, ghi rõ/ Yes, specify <br>" + WebHelpers.TextToHtmlTag(mrnv.allergy_text));
 
                 //vital signs
-                vs_temperature.Text = WebHelpers.FormatString(mrnv.vs_temperature);
-                vs_weight.Text = WebHelpers.FormatString(mrnv.vs_weight);
-                vs_height.Text = WebHelpers.FormatString(mrnv.vs_height);
-                vs_BMI.Text = WebHelpers.FormatString(mrnv.vs_BMI);
-                vs_pulse.Text = WebHelpers.FormatString(mrnv.vs_pulse);
-                vs_respiratory_rate.Text = WebHelpers.FormatString(mrnv.vs_respiratory_rate);
-                vs_blood_pressure.Text = WebHelpers.FormatString(mrnv.vs_blood_pressure);
-                vs_spO2.Text = WebHelpers.FormatString(mrnv.vs_SpO2);
+                vs_temperature.Text = mrnv.vs_temperature;
+                vs_weight.Text = mrnv.vs_weight;
+                vs_height.Text = mrnv.vs_height;
+                vs_BMI.Text = mrnv.vs_BMI;
+                vs_pulse.Text = mrnv.vs_pulse;
+                vs_respiratory_rate.Text = mrnv.vs_respiratory_rate;
+                vs_blood_pressure.Text = mrnv.vs_blood_pressure;
+                vs_spO2.Text = mrnv.vs_SpO2;
                 WebHelpers.VisibleControl(false, btnUpdateVitalSigns);
 
-                lbl_scr_before_vacc_1.Text = WebHelpers.FormatString(mrnv.scr_before_vacc_1);
-                lbl_scr_before_vacc_2.Text = WebHelpers.FormatString(mrnv.scr_before_vacc_2);
-                lbl_scr_before_vacc_3.Text = WebHelpers.FormatString(mrnv.scr_before_vacc_3);
-                lbl_scr_before_vacc_4.Text = WebHelpers.FormatString(mrnv.scr_before_vacc_4);
-                lbl_scr_before_vacc_5.Text = WebHelpers.FormatString(mrnv.scr_before_vacc_5);
-                lbl_scr_before_vacc_6.Text = WebHelpers.FormatString(mrnv.scr_before_vacc_6);
-                lbl_scr_before_vacc_7.Text = WebHelpers.FormatString(mrnv.scr_before_vacc_7);
-                lbl_scr_before_vacc_8.Text = WebHelpers.FormatString(mrnv.scr_before_vacc_8);
-                lbl_scr_before_vacc_9.Text = WebHelpers.FormatString(mrnv.scr_before_vacc_9);
+                lbl_scr_before_vacc_1.Text = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_1);
+                lbl_scr_before_vacc_2.Text = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_2);
+                lbl_scr_before_vacc_3.Text = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_3);
+                lbl_scr_before_vacc_4.Text = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_4);
+                lbl_scr_before_vacc_5.Text = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_5);
+                lbl_scr_before_vacc_6.Text = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_6);
+                lbl_scr_before_vacc_7.Text = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_7);
+                lbl_scr_before_vacc_8.Text = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_8);
+                lbl_scr_before_vacc_9.Text = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_9);
                     
                 // Appointed Vaccine
                 WebHelpers.LoadDataGridView(grid_appointed_vaccine, WebHelpers.GetJSONToDataTable(mrnv.appointed_vaccine), Mrnv.APPOINTED_VACCINE, btn_grid_appointed_vaccine_add);
 
-                lbl_additional_investigations.Text = WebHelpers.FormatString(mrnv.additional_investigations);
+                lbl_additional_investigations.Text = WebHelpers.TextToHtmlTag(mrnv.additional_investigations);
                 //V
-                lbl_initial_diagnosis.Text = WebHelpers.FormatString(mrnv.initial_diagnosis);
-                lbl_differential_diagnosis.Text = WebHelpers.FormatString(mrnv.differential_diagnosis);
-                lbl_associated_conditions.Text = WebHelpers.FormatString(mrnv.associated_conditions);
-                lbl_treatment_desc.Text = WebHelpers.FormatString(mrnv.treatment_desc);
-                lbl_next_appointment.Text = WebHelpers.FormatString(mrnv.next_appointment);
+                lbl_initial_diagnosis.Text = WebHelpers.TextToHtmlTag(mrnv.initial_diagnosis);
+                lbl_differential_diagnosis.Text = WebHelpers.TextToHtmlTag(mrnv.differential_diagnosis);
+                lbl_associated_conditions.Text = WebHelpers.TextToHtmlTag(mrnv.associated_conditions);
+                lbl_treatment_desc.Text = WebHelpers.TextToHtmlTag(mrnv.treatment_desc);
+                lbl_next_appointment.Text = WebHelpers.TextToHtmlTag(mrnv.next_appointment);
 
-                lbl_spec_opinion_req.Text = WebHelpers.GetBool(mrnv.spec_opinion_req, "Có, ghi rõ/ Yes, specify <br>" + WebHelpers.FormatString(mrnv.spec_opinion_req_text));
+                lbl_spec_opinion_req.Text = WebHelpers.GetBool(mrnv.spec_opinion_req, "Có, ghi rõ/ Yes, specify <br>" + WebHelpers.TextToHtmlTag(mrnv.spec_opinion_req_text));
 
-                lbl_pecific_edu_req.Text = WebHelpers.FormatString(mrnv.pecific_edu_req);
-                lbl_next_appointment.Text = WebHelpers.FormatString(mrnv.next_appointment);
+                lbl_pecific_edu_req.Text = WebHelpers.TextToHtmlTag(mrnv.pecific_edu_req);
+                lbl_next_appointment.Text = WebHelpers.TextToHtmlTag(mrnv.next_appointment);
             }
             catch (Exception ex)
             {
@@ -217,11 +217,11 @@ namespace EMR.OPD
                 prt_gender.Text = patientInfo.Gender;
                 prt_day_of_visit.Text = WebHelpers.FormatDateTime(patientVisitInfo.actual_visit_date_time);
                 prt_pid.Text = patientInfo.visible_patient_id;
-                prt_chief_complaint.Text = mrnv.chief_complaint;
-                prt_cur_med_history.Text = mrnv.cur_med_history;
-                prt_cur_medications.Text = mrnv.cur_medications;
-                prt_personal.Text = mrnv.personal;
-                prt_family.Text = mrnv.family;
+                prt_chief_complaint.Text = WebHelpers.TextToHtmlTag(mrnv.chief_complaint);
+                prt_cur_med_history.Text = WebHelpers.TextToHtmlTag(mrnv.cur_med_history);
+                prt_cur_medications.Text = WebHelpers.TextToHtmlTag(mrnv.cur_medications);
+                prt_personal.Text = WebHelpers.TextToHtmlTag(mrnv.personal);
+                prt_family.Text = WebHelpers.TextToHtmlTag(mrnv.family);
 
                 prt_allergy.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class='text-primary'>No</span>", Value = false }, new Option { Text = "Có/ <span class='text-primary'>Yes</span>", Value = true }, mrnv.allergy, "display: grid; grid-template-columns: 1fr 1fr");
 
@@ -231,10 +231,9 @@ namespace EMR.OPD
                 {
                     if (mrnv.allergy)
                     { 
-                        prt_allergy_note.Text = mrnv.allergy_text;
+                        prt_allergy_note.Text = WebHelpers.TextToHtmlTag(mrnv.allergy_text);
                         allergy_note.Visible = true;
-                    } 
-                    
+                    }
                 }
                 //prt_allergy_note.Text = mrnv.allergy_text;
                 prt_vs_temperature.Text = mrnv.vs_temperature;
@@ -246,24 +245,24 @@ namespace EMR.OPD
                 prt_vs_blood_pressure.Text = mrnv.vs_blood_pressure;
                 prt_vs_spO2.Text = mrnv.vs_SpO2;
 
-                prt_scr_before_vacc_1.Text = $"1. Tình trạng sức khỏe chưa ổn định/ <span class='text-primary'>Unstable health condition:</span> {mrnv.scr_before_vacc_1}";
-                prt_scr_before_vacc_2.Text = $"2. Sốt/Hạ thân nhiệt (Sốt: nhiệt độ ≥ 37,5°C; Hạ thân nhiệt: nhiệt độ ≤ 35,5°C)/ <span class='text-primary'>Fever / Hypothermia (Fever:temperature ≥ 37.5 ° C; Hypothermia: temperature ≤ 35.5 ° C):</span> {mrnv.scr_before_vacc_2}";
-                prt_scr_before_vacc_3.Text = $"3. Khóc bé hoặc không khóc/ <span class='text-primary'>Cry or unable to cry:</span>{mrnv.scr_before_vacc_3}";
-                prt_scr_before_vacc_4.Text = $"4. Da, môi không hồng/ Fever/ <span class='text-primary'>Skin and lips are not pink:</span> {mrnv.scr_before_vacc_4}";
-                prt_scr_before_vacc_5.Text = $"5. Bú kém hoặc bỏ bú/ <span class='text-primary'>Poor breastfeeding or breastfeeding refusal:</span> {mrnv.scr_before_vacc_5}";
-                prt_scr_before_vacc_6.Text = $"6. Tuổi thai < 28 tuần/ <span class='text-primary'>Gestational age < 28 weeks:</span> {mrnv.scr_before_vacc_6}";
-                prt_scr_before_vacc_7.Text = $"7. Trẻ < 34 tuần tuổi/ <span class='text-primary'>Children < 34 weeks old:</span> {mrnv.scr_before_vacc_7}";
-                prt_scr_before_vacc_8.Text = $"8. Cân nặng của trẻ < 2000 g, mẹ có HBsAg (-)/ <span class='text-primary'>Child's weight < 2000g, his/her morther HbsAg (-):</span> {mrnv.scr_before_vacc_8}";
-                prt_scr_before_vacc_9.Text = $"9. Các chống chỉ định khác, nếu có ghi rõ/<span class='text-primary'>Other contraindications, if yes specified:</span> {mrnv.scr_before_vacc_9}";
+                prt_scr_before_vacc_1.Text = $"1. Tình trạng sức khỏe chưa ổn định/ <span class='text-primary'>Unstable health condition:</span> {WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_1)}";
+                prt_scr_before_vacc_2.Text = $"2. Sốt/Hạ thân nhiệt (Sốt: nhiệt độ ≥ 37,5°C; Hạ thân nhiệt: nhiệt độ ≤ 35,5°C)/ <span class='text-primary'>Fever / Hypothermia (Fever:temperature ≥ 37.5 ° C; Hypothermia: temperature ≤ 35.5 ° C):</span> {WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_2)}";
+                prt_scr_before_vacc_3.Text = $"3. Khóc bé hoặc không khóc/ <span class='text-primary'>Cry or unable to cry:</span>{WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_3)}";
+                prt_scr_before_vacc_4.Text = $"4. Da, môi không hồng/ Fever/ <span class='text-primary'>Skin and lips are not pink:</span> {WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_4)}";
+                prt_scr_before_vacc_5.Text = $"5. Bú kém hoặc bỏ bú/ <span class='text-primary'>Poor breastfeeding or breastfeeding refusal:</span> {WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_5)}";
+                prt_scr_before_vacc_6.Text = $"6. Tuổi thai < 28 tuần/ <span class='text-primary'>Gestational age < 28 weeks:</span> {WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_6)}";
+                prt_scr_before_vacc_7.Text = $"7. Trẻ < 34 tuần tuổi/ <span class='text-primary'>Children < 34 weeks old:</span> {WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_7)}";
+                prt_scr_before_vacc_8.Text = $"8. Cân nặng của trẻ < 2000 g, mẹ có HBsAg (-)/ <span class='text-primary'>Child's weight < 2000g, his/her morther HbsAg (-):</span> {WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_8)}";
+                prt_scr_before_vacc_9.Text = $"9. Các chống chỉ định khác, nếu có ghi rõ/<span class='text-primary'>Other contraindications, if yes specified:</span> {WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_9)}";
 
-                string json_appointed_vaccine = mrnv.appointed_vaccine;
+                string json_appointed_vaccine = WebHelpers.TextToHtmlTag(mrnv.appointed_vaccine);
                 prt_appointed_vaccine.DataSource = JsonConvert.DeserializeObject<DataTable>(json_appointed_vaccine);
                 prt_appointed_vaccine.DataBind();
 
-                prt_additional_investigations.Text = mrnv.additional_investigations;
-                prt_initial_diagnosis.Text = mrnv.initial_diagnosis;
-                prt_differential_diagnosis.Text = mrnv.differential_diagnosis;
-                prt_associated_conditions.Text = mrnv.associated_conditions;
+                prt_additional_investigations.Text = WebHelpers.TextToHtmlTag(mrnv.additional_investigations);
+                prt_initial_diagnosis.Text = WebHelpers.TextToHtmlTag(mrnv.initial_diagnosis);
+                prt_differential_diagnosis.Text = WebHelpers.TextToHtmlTag(mrnv.differential_diagnosis);
+                prt_associated_conditions.Text = WebHelpers.TextToHtmlTag(mrnv.associated_conditions);
 
                 prt_treatment.Text = WebHelpers.CreateOptions(Mrnv.TREATMENT_CODE, mrnv.treatment_code, "display: grid; grid-template-columns: 1fr 1fr 1fr");
                 //
@@ -274,13 +273,13 @@ namespace EMR.OPD
                 {
                     if (mrnv.spec_opinion_req)
                     {
-                        prt_spec_opinion_req_text.Text = mrnv.spec_opinion_req_text;
+                        prt_spec_opinion_req_text.Text = WebHelpers.TextToHtmlTag(mrnv.spec_opinion_req_text);
                         spec_opinion_req.Visible = true;
                     }
                 }
                 //
-                prt_specific_edu_req.Text = mrnv.pecific_edu_req;
-                prt_next_appointment.Text = mrnv.next_appointment;
+                prt_specific_edu_req.Text = WebHelpers.TextToHtmlTag(mrnv.pecific_edu_req);
+                prt_next_appointment.Text = WebHelpers.TextToHtmlTag(mrnv.next_appointment);
 
             }
             catch (Exception ex)

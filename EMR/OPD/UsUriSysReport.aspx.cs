@@ -68,14 +68,14 @@ namespace EMR
             try
             {
                 txt_amend_reason.Text = "";
-                txt_diagnosis.Value = uusr.diagnosis;
-                txt_left_kidney.Value = uusr.left_kidney;
-                txt_right_kidney.Value = uusr.right_kidney;
-                txt_urinary_bladder.Value = uusr.urinary_bladder;
-                txt_prostate.Value = uusr.prostate;
-                txt_post_void_resi_volume.Value = uusr.post_void_resi_volume;
-                txt_conclusion.Value = uusr.conclusion;
-                txt_recommendation.Value = uusr.recommendation;
+                txt_diagnosis.Value = WebHelpers.TextToHtmlTag(uusr.diagnosis);
+                txt_left_kidney.Value = WebHelpers.TextToHtmlTag(uusr.left_kidney);
+                txt_right_kidney.Value = WebHelpers.TextToHtmlTag(uusr.right_kidney);
+                txt_urinary_bladder.Value = WebHelpers.TextToHtmlTag(uusr.urinary_bladder);
+                txt_prostate.Value = WebHelpers.TextToHtmlTag(uusr.prostate);
+                txt_post_void_resi_volume.Value = WebHelpers.TextToHtmlTag(uusr.post_void_resi_volume);
+                txt_conclusion.Value = WebHelpers.TextToHtmlTag(uusr.conclusion);
+                txt_recommendation.Value = WebHelpers.TextToHtmlTag(uusr.recommendation);
 
                 DataObj.Value = JsonConvert.SerializeObject(uusr);
                 Session["docid"] = uusr.document_id;
@@ -86,14 +86,14 @@ namespace EMR
         private void BindingDataFormView(Uusr uusr)
         {
             try {
-                lbl_diagnosis.Text = uusr.diagnosis;
-                lbl_left_kidney.Text = uusr.left_kidney;
-                lbl_right_kidney.Text = uusr.right_kidney;
-                lbl_urinary_bladder.Text = uusr.urinary_bladder;
-                lbl_prostate.Text = uusr.prostate;
-                lbl_post_void_resi_volume.Text = uusr.post_void_resi_volume;
-                lbl_conclusion.Text = uusr.conclusion;
-                lbl_recommendation.Text = uusr.recommendation;
+                lbl_diagnosis.Text = WebHelpers.TextToHtmlTag(uusr.diagnosis);
+                lbl_left_kidney.Text = WebHelpers.TextToHtmlTag(uusr.left_kidney);
+                lbl_right_kidney.Text = WebHelpers.TextToHtmlTag(uusr.right_kidney);
+                lbl_urinary_bladder.Text = WebHelpers.TextToHtmlTag(uusr.urinary_bladder);
+                lbl_prostate.Text = WebHelpers.TextToHtmlTag(uusr.prostate);
+                lbl_post_void_resi_volume.Text = WebHelpers.TextToHtmlTag(uusr.post_void_resi_volume);
+                lbl_conclusion.Text = WebHelpers.TextToHtmlTag(uusr.conclusion);
+                lbl_recommendation.Text = WebHelpers.TextToHtmlTag(uusr.recommendation);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
             
@@ -107,14 +107,14 @@ namespace EMR
                 WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
                 prt_fullname.Text = patientInfo.FullName;
 
-                prt_diagnosis.Text = uusr.diagnosis;
-                prt_left_kidney.Text = uusr.left_kidney;
-                prt_right_kidney.Text = uusr.right_kidney;
-                prt_urinary_bladder.Text = uusr.urinary_bladder;
-                prt_prostate.Text = uusr.prostate;
-                prt_post_void_resi_volume.Text = uusr.post_void_resi_volume;
-                prt_conclusion.Text = uusr.conclusion;
-                prt_recommendation.Text = uusr.recommendation;
+                prt_diagnosis.Text = WebHelpers.TextToHtmlTag(uusr.diagnosis);
+                prt_left_kidney.Text = WebHelpers.TextToHtmlTag(uusr.left_kidney);
+                prt_right_kidney.Text = WebHelpers.TextToHtmlTag(uusr.right_kidney);
+                prt_urinary_bladder.Text = WebHelpers.TextToHtmlTag(uusr.urinary_bladder);
+                prt_prostate.Text = WebHelpers.TextToHtmlTag(uusr.prostate);
+                prt_post_void_resi_volume.Text = WebHelpers.TextToHtmlTag(uusr.post_void_resi_volume);
+                prt_conclusion.Text = WebHelpers.TextToHtmlTag(uusr.conclusion);
+                prt_recommendation.Text = WebHelpers.TextToHtmlTag(uusr.recommendation);
 
                 string signature_date = WebHelpers.FormatDateTime(SignatureDate, "dd-MM-yyyy", "");
                 prt_signature_date.Text = "Ngày/ Date: " + signature_date;

@@ -216,7 +216,6 @@ namespace EMR
             {
                 WebHelpers.SendError(Page, ex);
             }
-
         }
         private void BindingDataFormPrint(MC mc)
         {
@@ -231,8 +230,14 @@ namespace EMR
 
                 prt_dob.Text = WebHelpers.FormatDateTime(patientInfo.date_of_birth);
                 
-                prt_gender.Text = WebHelpers.CreateOptions(new Option { Text = "Nam <div class='text-primary'>Male</div>", Value = "Male" }, new Option { Text = "Nữ<div class='text-primary'>Female</div>", Value = "Female" }, patientInfo.Gender, "display: grid; grid-template-columns: 1fr 1fr; width: 300px");
-                //prt_dept.Text = PatientVisit.Instance().getDept();
+                if(patientInfo.Gender == "Male" || patientInfo.Gender == "Nam")
+                {
+                    prt_male.Text = "☒";
+                } else if (patientInfo.Gender == "Female" || patientInfo.Gender == "Nữ")
+                {
+                    prt_female.Text = "☒";
+                }
+
                 prt_pid.Text = patientInfo.visible_patient_id;
                 prt_date_of_visit.Text = WebHelpers.FormatDateTime(patientVisitInfo.actual_visit_date_time);
                 prt_chief_complain.Text = WebHelpers.TextToHtmlTag(mc.chief_complain, false);

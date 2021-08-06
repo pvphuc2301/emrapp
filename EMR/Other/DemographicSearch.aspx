@@ -317,7 +317,7 @@
                 <div class="card-footer bg-white py-4"></div>
             </div>
 
-            <div class="row" id="last_customer" runat="server" visible="false">
+            <%--<div class="row" id="last_customer" runat="server">
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header bg-white">
@@ -329,7 +329,7 @@
                             <div class="table-responsive">
                                 <telerik:RadGrid CssClass="table" BorderWidth="0" OnSelectedIndexChanged="RadGrid1_SelectedIndexChanged"
                                     AutoGenerateColumns="false" ID="RadGrid3" runat="server" AllowPaging="True"
-                                    OnItemDataBound="RadGrid2_ItemDataBound" AllowSorting="true">
+                                    OnItemDataBound="RadGrid2_ItemDataBound" OnNeedDataSource="RadGrid3_NeedDataSource" AllowSorting="true">
                                     <MasterTableView AutoGenerateColumns="False" DataKeyNames="patient_id">
                                         <Columns>
                                             <telerik:GridBoundColumn
@@ -392,7 +392,7 @@
                         <div class="card-footer bg-white py-4"></div>
                     </div>
                 </div>
-            </div>
+            </div>--%>
         </div>
     </form>
     <script src="../scripts/myScript.js"></script>
@@ -403,7 +403,7 @@
 
         function beforeAsyncPostBack() {
             var curtime = new Date();
-            console.log(curtime);
+            
         }
 
         function afterAsyncPostBack() {

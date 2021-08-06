@@ -647,6 +647,10 @@
                         </asp:Panel>
 
                         <div class="row">
+                            
+                            <div class="col-md-12 cssclsNoScreen">
+                                <asp:Label runat="server" ID="lblPid"></asp:Label>
+                            </div>
     <div class="col-lg-12" id="accordionExample">
         <div class="card">
             <div class="card-body collapse show" id="collapsePatientInfo" aria-labelledby="headingPatientInfo">
@@ -1498,26 +1502,11 @@
             checkboxRadiobutton_init();
         }
 
-        function showWindow(sender, eventArgs) {
+        function showWindow() {
             var oWnd = $find("<%=RadWindow1.ClientID%>");
             oWnd.show();
         }
 
-
-       function RowDblClick(sender, eventArgs) {
-            console.log('sdfsdf');
-
-           var grid = $find("<%= RadGrid1.ClientID %>");
-           var masterTable = grid.get_masterTableView();
-           var item = eventArgs.get_itemIndexHierarchical();
-
-           var row = masterTable.get_dataItems()[item];
-
-           var button = row.findElement("RadLinkButton1");
-           button.click();
-
-           //console.log(row);
-        }
 
         function printDiv() {
             var printContents = document.getElementById("print_content").innerHTML;

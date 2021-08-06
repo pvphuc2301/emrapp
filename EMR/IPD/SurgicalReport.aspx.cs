@@ -67,24 +67,24 @@ namespace EMR.IPD
                 WebHelpers.BindDateTimePicker(dpk_procedure_date, surr.procedure_date);
                 txt_start_time.Text = surr.start_time;
                 txt_finish_time.Text = surr.finish_time;
-                txt_preo_diagnosis.Value = surr.preo_diagnosis;
-                txt_post_diagnosis.Value = surr.post_diagnosis;
-                txt_name_procedure.Value = surr.name_procedure;
-                txt_surgeon.Value = surr.surgeon;
-                txt_assistant_surgeon.Value = surr.assistant_surgeon;
-                txt_anesthesiologist.Value = surr.anesthesiologist;
-                txt_anesthesia.Value = surr.anesthesia;
-                txt_anesthetic_nurse.Value = surr.anesthetic_nurse;
-                txt_scrub_nurse.Value = surr.scrub_nurse;
-                txt_circulating_nurse.Value = surr.circulating_nurse;
-                txt_estimated_bloodloss.Value = surr.estimated_bloodloss;
-                txt_biopsy_pathology.Value = surr.biopsy_pathology;
-                txt_complications.Value = surr.complications;
-                txt_procedure_chart.Value = surr.procedure_chart;
-                txt_procedure_narrative.Value = surr.procedure_narrative;
+                txt_preo_diagnosis.Value = WebHelpers.TextToHtmlTag(surr.preo_diagnosis);
+                txt_post_diagnosis.Value = WebHelpers.TextToHtmlTag(surr.post_diagnosis);
+                txt_name_procedure.Value = WebHelpers.TextToHtmlTag(surr.name_procedure);
+                txt_surgeon.Value = WebHelpers.TextToHtmlTag(surr.surgeon);
+                txt_assistant_surgeon.Value = WebHelpers.TextToHtmlTag(surr.assistant_surgeon);
+                txt_anesthesiologist.Value = WebHelpers.TextToHtmlTag(surr.anesthesiologist);
+                txt_anesthesia.Value = WebHelpers.TextToHtmlTag(surr.anesthesia);
+                txt_anesthetic_nurse.Value = WebHelpers.TextToHtmlTag(surr.anesthetic_nurse);
+                txt_scrub_nurse.Value = WebHelpers.TextToHtmlTag(surr.scrub_nurse);
+                txt_circulating_nurse.Value = WebHelpers.TextToHtmlTag(surr.circulating_nurse);
+                txt_estimated_bloodloss.Value = WebHelpers.TextToHtmlTag(surr.estimated_bloodloss);
+                txt_biopsy_pathology.Value = WebHelpers.TextToHtmlTag(surr.biopsy_pathology);
+                txt_complications.Value = WebHelpers.TextToHtmlTag(surr.complications);
+                txt_procedure_chart.Value = WebHelpers.TextToHtmlTag(surr.procedure_chart);
+                txt_procedure_narrative.Value = WebHelpers.TextToHtmlTag(surr.procedure_narrative);
 
-                DataObj.Value = JsonConvert.SerializeObject(surr);
-                Session["docid"] = surr.document_id;
+                //DataObj.Value = JsonConvert.SerializeObject(surr);
+                //Session["docid"] = surr.document_id;
                 WebHelpers.AddScriptFormEdit(Page, surr, (string)Session["emp_id"], loc);
             }
             catch(Exception ex)
@@ -97,29 +97,29 @@ namespace EMR.IPD
             try
             {
                 //3
-                lbl_procedure_date.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(surr.procedure_date));
+                lbl_procedure_date.Text = WebHelpers.FormatDateTime(surr.procedure_date);
                 lbl_start_time.Text = WebHelpers.FormatString(surr.start_time);
                 lbl_finish_time.Text = WebHelpers.FormatString(surr.finish_time);
                 //4
-                lbl_preo_diagnosis.Text = WebHelpers.FormatString(surr.preo_diagnosis);
+                lbl_preo_diagnosis.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surr.preo_diagnosis));
                 //5
-                lbl_post_diagnosis.Text = WebHelpers.FormatString(surr.post_diagnosis);
+                lbl_post_diagnosis.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surr.post_diagnosis));
                 //6
-                lbl_name_procedure.Text = WebHelpers.FormatString(surr.name_procedure);
+                lbl_name_procedure.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surr.name_procedure));
                 //7
-                lbl_anesthesia.Text = WebHelpers.FormatString(surr.anesthesia);
+                lbl_anesthesia.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surr.anesthesia));
                 //8
-                lbl_surgeon.Text = WebHelpers.FormatString(surr.surgeon);
-                lbl_assistant_surgeon.Text = WebHelpers.FormatString(surr.assistant_surgeon);
-                lbl_anesthesiologist.Text = WebHelpers.FormatString(surr.anesthesiologist);
-                lbl_anesthetic_nurse.Text = WebHelpers.FormatString(surr.anesthetic_nurse);
-                lbl_scrub_nurse.Text = WebHelpers.FormatString(surr.scrub_nurse);
-                lbl_circulating_nurse.Text = WebHelpers.FormatString(surr.circulating_nurse);
-                lbl_estimated_bloodloss.Text = WebHelpers.FormatString(surr.estimated_bloodloss);
-                lbl_biopsy_pathology.Text = WebHelpers.FormatString(surr.biopsy_pathology);
-                lbl_complications.Text = WebHelpers.FormatString(surr.complications);
-                lbl_procedure_chart.Text = WebHelpers.FormatString(surr.procedure_chart);
-                lbl_procedure_narrative.Text = WebHelpers.FormatString(surr.procedure_narrative);
+                lbl_surgeon.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surr.surgeon));
+                lbl_assistant_surgeon.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surr.assistant_surgeon));
+                lbl_anesthesiologist.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surr.anesthesiologist));
+                lbl_anesthetic_nurse.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surr.anesthetic_nurse));
+                lbl_scrub_nurse.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surr.scrub_nurse));
+                lbl_circulating_nurse.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surr.circulating_nurse));
+                lbl_estimated_bloodloss.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surr.estimated_bloodloss));
+                lbl_biopsy_pathology.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surr.biopsy_pathology));
+                lbl_complications.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surr.complications));
+                lbl_procedure_chart.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surr.procedure_chart));
+                lbl_procedure_narrative.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surr.procedure_narrative));
             }
             catch (Exception ex)
             {
@@ -141,21 +141,21 @@ namespace EMR.IPD
                 prt_procedure_date.InnerHtml = WebHelpers.FormatDateTime(surr.procedure_date);
                 prt_start_time.InnerHtml = surr.start_time;
                 prt_finish_time.InnerHtml = surr.finish_time;
-                prt_preo_diagnosis.InnerHtml = surr.preo_diagnosis;
-                prt_post_diagnosis.InnerHtml = surr.post_diagnosis;
-                prt_name_procedure.InnerHtml = surr.name_procedure;
-                prt_anesthesia.InnerHtml = surr.anesthesia;
-                prt_surgeon.InnerHtml = surr.surgeon;
-                prt_assistant_surgeon.InnerHtml = surr.assistant_surgeon;
-                prt_anesthesiologist.InnerHtml = surr.anesthesiologist;
-                prt_anesthetic_nurse.InnerHtml = surr.anesthetic_nurse;
-                prt_scrub_nurse.InnerHtml = surr.scrub_nurse;
-                prt_circulating_nurse.InnerHtml = surr.circulating_nurse;
-                prt_estimated_bloodloss.InnerHtml = surr.estimated_bloodloss;
-                prt_biopsy_pathology.InnerHtml = surr.biopsy_pathology;
-                prt_complications.InnerHtml = surr.complications;
-                prt_procedure_chart.InnerHtml = surr.procedure_chart;
-                prt_procedure_narrative.InnerHtml = surr.procedure_narrative;
+                prt_preo_diagnosis.InnerHtml = WebHelpers.TextToHtmlTag(surr.preo_diagnosis);
+                prt_post_diagnosis.InnerHtml = WebHelpers.TextToHtmlTag(surr.post_diagnosis);
+                prt_name_procedure.InnerHtml = WebHelpers.TextToHtmlTag(surr.name_procedure);
+                prt_anesthesia.InnerHtml = WebHelpers.TextToHtmlTag(surr.anesthesia);
+                prt_surgeon.InnerHtml = WebHelpers.TextToHtmlTag(surr.surgeon);
+                prt_assistant_surgeon.InnerHtml = WebHelpers.TextToHtmlTag(surr.assistant_surgeon);
+                prt_anesthesiologist.InnerHtml = WebHelpers.TextToHtmlTag(surr.anesthesiologist);
+                prt_anesthetic_nurse.InnerHtml = WebHelpers.TextToHtmlTag(surr.anesthetic_nurse);
+                prt_scrub_nurse.InnerHtml = WebHelpers.TextToHtmlTag(surr.scrub_nurse);
+                prt_circulating_nurse.InnerHtml = WebHelpers.TextToHtmlTag(surr.circulating_nurse);
+                prt_estimated_bloodloss.InnerHtml = WebHelpers.TextToHtmlTag(surr.estimated_bloodloss);
+                prt_biopsy_pathology.InnerHtml = WebHelpers.TextToHtmlTag(surr.biopsy_pathology);
+                prt_complications.InnerHtml = WebHelpers.TextToHtmlTag(surr.complications);
+                prt_procedure_chart.InnerHtml = WebHelpers.TextToHtmlTag(surr.procedure_chart);
+                prt_procedure_narrative.InnerHtml = WebHelpers.TextToHtmlTag(surr.procedure_narrative);
 
                 string signature_date = WebHelpers.FormatDateTime(SignatureName, "dd-MM-yyyy", "");
 

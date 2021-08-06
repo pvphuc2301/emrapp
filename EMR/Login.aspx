@@ -164,6 +164,7 @@
     </form>
     <script src="scripts/waves.js"></script>
     <script>
+
         function togglePassword(id, eyeID) {
             let x = document.getElementById(id);
             let eye = document.getElementById(eyeID);

@@ -39,13 +39,6 @@ namespace EMR.ER
 
             PAGE_URL = $"/ER/EmerMedRec.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
-            patientInfo = new PatientInfo(varPID);
-            patientVisitInfo = new PatientVisitInfo(varPVID, loc);
-
-            var UCPatientInfo = (UCPatientInfo)Page.LoadControl("~/UserControls/UCPatientInfo.ascx");
-
-            UCPatientInfo.Initial(uc_patientinfo_wrapper, patientInfo, patientVisitInfo);
-
             if (!IsPostBack)
             {
                 Initial();
@@ -1169,6 +1162,9 @@ namespace EMR.ER
         {
             try
             {
+                patientInfo = new PatientInfo(varPID);
+                patientVisitInfo = new PatientVisitInfo(varPVID, loc);
+
                 EmergencyMedicalRecord emr;
                 if (varDocIdLog != null)
                 {
@@ -1180,13 +1176,14 @@ namespace EMR.ER
                     emr = new EmergencyMedicalRecord(varDocID, loc);
                     currentLog.Visible = false;
                 }
-
+                LoadPatientInfo();
                 loadRadGridHistoryLog();
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
 
                 if (emr.status == DocumentStatus.FINAL)
                 {
                     BindingDataForm(emr, WebHelpers.LoadFormControl(form1, emr, ControlState.View, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
+                    
                     BindingDataFormPrint(emr);
                 }
                 else if (emr.status == DocumentStatus.DRAFT)
@@ -1200,6 +1197,23 @@ namespace EMR.ER
             {
                 WebHelpers.SendError(Page, ex);
             }
+        }
+        private void LoadPatientInfo()
+        {
+            lblFirstName.Text = patientInfo.first_name_l;
+            lblLastName.Text = patientInfo.last_name_l;
+            lblGender.Text = patientInfo.gender_l;
+
+            WebHelpers.ConvertDateTime(patientInfo.DOB, out bool isValid, out string DOB, "dd-MM-yyyy");
+            lblDoB.Text = DOB + " (" + patientInfo.Age + "t)";
+
+            lblPatientAddress.Text = patientInfo.Address;
+            lblContactPerson.Text = patientInfo.Contact;
+
+            lblVisitCode.Text = patientVisitInfo.VisitCode;
+
+            WebHelpers.ConvertDateTime(patientVisitInfo.ActualVisitDateTime, out bool isValid1, out string ActualVisitDateTime, "dd-MM-yyyy");
+            lblVisitDate.Text = ActualVisitDateTime;
         }
         private void loadRadGridHistoryLog()
         {

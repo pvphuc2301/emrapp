@@ -283,6 +283,7 @@
     <Content Include="Report\ImagingReport.ascx" />
     <Content Include="Report\LabReport.ascx" />
     <Content Include="Report\LabTab.aspx" />
+    <Content Include="Report\rxHistory.aspx" />
     <Content Include="Report\Style1.css" />
     <Content Include="Report\TabStyle.css" />
     <Content Include="Report\TestTasb.aspx" />
@@ -853,6 +854,13 @@
     <Compile Include="Report\LabTab.aspx.designer.cs">
       <DependentUpon>LabTab.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Report\rxHistory.aspx.cs">
+      <DependentUpon>rxHistory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\rxHistory.aspx.designer.cs">
+      <DependentUpon>rxHistory.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Report\TestTasb.aspx.cs">
       <DependentUpon>TestTasb.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1138,7 +1146,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

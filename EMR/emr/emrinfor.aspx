@@ -226,6 +226,8 @@
                 <telerik:RadTab Text="Order Printing" Value="orderprint" Width="200px"></telerik:RadTab>
                 <telerik:RadTab Text="OPD Prescription" Value="opdprescription" Width="200px"></telerik:RadTab>
                 <telerik:RadTab Text="MAR Printing" Value="marprinting" Width="200px"></telerik:RadTab>
+                <telerik:RadTab Text="Medication History" Value="rxhistory" Width="200px"></telerik:RadTab>
+
             </Tabs>
         </telerik:RadTabStrip>
 
@@ -234,6 +236,7 @@
             <telerik:RadPageView id="OrderList" runat="server"></telerik:RadPageView>
             <telerik:RadPageView id="OpdPrescription" runat="server"></telerik:RadPageView>
             <telerik:RadPageView id="MARPrinting" runat="server"></telerik:RadPageView>
+            <telerik:RadPageView id="RxHistory" runat="server"></telerik:RadPageView>
         </telerik:RadMultiPage>
 
         <div id="tooltip__item" class="tooltip__item">
@@ -271,7 +274,7 @@
 
     <script>
         window.onload = function () {
-            console.log('window loaded');
+            
             let listItem = document.getElementsByClassName("list-item");
             let tooltip1 = document.getElementById("tooltip__item");
 

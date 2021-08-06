@@ -198,6 +198,7 @@ namespace EMR.Other
         {
             RadGridHC.MasterTableView.Rebind();
         }
+
         #region RadGridHC
         //Health check queue----------------------------------------------------------------------------------------------------------------------------
         public DataTable GetDataTable(string query)
@@ -222,8 +223,14 @@ namespace EMR.Other
         }
         protected void RadGridHC_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            string TableName = RadGridHC.MasterTableView.Name;
-            string query = GetQueryHC(specialty_id);
+            dynamic response = WebHelpers.GetAPI("api/hck/queue/" + specialty_id);
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                RadGridHC.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+            }
+
+            //string TableName = RadGridHC.MasterTableView.Name;
+           // string query = GetQueryHC(specialty_id);
 
             //if (!string.IsNullOrEmpty(query))
             //{
@@ -399,6 +406,11 @@ namespace EMR.Other
                 string url = $"/emr/emrinfor.aspx?pid={PID}&vbid={PVID}&loc={loc}";
                 Response.Redirect(url);
             } 
+        }
+
+        protected void RadGrid3_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+
         }
     }
 }

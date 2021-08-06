@@ -53,7 +53,7 @@ namespace EMR
                 OrderList.ContentUrl = $"~/Phar/orderlist.aspx?pid={varPID}&vbid={varVPID}";
                 OpdPrescription.ContentUrl = $"~/Phar/opdpreslist.aspx?pid={varPID}";
                 MARPrinting.ContentUrl = $"~/Phar/marprinting.aspx?vbid={varVPID}";
-
+                RxHistory.ContentUrl = $"~/Report/rxHistory.aspx?pid={varPID}";
                 //LoadRootNodes(RadTreeView1, TreeNodeExpandMode.ServerSideCallBack);
                 //LoadRootLAB_RAD(RadTreeView2, TreeNodeExpandMode.ServerSideCallBack);
                 //LoadRootScan(RadTreeView3, TreeNodeExpandMode.ServerSideCallBack);

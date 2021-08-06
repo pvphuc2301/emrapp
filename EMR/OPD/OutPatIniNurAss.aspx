@@ -147,7 +147,7 @@
                                             <asp:Label runat="server" ID="prt_fall_risk"  />
                                         </div>
 
-                                        <div style="margin-bottom: 6px">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; margin-bottom: 6px">
                                             <webUI:PrtRowS1 FontBold="true" Order="6." FixedWidth="235" Title="Đánh giá tình trạng dinh dưỡng:" SubTitle="Nutritional Status Screening" runat="server" />
                                             <asp:Label runat="server" ID="prt_nutrition_status_code"  />
                                         </div>

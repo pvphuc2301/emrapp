@@ -92,32 +92,32 @@ namespace EMR
         {
             try
             {
-                lbl_disc_reason_desc.Text = WebHelpers.FormatString(diss.disc_reason_desc);
-                lbl_date_of_hospital.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(diss.date_of_hospital, "dd-MMM-yyyy"));
-                lbl_date_of_discharge.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(diss.date_of_discharge, "dd-MMM-yyyy"));
-                lbl_admission_reason.Text = WebHelpers.FormatString(diss.admission_reason);
-                lbl_icd10_diagnosis.Text = WebHelpers.FormatString(diss.icd10_diagnosis);
-                lbl_associated_diagnosis.Text = WebHelpers.FormatString(diss.associated_diagnosis);
-                lbl_cur_med_history.Text = WebHelpers.FormatString(diss.cur_med_history);
-                lbl_ant_med_history.Text = WebHelpers.FormatString(diss.ant_med_history);
-                lbl_physical_finding.Text = WebHelpers.FormatString(diss.physical_finding);
-                lbl_lab_result.Text = WebHelpers.FormatString(diss.lab_result);
-                lbl_patho_result_desc.Text = WebHelpers.FormatString(diss.patho_result_desc);
-                lbl_proce_performed.Text = WebHelpers.FormatString(diss.proce_performed);
-                lbl_treatment.Text = WebHelpers.FormatString(diss.treatment);
-                lbl_evolution.Text = WebHelpers.FormatString(diss.evolution);
-                lbl_disc_condition.Text = WebHelpers.FormatString(diss.disc_condition);
-                lbl_disc_medication.Text = WebHelpers.FormatString(diss.disc_medication);
-                lbl_follow_up_instruc.Text = WebHelpers.FormatString(diss.follow_up_instruc);
-                lbl_special_diet.Text = WebHelpers.FormatString(diss.special_diet);
-                lbl_next_consult_date.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(diss.next_consult_date, "dd-MMM-yyyy"));
-                lbl_next_consult_doctor.Text = WebHelpers.FormatString(diss.next_consult_doctor);
-                lbl_dama.Text = WebHelpers.FormatString(diss.dama);
-                lbl_dama_note.Text = WebHelpers.FormatString(diss.dama_note);
-                lbl_transfer_reason.Text = WebHelpers.FormatString(diss.transfer_reason);
-                lbl_trans_to_hospital.Text = WebHelpers.FormatString(diss.trans_to_hospital);
-                lbl_signed_date.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(diss.signed_date, "dd-MMM-yyyy"));
-                lbl_signed_doctor.Text = WebHelpers.FormatString(diss.signed_doctor);
+                lbl_disc_reason_desc.Text = WebHelpers.TextToHtmlTag(diss.disc_reason_desc);
+                lbl_date_of_hospital.Text = WebHelpers.FormatDateTime(diss.date_of_hospital, "dd-MMM-yyyy");
+                lbl_date_of_discharge.Text = WebHelpers.FormatDateTime(diss.date_of_discharge, "dd-MMM-yyyy");
+                lbl_admission_reason.Text = WebHelpers.TextToHtmlTag(diss.admission_reason);
+                lbl_icd10_diagnosis.Text = WebHelpers.TextToHtmlTag(diss.icd10_diagnosis);
+                lbl_associated_diagnosis.Text = WebHelpers.TextToHtmlTag(diss.associated_diagnosis);
+                lbl_cur_med_history.Text = WebHelpers.TextToHtmlTag(diss.cur_med_history);
+                lbl_ant_med_history.Text = WebHelpers.TextToHtmlTag(diss.ant_med_history);
+                lbl_physical_finding.Text = WebHelpers.TextToHtmlTag(diss.physical_finding);
+                lbl_lab_result.Text = WebHelpers.TextToHtmlTag(diss.lab_result);
+                lbl_patho_result_desc.Text = WebHelpers.TextToHtmlTag(diss.patho_result_desc);
+                lbl_proce_performed.Text = WebHelpers.TextToHtmlTag(diss.proce_performed);
+                lbl_treatment.Text = WebHelpers.TextToHtmlTag(diss.treatment);
+                lbl_evolution.Text = WebHelpers.TextToHtmlTag(diss.evolution);
+                lbl_disc_condition.Text = WebHelpers.TextToHtmlTag(diss.disc_condition);
+                lbl_disc_medication.Text = WebHelpers.TextToHtmlTag(diss.disc_medication);
+                lbl_follow_up_instruc.Text = WebHelpers.TextToHtmlTag(diss.follow_up_instruc);
+                lbl_special_diet.Text = WebHelpers.TextToHtmlTag(diss.special_diet);
+                lbl_next_consult_date.Text = WebHelpers.FormatDateTime(diss.next_consult_date, "dd-MMM-yyyy");
+                lbl_next_consult_doctor.Text = WebHelpers.TextToHtmlTag(diss.next_consult_doctor);
+                lbl_dama.Text = WebHelpers.TextToHtmlTag(diss.dama);
+                lbl_dama_note.Text = WebHelpers.TextToHtmlTag(diss.dama_note);
+                lbl_transfer_reason.Text = WebHelpers.TextToHtmlTag(diss.transfer_reason);
+                lbl_trans_to_hospital.Text = WebHelpers.TextToHtmlTag(diss.trans_to_hospital);
+                lbl_signed_date.Text = WebHelpers.FormatDateTime(diss.signed_date, "dd-MMM-yyyy");
+                lbl_signed_doctor.Text = WebHelpers.TextToHtmlTag(diss.signed_doctor);
 
                 LoadDischargeReason(diss.disc_reason_code);
             }
@@ -136,27 +136,27 @@ namespace EMR
 
                 WebHelpers.BindDateTimePicker(dpk_date_of_discharge, diss.date_of_discharge);
                 //1
-                txt_admission_reason.Value = diss.admission_reason;
+                txt_admission_reason.Value = WebHelpers.TextToHtmlTag(diss.admission_reason);
                 //2
-                txt_icd10_diagnosis.Value = diss.icd10_diagnosis;
-                txt_associated_diagnosis.Value = diss.associated_diagnosis;
+                txt_icd10_diagnosis.Value = WebHelpers.TextToHtmlTag(diss.icd10_diagnosis);
+                txt_associated_diagnosis.Value = WebHelpers.TextToHtmlTag(diss.associated_diagnosis);
                 //3
-                txt_cur_med_history.Value = diss.cur_med_history;
-                txt_ant_med_history.Value = diss.ant_med_history;
+                txt_cur_med_history.Value = WebHelpers.TextToHtmlTag(diss.cur_med_history);
+                txt_ant_med_history.Value = WebHelpers.TextToHtmlTag(diss.ant_med_history);
                 //4
-                txt_physical_finding.Value = diss.physical_finding;
+                txt_physical_finding.Value = WebHelpers.TextToHtmlTag(diss.physical_finding);
                 //5
-                txt_lab_result.Value = diss.lab_result;
+                txt_lab_result.Value = WebHelpers.TextToHtmlTag(diss.lab_result);
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_patho_result_code_" + diss.patho_result_code);
 
                 //6
-                txt_proce_performed.Value = diss.proce_performed;
+                txt_proce_performed.Value = WebHelpers.TextToHtmlTag(diss.proce_performed);
                 //7
-                txt_treatment.Value = diss.treatment;
+                txt_treatment.Value = WebHelpers.TextToHtmlTag(diss.treatment);
                 //8
-                txt_evolution.Value = diss.evolution;
+                txt_evolution.Value = WebHelpers.TextToHtmlTag(diss.evolution);
                 //9
-                txt_disc_condition.Value = diss.disc_condition;
+                txt_disc_condition.Value = WebHelpers.TextToHtmlTag(diss.disc_condition);
                 //10
                 if (diss.disc_reason_code == "DAMA")
                 {
@@ -164,29 +164,29 @@ namespace EMR
                 }
                 else
                 {
-                    txt_disc_medication.Value = diss.disc_medication;
+                    txt_disc_medication.Value = WebHelpers.TextToHtmlTag(diss.disc_medication);
                 }
                 //11
-                txt_follow_up_instruc.Value = diss.follow_up_instruc;
+                txt_follow_up_instruc.Value = WebHelpers.TextToHtmlTag(diss.follow_up_instruc);
                 //12
-                txt_special_diet.Value = diss.special_diet;
+                txt_special_diet.Value = WebHelpers.TextToHtmlTag(diss.special_diet);
                 //13
                 WebHelpers.BindDateTimePicker(dpk_next_consult_date, diss.next_consult_date);
-                txt_next_consult_doctor.Value = diss.next_consult_doctor;
+                txt_next_consult_doctor.Value = WebHelpers.TextToHtmlTag(diss.next_consult_doctor);
 
                 //dama
-                txt_dama.Value = diss.dama;
-                txt_dama_note.Value = diss.dama_note;
+                txt_dama.Value = WebHelpers.TextToHtmlTag(diss.dama);
+                txt_dama_note.Value = WebHelpers.TextToHtmlTag(diss.dama_note);
 
                 // transfer
-                txt_trans_to_hospital.Value = diss.trans_to_hospital;
-                txt_transfer_reason.Value = diss.transfer_reason;
+                txt_trans_to_hospital.Value = WebHelpers.TextToHtmlTag(diss.trans_to_hospital);
+                txt_transfer_reason.Value = WebHelpers.TextToHtmlTag(diss.transfer_reason);
 
                 WebHelpers.BindDateTimePicker(dpk_signed_date, diss.signed_date);
                 txt_signed_doctor.Value = diss.signed_doctor;
 
-                DataObj.Value = JsonConvert.SerializeObject(diss);
-                Session["docid"] = diss.document_id;
+                //DataObj.Value = JsonConvert.SerializeObject(diss);
+                //Session["docid"] = diss.document_id;
                 WebHelpers.AddScriptFormEdit(Page, diss, (string)Session["emp_id"], loc);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
@@ -209,25 +209,25 @@ namespace EMR
 
                 prt_date_of_discharge.Text = WebHelpers.FormatDateTime(diss.date_of_discharge);
                 //1
-                prt_admission_reason.Text = diss.admission_reason;
+                prt_admission_reason.Text = WebHelpers.TextToHtmlTag(diss.admission_reason);
                 //2
-                prt_icd10_diagnosis.Text = diss.icd10_diagnosis;
+                prt_icd10_diagnosis.Text = WebHelpers.TextToHtmlTag(diss.icd10_diagnosis);
                 //3
-                prt_cur_med_history.Text = diss.cur_med_history;
+                prt_cur_med_history.Text = WebHelpers.TextToHtmlTag(diss.cur_med_history);
                 //4
-                prt_physical_finding.Text = diss.physical_finding;
+                prt_physical_finding.Text = WebHelpers.TextToHtmlTag(diss.physical_finding);
                 //5
-                prt_lab_result.Text = diss.lab_result;
+                prt_lab_result.Text = WebHelpers.TextToHtmlTag(diss.lab_result);
                 //6
-                prt_proce_performed.Text = diss.proce_performed;
+                prt_proce_performed.Text = WebHelpers.TextToHtmlTag(diss.proce_performed);
                 //7
-                prt_treatment.Text = diss.treatment;
+                prt_treatment.Text = WebHelpers.TextToHtmlTag(diss.treatment);
                 //8
-                prt_evolution.Text = diss.evolution;
+                prt_evolution.Text = WebHelpers.TextToHtmlTag(diss.evolution);
                 //9
-                prt_disc_condition.Text = diss.disc_condition;
+                prt_disc_condition.Text = WebHelpers.TextToHtmlTag(diss.disc_condition);
                 //10
-                prt_disc_medication.Text = diss.disc_medication;
+                prt_disc_medication.Text = WebHelpers.TextToHtmlTag(diss.disc_medication);
 
                 WebHelpers.VisibleControl(false, prt_follow_up_instruc, prt_special_diet, prt_next_consult, prt_dama, prt_trans_to_hospital, prt_transfer_reason, prt_disc_medication, prt_dama_title, prt_disc_medication_title, prt_trans_to_hospital_title, prt_transfer_reason_title, prt_follow_up_instruc_title, prt_special_diet_title, prt_next_consult_title);
                 
@@ -235,28 +235,28 @@ namespace EMR
                 {
                     //10
                     WebHelpers.VisibleControl(true, prt_dama_title, prt_dama);
-                    prt_dama.Text = diss.dama;
+                    prt_dama.Text = WebHelpers.TextToHtmlTag(diss.dama);
 
                 }
                 else if (diss.disc_reason_code == "TRANSFER")
                 {
                     //10
                     WebHelpers.VisibleControl(true, prt_disc_medication, prt_disc_medication_title, prt_trans_to_hospital, prt_trans_to_hospital_title, prt_transfer_reason, prt_transfer_reason_title);
-                    prt_disc_medication.Text = diss.disc_medication;
+                    prt_disc_medication.Text = WebHelpers.TextToHtmlTag(diss.disc_medication);
                     //11
-                    prt_trans_to_hospital.Text = diss.trans_to_hospital;
+                    prt_trans_to_hospital.Text = WebHelpers.TextToHtmlTag(diss.trans_to_hospital);
 
-                    prt_transfer_reason.Text = diss.transfer_reason;
+                    prt_transfer_reason.Text = WebHelpers.TextToHtmlTag(diss.transfer_reason);
                 }
                 else if (diss.disc_reason_code == "AMA")
                 {
                     WebHelpers.VisibleControl(true, prt_disc_medication, prt_disc_medication_title, prt_follow_up_instruc, prt_follow_up_instruc_title, prt_special_diet, prt_special_diet_title, prt_next_consult, prt_next_consult_title);
                     //10
-                    prt_disc_medication.Text = diss.disc_medication;
+                    prt_disc_medication.Text = WebHelpers.TextToHtmlTag(diss.disc_medication);
                     //11
-                    prt_follow_up_instruc.Text = diss.follow_up_instruc;
+                    prt_follow_up_instruc.Text = WebHelpers.TextToHtmlTag(diss.follow_up_instruc);
                     //12
-                    prt_special_diet.Text = diss.special_diet;
+                    prt_special_diet.Text = WebHelpers.TextToHtmlTag(diss.special_diet);
                     //13
                     prt_next_consult.Text = $"{WebHelpers.FormatDateTime(diss.next_consult_date, "dd-MM-yyyy", "")} {diss.next_consult_doctor}";
                 }

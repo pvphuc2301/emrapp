@@ -41,7 +41,7 @@ namespace EMR
     public static class WebHelpers
     {
         public static string URL = "http://172.16.0.88:8080/";//DEV
-        //public static string URL = "http://172.16.0.78:8082/";//UAT
+        //public static string URL = "http://172.16.0.78:8088/";//UAT
 
         #region API
         public static dynamic PostAPI(string url, dynamic obj)
@@ -228,6 +228,7 @@ namespace EMR
         public static DataTable GetJSONToDataTable(string JSONData)
         {
             if (JSONData == null) { return null; }
+            //JSONData = TextToHtmlTag(JSONData);
             DataTable dt;
             dynamic jsonObject = null;
             
@@ -311,7 +312,7 @@ namespace EMR
         {
             if (!string.IsNullOrEmpty(docId))
             {
-                ScriptManager.RegisterStartupScript(page, page.GetType(), "localStorage_removeItem", "window.sessionStorage.removeItem('\"" + docId + "\"'); console.log(comfirm_leave_page); window.removeEventListener('beforeunload', comfirm_leave_page, true);", true);
+                ScriptManager.RegisterStartupScript(page, page.GetType(), "localStorage_removeItem", "window.sessionStorage.removeItem('\"" + docId + "\"'); window.removeEventListener('beforeunload', comfirm_leave_page, true);", true);
 
                 WebHelpers.PostAPI($"api/emr/clear-session/{loc}/{docId}");
             }
@@ -436,24 +437,18 @@ namespace EMR
 
         internal static string TextToHtmlTag(string value, bool check = true)
         {
-            if (!string.IsNullOrEmpty(value))
-            {
+            //if (!string.IsNullOrEmpty(value))
+            //{
                 value = value.Replace("\n", "<br>");
-                
-                if (check) {
-                    value = value.Replace("&lt;", "<");
-                    value = value.Replace("&quot;", "\"");
-                    value = value.Replace("&gt;", ">");
-                }
-                else
-                {
-                    value = value.Replace("&lt;font color=&quot;red&quot;&gt;", "");
-                    value = value.Replace("&lt;/font&gt;", "");
-                    value = value.Replace("&lt;font color=&quot;#000000&quot;&gt;", "");
-                }
-                
-                return value;
-            }
+
+            //    if (!check)
+            //    {
+            //        value = value.Replace("<font color=\"red\">", "");
+            //        value = value.Replace("</font>", "");
+            //    }
+
+            //    return value;
+            //}
             return value;
         }
 
@@ -1161,8 +1156,12 @@ namespace EMR
         }
         public static string GetBool(bool? value, string returnTrue = "Có/ Yes", string returnFalse = "Không/ No")
         {
-            if (value == null) return null; 
-            return (bool)value ? returnTrue : returnFalse;
+            if (value == null) return null;
+            if (bool.TryParse(Convert.ToString(value), out bool result))
+            {
+                return result ? returnTrue : returnFalse;
+            }
+            return "#invalid";
         }
         public static string GetCheckedIcon(bool? value)
         {
@@ -1360,6 +1359,7 @@ namespace EMR
         internal static string DisplayCheckBox(DataTable dt, out int oth_index, string key = "code", string gap = "<br>")
         {
             oth_index = -1;
+            if(dt == null) { return ""; }
             //if (_source.Rows.Count) return "";
             string result = "";
             int i = 0;

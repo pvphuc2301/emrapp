@@ -70,14 +70,14 @@ namespace EMR
             {
                 txt_amend_reason.Text = "";
                 WebHelpers.BindDateTimePicker(dpk_discharge_date, surc.discharge_date);
-                txt_preo_diagnosis.Value = surc.preo_diagnosis;
-                txt_name_of_procedure.Value = surc.name_of_procedure;
-                txt_proce_narrative.Value = surc.proce_narrative;
-                txt_blood_type.Value = surc.blood_type;
-                txt_rh.Value = surc.rh;
+                txt_preo_diagnosis.Value = WebHelpers.TextToHtmlTag(surc.preo_diagnosis);
+                txt_name_of_procedure.Value = WebHelpers.TextToHtmlTag(surc.name_of_procedure);
+                txt_proce_narrative.Value = WebHelpers.TextToHtmlTag(surc.proce_narrative);
+                txt_blood_type.Value = WebHelpers.TextToHtmlTag(surc.blood_type);
+                txt_rh.Value = WebHelpers.TextToHtmlTag(surc.rh);
 
-                DataObj.Value = JsonConvert.SerializeObject(surc);
-                Session["docid"] = surc.document_id;
+                //DataObj.Value = JsonConvert.SerializeObject(surc);
+                //Session["docid"] = surc.document_id;
                 WebHelpers.AddScriptFormEdit(Page, surc, (string)Session["emp_id"], loc);
             }
             catch (Exception ex)
@@ -90,11 +90,11 @@ namespace EMR
             try
             {
                 lbl_discharge_date.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(surc.discharge_date));
-                lbl_preo_diagnosis.Text = WebHelpers.FormatString(surc.preo_diagnosis);
-                lbl_name_of_procedure.Text = WebHelpers.FormatString(surc.name_of_procedure);
-                lbl_proce_narrative.Text = WebHelpers.FormatString(surc.proce_narrative);
-                lbl_blood_type.Text = WebHelpers.FormatString(surc.blood_type);
-                lbl_rh.Text = WebHelpers.FormatString(surc.rh);
+                lbl_preo_diagnosis.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surc.preo_diagnosis));
+                lbl_name_of_procedure.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surc.name_of_procedure));
+                lbl_proce_narrative.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surc.proce_narrative));
+                lbl_blood_type.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surc.blood_type));
+                lbl_rh.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surc.rh));
             }
             catch(Exception ex)
             {
@@ -111,18 +111,26 @@ namespace EMR
                 prt_fullname.Text = patientInfo.FullName;
                 prt_dob.Text = WebHelpers.FormatDateTime(patientInfo.date_of_birth);
                 WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
-                prt_gender.Text = WebHelpers.CreateOptions(new Option { Text = "Nam <div class='text-primary'>Male</div>", Value = "Male" }, new Option { Text = "Nữ<div class='text-primary'>Female</div>", Value = "Female" }, patientInfo.gender_e, "display: grid; grid-template-columns: 1fr 1fr; width: 250px");
+
+                if (patientInfo.Gender == "Male" || patientInfo.Gender == "Nam")
+                {
+                    prt_male.Text = "☒";
+                }
+                else if (patientInfo.Gender == "Female" || patientInfo.Gender == "Nữ")
+                {
+                    prt_female.Text = "☒";
+                }
 
                 prt_address.Text = patientInfo.Address;
 
                 prt_admission_date.Text = WebHelpers.FormatDateTime(surc.admission_date);
                 prt_procedure_date.Text = WebHelpers.FormatDateTime(surc.procedure_date);
                 prt_discharge_date.Text = WebHelpers.FormatDateTime(surc.discharge_date);
-                prt_preo_diagnosis.Text = surc.preo_diagnosis;
-                prt_name_of_procedure.Text = surc.name_of_procedure;
-                prt_proce_narrative.Text = surc.proce_narrative;
-                prt_blood_type.Text = surc.blood_type;
-                prt_rh.Text = surc.rh;
+                prt_preo_diagnosis.Text = WebHelpers.TextToHtmlTag(surc.preo_diagnosis);
+                prt_name_of_procedure.Text = WebHelpers.TextToHtmlTag(surc.name_of_procedure);
+                prt_proce_narrative.Text = WebHelpers.TextToHtmlTag(surc.proce_narrative);
+                prt_blood_type.Text = WebHelpers.TextToHtmlTag(surc.blood_type);
+                prt_rh.Text = WebHelpers.TextToHtmlTag(surc.rh);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
             

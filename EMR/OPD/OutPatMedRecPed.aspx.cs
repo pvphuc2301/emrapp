@@ -69,19 +69,19 @@ namespace EMR
                 txt_amend_reason.Text = "";
 
                 // I. Lý do đến khám/ Chief complaint:
-                txt_chief_complaint.Value = pomr.chief_complaint;
+                txt_chief_complaint.Value = WebHelpers.TextToHtmlTag(pomr.chief_complaint);
 
                 // II. Bệnh sử/ Medical History:
                 // 1.Bệnh sử hiện tại / Current Medical History:
-                txt_medical_history.Value = pomr.medical_history;
+                txt_medical_history.Value = WebHelpers.TextToHtmlTag(pomr.medical_history);
 
-                txt_current_medication.Value = pomr.current_medication;
+                txt_current_medication.Value = WebHelpers.TextToHtmlTag(pomr.current_medication);
 
                 // 2.Tiền sử bệnh/ Antecedent Medical History:
-                txt_personal.Value = pomr.personal;
-                txt_family.Value = pomr.family;
+                txt_personal.Value = WebHelpers.TextToHtmlTag(pomr.personal);
+                txt_family.Value = WebHelpers.TextToHtmlTag(pomr.family);
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_allergy_" + pomr.allergy);
-                txt_allergy_note.Value = WebHelpers.GetBool(pomr.allergy, pomr.allergy_note, "");
+                txt_allergy_note.Value = WebHelpers.GetBool(pomr.allergy, WebHelpers.TextToHtmlTag(pomr.allergy_note), "");
 
 
                 // III.Khám bệnh/ Physical Examination:
@@ -98,13 +98,13 @@ namespace EMR
                 vs_spo2.Text = pomr.vs_spO2;
                 vs_pulse.Text = pomr.vs_pulse;
 
-                txt_physical_examination.Value = DataHelpers.FormatPhysicalExamination(pomr.physical_examination);
+                txt_physical_examination.Value = WebHelpers.TextToHtmlTag(pomr.physical_examination);
 
-                txt_laboratory_indications_results.Value = pomr.laboratory_indications_results;
+                txt_laboratory_indications_results.Value = WebHelpers.TextToHtmlTag(pomr.laboratory_indications_results);
                 // V.Kết luận/ Conclusion:
-                txt_initial_diagnosis.Value = pomr.initial_diagnosis;
-                txt_differential_diagnosis.Value = pomr.differential_diagnosis;
-                txt_associated_conditions.Value = pomr.associated_conditions;
+                txt_initial_diagnosis.Value = WebHelpers.TextToHtmlTag(pomr.initial_diagnosis);
+                txt_differential_diagnosis.Value = WebHelpers.TextToHtmlTag(pomr.differential_diagnosis);
+                txt_associated_conditions.Value = WebHelpers.TextToHtmlTag(pomr.associated_conditions);
 
                 // 5.Current medications
                 //Set default value
@@ -113,16 +113,16 @@ namespace EMR
 
                 rad_treatment_code_change(pomr.treatment_code);
 
-                txt_medicine.Value = pomr.medicine;
-                txt_tranfer.Value = pomr.tranfer;
+                txt_medicine.Value = WebHelpers.TextToHtmlTag(pomr.medicine);
+                txt_tranfer.Value = WebHelpers.TextToHtmlTag(pomr.tranfer);
 
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_spec_opinion_requested_" + pomr.spec_opinion_requested);
 
                 if (pomr.spec_opinion_requested == null) { rad_spec_opinion_requested_false.Checked = true; }
 
-                txt_spec_opinion_requested_note.Value = WebHelpers.GetBool(pomr.spec_opinion_requested, pomr.spec_opinion_requested_note, "");
+                txt_spec_opinion_requested_note.Value = WebHelpers.GetBool(pomr.spec_opinion_requested, WebHelpers.TextToHtmlTag(pomr.spec_opinion_requested_note), "");
 
-                txt_specific_education_required.Value = pomr.specific_education_required;
+                txt_specific_education_required.Value = WebHelpers.TextToHtmlTag(pomr.specific_education_required);
 
                 if(pomr.bool_next_appointment != null)
                 {
@@ -133,7 +133,7 @@ namespace EMR
                     }
                     else
                     {
-                        txt_next_appointment.Value = pomr.txt_next_appointment;
+                        txt_next_appointment.Value = WebHelpers.TextToHtmlTag(pomr.txt_next_appointment);
                     }
                 }
                 DataObj.Value = JsonConvert.SerializeObject(pomr);
@@ -151,49 +151,49 @@ namespace EMR
             try
             {
                 //1
-                lbl_chief_complaint.Text = WebHelpers.FormatString(pomr.chief_complaint);
-                lbl_current_medication.Text = WebHelpers.FormatString(pomr.current_medication);
+                lbl_chief_complaint.Text = WebHelpers.TextToHtmlTag(pomr.chief_complaint);
+                lbl_current_medication.Text = WebHelpers.TextToHtmlTag(pomr.current_medication);
                 //2
-                lbl_personal.Text = WebHelpers.FormatString(pomr.personal);
+                lbl_personal.Text = WebHelpers.TextToHtmlTag(pomr.personal);
             
-                lbl_medical_history.Text = WebHelpers.FormatString(pomr.medical_history);
+                lbl_medical_history.Text = WebHelpers.TextToHtmlTag(pomr.medical_history);
 
-                lbl_allergy.Text = WebHelpers.FormatString(WebHelpers.GetBool(pomr.allergy, "Có, ghi rõ/ Yes, specify: " + pomr.allergy_note));
+                lbl_allergy.Text = WebHelpers.TextToHtmlTag(WebHelpers.GetBool(pomr.allergy, "Có, ghi rõ/ Yes, specify: " + pomr.allergy_note));
 
-                lbl_family.Text = WebHelpers.FormatString(pomr.family);
+                lbl_family.Text = WebHelpers.TextToHtmlTag(pomr.family);
                 WebHelpers.VisibleControl(false, btnUpdateVitalSign);
-                vs_temperature.Text = WebHelpers.FormatString(pomr.vs_temperature);
-                vs_weight.Text = WebHelpers.FormatString(pomr.vs_weight);
-                vs_height.Text = WebHelpers.FormatString(pomr.vs_height);
-                vs_bmi.Text = WebHelpers.FormatString(pomr.vs_BMI);
-                vs_pulse.Text = WebHelpers.FormatString(pomr.vs_pulse);
-                vs_heart_rate.Text = WebHelpers.FormatString(pomr.vs_heart_rate);
-                vs_respiratory_rate.Text = WebHelpers.FormatString(pomr.vs_respiratory_rate);
-                vs_blood_pressure.Text = WebHelpers.FormatString(pomr.vs_blood_pressure);
-                vs_spo2.Text = WebHelpers.FormatString(pomr.vs_spO2);
+                vs_temperature.Text = pomr.vs_temperature;
+                vs_weight.Text = pomr.vs_weight;
+                vs_height.Text = pomr.vs_height;
+                vs_bmi.Text = pomr.vs_BMI;
+                vs_pulse.Text = pomr.vs_pulse;
+                vs_heart_rate.Text = pomr.vs_heart_rate;
+                vs_respiratory_rate.Text = pomr.vs_respiratory_rate;
+                vs_blood_pressure.Text = pomr.vs_blood_pressure;
+                vs_spo2.Text = pomr.vs_spO2;
 
-                lbl_physical_examination.Text = DataHelpers.FormatPhysicalExamination(pomr.physical_examination);
+                lbl_physical_examination.Text = WebHelpers.TextToHtmlTag(pomr.physical_examination);
 
                 rad_treatment_code_change(pomr.treatment_code);
                 if (pomr.treatment_code == "OPD")
                 {
-                    lbl_medicine.Text = WebHelpers.FormatString(pomr.medicine);
+                    lbl_medicine.Text = WebHelpers.TextToHtmlTag(pomr.medicine);
                 } else if (pomr.treatment_code == "TRF")
                 {
-                    lbl_tranfer.Text = WebHelpers.FormatString(pomr.tranfer);
+                    lbl_tranfer.Text = WebHelpers.TextToHtmlTag(pomr.tranfer);
                 }
                 
-                lbl_laboratory_indications_results.Text = WebHelpers.FormatString(pomr.laboratory_indications_results);
-                lbl_initial_diagnosis.Text = WebHelpers.FormatString(pomr.initial_diagnosis);
-                lbl_differential_diagnosis.Text = WebHelpers.FormatString(pomr.differential_diagnosis);
-                lbl_associated_conditions.Text = WebHelpers.FormatString(pomr.associated_conditions);
-                lbl_treatment_code.Text = WebHelpers.FormatString(pomr.treatment_desc);
+                lbl_laboratory_indications_results.Text = WebHelpers.TextToHtmlTag(pomr.laboratory_indications_results);
+                lbl_initial_diagnosis.Text = WebHelpers.TextToHtmlTag(pomr.initial_diagnosis);
+                lbl_differential_diagnosis.Text = WebHelpers.TextToHtmlTag(pomr.differential_diagnosis);
+                lbl_associated_conditions.Text = WebHelpers.TextToHtmlTag(pomr.associated_conditions);
+                lbl_treatment_code.Text = WebHelpers.TextToHtmlTag(pomr.treatment_desc);
 
-                lbl_spec_opinion_requested.Text = WebHelpers.FormatString(WebHelpers.GetBool(pomr.spec_opinion_requested, "Có, ghi rõ/ Yes, specify: " + pomr.spec_opinion_requested_note));
+                lbl_spec_opinion_requested.Text = WebHelpers.TextToHtmlTag(WebHelpers.GetBool(pomr.spec_opinion_requested, "Có, ghi rõ/ Yes, specify: " + pomr.spec_opinion_requested_note));
                 
-                lbl_specific_education_required.Text = WebHelpers.FormatString(pomr.specific_education_required);
+                lbl_specific_education_required.Text = WebHelpers.TextToHtmlTag(pomr.specific_education_required);
 
-                lbl_date_next_appointment.Text = WebHelpers.FormatString(WebHelpers.GetBool(pomr.bool_next_appointment, "Calendar<br>" + WebHelpers.FormatDateTime(pomr.date_next_appointment), "Text<br>" + WebHelpers.FormatString(pomr.txt_next_appointment)));
+                lbl_date_next_appointment.Text = WebHelpers.TextToHtmlTag(WebHelpers.GetBool(pomr.bool_next_appointment, "Calendar<br>" + WebHelpers.FormatDateTime(pomr.date_next_appointment), "Text<br>" + pomr.txt_next_appointment));
 
             }
             catch (Exception ex)
@@ -211,10 +211,10 @@ namespace EMR
                 prt_vpid.Text = patientInfo.visible_patient_id;
                 WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
                 prt_day_of_visit.Text = WebHelpers.FormatDateTime(patientVisitInfo.actual_visit_date_time);
-                prt_chief_complaint.Text = pomr.chief_complaint;
-                prt_medical_history.Text = pomr.medical_history;
-                prt_personal.Text = pomr.personal;
-                prt_family.Text = pomr.family;
+                prt_chief_complaint.Text = WebHelpers.TextToHtmlTag(pomr.chief_complaint);
+                prt_medical_history.Text = WebHelpers.TextToHtmlTag(pomr.medical_history);
+                prt_personal.Text = WebHelpers.TextToHtmlTag(pomr.personal);
+                prt_family.Text = WebHelpers.TextToHtmlTag(pomr.family);
 
                 prt_allergy.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, pomr.allergy, "display: grid; grid-template-columns: 1fr 1fr; width: 250px");
 
@@ -225,11 +225,11 @@ namespace EMR
                     if (pomr.allergy)
                     {
                         prt_allergy_note_wrapper.Visible = true;
-                        prt_allergy_note.Text = pomr.allergy_note;
+                        prt_allergy_note.Text = WebHelpers.TextToHtmlTag(pomr.allergy_note);
                     }
                 }
 
-                prt_current_medication.Text = pomr.current_medication;
+                prt_current_medication.Text = WebHelpers.TextToHtmlTag(pomr.current_medication);
                 //IV.
                 //1.
                 prt_vs_temperature.Text = pomr.vs_temperature;
@@ -241,23 +241,23 @@ namespace EMR
                 prt_vs_blood_pressure.Text = pomr.vs_blood_pressure;
                 prt_vs_spO2.Text = pomr.vs_spO2;
                 //2.
-                prt_physical_examination.Text = DataHelpers.FormatPhysicalExamination(pomr.physical_examination);
+                prt_physical_examination.Text = WebHelpers.TextToHtmlTag(pomr.physical_examination);
 
-                prt_laboratory_indications_results.Text = pomr.laboratory_indications_results;
-                prt_initial_diagnosis.Text = pomr.initial_diagnosis;
-                prt_differential_diagnosis.Text = pomr.differential_diagnosis;
-                prt_associated_conditions.Text = pomr.associated_conditions;
+                prt_laboratory_indications_results.Text = WebHelpers.TextToHtmlTag(pomr.laboratory_indications_results);
+                prt_initial_diagnosis.Text = WebHelpers.TextToHtmlTag(pomr.initial_diagnosis);
+                prt_differential_diagnosis.Text = WebHelpers.TextToHtmlTag(pomr.differential_diagnosis);
+                prt_associated_conditions.Text = WebHelpers.TextToHtmlTag(pomr.associated_conditions);
 
                 prt_treatment.Text = WebHelpers.CreateOptions(Omr.TREATMENT_CODE, (string)pomr.treatment_code, "display: grid; grid-template-columns: 1fr 1fr 1fr;");
 
                 if (pomr.treatment_code == "OPD")
                 {
                     prt_medicine.Visible = true;
-                    prt_medicine.Text = pomr.medicine;
+                    prt_medicine.Text = WebHelpers.TextToHtmlTag(pomr.medicine);
                 } else if(pomr.treatment_code == "TRF")
                 {
                     prt_medicine.Visible = true;
-                    prt_medicine.Text = pomr.tranfer;
+                    prt_medicine.Text = WebHelpers.TextToHtmlTag(pomr.tranfer);
                 }
                 else
                 {
@@ -271,7 +271,7 @@ namespace EMR
                     if (pomr.spec_opinion_requested)
                     {
                         prt_spec_opinion_requested_note_wrapper.Visible = true;
-                        prt_spec_opinion_requested_note.Text = pomr.spec_opinion_requested_note;
+                        prt_spec_opinion_requested_note.Text = WebHelpers.TextToHtmlTag(pomr.spec_opinion_requested_note);
                     }
                 }
 

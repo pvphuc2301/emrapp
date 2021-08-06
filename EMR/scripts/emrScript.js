@@ -92,15 +92,14 @@ function loadDocumentList(patientsDocument, pid, callback) {
 }
 
 function loadPID() {
-    console.log("load PID");
-
+    
     let pid = localStorage.getItem('pid');
     let iframe = parent.parent.document.getElementById('formFrame');
 
-    console.log(iframe);
+    
 
     if (!iframe) {
-        console.log("iframe not found");
+        
 
         iframe = document.createElement("iframe");
 
@@ -121,14 +120,13 @@ function closePID() {
     localStorage.removeItem('pid');
     window.location = "http://localhost:4200/Dashboard.aspx";
     
-    console.log('close PID');
+    
 }
 
 function openPID(pid) {
     localStorage.setItem('pid', pid);
     window.location = "http://localhost:4200/emr/Emr.aspx";
 
-    //console.log('open PID');
 }
 
 function addListPID() {

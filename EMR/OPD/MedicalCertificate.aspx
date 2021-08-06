@@ -48,7 +48,7 @@
                                         </div>
                                         <div style="width: 150px; text-align: center; font-size: 11px">
                                             <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
-                                            <asp:Label runat="server" ID="prt_vpid" CssClass="d-block"></asp:Label>
+                                            <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
                                         </div>
                                     </div>
                                     <webUI:Line runat="server" ID="Line" />
@@ -79,7 +79,16 @@
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; margin-bottom: 6px;">
                                             <webUI:PrtRowS1 FontBold="true" FixedWidth="155" Title="Giới tính:" SubTitle="Gender" runat="server" />
-                                            <asp:Label runat="server" ID="prt_gender" />
+                                            <div style='display: grid; grid-template-columns: 1fr 1fr; width: 300px'>
+                                                <div style='display: grid; grid-template-columns: auto 1fr;'>
+                                                    <asp:Label runat="server" ID="prt_male" Text="❏"></asp:Label>
+                                                    <span class='ml-1'>Nam <div class='text-primary'>Male</div></span>
+                                                </div>
+                                                <div style='display: grid; grid-template-columns: auto 1fr;'>
+                                                    <asp:Label runat="server" ID="prt_female" Text="❏"></asp:Label>
+                                                    <span class='ml-1'>Nữ <div class='text-primary'>Female</div></span>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 2fr 1fr; margin-bottom: 6px;">
@@ -134,17 +143,17 @@
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px; margin-bottom: 6px;">
-                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="230" Title="Phương pháp và thuốc điều trị:" SubTitle="Treatment and medications" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="210" Title="Phương pháp và thuốc điều trị:" SubTitle="Treatment and medications" runat="server" />
                                             <asp:Label runat="server" ID="prt_treatment" />
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px; margin-bottom: 6px;">
-                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="230" Title="Thời gian điều trị:" SubTitle="Treatment period" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="210" Title="Thời gian điều trị:" SubTitle="Treatment period" runat="server" />
                                             <asp:Label runat="server" ID="prt_treatment_period" />
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px; margin-bottom: 6px;">
-                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="230" Title="Lời khuyên và theo dõi:" SubTitle="Recommendation and Follow-up" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" FixedWidth="210" Title="Lời khuyên và theo dõi:" SubTitle="Recommendation and Follow-up" runat="server" />
                                             <asp:Label runat="server" ID="prt_recommendation" />
                                         </div>
 

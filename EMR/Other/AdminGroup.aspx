@@ -180,6 +180,16 @@
                                                         CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                     </telerik:GridBoundColumn>
 
+                                                    <telerik:GridTemplateColumn UniqueName="active_authorize" HeaderText="Allow authorize" AllowFiltering="false"
+                                                        Visible="true" ItemStyle-HorizontalAlign="Center" DataType="System.Boolean">
+                                                        <ItemTemplate>
+                                                            <asp:Panel ID="Panel2" runat="server">
+                                                                <asp:CheckBox ID="AllowAccess" runat="server" Text="" AutoPostBack="true" 
+                                                                    OnCheckedChanged="CheckedAccess" Checked='<%#CheckAllow(Eval("active_authorize")) %>' />                                                                
+                                                            </asp:Panel>
+                                                        </ItemTemplate>
+                                                    </telerik:GridTemplateColumn>
+
                                                     <telerik:GridBoundColumn SortExpression="site_rcd" HeaderText="site_rcd" DataField="site_rcd" 
                                                         ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
                                                         CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
@@ -343,6 +353,16 @@
                                                         ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 
                                                         CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                     </telerik:GridBoundColumn>
+
+                                                    <telerik:GridTemplateColumn UniqueName="active_authorize" HeaderText="Allow authorize" AllowFiltering="false"
+                                                        Visible="true" ItemStyle-HorizontalAlign="Center" DataType="System.Boolean">
+                                                        <ItemTemplate>
+                                                            <asp:Panel ID="Panel2" runat="server">
+                                                                <asp:CheckBox ID="AllowAccess" runat="server" Text="" AutoPostBack="true" 
+                                                                    OnCheckedChanged="CheckedAccess" Checked='<%#CheckAllow(Eval("active_authorize")) %>' />                                                                
+                                                            </asp:Panel>
+                                                        </ItemTemplate>
+                                                    </telerik:GridTemplateColumn>
 
                                                     <telerik:GridBoundColumn SortExpression="site_rcd" HeaderText="site_rcd" DataField="site_rcd" 
                                                         ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" 

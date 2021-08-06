@@ -7,137 +7,110 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EMR
+namespace EMR.Report
 {
 
 
-    public partial class PatientSummary
+    public partial class rxHistory
     {
 
         /// <summary>
-        /// form2 control.
+        /// form1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form2;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
-        /// RadScriptManager2 control.
+        /// RadScriptManager1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadScriptManager RadScriptManager2;
+        protected global::Telerik.Web.UI.RadScriptManager RadScriptManager1;
 
         /// <summary>
-        /// Upd control.
+        /// CheckAll control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel Upd;
+        protected global::System.Web.UI.WebControls.RadioButton CheckAll;
 
         /// <summary>
-        /// RadSplitter1 control.
+        /// CheckThis control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadSplitter RadSplitter1;
+        protected global::System.Web.UI.WebControls.RadioButton CheckThis;
 
         /// <summary>
-        /// TopPane control.
+        /// CheckLast control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadPane TopPane;
+        protected global::System.Web.UI.WebControls.RadioButton CheckLast;
 
         /// <summary>
-        /// radGridComplexDoc control.
+        /// CheckOther control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid radGridComplexDoc;
+        protected global::System.Web.UI.WebControls.RadioButton CheckOther;
 
         /// <summary>
-        /// TempDocId control.
+        /// IPD control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField TempDocId;
+        protected global::System.Web.UI.WebControls.CheckBox IPD;
 
         /// <summary>
-        /// RadTreeView1 control.
+        /// OPD control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTreeView RadTreeView1;
+        protected global::System.Web.UI.WebControls.CheckBox OPD;
 
         /// <summary>
-        /// btnRefresh1 control.
+        /// Discharge control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnRefresh1;
+        protected global::System.Web.UI.WebControls.CheckBox Discharge;
 
         /// <summary>
-        /// RadTreeView2 control.
+        /// External_Medication control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTreeView RadTreeView2;
+        protected global::System.Web.UI.WebControls.CheckBox External_Medication;
 
         /// <summary>
-        /// RadTreeView3 control.
+        /// RadGrid1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTreeView RadTreeView3;
-
-        /// <summary>
-        /// RadTreeView4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadTreeView RadTreeView4;
-
-        /// <summary>
-        /// RadSplitBar1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadSplitBar RadSplitBar1;
-
-        /// <summary>
-        /// MainContent control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadPane MainContent;
+        protected global::Telerik.Web.UI.RadGrid RadGrid1;
     }
 }

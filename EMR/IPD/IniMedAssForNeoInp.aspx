@@ -76,7 +76,7 @@
                                             <asp:Label runat="server" ID="prt_fullname" CssClass="d-block"></asp:Label>
                                             <asp:Label runat="server" ID="prt_dob" CssClass="d-block"></asp:Label>
                                             <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
-                                            <asp:Label runat="server" ID="prt_vpid" CssClass="d-block"></asp:Label>
+                                            <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
                                         </div>
                                     </div>
                                     <webUI:Line runat="server" ID="Line" />
@@ -677,7 +677,7 @@
         }
 
         let physical_exam = document.getElementById("lbl_physical_exam").innerText;
-        console.log(physical_exam.replace(/\n/g, "<br />"));
+        
         //document.getElementById("lbl_physical_exam").innerHTML = document.getElementById("lbl_physical_exam").innerText.replace(/\n/g, "<br />");
 
     </script>

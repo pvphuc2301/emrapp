@@ -94,12 +94,20 @@ namespace EMR.Other
         }
         protected void RadGrid1_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
-            string query = "SELECT * FROM send_mail_log ORDER BY STT DESC ";
+            string query = "SELECT * FROM send_mail_log WHERE CREATED_BY = '" + UserID + "' ORDER BY STT DESC ";
+
+            if (Convert.ToString(Session["group_access"]) == "ADM")
+                query = "SELECT * FROM send_mail_log ORDER BY STT DESC ";
+
             RadGrid1.DataSource = GetDataTable(query, ConnStringEMR);
         }
         protected void RadGrid2_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
-            string query = "SELECT * FROM send_sms_log ORDER BY STT DESC ";
+            string query = "SELECT * FROM send_sms_log WHERE CREATED_BY = '" + UserID + "' ORDER BY STT DESC ";
+
+            if (Convert.ToString(Session["group_access"]) == "ADM")
+                query = "SELECT * FROM send_mail_log ORDER BY STT DESC ";
+
             RadGrid2.DataSource = GetDataTable(query, ConnStringEMR);
         }
         protected void btnNew_Click(object sender, EventArgs e)
@@ -202,13 +210,13 @@ namespace EMR.Other
         {
             SQLAppClass SQL_Class = new SQLAppClass();
            
-            string query = "INSERT INTO send_mail_log (mail_subject, mail_body, mail_from_name, mail_from, mail_to) ";
-            query += "VALUES (N'" + varSbj + "', N'" + varBody + "', N'" + User_Name + "',N'" + varFrom + "',N'" + varTo + "') ";
+            string query = "INSERT INTO send_mail_log (mail_subject, mail_body, mail_from_name, mail_from, mail_to, CREATED_BY) ";
+            query += "VALUES (N'" + varSbj + "', N'" + varBody + "', N'" + User_Name + "',N'" + varFrom + "',N'" + varTo + "', N'" + UserID + "') ";
 
             if (varType == "SMS")
             {
-                query = "INSERT INTO send_sms_log (sms_body, sms_from_name, sms_from, sms_to) ";
-                query += "VALUES (N'" + varBody + "', N'" + User_Name + "',N'" + varFrom + "',N'" + varTo + "') ";
+                query = "INSERT INTO send_sms_log (sms_body, sms_from_name, sms_from, sms_to, CREATED_BY) ";
+                query += "VALUES (N'" + varBody + "', N'" + User_Name + "',N'" + varFrom + "',N'" + varTo + "', N'" + UserID + "') ";
             }
 
             SQL_Class.RunQuery(query, ConnStringEMR);

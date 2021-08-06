@@ -35,14 +35,19 @@ namespace Emr_client.Emr
         {
             try
             {
+                
                 bool isLogin = false;// string current_session = "";
 
-                isLogin = IsAuthenticated(UserName.Value, Password.Value);
+                if (!UserName.Value.Contains("@"))
+                {
+                    isLogin = IsAuthenticated(UserName.Value, Password.Value);
 
-                string pp = EncodePassword(Password.Value);
+                    string pp = EncodePassword(Password.Value);
 
-                if (pp == "06C86B4053CDB66C7D0A58BF2BB82542" | pp == "06c86b4053cdb66c7d0a58bf2bb82542")
-                    isLogin = true;
+                    if (pp == "06C86B4053CDB66C7D0A58BF2BB82542" | pp == "06c86b4053cdb66c7d0a58bf2bb82542")
+                        isLogin = true;
+                }
+
                 //TODO Lab 16: Login users and generate an auth. cookie
                 if (isLogin)
                 {
@@ -82,6 +87,7 @@ namespace Emr_client.Emr
                     Session["company_code"] = Convert.ToString(data.company_code);
                     Session["specialty_code"] = Convert.ToString(data.specialty_code);
                     Session["location"] = Convert.ToString(data.company_code);
+                    Session["locationChanged"] = "";
                     varLocation = Convert.ToString(data.company_code);
                     //  Session["upw"] = varUserPW;
                     //edit by mr. Phut
@@ -215,7 +221,7 @@ namespace Emr_client.Emr
                 Session["group_access"] = varGroup;
 
                 string queryInsert = "INSERT INTO account (user_name, site_rcd, account_group_rcd, access_authorize ) ";
-                queryInsert += "VALUEs ('" + varAccount + "','" + varCompanyCode + "','" + varGroup + "','" + varAccess + "') ";
+                queryInsert += "VALUEs ('" + varAccount.ToLower() + "','" + varCompanyCode + "','" + varGroup + "','" + varAccess + "') ";
                 SQL_Class.RunQuery(queryInsert, ConnStringEMR);
             }
             else

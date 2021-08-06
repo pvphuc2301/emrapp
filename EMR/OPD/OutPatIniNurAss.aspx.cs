@@ -185,18 +185,18 @@ namespace EMR
                 
                 //II.
                 //1.
-                txt_chief_complaint.Value = oina.chief_complaint;
+                txt_chief_complaint.Value = WebHelpers.TextToHtmlTag(oina.chief_complaint);
                 //2.
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_allergy_" + oina.allergy);
                 if (rad_allergy_true.Checked)
                 {
-                    txt_allergy_note.Value = oina.allergy_note;
+                    txt_allergy_note.Value = WebHelpers.TextToHtmlTag(oina.allergy_note);
                 }
                 //3.
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_mental_status_" + oina.mental_status);
                 if (rad_mental_status_true.Checked)
                 {
-                    txt_mental_status_note.Value = oina.mental_status_note;
+                    txt_mental_status_note.Value = WebHelpers.TextToHtmlTag(oina.mental_status_note);
                 }
                 //4
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_paint_score_code_" + oina.paint_score_code);
@@ -204,7 +204,7 @@ namespace EMR
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_fall_risk_" + oina.fall_risk);
                 if (rad_fall_risk_true.Checked)
                 {
-                    txt_fall_risk_assistance.Value = oina.fall_risk_assistance;
+                    txt_fall_risk_assistance.Value = WebHelpers.TextToHtmlTag(oina.fall_risk_assistance);
                 }
                 //6.
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_nutrition_status_code_" + oina.nutrition_status_code);
@@ -229,33 +229,33 @@ namespace EMR
         {
             try
             {
-                lbl_fall_risk.Text = WebHelpers.FormatString(WebHelpers.GetBool(oina.fall_risk, $"Có, cung cấp phương tiện hỗ trợ/ Yes, provide assistance: {WebHelpers.FormatString(oina.fall_risk_assistance)}", "Không có nguy cơ/ No risk"));
+                lbl_fall_risk.Text = WebHelpers.GetBool(oina.fall_risk, $"Có, cung cấp phương tiện hỗ trợ/ Yes, provide assistance: {WebHelpers.TextToHtmlTag(oina.fall_risk_assistance)}", "Không có nguy cơ/ No risk");
 
-                lbl_mental_status.Text = WebHelpers.FormatString(WebHelpers.GetBool(oina.mental_status, "Có/ Yes", $"Không, ghi rõ/ No, specify: {WebHelpers.FormatString(oina.mental_status_note)}"));
+                lbl_mental_status.Text = WebHelpers.GetBool(oina.mental_status, "Có/ Yes", $"Không, ghi rõ/ No, specify: {WebHelpers.TextToHtmlTag(oina.mental_status_note)}");
 
-                lbl_paint_score_description.Text = WebHelpers.FormatString(oina.paint_score_description);
+                lbl_paint_score_description.Text = WebHelpers.TextToHtmlTag(oina.paint_score_description);
 
-                lbl_chief_complaint.Text = WebHelpers.FormatString(oina.chief_complaint);
+                lbl_chief_complaint.Text = WebHelpers.TextToHtmlTag(oina.chief_complaint);
 
-                lbl_allergy.Text = WebHelpers.FormatString(WebHelpers.GetBool(oina.allergy, $"Có, ghi rõ/ Yes, specify: {WebHelpers.FormatString(oina.allergy_note)}"));
+                lbl_allergy.Text = WebHelpers.GetBool(oina.allergy, $"Có, ghi rõ/ Yes, specify: {WebHelpers.TextToHtmlTag(oina.allergy_note)}");
                 
-                lbl_mental_status.Text = WebHelpers.FormatString(WebHelpers.GetBool(oina.mental_status, "Có/ Yes", $"Không, ghi rõ/ No, specify: {WebHelpers.FormatString(oina.mental_status_note)}"));
+                lbl_mental_status.Text = WebHelpers.GetBool(oina.mental_status, "Có/ Yes", $"Không, ghi rõ/ No, specify: {WebHelpers.TextToHtmlTag(oina.mental_status_note)}");
 
-                lbl_nutrition_status_description.Text = WebHelpers.FormatString(oina.nutrition_status_description);
+                lbl_nutrition_status_description.Text = WebHelpers.TextToHtmlTag(oina.nutrition_status_description);
 
-                lbl_housing_description.Text = WebHelpers.FormatString(oina.housing_description);
-                lbl_prioritization_description.Text = WebHelpers.FormatString(oina.prioritization_description);
+                lbl_housing_description.Text = WebHelpers.TextToHtmlTag(oina.housing_description);
+                lbl_prioritization_description.Text = WebHelpers.TextToHtmlTag(oina.prioritization_description);
                 //
-                lbl_vs_temperature.Text = WebHelpers.FormatString(oina.vs_temperature) + " °C";
-                lbl_vs_heart_rate.Text = WebHelpers.FormatString(oina.vs_heart_rate) + " /phút (m)";
-                lbl_vs_weight.Text = WebHelpers.FormatString(oina.vs_weight) + " kg";
-                lbl_vs_height.Text = WebHelpers.FormatString(oina.vs_height) + " cm";
-                lbl_vs_respiratory_rate.Text = WebHelpers.FormatString(oina.vs_respiratory_rate) + " / phút (min)";
-                lbl_vs_bmi.Text = WebHelpers.FormatString(oina.vs_BMI) + " (Kg/m <sup>2</sup>)";
-                lbl_vs_blood_pressure.Text = WebHelpers.FormatString(oina.vs_blood_pressure) + " mmHg";
-                lbl_pulse.Text = WebHelpers.FormatString(oina.pulse) + " cm";
-                lbl_vs_spo2.Text = WebHelpers.FormatString(oina.vs_spO2) + " %";
-                lbl_assessment_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(oina.assessment_date_time, "dd-MM-yyyy HH:mm"));
+                lbl_vs_temperature.Text = oina.vs_temperature + " °C";
+                lbl_vs_heart_rate.Text =oina.vs_heart_rate + " /phút (m)";
+                lbl_vs_weight.Text = oina.vs_weight + " kg";
+                lbl_vs_height.Text = oina.vs_height + " cm";
+                lbl_vs_respiratory_rate.Text = oina.vs_respiratory_rate + " / phút (min)";
+                lbl_vs_bmi.Text = oina.vs_BMI + " (Kg/m <sup>2</sup>)";
+                lbl_vs_blood_pressure.Text = oina.vs_blood_pressure + " mmHg";
+                lbl_pulse.Text = oina.pulse + " cm";
+                lbl_vs_spo2.Text = oina.vs_spO2 + " %";
+                lbl_assessment_date_time.Text = WebHelpers.FormatDateTime(oina.assessment_date_time, "dd-MM-yyyy HH:mm");
 
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
@@ -280,15 +280,15 @@ namespace EMR
                 prt_vs_blood_pressure.Text = oina.vs_blood_pressure;
                 prt_vs_spO2.Text = oina.vs_spO2;
 
-                prt_chief_complaint.Text = oina.chief_complaint;
+                prt_chief_complaint.Text = WebHelpers.TextToHtmlTag(oina.chief_complaint);
 
-                prt_allergy.Text = WebHelpers.GetBool(oina.allergy, "Có, ghi rõ/ Yes, specify: " + oina.allergy_note);
+                prt_allergy.Text = WebHelpers.GetBool(oina.allergy, "Có, ghi rõ/ Yes, specify: " + WebHelpers.TextToHtmlTag(oina.allergy_note));
 
-                prt_mental_status.Text = WebHelpers.CreateOptions(new Option { Text = "Có/ Yes", Value = true }, new Option { Text = "Không, ghi rõ/ No, specify: " + oina.mental_status_note, Value = false }, oina.mental_status, "display: grid; grid-template-columns: 80px 1fr");
+                prt_mental_status.Text = WebHelpers.CreateOptions(new Option { Text = "Có/ Yes", Value = true }, new Option { Text = "Không, ghi rõ/ No, specify: " + WebHelpers.TextToHtmlTag(oina.mental_status_note), Value = false }, oina.mental_status, "display: grid; grid-template-columns: 80px 1fr");
 
                 prt_paint_score_code.Text = oina.paint_score_code;
 
-                prt_fall_risk.Text = WebHelpers.GetBool(oina.fall_risk, "Có, cung cấp phương tiện hỗ trợ/ Yes, provide assistance: " + oina.fall_risk_assistance, "Không có nguy cơ/ No risk");
+                prt_fall_risk.Text = WebHelpers.GetBool(oina.fall_risk, "Có, cung cấp phương tiện hỗ trợ/ Yes, provide assistance: " + WebHelpers.TextToHtmlTag(oina.fall_risk_assistance), "Không có nguy cơ/ No risk");
 
                 prt_nutrition_status_code.Text = oina.nutrition_status_description;
 
@@ -296,7 +296,7 @@ namespace EMR
 
                 string signature_date = WebHelpers.FormatDateTime(SignatureDate, "dd-MM-yyyy HH:mm", "");
 
-                prt_prioritization_code.Text = oina.prioritization_description;
+                prt_prioritization_code.Text = WebHelpers.TextToHtmlTag(oina.prioritization_description);
 
                 prt_signature_date.Text = "Ngày/ Date: " + signature_date;
                 prt_signature_name.Text = SignatureName;
@@ -312,7 +312,7 @@ namespace EMR
             {
                 Oina oina = new Oina(varDocID, loc);
                 oina.status = DocumentStatus.FINAL;
-                WebHelpers.RefreshMenu(Page);
+                //WebHelpers.RefreshMenu(Page);
                 UpdateData(oina);
                 WebHelpers.clearSessionDoc(Page, varDocID, loc);
             }
@@ -323,7 +323,7 @@ namespace EMR
             {
                 Oina oina = new Oina(varDocID, loc);
                 oina.status = DocumentStatus.DRAFT;
-                WebHelpers.RefreshMenu(Page);
+                //WebHelpers.RefreshMenu(Page);
                 UpdateData(oina);
             }
         }

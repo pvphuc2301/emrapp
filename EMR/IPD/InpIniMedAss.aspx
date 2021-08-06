@@ -1101,7 +1101,7 @@
 
         function beforeAsyncPostBack() {
             var curtime = new Date();
-            console.log(curtime);
+            
         }
 
         function afterAsyncPostBack() {
@@ -1117,7 +1117,7 @@
 
 
        function RowDblClick(sender, eventArgs) {
-            console.log('sdfsdf');
+            
 
            var grid = $find("<%= RadGrid1.ClientID %>");
            var masterTable = grid.get_masterTableView();
