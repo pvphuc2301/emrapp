@@ -61,8 +61,20 @@
                             <tr>
                                 <td class="report-content-cell">
                                     <div class="main" runat="server" id="print_content">
+                                        
+                                        <div class="d-grid" style="grid-template-columns: 325px 1fr">
+                                            <webUI:Label runat="server" SubTitle="Patient's name" Title="1. Họ tên bệnh nhân:" />
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_FullName" />
+                                           
+                                        </div>
 
-                                        <div class="row mb-2">
+                                        <div class="d-grid" style="grid-template-columns: 325px 1fr">
+                                            
+                                            <webUI:Label runat="server" SubTitle="Admission Date" Title="2. Ngày nhập viện:" />
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_admission_date" />
+                                        </div>
+
+                                        <%--<div class="row mb-2">
                                             <div class="col-5">
                                                 <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">1. Họ tên bệnh nhân:</label>
                                                 <span class="text-primary" style="margin-left: 14.5px;">Patient's name</span>
@@ -72,9 +84,9 @@
                                                     <label class="control-label text-sm-right" style="font-size: 14.5px;" runat="server" id="prt_FullName"></label>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>--%>
 
-                                        <div class="row mb-2">
+                                        <%--<div class="row mb-2">
                                             <div class="col-5">
                                                 <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">2. Ngày nhập viện:</label>
                                                 <span class="text-primary" style="margin-left: 14.5px">Admission Date</span>
@@ -82,9 +94,14 @@
                                             <div class="col-7">
                                                 <label class="control-label text-sm-right" style="font-size: 14.5px;" runat="server" id="prt_admission_date"></label>
                                             </div>
+                                        </div>--%>
+
+                                        <div class="d-grid" style="grid-template-columns: 325px 1fr">
+                                            <webUI:Label runat="server" SubTitle="Procedure Date" Title="3. Ngày phẫu thuật:" />
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_procedure_date" />
                                         </div>
 
-                                        <div class="row mb-2">
+                                        <%--<div class="row mb-2">
                                             <div class="col-5">
                                                 <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">3. Ngày phẫu thuật:</label>
                                                 <span class="text-primary" style="margin-left: 14.5px">Procedure Date</span>
@@ -92,9 +109,21 @@
                                             <div class="col-7">
                                                 <label class="control-label text-sm-right" runat="server" style="font-size: 14.5px;" id="prt_procedure_date"></label>
                                             </div>
+                                        </div>--%>
+
+                                        <div class="d-grid" style="grid-template-columns: 325px 1fr">
+                                            <div>
+                                                <webUI:Label runat="server" SubTitle="Start time" Title="Giờ bắt đầu:" />
+                                                <asp:Label CssClass="align-top" runat="server" ID="prt_start_time" />
+                                            </div>
+                                            <div>
+                                                <webUI:Label runat="server" SubTitle="Finish time" Title="Giờ kết thúc:" />
+                                                <asp:Label CssClass="align-top" runat="server" ID="prt_finish_time" />
+                                            </div>
                                         </div>
+
                                         <div class="row mb-2">
-                                            <div class="col-5" style="margin-left: 10px">
+                                            <%--<div class="col-5" style="margin-left: 10px">
                                                 <div class="row">
                                                     <div class="col-6">
                                                         <label class="d-block mb-0 h4" style="margin-left: 25px; font-size: 14.5px; font-family: Tahoma; font-weight: bold">Giờ bắt đầu:</label>
@@ -105,8 +134,8 @@
                                                     </div>
                                                 </div>
 
-                                            </div>
-                                            <div class="col-6" style="margin-left: -10px">
+                                            </div>--%>
+                                            <%--<div class="col-6" style="margin-left: -10px">
                                                 <div class="row">
                                                     <div class="col-5">
                                                         <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">Giờ kết thúc:</label>
@@ -117,33 +146,31 @@
                                                     </div>
                                                 </div>
 
-                                            </div>
+                                            </div>--%>
                                         </div>
 
-                                        <div class="row mb-2">
-                                            <div class="col-12">
-                                                <div class="row">
-                                                    <div style="width:250px">
-                                                        <label class="d-block h4" style="font-size: 14.5px; font-family: Tahoma;font-weight: bold;margin-left:10px">4. Chẩn đoán trước phẫu thuật:</label>
-                                                        <span class="text-primary" style="margin-left: 25px; font-size: 14.5px;">Preoperative diagnosis</span>
-                                                    </div>
-                                                    <div style="width:470px">
-                                                        <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_preo_diagnosis"></label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-2">
-                                            <div  style="width:250px">
-                                                <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">5. Chẩn đoán sau phẫu thuật:</label>
-                                                <span class="text-primary" style="margin-left: 25px; font-size: 14.5px;">Postoperative diagnosis</span>
-                                            </div>
-                                            <div style="width:470px">
-                                                <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_post_diagnosis"></label>
-                                            </div>
+                                    <div class="d-grid" style="grid-template-columns: 325px 1fr">
+                                        <webUI:Label runat="server" SubTitle="Preoperative diagnosis" Title="4. Chẩn đoán trước phẫu thuật:" />
+                                        <asp:Label CssClass="align-top" runat="server" ID="prt_preo_diagnosis" />
+                                    </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 325px 1fr">
+                                            <webUI:Label runat="server" SubTitle="Postoperative diagnosis" Title="5. Chẩn đoán sau phẫu thuật:" />
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_post_diagnosis" />
                                         </div>
 
-                                        <div class="row mb-2">
+                                        <div class="d-grid" style="grid-template-columns: 325px 1fr">
+                                            <webUI:Label runat="server" SubTitle="Procedure" Title="6. Phương pháp phẫu thuật:" />
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_name_procedure" />
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 325px 1fr">
+                                            <webUI:Label runat="server" SubTitle="Anesthesia" Title="7. Phương pháp vô cảm:" />
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_anesthesia" />
+                                        </div>
+
+
+                                        <%--<div class="row mb-2">
                                             <div  style="width:250px">
                                                 <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">6. Phương pháp phẫu thuật:</label>
                                                 <span class="text-primary" style="margin-left: 25px; font-size: 14.5px">Procedure</span>
@@ -151,9 +178,9 @@
                                             <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_name_procedure"></label>
                                             </div>
-                                        </div>
+                                        </div>--%>
 
-                                        <div class="row mb-2">
+                                        <%--<div class="row mb-2">
                                             <div  style="width:250px">
                                                 <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">7. Phương pháp vô cảm:</label>
                                                 <span class="text-primary" style="margin-left: 25px; font-size: 14.5px">Anesthesia</span>
@@ -161,9 +188,19 @@
                                             <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left:10px" runat="server" id="prt_anesthesia"></label>
                                             </div>
+                                        </div>--%>
+
+                                        <div class="d-grid" style="grid-template-columns: 325px 1fr">
+                                            <webUI:Label runat="server" SubTitle="Surgeon" Title="8. Bác sĩ phẫu thuật:" />
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_surgeon" />
                                         </div>
 
-                                        <div class="row mb-2">
+                                        <div class="d-grid" style="grid-template-columns: 325px 1fr">
+                                            <webUI:Label runat="server" SubTitle="Assistant surgeon" Title="9. Phụ mổ:" />
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_assistant_surgeon" />
+                                        </div>
+
+                                        <%--<div class="row mb-2">
                                             <div  style="width:250px">
                                                 <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">8. Bác sĩ phẫu thuật:</label>
                                                 <span class="text-primary" style="margin-left: 25px; font-size: 14.5px">Surgeon</span>
@@ -171,9 +208,9 @@
                                             <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_surgeon"></label>
                                             </div>
-                                        </div>
+                                        </div>--%>
 
-                                        <div class="row mb-2">
+                                        <%--<div class="row mb-2">
                                             <div  style="width:250px">
                                                 <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">9. Phụ mổ:</label>
                                                 <span class="text-primary" style="margin-left: 25px; font-size: 14.5px">Assistant surgeon</span>
@@ -181,9 +218,20 @@
                                             <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_assistant_surgeon"></label>
                                             </div>
+                                        </div>--%>
+
+                                        <div class="d-grid" style="grid-template-columns: 325px 1fr">
+                                            <webUI:Label runat="server" SubTitle="Anesthesiologist" Title="10. Bác sĩ gây mê:" />
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_anesthesiologist" />
                                         </div>
 
-                                        <div class="row mb-2">
+                                        <div class="d-grid" style="grid-template-columns: 325px 1fr">
+                                            <webUI:Label runat="server" SubTitle="Anesthetic nurse" Title="11. Điều dưỡng gây mê:" />
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_anesthetic_nurse" />
+                                        </div>
+
+
+                                        <%--<div class="row mb-2">
                                             <div  style="width:250px">
                                                 <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">10. Bác sĩ gây mê:</label>
                                                 <span class="text-primary" style="margin-left: 40px; font-size: 14.5px">Anesthesiologist</span>
@@ -192,8 +240,9 @@
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_anesthesiologist"></label>
                                             </div>
 
-                                        </div>
-                                        <div class="row mb-2">
+                                        </div>--%>
+
+                                        <%--<div class="row mb-2">
                                             <div  style="width:250px">
                                                 <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">11. Điều dưỡng gây mê:</label>
                                                 <span class="text-primary" style="margin-left: 40px; font-size: 14.5px">Anesthetic nurse</span>
@@ -201,8 +250,14 @@
                                             <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_anesthetic_nurse"></label>
                                             </div>
+                                        </div>--%>
+
+                                        <div class="d-grid" style="grid-template-columns: 325px 1fr">
+                                            <webUI:Label runat="server" SubTitle="Scrub nurse" Title="12. Điều dưỡng vòng trong:" />
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_scrub_nurse" />
                                         </div>
-                                        <div class="row mb-2">
+
+                                        <%--<div class="row mb-2">
                                             <div  style="width:250px">
                                                 <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">12. Điều dưỡng vòng trong:</label>
                                                 <span class="text-primary" style="margin-left: 40px; font-size: 14.5px">Scrub nurse</span>
@@ -210,8 +265,16 @@
                                             <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_scrub_nurse"></label>
                                             </div>
+                                        </div>--%>
+
+                                        <div class="d-grid" style="grid-template-columns: 325px 1fr">
+                                            <webUI:Label runat="server" SubTitle="Circulating nurse" Title="13. Điều dưỡng vòng ngoài:" />
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_circulating_nurse" />
                                         </div>
-                                        <div class="row mb-2">
+
+
+
+                                        <%--<div class="row mb-2">
                                             <div  style="width:250px">
                                                 <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">13. Điều dưỡng vòng ngoài:</label>
                                                 <span class="text-primary" style="margin-left: 40px; font-size: 14.5px">Circulating nurse</span>
@@ -219,8 +282,14 @@
                                             <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_circulating_nurse"></label>
                                             </div>
+                                        </div>--%>
+
+                                        <div class="d-grid" style="grid-template-columns: 325px 1fr">
+                                            <webUI:Label runat="server" SubTitle="Circulating nurse" Title="14. Ước lượng lượng máu mất:" />
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_estimated_bloodloss" />
                                         </div>
-                                        <div class="row mb-2">
+
+                                        <%--<div class="row mb-2">
                                             <div  style="width:250px">
                                                 <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">14. Ước lượng lượng máu mất:</label>
                                                 <span class="text-primary" style="margin-left: 40px; font-size: 14.5px">Estimated bloodloss</span>
@@ -228,8 +297,16 @@
                                             <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_estimated_bloodloss"></label>
                                             </div>
+                                        </div>--%>
+
+                                        <div class="d-grid" style="grid-template-columns: 325px 1fr">
+                                            <webUI:Label runat="server" SubTitle="Biopsy pathology" Title="15. Giải phẫu bệnh:" />
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_biopsy_pathology" />
                                         </div>
-                                        <div class="row mb-2">
+
+
+
+                                        <%--<div class="row mb-2">
                                             <div  style="width:250px">
                                                 <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">15. Giải phẫu bệnh:</label>
                                                 <span class="text-primary" style="margin-left: 40px; font-size: 14.5px">Biopsy pathology</span>
@@ -237,8 +314,15 @@
                                             <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_biopsy_pathology"></label>
                                             </div>
+                                        </div>--%>
+
+                                        <div class="d-grid" style="grid-template-columns: 325px 1fr">
+                                            <webUI:Label runat="server" SubTitle="Complications" Title="16. Biến chứng:" />
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_complications" />
                                         </div>
-                                        <div class="row mb-2">
+
+
+                                        <%--<div class="row mb-2">
                                             <div  style="width:250px">
                                                 <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold; margin-left:10px">16. Biến chứng:</label>
                                                 <span class="text-primary" style="margin-left: 40px; font-size: 14.5px">Complications</span>
@@ -246,18 +330,29 @@
                                             <div style="width:470px">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_complications"></label>
                                             </div>
+                                        </div>--%>
+
+                                        <div class="d-grid" style="grid-template-columns: 325px 1fr">
+                                            <webUI:Label runat="server" SubTitle="PROCEDURE CHART" Title="LƯỢC ĐỒ PHẪU THUẬT" />
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_procedure_chart" />
                                         </div>
-                                        <div class="row mb-2">
+
+                                        <%--<div class="row mb-2">
                                             <div class="col-12" style="text-align: center">
                                                 <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">LƯỢC ĐỒ PHẪU THUẬT</label>
                                                 <span class="text-primary">PROCEDURE CHART</span>
-
                                             </div>
                                             <div class="col-12">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_procedure_chart"></label>
                                             </div>
+                                        </div>--%>
+
+                                        <div class="d-grid" style="grid-template-columns: 325px 1fr">
+                                            <webUI:Label runat="server" SubTitle="PROCEDURE NARRATIVE" Title="TƯỜNG TRÌNH PHẪU THUẬT" />
+                                            <asp:Label CssClass="align-top" runat="server" ID="prt_procedure_narrative" />
                                         </div>
-                                        <div class="row mb-2">
+
+                                        <%--<div class="row mb-2">
                                             <div class="col-12" style="text-align: center">
                                                 <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">TƯỜNG TRÌNH PHẪU THUẬT</label>
                                                 <span class="text-primary" style="font-size: 14.5px">PROCEDURE NARRATIVE</span>
@@ -265,33 +360,18 @@
                                             <div class="col-12">
                                                 <label class="control-label " style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" id="prt_procedure_narrative"></label>
                                             </div>
-                                        </div>
-                                        <br />
-                                        <div class="row mb-2">
-                                            <div class="col-6">
-                                            </div>
-                                            <div class="col-6 mb-2">
-                                                <div class="col-12" style="text-align: center;">
-                                                    <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma;">
-                                                        Ngày/
-                                            <span class="text-primary" style="font-size: 14.5px">Date:</span>
-                                                        <label runat="server" id="lbl_submited_date"></label>
-                                                    </label>
-                                                </div>
-                                                <div class="col-12" style="text-align: center;">
-                                                    <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma;">Dictated by/<span class="text-primary" style="font-size: 14.5px">(Name,Signature):</span></label>
-                                                </div>
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <div class="col-12" style="text-align: center;">
-                                                    <label class="control-label " style="font-size: 14.5px; font-family: Tahoma;" runat="server" id="prt_signature_doctor"></label>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </div>--%>
 
+                                        <div class="d-grid" style="grid-template-columns: 1fr auto">
+                                            <div></div>
+                                            <div class="text-center">
+                                                <asp:Label CssClass="d-block" runat="server" ID="prt_signature_date" />
+                                                <asp:Label CssClass="d-block" runat="server" ID="Label1" Text="Ngày/ Date" />
+                                                <asp:Label CssClass="d-block" Style="line-height: 10px; margin-bottom: 70px;" runat="server" ID="Label2" Text="Dictated by/ (Name,Signature):" />
+
+                                                <asp:Label  runat="server" ID="prt_signature_name" />
+                                            </div>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>

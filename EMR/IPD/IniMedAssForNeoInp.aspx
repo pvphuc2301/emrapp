@@ -70,9 +70,9 @@
                                         <img src="../images/AIH_PI_FULL.png" />
                                         <div class="header-info-title">
                                             <h4>BỆNH ÁN SƠ SINH NỘI TRÚ</h4>
-                                            <h5 style="font-size:13px;">INITIAL MEDICAL ASSESSMENT FOR NEONATAL INPATIENTS</h5>
+                                            <h5 style="font-size:12.5px;">INITIAL MEDICAL ASSESSMENT FOR NEONATAL INPATIENTS</h5>
                                         </div>
-                                        <div style="width: 150px; text-align: left; font-size: 11px">
+                                        <div style="width: 140px; text-align: left; font-size: 11px">
                                             <asp:Label runat="server" ID="prt_fullname" CssClass="d-block"></asp:Label>
                                             <asp:Label runat="server" ID="prt_dob" CssClass="d-block"></asp:Label>
                                             <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
@@ -278,6 +278,9 @@
                         </asp:Panel>
 
                         <div class="row">
+                            <div class="col-md-12 cssclsNoScreen">
+                                <asp:Label runat="server" ID="lblPid"></asp:Label>
+                            </div>
     <div class="col-lg-12" id="accordionExample">
         <div class="card">
             <div class="card-body collapse show" id="collapsePatientInfo" aria-labelledby="headingPatientInfo">

@@ -1105,6 +1105,7 @@ namespace EMR.IPD
                 if (ogia.status == DocumentStatus.FINAL)
                 {
                     BindingDataForm(ogia, WebHelpers.LoadFormControl(form1, ogia, ControlState.View, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
+                    lblPid.Text = varVPID;
                     BindingDataFormPrint(ogia);
                 }
                 else if (ogia.status == DocumentStatus.DRAFT)

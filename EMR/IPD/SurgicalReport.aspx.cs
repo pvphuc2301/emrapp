@@ -135,32 +135,33 @@ namespace EMR.IPD
 
                 prt_vpid.Text = patientInfo.visible_patient_id;
                 WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
-                prt_FullName.InnerHtml = patientInfo.FullName;
-                prt_admission_date.InnerHtml = WebHelpers.FormatDateTime(patientVisitInfo.actual_visit_date_time);
+                prt_FullName.Text = patientInfo.FullName;
+                prt_admission_date.Text = WebHelpers.FormatDateTime(patientVisitInfo.actual_visit_date_time);
 
-                prt_procedure_date.InnerHtml = WebHelpers.FormatDateTime(surr.procedure_date);
-                prt_start_time.InnerHtml = surr.start_time;
-                prt_finish_time.InnerHtml = surr.finish_time;
-                prt_preo_diagnosis.InnerHtml = WebHelpers.TextToHtmlTag(surr.preo_diagnosis);
-                prt_post_diagnosis.InnerHtml = WebHelpers.TextToHtmlTag(surr.post_diagnosis);
-                prt_name_procedure.InnerHtml = WebHelpers.TextToHtmlTag(surr.name_procedure);
-                prt_anesthesia.InnerHtml = WebHelpers.TextToHtmlTag(surr.anesthesia);
-                prt_surgeon.InnerHtml = WebHelpers.TextToHtmlTag(surr.surgeon);
-                prt_assistant_surgeon.InnerHtml = WebHelpers.TextToHtmlTag(surr.assistant_surgeon);
-                prt_anesthesiologist.InnerHtml = WebHelpers.TextToHtmlTag(surr.anesthesiologist);
-                prt_anesthetic_nurse.InnerHtml = WebHelpers.TextToHtmlTag(surr.anesthetic_nurse);
-                prt_scrub_nurse.InnerHtml = WebHelpers.TextToHtmlTag(surr.scrub_nurse);
-                prt_circulating_nurse.InnerHtml = WebHelpers.TextToHtmlTag(surr.circulating_nurse);
-                prt_estimated_bloodloss.InnerHtml = WebHelpers.TextToHtmlTag(surr.estimated_bloodloss);
-                prt_biopsy_pathology.InnerHtml = WebHelpers.TextToHtmlTag(surr.biopsy_pathology);
-                prt_complications.InnerHtml = WebHelpers.TextToHtmlTag(surr.complications);
-                prt_procedure_chart.InnerHtml = WebHelpers.TextToHtmlTag(surr.procedure_chart);
-                prt_procedure_narrative.InnerHtml = WebHelpers.TextToHtmlTag(surr.procedure_narrative);
+                prt_procedure_date.Text = WebHelpers.FormatDateTime(surr.procedure_date);
+                prt_start_time.Text = surr.start_time;
+                prt_finish_time.Text = surr.finish_time;
+                prt_preo_diagnosis.Text = WebHelpers.TextToHtmlTag(surr.preo_diagnosis);
+                prt_post_diagnosis.Text = WebHelpers.TextToHtmlTag(surr.post_diagnosis);
+                prt_name_procedure.Text = WebHelpers.TextToHtmlTag(surr.name_procedure);
+                prt_anesthesia.Text = WebHelpers.TextToHtmlTag(surr.anesthesia);
+                prt_surgeon.Text = WebHelpers.TextToHtmlTag(surr.surgeon);
+                prt_assistant_surgeon.Text = WebHelpers.TextToHtmlTag(surr.assistant_surgeon);
+                prt_anesthesiologist.Text = WebHelpers.TextToHtmlTag(surr.anesthesiologist);
+                prt_anesthetic_nurse.Text = WebHelpers.TextToHtmlTag(surr.anesthetic_nurse);
+                prt_scrub_nurse.Text = WebHelpers.TextToHtmlTag(surr.scrub_nurse);
+                prt_circulating_nurse.Text = WebHelpers.TextToHtmlTag(surr.circulating_nurse);
+                prt_estimated_bloodloss.Text = WebHelpers.TextToHtmlTag(surr.estimated_bloodloss);
+                prt_biopsy_pathology.Text = WebHelpers.TextToHtmlTag(surr.biopsy_pathology);
+                prt_complications.Text = WebHelpers.TextToHtmlTag(surr.complications);
+                prt_procedure_chart.Text = WebHelpers.TextToHtmlTag(surr.procedure_chart);
+                prt_procedure_narrative.Text = WebHelpers.TextToHtmlTag(surr.procedure_narrative);
 
                 string signature_date = WebHelpers.FormatDateTime(SignatureName, "dd-MM-yyyy", "");
 
-                lbl_submited_date.InnerText = signature_date;
-                prt_signature_doctor.InnerText = SignatureName;
+
+                //lbl_submited_date.Text = signature_date;
+                //prt_signature_doctor.Text = SignatureName;
 
             }
             catch(Exception ex)

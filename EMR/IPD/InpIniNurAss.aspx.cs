@@ -723,7 +723,6 @@ namespace EMR
                 LoadPatientInfo();
                 loadRadGridHistoryLog();
                 
-
                 WebHelpers.setBmi(bmiStr, iina.vs_BMI);
 
                 iina.pain_annotation = WebHelpers.getPainAnnotation(iina.pain_annotation);
@@ -735,6 +734,7 @@ namespace EMR
                 if (iina.status == DocumentStatus.FINAL)
                 {
                     BindingDataForm(iina, WebHelpers.LoadFormControl(form1, iina, ControlState.View, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
+                    lblPid.Text = varVPID;
                     BindingDataFormPrint(iina);
                 }
                 else if (iina.status == DocumentStatus.DRAFT)

@@ -1229,8 +1229,8 @@ namespace EMR.ER
             }
             else if (dt.Rows.Count > 1)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("submited_name_e");
-                last_updated_date_time = dt.Rows[0].Field<DateTime>("submited_date_time");
+                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_e");
+                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
             }
 
             Session["signature_date"] = last_updated_date_time;

@@ -84,7 +84,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_FullName;
+        protected global::System.Web.UI.WebControls.Label prt_FullName;
 
         /// <summary>
         /// prt_admission_date control.
@@ -93,7 +93,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_admission_date;
+        protected global::System.Web.UI.WebControls.Label prt_admission_date;
 
         /// <summary>
         /// prt_procedure_date control.
@@ -102,7 +102,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_procedure_date;
+        protected global::System.Web.UI.WebControls.Label prt_procedure_date;
 
         /// <summary>
         /// prt_start_time control.
@@ -111,7 +111,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_start_time;
+        protected global::System.Web.UI.WebControls.Label prt_start_time;
 
         /// <summary>
         /// prt_finish_time control.
@@ -120,7 +120,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_finish_time;
+        protected global::System.Web.UI.WebControls.Label prt_finish_time;
 
         /// <summary>
         /// prt_preo_diagnosis control.
@@ -129,7 +129,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_preo_diagnosis;
+        protected global::System.Web.UI.WebControls.Label prt_preo_diagnosis;
 
         /// <summary>
         /// prt_post_diagnosis control.
@@ -138,7 +138,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_post_diagnosis;
+        protected global::System.Web.UI.WebControls.Label prt_post_diagnosis;
 
         /// <summary>
         /// prt_name_procedure control.
@@ -147,7 +147,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_name_procedure;
+        protected global::System.Web.UI.WebControls.Label prt_name_procedure;
 
         /// <summary>
         /// prt_anesthesia control.
@@ -156,7 +156,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_anesthesia;
+        protected global::System.Web.UI.WebControls.Label prt_anesthesia;
 
         /// <summary>
         /// prt_surgeon control.
@@ -165,7 +165,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_surgeon;
+        protected global::System.Web.UI.WebControls.Label prt_surgeon;
 
         /// <summary>
         /// prt_assistant_surgeon control.
@@ -174,7 +174,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_assistant_surgeon;
+        protected global::System.Web.UI.WebControls.Label prt_assistant_surgeon;
 
         /// <summary>
         /// prt_anesthesiologist control.
@@ -183,7 +183,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_anesthesiologist;
+        protected global::System.Web.UI.WebControls.Label prt_anesthesiologist;
 
         /// <summary>
         /// prt_anesthetic_nurse control.
@@ -192,7 +192,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_anesthetic_nurse;
+        protected global::System.Web.UI.WebControls.Label prt_anesthetic_nurse;
 
         /// <summary>
         /// prt_scrub_nurse control.
@@ -201,7 +201,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_scrub_nurse;
+        protected global::System.Web.UI.WebControls.Label prt_scrub_nurse;
 
         /// <summary>
         /// prt_circulating_nurse control.
@@ -210,7 +210,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_circulating_nurse;
+        protected global::System.Web.UI.WebControls.Label prt_circulating_nurse;
 
         /// <summary>
         /// prt_estimated_bloodloss control.
@@ -219,7 +219,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_estimated_bloodloss;
+        protected global::System.Web.UI.WebControls.Label prt_estimated_bloodloss;
 
         /// <summary>
         /// prt_biopsy_pathology control.
@@ -228,7 +228,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_biopsy_pathology;
+        protected global::System.Web.UI.WebControls.Label prt_biopsy_pathology;
 
         /// <summary>
         /// prt_complications control.
@@ -237,7 +237,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_complications;
+        protected global::System.Web.UI.WebControls.Label prt_complications;
 
         /// <summary>
         /// prt_procedure_chart control.
@@ -246,7 +246,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_procedure_chart;
+        protected global::System.Web.UI.WebControls.Label prt_procedure_chart;
 
         /// <summary>
         /// prt_procedure_narrative control.
@@ -255,25 +255,43 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_procedure_narrative;
+        protected global::System.Web.UI.WebControls.Label prt_procedure_narrative;
 
         /// <summary>
-        /// lbl_submited_date control.
+        /// prt_signature_date control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lbl_submited_date;
+        protected global::System.Web.UI.WebControls.Label prt_signature_date;
 
         /// <summary>
-        /// prt_signature_doctor control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_signature_doctor;
+        protected global::System.Web.UI.WebControls.Label Label1;
+
+        /// <summary>
+        /// Label2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label2;
+
+        /// <summary>
+        /// prt_signature_name control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_signature_name;
 
         /// <summary>
         /// RadWindowManager control.

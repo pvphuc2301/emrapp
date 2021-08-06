@@ -278,6 +278,7 @@ namespace EMR
                 if (imani.status == DocumentStatus.FINAL)
                 {
                     BindingDataForm(imani, WebHelpers.LoadFormControl(form1, imani, ControlState.View, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
+                    lblPid.Text = varVPID;
                     BindingDataFormPrint(imani);
                 }
                 else if (imani.status == DocumentStatus.DRAFT)

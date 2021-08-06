@@ -103,6 +103,9 @@
                         </asp:Panel>
 
                         <div class="row">
+                            <div class="col-md-12 cssclsNoScreen">
+                                <asp:Label runat="server" ID="lblPid"></asp:Label>
+                            </div>
     <div class="col-lg-12" id="accordionExample">
         <div class="card">
             <div class="card-body collapse show" id="collapsePatientInfo" aria-labelledby="headingPatientInfo">

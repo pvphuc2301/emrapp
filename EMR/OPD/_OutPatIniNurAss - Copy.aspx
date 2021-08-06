@@ -446,7 +446,7 @@
                                                     <label class="control-label mb-1 mr-2">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
                                                     <asp:Label runat="server" ID="lbl_vs_blood_pressure" />
                                                     <div class="form-group d-inline-block" runat="server" id="vs_blood_pressure_wrapper">
-                                                        <input  id="txt_vs_blood_pressure" data-type="number1" style="width: 160px" runat="server" class="form-control text-right" />
+                                                        <input  id="txt_vs_blood_pressure" style="width: 160px" runat="server" class="form-control text-right" />
                                                         <span class="append">mmHg</span>
                                                     </div>
                                                 </div>
