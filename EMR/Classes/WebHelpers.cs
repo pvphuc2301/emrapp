@@ -437,8 +437,8 @@ namespace EMR
 
         internal static string TextToHtmlTag(string value, bool check = true)
         {
-            //if (!string.IsNullOrEmpty(value))
-            //{
+            if (!string.IsNullOrEmpty(value))
+            {
                 value = value.Replace("\n", "<br>");
 
             //    if (!check)
@@ -447,8 +447,8 @@ namespace EMR
             //        value = value.Replace("</font>", "");
             //    }
 
-            //    return value;
-            //}
+                return value;
+            }
             return value;
         }
 

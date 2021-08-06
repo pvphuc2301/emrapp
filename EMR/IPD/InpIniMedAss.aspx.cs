@@ -174,148 +174,148 @@ namespace EMR
         {
             try
             {
-                prt_dob.Text = WebHelpers.FormatDateTime(patientInfo.date_of_birth) + " | " + patientInfo.Gender;
-                prt_vpid.Text = patientInfo.visible_patient_id;
-                WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
-                prt_chief_complaint.Text = WebHelpers.TextToHtmlTag(iima.chief_complaint);
-                prt_cur_med_history.Text = WebHelpers.TextToHtmlTag(iima.cur_med_history);
-                prt_cur_medication.Text = WebHelpers.TextToHtmlTag(iima.cur_medication);
-                prt_personal.Text = WebHelpers.TextToHtmlTag(iima.personal);
-                if (iima.habits_smoking != null)
-                {
-                    if (iima.habits_smoking = true)
-                    {
-                        prt_habits_smoking_True.Text = "☒";
-                        prt_habits_smoking_False.Text = "❏";
-                    }
-                    if (iima.habits_smoking = false)
-                    {
-                        prt_habits_smoking_True.Text = "❏";
-                        prt_habits_smoking_False.Text = "☒";
-                    }
-                }
-                if (iima.habits_smoking == null)
-                {
-                    prt_habits_smoking_True.Text = "❏";
-                    prt_habits_smoking_False.Text = "❏";
-                }
-                lbl_habits_smoking_pack.Text = iima.habits_smoking_pack;
-                if (iima.habits_alcohol != null)
-                {
-                    if (iima.habits_alcohol = true)
-                    {
-                        prt_habits_alcohol_True.Text = "☒";
-                        prt_habits_alcohol_False.Text = "❏";
-                    }
-                    if (iima.habits_alcohol = false)
-                    {
-                        prt_habits_alcohol_True.Text = "❏";
-                        prt_habits_alcohol_False.Text = "☒";
-                    }
-                }
-                if (iima.habits_alcohol == null)
-                {
-                    prt_habits_alcohol_True.Text = "❏";
-                    prt_habits_alcohol_False.Text = "❏";
-                }
-                prt_habits_alcohol_note.Text = iima.habits_alcohol_note;
-                if (iima.habits_drugs != null)
-                {
-                    if (iima.habits_drugs = true)
-                    {
-                        prt_habits_drugs_True.Text = "☒";
-                        prt_habits_drugs_False.Text = "❏";
-                    }
-                    if (iima.habits_drugs = false)
-                    {
-                        prt_habits_drugs_True.Text = "❏";
-                        prt_habits_drugs_False.Text = "☒";
-                    }
-                }
-                if (iima.habits_drugs == null)
-                {
-                    prt_habits_drugs_True.Text = "❏";
-                    prt_habits_drugs_False.Text = "❏";
-                }
-                prt_habits_drugs_note.Text = iima.habits_drugs_note;
-                if (iima.habits_physical_exercise != null)
-                {
-                    if (iima.habits_physical_exercise = true)
-                    {
-                        prt_habits_physical_exercise_True.Text = "☒";
-                        prt_habits_physical_exercise_False.Text = "❏";
-                    }
-                    if (iima.habits_drugs = false)
-                    {
-                        prt_habits_physical_exercise_True.Text = "❏";
-                        prt_habits_physical_exercise_False.Text = "☒";
-                    }
-                }
-                if (iima.habits_drugs == null)
-                {
-                    prt_habits_physical_exercise_True.Text = "❏";
-                    prt_habits_physical_exercise_False.Text = "❏";
-                }
-                prt_habits_phy_exer_note.Text = iima.habits_phy_exer_note;
-                prt_habits_other.Text = iima.habits_other;
-                if (iima.allergy != null)
-                {
-                    if (iima.allergy = true)
-                    {
-                        prt_allergy_True.Text = "☒";
-                        prt_allergy_False.Text = "❏";
-                    }
-                    if (iima.allergy = false)
-                    {
-                        prt_allergy_True.Text = "❏";
-                        prt_allergy_False.Text = "☒";
-                    }
-                }
-                if (iima.allergy == null)
-                {
-                    prt_allergy_True.Text = "❏";
-                    prt_allergy_False.Text = "❏";
-                }
-                prt_allergy_note.Text = WebHelpers.TextToHtmlTag(iima.allergy_note);
-                prt_family.Text = WebHelpers.TextToHtmlTag(iima.family);
-                prt_immunization.Text = WebHelpers.TextToHtmlTag(iima.immunization);
-                prt_vs_temperature.Text = iima.vs_temperature;
-                prt_vs_heart_rate.Text = iima.vs_heart_rate;
-                prt_vs_weight.Text = iima.vs_weight;
-                prt_vs_height.Text = iima.vs_height;
-                prt_vs_respiratory_rate.Text = iima.vs_respiratory_rate;
-                prt_vs_BMI.Text = iima.vs_BMI;
-                prt_vs_blood_pressure.Text = iima.vs_blood_pressure;
-                prt_vs_spO2.Text = iima.vs_spO2;
-                //prt_vs_pulse.Text = iima.vs_pulse;
-                prt_physical_exam.Text = WebHelpers.TextToHtmlTag(iima.physical_exam);
-                if (iima.psy_consul_required != null)
-                {
-                    if (iima.psy_consul_required = true)
-                    {
-                        prt_psy_consul_required_True.Text = "☒";
-                        prt_psy_consul_required_False.Text = "❏";
-                    }
-                    if (iima.psy_consul_required = false)
-                    {
-                        prt_psy_consul_required_True.Text = "❏";
-                        prt_psy_consul_required_False.Text = "☒";
-                    }
-                }
-                if (iima.psy_consul_required == null)
-                {
-                    prt_psy_consul_required_True.Text = "❏";
-                    prt_psy_consul_required_False.Text = "❏";
-                }
+                //prt_dob.Text = WebHelpers.FormatDateTime(patientInfo.date_of_birth) + " | " + patientInfo.Gender;
+                //prt_vpid.Text = patientInfo.visible_patient_id;
+                //WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
+                //prt_chief_complaint.Text = WebHelpers.TextToHtmlTag(iima.chief_complaint);
+                //prt_cur_med_history.Text = WebHelpers.TextToHtmlTag(iima.cur_med_history);
+                //prt_cur_medication.Text = WebHelpers.TextToHtmlTag(iima.cur_medication);
+                //prt_personal.Text = WebHelpers.TextToHtmlTag(iima.personal);
+                //if (iima.habits_smoking != null)
+                //{
+                //    if (iima.habits_smoking = true)
+                //    {
+                //        prt_habits_smoking_True.Text = "☒";
+                //        prt_habits_smoking_False.Text = "❏";
+                //    }
+                //    if (iima.habits_smoking = false)
+                //    {
+                //        prt_habits_smoking_True.Text = "❏";
+                //        prt_habits_smoking_False.Text = "☒";
+                //    }
+                //}
+                //if (iima.habits_smoking == null)
+                //{
+                //    prt_habits_smoking_True.Text = "❏";
+                //    prt_habits_smoking_False.Text = "❏";
+                //}
+                //lbl_habits_smoking_pack.Text = iima.habits_smoking_pack;
+                //if (iima.habits_alcohol != null)
+                //{
+                //    if (iima.habits_alcohol = true)
+                //    {
+                //        prt_habits_alcohol_True.Text = "☒";
+                //        prt_habits_alcohol_False.Text = "❏";
+                //    }
+                //    if (iima.habits_alcohol = false)
+                //    {
+                //        prt_habits_alcohol_True.Text = "❏";
+                //        prt_habits_alcohol_False.Text = "☒";
+                //    }
+                //}
+                //if (iima.habits_alcohol == null)
+                //{
+                //    prt_habits_alcohol_True.Text = "❏";
+                //    prt_habits_alcohol_False.Text = "❏";
+                //}
+                //prt_habits_alcohol_note.Text = iima.habits_alcohol_note;
+                //if (iima.habits_drugs != null)
+                //{
+                //    if (iima.habits_drugs = true)
+                //    {
+                //        prt_habits_drugs_True.Text = "☒";
+                //        prt_habits_drugs_False.Text = "❏";
+                //    }
+                //    if (iima.habits_drugs = false)
+                //    {
+                //        prt_habits_drugs_True.Text = "❏";
+                //        prt_habits_drugs_False.Text = "☒";
+                //    }
+                //}
+                //if (iima.habits_drugs == null)
+                //{
+                //    prt_habits_drugs_True.Text = "❏";
+                //    prt_habits_drugs_False.Text = "❏";
+                //}
+                //prt_habits_drugs_note.Text = iima.habits_drugs_note;
+                //if (iima.habits_physical_exercise != null)
+                //{
+                //    if (iima.habits_physical_exercise = true)
+                //    {
+                //        prt_habits_physical_exercise_True.Text = "☒";
+                //        prt_habits_physical_exercise_False.Text = "❏";
+                //    }
+                //    if (iima.habits_drugs = false)
+                //    {
+                //        prt_habits_physical_exercise_True.Text = "❏";
+                //        prt_habits_physical_exercise_False.Text = "☒";
+                //    }
+                //}
+                //if (iima.habits_drugs == null)
+                //{
+                //    prt_habits_physical_exercise_True.Text = "❏";
+                //    prt_habits_physical_exercise_False.Text = "❏";
+                //}
+                //prt_habits_phy_exer_note.Text = iima.habits_phy_exer_note;
+                //prt_habits_other.Text = iima.habits_other;
+                //if (iima.allergy != null)
+                //{
+                //    if (iima.allergy = true)
+                //    {
+                //        prt_allergy_True.Text = "☒";
+                //        prt_allergy_False.Text = "❏";
+                //    }
+                //    if (iima.allergy = false)
+                //    {
+                //        prt_allergy_True.Text = "❏";
+                //        prt_allergy_False.Text = "☒";
+                //    }
+                //}
+                //if (iima.allergy == null)
+                //{
+                //    prt_allergy_True.Text = "❏";
+                //    prt_allergy_False.Text = "❏";
+                //}
+                //prt_allergy_note.Text = WebHelpers.TextToHtmlTag(iima.allergy_note);
+                //prt_family.Text = WebHelpers.TextToHtmlTag(iima.family);
+                //prt_immunization.Text = WebHelpers.TextToHtmlTag(iima.immunization);
+                //prt_vs_temperature.Text = iima.vs_temperature;
+                //prt_vs_heart_rate.Text = iima.vs_heart_rate;
+                //prt_vs_weight.Text = iima.vs_weight;
+                //prt_vs_height.Text = iima.vs_height;
+                //prt_vs_respiratory_rate.Text = iima.vs_respiratory_rate;
+                //prt_vs_BMI.Text = iima.vs_BMI;
+                //prt_vs_blood_pressure.Text = iima.vs_blood_pressure;
+                //prt_vs_spO2.Text = iima.vs_spO2;
+                ////prt_vs_pulse.Text = iima.vs_pulse;
+                //prt_physical_exam.Text = WebHelpers.TextToHtmlTag(iima.physical_exam);
+                //if (iima.psy_consul_required != null)
+                //{
+                //    if (iima.psy_consul_required = true)
+                //    {
+                //        prt_psy_consul_required_True.Text = "☒";
+                //        prt_psy_consul_required_False.Text = "❏";
+                //    }
+                //    if (iima.psy_consul_required = false)
+                //    {
+                //        prt_psy_consul_required_True.Text = "❏";
+                //        prt_psy_consul_required_False.Text = "☒";
+                //    }
+                //}
+                //if (iima.psy_consul_required == null)
+                //{
+                //    prt_psy_consul_required_True.Text = "❏";
+                //    prt_psy_consul_required_False.Text = "❏";
+                //}
 
-                prt_laboratory_result.Text = WebHelpers.TextToHtmlTag(iima.laboratory_result);
-                //prt_add_investigation.Text = iima.add_investigation;
-                prt_initial_diagnosis.Text = WebHelpers.TextToHtmlTag(iima.initial_diagnosis);
-                //prt_diagnosis.Text = iima.diagnosis;
-                prt_diff_diagnosis.Text = WebHelpers.TextToHtmlTag(iima.diff_diagnosis);
-                prt_associated_conditions.Text = WebHelpers.TextToHtmlTag(iima.associated_conditions);
-                prt_treatment_plan.Text = WebHelpers.TextToHtmlTag(iima.treatment_plan);
-                prt_discharge_plan.Text = WebHelpers.TextToHtmlTag(iima.discharge_plan);
+                //prt_laboratory_result.Text = WebHelpers.TextToHtmlTag(iima.laboratory_result);
+                ////prt_add_investigation.Text = iima.add_investigation;
+                //prt_initial_diagnosis.Text = WebHelpers.TextToHtmlTag(iima.initial_diagnosis);
+                ////prt_diagnosis.Text = iima.diagnosis;
+                //prt_diff_diagnosis.Text = WebHelpers.TextToHtmlTag(iima.diff_diagnosis);
+                //prt_associated_conditions.Text = WebHelpers.TextToHtmlTag(iima.associated_conditions);
+                //prt_treatment_plan.Text = WebHelpers.TextToHtmlTag(iima.treatment_plan);
+                //prt_discharge_plan.Text = WebHelpers.TextToHtmlTag(iima.discharge_plan);
 
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
@@ -444,6 +444,7 @@ LoadVitalSigns(vs);
                 if (iima.status == DocumentStatus.FINAL)
                 {
                     BindingDataForm(iima, WebHelpers.LoadFormControl(form1, iima, ControlState.View, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
+                    lblPid.Text = varVPID;
                     BindingDataFormPrint(iima);
                 }
                 else if (iima.status == DocumentStatus.DRAFT)

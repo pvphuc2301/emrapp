@@ -597,20 +597,10 @@
                 canvas.width = 500;
                 ctx.strokeStyle = "red";
 
-                
-
                 let img1 = new Image();
 
                 img1.onload = function () {
                     ctx.drawImage(img1, 0, 0);
-
-                    ctx.beginPath();
-                    ctx.moveTo(119, 220);
-                    ctx.lineTo(119, 220);
-                    ctx.lineWidth = 3;
-                    ctx.strokeStyle = '#ff0000';
-                    ctx.lineCap = 'round';
-                    ctx.stroke();
                 }
 
                 img1.src = document.getElementById("image1").src;

@@ -1996,14 +1996,6 @@
 
                 img1.onload = function () {
                     ctx.drawImage(img1, 0, 0);
-
-                    ctx.beginPath();
-                    ctx.moveTo(119, 220);
-                    ctx.lineTo(119, 220);
-                    ctx.lineWidth = 3;
-                    ctx.strokeStyle = '#ff0000';
-                    ctx.lineCap = 'round';
-                    ctx.stroke();
                 }
 
             img1.src = document.getElementById("skin_anno_data_base64").value;
@@ -2136,7 +2128,6 @@
 
                         let his = JSON.stringify(history);
                         
-
                         let img = document.getElementById("image1");
                         
                         img.src = this.canvas;

@@ -3576,14 +3576,6 @@ applicable for children and pregnant</span>)
 
             pain_annotation_img.onload = function () {
                 ctx.drawImage(pain_annotation_img, 0, 0);
-
-                ctx.beginPath();
-                ctx.moveTo(119, 220);
-                ctx.lineTo(119, 220);
-                ctx.lineWidth = 3;
-                ctx.strokeStyle = '#ff0000';
-                ctx.lineCap = 'round';
-                ctx.stroke();
             }
 
             //pain_annotation_img.src = document.getElementById("pain_annotation_img").src;
@@ -3713,14 +3705,6 @@ applicable for children and pregnant</span>)
 
             skin_anno_data_img.onload = function () {
                 ctx.drawImage(skin_anno_data_img, 0, 0);
-
-                ctx.beginPath();
-                ctx.moveTo(119, 220);
-                ctx.lineTo(119, 220);
-                ctx.lineWidth = 3;
-                ctx.strokeStyle = '#ff0000';
-                ctx.lineCap = 'round';
-                ctx.stroke();
             }
 
             skin_anno_data_img.src = document.getElementById("skin_anno_data_base64").value;

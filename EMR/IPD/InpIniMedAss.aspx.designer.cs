@@ -78,15 +78,6 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_vpid;
 
         /// <summary>
-        /// print_content control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl print_content;
-
-        /// <summary>
         /// prt_chief_complaint control.
         /// </summary>
         /// <remarks>
@@ -553,6 +544,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ValidationSummary valSum;
+
+        /// <summary>
+        /// lblPid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPid;
 
         /// <summary>
         /// lblFirstName control.
