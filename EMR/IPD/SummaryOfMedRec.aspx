@@ -61,8 +61,8 @@
                                 <td class="report-content-cell">
                                     <div class="main" runat="server" id="print_content">
 
-                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr">
-                                            <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px;">
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 6px;">
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
                                                 <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" FixedLeft="13" Title="Từ ngày/ " SubTitle="From:" runat="server" />
                                                 <div>
                                                     <asp:Label runat="server" ID="prt_form_date"></asp:Label>
@@ -77,7 +77,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px;">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px; margin-bottom: 6px;">
                                             <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" FixedLeft="13" Title="Khoa/ " SubTitle="Department:" runat="server" />
                                             <div>
 
@@ -86,7 +86,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px;">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px; margin-bottom: 6px;">
                                             <webUI:PrtRowS1 FontBold="true" FixedLeft="13" CssClass="text-inline" Title="Lý do nhập viện/ " SubTitle="Chief complaint:" runat="server" />
                                             <div>
 
@@ -94,7 +94,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px;">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px; margin-bottom: 6px;">
                                             <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" FixedLeft="13" Title="Chẩn đoán/ " SubTitle="Diagnosis:" runat="server" />
                                             <div>
 
@@ -102,28 +102,43 @@
                                             </div>
                                         </div>
 
-                                        <webUI:PrtRowS1 FontBold="true" Order="1." CssClass="text-inline" Title="Diễn biến lâm sàng trong đợt điều trị/ " SubTitle="Clinical Evolution:" runat="server" />
-                                        <div style="margin-left: 13px;">
+                                        <div style=" margin-bottom: 6px;">
+                                            <webUI:PrtRowS1 FontBold="true" Order="1." CssClass="text-inline" Title="Diễn biến lâm sàng trong đợt điều trị/ " SubTitle="Clinical Evolution:" runat="server" />
+                                        </div>
+                                        
+                                        <div style="margin-left: 13px; margin-bottom: 6px;">
                                             <asp:Label runat="server" ID="prt_clinical_evolution"></asp:Label>
                                         </div>
 
-                                        <webUI:PrtRowS1 FontBold="true" Order="2." CssClass="text-inline" Title="KQ xét nghiệm cận lâm sàng/ " SubTitle="Results of para clinical tests:" runat="server" />
-                                        <div style="margin-left: 13px;">
+                                        <div style="margin-bottom: 6px;">
+                                            <webUI:PrtRowS1 FontBold="true" Order="2." CssClass="text-inline" Title="KQ xét nghiệm cận lâm sàng/ " SubTitle="Results of para clinical tests:" runat="server" />
+                                        </div>
+                                            
+                                        <div style="margin-left: 13px; margin-bottom: 6px;">
                                             <asp:Label runat="server" ID="prt_result_para_clinical"></asp:Label>
                                         </div>
 
-                                        <webUI:PrtRowS1 FontBold="true" Order="3." CssClass="text-inline" Title="Quá trình điều trị/ " SubTitle="Treatment:" runat="server" />
-                                        <div style="margin-left: 13px;">
+                                        <div style="margin-bottom: 6px;">
+                                            <webUI:PrtRowS1 FontBold="true" Order="3." CssClass="text-inline" Title="Quá trình điều trị/ " SubTitle="Treatment:" runat="server" />
+                                        </div>
+
+                                        <div style="margin-left: 13px; margin-bottom: 6px;">
                                             <asp:Label runat="server" ID="prt_treatment"></asp:Label>
                                         </div>
 
-                                        <webUI:PrtRowS1 FontBold="true" Order="4." CssClass="text-inline" Title="Đánh giá kết quả/ " SubTitle="Evaluation of treatment:" runat="server" />
-                                        <div style="margin-left: 13px;">
+                                        <div style="margin-bottom: 6px;">
+                                            <webUI:PrtRowS1 FontBold="true" Order="4." CssClass="text-inline" Title="Đánh giá kết quả/ " SubTitle="Evaluation of treatment:" runat="server" />
+                                        </div>
+
+                                        <div style="margin-left: 13px; margin-bottom: 6px;">
                                             <asp:Label runat="server" ID="prt_eval_treatment"></asp:Label>
                                         </div>
 
-                                        <webUI:PrtRowS1 FontBold="true" Order="5." CssClass="text-inline" Title="Hướng dẫn điều trị tiếp và tiên lượng/ " SubTitle="Continuous treatment and prognosis:" runat="server" />
-                                        <div style="margin-left: 13px;">
+                                        <div style="margin-bottom: 6px;">
+                                            <webUI:PrtRowS1 FontBold="true" Order="5." CssClass="text-inline" Title="Hướng dẫn điều trị tiếp và tiên lượng/ " SubTitle="Continuous treatment and prognosis:" runat="server" />
+                                        </div>
+                                        
+                                        <div style="margin-left: 13px;margin-bottom: 6px;">
                                             <asp:Label runat="server" ID="prt_treatment_prognosis"></asp:Label>
                                         </div>
 

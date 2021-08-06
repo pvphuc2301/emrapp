@@ -379,6 +379,19 @@ namespace EMR
             }
         }
 
+        internal static string GetLogLastName(object v1, object v2)
+        {
+           return string.IsNullOrEmpty(Convert.ToString(v1)) ? Convert.ToString(v2) : Convert.ToString(v1);
+        }
+
+        internal static string GetLogLastDateTime(object v1, object v2)
+        {
+            string created_date_time = Convert.ToString(v1);
+            string modified_date_time = Convert.ToString(v2);
+
+            return string.IsNullOrEmpty(modified_date_time) ? created_date_time : modified_date_time;
+        }
+
         internal static void RefreshMenu(Page page)
         {
             ScriptManager.RegisterStartupScript(page, page.GetType(), "refresh_menu", "setTimeout(()=> { RefreshClick(); },0);", true);

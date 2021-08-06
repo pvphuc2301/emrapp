@@ -1314,7 +1314,7 @@
                                                                 <Columns>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
-                                                                            <div style="width: 105px" class="pt-2 pb-2">Ngày/ <span class="text-primary">Date</span> - Giờ/ <span class="text-primary">hour</span></div>
+                                                                            <div style="width: 75px" class="pt-2 pb-2">Ngày/ <span class="text-primary">Date</span> - Giờ/ <span class="text-primary">hour</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <div class="form-group">
@@ -1326,7 +1326,7 @@
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
-                                                                            <div style="width: 220px">Phương pháp phẫu thuật và vô cảm/ <span class="text-primary">Surgical and Anesthesia methods</span></div>
+                                                                            <div style="width: 180px">Phương pháp phẫu thuật và vô cảm/ <span class="text-primary">Surgical and Anesthesia methods</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <webUI:TextField Value='<%#Eval("surgical_anesthesia") %>' ID="surgical_anesthesia" runat="server" />
@@ -1334,7 +1334,7 @@
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
-                                                                            <div style="width: 180px">Phẫu thuật viên/ <span class="text-primary">Surgeon</span></div>
+                                                                            <div style="width: 165px">Phẫu thuật viên/ <span class="text-primary">Surgeon</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <webUI:TextField Value='<%#Eval("surgeon") %>' ID="surgeon" runat="server" />
@@ -1342,7 +1342,7 @@
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
-                                                                            <div style="width: 210px">Bác sĩ gây mê/ <span class="text-primary">Anesthesiologist</span></div>
+                                                                            <div style="width: 165px">Bác sĩ gây mê/ <span class="text-primary">Anesthesiologist</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <webUI:TextField Value='<%#Eval("anesthesiologist") %>' ID="anesthesiologist" runat="server" />

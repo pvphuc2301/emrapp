@@ -157,11 +157,11 @@ namespace EMR.IPD
                 prt_procedure_chart.Text = WebHelpers.TextToHtmlTag(surr.procedure_chart);
                 prt_procedure_narrative.Text = WebHelpers.TextToHtmlTag(surr.procedure_narrative);
 
-                string signature_date = WebHelpers.FormatDateTime(SignatureName, "dd-MM-yyyy", "");
+                string signature_date = "Ngày/ Date: " + WebHelpers.FormatDateTime(SignatureDate, "dd-MM-yyyy", "");
 
-
-                //lbl_submited_date.Text = signature_date;
-                //prt_signature_doctor.Text = SignatureName;
+                prt_signature_date.Text = signature_date;
+                prt_signature_name.Text = SignatureName;
+                
 
             }
             catch(Exception ex)
@@ -303,35 +303,25 @@ namespace EMR.IPD
         private void loadRadGridHistoryLog()
         {
             DataTable dt = Surr.Logs(varDocID, loc);
-            RadGrid1.DataSource = dt;
+            
             string last_updated_date_time = "";
             string last_updated_doctor = "";
 
-            if (dt.Rows.Count == 1)
+            if (dt != null)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("created_name_e");
+                RadGrid1.DataSource = dt;
+            
+                last_updated_date_time = WebHelpers.GetLogLastDateTime(dt.Rows[dt.Rows.Count - 1]["created_date_time"], dt.Rows[dt.Rows.Count - 1]["modified_date_time"]);
 
-                WebHelpers.ConvertDateTime(dt.Rows[0].Field<DateTime>("created_date_time"), out bool isValid, out last_updated_date_time);
-
-                if (isValid)
-                {
-                    SignatureDate = last_updated_date_time;
-                }
-            }
-            else if (dt.Rows.Count > 1)
-            {
-                last_updated_doctor = dt.Rows[0].Field<string>("submited_name_e");
-                WebHelpers.ConvertDateTime(dt.Rows[0].Field<DateTime>("created_date_time"), out bool isValid, out last_updated_date_time);
-
-                if (isValid)
-                {
-                    SignatureDate = last_updated_date_time;
-                }
+                last_updated_doctor = WebHelpers.GetLogLastName(dt.Rows[dt.Rows.Count - 1]["created_name_e"], dt.Rows[dt.Rows.Count - 1]["modified_name_e"]);
             }
 
             SignatureDate = last_updated_date_time;
             SignatureName = last_updated_doctor;
-            RadLabel1.Text = $"Last updated by <i>{last_updated_doctor}</i> on <b><i>{Convert.ToDateTime(last_updated_date_time).ToString("dd-MMM-yyyy HH:mm tt")}</i></b>";
+
+            last_updated_date_time = WebHelpers.FormatDateTime(last_updated_date_time, "dd-MMM-yyyy HH:mm tt", "");
+
+            RadLabel1.Text = $"Last updated by <i>{last_updated_doctor}</i> on <b><i>{last_updated_date_time}</i></b>";
             RadGrid1.DataBind();
         }
         protected void LinkViewLastestVersion_Load(object sender, EventArgs e)
