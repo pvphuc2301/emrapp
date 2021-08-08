@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace AIHPortal.Phar
+namespace EMR.Phar
 {
 
 

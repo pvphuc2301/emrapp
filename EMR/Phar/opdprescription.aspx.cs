@@ -13,7 +13,7 @@ namespace EMR.Print
 {
     public partial class opdprescription : System.Web.UI.Page
     {
-        private string ConnStringHIS = ""; private string visitType = "";
+        private string ConnStringHIS = ""; private string visitType = ""; private string varPresType;
         public string varPID = ""; private string varPV_ID = ""; private string varPharID = ""; private string varVbID = ""; private bool oldVisit = false;
         public string loc { get; set; }
         protected void Page_Load(object sender, EventArgs e)
@@ -25,6 +25,8 @@ namespace EMR.Print
             varVbID = Request.QueryString["vibid"];
             varPV_ID = Request.QueryString["vid"];
             varPharID = Request.QueryString["phar"];
+            varPresType = Request.QueryString["pres_type"];
+
             if (!IsPostBack && !string.IsNullOrEmpty(varPID))
             {
                 LoadPatientInfomation(varPID);
@@ -117,10 +119,9 @@ namespace EMR.Print
             //    jsString = "api/emr/vital-sign-opd/" + varPV_ID;
             //else if (visitType == "IPD")
             //    jsString = "api/emr/vital-sign-ipd/" + varPV_ID;
-
             //    string _jsonData = WebHelpers.GetAPI(jsString);
-
-            jsString = $"api/emr/vital-sign/{loc}/{varPV_ID}/" + visitType;
+            loc = (string)Session["location"];
+            jsString = $"api/emr/vital-sign/{loc}/{varPV_ID}/" + varPresType;
             dynamic response = WebHelpers.GetAPI(jsString);
 
             if (response.Status == System.Net.HttpStatusCode.OK)

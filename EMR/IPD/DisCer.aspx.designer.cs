@@ -123,13 +123,58 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_to;
 
         /// <summary>
-        /// prt_no_health_insurance control.
+        /// prt_no1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_no_health_insurance;
+        protected global::System.Web.UI.WebControls.Label prt_no1;
+
+        /// <summary>
+        /// prt_no2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_no2;
+
+        /// <summary>
+        /// prt_no3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_no3;
+
+        /// <summary>
+        /// prt_no4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_no4;
+
+        /// <summary>
+        /// prt_no5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_no5;
+
+        /// <summary>
+        /// prt_no6 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_no6;
 
         /// <summary>
         /// prt_address control.

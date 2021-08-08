@@ -104,7 +104,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 150px 1fr 1fr 1fr">
+                                        <div class="d-grid" style="grid-template-columns: 150px 1fr 1fr 280px">
                                             <div>
                                                 <webUI:Label runat="server" SubTitle="Health Insurance" Title="BHYT:" />
                                             </div>
@@ -118,7 +118,14 @@
                                             </div>
                                             <div>
                                                 <webUI:Label runat="server" SubTitle="No" Title="Số:" />
-                                                <asp:Label CssClass="align-top" runat="server" ID="prt_no_health_insurance" />
+                                                <div class="d-inline-block">
+                                                    <div class="d-inline-block text-center align-top" style="margin-right:-6px; border: .5px solid #000; border-right-width: 0; padding: 1px 6px; width: 40px; height: 23px"><asp:Label runat="server" ID="prt_no1" /></div>
+                                                    <div class="d-inline-block text-center align-top" style="margin-right:-6px; border: .5px solid #000; border-right-width: 0; padding: 1px 6px; width: 35px; height: 23px"><asp:Label runat="server" ID="prt_no2" /></div>
+                                                    <div class="d-inline-block text-center align-top" style="margin-right:-6px; border: .5px solid #000; border-right-width: 0; padding: 1px 6px; width: 40px; height: 23px"><asp:Label runat="server" ID="prt_no3" /></div>
+                                                    <div class="d-inline-block text-center align-top" style="margin-right:-6px; border: .5px solid #000; border-right-width: 0; padding: 1px 6px; width: 45px; height: 23px"><asp:Label runat="server" ID="prt_no4" /></div>
+                                                    <div class="d-inline-block text-center align-top" style="margin-right:-6px; border: .5px solid #000; border-right-width: 0; padding: 1px 6px; width: 45px; height: 23px"><asp:Label runat="server" ID="prt_no5" /></div>
+                                                    <div class="d-inline-block text-center align-top" style="border: .5px solid #000; padding: 1px 6px; width: 45px; height: 23px"><asp:Label runat="server" ID="prt_no6" /></div>
+                                                </div>
                                             </div>
                                         </div>
 

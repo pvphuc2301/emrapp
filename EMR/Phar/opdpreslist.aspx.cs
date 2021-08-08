@@ -11,13 +11,13 @@ using System.Web.UI.HtmlControls;
 using Telerik.Web.UI;
 using System.Net;
 
-namespace AIHPortal.Phar
+namespace EMR.Phar
 {
     public partial class opdpreslist : System.Web.UI.Page
     {
         public string ConnStringHIS = "";
         public string Fr_Date = ""; string To_Date = ""; string DepName = ""; string Job_Type = "";
-        public string UserID = ""; string UserName = ""; string UGroup = ""; string presby = "";string EmpID = "";
+        public string UserID = ""; string UserName = ""; string UGroup = ""; string presby = "";string EmpNo = "";
         protected void Page_Load(object sender, EventArgs e)
         {
             ConnClass ConnStr = new ConnClass();
@@ -25,7 +25,7 @@ namespace AIHPortal.Phar
             
             UserID = (string)Session["UserID"]; UserName = (string)Session["UserName"];
             UGroup = (string)Session["UserGroup"]; DepName = (string)Session["Dep"];
-            EmpID = (string)Session["EmpID"];//1509
+            EmpNo = (string)Session["emp_nr"];//1509
             Job_Type = (string)Session["JobType"];
 
             string redirecturl = "~/login.aspx?ReturnUrl=";
@@ -44,6 +44,57 @@ namespace AIHPortal.Phar
         protected void ButtonS_Click(object sender, EventArgs e)
         {
            // Patient_ID = PatientID.Text;
+            RadGrid1.MasterTableView.Rebind();
+        }       
+        protected void RadGrid1_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
+        {
+            if (e.Item is GridDataItem)
+            {
+                foreach (TableCell cell in e.Item.Cells)
+                {
+                    if (cell.Text == "0" | cell.Text == "0%" | cell.Text == "0.0" | cell.Text == "0.00" | cell.Text == "0.000")
+                        cell.Text = String.Empty;
+                }
+            }            
+        }
+        protected void RadGrid1_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
+        {
+            string get_access = Convert.ToString(Session["access_authorize"]);
+            //string query = GetQuery();
+            if (Convert.ToString(Session["group_access"]) == "DOC" | get_access == "FullAccess" | get_access == "View")
+            {
+                string urlink = "api/pharmacy/prescription_list?keyword=" + Request.QueryString["vbid"];
+
+                if (!ShowAll.Checked)
+                {
+                    urlink += "&username=" + UserID;
+                }
+                dynamic response = WebHelpers.GetAPI(urlink);
+              
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    RadGrid1.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+                    //RadGrid1.DataBind();
+                }
+            }
+            //RadGrid1.DataSource = GetDataTable(query, ConnStringHIS);
+        }        
+        public string ReturnUrlink(object varPID, object varPvID, object varPharID)
+        {
+            string tmp = "../phar/opdprescription.aspx?pid=" + Convert.ToString(varPID) + "&vid=" + Convert.ToString(varPvID);
+            tmp += "&phar=" + Convert.ToString(varPharID) + "&vibid=" + Request.QueryString["vbid"] + "&loc=" + Request.QueryString["loc"];
+            
+            return tmp;
+        }
+        public string ReturnTotal(object varTargetName, object varTargetValue)
+        {
+            string totalValue = "";
+            if (Convert.ToString(varTargetName) == "OPD")
+                totalValue = String.Format("{0:#,#0}", varTargetValue);
+            return totalValue;
+        }
+        protected void CheckedRequest(object sender, System.EventArgs e)
+        {
             RadGrid1.MasterTableView.Rebind();
         }
         public DataTable GetDataTable(string query, string varConStr)
@@ -65,24 +116,6 @@ namespace AIHPortal.Phar
             }
 
             return myDataTable;
-        }      
-        protected void RadGrid1_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
-        {
-            if (e.Item is GridDataItem)
-            {
-                foreach (TableCell cell in e.Item.Cells)
-                {
-                    if (cell.Text == "0" | cell.Text == "0%" | cell.Text == "0.0" | cell.Text == "0.00" | cell.Text == "0.000")
-                        cell.Text = String.Empty;
-                }
-            }            
-        }
-        protected void RadGrid1_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
-        {
-            string get_access = Convert.ToString(Session["access_authorize"]);
-            string query = GetQuery();
-            if (Convert.ToString(Session["group_access"]) == "DOC" | get_access== "FullAccess" | get_access == "MAFullAccess")
-                RadGrid1.DataSource = GetDataTable(query, ConnStringHIS);
         }
         public string GetQuery()
         {
@@ -109,7 +142,7 @@ namespace AIHPortal.Phar
             query += "dbo.employee_formatted_name_iview_nl_view AS efni ON efni.person_id = uac.person_id ";
             query += "WHERE (pre.patient_id = '" + Guid.Parse(varPID) + "') ";
             if (!ShowAll.Checked)
-                query += "AND (employee_nr = N'" + EmpID + "') ";
+                query += "AND (employee_nr = N'" + EmpNo + "') ";
 
             // query += "WHERE (phu.visible_patient_id = '" + varVbID + "') ";
 
@@ -126,17 +159,6 @@ namespace AIHPortal.Phar
 
             Get_query = query;
             return Get_query;
-        }        
-        public string ReturnTotal(object varTargetName, object varTargetValue)
-        {
-            string totalValue = "";
-            if (Convert.ToString(varTargetName) == "OPD")
-                totalValue = String.Format("{0:#,#0}", varTargetValue);
-            return totalValue;
-        }
-        protected void CheckedRequest(object sender, System.EventArgs e)
-        {
-            RadGrid1.MasterTableView.Rebind();
         }
     }
 }

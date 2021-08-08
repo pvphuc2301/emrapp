@@ -152,7 +152,7 @@
                                             <asp:Label runat="server" ID="prt_treatment_period" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px; margin-bottom: 6px;">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; grid-gap: 5px">
                                             <webUI:PrtRowS1 FontBold="true" FixedWidth="210" Title="Lời khuyên và theo dõi:" SubTitle="Recommendation and Follow-up" runat="server" />
                                             <asp:Label runat="server" ID="prt_recommendation" />
                                         </div>

@@ -116,7 +116,39 @@ namespace EMR
                 prt_occupation.Text = patientInfo.GetOccupation();
                 prt_valid_from.Text = WebHelpers.FormatDateTime(disc.valid_from);
                 //prt_to.Text
-                prt_no_health_insurance.Text = disc.no_health_insurance;
+                //prt_no_health_insurance.Text = "<span style=\"border:1px solid #0000\" >" + disc.no_health_insurance + "</span>";
+
+                string no_health_insurance = disc.no_health_insurance;
+                prt_no1.Text = prt_no2.Text = prt_no3.Text = prt_no4.Text = prt_no5.Text = prt_no6.Text = " ";
+                    
+                for (int i = 0; i < no_health_insurance.Length; i++)
+                {
+                    if (i <= 1)
+                    { 
+                        prt_no1.Text += no_health_insurance[i]; 
+                    }
+                    else if (i <= 2)
+                    {
+                        prt_no2.Text += no_health_insurance[i];
+                    }
+                    else if (i <= 4)
+                    {
+                        prt_no3.Text += no_health_insurance[i];
+                    }
+                    else if (i <= 7)
+                    {
+                        prt_no4.Text += no_health_insurance[i];
+                    }
+                    else if (i <= 10)
+                    {
+                        prt_no5.Text += no_health_insurance[i];
+                    }
+                    else if (i <= 13)
+                    {
+                        prt_no6.Text += no_health_insurance[i];
+                    }
+                }
+
                 prt_address.Text = patientInfo.Address;
                 prt_admitted_time.dateTime = Convert.ToString(patientVisitInfo.actual_visit_date_time);
                 prt_disc_date_time.dateTime = Convert.ToString(disc.disc_date_time);

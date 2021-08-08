@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="opdpreslist.aspx.cs" Inherits="AIHPortal.Phar.opdpreslist" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="opdpreslist.aspx.cs" Inherits="EMR.Phar.opdpreslist" %>
 
 <!DOCTYPE html>
 
@@ -19,24 +19,23 @@
 <div>
     <asp:CheckBox ID="ShowAll" Text="Show All" runat="server" Font-Bold="true" Enabled="true" AutoPostBack="true" OnCheckedChanged="CheckedRequest" ></asp:CheckBox>
 
-        <telerik:RadGrid ID="RadGrid1" runat="server" Width="100%" OnNeedDataSource="RadGrid1_NeedDataSource" AllowSorting="true"
-            AllowPaging="true" AllowFilteringByColumn="false"
-            AutoGenerateColumns="False" AllowMultiRowSelection="False" GridLines="None" EnableLinqExpressions="false" ShowFooter="false">
-            <MasterTableView DataKeyNames="ph_prescription_id" AllowMultiColumnSorting="False" Width="100%" Name="Master" TableLayout="Fixed" 
-                ItemStyle-HorizontalAlign="Left" AlternatingItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Center">
+        <telerik:RadGrid ID="RadGrid1" runat="server" Width="100%" OnNeedDataSource="RadGrid1_NeedDataSource" AllowSorting="true" AllowPaging="true" AllowFilteringByColumn="false" AutoGenerateColumns="False" AllowMultiRowSelection="False" GridLines="None" EnableLinqExpressions="false" ShowFooter="false">
+            <MasterTableView DataKeyNames="ph_prescription_id" AllowMultiColumnSorting="False" Width="100%" Name="Master" TableLayout="Fixed" ItemStyle-HorizontalAlign="Left" AlternatingItemStyle-HorizontalAlign="Left" HeaderStyle-HorizontalAlign="Center">
                 <Columns>
                     <telerik:GridTemplateColumn HeaderButtonType="TextButton" HeaderStyle-Width = "10%" DataField="visible_patient_id"
                         UniqueName="visible_patient_id" HeaderText="PID" SortExpression="visible_patient_id" HeaderStyle-HorizontalAlign="Left">
                         <ItemTemplate> 
-                           <a href="#" onclick="javascript:window.open('<%# Eval("urlink") %>','mywin','left=60,top=20,width=1100,height=1000,toolbar=0,resizable=0');return false;" >
-                                <%# Eval("visible_patient_id") %>
+                           <a href="#" onclick="javascript:window.open('<%# string.Format("/phar/opdprescription.aspx?pid={0}&vid={1}&phar={2}&pres_type={3}",
+                Eval("patient_id"),Eval("patient_visit_id"),Eval("ph_prescription_id"), Eval("pres_type")) %>','mywin','left=60,top=20,width=1300,height=1000,toolbar=0,resizable=0');return false;" >
+                                <%# Eval("pid") %>
                             </a> 
                         </ItemTemplate>
                    </telerik:GridTemplateColumn>                               
                     <telerik:GridTemplateColumn HeaderButtonType="TextButton" HeaderStyle-Width = "15%" DataField="patient_name"
                         UniqueName="patient_name" HeaderText="Patient name" SortExpression="patient_name" HeaderStyle-HorizontalAlign="Left">
                         <ItemTemplate>                             
-                            <a href="#" onclick="javascript:window.open('<%# Eval("urlink") %>','mywin','left=60,top=20,width=1300,height=1000,toolbar=0,resizable=0');return false;" >
+                            <a href="#" onclick="javascript:window.open('<%# string.Format("/phar/opdprescription.aspx?pid={0}&vid={1}&phar={2}",
+                Eval("patient_id"),Eval("patient_visit_id"),Eval("ph_prescription_id")) %>','mywin','left=60,top=20,width=1300,height=1000,toolbar=0,resizable=0');return false;" >
                                 <%# Eval("patient_name") %>
                             </a>
                         </ItemTemplate>

@@ -359,7 +359,7 @@
 
                                         <webUI:PrtRowS1 FixedLeft="5" Order="●" Title="Tôi đã được nghe bác sĩ tư vấn và đồng ý tiêm chủng cho tôi/ người mà tôi làm giám hộ hợp pháp.Tôi đã kiểm tra đúng thuốc tiêm và thuốc còn thời hạn dùng." SubTitle="I have been consulted and agree on vaccination. I checked right medication and medication has still not expired." runat="server" />
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; page-break-inside: avoid !important">
                                             <webUI:PrtRowS1 FixedLeft="5" Order="●" CssClass="text-inline" Title="Họ tên người tiêm chủng/ người giám hộ/ " SubTitle="Full name of patient/ guardian:" runat="server" />
                                             <div> <hr style="border-bottom: 0.25px solid black"></div>
                                         </div>

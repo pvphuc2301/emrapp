@@ -621,11 +621,6 @@
                                                                 <label class="control-label mb-1 mr-2">Chiều cao/ <span class="text-primary">Height:</span></label>
                                                                 <asp:Label runat="server" ID="vs_height" />&nbsp;cm
                                                             </div>
-                                                            ktv
-                                                            
-                                                            chien.nguyen
-                                                            huong.phan
-
                                                             <div>
                                                                 <label class="control-label mb-1 mr-2">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
                                                                 <asp:Label runat="server" ID="vs_blood_pressure" />&nbsp;mmHg
