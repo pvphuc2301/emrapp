@@ -204,6 +204,7 @@ namespace EMR
         private void BindingDataFormPrint(POMR pomr)
         {
             try {
+
                 patientInfo = new PatientInfo(varPID);
                 patientVisitInfo = new PatientVisitInfo(varPVID, loc);
                 prt_fullname.Text = patientInfo.FullName + " " + patientInfo.Title;
@@ -282,7 +283,7 @@ namespace EMR
                     prt_next_appointment.Text = pomr.bool_next_appointment ? WebHelpers.FormatDateTime(pomr.date_next_appointment) : pomr.txt_next_appointment;
                 }
 
-                prt_signature_doctor.Text = (string)Session["signature_name"];
+                prt_signature_doctor.Text = SignatureName;
             }
             catch (Exception ex)
             {
@@ -400,6 +401,7 @@ namespace EMR
                     pomr = new POMR(varDocID, loc);
                     currentLog.Visible = false;
                 }
+
                 LoadPatientInfo();
                 loadRadGridHistoryLog();
 

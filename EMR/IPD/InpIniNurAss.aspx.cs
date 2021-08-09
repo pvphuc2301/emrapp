@@ -567,8 +567,7 @@ namespace EMR
                 lbl_dis_planning.Text = WebHelpers.FormatString(iina.dis_planning);
                 //F
                 lbl_dis_management.Text = WebHelpers.FormatString(iina.dis_management);
-                lbl_assess_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(iina.assess_date_time, "dd-MM-yyyy HH:mm"));
-
+                lbl_assess_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(iina.assess_date_time, "dd-MMM-yyyy HH:mm"));
 
                 pain_annotation_img.Src = JObject.Parse(iina.pain_annotation).dataURI;
 

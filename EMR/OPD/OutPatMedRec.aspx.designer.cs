@@ -1077,15 +1077,6 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label vs_temperature;
 
         /// <summary>
-        /// vs_heart_rate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label vs_heart_rate;
-
-        /// <summary>
         /// vs_weight control.
         /// </summary>
         /// <remarks>
@@ -1093,15 +1084,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label vs_weight;
-
-        /// <summary>
-        /// vs_respiratory_rate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label vs_respiratory_rate;
 
         /// <summary>
         /// vs_height control.
@@ -1113,15 +1095,6 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label vs_height;
 
         /// <summary>
-        /// vs_blood_pressure control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label vs_blood_pressure;
-
-        /// <summary>
         /// vs_bmi control.
         /// </summary>
         /// <remarks>
@@ -1131,15 +1104,6 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label vs_bmi;
 
         /// <summary>
-        /// vs_spo2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label vs_spo2;
-
-        /// <summary>
         /// vs_pulse control.
         /// </summary>
         /// <remarks>
@@ -1147,6 +1111,42 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label vs_pulse;
+
+        /// <summary>
+        /// vs_heart_rate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label vs_heart_rate;
+
+        /// <summary>
+        /// vs_respiratory_rate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label vs_respiratory_rate;
+
+        /// <summary>
+        /// vs_blood_pressure control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label vs_blood_pressure;
+
+        /// <summary>
+        /// vs_spo2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label vs_spo2;
 
         /// <summary>
         /// lbl_physical_examination control.

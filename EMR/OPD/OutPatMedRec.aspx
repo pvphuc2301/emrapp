@@ -699,12 +699,29 @@
                                                                     <asp:Label runat="server" ID="vs_temperature" />&nbsp;°C
                                                                 </div>
                                                                 <div>
-                                                                    <label class="control-label mb-1 mr-2">Mạch/ <span class="text-primary">Heart Rate:</span></label>
-                                                                    <asp:Label runat="server" ID="vs_heart_rate" />&nbsp;/phút (m)
-                                                                </div>
-                                                                <div>
                                                                     <label class="control-label mb-1 mr-2">Cân Nặng/ <span class="text-primary">Weight:</span></label>
                                                                     <asp:Label runat="server" ID="vs_weight" />&nbsp;Kg
+                                                                </div>
+                                                                <div>
+                                                                    <label class="control-label mb-1 mr-2">Chiều cao/ <span class="text-primary">Height:</span></label>
+                                                                    <asp:Label runat="server" ID="vs_height" />&nbsp;cm
+                                                                </div>
+                                                                <div>
+                                                                    <label for="bmi" class="control-label mb-1 mr-2">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
+                                                                    <asp:Label runat="server" ID="vs_bmi" />
+                                                                    <%--&nbsp;(Kg/m <sup>2</sup>)
+                                            <div>
+                                                (Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not applicable for children and pregnant</span>)
+                                            </div>--%>
+                                                                </div>
+                                                                <div>
+                                                                    <label for="head-circumference" class="control-label mb-1 mr-2">Vòng đầu (trẻ em < 2 tuổi)/ <span class="text-primary">Head Circumference (children < 2 year old) </span></label>
+                                                                    <asp:Label runat="server" ID="vs_pulse" />&nbsp;cm
+                                                                </div>
+
+                                                                <div>
+                                                                    <label class="control-label mb-1 mr-2">Nhịp tim/ <span class="text-primary">Heart rate:</span></label>
+                                                                    <asp:Label runat="server" ID="vs_heart_rate" />&nbsp;/phút (m)
                                                                 </div>
 
                                                                 <div>
@@ -713,31 +730,13 @@
                                                                 </div>
 
                                                                 <div>
-                                                                    <label class="control-label mb-1 mr-2">Chiều cao/ <span class="text-primary">Height:</span></label>
-                                                                    <asp:Label runat="server" ID="vs_height" />&nbsp;cm
-                                                                </div>
-
-                                                                <div>
                                                                     <label class="control-label mb-1 mr-2">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
                                                                     <asp:Label runat="server" ID="vs_blood_pressure" />&nbsp;mmHg
                                                                 </div>
 
                                                                 <div>
-                                                                    <label for="bmi" class="control-label mb-1 mr-2">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
-                                                                    <asp:Label runat="server" ID="vs_bmi" />&nbsp;(Kg/m <sup>2</sup>)
-                                            <div>
-                                                (Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not applicable for children and pregnant</span>)
-                                            </div>
-                                                                </div>
-
-                                                                <div>
                                                                     <label for="spO2" class="control-label mb-1 mr-2">Độ bão hòa Oxy/ <span class="text-primary">SpO2:</span></label>
                                                                     <asp:Label runat="server" ID="vs_spo2" />&nbsp;%
-                                                                </div>
-
-                                                                <div>
-                                                                    <label for="head-circumference" class="control-label mb-1 mr-2">Vòng đầu (trẻ em < 2 tuổi)/ <span class="text-primary">Head Circumference (children < 2 year old) </span></label>
-                                                                    <asp:Label runat="server" ID="vs_pulse" />&nbsp;cm
                                                                 </div>
                                                             </div>
                                                         </div>

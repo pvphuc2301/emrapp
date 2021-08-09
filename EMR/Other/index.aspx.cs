@@ -202,8 +202,8 @@ namespace EMR.Other
             string varUserName = Convert.ToString(Session["UserID"]);
             string varFullName = Convert.ToString(Session["UserName"]);
             string varEmail = Convert.ToString(Session["user_email"]);
-
-            string varUrl = "http://mis.aih.com.vn/portal/report/AllowUpdateEMR.aspx";
+            
+            string varUrl = "http://emr.aih.com.vn/report/AllowUpdateEMR.aspx";
 
             string apiString = $"api/patient/allow-doc-req/{pvid}/{varUserName}?full_name={varFullName}&email={varEmail}";
 
@@ -226,10 +226,10 @@ namespace EMR.Other
                 objMail.CC.Add(varEmail);
             }
 
-            var msg_Body = "Kính gửi phòng KHTH,<br /> <br /> ";
+            var msg_Body = "Kính gửi phòng KHTH,\n \n ";
             msg_Body += "Kính gửi phòng KTTH cấp quyền cập nhật hồ sơ bệnh án của khách hàng: " + visibleID + ", ngày đến khám: " + visitDate + ", ";
-            msg_Body += "visit code: " + visitCode + ", visit type: " + visitType + " < br /> ";
-            msg_Body += "Vui lòng nhấn đường link phía dưới để xem chi tiết và phê duyệt: < br /> " + varUrl + "< br /> < br /> " + Session["UserName"] + "<br /> ";
+            msg_Body += "visit code: " + visitCode + ", visit type: " + visitType + " \n ";
+            msg_Body += "Vui lòng nhấn đường link phía dưới để xem chi tiết và phê duyệt: \n " + varUrl + " \n \n " + Session["UserName"] + "\n ";
 
             objMail.Subject = "Yêu cầu cập nhật Hồ Sơ Bệnh Án từ:" + Session["UserName"];
             objMail.Body = msg_Body;// "Content office 365";
@@ -247,7 +247,8 @@ namespace EMR.Other
                                //smtpMail.Credentials = new NetworkCredential(MailAddressFrom.Address, txtPassword.Text);
             smtpMail.Credentials = new NetworkCredential(MailAddressFrom.Address, "AIH2@18!@");//"AIH2@18!@"
                                                                                                //if (!string.IsNullOrEmpty(varFr) && !string.IsNullOrEmpty(varToMail))
-            smtpMail.Send(objMail);
+            if(!string.IsNullOrEmpty(varToMail))
+                smtpMail.Send(objMail);
 
         }
         protected void CheckedRequest(object sender, System.EventArgs e)

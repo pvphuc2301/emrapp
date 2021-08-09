@@ -67,13 +67,13 @@ namespace EMR
             {
                 lbl_disc_ward_desc.Text = WebHelpers.TextToHtmlTag(disc.disc_ward_desc);
                 lbl_no_health_insurance.Text = WebHelpers.TextToHtmlTag(disc.no_health_insurance);
-                lbl_valid_from.Text = WebHelpers.FormatDateTime(disc.valid_from);
-                lbl_disc_date_time.Text = WebHelpers.FormatDateTime(disc.disc_date_time);
+                lbl_valid_from.Text = WebHelpers.FormatDateTime(disc.valid_from, "dd-MMM-yyyy");
+                lbl_disc_date_time.Text = WebHelpers.FormatDateTime(disc.disc_date_time, "dd-MMM-yyyy HH:mm");
                 lbl_diagnosis.Text = WebHelpers.TextToHtmlTag(disc.diagnosis);
                 lbl_disc_medication.Text = WebHelpers.TextToHtmlTag(disc.disc_medication);
                 lbl_followup_instruc.Text = WebHelpers.TextToHtmlTag(disc.followup_instruc);
                 lbl_notes.Text = WebHelpers.TextToHtmlTag(disc.notes);
-                lbl_signature_date.Text = WebHelpers.FormatDateTime(disc.signature_date);
+                lbl_signature_date.Text = WebHelpers.FormatDateTime(disc.signature_date, "dd-MMM-yyyy");
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
             
@@ -149,9 +149,46 @@ namespace EMR
                     }
                 }
 
+
+
                 prt_address.Text = patientInfo.Address;
-                prt_admitted_time.dateTime = Convert.ToString(patientVisitInfo.actual_visit_date_time);
-                prt_disc_date_time.dateTime = Convert.ToString(disc.disc_date_time);
+                var AdmittedTime = WebHelpers.ConvertDateTime(patientVisitInfo.actual_visit_date_time, out bool isValid, out string admitted_time);
+
+                if (isValid)
+                {
+                    string hour = AdmittedTime.Hour.ToString();
+                    string minute = AdmittedTime.Minute.ToString();
+
+                    string day = AdmittedTime.Day.ToString();
+                    string month = AdmittedTime.Month.ToString();
+                    string year = AdmittedTime.Year.ToString();
+
+                    prt_hour.Text = (hour.Length <= 1 ? "0" : "") + hour;
+                    prt_minute.Text = (minute.Length <= 1 ? "0" : "") + minute;
+                    prt_day.Text = (day.Length <= 1 ? "0" : "") + day;
+                    prt_month.Text = (month.Length <= 1 ? "0" : "") + month;
+                    prt_year.Text = year;
+                }
+
+                var DiscDateTime = WebHelpers.ConvertDateTime(disc.disc_date_time, out bool isValid1, out string disc_date_time);
+
+                if (isValid1)
+                {
+                    string hour = DiscDateTime.Hour.ToString();
+                    string minute = DiscDateTime.Minute.ToString();
+
+                    string day = DiscDateTime.Day.ToString();
+                    string month = DiscDateTime.Month.ToString();
+                    string year = DiscDateTime.Year.ToString();
+
+                    prt_hour1.Text = (hour.Length <= 1 ? "0" : "") + hour;
+                    prt_minute1.Text = (minute.Length <= 1 ? "0" : "") + minute;
+                    prt_day1.Text = (day.Length <= 1 ? "0" : "") + day;
+                    prt_month1.Text = (month.Length <= 1 ? "0" : "") + month;
+                    prt_year1.Text = year;
+                }
+
+                prt_date.dateTime = prt_date1.dateTime = Convert.ToString(disc.signature_date);
                 prt_diagnosis.Text = WebHelpers.TextToHtmlTag(disc.diagnosis);
                 prt_treatment.Text = WebHelpers.TextToHtmlTag(disc.disc_medication);
                 prt_followup_instruc.Text = WebHelpers.TextToHtmlTag(disc.followup_instruc);
@@ -374,10 +411,6 @@ namespace EMR
                 loadRadGridHistoryLog();
                 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-
-                prt_admitted_time.dateTime = Convert.ToString(patientVisitInfo.actual_visit_date_time);
-                prt_disc_date_time.dateTime = Convert.ToString(disc.disc_date_time);
-                prt_date.dateTime = prt_date1.dateTime = Convert.ToString(disc.signature_date);
 
                 if (disc.status == DocumentStatus.FINAL)
                 {

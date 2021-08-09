@@ -138,7 +138,7 @@
 
                                         <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Order="•" Title="Dấu hiệu sinh tồn/ " SubTitle="Vital signs" runat="server" />
 
-                                        <table class="table-bordered table-fixed mb-2"Style="width: 100%">
+                                        <table class="table-bordered table-fixed mb-2" Style="width: 100%">
                                             <tr>
                                                 <td class="p-2">Nhiệt độ/ Temperature (C degree)</td>
                                                 <td class="p-2 text-right" style="width: 100px;">
@@ -701,18 +701,8 @@
                                                                 </div>
 
                                                                 <div>
-                                                                    <label class="control-label mb-1 mr-2">Mạch/ <span class="text-primary">Heart Rate:</span></label>
-                                                                    <asp:Label runat="server" ID="vs_heart_rate" />&nbsp;/phút (m)
-                                                                </div>
-
-                                                                <div>
                                                                     <label class="control-label mb-1 mr-2">Cân Nặng/ <span class="text-primary">Weight:</span></label>
                                                                     <asp:Label runat="server" ID="vs_weight" />&nbsp;Kg
-                                                                </div>
-
-                                                                <div>
-                                                                    <label class="control-label mb-1 mr-2">Nhịp thở/ <span class="text-primary">Respiratory rate:</span></label>
-                                                                    <asp:Label runat="server" ID="vs_respiratory_rate" />&nbsp;/phút (m)
                                                                 </div>
 
                                                                 <div>
@@ -721,16 +711,30 @@
                                                                 </div>
 
                                                                 <div>
-                                                                    <label class="control-label mb-1 mr-2">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
-                                                                    <asp:Label runat="server" ID="vs_blood_pressure" />&nbsp;mmHg
+                                                                    <label for="bmi" class="control-label mb-1 mr-2">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
+                                                                    <asp:Label runat="server" ID="vs_BMI" />
                                                                 </div>
 
                                                                 <div>
-                                                                    <label for="bmi" class="control-label mb-1 mr-2">Chỉ số khối cơ thể/ <span class="text-primary">BMI</span></label>
-                                                                    <asp:Label runat="server" ID="vs_BMI" />&nbsp;(Kg/m <sup>2</sup>)
-                                                                <div>
-                                                                    (Không áp dụng cho trẻ em và phụ nữ có thai/ <span class="text-primary">not applicable for children and pregnant</span>)
+                                                                    <label for="head-circumference" class="control-label mb-1 mr-2">Vòng đầu (trẻ em < 2 tuổi)/ <span class="text-primary">Head Circumference (children < 2 year old) </span></label>
+                                                                    <asp:Label runat="server" ID="vs_pulse" />&nbsp;cm
                                                                 </div>
+
+
+
+                                                                <div>
+                                                                    <label class="control-label mb-1 mr-2">Nhịp tim/ <span class="text-primary">Heart Rate:</span></label>
+                                                                    <asp:Label runat="server" ID="vs_heart_rate" />&nbsp;/phút (m)
+                                                                </div>
+
+                                                                <div>
+                                                                    <label class="control-label mb-1 mr-2">Nhịp thở/ <span class="text-primary">Respiratory rate:</span></label>
+                                                                    <asp:Label runat="server" ID="vs_respiratory_rate" />&nbsp;/phút (m)
+                                                                </div>
+
+                                                                <div>
+                                                                    <label class="control-label mb-1 mr-2">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
+                                                                    <asp:Label runat="server" ID="vs_blood_pressure" />&nbsp;mmHg
                                                                 </div>
 
                                                                 <div>
@@ -738,10 +742,6 @@
                                                                     <asp:Label runat="server" ID="vs_spO2" />&nbsp;%
                                                                 </div>
 
-                                                                <div>
-                                                                    <label for="head-circumference" class="control-label mb-1 mr-2">Vòng đầu (trẻ em < 2 tuổi)/ <span class="text-primary">Head Circumference (children < 2 year old) </span></label>
-                                                                    <asp:Label runat="server" ID="vs_pulse" />&nbsp;cm
-                                                                </div>
                                                             </div>
                                                         </ContentTemplate>
                                                     </asp:UpdatePanel>

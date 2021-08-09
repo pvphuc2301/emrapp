@@ -675,7 +675,7 @@ namespace EMR
 
         internal static void Notification(Page page, string message, string type = "success")
         {
-            string script_str = "setTimeout(()=>{ alertify.set({ delay: 1700 });  alertify." + type + "(\"" + message + "\");},0);";
+            string script_str = "setTimeout(()=>{ alertify.set({ delay: 100700 });  alertify." + type + "(\"" + message + "\");},0);";
             ScriptManager.RegisterStartupScript(page, page.GetType(), "msg_error", script_str, true);
         }
 

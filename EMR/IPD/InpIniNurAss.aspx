@@ -779,7 +779,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6 mb-2">
-                                                    <label class="control-label mr-2 mb-1">Mạch/ <span class="text-primary">Heart Rate:</span></label>
+                                                    <label class="control-label mr-2 mb-1">Nhịp tim/ <span class="text-primary">Heart rate:</span></label>
                                                     <asp:Label runat="server" ID="lbl_vs_heart_rate"></asp:Label>
                                                     <div class="form-group w-5 d-inline-block" runat="server" id="vs_heart_rate_wrapper">
                                                         <input data-type="number" runat="server" id="txt_vs_heart_rate" class="form-control text-right" />

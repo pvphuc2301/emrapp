@@ -111,33 +111,38 @@ namespace EMR.Report
         }
         protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
         {
-            GridDataItem item = (e.Item as GridDataItem);
-            string pvid = item.GetDataKeyValue("patient_visit_id").ToString();
-            string visitType = item.GetDataKeyValue("visit_type_rcd").ToString();
-            string visible_id = Request.QueryString["vpid"];
+            if (e.Item is GridDataItem)
+            {
+                GridDataItem item = (e.Item as GridDataItem);
+                string pvid = item.GetDataKeyValue("patient_visit_id").ToString();
+                string visitType = item.GetDataKeyValue("visit_type_rcd").ToString();
+                string visible_id = Request.QueryString["vpid"];
 
-            Label lbVisit_date_time = (Label)item["PatientInfor"].FindControl("lbActual_visit_date_time");
-            Label lbVisit_code = (Label)item["PatientInfor"].FindControl("lbVisit_code");
-            Label lbRequest_email = (Label)item["PatientInfor"].FindControl("request_email");
-            string visitDate = Convert.ToString(lbVisit_date_time.Text);
-            string visitCode = Convert.ToString(lbVisit_code.Text);
-            string r_email = Convert.ToString(lbRequest_email.Text);
-
-            switch (e.CommandName)
-            {                
-                case "sendAllow":
-                    AddFormSend(pvid, visitType, visible_id, visitCode, visitDate, r_email, "Allow");
-                    RadGrid1.Rebind();
-                    break;
-                case "sendDeny":
-                    AddFormSend(pvid, visitType, visible_id, visitCode, visitDate, r_email, "Deny");
-                    RadGrid1.Rebind();
-                    break;
-                case "sendClose":
-                    AddFormSend(pvid, visitType, visible_id, visitCode, visitDate, r_email, "Close");
-                    RadGrid1.Rebind();
-                    break;
-            }           
+                Label lbVisit_date_time = (Label)item["PatientInfor"].FindControl("lbActual_visit_date_time");
+                Label lbVisit_code = (Label)item["PatientInfor"].FindControl("lbVisit_code");
+                Label lbRequest_email = (Label)item["PatientInfor"].FindControl("lbRequest_email");
+                string visitDate = Convert.ToString(lbVisit_date_time.Text);
+                string visitCode = Convert.ToString(lbVisit_code.Text);
+                string r_email = "itsystem@aih.com.vn";
+                if (!string.IsNullOrEmpty(Convert.ToString(lbRequest_email)))
+                    r_email = Convert.ToString(lbRequest_email.Text);
+                
+                switch (e.CommandName)
+                {
+                    case "sendAllow":
+                        AddFormSend(pvid, visitType, visible_id, visitCode, visitDate, r_email, "Allow");
+                        RadGrid1.Rebind();
+                        break;
+                    case "sendDeny":
+                        AddFormSend(pvid, visitType, visible_id, visitCode, visitDate, r_email, "Deny");
+                        RadGrid1.Rebind();
+                        break;
+                    case "sendClose":
+                        AddFormSend(pvid, visitType, visible_id, visitCode, visitDate, r_email, "Close");
+                        RadGrid1.Rebind();
+                        break;
+                }
+            }
         }
         public MailAddress MailAddressFrom { get; set; }
         public MailAddress MailAddressTo { get; set; }
@@ -201,7 +206,8 @@ namespace EMR.Report
                                //smtpMail.Credentials = new NetworkCredential(MailAddressFrom.Address, txtPassword.Text);
             smtpMail.Credentials = new NetworkCredential(MailAddressFrom.Address, "AIH2@18!@");//"AIH2@18!@"
                                                                                                //if (!string.IsNullOrEmpty(varFr) && !string.IsNullOrEmpty(varToMail))
-            smtpMail.Send(objMail);
+            if (!string.IsNullOrEmpty(varToMail))
+                smtpMail.Send(objMail);
 
         }
         protected void CheckedRequest(object sender, System.EventArgs e)
