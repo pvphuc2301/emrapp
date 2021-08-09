@@ -54,7 +54,7 @@ namespace EMR
 
         private void BindLocation()
         {
-            lbl_location.Text = Request.QueryString["loc"];
+            lbl_company_code.Text = (string)Session["company_code"];
             //switch (DataHelpers._LOCATION)
             //{
             //    case "AIH":

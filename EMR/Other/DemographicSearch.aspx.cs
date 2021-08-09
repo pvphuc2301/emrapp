@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using EMR.Model;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -134,16 +135,13 @@ namespace EMR.Other
                 RadGrid2.DataSource = WebHelpers.GetJSONToDataTable(strJSON);
             }
         }
-        protected void RadGrid2_ItemDataBound(object sender, GridItemEventArgs e)
-        {
-            if (e.Item is GridDataItem)
-            {
-                GridDataItem gridItem = e.Item as GridDataItem;
 
-                gridItem["date_of_birth"].Text = DataHelpers.CalculateAge(DateTime.Parse(gridItem["date_of_birth"].Text)).ToString();
-            }
-        }
         #endregion
+
+        protected string GetAge(object value)
+        {
+            return DataHelpers.CalculateAge(DateTime.Parse(Convert.ToString(value))).ToString();
+        }
 
         #region RadGrid5
         protected void RadGrid5_SelectedIndexChanged(object sender, EventArgs e)
@@ -172,7 +170,9 @@ namespace EMR.Other
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 RadGrid5.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
-                RadGrid5.DataBind();
+
+                RadGrid5.Rebind();
+                //RadGrid5.DataBind();
             }
         }
         protected void btnComplete_Click(object sender, EventArgs e)
@@ -372,7 +372,22 @@ namespace EMR.Other
                     else
                     {
                         string url = $"/emr/emrinfor.aspx?pid={PID}&vbid={PVID}&loc={loc}";
-                        Response.Redirect(url);
+
+                        PatientHistoryVm patientHistoryVm = new PatientHistoryVm()
+                        {
+                            date_of_birth = DataHelpers.ConvertSQLDateTime(WebHelpers.ConvertDateTime(item["date_of_birth"].Text, out bool isValid, out string dateTime)),
+                            gender = Convert.ToString(item.GetDataKeyValue("gender_l")),
+                            patient_name = Convert.ToString(item["patient_name_l"].Text),
+                            user_name = Convert.ToString(Session["UserId"]),
+                            visible_patient_id = Convert.ToString(item.GetDataKeyValue("visible_patient_id"))
+                        };
+
+                        dynamic response1 = WebHelpers.PostAPI($"api/emr/patient-history", patientHistoryVm);
+
+                        if (response1.Status == System.Net.HttpStatusCode.OK)
+                        {
+                            Response.Redirect(url);
+                        }
                     }
                 }
             }
@@ -411,7 +426,63 @@ namespace EMR.Other
 
         protected void RadGrid3_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
+            string url = "api/emr/patient-history-list?day=7&user_name=" + (string)Session["UserId"];
+            dynamic response = WebHelpers.GetAPI(url);
 
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                RadGrid3.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+            }
+        }
+
+        protected void RadGrid4_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            string url = "api/emr/patient-history-list?day=30&user_name=" + (string)Session["UserId"];
+            dynamic response = WebHelpers.GetAPI(url);
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                RadGrid4.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+            }
+        }
+
+        protected void RadGrid3_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            GridDataItem item = (e.Item as GridDataItem);
+            if (e.CommandName.Equals("Open"))
+            {
+                string PID = "";
+                string VPID = item.GetDataKeyValue("visible_patient_id").ToString();
+
+                dynamic response = WebHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=1&keyword=" + VPID);
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
+                    if(db.Rows.Count > 0)
+                    {
+                        PID = Convert.ToString(db.Rows[0]["patient_id"]);
+
+                        string url = $"/emr/emrinfor.aspx?pid={PID}&vbid={VPID}&loc={loc}";
+
+                        PatientHistoryVm patientHistoryVm = new PatientHistoryVm()
+                        {
+                            date_of_birth = DataHelpers.ConvertSQLDateTime(WebHelpers.ConvertDateTime(item["date_of_birth"].Text, out bool isValid, out string dateTime)),
+                            gender = Convert.ToString(item.GetDataKeyValue("gender")),
+                            patient_name = Convert.ToString(item["patient_name"].Text),
+                            user_name = Convert.ToString(Session["UserId"]),
+                            visible_patient_id = Convert.ToString(item.GetDataKeyValue("visible_patient_id"))
+                        };
+                         
+                        dynamic response1 = WebHelpers.PostAPI($"api/emr/patient-history", patientHistoryVm);
+
+                        if (response1.Status == System.Net.HttpStatusCode.OK)
+                        {
+                            Response.Redirect(url);
+                        }
+                    }
+                }
+            }
         }
     }
 }

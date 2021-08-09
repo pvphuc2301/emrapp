@@ -51,13 +51,13 @@ namespace EMR
         protected global::System.Web.UI.UserControl GeoAlt;
 
         /// <summary>
-        /// lbl_location control.
+        /// lbl_company_code control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_location;
+        protected global::System.Web.UI.WebControls.Label lbl_company_code;
 
         /// <summary>
         /// location_aih control.

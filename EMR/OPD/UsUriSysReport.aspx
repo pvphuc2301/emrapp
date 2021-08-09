@@ -509,7 +509,9 @@
         }
 
         function afterAsyncPostBack() {
-
+            setTimeout(function () {
+                document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
+            }, 1000);
         }
 
         function showWindow() {

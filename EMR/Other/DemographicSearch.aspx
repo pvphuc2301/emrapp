@@ -23,7 +23,7 @@
 <body>
     <form id="form1" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
-        <div class="scroll-effect" style="overflow: hidden; height: calc(100vh - 52px);">
+        <div style="overflow-x: hidden; overflow-y: scroll; height: calc(100vh - 52px);">
             <asp:UpdatePanel ID="updatePanel_demographicSearch" runat="server" UpdateMode="Always">
                 <ContentTemplate>
                     <div class="card">
@@ -56,7 +56,7 @@
                                     <ClientSettings>
                                         <ClientEvents OnRowDblClick="RowDblClick" />
                                     </ClientSettings>
-                                    <MasterTableView AutoGenerateColumns="False" DataKeyNames="patient_id, visible_patient_id" ClientDataKeyNames="patient_id">
+                                    <MasterTableView AutoGenerateColumns="False" DataKeyNames="patient_id, visible_patient_id, gender_l" ClientDataKeyNames="patient_id">
                                         <Columns>
                                             <telerik:GridTemplateColumn Display="false" HeaderStyle-Width="0" ItemStyle-Width="0" ItemStyle-Wrap="false">
                                                 <ItemTemplate>
@@ -69,9 +69,16 @@
                                             </telerik:GridBoundColumn>--%>
                                             <telerik:GridBoundColumn SortExpression="patient_name_l" HeaderText="Name" DataField="patient_name_l" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
                                             </telerik:GridBoundColumn>
-                                            <telerik:GridBoundColumn SortExpression="date_of_birth" HeaderText="Age" DataField="date_of_birth" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
+                                            <telerik:GridTemplateColumn HeaderText="Age" >
+                                                <ItemTemplate>
+                                                    <telerik:RadLabel runat="server" Text='<%# GetAge(Eval("date_of_birth")) %>'></telerik:RadLabel>
+                                                </ItemTemplate>
+                                            </telerik:GridTemplateColumn>
+                                            <telerik:GridBoundColumn Display="false" SortExpression="date_of_birth" HeaderText="Age" DataField="date_of_birth" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn SortExpression="gender_e" HeaderText="Gender" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" DataField="gender_e" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn SortExpression="gender_l" Visible="false" HeaderText="Gender" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" DataField="gender_l" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn SortExpression="work_queue_l" HeaderText="Work Queue" DataField="work_queue_l" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
                                             </telerik:GridBoundColumn>
@@ -167,8 +174,12 @@
                                     <telerik:GridBoundColumn
                                         SortExpression="patient_name_l" HeaderText="Name" DataField="patient_name_l" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
                                     </telerik:GridBoundColumn>
-                                    <telerik:GridBoundColumn
-                                        SortExpression="date_of_birth" HeaderText="Age" DataField="date_of_birth" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
+                                    <telerik:GridTemplateColumn HeaderText="Age" >
+                                        <ItemTemplate>
+                                            <telerik:RadLabel runat="server" Text='<%# GetAge(Eval("date_of_birth")) %>'></telerik:RadLabel>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+                                    <telerik:GridBoundColumn SortExpression="date_of_birth" Display="false" HeaderText="Age" DataField="date_of_birth" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
                                     </telerik:GridBoundColumn>
                                     <telerik:GridBoundColumn
                                         SortExpression="gender_e" HeaderText="Gender" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" DataField="gender_e" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
@@ -212,9 +223,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                            <telerik:RadGrid CssClass="table" BorderWidth="0" AutoGenerateColumns="false" ID="RadGrid2" runat="server" AllowPaging="True"
-                                ShowHeader="true"  OnItemCommand="RadGrid5_ItemCommand"
-                                OnItemDataBound="RadGrid2_ItemDataBound" AllowSorting="true" OnNeedDataSource="RadGrid2_NeedDataSource">
+                            <telerik:RadGrid CssClass="table" BorderWidth="0" AutoGenerateColumns="false" ID="RadGrid2" runat="server" AllowPaging="True" ShowHeader="true"  OnItemCommand="RadGrid5_ItemCommand" AllowSorting="true" OnNeedDataSource="RadGrid2_NeedDataSource">
                                 <ClientSettings>
                                         <ClientEvents OnRowDblClick="RowDblClick2" />
                                     </ClientSettings>
@@ -241,6 +250,7 @@
                                         <telerik:GridBoundColumn
                                             SortExpression="patient_name_l" HeaderText="Name" DataField="patient_name_l" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
                                         </telerik:GridBoundColumn>
+
                                         <telerik:GridBoundColumn
                                             SortExpression="date_of_birth" HeaderText="Age" DataField="date_of_birth" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
                                         </telerik:GridBoundColumn>
@@ -317,7 +327,7 @@
                 <div class="card-footer bg-white py-4"></div>
             </div>
 
-            <%--<div class="row" id="last_customer" runat="server">
+            <div class="row" id="last_customer" runat="server">
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-header bg-white">
@@ -327,22 +337,36 @@
                         </div>
                         <div class="card-body" style="padding: 0">
                             <div class="table-responsive">
-                                <telerik:RadGrid CssClass="table" BorderWidth="0" OnSelectedIndexChanged="RadGrid1_SelectedIndexChanged"
-                                    AutoGenerateColumns="false" ID="RadGrid3" runat="server" AllowPaging="True"
-                                    OnItemDataBound="RadGrid2_ItemDataBound" OnNeedDataSource="RadGrid3_NeedDataSource" AllowSorting="true">
-                                    <MasterTableView AutoGenerateColumns="False" DataKeyNames="patient_id">
+                                <telerik:RadGrid CssClass="table" BorderWidth="0" AutoGenerateColumns="false" ID="RadGrid3" runat="server" AllowPaging="True" OnItemCommand="RadGrid3_ItemCommand"  OnNeedDataSource="RadGrid3_NeedDataSource" AllowSorting="true">
+                                    <ClientSettings>
+                                        <ClientEvents OnRowDblClick="RowDblClick3" />
+                                    </ClientSettings>
+                                    <MasterTableView AutoGenerateColumns="False" DataKeyNames="visible_patient_id, gender">
                                         <Columns>
+                                            <telerik:GridTemplateColumn Display="false" HeaderStyle-Width="0" ItemStyle-Width="0" ItemStyle-Wrap="false">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="lnkOpen" runat="server" CommandArgument='<%#Eval("visible_patient_id") %>' CommandName="Open" Text=""></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
                                             <telerik:GridBoundColumn
                                                 SortExpression="visible_patient_id" HeaderText="Patient ID" DataField="visible_patient_id" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" ItemStyle-Font-Bold="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn
-                                                SortExpression="patient_name_l" HeaderText="Name" DataField="patient_name_l" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
+                                                SortExpression="patient_name" HeaderText="Name" DataField="patient_name" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridTemplateColumn HeaderText="Age" >
+                                                <ItemTemplate>
+                                                    <telerik:RadLabel runat="server" Text='<%# GetAge(Eval("date_of_birth")) %>'></telerik:RadLabel>
+                                                </ItemTemplate>
+                                            </telerik:GridTemplateColumn>
+                                            <telerik:GridBoundColumn
+                                                SortExpression="date_of_birth" Display="false" HeaderText="Age" DataField="date_of_birth" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn
-                                                SortExpression="date_of_birth" HeaderText="Age" DataField="date_of_birth" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
+                                                SortExpression="gender" HeaderText="Gender" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" DataField="gender" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn
-                                                SortExpression="gender_e" HeaderText="Gender" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" DataField="gender_e" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
+                                                SortExpression="lu_date_time" HeaderText="last update" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" DataField="lu_date_time" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
                                             </telerik:GridBoundColumn>
                                         </Columns>
                                     </MasterTableView>
@@ -359,27 +383,41 @@
                     <div class="card">
                         <div class="card-header bg-white">
                             <h4 class="card-title control-label m-0">
-                                <span class="text-primary">Last 1 Month</span>
+                                <span class="text-primary">Last 4 Weeks</span>
                             </h4>
                         </div>
                         <div class="card-body" style="padding: 0">
                             <div class="table-responsive">
-                                <telerik:RadGrid CssClass="table" BorderWidth="0" OnSelectedIndexChanged="RadGrid1_SelectedIndexChanged" AutoGenerateColumns="false"
-                                    ID="RadGrid4" runat="server" AllowPaging="True" OnItemDataBound="RadGrid2_ItemDataBound"
-                                    AllowSorting="true" >
-                                    <MasterTableView AutoGenerateColumns="False" DataKeyNames="patient_id">
+                                <telerik:RadGrid CssClass="table" BorderWidth="0" AutoGenerateColumns="false" ID="RadGrid4" runat="server" AllowPaging="True" OnItemCommand="RadGrid3_ItemCommand" OnNeedDataSource="RadGrid4_NeedDataSource" AllowSorting="true">
+                                    <ClientSettings>
+                                        <ClientEvents OnRowDblClick="RowDblClick4" />
+                                    </ClientSettings>
+                                    <MasterTableView AutoGenerateColumns="False" DataKeyNames="visible_patient_id, gender">
                                         <Columns>
+                                            <telerik:GridTemplateColumn Display="false" HeaderStyle-Width="0" ItemStyle-Width="0" ItemStyle-Wrap="false">
+                                        <ItemTemplate>
+                                            <asp:LinkButton ID="lnkOpen" runat="server" CommandArgument='<%#Eval("visible_patient_id") %>' CommandName="Open" Text=""></asp:LinkButton>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
                                             <telerik:GridBoundColumn
                                                 SortExpression="visible_patient_id" HeaderText="Patient ID" DataField="visible_patient_id" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" ItemStyle-Font-Bold="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn
-                                                SortExpression="patient_name_l" HeaderText="Name" DataField="patient_name_l" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
+                                                SortExpression="patient_name" HeaderText="Name" DataField="patient_name" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
+                                            </telerik:GridBoundColumn>
+                                            <telerik:GridTemplateColumn HeaderText="Age" >
+                                                <ItemTemplate>
+                                                    <telerik:RadLabel runat="server" Text='<%# GetAge(Eval("date_of_birth")) %>'></telerik:RadLabel>
+                                                </ItemTemplate>
+                                            </telerik:GridTemplateColumn>
+                                            <telerik:GridBoundColumn
+                                                SortExpression="date_of_birth" Display="false" HeaderText="Age" DataField="date_of_birth" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn
-                                                SortExpression="date_of_birth" HeaderText="Age" DataField="date_of_birth" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
+                                                SortExpression="gender" HeaderText="Gender" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" DataField="gender" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
                                             </telerik:GridBoundColumn>
                                             <telerik:GridBoundColumn
-                                                SortExpression="gender_e" HeaderText="Gender" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" DataField="gender_e" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
+                                                SortExpression="lu_date_time" HeaderText="last update" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" DataField="lu_date_time" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
                                             </telerik:GridBoundColumn>
                                         </Columns>
                                     </MasterTableView>
@@ -392,7 +430,7 @@
                         <div class="card-footer bg-white py-4"></div>
                     </div>
                 </div>
-            </div>--%>
+            </div>
         </div>
     </form>
     <script src="../scripts/myScript.js"></script>
@@ -447,6 +485,28 @@
             button.click();
 
             //console.log(row);
+        }
+
+        function RowDblClick3(sender, eventArgs) {
+            var grid = $find("<%=  RadGrid3.ClientID %>");
+            var masterTable = grid.get_masterTableView();
+            var item = eventArgs.get_itemIndexHierarchical();
+
+            var row = masterTable.get_dataItems()[item];
+
+            var button = row.findElement("lnkOpen");
+            button.click();
+        }
+
+        function RowDblClick4(sender, eventArgs) {
+            var grid = $find("<%=  RadGrid4.ClientID %>");
+            var masterTable = grid.get_masterTableView();
+            var item = eventArgs.get_itemIndexHierarchical();
+
+            var row = masterTable.get_dataItems()[item];
+
+            var button = row.findElement("lnkOpen");
+            button.click();
         }
         
         function funfordefautenterkey1(btn, event) {

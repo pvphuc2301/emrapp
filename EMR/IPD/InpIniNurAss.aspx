@@ -3841,6 +3841,9 @@ applicable for children and pregnant</span>)
             load_pain_annotation_Image();
 
             load_skin_anno_data_Image();
+            setTimeout(function () {
+                document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
+            }, 1000);
         }
 
         function showWindow() {

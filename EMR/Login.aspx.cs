@@ -20,8 +20,7 @@ namespace Emr_client.Emr
     public partial class Login : System.Web.UI.Page
     {
         public string ConnStringEMR = "";
-        public string varLocation;
-
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             //if (Convert.ToString(Session["company_code"]) == "AIHC")
@@ -57,7 +56,7 @@ namespace Emr_client.Emr
                     //Session["current_session"] = current_ss.Session.SessionID;
                     Insert_EMR_Account(UserName.Value, Convert.ToString(Session["company_code"]));
                     if (string.IsNullOrEmpty(Request.QueryString["ReturnUrl"]))
-                        Response.Redirect($"Emr.aspx?loc={varLocation}");
+                        Response.Redirect($"Emr.aspx?");
                     else
                         FormsAuthentication.RedirectFromLoginPage(UserName.Value, false);
                 }
@@ -86,9 +85,7 @@ namespace Emr_client.Emr
                     Session["job_type"] = Convert.ToString(data.job_type_code);
                     Session["company_code"] = Convert.ToString(data.company_code);
                     Session["specialty_code"] = Convert.ToString(data.specialty_code);
-                    Session["location"] = Convert.ToString(data.company_code);
-                    Session["locationChanged"] = "";
-                    varLocation = Convert.ToString(data.company_code);
+                    
                     //  Session["upw"] = varUserPW;
                     //edit by mr. Phut
 

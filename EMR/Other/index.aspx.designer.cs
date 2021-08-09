@@ -204,6 +204,51 @@ namespace EMR.Other
         protected global::Telerik.Web.UI.RadGrid RadGrid1;
 
         /// <summary>
+        /// RadWindowManager control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadWindowManager RadWindowManager;
+
+        /// <summary>
+        /// RadWindow1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadWindow RadWindow1;
+
+        /// <summary>
+        /// txtUpdateReason control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtUpdateReason;
+
+        /// <summary>
+        /// sendRequestVmDB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField sendRequestVmDB;
+
+        /// <summary>
+        /// btnSendRequest control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton btnSendRequest;
+
+        /// <summary>
         /// DocumentList control.
         /// </summary>
         /// <remarks>

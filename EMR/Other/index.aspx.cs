@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using EMR.Model;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -19,6 +21,7 @@ namespace EMR.Other
         public string varVPID { get; set; }
         PatientInfo patientInfo;
         PatientVisitInfo patientVisitInfo;
+        SendRequestVm sendRequestVm;
         public string loc { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
@@ -84,6 +87,22 @@ namespace EMR.Other
                         AddFormSend(pvid, visitType, visible_id, visitCode, visitDate);
                         RadGrid1.Rebind();
                         break;
+
+                    //case "sendRequest":
+                    //    sendRequestVm = new SendRequestVm()
+                    //    {
+                    //        pvid = item.GetDataKeyValue("patient_visit_id").ToString(),
+                    //        visible_id = Request.QueryString["vpid"],
+                    //        visitCode = Convert.ToString(lbVisit_code.Text),
+                    //        visitDate = Convert.ToString(lbVisit_date_time.Text),
+                    //        visitType = item.GetDataKeyValue("visit_type_group_rcd").ToString()
+                    //    };
+
+                    //    sendRequestVmDB.Value = JsonConvert.SerializeObject(sendRequestVm);
+
+                    //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "show_window", "setTimeout(()=>{ showWindow(); }, 0);", true);
+
+                    //    break;
                 }
             }
         }
@@ -125,7 +144,8 @@ namespace EMR.Other
         {
             if (e.Item is GridDataItem)
             {
-                LinkButton btnAction = e.Item.FindControl("btnAddNew") as LinkButton;
+                RadButton btnAction = e.Item.FindControl("btnAddNew") as RadButton;
+                btnAction.AutoPostBack = true;
 
                 GridDataItem item = (e.Item as GridDataItem);
 
@@ -133,6 +153,7 @@ namespace EMR.Other
                 string allow_date_time = ((GridDataItem)e.Item).GetDataKeyValue("allow_date_time").ToString();
 
                 string request_date_time = Convert.ToString((item["PatientInfor"].FindControl("lbRequest_date_time") as Label).Text);
+
                 string check_send = Convert.ToString((item["PatientInfor"].FindControl("lbCheckSend") as Label).Text);
 
                 //DateTime dateTime;
@@ -141,16 +162,22 @@ namespace EMR.Other
                     btnAction.Text = "Send";
 
                     btnAction.CssClass = "btn btn-sm btn-secondary waves-effect ";
+                    btnAction.Primary = false;
+
                     if (!string.IsNullOrEmpty(allow_date_time))
                     {
                         btnAction.CssClass = "btn btn-sm btn-primary waves-effect";
+                        btnAction.Primary = true;
                         btnAction.Text = "Update";
                         btnAction.Enabled = true;
                     }
                     else if (!string.IsNullOrEmpty(check_send) && check_send.ToLower() == "true" && string.IsNullOrEmpty(request_date_time))
                     {
-                        btnAction.CssClass = "btn btn-sm btn-primary waves-effect";
+                        //btnAction.CssClass = "btn btn-sm btn-primary waves-effect";
+                        btnAction.Primary = true;
                         btnAction.CommandName = "sendRequest";
+                        //btnAction.AutoPostBack = false;
+
                         //   btnAction.CssClass += "disabled";
                         btnAction.Enabled = true;
                     }
@@ -226,10 +253,10 @@ namespace EMR.Other
                 objMail.CC.Add(varEmail);
             }
 
-            var msg_Body = "Kính gửi phòng KHTH,\n \n ";
+            var msg_Body = "Kính gửi phòng KHTH,<br /> <br /> ";
             msg_Body += "Kính gửi phòng KTTH cấp quyền cập nhật hồ sơ bệnh án của khách hàng: " + visibleID + ", ngày đến khám: " + visitDate + ", ";
-            msg_Body += "visit code: " + visitCode + ", visit type: " + visitType + " \n ";
-            msg_Body += "Vui lòng nhấn đường link phía dưới để xem chi tiết và phê duyệt: \n " + varUrl + " \n \n " + Session["UserName"] + "\n ";
+            msg_Body += "visit code: " + visitCode + ", visit type: " + visitType + " <br /> ";
+            msg_Body += "Vui lòng nhấn đường link phía dưới để xem chi tiết và phê duyệt: <br /> " + varUrl + " <br /> <br /> " + Session["UserName"] + "<br /> ";
 
             objMail.Subject = "Yêu cầu cập nhật Hồ Sơ Bệnh Án từ:" + Session["UserName"];
             objMail.Body = msg_Body;// "Content office 365";
@@ -247,7 +274,6 @@ namespace EMR.Other
                                //smtpMail.Credentials = new NetworkCredential(MailAddressFrom.Address, txtPassword.Text);
             smtpMail.Credentials = new NetworkCredential(MailAddressFrom.Address, "AIH2@18!@");//"AIH2@18!@"
                                                                                                //if (!string.IsNullOrEmpty(varFr) && !string.IsNullOrEmpty(varToMail))
-            if(!string.IsNullOrEmpty(varToMail))
                 smtpMail.Send(objMail);
 
         }
@@ -287,14 +313,13 @@ namespace EMR.Other
         //}
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            
             string selectedItem = Request.Form.Get("ddlDocList");
 
-                string[] _params = selectedItem.Split('|');
+            string[] _params = selectedItem.Split('|');
 
-                string PVID = _params[2];
-                string modelID = _params[0];
-                string userName = (string)Session["UserID"];
+            string PVID = _params[2];
+            string modelID = _params[0];
+            string userName = (string)Session["UserID"];
 
             patientVisitInfo = new PatientVisitInfo(PVID, loc);
 
@@ -416,6 +441,18 @@ namespace EMR.Other
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 (sender as RadGrid).DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+            }
+        }
+
+        protected void btnSendRequest_Click(object sender, EventArgs e)
+        {
+            dynamic sendRequestVm  = JObject.Parse(sendRequestVmDB.Value);
+
+            if(sendRequestVm != null)
+            {
+                string a = txtUpdateReason.Text;
+                AddFormSend(sendRequestVm.pvid, sendRequestVm.visitType, sendRequestVm.visible_id, sendRequestVm.visitCode, sendRequestVm.visitDate);
+                RadGrid1.Rebind();
             }
         }
     }

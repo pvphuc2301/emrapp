@@ -64,7 +64,7 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link btn-link  waves-effect waves-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                  <icon:GeoAlt runat="server" ID="GeoAlt" />
-                                <asp:Label runat="server" ID="lbl_location"></asp:Label>
+                                <asp:Label runat="server" ID="lbl_company_code"></asp:Label>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right animated flipInY" aria-labelledby="btnGroupDrop1">
                                 <a runat="server" onclick="__doPostBack('location_Change', 'AIH')" id="location_aih" class="dropdown-item disabled" href="javascript:void(0)">

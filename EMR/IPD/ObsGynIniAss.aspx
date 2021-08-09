@@ -2104,6 +2104,9 @@
             formGroup_init();
             InputFilter("data-type='number'");
             $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
+            setTimeout(function () {
+                document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
+            }, 1000);
         }
 
         function showWindow() {

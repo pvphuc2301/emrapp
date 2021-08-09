@@ -14,7 +14,7 @@
 <body>
     <form id="form1" runat="server">
         <telerik:RadScriptManager ID="RadScriptManager1" runat="server"></telerik:RadScriptManager>
-        <div class="scroll-effect" style="overflow: hidden; height: 100vh;">
+        <div style="overflow-x: hidden; overflow-y: scroll; height: 100vh;">
         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                 <div class="row">
@@ -174,7 +174,12 @@
                                                                 <div>Action</div>
                                                             </HeaderTemplate>
                                                             <ItemTemplate>
-                                                                <asp:LinkButton runat="server" CommandName="addNew" ID="btnAddNew" CssClass="btn btn-sm btn-primary waves-effect" Width="66px">Add new</asp:LinkButton>
+                                                                <%--<asp:LinkButton runat="server" CommandName="addNew" ID="btnAddNew"  CssClass="btn btn-sm btn-primary waves-effect" Width="66px">Add new</asp:LinkButton>--%>
+
+                                                                <telerik:RadButton RenderMode="Lightweight" ID="btnAddNew" runat="server" 
+                        Text="Add New" CommandName="addNew">
+                    </telerik:RadButton>
+
                                                             </ItemTemplate>
                                                         </telerik:GridTemplateColumn>
 
@@ -216,6 +221,22 @@
                     </div>
                 </div>
                     
+                <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="250">
+                <Windows>
+                    <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Update reason" runat="server">
+                        <ContentTemplate>
+
+                            <telerik:RadTextBox RenderMode="Lightweight" runat="server" ID="txtUpdateReason" Width="100%" EmptyMessage="Enter reason" TextMode="MultiLine" Height="100px" Resize="None"></telerik:RadTextBox><br />
+                            <asp:HiddenField runat="server" ID="sendRequestVmDB" />
+                            <telerik:RadButton CssClass="mt-2" RenderMode="Lightweight" ID="btnSendRequest" runat="server"
+                        Text="Send" Primary="true" OnClick="btnSendRequest_Click" >
+
+                    </telerik:RadButton>
+                        </ContentTemplate>
+                    </telerik:RadWindow>
+                </Windows>
+            </telerik:RadWindowManager>
+
                 <div id="DocumentList" runat="server" class="modal fade in" role="dialog" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
                         <div class="modal-content">
@@ -265,6 +286,11 @@
     <script src="../scripts/bootstrap.min.js"></script>
 
     <script>
+
+        function showWindow() {
+            var oWnd = $find("<%=RadWindow1.ClientID%>");
+            oWnd.show();
+        }
 
         function ddDocList_select() {
             if (document.getElementById('ddlDocList').value == "") {

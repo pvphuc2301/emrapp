@@ -453,6 +453,8 @@
     <Compile Include="IPD\SurgicalReport.aspx.designer.cs">
       <DependentUpon>SurgicalReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Model\PatientHistoryVm.cs" />
+    <Compile Include="Model\sendRequestVm.cs" />
     <Compile Include="Other\Test.aspx.cs">
       <DependentUpon>Test.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1146,7 +1148,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

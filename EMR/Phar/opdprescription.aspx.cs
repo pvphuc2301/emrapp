@@ -120,7 +120,7 @@ namespace EMR.Print
             //else if (visitType == "IPD")
             //    jsString = "api/emr/vital-sign-ipd/" + varPV_ID;
             //    string _jsonData = WebHelpers.GetAPI(jsString);
-            loc = (string)Session["location"];
+            loc = (string)Session["company_code"];
             jsString = $"api/emr/vital-sign/{loc}/{varPV_ID}/" + varPresType;
             dynamic response = WebHelpers.GetAPI(jsString);
 

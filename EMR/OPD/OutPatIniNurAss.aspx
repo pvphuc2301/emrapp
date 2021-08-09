@@ -815,6 +815,9 @@
             InputFilter("data-type='number1'", /^\d*\.?\/?\d*$/);
             if (document.getElementById('txt_vs_bmi') != null) setbmiStr(document.getElementById('txt_vs_bmi').value);
             $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
+            setTimeout(function () {
+                document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
+            }, 1000);
         }
 
         function showWindow() {

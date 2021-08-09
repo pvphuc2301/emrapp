@@ -15,7 +15,7 @@
 <%@ Register Src="~/icons/Trash.ascx" TagPrefix="icon" TagName="Trash" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PatientLabel1.ascx" TagPrefix="webUI" TagName="PatientLabel1" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Line.ascx" TagPrefix="webUI" TagName="Line" %>
-<%@ Register Src="~/UserControls/PrintTemplate/PrtRowS1.ascx" TagPrefix="webUI" TagName="PrtRowS1" %>
+<%@ Register Src="~/UserControls/PrintTemplate/PrtRowS1.ascx" TagPrefix="" TagName="PrtRowS1" %>
 <%@ Register Src="~/UserControls/PrintTemplate/Signature1.ascx" TagPrefix="webUI" TagName="Signature1" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrtRowS2.ascx" TagPrefix="webUI" TagName="PrtRowS2" %>
 <%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="webUI" TagName="PopupShowDelay" %>
@@ -1173,6 +1173,9 @@
 
         function afterAsyncPostBack() {
             checkboxRadiobutton_init();
+            setTimeout(function () {
+                document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
+            }, 1000);
         }
         function showWindow() {
             var oWnd = $find("<%=RadWindow1.ClientID%>");

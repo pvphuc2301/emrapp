@@ -605,12 +605,14 @@
         var elem = window.parent.parent.document.getElementById("myProgress");
         progress(elem);
 
-
         function beforeAsyncPostBack() {
             var curtime = new Date();
         }
 
         function afterAsyncPostBack() {
+            setTimeout(function() {
+                document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
+            }, 1000);
         }
 
         function showWindow() {

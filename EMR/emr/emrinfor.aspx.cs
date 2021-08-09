@@ -29,7 +29,7 @@ namespace EMR
         {
             if (!WebHelpers.CheckSession(this, "", false)) return;
 
-            loc = Request.QueryString["loc"];
+            loc = (string)Session["company_code"];
             linkDemographicSearch.HRef = $"~/Other/DemographicSearch.aspx?loc={loc}";
             //if (Session["PageOpenEMR"] != null)
             //{

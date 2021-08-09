@@ -40,7 +40,7 @@ namespace EMR
     public enum ControlState { View, Edit }
     public static class WebHelpers
     {
-        public static string URL = "http://172.16.0.88:8080/";//DEV
+        public static string URL = "http://172.16.0.88:8080/";//PRO
         //public static string URL = "http://172.16.0.78:8088/";//UAT
 
         #region API
@@ -675,7 +675,7 @@ namespace EMR
 
         internal static void Notification(Page page, string message, string type = "success")
         {
-            string script_str = "setTimeout(()=>{ alertify.set({ delay: 100700 });  alertify." + type + "(\"" + message + "\");},0);";
+            string script_str = "setTimeout(()=>{ alertify.set({ delay: 1700 });  alertify." + type + "(\"" + message + "\");},0);";
             ScriptManager.RegisterStartupScript(page, page.GetType(), "msg_error", script_str, true);
         }
 
