@@ -20,7 +20,7 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div contenteditable="true" id="pre"></div>
+        <asp:Button runat="server" ID="btnSend" Text="Send"  OnClick="btnSend_Click"/>
     </form>
 
     <script src="../scripts/jquery-3.2.1.min.js"></script>

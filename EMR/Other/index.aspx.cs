@@ -83,26 +83,26 @@ namespace EMR.Other
                         DocumentList.Visible = true;
                         AddForm(pvid, visitType);
                         break;
-                    case "sendRequest":
-                        AddFormSend(pvid, visitType, visible_id, visitCode, visitDate);
-                        RadGrid1.Rebind();
-                        break;
-
                     //case "sendRequest":
-                    //    sendRequestVm = new SendRequestVm()
-                    //    {
-                    //        pvid = item.GetDataKeyValue("patient_visit_id").ToString(),
-                    //        visible_id = Request.QueryString["vpid"],
-                    //        visitCode = Convert.ToString(lbVisit_code.Text),
-                    //        visitDate = Convert.ToString(lbVisit_date_time.Text),
-                    //        visitType = item.GetDataKeyValue("visit_type_group_rcd").ToString()
-                    //    };
-
-                    //    sendRequestVmDB.Value = JsonConvert.SerializeObject(sendRequestVm);
-
-                    //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "show_window", "setTimeout(()=>{ showWindow(); }, 0);", true);
-
+                    //    AddFormSend(pvid, visitType, visible_id, visitCode, visitDate);
+                    //    RadGrid1.Rebind();
                     //    break;
+
+                    case "sendRequest":
+                        sendRequestVm = new SendRequestVm()
+                        {
+                            pvid = item.GetDataKeyValue("patient_visit_id").ToString(),
+                            visible_id = Request.QueryString["vpid"],
+                            visitCode = Convert.ToString(lbVisit_code.Text),
+                            visitDate = Convert.ToString(lbVisit_date_time.Text),
+                            visitType = item.GetDataKeyValue("visit_type_group_rcd").ToString()
+                        };
+
+                        sendRequestVmDB.Value = JsonConvert.SerializeObject(sendRequestVm);
+
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "show_window", "setTimeout(()=>{ showWindow(); }, 0);", true);
+
+                        break;
                 }
             }
         }
@@ -156,7 +156,8 @@ namespace EMR.Other
 
                 string check_send = Convert.ToString((item["PatientInfor"].FindControl("lbCheckSend") as Label).Text);
 
-                //DateTime dateTime;
+                string closed_date_time = Convert.ToString(item.GetDataKeyValue("closed_date_time"));
+                
                 if (DateTime.TryParse(closure_date_time, out DateTime dateTime))
                 {
                     btnAction.Text = "Send";
@@ -164,14 +165,14 @@ namespace EMR.Other
                     btnAction.CssClass = "btn btn-sm btn-secondary waves-effect ";
                     btnAction.Primary = false;
 
-                    if (!string.IsNullOrEmpty(allow_date_time))
+                    if (!string.IsNullOrEmpty(allow_date_time) && string.IsNullOrEmpty(closed_date_time))
                     {
                         btnAction.CssClass = "btn btn-sm btn-primary waves-effect";
                         btnAction.Primary = true;
                         btnAction.Text = "Update";
                         btnAction.Enabled = true;
                     }
-                    else if (!string.IsNullOrEmpty(check_send) && check_send.ToLower() == "true" && string.IsNullOrEmpty(request_date_time))
+                    else if (!string.IsNullOrEmpty(check_send) && check_send.ToLower() == "true" && (string.IsNullOrEmpty(request_date_time) || !string.IsNullOrEmpty(closed_date_time)))
                     {
                         //btnAction.CssClass = "btn btn-sm btn-primary waves-effect";
                         btnAction.Primary = true;
@@ -198,7 +199,7 @@ namespace EMR.Other
                 else
                 {
                     DateTime visit_date = DateTime.Parse(item["actual_visit_date_time"].Text.ToString());
-
+                    btnAction.Primary = true;
                     System.TimeSpan diff = DateTime.Now.Subtract(visit_date);
                     System.TimeSpan diff1 = DateTime.Now - visit_date;
 
@@ -232,7 +233,7 @@ namespace EMR.Other
             
             string varUrl = "http://emr.aih.com.vn/report/AllowUpdateEMR.aspx";
 
-            string apiString = $"api/patient/allow-doc-req/{pvid}/{varUserName}?full_name={varFullName}&email={varEmail}";
+            string apiString = $"api/patient/allow-doc-req/{pvid}/{varUserName}?full_name={varFullName}&email={varEmail}&reason={txtUpdateReason.Text}";
 
             dynamic response = WebHelpers.PostAPI(apiString);
 
@@ -256,9 +257,12 @@ namespace EMR.Other
             var msg_Body = "Kính gửi phòng KHTH,<br /> <br /> ";
             msg_Body += "Kính gửi phòng KTTH cấp quyền cập nhật hồ sơ bệnh án của khách hàng: " + visibleID + ", ngày đến khám: " + visitDate + ", ";
             msg_Body += "visit code: " + visitCode + ", visit type: " + visitType + " <br /> ";
+            
+            msg_Body += "Lý do: " + txtUpdateReason.Text + " <br /> ";
+
             msg_Body += "Vui lòng nhấn đường link phía dưới để xem chi tiết và phê duyệt: <br /> " + varUrl + " <br /> <br /> " + Session["UserName"] + "<br /> ";
 
-            objMail.Subject = "Yêu cầu cập nhật Hồ Sơ Bệnh Án từ:" + Session["UserName"];
+            objMail.Subject = "Yêu cầu cập nhật Hồ Sơ Bệnh Án từ: " + Session["UserName"];
             objMail.Body = msg_Body;// "Content office 365";
             objMail.IsBodyHtml = true;
 
@@ -451,7 +455,14 @@ namespace EMR.Other
             if(sendRequestVm != null)
             {
                 string a = txtUpdateReason.Text;
-                AddFormSend(sendRequestVm.pvid, sendRequestVm.visitType, sendRequestVm.visible_id, sendRequestVm.visitCode, sendRequestVm.visitDate);
+
+                string pvid = sendRequestVm.pvid;
+                string visitType = sendRequestVm.visitType;
+                string visible_id = sendRequestVm.visible_id;
+                string visitCode = sendRequestVm.visitCode;
+                string visitDate = WebHelpers.FormatDateTime(sendRequestVm.visitDate, "dd-MMM-yyyy HH:mm");
+
+                AddFormSend(pvid, visitType, visible_id, visitCode, visitDate);
                 RadGrid1.Rebind();
             }
         }

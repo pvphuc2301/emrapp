@@ -26,6 +26,7 @@ namespace EMR.Print
             varPV_ID = Request.QueryString["vid"];
             varPharID = Request.QueryString["phar"];
             varPresType = Request.QueryString["pres_type"];
+            loc = (string)Session["company_code"];
 
             if (!IsPostBack && !string.IsNullOrEmpty(varPID))
             {
@@ -120,7 +121,7 @@ namespace EMR.Print
             //else if (visitType == "IPD")
             //    jsString = "api/emr/vital-sign-ipd/" + varPV_ID;
             //    string _jsonData = WebHelpers.GetAPI(jsString);
-            loc = (string)Session["company_code"];
+            
             jsString = $"api/emr/vital-sign/{loc}/{varPV_ID}/" + varPresType;
             dynamic response = WebHelpers.GetAPI(jsString);
 
@@ -163,19 +164,30 @@ namespace EMR.Print
             {
                 mydataTable = WebHelpers.GetJSONToDataTable(response.Data);
                 //dynamic data = JObject.Parse(response.Data);
+                DateTime vsDate;
                 foreach (DataRow row in mydataTable.Rows)
                 {
-                    lbVisitDate.Text = row["actual_visit_date_time"].ToString();//.ToString("dd-MM-yyyy");
+
+                    lbVisitDate.Text = WebHelpers.FormatDateTime(row["actual_visit_date_time"].ToString(), "dd-MM-yyyy HH:mm tt");//.ToString("dd-MM-yyyy");
                     vsType = row["visit_type_group_rcd"].ToString();
+
+                    vsDate = WebHelpers.ConvertDateTime(row["actual_visit_date_time"].ToString(), out bool isValid, out string dateTime);
+                    if (isValid)
+                    {
+                        if (vsDate.Month < 8 && vsDate.Year <= 2020)
+                            oldVisit = true;
+                    }
+
                     break;
                 }                    
 
-                if (!string.IsNullOrEmpty(lbVisitDate.Text))
-                {
-                    DateTime vsDate = Convert.ToDateTime(lbVisitDate.Text);
-                    if (vsDate.Month < 8 && vsDate.Year <= 2020)
-                        oldVisit = true;
-                }
+                //if (!string.IsNullOrEmpty(lbVisitDate.Text))
+                //{
+                //    DateTime vsDate = Convert.ToDateTime(row["actual_visit_date_time"].ToString());
+                //    if (vsDate.Month < 8 && vsDate.Year <= 2020)
+                //        oldVisit = true;
+                //}
+
                 if (vsType == "OPD")
                 {
                     lbSpecialty.Text = "Khoa Khám Bệnh/ OPD";

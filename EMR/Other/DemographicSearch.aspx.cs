@@ -81,12 +81,17 @@ namespace EMR.Other
                 }
             }
         }
+
+        protected void RadGrid2_ItemDataBound(object sender, GridItemEventArgs e)
+        {
+
+        }
         protected void RadGrid1_ItemDataBound(object sender, GridItemEventArgs e)
         {
             if (e.Item is GridDataItem)
             {
                 GridDataItem gridItem = e.Item as GridDataItem;
-                gridItem["date_of_birth"].Text = DataHelpers.CalculateAge(DateTime.Parse(gridItem["date_of_birth"].Text)).ToString();
+                
                 Label lbCompleteDate = gridItem.FindControl("lbCompleted_Date") as Label;
                 Button btnComplete = gridItem.FindControl("btnAction") as Button;
                 if (string.IsNullOrEmpty(Convert.ToString(lbCompleteDate.Text)))

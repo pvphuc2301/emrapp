@@ -28,13 +28,12 @@ namespace EMR
         protected string loc;
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (!WebHelpers.CheckSession(this)) { return; }
 
             varPID = Request.QueryString["pid"];
             varVPID = Request.QueryString["vpid"];
-            loc = Request.QueryString["loc"];
-
+            loc = (string)Session["company_code"];
+            
 
             ConnClass ConnStr = new ConnClass();
 
@@ -374,7 +373,7 @@ namespace EMR
                     }
                 }
                 
-                if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], loc))
+                if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], loc, (string)Session["access_authorize"]))
                 {
                     string apiURL = $"api/emr/get-api/{loc}/{modelId}";
 

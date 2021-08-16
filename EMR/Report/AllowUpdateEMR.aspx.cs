@@ -116,8 +116,8 @@ namespace EMR.Report
                 GridDataItem item = (e.Item as GridDataItem);
                 string pvid = item.GetDataKeyValue("patient_visit_id").ToString();
                 string visitType = item.GetDataKeyValue("visit_type_rcd").ToString();
-                string visible_id = Request.QueryString["vpid"];
-
+                string visible_id = Convert.ToString(item.GetDataKeyValue("visible_patient_id"));
+                string request_full_name = Convert.ToString(item["request_full_name"].Text);
                 Label lbVisit_date_time = (Label)item["PatientInfor"].FindControl("lbActual_visit_date_time");
                 Label lbVisit_code = (Label)item["PatientInfor"].FindControl("lbVisit_code");
                 Label lbRequest_email = (Label)item["PatientInfor"].FindControl("lbRequest_email");
@@ -130,15 +130,15 @@ namespace EMR.Report
                 switch (e.CommandName)
                 {
                     case "sendAllow":
-                        AddFormSend(pvid, visitType, visible_id, visitCode, visitDate, r_email, "Allow");
+                        AddFormSend(pvid, visitType, visible_id, visitCode, visitDate, r_email, request_full_name, "Allow");
                         RadGrid1.Rebind();
                         break;
                     case "sendDeny":
-                        AddFormSend(pvid, visitType, visible_id, visitCode, visitDate, r_email, "Deny");
+                        AddFormSend(pvid, visitType, visible_id, visitCode, visitDate, r_email, request_full_name, "Deny");
                         RadGrid1.Rebind();
                         break;
                     case "sendClose":
-                        AddFormSend(pvid, visitType, visible_id, visitCode, visitDate, r_email, "Close");
+                        AddFormSend(pvid, visitType, visible_id, visitCode, visitDate, r_email, request_full_name, "Close");
                         RadGrid1.Rebind();
                         break;
                 }
@@ -146,12 +146,13 @@ namespace EMR.Report
         }
         public MailAddress MailAddressFrom { get; set; }
         public MailAddress MailAddressTo { get; set; }
-        private void AddFormSend(string pvid, string visitType, string visibleID, string visitCode, string visitDate, string varTo_Email, string varRequest)
+        private void AddFormSend(string pvid, string visitType, string visibleID, string visitCode, string visitDate, string varTo_Email, string request_full_name, string varRequest)
         {
             string varToMail = varTo_Email;string[] qc_mail = new string[5];// "tuan.cao@aih.com.vn"; 
             string varUserName = Convert.ToString(Session["UserID"]);
             string varFullName = Convert.ToString(Session["UserName"]);
             string varEmail = Convert.ToString(Session["user_email"]);
+            string sbj = " đã được chấp thuận.";
 
             var msg_Body = "Kính gửi Bác,<br /> <br /> ";
             msg_Body += "Phòng KTTH đã cấp quyền cập nhật hồ sơ bệnh án của khách hàng: " + visibleID + ", ngày đến khám: " + visitDate + ", ";
@@ -161,6 +162,7 @@ namespace EMR.Report
 
             if (varRequest == "Deny")
             {
+                sbj = " không được chấp thuận.";
                 apiString = $"api/patient/allow-doc-den/{pvid}/{varUserName}?full_name={varFullName}&email={varEmail}";
 
                 msg_Body = "Kính gửi Bác,<br /> <br /> ";
@@ -169,6 +171,7 @@ namespace EMR.Report
             }
             else if (varRequest == "Close")
             {
+                sbj = " đã bị đóng.";
                 apiString = $"api/patient/allow-doc-clo/{pvid}/{varUserName}?full_name={varFullName}&email={varEmail}";
 
                 msg_Body = "Kính gửi Bác,<br /> <br /> ";
@@ -190,7 +193,9 @@ namespace EMR.Report
 
             MailMessage objMail = new MailMessage(MailAddressFrom, MailAddressTo);
 
-            objMail.Subject = "Yêu cầu cập nhật Hồ Sơ Bệnh Án từ:" + Session["UserName"] + " không được chấp thuận ";
+            //objMail.Subject = "Yêu cầu cập nhật Hồ Sơ Bệnh Án từ: " + Session["UserName"] + sbj;
+            objMail.Subject = "Yêu cầu cập nhật Hồ Sơ Bệnh Án từ: " + request_full_name + sbj;
+            
             objMail.Body = msg_Body;// "Content office 365";
             objMail.IsBodyHtml = true;
 

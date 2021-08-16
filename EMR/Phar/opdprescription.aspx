@@ -184,7 +184,7 @@
 					<div>
 						<img alt="" src="../images/AIH_PI_FULL.png" style="height: auto; width: 202px;" />
 					</div>
-					<div style="font-size:smaller; position: relative; top: -20px">
+					<div style="font-size:smaller; position: relative; top: -10px">
                         <label>06 Bac Nam Street, An Phu Ward, District 2, HCMC</label>						
 					</div>
 				</div>

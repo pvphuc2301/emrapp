@@ -82,7 +82,7 @@ namespace EMR
                     patientLinked.Visible = false;
                 }
 
-                lblPatientInfo.InnerHtml = $"{patient.FullName} ({patient.Title}), DOB {WebHelpers.FormatDateTime(patient.date_of_birth)} ({patient.GetAge()} y) SEX {patient.Gender} PID {patient.visible_patient_id}";
+                lblPatientInfo.InnerText = $"{patient.FullName} ({patient.Title}), DOB {WebHelpers.FormatDateTime(patient.date_of_birth)} ({patient.GetAge()} y) SEX {patient.Gender} PID {patient.visible_patient_id}";
 
                 //MainContent.ContentUrl = string.Format("../other/patientsummary.aspx?pid={0}&vpid={1}", varPID, varVPID);
 
@@ -377,13 +377,14 @@ namespace EMR
             }
             return mydataTable;
         }
-
+        
         private void PostBackEventHandler()
         {
             switch (Request["__EVENTTARGET"])
             {
                 case "location_Change":
                     //DataHelpers._LOCATION = Request["__EVENTARGUMENT"];
+                    Session["company_code"] = Request["__EVENTARGUMENT"];
                     Response.Redirect(Request.RawUrl);
                     break;
                 case "lblURL_click":
@@ -832,6 +833,9 @@ namespace EMR
         protected void location_Change(string location)
         {
             //DataHelpers._LOCATION = location;
+
+            Session["company_code"] = location;
+
         }
         private void CheckUserID()
         {

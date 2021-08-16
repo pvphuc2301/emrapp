@@ -97,7 +97,7 @@ namespace EMR.IPD
             try
             {
                 //3
-                lbl_procedure_date.Text = WebHelpers.FormatDateTime(surr.procedure_date);
+                lbl_procedure_date.Text = WebHelpers.FormatDateTime(surr.procedure_date, "dd-MMM-yyyy");
                 lbl_start_time.Text = WebHelpers.FormatString(surr.start_time);
                 lbl_finish_time.Text = WebHelpers.FormatString(surr.finish_time);
                 //4
@@ -297,7 +297,7 @@ namespace EMR.IPD
 
             lblVisitCode.Text = patientVisitInfo.VisitCode;
 
-            WebHelpers.ConvertDateTime(patientVisitInfo.ActualVisitDateTime, out bool isValid1, out string ActualVisitDateTime, "dd-MM-yyyy");
+            WebHelpers.ConvertDateTime(patientVisitInfo.ActualVisitDateTime, out bool isValid1, out string ActualVisitDateTime, "dd-MMM-yyyy");
             lblVisitDate.Text = ActualVisitDateTime;
         }
         private void loadRadGridHistoryLog()

@@ -89,6 +89,7 @@ namespace EMR
             {
                 varPatientID = Guid.Parse(varPID);
             }
+
             //string query = "SELECT creation_date_time,visit_code, urlink, visit_date_time, order_owner_name_e,visit_type_rcd,employee_nr ";
             //query += "FROM (SELECT   CONVERT(VARCHAR(17), cpog.creation_date_time, 113) AS creation_date_time, cpog.placer_order_group_number,";
             ////query += "(SELECT TOP 1 user_name FROM user_account_nl_view WHERE person_id = cpo.order_owner_employee_id) AS user_account,";
@@ -133,7 +134,7 @@ namespace EMR
                 query += "AND pv.facility_id = 'DB7FE460-06C3-4343-9909-57709F9538E3' ";
             query += ") AS lablist ";
             query += "GROUP BY creation_date_time,visit_code, urlink, visit_date_time, order_owner_name_e,visit_type_rcd,employee_nr,created_date ";
-            query += "ORDER BY visit_date_time DESC, created_date DESC ";
+            query += "ORDER BY visit_date_time DESC, creation_date_time DESC ";
 
             Get_Query = query;
 

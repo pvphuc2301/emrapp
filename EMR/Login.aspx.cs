@@ -84,6 +84,7 @@ namespace Emr_client.Emr
                     Session["emp_nr"] = Convert.ToString(data.employee_nr);
                     Session["job_type"] = Convert.ToString(data.job_type_code);
                     Session["company_code"] = Convert.ToString(data.company_code);
+                    Session["const_company_code"] = Convert.ToString(data.company_code);
                     Session["specialty_code"] = Convert.ToString(data.specialty_code);
                     
                     //  Session["upw"] = varUserPW;

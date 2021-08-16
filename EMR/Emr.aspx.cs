@@ -41,7 +41,7 @@ namespace EMR
             switch (Request["__EVENTTARGET"])
             {
                 case "location_Change":
-                    //DataHelpers._LOCATION = Request["__EVENTARGUMENT"];
+                    Session["company_code"] = Request["__EVENTARGUMENT"];
                     Response.Redirect(Request.RawUrl);
                     break;
             }
@@ -55,17 +55,17 @@ namespace EMR
         private void BindLocation()
         {
             lbl_company_code.Text = (string)Session["company_code"];
-            //switch (DataHelpers._LOCATION)
-            //{
-            //    case "AIH":
-            //        location_cli.Visible = true;
-            //        location_aih.Visible = false;
-            //        break;
-            //    case "CLI":
-            //        location_cli.Visible = false;
-            //        location_aih.Visible = true;
-            //        break;
-            //}
+            switch ((string)Session["company_code"])
+            {
+                case "AIH":
+                    location_cli.Visible = true;
+                    location_aih.Visible = false;
+                    break;
+                case "CLI":
+                    location_cli.Visible = false;
+                    location_aih.Visible = true;
+                    break;
+            }
         }
     }
 }

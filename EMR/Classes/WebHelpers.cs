@@ -107,11 +107,11 @@ namespace EMR
             ScriptManager.RegisterStartupScript(page, page.GetType(), DateTime.Now.Millisecond.ToString(), "if(document.readyState=='loading') { window.addEventListener('load', function() { editFormEvent('" + JsonConvert.SerializeObject(obj) + "', '" + loc + "', '" + emp_id + "') } ); } else { editFormEvent('" + JsonConvert.SerializeObject(obj) + "', '" + loc + "', '" + emp_id + "') }", true);
         }
 
-        internal static dynamic CanOpenForm(Page page, string docid, string documentStatus, string emp_id, string location, string loc = "")
+        internal static dynamic CanOpenForm(Page page, string docid, string documentStatus, string emp_id, string location, string loc = "", string access_authorize = "")
         {
             loc = location;
             if (location != loc && documentStatus == DocumentStatus.FINAL) return true;
-            if (documentStatus == DocumentStatus.DRAFT)
+            if (documentStatus == DocumentStatus.DRAFT && access_authorize == "FullAccess")
             {
                 dynamic result = WebHelpers.GetAPI($"api/emr/check-session/{loc}/{docid}/{emp_id}");
 

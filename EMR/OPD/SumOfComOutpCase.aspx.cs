@@ -146,7 +146,6 @@ namespace EMR
                 LoadPatientInfo();
                 loadRadGridHistoryLog();
                 
-
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
 
                 //if (scoc.status == DocumentStatus.FINAL)
@@ -160,10 +159,12 @@ namespace EMR
                     BindingDataForm(scoc, WebHelpers.LoadFormControl(form1, scoc, ControlState.Edit, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
                 //}
 
+                btnSave.Visible = true;
+
                 WebHelpers.getAccessButtons(form1, scoc.status, (string)Session["access_authorize"], loc == locChanged, varDocIdLog != null);
 
                 WebHelpers.VisibleControl(false, btnComplete, btnDeleteModal, btnPrint, btnAmend);
-                btnSave.Visible = true;
+                
 
             }
             catch (Exception ex)

@@ -296,8 +296,6 @@
         headerDisplay.style.display = "none";
         leftMenuWidth.style.width = "0";
 
-
-
         //var i = 0;
         //var progressWidth = 1;
 

@@ -15,7 +15,7 @@
     <telerik:RadGrid OnNeedDataSource="RadGrid1_NeedDataSource" ItemStyle-Height="32px" HeaderStyle-Height="32px" CssClass="table" 
                                             BorderWidth="0" AutoGenerateColumns="false" ID="RadGrid1" runat="server" AllowPaging="True" OnItemCommand="RadGrid1_ItemCommand" 
                                             OnItemDataBound="RadGrid1_ItemDataBound">
-                                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="patient_visit_id, visit_type_rcd, closure_date_time, allow_date_time">
+                                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="visible_patient_id, patient_visit_id, visit_type_rcd, closure_date_time, allow_date_time">
                                                 <Columns>
                                                     <telerik:GridTemplateColumn ItemStyle-Width="100px">
                                                         <HeaderTemplate>
@@ -58,6 +58,8 @@
                                                     <telerik:GridBoundColumn SortExpression="visit_code" HeaderText="visit_code" DataField="visit_code" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
                                                     </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn SortExpression="request_full_name" HeaderText="request_full_name" DataField="request_full_name" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn SortExpression="reason" HeaderText="reason" DataField="reason" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
                                                     </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn SortExpression="request_date_time" HeaderText="request_date_time" DataField="request_date_time" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
                                                     </telerik:GridBoundColumn>

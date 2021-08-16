@@ -774,7 +774,7 @@
                                                     <label class="control-label mr-2 mb-1">Nhiệt độ/ <span class="text-primary">Temperature:</span></label>
                                                     <asp:Label runat="server" ID="lbl_vs_temperature"></asp:Label>
                                                     <div class="form-group w-4 d-inline-block" runat="server" id="vs_temperature_wrapper">
-                                                        <input data-type="number" runat="server" id="txt_vs_temperature" class="form-control text-right" />
+                                                        <input tabindex="1" data-type="number" runat="server" id="txt_vs_temperature" class="form-control text-right" />
                                                         <span class="append">°C</span>
                                                     </div>
                                                 </div>
@@ -782,7 +782,7 @@
                                                     <label class="control-label mr-2 mb-1">Nhịp tim/ <span class="text-primary">Heart rate:</span></label>
                                                     <asp:Label runat="server" ID="lbl_vs_heart_rate"></asp:Label>
                                                     <div class="form-group w-5 d-inline-block" runat="server" id="vs_heart_rate_wrapper">
-                                                        <input data-type="number" runat="server" id="txt_vs_heart_rate" class="form-control text-right" />
+                                                        <input tabindex="5" data-type="number" runat="server" id="txt_vs_heart_rate" class="form-control text-right" />
                                                         <span class="append">/phút (m)</span>
                                                     </div>
                                                 </div>
@@ -790,7 +790,7 @@
                                                     <label class="control-label mr-2 mb-1">Cân Nặng/ <span class="text-primary">Weight:</span></label>
                                                     <asp:Label runat="server" ID="lbl_vs_weight"></asp:Label>
                                                     <div class="form-group w-4 d-inline-block" runat="server" id="vs_weight_wrapper">
-                                                        <input data-type="number" onchange="CalculateBmi()" runat="server" id="txt_vs_weight" class="form-control text-right" />
+                                                        <input tabindex="2" data-type="number" onchange="CalculateBmi()" runat="server" id="txt_vs_weight" class="form-control text-right" />
                                                         <span class="append">Kg</span>
                                                     </div>
                                                 </div>
@@ -798,7 +798,7 @@
                                                     <label class="control-label mr-2 mb-1">Nhịp thở/ <span class="text-primary">Respiratory rate:</span></label>
                                                     <asp:Label runat="server" ID="lbl_vs_respiratory_rate"></asp:Label>
                                                     <div class="form-group w-5 d-inline-block" runat="server" id="vs_respiratory_rate_wrapper">
-                                                        <input data-type="number" runat="server" id="txt_vs_respiratory_rate" class="form-control text-right" />
+                                                        <input tabindex="6" data-type="number" runat="server" id="txt_vs_respiratory_rate" class="form-control text-right" />
                                                         <span class="append">/phút (m)</span>
                                                     </div>
                                                 </div>
@@ -806,7 +806,7 @@
                                                     <label class="control-label mr-2 mb-1">Chiều cao/ <span class="text-primary">Height:</span></label>
                                                     <asp:Label runat="server" ID="lbl_vs_height"></asp:Label>
                                                     <div class="form-group w-4 d-inline-block" runat="server" id="vs_height_wrapper">
-                                                        <input data-type="number" onchange="CalculateBmi()" maxlength="3" id="txt_vs_height" runat="server" class="form-control text-right" />
+                                                        <input tabindex="3" data-type="number" onchange="CalculateBmi()" maxlength="3" id="txt_vs_height" runat="server" class="form-control text-right" />
                                                         <span class="append">cm</span>
                                                     </div>
                                                 </div>
@@ -814,7 +814,7 @@
                                                     <label class="control-label mr-2 mb-1">Huyết áp/ <span class="text-primary">Blood Pressure:</span></label>
                                                     <asp:Label runat="server" ID="lbl_vs_blood_pressure"></asp:Label>
                                                     <div class="form-group w-5 d-inline-block" runat="server" id="vs_blood_pressure_wrapper">
-                                                        <input data-type="number1" id="txt_vs_blood_pressure" runat="server" class="form-control text-right" />
+                                                        <input tabindex="7" data-type="number1" id="txt_vs_blood_pressure" runat="server" class="form-control text-right" />
                                                         <span class="append">mmHg</span>
                                                     </div>
                                                 </div>
@@ -836,7 +836,7 @@ applicable for children and pregnant</span>)
                                                     <label for="spO2" class="control-label mb-1 mr-2">Độ bão hòa Oxy/ <span class="text-primary">SpO2:</span></label>
                                                     <asp:Label runat="server" ID="lbl_vs_spO2"></asp:Label>
                                                     <div class="form-group w-4 d-inline-block" runat="server" id="vs_spO2_wrapper">
-                                                        <input data-type="number" runat="server" id="txt_vs_spO2" class="form-control text-right" />
+                                                        <input tabindex="8" data-type="number" runat="server" id="txt_vs_spO2" class="form-control text-right" />
                                                         <span class="append">%</span>
                                                     </div>
                                                 </div>
@@ -844,7 +844,7 @@ applicable for children and pregnant</span>)
                                                     <label for="head-circumference" class="control-label mb-1 mr-2">Vòng đầu (trẻ em < 2 tuổi)/ <span class="text-primary">Head Circumference (children < 2 year old) </span></label>
                                                     <asp:Label runat="server" ID="lbl_vs_pulse"></asp:Label>
                                                     <div class="form-group w-4 d-inline-block" runat="server" id="vs_pulse_wrapper">
-                                                        <input data-type="number" runat="server" id="txt_vs_pulse" class="form-control text-right" />
+                                                        <input tabindex="4" data-type="number" runat="server" id="txt_vs_pulse" class="form-control text-right" />
                                                         <span class="append">cm</span>
                                                     </div>
                                                 </div>

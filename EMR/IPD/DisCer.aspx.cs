@@ -120,37 +120,37 @@ namespace EMR
 
                 string no_health_insurance = disc.no_health_insurance;
                 prt_no1.Text = prt_no2.Text = prt_no3.Text = prt_no4.Text = prt_no5.Text = prt_no6.Text = " ";
-                    
-                for (int i = 0; i < no_health_insurance.Length; i++)
+                if(no_health_insurance != null)
                 {
-                    if (i <= 1)
-                    { 
-                        prt_no1.Text += no_health_insurance[i]; 
-                    }
-                    else if (i <= 2)
+                    for (int i = 0; i < no_health_insurance.Length; i++)
                     {
-                        prt_no2.Text += no_health_insurance[i];
-                    }
-                    else if (i <= 4)
-                    {
-                        prt_no3.Text += no_health_insurance[i];
-                    }
-                    else if (i <= 7)
-                    {
-                        prt_no4.Text += no_health_insurance[i];
-                    }
-                    else if (i <= 10)
-                    {
-                        prt_no5.Text += no_health_insurance[i];
-                    }
-                    else if (i <= 13)
-                    {
-                        prt_no6.Text += no_health_insurance[i];
+                        if (i <= 1)
+                        {
+                            prt_no1.Text += no_health_insurance[i];
+                        }
+                        else if (i <= 2)
+                        {
+                            prt_no2.Text += no_health_insurance[i];
+                        }
+                        else if (i <= 4)
+                        {
+                            prt_no3.Text += no_health_insurance[i];
+                        }
+                        else if (i <= 7)
+                        {
+                            prt_no4.Text += no_health_insurance[i];
+                        }
+                        else if (i <= 10)
+                        {
+                            prt_no5.Text += no_health_insurance[i];
+                        }
+                        else if (i <= 13)
+                        {
+                            prt_no6.Text += no_health_insurance[i];
+                        }
                     }
                 }
-
-
-
+                
                 prt_address.Text = patientInfo.Address;
                 var AdmittedTime = WebHelpers.ConvertDateTime(patientVisitInfo.actual_visit_date_time, out bool isValid, out string admitted_time);
 

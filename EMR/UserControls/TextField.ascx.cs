@@ -101,8 +101,11 @@ namespace EMR
             }
         }
 
+        public string TabIndex { get; set; }
+
         protected void Page_Load(object sender, EventArgs e)
         {
+            DisplayControl.Attributes.Add("tabindex", TabIndex);
             DisplayControl.InnerHtml = InputControl.Value;
             DisplayControl.Attributes.Add("onblur", string.Format("changeValue('{0}', '{1}')", DisplayControl.ClientID, InputControl.ClientID));
         }

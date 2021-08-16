@@ -167,16 +167,16 @@
                                     <div class="col-md-12">
                                         <div class="table-responsive">
                                             <telerik:RadGrid OnNeedDataSource="RadGrid1_NeedDataSource" ItemStyle-Height="32px" HeaderStyle-Height="32px" Width="100%" OnItemCommand="RadGrid1_ItemCommand" OnItemDataBound="RadGrid1_ItemDataBound" CssClass="table" BorderWidth="0" AutoGenerateColumns="false" ID="RadGrid1" runat="server" AllowPaging="True">
-                                                <MasterTableView AutoGenerateColumns="False" DataKeyNames="patient_visit_id, visit_type_group_rcd, visit_type_rcd, closure_date_time, allow_date_time">
+                                                <MasterTableView AutoGenerateColumns="False" DataKeyNames="patient_visit_id, visit_type_group_rcd, visit_type_rcd, closure_date_time, closed_date_time, allow_date_time">
                                                     <Columns>
-                                                        <telerik:GridTemplateColumn ItemStyle-Width="100px">
+                                                        <telerik:GridTemplateColumn ItemStyle-Width="120px">
                                                             <HeaderTemplate>
                                                                 <div>Action</div>
                                                             </HeaderTemplate>
                                                             <ItemTemplate>
                                                                 <%--<asp:LinkButton runat="server" CommandName="addNew" ID="btnAddNew"  CssClass="btn btn-sm btn-primary waves-effect" Width="66px">Add new</asp:LinkButton>--%>
 
-                                                                <telerik:RadButton RenderMode="Lightweight" ID="btnAddNew" runat="server" 
+                                                                <telerik:RadButton RenderMode="Lightweight" Width="120px" ID="btnAddNew" runat="server" 
                         Text="Add New" CommandName="addNew">
                     </telerik:RadButton>
 
