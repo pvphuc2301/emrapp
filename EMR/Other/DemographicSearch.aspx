@@ -328,7 +328,7 @@
             </div>
 
             <div class="row" id="last_customer" runat="server">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header bg-white">
                             <h4 class="card-title control-label m-0">
@@ -375,7 +375,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-header bg-white">
                             <h4 class="card-title control-label m-0">
