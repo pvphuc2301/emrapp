@@ -102,9 +102,10 @@
                         <!-- This is  -->
                         <li class="nav-item"><a class="nav-link" runat="server" id="lblPatientInfo"></a></li>
                         <li class="nav-item ml-2">
-                            <a runat="server" id="linkDemographicSearch" onclick="headerDisplay.style.display='';leftMenuWidth.style.width='180px';" class="nav-link btn-icon" title="close patient's details">
+                            <asp:LinkButton ToolTip="Close" CssClass="nav-link btn-icon" Text="X" runat="server" ID="LinkDemographicSearch" OnClick="LinkDemographicSearch_Click" />
+                            <%--<a runat="server" id="linkDemographicSearch" onclick="headerDisplay.style.display='';leftMenuWidth.style.width='180px';" class="nav-link btn-icon" title="">
                                 <icon:X runat="server"/>
-                            </a>
+                            </a>--%>
                         </li>
                         <!-- ============================================================== -->
                         <!-- Search -->
@@ -290,11 +291,11 @@
     </script>
 
     <script>
-        let headerDisplay = window.parent.document.getElementById("header");
-        let leftMenuWidth = window.parent.document.getElementById("RadTabStrip2");
+        //let headerDisplay = window.parent.document.getElementById("header");
+        //let leftMenuWidth = window.parent.document.getElementById("RadTabStrip2");
 
-        headerDisplay.style.display = "none";
-        leftMenuWidth.style.width = "0";
+        //headerDisplay.style.display = "none";
+        //leftMenuWidth.style.width = "0";
 
         //var i = 0;
         //var progressWidth = 1;

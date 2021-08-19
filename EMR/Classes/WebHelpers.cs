@@ -465,6 +465,11 @@ namespace EMR
             return value;
         }
 
+        internal static void AddJS(Page page, string script)
+        {
+            ScriptManager.RegisterStartupScript(page, page.GetType(), DateTime.Now.ToString(), "setTimeout(()=> { " + script + " },100);", true);
+        }
+
         internal static void SendError(Page page, Exception ex)
         {
             //PopupException popupException = (PopupException)page.LoadControl("~/UserControls/PopupException.ascx");

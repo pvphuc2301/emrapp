@@ -252,33 +252,46 @@
                     </table>
                 </div>
 
-                 <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
-            <Windows>
-                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History" runat="server">
-                    <ContentTemplate>
-                        <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
-                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
-                                <Columns>
-                                    <telerik:GridTemplateColumn>
-                                        <ItemTemplate>
-                                            <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
-</telerik:RadLabel>
+                 <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" MaxHeight="400">
+                    <Windows>
+                        <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History" runat="server">
+                            <ContentTemplate>
+                                <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
+                                    <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
+                                        <Columns>
+                                            <telerik:GridTemplateColumn>
+                                                <ItemTemplate>
+                                                    <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
+        </telerik:RadLabel>
                                            
-                                            <asp:HyperLink CssClass="btn-link" Text="View Log" runat="server" NavigateUrl='<%# GetLogUrl(Eval("document_log_id")) %>'></asp:HyperLink>
-                                        </ItemTemplate>
-                                    </telerik:GridTemplateColumn>
-                                </Columns>
-                            </MasterTableView>
-                            <SelectedItemStyle CssClass="SelectedStyle" />
-                            <ClientSettings>
-                                <Selecting AllowRowSelect="true" />
-                            </ClientSettings>
-                        </telerik:RadGrid>
+                                                    <asp:HyperLink CssClass="btn-link" Text="View Log" runat="server" NavigateUrl='<%# GetLogUrl(Eval("document_log_id")) %>'></asp:HyperLink>
+                                                </ItemTemplate>
+                                            </telerik:GridTemplateColumn>
+                                        </Columns>
+                                    </MasterTableView>
+                                    <SelectedItemStyle CssClass="SelectedStyle" />
+                                    <ClientSettings>
+                                        <Selecting AllowRowSelect="true" />
+                                    </ClientSettings>
+                                </telerik:RadGrid>
+                            </ContentTemplate>
+                        </telerik:RadWindow>
 
-                    </ContentTemplate>
-                </telerik:RadWindow>
-            </Windows>
-        </telerik:RadWindowManager>
+                        <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow3" Title="Warning" runat="server">
+                            <ContentTemplate>
+                               
+                                <div class="text-center">
+                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                    <h4 class="mt-4 mb-4">Delete document?</h4>
+                                </div>
+
+                                <div class="d-grid no-block justify-content-end">
+                                    <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger">Delete</asp:LinkButton>
+                                </div>
+                            </ContentTemplate>
+                        </telerik:RadWindow>
+                    </Windows>
+                </telerik:RadWindowManager>
 
                 <div class="cssclsNoPrint">
                     <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd; border-radius: 0;">
@@ -943,7 +956,7 @@
 
                                                     <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
 
-                                                    <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal" class="btn btn-danger waves-effect">Delete</div>
+                                                    <div runat="server" onclick="showWindow3()" id="btnDeleteModal" class="btn btn-danger">Delete</div>
 
                                                     <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
@@ -1011,6 +1024,31 @@
         function showWindow() {
             var oWnd = $find("<%=RadWindow1.ClientID%>");
             oWnd.show();
+        }
+
+        function showWindow3() {
+            var oWnd = $find("<%= RadWindow3.ClientID%>");
+            oWnd.show();
+        }
+
+        function UpdateNode() {
+            var tree = window.parent.$find("RadTreeView1");
+            let oldName = window.parent.window.document.getElementById("TempDocName").value;
+            var node = tree.findNodeByText(oldName);
+            tree.trackChanges();
+            node.set_text(oldName.replace("DRAFT", "FINAL"));
+            tree.commitChanges();
+        }
+
+        function DeleteNode(url) {
+            var tree = window.parent.$find("RadTreeView1");
+            let oldName = window.parent.window.document.getElementById("TempDocName").value;
+            var node = tree.findNodeByText(oldName);
+            tree.trackChanges();
+            node.get_parent().get_nodes().remove(node);
+            tree.commitChanges();
+
+            window.location.href = url;
         }
 
     </script>

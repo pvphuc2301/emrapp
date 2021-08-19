@@ -208,6 +208,7 @@
     <Content Include="images\aih.ico" />
     <Content Include="IPD\ObsGynIniAss.aspx" />
     <Content Include="IPD\SurgicalReport.aspx" />
+    <Content Include="Other\FormMenu.aspx" />
     <Content Include="Other\Test.aspx" />
     <Content Include="Report\AllowUpdateEMR.aspx" />
     <Content Include="Other\DemographicSearch.aspx" />
@@ -455,6 +456,13 @@
     </Compile>
     <Compile Include="Model\PatientHistoryVm.cs" />
     <Compile Include="Model\sendRequestVm.cs" />
+    <Compile Include="Other\FormMenu.aspx.cs">
+      <DependentUpon>FormMenu.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Other\FormMenu.aspx.designer.cs">
+      <DependentUpon>FormMenu.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Other\Test.aspx.cs">
       <DependentUpon>Test.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1148,7 +1156,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

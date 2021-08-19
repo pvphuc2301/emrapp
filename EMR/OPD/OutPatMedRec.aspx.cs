@@ -394,7 +394,10 @@ namespace EMR
                 {
                     WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
 
-                    Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
+                    string url = $"../other/index.aspx?pid={varPID}&vpid={varVPID}";
+                    WebHelpers.AddJS(Page, "DeleteNode(\"" + url + "\");");
+
+                    //Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&req_act=1");
                 }
             }
             catch(Exception ex)

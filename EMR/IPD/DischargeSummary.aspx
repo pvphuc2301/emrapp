@@ -182,33 +182,47 @@
                     </table>
                 </div>
 
-                <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
-            <Windows>
-                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History" runat="server">
-                    <ContentTemplate>
-                        <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
-                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
-                                <Columns>
-                                    <telerik:GridTemplateColumn>
-                                        <ItemTemplate>
-                                            <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
-</telerik:RadLabel>
+                <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" MaxHeight="400">
+                    <Windows>
+                        <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History" runat="server">
+                            <ContentTemplate>
+                                <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
+                                    <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
+                                        <Columns>
+                                            <telerik:GridTemplateColumn>
+                                                <ItemTemplate>
+                                                    <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
+        </telerik:RadLabel>
                                            
-                                            <asp:HyperLink CssClass="btn-link" Text="View Log" runat="server" NavigateUrl='<%# GetLogUrl(Eval("document_log_id")) %>'></asp:HyperLink>
-                                        </ItemTemplate>
-                                    </telerik:GridTemplateColumn>
-                                </Columns>
-                            </MasterTableView>
-                            <SelectedItemStyle CssClass="SelectedStyle" />
-                            <ClientSettings>
-                                <Selecting AllowRowSelect="true" />
-                            </ClientSettings>
-                        </telerik:RadGrid>
+                                                    <asp:HyperLink CssClass="btn-link" Text="View Log" runat="server" NavigateUrl='<%# GetLogUrl(Eval("document_log_id")) %>'></asp:HyperLink>
+                                                </ItemTemplate>
+                                            </telerik:GridTemplateColumn>
+                                        </Columns>
+                                    </MasterTableView>
+                                    <SelectedItemStyle CssClass="SelectedStyle" />
+                                    <ClientSettings>
+                                        <Selecting AllowRowSelect="true" />
+                                    </ClientSettings>
+                                </telerik:RadGrid>
 
-                    </ContentTemplate>
-                </telerik:RadWindow>
-            </Windows>
-        </telerik:RadWindowManager>
+                            </ContentTemplate>
+                        </telerik:RadWindow>
+
+                        <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow3" Title="Warning" runat="server">
+                            <ContentTemplate>
+                               
+                                <div class="text-center">
+                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                    <h4 class="mt-4 mb-4">Delete document?</h4>
+                                </div>
+
+                                <div class="d-grid no-block justify-content-end">
+                                    <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger">Delete</asp:LinkButton>
+                                </div>
+                            </ContentTemplate>
+                        </telerik:RadWindow>
+                    </Windows>
+                </telerik:RadWindowManager>
 
                 <div class="cssclsNoPrint">
                     <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0; border-bottom: 1px solid #ddd; border-radius:0;">
@@ -217,6 +231,7 @@
                     </ul>
                     <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
                         <asp:HiddenField runat="server" ID="DataObj" />
+                        <asp:HiddenField runat="server" ID="DocName" />
                         <asp:Panel runat="server" ID="messagePlaceHolder">
                             <div class="card" runat="server" id="amendReasonWraper">
                                 <div class="card-body">
@@ -739,7 +754,7 @@
 
                                                             <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
 
-                                                            <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal" class="btn btn-danger waves-effect">Delete</div>
+                                                            <div runat="server" onclick="showWindow3()" id="btnDeleteModal" class="btn btn-danger">Delete</div>
 
                                                             <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
@@ -750,7 +765,7 @@
                                                 </div>
                                             </div>
 
-                                            <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
+                                            <%--<webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
                                                 <ModalBody>
                                                     <div class="text-center">
                                                         <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
@@ -758,10 +773,10 @@
                                                     </div>
                                                     <div class="text-right">
                                                         <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
-                                                        <asp:LinkButton OnClick="btnDelete_Click" OnClientClick="window.removeEventListener('beforeunload',comfirm_leave_page,true);" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
+                                                        
                                                     </div>
                                                 </ModalBody>
-                                            </webUI:PopupModal>
+                                            </webUI:PopupModal>--%>
 
                                             <webUI:PopupShowDelay runat="server" ID="PopupShowDelay" />
 
@@ -786,62 +801,6 @@
     <script src="../scripts/sweetalert.min.js"></script>
     <script src="../scripts/alertify.js"></script>
 
-    <script>
-
-
-
-        document.getElementById("<%# txt_signed_doctor.ClientID %>").addEventListener("input", function () {
-            
-        });
-
-
-        function format(e, t) { document.execCommand(e, !1, t) }
-
-        window.addEventListener("load", function () {
-            let t, o;
-
-            document.onkeyup = function (e) { (13 === e.keyCode || 32 === e.keyCode && window.getSelection().anchorNode.textContent.includes(t)) && (format("foreColor", "black"), format("insertText", "")) },
-
-                document.onkeydown = function (e) { o = "red" === window.getSelection().focusNode.parentNode.color, 32 === e.keyCode && o && (e.preventDefault(), format("foreColor", "black"), format("insertText", " ")) }
-
-            document.addEventListener('paste', (event) => {
-                let paste = (event.clipboardData || window.clipboardData).getData('text');
-
-                paste = paste.trim();
-
-                const selection = window.getSelection();
-                if (!selection.rangeCount) return false;
-                selection.deleteFromDocument();
-
-                let text;
-
-                if (window.getSelection().focusNode.parentNode.color == "red") {
-                    text = this.document.createTextNode(paste);
-                }
-                else {
-                    text = document.createElement("font");
-                    text.color = 'red';
-                    text.innerText = paste;
-                }
-
-                selection.getRangeAt(0).insertNode(text);
-
-                event.preventDefault();
-            });
-
-            document.body.addEventListener('dragover', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-            }, false);
-
-            document.body.addEventListener('drop', function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-            }, false);
-        });
-
-    </script>
-
     <script type="text/javascript">
         var elem = window.parent.parent.document.getElementById("myProgress");
         progress(elem);
@@ -861,6 +820,39 @@
             oWnd.show();
         }
 
+        function UpdateNode() {
+            window.parent.window.document.querySelector("#RAD_SPLITTER_PANE_EXT_CONTENT_LeftMenu").src = window.parent.window.document.querySelector("#RAD_SPLITTER_PANE_EXT_CONTENT_LeftMenu").src;
+
+            //console.log(window.parent.window.document.getElementById("_TRANSACTION"));
+
+            //let oldName = window.parent.window.document.getElementById("_TRANSACTION").value;
+            //var node = tree.findNodeByText(oldName);
+            //tree.trackChanges();
+            //node.set_text(oldName.replace("DRAFT", "FINAL"));
+            //tree.commitChanges();
+        }
+
+        function DeleteNode(url) {
+            //var tree = window.parent.$find("RadTreeView1");
+            //let oldName = window.parent.window.document.getElementById("TempDocName").value;
+            //var node = tree.findNodeByText(oldName);
+            //tree.trackChanges();
+            //node.get_parent().get_nodes().remove(node);
+            //tree.commitChanges();
+
+            window.removeEventListener('beforeunload', comfirm_leave_page, true);
+
+            window.parent.window.document.querySelector("#RAD_SPLITTER_PANE_EXT_CONTENT_LeftMenu").src = window.parent.window.document.querySelector("#RAD_SPLITTER_PANE_EXT_CONTENT_LeftMenu").src;
+
+            console.log(url);
+
+            window.location.href = url;
+        }
+
+        function showWindow3() {
+            var oWnd = $find("<%= RadWindow3.ClientID%>");
+            oWnd.show();
+        }
     </script>
 </body>
 </html>

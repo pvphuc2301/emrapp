@@ -155,7 +155,7 @@ namespace EMR.Other
             string PID = item.GetDataKeyValue("patient_id").ToString();
             string PVID = item.GetDataKeyValue("visible_patient_id").ToString();
 
-            string url = $"/emr/emrinfor.aspx?pid={PID}&vbid={PVID}&loc={loc}";
+            string url = $"/emr/emrinfor.aspx?pid={PID}&vbid={PVID}";
             //string url = string.Format("/emr/emr.aspx?pid={0}&vbid={1}", PID, PVID);
 
             Response.Redirect(url);
@@ -376,7 +376,7 @@ namespace EMR.Other
                     }
                     else
                     {
-                        string url = $"/emr/emrinfor.aspx?pid={PID}&vbid={PVID}&loc={loc}";
+                        string url = $"/emr/emrinfor.aspx?pid={PID}&vbid={PVID}";
 
                         PatientHistoryVm patientHistoryVm = new PatientHistoryVm()
                         {
@@ -391,7 +391,7 @@ namespace EMR.Other
 
                         if (response1.Status == System.Net.HttpStatusCode.OK)
                         {
-                            Response.Redirect(url);
+                            WebHelpers.AddJS(Page, "window.parent.window.location.href = \"" + url + "\"");
                         }
                     }
                 }
@@ -424,7 +424,7 @@ namespace EMR.Other
                 string PID = item.GetDataKeyValue("patient_id").ToString();
                 string PVID = item.GetDataKeyValue("visible_patient_id").ToString();
 
-                string url = $"/emr/emrinfor.aspx?pid={PID}&vbid={PVID}&loc={loc}";
+                string url = $"/emr/emrinfor.aspx?pid={PID}&vbid={PVID}";
                 Response.Redirect(url);
             } 
         }
@@ -468,7 +468,7 @@ namespace EMR.Other
                     {
                         PID = Convert.ToString(db.Rows[0]["patient_id"]);
 
-                        string url = $"/emr/emrinfor.aspx?pid={PID}&vbid={VPID}&loc={loc}";
+                        string url = $"/emr/emrinfor.aspx?pid={PID}&vbid={VPID}";
 
                         PatientHistoryVm patientHistoryVm = new PatientHistoryVm()
                         {

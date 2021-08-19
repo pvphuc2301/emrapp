@@ -281,6 +281,7 @@ namespace EMR
                 diss.status = DocumentStatus.FINAL;
                 
                 UpdateData(diss);
+                WebHelpers.AddJS(Page, "window.parent.window.document.querySelector('#RAD_SPLITTER_PANE_EXT_CONTENT_LeftMenu').src = window.parent.window.document.querySelector('#RAD_SPLITTER_PANE_EXT_CONTENT_LeftMenu').src;");
                 WebHelpers.clearSessionDoc(Page, varDocID, loc);
             }
         }
@@ -319,13 +320,16 @@ namespace EMR
         }
         protected void btnDelete_Click(object sender, EventArgs e)
         {
-            try { 
+            try {
                 dynamic result = Diss.Delete((string)Session["UserId"], varDocID, loc)[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    WebHelpers.clearSessionDoc(Page, varDocID, loc);
-                    Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
+                    string url = $"../other/index.aspx?pid={varPID}&vpid={varVPID}";
+                    WebHelpers.PostAPI($"api/emr/clear-session/{loc}/{varDocID}");
+
+                    //WebHelpers.clearSessionDoc(Page, varDocID, loc);
+                    WebHelpers.AddJS(Page, "DeleteNode(\""+ url + "\");");
                 }
             }
             catch(Exception ex)

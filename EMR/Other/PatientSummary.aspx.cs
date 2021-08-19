@@ -5,6 +5,9 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Script.Serialization;
 using System.Web.UI;
@@ -34,7 +37,6 @@ namespace EMR
             varVPID = Request.QueryString["vpid"];
             loc = (string)Session["company_code"];
             
-
             ConnClass ConnStr = new ConnClass();
 
             ConnStringEMR = ConnStr.SQL_EMRConnString;
@@ -45,12 +47,15 @@ namespace EMR
             {
                 MainContent.ContentUrl = $"index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}";
 
-                LoadRootNodes(RadTreeView1, TreeNodeExpandMode.ServerSideCallBack);
-                LoadRootLAB_RAD(RadTreeView2, TreeNodeExpandMode.ServerSideCallBack);
-                LoadRootScan(RadTreeView3, TreeNodeExpandMode.ServerSideCallBack);
-                LoadRootScan(RadTreeView4, TreeNodeExpandMode.ServerSideCallBack, "/" + (string)Session["company_code"]);
+                LeftMenu.ContentUrl = $"~/Other/FormMenu.aspx?pid={varPID}&vpid={varVPID}";
+
+                //LoadRootNodes(RadTreeView1, TreeNodeExpandMode.ServerSideCallBack);
+                //LoadRootLAB_RAD(RadTreeView2, TreeNodeExpandMode.ServerSideCallBack);
+                //LoadRootScan(RadTreeView3, TreeNodeExpandMode.ServerSideCallBack);
+                //LoadRootScan(RadTreeView4, TreeNodeExpandMode.ServerSideCallBack, "/" + (string)Session["company_code"]);
 
             }
+
             PostBackEvent();
 
             LeftMenuAccess();
@@ -58,27 +63,36 @@ namespace EMR
 
         private void LeftMenuAccess()
         {
-            WebHelpers.VisibleControl(false, RadTreeView1, RadTreeView2, RadTreeView3, RadTreeView4);
-            string get_access = (string)Session["access_authorize"];
-            switch (get_access)
-            {
-                case "FullAccess":
-                    WebHelpers.VisibleControl(true, RadTreeView1, RadTreeView2, RadTreeView3, RadTreeView4);
-                    break;
-                case "View":
-                    WebHelpers.VisibleControl(true, RadTreeView1, RadTreeView2, RadTreeView3, RadTreeView4);
-                    break;
-                case "ScanView":
-                    WebHelpers.VisibleControl(true, RadTreeView3, RadTreeView4);
-                    break;
-                case "CLSView":
-                    WebHelpers.VisibleControl(true, RadTreeView2);
-                    break;
-            }
+            //WebHelpers.VisibleControl(false, RadTreeView1, RadTreeView2, RadTreeView3, RadTreeView4);
+            //string get_access = (string)Session["access_authorize"];
+            //switch (get_access)
+            //{
+            //    case "FullAccess":
+            //        WebHelpers.VisibleControl(true, RadTreeView1, RadTreeView2, RadTreeView3, RadTreeView4);
+            //        break;
+            //    case "View":
+            //        WebHelpers.VisibleControl(true, RadTreeView1, RadTreeView2, RadTreeView3, RadTreeView4);
+            //        break;
+            //    case "ScanView":
+            //        WebHelpers.VisibleControl(true, RadTreeView3, RadTreeView4);
+            //        break;
+            //    case "CLSView":
+            //        WebHelpers.VisibleControl(true, RadTreeView2);
+            //        break;
+            //}
         }
 
         private void PostBackEvent()
         {
+            switch (Request["__EVENTTARGET"])
+            {
+                case "RefreshMenu":
+                    RegisterAsyncTask(new PageAsyncTask(LoadRootNodesAsync));
+                    RegisterAsyncTask(new PageAsyncTask(LoadRootLAB_RADAsync));
+                    RegisterAsyncTask(new PageAsyncTask(LoadRootScanAsync));
+                    RegisterAsyncTask(new PageAsyncTask(LoadRootScan1Async));
+                    break;
+            }
         }
 
         #region Menu Lab RAD
@@ -294,10 +308,10 @@ namespace EMR
             }
             return mydataTable;
         }
-        public string ReturnForm_Name(object varStatus, object varFormName, object varDr)
+        public string ReturnForm_Name(object varStatus, object varFormName, object varDr, object varCreatedDateTime)
         {
             string tmp = "";
-            tmp = varStatus.ToString() + "_" + varFormName.ToString() + " " + varDr.ToString();
+            tmp = varStatus.ToString() + "_" + varFormName.ToString() + " " + varDr.ToString() + " (" + WebHelpers.ConvertDateTime(varCreatedDateTime.ToString(), out bool isValid, out string datetime).ToString("HH:mm") + ")";
             return tmp;
         }
 
@@ -310,7 +324,7 @@ namespace EMR
             {
                 RadTreeNode node = new RadTreeNode();
 
-                node.Text = ReturnForm_Name(row["status"], row["model_name"], row["created_name_e"]);
+                node.Text = ReturnForm_Name(row["status"], row["model_name"], row["created_name_e"], row["created_date_time"]);
                 node.Value = row["model_name"].ToString();
 
                 node.Attributes["docId"] = row["document_id"].ToString();
@@ -356,45 +370,46 @@ namespace EMR
         }
         protected void RadTreeView1_NodeClick(object sender, RadTreeNodeEventArgs e)
         {
-            if (e.Node.Level != 0)
-            {
-                string docid = e.Node.Attributes["docId"];
-                string modelId = e.Node.Attributes["modelId"];
-                string status = e.Node.Attributes["status"];
+            //if (e.Node.Level != 0)
+            //{
+            //    string docid = e.Node.Attributes["docId"];
+            //    string modelId = e.Node.Attributes["modelId"];
+            //    string status = e.Node.Attributes["status"];
 
-                //string preDocid = (string)Session["docid"];
+            //    //string preDocid = (string)Session["docid"];
                 
-                if(!string.IsNullOrEmpty(TempDocId.Value))
-                {
-                    if(TempDocId.Value != docid)
-                    {
-                        string apiUri = $"api/emr/clear-session/{loc}/{TempDocId.Value}";
-                        WebHelpers.PostAPI(apiUri);
-                    }
-                }
+            //    if(!string.IsNullOrEmpty(TempDocId.Value))
+            //    {
+            //        if(TempDocId.Value != docid)
+            //        {
+            //            string apiUri = $"api/emr/clear-session/{loc}/{TempDocId.Value}";
+            //            WebHelpers.PostAPI(apiUri);
+            //        }
+            //    }
                 
-                if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], loc, (string)Session["access_authorize"]))
-                {
-                    string apiURL = $"api/emr/get-api/{loc}/{modelId}";
+            //    if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], loc, (string)Session["access_authorize"]))
+            //    {
+            //        string apiURL = $"api/emr/get-api/{loc}/{modelId}";
 
-                    dynamic response = WebHelpers.GetAPI(apiURL);
+            //        dynamic response = WebHelpers.GetAPI(apiURL);
 
-                    if (response.Status == System.Net.HttpStatusCode.OK)
-                    {
-                        dynamic data = JObject.Parse(response.Data);
+            //        if (response.Status == System.Net.HttpStatusCode.OK)
+            //        {
+            //            dynamic data = JObject.Parse(response.Data);
 
-                        patientVisitInfo = new PatientVisitInfo(e.Node.Attributes["patient_visit_id"], loc);
-                        TempDocId.Value = docid;
-                        MainContent.ContentUrl = $"/{data.url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}&pvid={patientVisitInfo.patient_visit_id}&loc={loc}";
+            //            patientVisitInfo = new PatientVisitInfo(e.Node.Attributes["patient_visit_id"], loc);
+            //            TempDocId.Value = docid;
+            //            TempDocName.Value = e.Node.Text;
+            //            MainContent.ContentUrl = $"/{data.url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}&pvid={patientVisitInfo.patient_visit_id}&loc={loc}";
 
-                        //return string.Format("/{0}?modelId={1}&docId={2}&pId={3}&vpId={4}", data.url, varModelID, varDocID, varPID, varVPID);
-                    }
-                }
-                else
-                {
-                    MainContent.ContentUrl = $"index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}";
-                }
-            }
+            //            //return string.Format("/{0}?modelId={1}&docId={2}&pId={3}&vpId={4}", data.url, varModelID, varDocID, varPID, varVPID);
+            //        }
+            //    }
+            //    else
+            //    {
+            //        MainContent.ContentUrl = $"index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}";
+            //    }
+            //}
         }
 
         private void LoadRootNodes(RadTreeView treeView, TreeNodeExpandMode expandMode)
@@ -474,17 +489,17 @@ namespace EMR
 
         protected void radGridComplexDoc_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            string apiURL = $"api/emr/menu-doc-complex/{loc}/{varPID}";
-            dynamic response = WebHelpers.GetAPI(apiURL);
+            //string apiURL = $"api/emr/menu-doc-complex/{loc}/{varPID}";
+            //dynamic response = WebHelpers.GetAPI(apiURL);
 
-            DataTable mydataTable;
+            //DataTable mydataTable;
 
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                mydataTable = WebHelpers.GetJSONToDataTable(response.Data);
+            //if (response.Status == System.Net.HttpStatusCode.OK)
+            //{
+            //    mydataTable = WebHelpers.GetJSONToDataTable(response.Data);
 
-                radGridComplexDoc.DataSource = mydataTable;
-            }
+            //    radGridComplexDoc.DataSource = mydataTable;
+            //}
         }
 
         protected void radGridComplexDoc_ItemCommand(object sender, GridCommandEventArgs e)
@@ -519,9 +534,141 @@ namespace EMR
             }
         }
 
-        protected void btnRefresh1_Click(object sender, EventArgs e)
+        private async Task LoadRootNodesAsync()
         {
+            //btnRootNodes.InnerText = "Loading...";
 
+            //string apiURL = $"api/emr/menu-visit/{loc}/{varPID}";
+            
+            //using(var client = new HttpClient())
+            //{
+            //    client.BaseAddress = new Uri(WebHelpers.URL);
+            //    client.DefaultRequestHeaders.Accept.Clear();
+            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            //    HttpResponseMessage response = await client.GetAsync(apiURL);
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //       string data = await response.Content.ReadAsStringAsync();
+
+            //        DataTable mydataTable = WebHelpers.GetJSONToDataTable(data);
+
+            //        foreach (DataRow row in mydataTable.Rows)
+            //        {
+            //            RadTreeNode node = new RadTreeNode();
+            //            node.Text = ReturnVisit_Date(row["actual_visit_date_time"], row["visit_type"], row["visit_code"]);
+            //            node.Value = row["patient_visit_id"].ToString();
+            //            node.ExpandMode = TreeNodeExpandMode.ServerSideCallBack;
+            //            node.NavigateUrl = "";// row["visit_code"].ToString();
+            //            node.Target = "MainContent";
+            //            RadTreeView1.Nodes.Add(node);
+            //        }
+
+            //        RadTreeView1.DataBind();
+
+            //        btnRootNodes.InnerText = "";
+            //    }
+            //}
+        }
+
+        private async Task LoadRootLAB_RADAsync()
+        {
+            //string query = "SELECT document_type_rcd, document_type_name description FROM document_type ";
+            //query += "WHERE (document_type_rcd = N'RAD' OR document_type_rcd = N'LAB') ";// AND (active_flag = 1) ";
+            //query += "ORDER BY document_type_rcd";
+
+            //string apiURL = $"api/emr/menu-visit/{loc}/{varPID}";
+            //dynamic response = WebHelpers.GetAPI(apiURL);
+
+            //DataTable mydataTable = new DataTable();
+            //mydataTable = GetDataTable(query, ConnStringEMR);
+
+            ////     if (response.Status == System.Net.HttpStatusCode.OK)
+            //{
+            //    //       mydataTable = WebHelpers.GetJSONToDataTable(response.Data);
+
+            //    foreach (DataRow row in mydataTable.Rows)
+            //    {
+            //        RadTreeNode node = new RadTreeNode();
+            //        node.Text = row["description"].ToString();
+            //        node.Value = row["document_type_rcd"].ToString();
+            //        node.ExpandMode = TreeNodeExpandMode.ServerSideCallBack;
+            //        node.NavigateUrl = "";// row["visit_code"].ToString();
+            //        node.Target = "MainContent";
+            //        RadTreeView2.Nodes.Add(node);
+            //    }
+            //    RadTreeView2.DataBind();
+            //    WebHelpers.AddJS(Page, "document.getElementById(\"btnRootLAB_RAD\").innerText = ''");
+            //}
+        }
+        private async Task LoadRootScanAsync()
+        {
+            //string apiURL = "api/patient/document-type-list/" + varPID;
+
+            //using (var client = new HttpClient())
+            //{
+            //    client.BaseAddress = new Uri(WebHelpers.URL);
+            //    client.DefaultRequestHeaders.Accept.Clear();
+            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            //    HttpResponseMessage response = await client.GetAsync(apiURL);
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        string data = await response.Content.ReadAsStringAsync();
+
+            //        JavaScriptSerializer JSserializer = new JavaScriptSerializer();
+
+            //        DataTable mydataTable = WebHelpers.GetJSONToDataTable(data);
+
+            //        foreach (DataRow row in mydataTable.Rows)
+            //        {
+            //            RadTreeNode node = new RadTreeNode();
+            //            node.Text = row["doc_type_name_l"].ToString();
+            //            node.Value = row["document_type_rcd"].ToString();
+            //            node.ExpandMode = TreeNodeExpandMode.ServerSideCallBack;
+            //            node.NavigateUrl = "";// row["visit_code"].ToString();
+            //            node.Target = "MainContent";
+            //            RadTreeView3.Nodes.Add(node);
+            //        }
+
+            //        RadTreeView3.DataBind();
+            //        WebHelpers.AddJS(Page, "document.getElementById(\"btnRootScan\").innerText = ''");
+            //    }
+            //}
+        }
+        private async Task LoadRootScan1Async()
+        {
+            //string apiURL = "api/patient/document-type-list/" + (string)Session["company_code"] + "/" + varPID;
+
+            //using (var client = new HttpClient())
+            //{
+            //    client.BaseAddress = new Uri(WebHelpers.URL);
+            //    client.DefaultRequestHeaders.Accept.Clear();
+            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            //    HttpResponseMessage response = await client.GetAsync(apiURL);
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        string data = await response.Content.ReadAsStringAsync();
+
+            //        JavaScriptSerializer JSserializer = new JavaScriptSerializer();
+
+            //        DataTable mydataTable = WebHelpers.GetJSONToDataTable(data);
+
+            //        foreach (DataRow row in mydataTable.Rows)
+            //        {
+            //            RadTreeNode node = new RadTreeNode();
+            //            node.Text = row["doc_type_name_l"].ToString();
+            //            node.Value = row["document_type_rcd"].ToString();
+            //            node.ExpandMode = TreeNodeExpandMode.ServerSideCallBack;
+            //            node.NavigateUrl = "";// row["visit_code"].ToString();
+            //            node.Target = "MainContent";
+            //            RadTreeView4.Nodes.Add(node);
+            //        }
+            //        RadTreeView4.DataBind();
+            //        WebHelpers.AddJS(Page, "document.getElementById(\"btnRootScan1\").innerText = ''");
+            //    }
+            //}
         }
     }
 }

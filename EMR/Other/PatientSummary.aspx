@@ -31,7 +31,7 @@
         div.RadTreeView > ul.rtLines, 
         ul.rtLines > li.rtLI > ul.rtUL { width: 100%; }
 
-        .RadTreeView_Bootstrap > ul.rtUL > li.rtLI > div.rtOut div.rtIn { cursor: default; background-color: transparent !important; border-color: transparent !important;}
+        .RadTreeView_Bootstrap > ul.rtUL > li.rtLI > div.rtOut div.rtIn { cursor: default; background-color: transparent !important; border-color: transparent !important; }
 
         .RadTreeView_Bootstrap > ul.rtUL > li.rtLI > div.rtOut.rtSelected div.rtIn { background-color: transparent !important; border-color: transparent !important; color: #000; cursor: default;} 
         
@@ -98,73 +98,17 @@
 <body>
     <form method="post" action="#" id="form2" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
-
          <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <div style="overflow: hidden; height: 100vh; margin-top: 15px;">
-                    <telerik:RadSplitter runat="server" ID="RadSplitter1" SplitBarsSize="2" 
-    Orientation="Vertical" Width="100%" Height="100%">
-                        <telerik:RadPane runat="server" ID="TopPane" Width="220" MinWidth="150" MaxWidth="550">
-                            <div class="scroll-effect" style="overflow: hidden; height: 100vh" id="menuLeft">
-                                <nav class="sidebar-wrapper" style="position: initial; width: inherit">
-                                    <div class="sidebar-menu">
-                                        <ul class="text-nowrap">
-                                            <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px; margin-top: 12px;">
-                                                <h5 class="font-bold text-primary ml-2">Complex Document</h5>
-                                                <telerik:RadGrid OnNeedDataSource="radGridComplexDoc_NeedDataSource" OnItemCommand="radGridComplexDoc_ItemCommand" CssClass="table" BorderWidth="0" AutoGenerateColumns="false" ShowHeader="false"
-                                    ID="radGridComplexDoc" ItemStyle-Height="25px" runat="server"
-                                     >
-                                                    <MasterTableView DataKeyNames="document_id,model_id,status,url">
-                                                        <Columns>
-                                                            <telerik:GridTemplateColumn ItemStyle-BorderWidth="0" SortExpression="visible_patient_id" DataField="visible_patient_id" ItemStyle-Height="25px">
-                                                                <ItemTemplate>
-                                                                    <asp:LinkButton Height="25px" runat="server" CommandName="selectDoc"><%# Eval("status") %>_<%# Eval("model_name") %> 	&nbsp;<%# Eval("created_name_l") %></asp:LinkButton>
-                                                                </ItemTemplate>
-                                                            </telerik:GridTemplateColumn>
-                                                        </Columns>
-                                                    </MasterTableView>
-                                                    <ClientSettings EnableRowHoverStyle="true">
-                                                        <Selecting AllowRowSelect="True" />
-                                                    </ClientSettings>
-                                                </telerik:RadGrid>
-                                                <%--<asp:LinkButton runat="server" OnClick="sumofcomoutpcase_Click" ID="sumofcomoutpcase">SUMMARY OF COMPLEX OUTPATIENT CASES</asp:LinkButton>--%>
-                                            </li>
-
-                                            <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px;">
-                                                <h5 class="font-bold text-primary ml-2">Form Document</h5>
-                                                <asp:HiddenField runat="server" ID="TempDocId" />
-                                                <telerik:RadTreeView OnClientMouseOut="ClientMouseOut" OnClientMouseOver="ClientMouseOver" OnNodeClick="RadTreeView1_NodeClick" ID="RadTreeView1" runat="server" OnNodeExpand="RadTreeView1_NodeExpand"/>
-                                            </li>
-
-                                            <asp:LinkButton runat="server" OnClick="btnRefresh1_Click" ID="btnRefresh1"></asp:LinkButton>
-
-                                            <%--END Load Left Menu--%>
-
-                                            <%--Load LAB and IMG Document--%>
-                                            <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px;">
-                                                <h5 class="font-bold text-primary ml-2">Clinical Reports</h5>
-                                                <telerik:RadTreeView OnNodeClick="RadTreeView2_NodeClick" ID="RadTreeView2" runat="server" OnNodeExpand="RadTreeView2_NodeExpand"/></li>
-                                            <%--End Load LAB and IMG Document--%>
-
-                                            <%--Load Scan Document--%>
-                                            <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px;">
-                                                <h5 class="font-bold text-primary ml-2">General Scan</h5>
-                                                <telerik:RadTreeView OnNodeClick="RadTreeView3_NodeClick" ID="RadTreeView3" runat="server" OnNodeExpand="RadTreeView3_NodeExpand"/>
-                                            </li>
-
-                                            <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px;">
-                                                <h5 class="font-bold text-primary ml-2">Form Scan</h5>
-                                                <telerik:RadTreeView OnNodeClick="RadTreeView3_NodeClick" ID="RadTreeView4" runat="server"  OnNodeExpand="RadTreeView4_NodeExpand"/>
-                                            </li>
-                                            <%--End Load Scan Document--%>
-                                        </ul>
-                                    </div>
-                                </nav>
-                            </div>
-                        </telerik:RadPane>
-                        <telerik:RadSplitBar CollapseMode="none" Visible="true" runat="server" ID="RadSplitBar1" ResizeStep="3" />
-
-                        <telerik:RadPane ID="MainContent" runat="server"></telerik:RadPane>
+                <%--<div style="overflow: hidden; height: 100vh; margin-top: 15px;">--%>
+                <%--<asp:HiddenField runat="server" ID="_TRANSACTION" />--%>
+                <input type="hidden" runat="server" id="_TRANSACTION" />
+                <%--<asp:TextBox runat="server" ID="_TRANSACTION" />--%>
+                <div style="overflow: hidden; height: 100vh;">
+                    <telerik:RadSplitter runat="server" ID="RadSplitter1" SplitBarsSize="4" Width="100%" Height="100%">
+                        <telerik:RadPane runat="server" ID="LeftMenu" Width="220" MinWidth="150" MaxWidth="550" />
+                        <telerik:RadSplitBar runat="server" ID="RadSplitBar1" />
+                        <telerik:RadPane ID="MainContent" runat="server" />
                     </telerik:RadSplitter>
                 </div>
                 <div id="tooltip__item" class="tooltip__item">
@@ -245,8 +189,8 @@
 
         let listItem = document.querySelectorAll(".list-item");
         let tooltip1 = document.getElementById("tooltip__item");
-        
-    </script>
 
+        //document.getElementById("btnRefreshMenu").click();
+    </script>
 </body>
 </html>

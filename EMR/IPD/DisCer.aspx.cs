@@ -28,7 +28,8 @@ namespace EMR
 
         public string SignatureDate { get; set; }
         public string SignatureName { get; set; }
-
+        public DateTime associated_visit_admited { get; set; }
+        public DateTime associated_visit_closed { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!WebHelpers.CheckSession(this)) return;
@@ -152,16 +153,29 @@ namespace EMR
                 }
                 
                 prt_address.Text = patientInfo.Address;
-                var AdmittedTime = WebHelpers.ConvertDateTime(patientVisitInfo.actual_visit_date_time, out bool isValid, out string admitted_time);
 
-                if (isValid)
+                bool isValidDateTime;
+
+                if(patientVisitInfo.associated_visit_id != Convert.ToString(Guid.Empty))
                 {
-                    string hour = AdmittedTime.Hour.ToString();
-                    string minute = AdmittedTime.Minute.ToString();
+                    PatientVisitInfo patientVisitInfo1 = new PatientVisitInfo(patientVisitInfo.associated_visit_id, loc);
+                    associated_visit_admited = WebHelpers.ConvertDateTime(patientVisitInfo1.actual_visit_date_time, out isValidDateTime, out string admitted_time1);
 
-                    string day = AdmittedTime.Day.ToString();
-                    string month = AdmittedTime.Month.ToString();
-                    string year = AdmittedTime.Year.ToString();
+                    associated_visit_closed = WebHelpers.ConvertDateTime(patientVisitInfo1.closure_date_time, out bool isValid3, out string admitted_time3);
+                }
+                else
+                {
+                    associated_visit_admited = WebHelpers.ConvertDateTime(patientVisitInfo.actual_visit_date_time, out isValidDateTime, out string admitted_time);
+                }
+
+                if (isValidDateTime)
+                {
+                    string hour = associated_visit_admited.Hour.ToString();
+                    string minute = associated_visit_admited.Minute.ToString();
+
+                    string day = associated_visit_admited.Day.ToString();
+                    string month = associated_visit_admited.Month.ToString();
+                    string year = associated_visit_admited.Year.ToString();
 
                     prt_hour.Text = (hour.Length <= 1 ? "0" : "") + hour;
                     prt_minute.Text = (minute.Length <= 1 ? "0" : "") + minute;

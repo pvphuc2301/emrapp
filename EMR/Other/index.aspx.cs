@@ -28,14 +28,21 @@ namespace EMR.Other
         {
             varPID = Request.QueryString["pid"];
             varVPID = Request.QueryString["vpid"];
-            loc = Request.QueryString["loc"];
+            loc = (string)Session["company_code"];
 
             if (!IsPostBack)
             {
                 LoadPatientInfo();
+
+                RadTreeNode node = new RadTreeNode();
+                node.Text = "New Node";
+                node.Value = "New Node";
+                node.ExpandMode = TreeNodeExpandMode.ServerSideCallBack;
+                node.NavigateUrl = "";
+                TreeviewTemp.Nodes.Add(node);
             }
         }
-        public void LoadPatientInfo()
+        protected void LoadPatientInfo()
         {
             patientInfo = new PatientInfo(varPID);
 
@@ -80,9 +87,11 @@ namespace EMR.Other
                 switch (e.CommandName)
                 {
                     case "addNew":
-                        DocumentList.Visible = true;
-                        AddForm(pvid, visitType);
+                        string type = Convert.ToString(item.GetDataKeyValue("visit_type_rcd"));
+                        lblVisitDate.Value = WebHelpers.FormatDateTime(lbVisit_date_time.Text, "yyyy-M-dd") + " (" + type.Trim() + "-" + visitCode + ")";
+                        AddForm(pvid, visitType, WebHelpers.FormatDateTime(lbVisit_date_time.Text, "dd-MMM-yyyy HH:mm"));
                         break;
+
                     //case "sendRequest":
                     //    AddFormSend(pvid, visitType, visible_id, visitCode, visitDate);
                     //    RadGrid1.Rebind();
@@ -107,7 +116,7 @@ namespace EMR.Other
             }
         }
 
-        private void AddForm(string pvid, string visitType)
+        private void AddForm(string pvid, string visitType, string datetime)
         {
             if(visitType != "OPD") { visitType = "IPD"; }
             string apiStr = "api/emr/list-form/" + pvid + "/" + visitType;
@@ -134,8 +143,12 @@ namespace EMR.Other
 
                     ddlDocList.Items.Add(item1);
                 }
-                lbl_visit_type.Text = db.Rows[0].Field<string>("model_type_rcd");
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), ScriptKey.SHOW_POPUP, "setTimeout(()=> { $('#DocumentList').modal({backdrop: 'static', keyboard: false}); },0);", true);
+
+                lblVisitDetails.Text = $"<i>date: { datetime }<br/> type: { visitType }</i>";
+
+                WebHelpers.AddJS(Page, "showWindow2();");
+
+                //ScriptManager.RegisterStartupScript(Page, Page.GetType(), ScriptKey.SHOW_POPUP, "setTimeout(()=> { $('#DocumentList').modal({backdrop: 'static', keyboard: false}); },0);", true);
 
             }
         }
@@ -144,13 +157,14 @@ namespace EMR.Other
         {
             if (e.Item is GridDataItem)
             {
-                RadButton btnAction = e.Item.FindControl("btnAddNew") as RadButton;
-                btnAction.AutoPostBack = true;
+                LinkButton btnAction = e.Item.FindControl("btnAddNew") as LinkButton;
+
+                //btnAction.AutoPostBack = true;
 
                 GridDataItem item = (e.Item as GridDataItem);
 
-                string closure_date_time = item["closure_date_time"].Text;
-                string allow_date_time = ((GridDataItem)e.Item).GetDataKeyValue("allow_date_time").ToString();
+                string closure_date_time = item.GetDataKeyValue("closure_date_time").ToString();
+                string allow_date_time = item.GetDataKeyValue("allow_date_time").ToString();
 
                 string request_date_time = Convert.ToString((item["PatientInfor"].FindControl("lbRequest_date_time") as Label).Text);
 
@@ -162,20 +176,20 @@ namespace EMR.Other
                 {
                     btnAction.Text = "Send";
 
-                    btnAction.CssClass = "btn btn-sm btn-secondary waves-effect ";
-                    btnAction.Primary = false;
+                    btnAction.CssClass = "btn btn-sm btn-secondary";
+                    
 
                     if (!string.IsNullOrEmpty(allow_date_time) && string.IsNullOrEmpty(closed_date_time))
                     {
-                        btnAction.CssClass = "btn btn-sm btn-primary waves-effect";
-                        btnAction.Primary = true;
+                        btnAction.CssClass = "btn btn-sm btn-primary";
+                        
                         btnAction.Text = "Update";
                         btnAction.Enabled = true;
                     }
                     else if (!string.IsNullOrEmpty(check_send) && check_send.ToLower() == "true" && (string.IsNullOrEmpty(request_date_time) || !string.IsNullOrEmpty(closed_date_time)))
                     {
-                        //btnAction.CssClass = "btn btn-sm btn-primary waves-effect";
-                        btnAction.Primary = true;
+                        btnAction.CssClass = "btn btn-sm btn-primary";
+                        
                         btnAction.CommandName = "sendRequest";
                         //btnAction.AutoPostBack = false;
 
@@ -198,25 +212,17 @@ namespace EMR.Other
                 }
                 else
                 {
-                    DateTime visit_date = DateTime.Parse(item["actual_visit_date_time"].Text.ToString());
-                    btnAction.Primary = true;
-                    System.TimeSpan diff = DateTime.Now.Subtract(visit_date);
-                    System.TimeSpan diff1 = DateTime.Now - visit_date;
-
+                    DateTime visit_date = DateTime.Parse(item.GetDataKeyValue("actual_visit_date_time").ToString());
+                    
                     int diff2 = int.Parse((DateTime.Now.Date - visit_date.Date).TotalDays.ToString());
 
-                    if(diff2 > 2)
-                    {
-                        e.Item.BackColor = Color.Red;
-                    } else if(diff2 == 2)
-                    {
-                        e.Item.BackColor = Color.Yellow;
-                    }
+                    if(diff2 > 2) e.Item.BackColor = Color.Red;
+                    else if(diff2 == 2) e.Item.BackColor = Color.Yellow;
                 }
 
                 if ((string)Session["access_authorize"] != "FullAccess") 
                 {
-                    btnAction.CssClass = "btn btn-sm btn-secondary waves-effect";
+                    btnAction.CssClass = "btn btn-sm btn-secondary";
                     btnAction.Enabled = false;
                     (item["StatusSMS"].FindControl("CheckRequest") as CheckBox).Enabled = false;
                 }
@@ -317,7 +323,7 @@ namespace EMR.Other
         //}
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            string selectedItem = Request.Form.Get("ddlDocList");
+            string selectedItem = Request.Form.Get("RadWindow2$C$ddlDocList");
 
             string[] _params = selectedItem.Split('|');
 
@@ -357,13 +363,12 @@ namespace EMR.Other
                             if (mydataTable.Rows.Count > 0)
                             {
                                 //string url = $"../{_params[1]}?modelId={modelID}&docId={mydataTable.Rows[0].Field<string>("document_id")}&pId={varPID}&vpId={Request["vpid"]}&pvid={PVID}";
-                            string url = $"../{_params[1]}?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={PVID}&modelId={modelID}&docId={mydataTable.Rows[0].Field<string>("document_id")}";
+                                string url = $"../{_params[1]}?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={PVID}&modelId={modelID}&docId={mydataTable.Rows[0].Field<string>("document_id")}";
 
-                            Response.Redirect(url, false);
+                                Response.Redirect(url, false);
                             }
                             else
                             {
-
                                 var objTemp = new
                                 {
                                     document_id = docId,
@@ -404,24 +409,32 @@ namespace EMR.Other
                             user_name = userName
                         };
 
-                        response3 = WebHelpers.PostAPI($"api/{data.api}/add/{loc}", objTemp);
+                    string nodeText = "DRAFT_" + data.model_name + " " + (string)Session["UserId"] + " (" + DateTime.Now.ToString("HH:mm") + ")";
 
-                        if (response3.Status == System.Net.HttpStatusCode.OK)
-                        {
-                            dynamic response4 = WebHelpers.PostAPI($"api/{data.api}/log/{loc}/{docId}");
-                            if (response4.Status == System.Net.HttpStatusCode.OK)
-                            {
-                                string url = $"../{_params[1]}?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={PVID}&modelId={modelID}&docId={docId}";
+                    string url = $"../{_params[1]}?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={PVID}&modelId={modelID}&docId={docId}";
 
-                                if (WebHelpers.CanOpenForm(Page, docId, DocumentStatus.DRAFT, (string)Session["emp_id"], loc
-                                    ))
-                                {
-                                    Response.Redirect(url, false);
-                                }
-                            }
-                        }
-                    }
+                    WebHelpers.AddJS(Page, "AddNode(\"" + nodeText + "\", \"" + url + "\");");
+
+                    //    response3 = WebHelpers.PostAPI($"api/{data.api}/add/{loc}", objTemp);
+
+                    //if (response3.Status == System.Net.HttpStatusCode.OK)
+                    //{
+                    //    dynamic response4 = WebHelpers.PostAPI($"api/{data.api}/log/{loc}/{docId}");
+                    //    if (response4.Status == System.Net.HttpStatusCode.OK)
+                    //    {
+                    //        string url = $"../{_params[1]}?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={PVID}&modelId={modelID}&docId={docId}";
+
+                    //        if (WebHelpers.CanOpenForm(Page, docId, DocumentStatus.DRAFT, (string)Session["emp_id"], loc
+                    //            ))
+                    //        {
+                    //            string nodeText = "DRAFT_" + data.model_name + " " + (string)Session["UserId"] + " (" + DateTime.Now.ToString("HH:mm") + ")";
+
+                    //            WebHelpers.AddJS(Page, "AddNode(\"" + nodeText + "\", \"" + url + "\");");
+                    //        }
+                    //    }
+                    //}
                 }
+            }
         }
 
         protected void RadGridPatientProblem_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)

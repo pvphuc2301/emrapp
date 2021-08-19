@@ -30,7 +30,7 @@ namespace EMR
             if (!WebHelpers.CheckSession(this, "", false)) return;
 
             loc = (string)Session["company_code"];
-            linkDemographicSearch.HRef = $"~/Other/DemographicSearch.aspx?loc={loc}";
+            //linkDemographicSearch.HRef = $"~/Other/DemographicSearch.aspx?loc={loc}";
             //if (Session["PageOpenEMR"] != null)
             //{
             //    HttpContext current_ss = HttpContext.Current;
@@ -890,6 +890,13 @@ namespace EMR
         {
             RadTabStrip1.Tabs[0].Selected = true;
             RadMultiPage1.SelectedIndex = 0;
+        }
+
+        protected void LinkDemographicSearch_Click(object sender, EventArgs e)
+        {
+            string url = $"/emr.aspx";
+            Response.Redirect(url);
+            //WebHelpers.AddJS(Page, "window.location.href = \"" + url + "\"");
         }
     }
 }

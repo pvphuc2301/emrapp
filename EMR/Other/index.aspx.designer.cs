@@ -33,6 +33,15 @@ namespace EMR.Other
         protected global::Telerik.Web.UI.RadScriptManager RadScriptManager1;
 
         /// <summary>
+        /// RadCodeBlock1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadCodeBlock RadCodeBlock1;
+
+        /// <summary>
         /// UpdatePanel1 control.
         /// </summary>
         /// <remarks>
@@ -159,24 +168,6 @@ namespace EMR.Other
         protected global::Telerik.Web.UI.RadGrid RadGridAllergy;
 
         /// <summary>
-        /// VitalSigns control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadPageView VitalSigns;
-
-        /// <summary>
-        /// gridViewVitalSign control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid gridViewVitalSign;
-
-        /// <summary>
         /// ProblemList control.
         /// </summary>
         /// <remarks>
@@ -193,6 +184,24 @@ namespace EMR.Other
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid RadGridPatientProblem;
+
+        /// <summary>
+        /// TreeviewTemp control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTreeView TreeviewTemp;
+
+        /// <summary>
+        /// lblVisitDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField lblVisitDate;
 
         /// <summary>
         /// RadGrid1 control.
@@ -249,22 +258,22 @@ namespace EMR.Other
         protected global::Telerik.Web.UI.RadButton btnSendRequest;
 
         /// <summary>
-        /// DocumentList control.
+        /// RadWindow2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DocumentList;
+        protected global::Telerik.Web.UI.RadWindow RadWindow2;
 
         /// <summary>
-        /// lbl_visit_type control.
+        /// lblVisitDetails control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_visit_type;
+        protected global::System.Web.UI.WebControls.Label lblVisitDetails;
 
         /// <summary>
         /// ddlDocList control.

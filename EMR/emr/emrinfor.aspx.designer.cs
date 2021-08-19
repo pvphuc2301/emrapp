@@ -42,13 +42,13 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlAnchor lblPatientInfo;
 
         /// <summary>
-        /// linkDemographicSearch control.
+        /// LinkDemographicSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor linkDemographicSearch;
+        protected global::System.Web.UI.WebControls.LinkButton LinkDemographicSearch;
 
         /// <summary>
         /// Person1 control.
