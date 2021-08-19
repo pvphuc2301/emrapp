@@ -13,11 +13,13 @@ namespace EMR.Other
 {
     public partial class FormMenu : System.Web.UI.Page
     {
+        private dynamic selectedItem;
         private string varPID;
         private string varVPID;
         private string loc;
         private string ConnStringEMR = "";
         PatientVisitInfo patientVisitInfo;
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -25,6 +27,11 @@ namespace EMR.Other
             varPID = Request.QueryString["pid"];
             varVPID = Request.QueryString["vpid"];
 
+            //[0]: root, [1]: children
+            string selectedItemURL = Request.QueryString["item"];
+            if(!string.IsNullOrEmpty(selectedItemURL))
+                selectedItem = JObject.Parse(selectedItemURL);
+            
             ConnClass ConnStr = new ConnClass();
 
             ConnStringEMR = ConnStr.SQL_EMRConnString;
@@ -282,6 +289,13 @@ namespace EMR.Other
                 node.Target = "MainContent";
 
                 #region Update 8/19/2021
+                if (selectedItem != null)
+                {
+                    if (Convert.ToString(selectedItem.item) == node.Text)
+                    {
+                        node.Selected = true;
+                    }
+                }
                 //if (node.Text == _SELECTED_ITEM.Text)
                 //{
                 //    node.Selected = true;
@@ -418,6 +432,15 @@ namespace EMR.Other
                     node.ExpandMode = expandMode;
                     node.NavigateUrl = "";// row["visit_code"].ToString();
                     node.Target = "MainContent";
+                    //Edit
+                    //if(selectedItem != null)
+                    //{
+                    //    if(selectedItem.root == node.Text)
+                    //    {
+                    //        node.Expanded = true;
+                    //    }
+                    //}
+                    //
                     treeView.Nodes.Add(node);
                 }
             }

@@ -145,24 +145,24 @@
         }
 
         function FindNode() {
-            var selectedItem = document.getElementById("_SELECTED_ITEM");
+            //var selectedItem = document.getElementById("_SELECTED_ITEM");
 
-            selectedItem.value = "FINAL_DISCHARGE SUMMARY No Title HIS User Test (13:51)";
+            //selectedItem.value = "FINAL_DISCHARGE SUMMARY No Title HIS User Test (13:51)";
 
             var tree = $find("<%= RadTreeView1.ClientID %>");
 
             let docValue = window.parent.window.document.getElementById("_TRANSACTION").value;
 
-            console.log("docValue", docValue);
+            console.log("value", docValue);
 
             var node = tree.findNodeByText(docValue);
-            var node1 = tree.findNodeByText(docValue);
+            
 
             //console.log('node', node);
             //console.log('node1', node1);
 
-            if (selectedItem.value != null) {
-                console.log(selectedItem.value);
+            if (docValue != null) {
+                var node1 = tree.findNodeByText(docValue);
                 node1.expand();
             }
 

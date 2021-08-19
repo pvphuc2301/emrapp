@@ -35,15 +35,6 @@
                     oWnd.show();
                 }
 
-                //Test
-
-                function selectDoc() {
-
-                    let LeftMenu = window.parent.window.document.getElementById("RAD_SPLITTER_PANE_EXT_CONTENT_LeftMenu");
-                    window.parent.window.document.getElementById('_TRANSACTION').value = 'FINAL_DISCHARGE SUMMARY No Title HIS User Test (18:18)';
-                    LeftMenu.src = LeftMenu.src;
-                }
-
                 function AddNode(value, url) {
 
                     //var tree = window.parent.$find("RadTreeView1");
@@ -53,6 +44,7 @@
                     //var nodeParent = tree.findNodeByText(document.getElementById("lblVisitDate").value);
 
                     //var node = treeTemp.findNodeByText("New Node");
+
                     //node.set_text(value);
                     
                     //nodeParent.get_nodes().add(node);
@@ -67,11 +59,26 @@
 
                     window.parent.window.document.getElementById('_TRANSACTION').value = document.getElementById("lblVisitDate").value;
 
-                    console.log(value);
+                    var item = {
+                        "root": document.getElementById("lblVisitDate").value,
+                        "item": value
+                    };
 
-                    LeftMenu.src = LeftMenu.src;
-
+                    LeftMenu.src = replaceUrlParam(LeftMenu.src, "item", JSON.stringify(item));
+                    
                     //window.location.href = url;
+                }
+
+                function replaceUrlParam(url, paramName, paramValue) {
+                    if (paramValue == null) {
+                        paramValue = '';
+                    }
+                    var pattern = new RegExp('\\b(' + paramName + '=).*?(&|#|$)');
+                    if (url.search(pattern) >= 0) {
+                        return url.replace(pattern, '$1' + paramValue + '$2');
+                    }
+                    url = url.replace(/[?#]$/, '');
+                    return url + (url.indexOf('?') > 0 ? '&' : '?') + paramName + '=' + paramValue;
                 }
             </script>
         </telerik:RadCodeBlock>
@@ -207,8 +214,6 @@
 
                 <telerik:RadTreeView Style="display: none;" runat="server" ID="TreeviewTemp" />
                 <asp:HiddenField runat="server" ID="lblVisitDate" />
-
-                <div onclick="selectDoc()">Select doc</div>
 
                 <div class="row">
                     <div class="col-md-12">
