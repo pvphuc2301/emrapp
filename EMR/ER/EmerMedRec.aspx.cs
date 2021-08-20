@@ -26,16 +26,21 @@ namespace EMR.ER
         public string varPVID { get; set; }
         public string varVPID { get; set; }
         public string varPID { get; set; }
+
+        public string SignatureDate { get; set; }
+        public string SignatureName { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!WebHelpers.CheckSession(this)) return;
 
             varDocID = Request.QueryString["docId"];
+            varDocIdLog = Request.QueryString["docIdLog"];
             varModelID = Request.QueryString["modelId"];
             varPVID = Request.QueryString["pvId"];
             varVPID = Request.QueryString["vpId"];
             varPID = Request.QueryString["pId"];
-            loc = Request.QueryString["loc"];
+            loc = (string)Session["company_code"];
+            locChanged = (string)Session["const_company_code"];
 
             PAGE_URL = $"/ER/EmerMedRec.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
@@ -263,7 +268,6 @@ namespace EMR.ER
                 lbl_discharge_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(emr.discharge_time, "dd-MMM-yyyy HH:mm"));
                 lbl_referred_to_OPD.Text = WebHelpers.FormatString(WebHelpers.GetBool(emr.referred_to_OPD, "Yes,specify/ Có, ghi rõ" + "<br/>" + WebHelpers.FormatString(emr.referred_to_OPD_text)));
                 
-
                 lbl_hospitalisation_required.Text = WebHelpers.FormatString(WebHelpers.GetBool(emr.hospitalisation_required));
                 lbl_reason.Text = WebHelpers.FormatString(emr.reason);
                 lbl_ward.Text = WebHelpers.FormatString(emr.ward);
@@ -1042,17 +1046,17 @@ namespace EMR.ER
                 prt_patient_discharge.Text = emr.txt_patient_discharge;
                 prt_icd_10.Text = emr.icd_10;
 
-                DateTime signature_date = (DateTime)Session["signature_date"];
-                string signature_doctor = (string)Session["signature_doctor"];
+                //DateTime signature_date = (DateTime)Session["signature_date"];
+                //string signature_doctor = (string)Session["signature_doctor"];
 
-                if(signature_date != null)
-                {
-                    lbl_date.Text = signature_date.ToString("dd");
-                    lbl_month.Text = signature_date.ToString("MM");
-                    lbl_year.Text = signature_date.ToString("yyyy");
-                }
+                //if(signature_date != null)
+                //{
+                //    lbl_date.Text = signature_date.ToString("dd");
+                //    lbl_month.Text = signature_date.ToString("MM");
+                //    lbl_year.Text = signature_date.ToString("yyyy");
+                //}
 
-                lbl_created_name_l.Text = signature_doctor;
+                //lbl_created_name_l.Text = signature_doctor;
             }
             catch (Exception ex)
             {
@@ -1101,7 +1105,7 @@ namespace EMR.ER
         }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            if (WebHelpers.CanOpenForm(Page, varDocID, DocumentStatus.DRAFT, (string)Session["emp_id"], loc))
+            if (WebHelpers.CanOpenForm(Page, varDocID, DocumentStatus.DRAFT, (string)Session["emp_id"], loc, locChanged, (string)Session["access_authorize"]))
             {
                 EmergencyMedicalRecord emr = new EmergencyMedicalRecord(varDocID, loc);
 
@@ -1136,6 +1140,9 @@ namespace EMR.ER
         }
         protected void btn_grid_Treatment_add_Click(object sender, EventArgs e)
         {
+
+
+
             ViewState[grid_Treatment.ID] = WebHelpers.AddRow((DataTable)ViewState[grid_Treatment.ID], grid_Treatment, EmergencyMedicalRecord.Treatment);
         }
         protected void grid_Treatment_RowDeleting(object sender, GridViewDeleteEventArgs e)
@@ -1176,8 +1183,12 @@ namespace EMR.ER
                     emr = new EmergencyMedicalRecord(varDocID, loc);
                     currentLog.Visible = false;
                 }
+
                 LoadPatientInfo();
-                loadRadGridHistoryLog();
+                //loadRadGridHistoryLog();
+
+                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, EmergencyMedicalRecord.Logs(varDocID, loc), out string SignatureDate, out string SignatureName);
+
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
 
                 if (emr.status == DocumentStatus.FINAL)
@@ -1198,6 +1209,7 @@ namespace EMR.ER
                 WebHelpers.SendError(Page, ex);
             }
         }
+
         private void LoadPatientInfo()
         {
             lblFirstName.Text = patientInfo.first_name_l;
@@ -1218,44 +1230,32 @@ namespace EMR.ER
         private void loadRadGridHistoryLog()
         {
             DataTable dt = EmergencyMedicalRecord.Logs(varDocID, loc);
-            RadGrid1.DataSource = dt;
-            DateTime last_updated_date_time = new DateTime();
+            string last_updated_date_time = "";
             string last_updated_doctor = "";
 
-            if (dt.Rows.Count == 1)
+            if (dt != null)
             {
-                last_updated_doctor = dt.Rows[0].Field<string>("created_name_e");
-                last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
-            }
-            else if (dt.Rows.Count > 1)
-            {
-                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_e");
-                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
+                RadGrid1.DataSource = dt;
+
+                string created_date_time = Convert.ToString(dt.Rows[0]["created_date_time"]);
+                string modified_date_time = Convert.ToString(dt.Rows[0]["modified_date_time"]);
+
+                last_updated_date_time = WebHelpers.GetLogLastDateTime(created_date_time, modified_date_time);
+
+                last_updated_doctor = WebHelpers.GetLogLastName(dt.Rows[0]["created_name_e"], dt.Rows[0]["modified_name_e"]);
             }
 
-            Session["signature_date"] = last_updated_date_time;
-            Session["signature_doctor"] = last_updated_doctor;
-            RadLabel1.Text = $"Last updated by {last_updated_doctor} on " + WebHelpers.FormatDateTime(last_updated_date_time, "dd-MM-yyyy HH:mm");
+            SignatureDate = last_updated_date_time;
+            SignatureName = last_updated_doctor;
+
+            last_updated_date_time = WebHelpers.FormatDateTime(last_updated_date_time, "dd-MMM-yyyy HH:mm tt", "");
+
+            RadLabel1.Text = $"Last updated by <i>{last_updated_doctor}</i> on <b><i>{last_updated_date_time}</i></b>";
             RadGrid1.DataBind();
         }
         protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
         {
-            string result = "Amended by";
-            if (Convert.ToString(status) == DocumentStatus.FINAL && string.IsNullOrEmpty(Convert.ToString(amend_reason)))
-            {
-                result = "Submitted by";
-            }
-
-            if (Convert.ToString(status) == DocumentStatus.DRAFT) result = "Saved by";
-
-            if (string.IsNullOrEmpty(Convert.ToString(modified_name)))
-            {
-                result += $" {created_name} on {created_date_time}";
-            }
-            else
-            {
-                result += $" {modified_name} on {modified_date_time}";
-            }
+            string result = WebHelpers.getLogText(status, created_name, created_date_time, modified_name, modified_date_time, amend_reason);
             return result;
         }
         protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
@@ -1460,6 +1460,17 @@ namespace EMR.ER
             {
                 WebHelpers.SendError(Page, ex);
             }
+        }
+
+        protected DateTime? GetDateTime(object value)
+        {
+            DateTime? dateTime = null;
+            DateTime result = WebHelpers.ConvertDateTime(value, out bool isValid, out string datetime);
+            if (isValid)
+            {
+                dateTime = result;
+            }
+            return dateTime;
         }
         #endregion
 

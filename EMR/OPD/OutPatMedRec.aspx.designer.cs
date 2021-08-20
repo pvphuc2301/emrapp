@@ -402,13 +402,13 @@ namespace EMR
         protected global::Telerik.Web.UI.RadGrid RadGrid1;
 
         /// <summary>
-        /// RadWindow3 control.
+        /// RadWindow2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadWindow RadWindow3;
+        protected global::Telerik.Web.UI.RadWindow RadWindow2;
 
         /// <summary>
         /// btnDelete control.
@@ -418,6 +418,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnDelete;
+
+        /// <summary>
+        /// RadWindow3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadWindow RadWindow3;
 
         /// <summary>
         /// btnHome control.

@@ -26,7 +26,6 @@
     <title></title>
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
-    <link href="../styles/sweetalert.min.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
 </head>
 <body>
@@ -175,7 +174,7 @@
                     </table>
                 </div>
 
-                <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
+                <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" MaxHeight="400">
             <Windows>
                 <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History" runat="server">
                     <ContentTemplate>
@@ -200,6 +199,30 @@
 
                     </ContentTemplate>
                 </telerik:RadWindow>
+                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow2" Title="Warning" runat="server">
+                            <ContentTemplate>
+                                <div class="text-center">
+                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                    <h4 class="mt-4 mb-4">Delete document?</h4>
+                                </div>
+
+                                <div class="d-grid no-block justify-content-end">
+                                    <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger">Delete</asp:LinkButton>
+                                </div>
+                            </ContentTemplate>
+                        </telerik:RadWindow>
+                        <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow3" Title="Warning" runat="server">
+                            <ContentTemplate>
+                                <div class="text-center">
+                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                    <h4 class="mt-4 mb-4">Denied!</h4>
+                                </div>
+
+                                <div class="d-grid no-block justify-content-end">
+                                    <%--<asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="LinkButton1" CssClass="btn btn-danger">Delete</asp:LinkButton>--%>
+                                </div>
+                            </ContentTemplate>
+                        </telerik:RadWindow>
             </Windows>
         </telerik:RadWindowManager>
 
@@ -488,7 +511,7 @@
 
                                                         <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
 
-                                                        <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal" class="btn btn-danger waves-effect">Delete</div>
+                                                        <div runat="server" onclick="showWindow('RadWindow2')" id="btnDeleteModal" class="btn btn-danger">Delete</div>
 
                                                         <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
@@ -549,10 +572,6 @@
             }, 1000);
         }
 
-        function showWindow() {
-            var oWnd = $find("<%=RadWindow1.ClientID%>");
-            oWnd.show();
-        }
     </script>
 
 

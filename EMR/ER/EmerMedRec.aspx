@@ -838,13 +838,14 @@
                                             </div>
                                         </div>
 
-                                        <div class="row mb-2 " style="text-align: justify;">
+                                        <div class="d-grid mb-2" style="grid-template-columns: 1fr">
                                             <div style="text-align: justify;">
                                                 <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma"> Lý do đến khám/ </asp:Label>
                                                 <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Chief complaint/ Reason of consultation: </asp:Label>
                                                 <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_chief_complaint"></asp:Label>
                                             </div>
                                         </div>
+                                        
 
                                         <div class="d-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr">
                                             <div>
@@ -895,12 +896,27 @@
 
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                                <asp:Label Style="font-weight: bold;"> Surgical: </asp:Label>
+                                                <asp:Label Style="font-weight: bold;" runat="server"> Surgical: </asp:Label>
                                                 <asp:Label  runat="server" ID="prt_past_med_his_surs"></asp:Label>
                                             </div>
                                         </div>
 
-                                        <div class="row mb-2 ">
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr; grid-gap: 5px; margin-bottom: 6px;">
+                                            <div>
+                                                <asp:Label runat="server" Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma" Text="Thói quen" /><asp:Label runat="server" Style="font-size: 14.5px; font-family: Tahoma" Text="/ Habits"/>
+                                            </div>
+                                            <div>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="lbl_habits_A" Text="❏"/><label for="lbl_chief_complaint_code_E " style="font-size: 14.5px; font-family: Tahoma; margin-left: 5px;">Rượu</label><label style="font-size: 14.5px; font-family: Tahoma;">/ Alcohol</label>
+                                            </div>
+                                            <div>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="lbl_habits_S" Text="❏"/><label for="lbl_chief_complaint_code_E " style="font-size: 14.5px; font-family: Tahoma; margin-left: 5px;">Thuốc lá</label><label style="font-size: 14.5px; font-family: Tahoma;">/ Smoking</label>
+                                            </div>
+                                            <div>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="lbl_habits_D" Text="❏"/><label for="lbl_chief_complaint_code_E " style="font-size: 14.5px; font-family: Tahoma; margin-left: 5px;">Chất gây nghiện</label><label style="font-size: 14.5px; font-family: Tahoma;">/ Drugs</label>
+                                            </div>
+                                        </div>
+
+                                        <%--<div class="row mb-2 ">
                                             <div class="col-12 ">
                                                 <div class="row ">
                                                     <div class="col-3 ">
@@ -908,25 +924,19 @@
                                                         <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> / Habits </asp:Label>
                                                     </div>
                                                     <div class="col-3 ">
-                                                        <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="lbl_habits_A" Text="❏"></asp:Label>
-                                                        <label for="lbl_chief_complaint_code_E " style="font-size: 14.5px; font-family: Tahoma;">Rượu</label>
-                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ Alcohol</label>
+                                                        
                                                     </div>
                                                     <div class="col-3 ">
-                                                        <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="lbl_habits_S" Text="❏"></asp:Label>
-                                                        <label for="lbl_chief_complaint_code_E " style="font-size: 14.5px; font-family: Tahoma;">Thuốc lá</label>
-                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ Smoking</label>
+                                                        
                                                     </div>
                                                     <div class="col-3 ">
-                                                        <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="lbl_habits_D" Text="❏"></asp:Label>
-                                                        <label for="lbl_chief_complaint_code_E " style="font-size: 14.5px; font-family: Tahoma;">Chất gây nghiện</label>
-                                                        <label style="font-size: 14.5px; font-family: Tahoma;">/ Drugs</label>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>--%>
 
-                                        <div class="row mb-2 ">
+                                        <div class="row mb-2">
                                             <div class="col-12 " style="margin-left: 50px; text-align: justify">
                                                 <label for="lbl_chief_complaint_code_E " style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">Khác ghi rõ</label>
                                                 <label style="font-size: 14.5px; font-family: Tahoma;">/ Other, specify: </label>
@@ -1489,44 +1499,13 @@
                                         
                                         <br />
 
-                                        <div class="row mb-2">
-                                            <div class="col-5">
-                                            </div>
-                                            <div class="col-7 mb-2">
-                                                <div class="col-12" style="text-align: center;">
-                                                    <label style="font-size: 14.5px; font-family: Tahoma;">
-                                                        Ngày
-                                                <asp:Label runat="server" ID="lbl_date">
-                                                </asp:Label>
-                                                    </label>
-                                                    <label style="font-size: 14.5px; font-family: Tahoma;">
-                                                        tháng
-                                                <asp:Label runat="server" ID="lbl_month">
-                                                </asp:Label>
-                                                    </label>
-                                                    <label style="font-size: 14.5px; font-family: Tahoma;">
-                                                        năm
-                                                <asp:Label runat="server" ID="lbl_year">
-                                                </asp:Label>
-                                                    </label>
-                                                </div>
-                                                <div class="col-12" style="text-align: center;">
-                                                    <label class="mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">
-                                                        Doctor in charge
-                                                    </label>
-                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> (name and signature): </asp:Label>
-                                                </div>
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <br />
-                                                <div class="col-12" style="text-align: center;">
-                                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="lbl_created_name_l"> </asp:Label>
-
-                                                </div>
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr; grid-gap: 5px">
+                                            <div></div>
+                                            <div class="text-center" style="break-inside: avoid !important; page-break-inside: avoid !important">
+                                                <div><span style="font-size: 14.5px; font-family: Tahoma" class="font-bold">Họ tên, chữ ký & MSNV của Bác sĩ</span></div>
+                                                <div><span style="font-size: 14.5px; font-family: Tahoma" class="text-primary"><i>Doctor’s full name, signature & ID</i></span></div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </td>
                             </tr>
@@ -1548,7 +1527,7 @@
                     </table>
                 </div>
 
-                <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="520" Height="400">
+                <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="520" MaxHeight="400">
             <Windows>
                 <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History" runat="server">
                     <ContentTemplate>
@@ -1572,6 +1551,30 @@
 
                     </ContentTemplate>
                 </telerik:RadWindow>
+                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow2" Title="Warning" runat="server">
+                            <ContentTemplate>
+                                <div class="text-center">
+                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                    <h4 class="mt-4 mb-4">Delete document?</h4>
+                                </div>
+
+                                <div class="d-grid no-block justify-content-end">
+                                    <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger">Delete</asp:LinkButton>
+                                </div>
+                            </ContentTemplate>
+                        </telerik:RadWindow>
+                        <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow3" Title="Warning" runat="server">
+                            <ContentTemplate>
+                                <div class="text-center">
+                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                    <h4 class="mt-4 mb-4">Denied!</h4>
+                                </div>
+
+                                <div class="d-grid no-block justify-content-end">
+                                    <%--<asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="LinkButton1" CssClass="btn btn-danger">Delete</asp:LinkButton>--%>
+                                </div>
+                            </ContentTemplate>
+                        </telerik:RadWindow>
             </Windows>
         </telerik:RadWindowManager>
 
@@ -1722,19 +1725,18 @@
                                     <div class="form-body">
 
                                         <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
-                                                       <span class="mr-2">You are viewing an old version of this document</span>
-                                                        <asp:HyperLink OnLoad="LinkViewLastestVersion_Load" ID="LinkViewLastestVersion" CssClass="btn-link" Text="View Latest Version" runat="server" ></asp:HyperLink>
-                                                    </div>
+                                            <div class="col-md-12">
+                                                <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
+                                                    <span class="mr-2">You are viewing an old version of this document</span>
+                                                    <asp:HyperLink OnLoad="LinkViewLastestVersion_Load" ID="LinkViewLastestVersion" CssClass="btn-link" Text="View Latest Version" runat="server" />
+                                                </div>
 
-                                                    <div class="alert alert-info d-flex align-items-center">
-                                                        <telerik:RadLabel runat="server" ID="RadLabel1">
-</telerik:RadLabel>
-                                                        <a class="btn-link" href="#" onclick="showWindow()">View History</a>
-                                                    </div>
+                                                <div class="alert alert-info d-flex align-items-center">
+                                                    <telerik:RadLabel runat="server" ID="RadLabel1" />
+                                                    <a class="btn-link" href="javascript:void(0)" onclick="showWindow('RadWindow1')">View History</a>
                                                 </div>
                                             </div>
+                                        </div>
 
                                         <div class="row mb-2">
                                             <div class="col-md-12">
@@ -2186,7 +2188,9 @@
                                                                     </div>
                                                                 </HeaderTemplate>
                                                                 <ItemTemplate>
-                                                                    <telerik:RadDateTimePicker Width="200px" ID="time" runat="server" SelectedDate='<%# DBNull.Value.Equals(Eval("time")) ? null : Eval("time") %>'></telerik:RadDateTimePicker>
+                                                                    <%--<telerik:RadDateTimePicker Width="200px" ID="time" runat="server" SelectedDate='<%# DBNull.Value.Equals(Eval("time")) ? null : Eval("time") %>'></telerik:RadDateTimePicker>--%>
+
+                                                                    <telerik:RadDateTimePicker Width="200px" ID="time" runat="server" SelectedDate='<%# GetDateTime(Eval("time")) %>'></telerik:RadDateTimePicker>
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
                                                             <asp:TemplateField>
@@ -2266,7 +2270,7 @@
                                                                     </div>
                                                                 </HeaderTemplate>
                                                                 <ItemTemplate>
-                                                                    <telerik:RadDateTimePicker Width="200px " ID="time" runat="server" SelectedDate='<%# DBNull.Value.Equals(Eval("time")) ? null : Eval("time") %>'></telerik:RadDateTimePicker>
+                                                                    <telerik:RadDateTimePicker Width="200px " ID="time" runat="server" SelectedDate='<%# GetDateTime(Eval("time")) %>'></telerik:RadDateTimePicker>
                                                                 </ItemTemplate>
                                                             </asp:TemplateField>
                                                             <asp:TemplateField>
@@ -2676,16 +2680,16 @@
                                             </div>
                                     </fieldset>
 
-                                        <div class="row mb-2">
-                                            <div class="col-md-12 gt-2-a">
-                                                <label class="control-label mb-1">Mã ICD-10/ <span class="text-primary">ICD-10 Code(S):</span></label>
-                                                <asp:Label runat="server" ID="lbl_icd_10"></asp:Label>
-                                                <div class="form-group " runat="server" id="icd_10_wrapper">
-                                                    <webUI:TextField runat="server" ID="txt_icd_10" />
-                                                    <asp:CustomValidator ID="CustomValidator32" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="icd_10_ServerValidate"></asp:CustomValidator>
-                                                </div>
+                                    <div class="row mb-2">
+                                        <div class="col-md-12 gt-2-a">
+                                            <label class="control-label mb-1">Mã ICD-10/ <span class="text-primary">ICD-10 Code(S):</span></label>
+                                            <asp:Label runat="server" ID="lbl_icd_10"></asp:Label>
+                                            <div class="form-group " runat="server" id="icd_10_wrapper">
+                                                <webUI:TextField runat="server" ID="txt_icd_10" />
+                                                <asp:CustomValidator ID="CustomValidator32" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="icd_10_ServerValidate"></asp:CustomValidator>
                                             </div>
                                         </div>
+                                    </div>
 
                                     <div class="row mb-2">
                                         <div class="col-md-12">
@@ -2694,7 +2698,7 @@
 
                                                 <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
 
-                                                <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal" class="btn btn-danger waves-effect">Delete</div>
+                                                <div runat="server" onclick="showWindow('RadWindow2')" id="btnDeleteModal" class="btn btn-danger">Delete</div>
 
                                                 <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
@@ -2704,19 +2708,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
-                                        <ModalBody>
-                                            <div class="text-center">
-                                                <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                                <h4 class="mt-4 mb-4">Delete document?</h4>
-                                            </div>
-                                            <div class="text-right">
-                                                <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
-                                                <asp:LinkButton OnClick="btnDelete_Click" OnClientClick="window.removeEventListener('beforeunload',comfirm_leave_page,true);" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
-                                            </div>
-                                        </ModalBody>
-                                    </webUI:PopupModal>
 
                                     <Button:PopupShowDelay runat="server" ID="PopupShowDelay" />
                                 </div>
@@ -2759,12 +2750,6 @@
                 document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
             }, 1000);
         }
-
-        function showWindow() {
-            var oWnd = $find("<%=RadWindow1.ClientID%>");
-            oWnd.show();
-        }
-
     </script>
 
 </body>

@@ -30,6 +30,9 @@ namespace EMR
         public string varPVID { get; set; }
         public string varVPID { get; set; }
         public string varPID { get; set; }
+
+        public string SignatureDate { get; set; }
+        public string SignatureName { get; set; }
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
@@ -42,7 +45,8 @@ namespace EMR
             varPVID = Request.QueryString["pvId"];
             varVPID = Request.QueryString["vpId"];
             varPID = Request.QueryString["pId"];
-            loc = Request.QueryString["loc"];
+            loc = (string)Session["company_code"];
+            locChanged = (string)Session["const_company_code"];
 
             PAGE_URL = $"/ER/EmerTriaAndNurAssRec.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
@@ -551,8 +555,7 @@ namespace EMR
             {
                 ena = new Ena(varDocID, loc);
                 ena.status = DocumentStatus.FINAL;
-                ena.user_name = (string)Session["UserID"];
-
+                
                 UpdateData(ena);
                 WebHelpers.clearSessionDoc(Page, varDocID, loc);
             }
@@ -563,7 +566,7 @@ namespace EMR
             {
                 ena = new Ena(varDocID, loc);
                 ena.status = DocumentStatus.DRAFT;
-                
+
                 UpdateData(ena);
             }
         }
@@ -585,7 +588,7 @@ namespace EMR
         }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            if (WebHelpers.CanOpenForm(Page, (string)varDocID, DocumentStatus.DRAFT, (string)Session["emp_id"], loc))
+            if (WebHelpers.CanOpenForm(Page, (string)varDocID, DocumentStatus.DRAFT, (string)Session["emp_id"], loc, locChanged, (string)Session["access_authorize"]))
             {
                 Ena ena = new Ena(varDocID, loc);
 
@@ -717,8 +720,10 @@ namespace EMR
                 }
 
                 LoadPatientInfo();
-                loadRadGridHistoryLog();
-                
+                //loadRadGridHistoryLog();
+
+                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Ena.Logs(varDocID, loc), out string SignatureDate, out string SignatureName);
+
                 WebHelpers.setBmi(bmiStr, ena.vs_bmi);
 
                 //imageTemp.Src = JObject.Parse(ena.skin_anno_data).dataURI;
@@ -765,28 +770,7 @@ namespace EMR
             WebHelpers.ConvertDateTime(patientVisitInfo.ActualVisitDateTime, out bool isValid1, out string ActualVisitDateTime, "dd-MM-yyyy");
             lblVisitDate.Text = ActualVisitDateTime;
         }
-        private void loadRadGridHistoryLog()
-        {
-            DataTable dt = Ena.Logs(varDocID, loc);
-            RadGrid1.DataSource = dt;
-            DateTime last_updated_date_time = new DateTime();
-            string last_updated_doctor = "";
-
-            if (dt.Rows.Count == 1)
-            {
-                last_updated_doctor = dt.Rows[0].Field<string>("created_name_e");
-                last_updated_date_time = dt.Rows[0].Field<DateTime>("created_date_time");
-            }
-            else if (dt.Rows.Count > 1)
-            {
-                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_e");
-                last_updated_date_time = dt.Rows[0].Field<DateTime>("modified_date_time");
-            }
-
-            Session["signature_doctor"] = last_updated_doctor;
-            RadLabel1.Text = $"Last updated by {last_updated_doctor} on " + WebHelpers.FormatDateTime(last_updated_date_time, "dd-MM-yyyy HH:mm");
-            RadGrid1.DataBind();
-        }
+        
         protected string GetLogUrl(object doc_log_id)
         {
             return PAGE_URL + $"&docIdLog={doc_log_id}";
@@ -801,23 +785,18 @@ namespace EMR
         }
         protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
         {
-            string result = "Amended by";
-            if (Convert.ToString(status) == DocumentStatus.FINAL && string.IsNullOrEmpty(Convert.ToString(amend_reason)))
-            {
-                result = "Submitted by";
-            }
-
-            if (Convert.ToString(status) == DocumentStatus.DRAFT) result = "Saved by";
-
-            if (string.IsNullOrEmpty(Convert.ToString(modified_name)))
-            {
-                result += $" {created_name} on {created_date_time}";
-            }
-            else
-            {
-                result += $" {modified_name} on {modified_date_time}";
-            }
+            string result = WebHelpers.getLogText(status, created_name, created_date_time, modified_name, modified_date_time, amend_reason);
             return result;
+        }
+        protected DateTime? GetDateTime(object value)
+        {
+            DateTime? dateTime = null;
+            DateTime result = WebHelpers.ConvertDateTime(value, out bool isValid, out string datetime);
+            if (isValid)
+            {
+                dateTime = result;
+            }
+            return dateTime;
         }
         protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
         {

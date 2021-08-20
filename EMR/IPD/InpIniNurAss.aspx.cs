@@ -39,7 +39,8 @@ namespace EMR
             varPVID = Request.QueryString["pvId"];
             varVPID = Request.QueryString["vpId"];
             varPID = Request.QueryString["pId"];
-            loc = Request.QueryString["loc"];
+            loc = (string)Session["company_code"];
+            locChanged = (string)Session["const_company_code"];
 
             PAGE_URL = $"/IPD/InpIniNurAss.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
@@ -654,7 +655,7 @@ namespace EMR
                 {
                     WebHelpers.clearSessionDoc(Page, varDocID, loc);
 
-                    Response.Redirect($"index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
+                    Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
                 }
             }
             catch (Exception ex)
@@ -665,7 +666,7 @@ namespace EMR
         protected void btnAmend_Click(object sender, EventArgs e)
         {
 
-            if (WebHelpers.CanOpenForm(Page, varDocID, DocumentStatus.DRAFT, (string)Session["emp_id"], loc))
+            if (WebHelpers.CanOpenForm(Page, varDocID, DocumentStatus.DRAFT, (string)Session["emp_id"], loc, locChanged, (string)Session["access_authorize"]))
             {
                 Iina iina = new Iina(varDocID, loc);
 
@@ -720,8 +721,10 @@ namespace EMR
                 }
 
                 LoadPatientInfo();
-                loadRadGridHistoryLog();
-                
+                //loadRadGridHistoryLog();
+
+                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Iina.Logs(varDocID, loc), out string SignatureDate, out string SignatureName);
+
                 WebHelpers.setBmi(bmiStr, iina.vs_BMI);
 
                 iina.pain_annotation = WebHelpers.getPainAnnotation(iina.pain_annotation);
@@ -767,40 +770,7 @@ namespace EMR
             WebHelpers.ConvertDateTime(patientVisitInfo.ActualVisitDateTime, out bool isValid1, out string ActualVisitDateTime, "dd-MM-yyyy");
             lblVisitDate.Text = ActualVisitDateTime;
         }
-        private void loadRadGridHistoryLog()
-        {
-            DataTable dt = Iina.Logs(varDocID, loc);
-            RadGrid1.DataSource = dt;
-            string last_updated_date_time = "";
-            string last_updated_doctor = "";
-
-            if (dt.Rows.Count == 1)
-            {
-                last_updated_doctor = dt.Rows[0].Field<string>("created_name_e");
-
-                WebHelpers.ConvertDateTime(dt.Rows[0].Field<DateTime>("created_date_time"), out bool isValid, out last_updated_date_time);
-
-                if (isValid)
-                {
-                    SignatureDate = last_updated_date_time;
-                }
-            }
-            else if (dt.Rows.Count > 1)
-            {
-                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_e");
-                WebHelpers.ConvertDateTime(dt.Rows[0].Field<DateTime>("modified_date_time"), out bool isValid, out last_updated_date_time);
-
-                if (isValid)
-                {
-                    SignatureDate = last_updated_date_time;
-                }
-            }
-
-            SignatureDate = last_updated_date_time;
-            SignatureName = last_updated_doctor;
-            RadLabel1.Text = $"Last updated by <i>{last_updated_doctor}</i> on <b><i>{Convert.ToDateTime(last_updated_date_time).ToString("dd-MMM-yyyy HH:mm tt")}</i></b>";
-            RadGrid1.DataBind();
-        }
+        
         protected string GetLogUrl(object doc_log_id)
         {
             return PAGE_URL + $"&docIdLog={doc_log_id}";
@@ -811,31 +781,8 @@ namespace EMR
         }
         protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
         {
-            string result = "Amended";
-            object name = "";
-            object time = "";
-
-            if (Convert.ToString(status) == DocumentStatus.FINAL && string.IsNullOrEmpty(Convert.ToString(amend_reason)))
-            {
-                result = "Submitted";
-            }
-
-            if (Convert.ToString(status) == DocumentStatus.DRAFT) result = "Saved";
-
-            if (string.IsNullOrEmpty(Convert.ToString(modified_name)))
-            {
-                name = created_name;
-                time = created_date_time;
-            }
-            else
-            {
-                name = modified_name;
-                time = created_date_time;
-            }
-
-            WebHelpers.ConvertDateTime(time, out bool isValid, out string dateTime, "dd-MMM-yyyy HH:mm tt");
-
-            return $"{result} by <i>{name}</i> on <i>{dateTime}</i>";
+            string result = WebHelpers.getLogText(status, created_name, created_date_time, modified_name, modified_date_time, amend_reason);
+            return result;
         }
         protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
         {

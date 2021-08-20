@@ -27,6 +27,7 @@ namespace EMR
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
             if (!WebHelpers.CheckSession(this, "", false)) return;
 
             loc = (string)Session["company_code"];

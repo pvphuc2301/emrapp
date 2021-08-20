@@ -40,17 +40,13 @@ namespace EMR
             varPVID = Request.QueryString["pvId"];
             varVPID = Request.QueryString["vpId"];
             varPID = Request.QueryString["pId"];
-            loc = Request.QueryString["loc"];
+            loc = (string)Session["company_code"];
+            locChanged = (string)Session["const_company_code"];
 
             PAGE_URL = $"/IPD/DischargeSummary.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
-            if (!IsPostBack) {
-                
-                patientInfo = new PatientInfo(varPID);
-                patientVisitInfo = new PatientVisitInfo(varPVID, loc);
-
-                LoadPatientInfo();
-
+            if (!IsPostBack) 
+            {
                 Initial(); 
             }
 
@@ -261,9 +257,9 @@ namespace EMR
                     prt_next_consult.Text = $"{WebHelpers.FormatDateTime(diss.next_consult_date, "dd-MM-yyyy", "")} {diss.next_consult_doctor}";
                 }
 
-                prt_signature_date.Text = WebHelpers.FormatDateTime(SignatureDate, "dd-MM-yyyy", "");
+                //prt_signature_date.Text = WebHelpers.FormatDateTime(SignatureDate, "dd-MM-yyyy", "");
 
-                prt_signature_doctor.Text = SignatureName;
+                //prt_signature_doctor.Text = SignatureName;
             }
             catch(Exception ex)
             {
@@ -298,8 +294,7 @@ namespace EMR
         protected void btnAmend_Click(object sender, EventArgs e)
         {
            
-            if (WebHelpers.CanOpenForm(Page, varDocID, DocumentStatus.DRAFT, (string)Session["emp_id"], loc
-                ))
+            if (WebHelpers.CanOpenForm(Page, varDocID, DocumentStatus.DRAFT, (string)Session["emp_id"], loc, locChanged, (string)Session["access_authorize"]))
             {
                 Diss diss = new Diss(varDocID, loc);
 
@@ -348,6 +343,9 @@ namespace EMR
         {
             try
             {
+                patientInfo = new PatientInfo(varPID);
+                patientVisitInfo = new PatientVisitInfo(varPVID, loc);
+
                 if (varDocIdLog != null)
                 {
                     diss = new Diss(varDocIdLog, true, loc);
@@ -358,8 +356,11 @@ namespace EMR
                     diss = new Diss(varDocID, loc);
                     currentLog.Visible = false;
                 }
+                LoadPatientInfo();
+                //loadRadGridHistoryLog();
 
-                loadRadGridHistoryLog();
+                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Diss.Logs(varDocID, loc), out string SignatureDate, out string SignatureName);
+
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
 
                 if (diss.status == DocumentStatus.FINAL)
@@ -416,31 +417,8 @@ namespace EMR
 
         protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
         {
-            string result = "Amended";
-            object name = "";
-            object time = "";
-
-            if (Convert.ToString(status) == DocumentStatus.FINAL && string.IsNullOrEmpty(Convert.ToString(amend_reason)))
-            {
-                result = "Submitted";
-            }
-
-            if (Convert.ToString(status) == DocumentStatus.DRAFT) result = "Saved";
-
-            if (string.IsNullOrEmpty(Convert.ToString(modified_name)))
-            {
-                name = created_name;
-                time = created_date_time;
-            }
-            else
-            {
-                name = modified_name;
-                time = created_date_time;
-            }
-
-            WebHelpers.ConvertDateTime(time, out bool isValid, out string dateTime, "dd-MMM-yyyy HH:mm tt");
-
-            return $"{result} by <i>{name}</i> on <i>{dateTime}</i>";
+            string result = WebHelpers.getLogText(status, created_name, created_date_time, modified_name, modified_date_time, amend_reason);
+            return result;
         }
         protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
         {

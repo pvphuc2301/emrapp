@@ -1,5 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="index.aspx.cs" Inherits="EMR.Other.index" %>
 
+<%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="icon" TagName="ExclamationTriangle" %>
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -277,17 +278,17 @@
                     </div>
                 </div>
                     
-                <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="270">
+                <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" MaxHeight="270">
                 <Windows>
                     <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Update reason" runat="server">
                         <ContentTemplate>
 
-                            <telerik:RadTextBox RenderMode="Lightweight" runat="server" ID="txtUpdateReason" Width="100%" EmptyMessage="Enter reason" TextMode="MultiLine" Height="100px" Resize="None"></telerik:RadTextBox><br />
+                            <telerik:RadTextBox RenderMode="Lightweight" runat="server" ID="txtUpdateReason" Width="100%" EmptyMessage="Enter reason" TextMode="MultiLine" Height="100px" Resize="None" /><br />
                             <asp:HiddenField runat="server" ID="sendRequestVmDB" />
-                            <telerik:RadButton CssClass="mt-2" RenderMode="Lightweight" ID="btnSendRequest" runat="server"
-                        Text="Send" Primary="true" OnClick="btnSendRequest_Click" >
-
-                    </telerik:RadButton>
+                            <div class="d-grid no-block justify-content-end">
+                                <telerik:RadButton CssClass="mt-2" RenderMode="Lightweight" ID="btnSendRequest" runat="server"
+                        Text="Send" Primary="true" OnClick="btnSendRequest_Click" />
+                            </div>
                         </ContentTemplate>
                     </telerik:RadWindow>
 
@@ -299,11 +300,23 @@
                                 
                             <select id="ddlDocList" runat="server" class="custom-select"></select>
                             <div class="d-grid no-block justify-content-end">
-                                <asp:LinkButton ValidationGroup="Group1" runat="server" ID="btnSave" OnClick="btnSave_Click" OnClientClick="return ddDocList_select();" CssClass="btn btn-primary mt-4">Save</asp:LinkButton>
+                                <asp:LinkButton ValidationGroup="Group1" runat="server" ID="btnSave" OnClick="btnSave_Click" OnClientClick="return ddDocList_select();" CssClass="btn btn-primary mt-4" Text="Save" />
                             </div>
-                            
                         </ContentTemplate>
                     </telerik:RadWindow>
+                    <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow3" Title="Warning" runat="server">
+                        <ContentTemplate>
+                            <div class="text-center">
+                                <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                <h4 class="mt-4 mb-4">Denied!</h4>
+                            </div>
+
+                            <div class="d-grid no-block justify-content-end">
+                                <%--<asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="LinkButton1" CssClass="btn btn-danger">Delete</asp:LinkButton>--%>
+                            </div>
+                        </ContentTemplate>
+                    </telerik:RadWindow>
+
                 </Windows>
             </telerik:RadWindowManager>
 
@@ -322,7 +335,6 @@
                         </div>
                     </div>
                 </div>
-
             </ContentTemplate>
         </asp:UpdatePanel>
         </div>
@@ -332,8 +344,6 @@
     <script src="../scripts/bootstrap.min.js"></script>
 
     <script>
-
-        
 
         function ddDocList_select() {
             //if (document.getElementById('ddlDocList').value == "") {

@@ -79,6 +79,7 @@ namespace EMR
                         WebHelpers.VisibleControl(true, findings_field);
                     }
 
+                    
                     if (!string.IsNullOrEmpty(Convert.ToString(jsonObject.addendum)))
                     lbl_addendum.InnerHtml = jsonObject.addendum;
                 }

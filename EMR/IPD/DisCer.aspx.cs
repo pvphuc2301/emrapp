@@ -40,7 +40,8 @@ namespace EMR
             varPVID = Request.QueryString["pvId"];
             varVPID = Request.QueryString["vpId"];
             varPID = Request.QueryString["pId"];
-            loc = Request.QueryString["loc"];
+            loc = (string)Session["company_code"];
+            locChanged = (string)Session["const_company_code"];
 
             PAGE_URL = $"/IPD/DisCer.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
@@ -254,7 +255,7 @@ namespace EMR
         }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            if (WebHelpers.CanOpenForm(Page, (string)varDocID, DocumentStatus.DRAFT, (string)Session["emp_id"], loc))
+            if (WebHelpers.CanOpenForm(Page, (string)varDocID, DocumentStatus.DRAFT, (string)Session["emp_id"], loc, locChanged, (string)Session["access_authorize"]))
             {
                 Disc disc = new Disc(varDocID, loc);
 
@@ -318,31 +319,8 @@ namespace EMR
 
         protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
         {
-            string result = "Amended";
-            object name = "";
-            object time = "";
-
-            if (Convert.ToString(status) == DocumentStatus.FINAL && string.IsNullOrEmpty(Convert.ToString(amend_reason)))
-            {
-                result = "Submitted";
-            }
-
-            if (Convert.ToString(status) == DocumentStatus.DRAFT) result = "Saved";
-
-            if (string.IsNullOrEmpty(Convert.ToString(modified_name)))
-            {
-                name = created_name;
-                time = created_date_time;
-            }
-            else
-            {
-                name = modified_name;
-                time = created_date_time;
-            }
-
-            WebHelpers.ConvertDateTime(time, out bool isValid, out string dateTime, "dd-MMM-yyyy HH:mm tt");
-
-            return $"{result} by <i>{name}</i> on <i>{dateTime}</i>";
+            string result = WebHelpers.getLogText(status, created_name, created_date_time, modified_name, modified_date_time, amend_reason);
+            return result;
         }
         protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
         {
@@ -422,8 +400,11 @@ namespace EMR
                 }
 
                 LoadPatientInfo();
-                loadRadGridHistoryLog();
-                
+
+                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Disc.Logs(varDocID, loc), out string SignatureDate, out string SignatureName);
+
+                //loadRadGridHistoryLog();
+
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
 
                 if (disc.status == DocumentStatus.FINAL)

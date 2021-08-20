@@ -372,6 +372,16 @@ function RefreshClick() {
     window.parent.document.getElementById("btnRefresh1").click();
 }
 
+function showWindow(radWindow) {
+    var oWnd = $find(radWindow);
+    oWnd.show();
+}
+
+function ShowNotification(arg) {
+    var notification = $find(arg);
+    notification.show();
+}
+
 //function lblURL_click() {
 
 //    let temp = {

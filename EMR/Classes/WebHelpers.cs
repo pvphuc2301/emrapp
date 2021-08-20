@@ -107,13 +107,12 @@ namespace EMR
             ScriptManager.RegisterStartupScript(page, page.GetType(), DateTime.Now.Millisecond.ToString(), "if(document.readyState=='loading') { window.addEventListener('load', function() { editFormEvent('" + JsonConvert.SerializeObject(obj) + "', '" + loc + "', '" + emp_id + "') } ); } else { editFormEvent('" + JsonConvert.SerializeObject(obj) + "', '" + loc + "', '" + emp_id + "') }", true);
         }
 
-        internal static dynamic CanOpenForm(Page page, string docid, string documentStatus, string emp_id, string location, string loc = "", string access_authorize = "")
+        internal static dynamic CanOpenForm(Page page, string docid, string docStatus, string emp_id, string company_code, string const_company_code, string access_authorize = "")
         {
-            loc = location;
-            if (location != loc && documentStatus == DocumentStatus.FINAL) return true;
-            if (documentStatus == DocumentStatus.DRAFT && access_authorize == "FullAccess")
+            if (company_code == const_company_code && docStatus == DocumentStatus.FINAL) return true;
+            if (docStatus == DocumentStatus.DRAFT && access_authorize == "FullAccess")
             {
-                dynamic result = WebHelpers.GetAPI($"api/emr/check-session/{loc}/{docid}/{emp_id}");
+                dynamic result = WebHelpers.GetAPI($"api/emr/check-session/{company_code}/{docid}/{emp_id}");
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
@@ -129,8 +128,8 @@ namespace EMR
                     //string pid = page.Request["pid"];
                     //string vpid = page.Request["vpid"];
                     //page.Response.Redirect($"../other/patientsummary.aspx?pid={pid}&vpid={vpid}&blocked={employee.full_name_l}", false);
-
-                    ScriptManager.RegisterStartupScript(page, page.GetType(), "document_block", "setTimeout(()=>{ sweetAlert(\"Denied!\", \"This document is blocked by " + employee.full_name_e + "\", \"error\");},0);", true);
+                    AddJS(page, "showWindow('RadWindow3')");
+                    //ScriptManager.RegisterStartupScript(page, page.GetType(), "document_block", "setTimeout(()=>{ sweetAlert(\"Denied!\", \"This document is blocked by " + employee.full_name_e + "\", \"error\");},0);", true);
                     return false;
                 }
                 else { return false; }
@@ -381,7 +380,7 @@ namespace EMR
 
         internal static string GetLogLastName(object v1, object v2)
         {
-           return string.IsNullOrEmpty(Convert.ToString(v1)) ? Convert.ToString(v2) : Convert.ToString(v1);
+           return !string.IsNullOrEmpty(Convert.ToString(v2)) ? Convert.ToString(v2) : Convert.ToString(v1);
         }
 
         internal static string GetLogLastDateTime(object v1, object v2)
@@ -389,7 +388,7 @@ namespace EMR
             string created_date_time = Convert.ToString(v1);
             string modified_date_time = Convert.ToString(v2);
 
-            return string.IsNullOrEmpty(modified_date_time) ? created_date_time : modified_date_time;
+            return string.IsNullOrEmpty(modified_date_time) ? FormatDateTime(created_date_time, "dd-MMM-yyyy HH:mm tt") : FormatDateTime(modified_date_time, "dd-MMM-yyyy HH:mm tt");
         }
 
         internal static void RefreshMenu(Page page)
@@ -552,10 +551,10 @@ namespace EMR
             }
             return visible;
         }
-        internal static bool LoadFormControl(HtmlForm form1, dynamic obj, ControlState state, bool IsViewLog, bool isLocationChanged, string access_authorize = "")
+        internal static bool LoadFormControl(HtmlForm form1, dynamic obj, ControlState state, bool viewLog, bool company_code, string access_authorize = "")
         {
             //1 - edit
-            bool visible = (state == ControlState.Edit && !isLocationChanged && access_authorize == "FullAccess" && IsViewLog == false) ? true : false;
+            bool visible = (access_authorize == "FullAccess" && company_code && state == ControlState.Edit && !viewLog) ? true : false;
 
             foreach (var prop in obj.GetType().GetProperties())
             {
@@ -571,6 +570,7 @@ namespace EMR
                     control2.Visible = !visible;
                 }
             }
+
             return visible;
         }
         internal static string CreateOptions(params dynamic[] options)
@@ -880,6 +880,53 @@ namespace EMR
             return value;
         }
 
+        internal static string loadRadGridHistoryLog(RadGrid RadGrid1, DataTable dt, out string SignatureDate, out string SignatureName)
+        {
+            string last_updated_date_time = "";
+            string last_updated_doctor = "";
+
+            if (dt != null)
+            {
+                if(dt.Rows.Count > 0)
+                {
+                    RadGrid1.DataSource = dt;
+
+                    string created_date_time = Convert.ToString(dt.Rows[0]["created_date_time"]);
+                    string modified_date_time = Convert.ToString(dt.Rows[0]["modified_date_time"]);
+
+                    string created_name_e = Convert.ToString(dt.Rows[0]["created_name_e"]);
+                    string modified_name_e = Convert.ToString(dt.Rows[0]["modified_name_e"]);
+
+                    last_updated_date_time = GetLogLastDateTime(created_date_time, modified_date_time);
+
+                    last_updated_doctor = GetLogLastName(created_name_e, modified_name_e);
+
+                    last_updated_date_time = FormatDateTime(last_updated_date_time, "dd-MMM-yyyy HH:mm tt", "");
+                    RadGrid1.DataBind();
+                }
+            }
+
+            SignatureDate = last_updated_date_time;
+            SignatureName = last_updated_doctor;
+
+            return $"Last updated by <i>{last_updated_doctor}</i> on <b><i>{last_updated_date_time}</i></b>";
+        }
+
+        internal static string getLogText(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
+        {
+            string result = "Amended by";
+            if (Convert.ToString(status) == DocumentStatus.FINAL && string.IsNullOrEmpty(Convert.ToString(amend_reason)))
+            {
+                result = "Submitted by";
+            }
+
+            if (Convert.ToString(status) == DocumentStatus.DRAFT) result = "Saved by";
+
+            result += $" {GetLogLastName(created_name, modified_name)} on {GetLogLastDateTime(created_date_time, modified_date_time)}";
+
+            return result;
+        }
+
         internal static dynamic getPainAnnotation(string pain_annotation)
         {
             if (!string.IsNullOrEmpty(pain_annotation)) return pain_annotation;
@@ -1052,7 +1099,7 @@ namespace EMR
                 }
             }
         }
-        internal static void getAccessButtons(HtmlForm form, string docStatus, string access_authorize, bool IsLocChanged, bool IsViewLog)
+        internal static void getAccessButtons(HtmlForm form, string docStatus, string access_authorize, bool company_code, bool viewLog)
         {
             LinkButton btnComplete = (LinkButton)form.FindControl("btnComplete");
             Control btnSave = form.FindControl("btnSave");
@@ -1063,7 +1110,7 @@ namespace EMR
             
             VisibleControl(false, btnCancel);
 
-            if (IsLocChanged || IsViewLog)
+            if (!company_code || viewLog)
             {
                 VisibleControl(false, btnComplete, btnSave, btnDelete, btnAmend, btnPrint);
                 return;

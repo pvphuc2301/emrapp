@@ -39,7 +39,8 @@ namespace EMR
             varPVID = Request.QueryString["pvId"];
             varVPID = Request.QueryString["vpId"];
             varPID = Request.QueryString["pId"];
-            loc = Request.QueryString["loc"];
+            loc = (string)Session["company_code"];
+            locChanged = (string)Session["const_company_code"];
 
             PAGE_URL = $"/IPD/SurgicalCertificate.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
@@ -178,8 +179,7 @@ namespace EMR
         }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            if (WebHelpers.CanOpenForm(Page, Request.QueryString["docId"], DocumentStatus.DRAFT, (string)Session["emp_id"], loc
-                ))
+            if (WebHelpers.CanOpenForm(Page, Request.QueryString["docId"], DocumentStatus.DRAFT, (string)Session["emp_id"], loc, locChanged, (string)Session["access_authorize"]))
             {
                 Surc surc = new Surc(Request.QueryString["docId"], loc);
 
@@ -225,8 +225,9 @@ namespace EMR
                 }
 
                 LoadPatientInfo();
-                loadRadGridHistoryLog();
-                
+                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Surc.Logs(varDocID, loc), out string SignatureDate, out string SignatureName);
+
+
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
 
                 if (surc.status == DocumentStatus.FINAL)
@@ -263,30 +264,7 @@ namespace EMR
             WebHelpers.ConvertDateTime(patientVisitInfo.ActualVisitDateTime, out bool isValid1, out string ActualVisitDateTime, "dd-MM-yyyy");
             lblVisitDate.Text = ActualVisitDateTime;
         }
-        private void loadRadGridHistoryLog()
-        {
-            DataTable dt = Surc.Logs(varDocID, loc);
-
-            string last_updated_date_time = "";
-            string last_updated_doctor = "";
-
-            if (dt != null)
-            {
-                RadGrid1.DataSource = dt;
-
-                last_updated_date_time = WebHelpers.GetLogLastDateTime(dt.Rows[dt.Rows.Count - 1]["created_date_time"], dt.Rows[dt.Rows.Count - 1]["modified_date_time"]);
-
-                last_updated_doctor = WebHelpers.GetLogLastName(dt.Rows[dt.Rows.Count - 1]["created_name_e"], dt.Rows[dt.Rows.Count - 1]["modified_name_e"]);
-            }
-
-            SignatureDate = last_updated_date_time;
-            SignatureName = last_updated_doctor;
-
-            last_updated_date_time = WebHelpers.FormatDateTime(last_updated_date_time, "dd-MMM-yyyy HH:mm tt", "");
-
-            RadLabel1.Text = $"Last updated by <i>{last_updated_doctor}</i> on <b><i>{last_updated_date_time}</i></b>";
-            RadGrid1.DataBind();
-        }
+        
         protected void LinkViewLastestVersion_Load(object sender, EventArgs e)
         {
             (sender as HyperLink).NavigateUrl = PAGE_URL;
@@ -297,31 +275,9 @@ namespace EMR
         }
         protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
         {
-            string result = "Amended";
-            object name = "";
-            object time = "";
 
-            if (Convert.ToString(status) == DocumentStatus.FINAL && string.IsNullOrEmpty(Convert.ToString(amend_reason)))
-            {
-                result = "Submitted";
-            }
-
-            if (Convert.ToString(status) == DocumentStatus.DRAFT) result = "Saved";
-
-            if (string.IsNullOrEmpty(Convert.ToString(modified_name)))
-            {
-                name = created_name;
-                time = created_date_time;
-            }
-            else
-            {
-                name = modified_name;
-                time = created_date_time;
-            }
-
-            WebHelpers.ConvertDateTime(time, out bool isValid, out string dateTime, "dd-MMM-yyyy HH:mm tt");
-
-            return $"{result} by <i>{name}</i> on <i>{dateTime}</i>";
+            string result = WebHelpers.getLogText(status, created_name, created_date_time, modified_name, modified_date_time, amend_reason);
+            return result;
         }
         protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
         {

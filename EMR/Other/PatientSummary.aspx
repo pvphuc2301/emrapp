@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PatientSummary.aspx.cs" Inherits="EMR.PatientSummary" Async="true" %>
 
-<%@ Register TagPrefix="telerik" Namespace="Telerik.Web.UI" Assembly="Telerik.Web.UI" %>
+<%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="icon" TagName="ExclamationTriangle" %>
 
 <!DOCTYPE html>
 
@@ -104,13 +104,88 @@
                 <%--<asp:HiddenField runat="server" ID="_TRANSACTION" />--%>
                 <input type="hidden" runat="server" id="_TRANSACTION" />
                 <%--<asp:TextBox runat="server" ID="_TRANSACTION" />--%>
+
                 <div style="overflow: hidden; height: 100vh;">
                     <telerik:RadSplitter runat="server" ID="RadSplitter1" SplitBarsSize="4" Width="100%" Height="100%">
-                        <telerik:RadPane runat="server" ID="LeftMenu" Width="220" MinWidth="150" MaxWidth="550" />
+                        <telerik:RadPane runat="server" Width="220" Height="100%" MinWidth="150" MaxWidth="550">
+                            <div style="overflow-x: hidden; overflow-y: scroll; height: 100vh" id="menuLeft">
+                                <nav class="sidebar-wrapper" style="position: initial; width: inherit">
+                                    <div class="sidebar-menu">
+                                        <ul class="text-nowrap" style="padding: 0;">
+                                            <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px; margin-top: 12px;">
+                                                <h5 class="title">Complex Document</h5>
+                                                <telerik:RadGrid OnNeedDataSource="radGridComplexDoc_NeedDataSource" OnItemCommand="radGridComplexDoc_ItemCommand" CssClass="table" BorderWidth="0" AutoGenerateColumns="false" ShowHeader="false"
+                                    ID="radGridComplexDoc" ItemStyle-Height="25px" runat="server"
+                                        >
+                                                    <MasterTableView DataKeyNames="document_id,model_id,status,url">
+                                                        <Columns>
+                                                            <telerik:GridTemplateColumn ItemStyle-BorderWidth="0" SortExpression="visible_patient_id" DataField="visible_patient_id" ItemStyle-Height="25px">
+                                                                <ItemTemplate>
+                                                                    <asp:LinkButton Height="25px" runat="server" CommandName="selectDoc"><%# Eval("status") %>_<%# Eval("model_name") %> 	&nbsp;<%# Eval("created_name_l") %></asp:LinkButton>
+                                                                </ItemTemplate>
+                                                            </telerik:GridTemplateColumn>
+                                                        </Columns>
+                                                    </MasterTableView>
+                                                    <ClientSettings EnableRowHoverStyle="true">
+                                                        <Selecting AllowRowSelect="True" />
+                                                    </ClientSettings>
+                                                </telerik:RadGrid>
+                                            </li>
+
+                                            <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px;">
+                                                <h5 class="title">Form Document</h5>
+                                                <asp:HiddenField runat="server" ID="TempDocName" />
+                                                <asp:HiddenField runat="server" ID="TempDocId" />
+                                                <telerik:RadTreeView OnNodeClick="RadTreeView1_NodeClick" ID="RadTreeView1" runat="server" OnNodeExpand="RadTreeView1_NodeExpand"/>
+                                            </li>
+
+                                            <%--END Load Left Menu--%>
+
+                                            <%--Load LAB and IMG Document--%>
+                                            <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px;">
+                                                <h5 class="title">Clinical Reports</h5>
+                                                <telerik:RadTreeView OnNodeClick="RadTreeView2_NodeClick" ID="RadTreeView2" runat="server" OnNodeExpand="RadTreeView2_NodeExpand"/></li>
+                                            <%--End Load LAB and IMG Document--%>
+
+                                            <%--Load Scan Document--%>
+                                            <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px;">
+                                                <h5 class="title">General Scan</h5>
+                                                <telerik:RadTreeView OnNodeClick="RadTreeView3_NodeClick" ID="RadTreeView3" runat="server" OnNodeExpand="RadTreeView3_NodeExpand"/>
+                                            </li>
+
+                                            <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px;">
+                                                <h5 class="title">Form Scan</h5>
+                                                <telerik:RadTreeView OnNodeClick="RadTreeView3_NodeClick" ID="RadTreeView4" runat="server"  OnNodeExpand="RadTreeView4_NodeExpand"/>
+                                            </li>
+                                            <%--End Load Scan Document--%>
+                                        </ul>
+                                    </div>
+                                </nav>
+                            </div>
+                        </telerik:RadPane>
                         <telerik:RadSplitBar runat="server" ID="RadSplitBar1" />
                         <telerik:RadPane ID="MainContent" runat="server" />
                     </telerik:RadSplitter>
                 </div>
+
+                <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" MaxHeight="270">
+                <Windows>
+                    <telerik:RadWindow RenderMode="Lightweight" Modal="true" ID="RadWindow3" Title="Warning" runat="server">
+                        <ContentTemplate>
+                            <div class="text-center">
+                                <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                <h4 class="mt-4 mb-4">Denied!</h4>
+                            </div>
+
+                            <div class="d-grid no-block justify-content-end">
+                                <%--<asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="LinkButton1" CssClass="btn btn-danger">Delete</asp:LinkButton>--%>
+                            </div>
+                        </ContentTemplate>
+                    </telerik:RadWindow>
+
+                </Windows>
+            </telerik:RadWindowManager>
+
                 <div id="tooltip__item" class="tooltip__item">
                     <table>
                         <tbody>
@@ -136,6 +211,7 @@
                         </tbody>
                     </table>
                 </div>
+
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>

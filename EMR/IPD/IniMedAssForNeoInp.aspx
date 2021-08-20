@@ -31,7 +31,7 @@
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/sweetalert.min.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
-    <style type="text/css">
+    <%--<style type="text/css">
         table {
             page-break-after: auto
         }
@@ -53,7 +53,7 @@
         tfoot {
             display: table-footer-group
         }
-    </style>
+    </style>--%>
 </head>
 
 <body>
@@ -132,27 +132,27 @@
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 200px 1fr">
-                                            <webUI:PrtRowS1 FontBold="true" Order="●. " Title="Weight:" SubTitle="Cân nặng hiện tại (gr)" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" Order="● " Title="Weight:" SubTitle="Cân nặng hiện tại (gr)" runat="server" />
                                             <asp:Label runat="server" ID="prt_exam_weight"></asp:Label>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 200px 1fr">
-                                            <webUI:PrtRowS1 FontBold="true" Order="●. " Title="Length:" SubTitle="Chiều dài (cm)" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" Order="● " Title="Length:" SubTitle="Chiều dài (cm)" runat="server" />
                                             <asp:Label runat="server" ID="prt_exam_length"></asp:Label>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 200px 1fr">
-                                            <webUI:PrtRowS1 FontBold="true" Order="●. " Title="Head Circumference:" SubTitle="Vòng đầu (cm)" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" Order="● " Title="Head Circumference:" SubTitle="Vòng đầu (cm)" runat="server" />
                                             <asp:Label runat="server" ID="prt_exam_head_circum"></asp:Label>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 200px 1fr">
-                                            <webUI:PrtRowS1 FontBold="true" Order="●. " Title="HR (per minute):" SubTitle="Mạch (lần/phút)" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" Order="● " Title="HR (per minute):" SubTitle="Mạch (lần/phút)" runat="server" />
                                             <asp:Label runat="server" ID="prt_exam_hr"></asp:Label>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 200px 1fr">
-                                            <webUI:PrtRowS1 FontBold="true" Order="●. " Title="RR (per minute):" SubTitle="Nhịp thở/phút" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" Order="● " Title="RR (per minute):" SubTitle="Nhịp thở/phút" runat="server" />
                                             <asp:Label runat="server" ID="prt_exam_rr"></asp:Label>
                                         </div>
 
@@ -170,17 +170,17 @@
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 200px 1fr">
-                                            <webUI:PrtRowS1 FontBold="true" Order="●. " Title="Initial diagnosis:" SubTitle="Chẩn đoán ban đầu" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" Order="● " Title="Initial diagnosis:" SubTitle="Chẩn đoán ban đầu" runat="server" />
                                             <asp:Label runat="server" ID="prt_initial_diagnosis"></asp:Label>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 200px 1fr">
-                                            <webUI:PrtRowS1 FontBold="true" Order="●. " Title="Differential diagnosis:" SubTitle="Chẩn đoán phân biệt" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" Order="● " Title="Differential diagnosis:" SubTitle="Chẩn đoán phân biệt" runat="server" />
                                             <asp:Label runat="server" ID="prt_diff_diagnosis"></asp:Label>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 200px 1fr">
-                                            <webUI:PrtRowS1 FontBold="true" Order="●. " Title="Associated conditions:" SubTitle="Bệnh kèm theo" runat="server" />
+                                            <webUI:PrtRowS1 FontBold="true" Order="● " Title="Associated conditions:" SubTitle="Bệnh kèm theo" runat="server" />
                                             <asp:Label runat="server" ID="prt_associated_conditions"></asp:Label>
                                         </div>
 
@@ -192,13 +192,11 @@
 
                                         <div style="margin-left: 20px"><asp:Label runat="server" ID="prt_discharge_plan"></asp:Label></div>
                                         
-                                        <div class="d-flex justify-content-between">
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr; grid-gap: 5px">
                                             <div></div>
-                                            <div class="text-center">
-                                                <asp:Label runat="server" ID="prt_signature_date">
-                                            </asp:Label>
-                                                <div class="font-bold">Doctor’s name and ID</div>
-                                                <div>Họ tên bác sĩ và mã số nhân viên</div>
+                                            <div class="text-center" style="break-inside: avoid !important; page-break-inside: avoid !important">
+                                                <div><span style="font-size: 14.5px; font-family: Tahoma" class="font-bold">Họ tên, chữ ký & MSNV của Bác sĩ</span></div>
+                                                <div><span style="font-size: 14.5px; font-family: Tahoma" class="text-primary"><i>Doctor’s full name, signature & ID</i></span></div>
                                             </div>
                                         </div>
                                     </div>
@@ -245,9 +243,32 @@
                                 <Selecting AllowRowSelect="true" />
                             </ClientSettings>
                         </telerik:RadGrid>
-
                     </ContentTemplate>
                 </telerik:RadWindow>
+                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow2" Title="Warning" runat="server">
+                            <ContentTemplate>
+                                <div class="text-center">
+                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                    <h4 class="mt-4 mb-4">Delete document?</h4>
+                                </div>
+
+                                <div class="d-grid no-block justify-content-end">
+                                    <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger">Delete</asp:LinkButton>
+                                </div>
+                            </ContentTemplate>
+                        </telerik:RadWindow>
+                        <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow3" Title="Warning" runat="server">
+                            <ContentTemplate>
+                                <div class="text-center">
+                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                                    <h4 class="mt-4 mb-4">Denied!</h4>
+                                </div>
+
+                                <div class="d-grid no-block justify-content-end">
+                                    <%--<asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="LinkButton1" CssClass="btn btn-danger">Delete</asp:LinkButton>--%>
+                                </div>
+                            </ContentTemplate>
+                        </telerik:RadWindow>
             </Windows>
         </telerik:RadWindowManager>
 
@@ -401,19 +422,18 @@
                                     <div class="form-body">
 
                                         <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
-                                                        <span class="mr-2">You are viewing an old version of this document</span>
-                                                <asp:HyperLink OnLoad="LinkViewLastestVersion_Load" ID="LinkViewLastestVersion" CssClass="btn-link" Text="View Latest Version" runat="server" ></asp:HyperLink>
-                                                    </div>
+                                            <div class="col-md-12">
+                                                <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
+                                                    <span class="mr-2">You are viewing an old version of this document</span>
+                                                    <asp:HyperLink OnLoad="LinkViewLastestVersion_Load" ID="LinkViewLastestVersion" CssClass="btn-link" Text="View Latest Version" runat="server" />
+                                                </div>
 
-                                                    <div class="alert alert-info d-flex align-items-center">
-                                                        <telerik:RadLabel runat="server" ID="RadLabel1">
-</telerik:RadLabel>
-                                                        <a class="btn-link" href="#" onclick="showWindow()">View History</a>
-                                                    </div>
+                                                <div class="alert alert-info d-flex align-items-center">
+                                                    <telerik:RadLabel runat="server" ID="RadLabel1" />
+                                                    <a class="btn-link" href="javascript:void(0)" onclick="showWindow('RadWindow1')">View History</a>
                                                 </div>
                                             </div>
+                                        </div>
 
                                         <div class="row mb-2">
                                             <div class="col-md-12">
@@ -615,7 +635,7 @@
 
                                                     <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
 
-                                                    <div data-toggle="modal" runat="server" data-target="#myModal" id="btnDeleteModal" class="btn btn-danger waves-effect">Delete</div>
+                                                    <div runat="server" onclick="showWindow('RadWindow2')" id="btnDeleteModal" class="btn btn-danger">Delete</div>
 
                                                     <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
@@ -675,11 +695,6 @@
             setTimeout(function () {
                 document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
             }, 1000);
-        }
-
-        function showWindow() {
-            var oWnd = $find("<%=RadWindow1.ClientID%>");
-            oWnd.show();
         }
 
         let physical_exam = document.getElementById("lbl_physical_exam").innerText;

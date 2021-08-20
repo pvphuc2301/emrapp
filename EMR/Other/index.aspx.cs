@@ -23,12 +23,14 @@ namespace EMR.Other
         PatientVisitInfo patientVisitInfo;
         SendRequestVm sendRequestVm;
         public string loc { get; set; }
+        public string locChanged { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             varPID = Request.QueryString["pid"];
             varVPID = Request.QueryString["vpid"];
             loc = (string)Session["company_code"];
+            locChanged = (string)Session["const_company_code"];
 
             if (!IsPostBack)
             {
@@ -411,28 +413,28 @@ namespace EMR.Other
 
                     string nodeText = "DRAFT_" + data.model_name + " " + (string)Session["UserId"] + " (" + DateTime.Now.ToString("HH:mm") + ")";
 
-                    string url = $"../{_params[1]}?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={PVID}&modelId={modelID}&docId={docId}";
+                    //string url = $"../{_params[1]}?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={PVID}&modelId={modelID}&docId={docId}";
 
-                    WebHelpers.AddJS(Page, "AddNode(\"" + nodeText + "\", \"" + url + "\");");
+                    //WebHelpers.AddJS(Page, "AddNode(\"" + nodeText + "\", \"" + url + "\");");
 
-                    //    response3 = WebHelpers.PostAPI($"api/{data.api}/add/{loc}", objTemp);
+                    response3 = WebHelpers.PostAPI($"api/{data.api}/add/{loc}", objTemp);
 
-                    //if (response3.Status == System.Net.HttpStatusCode.OK)
-                    //{
-                    //    dynamic response4 = WebHelpers.PostAPI($"api/{data.api}/log/{loc}/{docId}");
-                    //    if (response4.Status == System.Net.HttpStatusCode.OK)
-                    //    {
-                    //        string url = $"../{_params[1]}?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={PVID}&modelId={modelID}&docId={docId}";
+                    if (response3.Status == System.Net.HttpStatusCode.OK)
+                    {
+                        dynamic response4 = WebHelpers.PostAPI($"api/{data.api}/log/{loc}/{docId}");
+                        if (response4.Status == System.Net.HttpStatusCode.OK)
+                        {
+                            string url = $"../{_params[1]}?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={PVID}&modelId={modelID}&docId={docId}";
 
-                    //        if (WebHelpers.CanOpenForm(Page, docId, DocumentStatus.DRAFT, (string)Session["emp_id"], loc
-                    //            ))
-                    //        {
-                    //            string nodeText = "DRAFT_" + data.model_name + " " + (string)Session["UserId"] + " (" + DateTime.Now.ToString("HH:mm") + ")";
+                            if (WebHelpers.CanOpenForm(Page, docId, DocumentStatus.DRAFT, (string)Session["emp_id"], loc, locChanged, (string)Session["access_authorize"]))
+                            {
+                                //string nodeText = "DRAFT_" + data.model_name + " " + (string)Session["UserId"] + " (" + DateTime.Now.ToString("HH:mm") + ")";
 
-                    //            WebHelpers.AddJS(Page, "AddNode(\"" + nodeText + "\", \"" + url + "\");");
-                    //        }
-                    //    }
-                    //}
+                                //WebHelpers.AddJS(Page, "AddNode(\"" + nodeText + "\", \"" + url + "\");");
+                                Response.Redirect(url);
+                            }
+                        }
+                    }
                 }
             }
         }

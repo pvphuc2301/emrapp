@@ -17,6 +17,7 @@ namespace EMR.Other
         private string varPID;
         private string varVPID;
         private string loc;
+        private string locChanged;
         private string ConnStringEMR = "";
         PatientVisitInfo patientVisitInfo;
 
@@ -24,6 +25,7 @@ namespace EMR.Other
         protected void Page_Load(object sender, EventArgs e)
         {
             loc = (string)Session["company_code"];
+            locChanged = (string)Session["const_company_code"];
             varPID = Request.QueryString["pid"];
             varVPID = Request.QueryString["vpid"];
 
@@ -317,7 +319,7 @@ namespace EMR.Other
                 string status = item.GetDataKeyValue("status").ToString();
                 string url = item.GetDataKeyValue("url").ToString();
 
-                if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], loc))
+                if (WebHelpers.CanOpenForm(Page, docid, status, (string)Session["emp_id"], loc, locChanged, (string)Session["access_authorize"]))
                 {
                     //MainContent.ContentUrl = $"/{url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}&loc={loc}";
 
