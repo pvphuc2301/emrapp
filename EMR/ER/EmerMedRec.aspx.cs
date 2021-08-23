@@ -1187,7 +1187,9 @@ namespace EMR.ER
                 LoadPatientInfo();
                 //loadRadGridHistoryLog();
 
-                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, EmergencyMedicalRecord.Logs(varDocID, loc), out string SignatureDate, out string SignatureName);
+                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, EmergencyMedicalRecord.Logs(varDocID, loc), out string _SignatureDate, out string _SignatureName);
+                SignatureDate = _SignatureDate;
+                SignatureName = _SignatureName;
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
 
@@ -1226,32 +1228,6 @@ namespace EMR.ER
 
             WebHelpers.ConvertDateTime(patientVisitInfo.ActualVisitDateTime, out bool isValid1, out string ActualVisitDateTime, "dd-MM-yyyy");
             lblVisitDate.Text = ActualVisitDateTime;
-        }
-        private void loadRadGridHistoryLog()
-        {
-            DataTable dt = EmergencyMedicalRecord.Logs(varDocID, loc);
-            string last_updated_date_time = "";
-            string last_updated_doctor = "";
-
-            if (dt != null)
-            {
-                RadGrid1.DataSource = dt;
-
-                string created_date_time = Convert.ToString(dt.Rows[0]["created_date_time"]);
-                string modified_date_time = Convert.ToString(dt.Rows[0]["modified_date_time"]);
-
-                last_updated_date_time = WebHelpers.GetLogLastDateTime(created_date_time, modified_date_time);
-
-                last_updated_doctor = WebHelpers.GetLogLastName(dt.Rows[0]["created_name_e"], dt.Rows[0]["modified_name_e"]);
-            }
-
-            SignatureDate = last_updated_date_time;
-            SignatureName = last_updated_doctor;
-
-            last_updated_date_time = WebHelpers.FormatDateTime(last_updated_date_time, "dd-MMM-yyyy HH:mm tt", "");
-
-            RadLabel1.Text = $"Last updated by <i>{last_updated_doctor}</i> on <b><i>{last_updated_date_time}</i></b>";
-            RadGrid1.DataBind();
         }
         protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
         {

@@ -722,7 +722,9 @@ namespace EMR
                 LoadPatientInfo();
                 //loadRadGridHistoryLog();
 
-                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Ena.Logs(varDocID, loc), out string SignatureDate, out string SignatureName);
+                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Ena.Logs(varDocID, loc), out string _SignatureDate, out string _SignatureName);
+                SignatureDate = _SignatureDate;
+                SignatureName = _SignatureName;
 
                 WebHelpers.setBmi(bmiStr, ena.vs_bmi);
 

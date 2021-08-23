@@ -420,33 +420,6 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label prt_procedure_narrative;
 
         /// <summary>
-        /// prt_signature_date control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_signature_date;
-
-        /// <summary>
-        /// Label2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
-
-        /// <summary>
-        /// prt_signature_name control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_signature_name;
-
-        /// <summary>
         /// RadWindowManager control.
         /// </summary>
         /// <remarks>
@@ -499,6 +472,15 @@ namespace EMR.IPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadWindow RadWindow3;
+
+        /// <summary>
+        /// lblUserBlock control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblUserBlock;
 
         /// <summary>
         /// btnHome control.

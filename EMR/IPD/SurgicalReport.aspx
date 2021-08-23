@@ -168,17 +168,16 @@
                                         <div class="text-center">
                                             <webUI:Label runat="server" SubTitle="PROCEDURE NARRATIVE" Title="TƯỜNG TRÌNH PHẪU THUẬT" />
                                         </div>
-                                        <div>
+
+                                        <div class="mb-2">
                                             <asp:Label CssClass="align-top" runat="server" ID="prt_procedure_narrative" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 1fr auto; margin-top: 25px;">
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr; grid-gap: 5px">
                                             <div></div>
-                                            <div class="text-center">
-                                                <asp:Label CssClass="d-block" runat="server" ID="prt_signature_date" />
-                                                <asp:Label CssClass="d-block" Style="line-height: 10px; margin-bottom: 100px;" runat="server" ID="Label2" Text="Dictated by/ (Name,Signature):" />
-
-                                                <asp:Label  runat="server" ID="prt_signature_name" />
+                                            <div class="text-center" style="break-inside: avoid !important; page-break-inside: avoid !important">
+                                                <div><span style="font-size: 14.5px; font-family: Tahoma" class="font-bold">Họ tên, chữ ký & MSNV của Bác sĩ</span></div>
+                                                <div><span style="font-size: 14.5px; font-family: Tahoma" class="text-primary"><i>Doctor’s full name, signature & ID</i></span></div>
                                             </div>
                                         </div>
                                     </div>
@@ -243,7 +242,8 @@
                             <ContentTemplate>
                                 <div class="text-center">
                                     <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                    <h4 class="mt-4 mb-4">Denied!</h4>
+                                    <h4 class="mt-4">Denied!</h4>
+                                    <label runat="server" id="lblUserBlock" />
                                 </div>
 
                                 <div class="d-grid no-block justify-content-end">
@@ -716,6 +716,7 @@
 
         function afterAsyncPostBack() {
             setTimeout(function () {
+                if (document.getElementById("alertify-logs"))
                 document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
             }, 1000);
         }

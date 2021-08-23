@@ -358,7 +358,7 @@
 
                                         <webUI:PrtRowS1 FixedLeft="5" Order="●" Title="Tôi đã được nghe bác sĩ tư vấn và đồng ý tiêm chủng cho tôi/ người mà tôi làm giám hộ hợp pháp.Tôi đã kiểm tra đúng thuốc tiêm và thuốc còn thời hạn dùng." SubTitle="I have been consulted and agree on vaccination. I checked right medication and medication has still not expired." runat="server" />
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr; page-break-inside: avoid !important">
+                                        <div class="d-grid mt-1" style="grid-template-columns: auto 1fr; page-break-inside: avoid !important">
                                             <webUI:PrtRowS1 FixedLeft="5" Order="●" CssClass="text-inline" Title="Họ tên người tiêm chủng/ người giám hộ/ " SubTitle="Full name of patient/ guardian:" runat="server" />
                                             <div> <hr style="border-bottom: 0.25px solid black"></div>
                                         </div>
@@ -440,7 +440,8 @@
                             <ContentTemplate>
                                 <div class="text-center">
                                     <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                    <h4 class="mt-4 mb-4">Denied!</h4>
+                                    <h4 class="mt-4">Denied!</h4>
+                                    <label runat="server" id="lblUserBlock" />
                                 </div>
 
                                 <div class="d-grid no-block justify-content-end">
@@ -1195,6 +1196,7 @@
         function afterAsyncPostBack() {
             checkboxRadiobutton_init();
             setTimeout(function () {
+                if (document.getElementById("alertify-logs"))
                 document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
             }, 1000);
         }

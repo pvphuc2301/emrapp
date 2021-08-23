@@ -1059,6 +1059,15 @@ namespace EMR.IPD
         protected global::Telerik.Web.UI.RadWindow RadWindow3;
 
         /// <summary>
+        /// lblUserBlock control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblUserBlock;
+
+        /// <summary>
         /// btnHome control.
         /// </summary>
         /// <remarks>

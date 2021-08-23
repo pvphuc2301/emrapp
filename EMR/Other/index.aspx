@@ -19,6 +19,27 @@
         .RadGrid_Bootstrap .rgHeader, .RadGrid_Bootstrap th.rgResizeCol {
             padding: 6px 15px !important;
         }
+
+        .RadTabStrip_Silk .rtsLevel1 .rtsSelected .rtsLink {
+            background-image: none !important;
+            background-color: #fff !important;
+            color: #337ab7 !important;
+        }
+
+        .RadTabStrip_Silk .rtsLevel1 .rtsSelected .rtsLink:before {
+            color: #337ab7 !important;
+            border-color: #337ab7 !important;
+        }
+
+        .RadTabStrip_Silk .rtsLevel1 .rtsLink {
+            background-color: #F7F7F7 !important;
+            background-image: none !important;
+        }
+
+        .RadTabStrip_Silk .rtsLevel1 .rtsHovered .rtsLink {
+            background-color: #F0F0F0 !important;
+        }
+
     </style>
 </head>
 <body>
@@ -88,82 +109,53 @@
         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
                 <div class="row">
+
                     <div class="col-md-5">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row col-12 mb-2">
-                                    <h4 class="card-title control-label m-0">
-                                        <span class="text-primary">Demographics</span>
-                                    </h4>
-                                </div>
+                        <div style="border: 1px solid #d7d7db; margin: 12px; border-radius: 4px;">
+                            <div style="padding: 10px 1.25rem; font-size: 18px;">
+                                <span class="text-primary">Demographics</span>
+                            </div>
 
-                                <div class="row col-12">
-                                    <div >
-                                        <asp:Label Font-Bold="true" runat="server" ID="lbl_demographics_title"></asp:Label>
-                                    </div>
-                                    <lable class="flex-grow-1" runat="server" id="Lable1"></lable>
-                                </div>
+                            <div style="padding: 0 1.25rem;">
+                                <asp:Label Font-Bold="true" runat="server" ID="lbl_demographics_title"/>
+                            </div>
 
-                                <div class="row col-12" style="background-color: #337ab7; padding-top: 3px; padding-bottom: 2px; color: #fff;">
-                                    Demographics
-                                </div>
+                            <div style="padding: 0 1.25rem; background-color: #e9ecef; padding-top: 3px; padding-bottom: 2px; color: #000;">Demographics</div>
+                        
+                            <div style="padding: 0 1.25rem; display: grid; grid-template-columns: 150px 1fr">
+                                Gender <lable runat="server" id="lblGender" />
+                            </div>
 
-                                <div class="row col-12">
-                                    <div class="w-sm-6 d-flex">
-                                        Gender
-                                    </div>
-                                    <lable class="flex-grow-1" runat="server" id="lblGender"></lable>
-                                </div>
+                            <div style="padding: 0 1.25rem; display: grid; grid-template-columns: 150px 1fr">
+                                Date of Birth (Age) <lable class="flex-grow-1" runat="server" id="lblAge"/>
+                            </div>
 
-                                <div class="row col-12">
-                                    <div class="w-sm-6 d-flex">
-                                        Date of Birth (Age)
-                                    </div>
-                                    <div class="flex-grow-1" runat="server" id="lblAge"></div>
-                                </div>
+                            <div style="padding: 0 1.25rem; display: grid; grid-template-columns: 150px 1fr">
+                                Address <lable runat="server" id="lblAddress"/>
+                            </div>
+                                
+                            <div style="padding: 0 1.25rem; display: grid; grid-template-columns: 150px 1fr">
+                                Phone <div runat="server" id="lblPhone"/>
+                            </div>
 
-                                <div class="row col-12">
-                                    <div class="w-sm-6 d-flex">
-                                        Address
-                                    </div>
-                                    <div class="flex-grow-1" runat="server" id="lblAddress"></div>
-                                </div>
+                            <div style="padding: 0 1.25rem; background-color: #e9ecef; padding-top: 3px; padding-bottom: 2px; color: #000;">
+                                Next of Kin / Person to Contact
+                            </div>
 
-                                <div class="row col-12">
-                                    <div class="w-sm-6 d-flex">
-                                        Phone
-                                    </div>
-                                    <div class="flex-grow-1" runat="server" id="lblPhone"></div>
-                                </div>
+                            <div style="padding: 0 1.25rem; display: grid; grid-template-columns: 150px 1fr">
+                                Name <div class="flex-grow-1" runat="server" id="lblName"/>
+                            </div>
 
-                                <div class="row col-12" style="background-color: #337ab7; padding-top: 3px; padding-bottom: 2px; color: #fff;">
-                                    Next of Kin / Person to Contact
-                                </div>
-
-                                <div class="row col-12">
-                                    <div class=" w-sm-6 d-flex">
-                                        Name
-                                    </div>
-                                    <div class="flex-grow-1" runat="server" id="lblName"></div>
-                                </div>
-
-                                <div class="row col-12">
-                                    <div class=" w-sm-6 d-flex">
-                                        Relationship
-                                    </div>
-                                    <div class="flex-grow-1" runat="server" id="lblRelationship"></div>
-                                </div>
-
-                                <div class="row col-12">
-                                    <div class=" w-sm-6 d-flex">
-                                        Phone
-                                    </div>
-                                    <div class="flex-grow-1" runat="server" id="lblPhoneRel"></div>
-                                </div>
-
+                            <div style="padding: 0 1.25rem; display: grid; grid-template-columns: 150px 1fr">
+                                Relationship <div runat="server" id="lblRelationship"/>
+                            </div>
+                                
+                            <div style="padding: 0 1.25rem; display: grid; grid-template-columns: 150px 1fr">
+                                Phone <div runat="server" id="lblPhoneRel"/>
                             </div>
                         </div>
                     </div>
+
                     <div class="col-md-7">
                         <div class="card">
                             <telerik:RadTabStrip runat="server" ID="RadTabStrip1"  MultiPageID="RadMultiPage1" SelectedIndex="0" Skin="Silk">
@@ -175,12 +167,12 @@
 
                             <telerik:RadMultiPage runat="server" ID="RadMultiPage1" SelectedIndex="0">
                                 <telerik:RadPageView id="Allergy" runat="server">
-                                    <telerik:RadGrid CssClass="table mb-2 mt-3" BorderStyle="None" OnNeedDataSource="RadGridAllergy_NeedDataSource" ShowHeaderWhenEmpty="true" ID="RadGridAllergy" AllowSorting="true" runat="server" ShowHeader="true" AutoGenerateColumns="false" AllowPaging="true">
+                                    <telerik:RadGrid CssClass="table mt-3" BorderStyle="None" OnNeedDataSource="RadGridAllergy_NeedDataSource" ShowHeaderWhenEmpty="true" ID="RadGridAllergy" AllowSorting="true" runat="server" ShowHeader="true" AutoGenerateColumns="false" AllowPaging="true">
                                             <MasterTableView AutoGenerateColumns="False" DataKeyNames="allergy_id">
                                             <Columns>
-                                                <telerik:GridBoundColumn ItemStyle-Width="150px" DataField="allergy_name_e" HeaderText="Allergy name e" />
-                                                <telerik:GridBoundColumn ItemStyle-Width="150px" DataField="allergy_name_l" HeaderText="Allergy name l" />
-                                                <telerik:GridBoundColumn ItemStyle-Width="150px" DataField="lu_updated" DataFormatString="{0:dd-MMM-yyyy HH:mm}" HeaderText="Last updated" />
+                                                <telerik:GridBoundColumn DataField="allergy_name_e" HeaderText="Allergy name e" />
+                                                <telerik:GridBoundColumn DataField="allergy_name_l" HeaderText="Allergy name l" />
+                                                <telerik:GridBoundColumn HeaderStyle-Width="170px" DataField="lu_updated" DataFormatString="{0:dd-MMM-yyyy HH:mm}" HeaderText="Last updated" />
                                             </Columns>
                                         </MasterTableView>
                                         <ClientSettings>
@@ -191,15 +183,16 @@
                                 </telerik:RadPageView>
 
                                 <telerik:RadPageView id="ProblemList" runat="server">
-                                    <telerik:RadGrid CssClass="table mb-2 mt-3" BorderStyle="none" OnNeedDataSource="RadGridPatientProblem_NeedDataSource" ShowHeaderWhenEmpty="true" ID="RadGridPatientProblem" runat="server" ShowHeader="true" AutoGenerateColumns="false" AllowSorting="true" AllowPaging="true">
+                                    <telerik:RadGrid CssClass="table mt-3" BorderStyle="none" OnNeedDataSource="RadGridPatientProblem_NeedDataSource" ShowHeaderWhenEmpty="true" ID="RadGridPatientProblem" runat="server" ShowHeader="true" AutoGenerateColumns="false" AllowSorting="true" AllowPaging="true">
                                             <MasterTableView AutoGenerateColumns="False" DataKeyNames="patient_problem_id">
                                             <Columns>
-                                                <telerik:GridBoundColumn DataFormatString="{0:dd-MMM-yyyy HH:mm}" ItemStyle-Width="150px" DataField="entry_date_time" HeaderText="First data entry Date" />
-                                                <telerik:GridBoundColumn DataFormatString="{0:dd-MMM-yyyy}" ItemStyle-Width="150px" DataField="onset_date_time" HeaderText="Onset Time" />
+                                                <telerik:GridBoundColumn HeaderStyle-Width="170px" DataFormatString="{0:dd-MMM-yyyy HH:mm}" DataField="entry_date_time" HeaderText="First data entry Date" />
+
+                                                <telerik:GridBoundColumn DataFormatString="{0:dd-MMM-yyyy}" HeaderStyle-Width="170px" DataField="onset_date_time" HeaderText="Onset Time" />
 
                                                 <telerik:GridBoundColumn DataField="description" HeaderText="Description" />
 
-                                                <telerik:GridBoundColumn DataFormatString="{0:dd-MMM-yyyy HH:mm}" ItemStyle-Width="155px" DataField="lu_updated" HeaderText="Last Updated Date" />
+                                                <telerik:GridBoundColumn DataFormatString="{0:dd-MMM-yyyy HH:mm}" HeaderStyle-Width="170px" DataField="lu_updated" HeaderText="Last Updated Date" />
                                             </Columns>
                                         </MasterTableView>
                                         <ClientSettings>
@@ -304,11 +297,13 @@
                             </div>
                         </ContentTemplate>
                     </telerik:RadWindow>
+
                     <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow3" Title="Warning" runat="server">
                         <ContentTemplate>
                             <div class="text-center">
                                 <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                <h4 class="mt-4 mb-4">Denied!</h4>
+                                <h4>Denied!</h4>
+                                <label runat="server" id="lblUserBlock" />
                             </div>
 
                             <div class="d-grid no-block justify-content-end">
@@ -350,7 +345,7 @@
             //    document.getElementById('ddlDocList_error').innerText = "Please select form document!";
             //    return false;
             //}
-            //document.getElementById('btnSave').classList.add('disabled');
+            document.getElementById('RadWindow2_C_btnSave').classList.add('disabled');
             return true;
         }
     </script>

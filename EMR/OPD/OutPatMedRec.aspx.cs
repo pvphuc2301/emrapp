@@ -352,8 +352,6 @@ namespace EMR
                 prt_specific_education_required.Text = WebHelpers.TextToHtmlTag(omr.specific_education_required, false);
 
                 prt_next_appointment.Text = WebHelpers.TextToHtmlTag(omr.next_appointment, false);
-
-                prt_signature_doctor.Text = SignatureName;
             }
             catch(Exception ex)
             {
@@ -568,7 +566,10 @@ namespace EMR
                 }
 
                 LoadPatientInfo();
-                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Omr.Logs(varDocID, loc), out string SignatureDate, out string SignatureName);
+
+                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Omr.Logs(varDocID, loc), out string _SignatureDate, out string _SignatureName);
+                SignatureDate = _SignatureDate;
+                SignatureName = _SignatureName;
 
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);

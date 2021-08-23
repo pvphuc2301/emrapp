@@ -625,7 +625,8 @@
                             <ContentTemplate>
                                 <div class="text-center">
                                     <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                    <h4 class="mt-4 mb-4">Denied!</h4>
+                                    <h4 class="mt-4">Denied!</h4>
+                                    <label runat="server" id="lblUserBlock" />
                                 </div>
 
                                 <div class="d-grid no-block justify-content-end">
@@ -1515,7 +1516,8 @@
             InputFilter();
             checkboxRadiobutton_init();
             setTimeout(function () {
-                document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
+                if (document.getElementById("alertify-logs"))
+                    document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
             }, 1000);
         }
 

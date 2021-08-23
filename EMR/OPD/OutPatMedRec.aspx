@@ -221,12 +221,11 @@
                                             <asp:Label runat="server" ID="prt_next_appointment" />
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr">
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr; grid-gap: 5px">
                                             <div></div>
-                                            <div class="text-center" style="break-inside: avoid;">
-                                                <div class="font-bold">BÁC SĨ ĐIỀU TRỊ</div>
-                                                <div style="margin-bottom: 100px;">ATTENDING DOCTOR</div>
-                                                <asp:Label runat="server" ID="prt_signature_doctor" />
+                                            <div class="text-center" style="break-inside: avoid !important; page-break-inside: avoid !important">
+                                                <div><span style="font-size: 14.5px; font-family: Tahoma" class="font-bold">Họ tên, chữ ký & MSNV của Bác sĩ</span></div>
+                                                <div><span style="font-size: 14.5px; font-family: Tahoma" class="text-primary"><i>Doctor’s full name, signature & ID</i></span></div>
                                             </div>
                                         </div>
                                     </div>
@@ -291,7 +290,8 @@
                             <ContentTemplate>
                                 <div class="text-center">
                                     <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                    <h4 class="mt-4 mb-4">Denied!</h4>
+                                    <h4 class="mt-4">Denied!</h4>
+                                    <label runat="server" id="lblUserBlock" />
                                 </div>
 
                                 <div class="d-grid no-block justify-content-end">
@@ -1023,6 +1023,7 @@
             InputFilter("data-type='number'");
             $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
             setTimeout(function () {
+                if (document.getElementById("alertify-logs"))
                 document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
             }, 1000);
         }

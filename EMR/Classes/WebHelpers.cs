@@ -128,7 +128,9 @@ namespace EMR
                     //string pid = page.Request["pid"];
                     //string vpid = page.Request["vpid"];
                     //page.Response.Redirect($"../other/patientsummary.aspx?pid={pid}&vpid={vpid}&blocked={employee.full_name_l}", false);
-                    AddJS(page, "showWindow('RadWindow3')");
+
+                    AddJS(page, "showBlock('RadWindow3', \"This document is blocked by " + employee.full_name_e + "\");");
+
                     //ScriptManager.RegisterStartupScript(page, page.GetType(), "document_block", "setTimeout(()=>{ sweetAlert(\"Denied!\", \"This document is blocked by " + employee.full_name_e + "\", \"error\");},0);", true);
                     return false;
                 }

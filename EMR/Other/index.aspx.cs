@@ -307,6 +307,7 @@ namespace EMR.Other
 
             RadGrid1.Rebind();
         }
+
         //protected void btnOpen_Click(object sender, EventArgs e)
         //{
 
@@ -393,7 +394,6 @@ namespace EMR.Other
                                     if (response4.Status == System.Net.HttpStatusCode.OK)
                                     {
                                         string url = $"../{_params[1]}?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={PVID}&modelId={modelID}&docId={docId}";
-                                    Response.Redirect(url, false);
 
                                         Response.Redirect(url, false);
                                     }

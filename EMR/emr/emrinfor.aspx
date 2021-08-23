@@ -78,8 +78,29 @@
             left: calc(100% + 1em);
             transform: translate3d(15px, -50%, 0);
         }
+
         .RadTabStrip .rtsTxt {
             font-weight: 600;
+        }
+
+        .RadTabStrip_Silk .rtsLevel1 .rtsSelected .rtsLink {
+            background-image: none !important;
+            background-color: #fff !important;
+            color: #337ab7 !important;
+        }
+
+        .RadTabStrip_Silk .rtsLevel1 .rtsSelected .rtsLink:before {
+            color: #337ab7 !important;
+            border-color: #337ab7 !important;
+        }
+
+        .RadTabStrip_Silk .rtsLevel1 .rtsLink {
+            background-color: #F7F7F7 !important;
+            background-image: none !important;
+        }
+
+        .RadTabStrip_Silk .rtsLevel1 .rtsHovered .rtsLink {
+            background-color: #F0F0F0 !important;
         }
     </style>
 </head>
@@ -287,15 +308,14 @@
 
         }
 
-
     </script>
 
     <script>
-        //let headerDisplay = window.parent.document.getElementById("header");
-        //let leftMenuWidth = window.parent.document.getElementById("RadTabStrip2");
+        let headerDisplay = window.parent.document.getElementById("header");
+        let leftMenuWidth = window.parent.document.getElementById("RadTabStrip2");
 
-        //headerDisplay.style.display = "none";
-        //leftMenuWidth.style.width = "0";
+        headerDisplay.style.display = "none";
+        leftMenuWidth.style.width = "0";
 
         //var i = 0;
         //var progressWidth = 1;

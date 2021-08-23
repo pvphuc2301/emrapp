@@ -282,41 +282,7 @@ namespace EMR
         #endregion
 
         #region Methods
-        private void loadRadGridHistoryLog()
-        {
-            DataTable dt = Disc.Logs(varDocID, loc);
-            RadGrid1.DataSource = dt;
-            string last_updated_date_time = "";
-            string last_updated_doctor = "";
-
-            if (dt.Rows.Count == 1)
-            {
-                last_updated_doctor = dt.Rows[0].Field<string>("created_name_e");
-
-                WebHelpers.ConvertDateTime(dt.Rows[0].Field<DateTime>("created_date_time"), out bool isValid, out last_updated_date_time);
-
-                if (isValid)
-                {
-                    SignatureDate = last_updated_date_time;
-                }
-            }
-            else if (dt.Rows.Count > 1)
-            {
-                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_e");
-                WebHelpers.ConvertDateTime(dt.Rows[0].Field<DateTime>("modified_date_time"), out bool isValid, out last_updated_date_time);
-
-                if (isValid)
-                {
-                    SignatureDate = last_updated_date_time;
-                }
-            }
-
-            SignatureDate = last_updated_date_time;
-            SignatureName = last_updated_doctor;
-            RadLabel1.Text = $"Last updated by <i>{last_updated_doctor}</i> on <b><i>{Convert.ToDateTime(last_updated_date_time).ToString("dd-MMM-yyyy HH:mm tt")}</i></b>";
-            RadGrid1.DataBind();
-        }
-
+        
         protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
         {
             string result = WebHelpers.getLogText(status, created_name, created_date_time, modified_name, modified_date_time, amend_reason);
@@ -401,7 +367,9 @@ namespace EMR
 
                 LoadPatientInfo();
 
-                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Disc.Logs(varDocID, loc), out string SignatureDate, out string SignatureName);
+                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Disc.Logs(varDocID, loc), out string _SignatureDate, out string _SignatureName);
+                SignatureDate = _SignatureDate;
+                SignatureName = _SignatureName;
 
                 //loadRadGridHistoryLog();
 

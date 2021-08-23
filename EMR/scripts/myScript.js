@@ -377,6 +377,12 @@ function showWindow(radWindow) {
     oWnd.show();
 }
 
+function showBlock(radWindow, value) {
+    var oWnd = $find(radWindow);
+    oWnd.show();
+    document.getElementById("RadWindow3_C_lblUserBlock").innerText = value;
+}
+
 function ShowNotification(arg) {
     var notification = $find(arg);
     notification.show();

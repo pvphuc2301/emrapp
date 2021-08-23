@@ -255,7 +255,9 @@ namespace EMR
 
                 LoadPatientInfo();
 
-                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Somr.Logs(varDocID, loc), out string SignatureDate, out string SignatureName);
+                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Somr.Logs(varDocID, loc), out string _SignatureDate, out string _SignatureName);
+                SignatureDate = _SignatureDate;
+                SignatureName = _SignatureName;
 
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);

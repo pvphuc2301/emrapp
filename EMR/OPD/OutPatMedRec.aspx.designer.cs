@@ -366,15 +366,6 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_next_appointment;
 
         /// <summary>
-        /// prt_signature_doctor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_signature_doctor;
-
-        /// <summary>
         /// RadWindowManager control.
         /// </summary>
         /// <remarks>
@@ -427,6 +418,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadWindow RadWindow3;
+
+        /// <summary>
+        /// lblUserBlock control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblUserBlock;
 
         /// <summary>
         /// btnHome control.

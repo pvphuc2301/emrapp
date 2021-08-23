@@ -225,19 +225,19 @@ namespace EMR
                 //10
                 prt_disc_medication.Text = WebHelpers.TextToHtmlTag(diss.disc_medication);
 
-                WebHelpers.VisibleControl(false, prt_follow_up_instruc, prt_special_diet, prt_next_consult, prt_dama, prt_trans_to_hospital, prt_transfer_reason, prt_disc_medication, prt_dama_title, prt_disc_medication_title, prt_trans_to_hospital_title, prt_transfer_reason_title, prt_follow_up_instruc_title, prt_special_diet_title, prt_next_consult_title);
+                WebHelpers.VisibleControl(false, prt_next_consult_field, prt_dama_field, prt_transfer_reason_field, prt_disc_medication_field, prt_trans_to_hospital_field, prt_follow_up_instruc_field, prt_special_diet_field);
                 
                 if (diss.disc_reason_code == "DAMA")
                 {
                     //10
-                    WebHelpers.VisibleControl(true, prt_dama_title, prt_dama);
+                    WebHelpers.VisibleControl(true, prt_dama_field);
                     prt_dama.Text = WebHelpers.TextToHtmlTag(diss.dama);
 
                 }
                 else if (diss.disc_reason_code == "TRANSFER")
                 {
                     //10
-                    WebHelpers.VisibleControl(true, prt_disc_medication, prt_disc_medication_title, prt_trans_to_hospital, prt_trans_to_hospital_title, prt_transfer_reason, prt_transfer_reason_title);
+                    WebHelpers.VisibleControl(true, prt_disc_medication_field, prt_trans_to_hospital_field, prt_transfer_reason_field);
                     prt_disc_medication.Text = WebHelpers.TextToHtmlTag(diss.disc_medication);
                     //11
                     prt_trans_to_hospital.Text = WebHelpers.TextToHtmlTag(diss.trans_to_hospital);
@@ -246,7 +246,7 @@ namespace EMR
                 }
                 else if (diss.disc_reason_code == "AMA")
                 {
-                    WebHelpers.VisibleControl(true, prt_disc_medication, prt_disc_medication_title, prt_follow_up_instruc, prt_follow_up_instruc_title, prt_special_diet, prt_special_diet_title, prt_next_consult, prt_next_consult_title);
+                    WebHelpers.VisibleControl(true, prt_disc_medication_field, prt_follow_up_instruc_field, prt_special_diet_field, prt_next_consult_field);
                     //10
                     prt_disc_medication.Text = WebHelpers.TextToHtmlTag(diss.disc_medication);
                     //11
@@ -359,7 +359,9 @@ namespace EMR
                 LoadPatientInfo();
                 //loadRadGridHistoryLog();
 
-                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Diss.Logs(varDocID, loc), out string SignatureDate, out string SignatureName);
+                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Diss.Logs(varDocID, loc), out string _SignatureDate, out string _SignatureName);
+                SignatureDate = _SignatureDate;
+                SignatureName = _SignatureName;
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
 
@@ -380,41 +382,6 @@ namespace EMR
                 WebHelpers.SendError(Page, ex);
             }
         }
-        private void loadRadGridHistoryLog()
-        {
-            DataTable dt = Diss.Logs(varDocID, loc);
-            RadGrid1.DataSource = dt;
-            string last_updated_date_time = "";
-            string last_updated_doctor = "";
-
-            if (dt.Rows.Count == 1)
-            {
-                last_updated_doctor = dt.Rows[0].Field<string>("created_name_e");
-
-                WebHelpers.ConvertDateTime(dt.Rows[0].Field<DateTime>("created_date_time"), out bool isValid, out last_updated_date_time);
-
-                if (isValid)
-                {
-                    SignatureDate = last_updated_date_time;
-                }
-            }
-            else if (dt.Rows.Count > 1)
-            {
-                last_updated_doctor = dt.Rows[0].Field<string>("modified_name_e");
-                WebHelpers.ConvertDateTime(dt.Rows[0].Field<DateTime>("modified_date_time"), out bool isValid, out last_updated_date_time);
-
-                if (isValid)
-                {
-                    SignatureDate = last_updated_date_time;
-                }
-            }
-
-            SignatureName = last_updated_doctor;
-
-            RadLabel1.Text = $"Last updated by <i>{last_updated_doctor}</i> on <b><i>{Convert.ToDateTime(last_updated_date_time).ToString("dd-MMM-yyyy HH:mm tt")}</i></b>";
-            RadGrid1.DataBind();
-        }
-
         protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
         {
             string result = WebHelpers.getLogText(status, created_name, created_date_time, modified_name, modified_date_time, amend_reason);

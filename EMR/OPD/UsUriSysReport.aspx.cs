@@ -44,7 +44,7 @@ namespace EMR
             loc = (string)Session["company_code"];
             locChanged = (string)Session["const_company_code"];
 
-            PAGE_URL = $"/OPD/UsUriSystem.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+            PAGE_URL = $"/OPD/UsUriSysReport.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
             if (!IsPostBack)
             {
@@ -223,7 +223,9 @@ namespace EMR
 
                 LoadPatientInfo();
 
-                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Uusr.Logs(varDocID, loc), out string SignatureDate, out string SignatureName);
+                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Uusr.Logs(varDocID, loc), out string _SignatureDate, out string _SignatureName);
+                SignatureDate = _SignatureDate;
+                SignatureName = _SignatureName;
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
 

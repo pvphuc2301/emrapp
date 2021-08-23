@@ -158,10 +158,10 @@ namespace EMR.IPD
                 prt_procedure_chart.Text = WebHelpers.TextToHtmlTag(surr.procedure_chart);
                 prt_procedure_narrative.Text = WebHelpers.TextToHtmlTag(surr.procedure_narrative);
 
-                string signature_date = "Ngày/ Date: " + WebHelpers.FormatDateTime(SignatureDate, "dd-MM-yyyy", "");
+                //string signature_date = "Ngày/ Date: " + WebHelpers.FormatDateTime(SignatureDate, "dd-MM-yyyy", "");
 
-                prt_signature_date.Text = signature_date;
-                prt_signature_name.Text = SignatureName;
+                //prt_signature_date.Text = signature_date;
+                //prt_signature_name.Text = SignatureName;
                 
 
             }
@@ -265,8 +265,9 @@ namespace EMR.IPD
 
                 LoadPatientInfo();
 
-                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Surr.Logs(varDocID, loc), out string SignatureDate, out string SignatureName);
-
+                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Surr.Logs(varDocID, loc), out string _SignatureDate, out string _SignatureName);
+                SignatureDate = _SignatureDate;
+                SignatureName = _SignatureName;
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
                 if (surr.status == DocumentStatus.FINAL)

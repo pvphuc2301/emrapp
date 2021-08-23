@@ -391,7 +391,8 @@ namespace EMR.Other
 
                         if (response1.Status == System.Net.HttpStatusCode.OK)
                         {
-                            WebHelpers.AddJS(Page, "window.parent.window.location.href = \"" + url + "\"");
+                            Response.Redirect(url);
+                            //WebHelpers.AddJS(Page, "window.parent.window.location.href = \"" + url + "\"");
                         }
                     }
                 }

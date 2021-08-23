@@ -48,7 +48,7 @@ namespace EMR
             if (!IsPostBack)
             {
                 MainContent.ContentUrl = $"index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}";
-
+                
                 LoadRootNodes(RadTreeView1, TreeNodeExpandMode.ServerSideCallBack);
                 LoadRootLAB_RAD(RadTreeView2, TreeNodeExpandMode.ServerSideCallBack);
                 LoadRootScan(RadTreeView3, TreeNodeExpandMode.ServerSideCallBack);

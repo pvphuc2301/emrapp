@@ -108,7 +108,7 @@
                 <div style="overflow: hidden; height: 100vh;">
                     <telerik:RadSplitter runat="server" ID="RadSplitter1" SplitBarsSize="4" Width="100%" Height="100%">
                         <telerik:RadPane runat="server" Width="220" Height="100%" MinWidth="150" MaxWidth="550">
-                            <div style="overflow-x: hidden; overflow-y: scroll; height: 100vh" id="menuLeft">
+                            <div style="overflow-x: hidden; overflow-y: scroll; height: 100%" id="menuLeft">
                                 <nav class="sidebar-wrapper" style="position: initial; width: inherit">
                                     <div class="sidebar-menu">
                                         <ul class="text-nowrap" style="padding: 0;">
@@ -174,7 +174,8 @@
                         <ContentTemplate>
                             <div class="text-center">
                                 <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                <h4 class="mt-4 mb-4">Denied!</h4>
+                                <h4 class="mt-4">Denied!</h4>
+                                <label runat="server" id="lblUserBlock" />
                             </div>
 
                             <div class="d-grid no-block justify-content-end">

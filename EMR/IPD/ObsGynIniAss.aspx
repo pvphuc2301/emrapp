@@ -836,7 +836,8 @@
                             <ContentTemplate>
                                 <div class="text-center">
                                     <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                    <h4 class="mt-4 mb-4">Denied!</h4>
+                                    <h4 class="mt-4">Denied!</h4>
+                                    <label runat="server" id="lblUserBlock" />
                                 </div>
 
                                 <div class="d-grid no-block justify-content-end">
@@ -2125,6 +2126,7 @@
             InputFilter("data-type='number'");
             $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
             setTimeout(function () {
+                if (document.getElementById("alertify-logs"))
                 document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
             }, 1000);
         }
