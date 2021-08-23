@@ -74,6 +74,14 @@ namespace EMR
             {
                 WebHelpers.VisibleControl(true, undo, redo, pencilWrapper, cb_alert_true, cb_coma_true, cb_others_true, cb_rhythm_regular_true, cb_rhythm_inregular_true, cb_rhythm_others_true, cb_psychosocial_true, cb_psychosocial_others_true, cb_other_systems_normal_true, cb_other_systems_abnormal_true);
 
+                cb_rhythm_regular_true.Disabled = cb_rhythm_inregular_true.Disabled = cb_rhythm_others_true.Disabled = false;
+
+                cb_alert_true.Disabled = cb_coma_true.Disabled = cb_others_true.Disabled = false;
+
+                cb_psychosocial_true.Disabled = cb_psychosocial_others_true.Disabled = false;
+
+                cb_other_systems_normal_true.Disabled = cb_other_systems_abnormal_true.Disabled = false;
+
                 skin_anno_data_base64.Value = JsonConvert.DeserializeObject(ena.skin_anno_data).dataURI;
                 //Triage Date Time
                 WebHelpers.BindDateTimePicker(dtpk_triage_time, ena.triage_time);
