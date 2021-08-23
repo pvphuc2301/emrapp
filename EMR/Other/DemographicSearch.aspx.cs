@@ -113,7 +113,7 @@ namespace EMR.Other
         #region RadGrid1
         protected void RadGrid1_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            dynamic response = WebHelpers.GetAPI("api/Patient/outpatient-today-list?keyword=" + Session["UserID"] + "&pageIndex=1&pageSize=4");
+            dynamic response = WebHelpers.GetAPI("api/Patient/outpatient-today-list?keyword=" + Session["UserID"] + "&pageIndex=1&pageSize=100");
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
