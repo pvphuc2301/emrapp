@@ -441,9 +441,113 @@ namespace EMR
             {
                 patientInfo = new PatientInfo(varPID);
                 patientVisitInfo = new PatientVisitInfo(varPVID, loc);
+
+
+                
+
+                if (ena.alert != null)
+                {
+                    string alert = "❏";
+                    if (bool.TryParse(Convert.ToString(ena.alert), out bool result))
+                    {
+                        alert = result ? "☒" : "❏";
+                    }
+                    prt_alert_true.Text = alert;
+                }
+
+                if (ena.coma != null)
+                {
+                    string coma = "❏";
+                    if (bool.TryParse(Convert.ToString(ena.coma), out bool result))
+                    {
+                        coma = result ? "☒" : "❏";
+                    }
+                    prt_coma_true.Text = coma;
+                }
+
+                if (ena.others != null)
+                {
+                    string others = "❏";
+                    if (bool.TryParse(Convert.ToString(ena.others), out bool result))
+                    {
+                        others = result ? "☒" : "❏";
+                    }
+                    prt_others_true.Text = others;
+                }
+
+                if (ena.rhythm_regular != null)
+                {
+                    string rhythm_regular = "❏";
+                    if (bool.TryParse(Convert.ToString(ena.rhythm_regular), out bool result))
+                    {
+                        rhythm_regular = result ? "☒" : "❏";
+                    }
+                    prt_rhythm_regular_true.Text = rhythm_regular;
+                }
+
+                if (ena.rhythm_inregular != null)
+                {
+                    string rhythm_inregular = "❏";
+                    if (bool.TryParse(Convert.ToString(ena.rhythm_inregular), out bool result))
+                    {
+                        rhythm_inregular = result ? "☒" : "❏";
+                    }
+                    prt_rhythm_inregular_true.Text = rhythm_inregular;
+                }
+
+                if (ena.rhythm_others != null)
+                {
+                    string rhythm_others = "❏";
+                    if (bool.TryParse(Convert.ToString(ena.rhythm_others), out bool result))
+                    {
+                        rhythm_others = result ? "☒" : "❏";
+                    }
+                    prt_rhythm_others_true.Text = rhythm_others;
+                }
+
+                if (ena.psychosocial != null)
+                {
+                    string psychosocial = "❏";
+                    if (bool.TryParse(Convert.ToString(ena.psychosocial), out bool result))
+                    {
+                        psychosocial = result ? "☒" : "❏";
+                    }
+                    prt_psychosocial_true.Text = psychosocial;
+                }
+
+                if (ena.psychosocial_others != null)
+                {
+                    string psychosocial_others = "❏";
+                    if (bool.TryParse(Convert.ToString(ena.psychosocial_others), out bool result))
+                    {
+                        psychosocial_others = result ? "☒" : "❏";
+                    }
+                    prt_psychosocial_others_true.Text = psychosocial_others;
+                }
+
+                if (ena.other_systems_normal != null)
+                {
+                    string other_systems_normal = "❏";
+                    if (bool.TryParse(Convert.ToString(ena.other_systems_normal), out bool result))
+                    {
+                        other_systems_normal = result ? "☒" : "❏";
+                    }
+                    prt_other_systems_normal_true.Text = other_systems_normal;
+                }
+
+                if (ena.other_systems_abnormal != null)
+                {
+                    string other_systems_abnormal = "❏";
+                    if (bool.TryParse(Convert.ToString(ena.other_systems_abnormal), out bool result))
+                    {
+                        other_systems_abnormal = result ? "☒" : "❏";
+                    }
+                    prt_other_systems_abnormal_true.Text = other_systems_abnormal;
+                }
+
                 //prt_pid.Text = prt_vpid.Text = prt_barcode.Text = patient.visible_patient_id;
                 //prtdate.Text = $"Ngày/<span class='text-primary'>Date</span>: {WebHelpers.FormatDateTime(patientVisit.actual_visit_date_time, "dd/MM/yyyy")} Giờ/ <span class='text-primary'>Triage Time</span> {WebHelpers.FormatDateTime(ena.triage_time, "HH")}:{WebHelpers.FormatDateTime(ena.triage_time, "mm")} Khu vực/ <span class='text-primary'>Triage Area</span> #: {ena.triage_area}";
-                
+
                 //prt_fullname.Text = "&nbsp;" + patient.FullName;
                 //prt_dob.Text = "&nbsp;" + WebHelpers.FormatDateTime(patient.date_of_birth, "dd/MM/yyyy");
                 //prt_nationality.Text = "&nbsp;" + patient.GetNationality();
@@ -496,7 +600,6 @@ namespace EMR
 
                 //prt_room_number.Text = "";
                 //prt_time_of_assess.Text = " ";
-
                 //prt_general_appearance.Text = WebHelpers.CreateOptions(Ena.GENERAL_APPEARANCE_CODE, ena.general_appearance, "");
                 //prt_neuro.Text = $"Thần kinh/ <span class='text-primary'>Neuro</span>: GCS: Mắt/<span class='text-primary'>E</span> {ena.eye} Lời nói/<span class='text-primary'>V</span> {ena.voice} Vận động/<span class='text-primary'>M</span> {ena.motion}";
 
@@ -551,7 +654,7 @@ namespace EMR
             }
             catch (Exception ex)
             {
-                WebHelpers.SendError(Page, ex);
+
             }
         }
         #endregion

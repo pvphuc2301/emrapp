@@ -25,9 +25,25 @@
     <link href="../styles/sweetalert.min.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
     <style>
+        @media print {
+            .custom-control-label::before {
+                display: none !important;
+            }
+
+            .custom-checkbox .custom-control-input:disabled:checked ~ .custom-control-label:before {
+                display: none !important;
+            }
+
+            .custom-control-label:after {
+                display: none !important;
+            }
+        }
+
         #canvas {
             border: 2px solid #000;
         }
+
+
     </style>
 </head>
 <body>
@@ -1301,18 +1317,21 @@
 
                                                         <div class="mt-2">
                                                             <label class="custom-control custom-checkbox d-inline-block mr-2">
-                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_alert_true" />
+                                                                <asp:Label CssClass="cssclsNoScreen" runat="server" ID="prt_alert_true" Text="❏" />
+                                                                <input type="checkbox" class="custom-control-input cssclsNoPrint" runat="server" id="cb_alert_true" />
                                                                 <span class="custom-control-label">Tỉnh táo/ <span class="text-primary">Alert</span></span>
                                                             </label>
 
                                                             <label class="custom-control custom-checkbox d-inline-block mr-2">
-                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_coma_true" />
+                                                                 <asp:Label CssClass="cssclsNoScreen" runat="server" ID="prt_coma_true" Text="❏" />
+                                                                <input type="checkbox" class="custom-control-input cssclsNoPrint" runat="server" id="cb_coma_true" />
                                                                 <span class="custom-control-label">Hôn mê/ <span class="text-primary">Coma</span></span>
                                                             </label>
 
                                                             <div class="d-inline-block">
                                                                 <label class="custom-control custom-checkbox d-inline-block mr-2">
-                                                                    <input disabled-for="str_others_field" type="checkbox" class="custom-control-input" id="cb_others_true" runat="server" />
+                                                                    <asp:Label CssClass="cssclsNoScreen" runat="server" ID="prt_others_true" Text="❏" />
+                                                                    <input disabled-for="str_others_field" type="checkbox" class="custom-control-input cssclsNoPrint" id="cb_others_true" runat="server" />
                                                                     <span class="custom-control-label">Khác/ <span class="text-primary">Others:</span></span>
                                                                 </label>
                                                                 <asp:Label runat="server" ID="lbl_str_others"></asp:Label>
@@ -1384,15 +1403,18 @@
                                                     <div>
                                                         <label class="control-label mr-2">Nhịp tim/ <span class="text-primary">Rhythm:</span></label>
                                                         <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_regular_true" />
+                                                            <asp:Label CssClass="cssclsNoScreen" runat="server" ID="prt_rhythm_regular_true" Text="❏" />
+                                                            <input type="checkbox" class="custom-control-input cssclsNoPrint" runat="server" id="cb_rhythm_regular_true" />
                                                             <span class="custom-control-label">Đều/ <span class="text-primary">Regular</span></span>
                                                         </label>
                                                         <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_inregular_true" />
+                                                            <asp:Label CssClass="cssclsNoScreen" runat="server" ID="prt_rhythm_inregular_true" Text="❏" />
+                                                            <input type="checkbox" class="custom-control-input cssclsNoPrint" runat="server" id="cb_rhythm_inregular_true" />
                                                             <span class="custom-control-label">Không đều/ <span class="text-primary">Inregular</span></span>
                                                         </label>
                                                         <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                            <input disabled-for="rhythm_field" type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_others_true" />
+                                                            <asp:Label CssClass="cssclsNoScreen" runat="server" ID="prt_rhythm_others_true" Text="❏" />
+                                                            <input disabled-for="rhythm_field" type="checkbox" class="custom-control-input cssclsNoPrint" runat="server" id="cb_rhythm_others_true" />
                                                             <span class="custom-control-label">Khác/ <span class="text-primary">Others:</span></span>
                                                         </label>
                                                         <asp:Label runat="server" ID="lbl_rhythm_str_others"></asp:Label>
@@ -1406,11 +1428,13 @@
                                                     <label class="control-label">Tâm lý/ <span class="text-primary">Psychosocial:</span></label>
                                                     <div>
                                                         <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_psychosocial_true" />
+                                                            <asp:Label CssClass="cssclsNoScreen" runat="server" ID="prt_psychosocial_true" Text="❏" />
+                                                            <input type="checkbox" class="custom-control-input cssclsNoPrint" runat="server" id="cb_psychosocial_true" />
                                                             <span class="custom-control-label">Bình thường/ <span class="text-primary">Normal</span></span>
                                                         </label>
                                                         <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                            <input disabled-for="psychosocial_str_others_field" type="checkbox" class="custom-control-input" runat="server" id="cb_psychosocial_others_true" />
+                                                            <asp:Label CssClass="cssclsNoScreen" runat="server" ID="prt_psychosocial_others_true" Text="❏" />
+                                                            <input disabled-for="psychosocial_str_others_field" type="checkbox" class="custom-control-input cssclsNoPrint" runat="server" id="cb_psychosocial_others_true" />
                                                             <span class="custom-control-label">Khác/ <span class="text-primary">Others</span></span>
                                                         </label>
 
@@ -1425,11 +1449,13 @@
                                                     <label class="control-label">Các cơ quan khác/ <span class="text-primary">Other systems:</span></label>
                                                     <div>
                                                         <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_other_systems_normal_true" />
+                                                            <asp:Label CssClass="cssclsNoScreen" runat="server" ID="prt_other_systems_normal_true" Text="❏" />
+                                                            <input type="checkbox" class="custom-control-input cssclsNoPrint" runat="server" id="cb_other_systems_normal_true" />
                                                             <span class="custom-control-label">Bình thường/ <span class="text-primary">Normal</span></span>
                                                         </label>
                                                         <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
-                                                            <input disabled-for="other_systems_field" type="checkbox" class="custom-control-input" runat="server" id="cb_other_systems_abnormal_true" />
+                                                             <asp:Label CssClass="cssclsNoScreen" runat="server" ID="prt_other_systems_abnormal_true" Text="❏" />
+                                                            <input disabled-for="other_systems_field" type="checkbox" class="custom-control-input cssclsNoPrint" runat="server" id="cb_other_systems_abnormal_true" />
                                                             <span class="custom-control-label">Bất thường/ <span class="text-primary">Abnormal</span></span>
                                                         </label>
                                                         <asp:Label runat="server" ID="lbl_others_systems_str"></asp:Label>

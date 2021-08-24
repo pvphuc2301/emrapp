@@ -1743,6 +1743,15 @@ namespace EMR
         protected global::EMR.TextField txt_motion;
 
         /// <summary>
+        /// prt_alert_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_alert_true;
+
+        /// <summary>
         /// cb_alert_true control.
         /// </summary>
         /// <remarks>
@@ -1752,6 +1761,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_alert_true;
 
         /// <summary>
+        /// prt_coma_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_coma_true;
+
+        /// <summary>
         /// cb_coma_true control.
         /// </summary>
         /// <remarks>
@@ -1759,6 +1777,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_coma_true;
+
+        /// <summary>
+        /// prt_others_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_others_true;
 
         /// <summary>
         /// cb_others_true control.
@@ -1932,6 +1959,15 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label lbl_respiratory_oth;
 
         /// <summary>
+        /// prt_rhythm_regular_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_rhythm_regular_true;
+
+        /// <summary>
         /// cb_rhythm_regular_true control.
         /// </summary>
         /// <remarks>
@@ -1941,6 +1977,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_rhythm_regular_true;
 
         /// <summary>
+        /// prt_rhythm_inregular_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_rhythm_inregular_true;
+
+        /// <summary>
         /// cb_rhythm_inregular_true control.
         /// </summary>
         /// <remarks>
@@ -1948,6 +1993,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_rhythm_inregular_true;
+
+        /// <summary>
+        /// prt_rhythm_others_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_rhythm_others_true;
 
         /// <summary>
         /// cb_rhythm_others_true control.
@@ -1986,6 +2040,15 @@ namespace EMR
         protected global::EMR.TextField txt_rhythm_str_others;
 
         /// <summary>
+        /// prt_psychosocial_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_psychosocial_true;
+
+        /// <summary>
         /// cb_psychosocial_true control.
         /// </summary>
         /// <remarks>
@@ -1993,6 +2056,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_psychosocial_true;
+
+        /// <summary>
+        /// prt_psychosocial_others_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_psychosocial_others_true;
 
         /// <summary>
         /// cb_psychosocial_others_true control.
@@ -2031,6 +2103,15 @@ namespace EMR
         protected global::EMR.TextField txt_psychosocial_str_others;
 
         /// <summary>
+        /// prt_other_systems_normal_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_other_systems_normal_true;
+
+        /// <summary>
         /// cb_other_systems_normal_true control.
         /// </summary>
         /// <remarks>
@@ -2038,6 +2119,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_other_systems_normal_true;
+
+        /// <summary>
+        /// prt_other_systems_abnormal_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_other_systems_abnormal_true;
 
         /// <summary>
         /// cb_other_systems_abnormal_true control.
