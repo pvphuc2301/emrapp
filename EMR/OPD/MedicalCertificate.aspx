@@ -404,7 +404,7 @@
 
                                         <fieldset class="row mb-2">
                                             <legend>
-                                                <label class="control-label">Lý do đến khám/ <span class="text-primary">Chief complaint:</span></label>
+                                                <label class="control-label">Lý do nhập viện/ <span class="text-primary">Chief complaint:</span></label>
                                             </legend>
                                             <div class="col-md-12">
                                                 <div class="form-group" runat="server" id="chief_complain_wrapper">
@@ -440,7 +440,7 @@
 
                                         <fieldset class="row mb-2">
                                             <legend>
-                                                <label class="control-label">Đặc điểm lâm sàng/ <span class="text-primary">Clinical examination and findings:</span></label>
+                                                <label class="control-label">Khám lâm sàng/ <span class="text-primary">Clinical examination and findings:</span></label>
                                             </legend>
                                             <div class="col-md-12">
                                                 <div class="form-group" runat="server" id="clinical_findings_wrapper">
@@ -452,7 +452,7 @@
 
                                         <fieldset class="row mb-2">
                                             <legend>
-                                                <label class="control-label">Cận lâm sàng được chỉ định/ <span class="text-primary">Para-clinical Investigations:</span></label>
+                                                <label class="control-label">Cận lâm sàng/ <span class="text-primary">Para-clinical Investigations:</span></label>
                                             </legend>
                                             <div class="col-md-12">
                                                 <div class="form-group" runat="server" id="para_clinical_investigations_wrapper">
@@ -510,7 +510,7 @@
                                             </div>
                                         </fieldset>
 
-                                        <fieldset class="row mb-2">
+                                        <fieldset class="row mb-2" style="display: none;">
                                             <legend>
                                                 <label class="control-label">Lịch điều trị/ <span class="text-primary">Treatment plan:</span></label>
                                             </legend>

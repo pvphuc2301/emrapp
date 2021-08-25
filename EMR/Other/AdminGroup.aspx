@@ -91,7 +91,7 @@
                                         <telerik:RadGrid ItemStyle-Height="32px" HeaderStyle-Height="32px" CssClass="table" BorderWidth="0" 
                                             AutoGenerateColumns="false" ID="RadGrid2" runat="server" AllowPaging="True" 
                                             OnNeedDataSource="RadGrid2_NeedDataSource" AllowSorting="true">
-                                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="user_name">
+                                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="user_name" AllowFilteringByColumn="true">
                                                 <Columns>
                                                     <telerik:GridBoundColumn SortExpression="user_name" HeaderText="User Name" DataField="user_name" 
                                                         ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" FilterControlWidth="100%" 
@@ -101,7 +101,7 @@
                                                     <telerik:GridBoundColumn UniqueName="created_date_time" SortExpression="created_date_time" 
                                                         HeaderText="created_date_time" DataField="created_date_time" ItemStyle-Wrap="false" 
                                                         HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" 
-                                                        FilterDelay="4000" ShowFilterIcon="false">
+                                                        FilterDelay="4000" ShowFilterIcon="false" AllowFiltering="false">
                                                     </telerik:GridBoundColumn>
 
                                                     <telerik:GridTemplateColumn UniqueName="access_authorize" HeaderText="access_authorize" AllowFiltering="false"
@@ -146,7 +146,7 @@
                                         <telerik:RadGrid ItemStyle-Height="32px" HeaderStyle-Height="32px" CssClass="table" BorderWidth="0" 
                                             AutoGenerateColumns="false" ID="RadGrid3" runat="server" AllowPaging="True" 
                                             OnNeedDataSource="RadGrid3_NeedDataSource" AllowSorting="true">
-                                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="user_name">
+                                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="user_name" AllowFilteringByColumn="true">
                                                 <Columns>
                                                     <telerik:GridBoundColumn SortExpression="user_name" HeaderText="User Name" DataField="user_name" 
                                                         ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" FilterControlWidth="100%"  
@@ -211,7 +211,7 @@
                                         <telerik:RadGrid ItemStyle-Height="32px" HeaderStyle-Height="32px" CssClass="table" BorderWidth="0" 
                                             AutoGenerateColumns="false" ID="RadGrid4" runat="server" AllowPaging="True" 
                                             OnNeedDataSource="RadGrid4_NeedDataSource" AllowSorting="true">
-                                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="user_name">
+                                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="user_name" AllowFilteringByColumn="true">
                                                 <Columns>
                                                     <telerik:GridBoundColumn SortExpression="user_name" HeaderText="User Name" DataField="user_name" 
                                                         ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" FilterControlWidth="100%" 
@@ -266,7 +266,7 @@
                                         <telerik:RadGrid ItemStyle-Height="32px" HeaderStyle-Height="32px" CssClass="table" BorderWidth="0" 
                                             AutoGenerateColumns="false" ID="RadGrid5" runat="server" AllowPaging="True" 
                                             OnNeedDataSource="RadGrid5_NeedDataSource" AllowSorting="true">
-                                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="user_name">
+                                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="user_name" AllowFilteringByColumn="true">
                                                 <Columns>
                                                     <telerik:GridBoundColumn SortExpression="user_name" HeaderText="User Name" DataField="user_name" 
                                                         ItemStyle-Wrap="false" HeaderStyle-Wrap="false" HeaderStyle-ForeColor="#457" FilterControlWidth="100%" 

@@ -280,7 +280,7 @@
                             <asp:HiddenField runat="server" ID="sendRequestVmDB" />
                             <div class="d-grid no-block justify-content-end">
                                 <telerik:RadButton CssClass="mt-2" RenderMode="Lightweight" ID="btnSendRequest" runat="server"
-                        Text="Send" Primary="true" OnClick="btnSendRequest_Click" />
+                        Text="Send" Primary="true" OnClientClick="return btnSend_Click();" OnClick="btnSendRequest_Click" />
                             </div>
                         </ContentTemplate>
                     </telerik:RadWindow>
@@ -348,6 +348,17 @@
             document.getElementById('RadWindow2_C_btnSave').classList.add('disabled');
             return true;
         }
+
+        function btnSend_Click() {
+            //if (document.getElementById('ddlDocList').value == "") {
+            //    document.getElementById('ddlDocList_error').innerText = "Please select form document!";
+            //    return false;
+            //}
+            document.getElementById('RadWindow1_C_btnSendRequest').classList.add('disabled');
+            return true;
+        }
+
+        
     </script>
     </body>
 </html>

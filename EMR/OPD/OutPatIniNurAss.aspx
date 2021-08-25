@@ -34,7 +34,9 @@
         td    { page-break-inside:avoid; page-break-after:auto }
         thead { display:table-header-group }
         tfoot { display:table-footer-group }
-
+        .report-footer-space {
+            height: 0;
+        }
     </style>
 </head>
 <body>
