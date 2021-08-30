@@ -175,7 +175,7 @@
                         <tfoot class="report-footer">
                             <tr>
                                 <td class="report-footer-cell" style="font-size: 10px">
-                                    <img style="width: 100%" src="../images/bottomline.png" />
+                                    <img style="width: 100%" src="../images/ExcellentCare.png" />
                                     <div class="footer-info">
                                         <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
                                         <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>

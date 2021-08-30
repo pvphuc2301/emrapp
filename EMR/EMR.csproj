@@ -206,6 +206,10 @@
     <Content Include="icons\X.ascx" />
     <Content Include="images\admin-with-cogwheels.png" />
     <Content Include="images\aih.ico" />
+    <Content Include="images\AIH_PI_FULL - Copy.png" />
+    <Content Include="images\ExcellentCare.png" />
+    <Content Include="images\logo-opacity.png" />
+    <Content Include="images\PaintAssess.png" />
     <Content Include="IPD\ObsGynIniAss.aspx" />
     <Content Include="IPD\SurgicalReport.aspx" />
     <Content Include="Other\FormMenu.aspx" />
@@ -235,7 +239,6 @@
     <Content Include="images\2021-05-25_21-54-42.png" />
     <Content Include="images\AIH_Logo.jpg" />
     <Content Include="images\AIH_PI_FULL.png" />
-    <Content Include="images\bottomline.png" />
     <Content Include="images\pain_score.png" />
     <Content Include="images\Penguins.png" />
     <Content Include="IPD\DeliveryCertificate.aspx" />
@@ -301,6 +304,7 @@
     <Content Include="obj\Debug\EMR.csproj.CopyComplete" />
     <Content Include="obj\Debug\EMR.csproj.CoreCompileInputs.cache" />
     <Content Include="styles\alertify.css" />
+    <Content Include="styles\print.css" />
     <Content Include="styles\sweetalert.min.css" />
     <Content Include="UserControls\Barcode.ascx" />
     <Content Include="UserControls\CustomPagination.ascx" />
@@ -1156,7 +1160,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

@@ -30,18 +30,12 @@
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/sweetalert.min.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
+    <link href="../styles/print.css" rel="stylesheet" />
     <script>
         function changeValue(a, b) {
             document.getElementById(b).value = document.getElementById(a).innerHTML;
         }
     </script>
-    <style type="text/css">
-        table { page-break-after:auto }
-        tr    { page-break-inside:avoid; page-break-after:auto }
-        td    { page-break-inside:avoid; page-break-after:auto }
-        thead { display:table-header-group }
-        tfoot { display:table-footer-group }
-    </style>
 </head>
 
 <body>
@@ -781,7 +775,7 @@
                         <tfoot class="report-footer">
                             <tr>
                                 <td class="report-footer-cell">
-                                    <img style="width: 100%" src="../images/bottomline.png" />
+                                    <img style="width: 100%" src="../images/ExcellentCare.png" />
                                     <div class="footer-info">
                                         <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
                                         <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>
@@ -794,18 +788,18 @@
                         </tfoot>
                     </table>
                 </div>--%>
-                <div class="cssclsNoScreen">
+                <div class="cssclsNoScreen" id="printContent" style="font-family: Tahoma !important; font-size: 13.3048px !important;">
                     <table class="report-container">
                         <thead class="report-header">
                             <tr>
                                 <th class="report-header-cell">
-                                    <div class="header-info">
-                                       <img src="../images/AIH_PI_FULL.png" />
+                                    <div class="header-info" style="display: flex; align-items: center; height: 80px;">
+                                       <img style="width: 200px" src="../images/AIH_PI_FULL.png" />
                                         <div class="header-info-title">
                                             <h4>PHIẾU ĐÁNH GIÁ BỆNH <br /> NHÂN TẠI KHOA CẤP CỨU</h4>
                                             <h5>EMERGENCY MEDICAL ASSESSMENT</h5>
                                         </div>
-                                        <div style="width: 150px; text-align: left; font-size: 11px">
+                                        <div style="width: 120px; text-align: left; font-size: 11px">
                                             <asp:Label CssClass="d-block" runat="server" ID="prt_fullname"></asp:Label>
                                             <asp:Label class="d-block" CssClass="d-block" runat="server" ID="prt_dob"></asp:Label>
                                             <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
@@ -813,8 +807,10 @@
                                         </div>
 
                                     </div>
-                                    <webUI:Line runat="server" ID="Line" />
-
+                                    <div style="height: 20px;">
+                                        <span style="width: 190px; border-bottom-style: solid; border-bottom-color: #e20e5a; border-bottom-width: 5px; display: inline-block; font-size: 26.6667px;"></span>
+                                        <span style="display: inline-block; border-bottom-style: solid; border-bottom-color: #007297; border-bottom-width: 5px; width: calc(100% - 191px); margin-left: -5px;"></span>
+                                    </div>
                                 </th>
                             </tr>
                         </thead>
@@ -915,26 +911,6 @@
                                                 <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="lbl_habits_D" Text="❏"/><label for="lbl_chief_complaint_code_E " style="font-size: 14.5px; font-family: Tahoma; margin-left: 5px;">Chất gây nghiện</label><label style="font-size: 14.5px; font-family: Tahoma;">/ Drugs</label>
                                             </div>
                                         </div>
-
-                                        <%--<div class="row mb-2 ">
-                                            <div class="col-12 ">
-                                                <div class="row ">
-                                                    <div class="col-3 ">
-                                                        <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma"> Thói quen </asp:Label>
-                                                        <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> / Habits </asp:Label>
-                                                    </div>
-                                                    <div class="col-3 ">
-                                                        
-                                                    </div>
-                                                    <div class="col-3 ">
-                                                        
-                                                    </div>
-                                                    <div class="col-3 ">
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>--%>
 
                                         <div class="row mb-2">
                                             <div class="col-12 " style="margin-left: 50px; text-align: justify">
@@ -1123,119 +1099,28 @@
                                             <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> Điều trị tại khoa cấp cứu: </asp:Label>
                                         </div>
 
-                                        <div class="row mb-2 ">
-                                            <div class="col-md-12 ">
-                                                <asp:UpdatePanel ID="up1" runat="server" UpdateMode="Always">
-                                                    <ContentTemplate>
-                                                        <asp:GridView ShowHeaderWhenEmpty="true " ID="lbl_Treatment" ShowHeader="true" runat="server" AutoGenerateColumns="false " Style="width: 100%">
-                                                            <HeaderStyle />
-                                                            <Columns>
-                                                                <asp:TemplateField>
-                                                                    <HeaderTemplate>
-                                                                        <div style="width: 150px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary pt-2 pb-2 ">Time </div>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <div style="width: 150px; font-size: 14.5px; font-family: Tahoma; text-align: center;">
-                                                                            <asp:Label Style="text-align: center;" Text='<%# Eval("time ", "{0:dd/MM/yyyy HH:mm tt} ") %>' runat="server" />
-                                                                        </div>
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField>
-                                                                    <HeaderTemplate>
-                                                                        <div style="width: 200px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary ">Medication and Fluid </div>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <div style="width: 200px; font-size: 14.5px; font-family: Tahoma; text-align: justify; margin: 5px" class="text-primary ">
-                                                                            <asp:Label runat="server" Text='<%# Eval("medication") %>' />
-                                                                        </div>
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField>
-                                                                    <HeaderTemplate>
-                                                                        <div style="width: 100px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary ">Dose </div>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <div style="width: 100px; text-align: center; font-size: 14.5px; font-family: Tahoma" class="text-primary ">
-                                                                            <asp:Label runat="server" Text='<%# Eval("dose") %>' />
-                                                                        </div>
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField>
-                                                                    <HeaderTemplate>
-                                                                        <div style="width: 50px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center">Route </div>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <div style="width: 50px; font-size: 14.5px; font-family: Tahoma; text-align: center; margin: 5px" class="text-primary ">
-                                                                            <asp:Label runat="server" Text='<%# Eval("route") %>' />
-                                                                        </div>
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField>
-                                                                    <HeaderTemplate>
-                                                                        <div style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary ">Comment </div>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <div style="font-size: 14.5px; font-family: Tahoma; text-align: justify; margin: 5px">
-                                                                            <asp:Label runat="server" Text='<%# Eval("comment") %>' />
-                                                                        </div>
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                            </Columns>
-                                                        </asp:GridView>
-                                                    </ContentTemplate>
-                                                </asp:UpdatePanel>
-                                            </div>
-                                        </div>
+                                        <table class="table-bordered mt-1 mb-1" runat="server" id="prt_treatment">
+                                            <tr>
+                                                <td style="width: 150px" class="text-center">Time</td>
+                                                <td style="width: 200px" class="text-center">Medication and Fluid</td>
+                                                <td style="width: 100px" class="text-center">Dose</td>
+                                                <td style="width: 100px" class="text-center">Route</td>
+                                                <td style="width: 221px" class="text-center">Comment</td>
+                                                
+                                            </tr>
+                                        </table>
 
                                         <div class="row mb-2 ">
                                             <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma; margin-left: 30px"> Progress Note </asp:Label>
                                         </div>
 
-                                        <div class="row mb-2 ">
-                                            <div class="col-md-12 ">
-                                                <asp:UpdatePanel ID="up2" runat="server" UpdateMode="Always ">
-                                                    <ContentTemplate>
-                                                        <asp:GridView ShowHeaderWhenEmpty="true " ID="lbl_progress_note" ShowHeader="true" runat="server" AutoGenerateColumns="false " style="width:100%">
-                                                        
-                                                            <Columns>
-                                                                <asp:TemplateField>
-                                                                    <HeaderTemplate>
-                                                                        <div style="width: 150px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center">Time 
-
-                                                                        </div>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <div style="width: 150px; font-size: 14.5px; font-family: Tahoma; text-align: center" >
-                                                                            <asp:Label  Text='<%# Eval("time ", "{0: dd/MM/yyyy HH:mm tt} ") %>' runat="server" />
-                                                                        </div>
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField>
-                                                                    <HeaderTemplate>
-                                                                        <div style="width: 300px; font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary ">Progress </div>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <div style="width: 300px; font-size: 14.5px; font-family: Tahoma; text-align: justify; margin: 5px" class="text-primary ">
-                                                                            <asp:Label runat="server" Text='<%# Eval("progress") %>' />
-                                                                        </div>
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                                <asp:TemplateField>
-                                                                    <HeaderTemplate>
-                                                                        <div style= "font-weight: bold; font-size: 14.5px; font-family: Tahoma; text-align: center" class="text-primary ">Appropriate Order </div>
-                                                                    </HeaderTemplate>
-                                                                    <ItemTemplate>
-                                                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin: 5px" class="text-primary ">
-                                                                            <asp:Label runat="server" Text='<%# Eval("appropriate_order") %>' />
-                                                                        </div>
-                                                                    </ItemTemplate>
-                                                                </asp:TemplateField>
-                                                            </Columns>
-                                                        </asp:GridView>
-                                                    </ContentTemplate>
-                                                </asp:UpdatePanel>
-                                            </div>
-                                        </div>
+                                        <table class="table-bordered mt-1 mb-1" runat="server" id="prt_progress_note">
+                                            <tr>
+                                                <td style="width: 150px" class="text-center">Time</td>
+                                                <td style="width: 310px" class="text-center">Progress</td>
+                                                <td style="width: 310px" class="text-center">Appropriate Order</td>
+                                            </tr>
+                                        </table>
 
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify;">
@@ -1513,7 +1398,7 @@
                         <tfoot class="report-footer">
                             <tr>
                                 <td class="report-footer-cell">
-                                    <img style="width: 100%" src="../images/bottomline.png" />
+                                    <img style="width: 100%" src="../images/ExcellentCare.png" />
                                     <div class="footer-info">
                                         <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
                                         <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>

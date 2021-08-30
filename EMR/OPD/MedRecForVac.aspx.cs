@@ -241,27 +241,38 @@ namespace EMR.OPD
                 prt_scr_before_vacc_7.Text += WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_7);
                 prt_scr_before_vacc_8.Text += WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_8);
 
-                //DataTable tb = WebHelpers.GetJSONToDataTable(mrfv.appointed_vaccine);
-                prt_appointed_vaccine.DataSource = WebHelpers.GetJSONToDataTable(mrfv.appointed_vaccine);
-                prt_appointed_vaccine.DataBind();
-                //if (tb != null)
-                //{
-                //    foreach (DataRow row in tb.Rows)
-                //    {
-                //        HtmlTableRow tr = new HtmlTableRow();
-                //        HtmlTableCell td;
-                //        for (int i = 0; i < prt_appointed_vaccine.Rows[0].Cells.Count; i++)
-                //        {
-                //            var temp = prt_appointed_vaccine.Rows[0].Cells[i];
-                //            string colName = temp.Attributes["data-field"];
-                //            td = new HtmlTableCell();
-                //            td.InnerText = row[colName].ToString();
-                //            if (temp.Attributes["data-align"] != null) td.Attributes.Add("class", "text-" + temp.Attributes["data-align"]);
-                //            tr.Cells.Add(td);
-                //        }
-                //        prt_appointed_vaccine.Rows.Add(tr);
-                //    }
-                //}
+                DataTable appointed_vaccine = WebHelpers.GetJSONToDataTable(mrfv.appointed_vaccine);
+
+                if (appointed_vaccine != null)
+                {
+                    foreach (DataRow row in appointed_vaccine.Rows)
+                    {
+                        HtmlTableRow tr = new HtmlTableRow();
+                        HtmlTableCell td;
+
+                        //
+                        td = new HtmlTableCell();
+
+                        td.InnerText = Convert.ToString(row["drug_name"]);
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        td.InnerText = row["strength"].ToString();
+                        td.Align = "Center";
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        td.InnerText = row["router"].ToString();
+                        td.Align = "Center";
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        td.InnerText = row["reason"].ToString();
+                        tr.Cells.Add(td);
+
+                        prt_appointed_vaccine.Rows.Add(tr);
+                    }
+                }
 
                 prt_additional_investigations.Text = WebHelpers.TextToHtmlTag(mrfv.additional_investigations);
                 prt_initial_diagnosis.Text = WebHelpers.TextToHtmlTag(mrfv.initial_diagnosis);

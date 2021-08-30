@@ -25,9 +25,6 @@
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/sweetalert.min.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
-    <style>
-    
-    </style>
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
@@ -40,7 +37,7 @@
                             <tr>
                                 <th class="report-header-cell">
                                     <div class="header-info" style="padding-top: 120px; display: grid; grid-template-columns: 250px 1fr 150px">
-                                        <div class="text-center align-top" style="line-height: 16.6667px; height: 90px; background: blue;">
+                                        <div class="text-center align-top" style="line-height: 16.6667px; height: 90px;">
                                             <div>SỞ Y TẾ TP.HCM</div>
                                             <div class="text-primary">HCMC DOH</div>
                                             <div>BỆNH VIỆN QUỐC TẾ MỸ</div>
@@ -259,7 +256,7 @@
                         <tfoot class="report-footer">
                             <tr>
                                 <%--<td class="report-footer-cell" style="font-size: 10px">
-                                <img style="width: 100%" src="../images/bottomline.png" />
+                                <img style="width: 100%" src="../images/ExcellentCare.png" />
                                 <div class="footer-info">
                                     <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
                                     <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>

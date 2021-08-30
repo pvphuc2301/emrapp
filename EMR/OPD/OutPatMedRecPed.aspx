@@ -27,38 +27,35 @@
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
-    <style type="text/css">
-        table { page-break-after:auto }
-        tr    { page-break-inside:avoid; page-break-after:auto }
-        td    { page-break-inside:avoid; page-break-after:auto }
-        thead { display:table-header-group }
-        tfoot { display:table-footer-group }
-    </style>
+    <link href="../styles/print.css" rel="stylesheet" />
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
         <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <div class="cssclsNoScreen">
+                <div class="cssclsNoScreen" id="printContent" style="font-family: Tahoma !important; font-size: 13.3048px !important;">
                     <table class="report-container">
                         <thead class="report-header">
                             <tr>
                                 <th class="report-header-cell">
-                                    <div class="header-info">
-                                        <img src="../images/AIH_PI_FULL.png" />
+                                    <div class="header-info" style="display: flex; align-items: center; height: 80px;">
+                                        <img style="width: 200px" src="../images/AIH_PI_FULL.png" />
                                         <div class="header-info-title">
                                             <h4>BỆNH ÁN NGOẠI TRÚ NHI</h4>
                                             <h5>PEDIATRIC OUTPATIENT MEDICAL RECORD</h5>
                                         </div>
-                                        <div style="width: 150px; text-align: left; font-size: 11px">
+                                        <div style="width: 120px; text-align: left; font-size: 11px">
                                             <asp:Label CssClass="d-block" runat="server" ID="prt_fullname"></asp:Label>
                                             <asp:Label class="d-block" CssClass="d-block" runat="server" ID="prt_dob"></asp:Label>
                                             <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
                                             <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
                                         </div>
                                     </div>
-                                    <webUI:Line runat="server" ID="Line" />
+                                    <div style="height: 20px;">
+                                        <span style="width: 190px; border-bottom-style: solid; border-bottom-color: #e20e5a; border-bottom-width: 5px; display: inline-block; font-size: 26.6667px;"></span>
+                                        <span style="display: inline-block; border-bottom-style: solid; border-bottom-color: #007297; border-bottom-width: 5px; width: calc(100% - 191px); margin-left: -5px;"></span>
+                                    </div>
                                 </th>
                             </tr>
                         </thead>
@@ -66,7 +63,8 @@
                         <tbody class="report-content">
                             <tr>
                                 <td class="report-content-cell">
-                                    <div class="main" runat="server" id="print_content">
+                                    <div style="position: relative;"  class="main" runat="server" id="print_content">
+                                        <img style="height: 1px" src="../images/logo-opacity.png" />
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; margin-bottom: 6px;">
                                             <webUI:PrtRowS1 FontBold="true" Title="Ngày khám bệnh" SubTitle="Day of visit" runat="server" />
@@ -246,7 +244,7 @@
                         <tfoot class="report-footer">
                             <tr>
                                 <td class="report-footer-cell">
-                                    <img style="width: 100%" src="../images/bottomline.png" />
+                                    <img style="width: 100%" src="../images/ExcellentCare.png" />
                                     <div class="footer-info">
                                         <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
                                         <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>
@@ -861,7 +859,7 @@
 
                                                     <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                    <asp:LinkButton runat="server" OnClientClick="window.print(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                    <asp:LinkButton runat="server" OnClientClick="btnPrint_Click(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                     <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                             </div>
@@ -917,6 +915,24 @@
             }, 1000);
         }
 
+        function btnPrint_Click() {
+            let printContent = document.querySelector("#printContent");
+            printContent.setAttribute("style", "display: block");
+
+            let total = Math.ceil(printContent.offsetHeight / 1096);
+
+            for (let i = 1; i <= total; i++) {
+                let div = document.createElement("div");
+                div.setAttribute("class", "watermark page");
+                div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px;");
+                div.setAttribute("data-page", "Page " + i + " of " + total);
+                document.getElementById("print_content").append(div);
+
+            }
+
+            setTimeout(() => { printContent.setAttribute("style", "display: none"); }, 100);
+            window.print();
+        }
     </script>
 
 </body>

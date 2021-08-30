@@ -28,37 +28,34 @@
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
-    <style type="text/css">
-        table { page-break-after:auto }
-        tr    { page-break-inside:avoid; page-break-after:auto }
-        td    { page-break-inside:avoid; page-break-after:auto }
-        thead { display:table-header-group }
-        tfoot { display:table-footer-group }
-    </style>
+    <link href="../styles/print.css" rel="stylesheet" />
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
         <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <div class="cssclsNoScreen">
+                <div class="cssclsNoScreen" id="printContent" style="font-family: Tahoma !important; font-size: 13.3048px !important;">
                     <table class="report-container">
                         <thead class="report-header">
                             <tr>
                                 <th class="report-header-cell">
-                                    <div class="header-info">
-                                        <img src="../images/AIH_PI_FULL.png" />
+                                    <div class="header-info" style="display: flex; align-items: center; height: 80px;">
+                                        <img style="width: 200px" src="../images/AIH_PI_FULL.png" />
                                         <div class="header-info-title">
                                             <h4>BỆNH ÁN TIÊM CHỦNG</h4>
                                             <h5>MEDICAL RECORD FOR VACCINATION</h5>
                                             <div class="text-primary" style="font-size: 12.5px;">(Áp dụng cho các đối tượng ≥1 tháng tuổi/ For person ≥ 1 month old)</div>
                                         </div>
-                                        <div style="width: 140px" class="text-center">
+                                        <div style="width: 120px" class="text-center">
                                             <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
                                             <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
                                         </div>
                                     </div>
-                                    <webUI:Line runat="server" />
+                                    <div style="height: 20px;">
+                                        <span style="width: 190px; border-bottom-style: solid; border-bottom-color: #e20e5a; border-bottom-width: 5px; display: inline-block; font-size: 26.6667px;"></span>
+                                        <span style="display: inline-block; border-bottom-style: solid; border-bottom-color: #007297; border-bottom-width: 5px; width: calc(100% - 191px); margin-left: -5px;"></span>
+                                    </div>
                                 </th>
                             </tr>
                         </thead>
@@ -66,7 +63,9 @@
                         <tbody class="report-content">
                             <tr>
                                 <td class="report-content-cell">
-                                    <div class="main" runat="server" id="print_content">
+                                    <div style="position: relative;" class="main" runat="server" id="print_content">
+                                        <img style="height: 1px" src="../images/logo-opacity.png" />
+
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Title="Họ tên người bệnh" SubTitle="Full name:" runat="server" />
                                             <asp:Label runat="server" ID="prt_fullname"></asp:Label>
@@ -137,7 +136,7 @@
 
                                         <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Order="•" Title="Dấu hiệu sinh tồn/ " SubTitle="Vital signs" runat="server" />
 
-                                        <table class="table-bordered mb-2" style="table-layout: fixed; width: 100%;">
+                                        <table class="table-bordered mt-1 mb-1" style="table-layout: fixed; width: 100%;">
                                             <tr>
                                                 <td class="p-2">Nhiệt độ/ Temperature (C degree)</td>
                                                 <td class="p-2 text-right" style="width: 100px;">
@@ -219,44 +218,14 @@
 
                                         <webUI:PrtRowS1 FixedLeft="5" FontBold="true" CssClass="text-inline" Order="•" Title="Loại vắc xin tiêm chủng lần này/ " SubTitle="Appointed vaccine" runat="server" />
 
-                                        <asp:GridView ShowHeaderWhenEmpty="true" ID="prt_appointed_vaccine" runat="server" CssClass="table-bordered" AutoGenerateColumns="false">
-                                            <Columns>
-                                                <asp:TemplateField>
-                                                    <HeaderTemplate>
-                                                        <div style="width: 180px">Tên vaccin/ <span class="text-primary">Drug names</span></div>
-                                                    </HeaderTemplate>
-                                                    <ItemTemplate>
-                                                        <asp:Label runat="server" Text='<%#Eval("drug_name") %>' ID="drug_name"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField>
-                                                    <HeaderTemplate>
-                                                        <div style="width: 130px">Hàm lượng/ <span class="text-primary">Strength</span></div>
-                                                    </HeaderTemplate>
-                                                    <ItemTemplate>
-                                                        <asp:Label runat="server" Text='<%#Eval("strength") %>' ID="strength"></asp:Label>
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField>
-                                                    <HeaderTemplate>
-                                                        <div style="width: 120px">Đường dùng/ <span class="text-primary">Route</span></div>
-                                                    </HeaderTemplate>
-                                                    <ItemTemplate>
-                                                        <asp:Label runat="server" Text='<%#Eval("router") %>' ID="router"></asp:Label>
-                                                        
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                                <asp:TemplateField>
-                                                    <HeaderTemplate>
-                                                        <div style="width: 300px">Hướng dẫn bổ sung/ Chỉ định sử dụng khi cần thiết kèm theo lý do/ <span class="text-primary">Additional instruction/ PRN order with reason</span></div>
-                                                    </HeaderTemplate>
-                                                    <ItemTemplate>
-                                                        <asp:Label runat="server" Text='<%#Eval("reason") %>' ID="reason"></asp:Label>
-                                                        
-                                                    </ItemTemplate>
-                                                </asp:TemplateField>
-                                            </Columns>
-                                        </asp:GridView>
+                                        <table style="width: 721px;" class="table-bordered mt-1 mb-1" runat="server" id="prt_appointed_vaccine">
+                                            <tr>
+                                                <td style="width: 200px" class="text-center"><b>Tên vaccin</b><br /> <i class="text-primary">Drug names</i></td>
+                                                <td style="width: 100px" class="text-center"><b>Hàm lượng</b> <i class="text-primary">Strength</i></td>
+                                                <td style="width: 100px" class="text-center"><b>Đường dùng</b><br /> <i class="text-primary">Route</i></td>
+                                                <td style="width: 321px" class="text-center"><b>Hướng dẫn bổ sung/ Chỉ định sử <br /> dụng khi cần thiết kèm theo lý do</b><br /> <i class="text-primary">Additional instruction/ PRN order with reason</i></td>
+                                            </tr>
+                                        </table>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FixedLeft="5" FontBold="true" CssClass="text-inline" Order="•" Title="Khảo sát bổ sung khác/ " SubTitle="Additional investigations:" runat="server" />
@@ -310,7 +279,7 @@
 
                                         <webUI:PrtRowS1 FixedLeft="5" Order="●" Title="Tôi đã được nghe bác sĩ tư vấn và đồng ý tiêm chủng cho tôi/ người mà tôi làm giám hộ hợp pháp.Tôi đã kiểm tra đúng thuốc tiêm và thuốc còn thời hạn dùng." SubTitle="I have been consulted and agree on vaccination. I checked right medication and medication has still not expired." runat="server" />
 
-                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                        <div class="d-grid mb-1 mt-1" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FixedLeft="5" Order="●" CssClass="text-inline" Title="Họ tên người tiêm chủng/ người giám hộ/ " SubTitle="Full name of patient/ guardian:" runat="server" />
                                             <div style="line-height: 15px; height: 15px;" class="prt-line-solid"></div>
                                         </div>
@@ -337,7 +306,7 @@
                         <tfoot class="report-footer">
                             <tr>
                                 <td class="report-footer-cell">
-                                    <img style="width: 100%" src="../images/bottomline.png" />
+                                    <img style="width: 100%" src="../images/ExcellentCare.png" />
                                     <div class="footer-info">
                                         <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
                                         <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>
@@ -1081,7 +1050,7 @@
 
                                                 <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                <asp:LinkButton runat="server" OnClientClick="window.print(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                <asp:LinkButton runat="server" OnClientClick="btnPrint_Click(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                 <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                             </div>
@@ -1140,6 +1109,26 @@
                 document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
             }, 1000);
         }
+
+        function btnPrint_Click() {
+            let printContent = document.querySelector("#printContent");
+            printContent.setAttribute("style", "display: block");
+
+            let total = Math.ceil(printContent.offsetHeight / 1096);
+
+            for (let i = 1; i <= total; i++) {
+                let div = document.createElement("div");
+                div.setAttribute("class", "watermark page");
+                div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px;");
+                div.setAttribute("data-page", "Page " + i + " of " + total);
+                document.getElementById("print_content").append(div);
+
+            }
+
+            setTimeout(() => { printContent.setAttribute("style", "display: none"); }, 100);
+            window.print();
+        }
+
 
     </script>
 </body>

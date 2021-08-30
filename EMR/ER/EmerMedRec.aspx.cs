@@ -859,13 +859,71 @@ namespace EMR.ER
                 }
                 prt_spec_opinion_summarised.Text = emr.spec_opinion_summarised;
 
-                string json_treatment = emr.treatment;
-                lbl_Treatment.DataSource = JsonConvert.DeserializeObject<DataTable>(json_treatment);
-                lbl_Treatment.DataBind();
+                DataTable treatment = WebHelpers.GetJSONToDataTable(emr.treatment);
 
-                string json_progress_note = emr.progress_note;
-                lbl_progress_note.DataSource = JsonConvert.DeserializeObject<DataTable>(json_progress_note);
-                lbl_progress_note.DataBind();
+                if (treatment != null)
+                {
+                    foreach (DataRow row in treatment.Rows)
+                    {
+                        HtmlTableRow tr = new HtmlTableRow();
+                        HtmlTableCell td;
+
+                        //
+                        td = new HtmlTableCell();
+
+                        td.InnerText = WebHelpers.FormatDateTime(Convert.ToString(row["time"]), "dd/MM/yyyy HH:mm tt");
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        td.InnerText = row["medication"].ToString();
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        td.InnerText = row["dose"].ToString();
+                        td.Align = "Center";
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        td.InnerText = row["route"].ToString();
+                        td.Align = "Center";
+
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        td.InnerText = row["comment"].ToString();
+                        tr.Cells.Add(td);
+
+                        prt_treatment.Rows.Add(tr);
+                    }
+                }
+
+                DataTable progress_note = WebHelpers.GetJSONToDataTable(emr.progress_note);
+
+                if (progress_note != null)
+                {
+                    foreach (DataRow row in progress_note.Rows)
+                    {
+                        HtmlTableRow tr = new HtmlTableRow();
+                        HtmlTableCell td;
+
+                        //
+                        td = new HtmlTableCell();
+
+                        td.InnerText = WebHelpers.FormatDateTime(Convert.ToString(row["time"]), "dd/MM/yyyy HH:mm tt");
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        td.InnerText = row["progress"].ToString();
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        td.InnerText = row["appropriate_order"].ToString();
+                        td.Align = "Center";
+                        tr.Cells.Add(td);
+
+                        prt_progress_note.Rows.Add(tr);
+                    }
+                }
 
                 prt_conclusions.Text = emr.conclusions;
                 if (emr.discharge != null)

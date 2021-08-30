@@ -1203,6 +1203,15 @@ namespace EMR.IPD
         protected global::System.Web.UI.UserControl myModal;
 
         /// <summary>
+        /// btnDelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        //protected global::System.Web.UI.WebControls.LinkButton btnDelete;
+
+        /// <summary>
         /// PopupShowDelay control.
         /// </summary>
         /// <remarks>

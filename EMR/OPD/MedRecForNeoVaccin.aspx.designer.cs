@@ -339,22 +339,13 @@ namespace EMR.OPD
         protected global::System.Web.UI.WebControls.Label prt_scr_before_vacc_9;
 
         /// <summary>
-        /// up1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel up1;
-
-        /// <summary>
         /// prt_appointed_vaccine control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView prt_appointed_vaccine;
+        protected global::System.Web.UI.HtmlControls.HtmlTable prt_appointed_vaccine;
 
         /// <summary>
         /// prt_additional_investigations control.
@@ -1579,6 +1570,15 @@ namespace EMR.OPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UserControl myModal;
+
+        /// <summary>
+        /// btnDelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        //protected global::System.Web.UI.WebControls.LinkButton btnDelete;
 
         /// <summary>
         /// PopupShowDelay control.

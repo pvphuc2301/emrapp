@@ -78,15 +78,6 @@ namespace EMR.ER
         protected global::System.Web.UI.WebControls.Label prt_vpid;
 
         /// <summary>
-        /// Line control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.UserControls.PrintTemplate.Line Line;
-
-        /// <summary>
         /// print_content control.
         /// </summary>
         /// <remarks>
@@ -393,40 +384,22 @@ namespace EMR.ER
         protected global::System.Web.UI.WebControls.Label prt_spec_opinion_summarised;
 
         /// <summary>
-        /// up1 control.
+        /// prt_treatment control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel up1;
+        protected global::System.Web.UI.HtmlControls.HtmlTable prt_treatment;
 
         /// <summary>
-        /// lbl_Treatment control.
+        /// prt_progress_note control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView lbl_Treatment;
-
-        /// <summary>
-        /// up2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel up2;
-
-        /// <summary>
-        /// lbl_progress_note control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView lbl_progress_note;
+        protected global::System.Web.UI.HtmlControls.HtmlTable prt_progress_note;
 
         /// <summary>
         /// prt_conclusions control.

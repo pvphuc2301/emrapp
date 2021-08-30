@@ -65,6 +65,7 @@ namespace EMR.OPD
             WebHelpers.ConvertDateTime(patientVisitInfo.ActualVisitDateTime, out bool isValid1, out string ActualVisitDateTime, "dd-MM-yyyy");
             lblVisitDate.Text = ActualVisitDateTime;
         }
+
         #region Binding Data
         private void BindingDataForm(Mrnv mrnv, bool state)
         {
@@ -256,9 +257,38 @@ namespace EMR.OPD
                 prt_scr_before_vacc_8.Text = $"8. Cân nặng của trẻ < 2000 g, mẹ có HBsAg (-)/ <span class='text-primary'>Child's weight < 2000g, his/her morther HbsAg (-):</span> {WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_8)}";
                 prt_scr_before_vacc_9.Text = $"9. Các chống chỉ định khác, nếu có ghi rõ/<span class='text-primary'>Other contraindications, if yes specified:</span> {WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_9)}";
 
-                string json_appointed_vaccine = WebHelpers.TextToHtmlTag(mrnv.appointed_vaccine);
-                prt_appointed_vaccine.DataSource = JsonConvert.DeserializeObject<DataTable>(json_appointed_vaccine);
-                prt_appointed_vaccine.DataBind();
+                DataTable appointed_vaccine = WebHelpers.GetJSONToDataTable(mrnv.appointed_vaccine);
+
+                if (appointed_vaccine != null)
+                {
+                    foreach (DataRow row in appointed_vaccine.Rows)
+                    {
+                        HtmlTableRow tr = new HtmlTableRow();
+                        HtmlTableCell td;
+
+                        //
+                        td = new HtmlTableCell();
+
+                        td.InnerText = Convert.ToString(row["drug_name"]);
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        td.InnerText = row["strength"].ToString();
+                        td.Align = "Center";
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        td.InnerText = row["router"].ToString();
+                        td.Align = "Center";
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        td.InnerText = row["reason"].ToString();
+                        tr.Cells.Add(td);
+
+                        prt_appointed_vaccine.Rows.Add(tr);
+                    }
+                }
 
                 prt_additional_investigations.Text = WebHelpers.TextToHtmlTag(mrnv.additional_investigations);
                 prt_initial_diagnosis.Text = WebHelpers.TextToHtmlTag(mrnv.initial_diagnosis);
