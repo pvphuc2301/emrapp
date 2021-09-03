@@ -96,5 +96,12 @@
     <script src="../../scripts/custom.min.js"></script>
     <script src="../../scripts/myScript.js"></script>
     <script src="../../scripts/contenteditable.min.js"></script>
+
+    <script>
+        let MsoNormal = document.getElementsByClassName("MsoNormal");
+        for (let i = 0; i < MsoNormal.length; i++) {
+            console.log(MsoNormal.innerText, MsoNormal.innerText == "");
+        }
+    </script>
 </body>
 </html>

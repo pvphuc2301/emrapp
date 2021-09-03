@@ -48,5 +48,15 @@
         </div>
     </div>  
     </form>
+
+     <script>
+         let MsoNormal = document.getElementsByTagName("p");
+         //.getElementsByClassName("MsoNormal");
+         for (let i = 0; i < MsoNormal.length; i++) {
+             if (MsoNormal[i].innerText.trim() == "") {
+                 MsoNormal[i].setAttribute("style", "display: none");
+             }
+         }
+     </script>
 </body>
 </html>

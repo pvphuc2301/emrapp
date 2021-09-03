@@ -18,6 +18,13 @@
         margin-top: 0pt;
     }
 
+    p {
+        margin-bottom: 6px;
+    }
+
+    .scroll-sidebar {
+        height: calc(100% - 73px);
+    }
 </style>
 
 <div class="recipeImage qsf-ib">
