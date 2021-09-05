@@ -933,6 +933,9 @@
             setTimeout(() => { printContent.setAttribute("style", "display: none"); }, 100);
             window.print();
         }
+
+        let vs_heart_rate = document.getElementById("vs_heart_rate");
+        document.getElementById("prt_pulse").innerText = vs_heart_rate.innerText;
     </script>
 
 </body>
