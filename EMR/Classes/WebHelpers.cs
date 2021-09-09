@@ -484,6 +484,19 @@ namespace EMR
             
             ScriptManager.RegisterStartupScript(page, page.GetType(), "msg_error", "setTimeout(()=>{ sweetAlert(\"Error!\", \"" + message + "\", \"error\");},0);", true);
         }
+        internal static dynamic ConvertDateTime(object time, out bool isValid, string DateTimeFormat = "yyyy-MM-dd HH:mm tt")
+        {
+            if (DateTime.TryParse(Convert.ToString(time), out DateTime validDateTime))
+            {
+                isValid = true;
+                return validDateTime;
+            }
+            else
+            {
+                isValid = false;
+                return time;
+            }
+        }
 
         internal static DateTime ConvertDateTime(object time, out bool isValid, out string dateTime, string DateTimeFormat = "yyyy-MM-dd HH:mm tt")
         {
