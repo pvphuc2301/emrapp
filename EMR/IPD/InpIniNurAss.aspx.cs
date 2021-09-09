@@ -68,8 +68,6 @@ namespace EMR
         {
             try
             {
-
-
                 txt_amend_reason.Text = "";
 
                 pain_annotation_base64.Value = JsonConvert.DeserializeObject(iina.pain_annotation).dataURI;
@@ -379,9 +377,16 @@ namespace EMR
                 lbl_past_med_history.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.past_med_history));
                 lbl_past_sur_history.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.past_sur_history));
 
-                lbl_substance_abuse.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.substance_abuse));
+                DataTable substance_abuse = WebHelpers.GetJSONToDataTable(iina.substance_abuse);
+                lbl_substance_abuse.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(substance_abuse, out int oth_index));
+
+                if (oth_index != -1)
+                {
+                    lbl_substance_abuse.Text += "&nbsp;" + iina.substance_abuse_other;
+                }
 
                 lbl_previous_document.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.previous_document, "Có, ghi rõ/ Yes, specify: " + WebHelpers.FormatString(iina.previous_document_note)));
+
                 lbl_cur_home_medication.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.cur_home_medication, "Có/ Yes (Tham khảo đơn thuốc đính kèm)/ If, yes please refer to the prescription attached"));
                 lbl_allergy.Text = WebHelpers.FormatString(WebHelpers.GetBool(iina.allergy, "Có (ghi rõ)/ Yes (specify): " + iina.allergy_note));
                 lbl_high_risk_patient.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(iina.high_risk_patient));
@@ -587,37 +592,1007 @@ namespace EMR
         {
             try
             {
+                PatientInfo patientInfo = new PatientInfo(varPID);
+                PatientVisitInfo visitInfo = new PatientVisitInfo(varPVID, loc);
+                
 
+
+                prt_date_of_admission.Text = WebHelpers.FormatDateTime(visitInfo.ActualVisitDateTime, "dd/MM/yyyy");
+                prt_time_of_admission.Text = WebHelpers.FormatDateTime(visitInfo.ActualVisitDateTime, "HH:mm");
+
+                {
+                    var control = FindControl("prt_residence_code_" + iina.residence_code);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                if(iina.residence_code == "vnm")
+                {
+                    prt_residence_code_vnm.Text = "☑";
+                }
+                else if(string.IsNullOrEmpty(iina.residence_code))
+                {
+                    prt_residence_code_oth.Text = "☑";
+                    prt_residence_other.Text = iina.residence_other;
+                }
+
+                {
+                    var control = FindControl("prt_language_code_" + iina.language_code);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                        if(iina.language_code == "OTH")
+                        {
+                            prt_language_other.Text = iina.language_other;
+                        }
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_req_interpreter_" + iina.req_interpreter);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_religion_code_" + iina.religion_code);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                        if (iina.religion_code == "OTH")
+                        {
+                            prt_religion_code_oth.Text = iina.religion_other;
+                        }
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_spiritual_couns_" + iina.spiritual_couns);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                prt_occupation.Text = iina.occupation;
+
+                {
+                    var control = FindControl("prt_living_status_code_" + iina.living_status_code);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                        if (iina.living_status_code == "OTH")
+                        {
+                            prt_living_status_note.Text = iina.living_status_note;
+                        }
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_hospital_concern_code_" + iina.hospital_concern_code);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                        if (iina.hospital_concern_code == "OTH")
+                        {
+                            prt_hospital_concern_other.Text = iina.hospital_concern_other;
+                        }
+                    }
+                }
+
+                prt_contact_name.Text = patientInfo.Contact;
+                prt_relationship_type_rcd.Text = patientInfo.Relationship;
+
+                prt_accompanied.Text = iina.accompanied;
+                prt_relationship.Text = iina.relationship;
+
+                //iina.accompanied
+
+                //B. Bệnh sử/ medical history
+
+                #region...
+
+                {
+                    var control = FindControl("prt_admit_from_code_" + iina.admit_from_code);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                        if(iina.admit_from_code == "OTH")
+                        {
+                            prt_admit_from_other.Text = iina.admit_from_other;
+                        }
+                    }
+                }
+
+                DataTable arrived = WebHelpers.GetJSONToDataTable(iina.arrived);
+                if (arrived != null)
+                {
+                    foreach (DataRow row in arrived.Rows)
+                    {
+                        string code = Convert.ToString(row["code"]);
+                        Control control = FindControl("prt_arrived_" + code);
+                        if (control != null)
+                        {
+                            (control as Label).Text = "☑";
+                        }
+                    }
+                }
+
+                prt_admission_reason.Text = iina.admission_reason;
+
+                {
+                    var control = FindControl("prt_previous_admission_" + !string.IsNullOrEmpty(iina.previous_admission));
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                        prt_previous_admission.Text = iina.previous_admission;
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_past_med_history_" + iina.past_med_history);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                        if (iina.past_med_history)
+                        {
+                            prt_past_med_history_note.Text = iina.past_med_history_note;
+                        }
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_past_sur_history_" + iina.past_sur_history);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                        if (iina.past_sur_history)
+                        {
+                            prt_past_sur_history_note.Text = iina.past_sur_history_note;
+                        }
+                    }
+                }
+
+                DataTable substance_abuse = WebHelpers.GetJSONToDataTable(iina.substance_abuse);
+                if (substance_abuse != null)
+                {
+                    foreach (DataRow row in substance_abuse.Rows)
+                    {
+                        string code = Convert.ToString(row["code"]);
+                        Control control = FindControl("prt_substance_abuse_" + code);
+                        if (control != null)
+                        {
+                            (control as Label).Text = "☑";
+                            if (code == "OTH")
+                            {
+                                prt_substance_abuse_other.Text = iina.substance_abuse_other;
+                            }
+                        }
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_previous_document_" + iina.previous_document);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                        if (iina.previous_document)
+                        {
+                            prt_previous_document_note.Text = iina.previous_document_note;
+                        }
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_cur_home_medication_" + iina.cur_home_medication);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_allergy_" + iina.allergy);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                        if (iina.allergy)
+                        {
+                            prt_allergy_note.Text = iina.allergy_note;
+                        }
+                    }
+                }
+
+                DataTable high_risk_patient = WebHelpers.GetJSONToDataTable(iina.high_risk_patient);
+                if (high_risk_patient != null)
+                {
+                    foreach (DataRow row in high_risk_patient.Rows)
+                    {
+                        string code = Convert.ToString(row["code"]);
+                        Control control = FindControl("prt_high_risk_patient_" + code);
+                        if (control != null)
+                        {
+                            (control as Label).Text = "☑";
+                        }
+                    }
+                }
+
+                #endregion
+
+                //C. Đánh giá của điều dưỡng/ Nursing assessment
+
+                #region 1. Dấu hiệu sinh tồn và các chỉ số đo lường/ Vital signs and standard measurements
+
+                prt_vs_temperature.Text = iina.vs_temperature;
+                prt_vs_heart_rate.Text = iina.vs_heart_rate;
+                prt_vs_blood_pressure.Text = iina.vs_blood_pressure;
+                prt_vs_respiratory_rate.Text = iina.vs_respiratory_rate;
+                prt_vs_weight.Text = iina.vs_weight;
+                prt_vs_height.Text = iina.vs_height;
+                prt_vs_BMI.Text = iina.vs_BMI;
+                
+                #endregion
+
+                #region 2. Hệ hô hấp/ Respiratory system
+
+                DataTable respiratory_system = WebHelpers.GetJSONToDataTable(iina.respiratory_system);
+                if (respiratory_system != null)
+                {
+                    foreach (DataRow row in respiratory_system.Rows)
+                    {
+                        string code = Convert.ToString(row["code"]);
+                        Control control = FindControl("prt_respiratory_system_" + code);
+                        if (control != null)
+                        {
+                            (control as Label).Text = "☑";
+                        }
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_cough_" + iina.cough);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_pro_cough_" + iina.pro_cough);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                        if (iina.pro_cough)
+                        {
+                            prt_pro_cough_note.Text = iina.pro_cough_note;
+                        }
+                    }
+                }
+
+                #endregion
+
+                #region 3. Hệ tim mạch/ Cardiovascular system
+
+                {
+                    var control = FindControl("prt_pulse_code_" + iina.pulse_code);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                DataTable presence = WebHelpers.GetJSONToDataTable(iina.presence);
+                if (presence != null)
+                {
+                    foreach (DataRow row in presence.Rows)
+                    {
+                        string code = Convert.ToString(row["code"]);
+                        Control control = FindControl("prt_presence_" + code);
+                        if (control != null)
+                        {
+                            (control as Label).Text = "☑";
+                        }
+                    }
+                }
+
+                DataTable extremities = WebHelpers.GetJSONToDataTable(iina.extremities);
+                if (extremities != null)
+                {
+                    foreach (DataRow row in extremities.Rows)
+                    {
+                        string code = Convert.ToString(row["code"]);
+                        Control control = FindControl("prt_extremities_" + code);
+                        if (control != null)
+                        {
+                            (control as Label).Text = "☑";
+                        }
+                    }
+                }
+
+                #endregion
+
+                #region 4. Hệ thần kinh cảm giác/ Neurosensory system
+
+                DataTable oriented = WebHelpers.GetJSONToDataTable(iina.oriented);
+                if (oriented != null)
+                {
+                    foreach (DataRow row in oriented.Rows)
+                    {
+                        string code = Convert.ToString(row["code"]);
+                        Control control = FindControl("prt_oriented_" + code);
+                        if (control != null)
+                        {
+                            (control as Label).Text = "☑";
+                        }
+                    }
+                }
+
+                DataTable mental_status = WebHelpers.GetJSONToDataTable(iina.mental_status);
+                if (mental_status != null)
+                {
+                    foreach (DataRow row in mental_status.Rows)
+                    {
+                        string code = Convert.ToString(row["code"]);
+                        Control control = FindControl("prt_mental_status_" + code);
+                        if (control != null)
+                        {
+                            (control as Label).Text = "☑";
+                            if(code == "OTH")
+                            {
+                                prt_mental_status_other.Text = iina.mental_status_other;
+                            }
+                        }
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_hearing_code_" + iina.hearing_code);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_vision_code_" + iina.vision_code);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_speech_code_" + iina.speech_code);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                #endregion
+
+                #region 5. Hệ tiêu hóa/ Gastrointestinal system
+
+                {
+                    var control = FindControl("prt_diet_code_" + iina.diet_code);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                        if (iina.diet_code == "OTH")
+                        {
+                            prt_diet_other.Text = iina.diet_other;
+                        }
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_diet_pre_code_" + iina.diet_pre_code);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                {
+                    if(iina.ng_tube != null)
+                    {
+                        if (!iina.ng_tube)
+                        {
+                            prt_ng_tube_false.Text = "☑";
+                        }
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_gastrostomy_" + iina.gastrostomy);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                {
+                    if (iina.size != null)
+                    {
+                        if (iina.size)
+                        {
+                            prt_size_true.Text = "☑";
+                        }
+                    }
+                }
+
+                prt_size_note.Text = WebHelpers.FormatString(iina.size_note, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                prt_last_date_changed.Text = WebHelpers.FormatDateTime(iina.last_date_changed, "dd/MM/yyyy");
+                prt_food_dislike.Text = iina.food_dislike;
+
+                {
+                    var control = FindControl("prt_bowel_elimination_code_" + iina.bowel_elimination_code);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_stool_consistency_code_" + iina.stool_consistency_code);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_gas_presence_code_" + iina.gas_presence_code);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                #endregion
+
+                #region 6. Đánh giá dinh dưỡng ban đầu/ Initial Nutrition Assessment
+
+                string[] initialTemp = new string[4]
+                {
+                    "prt_bmi_out_range_" + iina.bmi_out_range,
+                    "prt_loss_weight_" + iina.loss_weight,
+                    "prt_reduce_dietary_" + iina.reduce_dietary,
+                    "prt_severely_ill_" + iina.severely_ill
+                    
+                };
+
+                foreach (var i in initialTemp)
+                {
+                    var control = FindControl(i);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "✓";
+                    }
+                }
+
+                string[] finalTemp = new string[3]
+                {
+                    "prt_nutrition_normal_" + iina.nutrition_normal,
+                    "prt_normal_nutrition_req_" + iina.normal_nutrition_req,
+                    "prt_younger_70_" + iina.younger_70
+
+                };
+
+                foreach (var i in finalTemp)
+                {
+                    var control = FindControl(i);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                DataTable nutrition_score1 = WebHelpers.GetJSONToDataTable(iina.nutrition_score1);
+                if (nutrition_score1 != null)
+                {
+                    foreach (DataRow row in nutrition_score1.Rows)
+                    {
+                        string code = Convert.ToString(row["code"]);
+                        Control control = FindControl("prt_nutrition_score1_" + code);
+                        if (control != null)
+                        {
+                            (control as Label).Text = "☑";
+                        }
+                    }
+                }
+
+                DataTable nutrition_score2 = WebHelpers.GetJSONToDataTable(iina.nutrition_score2);
+                if (nutrition_score2 != null)
+                {
+                    foreach (DataRow row in nutrition_score2.Rows)
+                    {
+                        string code = Convert.ToString(row["code"]);
+                        Control control = FindControl("prt_nutrition_score2_" + code);
+                        if (control != null)
+                        {
+                            (control as Label).Text = "☑";
+                        }
+                    }
+                }
+
+                DataTable nutrition_score3 = WebHelpers.GetJSONToDataTable(iina.nutrition_score3);
+                if (nutrition_score3 != null)
+                {
+                    foreach (DataRow row in nutrition_score3.Rows)
+                    {
+                        string code = Convert.ToString(row["code"]);
+                        Control control = FindControl("prt_nutrition_score3_" + code);
+                        if (control != null)
+                        {
+                            (control as Label).Text = "☑";
+                        }
+                    }
+                }
+
+                DataTable severity_score1 = WebHelpers.GetJSONToDataTable(iina.severity_score1);
+                if (severity_score1 != null)
+                {
+                    foreach (DataRow row in severity_score1.Rows)
+                    {
+                        string code = Convert.ToString(row["code"]);
+                        Control control = FindControl("prt_severity_score1_" + code);
+                        if (control != null)
+                        {
+                            (control as Label).Text = "☑";
+                        }
+                    }
+                }
+
+                DataTable severity_score2 = WebHelpers.GetJSONToDataTable(iina.severity_score2);
+                if (severity_score2 != null)
+                {
+                    foreach (DataRow row in severity_score2.Rows)
+                    {
+                        string code = Convert.ToString(row["code"]);
+                        Control control = FindControl("prt_severity_score2_" + code);
+                        if (control != null)
+                        {
+                            (control as Label).Text = "☑";
+                        }
+                    }
+                }
+
+                DataTable severity_score3 = WebHelpers.GetJSONToDataTable(iina.severity_score3);
+                if (severity_score3 != null)
+                {
+                    foreach (DataRow row in severity_score3.Rows)
+                    {
+                        string code = Convert.ToString(row["code"]);
+                        Control control = FindControl("prt_severity_score3_" + code);
+                        if (control != null)
+                        {
+                            (control as Label).Text = "☑";
+                        }
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_older_70_" + iina.older_70);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "x";
+                    }
+                }
+
+                prt_nutrition_score.Text = iina.nutrition_score;
+                prt_severity_score.Text = iina.severity_score;
+                prt_age_score.Text =  iina.age_score;
+
+                prt_total_nutri_score.Text = iina.total_nutri_score;
+
+                #endregion
+
+                #region 7. Hệ tiết niệu sinh dục/ Genitourinary system
+                
+                DataTable urination = WebHelpers.GetJSONToDataTable(iina.urination);
+                if (urination != null)
+                {
+                    foreach (DataRow row in urination.Rows)
+                    {
+                        string code = Convert.ToString(row["code"]);
+                        Control control = FindControl("prt_urination_" + code);
+                        if (control != null)
+                        {
+                            (control as Label).Text = "☑";
+                        }
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_inter_catheter_" + iina.inter_catheter);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                        if (iina.ind_catheter)
+                        {
+                            prt_inter_catheter_note.Text = iina.inter_catheter_note;
+                        }
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_ind_catheter_" + iina.ind_catheter);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                    prt_ind_catheter_size.Text = Convert.ToString(iina.ind_catheter_size);
+                    prt_ind_catheter_date.Text = WebHelpers.FormatDateTime(iina.ind_catheter_date, "dd/MM/yyyy");
+                }
+
+                {
+                    var control = FindControl("prt_sup_catheter_" + iina.sup_catheter);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                    prt_sup_catheter_size.Text = Convert.ToString(iina.sup_catheter_size);
+                    prt_last_sup_catheter_date.Text = WebHelpers.FormatDateTime(iina.last_sup_catheter_date, "dd/MM/yyyy");
+                }
+
+                {
+                    var control = FindControl("prt_menstruation_code_" + iina.menstruation_code);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                    prt_cycle_day.Text = iina.cycle_day;
+                }
+
+                {
+
+                   dynamic datetime = WebHelpers.ConvertDateTime(iina.last_mens_period, out bool isValid);
+                    if (isValid)
+                    {
+                        prt_last_mens_period.Text = WebHelpers.FormatDateTime(datetime, "dd/MM/yyyy");
+                    }
+                    else
+                    {
+                        prt_last_mens_period.Text = datetime;
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_not_pregnancy_" + iina.not_pregnancy);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                {
+                    var control = FindControl("prt_pre_pregnancy_" + iina.pre_pregnancy);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                prt_para.Text = iina.para;
+
+                {
+                    var control = FindControl("prt_cur_pregnancy_" + iina.cur_pregnancy);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                    prt_pregnancy_week.Text = iina.pregnancy_week;
+                }
+
+                {
+                    var control = FindControl("prt_contraception_code_" + iina.contraception_code);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                        if(iina.contraception_code == "OTH")
+                        {
+                            prt_contraception_other.Text = iina.contraception_other;
+                        }
+                    }
+                }
+
+                #endregion
+
+                #region 8. Hệ cơ - xương khớp/ Musculoskeletal system
+
+                DataTable mus_history = WebHelpers.GetJSONToDataTable(iina.mus_history);
+                if (mus_history != null)
+                {
+                    foreach (DataRow row in mus_history.Rows)
+                    {
+                        string code = Convert.ToString(row["code"]);
+                        Control control = FindControl("prt_mus_history_" + code);
+                        if (control != null)
+                        {
+                            (control as Label).Text = "☑";
+                        }
+                    }
+                }
+
+                string[] musTemp = new string[4]
+                {
+                    "prt_paralysis_" + iina.paralysis,
+                    "prt_amputation_" + iina.amputation,
+                    "prt_contracture_" + iina.contracture,
+                    "prt_prosthesis_" + iina.prosthesis
+                };
+
+                foreach (var i in musTemp)
+                {
+                    var control = FindControl(i);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                prt_paralysis_note.Text = iina.paralysis_note;
+                
+                prt_amputation_note.Text = iina.amputation_note;
+
+                prt_contracture_note.Text = iina.contracture_note;
+
+                prosthesis_note.Text = iina.prosthesis_note;
+
+                #endregion
+
+                #region 9. Đau/ Pain
+
+                //9
+
+                {
+                    var control = FindControl("prt_cur_in_pain_" + iina.cur_in_pain);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                prt_p_location_1.Text = iina.p_location_1;
+                prt_p_location_2.Text = iina.p_location_2;
+                prt_p_location_3.Text = iina.p_location_3;
+
+                prt_q_location_1.Text = iina.q_location_1;
+                prt_q_location_2.Text = iina.q_location_2;
+                prt_q_location_3.Text = iina.q_location_3;
+
+                prt_r_location_1.Text = iina.r_location_1;
+                prt_r_location_2.Text = iina.r_location_2;
+                prt_r_location_3.Text = iina.r_location_3;
+
+                prt_s_location_1.Text = iina.s_location_1;
+                prt_s_location_2.Text = iina.s_location_2;
+                prt_s_location_3.Text = iina.s_location_3;
+
+                prt_t_location_1.Text = iina.t_location_1;
+                prt_t_location_2.Text = iina.t_location_2;
+                prt_t_location_3.Text = iina.t_location_3;
+
+                imageTemp.Src = JObject.Parse(iina.pain_annotation).dataURI;
+
+                {
+                    var control = FindControl("prt_using_pain_killer_" + iina.using_pain_killer);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                prt_pain_killer_name.Text = iina.pain_killer_name;
+                prt_pa_comment.Text = iina.pa_comment;
+
+                #endregion
+
+                #region 10. Da & Nguy cơ loét tỳ đè/ Skin & Pressure Sore Risk
+
+                DataTable condition = WebHelpers.GetJSONToDataTable(iina.condition);
+                if (condition != null)
+                {
+                    foreach (DataRow row in condition.Rows)
+                    {
+                        string code = Convert.ToString(row["code"]);
+                        Control control = FindControl("prt_condition_" + code);
+                        if (control != null)
+                        {
+                            (control as Label).Text = "☑";
+                        }
+                    }
+                }
+
+                DataTable wounds = WebHelpers.GetJSONToDataTable(iina.wounds);
+                if (wounds != null)
+                {
+                    foreach (DataRow row in wounds.Rows)
+                    {
+                        string code = Convert.ToString(row["code"]);
+                        Control control = FindControl("prt_wounds_" + code);
+                        if (control != null)
+                        {
+                            (control as Label).Text = "☑";
+                        }
+                    }
+                }
+
+                DataTable skin_anno = WebHelpers.GetJSONToDataTable(iina.skin_anno);
+
+                if (skin_anno != null)
+                {
+                    HtmlTableRow tr1 = new HtmlTableRow();
+                    HtmlTableCell td1;
+
+                    string location = "";
+                    string type = "";
+
+                    if (skin_anno.Rows.Count > 0)
+                    {
+                        location = Convert.ToString(skin_anno.Rows[0]["location"]);
+                        type = Convert.ToString(skin_anno.Rows[0]["type"]);
+                    }
+
+                    //
+                    td1 = new HtmlTableCell();
+                    td1.InnerText = location;
+                    td1.Align = "Center";
+                    tr1.Cells.Add(td1);
+                    //
+                    td1 = new HtmlTableCell();
+                    td1.InnerText = type;
+                    td1.Align = "Center";
+                    tr1.Cells.Add(td1);
+
+                    td1 = new HtmlTableCell();
+                    td1.InnerHtml = "<img style='width: 300px' src='" + JObject.Parse(iina.skin_anno_data).dataURI + "'>";
+                    td1.Width = "300px";
+                    td1.RowSpan = skin_anno.Rows.Count;
+                    tr1.Cells.Add(td1);
+
+                    prt_skin_anno.Rows.Add(tr1);
+
+                    for (int i = 1; i < skin_anno.Rows.Count; i++)
+                    {
+                        HtmlTableRow tr = new HtmlTableRow();
+                        HtmlTableCell td;
+
+                        //
+                        td = new HtmlTableCell();
+                        td.InnerText = Convert.ToString(skin_anno.Rows[i]["location"]);
+                        td.Align = "Center";
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        td.InnerText = Convert.ToString(skin_anno.Rows[i]["type"]);
+                        td.Align = "Center";
+                        tr.Cells.Add(td);
+
+                        prt_skin_anno.Rows.Add(tr);
+                    }
+
+                }
+                else
+                {
+                    HtmlTableRow tr1 = new HtmlTableRow();
+                    HtmlTableCell td1;
+                    //
+                    td1 = new HtmlTableCell();
+                    td1.InnerText = "";
+                    td1.Align = "Center";
+                    tr1.Cells.Add(td1);
+                    //
+                    td1 = new HtmlTableCell();
+                    td1.InnerText = "";
+                    td1.Align = "Center";
+                    tr1.Cells.Add(td1);
+
+                    td1 = new HtmlTableCell();
+                    td1.InnerHtml = "<img style='width: 300px' src='" + JObject.Parse(iina.skin_anno_data).dataURI + "'>";
+                    td1.Width = "300px";
+                    tr1.Cells.Add(td1);
+
+                    prt_skin_anno.Rows.Add(tr1);
+                }
+
+                prt_sensory_code.Text = iina.sensory_code;
+                prt_moisture_code.Text = iina.moisture_code;
+                prt_activity_code.Text = iina.activity_code;
+                prt_mobility_code.Text = iina.mobility_code;
+                prt_nutrition_code.Text = iina.nutrition_code;
+                prt_friction_code.Text = iina.friction_code;
+                prt_total_score.Text = iina.total_score;
+
+                prt_preven_action.Text = iina.preven_action;
+
+                #endregion
+
+                #region 11. Khả năng thực hiện những sinh hoạt hàng ngày/ Ability to perform daily activities.
+
+                prt_oral_care_note.Text = iina.oral_care_note;
+                prt_medication_used.Text = iina.medication_used;
+
+                #endregion
+
+                //12
+                prt_fall_history_code.Text = iina.fall_history_code;
+                prt_secon_diagnosis_code.Text = iina.secon_diagnosis_code;
+                prt_ambula_aids_code.Text = iina.ambula_aids_code;
+                prt_intra_therapy_code.Text = iina.intra_therapy_code;
+                prt_gait_trans_code.Text = iina.gait_trans_code;
+                prt_fr_mental_status_code.Text = iina.fr_mental_status_code;
+                prt_fr_total_score.Text = iina.fr_total_score;
+                
+                string[] temp = new string[17] {
+                    //11
+                    "prt_pres_sore_risk_code_" + iina.pres_sore_risk_code,
+                    "prt_bathing_code_" + iina.bathing_code,
+                    "prt_oral_care_code_" + iina.oral_care_code,
+                    "prt_dentures_code_" + iina.dentures_code,
+                    "prt_toilet_use_code_" + iina.toilet_use_code,
+                    "prt_dressing_code_" + iina.dressing_code,
+                    "prt_eating_code_" + iina.eating_code,
+                    "prt_turning_bed_code_" + iina.turning_bed_code,
+                    "prt_ambulation_code_" + iina.ambulation_code,
+                    "prt_sleep_code_" + iina.sleep_code,
+                    "prt_medication_used_" + iina.medication_used,
+                    //12
+                    "prt_fall_history_code_" + iina.fall_history_code,
+                    "prt_secon_diagnosis_code_" + iina.secon_diagnosis_code,
+                    "prt_ambula_aids_code_" + iina.ambula_aids_code,
+                    "prt_intra_therapy_code_" + iina.intra_therapy_code,
+                    "prt_gait_trans_code_" + iina.gait_trans_code,
+                    "prt_fr_mental_status_code_" + iina.fr_mental_status_code
+                };
+                
+                foreach (var i in temp)
+                {
+                    var control = FindControl(i);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☑";
+                    }
+                }
+
+                //D
+                string[] dischargePlanTemp = new string[13] {
+                    "prt_involvement_" + iina.involvement,
+                    "prt_req_med_equipment_" + iina.req_med_equipment,
+                    "prt_req_foll_care_" + iina.req_foll_care,
+                    "prt_suicidal_referral_" + iina.suicidal_referral,
+                    "prt_alone_reduce_functional_" + iina.alone_reduce_functional,
+                    "prt_ref_physiotherapist_" + iina.ref_physiotherapist,
+                    "prt_ref_speech_therapist_" + iina.ref_speech_therapist,
+                    "prt_ref_dietician_" + iina.ref_dietician,
+                    "prt_ref_psychologist_" + iina.ref_psychologist,
+                    "prt_ref_other_hospital_" + iina.ref_other_hospital,
+                    "prt_support_at_home_" + iina.support_at_home,
+                    "prt_req_transportation_" + iina.req_transportation,
+                    "prt_stairs_climb_home_" + iina.stairs_climb_home
+                };
+
+                foreach (var i in dischargePlanTemp)
+                {
+                    var control = FindControl(i);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "✓";
+                    }
+                }
+
+                //E
+                //E
+                prt_dis_planning.Text = iina.dis_planning;
+                //F
+                prt_dis_management.Text = iina.dis_management;
             }
-            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
-            //Patient patient = Patient.Instance();
-            //prt_fullname.Text = $"{patient.FullName} ({patient.GetTitle()})";
-            //prt_DOB.Text = $"{WebHelpers.FormatDateTime(patient.date_of_birth)} | {patient.Gender}";
-            //prt_barcode.Text = prt_vpid.Text = patient.visible_patient_id;
-
-            //prt_vs_temperature.Text = oina.vs_temperature;
-            //prt_vs_weight.Text = oina.vs_weight;
-            //prt_vs_height.Text = oina.vs_height;
-            //prt_vs_BMI.Text = oina.vs_BMI;
-            //prt_pulse.Text = oina.vs_heart_rate;
-            //prt_vs_respiratory_rate.Text = oina.vs_respiratory_rate;
-            //prt_vs_blood_pressure.Text = oina.vs_blood_pressure;
-            //prt_vs_spO2.Text = oina.vs_spO2;
-
-            //prt_chief_complaint.Text = oina.chief_complaint;
-            //prt_allergy.Text = oina.allergy ? "Có, ghi rõ/ Yes, specify: " + oina.allergy_note : "Không";
-
-            //prt_mental_status.Text = WebHelpers.CreateOptions(new Option { Text = "Có/ Yes", Value = true }, new Option { Text = "Không, ghi rõ/ No, specify: " + oina.mental_status_note, Value = false }, oina.mental_status, "display: grid; grid-template-columns: 80px 1fr");
-
-            //prt_paint_score_code.Value = oina.paint_score_code;
-
-            //prt_fall_risk.Value = oina.fall_risk ? "Nếu có, cung cấp phương tiện hỗ trợ/ If yes, provide assistance: " + oina.fall_risk_assistance : "Không có nguy cơ/ No risk";
-
-            //prt_nutrition_status_code.Value = oina.nutrition_status_description;
-
-            //prt_housing.Text = WebHelpers.CreateOptions(Oina.HOUSING_CODE, (string)oina.housing_code, "display: grid; grid-template-columns: 1fr 1fr");
-
-            //prt_prioritization_code.Value = oina.prioritization_description;
+            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
 
         }
         #endregion
@@ -689,7 +1664,7 @@ namespace EMR
         {
             Iina iina = new Iina(varDocID, loc);
             BindingDataFormPrint(iina);
-            ScriptManager.RegisterStartupScript(this, this.GetType(), "print_document", "window.print();", true);
+            WebHelpers.AddJS(Page, "btnPrint_Click()");
         }
         protected void btn_grid_skin_anno_add_Click(object sender, EventArgs e)
         {
@@ -739,7 +1714,6 @@ namespace EMR
                 {
                     BindingDataForm(iina, WebHelpers.LoadFormControl(form1, iina, ControlState.View, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
                     lblPid.Text = varVPID;
-                    BindingDataFormPrint(iina);
                 }
                 else if (iina.status == DocumentStatus.DRAFT)
                 {
@@ -989,7 +1963,6 @@ namespace EMR
                 iina.severely_ill = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_severely_ill_");
                 //table 2
                 iina.nutrition_normal = cb_nutrition_normal_true.Checked;
-                iina.nutrition_score1 = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_nutrition_score1_", Iina.NUTRITION_SCORE1_CODE);
                 iina.nutrition_score1 = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_nutrition_score1_", Iina.NUTRITION_SCORE1_CODE);
                 iina.nutrition_score2 = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_nutrition_score2_", Iina.NUTRITION_SCORE2_CODE);
                 iina.nutrition_score3 = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_nutrition_score3_", Iina.NUTRITION_SCORE3_CODE);

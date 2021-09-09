@@ -23,398 +23,214 @@
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
+    <link href="../styles/print.css" rel="stylesheet" />
+    <style>
+        @media print {
+            .page:after {
+                bottom: 3px;
+            }
+        }
+    </style>
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
         <asp:UpdatePanel ID="UpPrintForm" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <div class="cssclsNoScreen1" style="display: none;">
+                <div class="cssclsNoScreen" id="printContent">
                     <table class="report-container">
                         <thead class="report-header">
                             <tr>
                                 <th class="report-header-cell">
                                     <div class="header-info">
-                                        <img src="../images/AIH_PI_FULL.png" />
+                                        <img width="200" src="../images/AIH_PI_FULL.png" />
                                         <div class="header-info-title">
                                             <h4>BỆNH ÁN NỘI TRÚ</h4>
                                             <h5>INPATIENT INITIAL MEDICAL ASSESSMENT</h5>
                                         </div>
-                                        <div style="width: 150px; text-align: left; font-size: 11px">
+                                        <div style="width: 120px; text-align: left; font-size: 11px">
                                             <asp:Label CssClass="d-block" runat="server" ID="prt_fullname"></asp:Label>
                                             <asp:Label class="d-block" CssClass="d-block" runat="server" ID="prt_dob"></asp:Label>
                                             <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
                                             <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
                                         </div>
                                     </div>
-                                    <webUI:Line runat="server" />
+                                    <div style="height: 25px">
+                                        <span style="width: 190px; border-bottom-style: solid; border-bottom-color: #e20e5a; border-bottom-width: 5px; display: inline-block; font-size: 26.6667px;"></span>
+                                        <span style="display: inline-block; border-bottom-style: solid; border-bottom-color: #007297; border-bottom-width: 5px; width: calc(100% - 191px); margin-left: -5px;"></span>
+                                    </div>
                                 </th>
                             </tr>
                         </thead>
                         <tbody class="report-content">
                             <tr>
                                 <td class="report-content-cell">
-                                    <div class="main" runat="server" >
-                                        <div class="row mb-2">
-                                <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                    <asp:Label Style="font-weight: bold;">I. Lí do nhập viện/ Reason for admission: </asp:Label>
-                                    <asp:Label runat="server" ID="prt_chief_complaint"></asp:Label>
-                                </div>
-                            </div>
+                                    <div style="position: relative" class="main" runat="server" id="print_content">
+                                        <img style="height: 1px" src="../images/logo-opacity.png" />
+                                        
+                                        <div class="mb-1">
+                                            <b>I. Lí do nhập viện</b>/ Reason for admission: <asp:Label runat="server" ID="prt_chief_complaint"/>
+                                        </div>
 
-                            <%--<div class="row mb-2 " style="text-align: justify;">
-                                <div class="col-12 " style="text-align: justify;">
-                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">I. Lý do đến khám/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Reason for admission: </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="Label2"></asp:Label>
-                                </div>
-                            </div>--%>
-                            <div class="row mb-2 ">
-                                <div class="col-12 " style="text-align: justify;">
-                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">II. Bệnh sử/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Medical history: </asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2 ">
-                                <div class="col-12 " style="text-align: justify;">
-                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">1. Bệnh sử hiện tại/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Current medical history: </asp:Label>
-                                    <asp:Label Style="text-align: justify; font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_cur_med_history"></asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2">
-                                <div class="col-12 " style="text-align: justify;">
-                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">* Thuốc đang sử dụng/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Current medications: </asp:Label>
-                                    <asp:Label runat="server" ID="prt_cur_medication"></asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2 ">
-                                <div class="col-12 " style="text-align: justify;">
-                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">2. Tiền sử bệnh/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Antecedent medical history: </asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2 ">
-                                <div class="col-12 " style="text-align: justify; margin-left: 10px">
-                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">- Bản thân/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Personal: </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_personal"></asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2 ">
-                                <div class="col-12 " style="text-align: justify; margin-left: 10px">
-                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">• Thói quen/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Habits: </asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2 ">
-                                <div class="col-3" style="text-align: justify; margin-left: 10px">
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Hút thuốc lá/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Smoking: </asp:Label>
-                                </div>
-                                <div class="col-2" style="top: -5px">
-                                    <asp:Label Style="font-size: 22.5px;" ID="prt_habits_smoking_False" runat="server" />
-                                    <label style="font-size: 14.5px; font-family: Tahoma;">Không</label>
-                                    <label style="font-size: 14.5px; font-family: Tahoma;">/ No</label>
-                                </div>
-                                <div class="col-7" style="text-align: justify; top: -5px; margin-right: -15px">
-                                    <asp:Label Style="font-size: 22.5px;" ID="prt_habits_smoking_True" runat="server" />
-                                    <label style="font-size: 14.5px; font-family: Tahoma;">Có, ghi số gói trong năm/ </label>
-                                    <label style="font-size: 14.5px; font-family: Tahoma;">Yes, specify pack years:</label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma; margin-right: 5px" runat="server" ID="lbl_habits_smoking_pack"></asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2 ">
-                                <div class="col-3" style="text-align: justify; margin-left: 10px">
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Uống rượu/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Alcohol: </asp:Label>
-                                </div>
-                                <div class="col-2" style="top: -5px">
-                                    <asp:Label Style="font-size: 22.5px;" ID="prt_habits_alcohol_False" runat="server" />
+                                        <div class="mb-1">
+                                            <b>II. Bệnh sử</b>/ Medical history:
+                                        </div>
 
-                                    <label style="font-size: 14.5px; font-family: Tahoma;">Không</label>
-                                    <label style="font-size: 14.5px; font-family: Tahoma;">/ No</label>
+                                        <div class="mb-1">
+                                            <b>1. Bệnh sử hiện tại</b>/ Current medical history: <asp:Label runat="server" ID="prt_cur_med_history"/>
+                                        </div>
 
-                                </div>
-                                <div class="col-6" style="top: -5px">
-                                    <asp:Label Style="font-size: 22.5px;" ID="prt_habits_alcohol_True" runat="server" />
-                                    <label style="font-size: 14.5px; font-family: Tahoma;">Có, ghi rõ/ </label>
-                                    <label style="font-size: 14.5px; font-family: Tahoma;">Yes, specify: </label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_habits_alcohol_note"></asp:Label>
+                                        <div class="mb-1">
+                                            <b>* Thuốc đang sử dụng</b>/ Current medications: <asp:Label runat="server" ID="prt_cur_medication"/>
+                                        </div>
 
-                                </div>
-                            </div>
-                            <div class="row mb-2 ">
-                                <div class="col-3" style="text-align: justify; margin-left: 10px">
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Chất gây nghiện/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Drugs: </asp:Label>
-                                </div>
-                                <div class="col-2" style="top: -5px">
-                                    <asp:Label Style="font-size: 22.5px;" ID="prt_habits_drugs_False" runat="server" />
+                                        <div class="mb-1">
+                                            <b>2. Tiền sử bệnh</b>/ Antecedent medical history:
+                                        </div>
 
-                                    <label style="font-size: 14.5px; font-family: Tahoma;">Không</label>
-                                    <label style="font-size: 14.5px; font-family: Tahoma;">/ No</label>
+                                        <div class="mb-1" style="margin-left: 10px">
+                                            <b>- Bản thân</b>/ Personal: <asp:Label runat="server" ID="prt_personal"/>
+                                        </div>
 
-                                </div>
-                                <div class="col-6" style="top: -5px">
-                                    <asp:Label Style="font-size: 22.5px;" ID="prt_habits_drugs_True" runat="server" />
-                                    <label style="font-size: 14.5px; font-family: Tahoma;">Có, ghi rõ/ </label>
-                                    <label style="font-size: 14.5px; font-family: Tahoma;">Yes, specify: </label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_habits_drugs_note"></asp:Label>
+                                        <div class="mb-1 d-grid" style="grid-template-columns: auto 1fr; margin-left: 30px">
+                                            ○ Tiêm chủng/ Immunization:&nbsp;<asp:Label runat="server" ID="prt_immunization"/>
+                                        </div>
 
-                                </div>
-                            </div>
-                            <div class="row mb-2 ">
-                                <div class="col-12" style="text-align: justify; margin-left: 10px">
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Tập thể dục thường xuyên/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Regular physical exercise: </asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2 ">
-                                <div class="col-3" style="text-align: justify; margin-left: 10px">
-                                </div>
-                                <div class="col-2" style="top: -5px">
-                                    <asp:Label Style="font-size: 22.5px;" ID="prt_habits_physical_exercise_False" runat="server" />
-                                    <label style="font-size: 14.5px; font-family: Tahoma;">Không</label>
-                                    <label style="font-size: 14.5px; font-family: Tahoma;">/ No</label>
+                                        <div class="mb-1" style="margin-left: 20px">
+                                            • Thói quen/ Habits:
+                                        </div>
 
-                                </div>
-                                <div class="col-6" style="top: -5px">
-                                    <asp:Label Style="font-size: 22.5px;" ID="prt_habits_physical_exercise_True" runat="server" />
-                                    <label style="font-size: 14.5px; font-family: Tahoma;">Có, ghi rõ/ </label>
-                                    <label style="font-size: 14.5px; font-family: Tahoma;">Yes, specify: </label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_habits_phy_exer_note"></asp:Label>
+                                        <div class="mb-1 d-grid" style="grid-template-columns: 150px 1fr; margin-left: 10px">
+                                            Hút thuốc lá/ Smoking: <asp:Label runat="server" ID="prt_habits_smoking"/>
+                                        </div>
 
-                                </div>
-                            </div>
-                            <div class="row mb-2 ">
-                                <div class="col-12" style="text-align: justify; margin-left: 10px">
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Khác, Ghi rõ/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Other, Specify: </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_habits_other"></asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2 ">
-                                <div class="col-3" style="text-align: justify; margin-left: 10px">
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Tiền sử dị ứng/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Allergy: </asp:Label>
-                                </div>
-                                <div class="col-2" style="top: -5px">
-                                    <asp:Label Style="font-size: 22.5px;" ID="prt_allergy_False" runat="server" />
+                                        <div class="mb-1 d-grid" style="grid-template-columns: 150px 1fr; margin-left: 10px">
+                                            Uống rượu/ Alcohol: <asp:Label runat="server" ID="prt_habits_alcohol"/>
+                                        </div>
 
-                                    <label style="font-size: 14.5px; font-family: Tahoma;">Không</label>
-                                    <label style="font-size: 14.5px; font-family: Tahoma;">/ No</label>
+                                        <div class="mb-1 d-grid" style="grid-template-columns: 150px 1fr; margin-left: 10px">
+                                            Chất gây nghiện/ Drugs: <asp:Label runat="server" ID="prt_habits_drugs"/>
+                                        </div>
 
-                                </div>
-                                <div class="col-6" style="top: -5px">
-                                    <asp:Label Style="font-size: 22.5px;" ID="prt_allergy_True" runat="server" />
-                                    <label style="font-size: 14.5px; font-family: Tahoma;">Có, ghi rõ/ </label>
-                                    <label style="font-size: 14.5px; font-family: Tahoma;">Yes, specify: </label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_allergy_note"></asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2 ">
-                                <div class="col-12 " style="text-align: justify; margin-left: 10px">
-                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">- Gia đình / </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Family: </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_family"></asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2 ">
-                                <div class="col-12 " style="text-align: justify; margin-left: 10px">
-                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">- Tiêm chủng/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Immunization: </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_immunization"></asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2 " style="text-align: justify;">
-                                <div class="col-12 " style="text-align: justify;">
-                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">III. Khám bệnh/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Physical Examination: </asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2 " style="text-align: justify;">
-                                <div class="col-12 " style="text-align: justify; margin-left: 15px">
-                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">DẤU HIỆU SINH TỒN/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">VITAL SIGNS: </asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2">
-                                <div class="col-12">
-                                    <div class="row mb-2" style="margin-bottom: 0rem !important;">
-                                        <div style="width: 280px; border-style: solid; border-width: 0.5px; margin-left: 10px; font-size: 14.5px; font-family: Tahoma; padding-left: 10px; padding-right: 10px; border-left-width: 2px; border-top-width: 2px;">
-                                            Nhiệt độ/ Temperature (C degree)
+                                        <div class="mb-1" style="margin-left: 10px">
+                                            Tập thể dục thường xuyên/ Regular physical exercise:
                                         </div>
-                                        <div style="width: 80px; border-style: solid; border-width: 0.25px; font-size: 14.5px; font-family: Tahoma; text-align: center; border-top-width: 2px;">
-                                            <asp:Label runat="server" ID="prt_vs_temperature"></asp:Label>
-                                        </div>
-                                        <div style="width: 280px; border-style: solid; border-width: 0.25px; font-size: 14.5px; font-family: Tahoma; padding-left: 10px; padding-right: 10px; border-top-width: 2px;">
-                                            Nhịp tim/ Heart rate  (phút/min)
-                                        </div>
-                                        <div style="width: 80px; border-style: solid; border-width: 0.5px; font-size: 14.5px; font-family: Tahoma; text-align: center; border-right-width: 2px; border-top-width: 2px;">
-                                            <asp:Label runat="server" ID="prt_vs_heart_rate"></asp:Label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="row mb-2" style="margin-bottom: 0rem !important;">
-                                        <div style="width: 280px; border-style: solid; border-width: 0.5px; margin-left: 10px; font-size: 14.5px; font-family: Tahoma; padding-left: 10px; padding-right: 10px; border-left-width: 2px;">
-                                            Cân nặng/ Weight (Kg)
-                                        </div>
-                                        <div style="width: 80px; border-style: solid; border-width: 0.25px; font-size: 14.5px; font-family: Tahoma; text-align: center">
-                                            <asp:Label runat="server" ID="prt_vs_weight"></asp:Label>
-                                        </div>
-                                        <div style="width: 280px; border-style: solid; border-width: 0.25px; font-size: 14.5px; font-family: Tahoma; padding-left: 10px; padding-right: 10px">
-                                            Nhịp thở/ Respiratory Rate (phút/min)
-                                        </div>
-                                        <div style="width: 80px; border-style: solid; border-width: 0.5px; font-size: 14.5px; font-family: Tahoma; text-align: center; border-right-width: 2px;">
-                                            <asp:Label runat="server" ID="prt_vs_respiratory_rate"></asp:Label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="row mb-2" style="margin-bottom: 0rem !important;">
-                                        <div style="width: 280px; border-style: solid; border-width: 0.5px; margin-left: 10px; font-size: 14.5px; font-family: Tahoma; padding-left: 10px; padding-right: 10px; border-left-width: 2px;">
-                                            Chiều cao/Height (cm)
-                                        </div>
-                                        <div style="width: 80px; border-style: solid; border-width: 0.25px; font-size: 14.5px; font-family: Tahoma; text-align: center">
-                                            <asp:Label runat="server" ID="prt_vs_height"></asp:Label>
-                                        </div>
-                                        <div style="width: 280px; border-style: solid; border-width: 0.25px; font-size: 14.5px; font-family: Tahoma; padding-left: 10px; padding-right: 10px">
-                                            Huyết áp/Blood pressure (mmHg)
-                                        </div>
-                                        <div style="width: 80px; border-style: solid; border-width: 0.5px; font-size: 14.5px; font-family: Tahoma; text-align: center; border-bottom-width: 1px; border-right-width: 2px;">
-                                            <asp:Label runat="server" ID="prt_vs_blood_pressure"></asp:Label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="row mb-2" style="margin-bottom: 0px;">
-                                        <div style="width: 280px; border-style: solid; border-width: 0.5px; margin-left: 10px; font-size: 14.5px; font-family: Tahoma; padding-left: 10px; padding-right: 10px; border-bottom-width: 2px; border-left-width: 2px;">
-                                            Chỉ số khối cơ thể/ BMI (Kg/m2)
-                                        </div>
-                                        <div style="width: 80px; border-style: solid; border-width: 0.25px; font-size: 14.5px; font-family: Tahoma; text-align: center; border-bottom-width: 2px;">
-                                            <asp:Label runat="server" ID="prt_vs_BMI"></asp:Label>
-                                        </div>
-                                        <div style="width: 280px; border-style: solid; border-width: 0.25px; font-size: 14.5px; font-family: Tahoma; padding-left: 10px; padding-right: 10px; border-bottom-width: 2px;">
-                                            Độ bão hòa Oxy/ SpO2 (%)
-                                        </div>
-                                        <div style="width: 80px; border-style: solid; border-width: 0.25px; font-size: 14.5px; font-family: Tahoma; text-align: center; border-bottom-width: 2px; border-right-width: 2px;">
-                                            <asp:Label runat="server" ID="prt_vs_spO2"></asp:Label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-2 ">
-                                <div class="col-12 " style="text-align: left; margin: 15px; font-size: 14.5px; white-space: pre-line">
-                                    <asp:Label runat="server" ID="prt_physical_exam"></asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2 ">
-                                <div class="col-12">
-                                    <div class="row">
-                                        <div class="col-8 " style="text-align: justify;">
-                                            <asp:Label Style="font-weight: bold; font-size: 13.5px; font-family: Tahoma">❖	Yêu cầu khám chuyên khoa tâm lý/ </asp:Label>
-                                            <asp:Label Style="font-size: 13.5px; font-family: Tahoma">Psychological consultation required: </asp:Label>
-                                        </div>
-                                        <div class="col-2" style="top: -5px">
-                                            <asp:Label Style="font-size: 22.5px;" ID="prt_psy_consul_required_False" runat="server" />
-                                            <label style="font-size: 14.5px; font-family: Tahoma;">Không</label>
-                                            <label style="font-size: 14.5px; font-family: Tahoma;">/ No</label>
-                                        </div>
-                                        <div class="col-2" style="top: -5px">
-                                            <asp:Label Style="font-size: 22.5px;" ID="prt_psy_consul_required_True" runat="server" />
-                                            <label style="font-size: 14.5px; font-family: Tahoma;">Có/ </label>
-                                            <label style="font-size: 14.5px; font-family: Tahoma;">Yes</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-2 " style="text-align: justify;">
-                                <div class="col-12 " style="text-align: justify;">
-                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">IV. Chỉ định và kết quả xét nghiệm/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Laboratory indications and results: </asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2 ">
-                                <div class="col-12 " style="text-align: left; margin: 15px; font-size: 14.5px; white-space: pre-line">
-                                    <asp:Label runat="server" ID="prt_laboratory_result"></asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2 " style="text-align: justify;">
-                                <div class="col-12 " style="text-align: justify;">
-                                    <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">V. Kết luận/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Conclusion: </asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2 " style="text-align: justify;">
-                                <div class="col-12 " style="text-align: justify;">
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Chẩn đoán ban đầu/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Initial diagnosis: </asp:Label>
-                                    <asp:Label runat="server" ID="prt_initial_diagnosis"></asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2 " style="text-align: justify;">
-                                <div class="col-12 " style="text-align: justify;">
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Chẩn đoán phân biệt/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Differential diagnosis: </asp:Label>
-                                    <asp:Label runat="server" ID="prt_diff_diagnosis"></asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2 " style="text-align: justify;">
-                                <div class="col-12 " style="text-align: justify;">
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Bệnh kèm theo/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Associated conditions: </asp:Label>
-                                    <asp:Label runat="server" ID="prt_associated_conditions"></asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2 " style="text-align: justify;">
-                                <div class="col-12 " style="text-align: justify;">
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Kế hoạch điều trị/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Treatment Plan: </asp:Label>
-                                    <asp:Label runat="server" ID="prt_treatment_plan"></asp:Label>
-                                </div>
-                            </div>
-                            <div class="row mb-2 " style="text-align: justify;">
-                                <div class="col-12 " style="text-align: justify;">
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Kế hoạch xuất viện/ </asp:Label>
-                                    <asp:Label Style="font-size: 14.5px; font-family: Tahoma">Discharge plan: </asp:Label>
-                                    <asp:Label runat="server" ID="prt_discharge_plan"></asp:Label>
-                                </div>
-                            </div>
 
-                            <br />
+                                        <div class="mb-1 d-grid" style="grid-template-columns: 150px 1fr; margin-left: 10px">
+                                            <div></div>
+                                            <asp:Label runat="server" ID="prt_habits_physical_exercise"/>
+                                        </div>
 
-                            <div class="row mb-2">
-                                <div class="col-5">
-                                </div>
-                                <div class="col-7 mb-2">
-                                    <div class="col-12" style="text-align: center;">
-                                        <label style="font-size: 14.5px; font-family: Tahoma;">
-                                            Ngày/Date
-                                            <asp:Label runat="server" ID="lbl_date">
-                                            </asp:Label>
-                                        </label>
-                                        <label style="font-size: 14.5px; font-family: Tahoma;">
-                                            tháng/month
-                                            <asp:Label runat="server" ID="lbl_month">
-                                            </asp:Label>
-                                        </label>
-                                        <label style="font-size: 14.5px; font-family: Tahoma;">
-                                            năm/year
-                                            <asp:Label runat="server" ID="lbl_year">
-                                            </asp:Label>
-                                        </label>
-                                    </div>
-                                    <div class="col-12" style="text-align: center;">
-                                        <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: bold">
-                                            Họ tên bác sĩ và mã số nhân viên/
-                                            <span class="text-primary" style="font-size: 14.5px">Doctor’s name and ID</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+                                        <div class="mb-1" style="margin-left: 10px">
+                                            Khác/ Other, Ghi rõ/ Specify:
+                                        </div>
+
+                                        <div class="mb-1 d-grid" style="grid-template-columns: 150px 1fr; margin-left: 10px">
+                                            Tiền sử dị ứng/ Allergy: <asp:Label runat="server" ID="prt_allergy"/>
+                                        </div>
+
+                                        <div class="mb-1" style="margin-left: 10px">
+                                            <b>- Gia đình</b>/ Family: <asp:Label runat="server" ID="prt_family"/>
+                                        </div>
+
+                                        <div class="mb-1">
+                                            <b>III. Khám bệnh</b>/ Physical Examination:
+                                        </div>
+
+                                        <div class="mb-1" style="margin-left: 20px">
+                                            <b>DẤU HIỆU SINH TỒN</b>/ VITAL SIGNS
+                                        </div>
+
+                                        <table class="table-bordered mb-2" style="table-layout: fixed; width: 100%;">
+                                            <tr>
+                                                <td class="p-2">Nhiệt độ/ Temperature (C degree)</td>
+                                                <td class="p-2 text-right" style="width: 100px;">
+                                                    <asp:Label runat="server" ID="prt_vs_temperature" /></td>
+                                                <td class="p-2">Nhịp tim/ Heart rate (/min)</td>
+                                                <td class="p-2 text-right" style="width: 100px;">
+                                                    <asp:Label runat="server" ID="prt_vs_heart_rate" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2">Cân nặng/ Weight (Kg)</td>
+                                                <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="prt_vs_weight" /></td>
+                                                <td class="p-2">Nhịp thở/ Respiratory Rate (/min)</td>
+                                                <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="prt_vs_respiratory_rate" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2">Chiều cao/Height (cm)</td>
+                                                <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="prt_vs_height" /></td>
+                                                <td class="p-2">Huyết áp/Blood pressure (mmHg)</td>
+                                                <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="prt_vs_blood_pressure" /></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-2">Chỉ số khối cơ thể/ BMI (Kg/m2)</td>
+                                                <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="prt_vs_BMI" /></td>
+                                                <td class="p-2">Độ bão hòa Oxy/ SpO2 (%)</td>
+                                                <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="prt_vs_spO2" /></td>
+                                            </tr>
+                                        </table>
+
+                                        <div class="mb-1" style="margin-left: 20px">
+                                            <asp:Label runat="server" ID="prt_physical_exam"/>
+                                        </div>
+
+                                        <div class="mb-1 d-grid" style="grid-template-columns: auto 1fr; margin-left: 10px">
+                                            <div><b>❖ Yêu cầu khám chuyên khoa tâm lý</b>/ Psychological consultation required:&nbsp;</div>
+                                            <asp:Label runat="server" ID="prt_psy_consul_required"/>
+                                        </div>
+
+                                        <div class="mb-1">
+                                            <b>IV. Chỉ định và kết quả xét nghiệm</b>/ Laboratory indications and results:
+                                        </div>
+
+                                        <div class="mb-1" style="margin-left: 20px">
+                                            <asp:Label runat="server" ID="prt_laboratory_result"/>
+                                        </div>
+
+                                        <div class="mb-1" style="margin-left: 20px">
+                                            <asp:Label runat="server" ID="prt_add_investigation"/>
+                                        </div>
+
+                                        <div class="mb-1">
+                                            <b>V. Kết luận</b>/ Conclusion:
+                                        </div>
+                            
+                                        <div class="mb-1 d-grid" style="grid-template-columns: auto 1fr; margin-left: 20px">
+                                            <div>Chẩn đoán ban đầu/ Initial diagnosis:&nbsp;</div>
+                                            <asp:Label runat="server" ID="prt_initial_diagnosis"/>
+                                        </div>
+
+                                        <div class="mb-1 d-grid" style="grid-template-columns: auto 1fr; margin-left: 20px">
+                                            <div>Chẩn đoán phân biệt/ Differential diagnosis:&nbsp;</div>
+                                            <asp:Label runat="server" ID="prt_diff_diagnosis"/>
+                                        </div>
+
+                                        <div class="mb-1 d-grid" style="grid-template-columns: auto 1fr; margin-left: 20px">
+                                            <div>Bệnh kèm theo/ Associated conditions:&nbsp;</div>
+                                            <asp:Label runat="server" ID="prt_associated_conditions"/>
+                                        </div>
+
+                                        <div class="mb-1 d-grid" style="grid-template-columns: auto 1fr; margin-left: 20px">
+                                            <div>Kế hoạch điều trị/ Treatment Plan:&nbsp;</div>
+                                            <asp:Label runat="server" ID="prt_treatment_plan"/>
+                                        </div>
+
+                                        <div class="mb-1 d-grid" style="grid-template-columns: auto 1fr; margin-left: 20px">
+                                            <div>Kế hoạch xuất viện/ Discharge plan:&nbsp;</div>
+                                            <asp:Label runat="server" ID="prt_discharge_plan"/>
+                                        </div>
+
+                                        <div class="mt-4" style="margin-left: 20px">
+                                            <div>Ngày giờ/ Date & time: <asp:Label runat="server" ID="prt_signature_date"/></div>
+                                            <div>Họ tên bác sĩ và mã số nhân viên/ Doctor's name and ID:</div>
+                                            <div>Chữ ký/ Signature</div>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
@@ -488,12 +304,12 @@
                     </Windows>
                 </telerik:RadWindowManager>
 
-                <div class="cssclsNoPrint1">
-                    <ul class="breadcrumb cssclsNoPrint" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd; border-radius: 0;">
+                <div class="cssclsNoPrint">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                       <li>Inpatient Initial Medical Assessment</li>
                     </ul>
-                    <div id="print_content" style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
+                    <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
                         <asp:HiddenField runat="server" ID="DataObj" />
                         <asp:Panel runat="server" ID="messagePlaceHolder">
                             <div class="card" runat="server" id="amendReasonWraper">
@@ -637,7 +453,7 @@
                                     <div class="card-body collapse show" id="collapseOne">
                                         <div class="form-body">
 
-                                            <div class="row cssclsNoPrint">
+                                            <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
                                                         <span class="mr-2">You are viewing an old version of this document</span>
@@ -1063,7 +879,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="row mb-2 cssclsNoPrint">
+                                        <div class="row mb-2">
                                             <div class="col-md-12">
                                                 <div class="form-actions">
                                                     <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
@@ -1074,7 +890,7 @@
 
                                                     <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                    <asp:LinkButton runat="server" OnClientClick="printDiv(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                    <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                     <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                                 </div>
@@ -1148,6 +964,24 @@
             document.body.innerHTML = originalContents;
         }
 
+        function btnPrint_Click() {
+            let printContent = document.querySelector("#printContent");
+            printContent.setAttribute("style", "display: block");
+
+            let total = Math.ceil(printContent.offsetHeight / 1096);
+
+            for (let i = 1; i <= total; i++) {
+                let div = document.createElement("div");
+                div.setAttribute("class", "watermark page");
+                div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px");
+                div.setAttribute("data-page", "Page " + i + " of " + total);
+                document.getElementById("print_content").append(div);
+            }
+
+            setTimeout(() => { printContent.setAttribute("style", "display: none"); }, 100);
+
+            window.print();
+        }
     </script>
 
 </body>

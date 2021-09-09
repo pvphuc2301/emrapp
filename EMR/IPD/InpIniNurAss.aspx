@@ -22,23 +22,16 @@
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
+    <link href="../styles/print.css" rel="stylesheet" />
+
     <style>
         canvas {
             border: 2px solid #000;
         }
 
-        @media print {
-                 #scrollableDiv{
-                  width: 100%;
-                  height: 100%;
-                 }
-                   .visible-print{
-                     display: block;
-                     width: auto;
-                     height: auto;
-                     overflow: visible;  
-                    }
-               }
+        .watermark {
+            height: 1019px;
+        }
     </style>
 </head>
 <body>
@@ -46,6 +39,3729 @@
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
         <asp:UpdatePanel ID="UpPrintForm" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
+
+                <div class="cssclsNoScreen" id="printContent">
+                <table class="report-container">
+                    <thead class="report-header">
+                        <tr>
+                            <th class="report-header-cell">
+                                <div class="header-info" style="height: 75px;">
+                                    <img width="200" src="../images/AIH_PI_FULL.png" />
+                                    <div class="header-info-title">
+                                        <h4 style="font-size: 16px">PHIẾU ĐÁNH GIÁ BAN ĐẦU NGƯỜI BỆNH NỘI TRÚ CỦA ĐIỀU DƯỠNG</h4>
+                                        <h5>INPATIENT INITIAL NURSING ASSESSMENT</h5>
+                                    </div>
+                                    <div></div>
+                                </div>
+                                <div style="height: 25px">
+                                    <span style="width: 190px; border-bottom-style: solid; border-bottom-color: #e20e5a; border-bottom-width: 5px; display: inline-block; font-size: 26.6667px;"></span>
+                                    <span style="display: inline-block; border-bottom-style: solid; border-bottom-color: #007297; border-bottom-width: 5px; width: calc(100% - 191px); margin-left: -5px;"></span>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="report-content">
+                        <tr>
+                            <td class="report-content-cell">
+                                <div style="position: relative" class="main" runat="server" id="print_content">
+                                    <img style="height: 1px" src="../images/logo-opacity.png" />
+                                    
+                                    <div class="d-grid mb-1" style="grid-template-columns: 250px 1fr">
+                                        <div class="p-2 mr-2" style="border: 1px dashed #000">
+                                            Họ tên: <asp:Label runat="server" ID="prt_fullname"/><br />
+                                            Ngày sinh: <asp:Label runat="server" ID="prt_dob"/><br />
+                                            Giới tính: <asp:Label runat="server" ID="prt_gender"/><br />
+                                            PID: <asp:Label runat="server" ID="prt_pid"/>
+                                        </div>
+                                        <div>
+                                            <b>Hồ sơ đánh giá phải được hoàn tất trong vòng 24 giờ sau khi nhập viện, đánh dấu vào những ô thích hợp</b><br />
+                                            <span class="text-primary">This form have to be completed within 24 hours of admission, tick on the appropriate boxes</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center mb-2">
+                                        <b>A. THÔNG TIN TỔNG QUÁT VỀ NGƯỜI BỆNH/ <span class="text-primary">GENERAL PATIENT INFORMATION</span></b>
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <div class="d-grid mb-2" style="grid-template-columns: 1fr 1fr">
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                <div>
+                                                    Ngày nhập viện <br />    
+                                                    <span class="text-primary">Date of Admission&nbsp;</span>
+                                                </div>
+                                                 <asp:Label runat="server" ID="prt_date_of_admission"/>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                <div>
+                                                    Giờ vào viện <br />    
+                                                    <span class="text-primary">Time of Admission&nbsp;</span>
+                                                </div>
+                                                 <asp:Label runat="server" ID="prt_time_of_admission"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 1fr 1fr">
+                                            <div class="d-grid" style="grid-template-columns: 200px 1fr">
+                                                <div>
+                                                    Quốc gia cư trú: <br />    
+                                                    <span class="text-primary">Country of residence</span>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" ID="prt_residence_code_vnm" Text="❏"/>
+                                                    <div>
+                                                        Việt Nam <br />
+                                                        <span class="text-primary">Vietnam</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                <asp:Label runat="server" ID="prt_residence_code_oth" Text="❏"/>
+                                                <div>
+                                                    Khác: &nbsp;<br />
+                                                    <span class="text-primary">Other</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_residence_other" />
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 1fr 1fr">
+                                            <div class="d-grid" style="grid-template-columns: 200px 1fr">
+                                                <div>
+                                                    Ngôn ngữ: <br />    
+                                                    <span class="text-primary">Language</span>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" ID="prt_language_code_vi" Text="❏"/>
+                                                    <div>
+                                                        Tiếng việt <br />
+                                                        <span class="text-primary">Vietnamese</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 150px 1fr">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" ID="prt_language_code_en" Text="❏"/>
+                                                    <div>
+                                                        Tiếng anh<br />
+                                                        <span class="text-primary">English</span>
+                                                    </div>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                    <asp:Label runat="server" ID="prt_language_code_oth" Text="❏"/>
+                                                    <div>
+                                                        Tiếng khác:&nbsp;<br />
+                                                        <span class="text-primary">Other</span>
+                                                    </div>
+                                                    <asp:Label runat="server" ID="prt_language_other" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 1fr 1fr">
+                                            <div class="d-grid" style="grid-template-columns: 200px 1fr">
+                                                <div>
+                                                    Cần phiên dịch: <br />    
+                                                    <span class="text-primary">Requires interpreter</span>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" ID="prt_req_interpreter_true" Text="❏"/>
+                                                    <div>
+                                                        Có <br />
+                                                        <span class="text-primary">Yes</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" ID="prt_req_interpreter_false" Text="❏"/>
+                                                <div>
+                                                    Không<br />
+                                                    <span class="text-primary">No</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 1fr 1fr">
+                                            <div class="d-grid" style="grid-template-columns: 200px 1fr">
+                                                <div>
+                                                    Tôn giáo: <br />    
+                                                    <span class="text-primary">Religion</span>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" ID="prt_religion_code_bh" Text="❏"/>
+                                                    <div>
+                                                        Phật giáo <br />
+                                                        <span class="text-primary">Buddhism</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 150px 1fr">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" ID="prt_religion_code_ch" Text="❏"/>
+                                                    <div>
+                                                        Thiên chúa giáo<br />
+                                                        <span class="text-primary">Christian</span>
+                                                    </div>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                    <asp:Label runat="server" ID="prt_religion_code_oth" Text="❏"/>
+                                                    <div>
+                                                        Khác:&nbsp;<br />
+                                                        <span class="text-primary">Other</span>
+                                                    </div>
+                                                    <asp:Label runat="server" ID="prt_religion_other" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 1fr 1fr">
+                                            <div class="d-grid" style="grid-template-columns: 200px 1fr">
+                                                <div>
+                                                    Nhu cầu tín ngưỡng: <br />    
+                                                    <span class="text-primary">Spiritual counselling</span>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" ID="prt_spiritual_couns_true" Text="❏"/>
+                                                    <div>
+                                                        Có <br />
+                                                        <span class="text-primary">Yes</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" ID="prt_spiritual_couns_false" Text="❏"/>
+                                                <div>
+                                                    Không<br />
+                                                    <span class="text-primary">No</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: auto 1fr">
+                                            <div>
+                                                Nghề nghiệp:&nbsp;<br />
+                                                <span class="text-primary">Occupation</span>
+                                            </div>
+                                            <asp:Label runat="server" ID="prt_occupation" />
+                                        </div>
+                                        
+                                        <div class="d-grid mb-2" style="grid-template-columns: 120px 100px 1fr 235px">
+                                            <div>
+                                                Hoàn cảnh sống: <br />    
+                                                <span class="text-primary">Living status</span>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" ID="prt_living_status_code_aln" Text="❏"/>
+                                                <div>
+                                                    Một mình <br />
+                                                    <span class="text-primary">Alone</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" ID="prt_living_status_code_wth" Text="❏"/>
+                                                <div>
+                                                    Với vợ/chồng/con/anh,chị,em ruột<br />
+                                                    <span class="text-primary">With spouse/children/sibling</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                <asp:Label runat="server" ID="prt_living_status_code_oth" Text="❏"/>
+                                                <div>
+                                                    Khác:&nbsp;<br />
+                                                    <span class="text-primary">Other</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_living_status_note" />
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 220px 1fr">
+                                            <div>
+                                                Mối quan tâm khi nằm viện: <br />    
+                                                <span class="text-primary">Concerns related to hospitalization</span>
+                                            </div>
+
+                                            <div>
+                                                <div class="d-grid mb-2" style="grid-template-columns: 90px 1fr 235px">
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" ID="prt_hospital_concern_code_non" Text="❏"/>
+                                                        <div>
+                                                            Không<br />
+                                                            <span class="text-primary">None</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" ID="prt_hospital_concern_code_rel" Text="❏"/>
+                                                        <div>
+                                                            Gia đình/các mối quan hệ<br />
+                                                            <span class="text-primary">Family/ relationship issues</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" ID="prt_hospital_concern_code_fin" Text="❏"/>
+                                                        <div>
+                                                            Tài chính<br />
+                                                            <span class="text-primary">Fanancial</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid mb-2" style="grid-template-columns: 1fr 235px">
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" ID="prt_hospital_concern_code_wor" Text="❏"/>
+                                                        <div>
+                                                            Lo âu<br />
+                                                            <span class="text-primary">Worriedness</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                        <asp:Label runat="server" ID="prt_hospital_concern_code_oth" Text="❏"/>
+                                                        <div>
+                                                            Khác:&nbsp;<br />
+                                                            <span class="text-primary">Other</span>
+                                                        </div>
+                                                        <asp:Label runat="server" ID="prt_hospital_concern_other" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 2fr 1fr">
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                <div>
+                                                    Tên người liên lạc:&nbsp;<br />
+                                                    <span class="text-primary">Contact person's Name</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_contact_name" />
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                <div>
+                                                    Quan hệ:&nbsp;<br />
+                                                    <span class="text-primary">Relationship:</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_relationship_type_rcd" />
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 2fr 1fr">
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                <div>
+                                                    Người đi cùng:&nbsp;<br />
+                                                    <span class="text-primary">Accompanied by:</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_accompanied" />
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                <div>
+                                                    Quan hệ:&nbsp;<br />
+                                                    <span class="text-primary">Relationship:</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_relationship" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center mb-2">
+                                        <b>B. BỆNH SỬ/ <span class="text-primary">MEDICAL HISTORY</span></b>
+                                    </div>
+
+                                    <div class="mb-2">
+                                        <div class="d-grid mb-2" style="grid-template-columns: 150px 150px 150px 150px 1fr">
+                                            <div>
+                                                Bệnh nhập viện từ <br />    
+                                                <span class="text-primary">Patient admitted from</span>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏"  ID="prt_admit_from_code_opd"/>
+                                                <div>
+                                                    Khoa khám bệnh <br />    
+                                                    <span class="text-primary">OPD</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏"  ID="prt_admit_from_code_er"/>
+                                                <div>
+                                                    Khoa cấp cứu<br />    
+                                                    <span class="text-primary">Emergency</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏"  ID="prt_admit_from_code_vd"/>
+                                                <div>
+                                                    Bác sĩ hợp tác<br />    
+                                                    <span class="text-primary">Visiting doctor</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                <asp:Label runat="server" Text="❏"  ID="prt_admit_from_code_oth"/>
+                                                <div>
+                                                    Khác<br />    
+                                                    <span class="text-primary">Referral&nbsp;</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_admit_from_other"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 150px 150px 150px 1fr">
+                                            <div>
+                                                Tình trạng khi đến: <br />    
+                                                <span class="text-primary">Arrived by</span>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏"  ID="prt_arrived_w"/>
+                                                <div>
+                                                    Tự đi được<br />    
+                                                    <span class="text-primary">Walking</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏"  ID="prt_arrived_s"/>
+                                                <div>
+                                                    Bằng băng ca<br />    
+                                                    <span class="text-primary">Stretcher</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_arrived_wc"/>
+                                                <div>
+                                                    Bằng xe lăn<br />    
+                                                    <span class="text-primary">Wheelchair</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-grid mb-2" style="grid-template-columns: auto 1fr">
+                                            <div>
+                                                Lý do nhập viện:<br />
+                                                <span class="text-primary">Reason for admission&nbsp;</span>
+                                            </div>
+                                            <asp:Label runat="server" ID="prt_admission_reason"/>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 1fr 1fr">
+                                            <div>
+                                                Lần nhập viện trước tại bệnh viện Quốc tế Mỹ:<br />    
+                                                <span class="text-primary">Previous admission at AIH</span>
+                                            </div>
+                                                 
+                                            <div class="d-grid" style="grid-template-columns: 125px 1fr">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_previous_admission_false"/>                                                
+                                                    <div>
+                                                        Không<br />
+                                                        <span class="text-primary">No</span>
+                                                    </div>
+                                                </div>
+                                            
+                                                <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_previous_admission_true"/>
+                                                    <div>
+                                                        Có, <br />
+                                                        <span class="text-primary">Yes</span>
+                                                    </div>
+                                                    <asp:Label runat="server" ID="prt_previous_admission"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 1fr 1fr">
+                                            <div class="d-grid" style="grid-template-columns: 1fr 145px">
+                                                <div>
+                                                    Tiền sử bệnh:<br />    
+                                                    <span class="text-primary">Past medical history</span>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_past_med_history_false"/>
+                                                    <div>
+                                                        Không <br />
+                                                        <span class="text-primary">No</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                 
+                                            <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_past_med_history_true"/>
+                                                <div>
+                                                    Có<br />
+                                                    <span class="text-primary">Yes</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_past_med_history_note"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 1fr 1fr">
+                                            <div class="d-grid" style="grid-template-columns: 1fr 145px">
+                                                <div>
+                                                    Tiền sử phẫu thuật:<br />    
+                                                    <span class="text-primary">Past surgical history</span>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_past_sur_history_false"/>
+                                                    <div>
+                                                        Không <br />
+                                                        <span class="text-primary">No</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                 
+                                            <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_past_sur_history_true"/>
+                                                <div>
+                                                    Có<br />
+                                                    <span class="text-primary">Yes</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_past_sur_history_note"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 1fr 1fr">
+                                            <div class="d-grid" style="grid-template-columns: 1fr 145px">
+                                                <div>
+                                                    Lạm dụng chất kích thích:<br />    
+                                                    <span class="text-primary">Substance abuse</span>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_substance_abuse_s"/>
+                                                    <div>
+                                                        Hút thuốc <br />
+                                                        <span class="text-primary">Smoking</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="d-grid" style="grid-template-columns: 125px 1fr">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_substance_abuse_a"/>
+                                                    <div>
+                                                        Rượu bia<br />
+                                                        <span class="text-primary">Alcohol</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_substance_abuse_oth"/>
+                                                    <div>
+                                                        Khác:&nbsp;<br />
+                                                        <span class="text-primary">Other</span>
+                                                    </div>
+                                                    <asp:Label runat="server" ID="prt_substance_abuse_other"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                            
+                                        <div class="d-grid mb-2" style="grid-template-columns: 1fr 1fr">
+                                            <div class="d-grid" style="grid-template-columns: 1fr 145px">
+                                                <div>
+                                                    Hồ sơ bệnh án kèm theo:<br />    
+                                                    <span class="text-primary">Previous test results/documents</span>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_previous_document_false"/>
+                                                    <div>
+                                                        Không <br />
+                                                        <span class="text-primary">No</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                 
+                                            <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_previous_document_true"/>
+                                                <div>
+                                                    Có, Ghi rõ: <br />
+                                                    <span class="text-primary">Yes, specify</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_previous_document_note"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 1fr 1fr">
+                                            <div class="d-grid" style="grid-template-columns: 1fr 145px">
+                                                <div>
+                                                    Thuốc hiện đang dùng tại nhà:<br />    
+                                                    <span class="text-primary">Current home medication</span>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_cur_home_medication_false"/>
+                                                    <div>
+                                                        Không <br />
+                                                        <span class="text-primary">No</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                 
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_cur_home_medication_true"/>
+                                                <div>
+                                                    Có (Tham khảo đơn thuốc đính kèm)<br />
+                                                    <span class="text-primary">Yes, if yes please refer to the prescription attached</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 1fr 1fr">
+                                            <div class="d-grid" style="grid-template-columns: 1fr 145px">
+                                                <div>
+                                                    Dị ứng/ Phản ứng:<br />    
+                                                    <span class="text-primary">Allergy/ Reaction</span>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_allergy_false"/>
+                                                    <div>
+                                                        Không <br />
+                                                        <span class="text-primary">No</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                 
+                                            <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_allergy_true"/>
+                                                <div>
+                                                    Có, Ghi rõ: <br />
+                                                    <span class="text-primary">Yes, specify</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_allergy_note"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 230px 1fr">
+                                            <div>
+                                                Người bệnh có nguy cơ cao:<br />    
+                                                <span class="text-primary">High-risk patient</span>
+                                            </div>
+                                            <div>
+                                                <div class="d-grid" style="grid-template-columns: 1fr 1fr">
+                                                    <div>
+                                                        <div class="d-grid mb-1" style="grid-template-columns: 15px 1fr">
+                                                            <asp:Label runat="server" Text="❏" ID="prt_high_risk_patient_ch"/>
+                                                            <div>
+                                                                Trẻ em (< hoặc 8 tuổi) <br />
+                                                                <span class="text-primary">Children (< 8 years old)</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="d-grid mb-1" style="grid-template-columns: 15px 1fr">
+                                                            <asp:Label runat="server" Text="❏" ID="prt_high_risk_patient_eld"/>
+                                                            <div>
+                                                                Người cao tuổi (80 tuổi hoặc hơn) <br />
+                                                                <span class="text-primary">Elderly people (80 years old or above)</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="d-grid mb-1" style="grid-template-columns: 15px 1fr">
+                                                            <asp:Label runat="server" Text="❏" ID="prt_high_risk_patient_ccp"/>
+                                                            <div>
+                                                                Những người bệnh lú lẫn/hôn mê <br />
+                                                                <span class="text-primary">Confused or comatose patients</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div>
+                                                        <div class="d-grid mb-1" style="grid-template-columns: 15px 1fr">
+                                                            <asp:Label runat="server" Text="❏" ID="prt_high_risk_patient_sdp"/>
+                                                            <div>
+                                                               Những người bệnh tàn tật nặng <br />
+                                                                <span class="text-primary">Severely disabled patients</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="d-grid mb-1" style="grid-template-columns: 15px 1fr">
+                                                            <asp:Label runat="server" Text="❏" ID="prt_high_risk_patient_hrf"/>
+                                                            <div>
+                                                                Những người bệnh có nguy cơ té ngã cao<br />
+                                                                <span class="text-primary">Patients with high risk of falls</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="d-grid mb-1" style="grid-template-columns: 15px 1fr">
+                                                            <asp:Label runat="server" Text="❏" ID="prt_high_risk_patient_res"/>
+                                                            <div>
+                                                                Người bệnh bị kìm giữ<br />
+                                                                <span class="text-primary">Restrained patients</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_high_risk_patient_hrt"/>
+                                                    <div>
+                                                        Người bệnh đang điều trị có nguy cơ cao (như chạy thận nhân tạo, hóa trị liệu...)<br />
+                                                        <span class="text-primary">Patients that receiving high-risk treatments (such as dialysis, chemotherapy...)</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="text-center mb-2">
+                                        <b>C. ĐÁNH GIÁ CỦA ĐIỀU DƯỠNG/ <span class="text-primary">NURSING ASSESSMENT</span></b>
+                                    </div>
+
+                                    <div class="mb-1"><b>1. Dấu hiệu sinh tồn và các chỉ số đo lường/ </b><span class="text-primary">Vital signs and standard measurements</span></div>
+
+                                    <table style="width: calc(100% - 20px); margin-left: 20px" class="table-bordered mb-2">
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        Nhiệt độ <br />
+                                                        <span class="text-primary">temperature</span>
+                                                    </div>
+                                                    <div>
+                                                        <asp:Label runat="server" ID="prt_vs_temperature"/> °C
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        Mạch: <br />
+                                                        <span class="text-primary">Pulse</span>
+                                                    </div>
+                                                    <div class="d-grid" style="grid-template-columns: 1fr auto">
+                                                        <asp:Label runat="server" ID="prt_vs_heart_rate"/> 
+                                                        <div>
+                                                            /Phút <br />
+                                                            <span class="text-primary">Min</span>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        HA: <br />
+                                                        <span class="text-primary">BP</span>
+                                                    </div>
+                                                    <div>
+                                                        <asp:Label runat="server" ID="prt_vs_blood_pressure"/> mmHg
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        Nhịp thở: <br />
+                                                        <span class="text-primary">Respiration rate</span>
+                                                    </div>
+                                                    <div class="d-grid" style="grid-template-columns: 1fr auto">
+                                                        <asp:Label runat="server" ID="prt_vs_respiratory_rate"/> 
+                                                        <div>
+                                                            /Phút <br />
+                                                            <span class="text-primary">min</span>
+                                                        </div> 
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        Trọng lượng: <br />
+                                                        <span class="text-primary">Weight</span>
+                                                    </div>
+                                                    <div>
+                                                        <asp:Label runat="server" ID="prt_vs_weight"/> kg
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td colspan="2">
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        Chiều cao: <br />
+                                                        <span class="text-primary">Height</span>
+                                                    </div>
+                                                    <div>
+                                                        <asp:Label runat="server" ID="prt_vs_height"/> cm
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-flex justify-content-between">
+                                                    <div>
+                                                        Chỉ số BMI = <br />
+                                                        <span class="text-primary">BMI</span>
+                                                    </div>
+                                                    <div>
+                                                        <asp:Label runat="server" ID="prt_vs_BMI"/> kg/m <sup>2</sup>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <div class="mb-2"><b>2. Hệ hô hấp/ </b><span class="text-primary">Respiratory system</span></div>
+                                    
+                                    <div class="d-grid mb-2" style="grid-template-columns: 1fr 1fr 1fr 1fr 1fr; margin-left: 20px">
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_respiratory_system_n"/>
+                                            <div>
+                                                Không có vấn đề<br />
+                                                <span class="text-primary">Normal</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_respiratory_system_d"/>
+                                            <div>
+                                                Khó thở<br />
+                                                <span class="text-primary">Dyspnea</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_respiratory_system_o"/>
+                                            <div>
+                                                Khó thở nằm<br />
+                                                <span class="text-primary">Orthopnea</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_respiratory_system_w"/>
+                                            <div>
+                                                Khó thở khò khè<br />
+                                                <span class="text-primary">Wheeze</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_respiratory_system_c"/>
+                                            <div>
+                                                Da xanh tái<br />
+                                                <span class="text-primary">Cyanosis</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid" style="grid-template-columns: 80px 70px 60px 150px 1fr; margin-left: 20px">
+                                        <div>Ho/ <span class="text-primary">Cough:</span></div>
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_cough_false"/>
+                                            <div>
+                                                Không<br />
+                                                <span class="text-primary">No</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_cough_true"/>
+                                            <div>
+                                                Có<br />
+                                                <span class="text-primary">Yes</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_pro_cough_false"/>
+                                            <div>
+                                                Không có đờm<br />
+                                                <span class="text-primary">Unproductive cough</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_pro_cough_true"/>
+                                            <div>
+                                                Có đờm (ghi rõ màu/ tính chất/ số lượng): &nbsp;<br />
+                                                <span class="text-primary">Productive (specify colour/nature/amount)</span>
+                                            </div>
+                                            <asp:Label runat="server" ID="prt_pro_cough_note"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2"><b>3. Hệ tim mạch/ </b><span class="text-primary">Cardiovascular system</span></div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 150px 120px 1fr; margin-left: 20px">
+                                        <div><b>Mạch/ <span class="text-primary">Pulse:</span></b></div>
+
+                                        <div>
+                                            <asp:Label runat="server" Text="❏" ID="prt_pulse_code_r"/>
+                                            Đều/ <span class="text-primary">Regular</span>
+                                        </div>
+
+                                        <div>
+                                            <asp:Label runat="server" Text="❏" ID="prt_pulse_code_i"/>
+                                            Không đều/ <span class="text-primary">Irregular</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 150px 120px 1fr 1fr 1fr; margin-left: 20px">
+                                        <div><b>Tình trạng hiện tại: <span class="text-primary">Presence with:</span></b></div>
+                                            
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_presence_cp"/>
+                                            <div>
+                                                Đau ngực<br />
+                                                <span class="text-primary">Chest pain</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_presence_di"/>
+                                            <div>
+                                                Chóng mặt<br />
+                                                <span class="text-primary">Dizziness</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_presence_ca"/>
+                                            <div>
+                                                Đau bắp chân<br />
+                                                <span class="text-primary">Calf pain</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_presence_pe"/>
+                                            <div>
+                                                Phù ngoại biên<br />
+                                                <span class="text-primary">Peripheral edema</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 150px 120px 1fr 1fr 1fr; margin-left: 20px">
+                                        <div>
+                                            <b>Tứ chi:</b><br />
+                                            <span class="text-primary">Extremities</span>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_extremities_wa"/>
+                                            <div>
+                                                Ấm<br />
+                                                <span class="text-primary">Warm</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_extremities_co"/>
+                                            <div>
+                                                Lạnh<br />
+                                                <span class="text-primary">Cold</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_extremities_cl"/>
+                                            <div>
+                                                Ẩm ướt<br />
+                                                <span class="text-primary">Clammy</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_extremities_cy"/>
+                                            <div>
+                                                Xanh tái<br />
+                                                <span class="text-primary">Cyanosed</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2"><b>4. Hệ thần kinh cảm giác/ </b><span class="text-primary">Neurosensory system</span></div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 150px 1fr 1fr 1fr 1fr 210px; margin-left: 20px">
+                                        <div>
+                                            <b>Định hướng được:</b><br />
+                                            <span class="text-primary">Oriented</span>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_oriented_day"/>
+                                            <div>
+                                                Ngày<br />
+                                                <span class="text-primary">Day</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_oriented_time"/>
+                                            <div>
+                                                Thời gian<br />
+                                                <span class="text-primary">Time</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_oriented_per"/>
+                                            <div>
+                                                Người<br />
+                                                <span class="text-primary">Person</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_oriented_pla"/>
+                                            <div>
+                                                Nơi<br />
+                                                <span class="text-primary">Place</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_oriented_na"/>
+                                            <div>
+                                                Không định hướng được<br />
+                                                <span class="text-primary">Not at all</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 150px 1fr; margin-left: 20px">
+                                        <div>
+                                            <b>Tình trạng tinh thần:</b><br />
+                                            <span class="text-primary">Mental status</span>
+                                        </div>
+                                        <div>
+                                            <div class="d-grid" style="grid-template-columns: 1fr 1fr 135px 105px 105px">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_mental_status_al"/>
+                                                    <div>
+                                                        Tỉnh táo<br />
+                                                        <span class="text-primary">Alert</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_mental_status_cf"/>
+                                                    <div>
+                                                        Nhầm lẫn<br />
+                                                        <span class="text-primary">Confused</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_mental_status_ag"/>
+                                                    <div>
+                                                        Kích động<br />
+                                                        <span class="text-primary">Agitated</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_mental_status_"/>
+                                                    <div>
+                                                        Lo âu<br />
+                                                        <span class="text-primary">Anxious</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_mental_status_fr"/>
+                                                    <div>
+                                                        Quấy<br />
+                                                        <span class="text-primary">Fretful</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="d-grid" style="grid-template-columns: 1fr 1fr 135px 210px">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_mental_status_le"/>
+                                                    <div>
+                                                        Lơ mơ<br />
+                                                        <span class="text-primary">Lethargic</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_mental_status_de"/>
+                                                    <div>
+                                                        Trầm cảm<br />
+                                                        <span class="text-primary">Depressed</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_mental_status_oth"/>
+                                                    <div>
+                                                        Khác<br />
+                                                        <span class="text-primary">Other</span>
+                                                    </div>
+                                                    <asp:Label runat="server" ID="prt_mental_status_other"/>
+                                                </div>
+
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 150px 1fr; margin-left: 20px">
+                                        <div>
+                                            <b>Thính giác:</b><br />
+                                            <span class="text-primary">Hearing</span>
+                                        </div>
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr 345px">
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_hearing_code_n"/>
+                                                <div>
+                                                    Bình thường<br />
+                                                    <span class="text-primary">Khiếm thính</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_hearing_code_hi"/>
+                                                <div>
+                                                    Khiếm thính<br />
+                                                    <span class="text-primary">Hearing impaired</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_hearing_code_ha"/>
+                                                <div>
+                                                    Dùng máy trợ thính (Trái/Phải)<br />
+                                                    <span class="text-primary">Uses hearing aid (Left/Right)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 150px 1fr; margin-left: 20px">
+                                        <div>
+                                            <b>Thị giác:</b><br />
+                                            <span class="text-primary">Vision</span>
+                                        </div>
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr 160px 220px">
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_vision_code_nm"/>
+                                                <div>
+                                                    Bình thường<br />
+                                                    <span class="text-primary">Khiếm thính</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_vision_code_gl"/>
+                                                <div>
+                                                    Đeo kính<br />
+                                                    <span class="text-primary">Glasses</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_vision_code_cl"/>
+                                                <div>
+                                                    Kính sát tròng<br />
+                                                    <span class="text-primary">Contact lenses</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_vision_code_oth"/>
+                                                <div>
+                                                    Khác<br />
+                                                    <span class="text-primary">Other</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_vision_other"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid" style="grid-template-columns: 150px 1fr; margin-left: 20px">
+                                        <div>
+                                            <b>Khả năng ngôn ngữ:</b><br />
+                                            <span class="text-primary">Speech</span>
+                                        </div>
+                                        <div>
+                                            <div class="d-grid mb-2" style="grid-template-columns: 1fr 1fr 160px 220px">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_speech_code_nm"/>
+                                                    <div>
+                                                        Bình thường<br />
+                                                        <span class="text-primary">Normal</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_speech_code_sl"/>
+                                                    <div>
+                                                        Nói lắp<br />
+                                                        <span class="text-primary">Slurred</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_speech_code_ap"/>
+                                                    <div>
+                                                        Chứng mất ngôn ngữ<br />
+                                                        <span class="text-primary">Aphasic</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_speech_code_nc"/>
+                                                    <div>
+                                                        Không giao tiếp (Bất tỉnh or mê)<br />
+                                                        <span class="text-primary">Non-communicative (Unconscious)</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid mb-2" style="grid-template-columns: 1fr 1fr 160px 220px">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_speech_code_si"/>
+                                                    <div>
+                                                        Khiếm ngôn<br />
+                                                        <span class="text-primary">Speech impaired</span>
+                                                    </div>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_speech_code_nv"/>
+                                                    <div>
+                                                        Chưa biết nói<br />
+                                                        <span class="text-primary">Non-verbal</span>
+                                                    </div>
+                                                </div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2"><b>5. Hệ tiêu hóa/ </b><span class="text-primary">Gastrointestinal system</span></div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 150px 1fr; margin-left: 20px">
+                                        <div>
+                                            <b>Chế độ ăn uống:</b><br />
+                                            <span class="text-primary">Diet</span>
+                                        </div>
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr 160px 220px">
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_diet_code_nm"/>
+                                                <div>
+                                                    Bình thường<br />
+                                                    <span class="text-primary">Normal</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_diet_code_bf"/>
+                                                <div>
+                                                    Bú bình<br />
+                                                    <span class="text-primary">bottle feeding</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_diet_code_tbf"/>
+                                                <div>
+                                                    Bú mẹ hoàn toàn<br />
+                                                    <span class="text-primary">Total breast feeding</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_diet_code_oth"/>
+                                                <div>
+                                                    Khác<br />
+                                                    <span class="text-primary">Other</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_diet_other"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 150px 1fr; margin-left: 20px">
+                                        <div>
+                                            <b>Tình trạng hiện có:</b><br />
+                                            <span class="text-primary">Presence of</span>
+                                        </div>
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr 380px">
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_diet_pre_code_v"/>
+                                                <div>
+                                                    Nôn<br />
+                                                    <span class="text-primary">Vomiting</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_diet_pre_code_n"/>
+                                                <div>
+                                                    Buồn nôn<br />
+                                                    <span class="text-primary">Nausea</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_diet_pre_code_s"/>
+                                                <div>
+                                                    Nuốt khó (chuyển đến chuyên gia trị liệu)<br />
+                                                    <span class="text-primary">Swallowing difficulties (refer to therapist)</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 150px 1fr; margin-left: 20px">
+                                        <div class="d-grid" style="grid-template-columns: 85px 1fr">
+                                            <div>
+                                                <b>Ống thông:</b><br />
+                                                <span class="text-primary">NG tube</span>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_ng_tube_false"/>
+                                                <div>
+                                                    Không<br />
+                                                    <span class="text-primary">No</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr 380px">
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_gastrostomy_true"/>
+                                                <div>
+                                                    Mở dạ dày<br />
+                                                    <span class="text-primary">Gastrostomy</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_size_true"/>
+                                                <div>
+                                                    Kích cỡ: <br />
+                                                    <span class="text-primary">Size</span>
+                                                </div>
+                                                <div>
+                                                    <asp:Label runat="server" ID="prt_size_note"/> Fr
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                <asp:Label runat="server" ID="Label11"/>
+                                                <div>
+                                                    Ngày thay ống gần nhất: <br />
+                                                    <span class="text-primary">Date last changed</span>
+                                                </div>
+                                                <div>
+                                                    <asp:Label runat="server" ID="prt_last_date_changed"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: auto 1fr; margin-left: 20px">
+                                        <div>
+                                            Thức ăn không ưa thích: &nbsp;<br />
+                                            <span class="text-primary">Food dislikes</span>
+                                        </div>
+                                        <asp:Label runat="server" ID="prt_food_dislike"/>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 150px 1fr; margin-left: 20px">
+                                        <div>
+                                            <b>Bài tiết:</b><br />
+                                            <span class="text-primary">Bowel Elimination</span>
+                                        </div>
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr 160px 220px">
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_bowel_elimination_code_two"/>
+                                                <div>
+                                                    2 lần/ngày<br />
+                                                    <span class="text-primary">2 times/day</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_bowel_elimination_code_one"/>
+                                                <div>
+                                                    1 lần/ngày<br />
+                                                    <span class="text-primary">1 time/day</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_bowel_elimination_code_eod"/>
+                                                <div>
+                                                    Cách ngày<br />
+                                                    <span class="text-primary">Every other day</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_bowel_elimination_code_oth"/>
+                                                <div>
+                                                    Khác<br />
+                                                    <span class="text-primary">Other</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 150px 1fr; margin-left: 20px">
+                                        <div>
+                                            <b>Tính chất phân:</b><br />
+                                            <span class="text-primary">Consistency of stool</span>
+                                        </div>
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr 160px 220px">
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_stool_consistency_code_h"/>
+                                                <div>
+                                                    Cứng<br />
+                                                    <span class="text-primary">Hard</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_stool_consistency_code_f"/>
+                                                <div>
+                                                    Có hình dạng<br />
+                                                    <span class="text-primary">Formed</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_stool_consistency_code_l"/>
+                                                <div>
+                                                    Lỏng<br />
+                                                    <span class="text-primary">Loose</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_stool_consistency_code_w"/>
+                                                <div>
+                                                    Phân nước<br />
+                                                    <span class="text-primary">Watery</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 150px 1fr; margin-left: 20px">
+                                        <div>
+                                            <b>Tình trạng hiện có:</b><br />
+                                            <span class="text-primary">Presence with</span>
+                                        </div>
+                                        <div class="d-grid" style="grid-template-columns: 1fr 260px 220px">
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_gas_presence_code_n"/>
+                                                <div>
+                                                    Bình thường<br />
+                                                    <span class="text-primary">Normal</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_gas_presence_code_i"/>
+                                                <div>
+                                                    Không kiểm soát<br />
+                                                    <span class="text-primary">Incontinence</span>
+                                                </div>
+                                            </div>
+                                                
+                                            <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_gas_presence_code_s"/>
+                                                <div>
+                                                    Hậu môn nhân tạo: <br />
+                                                    <span class="text-primary">Stoma</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="Label13"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2"><b>6. Đánh giá dinh dưỡng ban đầu/ </b><span class="text-primary">Initial Nutrition Assessment</span></div>
+
+                                    <div class="mb-1 text-center"><b>Bảng 1: Khảo sát dinh dưỡng ban đầu/ </b><span class="text-primary">Table 1: Initial screening</span></div>
+
+                                    <table class="table-bordered mb-2" style="width: 100%">
+                                        <tr>
+                                            <td class="text-center"><b>STT/</b><span class="text-primary">No.</span></td>
+                                            <td class="text-center"><b>Câu hỏi/</b><span class="text-primary">Questions</span></td>
+                                            <td class="text-center"><b>Có/</b><span class="text-primary">Yes</span></td>
+                                            <td class="text-center"><b>Không/</b><span class="text-primary">No</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><b>1</b></td>
+                                            <td>Chỉ số BMI < 20.5/ <span class="text-primary">Is BMI < 20.5?</span></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_bmi_out_range_true"/></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_bmi_out_range_false"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><b>2</b></td>
+                                            <td>Người bệnh có sụt cân trong vòng 3 tháng gần đây không <br /> <span class="text-primary">Has the patient lost weight within the last 3 months?</span></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_loss_weight_true"/></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_loss_weight_false"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><b>3</b></td>
+                                            <td>Người bệnh có chán ăn trong 1 tuần qua không? <br /> <span class="text-primary">Has the patient had a reduced dietary intake in the last week?</span></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_reduce_dietary_true"/></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_reduce_dietary_false"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><b>4</b></td>
+                                            <td>Người bệnh có bị bệnh gì nghiêm trọng không? <br /> <span class="text-primary">Is the patient severely ill?</span></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_severely_ill_true"/></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_severely_ill_false"/></td>
+                                        </tr>
+                                    </table>
+
+                                    <div class="mb-2">
+                                        Ghi chú: Thức ăn bao gồm ăn qua miệng và các đường khác (qua ống thông dạ dày hoặc dinh dưỡng qua đường tĩnh mạnh) <br /> 
+                                        <span class="text-primary">Note: Food intake includes food taken by mouth, and other route (tube feeding or parenteral nutrition)</span>
+                                        <div style="margin-left: 20px">
+                                            - Nếu trả lời "<b>Có</b>" cho bất kỳ câu hỏi nào ở bảng 1 thì vui lòng đánh giá tiếp ở <b>bảng 2</b> <br />
+                                            <span class="text-primary" style="margin-left: 10px;">The answer is <b>Yes</b> to any question: go to the final screening in <b>Table 2</b></span> <br />
+                                            - Nếu trả lời "<b>Không</b>" cho bất kỳ câu hỏi nào ở bảng 1 thì vui lòng đánh giá lại mỗi tuần. <br />
+                                            <span class="text-primary" style="margin-left: 10px;">The answer is <b>No</b> to all questions: the patient is re-screened weekly</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-1 text-center"><b>Bảng 2: Khảo sát dinh dưỡng tiếp theo/ </b><span class="text-primary">Table 2: Final screening</span></div>
+
+                                    <table class="table-bordered mb-2">
+                                        <tr>
+                                            <td style="width: 90px" class="text-center"></td>
+                                            <td style="width: 250px" class="text-center"><b> Tình trạng dinh dưỡng </b><br /><span class="text-primary">Questions</span></td>
+                                            <td class="text-center"><b>Bệnh nặng</b> <br /><span class="text-primary">Severity of disease</span></td>
+                                            <td style="width: 120px" class="text-center"><b>Tuổi</b> <br /><span class="text-primary">Age</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><b>Điểm = 0</b> <br /><span class="text-primary">Score = 0</span></td>
+                                            <td>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_nutrition_normal_true"/>
+                                                    <div>
+                                                        Tình trạng dinh dưỡng bình thường <br />
+                                                        <span class="text-primary">Normal nutritional status</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_normal_nutrition_req_true"/>
+                                                    <div>
+                                                        Yêu cầu dinh dưỡng đặc biệt <br />
+                                                        <span class="text-primary">Normal nutritional requirements</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="align-top">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_younger_70_true"/>
+                                                    <div>
+                                                        &lt; 70 tuổi <br />
+                                                        <span class="text-primary">&lt; 70 years old</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><b>Điểm = 1</b> <br /><span class="text-primary">Score = 1 <br />
+                                            (cross 1 or <br />
+                                            more)</span></td>
+                                            <td>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_nutrition_score1_1"/>
+                                                    <div>
+                                                        Sụt cân &gt; 5% trong 3 tháng <br />
+                                                        <span class="text-primary">Weight loss &gt; 5 in <b>3 months</b></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_nutrition_score1_2"/>
+                                                    <div>
+                                                        Ăn ít 50%-75% so với nhu cầu ăn bình thường <br />
+                                                    trong tuần qua<br />
+                                                    <span class="text-primary">Food intake below <b>50 - 75%</b> of normal requirement in preceding week</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="align-top">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_severity_score1_1"/>
+                                                    <div>
+                                                        Gãy khớp háng /<span class="text-primary">Hip fracture</span>
+                                                    </div>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_severity_score1_2"/>
+                                                    <div>
+                                                        Bệnh mãn tính có kèm theo biến chứng <br />
+                                                        <span class="text-primary">Chronic disease with complications</span>
+                                                    </div>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_severity_score1_3"/>
+                                                    <div>
+                                                        Viên phổi tắc nghẽn mãn tính/ <span class="text-primary">COPD</span>
+                                                    </div>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_severity_score1_4"/>
+                                                    <div>
+                                                        NB yếu nhưng có thể di chuyển được <br />
+                                                        <span class="text-primary">The patient is weak but can move out of bed</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="align-top">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_older_70_true"/>
+                                                    <div>
+                                                        ≥ 70 tuổi <br />
+                                                        <span class="text-primary">≥ 70 years old</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-center"><b>Điểm = 2</b> <br /><span class="text-primary">Score = 2 <br />
+                                            (cross 1 or <br />
+                                            more)</span></td>
+                                            <td>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_nutrition_score2_1"/>
+                                                    <div>
+                                                        Sụt cân &gt; 5% trong 2 tháng <br />
+                                                        <span class="text-primary">Weight loss &gt; 5 in <b>2 months</b></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_nutrition_score2_2"/>
+                                                    <div>
+                                                        BMI 18.5-20.5 và tổng trạng suy yếu<br />
+                                                        <span class="text-primary">BMI 18.5-20.5 and impaired general condition</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_nutrition_score2_3"/>
+                                                    <div>
+                                                        Ăn ít 25%-50% so với nhu cầu ăn bình thường trong tuần qua<br />
+                                                        <span class="text-primary">Food intake 20-50% of normal requirement in preceding week</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="align-top">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_severity_score2_1"/>
+                                                    <div>
+                                                        Có phẫu thuật ở bụng <br />
+                                                        <span class="text-primary">Major abdominal surgery</span>
+                                                    </div>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_severity_score2_2"/>
+                                                    <div>
+                                                        Đột quị/ <span class="text-primary">Stroke</span>
+                                                    </div>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_severity_score2_3"/>
+                                                    <div>
+                                                        Viêm phổi nặng/ <span class="text-primary">Severe pneumonia</span>
+                                                    </div>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_severity_score2_4"/>
+                                                    <div>
+                                                        Bệnh ác tính huyết học <br />
+                                                        <span class="text-primary">Hematologic malignancy</span>
+                                                    </div>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_severity_score2_5"/>
+                                                    <div>
+                                                        Người bệnh nằm liệt giường <br />
+                                                        <span class="text-primary">The patient is bedridden</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                    
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-center"><b>Điểm = 3</b> <br /><span class="text-primary">Score = 3 <br />
+                                            (cross 1 or <br />
+                                            more)</span></td>
+                                            <td>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_nutrition_score3_1"/>
+                                                    <div>
+                                                        Sụt cân &gt; 5% trong 1 tháng <br />
+                                                        <span class="text-primary">Weight loss &gt; 5 in <b>1 month</b></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_nutrition_score3_2"/>
+                                                    <div>
+                                                        BMI &lt; 18.5 và tổng trạng suy yếu<br />
+                                                        <span class="text-primary">BMI &lt; 18.5 and impaired general condition</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_nutrition_score3_3"/>
+                                                    <div>
+                                                        Ăn ít 0-25% so với nhu cầu ăn bình thường <br /> trong tuần qua<br />
+                                                        <span class="text-primary">Food intake <b>0-25%</b> of normal requirement in <br /> preceding week</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="align-top">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_severity_score3_1"/>
+                                                    <div>
+                                                        Chấn thương đầu <br />
+                                                        <span class="text-primary">Head injury</span>
+                                                    </div>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_severity_score3_2"/>
+                                                    <div>
+                                                        Ghép tủy xương <br /> <span class="text-primary">Bone marrow transplantation</span>
+                                                    </div>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_severity_score3_3"/>
+                                                    <div>
+                                                        Bệnh nhân chăm sóc chuyên sâu (APACHE &gt; 10)<span class="text-primary">Intensive care patients (APACHE &gt; 10)</span>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-center"><b>Điểm/</b><span class="text-primary">Score</td>
+                                            <td class="text-center"><asp:Label runat="server"  ID="prt_nutrition_score"/></td>
+                                            <td class="text-center"><asp:Label runat="server"  ID="prt_severity_score"/></td>
+                                            <td class="text-center"><asp:Label runat="server"  ID="prt_age_score"/></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-center"><b>Tổng điểm</b><br />
+                                                <span class="text-primary">Total score</td>
+                                            <td colspan="3" class="text-center"><asp:Label runat="server"  ID="prt_total_nutri_score"/></td>
+                                        </tr>
+                                            
+                                    </table>
+
+                                    <div class="mb-2">
+                                        *<b>Ghi chú: </b> Khi đánh giá điểm cho mỗi tiêu chí thì luôn luôn chọn điểm cao nhất. Sau đó cộng tất cả các điểm số ở cuối để có điểm số cuối cùng <br />
+                                        <span class="text-primary">Notes: When assessing the score for each criterion, always choose the highest score. Then add all scores at the end to get the final score</span><br />
+                                        <div style="margin-left: 20px">
+                                            Nếu điểm  3: đánh giá lại NB mỗi tuần/ <span class="text-primary">If score 3: weekly re-screening of the patient</span> <br />
+                                            Nếu điểm  3: giới thiệu NB đến khám chuyên gia dinh dưỡng/ <span class="text-primary">If score 3: refer patients to the nutritionists</span> <br />
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2"><b>7. Hệ tiết niệu sinh dục/ </b><span class="text-primary">Genitourinary system</span></div>
+
+                                    <div style="margin-left: 20px"><b>Tiểu/ </b><span class="text-primary">Urination:</span></div>
+
+                                    <div style="margin-left: 40px">
+                                        <div class="d-grid mb-2" style="grid-template-columns: 150px 200px 1fr">
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_urination_nm"/>
+                                                <div>
+                                                    Không có vấn đề<br />
+                                                    <span class="text-primary">Normal</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_urination_no"/>
+                                                <div>
+                                                    Tiểu đêm<br />
+                                                    <span class="text-primary">Nocturia</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_urination_fr"/>
+                                                <div>
+                                                    Thường xuyên<br />
+                                                    <span class="text-primary">Frequency</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 150px 200px 1fr">
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_urination_dy"/>
+                                                <div>
+                                                    Khó tiểu<br />
+                                                    <span class="text-primary">Dysuria</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_urination_in"/>
+                                                <div>
+                                                    Không kiểm soát<br />
+                                                    <span class="text-primary">Incontinece</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_inter_catheter_true"/>
+                                                <div>
+                                                    Thông tiểu ngắt quãng<br />
+                                                    <span class="text-primary">Intermittent catheterization</span>
+                                                </div>
+                                                <div>
+                                                    <asp:Label runat="server" ID="prt_inter_catheter_note"/> lần/ngày
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 150px 100px 1fr">
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_ind_catheter_true"/>
+                                                <div>
+                                                    Ống thông tiểu lưu<br />
+                                                    <span class="text-primary">Indwelling catheter</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                <div>
+                                                    Kích cỡ:&nbsp;<br />
+                                                    <span class="text-primary">Size</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_ind_catheter_size"/>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                <div>
+                                                    Ngày thay gần nhất:<br />
+                                                    <span class="text-primary">Fr, Date last changed&nbsp;</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_ind_catheter_date"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 200px 100px 1fr">
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label15"/>
+                                                <div>
+                                                    Ống thông bàng quang qua da<br />
+                                                    <span class="text-primary">Suprapubic catheter</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                <div>
+                                                    Kích cỡ:&nbsp;<br />
+                                                    <span class="text-primary">Size</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_sup_catheter_size"/>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                <div>
+                                                    Ngày thay gần nhất:<br />
+                                                    <span class="text-primary">Fr, Date last changed&nbsp;</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_last_sup_catheter_date"/>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div style="margin-left: 20px" class="mb-2"><b>Đối với người bệnh nữ/</b><span class="text-primary">For female patients only:</span></div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 100px 1fr; margin-left: 20px">
+                                        <div>
+                                            <b>Kinh nguyệt:</b><br />
+                                            <span class="text-primary">Menstruation</span>
+                                        </div>
+                                        <div>
+                                            <div class="d-grid" style="grid-template-columns: 1fr 1fr 170px 230px">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_menstruation_code_am"/>
+                                                    <div>
+                                                        Vô kinh<br />
+                                                        <span class="text-primary">Amenorrhea</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_menstruation_code_me"/>
+                                                    <div>
+                                                        Mãn kinh<br />
+                                                        <span class="text-primary">Menopause</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_menstruation_code_cy"/>
+                                                    <div>
+                                                        Chù kỳ<br />
+                                                        <span class="text-primary">Cycle</span>
+                                                    </div>
+                                                    <div>
+                                                        &nbsp;<asp:Label runat="server" ID="prt_cycle_day"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                    <div>
+                                                        Ngày đầu của kỳ kinh cuối<br />
+                                                        <span class="text-primary">Last menstrual period started</span>
+                                                    </div>
+                                                    <asp:Label runat="server" ID="prt_last_mens_period"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 80px 1fr; margin-left: 20px">
+                                        <div>
+                                            <b>Có thai:</b><br />
+                                            <span class="text-primary">Pregnancy</span>
+                                        </div>
+                                        <div>
+                                            <div class="d-grid" style="grid-template-columns: 1fr 200px 150px 230px">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_not_pregnancy_true"/>
+                                                    <div>
+                                                        Không<br />
+                                                        <span class="text-primary">No</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_pre_pregnancy_true"/>
+                                                    <div>
+                                                        Đã từng mang thai trước đây<br />
+                                                        <span class="text-primary">Previous pregnancy</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                    <div>
+                                                        PARA&nbsp;
+                                                    </div>
+                                                    <asp:Label runat="server" ID="prt_para"/>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_cur_pregnancy_true"/>
+                                                    <div>
+                                                        Hiện đang mang thai <br />
+                                                        <span class="text-primary">Current pregnancy</span>
+                                                    </div>
+                                                    <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                        <div><asp:Label runat="server" ID="prt_pregnancy_week"/>&nbsp;</div>
+                                                        <div>
+                                                            tuần<br />
+                                                            <span class="text-primary">weeks</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid" style="grid-template-columns: 130px 1fr; margin-left: 20px">
+                                        <div>
+                                            <b>Ngừa thai:</b><br />
+                                            <span class="text-primary">Contraception</span>
+                                        </div>
+                                        <div>
+                                            <div class="d-grid" style="grid-template-columns: 80px 120px 240px 1fr">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_contraception_code_no"/>
+                                                    <div>
+                                                        Không<br />
+                                                        <span class="text-primary">No</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_contraception_code_pill"/>
+                                                    <div>
+                                                        Thuốc ngừa thai<br />
+                                                        <span class="text-primary">Contraceptive pill</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_contraception_code_dev"/>
+                                                    <div>
+                                                        Dụng cụ ngừa thai đặt trong tử cung <br />
+                                                        <span class="text-primary">Intrauterine Device</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_contraception_code_oth"/>
+                                                    <div>
+                                                        Khác <br />
+                                                        <span class="text-primary">Other</span>
+                                                    </div>
+                                                    <asp:Label runat="server" ID="prt_contraception_other"/>
+                                                </div>
+                                            </div>
+                                                
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2"><b>8. Hệ cơ - xương khớp/ </b><span class="text-primary">Musculoskeletal system</span></div>
+
+                                    <div class="d-grid" style="grid-template-columns: 100px 1fr; margin-left: 20px">
+                                        <div>
+                                            Tiền sử<br />
+                                            <span class="text-primary">History</span>
+                                        </div>
+                                        <div>
+                                            <div class="d-grid mb-2" style="grid-template-columns: 1fr 1fr 150px 210px">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_mus_history_nm"/>
+                                                    <div>
+                                                        Bình thường<br />
+                                                        <span class="text-primary">Normal</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_mus_history_jp"/>
+                                                    <div>
+                                                        Đau khớp<br />
+                                                        <span class="text-primary">Joint pain</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_mus_history_js"/>
+                                                    <div>
+                                                        Sưng khớp <br />
+                                                        <span class="text-primary">Joint swelling</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_mus_history_ms"/>
+                                                    <div>
+                                                        Sự co rút cơ <br />
+                                                        <span class="text-primary">Muscle spasms</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid mb-2" style="grid-template-columns: 15px auto 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_paralysis_true"/>
+                                                <div>
+                                                    Liệt/ (1/2 người/2 chi/4 chi): <br />
+                                                    <span class="text-primary">Paralysis (Hemi/Para/Tetra)</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_paralysis_note"/>
+                                            </div>
+
+                                            <div class="d-grid mb-2" style="grid-template-columns: 15px auto 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_amputation_true"/>
+                                                <div>
+                                                    Đoạn chi: <br />
+                                                    <span class="text-primary">Amputation</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_amputation_note"/>
+                                            </div>
+
+                                            <div class="d-grid mb-2" style="grid-template-columns: 1fr 1fr">
+                                                <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_contracture_true"/>
+                                                    <div>
+                                                        Cơ bắp co rút: <br />
+                                                        <span class="text-primary">Contracture</span>
+                                                    </div>
+                                                    <asp:Label runat="server" ID="prt_contracture_note"/>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_prosthesis_true"/>
+                                                    <div>
+                                                        Lắp bộ phận giả: <br />
+                                                        <span class="text-primary">Prosthesis</span>
+                                                    </div>
+                                                    <asp:Label runat="server" ID="prosthesis_note"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2"><b>9. Đau/ </b><span class="text-primary">Pain</span></div>
+
+                                    <div class="d-grid mb-2" style="margin-left: 20px; grid-template-columns: 250px 130px 1fr">
+                                        <div>
+                                            Hiện đang đau/ <span class="text-primary">Currently in pain</span>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_cur_in_pain_false"/>
+                                            <div>
+                                                Không/<span class="text-primary">No</span>
+                                            </div>
+                                        </div>
+                                            
+                                        <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                            <asp:Label runat="server" Text="❏" ID="prt_cur_in_pain_true"/>
+                                            <div>
+                                                Có, báo bác sĩ/<span class="text-primary">Yes, inform doctor</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid" style="grid-template-columns: 1fr 2px 250px">
+                                        <div>
+                                            <table class="table-bordered mb-2">
+                                                <tr>
+                                                    <td class="text-center"><b>Mô tả đánh giá đau <br /><span class="text-primary">Pain Assessment Description</span></b></td>
+                                                    <td style="width: 80px" class="text-center"><b>Vị trí 1 <br /><span class="text-primary">Location 1</span></b></td>
+                                                    <td style="width: 80px" class="text-center"><b>Vị trí 2 <br /><span class="text-primary">Location 2</span></b></td>
+                                                    <td style="width: 80px" class="text-center"><b>Vị trí 3 <br /><span class="text-primary">Location 3</span></b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center"><b>P Nguyên nhân đau <br /><span class="text-primary"><u>Provoking factors</u></span></b><br /><span class="text-primary">(what factors precipitated the discomfort?)</span></td>
+                                                    <td><asp:Label runat="server" ID="prt_p_location_1"/></td>
+                                                    <td><asp:Label runat="server" ID="prt_p_location_2"/></td>
+                                                    <td><asp:Label runat="server" ID="prt_p_location_3"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center"><b>Q Đau như thế nào? <br /><span class="text-primary"><u>Quality</u></span></b><br />(Mô tả đau, sự khó chịu) <br /><span class="text-primary">(describe the pain, discomfort, & characteristics of pain)</span></td>
+                                                    <td><asp:Label runat="server" ID="prt_q_location_1"/></td>
+                                                    <td><asp:Label runat="server" ID="prt_q_location_2"/></td>
+                                                    <td><asp:Label runat="server" ID="prt_q_location_3"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center"><b>R Nơi đau <br /><span class="text-primary"><u>Region/ Radiation</u></span></b><br />(Đau ở đâu? Đau có lan truyền qua vị trí khác) <br /><span class="text-primary">(Where is the pain? Does it radiate?)</span></td>
+                                                    <td><asp:Label runat="server" ID="prt_r_location_1"/></td>
+                                                    <td><asp:Label runat="server" ID="prt_r_location_2"/></td>
+                                                    <td><asp:Label runat="server" ID="prt_r_location_3"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center"><b>S Mức độ đau <br /><span class="text-primary"><u>Severity</u></span></b><br /><span class="text-primary">(rate pain score)</span></td>
+                                                    <td><asp:Label runat="server" ID="prt_s_location_1"/></td>
+                                                    <td><asp:Label runat="server" ID="prt_s_location_2"/></td>
+                                                    <td><asp:Label runat="server" ID="prt_s_location_3"/></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center"><b>T Thời gian<br /><span class="text-primary"><u>Time</u></span></b><br />(Người bệnh đã bị đau trong bao lâu?)<br /><span class="text-primary">(how long the patient had the pain?)</span></td>
+                                                    <td><asp:Label runat="server" ID="prt_t_location_1"/></td>
+                                                    <td><asp:Label runat="server" ID="prt_t_location_2"/></td>
+                                                    <td><asp:Label runat="server" ID="prt_t_location_3"/></td>
+                                                </tr>
+                                            </table>
+                                            
+                                            <div class="d-grid mb-2" style="margin-left: 20px; grid-template-columns: 200px 1fr">
+                                                <div>
+                                                    Sử dụng thuốc giảm đau <br /> <span class="text-primary">Using painkiller</span>
+                                                </div>
+
+                                                <div>
+                                                    <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="prt_using_pain_killer_false"/>
+                                                        <div>
+                                                            Không/<span class="text-primary">No</span>
+                                                        </div>
+                                                    </div>
+                                            
+                                                    <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="prt_using_pain_killer_true"/>
+                                                        <div>
+                                                            Có, (nếu có báo cho BS điều trị đau) <br />
+                                                            <span class="text-primary">Yes (if, yes. Inform a pain specialist)</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid mb-2" style="margin-left: 20px; grid-template-columns: auto 1fr">
+                                                <div>
+                                                    Tên thuốc <br /> <span class="text-primary">Name of painkiller</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_pain_killer_name"/>
+                                            </div>
+
+                                            <div class="d-grid mb-2" style="margin-left: 20px; grid-template-columns: auto 1fr">
+                                                <div>
+                                                    Nhận xét <br /> <span class="text-primary">Comments</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_pa_comment"/>
+                                            </div>
+                                        </div>
+                                        <div></div>
+                                        <img src="#" runat="server" width="280" id="imageTemp" alt="Alternate Text" />
+                                    </div>
+
+                                    <div class="mb-2"><b>10. Da & Nguy cơ loét tỳ đè/ </b><span class="text-primary">Skin & Pressure Sore Risk</span></div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 100px 1fr; margin-left: 20px">
+                                        <div><b>Tình trạng <br /> <span class="text-primary">Condition</span></b></div>
+                                            
+                                        <div>
+                                            <div class="d-grid mb-2" style="grid-template-columns: 1fr 1fr 1fr 1fr">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_condition_nm"/>
+                                                    <div>
+                                                        Bình thường<br />
+                                                        <span class="text-primary">Normal</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_condition_pa"/>
+                                                    <div>
+                                                        Tái<br />
+                                                        <span class="text-primary">Pale</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_condition_fl"/>
+                                                    <div>
+                                                        Đỏ<br />
+                                                        <span class="text-primary">Flush</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_condition_ja"/>
+                                                    <div>
+                                                        Vàng da<br />
+                                                        <span class="text-primary">Jaundiced</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid mb-2" style="grid-template-columns: 1fr 1fr 1fr 1fr">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_condition_dr"/>
+                                                    <div>
+                                                        Khô<br />
+                                                        <span class="text-primary">Dry</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_condition_oi"/>
+                                                    <div>
+                                                        Nhờn<br />
+                                                        <span class="text-primary">Oily</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_condition_sw"/>
+                                                    <div>
+                                                        Nhiều mồ hôi<br />
+                                                        <span class="text-primary">Sweaty</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_condition_ra"/>
+                                                    <div>
+                                                        Phát ban<br />
+                                                        <span class="text-primary">Rash</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 100px 1fr; margin-left: 20px">
+                                        <div><b>Vết thương<br /> <span class="text-primary">Wounds:</span></b></div>
+                                            
+                                        <div>
+                                            <div class="d-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_wounds_1"/>
+                                                    <div>
+                                                        Máu tụ (1)<br />
+                                                        <span class="text-primary">Haematoma</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_wounds_2"/>
+                                                    <div>
+                                                        Sự thâm tím (2)<br />
+                                                        <span class="text-primary">Bruises</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_wounds_3"/>
+                                                    <div>
+                                                        Rách (3)<br />
+                                                        <span class="text-primary">Laceration</span>
+                                                    </div>
+                                                </div>
+                                                <div></div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_wounds_4"/>
+                                                    <div>
+                                                        Sẹo (4)<br />
+                                                        <span class="text-primary">Scar</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_wounds_5"/>
+                                                    <div>
+                                                        Phỏng (5)<br />
+                                                        <span class="text-primary">Burn</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_wounds_6"/>
+                                                    <div>
+                                                        Loét do tì đè (6)<br />
+                                                        <span class="text-primary">Pressure sore</span>
+                                                    </div>
+                                                </div>
+
+                                                <div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2" style="margin-left: 20px">
+                                        Biểu thị vùng da với chỉ số tương ứng trên sơ đồ cơ thể và mô tả vết thương dưới đây <br />
+                                        <span class="text-primary">Indicate the location with the corresponding number in the body diagram and describe the wound below.</span>
+                                    </div>
+
+                                    <table style="width: 100%" class="table-bordered mb-2" runat="server" id="prt_skin_anno">
+                                        <tr>
+                                            <td class="text-center"><b>Vùng <br /> <span class="text-primary">Location</span></b></td>
+                                            <td class="text-center">Loại vết thương và mô tả vết thương (vd: <br /> kích cỡ, độ sâu, màu...)<br />
+                                            <span class="text-primary">Wound type and description (i.e. size, depth, colour...)</span></td>
+                                            <td style="width: 300px" class="text-center">
+                                                Chỉ rõ vùng của vết thương bằng chỉ số tương ứng (1-6) dưới đây <br />
+                                                <span class="text-primary">Specify location of wound with the corresponding number (1-6) below</span>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                    <div style="margin-left: 20px" class="mb-2">
+                                        <b>Đánh giá nguy cơ loét tỳ đè được cải tiến thang Braden</b> <br />
+                                        <span class="text-primary">Pressure Sore risk assessment-Modified Braden</span><br />
+                                        <b>Hướng dẫn: </b>so sánh tình trạng của người bệnh với mô tả phù hợp nhất của từng loại. Ghi điểm (bằng số) ở cột bên phải. Cộng lại ở bên dưới để tính.<br />
+                                        <span class="text-primary"><b>Guidance:</b> Compare the patient's condition to the most appropriate description for each category. Note the score (written as a number) at the right column. Add up at the bottom to receive the total score.</span>
+                                    </div>
+
+                                    <table class="table-bordered mb-2" style="width: 100%; font-size: 12px">
+                                        <tr>
+                                            <td class="text-center" style="width: 170px" rowspan="2"><b>NGUY CƠ <br /><span class="text-primary">RISK</span></b></td>
+                                            <td class="text-center" colspan="4"><b>ĐIỂM/MÔ TẢ</b><br /><span class="text-primary">SCORE/DESCRIPTION</span></td>
+                                            <td class="text-center" rowspan="2"><b>ĐIỂM <br /><span class="text-primary">SCORE</span></b></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center" style="width: 140px"><b>1</b></td>
+                                            <td class="text-center" style="width: 130px"><b>2</b></td>
+                                            <td class="text-center" style="width: 145px"><b>3</b></td>
+                                            <td class="text-center"><b>4</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><b>NHẬN THỨC GIÁC QUAN</b> <br /><span class="text-primary">SENSORY PERCEPTION</span></td>
+                                            <td class="text-center"><b>Giới hạn hoàn toàn</b><br /><span class="text-primary">Completely limited</span></td>
+                                            <td class="text-center"><b>Giới hạn nhiều</b><br /><span class="text-primary">Very limited</span></td>
+                                            <td class="text-center"><b>Giới hạn ít</b><br /><span class="text-primary">Slightly limited</span></td>
+                                            <td class="text-center"><b>Không giới hạn</b><br /><span class="text-primary">No limitations</span></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_sensory_code"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><b>ĐỘ ẨM</b><br /><span class="text-primary">MOISTURE</span></td>
+                                            <td class="text-center"><b>Liên tục ẩm</b><br /><span class="text-primary">constantly moist</span></td>
+                                            <td class="text-center"><b>Thường ẩm</b><br /><span class="text-primary">Often moist</span></td>
+                                            <td class="text-center"><b>Thỉnh thoảng ẩm</b><br /><span class="text-primary">Occasionally moist</span></td>
+                                            <td class="text-center"><b>Hiếm khi ẩm</b><br /><span class="text-primary">Rarely moist</span></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_moisture_code"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><b>VẬN ĐỘNG</b><br /><span class="text-primary">ACTIVITY</span></td>
+                                            <td class="text-center"><b>Nằm liệt giường</b><br /><span class="text-primary">Bedfast</span></td>
+                                            <td class="text-center"><b>Cố định trên ghế</b><br /><span class="text-primary">Chairfast</span></td>
+                                            <td class="text-center"><b>Thỉnh thoảng đi lại</b><br /><span class="text-primary">Walks occasionally <br />moist</span></td>
+                                            <td class="text-center"><b>Đi lại thường xuyên</b><br /><span class="text-primary">Walks frequently</span></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_activity_code"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><b>DI CHUYỂN</b><br /><span class="text-primary">MOBILITY</span></td>
+                                            <td class="text-center"><b>Hoàn toàn bất động</b><br /><span class="text-primary">Completely immobile</span></td>
+                                            <td class="text-center"><b>Rất hạn chế</b><br /><span class="text-primary">Very limited</span></td>
+                                            <td class="text-center"><b>Ít hạn chế</b><br /><span class="text-primary">Slightly limited</span></td>
+                                            <td class="text-center"><b>Không giới hạn</b><br /><span class="text-primary">No limitations</span></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_mobility_code"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><b>DINH DƯỠNG</b><br /><span class="text-primary">NUTRITION</span></td>
+                                            <td class="text-center"><b>Rất kém</b><br /><span class="text-primary">Very poor</span></td>
+                                            <td class="text-center"><b>Có thể không đầy đủ</b><br /><span class="text-primary">Probably inadequate</span></td>
+                                            <td class="text-center"><b>Đầy đủ</b><br /><span class="text-primary">Adequate</span></td>
+                                            <td class="text-center"><b>Hoàn hảo</b><br /><span class="text-primary">Excellent</span></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_nutrition_code"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><b>SỰ MA SÁT & TRƯỢT DA</b><br /><span class="text-primary">FRICTION & SHEAR</span></td>
+                                            <td class="text-center"><b>Có vấn đề</b><br /><span class="text-primary">Problem</span></td>
+                                            <td class="text-center"><b>Vấn đề tiềm ẩn</b><br /><span class="text-primary">Potential problem</span></td>
+                                            <td class="text-center"><b>Không có vấn đề</b><br /><span class="text-primary">No problem</span></td>
+                                            <td class="text-center"><b></b><br /><span class="text-primary"></span></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_friction_code"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"><b>NGUY CƠ</b><br /><span class="text-primary">RISK</span></td>
+                                            <td class="text-center"><b>Nguy cơ rất cao ≤ 10</b><br /><span class="text-primary">Very hish risk ≤ 10</span></td>
+                                            <td class="text-center"><b>Nguy cơ cao: 11-17</b><br /><span class="text-primary">High risk: 11-17</span></td>
+                                            <td class="text-center"><b>Nguy cơ thấp ≥ 18</b><br /><span class="text-primary">Low risk: ≥ 18</span></td>
+                                            <td class="text-center"><b>TỔNG SỐ ĐIỂM</b><br /><span class="text-primary">TOTAL SCORE</span></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_total_score"/></td>
+                                        </tr>
+                                    </table>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 150px 1fr; margin-left: 20px">
+                                        <div><b>Nguy cơ loét tỳ đè:<br /> <span class="text-primary">Pressure sore risk:</span></b></div>
+                                            
+                                        <div class="d-grid" style="grid-template-columns: 200px 1fr 1fr 1fr">
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_pres_sore_risk_code_v"/>
+                                                <div>
+                                                    Rất cao<br />
+                                                    <span class="text-primary">Very high</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_pres_sore_risk_code_h"/>
+                                                <div>
+                                                    Cao<br />
+                                                    <span class="text-primary">High</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_pres_sore_risk_code_l"/>
+                                                <div>
+                                                    Thấp<br />
+                                                    <span class="text-primary">Low</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: auto 1fr; margin-left: 20px">
+                                        <div>
+                                            Cách phòng ngừa tương ứng với những nguy cơ xác định <br />
+                                            <span class="text-primary">Take preventive actions according to the identified risk</span>
+                                        </div>
+                                        <asp:Label runat="server" ID="prt_preven_action"/>
+                                    </div>
+
+                                    <div class="mb-2"><b>11. Khả năng thực hiện những sinh hoạt hằng ngày/ </b><span class="text-primary">Ability to perform daily activities.</span></div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 100px 1fr; margin-left: 20px">
+                                        <div><b>Tắm<br /> <span class="text-primary">Bathing:</span></b></div>
+                                            
+                                        <div class="d-grid" style="grid-template-columns: 1fr 165px 165px 165px">
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_bathing_code_in"/>
+                                                <div>
+                                                    Tự tắm<br />
+                                                    <span class="text-primary">Independent</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_bathing_code_as"/>
+                                                <div>
+                                                    Cần sự hỗ trợ khi tắm<br />
+                                                    <span class="text-primary">Assisted in shower</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_bathing_code_ab"/>
+                                                <div>
+                                                    Hỗ trợ tắm tại giường<br />
+                                                    <span class="text-primary">Assisted in bed</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_bathing_code_db"/>
+                                                <div>
+                                                    Tự tắm tại giường<br />
+                                                    <span class="text-primary">Dependent in bed</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div style="margin-left: 20px">
+                                        <b>Chăm sóc răng miệng</b><br />
+                                        <span class="text-primary">Oral care</span>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 150px 1fr; margin-left: 20px">
+                                        <div></div>
+                                            
+                                        <div class="d-grid" style="grid-template-columns: 1fr 165px 165px 165px">
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_oral_care_code_oc"/>
+                                                <div>
+                                                    Tự làm<br />
+                                                    <span class="text-primary">Independent</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_oral_care_code_pu"/>
+                                                <div>
+                                                    Chỉ chuẩn bị đồ dùng<br />
+                                                    <span class="text-primary">Prepare utensils only</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_oral_care_code_ab"/>
+                                                <div>
+                                                    Hỗ trợ đánh răng<br />
+                                                    <span class="text-primary">Assisted to brush teeth</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label20"/>
+                                                <asp:Label runat="server" ID="prt_oral_care_note"/>
+                                                <div>
+                                                    lần/ngày<br />
+                                                    <span class="text-primary">times/day</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 150px 1fr; margin-left: 20px">
+                                        <div><b>Răng giả:<br /> <span class="text-primary">Dentures:</span></b></div>
+                                            
+                                        <div class="d-grid" style="grid-template-columns: 1fr 165px 165px 165px">
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_dentures_code_n"/>
+                                                <div>
+                                                    Không có<br />
+                                                    <span class="text-primary">None</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_dentures_code_u"/>
+                                                <div>
+                                                    Hàm trên<br />
+                                                    <span class="text-primary">Upper</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_dentures_code_l"/>
+                                                <div>
+                                                    Hàm dưới<br />
+                                                    <span class="text-primary">Lower</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_dentures_code_p"/>
+                                                <div>
+                                                    Từng phần<br />
+                                                    <span class="text-primary">Partial</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 150px 1fr; margin-left: 20px">
+                                        <div><b>Đi vệ sinh:<br /> <span class="text-primary">Toilet use</span></b></div>
+                                            
+                                        <div>
+                                            <div class="d-grid mb-2" style="grid-template-columns: 1fr 165px 330px">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_toilet_use_code_in"/>
+                                                    <div>
+                                                        Tự vệ sinh<br />
+                                                        <span class="text-primary">Independent</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_toilet_use_code_at"/>
+                                                    <div>
+                                                        Cần hỗ trợ khi đi vệ sinh<br />
+                                                        <span class="text-primary">Assisted to the toilet</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_toilet_use_code_ac"/>
+                                                    <div>
+                                                        Cần hỗ trợ trên ghế dùng để tiểu tiện trong phòng<br />
+                                                        <span class="text-primary">Assisted on the commode</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid mb-2" style="grid-template-columns: 1fr 165px 330px">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_toilet_use_code_di"/>
+                                                    <div>
+                                                        Tã<br />
+                                                        <span class="text-primary">Diaper</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_toilet_use_code_bu"/>
+                                                    <div>
+                                                        Bô dùng tại giường<br />
+                                                        <span class="text-primary">Bedpan/urine bottle</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_toilet_use_code_uc"/>
+                                                    <div>
+                                                        Ống thông tiểu đặt ngoài bàng quang<br />
+                                                        <span class="text-primary">Urinary condom</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid mb-2" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_toilet_use_code_ca"/>
+                                                <div>
+                                                    Ống thông tiểu<br />
+                                                    <span class="text-primary">Urinary catheter</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 150px 1fr;margin-left: 20px">
+                                        <div><b>Trang phục<br /> <span class="text-primary">Dressing</span></b></div>
+                                            
+                                        <div class="d-grid" style="grid-template-columns: 1fr 165px 165px 165px">
+                                            <div></div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_dressing_code_in"/>
+                                                <div>
+                                                    Tự làm<br />
+                                                    <span class="text-primary">Independent</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_dressing_code_wa"/>
+                                                <div>
+                                                    Cần hỗ trợ<br />
+                                                    <span class="text-primary">With assistance</span>
+                                                </div>
+                                            </div>
+                                            <div></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 150px 1fr;margin-left: 20px">
+                                        <div><b>Ăn/cho ăn<br /> <span class="text-primary">Eating/Feeding</span></b></div>
+                                            
+                                        <div class="d-grid" style="grid-template-columns: 1fr 165px 165px 165px">
+                                                
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_eating_code_in"/>
+                                                <div>
+                                                    Tự ăn<br />
+                                                    <span class="text-primary">Independent</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_eating_code_dp"/>
+                                                <div>
+                                                    Phụ thuộc về tư thế<br />
+                                                    <span class="text-primary">Depend on position</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_eating_code_da"/>
+                                                <div>
+                                                    Phụ thuộc về ăn uống<br />
+                                                    <span class="text-primary">Dependent to eat</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_eating_code_tu"/>
+                                                <div>
+                                                    Cho ăn qua ống<br />
+                                                    <span class="text-primary">NG tube/Gastrostomy</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 1fr auto;margin-left: 20px">
+                                        <div><b>Xoay trở tư thế trên giường<br /> <span class="text-primary">Turning in bed</span></b></div>
+                                            
+                                        <div class="d-grid mb-2" style="grid-template-columns: 165px 330px">
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_turning_bed_code_in"/>
+                                                <div>
+                                                    Tự xoay trở<br />
+                                                    <span class="text-primary">Independent</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_turning_bed_code_dn"/>
+                                                <div>
+                                                    Không tự xoay trở<br />
+                                                    <span class="text-primary">Does not turn independently</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 1fr auto;margin-left: 20px">
+                                        <div><b>Đi lại</b>:<br /><span class="text-primary">Ambulation</span></div>
+                                            
+                                        <div class="d-grid mb-2" style="grid-template-columns: 165px 165px 165px">
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_ambulation_code_in"/>
+                                                <div>
+                                                    Tự đi<br />
+                                                    <span class="text-primary">Independent</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_ambulation_code_bf"/>
+                                                <div>
+                                                    Liệt giường<br />
+                                                    <span class="text-primary">Bedfast</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_ambulation_code_na"/>
+                                                <div>
+                                                    Cần hỗ trợ (ghi rõ)<br />
+                                                    <span class="text-primary">Need assistance (specify)</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="Label25"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 80px 1fr;margin-left: 20px">
+                                        <div><b>Ngủ</b>:<br /><span class="text-primary">Sleep</span></div>
+                                            
+                                        <div class="mb-2">
+                                            <div class="d-grid" style="grid-template-columns: 1fr 165px 165px 165px">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_sleep_code_nm"/>
+                                                    <div>
+                                                        Bình thường<br />
+                                                        <span class="text-primary">Normal</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_sleep_code_ae"/>
+                                                    <div>
+                                                        Thức sớm<br />
+                                                        <span class="text-primary">Awake early</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_sleep_code_pfa"/>
+                                                    <div>
+                                                        Khó ngủ<br />
+                                                        <span class="text-primary">Problem to fall asleep</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="prt_sleep_code_pst"/>
+                                                    <div>
+                                                        Khó ngủ say<br />
+                                                        <span class="text-primary">Problem to sleep through</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                
+                                            <div class="d-grid" style="grid-template-columns: 15px auto 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="prt_medication_used_true"/>
+                                                <div>
+                                                    Thuốc đã sử dụng&nbsp;<br />
+                                                    <span class="text-primary">medication used</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="prt_medication_used"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center mb-2"><b>12. Đánh giá nguy cơ té ngã sử dụng Bảng Morse Scale/ </b><span class="text-primary">High risk of fall assessment using Morse Scale</span></div>
+
+                                    <table class="table-bordered mb-2" style="width: 100%">
+                                        <tr>
+                                            <td class="text-center"><b>Tình trạng/ </b><span class="text-primary">Variable</span></td>
+                                            <td style="width: 100px" class="text-center"><b>Điểm/ </b><span class="text-primary">Score</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-grid" style="grid-template-columns: 300px 1fr">
+                                                    <div><b>Tiền sử bị ngã/ </b><span class="text-primary">History of falling:</span></div>
+                                                    <div>
+                                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                            <asp:Label runat="server" Text="❏" ID="prt_fall_history_code_0"/>
+                                                            <div>
+                                                                Có/ <span class="text-primary">Yes</span> = 25
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                            <asp:Label runat="server" Text="❏" ID="prt_fall_history_code_25"/>
+                                                            <div>
+                                                                Không/ <span class="text-primary">No</span> = 0
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_fall_history_code"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-grid" style="grid-template-columns: 300px 1fr">
+                                                    <div><b>Có từ 2 bệnh lý trở lên/ </b><span class="text-primary">Secondary diagnosis:</span></div>
+                                                    <div>
+                                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                            <asp:Label runat="server" Text="❏" ID="prt_secon_diagnosis_code_15"/>
+                                                            <div>
+                                                                Có/ <span class="text-primary">Yes</span> = 15
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                            <asp:Label runat="server" Text="❏" ID="prt_secon_diagnosis_code_0"/>
+                                                            <div>
+                                                                Không/ <span class="text-primary">No</span> = 0
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_secon_diagnosis_code"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-grid" style="grid-template-columns: 250px 1fr">
+                                                    <div><b>Khả năng di chuyển/ </b><span class="text-primary">Ambulatory Aids:</span></div>
+                                                    <div>
+                                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                            <asp:Label runat="server" Text="❏" ID="prt_ambula_aids_code_30"/>
+                                                            <div>
+                                                                Sử dụng vật dụng hỗ trợ = 30 <br /> <span class="text-primary">Furniture</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                            <asp:Label runat="server" Text="❏" ID="prt_ambula_aids_code_15"/>
+                                                            <div>
+                                                                Nạng, thiết bị hỗ trợ đi lại = 15 <br /> <span class="text-primary">Crutches, cane walker</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                            <asp:Label runat="server" Text="❏" ID="prt_ambula_aids_code_0"/>
+                                                            <div>
+                                                                Không di chuyển, nằm tại giường, điều dưỡng hỗ trợ = 0 <br /> <span class="text-primary">None, bedrest, wheelchair, nurse assist</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_ambula_aids_code"/></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div><b>Liệu pháp tiêm tĩnh mạch/ </b><span class="text-primary">Intravenous therapy/heparin locked:</span></div>
+
+                                                <div style="margin-left: 100px">
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="prt_intra_therapy_code_20"/>
+                                                        <div>
+                                                            Có/<span class="text-primary">Yes</span> = 20
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="prt_intra_therapy_code_0"/>
+                                                        <div>
+                                                            Không/<span class="text-primary">No</span> = 0
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_intra_therapy_code"/></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div class="d-grid" style="grid-template-columns: 290px 1fr">
+                                                    <div><b>Dáng đi/di chuyển/ </b><span class="text-primary">Gait/ transferring:</span></div>
+                                                    <div>
+                                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                            <asp:Label runat="server" Text="❏" ID="prt_gait_trans_code_20"/>
+                                                            <div>
+                                                                Suy yếu/<span class="text-primary">Impaired</span> = 20
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                            <asp:Label runat="server" Text="❏" ID="prt_gait_trans_code_10"/>
+                                                            <div>
+                                                                Yếu/<span class="text-primary">Weak</span> = 10
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                            <asp:Label runat="server" Text="❏" ID="prt_gait_trans_code_0"/>
+                                                            <div>
+                                                                Bình thường, nằm tại giường/<span class="text-primary">Normal, bedrest</span> = 0
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_gait_trans_code"/></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div class="d-grid" style="grid-template-columns: 290px 1fr">
+                                                    <div><b>Trạng thái tâm thần/</b><span class="text-primary">Mental status:</span></div>
+                                                    <div>
+                                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                            <asp:Label runat="server" Text="❏" ID="prt_fr_mental_status_code_0"/>
+                                                            <div>
+                                                                Hiểu được giới hạn bản thân = 0 <br />
+                                                                <span class="text-primary">Understands limitations</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                            <asp:Label runat="server" Text="❏" ID="prt_fr_mental_status_code_15"/>
+                                                            <div>
+                                                                Không hiểu được giới hạn bản thân = 15 <br />
+                                                                <span class="text-primary">Does not understand limitation</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_fr_mental_status_code"/></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div class="d-grid" style="grid-template-columns: 1fr auto">
+                                                    <div></div>
+                                                    <div><b>Tổng điểm <br />
+                                                    </b><span class="text-primary">Total score:</span></div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_fr_total_score"/></td>
+                                        </tr>
+                                    </table>
+
+                                    <div class="d-grid mb-2" style="grid-template-columns: 1fr auto 1fr;">
+                                        <div class="text-center">0-24: <b>Nguy cơ thấp</b>/<span class="text-primary">Low risk</span></div>
+                                        <div class="text-center">25-44: <b>Nguy cơ trung bình</b>/<span class="text-primary">Medium risk</span></div>
+                                        <div class="text-center">45+: <b>Nguy cơ cao</b>/<span class="text-primary">High risk</span></div>
+                                    </div>
+
+                                    <div class="d-grid mb-1" style="grid-template-columns: auto 1fr">
+                                        <b>D.&nbsp;</b>
+                                        <div>
+                                            <b>KẾ HOẠCH XUẤT VIỆN (HOÀN TẤT TRONG VÒNG 24 GIỜ SAU KHI NHẬP VIỆN) <br /><span class="text-primary">DISCHARGE PLAN (TO BE COMPLETED WITHIN 24 HOURS OF ADMISSION)</span></b>
+                                        </div>
+                                    </div>
+
+                                    <div  class="mb-2"><b>Đánh giá lại và mời hội chẩn nếu tìnhtrạng sức khỏe của người bệnh thay đổi. Nếu cần, chuyển bệnh đến khoa thích hợp. Nếu có nghi vấn, thảo luận với bác sĩ phụ trách. </b><br /><span class="text-primary">Reassess and inform if patient's condition charges. If there is "Yes" refer to the respective unit. In doubt, disscuss with doctor in charge</span></div>
+
+                                    <table class="table-bordered mb-2" style="width: 100%">
+                                        <tr>
+                                            <td></td>
+                                            <td class="text-center" style="width: 50px"><b>Có</b><br /><span class="text-primary">Yes</span></td>
+                                            <td class="text-center" style="width: 60px"><b>Không</b><br /><span class="text-primary">No</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Nhiều chuyên khoa cùng tham gia điều trị</b><br /><span class="text-primary">Multidisciplinary team involvement</span>
+                                            </td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_involvement_true"/></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_involvement_false"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Yêu cầu thiết bị y tế, máy tạo oxy và dịch vụ giúp đỡ chăm sóc tại nhà</b><br /><span class="text-primary">Requires medical equipment, oxygen concentrator and home care help services</span>
+                                            </td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_req_med_equipment_true"/></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_req_med_equipment_false"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Yêu cầu theo dõi điều trị</b><br /><span class="text-primary">Requires follow-up care</span>
+                                            </td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_req_foll_care_true"/></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_req_foll_care_false"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Các trường hợp tự tử (cần hội chẩn khẩn cấp)</b><br /><span class="text-primary">Suicidal cases (Urgent referral)</span>
+                                            </td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_suicidal_referral_true"/></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_suicidal_referral_false"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Sống một mình với tình trạng suy giảm chức năng và không được chăm sóc điều trị hay hỗ <br /> trợ từ gia đình</b><br /><span class="text-primary">Lives alone with reduced functional status and no other care giver or family support</span>
+                                            </td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_alone_reduce_functional_true"/></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_alone_reduce_functional_false"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Mời bác sĩ vật lý trị liệu hội chẩn (nếu có, báo bác sĩ)</b><br /><span class="text-primary">Referral to Physiotherapist (if yes, inform Doctor)</span>
+                                            </td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_ref_physiotherapist_true"/></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_ref_physiotherapist_false"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Mời chuyên gia ngôn ngữ trị liệu hội chẩn (nếu có, báo bác sĩ)</b><br /><span class="text-primary">Referral to speech therapist (if yes, inform doctor)</span>
+                                            </td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_ref_speech_therapist_true"/></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_ref_speech_therapist_false"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Giới thiệu đến chuyên gia dinh dưỡng</b><br /><span class="text-primary">Referral to Dietician</span>
+                                            </td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_ref_dietician_true"/></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_ref_dietician_false"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Giới thiệu đến chuyên gia tâm lý</b><br /><span class="text-primary">Referral to Psychologist</span>
+                                            </td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_ref_psychologist_true"/></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_ref_psychologist_false"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Yêu cầu chuyển đến bệnh viện khác</b><br /><span class="text-primary">Requires referral to other hospital</span>
+                                            </td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_ref_other_hospital_true"/></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_ref_other_hospital_false"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Người nhà hỗ trợ tại nhà</b><br /><span class="text-primary">Support system at home</span>
+                                            </td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_support_at_home_true"/></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_support_at_home_false"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Người bệnh yêu cầu phương tiện vận chuyển về nhà</b><br /><span class="text-primary">Will patient require transportation arrangements to go home</span>
+                                            </td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_req_transportation_true"/></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_req_transportation_false"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Cầu thang bộ tại nhà</b><br /><span class="text-primary">Stairts to climb at home</span>
+                                            </td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_stairs_climb_home_true"/></td>
+                                            <td class="text-center"><asp:Label runat="server" ID="prt_stairs_climb_home_false"/></td>
+                                        </tr>
+                                    </table>
+
+                                    <div>
+                                        <div class="mb-2"><b>HƯỚNG DẪN NGƯỜI BỆNH VỀ NHỮNG TIỆN NGHI TRONG PHÒNG VÀ CÁC DỊCH VỤ (HOÀN TẤT TRONG VÒNG 4 GIỜ SAU KHI NHẬP VIỆN). <br />
+                                        <span class="text-primary">PATIENT ORIENTATION TO ROOM FACILITIES AND SERVICES (TO BE COMPLETED WITHIN 4 HOURS OF ADMISSION)</span></b></div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 150px 1fr">
+                                            <div>
+                                                <b>Hướng dẫn:</b><br />
+                                                <span class="text-primary">Orientation provided to</span>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 1fr 1fr 1fr 1fr">
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="Label29"/>
+                                                    <div>
+                                                        Người bệnh<br />
+                                                        <span class="text-primary">Patient</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="Label30"/>
+                                                    <div>
+                                                        Thân nhân<br />
+                                                        <span class="text-primary">Relative</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="Label31"/>
+                                                    <div>
+                                                        Khác (ghi rõ)<br />
+                                                        <span class="text-primary">Others</span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                    <asp:Label runat="server" Text="❏" ID="Label32"/>
+                                                    <div>
+                                                        Không áp dụng<br />
+                                                        <span class="text-primary">Not applicable</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 15px 1fr">
+                                            1.
+                                            <div>
+                                                <div class="mb-2">
+                                                    <b>Nhân viên lầu trại</b><br />
+                                                    <span class="text-primary">Ward personnel</span>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 1fr 1fr">
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="Label33"/>
+                                                        <div>
+                                                            Giới thiệu với điều dưỡng phụ trách và nhân viên khác<br />
+                                                            <span class="text-primary">Introduction to Nurse in charge and other staffs</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="Label34"/>
+                                                        <div>
+                                                            Giới thiệu với người bệnh khác (trường hợp phòng đôi)<br />
+                                                            <span class="text-primary">Introduction to other patient (in case of double beds)</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            2.
+                                            <div>
+                                                <div class="mb-2">
+                                                    <b>Tiện nghi vật chất</b><br />
+                                                    <span class="text-primary">Physical facilities</span>
+                                                </div>
+                                                <div class="d-grid mb-2" style="grid-template-columns: 200px 1fr 1fr 1fr">
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="Label35"/>
+                                                        <div>
+                                                            Vị trí lầu trại và giường<br />
+                                                            <span class="text-primary">Ward and bed location</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="Label36"/>
+                                                        <div>
+                                                            Phòng tắm/toilet<br />
+                                                            <span class="text-primary">Bathroom/toilet</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="Label37"/>
+                                                        <div>
+                                                            Sử dụng TV<br />
+                                                            <span class="text-primary">Use of TV</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="Label38"/>
+                                                        <div>
+                                                            Sử dụng điện thoại<br />
+                                                            <span class="text-primary">Use of telephone</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                            <div></div>
+                                            <div>
+                                                <div></div>
+                                                <div class="d-grid" style="grid-template-columns: 1fr 360px">
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="Label39"/>
+                                                        <div>
+                                                            Hệ thống gọi điều dưỡng<br />
+                                                            <span class="text-primary">Nurse call system</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="Label40"/>
+                                                        <div>
+                                                            Trạm điều dưỡng và quầy chính<br />
+                                                            <span class="text-primary">Nurse station and main counter</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 15px 1fr">
+                                            3.
+                                            <div>
+                                                <div class="mb-2">
+                                                    <b>Chính sách và quy trình</b><br />
+                                                    <span class="text-primary">Policies and procedure</span>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 200px 1fr 1fr 1fr">
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="Label41"/>
+                                                        <div>
+                                                            Khách thăm bệnh, giờ thăm<br />
+                                                            <span class="text-primary">Visitors and visiting hours</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="Label42"/>
+                                                        <div>
+                                                            Phiếu ở lại đêm<br />
+                                                            <span class="text-primary">Over-night pass</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="Label44"/>
+                                                        <div>
+                                                            Mặc đồ ở nhà<br />
+                                                            <span class="text-primary">Wearing of home clothes</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="Label45"/>
+                                                        <div>
+                                                            Dịch vụ ăn uống<br />
+                                                            <span class="text-primary">Meal service</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 15px 1fr">
+                                            <div></div>
+                                            <div>
+                                                <div></div>
+                                                <div class="d-grid" style="grid-template-columns: 1fr 360px">
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="Label46"/>
+                                                        <div>
+                                                            Quy trình trước và sau phẫu thuật nếu có<br />
+                                                            <span class="text-primary">Pre-and postoperative procedures (if applicable)</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="Label47"/>
+                                                        <div>
+                                                            Số liên lạc với lầu trại<br />
+                                                            <span class="text-primary">Ward contact number</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 15px 1fr">
+                                            4.
+                                            <div>
+                                                <div class="mb-2">
+                                                    <b>Biện pháp an toàn</b><br />
+                                                    <span class="text-primary">Safety precautions</span>
+                                                </div>
+                                                <div class="d-grid" style="grid-template-columns: 1fr 1fr 1fr">
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="Label48"/>
+                                                        <div>
+                                                            Vị trí cửa thoát hiểm<br />
+                                                            <span class="text-primary">Location of fire exits</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="Label49"/>
+                                                        <div>
+                                                            Biện pháp phòng ngừa té ngã<br />
+                                                            <span class="text-primary">Fall precaution</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="Label50"/>
+                                                        <div>
+                                                            Sử dụng vòng đeo tay nhận diện<br />
+                                                            <span class="text-primary">Use of identification wrist band</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 15px 1fr">
+                                            <div></div>
+                                            <div>
+                                                <div></div>
+                                                <div class="d-grid" style="grid-template-columns: 1fr 1fr">
+                                                    <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                        <asp:Label runat="server" Text="❏" ID="Label51"/>
+                                                        <div>
+                                                            Nguy cơ cháy-Không hút thuốc trong phạm vi bệnh viện<br />
+                                                            <span class="text-primary">Fire hazard-No smoking within the hospital</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 15px 1fr">
+                                            5.
+                                            <div>
+                                                <b>Tư trang/ vật dụng cá nhân <br />
+                                                <span class="text-primary">Valuables/ Belongings</span></b>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 110px 60px 45px 115px 115px 60px 1fr 1fr 80px; margin-left: 20px">
+                                            <div>
+                                                <b>Răng giả:</b><br />
+                                                <span class="text-primary">Dentures</span>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label52"/>
+                                                <div>
+                                                    Không<br />
+                                                    <span class="text-primary">No</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label53"/>
+                                                <div>
+                                                    Có<br />
+                                                    <span class="text-primary">Yes</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label54"/>
+                                                <div>
+                                                    Người bệnh giữ<br />
+                                                    <span class="text-primary">With patient</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label55"/>
+                                                <div>
+                                                    Thân nhân giữ<br />
+                                                    <span class="text-primary">With relative</span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                ghi rõ:<br />
+                                                <span class="text-primary">Specify</span>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label56"/>
+                                                <div>
+                                                    Hàm trên<br />
+                                                    <span class="text-primary">Upper</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label57"/>
+                                                <div>
+                                                    Hàm dưới<br />
+                                                    <span class="text-primary">Lower</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label58"/>
+                                                <div>
+                                                    Từng phần<br />
+                                                    <span class="text-primary">Partial</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 110px 60px 45px 115px 115px 60px 60px 1fr; margin-left: 20px">
+                                            <div>
+                                                <b>Máy trợ thính:</b><br />
+                                                <span class="text-primary">Hearing aid</span>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label60"/>
+                                                <div>
+                                                    Không<br />
+                                                    <span class="text-primary">No</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label61"/>
+                                                <div>
+                                                    Có<br />
+                                                    <span class="text-primary">Yes</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label62"/>
+                                                <div>
+                                                    Người bệnh giữ<br />
+                                                    <span class="text-primary">With patient</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label63"/>
+                                                <div>
+                                                    Thân nhân giữ<br />
+                                                    <span class="text-primary">With relative</span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                ghi rõ:<br />
+                                                <span class="text-primary">Specify</span>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label65"/>
+                                                <div>
+                                                    trái<br />
+                                                    <span class="text-primary">left</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label66"/>
+                                                <div>
+                                                    phải<br />
+                                                    <span class="text-primary">right</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 110px 60px 45px 115px 115px 1fr; margin-left: 20px">
+                                            <div>
+                                                <b>Mắt kính:</b><br />
+                                                <span class="text-primary">Eye glasses</span>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label59"/>
+                                                <div>
+                                                    Không<br />
+                                                    <span class="text-primary">No</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label64"/>
+                                                <div>
+                                                    Có<br />
+                                                    <span class="text-primary">Yes</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label67"/>
+                                                <div>
+                                                    Người bệnh giữ<br />
+                                                    <span class="text-primary">With patient</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label68"/>
+                                                <div>
+                                                    Thân nhân giữ<br />
+                                                    <span class="text-primary">With relative</span>
+                                                </div>
+                                            </div>
+                                            <div></div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 110px 60px 45px 115px 115px 1fr; margin-left: 20px">
+                                            <div>
+                                                Kính sát tròng:<br />
+                                                <span class="text-primary">Contact lenses</span>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label69"/>
+                                                <div>
+                                                    Không<br />
+                                                    <span class="text-primary">No</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label70"/>
+                                                <div>
+                                                    Có<br />
+                                                    <span class="text-primary">Yes</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label71"/>
+                                                <div>
+                                                    Người bệnh giữ<br />
+                                                    <span class="text-primary">With patient</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label72"/>
+                                                <div>
+                                                    Thân nhân giữ<br />
+                                                    <span class="text-primary">With relative</span>
+                                                </div>
+                                            </div>
+                                            <div></div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 140px 60px 45px 115px 115px 1fr; margin-left: 20px">
+                                            <div>
+                                                <b>Tiền mặt/ nữ trang:</b><br />
+                                                <span class="text-primary">Cash Jewelry</span>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label73"/>
+                                                <div>
+                                                    Không<br />
+                                                    <span class="text-primary">No</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label74"/>
+                                                <div>
+                                                    Có<br />
+                                                    <span class="text-primary">Yes</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label75"/>
+                                                <div>
+                                                    Người bệnh giữ<br />
+                                                    <span class="text-primary">With patient</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label76"/>
+                                                <div>
+                                                    Thân nhân giữ<br />
+                                                    <span class="text-primary">With relative</span>
+                                                </div>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" Text="❏" ID="Label77"/>
+                                                <div>
+                                                    Trong két an toàn của bệnh viện<br />
+                                                    <span class="text-primary">In the safety box</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: auto 1fr; margin-left: 20px">
+                                            <div>
+                                                Khác (ghi rõ):<br />
+                                                <span class="text-primary">Other (specify)</span>
+                                            </div>
+                                            <asp:Label runat="server" ID="Label78"/>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 150px 1fr 1fr 1fr; margin-left: 20px">
+                                            <div>
+                                                Thân nhân:<br />
+                                                <span class="text-primary">Relative</span>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                <div>
+                                                    Quan hệ:<br />
+                                                    <span class="text-primary">Relationship</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="Label79"/>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                <div>
+                                                    Tên:<br />
+                                                    <span class="text-primary">Name</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="Label80"/>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                <div>
+                                                    Chữ ký:<br />
+                                                    <span class="text-primary">Signature</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="Label81"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-2" style="margin-left: 20px">
+                                            Khai báo:<br />
+                                            <span class="text-primary">Declaration</span>
+                                        </div>
+
+                                        <div style="margin-left: 20px">
+                                            <div><b>Tôi tên là</b>: <span style="width: 150px; display: inline-block"></span> hiểu rõ rằng nếu Tôi và/người bệnh muốn giữ bên mình bất cứ đồ vật nào có giá trị </div>
+                                            <div class="text-primary"><b>I am: </b><span style="width: 150px; display: inline-block"></span> understand that if and / the patient choose to keep any valuables </div>
+                                            <div>
+                                                hoặc tiền trong thời gian nằm viện, Tôi sẽ không quy bất cứ trách nhiệm nào liên quan đến việc mắt mát hoặc hư tổn nào </div>
+                                            <div class="text-primary">or cash with me/him/her during hospitalization. I shall not hold AIH (the hospital) responsible in any way whatsoever in </div>
+                                            <div>cho những vật có giá trị/tiền mặt này cho bệnh viện quốc tế Mỹ.</div>
+                                            <div  class="text-primary">the event of loss or damage to the valuable/cash.</div>
+                                        </div>
+
+                                        <div class="mb-2" style="margin-left: 20px">
+                                            Hướng dẫn khai báo <br />
+                                            <span class="text-primary">Orientation and Declaration</span>
+                                        </div>
+                                        
+                                        <div class="d-grid mb-2" style="grid-template-columns: 150px 1fr 1fr 250px; margin-left: 20px">
+                                            <div>
+                                                Người xác nhận:<br />
+                                                <span class="text-primary">Acknowledged by</span>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                <div>
+                                                    Tên:<br />
+                                                    <span class="text-primary">Name</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="Label89"/>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                <div>
+                                                    Ký tên:<br />
+                                                    <span class="text-primary">Signature</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="Label90"/>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: auto auto auto auto">
+                                                <div>
+                                                    Ngày:<br />
+                                                    <span class="text-primary">Date</span>
+                                                </div>
+                                                <asp:Label runat="server" Text="___/__/20__;" ID="Label91"/>
+                                                <div>
+                                                    Giờ:<br />
+                                                    <span class="text-primary">Time</span>
+                                                </div>
+                                                <asp:Label runat="server" Text="___:___" ID="Label92"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid mb-2" style="grid-template-columns: 150px 1fr 1fr 250px; margin-left: 20px">
+                                            <div>
+                                                Người làm chứng:<br />
+                                                <span class="text-primary">Witnessed by</span>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                <div>
+                                                    Tên:<br />
+                                                    <span class="text-primary">Name</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="Label84"/>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                <div>
+                                                    Ký tên:<br />
+                                                    <span class="text-primary">Signature</span>
+                                                </div>
+                                                <asp:Label runat="server" ID="Label85"/>
+                                            </div>
+                                            <div class="d-grid" style="grid-template-columns: auto auto auto auto">
+                                                <div>
+                                                    Ngày:<br />
+                                                    <span class="text-primary">Date</span>
+                                                </div>
+                                                <asp:Label runat="server" Text="___/__/20__;" ID="Label86"/>
+                                                <div>
+                                                    Giờ:<br />
+                                                    <span class="text-primary">Time</span>
+                                                </div>
+                                                <asp:Label runat="server" Text="___:___" ID="Label87"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2"><b>E. KẾ HOẠCH XUẤT VIỆN - ĐÁNH GIÁ LẠI / <span class="text-primary">DISCHARGE PLANNING - REASSESSMENT</span></b></div>
+                                    
+                                    <div style="margin-left: 20px">
+                                        <asp:Label runat="server" ID="prt_dis_planning"/>
+                                    </div>
+
+                                    <div class="mb-2"><b>F. QUẢN LÝ XUẤT VIỆN (HOÀN THÀNH SỚM NHẤT CÓ THỂ TRONG GNÀY NHẬP VIỆN) <br />
+                                        <span class="text-primary" style="margin-left: 15px">DISCHARGE MANAGEMENT (TO BE DONE AS EARLY AT THE DAY OF ADMISSION)</span></b></div>
+
+                                    <div style="margin-left: 20px">
+                                        <asp:Label runat="server" ID="prt_dis_management"/>
+                                    </div>
+
+                                    <div class="d-grid" style="grid-template-columns: 1fr 1fr;">
+                                        <div class="text-center">
+                                            <b>Điều dưỡng đánh giá ban đầu</b><br />
+                                            <span class="text-primary">Initial assessment nurse</span><br />
+                                            (Họ tên, chữ ký, MSNV/ <span class="text-primary">Name, signature & ID</span>)
+                                            <div style="height: 70px"></div>
+                                            <div>Ngày/<span class="text-primary">Date</span> ___/___/20__ Giờ/<span class="text-primary">Time</span> ___:___</div>
+                                        </div>
+                                        <div class="text-center">
+                                            <b>Điều dưỡng đánh giá lại</b><br />
+                                            <span class="text-primary">Re-assessment nurse</span><br />
+                                            (Họ tên, chữ ký, MSNV/ <span class="text-primary">Name, signature & ID</span>)
+                                            <div style="height: 70px"></div>
+                                            <div>Ngày/<span class="text-primary">Date</span> ___/___/20__ Giờ/<span class="text-primary">Time</span> ___:___</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot class="report-footer">
+                        <tr>
+                            <td class="report-footer-cell">
+                                <img style="width: 100%" src="../images/ExcellentCare.png" />
+                                <div class="footer-info">
+                                    <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
+                                    <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>
+                                    <div>Tel: 028 3910 9999</div>
+                                    <div>www.aih.com.vn</div>
+                                </div>
+                            </td>
+                            <td class="report-footer-space"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+
 
                 <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" MaxHeight="400">
                     <Windows>
@@ -98,12 +3814,12 @@
                     </Windows>
                 </telerik:RadWindowManager>
 
-                <div class="cssclsNoPrint1">
-                    <ul class="breadcrumb cssclsNoPrint" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd; border-radius: 0;">
+                <div class="cssclsNoPrint">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                       <li>Inpatient Initial Nursing Assessment</li>
                     </ul>
-                    <div id="print_content" style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
+                    <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
                         <asp:HiddenField runat="server" ID="DataObj" />
                         <asp:Panel runat="server" ID="messagePlaceHolder">
                             <div class="card" runat="server" id="amendReasonWraper">
@@ -248,7 +3964,7 @@
                                     <div class="card-body collapse show" id="collapseOne">
                                         <div class="form-body">
 
-                                            <div class="row cssclsNoPrint">
+                                            <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
                                                         <span class="mr-2">You are viewing an old version of this document</span>
@@ -827,7 +4543,7 @@
                                                     <label class="control-label mr-2 mb-1">Chiều cao/ <span class="text-primary">Height:</span></label>
                                                     <asp:Label runat="server" ID="lbl_vs_height"></asp:Label>
                                                     <div class="form-group w-4 d-inline-block" runat="server" id="vs_height_wrapper">
-                                                        <input tabindex="3" data-type="number" onchange="CalculateBmi()" maxlength="3" id="txt_vs_height" runat="server" class="form-control text-right" />
+                                                        <input tabindex="3" data-type="number" onchange="CalculateBmi()" id="txt_vs_height" runat="server" class="form-control text-right" />
                                                         <span class="append">cm</span>
                                                     </div>
                                                 </div>
@@ -2196,7 +5912,7 @@ applicable for children and pregnant</span>)
                                                     <img src="" id="pain_annotation_img" runat="server"  class="cssclsNoScreen" />
                                                         <asp:HiddenField runat="server" ID="pain_annotation_base64" />
 
-                                                        <div class="cssclsNoPrint"  style="width: 500px;">
+                                                        <div class=""  style="width: 500px;">
                                                             <div id="controllers">
                                                                 <span runat="server" class="controller btn btn-secondary" id="pain_annotation_undo">undo</span>
                                                                 <span runat="server" class="controller btn btn-secondary" id="pain_annotation_redo">redo</span>
@@ -2398,7 +6114,7 @@ applicable for children and pregnant</span>)
                                                     <img class="cssclsNoScreen" src="" id="skin_anno_data_img" runat="server" />
                                                         <asp:HiddenField runat="server" ID="skin_anno_data_base64" />
 
-                                                        <div class="cssclsNoPrint"  style="width: 500px;">
+                                                        <div class=""  style="width: 500px;">
                                                             <div id="controllers1">
                                                                 <span runat="server" class="controller btn btn-secondary" id="skin_anno_data_undo">undo</span>
                                                                 <span runat="server" class="controller btn btn-secondary" id="skin_anno_data_redo">redo</span>
@@ -3499,6 +7215,7 @@ applicable for children and pregnant</span>)
                                             <div class="col-md-12">
                                                 <label class="control-label mb-1 h4">E. KẾ HOẠCH XUẤT VIỆN- ĐÁNH GIÁ LẠI/ <span class="text-primary">DISCHARGE PLANNING - REASSESSMENT:</span></label>
                                             </div>
+
                                             <div class="col-md-12 gt-2-a mb-2">
 
                                                 <label></label>
@@ -3533,7 +7250,7 @@ applicable for children and pregnant</span>)
                                                 </div>
                                             </div>
 
-                                            <div class="row mb-2 cssclsNoPrint">
+                                            <div class="row mb-2">
                                                 <div class="col-md-12">
                                                     <div class="form-actions">
                                                         <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
@@ -3544,7 +7261,7 @@ applicable for children and pregnant</span>)
 
                                                         <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                        <asp:LinkButton OnClientClick="printDiv(); return false;" runat="server" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                        <asp:LinkButton OnClick="btnPrint_Click" runat="server" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                         <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                                     </div>
@@ -3868,15 +7585,23 @@ applicable for children and pregnant</span>)
             }, 1000);
         }
 
-        function printDiv() {
-            var printContents = document.getElementById("print_content").innerHTML;
-            var originalContents = document.body.innerHTML;
+        function btnPrint_Click() {
+            let printContent = document.querySelector("#printContent");
+            printContent.setAttribute("style", "display: block");
 
-            document.body.innerHTML = printContents;
+            let total = Math.ceil(printContent.offsetHeight / 1021);
+
+            for (let i = 1; i <= total; i++) {
+                let div = document.createElement("div");
+                div.setAttribute("class", "watermark page");
+                div.setAttribute("style", "top: " + (1173 * (i - 1)) + "px");
+                div.setAttribute("data-page", "Page " + i + " of " + total);
+                document.getElementById("print_content").append(div);
+            }
+
+            setTimeout(() => { printContent.setAttribute("style", "display: none"); }, 100);
 
             window.print();
-
-            document.body.innerHTML = originalContents;
         }
     </script>
 
