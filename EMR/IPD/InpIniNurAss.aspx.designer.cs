@@ -2904,15 +2904,6 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_medication_used;
 
         /// <summary>
-        /// prt_fall_history_code_0 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_fall_history_code_0;
-
-        /// <summary>
         /// prt_fall_history_code_25 control.
         /// </summary>
         /// <remarks>
@@ -2920,6 +2911,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label prt_fall_history_code_25;
+
+        /// <summary>
+        /// prt_fall_history_code_0 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_fall_history_code_0;
 
         /// <summary>
         /// prt_fall_history_code control.
@@ -10587,7 +10587,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        /// protected global::System.Web.UI.WebControls.LinkButton btnDelete;
+        protected global::System.Web.UI.WebControls.LinkButton btnDelete;
 
         /// <summary>
         /// PopupShowDelay control.

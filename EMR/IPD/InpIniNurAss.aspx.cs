@@ -340,7 +340,7 @@ namespace EMR
 
                 skin_anno_data_img.Src = JObject.Parse(iina.skin_anno_data).dataURI;
 
-                WebHelpers.VisibleControl(true, pain_annotation_undo, skin_anno_data_undo, pain_annotation_redo, skin_anno_data_redo, pain_annotation_pencilWrapper, skin_anno_data_pencil_wrapper, cb_older_70_true, cb_younger_70_true);
+                WebHelpers.VisibleControl(true, pain_annotation_undo, skin_anno_data_undo, pain_annotation_redo, skin_anno_data_redo, pain_annotation_pencilWrapper, skin_anno_data_pencil_wrapper, cb_older_70_true, cb_younger_70_true, cb_normal_nutrition_req_true, cb_nutrition_normal_true);
 
                 DataObj.Value = JsonConvert.SerializeObject(iina);
 
@@ -466,7 +466,8 @@ namespace EMR
                     //
                     //Total score
                     //
-                    total_score.Text = WebHelpers.FormatString(iina.total_score);
+
+                    total_nutri_score.Text = WebHelpers.FormatString(iina.total_nutri_score);
                 }
                 //
                 //7
@@ -594,8 +595,11 @@ namespace EMR
             {
                 PatientInfo patientInfo = new PatientInfo(varPID);
                 PatientVisitInfo visitInfo = new PatientVisitInfo(varPVID, loc);
-                
 
+                prt_fullname.Text = patientInfo.FullName;
+                prt_dob.Text = WebHelpers.FormatDateTime(patientInfo.DOB, "dd/MM/yyyy");
+                prt_gender.Text = patientInfo.Gender;
+                prt_pid.Text = patientInfo.visible_patient_id;
 
                 prt_date_of_admission.Text = WebHelpers.FormatDateTime(visitInfo.ActualVisitDateTime, "dd/MM/yyyy");
                 prt_time_of_admission.Text = WebHelpers.FormatDateTime(visitInfo.ActualVisitDateTime, "HH:mm");
@@ -1779,9 +1783,10 @@ namespace EMR
         }
         private bool ShowFinalScreening(Iina iina)
         {
+            if(iina.bmi_out_range != null) { if (iina.bmi_out_range) return true; }
             if(iina.loss_weight != null) { if (iina.loss_weight) return true; }
-            else if(iina.reduce_dietary != null) { if (iina.reduce_dietary) return true; }
-            else if (iina.severely_ill != null) { if (iina.severely_ill) return true; }
+            if(iina.reduce_dietary != null) { if (iina.reduce_dietary) return true; }
+            if (iina.severely_ill != null) { if (iina.severely_ill) return true; }
             return false;
         }
         private string GetPresSoreRiskCode(int score)
@@ -1831,7 +1836,11 @@ namespace EMR
         }
         private void update_total_nutri_score()
         {
-            total_nutri_score.Text = Convert.ToString(int.Parse(nutrition_score.Text) + int.Parse(severity_score.Text) + int.Parse(age_score.Text));
+            int nutritionScore = string.IsNullOrEmpty(nutrition_score.Text) ? 0 : int.Parse(nutrition_score.Text);
+            int severityScore = string.IsNullOrEmpty(severity_score.Text) ? 0 : int.Parse(severity_score.Text);
+            int ageScore = string.IsNullOrEmpty(age_score.Text) ? 0 : int.Parse(age_score.Text);
+            int total = nutritionScore + severityScore + ageScore;
+            total_nutri_score.Text = Convert.ToString(total);
         }
         private void UpdateData(Iina iina)
         {
@@ -2181,22 +2190,22 @@ namespace EMR
             switch (Request["__EVENTTARGET"])
             {
                 case "initial_screening_change":
-                    initial_screening_change(Request["__EVENTARGUMENT"]);
+                    initial_screening_change(Convert.ToString(Request["__EVENTARGUMENT"]));
                     break;
                 case "nutrition_status_change":
-                    nutrition_status_change(Request["__EVENTARGUMENT"]);
+                    nutrition_status_change(Convert.ToString(Request["__EVENTARGUMENT"]));
                     break;
                 case "severity_of_disease_change":
-                    severity_of_disease_change(Request["__EVENTARGUMENT"]);
+                    severity_of_disease_change(Convert.ToString(Request["__EVENTARGUMENT"]));
                     break;
                 case "age_change":
-                    age_change(Request["__EVENTARGUMENT"]);
+                    age_change(Convert.ToString(Request["__EVENTARGUMENT"]));
                     break;
                 case "total_score_change":
-                    total_score_change(Request["__EVENTARGUMENT"]);
+                    total_score_change(Convert.ToString(Request["__EVENTARGUMENT"]));
                     break;
                 case "fr_total_score_change":
-                    fr_total_score_change(Request["__EVENTARGUMENT"]);
+                    fr_total_score_change(Convert.ToString(Request["__EVENTARGUMENT"]));
                     break;
             }
         }
@@ -2246,7 +2255,7 @@ namespace EMR
 
             try
             {
-                if (cb_severity_score1_1.Checked || cb_severity_score1_1.Checked || cb_severity_score1_3.Checked || cb_severity_score1_4.Checked)
+                if (cb_severity_score1_1.Checked || cb_severity_score1_2.Checked || cb_severity_score1_3.Checked || cb_severity_score1_4.Checked)
                 {
                     score += 1;
                 }

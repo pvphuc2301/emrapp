@@ -60,22 +60,13 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label prt_vpid;
 
         /// <summary>
-        /// Line control.
+        /// print_content control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.PrintTemplate.Line Line;
-
-        /// <summary>
-        /// Div1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl print_content;
 
         /// <summary>
         /// prt_reason_admission control.
@@ -87,22 +78,13 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label prt_reason_admission;
 
         /// <summary>
-        /// prt_is_obs_gyn_True control.
+        /// prt_title control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_is_obs_gyn_True;
-
-        /// <summary>
-        /// prt_is_obs_gyn_False control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_is_obs_gyn_False;
+        protected global::System.Web.UI.WebControls.Label prt_title;
 
         /// <summary>
         /// div_obs control.
@@ -132,15 +114,6 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label prt_lmp_to;
 
         /// <summary>
-        /// prt_ges_age_days control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_ges_age_days;
-
-        /// <summary>
         /// prt_ges_age_weeks control.
         /// </summary>
         /// <remarks>
@@ -148,6 +121,15 @@ namespace EMR.IPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label prt_ges_age_weeks;
+
+        /// <summary>
+        /// prt_ges_age_days control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_ges_age_days;
 
         /// <summary>
         /// prt_prenatal_visit control.
@@ -159,130 +141,58 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label prt_prenatal_visit;
 
         /// <summary>
-        /// prt_tetanus_vaccination_False control.
+        /// prt_tetanus_vaccination control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_tetanus_vaccination_False;
+        protected global::System.Web.UI.WebControls.Label prt_tetanus_vaccination;
 
         /// <summary>
-        /// prt_tetanus_vaccination_True control.
+        /// prt_gbs_disease control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_tetanus_vaccination_True;
+        protected global::System.Web.UI.WebControls.Label prt_gbs_disease;
 
         /// <summary>
-        /// prt_tetanus_vaccin_time control.
+        /// prt_gbs_bacteriuria control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_tetanus_vaccin_time;
+        protected global::System.Web.UI.WebControls.Label prt_gbs_bacteriuria;
 
         /// <summary>
-        /// prt_gbs_disease_False control.
+        /// prt_gbs_vaginal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_gbs_disease_False;
+        protected global::System.Web.UI.WebControls.Label prt_gbs_vaginal;
 
         /// <summary>
-        /// prt_gbs_disease_True control.
+        /// prt_ges_diabetes control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_gbs_disease_True;
+        protected global::System.Web.UI.WebControls.Label prt_ges_diabetes;
 
         /// <summary>
-        /// prt_gbs_bacteriuria_False control.
+        /// prt_other_ges_abnormal control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_gbs_bacteriuria_False;
-
-        /// <summary>
-        /// prt_gbs_bacteriuria_True control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_gbs_bacteriuria_True;
-
-        /// <summary>
-        /// prt_gbs_vaginal_False control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_gbs_vaginal_False;
-
-        /// <summary>
-        /// prt_gbs_vaginal_True control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_gbs_vaginal_True;
-
-        /// <summary>
-        /// prt_ges_diabetes_False control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_ges_diabetes_False;
-
-        /// <summary>
-        /// prt_ges_diabetes_True control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_ges_diabetes_True;
-
-        /// <summary>
-        /// prt_other_ges_abnormal_False control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_other_ges_abnormal_False;
-
-        /// <summary>
-        /// prt_other_ges_abnormal_True control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_other_ges_abnormal_True;
-
-        /// <summary>
-        /// other_ges_abnormal_note control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label other_ges_abnormal_note;
+        protected global::System.Web.UI.WebControls.Label prt_other_ges_abnormal;
 
         /// <summary>
         /// prt_labor_trig_at_time control.
@@ -420,58 +330,31 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label prt_previous_gyn_diseases;
 
         /// <summary>
-        /// updatePanel4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel updatePanel4;
-
-        /// <summary>
         /// prt_obs_history control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView prt_obs_history;
+        protected global::System.Web.UI.HtmlControls.HtmlTable prt_obs_history;
 
         /// <summary>
-        /// Label22 control.
+        /// prt_general_appearance control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label22;
+        protected global::System.Web.UI.WebControls.Label prt_general_appearance;
 
         /// <summary>
-        /// prt_edema_False control.
+        /// prt_edema control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_edema_False;
-
-        /// <summary>
-        /// prt_edema_True control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_edema_True;
-
-        /// <summary>
-        /// prt_edema_note control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_edema_note;
+        protected global::System.Web.UI.WebControls.Label prt_edema;
 
         /// <summary>
         /// prt_cardio_system control.
@@ -564,22 +447,13 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label prt_other_findings;
 
         /// <summary>
-        /// prt_psy_consul_required_False control.
+        /// prt_psy_consul_required control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_psy_consul_required_False;
-
-        /// <summary>
-        /// prt_psy_consul_required_True control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_psy_consul_required_True;
+        protected global::System.Web.UI.WebControls.Label prt_psy_consul_required;
 
         /// <summary>
         /// div_for_obstetric control.
@@ -591,13 +465,22 @@ namespace EMR.IPD
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_for_obstetric;
 
         /// <summary>
-        /// prt_obs_pre_cicatrice control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_obs_pre_cicatrice;
+        protected global::System.Web.UI.WebControls.Label Label1;
+
+        /// <summary>
+        /// prt_obs_pre_cicatrice_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_obs_pre_cicatrice_true;
 
         /// <summary>
         /// prt_obs_uterine_shape control.
@@ -717,76 +600,94 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label prt_obs_adnexa;
 
         /// <summary>
-        /// prt_obs_mem_condition_code_True control.
+        /// prt_obs_mem_condition_code control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_obs_mem_condition_code_True;
+        protected global::System.Web.UI.WebControls.Label prt_obs_mem_condition_code;
 
         /// <summary>
-        /// prt_obs_mem_condition_code_False control.
+        /// obs_mem_condition_code_ru_field control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_obs_mem_condition_code_False;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl obs_mem_condition_code_ru_field;
 
         /// <summary>
-        /// prt_N control.
+        /// prt_obs_rup_of_mem_at control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_N;
+        protected global::System.Web.UI.WebControls.Label prt_obs_rup_of_mem_at;
 
         /// <summary>
-        /// prt_O control.
+        /// prt_obs_rup_of_mem_code control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_O;
+        protected global::System.Web.UI.WebControls.Label prt_obs_rup_of_mem_code;
 
         /// <summary>
-        /// prt_P control.
+        /// prt_obs_feat_amniotic_n control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_P;
+        protected global::System.Web.UI.WebControls.Label prt_obs_feat_amniotic_n;
 
         /// <summary>
-        /// prt_O_C control.
+        /// prt_obs_feat_amniotic_o control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_O_C;
+        protected global::System.Web.UI.WebControls.Label prt_obs_feat_amniotic_o;
 
         /// <summary>
-        /// prt_O_B control.
+        /// prt_obs_feat_amniotic_p control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_O_B;
+        protected global::System.Web.UI.WebControls.Label prt_obs_feat_amniotic_p;
 
         /// <summary>
-        /// prt_O_O control.
+        /// prt_obs_presentation_code_c control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_O_O;
+        protected global::System.Web.UI.WebControls.Label prt_obs_presentation_code_c;
+
+        /// <summary>
+        /// prt_obs_presentation_code_b control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_obs_presentation_code_b;
+
+        /// <summary>
+        /// prt_obs_presentation_code_o control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_obs_presentation_code_o;
 
         /// <summary>
         /// prt_obs_presentation_other control.
@@ -825,13 +726,13 @@ namespace EMR.IPD
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl div_for_gyneacology;
 
         /// <summary>
-        /// prt_gyn_abdo_sur_scars control.
+        /// prt_gyn_abdo_sur_scars_true control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_gyn_abdo_sur_scars;
+        protected global::System.Web.UI.WebControls.Label prt_gyn_abdo_sur_scars_true;
 
         /// <summary>
         /// prt_gyn_reason control.
@@ -942,15 +843,6 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label prt_add_investigations;
 
         /// <summary>
-        /// Label61 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label61;
-
-        /// <summary>
         /// prt_initial_diagnosis control.
         /// </summary>
         /// <remarks>
@@ -994,15 +886,6 @@ namespace EMR.IPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label prt_discharge_plan;
-
-        /// <summary>
-        /// lbl_create_date control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_create_date;
 
         /// <summary>
         /// RadWindowManager control.
@@ -3954,7 +3837,7 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        //protected global::System.Web.UI.WebControls.LinkButton btnDelete;
+        /// protected global::System.Web.UI.WebControls.LinkButton btnDelete;
 
         /// <summary>
         /// PopupShowDelay control.

@@ -22,25 +22,19 @@
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
-    <style type="text/css">
-        /*table { page-break-after:auto }
-        tr    { page-break-inside:avoid; page-break-after:auto }
-        td    { page-break-inside:avoid; page-break-after:auto }
-        thead { display:table-header-group }
-        tfoot { display:table-footer-group }*/
-    </style>
+    <link href="../styles/print.css" rel="stylesheet" />
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <div class="cssclsNoScreen1" style="display: none;">
+                <div class="cssclsNoScreen" id="printContent">
                 <table class="report-container">
                     <thead class="report-header">
                         <tr>
                             <th class="report-header-cell">
-                                <div class="header-info">
+                                <div class="header-info" style="height: 75px;">
                                     <img src="../images/AIH_PI_FULL.png" />
                                     <div class="header-info-title">
                                         <h4>BỆNH ÁN SẢN PHỤ KHOA</h4>
@@ -51,730 +45,470 @@
                                         <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
                                     </div>
                                 </div>
-                                <webUI:Line runat="server" ID="Line" />
+                                <div style="height: 25px">
+                                    <span style="width: 190px; border-bottom-style: solid; border-bottom-color: #e20e5a; border-bottom-width: 5px; display: inline-block; font-size: 26.6667px;"></span>
+                                    <span style="display: inline-block; border-bottom-style: solid; border-bottom-color: #007297; border-bottom-width: 5px; width: calc(100% - 191px); margin-left: -5px;"></span>
+                                </div>
                             </th>
                         </tr>
                     </thead>
                     <tbody class="report-content">
                         <tr>
                             <td class="report-content-cell">
-                                <div class="main" runat="server" id="Div1">
+                                <div style="position: relative" class="main" runat="server" id="print_content">
+                                    <img style="height: 1px" src="../images/logo-opacity.png" />
                                     <!-- Code printed here -->
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label Style="font-weight: bold;">I. Lí do nhập viện/ Reason for admission: </asp:Label>
-                                            <asp:Label runat="server" ID="prt_reason_admission"></asp:Label>
-                                        </div>
+                                    <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>I. Lí do nhập viện/ Reason for admission:</b>
+                                        <asp:Label runat="server" ID="prt_reason_admission" />
                                     </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label Style="font-weight: bold;">II. Bệnh sử/ Medical history: </asp:Label>
-                                        </div>
+
+                                    <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>II. Bệnh sử/ Medical history:</b>
                                     </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label Style="font-weight: bold;">1. Bệnh sử hiện tại/ Current medical history: </asp:Label>
-                                        </div>
+
+                                    <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>1. Bệnh sử hiện tại/ Current medical history:</b>
                                     </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: center; font-family: Tahoma; font-size: 14.5px">
-                                            <asp:Label ID="prt_is_obs_gyn_True" runat="server" />
-                                            <asp:Label ID="prt_is_obs_gyn_False" runat="server" />
-                                        </div>
+
+                                    <div class="text-center" style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b><asp:Label ID="prt_title" runat="server" /></b>
                                     </div>
+
                                     <div id="div_obs" runat="server">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label>- Kinh chót/ LMP: từ/ from:  </asp:Label>
-                                            <asp:Label runat="server" ID="prt_lmp_from"></asp:Label>
-                                            <asp:Label> đến/ to:  </asp:Label>
-                                            <asp:Label runat="server" ID="prt_lmp_to"></asp:Label>
+                                        <div style="font-size: 14.5px; font-family: Tahoma">
+                                            - Kinh chót/ LMP: từ/ from: <asp:Label runat="server" ID="prt_lmp_from"/>
+                                            đến/ to: <asp:Label runat="server" ID="prt_lmp_to"/>
                                         </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label>- Tuổi thai/ Gestational age:  </asp:Label>
-                                            <asp:Label runat="server" ID="prt_ges_age_days"></asp:Label>
-                                            <asp:Label> tuần/ weeks:  </asp:Label>
-                                            <asp:Label runat="server" ID="prt_ges_age_weeks"></asp:Label>
-                                            <asp:Label> ngày/days  </asp:Label>
+                                        <div style="font-size: 14.5px; font-family: Tahoma">
+                                            - Tuổi thai/ Gestational age: 
+                                            <asp:Label runat="server" ID="prt_ges_age_weeks"/> tuần/ weeks: 
+                                            <asp:Label runat="server" ID="prt_ges_age_days"/> ngày/days
                                         </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label>- Khám thai/ Prenatal visit:  </asp:Label>
-                                            <asp:Label runat="server" ID="prt_prenatal_visit"></asp:Label>
+
+                                        <div style="font-size: 14.5px; font-family: Tahoma">
+                                            - Khám thai/ Prenatal visit:
+                                            <asp:Label runat="server" ID="prt_prenatal_visit"/>
                                         </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label>- Chủng ngừa uốn ván/ Tetanus vaccination:  </asp:Label>
+
+                                        <div style="font-size: 14.5px; font-family: Tahoma">
+                                            - Chủng ngừa uốn ván/ Tetanus vaccination:
                                         </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 15px">
-                                            <div class="row">
-                                                <div class="col-2 ">
-                                                </div>
-                                                <div class="col-5 ">
-                                                    <asp:Label ID="prt_tetanus_vaccination_False" runat="server" />
-                                                    <asp:Label>Chưa/ Not yet</asp:Label>
-                                                </div>
-                                                <div class="col-5 ">
-                                                    <asp:Label ID="prt_tetanus_vaccination_True" runat="server" />
-                                                    <asp:Label>Có/yes: </asp:Label>
-                                                    <asp:Label runat="server" ID="prt_tetanus_vaccin_time"></asp:Label>
-                                                    <asp:Label> Lần/times </asp:Label>
-                                                </div>
-                                            </div>
+
+                                        <div style="margin-left: 10px">
+                                            <asp:Label ID="prt_tetanus_vaccination" runat="server" />
                                         </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label>- Nhiễm Streptococcus nhóm B/ GBS infection:  </asp:Label>
+
+
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            - Nhiễm Streptococcus nhóm B/ GBS infection:
                                         </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 10px; margin-right: 25px">
-                                            <asp:Label>• Con trước nhiễm trùng huyết do Streptococcus nhóm B/ Previous infant with invasive GBS disease:  </asp:Label>
+
+                                        <div style="font-size: 14.5px; font-family: Tahoma; margin-left: 10px;">
+                                            • Con trước nhiễm trùng huyết do Streptococcus nhóm B/ Previous infant with invasive GBS disease:
                                         </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 15px">
-                                            <div class="row">
-                                                <div class="col-2 ">
-                                                </div>
-                                                <div class="col-5 ">
-                                                    <asp:Label ID="prt_gbs_disease_False" runat="server" />
-                                                    <asp:Label>Không/ No</asp:Label>
-                                                </div>
-                                                <div class="col-5 ">
-                                                    <asp:Label ID="prt_gbs_disease_True" runat="server" />
-                                                    <asp:Label>Có/yes</asp:Label>
-                                                </div>
-                                            </div>
+
+                                        <div style="margin-left: 40px">
+                                            <asp:Label ID="prt_gbs_disease" runat="server" />
                                         </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin: 10px; margin-right: 25px; max-width: 99%">
-                                            <asp:Label>• Nhiễm trùng tiểu do Streptococcus nhóm B trong thai kỳ lần này/ GBS bacteriuria during any trimester of the current pregnancy: </asp:Label>
+
+                                        <div style="margin-left: 40px">
+                                            Nhiễm trùng tiểu do Streptococcus nhóm B trong thai kỳ lần này/ GBS bacteriuria during any trimester of the current pregnancy:
                                         </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 15px">
-                                            <div class="row">
-                                                <div class="col-2 ">
-                                                </div>
-                                                <div class="col-5 ">
-                                                    <asp:Label ID="prt_gbs_bacteriuria_False" runat="server" />
-                                                    <asp:Label>Không/ No</asp:Label>
-                                                </div>
-                                                <div class="col-5 ">
-                                                    <asp:Label ID="prt_gbs_bacteriuria_True" runat="server" />
-                                                    <asp:Label>Có/yes</asp:Label>
-                                                </div>
-                                            </div>
+
+                                        <div style="margin-left: 40px">
+                                            <asp:Label ID="prt_gbs_bacteriuria" runat="server" />
                                         </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 10px; margin-right: -15px; max-width: 99%">
-                                            <asp:Label>• Cấy tầm soát phết âm đạo – trực tràng dương tính Streptococcus nhóm B trong tam cá nguyệt cuối thai kỳ lần này/ Positive GBS vaginal-rectal screening culture in late gestation during current pregnancy: </asp:Label>
+
+                                        <div style="font-size: 14.5px; font-family: Tahoma; margin-left: 10px;">
+                                            • Cấy tầm soát phết âm đạo – trực tràng dương tính Streptococcus nhóm B trong tam cá nguyệt cuối thai kỳ lần này/ Positive GBS vaginal-rectal screening culture in late gestation during current pregnancy:
                                         </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 15px">
-                                            <div class="row">
-                                                <div class="col-2 ">
-                                                </div>
-                                                <div class="col-5 ">
-                                                    <asp:Label ID="prt_gbs_vaginal_False" runat="server" />
-                                                    <asp:Label>Không/ No</asp:Label>
-                                                </div>
-                                                <div class="col-5 ">
-                                                    <asp:Label ID="prt_gbs_vaginal_True" runat="server" />
-                                                    <asp:Label>Có/yes</asp:Label>
-                                                </div>
-                                            </div>
+
+                                        <div style="margin-left: 40px">
+                                            <asp:Label ID="prt_gbs_vaginal" runat="server" />
                                         </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <div class="row">
-                                                <div class="col-6 ">
-                                                    <asp:Label>- Đái tháo đường thai kỳ/ Gestational Diabete: </asp:Label>
-                                                </div>
-                                                <div class="col-3 ">
-                                                    <asp:Label ID="prt_ges_diabetes_False" runat="server" />
-                                                    <asp:Label>Không/ No</asp:Label>
-                                                </div>
-                                                <div class="col-3 ">
-                                                    <asp:Label ID="prt_ges_diabetes_True" runat="server" />
-                                                    <asp:Label>Có/yes</asp:Label>
-                                                </div>
-                                            </div>
+                                        
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            - Đái tháo đường thai kỳ/ Gestational Diabetes:&nbsp;
+                                            <asp:Label ID="prt_ges_diabetes" runat="server" />
                                         </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma;">
-                                            <asp:Label>- Bất thường khác trong thai kỳ/ Other gestational abnormalities: </asp:Label>
+
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma;">
+                                            - Bất thường khác trong thai kỳ/ Other gestational abnormalities:
                                         </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 15px">
-                                            <div class="row">
-                                                <div class="col-2 ">
-                                                </div>
-                                                <div class="col-5 ">
-                                                    <asp:Label ID="prt_other_ges_abnormal_False" runat="server" />
-                                                    <asp:Label>Không/ No</asp:Label>
-                                                </div>
-                                                <div class="col-5 ">
-                                                    <asp:Label ID="prt_other_ges_abnormal_True" runat="server" />
-                                                    <asp:Label>Có/yes</asp:Label>
-                                                    <asp:Label ID="other_ges_abnormal_note" runat="server" />
-                                                </div>
-                                            </div>
+
+                                        <div style="margin-left: 40px; font-size: 14.5px; font-family: Tahoma;">
+                                            <asp:Label ID="prt_other_ges_abnormal" runat="server" />
                                         </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma;">
-                                            <asp:Label>- Chuyển dạ khởi phát lúc/ Labor triggered at: </asp:Label>
+
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma;">
+                                            - Chuyển dạ khởi phát lúc/ Labor triggered at:
                                             <asp:Label ID="prt_labor_trig_at_time" runat="server" />
                                         </div>
-                                        <div  style="text-align: justify; font-size: 14.5px; font-family: Tahoma;">
-                                            <asp:Label>- Dấu hiệu ban đầu/ Preliminary signs: </asp:Label>
+
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma;">
+                                            - Dấu hiệu ban đầu/ Preliminary signs:
                                             <asp:Label ID="prt_preliminary_signs" runat="server" />
                                         </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma;">
-                                            <asp:Label>❖ Thuốc đang sử dụng/ Current medications </asp:Label>
+
+                                        <div style="margin-left: 20px; text-align: justify; font-size: 14.5px; font-family: Tahoma;">
+                                            <b>❖ Thuốc đang sử dụng/ Current medications</b>:
                                             <asp:Label ID="prt_obs_cur_medication" runat="server" />
                                         </div>
                                     </div>
-                                    <div class="row mb-2  " id="div_gyn" runat="server">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma;">
+
+                                    <div id="div_gyn" runat="server">
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma;">
                                             <asp:Label ID="prt_gyn_med_history" runat="server" />
                                         </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma;">
-                                            <asp:Label>❖ Thuốc đang sử dụng/ Current medications</asp:Label>
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma;">
+                                            <b>❖ Thuốc đang sử dụng/ Current medications</b>:
                                             <asp:Label ID="prt_gyn_cur_medication" runat="server" />
                                         </div>
                                     </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label Style="font-weight: bold;">2. Tiền sử bệnh/ Antecedent medical history: </asp:Label>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label>- Cá nhân/ Personal:</asp:Label>
-                                            <asp:Label ID="prt_personal" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label>- Gia đình/ Family: </asp:Label>
-                                            <asp:Label ID="prt_family" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label Style="font-weight: bold;">3. Tiền căn phụ khoa/ Gynecological history: </asp:Label>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label>- Tuổi dậy thì/ Age of menarche: </asp:Label>
-                                            <asp:Label ID="prt_age_of_menarhce" runat="server" />
-                                            <asp:Label> Chu kỳ kinh/ Menstrual cycle: </asp:Label>
-                                            <asp:Label ID="prt_menstrual_cycle" runat="server" />
-                                            <asp:Label> ngày/ day(s). Số ngày hành kinh/ Length of period: </asp:Label>
-                                            <asp:Label ID="prt_length_of_period" runat="server" />
-                                            <asp:Label> ngày/ day(s), Lượng máu kinh/ Amount of menstrual blood: </asp:Label>
-                                            <asp:Label ID="prt_amount_mens_blood" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label>- Tuổi kết hôn/ Marriage age: </asp:Label>
-                                            <asp:Label ID="prt_marriage_age" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label>- Tuổi mãn kinh/ Age of menopause: </asp:Label>
-                                            <asp:Label ID="prt_age_menopause" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label>- Những bệnh phụ khoa đã mắc trước đây/ Previous gynecological diseases: </asp:Label>
-                                            <asp:Label ID="prt_previous_gyn_diseases" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label Style="font-weight: bold;">4. Tiền căn sản khoa/ Obstetric history: </asp:Label>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 " style="page-break-inside: avoid" >
-                                        <div class="col-md-12 " style="font-size: 14.5px; font-family: Tahoma">
-                                            <asp:UpdatePanel ID="updatePanel4" runat="server" UpdateMode="Always">
-                                                <ContentTemplate>
-                                                    <asp:GridView
-                                                        ShowHeaderWhenEmpty="true"
-                                                        ID="prt_obs_history"
-                                                        runat="server"
-                                                        CssClass="tb-responsive table-bordered"
-                                                        AutoGenerateColumns="false">
-                                                        <Columns>
-                                                            <asp:TemplateField>
-                                                                <HeaderTemplate>
-                                                                    <div class="w-s pt-2 pb-2" style=" font-weight: bold; margin: 5px">
-                                                                        Lần mang thai thứ/ <span class="text-primary">gravidity</span>
-                                                                    </div>
-                                                                </HeaderTemplate>
-                                                                <ItemTemplate>
-                                                                    <asp:Label Style="margin: 5px" Text='<%#Eval("label") %>' runat="server" />
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField>
-                                                                <HeaderTemplate>
-                                                                    <div style="width: 80px; text-align: center; margin: 5px">1</div>
-                                                                </HeaderTemplate>
-                                                                <ItemTemplate>
-                                                                    <asp:Label Style="margin: 5px" Text='<%#Eval("grav_1") %>' runat="server" Width="100px" />
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField>
-                                                                <HeaderTemplate>
-                                                                    <div style="width: 80px; text-align: center; margin: 5px">2</div>
-                                                                </HeaderTemplate>
-                                                                <ItemTemplate>
-                                                                    <asp:Label Style="margin: 5px" Text='<%#Eval("grav_2") %>' runat="server" Width="100px" />
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField>
-                                                                <HeaderTemplate>
-                                                                    <div style="margin: 5px" style="width: 80px; text-align: center; margin: 5px">3</div>
-                                                                </HeaderTemplate>
-                                                                <ItemTemplate>
-                                                                    <asp:Label Style="margin: 5px" Text='<%#Eval("grav_3") %>' runat="server" Width="100px" />
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField>
-                                                                <HeaderTemplate>
-                                                                    <div style="width: 80px; text-align: center; margin: 5px">4</div>
-                                                                </HeaderTemplate>
-                                                                <ItemTemplate>
-                                                                    <asp:Label Style="margin: 5px" Text='<%#Eval("grav_4") %>' runat="server" Width="100px" />
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField>
-                                                                <HeaderTemplate>
-                                                                    <div style="width: 80px; text-align: center; margin: 5px">5</div>
-                                                                </HeaderTemplate>
-                                                                <ItemTemplate>
-                                                                    <asp:Label Style="margin: 5px" Text='<%#Eval("grav_5") %>' runat="server" Width="100px" />
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
-                                                            <asp:TemplateField>
-                                                                <HeaderTemplate>
-                                                                    <div style="width: 80px; text-align: center; margin: 5px">6</div>
-                                                                </HeaderTemplate>
-                                                                <ItemTemplate>
-                                                                    <asp:Label Style="margin: 5px" Text='<%#Eval("grav_6") %>' runat="server" Width="100px" />
-                                                                </ItemTemplate>
-                                                            </asp:TemplateField>
 
-                                                        </Columns>
+                                    <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>2. Tiền sử bệnh/ Antecedent medical history:</b>
+                                    </div>
 
-                                                    </asp:GridView>
-                                                </ContentTemplate>
-                                            </asp:UpdatePanel>
-                                        </div>
+                                    <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        - Cá nhân/ Personal: <asp:Label ID="prt_personal" runat="server" />
                                     </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label Style="font-weight: bold;">III. Khám lâm sàng/ Physical examination: </asp:Label>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label Style="font-weight: bold;">1. Khám tổng quát/ General exam: </asp:Label>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-8 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 10px; max-width: 99%">
-                                            <asp:Label Style="font-weight: bold">• Tổng trạng/ </asp:Label>
-                                            <asp:Label>General appearance: </asp:Label>
-                                            <asp:Label ID="Label22" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 10px; max-width: 99%">
-                                            <div class="row">
-                                                <div class="col-2 ">
-                                                    <asp:Label Style="font-weight: bold">Phù/ </asp:Label>
-                                                    <asp:Label>Edema: </asp:Label>
-                                                </div>
-                                                <div class="col-2 ">
-                                                    <asp:Label ID="prt_edema_False" runat="server" />
-                                                    <asp:Label>Không/ No</asp:Label>
-                                                </div>
-                                                <div class="col-8 ">
-                                                    <asp:Label ID="prt_edema_True" runat="server" />
-                                                    <asp:Label>Có, chi tiết/ Yes, specify: </asp:Label>
-                                                    <asp:Label ID="prt_edema_note" runat="server" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 10px; max-width: 99%">
-                                            <asp:Label Style="font-weight: bold">• Hệ tim mạch/ </asp:Label>
-                                            <asp:Label>Cardiovascular system: </asp:Label>
-                                            <asp:Label ID="prt_cardio_system" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 10px; max-width: 99%">
-                                            <asp:Label Style="font-weight: bold">• Hệ hô hấp/ </asp:Label>
-                                            <asp:Label>Respiratory system: </asp:Label>
-                                            <asp:Label ID="prt_respiratory_system" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 10px; max-width: 99%">
-                                            <asp:Label Style="font-weight: bold">• Hệ tiêu hóa/ </asp:Label>
-                                            <asp:Label>Digestive system: </asp:Label>
-                                            <asp:Label ID="prt_digestive_system" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 10px; max-width: 99%">
-                                            <asp:Label Style="font-weight: bold">• Hệ thần kinh/ </asp:Label>
-                                            <asp:Label>Nervous system: </asp:Label>
-                                            <asp:Label ID="prt_nervous_system" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 10px; max-width: 99%">
-                                            <asp:Label Style="font-weight: bold">• Hệ niệu-dục/ </asp:Label>
-                                            <asp:Label>Urogenital system: </asp:Label>
-                                            <asp:Label ID="prt_uro_system" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 10px; max-width: 99%">
-                                            <asp:Label Style="font-weight: bold">• Hệ cơ-xương-khớp/ </asp:Label>
-                                            <asp:Label>Musculoskeletal system: </asp:Label>
-                                            <asp:Label ID="prt_mus_system" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 10px; max-width: 99%">
-                                            <asp:Label Style="font-weight: bold">• Tai Mũi Họng/ </asp:Label>
-                                            <asp:Label>Otorhinolaryngology: </asp:Label>
-                                            <asp:Label ID="prt_otorhinolaryngology" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 10px; max-width: 99%">
-                                            <asp:Label Style="font-weight: bold">• Hệ da-lông/ </asp:Label>
-                                            <asp:Label>Integumentary system: </asp:Label>
-                                            <asp:Label ID="prt_integumentary_system" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 10px; max-width: 99%">
-                                            <asp:Label Style="font-weight: bold">• Mắt/ </asp:Label>
-                                            <asp:Label>Ophthalmology: </asp:Label>
-                                            <asp:Label ID="prt_ophthalmology" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 10px; max-width: 99%">
-                                            <asp:Label Style="font-weight: bold">• Ghi nhận khác/ </asp:Label>
-                                            <asp:Label>Other findings: </asp:Label>
-                                            <asp:Label ID="prt_other_findings" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div style="font-size: 14.5px; font-family: Tahoma; max-width: 100%; margin-left: 15px; width: 520px">
-                                            <asp:Label Style="font-weight: bold">❖	Yêu cầu khám chuyên khoa tâm lý/ </asp:Label>
-                                            <asp:Label>Psychological consultation required: </asp:Label>
-                                        </div>
-                                        <div style="font-size: 14.5px; font-family: Tahoma; max-width: 100%; width: 100px">
-                                            <asp:Label ID="prt_psy_consul_required_False" runat="server" />
-                                            <asp:Label>Không/ No</asp:Label>
-                                        </div>
-                                        <div style="font-size: 14.5px; font-family: Tahoma; max-width: 100%; width: 100px">
-                                            <asp:Label ID="prt_psy_consul_required_True" runat="server" />
-                                            <asp:Label>Có/ Yes </asp:Label>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2  " id="div_for_obstetric" runat="server">
-                                        <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; max-width: 100%;">
-                                            <asp:Label Style="font-weight: bold">2. Khám chuyên khoa/ Specific exam: </asp:Label>
-                                            <asp:Label>(Cho sản khoa/ For Obstetric) </asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; margin-left: 10px; max-width: 100%">
-                                            <asp:Label Style="font-weight: bold">• Khám ngoài/ </asp:Label>
-                                            <asp:Label>External exam: </asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; margin-left: 12px; margin-right: 10px; font-family: Tahoma; max-width: 99%">
-                                            <asp:Label>- Vết mổ cũ/ Previous cicatrice: </asp:Label>
-                                            <asp:Label runat="server" ID="prt_obs_pre_cicatrice"></asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 12px; margin-right: 10px; max-width: 99%">
-                                            <asp:Label>- Hình dáng tử cung/ Uterine shape: </asp:Label>
-                                            <asp:Label runat="server" ID="prt_obs_uterine_shape"></asp:Label>
-                                            <asp:Label>. Tư thế/ Posture:  </asp:Label>
-                                            <asp:Label runat="server" ID="prt_obs_posture"></asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 12px; margin-right: 10px; max-width: 99%">
-                                            <asp:Label>- Bề cao tử cung/ Fundal height:  </asp:Label>
-                                            <asp:Label runat="server" ID="prt_obs_fundal_height"></asp:Label>
-                                            <asp:Label> cm, chu vi vòng bụng/ abdominal circumference:  </asp:Label>
-                                            <asp:Label runat="server" ID="prt_obs_abdominal_circum"></asp:Label>
-                                            <asp:Label> cm</asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 12px; margin-right: 10px; max-width: 99%">
-                                            <asp:Label>- Cơn gò tử cung/ Uterine contraction:  </asp:Label>
-                                            <asp:Label runat="server" ID="prt_obs_uterine_con"></asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 12px; margin-right: 10px; max-width: 99%">
-                                            <asp:Label>- Tần số tim thai/ Fetal heart rate:  </asp:Label>
-                                            <asp:Label runat="server" ID="prt_obs_fetal_heart_rate"></asp:Label>
-                                            <asp:Label>lần/phút/ bpm  </asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 12px; margin-right: 10px; max-width: 99%">
-                                            <asp:Label>- Ngực/ Breasts:  </asp:Label>
-                                            <asp:Label runat="server" ID="prt_obs_breasts"></asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; max-width: 100%; margin-left: 10px">
-                                            <asp:Label Style="font-weight: bold">• Khám trong/ </asp:Label>
-                                            <asp:Label>Internal exam: </asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 12px; margin-right: 10px; max-width: 99%">
-                                            <asp:Label>- Chỉ số Bishop/ Bishop score:  </asp:Label>
-                                            <asp:Label runat="server" ID="prt_obs_bishop_score"></asp:Label>
-                                            <asp:Label>điểm/ points</asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 12px; margin-right: 10px; max-width: 99%">
-                                            <asp:Label>- Âm hộ/ Vulva:  </asp:Label>
-                                            <asp:Label runat="server" ID="prt_obs_vulva"></asp:Label>
-                                            <asp:Label>- Âm đạo/ Vagina: </asp:Label>
-                                            <asp:Label runat="server" ID="prt_obs_vagina"></asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 12px; margin-right: 10px; max-width: 99%">
-                                            <asp:Label>- Tầng sinh môn/ Perineum:  </asp:Label>
-                                            <asp:Label runat="server" ID="prt_obs_perineum"></asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 12px; margin-right: 10px; max-width: 99%">
-                                            <asp:Label>- Cổ tử cung/ Cervix:  </asp:Label>
-                                            <asp:Label runat="server" ID="prt_obs_cervix"></asp:Label>
-                                            <asp:Label> Phần phụ/ Adnexa:  </asp:Label>
-                                            <asp:Label runat="server" ID="prt_obs_adnexa"></asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 12px; margin-right: 10px; max-width: 99%">
-                                            <div class="row">
-                                                <div class="col-6 ">
-                                                    <asp:Label>- Tình trạng ối/ Membrane condition: </asp:Label>
-                                                </div>
-                                                <div class="col-3 ">
-                                                    <asp:Label ID="prt_obs_mem_condition_code_True" runat="server" />
-                                                    <asp:Label>Nguyên vẹn/ Intact</asp:Label>
-                                                </div>
-                                                <div class="col-3 ">
-                                                    <asp:Label ID="prt_obs_mem_condition_code_False" runat="server" />
-                                                    <asp:Label>Đã vỡ/ Ruptured </asp:Label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma;  margin-left: 12px; margin-right: 10px; max-width: 99%">
-                                            <asp:Label Style="font-weight: bold">- Đặc điểm dịch ối/ </asp:Label>
-                                            <asp:Label>Features of amniotic fluid: </asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 12px; margin-right: 10px; max-width: 99%">
-                                            <div class="row">
-                                                <div class="col-1 ">
-                                                </div>
-                                                <div class="col-3 ">
-                                                    <asp:Label ID="prt_N" runat="server" />
-                                                    <asp:Label>Bình thường/ Normal </asp:Label>
-                                                </div>
-                                                <div class="col-4 ">
-                                                    <asp:Label ID="prt_O" runat="server" />
-                                                    <asp:Label>Thiểu ối/ Oligohydramnios </asp:Label>
-                                                </div>
-                                                <div class="col-4 ">
-                                                    <asp:Label ID="prt_P" runat="server" />
-                                                    <asp:Label>Đa ối/ Polyhydramnios </asp:Label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; margin-left: 12px; max-width: 99%">
-                                            <asp:Label>- Ngôi thai/ </asp:Label>
-                                            <asp:Label>Presentation: </asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; margin-left: 12px; width: 100%">
-                                            <div class="row">
-                                                <div style="width: 20px">
-                                                </div>
-                                                <div style="width: 130px">
-                                                    <asp:Label ID="prt_O_C" runat="server" />
-                                                    <asp:Label>Đầu/ Cephalic </asp:Label>
-                                                </div>
-                                                <div style="width: 130px">
-                                                    <asp:Label ID="prt_O_B" runat="server" />
-                                                    <asp:Label>Mông/ Breech </asp:Label>
-                                                </div>
-                                                <div style="width: 400px; text-align: justify">
-                                                    <asp:Label ID="prt_O_O" runat="server" />
-                                                    <asp:Label>- Ngôi khác/ Others, specify: </asp:Label>
-                                                    <asp:Label ID="prt_obs_presentation_other" runat="server" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; margin-left: 12px; margin-right: 10px; max-width: 99%">
-                                            <asp:Label>- Vị trí ngôi thai/ Fetal position: </asp:Label>
-                                            <asp:Label ID="prt_obs_fetal_position" runat="server" />
-                                        </div>
-                                        <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; margin-left: 12px; margin-right: 10px; max-width: 99%">
-                                            <asp:Label>- Khám khung chậu/ Pelvic exam: </asp:Label>
-                                            <asp:Label ID="prt_obs_pelvic_exam" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2  " id="div_for_gyneacology" runat="server">
-                                        <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; max-width: 99%;">
-                                            <asp:Label Style="font-weight: bold">2. Khám chuyên khoa/ Specific exam: </asp:Label>
-                                            <asp:Label>(Cho phụ khoa/ For Gyneacology)</asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; margin-left: 12px; margin-right: 10px; max-width: 99%">
-                                            <asp:Label Style="font-weight: bold">• Khám ngoài/ </asp:Label>
-                                            <asp:Label>External examination: </asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 12px; margin-right: 10px; max-width: 99%">
-                                            <asp:Label>- Bụng có sẹo phẫu thuật cũ/Abdominal Surgery Scars:  </asp:Label>
-                                            <asp:Label runat="server" ID="prt_gyn_abdo_sur_scars"></asp:Label>
-                                            <asp:Label runat="server" ID="prt_gyn_reason"></asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 12px; margin-right: 10px; max-width: 99%">
-                                            <asp:Label>- Sờ nắn và đo ngoài tử cung/Uterine Height :  </asp:Label>
-                                            <asp:Label runat="server" ID="prt_gyn_uterine_height"></asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; margin-left: 12px; margin-right: 10px; max-width: 99%">
-                                            <asp:Label Style="font-weight: bold">• Khám trong/ </asp:Label>
-                                            <asp:Label>Internal examination: </asp:Label>
-                                        </div>
-                                        
-                                        <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; margin-left: 12px; max-width: 99%">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <asp:Label>- Âm hộ/ Vulva:  </asp:Label>
-                                                    <asp:Label runat="server" ID="prt_gyn_vulva"></asp:Label>
-                                                </div>
-                                                <div class="col-6">
-                                                    <asp:Label>- Tầng sinh môn/ Perineum:  </asp:Label>
-                                                    <asp:Label runat="server" ID="prt_gyn_perineum"></asp:Label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 12px; max-width: 99%">
-                                            <asp:Label>Khám mỏ vịt/Speculum examination:  </asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; margin-left: 12px; max-width: 99%">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <asp:Label>- Âm đạo/ Vagina:  </asp:Label>
-                                                    <asp:Label runat="server" ID="prt_gyn_vagina"></asp:Label>
-                                                </div>
-                                                <div class="col-6">
-                                                    <asp:Label>- Dịch tiết/Discharge:  </asp:Label>
-                                                    <asp:Label runat="server" ID="prt_gyn_discharge"></asp:Label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; margin-left: 12px; max-width: 99%">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <asp:Label>- Cổ tử cung/ Cervix:  </asp:Label>
-                                                    <asp:Label runat="server" ID="prt_gyn_cervix"></asp:Label>
-                                                </div>
-                                                <div class="col-6">
-                                                    <asp:Label>- Tử cung/Uterus:  </asp:Label>
-                                                    <asp:Label runat="server" ID="prt_gyn_uterus"></asp:Label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 " style="font-size: 14.5px; font-family: Tahoma; margin-left: 12px; max-width: 99%">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <asp:Label>- Phần phụ/ Adnexa:  </asp:Label>
-                                                    <asp:Label runat="server" ID="prt_gyn_adnexa"></asp:Label>
-                                                </div>
-                                                <div class="col-6">
-                                                    <asp:Label>- Các túi cùng /Douglas pouchs:  </asp:Label>
-                                                    <asp:Label runat="server" ID="prt_gyn_douglas_pouchs"></asp:Label>
-                                                </div>
-                                            </div>
-                                        </div>
 
+                                    <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        - Gia đình/ Family: <asp:Label ID="prt_family" runat="server" />
                                     </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label Style="font-weight: bold;">IV. Chỉ định và kết quả xét nghiệm /Laboratory indications and results: </asp:Label>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label runat="server" ID="prt_lab_result"></asp:Label>
-                                        </div>
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label runat="server" ID="prt_add_investigations"></asp:Label>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                            <asp:Label Style="font-weight: bold;">V. Conclusion/Kết luận: </asp:Label>
-                                            <asp:Label runat="server" ID="Label61"></asp:Label>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 5px; max-width: 99%">
-                                            <asp:Label Style="font-weight: bold;">Chẩn đoán ban đầu/</asp:Label>
-                                            <asp:Label>Initial diagnosis: </asp:Label>
-                                            <asp:Label runat="server" ID="prt_initial_diagnosis"></asp:Label>
 
+                                    <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>3. Tiền căn phụ khoa/ Gynecological history:</b>
+                                    </div>
+
+                                    <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        - Tuổi dậy thì/ Age of menarche: <asp:Label ID="prt_age_of_menarhce" runat="server" />,
+                                        Chu kỳ kinh/ Menstrual cycle:
+                                        <asp:Label ID="prt_menstrual_cycle" runat="server" />
+                                        ngày/ day(s). Số ngày hành kinh/ Length of period:
+                                        <asp:Label ID="prt_length_of_period" runat="server" />
+                                        ngày/ day(s), Lượng máu kinh/ Amount of menstrual blood:
+                                        <asp:Label ID="prt_amount_mens_blood" runat="server" />
+                                    </div>
+
+                                    <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        - Tuổi kết hôn/ Marriage age: <asp:Label ID="prt_marriage_age" runat="server" />
+                                    </div>
+
+                                    <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        - Tuổi mãn kinh/ Age of menopause: <asp:Label ID="prt_age_menopause" runat="server" />
+                                    </div>
+
+                                    <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        - Những bệnh phụ khoa đã mắc trước đây/ Previous gynecological diseases: <asp:Label ID="prt_previous_gyn_diseases" runat="server" />
+                                    </div>
+
+                                    <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>4. Tiền căn sản khoa</b>/ Obstetric history:
+                                    </div>
+
+                                    <table style="width: 721px;" class="table-bordered mt-1 mb-1" runat="server" id="prt_obs_history">
+                                        <tr>
+                                            <td style="width: 331px"><b>Lần mang thai thứ</b>/ gravidity</td>
+                                            <td style="width: 65px" class="text-center"><b>1</b></td>
+                                            <td style="width: 65px" class="text-center"><b>2</b></td>
+                                            <td style="width: 65px" class="text-center"><b>3</b></td>
+                                            <td style="width: 65px" class="text-center"><b>4</b></td>
+                                            <td style="width: 65px" class="text-center"><b>5</b></td>
+                                            <td style="width: 65px" class="text-center"><b>6</b></td>
+                                        </tr>
+                                    </table>
+
+                                    <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>III. Khám lâm sàng/ Physical examination:</b>
+                                    </div>
+
+                                    <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>1. Khám tổng quát/ General exam:</b>
+                                    </div>
+
+                                    <div style="margin-left: 40px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>• Tổng trạng/ </b>General appearance: <asp:Label ID="prt_general_appearance" runat="server" />
+                                    </div>
+
+                                    <div class="d-grid" style="margin-left: 40px; grid-template-columns: auto 1fr; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <div>
+                                            <b>Phù/ </b>Edema:&nbsp;
+                                        </div>
+                                        <div>
+                                            <asp:Label ID="prt_edema" runat="server" />
                                         </div>
                                     </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 5px; max-width: 99%">
-                                            <asp:Label Style="font-weight: bold;">Chẩn đoán phân biệt/</asp:Label>
-                                            <asp:Label>Differential diagnosis: </asp:Label>
-                                            <asp:Label runat="server" ID="prt_diagnosis"></asp:Label>
-                                        </div>
+
+                                    <div style="margin-left: 40px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>• Hệ tim mạch/ </b>Cardiovascular system: <asp:Label ID="prt_cardio_system" runat="server" />
                                     </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 5px; max-width: 99%">
-                                            <asp:Label Style="font-weight: bold;">Bệnh kèm theo/</asp:Label>
-                                            <asp:Label>Associated conditions: </asp:Label>
-                                            <asp:Label runat="server" ID="prt_associated_conditions"></asp:Label>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 5px; max-width: 99%">
-                                            <asp:Label Style="font-weight: bold;">Kế hoạch điều trị/</asp:Label>
-                                            <asp:Label>Treatment Plan: </asp:Label>
-                                            <asp:Label runat="server" ID="prt_treatment_plan"></asp:Label>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-2 ">
-                                        <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma; margin-left: 5px; max-width: 99%">
-                                            <asp:Label Style="font-weight: bold;">Kế hoạch xuất viện/</asp:Label>
-                                            <asp:Label>Discharge plan: </asp:Label>
-                                            <asp:Label runat="server" ID="prt_discharge_plan"></asp:Label>
-                                        </div>
-                                    </div>
-                                    <br />
                                     
-                                    <div class="row mb-2">
-                                        <div class="col-5">
+                                    <div style="margin-left: 40px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>• Hệ hô hấp/ </b>Respiratory system: <asp:Label ID="prt_respiratory_system" runat="server" />
+                                    </div>
+                                    
+                                    <div style="margin-left: 40px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>• Hệ tiêu hóa/ </b>Digestive system: <asp:Label ID="prt_digestive_system" runat="server" />
+                                    </div>
+                                    
+                                    <div style="margin-left: 40px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>• Hệ thần kinh/ </b>Nervous system: <asp:Label ID="prt_nervous_system" runat="server" />
+                                    </div>
+                                    
+                                    <div style="margin-left: 40px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>• Hệ niệu-dục/ </b>Urogenital system: <asp:Label ID="prt_uro_system" runat="server" />
+                                    </div>
+                                    
+                                    <div style="margin-left: 40px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>• Hệ cơ-xương-khớp/ </b>Musculoskeletal system: <asp:Label ID="prt_mus_system" runat="server" />
+                                    </div>
+                                    
+                                    <div style="margin-left: 40px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>• Tai Mũi Họng/ </b>Otorhinolaryngology: <asp:Label ID="prt_otorhinolaryngology" runat="server" />
+                                    </div>
+
+                                    <div style="margin-left: 40px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>• Hệ da-lông/ </b>Integumentary system: <asp:Label ID="prt_integumentary_system" runat="server" />
+                                    </div>
+
+                                    <div style="margin-left: 40px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>• Mắt/ </b>Ophthalmology: <asp:Label ID="prt_ophthalmology" runat="server" />
+                                    </div>
+                                    
+                                    <div style="margin-left: 40px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>• Ghi nhận khác/ </b>Other findings: <asp:Label ID="prt_other_findings" runat="server" />
+                                    </div>
+                                    
+                                    <div class="d-grid" style="grid-template-columns: auto 1fr; margin-left: 20px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <div>
+                                            <b>❖ Yêu cầu khám chuyên khoa tâm lý/ </b>Psychological consultation required: &nbsp;
                                         </div>
-                                        <div class="col-7 mb-2">
-                                            <div class="col-12" style="text-align: center;">
-                                                <label style="font-size: 14.5px; font-family: Tahoma">
-                                                    <span style="font-weight: bold">Ngày giờ/ Date & time: </span>
-                                                    <asp:Label ID="lbl_create_date" runat="server" />
-                                                </label>
+                                        <asp:Label ID="prt_psy_consul_required" runat="server" />
+                                    </div>
+
+                                    <div id="div_for_obstetric" runat="server">
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            <b>2. Khám chuyên khoa/ Specific exam: </b>(Cho sản khoa/ For Obstetric)
+                                        </div>
+                                    
+                                        <div style="margin-left: 10px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            <b>• Khám ngoài/ </b>External exam: <asp:Label ID="Label1" runat="server" />
+                                        </div>
+
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            - Vết mổ cũ/ Previous cicatrice: <asp:Label ID="prt_obs_pre_cicatrice_true" runat="server" Text="❏" />
+                                        </div>
+
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            - Hình dáng tử cung/ Uterine shape: <asp:Label ID="prt_obs_uterine_shape" runat="server" />
+                                            . Tư thế/ Posture: <asp:Label runat="server" ID="prt_obs_posture"/>
+                                        </div>
+
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            - Bề cao tử cung/ Fundal height: <asp:Label runat="server" ID="prt_obs_fundal_height"/>
+                                            cm, chu vi vòng bụng/ abdominal circumference: <asp:Label runat="server" ID="prt_obs_abdominal_circum"/>&nbsp;cm
+                                        </div>
+
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            - Cơn gò tử cung/ Uterine contraction: <asp:Label ID="prt_obs_uterine_con" runat="server" />
+                                        </div>
+
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            - Tần số tim thai/ Fetal heart rate: <asp:Label ID="prt_obs_fetal_heart_rate" runat="server" />&nbsp;lần/phút/ bpm
+                                        </div>
+
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            - Ngực/ Breasts: <asp:Label ID="prt_obs_breasts" runat="server" />
+                                        </div>
+
+                                        <div style="margin-left: 10px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            <b>• Khám trong</b>/ Internal exam:
+                                        </div>
+
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            - Chỉ số Bishop/ Bishop score: <asp:Label ID="prt_obs_bishop_score" runat="server" />&nbsp;điểm/ points
+                                        </div>
+                                    
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            - Âm hộ/ Vulva: <asp:Label runat="server" ID="prt_obs_vulva"/>
+                                             Âm đạo/ Vagina: <asp:Label runat="server" ID="prt_obs_vagina"/>
+                                        </div>
+
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            - Tầng sinh môn/ Perineum: <asp:Label runat="server" ID="prt_obs_perineum"/>
+                                        </div>
+                                    
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            - Cổ tử cung/ Cervix: <asp:Label runat="server" ID="prt_obs_cervix"/>
+                                            Phần phụ/ Adnexa: <asp:Label runat="server" ID="prt_obs_adnexa"/>
+                                        </div>
+                                    
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            <div>
+                                                - Tình trạng ối/ Membrane condition &nbsp;
                                             </div>
-                                            <div class="col-12" style="text-align: center;">
-                                                <div class="col-12" style="text-align: center;">
-                                                    <label style="font-size: 14.5px; font-family: Tahoma">
-                                                        <span style="font-weight: bold">Họ tên, chữ ký & MSNV/ </span>
-                                                        <span class="text-primary">Doctor’s name and ID</span>
-                                                    </label>
-                                                </div>
-                                                <div class="col-12" style="text-align: center;">
-                                                    <label style="font-size: 14.5px; font-family: Tahoma">
-                                                        <span class="text-primary">Chữ ký/ Signature </span>
-                                                    </label>
-                                                </div>
+                                            <asp:Label ID="prt_obs_mem_condition_code" runat="server" />
+                                        </div>
+
+                                        <div runat="server" id="obs_mem_condition_code_ru_field" style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            - Ối vỡ lúc/ Rupture of membrane at: <asp:Label runat="server" ID="prt_obs_rup_of_mem_at"/>
+                                            <br />
+                                            <asp:Label runat="server" ID="prt_obs_rup_of_mem_code"/>
+                                        </div>
+
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            <b>- Đặc điểm dịch ối</b>/ Features of amniotic fluid:
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr 1fr; margin-left: 40px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            <div>
+                                                <asp:Label ID="prt_obs_feat_amniotic_n" Text="❏" runat="server" />&nbsp;Bình thường/ Normal
+                                            </div>
+                                            <div>
+                                                <asp:Label ID="prt_obs_feat_amniotic_o" Text="❏" runat="server" />&nbsp;Thiểu ối/ Oligohydramnios
+                                            </div>
+                                            <div>
+                                                <asp:Label ID="prt_obs_feat_amniotic_p" Text="❏" runat="server" />&nbsp;Đa ối/ Polyhydramnios
+                                            </div>
+                                        </div>
+
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            - Ngôi thai/ Presentation:
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr; margin-left: 40px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            <div>
+                                                <asp:Label ID="prt_obs_presentation_code_c" runat="server" Text="❏" />&nbsp;Đầu/ Cephalic
+                                            </div>
+                                            <div>
+                                                <asp:Label ID="prt_obs_presentation_code_b" runat="server" Text="❏" />&nbsp;Mông/ Breech
                                             </div>
 
+                                            <div>
+                                                <asp:Label ID="prt_obs_presentation_code_o" runat="server" Text="❏" />&nbsp;Ngôi khác/ Others, specify: <asp:Label ID="prt_obs_presentation_other" runat="server" />
+                                            </div>
+                                        </div>
+
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            - Vị trí ngôi thai/ Fetal position: <asp:Label ID="prt_obs_fetal_position" runat="server" />
+                                        </div>
+
+                                        <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                            - Khám khung chậu/ Pelvic exam: <asp:Label ID="prt_obs_pelvic_exam" runat="server" />
                                         </div>
                                     </div>
+
+                                    <div id="div_for_gyneacology" runat="server">
+
+                                        <div style="font-size: 14.5px; font-family: Tahoma;">
+                                            <b>2. Khám chuyên khoa/ Specific exam:</b> (Cho phụ khoa/ For Gyneacology)
+                                        </div>
+
+                                        <div style="font-size: 14.5px; font-family: Tahoma; margin-left: 12px">
+                                            <b>• Khám ngoài/External examination:</b>
+                                        </div>
+                                        
+                                        <div style="font-size: 14.5px; font-family: Tahoma; margin-left: 12px">
+                                            - Bụng có sẹo phẫu thuật cũ/Abdominal Surgery Scars:
+                                            <asp:Label runat="server" ID="prt_gyn_abdo_sur_scars_true" Text="❏"/>
+                                            Lý do/Reason <asp:Label runat="server" ID="prt_gyn_reason"/>
+                                        </div>
+                                        
+                                        <div style="font-size: 14.5px; font-family: Tahoma; margin-left: 12px">
+                                            - Sờ nắn và đo ngoài tử cung/Uterine Height:
+                                            <asp:Label runat="server" ID="prt_gyn_uterine_height"/>
+                                        </div>
+                                        
+                                        <div style="font-size: 14.5px; font-family: Tahoma; margin-left: 12px">
+                                            <b>• Khám trong/Internal examination:</b>
+                                        </div>
+                                        
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr; font-size: 14.5px; font-family: Tahoma; margin-left: 12px">
+                                            <div>
+                                                Âm hộ/ Vulva: <asp:Label runat="server" ID="prt_gyn_vulva"/>
+                                            </div>
+                                            <div>
+                                                Tầng sinh môn/ Perineum: <asp:Label runat="server" ID="prt_gyn_perineum"/>
+                                            </div>
+                                        </div>
+
+                                        <div style="font-size: 14.5px; font-family: Tahoma; margin-left: 12px">
+                                            Khám mỏ vịt/Speculum examination
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr; font-size: 14.5px; font-family: Tahoma; margin-left: 12px">
+                                            <div>
+                                                Âm đạo/ Vagina: <asp:Label runat="server" ID="prt_gyn_vagina"/>
+                                            </div>
+                                            <div>
+                                                Dịch tiết/Discharge: <asp:Label runat="server" ID="prt_gyn_discharge"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr; font-size: 14.5px; font-family: Tahoma; margin-left: 12px">
+                                            <div>
+                                                Cổ tử cung/ Cervix: <asp:Label runat="server" ID="prt_gyn_cervix"/>
+                                            </div>
+                                            <div>
+                                                Tử cung/Uterus: <asp:Label runat="server" ID="prt_gyn_uterus"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: 1fr 1fr; font-size: 14.5px; font-family: Tahoma; margin-left: 12px">
+                                            <div>
+                                                Phần phụ/ Adnexa: <asp:Label runat="server" ID="prt_gyn_adnexa"/>
+                                            </div>
+                                            <div>
+                                                Các túi cùng /Douglas pouchs: <asp:Label runat="server" ID="prt_gyn_douglas_pouchs"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div style="font-size: 14.5px; font-family: Tahoma">
+                                        <b>IV. Chỉ định và kết quả xét nghiệm /Laboratory indications and results:</b>
+                                    </div>
+                                    
+                                    <div style="margin-left: 20px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <asp:Label runat="server" ID="prt_lab_result"/>
+                                        <br />
+                                        <asp:Label ID="prt_add_investigations" runat="server" />
+                                    </div>
+
+                                    <div style="font-size: 14.5px; font-family: Tahoma">
+                                        <b>V. Conclusion/Kết luận: </b>
+                                    </div>
+
+                                    <div style="margin-left: 20px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>Chẩn đoán ban đầu</b>/ Initial diagnosis: <asp:Label ID="prt_initial_diagnosis" runat="server" />
+                                    </div>
+
+                                    <div style="margin-left: 20px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>Chẩn đoán phân biệt</b>/ Differential diagnosis: <asp:Label ID="prt_diagnosis" runat="server" />
+                                    </div>
+
+                                    <div style="margin-left: 20px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>Bệnh kèm theo</b>/ Associated conditions: <asp:Label ID="prt_associated_conditions" runat="server" />
+                                    </div>
+
+                                    <div style="margin-left: 20px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>Kế hoạch điều trị</b>/ Treatment Plan: <asp:Label ID="prt_treatment_plan" runat="server" />
+                                    </div>
+
+                                    <div style="margin-left: 20px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                        <b>Kế hoạch xuất viện</b>/ Discharge plan: <asp:Label ID="prt_discharge_plan" runat="server" />
+                                    </div>
+                                    
+                                    <div class="d-grid" style="grid-template-columns: 1fr 1fr; grid-gap: 5px">
+                                        <div></div>
+                                        <div class="text-center" style="break-inside: avoid !important; page-break-inside: avoid !important">
+                                            <div><span style="font-size: 14.5px; font-family: Tahoma" class="font-bold">Họ tên, chữ ký & MSNV của Bác sĩ</span></div>
+                                            <div><i style="font-size: 14.5px; font-family: Tahoma;" class="text-primary">Doctor’s full name, signature & ID</i></div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </td>
                         </tr>
@@ -805,10 +539,8 @@
                                         <Columns>
                                             <telerik:GridTemplateColumn>
                                                 <ItemTemplate>
-                                                    <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
-        </telerik:RadLabel>
-                                           
-                                                    <asp:HyperLink CssClass="btn-link" Text="View Log" runat="server" NavigateUrl='<%# GetLogUrl(Eval("document_log_id")) %>'></asp:HyperLink>
+                                                    <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'/>
+                                                    <asp:HyperLink CssClass="btn-link" Text="View Log" runat="server" NavigateUrl='<%# GetLogUrl(Eval("document_log_id")) %>'/>
                                                 </ItemTemplate>
                                             </telerik:GridTemplateColumn>
                                         </Columns>
@@ -848,12 +580,12 @@
                     </Windows>
                 </telerik:RadWindowManager>
 
-                <div class="cssclsNoPrint1">
-                    <ul class="breadcrumb cssclsNoPrint" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd; border-radius: 0;">
+                <div class="cssclsNoPrint">
+                    <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                       <li>Discharge Summary</li>
                     </ul>
-                    <div id="print_content" style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
+                    <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
                         <asp:HiddenField runat="server" ID="DataObj" />
                         <asp:Panel runat="server" ID="messagePlaceHolder">
                             <div class="card" runat="server" id="amendReasonWraper">
@@ -1002,7 +734,7 @@
                                     <div class="card-body collapse show" id="collapseOne">
                                         <div class="form-body">
 
-                                            <div class="row cssclsNoPrint">
+                                            <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
                                                         <span class="mr-2">You are viewing an old version of this document</span>
@@ -2056,7 +1788,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="row mb-2 cssclsNoPrint">
+                                        <div class="row mb-2">
                                             <div class="col-md-12">
                                                 <div class="form-actions">
                                                     <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
@@ -2067,7 +1799,7 @@
 
                                                     <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                    <asp:LinkButton runat="server" OnClientClick="printDiv(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                    <asp:LinkButton runat="server" OnClientClick="btnPrint_Click(); return false;" ID="btnPrint" CssClass="btn btn-secondary">Print</asp:LinkButton>
 
                                                     <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                                 </div>
@@ -2131,15 +1863,23 @@
             }, 1000);
         }
 
-        function printDiv() {
-            var printContents = document.getElementById("print_content").innerHTML;
-            var originalContents = document.body.innerHTML;
+        function btnPrint_Click() {
+            let printContent = document.querySelector("#printContent");
+            printContent.setAttribute("style", "display: block");
 
-            document.body.innerHTML = printContents;
+            let total = Math.ceil(printContent.offsetHeight / 1096);
+
+            for (let i = 1; i <= total; i++) {
+                let div = document.createElement("div");
+                div.setAttribute("class", "watermark page");
+                div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px");
+                div.setAttribute("data-page", "Page " + i + " of " + total);
+                document.getElementById("print_content").append(div);
+            }
+
+            setTimeout(() => { printContent.setAttribute("style", "display: none"); }, 100);
 
             window.print();
-
-            document.body.innerHTML = originalContents;
         }
     </script>
 </body>

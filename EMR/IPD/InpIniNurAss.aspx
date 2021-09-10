@@ -2852,13 +2852,13 @@
                                                     <div><b>Tiền sử bị ngã/ </b><span class="text-primary">History of falling:</span></div>
                                                     <div>
                                                         <div class="d-grid" style="grid-template-columns: 15px 1fr">
-                                                            <asp:Label runat="server" Text="❏" ID="prt_fall_history_code_0"/>
+                                                            <asp:Label runat="server" Text="❏" ID="prt_fall_history_code_25"/>
                                                             <div>
                                                                 Có/ <span class="text-primary">Yes</span> = 25
                                                             </div>
                                                         </div>
                                                         <div class="d-grid" style="grid-template-columns: 15px 1fr">
-                                                            <asp:Label runat="server" Text="❏" ID="prt_fall_history_code_25"/>
+                                                            <asp:Label runat="server" Text="❏" ID="prt_fall_history_code_0"/>
                                                             <div>
                                                                 Không/ <span class="text-primary">No</span> = 0
                                                             </div>
@@ -3729,14 +3729,14 @@
                                             <b>Điều dưỡng đánh giá ban đầu</b><br />
                                             <span class="text-primary">Initial assessment nurse</span><br />
                                             (Họ tên, chữ ký, MSNV/ <span class="text-primary">Name, signature & ID</span>)
-                                            <div style="height: 70px"></div>
+                                            <div style="height: 100px"></div>
                                             <div>Ngày/<span class="text-primary">Date</span> ___/___/20__ Giờ/<span class="text-primary">Time</span> ___:___</div>
                                         </div>
                                         <div class="text-center">
                                             <b>Điều dưỡng đánh giá lại</b><br />
                                             <span class="text-primary">Re-assessment nurse</span><br />
                                             (Họ tên, chữ ký, MSNV/ <span class="text-primary">Name, signature & ID</span>)
-                                            <div style="height: 70px"></div>
+                                            <div style="height: 100px"></div>
                                             <div>Ngày/<span class="text-primary">Date</span> ___/___/20__ Giờ/<span class="text-primary">Time</span> ___:___</div>
                                         </div>
                                     </div>
@@ -5358,7 +5358,7 @@ applicable for children and pregnant</span>)
                                                                                         <span class="custom-control-label">Viêm phổi nặng/ <span class="text-primary">Severe pneumonia</span></span>
                                                                                     </label>
                                                                                     <label class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" disabled-for="mental_status_other_field" class="custom-control-input" runat="server" id="cb_severity_score2_4" />
+                                                                                        <input type="checkbox" onchange="__doPostBack('severity_of_disease_change', '')" class="custom-control-input" runat="server" id="cb_severity_score2_4" />
                                                                                         <span class="custom-control-label">Bệnh ác tính huyết học/ <span class="text-primary">Hematologic malignancy</span></span>
                                                                                     </label>
                                                                                     <label class="custom-control custom-checkbox">

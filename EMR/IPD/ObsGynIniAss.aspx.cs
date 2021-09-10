@@ -370,15 +370,13 @@ namespace EMR.IPD
                 {
                     if (ogia.is_obs_gyn == true)
                     {
-                        prt_is_obs_gyn_True.Text = "SẢN KHOA/ OBSTETRICS";
-                        prt_is_obs_gyn_False.Text = null;
+                        prt_title.Text = "SẢN KHOA/ OBSTETRICS";
                         div_obs.Visible = true;
                         div_for_obstetric.Visible = true;
                     }
                     else
                     {
-                        prt_is_obs_gyn_True.Text = null;
-                        prt_is_obs_gyn_False.Text = "PHỤ KHOA/ GYNECOLOGY";
+                        prt_title.Text = "PHỤ KHOA/ GYNECOLOGY";
                         div_gyn.Visible = true;
                         div_for_gyneacology.Visible = true;
                     }
@@ -387,137 +385,48 @@ namespace EMR.IPD
                 //{
                 //    lbl_is_obs_gyn.Text = "——";
                 //}
-                prt_lmp_from.Text = ogia.lmp_from;
-                prt_lmp_to.Text = ogia.lmp_to;
-                prt_ges_age_days.Text = Convert.ToString(ogia.ges_age_days);
-                prt_ges_age_weeks.Text = Convert.ToString(ogia.ges_age_weeks);
+                prt_lmp_from.Text = WebHelpers.FormatString(ogia.lmp_from, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                prt_lmp_to.Text = WebHelpers.FormatString(ogia.lmp_to, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                prt_ges_age_days.Text = WebHelpers.FormatString(Convert.ToString(ogia.ges_age_days), "&nbsp;&nbsp;&nbsp;&nbsp;");
+                prt_ges_age_weeks.Text = WebHelpers.FormatString(Convert.ToString(ogia.ges_age_weeks), "&nbsp;&nbsp;&nbsp;&nbsp;");
                 prt_prenatal_visit.Text = ogia.prenatal_visit;
-                if (ogia.tetanus_vaccination != null)
-                {
-                    if (ogia.tetanus_vaccination == true)
-                    {
-                        prt_tetanus_vaccination_True.Text = "☒";
-                        prt_tetanus_vaccination_False.Text = "❏";
-                    }
-                    else
-                    {
-                        prt_tetanus_vaccination_True.Text = "❏";
-                        prt_tetanus_vaccination_False.Text = "☒";
-                    }
-                }
-                if (ogia.tetanus_vaccination == null)
-                {
-                    prt_tetanus_vaccination_True.Text = "❏";
-                    prt_tetanus_vaccination_False.Text = "❏";
-                }
-                prt_tetanus_vaccin_time.Text = ogia.tetanus_vaccin_time;
-                if (ogia.gbs_disease != null)
-                {
-                    if (ogia.gbs_disease == true)
-                    {
-                        prt_gbs_disease_True.Text = "☒";
-                        prt_gbs_disease_False.Text = "❏";
-                    }
-                    else
-                    {
-                        prt_gbs_disease_True.Text = "❏";
-                        prt_gbs_disease_False.Text = "☒";
-                    }
-                }
-                if (ogia.gbs_disease == null)
-                {
-                    prt_gbs_disease_True.Text = "❏";
-                    prt_gbs_disease_False.Text = "❏";
-                }
-                if (ogia.gbs_bacteriuria != null)
-                {
-                    if (ogia.gbs_bacteriuria == true)
-                    {
-                        prt_gbs_bacteriuria_True.Text = "☒";
-                        prt_gbs_bacteriuria_False.Text = "❏";
-                    }
-                    else
-                    {
-                        prt_gbs_bacteriuria_True.Text = "❏";
-                        prt_gbs_bacteriuria_False.Text = "☒";
-                    }
-                }
-                if (ogia.gbs_bacteriuria == null)
-                {
-                    prt_gbs_bacteriuria_True.Text = "❏";
-                    prt_gbs_bacteriuria_False.Text = "❏";
-                }
-                if (ogia.gbs_vaginal != null)
-                {
-                    if (ogia.gbs_vaginal == true)
-                    {
-                        prt_gbs_vaginal_True.Text = "☒";
-                        prt_gbs_vaginal_False.Text = "❏";
-                    }
-                    else
-                    {
-                        prt_gbs_vaginal_True.Text = "❏";
-                        prt_gbs_vaginal_False.Text = "☒";
-                    }
-                }
-                if (ogia.gbs_vaginal == null)
-                {
-                    prt_gbs_vaginal_True.Text = "❏";
-                    prt_gbs_vaginal_False.Text = "❏";
-                }
-                if (ogia.ges_diabetes != null)
-                {
-                    if (ogia.ges_diabetes == true)
-                    {
-                        prt_ges_diabetes_True.Text = "☒";
-                        prt_ges_diabetes_False.Text = "❏";
-                    }
-                    else
-                    {
-                        prt_ges_diabetes_True.Text = "❏";
-                        prt_ges_diabetes_False.Text = "☒";
-                    }
-                }
-                if (ogia.ges_diabetes == null)
-                {
-                    prt_ges_diabetes_True.Text = "❏";
-                    prt_ges_diabetes_False.Text = "❏";
-                }
-                if (ogia.other_ges_abnormal != null)
-                {
-                    if (ogia.other_ges_abnormal == true)
-                    {
-                        prt_other_ges_abnormal_True.Text = "☒";
-                        prt_other_ges_abnormal_False.Text = "❏";
-                    }
-                    else
-                    {
-                        prt_other_ges_abnormal_True.Text = "❏";
-                        prt_other_ges_abnormal_False.Text = "☒";
-                    }
-                }
-                if (ogia.other_ges_abnormal == null)
-                {
-                    prt_other_ges_abnormal_True.Text = "❏";
-                    prt_other_ges_abnormal_False.Text = "❏";
-                }
-                other_ges_abnormal_note.Text = ogia.other_ges_abnormal_note;
-                if (ogia.labor_trig_at_time != null)
-                {
 
-                    string labor_trig_at_time_temp = ogia.labor_trig_at_time.ToString("dd/mm/yyyy hh:mm:ss tt");
+                prt_tetanus_vaccination.Text = WebHelpers.CreateOptions(new Option { Text = "Chưa/ Not yet", Value = false }, new Option { Text = "Có/yes, " + ogia.tetanus_vaccin_time + " Lần/times", Value = true }, ogia.tetanus_vaccination, "display: grid;grid-template-columns:200px auto;");
 
-                    if (labor_trig_at_time_temp == "01/00/0001 12:00:00 AM")
-                    {
-                        prt_labor_trig_at_time.Text = "........giờ/ hour " + "........phút/ minute";
-                    }
-                    else
-                    {
-                        prt_labor_trig_at_time.Text = ogia.labor_trig_at_time.ToString("HH") + "giờ/ hour "
-                                                + ogia.labor_trig_at_time.ToString("mm") + "phút/ minute"
-                                                + ogia.labor_trig_at_time.ToString("DD/mm/yyyy");
-                    }
+                prt_gbs_disease.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, ogia.gbs_disease, "display: grid;grid-template-columns:1fr 1fr;");
+
+                prt_gbs_bacteriuria.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, ogia.gbs_bacteriuria, "display: grid;grid-template-columns:1fr 1fr;");
+
+                prt_gbs_vaginal.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, ogia.gbs_vaginal, "display: grid;grid-template-columns:1fr 1fr;");
+
+                prt_ges_diabetes.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, ogia.gbs_vaginal, "display: grid;grid-template-columns:150px auto;");
+
+                prt_other_ges_abnormal.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, chi tiết/ Yes, specify: " + ogia.other_ges_abnormal_note, Value = true }, ogia.gbs_vaginal, "display: grid;grid-template-columns:150px auto;");
+
+                dynamic labor_trig_at_time = WebHelpers.ConvertDateTime(ogia.labor_trig_at_time, out bool IsValidDateTime);
+
+                if (IsValidDateTime)
+                {
+                    prt_labor_trig_at_time.Text = labor_trig_at_time.ToString("HH") + "&nbsp;giờ/ hour "
+                                                + labor_trig_at_time.ToString("mm") + "&nbsp;phút/ minute&nbsp;"
+                                                + labor_trig_at_time.ToString("dd/MM/yyyy");
                 }
+
+                //if (ogia.labor_trig_at_time != null)
+                //{
+                //    string labor_trig_at_time_temp = ogia.labor_trig_at_time.ToString("dd/mm/yyyy hh:mm:ss tt");
+
+                //    if (labor_trig_at_time_temp == "01/00/0001 12:00:00 AM")
+                //    {
+                //        prt_labor_trig_at_time.Text = "........giờ/ hour " + "........phút/ minute";
+                //    }
+                //    else
+                //    {
+                //        prt_labor_trig_at_time.Text = ogia.labor_trig_at_time.ToString("HH") + "giờ/ hour "
+                //                                + ogia.labor_trig_at_time.ToString("mm") + "phút/ minute"
+                //                                + ogia.labor_trig_at_time.ToString("DD/mm/yyyy");
+                //    }
+                //}
 
                 prt_preliminary_signs.Text = ogia.preliminary_signs;
                 prt_obs_cur_medication.Text = ogia.obs_cur_medication;
@@ -525,38 +434,61 @@ namespace EMR.IPD
                 prt_gyn_cur_medication.Text = ogia.gyn_cur_medication;
                 prt_personal.Text = ogia.personal;
                 prt_family.Text = ogia.family;
-                prt_age_of_menarhce.Text = (ogia.age_of_menarhce ?? "—").ToString();
-                prt_menstrual_cycle.Text = (ogia.menstrual_cycle ?? "—").ToString();
-                prt_length_of_period.Text = (ogia.length_of_period ?? "—").ToString();
-                prt_amount_mens_blood.Text = (ogia.amount_mens_blood ?? "—").ToString();
-                prt_marriage_age.Text = (ogia.marriage_age ?? "—").ToString();
-                prt_age_menopause.Text = (ogia.age_menopause ?? "—").ToString();
-                prt_previous_gyn_diseases.Text = (ogia.previous_gyn_diseases ?? "—").ToString();
+                prt_age_of_menarhce.Text = WebHelpers.FormatString(ogia.age_of_menarhce, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                prt_menstrual_cycle.Text = WebHelpers.FormatString(Convert.ToString(ogia.menstrual_cycle), "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                prt_length_of_period.Text = WebHelpers.FormatString(ogia.length_of_period, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                prt_amount_mens_blood.Text = ogia.amount_mens_blood;
+                prt_marriage_age.Text = Convert.ToString(ogia.marriage_age);
+                prt_age_menopause.Text = ogia.age_menopause;
+                prt_previous_gyn_diseases.Text = ogia.previous_gyn_diseases;
 
-                WebHelpers.LoadDataGridView(prt_obs_history, WebHelpers.GetJSONToDataTable(ogia.obs_history), Ogia.OBS_HISTORY);
+                DataTable obs_history = WebHelpers.GetJSONToDataTable(ogia.obs_history);
 
-                lbl_general_appearance.Text = ogia.general_appearance;
-
-                if (ogia.edema != null)
+                if (obs_history != null)
                 {
-                    if (ogia.edema == true)
+                    foreach (DataRow row in obs_history.Rows)
                     {
-                        prt_edema_True.Text = "☒";
-                        prt_edema_False.Text = "❏";
-                        prt_edema_note.Text = ogia.edema_note;
+                        HtmlTableRow tr = new HtmlTableRow();
+                        HtmlTableCell td;
 
-                    }
-                    else
-                    {
-                        prt_edema_True.Text = "❏";
-                        prt_edema_False.Text = "☒";
+                        //
+                        td = new HtmlTableCell();
+
+                        td.InnerText = Convert.ToString(row["label"]);
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        td.InnerText = Convert.ToString(row["grav_1"]);
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        td.InnerText = row["grav_2"].ToString();
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        td.InnerText = row["grav_3"].ToString();
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        td.InnerText = row["grav_4"].ToString();
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        td.InnerText = row["grav_5"].ToString();
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        td.InnerText = row["grav_6"].ToString();
+                        tr.Cells.Add(td);
+                        
+                        prt_obs_history.Rows.Add(tr);
                     }
                 }
-                if (ogia.edema == null)
-                {
-                    prt_edema_True.Text = "❏";
-                    prt_edema_False.Text = "❏";
-                }
+
+                prt_general_appearance.Text = ogia.general_appearance;
+
+                prt_edema.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, chi tiết/ Yes, specify: " + WebHelpers.GetBool(ogia.edema, ogia.edema_note, ""), Value = true }, ogia.edema, "display: grid;grid-template-columns:150px auto;");
+
                 prt_cardio_system.Text = ogia.cardio_system;
                 prt_respiratory_system.Text = ogia.respiratory_system;
                 prt_digestive_system.Text = ogia.digestive_system;
@@ -570,168 +502,89 @@ namespace EMR.IPD
                 prt_ophthalmology.Text = ogia.ophthalmology;
                 prt_other_findings.Text = ogia.other_findings;
                 prt_integumentary_system.Text = ogia.integumentary_system;
-                
-                if (ogia.psy_consul_required != null)
-                {
-                    if (ogia.psy_consul_required == true)
-                    {
-                        prt_psy_consul_required_True.Text = "☒";
-                        prt_psy_consul_required_False.Text = "❏";
 
-                    }
-                    else
-                    {
-                        prt_psy_consul_required_True.Text = "❏";
-                        prt_psy_consul_required_False.Text = "☒";
-                    }
-                }
-                if (ogia.psy_consul_required == null)
-                {
-                    prt_psy_consul_required_True.Text = "❏";
-                    prt_psy_consul_required_False.Text = "❏";
-                }
-                if (ogia.obs_pre_cicatrice != null)
-                {
-                    if (ogia.obs_pre_cicatrice == true)
-                    {
-                        prt_obs_pre_cicatrice.Text = "☒";
-                    }
-                    else
-                    {
-                        lbl_obs_pre_cicatrice.Text = "❏";
+                prt_psy_consul_required.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, ogia.psy_consul_required, "display: grid;grid-template-columns:1fr 1fr;");
 
+                {
+                    Control control = FindControl("prt_obs_pre_cicatrice_" + ogia.obs_pre_cicatrice);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☒";
                     }
                 }
-                if (ogia.obs_pre_cicatrice == null)
-                {
-                    lbl_obs_pre_cicatrice.Text = "❏";
-                    lbl_obs_pre_cicatrice.Text = "❏";
-                }
-
-                prt_obs_uterine_shape.Text = (ogia.obs_uterine_shape ?? "—").ToString();
-                prt_obs_posture.Text = (ogia.obs_posture ?? "—").ToString();
-                prt_obs_fundal_height.Text = (ogia.obs_fundal_height ?? "—").ToString();
-                prt_obs_abdominal_circum.Text = (ogia.obs_abdominal_circum ?? "—").ToString();
+               
+                prt_obs_uterine_shape.Text = WebHelpers.FormatString(ogia.obs_uterine_shape, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                prt_obs_posture.Text = ogia.obs_posture;
+                prt_obs_fundal_height.Text = WebHelpers.FormatString(ogia.obs_fundal_height, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                prt_obs_abdominal_circum.Text = WebHelpers.FormatString(ogia.obs_abdominal_circum, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                 prt_obs_uterine_con.Text = ogia.obs_uterine_con;
-                prt_obs_fetal_heart_rate.Text = (ogia.obs_fetal_heart_rate ?? "—").ToString();
-                prt_obs_breasts.Text = (ogia.obs_breasts ?? "—").ToString();
-                prt_obs_bishop_score.Text = (ogia.obs_bishop_score ?? "—").ToString();
-                prt_obs_vulva.Text = (ogia.obs_vulva ?? "—").ToString();
-                prt_obs_vagina.Text = (ogia.obs_vagina ?? "—").ToString();
-                prt_obs_perineum.Text = (ogia.obs_perineum ?? "—").ToString();
-                prt_obs_cervix.Text = (ogia.obs_cervix ?? "—").ToString();
-                prt_obs_adnexa.Text = (ogia.obs_adnexa ?? "—").ToString();
-                if (ogia.obs_mem_condition_code != null)
-                {
-                    if (ogia.obs_mem_condition_code == "IN")
-                    {
-                        prt_obs_mem_condition_code_True.Text = "☒";
-                        prt_obs_mem_condition_code_False.Text = "❏";
-                    }
-                    else
-                    {
-                        prt_obs_mem_condition_code_False.Text = "☒";
-                        prt_obs_mem_condition_code_True.Text = "❏";
-                    }
-                }
-                if (ogia.obs_mem_condition_code == null)
-                {
-                    prt_obs_mem_condition_code_False.Text = "❏";
-                    prt_obs_mem_condition_code_True.Text = "❏";
-                }
-                string OFA_temp = ogia.obs_feat_amniotic;
-                if (OFA_temp != null && OFA_temp != "")
-                {
-                    List<Obs_Feat_Amniotic> Habits_Temps = JsonConvert.DeserializeObject<List<Obs_Feat_Amniotic>>(OFA_temp);
-                    prt_N.Text = "❏";
-                    prt_P.Text = "❏";
-                    prt_O.Text = "❏";
-                    foreach (Obs_Feat_Amniotic locAvpu in Habits_Temps)
-                    {
+                prt_obs_fetal_heart_rate.Text = WebHelpers.FormatString(ogia.obs_fetal_heart_rate, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                prt_obs_breasts.Text = WebHelpers.FormatString(ogia.obs_breasts, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                prt_obs_bishop_score.Text = WebHelpers.FormatString(ogia.obs_bishop_score, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+                prt_obs_vulva.Text = ogia.obs_vulva;
+                prt_obs_vagina.Text = ogia.obs_vagina;
+                prt_obs_perineum.Text = ogia.obs_perineum;
+                prt_obs_cervix.Text = ogia.obs_cervix;
+                prt_obs_adnexa.Text = ogia.obs_adnexa;
 
-                        string cde = locAvpu.code;
-                        if (cde != null)
+                prt_obs_mem_condition_code.Text = WebHelpers.CreateOptions(new Option { Text = "Nguyên vẹn/ Intact", Value = "IN" }, new Option { Text = "Đã vỡ/ Ruptured", Value = "RU" }, ogia.obs_mem_condition_code, "display: grid;grid-template-columns:150px auto;");
+
+                obs_mem_condition_code_ru_field.Visible = ogia.obs_mem_condition_code == "RU";
+
+                if (ogia.obs_mem_condition_code == "RU")
+                {
+                    DateTime obs_rup_of_mem_at = WebHelpers.ConvertDateTime(ogia.obs_rup_of_mem_at, out bool IsValidDateTime1);
+                    if (IsValidDateTime1)
+                    {
+                        prt_obs_rup_of_mem_at.Text = $"{ WebHelpers.FormatDateTime(obs_rup_of_mem_at, "HH")} giờ/ hour { WebHelpers.FormatDateTime(obs_rup_of_mem_at, "mm")} phút/ minute ngày/ date { WebHelpers.FormatDateTime(obs_rup_of_mem_at, "dd/MM/yyyy")}";
+                    }
+                    prt_obs_rup_of_mem_code.Text = WebHelpers.CreateOptions(new Option { Text = "Tự nhiên/ Spontaneous", Value = "IN" }, new Option { Text = "Can thiệp/ Interventional", Value = "RU" }, ogia.obs_rup_of_mem_code, "display: grid;grid-template-columns:200px auto;");
+                }
+
+                DataTable obs_feat_amniotic = WebHelpers.GetJSONToDataTable(ogia.obs_feat_amniotic);
+                if (obs_feat_amniotic != null)
+                {
+                    foreach (DataRow row in obs_feat_amniotic.Rows)
+                    {
+                        string code = Convert.ToString(row["code"]);
+                        Control control = FindControl("prt_obs_feat_amniotic_" + code);
+                        if (control != null)
                         {
-                            if (cde == "N")
-                            {
-                                prt_N.Text = "☒";
-                            }
-                            if (cde == "P")
-                            {
-                                prt_P.Text = "☒";
-                            }
-                            if (cde == "O")
-                            {
-                                prt_O.Text = "☒";
-                            }
+                            (control as Label).Text = "☒";
                         }
+                    }
+                }
 
+                {
+                    Control control = FindControl("prt_obs_presentation_code_" + ogia.obs_presentation_code);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☒";
                     }
                 }
-                if (OFA_temp == null && OFA_temp == "")
-                {
-                    prt_N.Text = "❏";
-                    prt_P.Text = "❏";
-                    prt_O.Text = "❏";
-                }
-                if (ogia.obs_presentation_code != null)
-                {
-                    if (ogia.obs_presentation_code == "C")
-                    {
-                        prt_O_C.Text = "☒";
-                        prt_O_O.Text = "❏";
-                        prt_O_B.Text = "❏";
 
-                    }
-                    if (ogia.obs_presentation_code == "B")
-                    {
-                        prt_O_C.Text = "❏";
-                        prt_O_B.Text = "☒";
-                        prt_O_O.Text = "❏";
-
-                    }
-                    else
-                    {
-                        prt_O_C.Text = "❏";
-                        prt_O_B.Text = "❏";
-                        prt_O_O.Text = "☒";
-                        prt_obs_presentation_other.Text = ogia.obs_presentation_other;
-                    }
-                }
-                if (ogia.obs_presentation_code == null)
-                {
-                    prt_O_C.Text = "❏";
-                    prt_O_B.Text = "❏";
-                    prt_O_O.Text = "❏";
-                }
                 prt_obs_fetal_position.Text = ogia.obs_fetal_position;
                 prt_obs_pelvic_exam.Text = ogia.obs_pelvic_exam;
-                if (ogia.gyn_abdo_sur_scars != null)
+
                 {
-                    if (ogia.gyn_abdo_sur_scars != null)
+                    Control control = FindControl("prt_gyn_abdo_sur_scars_" + ogia.gyn_abdo_sur_scars);
+                    if (control != null)
                     {
-                        prt_gyn_abdo_sur_scars.Text = "☒";
+                        (control as Label).Text = "☒";
                         prt_gyn_reason.Text = ogia.gyn_reason;
                     }
-                    else
-                    {
-                        prt_gyn_abdo_sur_scars.Text = "❏";
-                    }
                 }
-                if (ogia.gyn_abdo_sur_scars == null)
-                {
-                    prt_gyn_abdo_sur_scars.Text = "❏";
-                }
-                prt_gyn_uterine_height.Text = (ogia.gyn_uterine_height ?? "—").ToString();
-                prt_gyn_vulva.Text = (ogia.gyn_vulva ?? "—").ToString();
-                prt_gyn_perineum.Text = (ogia.gyn_perineum ?? "—").ToString();
-                prt_gyn_vagina.Text = (ogia.gyn_vagina ?? "—").ToString();
-                prt_gyn_discharge.Text = (ogia.gyn_discharge ?? "—").ToString();
-                prt_gyn_cervix.Text = (ogia.gyn_cervix ?? "—").ToString();
-                prt_gyn_uterus.Text = (ogia.gyn_uterus ?? "—").ToString();
-                prt_gyn_adnexa.Text = (ogia.gyn_adnexa ?? "—").ToString();
-                prt_gyn_douglas_pouchs.Text = (ogia.gyn_douglas_pouchs ?? "—").ToString();
-                prt_lab_result.Text = (ogia.lab_result ?? "—").ToString();
+
+                prt_gyn_uterine_height.Text = ogia.gyn_uterine_height;
+                prt_gyn_vulva.Text = ogia.gyn_vulva;
+                prt_gyn_perineum.Text = ogia.gyn_perineum;
+                prt_gyn_vagina.Text = ogia.gyn_vagina;
+                prt_gyn_discharge.Text = ogia.gyn_discharge;
+                prt_gyn_cervix.Text = ogia.gyn_cervix;
+                prt_gyn_uterus.Text = ogia.gyn_uterus;
+                prt_gyn_adnexa.Text = ogia.gyn_adnexa;
+                prt_gyn_douglas_pouchs.Text = ogia.gyn_douglas_pouchs;
+                prt_lab_result.Text = ogia.lab_result;
                 prt_add_investigations.Text = ogia.add_investigations;
                 prt_initial_diagnosis.Text = ogia.initial_diagnosis;
                 prt_diagnosis.Text = ogia.diagnosis;

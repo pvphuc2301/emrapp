@@ -210,10 +210,12 @@
     <Content Include="images\ExcellentCare.png" />
     <Content Include="images\logo-opacity.png" />
     <Content Include="images\PaintAssess.png" />
+    <Content Include="images\prt_header.png" />
     <Content Include="IPD\ObsGynIniAss.aspx" />
     <Content Include="IPD\SurgicalReport.aspx" />
     <Content Include="Other\FormMenu.aspx" />
     <Content Include="Other\Test.aspx" />
+    <Content Include="Phar\medicalAdRec.aspx" />
     <Content Include="Report\AllowUpdateEMR.aspx" />
     <Content Include="Other\DemographicSearch.aspx" />
     <Content Include="Other\index.aspx" />
@@ -473,6 +475,13 @@
     </Compile>
     <Compile Include="Other\Test.aspx.designer.cs">
       <DependentUpon>Test.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Phar\medicalAdRec.aspx.cs">
+      <DependentUpon>medicalAdRec.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Phar\medicalAdRec.aspx.designer.cs">
+      <DependentUpon>medicalAdRec.aspx</DependentUpon>
     </Compile>
     <Compile Include="Report\AllowUpdateEMR.aspx.cs">
       <DependentUpon>AllowUpdateEMR.aspx</DependentUpon>
@@ -1160,7 +1169,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

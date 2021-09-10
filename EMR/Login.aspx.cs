@@ -213,6 +213,11 @@ namespace Emr_client.Emr
                     varGroup = "TECH";
                     varAccess = "CLSView";
                 }
+                else
+                {
+                    varGroup = "OTH";
+                    varAccess = "ScanView";
+                }
 
                 varCompanyCode = Convert.ToString(Session["company_code"]);
                 Session["access_authorize"] = varAccess;

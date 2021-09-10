@@ -147,10 +147,9 @@
             </tr>
         </tfoot>
     </table>
+
 <div id="headerView" runat="server">    
     <header id="pageHeader">
-
-        
         <table style="width:100%; border-collapse:collapse" >
             <tr style="text-align:center">
                 <td>                   
@@ -160,7 +159,7 @@
                     <br /><label style="font-size:larger">MEDICAL ADMINISTRATION RECORD/ Y LỆNH NỘI TRÚ</label><br />
                 </td>
             </tr>              
-        </table>     
+        </table>
 
         <table class="tblHeader" style="font-weight:normal">
 					<tr>
@@ -242,6 +241,7 @@
 						<td></td>
 					</tr>
 					</table>
+
     </header>
     <footer id="pageFooter" class="cssclsNoScreen">
         <table class="tbFooter" style="width:100%; font-size:small; border-collapse:collapse" >
