@@ -560,7 +560,7 @@ namespace EMR
                 prt_btc_sensory.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"text-primary\"><i>No</i></span>", Value = false }, new Option { Text = "Có, Giải thích/ <span class=\"text-primary\"><i>Yes Explain</i></span> ", Value = true }, ena.btc_sensory, "display: grid;grid-template-columns:90px auto;");
                 prt_btc_sensory_note.Text = ena.btc_sensory_note;
 
-                prt_btc_religious.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"text-primary\"><i>No</i></span>", Value = false }, new Option { Text = "Có, Giải thích/ <span class=\"text-primary\"><i>Yes Explain</i></span> ", Value = true }, ena.btc_religious, "display: grid;grid-template-columns:90px auto;") + ( WebHelpers.GetBool(ena.btc_religious, ena.btc_religious_note, ""));
+                prt_btc_religious.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"text-primary\"><i>No</i></span>", Value = false }, new Option { Text = "Có, Giải thích/ <span class=\"text-primary\"><i>Yes Explain</i></span> ", Value = true }, ena.btc_religious, "display: grid;grid-template-columns:90px auto;");
 
                 prt_btc_religious_note.Text = ena.btc_religious_note;
 
