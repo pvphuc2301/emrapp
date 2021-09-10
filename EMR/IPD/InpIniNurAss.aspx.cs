@@ -1433,6 +1433,7 @@ namespace EMR
                 {
                     HtmlTableRow tr1 = new HtmlTableRow();
                     HtmlTableCell td1;
+                    HtmlGenericControl p;
 
                     string location = "";
                     string type = "";
@@ -1445,12 +1446,14 @@ namespace EMR
 
                     //
                     td1 = new HtmlTableCell();
-                    td1.InnerText = location;
+                    p = new HtmlGenericControl("lable") { InnerHtml = location };
+                    td1.Controls.Add(p);
                     td1.Align = "Center";
                     tr1.Cells.Add(td1);
                     //
                     td1 = new HtmlTableCell();
-                    td1.InnerText = type;
+                    p = new HtmlGenericControl("lable") { InnerHtml = type };
+                    td1.Controls.Add(p);
                     td1.Align = "Center";
                     tr1.Cells.Add(td1);
 
@@ -1469,12 +1472,14 @@ namespace EMR
 
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = Convert.ToString(skin_anno.Rows[i]["location"]);
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(skin_anno.Rows[i]["location"]) };
+                        td.Controls.Add(p);
                         td.Align = "Center";
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = Convert.ToString(skin_anno.Rows[i]["type"]);
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(skin_anno.Rows[i]["type"]) };
+                        td.Controls.Add(p);
                         td.Align = "Center";
                         tr.Cells.Add(td);
 

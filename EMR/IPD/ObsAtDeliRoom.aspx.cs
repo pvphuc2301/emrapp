@@ -384,24 +384,28 @@ namespace EMR
                     {
                         HtmlTableRow tr = new HtmlTableRow();
                         HtmlTableCell td;
+                        HtmlGenericControl p;
+                        //
+                        td = new HtmlTableCell();
+                        p = new HtmlGenericControl("lable") { InnerHtml = WebHelpers.FormatDateTime(Convert.ToString(row["date_time"]), "dd/MM/yyyy HH:mm") };
+                        td.Controls.Add(p);
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["surgical_anesthesia"]) };
+                        td.Controls.Add(p);
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["surgeon"]) };
+                        td.Controls.Add(p);
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["anesthesiologist"]) };
+                        td.Controls.Add(p);
+                        tr.Cells.Add(td);
 
-                        //
-                        td = new HtmlTableCell();
-                        td.InnerText = WebHelpers.FormatDateTime(Convert.ToString(row["date_time"]), "dd/MM/yyyy HH:mm");
-                        tr.Cells.Add(td);
-                        //
-                        td = new HtmlTableCell();
-                        td.InnerText = Convert.ToString(row["surgical_anesthesia"]);
-                        tr.Cells.Add(td);
-                        //
-                        td = new HtmlTableCell();
-                        td.InnerText = Convert.ToString(row["surgeon"]);
-                        tr.Cells.Add(td);
-                        //
-                        td = new HtmlTableCell();
-                        td.InnerText = Convert.ToString(row["anesthesiologist"]);
-                        tr.Cells.Add(td);
-                        
                         prt_operations.Rows.Add(tr);
                     }
                 }

@@ -450,37 +450,43 @@ namespace EMR.IPD
                     {
                         HtmlTableRow tr = new HtmlTableRow();
                         HtmlTableCell td;
+                        HtmlGenericControl p;
+                        //
+                        td = new HtmlTableCell();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["label"]) };
+                        td.Controls.Add(p);
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["grav_1"]) };
+                        td.Controls.Add(p);
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["grav_2"]) };
+                        td.Controls.Add(p);
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["grav_3"]) };
+                        td.Controls.Add(p);
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["grav_4"]) };
+                        td.Controls.Add(p);
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["grav_5"]) };
+                        td.Controls.Add(p);
+                        tr.Cells.Add(td);
+                        //
+                        td = new HtmlTableCell();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["grav_6"]) };
+                        td.Controls.Add(p);
+                        tr.Cells.Add(td);
 
-                        //
-                        td = new HtmlTableCell();
-
-                        td.InnerText = Convert.ToString(row["label"]);
-                        tr.Cells.Add(td);
-                        //
-                        td = new HtmlTableCell();
-                        td.InnerText = Convert.ToString(row["grav_1"]);
-                        tr.Cells.Add(td);
-                        //
-                        td = new HtmlTableCell();
-                        td.InnerText = row["grav_2"].ToString();
-                        tr.Cells.Add(td);
-                        //
-                        td = new HtmlTableCell();
-                        td.InnerText = row["grav_3"].ToString();
-                        tr.Cells.Add(td);
-                        //
-                        td = new HtmlTableCell();
-                        td.InnerText = row["grav_4"].ToString();
-                        tr.Cells.Add(td);
-                        //
-                        td = new HtmlTableCell();
-                        td.InnerText = row["grav_5"].ToString();
-                        tr.Cells.Add(td);
-                        //
-                        td = new HtmlTableCell();
-                        td.InnerText = row["grav_6"].ToString();
-                        tr.Cells.Add(td);
-                        
                         prt_obs_history.Rows.Add(tr);
                     }
                 }

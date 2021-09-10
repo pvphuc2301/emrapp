@@ -652,58 +652,69 @@ namespace EMR
                     {
                         HtmlTableRow tr = new HtmlTableRow();
                         HtmlTableCell td;
-
+                        HtmlGenericControl p;
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = Convert.ToString(row["time"]);
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["time"]) };
+                        td.Controls.Add(p);
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = Convert.ToString(row["rrlp"]);
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["rrlp"]) };
+                        td.Controls.Add(p);
                         td.Align = "Center";
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["o2sat"].ToString();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["o2sat"]) };
+                        td.Controls.Add(p);
                         td.Align = "Center";
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["hr"].ToString();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["hr"]) };
+                        td.Controls.Add(p);
                         td.Align = "Center";
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["bp"].ToString();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["bp"]) };
+                        td.Controls.Add(p);
                         td.Align = "Center";
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["temp"].ToString();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["temp"]) };
+                        td.Controls.Add(p);
                         td.Align = "Center";
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["gcs"].ToString();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["gcs"]) };
+                        td.Controls.Add(p);
                         td.Align = "Center";
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["pain"].ToString();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["pain"]) };
+                        td.Controls.Add(p);
                         td.Align = "Center";
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["ats"].ToString();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["ats"]) };
+                        td.Controls.Add(p);
                         td.Align = "Center";
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["intervention"].ToString();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["intervention"]) };
+                        td.Controls.Add(p);
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["initial"].ToString();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["initial"]) };
+                        td.Controls.Add(p);
                         tr.Cells.Add(td);
 
                         prt_assessment_system.Rows.Add(tr);
@@ -718,43 +729,51 @@ namespace EMR
                     {
                         HtmlTableRow tr = new HtmlTableRow();
                         HtmlTableCell td;
-
+                        HtmlGenericControl p;
                         //
                         td = new HtmlTableCell();
-
-                        td.InnerText = Convert.ToString(row["dir_med_time"]);
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["dir_med_time"]) };
+                        td.Controls.Add(p);
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = Convert.ToString(row["dir_medication"]);
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["dir_medication"]) };
+                        td.Controls.Add(p);
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["dir_med_dose"].ToString();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["dir_med_dose"]) };
+                        td.Controls.Add(p);
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["dir_med_route"].ToString();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["dir_med_route"]) };
+                        td.Controls.Add(p);
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["dir_med_rate"].ToString();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["dir_med_rate"]) };
+                        td.Controls.Add(p);
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["dir_med_doctor"].ToString();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["dir_med_doctor"]) };
+                        td.Controls.Add(p);
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["dir_med_comment"].ToString();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["dir_med_comment"]) };
+                        td.Controls.Add(p);
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["dir_med_time2"].ToString();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["dir_med_time2"]) };
+                        td.Controls.Add(p);
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["dir_med_initial"].ToString();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["dir_med_initial"]) };
+                        td.Controls.Add(p);
                         tr.Cells.Add(td);
 
                         prt_direct_medication.Rows.Add(tr);
@@ -794,20 +813,22 @@ namespace EMR
                     {
                         HtmlTableRow tr = new HtmlTableRow();
                         HtmlTableCell td;
-
+                        HtmlGenericControl p;
                         //
                         td = new HtmlTableCell();
-                        
-                        td.InnerText = WebHelpers.FormatDateTime(Convert.ToString(row["date_time"]), "dd/MM/yyyy");
+                        p = new HtmlGenericControl("lable") { InnerHtml = WebHelpers.FormatDateTime(Convert.ToString(row["date_time"]), "dd/MM/yyyy") };
+                        td.Controls.Add(p);
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = WebHelpers.FormatDateTime(Convert.ToString(row["date_time"]), "HH:mm");
+                        p = new HtmlGenericControl("lable") { InnerHtml = WebHelpers.FormatDateTime(Convert.ToString(row["date_time"]), "HH:mm") };
+                        td.Controls.Add(p);
                         td.Align = "Center";
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["patient_condition"].ToString();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["patient_condition"]) };
+                        td.Controls.Add(p);
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
@@ -815,7 +836,8 @@ namespace EMR
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["signature_name"].ToString();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["signature_name"]) };
+                        td.Controls.Add(p);
                         tr.Cells.Add(td);
 
                         prt_nursing_note.Rows.Add(tr);
