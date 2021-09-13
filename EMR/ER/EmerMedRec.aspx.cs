@@ -798,6 +798,7 @@ namespace EMR.ER
                 prt_allergies.Text = emr.allergies;
                 prt_relevant_family_history.Text = emr.relevant_family_history;
                 prt_finding.Text = emr.finding;
+
                 if (emr.required_code != null)
                 {
                     ((HtmlInputRadioButton)FindControl("rad_required_code_" + emr.required_code)).Checked = true;

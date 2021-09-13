@@ -157,7 +157,7 @@ namespace EMR
 
                 bool isValidDateTime;
 
-                if(patientVisitInfo.associated_visit_id != Convert.ToString(Guid.Empty))
+                if(patientVisitInfo.associated_visit_id != Convert.ToString(Guid.Empty) &&  Convert.ToString(patientVisitInfo.visit_type).Trim() == "ERO")
                 {
                     PatientVisitInfo patientVisitInfo1 = new PatientVisitInfo(patientVisitInfo.associated_visit_id, loc);
                     associated_visit_admited = WebHelpers.ConvertDateTime(patientVisitInfo1.actual_visit_date_time, out isValidDateTime, out string admitted_time1);

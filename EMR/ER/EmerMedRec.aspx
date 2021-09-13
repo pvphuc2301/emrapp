@@ -21,7 +21,6 @@
 <%@ Register Src="~/icons/XSquare.ascx" TagPrefix="icon" TagName="XSquare" %>
 <%@ Register Src="~/icons/Trash.ascx" TagPrefix="icon" TagName="Trash" %>
 
-
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
@@ -2588,7 +2587,7 @@
 
                                                 <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                <asp:LinkButton runat="server" OnClientClick="window.print(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                <asp:LinkButton runat="server" OnClientClick="btnPrint_Click(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                 <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                             </div>
@@ -2628,6 +2627,17 @@
             var curtime = new Date();
         }
 
+        function btnPrint_Click() {
+            if (document.getElementById('lbl_required_code').innerText.includes("Yes")) {
+                document.getElementById("lbl_required_code_True").innerText = "☒";
+                document.getElementById("lbl_required_code_False").innerText = "❏";
+            } else {
+                document.getElementById("lbl_required_code_False").innerText = "☒";
+                document.getElementById("lbl_required_code_True").innerText = "❏";
+            }
+            window.print();
+        }
+
         function afterAsyncPostBack() {
             formGroup_init();
             checkboxRadiobutton_init();
@@ -2636,7 +2646,13 @@
                 if (document.getElementById("alertify-logs"))
                 document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
             }, 1000);
+
+            
         }
+
+        
+
+        
     </script>
 
 </body>
