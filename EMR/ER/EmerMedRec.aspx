@@ -2635,6 +2635,46 @@
                 document.getElementById("lbl_required_code_False").innerText = "☒";
                 document.getElementById("lbl_required_code_True").innerText = "❏";
             }
+
+            let prt_progress_note = document.getElementById("prt_progress_note");
+            let grid_Treatment = document.getElementById("prt_treatment");
+            
+            if (prt_progress_note.rows.length > 0) {
+                for (var i = 0, row; row = prt_progress_note.rows[i]; i++) {
+                    //iterate through rows
+                    //rows would be accessed using the "row" variable assigned in the for loop
+                    for (var j = 0, col; col = row.cells[j]; j++) {
+
+                        let p = document.createElement("lable");
+
+                        p.innerHTML = col.innerText;
+                        console.log(p.innerHTML);
+                        col.innerHTML = p.innerHTML;
+
+                        //iterate through columns
+                        //columns would be accessed using the "col" variable assigned in the for loop
+                    }
+                }
+            }
+
+            if (grid_Treatment.rows.length > 0) {
+                for (var i = 0, row; row = grid_Treatment.rows[i]; i++) {
+                    //iterate through rows
+                    //rows would be accessed using the "row" variable assigned in the for loop
+                    for (var j = 0, col; col = row.cells[j]; j++) {
+
+                        let p = document.createElement("lable");
+
+                        p.innerHTML = col.innerText;
+                        console.log(p.innerHTML);
+                        col.innerHTML = p.innerHTML;
+
+                        //iterate through columns
+                        //columns would be accessed using the "col" variable assigned in the for loop
+                    }
+                }
+            }
+
             window.print();
         }
 

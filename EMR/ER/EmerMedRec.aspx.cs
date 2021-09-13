@@ -129,6 +129,7 @@ namespace EMR.ER
             }
             WebHelpers.VisibleControl(rad_hospitalisation_required_True.Checked, hos_req_field);
         }
+
         #region Binding Data
         private void BindingDataForm(EmergencyMedicalRecord emr, bool state)
         {
@@ -1123,6 +1124,7 @@ namespace EMR.ER
             }
         }
         #endregion
+        
         #region Events
         protected void btnComplete_Click(object sender, EventArgs e)
         {
