@@ -29,6 +29,10 @@
             .page:after {
                 bottom: 3px;
             }
+
+            .watermark {
+                height: 945px;
+            }
         }
     </style>
 </head>
@@ -48,11 +52,12 @@
                                             <h4>BỆNH ÁN NỘI TRÚ</h4>
                                             <h5>INPATIENT INITIAL MEDICAL ASSESSMENT</h5>
                                         </div>
-                                        <div style="width: 120px; text-align: left; font-size: 11px">
-                                            <asp:Label CssClass="d-block" runat="server" ID="prt_fullname"></asp:Label>
-                                            <asp:Label class="d-block" CssClass="d-block" runat="server" ID="prt_dob"></asp:Label>
+                                        <div style="width: 160px; text-align: left; font-size: 11px">
+                                            <div runat="server" id="prt_fullname"></div>
+                                            <div runat="server" id="prt_gender"></div>
+                                            <div class="d-block" runat="server" id="prt_DOB"></div>
+                                            <div runat="server" id="prt_vpid" class="d-block font-bold"></div>
                                             <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
-                                            <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
                                         </div>
                                     </div>
                                     <div style="height: 25px">

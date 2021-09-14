@@ -360,10 +360,15 @@ namespace EMR.IPD
             try
             {
                 patientInfo = new PatientInfo(varPID);
+                patientVisitInfo = new PatientVisitInfo(varPVID, loc);
 
-                WebHelpers.VisibleControl(false, div_obs, div_gyn, div_for_obstetric, div_for_gyneacology);
-                prt_vpid.Text = patientInfo.visible_patient_id;
                 WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
+                prt_fullname.InnerText = string.Format("{0} - {1}", patientInfo.FullName, patientInfo.Gender);
+
+                prt_DOB.InnerText = "DOB: " + WebHelpers.FormatDateTime(patientInfo.DOB, "dd-MM-yyyy", "");
+
+                prt_vpid.InnerText = string.Format("{0} - {1} - {2}", patientInfo.visible_patient_id, patientVisitInfo.visit_type, patientVisitInfo.visit_code);
+
                 prt_reason_admission.Text = ogia.reason_admission;
 
                 if (ogia.is_obs_gyn != null)

@@ -23,6 +23,11 @@
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
     <link href="../styles/print.css" rel="stylesheet" />
+    <style>
+        .watermark {
+            height: 945px;
+        }
+    </style>
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
@@ -34,15 +39,18 @@
                     <thead class="report-header">
                         <tr>
                             <th class="report-header-cell">
-                                <div class="header-info" style="height: 75px;">
+                                <div class="header-info">
                                     <img src="../images/AIH_PI_FULL.png" />
                                     <div class="header-info-title">
                                         <h4>BỆNH ÁN SẢN PHỤ KHOA</h4>
-                                        <h5>OBSTETRIC & GYNECOLOGICAL INITIAL ASSESSMENT</h5>
+                                        <h5 style="font-size: 13.5px">OBSTETRIC & GYNECOLOGICAL INITIAL ASSESSMENT</h5>
                                     </div>
-                                    <div style="text-align:center">
+                                    <div style="width: 160px; text-align: left; font-size: 11px">
+                                        <div runat="server" id="prt_fullname"></div>
+                                        <div runat="server" id="prt_gender"></div>
+                                        <div class="d-block" runat="server" id="prt_DOB"></div>
+                                        <div runat="server" id="prt_vpid" class="d-block font-bold"></div>
                                         <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
-                                        <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
                                     </div>
                                 </div>
                                 <div style="height: 25px">

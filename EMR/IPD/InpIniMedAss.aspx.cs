@@ -175,9 +175,16 @@ namespace EMR
         {
             try
             {
-                prt_dob.Text = WebHelpers.FormatDateTime(patientInfo.date_of_birth) + " | " + patientInfo.Gender;
-                prt_vpid.Text = patientInfo.visible_patient_id;
+                patientInfo = new PatientInfo(varPID);
+                patientVisitInfo = new PatientVisitInfo(varPVID, loc);
+
                 WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
+                prt_fullname.InnerText = string.Format("{0} - {1}", patientInfo.FullName, patientInfo.Gender);
+
+                prt_DOB.InnerText = "DOB: " + WebHelpers.FormatDateTime(patientInfo.DOB, "dd-MM-yyyy", "");
+
+                prt_vpid.InnerText = string.Format("{0} - {1} - {2}", patientInfo.visible_patient_id, patientVisitInfo.visit_type, patientVisitInfo.visit_code);
+
 
                 //I
                 prt_chief_complaint.Text = WebHelpers.TextToHtmlTag(iima.chief_complaint);

@@ -42,13 +42,31 @@ namespace EMR
         protected global::System.Web.UI.UpdatePanel Upd;
 
         /// <summary>
-        /// BarCode control.
+        /// prt_fullname control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder BarCode;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_fullname;
+
+        /// <summary>
+        /// prt_gender control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_gender;
+
+        /// <summary>
+        /// prt_DOB control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_DOB;
 
         /// <summary>
         /// prt_vpid control.
@@ -57,7 +75,16 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_vpid;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_vpid;
+
+        /// <summary>
+        /// BarCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder BarCode;
 
         /// <summary>
         /// print_content control.
@@ -2271,7 +2298,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        //protected global::System.Web.UI.WebControls.LinkButton btnDelete;
+        protected global::System.Web.UI.WebControls.LinkButton btnDelete;
 
         /// <summary>
         /// PopupShowDelay control.
