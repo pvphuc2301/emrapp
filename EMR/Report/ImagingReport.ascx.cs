@@ -79,10 +79,17 @@ namespace EMR
                         WebHelpers.VisibleControl(true, findings_field);
                     }
 
-                    
                     if (!string.IsNullOrEmpty(Convert.ToString(jsonObject.addendum)))
-                    lbl_addendum.InnerHtml = jsonObject.addendum;
+                    {
+                        lbl_addendum.InnerHtml = jsonObject.addendum;
+                        addendum_field.Visible = true;
+                    }
+                    else
+                    {
+                        addendum_field.Visible = false;
+                    }
                 }
+
                 Session["radid"] = "";
             }
         }        
