@@ -1872,6 +1872,13 @@
         }
 
         function btnPrint_Click() {
+
+            if (document.getElementById("lbl_is_obs_gyn").innerText == "SẢN KHOA/ OBSTETRICS") {
+                document.getElementById("div_for_gyneacology").setAttribute("style", "display: none");
+            } else {
+                document.getElementById("div_for_obstetric").setAttribute("style", "display: none");
+            }
+
             let printContent = document.querySelector("#printContent");
             printContent.setAttribute("style", "display: block");
 

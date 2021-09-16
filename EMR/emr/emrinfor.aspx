@@ -312,12 +312,12 @@
 
     <script>
 
-        //let myIframe = document.getElementById("MARPrinting").getElementsByTagName("iframe");
-        //if (myIframe) {
-        //    let oldSrc = myIframe[0].src;
-        //    oldSrc = oldSrc.replace("marprinting", "medicalAdRec");
-        //    myIframe[0].src = oldSrc;
-        //}
+        let myIframe = document.getElementById("MARPrinting").getElementsByTagName("iframe");
+        if (myIframe) {
+            let oldSrc = myIframe[0].src;
+            oldSrc = oldSrc.replace("marprinting", "medicalAdRec");
+            myIframe[0].src = oldSrc;
+        }
 
         let headerDisplay = window.parent.document.getElementById("header");
         let leftMenuWidth = window.parent.document.getElementById("RadTabStrip2");
