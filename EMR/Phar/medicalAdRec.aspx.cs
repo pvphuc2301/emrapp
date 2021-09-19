@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -58,6 +59,10 @@ namespace EMR.Phar
             RadGrid1.MasterTableView.GetColumn("drug_name_l").Display = false;
             RadGrid1.MasterTableView.GetColumn("dosage_instruction").Display = false;
             RadGrid1.MasterTableView.GetColumn("note").Display = false;
+
+            RadGrid2.MasterTableView.GetColumn("drug_name_l").Display = false;
+            RadGrid2.MasterTableView.GetColumn("dosage_instruction").Display = false;
+            RadGrid2.MasterTableView.GetColumn("note").Display = false;
         }
         public void GetPatientInfor()
         {
@@ -170,18 +175,23 @@ namespace EMR.Phar
 
         protected void RadGrid1_PreRender(object sender, EventArgs e)
         {
+            List<int> temp = new List<int>();
+
             for (int i = RadGrid1.Items.Count - 1; i > 0; i--)
             {
                 if (RadGrid1.Items[i][RadGrid1.Columns[0]].Text == RadGrid1.Items[i - 1][RadGrid1.Columns[0]].Text
                     && RadGrid1.Items[i][RadGrid1.Columns[8]].Text == RadGrid1.Items[i - 1][RadGrid1.Columns[8]].Text
                     && RadGrid1.Items[i][RadGrid1.Columns[9]].Text == RadGrid1.Items[i - 1][RadGrid1.Columns[9]].Text)
                 {
+                    temp.Add(i);
+
                     RadGrid1.Items[i - 1][RadGrid1.Columns[1]].RowSpan = RadGrid1.Items[i][RadGrid1.Columns[1]].RowSpan < 2 ? 2 : RadGrid1.Items[i][RadGrid1.Columns[1]].RowSpan + 1;
                     RadGrid1.Items[i][RadGrid1.Columns[1]].Visible = false;
                     RadGrid1.Items[i - 1][RadGrid1.Columns[2]].RowSpan = RadGrid1.Items[i][RadGrid1.Columns[2]].RowSpan < 2 ? 2 : RadGrid1.Items[i][RadGrid1.Columns[2]].RowSpan + 1;
                     RadGrid1.Items[i][RadGrid1.Columns[2]].Visible = false;
                 }
             }
+
             //To mau lai cho Radgird 
             foreach (GridDataItem dataItem in RadGrid1.Items)
             {
@@ -191,6 +201,8 @@ namespace EMR.Phar
                     dataItem[col.UniqueName].Style.Add("border-left", "solid 1px #ededed");
                 }
             }
+            lbl_lst.Value = JsonConvert.SerializeObject(temp);
+            WebHelpers.AddJS(Page, "FormatGrid()");
         }
         protected void RadGrid1_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
@@ -234,11 +246,11 @@ namespace EMR.Phar
             if (e.Item is GridFilteringItem)
                 e.Item.Visible = false;
         }
-        protected void RadGrid1_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
+        protected void RadGrid1_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
             string query = GetQuery(varVbID);
             if (!string.IsNullOrEmpty(query))
-                RadGrid1.DataSource = GetDataTable(query, ConnStringHIS);
+                (sender as RadGrid).DataSource = GetDataTable(query, ConnStringHIS);
         }
 
         public string GetQuery(string varVbID)
@@ -340,6 +352,7 @@ namespace EMR.Phar
         protected void ButtonPreview_Click(object sender, EventArgs e)
         {
             RadGrid1.Rebind();
+            RadGrid2.Rebind();
             GetPatientInfor();
         }
 

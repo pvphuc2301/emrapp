@@ -278,6 +278,14 @@
 
                                     <div class="d-grid" style="grid-template-columns: 1fr 1fr; grid-gap: 5px">
                                         <div></div>
+                                        <div class="text-center" style="break-inside: avoid !important; page-break-inside: avoid !important">
+                                            <div><span style="font-size: 14.5px; font-family: Tahoma" class="font-bold">Họ tên, chữ ký & MSNV của Bác sĩ</span></div>
+                                            <div><span style="font-size: 14.5px; font-family: Tahoma" class="text-primary"><i>Doctor’s full name, signature & ID</i></span></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid" style="grid-template-columns: 1fr 1fr; grid-gap: 5px; display: none;">
+                                        <div></div>
                                         <div>
                                             <div>Ngày giờ/ Date & time: <asp:Label runat="server" ID="prt_signature_date"/></div>
                                             <div>Họ tên bác sĩ và mã số nhân viên/ Doctor's name and ID:</div>

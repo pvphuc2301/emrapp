@@ -424,7 +424,19 @@ namespace EMR
                 foreach (DataRow row in mydataTable.Rows)
                 {
                     RadTreeNode node = new RadTreeNode();
-                    node.Text = ReturnVisit_Date(row["actual_visit_date_time"], row["visit_type"], row["visit_code"]);
+
+                    string NoteText = ReturnVisit_Date(row["actual_visit_date_time"], row["visit_type"], row["visit_code"]);
+
+                    patientVisitInfo = new PatientVisitInfo(Convert.ToString(row["patient_visit_id"]), loc);
+
+                    if (patientVisitInfo.associated_visit_id != Convert.ToString(Guid.Empty))
+                    {
+                        PatientVisitInfo patientVisitInfo1 = new PatientVisitInfo(patientVisitInfo.associated_visit_id, loc);
+                        NoteText = NoteText.Substring(0, NoteText.Length - 1) + "<span style='font-size: 10px'>🔗</span>" + patientVisitInfo1.visit_type + "-" + patientVisitInfo1.visit_code + ")";
+                    }
+
+                    node.Text = NoteText;
+
                     node.Value = row["patient_visit_id"].ToString();
                     node.ExpandMode = expandMode;
                     node.NavigateUrl = "";// row["visit_code"].ToString();

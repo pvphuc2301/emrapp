@@ -148,14 +148,14 @@
                                                 <div class="font-bold">TRƯỞNG KHOA</div>
                                                 <div><span class="text-primary">HEAD OF DEPARTMENT</span></div>
                                                 <div>(Họ tên, chữ ký & MSNV)</div>
-                                                <div><span class="text-primary">(Full name, Signature & ID)</span></div>
+                                                <div><span class="text-primary">(Name, signature & ID)</span></div>
                                             </div>
                                             <div class="text-center">
                                                 <div><span class="font-bold">Ngày</span>/ <span class="text-primary">Date</span> __/__/20__</div>
-                                                <div class="font-bold">BAN GIÁM ĐỐC Y KHOA</div>
-                                                <div><span class="text-primary">BOARD OF MEDICAL DIRECTOR</span></div>
+                                                <div class="font-bold">TỔNG GIÁM ĐỐC</div>
+                                                <div><span class="text-primary">CHIEF EXECUTIVE OFFICER</span></div>
                                                 <div>(Họ tên, chữ ký & MSNV)</div>
-                                                <div><span class="text-primary">(Full name, Signature & ID)</span></div>
+                                                <div><span class="text-primary">(Name, signature & ID)</span></div>
                                             </div>
                                         </div>
                                     </div>
