@@ -157,17 +157,21 @@ namespace EMR
 
                 bool isValidDateTime;
 
-                if(patientVisitInfo.associated_visit_id != Convert.ToString(Guid.Empty) &&  Convert.ToString(patientVisitInfo.visit_type).Trim() == "ERO")
-                {
-                    PatientVisitInfo patientVisitInfo1 = new PatientVisitInfo(patientVisitInfo.associated_visit_id, loc);
-                    associated_visit_admited = WebHelpers.ConvertDateTime(patientVisitInfo1.actual_visit_date_time, out isValidDateTime, out string admitted_time1);
+                //if(patientVisitInfo.associated_visit_id != Convert.ToString(Guid.Empty) &&  Convert.ToString(patientVisitInfo.visit_type).Trim() == "ERO")
+                //{
 
-                    associated_visit_closed = WebHelpers.ConvertDateTime(patientVisitInfo1.closure_date_time, out bool isValid3, out string admitted_time3);
-                }
-                else
-                {
-                    associated_visit_admited = WebHelpers.ConvertDateTime(patientVisitInfo.actual_visit_date_time, out isValidDateTime, out string admitted_time);
-                }
+                //    PatientVisitInfo patientVisitInfo1 = new PatientVisitInfo(patientVisitInfo.associated_visit_id, loc);
+
+                //    associated_visit_admited = WebHelpers.ConvertDateTime(patientVisitInfo1.actual_visit_date_time, out isValidDateTime, out string admitted_time1);
+
+                //    associated_visit_closed = WebHelpers.ConvertDateTime(patientVisitInfo1.closure_date_time, out bool isValid3, out string admitted_time3);
+                //}
+                //else
+                //{
+                //    associated_visit_admited = WebHelpers.ConvertDateTime(patientVisitInfo.actual_visit_date_time, out isValidDateTime, out string admitted_time);
+                //}
+
+                associated_visit_admited = WebHelpers.ConvertDateTime(patientVisitInfo.actual_visit_date_time, out isValidDateTime, out string admitted_time);
 
                 if (isValidDateTime)
                 {

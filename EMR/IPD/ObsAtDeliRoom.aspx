@@ -1250,6 +1250,13 @@
         }
 
         function btnPrint_Click() {
+
+            if (document.getElementById("lbl_cervix_intact").innerText == "Nguyên vẹn/ Intact") {
+                document.getElementById("prt_cervix_intact").innerHTML = '<div style="display: grid;grid-template-columns:150px auto;"><div style="display: grid; grid-template-columns: auto 1fr;"> ☒ <span class="ml-1">Nguyên vẹn/ Intact</span></div><div style="display: grid; grid-template-columns: auto 1fr;"> ❏ <span class="ml-1">Rách/ Laceration</span></div></div>';
+            } else if (document.getElementById("lbl_cervix_intact").innerText == "Rách/ Laceration") {
+                document.getElementById("prt_cervix_intact").innerHTML = '<div style="display: grid;grid-template-columns:150px auto;"><div style="display: grid; grid-template-columns: auto 1fr;"> ❏ <span class="ml-1">Nguyên vẹn/ Intact</span></div><div style="display: grid; grid-template-columns: auto 1fr;"> ☒ <span class="ml-1">Rách/ Laceration</span></div></div>'
+            }
+
             let printContent = document.querySelector("#printContent");
             printContent.setAttribute("style", "display: block");
 

@@ -11,13 +11,16 @@
     <link href="../styles/alertify.css" rel="stylesheet" />
     <link href="../styles/print.css" rel="stylesheet" />
     <style>
-        .border{ border: .5px solid #000 !important; }
-        #RadGrid2_ctl00{
+        .border { border: .5px solid #000 !important; }
+
+        #RadGrid2_ctl00 {
             border: 1px solid #000 !important;
         }
+
         .watermark {
             background-image: none !important;
-            height: 830px;
+            height: 790px;/*
+            border: 1px solid #000;*/
         }
 
         .cssclsNoScreen .header-info {
@@ -66,7 +69,7 @@
             /*border: 1px solid #000;*/
         }
 
-        thead {display: table-header-group;}
+        thead { display: table-header-group; }
     </style>
 </head>
 <body>
@@ -92,110 +95,114 @@
                                 <span style="display: inline-block; border-bottom-style: solid; border-bottom-color: #007297; border-bottom-width: 5px; width: calc(100% - 191px); margin-left: -5px;"></span>
                             </div>
 
-                            <div class="border p-2">
-                                <div class="d-grid" style="grid-template-columns: 1fr 1fr;">
-                                    <div class="d-grid m-0 p-0" style="grid-template-columns: auto 1fr;">
-                                        <div>Họ và tên/ <i class="text-primary">Fullname</i>:&nbsp;</div>
-                                        <asp:Label runat="server" ID="lbFullName" />
-                                    </div>
+                            <div class="border p-1" style="overflow: hidden;" id="prt_info">
+                                
+                                <div style="line-height: 15px;">
+                                    <div class="d-grid" style="grid-template-columns: 1fr 1fr;">
+                                        <div class="d-grid m-0 p-0" style="grid-template-columns: auto 1fr;">
+                                            <div>Họ và tên/ <i class="text-primary">Fullname</i>:&nbsp;</div>
+                                            <asp:Label runat="server" ID="lbFullName" />
+                                        </div>
 
-                                    <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                        <div>MAS:&nbsp;</div>
-                                        <div>
-                                            <div class="cssclsNoPrint">
-                                                From:&nbsp;<telerik:RadDatePicker  ID="FromDate" runat="server" Width="180" TabIndex="2"></telerik:RadDatePicker>
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                            <div>MAS:&nbsp;</div>
+                                            <div>
+                                                <div class="cssclsNoPrint">
+                                                    From:&nbsp;<telerik:RadDatePicker  ID="FromDate" runat="server" Width="180" TabIndex="2"></telerik:RadDatePicker>
+                                                </div>
+                                                <asp:Label ID="lbMASFromTo" runat="server" CssClass="cssclsNoScreen"/>
                                             </div>
-                                            <asp:Label ID="lbMASFromTo" runat="server" CssClass="cssclsNoScreen"/>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="d-grid" style="grid-template-columns: 1fr 1fr;">
-                                    <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                        <div>
-                                            Mã số người bệnh/ <i class="text-primary">PID</i>:&nbsp;
-                                        </div>
-                                        <div>
-                                            <asp:TextBox ID="PatientID" runat="server" AutoPostBack="false" TabIndex="1" Width="180px" CssClass="cssclsNoPrint" Visible="false"/>
-                                            <asp:Label runat="server" ID="lbPID" />
                                         </div>
                                     </div>
 
-                                    <div>
-                                        Chiều cao/ <i class="text-primary">Height</i>: <asp:Label runat="server" ID="lblHeight" /> cm; Cân nặng/ <i class="text-primary">Weight</i>: <asp:Label runat="server" ID="lblWeight" /> kg 
-                                    </div>
-                                </div>
-
-                                <div class="d-grid" style="grid-template-columns: 1fr 1fr;">
-                                    <div class="d-grid" style="grid-template-columns: 1fr 120px">
+                                    <div class="d-grid" style="grid-template-columns: 1fr 1fr;">
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
                                             <div>
-                                                Ngày sinh/ <i class="text-primary">DOB</i>:&nbsp;
+                                                Mã số người bệnh/ <i class="text-primary">PID</i>:&nbsp;
                                             </div>
-                                            <asp:Label runat="server" ID="lbBirthday" /> 
+                                            <div>
+                                                <asp:TextBox ID="PatientID" runat="server" AutoPostBack="false" TabIndex="1" Width="180px" CssClass="cssclsNoPrint" Visible="false"/>
+                                                <asp:Label runat="server" ID="lbPID" />
+                                            </div>
                                         </div>
+
                                         <div>
-                                            Tuổi/ <i class="text-primary">Age</i>: <asp:Label runat="server" ID="lbAge" />
+                                            Chiều cao/ <i class="text-primary">Height</i>: <asp:Label runat="server" ID="lblHeight" /> cm; Cân nặng/ <i class="text-primary">Weight</i>: <asp:Label runat="server" ID="lblWeight" /> kg 
                                         </div>
                                     </div>
 
-                                    <div>Dị ứng/ <i class="text-primary">Allery</i>: <asp:Label runat="server" ID="lbAllergy" /></div>
-                                </div>
+                                    <div class="d-grid" style="grid-template-columns: 1fr 1fr;">
+                                        <div class="d-grid" style="grid-template-columns: 1fr 120px">
+                                            <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                                <div>
+                                                    Ngày sinh/ <i class="text-primary">DOB</i>:&nbsp;
+                                                </div>
+                                                <asp:Label runat="server" ID="lbBirthday" /> 
+                                            </div>
+                                            <div>
+                                                Tuổi/ <i class="text-primary">Age</i>: <asp:Label runat="server" ID="lbAge" />
+                                            </div>
+                                        </div>
 
-                                <div class="d-grid" style="grid-template-columns: 1fr 1fr;">
+                                        <div>Dị ứng/ <i class="text-primary">Allery</i>: <asp:Label runat="server" ID="lbAllergy" /></div>
+                                    </div>
+
+                                    <div class="d-grid" style="grid-template-columns: 1fr 1fr;">
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                            <div>
+                                                Giới tính/ <i class="text-primary">Gender</i>:&nbsp;
+                                            </div>
+                                            <asp:Label runat="server" ID="lbSex" /> 
+                                        </div>
+
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                            <div>
+                                                Phòng/ <i class="text-primary">Room</i>:&nbsp;
+                                            </div>
+                                            <asp:Label runat="server" ID="lbRoom" />
+                                        </div>
+                                    </div>
+
+                                    <div class="d-grid cssclsNoPrint" style="grid-template-columns: auto 1fr">
+                                        <div>
+                                            Bác sỹ/ <i class="text-primary">Physician</i>:&nbsp;
+                                        </div>
+                                        <div>
+                                            <telerik:RadComboBox ID="DrOrderCombobox" runat="server" RenderMode="Lightweight" DataTextField="combo_code" DataValueField="order_code" Width="60%"/>
+                                            <asp:CheckBox ID="PrintAll" Text="Print All" runat="server" Font-Bold="true" Enabled="true"/>
+                                            <asp:CheckBox ID="AllDoctor" Text="All Doctor" runat="server" Font-Bold="true" Enabled="true"/>
+                                            <asp:Label ID="lbDoctor" runat="server" CssClass="cssclsNoScreen" Visible="false"/>
+                                        </div>
+                                    </div>
+
                                     <div class="d-grid" style="grid-template-columns: auto 1fr">
                                         <div>
-                                            Giới tính/ <i class="text-primary">Gender</i>:&nbsp;
+                                            Chẩn đoán/ <i class="text-primary">Diagnosis</i>:&nbsp;
                                         </div>
-                                        <asp:Label runat="server" ID="lbSex" /> 
-                                    </div>
-
-                                    <div class="d-grid" style="grid-template-columns: auto 1fr">
                                         <div>
-                                            Phòng/ <i class="text-primary">Room</i>:&nbsp;
+                                            <asp:Label runat="server" ID="lbProblem" />
+                                            <asp:Label ID="Label1" runat="server" Font-Bold="false" Visible="false"></asp:Label>
+                                            <div class="cssclsNoPrint">
+                                                <telerik:RadComboBox ID="rcbMyList1" runat="server" RenderMode="Lightweight" Visible="true"
+                                                    DataTextField="patientDianosis" DataValueField="patientDianosis" Width="400px" >  
+                                                    <ItemTemplate> 
+                                                        <asp:CheckBox ID="CheckBox1" runat="server" Text='<%# Eval("patientDianosis") %>' /> 
+                                                    </ItemTemplate> 
+                                                    <CollapseAnimation Type="OutQuint" Duration="200"></CollapseAnimation> 
+                                                </telerik:RadComboBox>
+                                                <asp:Button ID="ButtonT" runat="server" Text="GetValues" OnClick="ButtonGetValue_Click" Visible="true" />
+                                            </div>
                                         </div>
-                                        <asp:Label runat="server" ID="lbRoom" />
-                                    </div>
-                                </div>
+                                    </div> 
 
-                                <div class="d-grid cssclsNoPrint" style="grid-template-columns: auto 1fr">
-                                    <div>
-                                        Bác sỹ/ <i class="text-primary">Physician</i>:&nbsp;
-                                    </div>
-                                    <div>
-                                        <telerik:RadComboBox ID="DrOrderCombobox" runat="server" RenderMode="Lightweight" DataTextField="combo_code" DataValueField="order_code" Width="60%"/>
-                                        <asp:CheckBox ID="PrintAll" Text="Print All" runat="server" Font-Bold="true" Enabled="true"/>
-                                        <asp:CheckBox ID="AllDoctor" Text="All Doctor" runat="server" Font-Bold="true" Enabled="true"/>
-                                        <asp:Label ID="lbDoctor" runat="server" CssClass="cssclsNoScreen" Visible="false"/>
-                                    </div>
-                                </div>
-
-                                <div class="d-grid" style="grid-template-columns: auto 1fr">
-                                    <div>
-                                        Chẩn đoán/ <i class="text-primary">Diagnosis</i>:&nbsp;
-                                    </div>
-                                    <div>
-                                        <asp:Label runat="server" ID="lbProblem" />
-                                        <asp:Label ID="Label1" runat="server" Font-Bold="false" Visible="false"></asp:Label>
-                                        <div class="cssclsNoPrint">
-                                            <telerik:RadComboBox ID="rcbMyList1" runat="server" RenderMode="Lightweight" Visible="true"
-                                                DataTextField="patientDianosis" DataValueField="patientDianosis" Width="400px" >  
-                                                <ItemTemplate> 
-                                                    <asp:CheckBox ID="CheckBox1" runat="server" Text='<%# Eval("patientDianosis") %>' /> 
-                                                </ItemTemplate> 
-                                                <CollapseAnimation Type="OutQuint" Duration="200"></CollapseAnimation> 
-                                            </telerik:RadComboBox>
-                                            <asp:Button ID="ButtonT" runat="server" Text="GetValues" OnClick="ButtonGetValue_Click" Visible="true" />
+                                    <div class="d-grid cssclsNoPrint" style="grid-template-columns: 150px 1fr">
+                                        <div></div>
+                                        <div>
+                                            <asp:Button runat="server" ID="Button1" Text="Preview" OnClick="ButtonPreview_Click" Width="80px" CssClass="cssclsNoPrint btn btn-secondary" />
+                                            <div onclick="btnPrint_Click()" class="btn btn-secondary d-inline-block">Print</div>
                                         </div>
                                     </div>
-                                </div> 
 
-                                <div class="d-grid cssclsNoPrint" style="grid-template-columns: 150px 1fr">
-                                    <div></div>
-                                    <div>
-                                        <asp:Button runat="server" ID="Button1" Text="Preview" OnClick="ButtonPreview_Click" Width="80px" CssClass="cssclsNoPrint btn btn-secondary" />
-                                        <div onclick="btnPrint_Click()" class="btn btn-secondary d-inline-block">Print</div>
-                                    </div>
                                 </div>
                             </div>
                         </th>
@@ -206,12 +213,19 @@
                     <tr>
                         <td class="report-content-cell">
                             <div style="position: relative;" class="main" runat="server" id="print_content">
+                                <div id="custom_page" hidden="hidden" runat="server"></div>
                                 <asp:Label runat="server" ID="lbError" ForeColor="Red" Visible="false"/>
                                 <asp:Label ID="lbNoReviewed" runat="server" Font-Bold="true" ForeColor="Red"/>
                                 
                                 <div class="" id="listMedicine" runat="server">
                                     <asp:HiddenField runat="server" ID="lbl_lst" />
-                                    <telerik:RadGrid ID="RadGrid2" GridLines="None" runat="server" AllowAutomaticDeletes="True" Width="100%" AutoGenerateColumns="False" ShowFooter="False" OnItemDataBound="RadGrid1_ItemDataBound" OnNeedDataSource="RadGrid1_NeedDataSource" ItemStyle-BackColor="White" CssClass="rgview" Skin="">
+
+                                    <%--<div style="border: 1px solid #000; height: 200px; width: 100%; box-sizing: border-box; page-break-inside: avoid">1</div>
+                                    <div style="border: 1px solid #000; height: 437px; width: 100%; box-sizing: border-box; page-break-inside: avoid">2</div>
+                                    <div style="border: 1px solid #000; height: 432px; width: 100%; box-sizing: border-box; page-break-inside: avoid">3</div>--%>
+                                    
+
+                                    <telerik:RadGrid ID="RadGrid2" GridLines="None" runat="server" AllowAutomaticDeletes="True" AutoGenerateColumns="False" ShowFooter="False" OnItemDataBound="RadGrid1_ItemDataBound" OnNeedDataSource="RadGrid1_NeedDataSource" ItemStyle-BackColor="White" CssClass="rgview" Skin="">
                                         <MasterTableView HeaderStyle-HorizontalAlign="Center" HeaderStyle-Font-Bold="true" HeaderStyle-Font-Size="Small" 
                                             HeaderStyle-ForeColor="Black" ItemStyle-Font-Size="Smaller" AlternatingItemStyle-Font-Size="Smaller"
                                             HeaderStyle-Height="50px">
@@ -329,6 +343,8 @@
                     </Columns>
                 </MasterTableView>
         </telerik:RadGrid>
+                                    
+
                                 </div>
                             </div>
                         </td>
@@ -361,60 +377,89 @@
     </form>
 
     <script>
-
         function FormatGrid() {
-            document.getElementById("print_content").style.height = h - 357 + "px";
+            document.getElementById("print_content").style.height = "407px";
             document.getElementById("print_content").style.overflowY = "scroll";
 
             let lbl_lst = JSON.parse(document.getElementById("lbl_lst").value);
             var prt_table = document.getElementById("RadGrid2_ctl00");
 
-            //console.log(lbl_lst);
-            
             for (let i = 0; i < lbl_lst.length; i++) {
-                //console.log(lbl_lst[i]);
-                console.log(prt_table.rows[lbl_lst[i] + 1]);
-                    
                 prt_table.rows[lbl_lst[i] + 1].cells[1].setAttribute("style", "border-bottom: none !important;");
                 prt_table.rows[lbl_lst[i] + 2].cells[1].setAttribute("style", "border-top: none !important;border-bottom: none !important;");
-
                 prt_table.rows[lbl_lst[i] + 2].cells[1].innerHTML = "";
-
                 prt_table.rows[lbl_lst[i] + 1].cells[2].setAttribute("style", "border-bottom: none !important;");
                 prt_table.rows[lbl_lst[i] + 2].cells[2].setAttribute("style", "border-top: none !important;border-bottom: none !important;");
-
                 prt_table.rows[lbl_lst[i] + 2].cells[2].innerHTML = "";
-
             }
         }
 
         let w = window.innerWidth;
         let h = window.innerHeight;
 
+        function getTotalPages() {
+            let totalHeight = 0;
+            let step = 581;
+            let totalPage = 1;
+            var prt_table = document.getElementById("RadGrid2_ctl00");
+            for (let i = 0; i < prt_table.rows.length; i++) {
+                //console.log(totalHeight, " + ", prt_table.rows[i].offsetHeight, "=", totalHeight + prt_table.rows[i].offsetHeight);
+                totalHeight += prt_table.rows[i].offsetHeight;
+                if (totalHeight > step) {
+                    //console.log('-----------------------');
+                    totalPage++;
+                    totalHeight = 0;
+                }
+            }
+            return totalPage;
+        }
+
         function btnPrint_Click() {
+            let totalPage = 1;
+
+            let customPage = document.getElementById('custom_page');
+
+            document.getElementById("prt_info").style.height = "150px";
+            document.getElementById("RadGrid2_ctl00").style.width = "720px";
+
             document.getElementById("print_content").style.height = "";
             document.getElementById("print_content").style.overflowY = "";
 
             //let printContent = document.querySelector("#printContent");
 
-            //let total = Math.ceil(printContent.offsetHeight / 676);
-            
-            //for (let i = 1; i <= total; i++) {
-            //    let div = document.createElement("div");
-            //    div.setAttribute("class", "watermark");
-            //    div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px;");
-            //    div.setAttribute("data-page", "Page " + i + " of " + total);
-            //    document.getElementById("print_content").append(div);
-            //}
+            //console.log(customPage.innerText);
+
+            if (customPage.innerText == '') {
+                totalPage = getTotalPages();
+            } else {
+                totalPage = customPage.innerText;
+            }
+
+            for (let i = 1; i <= totalPage; i++) {
+                let div = document.createElement("div");
+                div.setAttribute("class", "watermark page");
+                div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px;");
+                div.setAttribute("data-page", "Page " + i + " of " + totalPage);
+                document.getElementById("print_content").append(div);
+            }
+
+            //console.log('offsetHeight', document.getElementById("prt_info").offsetHeight);
 
             setTimeout(() => {
+                document.getElementById("prt_info").style.height = "";
+                document.getElementById("RadGrid2_ctl00").style.width = "100%";
                 document.getElementById("print_content").style.height = h - 357 + "px";
                 document.getElementById("print_content").style.overflowY = "scroll";
-
-                //$('.watermark').remove();
-
+                removeElementsByClass("watermark");
             }, 100);
             window.print();
+        }
+
+        function removeElementsByClass(className) {
+            var elements = document.getElementsByClassName(className);
+            while (elements.length > 0) {
+                elements[0].parentNode.removeChild(elements[0]);
+            }
         }
     </script>
 </body>

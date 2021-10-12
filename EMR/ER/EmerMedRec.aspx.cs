@@ -74,26 +74,34 @@ namespace EMR.ER
         }
         private void discharge_change(string value = "")
         {
-            if (value == "clear") { rad_discharge_True.Checked = rad_discharge_False.Checked = false; }
+            if (value == "clear") { 
+                rad_discharge_True.Checked = rad_discharge_False.Checked = false; 
+                return;
+            }
             if (string.IsNullOrEmpty(value))
             {
                 WebHelpers.VisibleControl(false, discharge_field, discharge_field1, discharge_field2);
-                return;
+            } 
+            else
+            {
+                WebHelpers.VisibleControl(rad_discharge_True.Checked, discharge_field, discharge_field1, discharge_field2);
             }
-            WebHelpers.VisibleControl(rad_discharge_True.Checked, discharge_field, discharge_field1, discharge_field2);
         }
         private void specialist_opinion_change(string value = "")
         {
 
-            if (value == "clear") {
-                rad_specialist_opinion_True.Checked = rad_specialist_opinion_False.Checked = false;
+            if (value == "clear") { 
+                rad_specialist_opinion_True.Checked = rad_specialist_opinion_False.Checked = false; 
+                return;
             }
             if (string.IsNullOrEmpty(value))
             {
                 WebHelpers.VisibleControl(false, specialist_opinion_field, specialist_opinion_field1, specialist_opinion_field2);
-                return;
             }
-            WebHelpers.VisibleControl(rad_specialist_opinion_True.Checked, specialist_opinion_field, specialist_opinion_field1, specialist_opinion_field2);
+            else
+            {
+                WebHelpers.VisibleControl(rad_specialist_opinion_True.Checked, specialist_opinion_field, specialist_opinion_field1, specialist_opinion_field2);
+            }
         }
         private void transfer_hospital_change(string value = "")
         {
@@ -104,30 +112,44 @@ namespace EMR.ER
             if (string.IsNullOrEmpty(value))
             {
                 WebHelpers.VisibleControl(false, transfer_hos_field, transfer_hos_field1, transfer_hos_field2);
-                return;
             }
-            WebHelpers.VisibleControl(rad_transfer_hospital_True.Checked, transfer_hos_field, transfer_hos_field1, transfer_hos_field2);
+            else
+            {
+                WebHelpers.VisibleControl(rad_transfer_hospital_True.Checked, transfer_hos_field, transfer_hos_field1, transfer_hos_field2);
+            }
         }
         private void emergency_surgery_change(string value = "")
         {
             if (value == "clear")
-            { rad_emergency_surgery_True.Checked = rad_emergency_surgery_False.Checked = false; }
+            { 
+                rad_emergency_surgery_True.Checked = rad_emergency_surgery_False.Checked = false;
+                return;
+            }
+
             if (string.IsNullOrEmpty(value))
             {
                 WebHelpers.VisibleControl(false, emr_sur_field, emr_sur_field1, emr_sur_field2);
-                return;
             }
-            WebHelpers.VisibleControl(rad_emergency_surgery_True.Checked, emr_sur_field, emr_sur_field1, emr_sur_field2);
+            else
+            {
+                WebHelpers.VisibleControl(rad_emergency_surgery_True.Checked, emr_sur_field, emr_sur_field1, emr_sur_field2);
+            }
         }
         private void hos_req_change(string value = "")
         {
-            if (value == "clear") { rad_hospitalisation_required_True.Checked = rad_hospitalisation_required_False.Checked = false; }
+            if (value == "clear") 
+            { 
+                rad_hospitalisation_required_True.Checked = rad_hospitalisation_required_False.Checked = false;
+                return;
+            }
             if (string.IsNullOrEmpty(value))
             {
                 WebHelpers.VisibleControl(false, hos_req_field);
-                return;
             }
-            WebHelpers.VisibleControl(rad_hospitalisation_required_True.Checked, hos_req_field);
+            else
+            {
+                WebHelpers.VisibleControl(rad_hospitalisation_required_True.Checked, hos_req_field);
+            }
         }
 
         #region Binding Data

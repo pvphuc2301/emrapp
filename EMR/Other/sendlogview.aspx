@@ -71,7 +71,10 @@
    
                 <tr>  
                     <td class="auto-style1"></td>  
-                    <td>  
+                    <td>
+                        <p>
+                                By signing below, I consent to the use of email communication between myself/ <asp:Label runat="server" ID="Label1" Font-Bold="true" /> and <asp:Label runat="server" ID="Label2" Font-Bold="true" />.  I recognize that there are risks to its use, and despite <asp:Label runat="server" ID="Label3" />’s best efforts, he/she cannot absolutely guarantee confidentiality.  I understand and accept those risks and the policies for email use outlined in the form.  I further agree to follow these policies and agree that should I fail do so, <asp:Label runat="server" ID="Label4" Font-Bold="true" /> may cease to allow me to use email to communicate with him/her.  I also understand that I may withdraw my consent to communicate via email at any time by notifying <asp:Label runat="server" ID="Label5" Font-Bold="true" /> in writing.
+                        </p>
                         <asp:Button ID="bttn_Send" Text="Send Message" runat="server" OnClick="bttn_Send_Click" />  
                     </td>  
                 </tr>  

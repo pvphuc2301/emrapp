@@ -61,6 +61,8 @@
          function showInfo() {
              let select = document.getElementsByTagName("select");
 
+             console.log(select);
+
              if (select.length > 0) {
                  let content = select[0].innerHTML;
                  content = "<div class='bg-primary text-white'>MÔ TẢ / FINDINGS:</div>" + content;
@@ -74,7 +76,6 @@
                  document.getElementById("fe064fa4-6b4f-4d70-2726-000020fba3d1_userControl_findings_field").setAttribute("style", "display: none");
              }
          }
-
      </script>
 </body>
 </html>

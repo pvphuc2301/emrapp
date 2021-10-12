@@ -234,6 +234,11 @@ namespace EMR.Other
         public MailAddress MailAddressTo { get; set; }
         private void AddFormSend(string pvid, string visitType, string visibleID, string visitCode, string visitDate)
         {
+            if (ServicePointManager.SecurityProtocol.HasFlag(SecurityProtocolType.Tls12) == false)
+            {
+                ServicePointManager.SecurityProtocol = ServicePointManager.SecurityProtocol | SecurityProtocolType.Tls12;
+            }
+
             string varToMail = "trang.tranthi@aih.com.vn"; string[] qc_mail = new string[5];
             string varUserName = Convert.ToString(Session["UserID"]);
             string varFullName = Convert.ToString(Session["UserName"]);

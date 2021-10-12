@@ -33,8 +33,9 @@
                    </telerik:GridTemplateColumn>                               
                     <telerik:GridTemplateColumn HeaderButtonType="TextButton" HeaderStyle-Width = "15%" DataField="patient_name"
                         UniqueName="patient_name" HeaderText="Patient name" SortExpression="patient_name" HeaderStyle-HorizontalAlign="Left">
-                        <ItemTemplate>                             
-                            <a href="#" onclick="javascript:window.open('<%# string.Format("/phar/opdprescription.aspx?pid={0}&vid={1}&phar={2}",
+                        <ItemTemplate>     
+                            <asp:Label runat="server" Text='<%# Eval("patient_name") %>' />
+                            <a href="#" style="display: none;" onclick="javascript:window.open('<%# string.Format("/phar/opdprescription.aspx?pid={0}&vid={1}&phar={2}",
                 Eval("patient_id"),Eval("patient_visit_id"),Eval("ph_prescription_id")) %>','mywin','left=60,top=20,width=1300,height=1000,toolbar=0,resizable=0');return false;" >
                                 <%# Eval("patient_name") %>
                             </a>

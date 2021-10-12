@@ -17,14 +17,20 @@ namespace EMR.Other
     {
         public string ConnStringEMR = ""; string varView = "";string User_Name = "";
         public string Fr_Date = ""; string To_Date = ""; string DepName = ""; string Job_Type = "";
-        public string UserID = ""; 
+        public string UserID = "";
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             ConnClass ConnStr = new ConnClass();
             ConnStringEMR = ConnStr.SQL_EMRConnString;
+            string pid = Request.QueryString["pid"];
+            PatientInfo patientInfo = new PatientInfo(pid);
 
             UserID = (string)Session["UserID"]; User_Name = (string)Session["UserName"];
             DepName = (string)Session["Dep"];
+
+            Label1.Text = patientInfo.FullName;
+            Label2.Text = Label3.Text = Label4.Text = Label5.Text = User_Name;
 
             string redirecturl = "~/login.aspx?ReturnUrl=";
             redirecturl = redirecturl + Request.ServerVariables["script_name"] + "?";
@@ -139,25 +145,35 @@ namespace EMR.Other
         }
         public void Send_mail()
         {
-            string varFrom = "itsystem@aih.com.vn";// "tuan.cao@aih.com.vn"; //example:- sourabh9303@gmail.com  
+            if (ServicePointManager.SecurityProtocol.HasFlag(SecurityProtocolType.Tls12) == false)
+            {
+                ServicePointManager.SecurityProtocol = ServicePointManager.SecurityProtocol | SecurityProtocolType.Tls12;
+            }
+
+            //string varFrom = "itsystem@aih.com.vn";// "tuan.cao@aih.com.vn"; //example:- sourabh9303@gmail.com  
+            string varFrom = "bvqtmy@aih.com.vn";
             string varTo = txtTo.Text;
             if (!string.IsNullOrEmpty(varFrom) && !string.IsNullOrEmpty(varTo))
             {
                 using (MailMessage mail = new MailMessage(varFrom, varTo))
                 {
                     mail.Subject = txtSubject.Text;
-                    mail.Body = txtMessage.Text;
+                    string signature = "By signing below, I consent to the use of email communication between myself/ " + Label1.Text + " and " + Label2.Text + ".  I recognize that there are risks to its use, and despite " + Label3.Text + "’s best efforts, he/she cannot absolutely guarantee confidentiality.  I understand and accept those risks and the policies for email use outlined in the form.  I further agree to follow these policies and agree that should I fail do so, " + Label4.Text + " may cease to allow me to use email to communicate with him/her.  I also understand that I may withdraw my consent to communicate via email at any time by notifying " + Label5.Text + " in writing.";
+                    mail.Body = txtMessage.Text + "<br><br><br>" + signature;
                     if (fileUploader.HasFile)
                     {
                         string fileName = Path.GetFileName(fileUploader.PostedFile.FileName);
                         mail.Attachments.Add(new Attachment(fileUploader.PostedFile.InputStream, fileName));
                     }
-                    mail.IsBodyHtml = false;
+                    //mail.IsBodyHtml = false;
+                    mail.IsBodyHtml = true;
+                    mail.BodyEncoding = System.Text.Encoding.UTF8;
                     SmtpClient smtpMail = new SmtpClient("smtp.office365.com");
                     smtpMail.DeliveryMethod = SmtpDeliveryMethod.Network;
                     smtpMail.EnableSsl = true;
                     smtpMail.Port = 25;// Convert.ToInt32(spinPort.EditValue.ToString());smtp.Port = 587;gmail
-                    smtpMail.Credentials = new NetworkCredential(varFrom, "AIH2@18!@");// Convert.ToString(Session["upw"])
+                    //smtpMail.Credentials = new NetworkCredential(varFrom, "AIH2@18!@");// Convert.ToString(Session["upw"])
+                    smtpMail.Credentials = new NetworkCredential(varFrom, "P@ssw0rd@");
                     smtpMail.Send(mail);
                     save_log(varFrom, varTo, txtSubject.Text, txtMessage.Text, "mail");
                     RadGrid1.Rebind();

@@ -1240,12 +1240,12 @@
                                                     <asp:Label runat="server" ID="lbl_specialist_opinion"></asp:Label>
                                                     <div runat="server" id="specialist_opinion_wrapper">
                                                         <div class="custom-control custom-radio d-inline-block">
-                                                            <input onclick="__doPostBack('specialist_opinion_change','')" type="radio" id="rad_specialist_opinion_False" runat="server" name="rad_specialist_opinion" class="custom-control-input" />
+                                                            <input onclick="__doPostBack('specialist_opinion_change','False')" type="radio" id="rad_specialist_opinion_False" runat="server" name="rad_specialist_opinion" class="custom-control-input" />
                                                             <label class="custom-control-label" for="rad_specialist_opinion_False">
                                                                 Không/ <span class="text-primary">No</span></label>
                                                         </div>
                                                         <div class="custom-control custom-radio d-inline-block">
-                                                            <input onclick="__doPostBack('specialist_opinion_change','')" disabled-for="specialist_opinion_field" type="radio" id="rad_specialist_opinion_True" runat="server" name="rad_specialist_opinion" class="custom-control-input" />
+                                                            <input onclick="__doPostBack('specialist_opinion_change','True')" disabled-for="specialist_opinion_field" type="radio" id="rad_specialist_opinion_True" runat="server" name="rad_specialist_opinion" class="custom-control-input" />
                                                             <label class="custom-control-label" for="rad_specialist_opinion_True">
                                                                 Có/ <span class="text-primary">Yes</span></label>
                                                             <input onclick="__doPostBack('specialist_opinion_change','clear')" hidden="hidden" type="checkbox" id="Radio5" runat="server" />
@@ -1486,10 +1486,10 @@
                                                 <asp:Label runat="server" ID="lbl_discharge"></asp:Label>
                                                 <div runat="server" id="discharge_wrapper">
                                                     <div class="custom-control custom-radio d-inline-block">
-                                                        <input onclick="__doPostBack('discharge_change','')" type="radio" id="rad_discharge_False" runat="server" name="rad_discharge" class="custom-control-input" /><label class="custom-control-label" for="rad_discharge_False">Không/ <span class="text-primary">No</span></label>
+                                                        <input onclick="__doPostBack('discharge_change','False')" type="radio" id="rad_discharge_False" runat="server" name="rad_discharge" class="custom-control-input" /><label class="custom-control-label" for="rad_discharge_False">Không/ <span class="text-primary">No</span></label>
                                                     </div>
                                                     <div class="custom-control custom-radio d-inline-block">
-                                                        <input onclick="__doPostBack('discharge_change','')" disabled-for="discharge_field" type="radio" id="rad_discharge_True" runat="server" name="rad_discharge" class="custom-control-input" />
+                                                        <input onclick="__doPostBack('discharge_change','True')" disabled-for="discharge_field" type="radio" id="rad_discharge_True" runat="server" name="rad_discharge" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_discharge_True">Có/ <span class="text-primary">Yes</span></label>
                                                             <input onclick="__doPostBack('discharge_change','clear')" hidden="hidden" type="checkbox" id="Radio4" runat="server" />
                                                         <label for="Radio4"><icon:XSquare runat="server" ID="XSquare3" /></label>
@@ -1573,11 +1573,11 @@
                                                         <asp:Label runat="server" ID="lbl_hospitalisation_required"></asp:Label>
                                                         <div runat="server" id="hospitalisation_required_wrapper">
                                                             <div class="custom-control custom-radio d-inline-block">
-                                                                <input type="radio" onclick="__doPostBack('hos_req_change','')" id="rad_hospitalisation_required_False" runat="server" name="rad_hos_req" class="custom-control-input" />
+                                                                <input type="radio" onclick="__doPostBack('hos_req_change','False')" id="rad_hospitalisation_required_False" runat="server" name="rad_hos_req" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_hospitalisation_required_False">Không/ <span class="text-primary">No</span></label>
                                                             </div>
                                                             <div class="custom-control custom-radio mb-2 d-inline-block">
-                                                                <input onclick="__doPostBack('hos_req_change','')" type="radio" id="rad_hospitalisation_required_True" runat="server" name="rad_hos_req" class="custom-control-input" />
+                                                                <input onclick="__doPostBack('hos_req_change','True')" type="radio" id="rad_hospitalisation_required_True" runat="server" name="rad_hos_req" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_hospitalisation_required_True">Có, Giải thích/ <span class="text-primary">Yes, Explain</span></label>
                                                                 <input onclick="__doPostBack('hos_req_change','clear')"  type="checkbox" id="Radio1" hidden="hidden" runat="server" name="rad_hos_req" class="custom-control-input" />
                                                                 <label for="Radio1"><icon:XSquare runat="server" ID="XSquare9" /></label>
@@ -1641,20 +1641,14 @@
                                                 <asp:Label runat="server" ID="lbl_emergency_surgery"></asp:Label>
                                                 <div runat="server" id="emergency_surgery_wrapper">
                                                     <div class="custom-control custom-radio d-inline-block">
-                                                        <input onclick="__doPostBack('emergency_surgery_change','')" type="radio" id="rad_emergency_surgery_False" runat="server" name="rad_emr_sur" class="custom-control-input" />
+                                                        <input onclick="__doPostBack('emergency_surgery_change','False')" type="radio" id="rad_emergency_surgery_False" runat="server" name="rad_emr_sur" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_emergency_surgery_False">
-                                                            Không/
-                                                                                    <span
-                                                                                        class="text-primary">No</span></label>
+                                                            Không/<span class="text-primary">No</span></label>
                                                     </div>
                                                     <div class="custom-control custom-radio mb-2 d-inline-block">
-                                                        <input onclick="__doPostBack('emergency_surgery_change','')" type="radio" id="rad_emergency_surgery_True" runat="server" name="rad_emr_sur" class="custom-control-input" />
+                                                        <input onclick="__doPostBack('emergency_surgery_change','True')" type="radio" id="rad_emergency_surgery_True" runat="server" name="rad_emr_sur" class="custom-control-input" />
                                                         <label class="custom-control-label" for="rad_emergency_surgery_True">
-                                                            Có,
-                                                                                        Giải
-                                                                                        thích/ <span
-                                                                                            class="text-primary">Yes,
-                                                                                            Explain</span></label>
+                                                            Có, Giải thích/ <span class="text-primary">Yes, Explain</span></label>
 
                                                         <input onclick="__doPostBack('emergency_surgery_change','clear')" type="checkbox" hidden="hidden" id="Radio2" runat="server" />
 
@@ -1725,14 +1719,12 @@
                                             <asp:Label runat="server" ID="lbl_transfer_hospital"></asp:Label>
                                             <div runat="server" id="transfer_hospital_wrapper">
                                                 <div class="custom-control custom-radio d-inline-block">
-                                                    <input onclick="__doPostBack('transfer_hospital_change','')" type="radio" id="rad_transfer_hospital_False" runat="server" name="rad_transfer_hos" class="custom-control-input" />
+                                                    <input onclick="__doPostBack('transfer_hospital_change','False')" type="radio" id="rad_transfer_hospital_False" runat="server" name="rad_transfer_hos" class="custom-control-input" />
                                                     <label class="custom-control-label" for="rad_transfer_hospital_False">
-                                                        Không/
-                                                                                <span
-                                                                                    class="text-primary">No</span></label>
+                                                        Không/ <span class="text-primary">No</span></label>
                                                 </div>
                                                 <div class="custom-control custom-radio mb-2 d-inline-block">
-                                                    <input onclick="__doPostBack('transfer_hospital_change','')"  type="radio" id="rad_transfer_hospital_True" runat="server" name="rad_transfer_hos" class="custom-control-input" />
+                                                    <input onclick="__doPostBack('transfer_hospital_change','True')"  type="radio" id="rad_transfer_hospital_True" runat="server" name="rad_transfer_hos" class="custom-control-input" />
                                                     <label class="custom-control-label" for="rad_transfer_hospital_True">Có, Giải thích/ <span class="text-primary">Yes, Explain</span></label>
                                                     <input onclick="__doPostBack('transfer_hospital_change','clear')" hidden="hidden" type="checkbox" id="Radio3" runat="server" />
 
@@ -1741,8 +1733,6 @@
                                                 <asp:CustomValidator ID="CustomValidator9" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="transfer_hospital_ServerValidate"></asp:CustomValidator>
                                             </div>
                                         </div>
-                                    
-
                                         <div class="col-md-12 gt-2-a"  runat="server" id="transfer_hos_field">
                                             <label class="control-label mb-1">Lý do chuyển viện/ <span class="text-primary">Reason for transfer:</span></label>
                                             <asp:Label runat="server" ID="lbl_reason_for_transfer"></asp:Label>

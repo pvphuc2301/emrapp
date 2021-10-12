@@ -148,6 +148,11 @@ namespace EMR.Report
         public MailAddress MailAddressTo { get; set; }
         private void AddFormSend(string pvid, string visitType, string visibleID, string visitCode, string visitDate, string varTo_Email, string request_full_name, string varRequest)
         {
+            if (ServicePointManager.SecurityProtocol.HasFlag(SecurityProtocolType.Tls12) == false)
+            {
+                ServicePointManager.SecurityProtocol = ServicePointManager.SecurityProtocol | SecurityProtocolType.Tls12;
+            }
+
             string varToMail = varTo_Email;string[] qc_mail = new string[5];// "tuan.cao@aih.com.vn"; 
             string varUserName = Convert.ToString(Session["UserID"]);
             string varFullName = Convert.ToString(Session["UserName"]);

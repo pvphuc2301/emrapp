@@ -190,7 +190,7 @@
                         </li>
                         
                         <li class="nav-item dropdown">
-                            <a class="nav-link btn-link waves-effect waves-primary icon-badge-container" href="../other/sendlogview.aspx?view=mail" title="Mail" target="MainContent">
+                            <a runat="server" id="linkMail" class="nav-link btn-link waves-effect waves-primary icon-badge-container" href="../other/sendlogview.aspx?view=mail" title="Mail" target="MainContent">
                                 <icon:Envelope runat="server" />
                                 <div class="icon-badge">mail</div>
                             </a>
@@ -240,7 +240,6 @@
                 </div>
             </nav>
         </header>
-        
         <telerik:RadTabStrip runat="server" ID="RadTabStrip1"  MultiPageID="RadMultiPage1" SelectedIndex="0"
              OnTabClick="RadTabStrip1_TabClick" Skin="Silk" >
             <Tabs>
@@ -249,7 +248,6 @@
                 <telerik:RadTab Text="OPD Prescription" Value="opdprescription" Width="200px"></telerik:RadTab>
                 <telerik:RadTab Text="MAR Printing" Value="marprinting" Width="200px"></telerik:RadTab>
                 <telerik:RadTab Text="Medication History" Value="rxhistory" Width="200px"></telerik:RadTab>
-
             </Tabs>
         </telerik:RadTabStrip>
 

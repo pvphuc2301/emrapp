@@ -41,8 +41,10 @@ namespace EMR
             //else { Session["PageOpenEMR"] = true; }
              varPID = Request.QueryString["pid"]; // "97052A99-0134-11EB-B34D-D89EF37D444C";//  "C248E0FC-39B6-493F-A197-6CF2A96B37AD";//
             lblPID.Text = varVPID = Request.QueryString["vbid"]; //"3afc144a-86ca-11eb-9dfe-dca2660bc0a2";// ValueHiddenField.Value;
-                                                   //varVisibleID = Request.QueryString["vbid"]; //"900031267";
-                                                   //LoadPatientInfomation();
+                                                                 //varVisibleID = Request.QueryString["vbid"]; //"900031267";
+                                                                 //LoadPatientInfomation();
+
+            linkMail.HRef = "../other/sendlogview.aspx?view=mail&pid=" + varPID;
             //
             ConnClass ConnStr = new ConnClass();
             ConnStringHIS = ConnStr.SQL_HISConnString;
