@@ -65,15 +65,19 @@
 
              if (select.length > 0) {
                  let content = select[0].innerHTML;
+
+                 console.log("select");
+
                  content = "<div class='bg-primary text-white'>MÔ TẢ / FINDINGS:</div>" + content;
                  content = content.replaceAll("&nbsp;-", "<br/>-");
                  content = content.replaceAll("&nbsp;*", "<br/>*");
                  content = content.replace("KẾT LUẬN/ IMPRESSION:", "<div class='bg-primary text-white'>KẾT LUẬN/ IMPRESSION:</div>");
                  content = content.replace("ADDENDUM:", "<div class='bg-primary text-white'>ADDENDUM:</div>");
 
-                 document.getElementById("fe064fa4-6b4f-4d70-2726-000020fba3d1_userControl_temp_field").innerHTML = content;
-
-                 document.getElementById("fe064fa4-6b4f-4d70-2726-000020fba3d1_userControl_findings_field").setAttribute("style", "display: none");
+                 //document.getElementById("fe064fa4-6b4f-4d70-2726-000020fba3d1_userControl_temp_field").innerHTML = content;
+                 document.getElementsByClassName("temp_field")[document.getElementsByClassName("temp_field").length - 1].innerHTML = content;
+                 console.log(content);
+                 //document.getElementById("fe064fa4-6b4f-4d70-2726-000020fba3d1_userControl_findings_field").setAttribute("style", "display: none");
              }
          }
      </script>

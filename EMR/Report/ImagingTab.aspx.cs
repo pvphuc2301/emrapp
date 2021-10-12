@@ -101,7 +101,6 @@ namespace EMR
         {
             AddPageView(e.Tab);
             e.Tab.PageView.Selected = true;
-            WebHelpers.AddJS(Page, "showInfo()");
         }
     }
 }

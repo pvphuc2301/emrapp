@@ -317,7 +317,7 @@
                                             <div class="row mb-2 ">
                                                 <div class="col-5">
                                                     <label class="d-block mb-0 h4" style="font-size: 14.5px; font-family: Tahoma; font-weight: 700; margin-left: 25px;">* Tên của bác sĩ chuyên khoa/ khoa:</label>
-                                                    <span class="text-primary" style="margin-left: 14.5px; margin-left: 50px;">Name of the specialist/ Department</span>
+                                                    <span style="margin-left: 14.5px; margin-left: 45px;">Name of the specialist/ Department</span>
                                                 </div>
                                                 <div class="col-7">
                                                     <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_name_of_specialist"></asp:Label>
@@ -520,6 +520,9 @@
                                                         <label for="lbl_specialist_opinion_True" style="font-size: 14.5px; font-family: Tahoma;">Có</label>
                                                         <label style="font-size: 14.5px; font-family: Tahoma;">/ Yes</label>
                                                     </div>
+                                                </div>
+                                                <div style="font-size: 14.5px; font-family: Tahoma; margin-left: 25px">
+                                                    Khi không có thời gian để ghi nhận đầy đủ bệnh sử và kết quả khám lâm sàng của bệnh nhân cần phẫu thuật cấp cứu, vui lòng ghi rõ: <br />                                                    When there is no time to record the complete history and physical examination of a patient requiring emergency surgery, indicate
                                                 </div>
                                             </div>
                                         </div>

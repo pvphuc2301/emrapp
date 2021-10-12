@@ -1031,7 +1031,7 @@ namespace EMR.ER
                 prt_reason.Text = emr.reason;
                 prt_ward.Text = emr.ward;
 
-                if (emr.discharge_time != null)
+                if (emr.time_of_leaving_emergency != null)
                 {
                     prt_time_of_leaving_emergency.Text = WebHelpers.FormatDateTime(emr.time_of_leaving_emergency, "HH:mm");
                 }

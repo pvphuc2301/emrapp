@@ -13,6 +13,7 @@ namespace EMR
         public string varPID = "";
         protected void Page_Load(object sender, EventArgs e)
         {
+            //WebHelpers.AddJS(Page, "showInfo()");
             string varReportID = (string)Session["radid"]; //Request.QueryString["radid"];//   varReportID = "f076907a-ecf6-475a-4315-0000219f339b";
             varPID = Request.QueryString["pid"];
 
@@ -49,10 +50,10 @@ namespace EMR
                         //lbl_technique.InnerHtml = jsonObject.region_2;
                         //lbl_findings.InnerHtml = jsonObject.region_3;
                         //lbl_impression.InnerHtml = jsonObject.region_4;
-                        lbl_diagnosis.Text = jsonObject.region_1;
-                        lbl_technique.Text = jsonObject.region_2;
-                        lbl_findings.Text = jsonObject.region_3;
-                        lbl_impression.Text = jsonObject.region_4;
+                        lbl_diagnosis.Text = GetCorrectValue(Convert.ToString(jsonObject.region_1));
+                        lbl_technique.Text = GetCorrectValue(Convert.ToString(jsonObject.region_2));
+                        lbl_findings.Text = GetCorrectValue(Convert.ToString(jsonObject.region_3));
+                        lbl_impression.Text = GetCorrectValue(Convert.ToString(jsonObject.region_4));
 
                         WebHelpers.VisibleControl(true, diagnosis_field, technique_field, findings_field, impression_field);
                     }
@@ -60,28 +61,28 @@ namespace EMR
                     {
                         //lbl_technique.InnerHtml = jsonObject.region_2;
                         //lbl_findings.InnerHtml = jsonObject.region_3;
-                        lbl_history.Text = jsonObject.region_1;
-                        lbl_technique.Text = jsonObject.region_2;
-                        lbl_impression.Text = jsonObject.region_3;
+                        lbl_history.Text = GetCorrectValue(Convert.ToString(jsonObject.region_1));
+                        lbl_technique.Text = GetCorrectValue(Convert.ToString(jsonObject.region_2));
+                        lbl_impression.Text = GetCorrectValue(Convert.ToString(jsonObject.region_3));
 
                         WebHelpers.VisibleControl(true, history_field, technique_field, impression_field);
                     }
                     else if (!string.IsNullOrEmpty(Convert.ToString(jsonObject.region_2)))
                     {
                         //lbl_technique.InnerHtml = jsonObject.region_2;
-                        lbl_findings.Text = jsonObject.region_1;
-                        lbl_impression.Text = jsonObject.region_2;
+                        lbl_findings.Text = GetCorrectValue(Convert.ToString(jsonObject.region_1));
+                        lbl_impression.Text = GetCorrectValue(Convert.ToString(jsonObject.region_2));
                         WebHelpers.VisibleControl(true, findings_field, impression_field);
                     }
                     else if (!string.IsNullOrEmpty(Convert.ToString(jsonObject.region_1)))
                     {
-                        lbl_findings.Text = jsonObject.region_1;
+                        lbl_findings.Text = GetCorrectValue(Convert.ToString(jsonObject.region_1));
                         WebHelpers.VisibleControl(true, findings_field);
                     }
 
                     if (!string.IsNullOrEmpty(Convert.ToString(jsonObject.addendum)))
                     {
-                        lbl_addendum.InnerHtml = jsonObject.addendum;
+                        lbl_addendum.InnerHtml = GetCorrectValue(Convert.ToString(jsonObject.addendum));
                         addendum_field.Visible = true;
                     }
                     else
@@ -92,6 +93,24 @@ namespace EMR
 
                 Session["radid"] = "";
             }
-        }        
+        }
+
+        private string GetCorrectValue(string value)
+        {
+            string result = "";
+            int start = value.IndexOf("<xsl:if");
+            int end = value.LastIndexOf("</xsl:if>");
+            if(start > 1 && end > 1)
+            {
+                result = value.Substring(0, start);
+                result += value.Substring(end);
+            }
+            else
+            {
+                result = value;
+            }
+
+            return result;
+        }
     }
 }

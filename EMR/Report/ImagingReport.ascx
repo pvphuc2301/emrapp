@@ -73,7 +73,7 @@
                 </tr>
             </table>
             
-            <asp:Label runat="server" ID="temp_field"></asp:Label>
+            <asp:Label runat="server" ID="temp_field" CssClass="temp_field"></asp:Label>
             
             <asp:Panel runat="server" ID="diagnosis_field">
                 <div class="bg-primary text-white">CHẨN ĐOÁN / DIAGNOSIS:</div>
@@ -104,6 +104,7 @@
                 <div class="bg-primary text-white">ADDENDUM:</div>
                 <p id="lbl_addendum" runat="server"></p>
             </asp:Panel>
+
 
         </div>
     </div>

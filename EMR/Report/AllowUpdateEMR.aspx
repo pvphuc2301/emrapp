@@ -12,7 +12,7 @@
     <form method="post" action="#" id="form2" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
         <br /><br />
-    <telerik:RadGrid OnNeedDataSource="RadGrid1_NeedDataSource" ItemStyle-Height="32px" HeaderStyle-Height="32px" CssClass="table" 
+    <telerik:RadGrid OnNeedDataSource="RadGrid1_NeedDataSource" AllowSorting="true" ItemStyle-Height="32px" HeaderStyle-Height="32px" CssClass="table" 
                                             BorderWidth="0" AutoGenerateColumns="false" ID="RadGrid1" runat="server" AllowPaging="True" OnItemCommand="RadGrid1_ItemCommand" 
                                             OnItemDataBound="RadGrid1_ItemDataBound">
                                             <MasterTableView AutoGenerateColumns="False" DataKeyNames="visible_patient_id, patient_visit_id, visit_type_rcd, closure_date_time, allow_date_time">
