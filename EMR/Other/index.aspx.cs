@@ -239,7 +239,8 @@ namespace EMR.Other
                 ServicePointManager.SecurityProtocol = ServicePointManager.SecurityProtocol | SecurityProtocolType.Tls12;
             }
 
-            string varToMail = "trang.tranthi@aih.com.vn"; string[] qc_mail = new string[5];
+            string varToMail = "trang.tranthi@aih.com.vn";
+            string[] qc_mail = new string[5];
             string varUserName = Convert.ToString(Session["UserID"]);
             string varFullName = Convert.ToString(Session["UserName"]);
             string varEmail = Convert.ToString(Session["user_email"]);
@@ -267,14 +268,17 @@ namespace EMR.Other
                 objMail.CC.Add(varEmail);
             }
 
-            var msg_Body = "Kính gửi phòng KHTH,<br /> <br /> ";
-            msg_Body += "Kính gửi phòng KTTH cấp quyền cập nhật hồ sơ bệnh án của khách hàng: " + visibleID + ", ngày đến khám: " + visitDate + ", ";
+            //var msg_Body = "Kính gửi phòng KHTH,<br /> <br /> ";
+            //msg_Body += "Kính gửi phòng KTTH cấp quyền cập nhật hồ sơ bệnh án của khách hàng: " + visibleID + ", ngày đến khám: " + visitDate + ", ";
+            var msg_Body = "";
+            msg_Body += "Cập nhật hồ sơ bệnh án của khách hàng: " + visibleID + ", ngày đến khám: " + visitDate + ", ";
             msg_Body += "visit code: " + visitCode + ", visit type: " + visitType + " <br /> ";
             
             msg_Body += "Lý do: " + txtUpdateReason.Text + " <br /> ";
 
-            msg_Body += "Vui lòng nhấn đường link phía dưới để xem chi tiết và phê duyệt: <br /> " + varUrl + " <br /> <br /> " + Session["UserName"] + "<br /> ";
+            //msg_Body += "Vui lòng nhấn đường link phía dưới để xem chi tiết và phê duyệt: <br /> " + varUrl + " <br /> <br /> " + Session["UserName"] + "<br /> ";
 
+            //objMail.Subject = "Cập nhật Hồ Sơ Bệnh Án: " + Session["UserName"];
             objMail.Subject = "Yêu cầu cập nhật Hồ Sơ Bệnh Án từ: " + Session["UserName"];
             objMail.Body = msg_Body;// "Content office 365";
             objMail.IsBodyHtml = true;
@@ -292,7 +296,13 @@ namespace EMR.Other
             smtpMail.Credentials = new NetworkCredential(MailAddressFrom.Address, "AIH2@18!@");//"AIH2@18!@"
                                                                                                //if (!string.IsNullOrEmpty(varFr) && !string.IsNullOrEmpty(varToMail))
                 smtpMail.Send(objMail);
-
+            //update 17/10/2021
+            //string apiString1 = $"api/patient/allow-doc-app/{pvid}/{varUserName}?full_name={varFullName}&email={varEmail}";
+            string appUserName = "trang.tranthi";
+            string appFullname = "";
+            string appEmail = "";
+            string apiString1 = $"api/patient/allow-doc-app/{pvid}/{appUserName}?full_name={appFullname}&email={appEmail}";
+            dynamic response1 = WebHelpers.PostAPI(apiString1);
         }
         protected void CheckedRequest(object sender, System.EventArgs e)
         {

@@ -731,7 +731,7 @@ namespace EMR.ER
                 prt_vpid.Text = patientInfo.visible_patient_id;
                 prt_evaluation_time.Text = WebHelpers.FormatDateTime(emr.evaluation_time, "HH:mm");
                 //WebHelpers.FormatDateTime(emr.evaluation_time, "dd/MM/yyyy HH:mm tt");
-
+                
                 prt_chief_complaint.Text = emr.chief_complaint;
                 lbl_chief_complaint_code_R.Text = "❏";
                 lbl_chief_complaint_code_E.Text = "❏";

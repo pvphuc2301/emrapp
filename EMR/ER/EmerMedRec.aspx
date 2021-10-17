@@ -85,8 +85,8 @@
 
                                         <div class="row mb-2 ">
                                             <div class="col-12 ">
-                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">Giờ bắt đầu đánh giá</asp:Label>
-                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> / Starting time of the assessment: </asp:Label>
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">Ngày, giờ bắt đầu đánh giá</asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> / Starting date, time of the assessment: </asp:Label>
                                                 <asp:Label Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_evaluation_time"></asp:Label>
                                             </div>
                                         </div>
@@ -139,6 +139,14 @@
                                             </div>
                                         </div>
                                         
+                                        <div class="row mb-2 ">
+                                            <div class="col-12 " style="text-align: justify;">
+                                                <asp:Label Style="font-weight: bold; font-size: 14.5px; font-family: Tahoma">Tiền sử bệnh</asp:Label>
+                                                <asp:Label Style="font-size: 14.5px; font-family: Tahoma"> / Past medical history <span class="font-bold">(PMH)</span>: </asp:Label>
+                                            </div>
+                                        </div>
+                                        
+
                                         <div class="row mb-2 ">
                                             <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
                                                 <asp:Label Style="font-weight: bold;"> Meds: </asp:Label>
@@ -647,6 +655,7 @@
                                         <div class="d-grid" style="grid-template-columns: 1fr 1fr; grid-gap: 5px">
                                             <div></div>
                                             <div class="text-center" style="break-inside: avoid !important; page-break-inside: avoid !important">
+                                                <div id="printedTime"></div>
                                                 <div><span style="font-size: 14.5px; font-family: Tahoma" class="font-bold">Họ tên, chữ ký & MSNV của Bác sĩ</span></div>
                                                 <div><span style="font-size: 14.5px; font-family: Tahoma" class="text-primary"><i>Doctor’s full name, signature & ID</i></span></div>
                                             </div>
@@ -1886,6 +1895,20 @@
                 document.getElementById("lbl_required_code_False").innerText = "☒";
                 document.getElementById("lbl_required_code_True").innerText = "❏";
             }
+
+            let printedTime = document.getElementById("printedTime");
+            if (printedTime) {
+                const date = new Date();
+                let day = date.getDate() > 9 ? date.getDate() : "0" + date.getDate();
+                let month = date.getMonth() + 1 > 9 ? date.getMonth() + 1 : "0" + date.getMonth() + 1;
+                let hour = date.getHours() > 9 ? date.getHours() : "0" + date.getHours();
+                let minute = date.getMinutes() > 9 ? date.getMinutes() : "0" + date.getMinutes();
+                printedTime.innerHTML = "Ngày/Date: " + day + "/" + month + "/" + date.getFullYear() + ", Giờ/Time " + hour + ":" + minute;
+            }
+
+            let lbl_evaluation_time = document.getElementById("lbl_evaluation_time");
+            let prt_evaluation_time = document.getElementById("prt_evaluation_time");
+            prt_evaluation_time.innerText = lbl_evaluation_time.innerText;
 
             window.print();
         }

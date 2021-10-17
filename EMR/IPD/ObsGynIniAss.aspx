@@ -1873,6 +1873,10 @@
 
         function btnPrint_Click() {
 
+            if (document.getElementById("prt_diagnosis")) {
+                document.getElementById("prt_diagnosis").innerText = document.getElementById("lbl_diff_diagnosis").innerText;
+            }
+
             if (document.getElementById("lbl_is_obs_gyn").innerText == "SẢN KHOA/ OBSTETRICS") {
                 document.getElementById("div_for_gyneacology").setAttribute("style", "display: none");
             } else {

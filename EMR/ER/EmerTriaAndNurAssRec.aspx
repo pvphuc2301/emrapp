@@ -392,8 +392,8 @@
                                                 <div>
                                                     <div>
                                                         Nhịp tim/<i class="text-primary">Rhythm</i>
-                                                <asp:Label runat="server" ID="prt_rhythm_regular"/>&nbsp;Đều/ <i class="text-primary">Regular</i>
-                                                <asp:Label runat="server" ID="prt_rhythm_inregular"/>&nbsp;Không đều/ <i class="text-primary">Irregular</i>
+                                                        <asp:Label runat="server" ID="prt_rhythm_regular"/>&nbsp;Đều/ <i class="text-primary">Regular</i>
+                                                        <asp:Label runat="server" ID="prt_rhythm_inregular"/>&nbsp;Không đều/ <i class="text-primary">Irregular</i>
                                                     </div>
                                                     <div>
                                                         <asp:Label runat="server" ID="prt_rhythm_others"/>
@@ -526,8 +526,8 @@
                                                 <td style="width: 45px" class="text-center"><i class="text-primary">GCS</i></td>
                                                 <td style="width: 45px" class="text-center"><i class="text-primary">Pain /10</i></td>
                                                 <td style="width: 65px" class="text-center"><i class="text-primary">ATS scale</i></td>
-                                                <td style="width: 206px" class="text-center"><i class="text-primary">Re-Assessment & Intervention</i></td>
-                                                <td style="width: 100px" class="text-center"><i class="text-primary">RN's Initial</i></td>
+                                                <td style="width: 206px" class="text-center"><i class="text-primary">Tái đánh giá & Can thiệp <br /> Re-Assessment & Intervention</i></td>
+                                                <td style="width: 100px" class="text-center"><i class="text-primary">Điều dưỡng <br />RN's Initial</i></td>
                                             </tr>
                                         </table>
 
@@ -1495,9 +1495,9 @@
                                                                     <span class="custom-control-label">Khác/ <span class="text-primary">Others:</span></span>
                                                                 </label>
                                                                 <asp:Label runat="server" ID="lbl_str_others"></asp:Label>
-                                                                <div class="form-group str_others_field d-inline-block w-n" runat="server" id="str_others_wrapper">
-                                                                    <webUI:TextField runat="server" ID="txt_str_others" TextMode="SingleLine"/>
-                                                                </div>
+                                                            </div>
+                                                            <div class="form-group str_others_field w-n" runat="server" id="str_others_wrapper">
+                                                                <webUI:TextField runat="server" ID="txt_str_others" TextMode="SingleLine"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1549,7 +1549,7 @@
                                                                 <span class="custom-control-label">Khác/ <span class="text-primary">Others:</span></span>
                                                             </label>
 
-                                                            <div runat="server" id="txt_respiratory_oth_field" class="form-group respiratory_oth_field w-n d-inline-block">
+                                                            <div runat="server" id="txt_respiratory_oth_field" class="form-group respiratory_oth_field w-n">
                                                                 <webUI:TextField runat="server" ID="txt_respiratory_oth" TextMode="SingleLine"/>
                                                             </div>
                                                             <asp:Label runat="server" ID="lbl_respiratory_oth"></asp:Label>
@@ -1575,7 +1575,7 @@
                                                             <span class="custom-control-label">Khác/ <span class="text-primary">Others:</span></span>
                                                         </label>
                                                         <asp:Label runat="server" ID="lbl_rhythm_str_others"></asp:Label>
-                                                        <div class="form-group rhythm_field d-inline-block w-n" runat="server" id="rhythm_str_others_wrapper">
+                                                        <div class="form-group rhythm_field w-n" runat="server" id="rhythm_str_others_wrapper">
                                                             <webUI:TextField runat="server" ID="txt_rhythm_str_others" TextMode="SingleLine"/>
                                                         </div>
                                                     </div>
@@ -1594,7 +1594,7 @@
                                                         </label>
 
                                                         <asp:Label runat="server" ID="lbl_psychosocial_str_others"></asp:Label>
-                                                        <div class="form-group psychosocial_str_others_field d-inline-block w-n" runat="server" id="psychosocial_str_others_wrapper">
+                                                        <div class="form-group psychosocial_str_others_field w-n" runat="server" id="psychosocial_str_others_wrapper">
                                                             <webUI:TextField runat="server" ID="txt_psychosocial_str_others" TextMode="SingleLine" />
                                                         </div>
                                                     </div>
@@ -1613,7 +1613,7 @@
                                                         </label>
                                                         <asp:Label runat="server" ID="lbl_others_systems_str"></asp:Label>
 
-                                                        <div class="other_systems_field d-inline-block" runat="server" id="others_systems_str_wrapper">
+                                                        <div class="other_systems_field" runat="server" id="others_systems_str_wrapper">
                                                             <label>Ghi rõ/ Specify</label>
                                                             <div class="form-group d-inline-block w-n">
                                                                 <webUI:TextField runat="server" ID="txt_others_systems_str" TextMode="SingleLine" />
@@ -1763,14 +1763,14 @@
                                             
                                             <fieldset class="row mb-2">
 
-                                                <div class="col-md-12">
+                                                <div class="col-md-12" style="overflow-x: scroll">
                                                     <asp:UpdatePanel ID="updatePanel_AssessmentSystem" runat="server" UpdateMode="Always">
                                                         <ContentTemplate>
                                                             <asp:GridView ShowHeaderWhenEmpty="true" ID="grid_AssessmentSystem" runat="server" ShowHeader="true" OnRowDeleting="grid_AssessmentSystem_RowDeleting" OnRowDataBound="gridAssessmentSystem_RowDataBound" CssClass="tb-responsive table-bordered" AutoGenerateColumns="false">
                                                                 <Columns>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
-                                                                            <div style="width: 105px" class="text-primary pt-2 pb-2">Time</div>
+                                                                            <div style="width: 90px" class="text-primary pt-2 pb-2">Time</div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <webUI:TextField CssClass="form-control" Value='<%#Eval("time") %>' Width="105px" ID="time" TextMode="SingleLine" runat="server" />
@@ -1886,7 +1886,7 @@
                                                     </asp:UpdatePanel>
                                                 </div>
                                             
-                                                <div class="col-md-12">
+                                                <div class="col-md-12" style="overflow-x: scroll">
                                                     <label class="control-label mb-1 font-bold">Y lệnh thuốc & dịch truyền trực tiếp/ <span class="text-primary">Direct Medication & IV fluids Order</span></label>
                                                     <asp:UpdatePanel ID="UpdatePanelDirectMedication" runat="server" UpdateMode="Always">
                                                         <ContentTemplate>
@@ -1894,7 +1894,7 @@
                                                                 <Columns>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
-                                                                            <div style="width: 105px" class="pt-2 pb-2">Thời gian/ <span class="text-primary">Time</span></div>
+                                                                            <div style="width: 90px" class="pt-2 pb-2">Thời gian/ <span class="text-primary">Time</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <webUI:TextField CssClass="form-control" Value='<%#Eval("dir_med_time") %>' Width="105px" ID="dir_med_time" runat="server" TextMode="SingleLine" />
@@ -1926,7 +1926,7 @@
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
-                                                                            <div style="width: 100px">Tốc độ/ <span class="text-primary">Rate</span></div>
+                                                                            <div style="width: 90px">Tốc độ/ <span class="text-primary">Rate</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <webUI:TextField Value='<%#Eval("dir_med_rate") %>' ID="dir_med_rate" runat="server" TextMode="SingleLine" />
@@ -1934,7 +1934,7 @@
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
-                                                                            <div style="width: 150px">Bác sĩ/ <span class="text-primary">Doctor</span></div>
+                                                                            <div style="width: 120px">Bác sĩ/ <span class="text-primary">Doctor</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <webUI:TextField Value='<%#Eval("dir_med_doctor") %>' ID="dir_med_doctor" runat="server" TextMode="SingleLine" />
@@ -1942,7 +1942,7 @@
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
-                                                                            <div style="width: 150px">Ghi chú/ <span class="text-primary">Comment</span></div>
+                                                                            <div style="width: 110px">Ghi chú/ <span class="text-primary">Comment</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <webUI:TextField Value='<%#Eval("dir_med_comment") %>' ID="dir_med_comment" runat="server" TextMode="SingleLine" />
@@ -1950,7 +1950,7 @@
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
-                                                                            <div>Thời gian/ <span class="text-primary">Time</span></div>
+                                                                            <div style="width: 90px">Thời gian/ <span class="text-primary">Time</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <webUI:TextField TextMode="SingleLine" CssClass="form-control" Value='<%#Eval("dir_med_time2") %>' Width="105px" ID="dir_med_time2" runat="server" />
@@ -1958,7 +1958,7 @@
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
-                                                                            <div style="width: 150px">Điều dưỡng/ <span class="text-primary">RN's Initial</span></div>
+                                                                            <div style="width: 140px">Điều dưỡng/ <span class="text-primary">RN's Initial</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <webUI:TextField Value='<%#Eval("dir_med_initial") %>' ID="dir_med_initial" runat="server" />
@@ -2390,6 +2390,15 @@
     </script>
 
     <script type="text/javascript">
+
+        function rhythm_others_change() {
+            if (document.getElementById("cb_rhythm_others_true").checked) {
+                document.getElementsByClassName("rhythm_field")[0].classList.add('d-none');
+            } else {
+                document.getElementsByClassName("rhythm_field")[0].classList.remove('d-none');
+            }
+        }
+
         var elem = window.parent.parent.document.getElementById("myProgress");
         progress(elem);
 
