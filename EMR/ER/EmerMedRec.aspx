@@ -1921,13 +1921,7 @@
                 if (document.getElementById("alertify-logs"))
                 document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
             }, 1000);
-
-            
         }
-
-        
-
-        
     </script>
 
 </body>

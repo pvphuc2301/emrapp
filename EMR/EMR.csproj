@@ -171,24 +171,6 @@
     <Content Include="App_Data\RadCaptcha\Y.wav" />
     <Content Include="App_Data\RadCaptcha\Z.wav" />
     <Content Include="BarcodeLib.dll" />
-    <Content Include="bin\BarcodeLib.dll" />
-    <Content Include="bin\EMR.dll" />
-    <Content Include="bin\EMR.pdb" />
-    <Content Include="bin\EnvDTE.dll" />
-    <Content Include="bin\Newtonsoft.Json.dll" />
-    <Content Include="bin\OnBarcode.Barcode.BarcodeScanner.dll" />
-    <Content Include="bin\PopupControl.dll" />
-    <Content Include="bin\stdole.dll" />
-    <Content Include="bin\Telerik.Web.Design.dll" />
-    <Content Include="bin\Telerik.Web.Spreadsheet.dll" />
-    <Content Include="bin\Telerik.Web.UI.dll" />
-    <Content Include="bin\Telerik.Web.UI.Skins.dll" />
-    <Content Include="bin\Telerik.Windows.Documents.Core.dll" />
-    <Content Include="bin\Telerik.Windows.Documents.Flow.dll" />
-    <Content Include="bin\Telerik.Windows.Documents.Spreadsheet.dll" />
-    <Content Include="bin\Telerik.Windows.Documents.Spreadsheet.FormatProviders.OpenXml.dll" />
-    <Content Include="bin\Telerik.Windows.Zip.dll" />
-    <Content Include="bin\zxing.dll" />
     <Content Include="Dashboard.aspx" />
     <Content Include="DashboardTest.aspx" />
     <Content Include="Emr.aspx" />
@@ -254,10 +236,6 @@
     <Content Include="IPD\SurgicalCertificate.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
-    <Content Include="obj\Debug\EMR.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Debug\EMR.dll" />
-    <Content Include="obj\Debug\emr.dll.licenses" />
-    <Content Include="obj\Debug\EMR.pdb" />
     <Content Include="OnBarcode.Barcode.BarcodeScanner.dll" />
     <Content Include="OPD\MedicalCertificate.aspx" />
     <Content Include="OPD\MedRecForNeoVaccin.aspx" />
@@ -302,9 +280,6 @@
     <Content Include="scripts\inpIniNurAss.js" />
     <Content Include="scripts\jquery-2.2.1.js" />
     <Content Include="scripts\jquery-2.2.1.min.js" />
-    <Content Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <Content Include="obj\Debug\EMR.csproj.CopyComplete" />
-    <Content Include="obj\Debug\EMR.csproj.CoreCompileInputs.cache" />
     <Content Include="styles\alertify.css" />
     <Content Include="styles\print.css" />
     <Content Include="styles\sweetalert.min.css" />
@@ -326,7 +301,6 @@
     <Content Include="UserControls\UCPatientInfo.ascx" />
     <Content Include="zxing.dll" />
     <Content Include="Print\Print.rar" />
-    <Content Include="bin\EMR.dll.config" />
     <None Include="Properties\PublishProfiles\DEV.pubxml" />
     <None Include="Properties\PublishProfiles\UAT.pubxml" />
     <None Include="scripts\jquery.validate-vsdoc.js" />
@@ -672,7 +646,6 @@
     <Compile Include="Logout.aspx.designer.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
     </Compile>
-    <Compile Include="obj\Debug\.NETFramework,Version=v4.5.AssemblyAttributes.cs" />
     <Compile Include="OPD\MedicalCertificate.aspx.cs">
       <DependentUpon>MedicalCertificate.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1140,7 +1113,6 @@
   <ItemGroup>
     <Folder Include="assets\node_modules\html5-editor\" />
     <Folder Include="DataEntities\" />
-    <Folder Include="obj\Debug\TempPE\" />
     <Folder Include="Pages\" />
   </ItemGroup>
   <ItemGroup>
@@ -1169,7 +1141,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

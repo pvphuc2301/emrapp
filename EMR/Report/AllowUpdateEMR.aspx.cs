@@ -23,6 +23,9 @@ namespace EMR.Report
         public bool isDraft = false;
         public string docId = "";
         public string ConnStringEMR = "";
+        public bool Export = false;
+        int varColor = 0;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             UserID = (string)Session["UserID"];
@@ -105,7 +108,16 @@ namespace EMR.Report
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    RadGrid1.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+                    DataTable root = WebHelpers.GetJSONToDataTable(response.Data);
+                    DataTable dt = root.Clone();
+
+                    foreach (DataRow row in root.Rows)
+                    {
+                        string pid = Convert.ToString(row["visible_patient_id"]);
+                        if (pid == "900000488" || pid == "900005754") { continue; }
+                        dt.Rows.Add(row.ItemArray);
+                    }
+                    RadGrid1.DataSource = dt;
                 }
             }
         }
@@ -115,6 +127,7 @@ namespace EMR.Report
             {
                 GridDataItem item = (e.Item as GridDataItem);
                 string pvid = item.GetDataKeyValue("patient_visit_id").ToString();
+
                 string visitType = item.GetDataKeyValue("visit_type_rcd").ToString();
                 string visible_id = Convert.ToString(item.GetDataKeyValue("visible_patient_id"));
                 string request_full_name = Convert.ToString(item["request_full_name"].Text);
@@ -237,6 +250,86 @@ namespace EMR.Report
             dynamic response = WebHelpers.PostAPI(apiString);
 
             RadGrid1.Rebind();
+        }
+
+        protected void ButtonExport_Click(object sender, System.EventArgs e)
+        {
+            //Export = true;
+            GridTableView view = RadGrid1.MasterTableView;  //Top-level view  
+            string ExportExcel = ((LinkButton)sender).ID;
+            if (ExportExcel == "ExportGroup")
+            {
+                //Export_Group = true;
+                RadGrid1.MasterTableView.HierarchyDefaultExpanded = false;
+            }
+            if (ExportExcel == "ExportDetail")
+            {
+                //ExportAll = true;
+                //ExpandGridTableView(this.RadGrid1.MasterTableView, true);
+                RadGrid1.MasterTableView.HierarchyDefaultExpanded = true;
+            }
+            RadGrid1.MasterTableView.AllowFilteringByColumn = false;
+            RadGrid1.ExportSettings.ExportOnlyData = true;
+            RadGrid1.ExportSettings.IgnorePaging = true;
+            RadGrid1.ExportSettings.OpenInNewWindow = true;
+            string gridcaption = "<b style='color: blue; text-align: left; font-size:20'>Danh Sách Yêu Cầu Bổ Sung Hồ Sơ Bệnh Án</b>";
+            //if (!string.IsNullOrEmpty(To_Date))
+            //    gridcaption += "<BR/>" + "<b>From date: </b>" + String.Format("{0:dd/MMM/yyyy}", FromDate.SelectedDate) + "<b> to:</b>" + String.Format("{0:dd/MMM/yyyy}", ToDate.SelectedDate);
+            //else
+            //    gridcaption += "<BR/>" + "<b>From date: </b>" + String.Format("{0:dd/MMM/yyyy}", FromDate.SelectedDate) + "<b> to:</b>" + String.Format("{0:dd/MMM/yyyy}", DateTime.Today.Date);
+            //gridcaption += "<BR/>" + "<b> Shit name: " + Shift_Name + " </b>";
+            RadGrid1.MasterTableView.Caption = gridcaption;
+            RadGrid1.MasterTableView.ExportToExcel();
+        }
+
+        protected void RadGrid1_DataBound(object sender, EventArgs e)
+        {
+            if (Export)
+            {
+                foreach (GridHeaderItem headercha in RadGrid1.MasterTableView.GetItems(GridItemType.Header))
+                {
+                    headercha.BackColor = System.Drawing.Color.LightBlue;
+                }
+                LoopHierarchyRecursive(RadGrid1.MasterTableView, 0);
+            }
+        }
+
+        protected void LoopHierarchyRecursive(GridTableView gridTableView, int i)
+        {
+            foreach (GridNestedViewItem nestedViewItem in gridTableView.GetItems(GridItemType.NestedView))
+            {
+                // you should skip the items if not expanded, or tables not bound
+                if (nestedViewItem.NestedTableViews.Length > 0)
+                {
+                    // now you can access: nestedViewItem.NestedTableViews[0].Items, which will be the DataItems of this nested table
+                    // then make recursive call
+                    foreach (GridDataItem item in gridTableView.Items)
+                    {
+                        if (i == 0)
+                        {
+                            //if (!Export_Group)
+                            //    item.BackColor = System.Drawing.Color.LightGray;
+                        }
+                        else if (i == 1)
+                            item.BackColor = System.Drawing.Color.LightBlue;
+                        item.Font.Bold = true;
+
+                        if (item.Expanded)
+                        {
+                            foreach (GridTableView childTable in item.ChildItem.NestedTableViews)
+                            {
+                                foreach (GridHeaderItem headercon in childTable.GetItems(GridItemType.Header))
+                                {
+                                    headercon.Visible = false;
+                                }
+                            }
+                        }
+                    }
+                    varColor = varColor + 1;
+                    LoopHierarchyRecursive(nestedViewItem.NestedTableViews[0], varColor);
+                    // above [0] stands for the first table in the hierarchy, since Telerik RadGrid supports multiple tables at a level
+                }
+            }
         }
     }
 }

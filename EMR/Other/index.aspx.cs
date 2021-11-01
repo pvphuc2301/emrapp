@@ -253,7 +253,7 @@ namespace EMR.Other
 
             //qc_mail[0] = "chung.nguyen@aih.com.vn";
             //qc_mail[1] = "long.do@aih.com.vn";
-            //qc_mail[2] = "phut.phan@aih.com.vn";
+            qc_mail[0] = "phut.phan@aih.com.vn";
 
             var objMailForm = new MailAddress("itsystem@aih.com.vn", "itsystem@aih.com.vn");
             MailAddressFrom = objMailForm;
@@ -284,7 +284,7 @@ namespace EMR.Other
             objMail.IsBodyHtml = true;
 
             objMail.BodyEncoding = System.Text.Encoding.UTF8;
-            //objMail.CC.Add(qc_mail[0]);
+            objMail.CC.Add(qc_mail[0]);
             //objMail.CC.Add(qc_mail[1]);
             //objMail.CC.Add(qc_mail[2]);
 
