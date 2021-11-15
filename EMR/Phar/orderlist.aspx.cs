@@ -134,7 +134,7 @@ namespace EMR
                 query += "AND pv.facility_id = 'DB7FE460-06C3-4343-9909-57709F9538E3' ";
             query += ") AS lablist ";
             query += "GROUP BY creation_date_time,visit_code, urlink, visit_date_time, order_owner_name_e,visit_type_rcd,employee_nr,created_date ";
-            query += "ORDER BY visit_date_time DESC, creation_date_time DESC ";
+            query += "ORDER BY cast(visit_date_time as date) DESC, cast(creation_date_time as date) DESC ";
 
             Get_Query = query;
 
