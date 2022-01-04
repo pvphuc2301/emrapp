@@ -19,7 +19,10 @@ namespace EMR
     {
         public string ConnStringHIS = ""; public string ConnStringEMR = "";
 
-        public string varPID = ""; public string varVPID = ""; private string orderType = "";
+        public string varPID = ""; 
+        public string varVPID = ""; 
+        public string varPVPID = "";
+        private string orderType = "";
         public string UserID;
         PatientInfo patient;
         protected string loc;
@@ -43,6 +46,7 @@ namespace EMR
             lblPID.Text = varVPID = Request.QueryString["vbid"]; //"3afc144a-86ca-11eb-9dfe-dca2660bc0a2";// ValueHiddenField.Value;
                                                                  //varVisibleID = Request.QueryString["vbid"]; //"900031267";
                                                                  //LoadPatientInfomation();
+            varPVPID = Request.QueryString["pvpid"];
 
             linkMail.HRef = "../other/sendlogview.aspx?view=mail&pid=" + varPID;
             //
@@ -66,19 +70,29 @@ namespace EMR
                 
                 patient = new PatientInfo(varPID);
 
-                if(Request.QueryString["isLinked"] != null)
+                if (Request.QueryString["pvpid"] != null)
                 {
-                    patientLinked.Visible = true;
-                    //foreach (DataRow row in PATIENT_INFO.patientLinked.Rows)
-                    //{
-                    //    string vpid = row.Field<string>("visible_patient_id");
-                    //    HtmlGenericControl a = new HtmlGenericControl();
-                    //    //a.Attributes["onclick"] = "__doPostBack('pid_Change', '" + vpid + "')";
-                    //    a.Attributes["class"] = "dropdown-item disabled";
-                    //    a.InnerText = vpid;
+                   patientLinked.Visible = true;
 
-                    //    pidList.Controls.Add(a);
-                    //}
+                   var response = WebHelpers.GetAPI("api/Patient/select-patient-linked/" + varPID);
+                   if (response.Status == System.Net.HttpStatusCode.OK)
+                   {
+                        foreach (DataRow row in WebHelpers.GetJSONToDataTable(response.Data).Rows)
+                        {
+                            string vpid = row.Field<string>("visible_patient_id");
+                            HtmlGenericControl a = new HtmlGenericControl();
+                            //a.Attributes["onclick"] = "__doPostBack('pid_Change', '" + vpid + "')";
+                            a.Attributes["class"] = "dropdown-item disabled";
+                            a.InnerText = vpid;
+
+                            if(varPVPID == vpid)
+                            {
+                                a.InnerHtml += " <svg width=\"12\" height=\"12\" aria-hidden=\"true\" focusable=\"false\" data-prefix=\"fas\" data-icon=\"key\" class=\"svg-inline--fa fa-key fa-w-16\" role=\"img\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 512 512\"><path fill=\"currentColor\" d=\"M512 176.001C512 273.203 433.202 352 336 352c-11.22 0-22.19-1.062-32.827-3.069l-24.012 27.014A23.999 23.999 0 0 1 261.223 384H224v40c0 13.255-10.745 24-24 24h-40v40c0 13.255-10.745 24-24 24H24c-13.255 0-24-10.745-24-24v-78.059c0-6.365 2.529-12.47 7.029-16.971l161.802-161.802C163.108 213.814 160 195.271 160 176 160 78.798 238.797.001 335.999 0 433.488-.001 512 78.511 512 176.001zM336 128c0 26.51 21.49 48 48 48s48-21.49 48-48-21.49-48-48-48-48 21.49-48 48z\"></path></svg>";
+                            }
+
+                            pidList.Controls.Add(a);
+                        }
+                    }
                 }
                 else
                 {

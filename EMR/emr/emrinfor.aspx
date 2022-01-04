@@ -165,11 +165,8 @@
                         </li>
 
                         <li runat="server" id="patientLinked" class="nav-item dropdown">
-                            <a class="nav-link btn-link  waves-effect waves-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&#9903;
-                                <asp:Label runat="server" ID="Label1"></asp:Label>
-                            </a>
-                            <div runat="server" id="pidList" class="dropdown-menu dropdown-menu-right animated flipInY" aria-labelledby="btnGroupDrop1">
-                            </div>
+                            <a class="nav-link btn-link  waves-effect waves-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">🔗</a>
+                            <div runat="server" id="pidList" class="dropdown-menu dropdown-menu-right animated flipInY" aria-labelledby="btnGroupDrop1"></div>
                         </li>
 
                         <li class="nav-item dropdown">

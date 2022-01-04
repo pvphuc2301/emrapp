@@ -265,6 +265,7 @@ namespace EMR
 
                 prt_signature_date.Text = "Ngày/ Date: " + signature_date;
                 prt_signature_name.Text = SignatureName;
+
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
         }

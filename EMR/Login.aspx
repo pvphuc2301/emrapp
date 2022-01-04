@@ -165,6 +165,20 @@
     <script src="scripts/waves.js"></script>
     <script>
 
+        onEnter(document.getElementById("form1"), document.getElementById("btnLogin"));
+
+        function onEnter(form, button) {
+            form.addEventListener("keyup", function (event) {
+                // Number 13 is the "Enter" key on the keyboard
+                if (event.keyCode === 13) {
+                    // Cancel the default action, if needed
+                    event.preventDefault();
+                    // Trigger the button element with a click
+                    button.click();
+                }
+            });
+        }
+
         function togglePassword(id, eyeID) {
             let x = document.getElementById(id);
             let eye = document.getElementById(eyeID);

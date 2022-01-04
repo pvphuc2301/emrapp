@@ -1,4 +1,5 @@
-﻿using EMR.UserControls;
+﻿using EMR.Model;
+using EMR.UserControls;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -40,8 +41,8 @@ namespace EMR
     public enum ControlState { View, Edit }
     public static class WebHelpers
     {
-        public static string URL = "http://172.16.0.88:8080/";//PRO
-        //public static string URL = "http://172.16.0.78:8088/";//UAT
+        //public static string URL = "http://172.16.0.88:8080/";//PRO
+        public static string URL = "http://172.16.0.78:8088/";//UAT
 
         #region API
         public static dynamic PostAPI(string url, dynamic obj)
@@ -735,34 +736,91 @@ namespace EMR
             else { return AddRow(dataSource, gridView, columns); }
         }
 
+        internal static DataTable BindingDataGridView_NursingNote(GridView gridView, DataTable dataSource, Dictionary<string, string> columns, dynamic btnAdd = null)
+        {
+            DisabledGridView(gridView, false);
+            if (btnAdd != null) { WebHelpers.VisibleControl(true, btnAdd); }
+            if (dataSource != null)
+            {
+                DataTable _dataTable = new DataTable();
+                
+                for (int i = 0; i < columns.Count; i++)
+                {
+                    var col = columns.ElementAt(i);
+
+                    _dataTable.Columns.Add(col.Key);
+                    if (!string.IsNullOrEmpty(col.Value))
+                    {
+                        switch (col.Value)
+                        {
+                            case "DateTime":
+                                _dataTable.Columns[i].DataType = typeof(DateTime);
+                                break;
+                        }
+                    }
+                }
+
+                //Add nursing_intervention column if not exists
+                if (dataSource.Columns.Count < 5)
+                {
+                    DataColumn nursing_intervention = new DataColumn("nursing_intervention", typeof(string));
+                    dataSource.Columns.Add(nursing_intervention);
+
+                }
+
+                _dataTable = dataSource;
+
+                return DataBind(gridView, _dataTable);
+            }
+            else { return AddRow(dataSource, gridView, columns); }
+        }
+
         internal static void LoadDataGridView(GridView gridView, DataTable dataSource, Dictionary<string, string> columns, dynamic btnAdd = null)
         {
             if (btnAdd != null) { WebHelpers.VisibleControl(false, btnAdd); }
 
             if (dataSource == null) { dataSource = new DataTable(); }
+            for (int i = 0; i < columns.Count; i++)
+            {
+                var col = columns.ElementAt(i);
 
-            if (dataSource.Rows.Count <= 0)
-             {
-                for (int i = 0; i < columns.Count; i++)
+                if (!dataSource.Columns.Contains(col.Key))
                 {
-                    var col = columns.ElementAt(i);
 
-                    if (!dataSource.Columns.Contains(col.Key))
+                    dataSource.Columns.Add(col.Key);
+                    if (!string.IsNullOrEmpty(col.Value))
                     {
-
-                        dataSource.Columns.Add(col.Key);
-                        if (!string.IsNullOrEmpty(col.Value))
+                        switch (col.Value)
                         {
-                            switch (col.Value)
-                            {
-                                case "DateTime":
-                                    dataSource.Columns[i].DataType = typeof(DateTime);
-                                    break;
-                            }
+                            case "DateTime":
+                                dataSource.Columns[i].DataType = typeof(DateTime);
+                                break;
                         }
                     }
                 }
             }
+            //if (dataSource.Rows.Count <= 0)
+            // {
+            //    for (int i = 0; i < columns.Count; i++)
+            //    {
+            //        var col = columns.ElementAt(i);
+
+            //        if (!dataSource.Columns.Contains(col.Key))
+            //        {
+
+            //            dataSource.Columns.Add(col.Key);
+            //            if (!string.IsNullOrEmpty(col.Value))
+            //            {
+            //                switch (col.Value)
+            //                {
+            //                    case "DateTime":
+            //                        dataSource.Columns[i].DataType = typeof(DateTime);
+            //                        break;
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
 
             gridView.DataSource = dataSource;
             gridView.DataBind();
@@ -1103,6 +1161,47 @@ namespace EMR
                 }
             }
         }
+        internal static void getAccessButtons(AccessButtonInfo model)
+        {
+            LinkButton btnComplete = (LinkButton)model.Form.FindControl("btnComplete");
+            Control btnSave = model.Form.FindControl("btnSave");
+            Control btnDelete = model.Form.FindControl("btnDeleteModal");
+            Control btnAmend = model.Form.FindControl("btnAmend");
+            Control btnPrint = model.Form.FindControl("btnPrint");
+            Control btnCancel = model.Form.FindControl("btnCancel");
+
+            VisibleControl(false, btnCancel);
+
+            if (!model.IsSameCompanyCode || model.IsViewLog)
+            {
+                VisibleControl(false, btnComplete, btnSave, btnDelete, btnAmend, btnPrint);
+                return;
+            }
+
+            if (model.DocStatus == DocumentStatus.FINAL)
+            {
+                VisibleControl(true, btnAmend, btnPrint);
+                VisibleControl(false, btnComplete, btnSave, btnDelete);
+            }
+            else
+            {
+                VisibleControl(false, btnAmend, btnPrint);
+                VisibleControl(true, btnComplete, btnSave, btnDelete);
+            }
+
+            switch (model.AccessAuthorize)
+            {
+                case "View":
+                    VisibleControl(false, btnAmend, btnPrint, btnComplete, btnSave, btnDelete);
+                    break;
+            }
+
+            if(model.AccessGroup == "ADM")
+            {
+                VisibleControl(true, btnDelete);
+            }
+
+        }
         internal static void getAccessButtons(HtmlForm form, string docStatus, string access_authorize, bool company_code, bool viewLog)
         {
             LinkButton btnComplete = (LinkButton)form.FindControl("btnComplete");
@@ -1135,6 +1234,9 @@ namespace EMR
             {
                 case "View":
                     VisibleControl(false, btnAmend, btnPrint, btnComplete, btnSave, btnDelete);
+                    break;
+                case "ADM":
+                    VisibleControl(true, btnDelete);
                     break;
             }
         }

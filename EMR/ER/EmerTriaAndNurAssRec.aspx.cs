@@ -68,13 +68,14 @@ namespace EMR
                 BindingDataFormView(ena);
             }
         }
+        
         private void BindingDataFormEdit(Ena ena)
         {
             try
             {
                 WebHelpers.VisibleControl(true, undo, redo, pencilWrapper, cb_alert_true, cb_coma_true, cb_others_true, cb_rhythm_regular_true, cb_rhythm_inregular_true, cb_rhythm_others_true, cb_psychosocial_true, cb_psychosocial_others_true, cb_other_systems_normal_true, cb_other_systems_abnormal_true);
 
-                cb_rhythm_regular_true.Disabled = cb_rhythm_inregular_true.Disabled = cb_rhythm_others_true.Disabled = false;
+                cb_rhythm_regular_true.Disabled = cb_rhythm_inregular_true.Disabled = cb_rhythm_cardiac_arrest_true.Disabled = cb_rhythm_chest_pain_true.Disabled = cb_rhythm_others_true.Disabled = false;
 
                 cb_alert_true.Disabled = cb_coma_true.Disabled = cb_others_true.Disabled = false;
 
@@ -151,6 +152,9 @@ namespace EMR
 
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_btc_cultural_" + ena.btc_cultural);
                 txt_btc_cultural_note.Value = ena.btc_cultural_note;
+                //updated 26/11/21 (by Ken)
+                txt_room_number.Value = ena.room_number;
+                WebHelpers.BindDateTimePicker(dtpk_time_of_assessment, ena.time_of_assessment);
 
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_general_appearance_", WebHelpers.GetJSONToDataTable(ena.general_appearance), "cde");
 
@@ -172,15 +176,19 @@ namespace EMR
                 cb_respiratory_oth.Disabled = false;
                 DataTable respiratory = WebHelpers.GetJSONToDataTable(ena.respiratory);
 
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_respiratory_", respiratory, out int oth_index, "cde");
+                //WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_respiratory_", respiratory, out int oth_index, "cde");
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_respiratory_", respiratory, out int oth_index, "code");
 
-                if(oth_index != -1)
+                if (oth_index != -1)
                 {
                     txt_respiratory_oth.Value = respiratory.Rows[oth_index].Field<string>("desc").ToString();
                 }
 
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_rhythm_regular_" + ena.rhythm_regular);
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_rhythm_inregular_" + ena.rhythm_inregular);
+                //updated 01/12/21 (by Ken)
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_rhythm_cardiac_arrest_" + ena.rhythm_cardiac_arrest);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_rhythm_chest_pain_" + ena.rhythm_chest_pain);
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_rhythm_others_" + ena.rhythm_others);
 
                 txt_rhythm_str_others.Value = ena.rhythm_str_others;
@@ -203,24 +211,24 @@ namespace EMR
                 txt_abortions.Value = ena.abortions;
 
                 WebHelpers.BindDateTimePicker(dtpk_blood_glucose_date_time, ena.blood_glucose_date_time);
-
                 txt_blood_glucose_note.Value = ena.blood_glucose_note;
+                txt_blood_glucose_signature.Value = ena.blood_glucose_signature;
 
                 WebHelpers.BindDateTimePicker(dtpk_ecg_date_time, ena.ecg_date_time);
-
                 txt_ecg_note.Value = ena.ecg_note;
+                txt_ecg_signature.Value = ena.ecg_signature;
 
                 WebHelpers.BindDateTimePicker(dtpk_urine_cath_date_time, ena.urine_cath_date_time);
-
                 txt_urine_cath_note.Value = ena.urine_cath_note;
+                txt_urine_cath_signature.Value = ena.urine_cath_signature;
 
                 WebHelpers.BindDateTimePicker(dtpk_splint_cast_dressing_date_time, ena.splint_cast_dressing_date_time);
-
                 txt_splint_cast_dressing_note.Value = ena.splint_cast_dressing_note;
+                txt_splint_cast_dressing_signature.Value = ena.splint_cast_dressing_signature;
 
                 WebHelpers.BindDateTimePicker(dtpk_procedure_other_date_time, ena.procedure_other_date_time);
-
                 txt_procedure_other_note.Value = ena.procedure_other_note;
+                txt_procedure_other_signature.Value = ena.procedure_other_signature;
 
                 //Assessment System
 
@@ -250,7 +258,7 @@ namespace EMR
                 WebHelpers.BindDateTimePicker(dtpk_noticed_time, ena.noticed_time);
 
                 //Nursing notes
-                ViewState[grid_NursingNotes.ID] = WebHelpers.BindingDataGridView(grid_NursingNotes, WebHelpers.GetJSONToDataTable(ena.nursing_note), Ena.NURSING_NOTE_COL, btn_grid_NursingNotes_add);
+                ViewState[grid_NursingNotes.ID] = WebHelpers.BindingDataGridView_NursingNote(grid_NursingNotes, WebHelpers.GetJSONToDataTable(ena.nursing_note), Ena.NURSING_NOTE_COL, btn_grid_NursingNotes_add);
 
                 DataObj.Value = JsonConvert.SerializeObject(ena);
 
@@ -259,6 +267,7 @@ namespace EMR
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
         }
+        
         private void BindingDataFormView(Ena ena)
         {
             try
@@ -336,7 +345,9 @@ namespace EMR
                 lbl_btc_religious.Text = WebHelpers.FormatString(WebHelpers.GetBool(ena.btc_religious, $"Có, Giải thích/Yes Explain {WebHelpers.FormatString(ena.btc_religious_note)}"));
 
                 lbl_btc_cultural.Text = WebHelpers.FormatString(WebHelpers.GetBool(ena.btc_cultural, $"Có, Giải thích/Yes Explain {WebHelpers.FormatString(ena.btc_cultural_note)}"));
-
+                //updated 26/11/21 (by Ken)
+                lbl_room_number.Text = ena.room_number;
+                lbl_time_of_assessment.Text = WebHelpers.FormatDateTime(ena.time_of_assessment, "dd-MMM-yyyy HH:mm");
                 lbl_general_appearance.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(ena.general_appearance));
                 lbl_eye.Text = WebHelpers.FormatString(ena.eye);
                 lbl_voice.Text = WebHelpers.FormatString(ena.voice);
@@ -348,9 +359,18 @@ namespace EMR
                 cb_others_true.Checked = ena.others;
                 lbl_str_others.Text = WebHelpers.FormatString(ena.str_others);
                 //Cardiovascular
-                cb_rhythm_regular_true.Disabled = cb_rhythm_inregular_true.Disabled = cb_rhythm_others_true.Disabled = true;
+                cb_rhythm_regular_true.Disabled 
+                    = cb_rhythm_inregular_true.Disabled 
+                    = cb_rhythm_cardiac_arrest_true.Disabled 
+                    = cb_rhythm_chest_pain_true.Disabled 
+                    = cb_rhythm_others_true.Disabled = true;
+
                 cb_rhythm_regular_true.Checked = ena.rhythm_regular;
                 cb_rhythm_inregular_true.Checked = ena.rhythm_inregular;
+                //updated 01/12/21
+                cb_rhythm_cardiac_arrest_true.Checked = ena.rhythm_cardiac_arrest != null && ena.rhythm_cardiac_arrest ;
+                cb_rhythm_chest_pain_true.Checked = ena.rhythm_chest_pain != null && ena.rhythm_chest_pain;
+
                 cb_rhythm_others_true.Checked = ena.rhythm_others;
                 lbl_rhythm_str_others.Text = ena.rhythm_str_others;
                 //Psychosocial
@@ -389,19 +409,23 @@ namespace EMR
                 //Intervention Procedure
                 lbl_blood_glucose_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.blood_glucose_date_time, "dd-MMM-yyyy HH:mm"));
                 lbl_blood_glucose_note.Text = WebHelpers.FormatString(ena.blood_glucose_note);
+                lbl_blood_glucose_signature.Text = WebHelpers.FormatString(ena.blood_glucose_signature);
 
                 lbl_ecg_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.ecg_date_time, "dd-MMM-yyyy HH:mm"));
                 lbl_ecg_note.Text = WebHelpers.FormatString(ena.ecg_note);
+                lbl_ecg_signature.Text = WebHelpers.FormatString(ena.ecg_signature);
 
                 lbl_urine_cath_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.urine_cath_date_time, "dd-MMM-yyyy HH:mm"));
                 lbl_urine_cath_note.Text = WebHelpers.FormatString(ena.urine_cath_note);
+                lbl_urine_cath_signature.Text = WebHelpers.FormatString(ena.urine_cath_signature);
 
                 lbl_splint_cast_dressing_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.splint_cast_dressing_date_time, "dd-MMM-yyyy HH:mm"));
                 lbl_splint_cast_dressing_note.Text = WebHelpers.FormatString(ena.splint_cast_dressing_note);
+                lbl_splint_cast_dressing_signature.Text = WebHelpers.FormatString(ena.splint_cast_dressing_signature);
 
                 lbl_procedure_other_date_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.procedure_other_date_time, "dd-MMM-yyyy HH:mm"));
                 lbl_procedure_other_note.Text = WebHelpers.FormatString(ena.procedure_other_note);
-
+                lbl_procedure_other_signature.Text = WebHelpers.FormatString(ena.procedure_other_signature);
                 //
 
                 //DataBind(grid_AssessmentSystem, WebHelpers.GetJSONToDataTable(ena.assessment_system));
@@ -430,11 +454,12 @@ namespace EMR
                 lbl_noticed_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.noticed_time, "dd-MMM-yyyy HH:mm"));
 
                 //PHIẾU GHI CHÚ ĐIỀU DƯỠNG / NURSING NOTES
-                WebHelpers.LoadDataGridView(grid_NursingNotes, WebHelpers.GetJSONToDataTable(ena.nursing_note), Iina.SKIN_ANNO, btn_grid_NursingNotes_add);
+                WebHelpers.LoadDataGridView(grid_NursingNotes, WebHelpers.GetJSONToDataTable(ena.nursing_note), Ena.NURSING_NOTE_COL, btn_grid_NursingNotes_add);
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
 
         }
+
         private void BindingDataFormPrint(Ena ena)
         {
             try
@@ -567,8 +592,8 @@ namespace EMR
                 prt_btc_cultural.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"text-primary\"><i>No</i></span>", Value = false }, new Option { Text = "Có, Giải thích/ <span class=\"text-primary\"><i>Yes Explain</i></span> ", Value = true }, ena.btc_cultural, "display: grid;grid-template-columns:90px auto;");
                 prt_btc_cultural_note.Text = ena.btc_cultural_note;
 
-                prt_room_number.Text = "";
-                prt_time_of_assess.Text = " ";
+                prt_room_number.Text = ena.room_number;
+                prt_time_of_assess.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.time_of_assessment, "dd/MM/yyyy HH:mm"), "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 
                 //prt_general_appearance.Text = WebHelpers.CreateOptions(Ena.GENERAL_APPEARANCE_CODE, ena.general_appearance, "");
 
@@ -596,6 +621,10 @@ namespace EMR
 
                 prt_rhythm_regular.Text = WebHelpers.GetCheckedIcon(ena.rhythm_regular);
                 prt_rhythm_inregular.Text = WebHelpers.GetCheckedIcon(ena.rhythm_inregular);
+                //updated 01/12/21 (by Ken)
+                prt_rhythm_cardiac_arrest.Text = WebHelpers.GetCheckedIcon(ena.rhythm_cardiac_arrest);
+                prt_rhythm_chest_pain.Text = WebHelpers.GetCheckedIcon(ena.rhythm_chest_pain);
+
                 prt_rhythm_others.Text = WebHelpers.GetCheckedIcon(ena.rhythm_others) + "Khác/ <i class='text-primary'>Others</i>: " + ena.rhythm_str_others;
 
                 prt_psychosocial.Text = WebHelpers.GetCheckedIcon(ena.psychosocial);
@@ -631,18 +660,23 @@ namespace EMR
 
                 prt_blood_glucose_date_time.Text = WebHelpers.FormatDateTime(ena.blood_glucose_date_time, "dd/MM/yyyy HH:mm");
                 prt_blood_glucose_note.Text = ena.blood_glucose_note;
+                prt_blood_glucose_signature.Text = ena.blood_glucose_signature;
 
                 prt_ecg_date_time.Text = WebHelpers.FormatDateTime(ena.ecg_date_time, "dd/MM/yyyy HH:mm");
                 prt_ecg_note.Text = ena.ecg_note;
+                prt_ecg_signature.Text =  ena.ecg_signature;
 
                 prt_urine_cath_date_time.Text = WebHelpers.FormatDateTime(ena.urine_cath_date_time, "dd/MM/yyyy HH:mm");
                 prt_urine_cath_note.Text = ena.urine_cath_note;
+                prt_urine_cath_signature.Text = ena.urine_cath_signature;
 
                 prt_splint_cast_dressing_date_time.Text = WebHelpers.FormatDateTime(ena.splint_cast_dressing_date_time, "dd/MM/yyyy HH:mm");
                 prt_splint_cast_dressing_note.Text = ena.splint_cast_dressing_note;
+                prt_splint_cast_dressing_signature.Text = ena.splint_cast_dressing_signature;
 
                 prt_procedure_other_date_time.Text = WebHelpers.FormatDateTime(ena.procedure_other_date_time, "dd/MM/yyyy HH:mm");
                 prt_procedure_other_note.Text =  ena.procedure_other_note;
+                prt_procedure_other_signature.Text = ena.procedure_other_signature;
 
                 DataTable assessment_system = WebHelpers.GetJSONToDataTable(ena.assessment_system);
 
@@ -832,7 +866,8 @@ namespace EMR
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        //td.InnerText = row["dir_med_route"].ToString();
+                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["nursing_intervention"]) };
+                        td.Controls.Add(p);
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
@@ -1222,6 +1257,9 @@ namespace EMR
 
                 ena.btc_cultural = WebHelpers.GetRadioButton(form1, "rad_btc_cultural_");
                 ena.btc_cultural_note = txt_btc_cultural_note.Value;
+                //updated 26/11/21
+                ena.room_number = txt_room_number.Value;
+                ena.time_of_assessment = DataHelpers.ConvertSQLDateTime(dtpk_time_of_assessment.SelectedDate);
 
                 ena.general_appearance = WebHelpers.GetCheckBox(form1, "cb_general_appearance_", Ena.GENERAL_APPEARANCE_CODE, "cde");
 
@@ -1238,17 +1276,36 @@ namespace EMR
 
                 if (cb_respiratory_oth.Checked)
                 {
-                    DataRow dtRow = dtb_respiratory.NewRow();
+                    //DataRow dtRow = dtb_respiratory.NewRow();
 
-                    dtRow["code"] = "OTH";
-                    dtRow["desc"] = txt_respiratory_oth.Value;
-                    dtb_respiratory.Rows.Add(dtRow);
+                    //dtRow["code"] = "OTH";
+                    //dtRow["desc"] = txt_respiratory_oth.Value;
+                    //dtb_respiratory.Rows.Add(dtRow);
+
+                    //updated 22/12/21 by Ken
+                    try
+                    {
+                        foreach (DataRow dtRow in dtb_respiratory.Rows)
+                        {
+                            if (Convert.ToString(dtRow["code"]) == "OTH")
+                            {
+                                dtRow["desc"] = txt_respiratory_oth.Value;
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                    
                 }
 
                 ena.respiratory = JsonConvert.SerializeObject(dtb_respiratory);
 
                 ena.rhythm_regular = cb_rhythm_regular_true.Checked;
                 ena.rhythm_inregular = cb_rhythm_inregular_true.Checked;
+                //updated 01/12/21
+                ena.rhythm_cardiac_arrest = cb_rhythm_cardiac_arrest_true.Checked;
+                ena.rhythm_chest_pain = cb_rhythm_chest_pain_true.Checked;
                 ena.rhythm_others = cb_rhythm_others_true.Checked;
                 ena.rhythm_str_others = txt_rhythm_str_others.Value;
 
@@ -1267,22 +1324,23 @@ namespace EMR
 
                 ena.blood_glucose_date_time = DataHelpers.ConvertSQLDateTime(dtpk_blood_glucose_date_time.SelectedDate);
                 ena.blood_glucose_note = txt_blood_glucose_note.Value;
+                ena.blood_glucose_signature = txt_blood_glucose_signature.Value;
 
                 ena.ecg_date_time = DataHelpers.ConvertSQLDateTime(dtpk_ecg_date_time.SelectedDate);
-
                 ena.ecg_note = txt_ecg_note.Value;
+                ena.ecg_signature = txt_ecg_signature.Value;
 
                 ena.urine_cath_date_time = DataHelpers.ConvertSQLDateTime(dtpk_urine_cath_date_time.SelectedDate);
-
                 ena.urine_cath_note = txt_urine_cath_note.Value;
+                ena.urine_cath_signature = txt_urine_cath_signature.Value;
 
                 ena.splint_cast_dressing_date_time = DataHelpers.ConvertSQLDateTime(dtpk_splint_cast_dressing_date_time.SelectedDate);
-
                 ena.splint_cast_dressing_note = txt_splint_cast_dressing_note.Value;
+                ena.splint_cast_dressing_signature = txt_splint_cast_dressing_signature.Value;
 
                 ena.procedure_other_date_time = DataHelpers.ConvertSQLDateTime(dtpk_procedure_other_date_time.SelectedDate);
-
                 ena.procedure_other_note = txt_procedure_other_note.Value;
+                ena.procedure_other_signature = txt_procedure_other_signature.Value;
 
                 // Assessment System
 
@@ -1310,7 +1368,7 @@ namespace EMR
 
                 // nursing notes
                 ena.nursing_note = WebHelpers.GetDataGridView(grid_NursingNotes, Ena.NURSING_NOTE_COL);
-
+                
                 ena.skin_anno_data = "{\"dataURI\":\""+ skin_anno_data_base64.Value + "\"}";
 
                 if (JsonConvert.SerializeObject(ena) == DataObj.Value)

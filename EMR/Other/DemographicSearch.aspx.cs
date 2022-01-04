@@ -32,6 +32,7 @@ namespace EMR.Other
                 // RadGridHC.MasterTableView.CommandItemDisplay = GridCommandItemDisplay.None;
                 txt_pid.Attributes.Add("onkeydown", "funfordefautenterkey1(" + btnSearch.ClientID + ",event)");
             }
+
             //if (txt_pid.Value.Length >= 9)
             //{
             //    btnSearch_Click(sender, e);
@@ -56,36 +57,37 @@ namespace EMR.Other
             }
         }
 
-        protected void RadGrid1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GridDataItem item = (GridDataItem)(sender as RadGrid).SelectedItems[0];
+        //protected void RadGrid1_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    GridDataItem item = (GridDataItem)(sender as RadGrid).SelectedItems[0];
 
-            string patientID = item.GetDataKeyValue("patient_id").ToString();
+        //    string patientID = item.GetDataKeyValue("patient_id").ToString();
 
-            dynamic response = WebHelpers.GetAPI("api/Patient/check-primary/" + patientID);
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                dynamic data = JObject.Parse(response.Data);
+        //    dynamic response = WebHelpers.GetAPI("api/Patient/check-primary/" + patientID);
+        //    if (response.Status == System.Net.HttpStatusCode.OK)
+        //    {
+        //        dynamic data = JObject.Parse(response.Data);
 
-                string script;
+        //        string script;
 
-                if (data.primary_visible_patient_id != null)
-                {
-                    //response = WebHelpers.GetAPI("api/Patient/select-patient-linked/" + patientID);
-                    JavaScriptSerializer js = new JavaScriptSerializer();
-                }
-                else
-                {
-                    script = "openPID('" + patientID + "');";
-                    ScriptManager.RegisterClientScriptBlock((sender as Control), GetType(), "alert", script, true);
-                }
-            }
-        }
+        //        if (data.primary_visible_patient_id != null)
+        //        {
+        //            //response = WebHelpers.GetAPI("api/Patient/select-patient-linked/" + patientID);
+        //            JavaScriptSerializer js = new JavaScriptSerializer();
+        //        }
+        //        else
+        //        {
+        //            script = "openPID('" + patientID + "');";
+        //            ScriptManager.RegisterClientScriptBlock((sender as Control), GetType(), "alert", script, true);
+        //        }
+        //    }
+        //}
 
         protected void RadGrid2_ItemDataBound(object sender, GridItemEventArgs e)
         {
 
         }
+
         protected void RadGrid1_ItemDataBound(object sender, GridItemEventArgs e)
         {
             if (e.Item is GridDataItem)
@@ -353,25 +355,21 @@ namespace EMR.Other
                 string PVID = item.GetDataKeyValue("visible_patient_id").ToString();
 
                 dynamic response = WebHelpers.GetAPI("api/Patient/check-primary/" + PID);
+
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
                     dynamic data = JObject.Parse(response.Data);
 
-                    string script;
-                    
                     if (data.primary_visible_patient_id != null)
                     {
-                        //dynamic PATIENT_INFO = (dynamic)Session["PATIENT_INFO"];
-                        
+                        hf_primary_visible_patient_id.Value = data.primary_visible_patient_id;
+                        lbl_primary_visible_patient_id.Text = data.primary_visible_patient_id;
                         response = WebHelpers.GetAPI("api/Patient/select-patient-linked/" + data.patient_id);
                         if (response.Status == System.Net.HttpStatusCode.OK)
                         {
                             ScriptManager.RegisterStartupScript(Page, Page.GetType(), ScriptKey.SHOW_POPUP, "setTimeout(()=> { $('#DocumentList').modal({backdrop: 'static', keyboard: false}); },0);", true);
-                            //PATIENT_INFO.patientLinked = WebHelpers.GetJSONToDataTable(response.Data);
                             radGridPidList.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
                             radGridPidList.DataBind();
-                            //&#128273;
-                            //Session["PATIENT_INFO"] = PATIENT_INFO;
                         }
                     }
                     else
@@ -392,7 +390,6 @@ namespace EMR.Other
                         if (response1.Status == System.Net.HttpStatusCode.OK)
                         {
                             Response.Redirect(url);
-                            //WebHelpers.AddJS(Page, "window.parent.window.location.href = \"" + url + "\"");
                         }
                     }
                 }
@@ -424,8 +421,7 @@ namespace EMR.Other
             {
                 string PID = item.GetDataKeyValue("patient_id").ToString();
                 string PVID = item.GetDataKeyValue("visible_patient_id").ToString();
-
-                string url = $"/emr/emrinfor.aspx?pid={PID}&vbid={PVID}";
+                string url = $"/emr/emrinfor.aspx?pid={PID}&vbid={PVID}&pvpid={lbl_primary_visible_patient_id.Text}" ;
                 Response.Redirect(url);
             } 
         }

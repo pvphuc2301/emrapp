@@ -344,10 +344,10 @@
                                             <div class="font-bold">ĐÁNH GIÁ THỂ CHẤT CÁC CƠ QUAN/ <span class="text-primary"><i>ASSESSMENT BY SYSTEM</i></span></div>
                                             <div style="display: grid; grid-template-columns: 1fr 1fr">
                                                 <div>
-                                                    Số phòng/ <span class="text-primary"><i>Room number</i></span>:<asp:Label runat="server" ID="prt_room_number"></asp:Label>
+                                                    Số phòng/ <span class="text-primary"><i>Room number</i></span>:&nbsp;<asp:Label runat="server" ID="prt_room_number"></asp:Label>
                                                 </div>
                                                 <div>
-                                                    Thời điểm đánh giá/ <span class="text-primary"><i>Time of assessment</i></span>:<asp:Label runat="server" ID="prt_time_of_assess"></asp:Label>
+                                                    Thời điểm đánh giá/ <span class="text-primary"><i>Time of assessment</i></span>:&nbsp;<asp:Label runat="server" ID="prt_time_of_assess"></asp:Label>
                                                 </div>
                                             </div>
 
@@ -394,6 +394,10 @@
                                                         Nhịp tim/<i class="text-primary">Rhythm</i>
                                                         <asp:Label runat="server" ID="prt_rhythm_regular"/>&nbsp;Đều/ <i class="text-primary">Regular</i>
                                                         <asp:Label runat="server" ID="prt_rhythm_inregular"/>&nbsp;Không đều/ <i class="text-primary">Irregular</i>
+                                                    </div>
+                                                    <div>
+                                                        <asp:Label runat="server" ID="prt_rhythm_cardiac_arrest"/>&nbsp;Ngưng tim/ <i class="text-primary">Cardiac arrest</i>
+                                                        <asp:Label runat="server" ID="prt_rhythm_chest_pain"/>&nbsp;Đau ngực/ <i class="text-primary">Chest pain</i>
                                                     </div>
                                                     <div>
                                                         <asp:Label runat="server" ID="prt_rhythm_others"/>
@@ -464,6 +468,7 @@
                                                     <asp:Label runat="server" ID="prt_blood_glucose_note" />
                                                 </td>
                                                 <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="prt_blood_glucose_signature" />
                                                 </td>
                                             </tr>
                                             <tr>
@@ -476,7 +481,7 @@
                                                     Bác sĩ đọc kết quả/ <i class="text-primary">Reviewed by Dr.</i> <asp:Label runat="server" ID="prt_ecg_note" />
                                                 </td>
                                                 <td class="p-2 text-right">
-                                                    
+                                                    <asp:Label runat="server" ID="prt_ecg_signature" />
                                                 </td>
                                             </tr>
                                             <tr>
@@ -488,6 +493,7 @@
                                                     <asp:Label runat="server" ID="prt_urine_cath_note" />
                                                 </td>
                                                 <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="prt_urine_cath_signature" />
                                                 </td>
                                             </tr>
                                             <tr>
@@ -500,6 +506,7 @@
                                                     <asp:Label runat="server" ID="prt_splint_cast_dressing_note" />
                                                 </td>
                                                 <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="prt_splint_cast_dressing_signature" />
                                                 </td>
                                             </tr>
                                             <tr>
@@ -511,6 +518,7 @@
                                                     <asp:Label runat="server" ID="prt_procedure_other_note" />
                                                 </td>
                                                 <td class="p-2 text-right">
+                                                    <asp:Label runat="server" ID="prt_procedure_other_signature" />
                                                 </td>
                                             </tr>
                                         </table>
@@ -1431,6 +1439,22 @@
                                                 <label class="col-md-12 control-label mb-2 h5">ĐÁNH GIÁ THỂ CHẤT CÁC CƠ QUAN/ <span class="text-primary">ASSESSMENT BY SYSTEM:</span></label>
 
                                                 <div class="col-md-12 gt-2-a mb-2">
+                                                    <label class="control-label">Số phòng/ <span class="text-primary">Room number:</span></label>
+                                                    <asp:Label runat="server" ID="lbl_room_number"/>
+                                                    <div runat="server" id="room_number_wrapper" class="form-group w-n">
+                                                        <webUI:TextField runat="server" ID="txt_room_number" TextMode="SingleLine"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 gt-2-a mb-2">
+                                                    <label class="control-label">Thời điểm đánh giá/ <span class="text-primary">Time of assessment:</span></label>
+                                                    <asp:Label runat="server" ID="lbl_time_of_assessment"/>
+                                                    <div runat="server" id="time_of_assessment_wrapper" class="form-group w-n">
+                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_time_of_assessment" Width="200px" />
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 gt-2-a mb-2">
                                                     <label class="control-label">Tổng trạng chung/ <span class="text-primary">General appearance:</span></label>
 
                                                     <asp:Label runat="server" ID="lbl_general_appearance"/>
@@ -1571,6 +1595,14 @@
                                                             <span class="custom-control-label">Không đều/ <span class="text-primary">Inregular</span></span>
                                                         </label>
                                                         <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_cardiac_arrest_true" />
+                                                            <span class="custom-control-label">Ngưng tim/ <span class="text-primary">Cardiac arrest</span></span>
+                                                        </label>
+                                                        <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_chest_pain_true" />
+                                                            <span class="custom-control-label">Đau ngực/ <span class="text-primary">Chest pain</span></span>
+                                                        </label>
+                                                        <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
                                                             <input disabled-for="rhythm_field" type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_others_true" />
                                                             <span class="custom-control-label">Khác/ <span class="text-primary">Others:</span></span>
                                                         </label>
@@ -1673,6 +1705,9 @@
                                                                 <td>
                                                                     <div>Ghi chú/ <span class="text-primary">Notes</span></div>
                                                                 </td>
+                                                                <td style="width: 180px;">
+                                                                    <div>Ký tên/ <span class="text-primary">Signature</span></div>
+                                                                </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>
@@ -1688,6 +1723,12 @@
                                                                     <asp:Label runat="server" ID="lbl_blood_glucose_note"></asp:Label>
                                                                     <div runat="server" id="blood_glucose_note_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_blood_glucose_note" TextMode="SingleLine" />
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <asp:Label runat="server" ID="lbl_blood_glucose_signature"></asp:Label>
+                                                                    <div runat="server" id="blood_glucose_signature_wrapper">
+                                                                        <webUI:TextField runat="server" ID="txt_blood_glucose_signature" TextMode="SingleLine" />
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -1706,6 +1747,12 @@
                                                                         <webUI:TextField runat="server" ID="txt_ecg_note" TextMode="SingleLine" />
                                                                     </div>
                                                                 </td>
+                                                                <td>
+                                                                    <asp:Label runat="server" ID="lbl_ecg_signature"></asp:Label>
+                                                                    <div runat="server" id="ecg_signature_wrapper">
+                                                                        <webUI:TextField runat="server" ID="txt_ecg_signature" TextMode="SingleLine" />
+                                                                    </div>
+                                                                </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Thông tiểu/Urine cath
@@ -1720,6 +1767,12 @@
                                                                     <asp:Label runat="server" ID="lbl_urine_cath_note"></asp:Label>
                                                                     <div runat="server" id="urine_cath_note_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_urine_cath_note" TextMode="SingleLine" />
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <asp:Label runat="server" ID="lbl_urine_cath_signature"></asp:Label>
+                                                                    <div runat="server" id="urine_cath_signature_wrapper">
+                                                                        <webUI:TextField runat="server" ID="txt_urine_cath_signature" TextMode="SingleLine" />
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -1739,6 +1792,12 @@
                                                                     <webUI:TextField runat="server" ID="txt_splint_cast_dressing_note" TextMode="SingleLine" />
                                                                     </div>
                                                                 </td>
+                                                                <td>
+                                                                    <asp:Label runat="server" ID="lbl_splint_cast_dressing_signature"></asp:Label>
+                                                                    <div runat="server" id="splint_cast_dressing_signature_wrapper">
+                                                                        <webUI:TextField runat="server" ID="txt_splint_cast_dressing_signature" TextMode="SingleLine" />
+                                                                    </div>
+                                                                </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Khác/Others
@@ -1753,6 +1812,12 @@
                                                                     <asp:Label runat="server" ID="lbl_procedure_other_note"></asp:Label>
                                                                     <div runat="server" id="procedure_other_note_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_procedure_other_note" TextMode="SingleLine" />
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <asp:Label runat="server" ID="lbl_procedure_other_signature"></asp:Label>
+                                                                    <div runat="server" id="procedure_other_signature_wrapper">
+                                                                        <webUI:TextField runat="server" ID="txt_procedure_other_signature" TextMode="SingleLine" />
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -2076,7 +2141,7 @@
 
                                             <fieldset class="row mb-2">
                                                 <label class="col-md-12 control-label mb-2">PHIẾU GHI CHÚ ĐIỀU DƯỠNG/ <span class="text-primary">NURSING NOTES</span></label>
-                                                <div class="col-md-12">
+                                                <div class="col-md-12" style="overflow-x: scroll">
                                                     <asp:UpdatePanel ID="updatePanel_NursingNotes" runat="server" UpdateMode="Always">
                                                         <ContentTemplate>
                                                             <asp:GridView ID="grid_NursingNotes" runat="server" OnRowDeleting="grid_NursingNotes_RowDeleting" OnRowDataBound="gridAssessmentSystem_RowDataBound" ShowHeaderWhenEmpty="true" ShowHeader="true" CssClass="tb-responsive table-bordered" AutoGenerateColumns="false">
@@ -2097,6 +2162,14 @@
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <webUI:TextField Value='<%#Eval("patient_condition") %>' ID="patient_condition" runat="server" TextMode="SingleLine" />
+                                                                        </ItemTemplate>
+                                                                    </asp:TemplateField>
+                                                                    <asp:TemplateField>
+                                                                        <HeaderTemplate>
+                                                                            <div style="width: 300px">Can thiệp điều dưỡng/ <span class="text-primary">Nursing Intervention</span></div>
+                                                                        </HeaderTemplate>
+                                                                        <ItemTemplate>
+                                                                            <webUI:TextField Value='<%#Eval("nursing_intervention") %>' ID="nursing_intervention" runat="server" TextMode="SingleLine" />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>

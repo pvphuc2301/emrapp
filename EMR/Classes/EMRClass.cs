@@ -286,6 +286,8 @@ namespace EMR
         public dynamic respiratory { get; set; }
         public dynamic rhythm_regular { get; set; }
         public dynamic rhythm_inregular { get; set; }
+        public dynamic rhythm_cardiac_arrest { get; set; } //updated 01/12/21 by Ken
+        public dynamic rhythm_chest_pain { get; set; } //updated 01/12/21 by Ken
         public dynamic rhythm_others { get; set; }
         public dynamic rhythm_str_others { get; set; }
         public dynamic psychosocial { get; set; }
@@ -320,10 +322,16 @@ namespace EMR
         public dynamic direct_medication { get; set; }
         public dynamic assessment_system { get; set; }
         public dynamic nursing_note { get; set; }
+        public dynamic room_number { get; set; }
+        public dynamic time_of_assessment { get; set; }
         public dynamic status { get; set; }
         public dynamic user_name { get; set; }
         public dynamic skin_anno_data { get; set; }
-
+        public dynamic blood_glucose_signature { get; set; }//updated 22/12/21 by Ken
+        public dynamic ecg_signature { get; set; }//updated 22/12/21 by Ken
+        public dynamic urine_cath_signature { get; set; }//updated 22/12/21 by Ken
+        public dynamic splint_cast_dressing_signature { get; set; }//updated 22/12/21 by Ken
+        public dynamic procedure_other_signature { get; set; }//updated 22/12/21 by Ken
 
         #endregion
 
@@ -346,6 +354,7 @@ namespace EMR
             { "id", "" },
             { "date_time", "DateTime" },
             { "patient_condition", "" },
+            { "nursing_intervention", "" },
             { "signature_name", "" },
         };
         public static Dictionary<string, string> ASSESSMENT_SYSTEM_COL = new Dictionary<string, string>()
@@ -522,6 +531,8 @@ namespace EMR
   dynamic respiratory,
   dynamic rhythm_regular,
   dynamic rhythm_inregular,
+  dynamic rhythm_cardiac_arrest, //updated 01/12/21 by Ken
+  dynamic rhythm_chest_pain, //updated 01/12/21 by Ken
   dynamic rhythm_others,
   dynamic rhythm_str_others,
   dynamic psychosocial,
@@ -556,7 +567,14 @@ namespace EMR
   dynamic direct_medication,
   dynamic assessment_system,
   dynamic nursing_note,
-  dynamic skin_anno_data
+  dynamic room_number,
+  dynamic time_of_assessment,
+  dynamic skin_anno_data,
+  dynamic blood_glucose_signature,//updated 22/12/21 by Ken
+  dynamic ecg_signature,//updated 22/12/21 by Ken
+  dynamic urine_cath_signature,//updated 22/12/21 by Ken
+  dynamic splint_cast_dressing_signature,//updated 22/12/21 by Ken
+  dynamic procedure_other_signature//updated 22/12/21 by Ken
         )
         {
             this.document_id = document_id;
@@ -617,6 +635,8 @@ namespace EMR
             this.respiratory = respiratory;
             this.rhythm_regular = rhythm_regular;
             this.rhythm_inregular = rhythm_inregular;
+            this.rhythm_cardiac_arrest = rhythm_cardiac_arrest; //updated 01/12/21 by Ken
+            this.rhythm_chest_pain = rhythm_chest_pain; //updated 01/12/21 by Ken
             this.rhythm_others = rhythm_others;
             this.rhythm_str_others = rhythm_str_others;
             this.psychosocial = psychosocial;
@@ -651,8 +671,15 @@ namespace EMR
             this.direct_medication = direct_medication;
             this.assessment_system = assessment_system;
             this.nursing_note = nursing_note;
+            this.room_number = room_number;
+            this.time_of_assessment = time_of_assessment;
             this.skin_anno_data = skin_anno_data;
-    }
+            this.blood_glucose_signature = blood_glucose_signature;//updated 22/12/21 by Ken
+            this.ecg_signature = ecg_signature;//updated 22/12/21 by Ken
+            this.urine_cath_signature = urine_cath_signature;//updated 22/12/21 by Ken
+            this.splint_cast_dressing_signature = splint_cast_dressing_signature;//updated 22/12/21 by Ken
+            this.procedure_other_signature = procedure_other_signature;//updated 22/12/21 by Ken
+        }
         public static DataTable Logs(string document_id, string loc)
         {
             dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");

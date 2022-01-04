@@ -27,6 +27,8 @@
 <body>
     <form id="form1" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
+        <asp:HiddenField runat="server" ID="hf_primary_visible_patient_id" />
+        <asp:Label runat="server" ID="lbl_primary_visible_patient_id" />
         <div style="overflow-x: hidden; overflow-y: scroll; height: calc(100vh - 52px);">
             
             <asp:UpdatePanel ID="updatePanel_demographicSearch" runat="server" UpdateMode="Always">
@@ -117,14 +119,10 @@
                                 <p>
                                     Select PID <asp:Label runat="server" ID="lbl_visit_type"></asp:Label>
                                 </p>
-                                <telerik:RadGrid OnItemCommand="radGridPidList_ItemCommand" CssClass="table" BorderWidth="0" AutoGenerateColumns="false" ShowHeader="false"
-                                    ID="radGridPidList" runat="server"
-                                     >
+                                <telerik:RadGrid OnItemCommand="radGridPidList_ItemCommand" CssClass="table" BorderWidth="0" AutoGenerateColumns="false" ShowHeader="false" ID="radGridPidList" runat="server">
                                     <MasterTableView DataKeyNames="patient_id,visible_patient_id">
                                         <Columns>
-                                            <telerik:GridBoundColumn Visible="false"
-                                                SortExpression="patient_id" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" DataField="patient_id" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true">
-                                            </telerik:GridBoundColumn>
+                                            <telerik:GridBoundColumn Visible="false" SortExpression="patient_id" ItemStyle-Wrap="false" HeaderStyle-Wrap="false" DataField="patient_id" HeaderStyle-ForeColor="#457" CurrentFilterFunction="Contains" FilterDelay="4000" ShowFilterIcon="true" FooterStyle-Font-Bold="true"/>
                                             <telerik:GridTemplateColumn SortExpression="visible_patient_id" DataField="visible_patient_id">
                                                 <ItemTemplate>
                                                     <asp:LinkButton runat="server" CommandName="selectPID"><%# Eval("visible_patient_id") %></asp:LinkButton>

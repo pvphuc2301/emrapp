@@ -87,8 +87,17 @@ namespace EMR
                     BindingDataForm(mc, WebHelpers.LoadFormControl(form1, mc, ControlState.Edit, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
                 }
 
-                WebHelpers.getAccessButtons(form1, mc.status, (string)Session["access_authorize"], loc == locChanged, varDocIdLog != null);
-                
+                //WebHelpers.getAccessButtons(form1, mc.status, (string)Session["access_authorize"], loc == locChanged, varDocIdLog != null);
+
+                WebHelpers.getAccessButtons(new Model.AccessButtonInfo() { 
+                    Form = form1, 
+                    DocStatus = mc.status,
+                    AccessGroup = (string)Session["group_access"],
+                    AccessAuthorize = (string)Session["access_authorize"],
+                    IsSameCompanyCode = loc == locChanged,
+                    IsViewLog = varDocIdLog != null
+                });
+
                 if (btnPrint.Visible)
                 {
                     BindingDataFormPrint(mc);
@@ -253,6 +262,7 @@ namespace EMR
             try
             {
                 dynamic result = MC.Delete((string)Session["UserID"], Request.QueryString["docid"], loc)[0];
+                
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
                     WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);

@@ -173,6 +173,7 @@
     <Content Include="BarcodeLib.dll" />
     <Content Include="Dashboard.aspx" />
     <Content Include="DashboardTest.aspx" />
+    <Content Include="DBP\OPD\OutPatMedRec.aspx" />
     <Content Include="Emr.aspx" />
     <Content Include="emrbyvisit\opdTab.aspx" />
     <Content Include="emr\emrinfor.aspx" />
@@ -186,15 +187,19 @@
     <Content Include="icons\GeoAlt.ascx" />
     <Content Include="icons\Pencil.ascx" />
     <Content Include="icons\X.ascx" />
+    <Content Include="images\2021-12-27_14-08-55.png" />
     <Content Include="images\admin-with-cogwheels.png" />
     <Content Include="images\aih.ico" />
     <Content Include="images\AIH_PI_FULL - Copy.png" />
     <Content Include="images\ExcellentCare.png" />
+    <Content Include="images\Footer.jpg" />
+    <Content Include="images\Image-1.jpg" />
     <Content Include="images\logo-opacity.png" />
     <Content Include="images\PaintAssess.png" />
     <Content Include="images\prt_header.png" />
     <Content Include="IPD\ObsGynIniAss.aspx" />
     <Content Include="IPD\SurgicalReport.aspx" />
+    <Content Include="OPD\OutPatIniNurAss_v1.aspx" />
     <Content Include="Other\FormMenu.aspx" />
     <Content Include="Other\Test.aspx" />
     <Content Include="Phar\medicalAdRec.aspx" />
@@ -357,6 +362,13 @@
     <Compile Include="DashboardTest.aspx.designer.cs">
       <DependentUpon>DashboardTest.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DBP\OPD\OutPatMedRec.aspx.cs">
+      <DependentUpon>OutPatMedRec.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DBP\OPD\OutPatMedRec.aspx.designer.cs">
+      <DependentUpon>OutPatMedRec.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Emr.aspx.cs">
       <DependentUpon>Emr.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -434,8 +446,16 @@
     <Compile Include="IPD\SurgicalReport.aspx.designer.cs">
       <DependentUpon>SurgicalReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Model\AccessButtonInfo.cs" />
     <Compile Include="Model\PatientHistoryVm.cs" />
     <Compile Include="Model\sendRequestVm.cs" />
+    <Compile Include="OPD\OutPatIniNurAss_v1.aspx.cs">
+      <DependentUpon>OutPatIniNurAss_v1.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPD\OutPatIniNurAss_v1.aspx.designer.cs">
+      <DependentUpon>OutPatIniNurAss_v1.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Other\FormMenu.aspx.cs">
       <DependentUpon>FormMenu.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
