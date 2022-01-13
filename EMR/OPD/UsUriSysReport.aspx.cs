@@ -239,7 +239,17 @@ namespace EMR
                     BindingDataForm(uusr, WebHelpers.LoadFormControl(form2, uusr, ControlState.Edit, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
                 }
 
-                WebHelpers.getAccessButtons(form2, uusr.status, (string)Session["access_authorize"], loc == locChanged, varDocIdLog != null);
+                //WebHelpers.getAccessButtons(form2, uusr.status, (string)Session["access_authorize"], loc == locChanged, varDocIdLog != null);
+
+                WebHelpers.getAccessButtons(new Model.AccessButtonInfo()
+                {
+                    Form = form2,
+                    DocStatus = uusr.status,
+                    AccessGroup = (string)Session["group_access"],
+                    AccessAuthorize = (string)Session["access_authorize"],
+                    IsSameCompanyCode = loc == locChanged,
+                    IsViewLog = varDocIdLog != null
+                });
             }
             catch (Exception ex)
             {

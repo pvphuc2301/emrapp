@@ -1284,6 +1284,7 @@ namespace EMR.ER
 
                 if (emr.status == DocumentStatus.FINAL)
                 {
+
                     BindingDataForm(emr, WebHelpers.LoadFormControl(form1, emr, ControlState.View, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
                     
                     BindingDataFormPrint(emr);
@@ -1293,7 +1294,17 @@ namespace EMR.ER
                     BindingDataForm(emr, WebHelpers.LoadFormControl(form1, emr, ControlState.Edit, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
                 }
 
-                WebHelpers.getAccessButtons(form1, emr.status, (string)Session["access_authorize"], loc == locChanged, varDocIdLog != null);
+                //WebHelpers.getAccessButtons(form1, emr.status, (string)Session["access_authorize"], loc == locChanged, varDocIdLog != null);
+
+                WebHelpers.getAccessButtons(new Model.AccessButtonInfo()
+                {
+                    Form = form1,
+                    DocStatus = emr.status,
+                    AccessGroup = (string)Session["group_access"],
+                    AccessAuthorize = (string)Session["access_authorize"],
+                    IsSameCompanyCode = loc == locChanged,
+                    IsViewLog = varDocIdLog != null
+                });
             }
             catch (Exception ex)
             {

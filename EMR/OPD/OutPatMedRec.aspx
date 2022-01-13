@@ -64,7 +64,7 @@
                         <tbody class="report-content">
                             <tr>
                                 <td class="report-content-cell">
-                                    <div style="position: relative;"  class="main" runat="server" id="print_content">
+                                    <div style="position: relative;" class="main" runat="server" id="print_content">
                                         <img style="height: 1px" src="../images/logo-opacity.png" />
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; margin-bottom: 6px;">

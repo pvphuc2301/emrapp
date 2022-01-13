@@ -170,12 +170,13 @@
                         </li>
 
                         <li class="nav-item dropdown">
-                            <a class="nav-link btn-link  waves-effect waves-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="text-primary"><icon:GeoAlt runat="server" ID="GeoAlt" /></span>
+                            <%--<a class="nav-link btn-link  waves-effect waves-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--%>
+                            <a class="nav-link btn-link  waves-effect waves-primary">
+                                <%--<span class="text-primary"><icon:GeoAlt runat="server" ID="GeoAlt" /></span>--%>
                                 <asp:Label runat="server" ID="lbl_location"></asp:Label>
                             </a>
 
-                            <div class="dropdown-menu dropdown-menu-right animated flipInY" aria-labelledby="btnGroupDrop1">
+                            <%--<div class="dropdown-menu dropdown-menu-right animated flipInY" aria-labelledby="btnGroupDrop1">
                                 <a runat="server" onclick="__doPostBack('location_Change', 'AIH')" id="location_aih" class="dropdown-item disabled" href="javascript:void(0)">
                                     AIH
                                 </a>
@@ -183,7 +184,7 @@
                                 <a runat="server" onclick="__doPostBack('location_Change', 'CLI')" id="location_cli" class="dropdown-item disabled" href="#">
                                     CLI
                                 </a>
-                            </div>
+                            </div>--%>
                         </li>
                         
                         <li class="nav-item dropdown">

@@ -195,15 +195,6 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl pidList;
 
         /// <summary>
-        /// GeoAlt control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UserControl GeoAlt;
-
-        /// <summary>
         /// lbl_location control.
         /// </summary>
         /// <remarks>
@@ -211,24 +202,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lbl_location;
-
-        /// <summary>
-        /// location_aih control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor location_aih;
-
-        /// <summary>
-        /// location_cli control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor location_cli;
 
         /// <summary>
         /// linkMail control.

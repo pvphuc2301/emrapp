@@ -1729,9 +1729,19 @@ namespace EMR
                     BindingDataForm(iina, WebHelpers.LoadFormControl(form1, iina, ControlState.Edit, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
                 }
 
-                WebHelpers.getAccessButtons(form1, iina.status, (string)Session["access_authorize"], loc == locChanged, varDocIdLog != null);
+                //WebHelpers.getAccessButtons(form1, iina.status, (string)Session["access_authorize"], loc == locChanged, varDocIdLog != null);
 
                 final_screening_field.Visible = ShowFinalScreening(iina);
+
+                WebHelpers.getAccessButtons(new Model.AccessButtonInfo()
+                {
+                    Form = form1,
+                    DocStatus = iina.status,
+                    AccessGroup = (string)Session["group_access"],
+                    AccessAuthorize = (string)Session["access_authorize"],
+                    IsSameCompanyCode = loc == locChanged,
+                    IsViewLog = varDocIdLog != null
+                });
             }
             catch (Exception ex)
             {

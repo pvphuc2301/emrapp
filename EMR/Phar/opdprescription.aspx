@@ -177,100 +177,98 @@
         </tfoot>
     </table>
     <header id="pageHeader">
-        
-    <div id="header">
+        <div id="header">
 			<div class="row">
-				<div class="column1">
-					<div>
+				<div class="column1" runat="server" id="header_wrapper">
+                    <%--<div>
 						<img alt="" src="../images/AIH_PI_FULL.png" style="height: auto; width: 202px;" />
 					</div>
 					<div style="font-size:smaller; position: relative; top: -10px">
                         <label>06 Bac Nam Street, An Phu Ward, District 2, HCMC</label>						
-					</div>
+					</div>--%>
 				</div>
-			  <div class="column2">
+			    <div class="column2">
 					<table class="tblHeader" style="font-size:12px">
-					<tr>
-						<td>Họ và tên/ Full Name:</td>
-						<td colspan="3">
-							<asp:Label ID="lbFullName" runat="server" Font-Bold="true"></asp:Label>                            
-						</td>
-					</tr>
-					  
-					  <tr>
-						<td style="width:25%"><label>Mã số bệnh nhân/ PID:</label></td>
-						<td style="width:25%;"><asp:Label ID="lbPID" runat="server" Font-Bold="true"></asp:Label></td>
-						<td style="width:25%">Giới tính/ Sex:</td>
-						<td style="width:25%"><asp:Label ID="lbSex" runat="server"></asp:Label></td>
-					  </tr>
-					  <tr>
-						<td><label>Ngày sinh/ Birth of Date:</label></td>
-						<td><asp:Label ID="lbBirthday" runat="server"></asp:Label></td>
-						<td>Tuổi/ Age:</td>
-						<td><asp:Label ID="lbAge" runat="server"></asp:Label></td>
-					  </tr>
-					  <tr>
-						<td><label>Chiều cao/ Height:</label></td>
-						<td><asp:Label ID="lbHeight" runat="server"></asp:Label></td>
-						<td>Cân nặng/ Weight:</td>
-						<td><asp:Label ID="lbWeight" runat="server"></asp:Label></td>
-					  </tr>
-					  <tr>
-						<td><label>Ngày khám/ Exam. Date:</label></td>
-						<td><asp:Label ID="lbVisitDate" runat="server"></asp:Label></td>
-						<td>Khoa/ Department:</td>
-						<td><asp:Label ID="lbSpecialty" runat="server"></asp:Label></td>
-					  </tr>
-					  <tr>
-						<td><label>Bảo hiểm/ Insurance:</label></td>
-                          <td></td>
-						<td>
-                            <asp:label id="lbGuardianText" runat="server" visible="false" Text="Người giám hộ/Guardian:"></asp:label>
-						</td>
-                          <td>
-                              <asp:Label ID="lbGuardian" runat="server" Visible="false"></asp:Label>                              
-                          </td>
-					</tr>
-					<tr>
-						<td><label>Địa chỉ/ Address:</label></td>
-						<td colspan="3"><asp:Label ID="lbAddress" runat="server"></asp:Label></td>
-					</tr>
-					</table>
-			  </div>
-			</div>	
+					    <tr>
+						    <td>Họ và tên/ Full Name:</td>
+						    <td colspan="3">
+							    <asp:Label ID="lbFullName" runat="server" Font-Bold="true"></asp:Label>                            
+						    </td>
+					    </tr>
+					      <tr>
+						    <td style="width:25%"><label>Mã số bệnh nhân/ PID:</label></td>
+						    <td style="width:25%;"><asp:Label ID="lbPID" runat="server" Font-Bold="true"></asp:Label></td>
+						    <td style="width:25%">Giới tính/ Sex:</td>
+						    <td style="width:25%"><asp:Label ID="lbSex" runat="server"></asp:Label></td>
+					      </tr>
+					      <tr>
+						    <td><label>Ngày sinh/ Birth of Date:</label></td>
+						    <td><asp:Label ID="lbBirthday" runat="server"></asp:Label></td>
+						    <td>Tuổi/ Age:</td>
+						    <td><asp:Label ID="lbAge" runat="server"></asp:Label></td>
+					      </tr>
+					      <tr>
+						    <td><label>Chiều cao/ Height:</label></td>
+						    <td><asp:Label ID="lbHeight" runat="server"></asp:Label></td>
+						    <td>Cân nặng/ Weight:</td>
+						    <td><asp:Label ID="lbWeight" runat="server"></asp:Label></td>
+					      </tr>
+					      <tr>
+						    <td><label>Ngày khám/ Exam. Date:</label></td>
+						    <td><asp:Label ID="lbVisitDate" runat="server"></asp:Label></td>
+						    <td>Khoa/ Department:</td>
+						    <td><asp:Label ID="lbSpecialty" runat="server"></asp:Label></td>
+					      </tr>
+					      <tr>
+						    <td><label>Bảo hiểm/ Insurance:</label></td>
+                              <td></td>
+						    <td>
+                                <asp:label id="lbGuardianText" runat="server" visible="false" Text="Người giám hộ/Guardian:"></asp:label>
+						    </td>
+                              <td>
+                                  <asp:Label ID="lbGuardian" runat="server" Visible="false"></asp:Label>                              
+                              </td>
+					    </tr>
+					    <tr>
+						    <td><label>Địa chỉ/ Address:</label></td>
+						    <td colspan="3"><asp:Label ID="lbAddress" runat="server"></asp:Label></td>
+					    </tr>
+				    </table>
+			    </div>
+	        </div>	
         </div>
-<div style="background-color:white">
-        <div style="text-align:center">
-            <h2 id="lbDT" runat="server" style="margin: 0;" visible="true">ĐƠN THUỐC / PRESCRIPTION</h2>
-            <h2 id="lbTV" runat="server" style="margin: 0;" visible="false">PHIẾU TƯ VẤN / CONSULTANCE NOTES</h2>
-        </div>
-		<div class="row">
-			<div style="font-size:small">
-					<label>DỊ ỨNG/ ALLERGY:</label>
-                <asp:Label ID="lbAllergy" runat="server" Font-Bold="false"></asp:Label>
-			</div>
-		</div>
-		<div class="row">
-			<div style="font-size:small">
-                <telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel1">
-                <label>CHẨN ĐOÁN/ DIAGNOSIS:</label>
-                <asp:Label ID="lbDianosis" runat="server" Font-Bold="false" Visible="true"></asp:Label>                                
-                    <asp:Label ID="Label1" runat="server" Font-Bold="false" Visible="false"></asp:Label>
-                    <div class="cssclsNoPrint">
-                        <div id="PrevireDiv" runat="server" style="position: relative; float: left; padding-right: 20px;padding-left: 0px;"> 
-                        <telerik:RadComboBox ID="rcbMyList1" runat="server" RenderMode="Lightweight" CssClass="cssclsNoPrint" 
-                            DataTextField="diagnosis" DataValueField="diagnosis" Width="400" >  
-                            <ItemTemplate> 
-                                <asp:CheckBox ID="CheckBox1" runat="server" Text='<%# Eval("diagnosis") %>' CssClass="cssclsNoPrint" /> 
-                            </ItemTemplate> 
-                            <CollapseAnimation Type="OutQuint" Duration="200"></CollapseAnimation> 
-                        </telerik:RadComboBox>
-                        <asp:Button ID="ButtonT" runat="server" Text="GetValues" OnClick="ButtonGetValue_Click" CssClass="cssclsNoPrint" />
-                    </div>                
-</div>                                                                 
+        <div style="background-color:white; margin-top: 5px;">
+            <div style="text-align:center">
+                <h2 id="lbDT" runat="server" style="margin: 0;" visible="true">ĐƠN THUỐC / PRESCRIPTION</h2>
+                <h2 id="lbTV" runat="server" style="margin: 0;" visible="false">PHIẾU TƯ VẤN / CONSULTANCE NOTES</h2>
+            </div>
+		    <div class="row">
+			    <div style="font-size:small">
+					    <label>DỊ ỨNG/ ALLERGY:</label>
+                    <asp:Label ID="lbAllergy" runat="server" Font-Bold="false"></asp:Label>
+			    </div>
+		    </div>
+		    <div class="row">
+			    <div style="font-size:small">
+                    <telerik:RadAjaxPanel runat="server" ID="RadAjaxPanel1">
+                    <label>CHẨN ĐOÁN/ DIAGNOSIS:</label>
+                    <asp:Label ID="lbDianosis" runat="server" Font-Bold="false" Visible="true"></asp:Label>                                
+                        <asp:Label ID="Label1" runat="server" Font-Bold="false" Visible="false"></asp:Label>
+                        <div class="cssclsNoPrint">
+                            <div id="PrevireDiv" runat="server" style="position: relative; float: left; padding-right: 20px;padding-left: 0px;"> 
+                                <telerik:RadComboBox ID="rcbMyList1" runat="server" RenderMode="Lightweight" CssClass="cssclsNoPrint" 
+                                    DataTextField="diagnosis" DataValueField="diagnosis" Width="400" >  
+                                    <ItemTemplate> 
+                                        <asp:CheckBox ID="CheckBox1" runat="server" Text='<%# Eval("diagnosis") %>' CssClass="cssclsNoPrint" /> 
+                                    </ItemTemplate> 
+                                    <CollapseAnimation Type="OutQuint" Duration="200"></CollapseAnimation> 
+                                </telerik:RadComboBox>
+                                <asp:Button ID="ButtonT" runat="server" Text="GetValues" OnClick="ButtonGetValue_Click" CssClass="cssclsNoPrint" />
+                            </div>
+                        </div>                                                                 
                     </telerik:RadAjaxPanel>
-			</div>	
-<div id="Div1" runat="server" style="position: relative; float: left; padding-right: 0px;padding-left: 100px;">
+			    </div>	
+                <div id="Div1" runat="server" style="position: relative; float: left; padding-right: 0px;padding-left: 100px;">
                     <button onclick="javascript:window.print()" class="cssclsNoPrint" style="width:150px">Print</button>
                 </div>
                 <div id="Div2" runat="server" style="position: relative; float: left; padding-right: 0px;padding-left: 60px;">
@@ -280,9 +278,9 @@
                 <div id="Div3" runat="server" style="position: relative; float: left; padding-right: 0px;padding-left: 60px;">
                     <asp:Button runat="server" ID="PrintTV" Text="Xem phiếu tư vấn" CssClass="cssclsNoPrint"
                         OnClick="cmd_PrintTV_Click" Width="150px" Visible="false" />
-</div>            		
-		</div> 
-</div>        
+                </div>
+		    </div> 
+        </div>
     </header>
     <footer id="pageFooter">
         <table class="tbFooter" style="width:100%; font-size:small; border-collapse:collapse" >

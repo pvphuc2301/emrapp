@@ -397,15 +397,27 @@ namespace EMR
                         patientVisitInfo = new PatientVisitInfo(e.Node.Attributes["patient_visit_id"], loc);
                         TempDocId.Value = docid;
                         TempDocName.Value = e.Node.Text;
-                        MainContent.ContentUrl = $"/{data.url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}&pvid={patientVisitInfo.patient_visit_id}&loc={loc}";
+
+                        switch (loc)
+                        {
+                            case "AIH":
+                                MainContent.ContentUrl = $"/{data.url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}&pvid={patientVisitInfo.patient_visit_id}&loc={loc}";
+                                break;
+                            case "CLI":
+                                MainContent.ContentUrl = $"/DBP/{data.url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}&pvid={patientVisitInfo.patient_visit_id}&loc={loc}";
+                                break;
+                        }
 
                         //return string.Format("/{0}?modelId={1}&docId={2}&pId={3}&vpId={4}", data.url, varModelID, varDocID, varPID, varVPID);
+
                     }
                 }
                 else
                 {
                     MainContent.ContentUrl = $"index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}";
                 }
+
+                
             }
         }
 

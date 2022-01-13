@@ -46,6 +46,16 @@ namespace EMR.Print
                     PrintDT.Visible = true;
                 }
             }
+
+            switch (loc)
+            {
+                case "AIH":
+                    header_wrapper.InnerHtml = "<div><img src=\"../images/AIH_PI_FULL.png\" style=\"height: auto; width: 202px;\" /></div><div style=\"font-size:smaller; position: relative; top: -10px\"><label>06 Bac Nam Street, An Phu Ward, District 2, HCMC</label></div>";
+                    break;
+                case "CLI":
+                    header_wrapper.InnerHtml = "<div><img src=\"../images/DBP/AIH_CLINIC_logo_final_02.png\" style=\"height: auto; width: 202px; margin-bottom: 10px\" /></div><div style=\"font-size:smaller; position: relative; top: -10px\"><label style=\"font-weight: 500;\">Địa chỉ/Address: 79, Dien Bien Phu St., Da Kao Ward, Dist.1, HCMC</label></div>";
+                    break;
+            }
         }
 
         protected void RadGrid1_NeedDataSource(object source, Telerik.Web.UI.GridNeedDataSourceEventArgs e)

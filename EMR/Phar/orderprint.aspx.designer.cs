@@ -78,13 +78,13 @@ namespace EMR
         protected global::Telerik.Web.UI.RadGrid RadGrid1;
 
         /// <summary>
-        /// pageHeader control.
+        /// header_wrapper control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl pageHeader;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl header_wrapper;
 
         /// <summary>
         /// PID_BarCode control.

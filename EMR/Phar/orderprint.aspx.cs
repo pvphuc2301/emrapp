@@ -30,6 +30,7 @@ namespace EMR
         public string ConnStringHIS = ""; string ConnStringMISPro = "";
         public string PID = "";string orderGroupID = ""; string orderNo = ""; string visibleID = ""; string UserID = "";
         public bool ShowAll = false; bool ShowLAB = false; bool ShowRAD = false; bool ShowOther = false;
+        public string loc { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             ConnClass ConnStr = new ConnClass();
@@ -43,9 +44,33 @@ namespace EMR
             orderGroupID = Request.QueryString["ordid"];// "111534";         
             orderNo = Request.QueryString["ordno"];// "111534";         
 
-            gen_BarCode(visibleID, "PID");            
+            gen_BarCode(visibleID, "PID");
             gen_BarCode(orderNo, "LAB");
             LoadPatientInfomation(PID);
+
+            loc = (string)Session["company_code"];
+            string address = "";
+            
+            switch (loc)
+            {
+                case "AIH":
+                    address += "<div><div style=\"float: left;width: 28%;text-align:center;border: 1pt;font-style: italic;\">"+
+                        "<img src=\"../images/AIH_Logo.jpg\" style=\"height: 80px; width: auto;\" /></div>" +
+                        "<div style=\"float: left;width: 72%;\"><label style=\"font-size:large; text-align:left\">BỆNH VIỆN QUỐC TẾ MỸ<br />AMERICAN INTERNATIONAL HOSPITAL</label>" +
+                        "<br /><label style=\"font-weight:normal; font-size:smaller; text-align:left\">Địa chỉ/ Add: Số 06 đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM, Việt Nam" +
+                        "<br />Điện thoại/ Tel: (028) 3910 9999 Fax: (028) 3910 9999 Hotline: (028) 3910 9999 Emergency: (028) 3910 9999</label><br /><br /></div></div>";
+                    break;
+                case "CLI":
+                    address = "<div><div style=\"float: left;width: 28%;text-align:center;border: 1pt;font-style: italic;\">" +
+                        "<img src=\"../images/DBP/AIH_CLINIC_logo_final_02.png\" style=\"height: 70px; width: auto;\" /></div>" +
+                        "<div style=\"float: left;width: 72%;\"><label style=\"font-size:large; text-align:left\">PHÒNG KHÁM QUỐC TẾ MỸ<br />AMERICAN INTERNATIONAL CLINIC</label>" +
+                        "<br /><label style=\"font-weight:normal; font-size:smaller; text-align:left\">Địa chỉ/ Add: 79, Dien Bien Phu St., Da Kao Ward, Dist.1, HCMC" +
+                        "<br />Điện thoại/ Tel: (028) 3910 9888</label><br /><br /></div></div>";
+                    break;
+            }
+
+            header_wrapper.InnerHtml = address;
+
             //Get_Patient_Infor(Guid.Parse(PID));//, Guid varVisitID);               
         }
         public DataTable GetDataTable(string query, string varConstr)
@@ -353,7 +378,7 @@ namespace EMR
                 lbInitDiag.Text = initDiag.Text;
                 RequiredField.Enabled = false;
                 pageHost.Attributes.Add("class", "");
-                pageHeader.Attributes.Add("class", "");
+                //pageHeader.Attributes.Add("class", "");
                 lbError.Visible = false;
             }
             else  if (!string.IsNullOrEmpty(getDiag))
@@ -362,7 +387,7 @@ namespace EMR
                 initDiag.Visible = false;
                 RequiredField.Enabled = false;
                 pageHost.Attributes.Add("class", "");
-                pageHeader.Attributes.Add("class", "");
+                //pageHeader.Attributes.Add("class", "");
                 lbError.Visible = false;
             }
             else
@@ -370,7 +395,7 @@ namespace EMR
                 initDiag.Visible = true;
                 RequiredField.Enabled = true;
                 pageHost.Attributes.Add("class", "cssclsNoPrint");
-                pageHeader.Attributes.Add("class", "cssclsNoPrint");
+                //pageHeader.Attributes.Add("class", "cssclsNoPrint");
                 lbError.Visible = true;                
 
             }

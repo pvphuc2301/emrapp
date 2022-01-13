@@ -64,15 +64,10 @@
 	        border: 1px solid #ccc;                       
 	    }
     .column1 {
-			float: left;
-			width: 28%;
-			text-align:center;
-			border: 1pt;
-			font-style: italic;
+			float: left;width: 28%;text-align:center;border: 1pt;font-style: italic;
 		}		
 		.column2 {
-			float: left;
-			width: 72%;
+			float: left;width: 72%;
 		}				
 		/* Clear floats after the columns */		
         .RadGrid_WebBlue td, .RadGrid_WebBlue th

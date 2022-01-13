@@ -1,14 +1,16 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Data;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 
-namespace EMR
+namespace EMR.DBP.OPD
 {
-    public partial class OutPathIniNurAss : System.Web.UI.Page
+    public partial class OutPatIniNurAss : System.Web.UI.Page
     {
         Oina oina;
         PatientInfo patientInfo;
@@ -38,7 +40,7 @@ namespace EMR
             loc = (string)Session["company_code"];
             locChanged = (string)Session["const_company_code"];
 
-            PAGE_URL = $"/OPD/OutPatIniNurAss.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+            PAGE_URL = $"/DBP/OPD/OutPatIniNurAss.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
             if (!IsPostBack)
             {
@@ -157,7 +159,7 @@ namespace EMR
                 txt_vs_bmi.Value = oina.vs_BMI;
                 txt_vs_spo2.Value = oina.vs_spO2;
                 txt_pulse.Value = oina.pulse;
-                
+
                 //II.
                 //1.
                 txt_chief_complaint.Value = WebHelpers.TextToHtmlTag(oina.chief_complaint);
@@ -193,7 +195,7 @@ namespace EMR
                 DataObj.Value = JsonConvert.SerializeObject(oina);
                 Session["docid"] = oina.document_id;
                 WebHelpers.AddScriptFormEdit(Page, oina, (string)Session["emp_id"], loc);
-                
+
             }
             catch (Exception ex)
             {
@@ -213,7 +215,7 @@ namespace EMR
                 lbl_chief_complaint.Text = WebHelpers.TextToHtmlTag(oina.chief_complaint);
 
                 lbl_allergy.Text = WebHelpers.GetBool(oina.allergy, $"Có, ghi rõ/ Yes, specify: {WebHelpers.TextToHtmlTag(oina.allergy_note)}");
-                
+
                 lbl_mental_status.Text = WebHelpers.GetBool(oina.mental_status, "Có/ Yes", $"Không, ghi rõ/ No, specify: {WebHelpers.TextToHtmlTag(oina.mental_status_note)}");
 
                 lbl_nutrition_status_description.Text = WebHelpers.TextToHtmlTag(oina.nutrition_status_description);
@@ -222,7 +224,7 @@ namespace EMR
                 lbl_prioritization_description.Text = WebHelpers.TextToHtmlTag(oina.prioritization_description);
                 //
                 lbl_vs_temperature.Text = oina.vs_temperature + " °C";
-                lbl_vs_heart_rate.Text =oina.vs_heart_rate + " /phút (m)";
+                lbl_vs_heart_rate.Text = oina.vs_heart_rate + " /phút (m)";
                 lbl_vs_weight.Text = oina.vs_weight + " kg";
                 lbl_vs_height.Text = oina.vs_height + " cm";
                 lbl_vs_respiratory_rate.Text = oina.vs_respiratory_rate + " / phút (min)";
@@ -233,7 +235,7 @@ namespace EMR
                 lbl_assessment_date_time.Text = WebHelpers.FormatDateTime(oina.assessment_date_time, "dd-MM-yyyy HH:mm");
 
             }
-            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
+            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
 
         }
         private void BindingDataFormPrint(Oina oina)
@@ -274,10 +276,10 @@ namespace EMR
                 prt_prioritization_code.Text = WebHelpers.TextToHtmlTag(oina.prioritization_description);
 
                 prt_signature_date.Text = "Ngày/ Date: " + signature_date;
-                prt_signature_name.Text = SignatureName;
+                //prt_signature_name.Text = SignatureName;
 
             }
-            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
+            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }
         #endregion
 
@@ -315,7 +317,8 @@ namespace EMR
 
                     Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
                 }
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
@@ -339,7 +342,7 @@ namespace EMR
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             WebHelpers.clearSessionDoc(Page, varDocID, loc);
-            
+
             Initial();
         }
 
@@ -353,7 +356,7 @@ namespace EMR
             return PAGE_URL + $"&docIdLog={doc_log_id}";
         }
         #region METHODS
-        
+
         private void UpdateData(Oina oina)
         {
             try
@@ -370,7 +373,7 @@ namespace EMR
                 //1.
                 oina.chief_complaint = txt_chief_complaint.Value;
                 //2.
-                oina.allergy = WebHelpers.GetData(form1, new HtmlInputRadioButton(),"rad_allergy_");
+                oina.allergy = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_allergy_");
                 oina.allergy_note = WebHelpers.GetBool(oina.allergy, txt_allergy_note.Value, null);
                 //3.
                 oina.mental_status = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_mental_status_");
@@ -441,7 +444,7 @@ namespace EMR
         {
             Response.Redirect(PAGE_URL);
         }
-        
+
         #endregion
 
         #region Validation
@@ -457,7 +460,7 @@ namespace EMR
         {
             args.IsValid = txt_fall_risk_assistance.Value.Length <= 256;
         }
-        
+
         protected void CustomValidatorMentalStatus_ServerValidate(object source, ServerValidateEventArgs args)
         {
             args.IsValid = rad_mental_status_true.Checked || rad_mental_status_false.Checked;

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OutPatMedRec.aspx.cs" Inherits="EMR.DBP.OPD.OutPatMedRec" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OutPatMedRec.aspx.cs" ValidateRequest="false" Inherits="EMR.DBP.OPD.OutPatMedRec" %>
 
 <%@ Register Src="~/UserControls/Alert.ascx" TagPrefix="uc1" TagName="Alert" %>
 <%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="webUI" TagName="TextField" %>
@@ -25,10 +25,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>Outpatient Medical Record</title>
-    <link href="../styles/style.css" rel="stylesheet" />
-    <link href="../styles/myStyle.css" rel="stylesheet" />
-    <link href="../styles/alertify.css" rel="stylesheet" />
-    <link href="../styles/print.css" rel="stylesheet" />
+    <link href="../../styles/style.css" rel="stylesheet" />
+    <link href="../../styles/myStyle.css" rel="stylesheet" />
+    <link href="../../styles/alertify.css" rel="stylesheet" />
+    <link href="../../styles/print.css" rel="stylesheet" />
+    <style>
+        @media print {
+            .watermark {
+                background-image: none !important;
+            }
+        }
+    </style>
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
@@ -41,17 +48,17 @@
                             <tr>
                                 <th class="report-header-cell">
                                     <div class="header-info" style="display: flex; align-items: center; height: 80px;">
-                                        <img style="width: 200px" src="../images/AIH_PI_FULL.png" />
+                                        <img style="width: 200px" src="../../images/DBP/AIH_CLINIC_logo_final_02.png" />
                                         <div class="header-info-title">
                                             <h4>BỆNH ÁN NGOẠI TRÚ</h4>
                                             <h5>OUTPATIENT MEDICAL RECORD</h5>
                                         </div>
-                                        <div style="width: 120px; text-align: left; font-size: 11px">
+                                        <%--<div style="width: 120px; text-align: left; font-size: 11px">
                                             <asp:Label CssClass="d-block" runat="server" ID="prt_fullname"></asp:Label>
                                             <asp:Label class="d-block" CssClass="d-block" runat="server" ID="prt_dob"></asp:Label>
                                             <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
                                             <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
-                                        </div>
+                                        </div>--%>
                                     </div>
                                     <div style="height: 20px;">
                                         <span style="width: 190px; border-bottom-style: solid; border-bottom-color: #e20e5a; border-bottom-width: 5px; display: inline-block; font-size: 26.6667px;"></span>
@@ -65,7 +72,7 @@
                             <tr>
                                 <td class="report-content-cell">
                                     <div style="position: relative;"  class="main" runat="server" id="print_content">
-                                        <img style="height: 1px" src="../images/logo-opacity.png" />
+                                        <img style="height: 1px" src="../../images/logo-opacity.png" />
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; margin-bottom: 6px;">
                                             <webUI:PrtRowS1 FontBold="true" Title="Ngày khám bệnh" SubTitle="Day of visit" runat="server" />
@@ -241,12 +248,12 @@
                         <tfoot class="report-footer">
                             <tr>
                                 <td class="report-footer-cell">
-                                    <img style="width: 100%" src="../images/ExcellentCare.png" />
-                                    <div class="footer-info">
-                                        <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
-                                        <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>
-                                        <div>Tel: 028 3910 9999</div>
-                                        <div>www.aih.com.vn</div>
+                                    <img style="width: 100%" src="../../images/ExcellentCare.png" />
+                                    <%--<img style="width: 100%" src="../../images/ExcellentCare-removebg-preview.png" />--%>
+                                    <div class="footer-info" style="font-size: 9px">
+                                        <div style="font-weight: bold;">PHÒNG KHÁM ĐA KHOA <br />(THUỘC CÔNG TY CỔ PHẦN PHÒNG KHÁM BỆNH VIỆN QUỐC TẾ MỸ)</div>
+                                        <div>Số 79, Đường Điện Biên Phủ, Phường ĐaKao, Quận 1, Tp.HCM</div>
+                                        <div>Tel: 028 3910 9888</div>
                                     </div>
                                 </td>
                                 <td class="report-footer-space"></td>
@@ -264,9 +271,8 @@
                                         <Columns>
                                             <telerik:GridTemplateColumn>
                                                 <ItemTemplate>
-                                                    <%--<telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>--%></telerik:RadLabel>
-                                           
-                                                    <%--<asp:HyperLink CssClass="btn-link" Text="View Log" runat="server" NavigateUrl='<%# GetLogUrl(Eval("document_log_id")) %>'></asp:HyperLink>--%>
+                                                    <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>' />
+                                                    <asp:HyperLink CssClass="btn-link" Text="View Log" runat="server" NavigateUrl='<%# GetLogUrl(Eval("document_log_id")) %>' />
                                                 </ItemTemplate>
                                             </telerik:GridTemplateColumn>
                                         </Columns>
@@ -332,114 +338,114 @@
                         </asp:Panel>
 
                         <div class="row">
-    <div class="col-lg-12" id="accordionExample">
-        <div class="card">
-            <div class="card-body collapse show" id="collapsePatientInfo" aria-labelledby="headingPatientInfo">
-                <h5 class="box-title">Thông tin bệnh nhân/ Patient Detail</h5>
-                <hr style="margin: 8px 0 12px 0;" />
-                <div class="row">
-                    <div class="col-sm-6" style="display: flex">
-                        <div class="w-5 text-sm-right">
-                            <label class="control-label text-sm-right mr-3">First Name:</label>
-                        </div>
-                        <div class="flex-grow-1">
-                            <asp:Label runat="server" ID="lblFirstName" CssClass="control-label text-sm-right"></asp:Label>
-                        </div>
-                    </div>
+                            <div class="col-lg-12" id="accordionExample">
+                                <div class="card">
+                                    <div class="card-body collapse show" id="collapsePatientInfo" aria-labelledby="headingPatientInfo">
+                                        <h5 class="box-title">Thông tin bệnh nhân/ Patient Detail</h5>
+                                        <hr style="margin: 8px 0 12px 0;" />
+                                        <div class="row">
+                                            <div class="col-sm-6" style="display: flex">
+                                                <div class="w-5 text-sm-right">
+                                                    <label class="control-label text-sm-right mr-3">First Name:</label>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <asp:Label runat="server" ID="lblFirstName" CssClass="control-label text-sm-right"></asp:Label>
+                                                </div>
+                                            </div>
 
-                    <!--/span-->
-                    <div class="col-sm-6" style="display: flex">
-                        <div class="w-5 text-sm-right">
-                            <label class="control-label text-sm-right mr-3">Last Name:</label>
-                        </div>
-                        <div class="flex-grow-1">
-                            <asp:Label runat="server" ID="lblLastName" CssClass="control-label text-sm-right"></asp:Label>
-                        </div>
-                    </div>
-                </div>
-                <!--/row-->
-                <div class="row">
-                    <div class="col-sm-6" style="display: flex">
-                        <div class="w-5 text-sm-right">
-                            <label class="control-label text-sm-right mr-3">Gender:</label>
-                        </div>
-                        <div class="flex-grow-1">
-                            <asp:Label runat="server" ID="lblGender" CssClass="control-label text-sm-right"></asp:Label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6" style="display: flex">
-                        <div class="w-5 text-sm-right">
-                            <label class="control-label text-sm-right mr-3">Date of Birth:</label>
-                        </div>
-                        <div class="flex-grow-1">
-                            <asp:Label runat="server" ID="lblDoB" CssClass="control-label text-sm-right"></asp:Label>
-                        </div>
-                    </div>
-                    <!--/span-->
-                </div>
-                <!--/row-->
-                <div class="row">
-                    <div class="col-sm-6" style="display: flex">
-                        <div class="w-5 text-sm-right">
-                            <label class="control-label text-sm-right mr-3">Contact Person:</label>
-                        </div>
-                        <div class="flex-grow-1">
-                            <asp:Label runat="server" ID="lblContactPerson" CssClass="control-label text-sm-right"></asp:Label>
-                        </div>
-                    </div>
+                                            <!--/span-->
+                                            <div class="col-sm-6" style="display: flex">
+                                                <div class="w-5 text-sm-right">
+                                                    <label class="control-label text-sm-right mr-3">Last Name:</label>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <asp:Label runat="server" ID="lblLastName" CssClass="control-label text-sm-right"></asp:Label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/row-->
+                                        <div class="row">
+                                            <div class="col-sm-6" style="display: flex">
+                                                <div class="w-5 text-sm-right">
+                                                    <label class="control-label text-sm-right mr-3">Gender:</label>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <asp:Label runat="server" ID="lblGender" CssClass="control-label text-sm-right"></asp:Label>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6" style="display: flex">
+                                                <div class="w-5 text-sm-right">
+                                                    <label class="control-label text-sm-right mr-3">Date of Birth:</label>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <asp:Label runat="server" ID="lblDoB" CssClass="control-label text-sm-right"></asp:Label>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                        </div>
+                                        <!--/row-->
+                                        <div class="row">
+                                            <div class="col-sm-6" style="display: flex">
+                                                <div class="w-5 text-sm-right">
+                                                    <label class="control-label text-sm-right mr-3">Contact Person:</label>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <asp:Label runat="server" ID="lblContactPerson" CssClass="control-label text-sm-right"></asp:Label>
+                                                </div>
+                                            </div>
 
-                    <div class="col-sm-6" style="display: flex">
-                        <div class="w-5 text-sm-right">
-                            <label class="control-label text-sm-right mr-3">Relationship:</label>
+                                            <div class="col-sm-6" style="display: flex">
+                                                <div class="w-5 text-sm-right">
+                                                    <label class="control-label text-sm-right mr-3">Relationship:</label>
 
-                        </div>
-                        <div class="flex-grow-1">
-                            <asp:Label runat="server" ID="lblRelationship" CssClass="control-label text-sm-right"></asp:Label>
-                        </div>
-                    </div>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <asp:Label runat="server" ID="lblRelationship" CssClass="control-label text-sm-right"></asp:Label>
+                                                </div>
+                                            </div>
 
-                </div>
-                <!--/row-->
-                <div class="row">
-                    <div class="col-lg-6 d-sm-flex">
-                        <div class="w-5 text-sm-right">
-                            <label class="control-label text-sm-right mr-3">Address:</label>
-                        </div>
-                        <div class="flex-grow-1">
-                            <asp:Label runat="server" ID="lblPatientAddress" CssClass="control-label text-sm-right"></asp:Label>
-                        </div>
-                    </div>
-                </div>
-                <!--/row-->
-                <!--/row-->
-                <!-- Header: Patient Visit Info -->
-                <h5 class="box-title">Thông tin lần khám/ Visit Detail <span class="text-danger">*</span></h5>
-                <hr style="margin: 8px 0 12px 0;" />
+                                        </div>
+                                        <!--/row-->
+                                        <div class="row">
+                                            <div class="col-lg-6 d-sm-flex">
+                                                <div class="w-5 text-sm-right">
+                                                    <label class="control-label text-sm-right mr-3">Address:</label>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <asp:Label runat="server" ID="lblPatientAddress" CssClass="control-label text-sm-right"></asp:Label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--/row-->
+                                        <!--/row-->
+                                        <!-- Header: Patient Visit Info -->
+                                        <h5 class="box-title">Thông tin lần khám/ Visit Detail <span class="text-danger">*</span></h5>
+                                        <hr style="margin: 8px 0 12px 0;" />
 
-                <div class="row">
-                    <div class="col-sm-6" style="display: flex">
-                        <div class="w-5 text-sm-right">
-                            <label class="control-label text-sm-right mr-3">Encounter:</label>
-                        </div>
-                        <div class="flex-grow-1">
-                            <asp:Label runat="server" ID="lblVisitCode" CssClass="control-label text-sm-right"></asp:Label>
-                        </div>
-                    </div>
+                                        <div class="row">
+                                            <div class="col-sm-6" style="display: flex">
+                                                <div class="w-5 text-sm-right">
+                                                    <label class="control-label text-sm-right mr-3">Encounter:</label>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <asp:Label runat="server" ID="lblVisitCode" CssClass="control-label text-sm-right"></asp:Label>
+                                                </div>
+                                            </div>
 
-                    <div class="col-sm-6" style="display: flex">
-                        <div class="w-5 text-sm-right">
-                            <label class="control-label text-sm-right mr-3">Admit Date:</label>
+                                            <div class="col-sm-6" style="display: flex">
+                                                <div class="w-5 text-sm-right">
+                                                    <label class="control-label text-sm-right mr-3">Admit Date:</label>
+                                                </div>
+                                                <div class="flex-grow-1">
+                                                    <asp:Label runat="server" ID="lblVisitDate" CssClass="control-label text-sm-right"></asp:Label>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="flex-grow-1">
-                            <asp:Label runat="server" ID="lblVisitDate" CssClass="control-label text-sm-right"></asp:Label>
-                        </div>
-                    </div>
-                    <!--/span-->
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
                         
                         <div class="row">
                             <div class="col-lg-12">
@@ -1003,11 +1009,11 @@
         </asp:UpdatePanel>
     </form>
 
-    <script src="../scripts/jquery-3.2.1.min.js"></script>
-    <script src="../scripts/bootstrap.min.js"></script>
-    <script src="../scripts/myScript.js"></script>
-    <script src="../scripts/contenteditable.min.js"></script>
-    <script src="../scripts/alertify.js"></script>
+    <script src="../../scripts/jquery-3.2.1.min.js"></script>
+    <script src="../../scripts/bootstrap.min.js"></script>
+    <script src="../../scripts/myScript.js"></script>
+    <script src="../../scripts/contenteditable.min.js"></script>
+    <script src="../../scripts/alertify.js"></script>
 
     <script type="text/javascript">
         var elem = window.parent.parent.document.getElementById("myProgress");
@@ -1031,7 +1037,6 @@
                 document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
             }, 1000);
         }
-
 
         function UpdateNode() {
             var tree = window.parent.$find("RadTreeView1");
@@ -1062,10 +1067,11 @@
             for (let i = 1; i <= total; i++) {
                 let div = document.createElement("div");
                 div.setAttribute("class", "watermark page");
-                div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px;");
+                //div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px;");
+                div.setAttribute("style", "top: " + (1088 * (i - 1)) + "px;");
+                div.setAttribute("id", "page" + i);
                 div.setAttribute("data-page", "Page " + i + " of " + total);
                 document.getElementById("print_content").append(div);
-
             }
 
             setTimeout(() => { printContent.setAttribute("style", "display: none"); }, 100);

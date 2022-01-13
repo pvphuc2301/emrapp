@@ -459,12 +459,15 @@ namespace EMR
             switch (loc)
             {
                 case "AIH":
-                    location_cli.Visible = true;
-                    location_aih.Visible = false;
+                    lbl_location.ToolTip = "Bệnh Viện Quốc Tế Mỹ";
+                    //location_cli.Visible = true;
+                    //location_aih.Visible = false;
                     break;
                 case "CLI":
-                    location_cli.Visible = false;
-                    location_aih.Visible = true;
+                    lbl_location.ToolTip = "Phòng Khám Điện Biên Phủ";
+
+                    //location_cli.Visible = false;
+                    //location_aih.Visible = true;
                     break;
             }
         }

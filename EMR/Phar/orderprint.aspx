@@ -123,33 +123,20 @@
                     <br />Ký và ghi rõ họ tên/ Sign with full name
                     </div>
                 </td>
-            </tr>          
-        </tbody>        
-        
+            </tr>
+        </tbody>
     </table>
-    <header id="pageHeader" runat="server" class="">
-        
-        <div class="row">
-				<div class="column1">
-					<div>
-						<img alt="" src="../images/AIH_Logo.jpg" style="height: 80px; width: auto;" />
-					</div>					
-				</div>
-			  <div class="column2">
-                  <label style="font-size:large; text-align:left">BỆNH VIỆN QUỐC TẾ MỸ<br />AMERICAN INTERNATIONAL HOSPITAL</label>
-                    <br /><label style="font-weight:normal; font-size:smaller; text-align:left">Địa chỉ/ Add: Số 06 đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM, Việt Nam
-                    <br />Điện thoại/ Tel: (028) 3910 9999 Fax: (028) 3910 9999 Hotline: (028) 3910 9999 Emergency: (028) 3910 9999</label> 
-                    <br /><br />
-			  </div>
-        </div>
+    <header id="pageHeader">
+		<div runat="server" id="header_wrapper"></div>
              
-<table style="font-weight:normal; border:0; border-spacing:0; border-collapse:collapse; width:100%">
+        <table style="font-weight:normal; border:0; border-spacing:0; border-collapse:collapse; width:100%">
             <tr>
                 <td style="width:30%"><asp:PlaceHolder ID="PID_BarCode" runat="server"></asp:PlaceHolder></td>
                 <td><div align="center"><label style="font-size:large;">PHIẾU CHỈ ĐỊNH <br /><b>REQUEST ORDER</b></label></div></td>
                 <td style="width:30%"><div align="left"><asp:PlaceHolder ID="LAB_BarCode" runat="server"></asp:PlaceHolder></div></td>
             </tr>
-</table>
+        </table>
+
         <table class="tblHeader" style="font-weight:normal">            
 					<tr>
 						<td style="width:20%">Họ và tên/ Full Name:</td>
@@ -228,6 +215,7 @@
 						<td></td>
 					</tr>
 					</table>
+
     </header>    
         <asp:SqlDataSource ID="DoctorDataSource" runat="server" ConnectionString=""
         SelectCommand="SELECT employee_nr, display_name_l AS employee_name, display_name_e 

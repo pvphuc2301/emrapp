@@ -982,7 +982,16 @@ namespace EMR.IPD
                     BindingDataForm(ogia, WebHelpers.LoadFormControl(form1, ogia, ControlState.Edit, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
                 }
 
-                WebHelpers.getAccessButtons(form1, ogia.status, (string)Session["access_authorize"], loc == locChanged, varDocIdLog != null);
+                //WebHelpers.getAccessButtons(form1, ogia.status, (string)Session["access_authorize"], loc == locChanged, varDocIdLog != null);
+                WebHelpers.getAccessButtons(new Model.AccessButtonInfo()
+                {
+                    Form = form1,
+                    DocStatus = ogia.status,
+                    AccessGroup = (string)Session["group_access"],
+                    AccessAuthorize = (string)Session["access_authorize"],
+                    IsSameCompanyCode = loc == locChanged,
+                    IsViewLog = varDocIdLog != null
+                });
             }
             catch (Exception ex)
             {
