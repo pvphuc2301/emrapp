@@ -1,5 +1,4 @@
-﻿using EMR.UserControls;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,7 +11,7 @@ using Telerik.Web.UI;
 
 namespace EMR.ER
 {
-    public partial class EmerMedRec : System.Web.UI.Page
+    public partial class EmerMedRecV10 : System.Web.UI.Page
     {
         EmergencyMedicalRecord emr;
         PatientInfo patientInfo;
@@ -74,14 +73,15 @@ namespace EMR.ER
         }
         private void discharge_change(string value = "")
         {
-            if (value == "clear") { 
-                rad_discharge_True.Checked = rad_discharge_False.Checked = false; 
+            if (value == "clear")
+            {
+                rad_discharge_True.Checked = rad_discharge_False.Checked = false;
                 return;
             }
             if (string.IsNullOrEmpty(value))
             {
                 WebHelpers.VisibleControl(false, discharge_field, discharge_field1, discharge_field2);
-            } 
+            }
             else
             {
                 WebHelpers.VisibleControl(rad_discharge_True.Checked, discharge_field, discharge_field1, discharge_field2);
@@ -90,8 +90,9 @@ namespace EMR.ER
         private void specialist_opinion_change(string value = "")
         {
 
-            if (value == "clear") { 
-                rad_specialist_opinion_True.Checked = rad_specialist_opinion_False.Checked = false; 
+            if (value == "clear")
+            {
+                rad_specialist_opinion_True.Checked = rad_specialist_opinion_False.Checked = false;
                 return;
             }
             if (string.IsNullOrEmpty(value))
@@ -105,9 +106,9 @@ namespace EMR.ER
         }
         private void transfer_hospital_change(string value = "")
         {
-            if (value == "clear") 
-            { 
-                rad_transfer_hospital_True.Checked = rad_transfer_hospital_False.Checked = false; 
+            if (value == "clear")
+            {
+                rad_transfer_hospital_True.Checked = rad_transfer_hospital_False.Checked = false;
             }
             if (string.IsNullOrEmpty(value))
             {
@@ -121,7 +122,7 @@ namespace EMR.ER
         private void emergency_surgery_change(string value = "")
         {
             if (value == "clear")
-            { 
+            {
                 rad_emergency_surgery_True.Checked = rad_emergency_surgery_False.Checked = false;
                 return;
             }
@@ -137,8 +138,8 @@ namespace EMR.ER
         }
         private void hos_req_change(string value = "")
         {
-            if (value == "clear") 
-            { 
+            if (value == "clear")
+            {
                 rad_hospitalisation_required_True.Checked = rad_hospitalisation_required_False.Checked = false;
                 return;
             }
@@ -194,7 +195,7 @@ namespace EMR.ER
                 WebHelpers.BindDateTimePicker(dtpk_time_contaced, emr.time_contaced);
                 WebHelpers.BindDateTimePicker(dtpk_time_provided, emr.time_provided);
                 txt_spec_opinion_summarised.Value = emr.spec_opinion_summarised;
-                
+
                 ViewState[grid_Treatment.ID] = WebHelpers.BindingDataGridView(grid_Treatment, WebHelpers.GetJSONToDataTable(emr.treatment), EmergencyMedicalRecord.Treatment, btn_grid_Treatment_add);
 
                 ViewState[grid_progress_note.ID] = WebHelpers.BindingDataGridView(grid_progress_note, WebHelpers.GetJSONToDataTable(emr.progress_note), EmergencyMedicalRecord.ProgressNote, btn_grid_progress_note_add);
@@ -246,7 +247,7 @@ namespace EMR.ER
         {
             try
             {
-                
+
                 lbl_evaluation_time.Text = WebHelpers.FormatDateTime(emr.evaluation_time, "dd-MMM-yyyy HH:mm");
                 lbl_chief_complaint.Text = WebHelpers.FormatString(emr.chief_complaint);
                 lbl_chief_complaint_desc.Text = WebHelpers.FormatString(emr.chief_complaint_desc);
@@ -269,9 +270,9 @@ namespace EMR.ER
                 lbl_associated_conditions.Text = WebHelpers.FormatString(emr.associated_conditions);
                 lbl_comfirmed_diagnosis.Text = WebHelpers.FormatString(emr.comfirmed_diagnosis);
                 lbl_specialist_opinion.Text = WebHelpers.FormatString(WebHelpers.GetBool(emr.specialist_opinion));
-                
+
                 specialist_opinion_change(Convert.ToString(emr.specialist_opinion));
-                
+
                 lbl_name_of_specialist.Text = WebHelpers.FormatString(emr.name_of_specialist);
                 lbl_time_contaced.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(emr.time_contaced));
                 lbl_time_provided.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(emr.time_provided));
@@ -290,7 +291,7 @@ namespace EMR.ER
                 lbl_specify_care_instructions.Text = WebHelpers.FormatString(emr.specify_care_instructions);
                 lbl_discharge_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(emr.discharge_time, "dd-MMM-yyyy HH:mm"));
                 lbl_referred_to_OPD.Text = WebHelpers.FormatString(WebHelpers.GetBool(emr.referred_to_OPD, "Yes,specify/ Có, ghi rõ" + "<br/>" + WebHelpers.FormatString(emr.referred_to_OPD_text)));
-                
+
                 lbl_hospitalisation_required.Text = WebHelpers.FormatString(WebHelpers.GetBool(emr.hospitalisation_required));
                 lbl_reason.Text = WebHelpers.FormatString(emr.reason);
                 lbl_ward.Text = WebHelpers.FormatString(emr.ward);
@@ -330,7 +331,7 @@ namespace EMR.ER
                 lbl_icd_10.Text = WebHelpers.FormatString(emr.icd_10);
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
@@ -723,7 +724,7 @@ namespace EMR.ER
                 patientInfo = new PatientInfo(varPID);
 
                 div_pecialistopinion.Visible = div_discharge_field.Visible = div_hos_req_field.Visible = div_emr_sur_field.Visible = div_transfer_hos_field.Visible = false;
-        
+
                 div_pecialistopinion.Visible = div_discharge_field.Visible = div_hos_req_field.Visible = div_emr_sur_field.Visible = div_transfer_hos_field.Visible = false;
                 WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
                 prt_fullname.Text = patientInfo.FullName;
@@ -731,7 +732,7 @@ namespace EMR.ER
                 prt_vpid.Text = patientInfo.visible_patient_id;
                 prt_evaluation_time.Text = WebHelpers.FormatDateTime(emr.evaluation_time, "HH:mm");
                 //WebHelpers.FormatDateTime(emr.evaluation_time, "dd/MM/yyyy HH:mm tt");
-                
+
                 prt_chief_complaint.Text = emr.chief_complaint;
                 lbl_chief_complaint_code_R.Text = "❏";
                 lbl_chief_complaint_code_E.Text = "❏";
@@ -1152,7 +1153,7 @@ namespace EMR.ER
             }
         }
         #endregion
-        
+
         #region Events
         protected void btnComplete_Click(object sender, EventArgs e)
         {
@@ -1200,7 +1201,7 @@ namespace EMR.ER
 
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
-                
+
                 //load form control
                 WebHelpers.LoadFormControl(form1, emr, ControlState.Edit, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]);
                 //binding data
@@ -1285,7 +1286,7 @@ namespace EMR.ER
                 if (emr.status == DocumentStatus.FINAL)
                 {
                     BindingDataForm(emr, WebHelpers.LoadFormControl(form1, emr, ControlState.View, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
-                    
+
                     BindingDataFormPrint(emr);
                 }
                 else if (emr.status == DocumentStatus.DRAFT)
@@ -1294,7 +1295,7 @@ namespace EMR.ER
                 }
 
                 // WebHelpers.getAccessButtons(form1, emr.status, (string)Session["access_authorize"], loc == locChanged, varDocIdLog != null);
-                
+
                 WebHelpers.getAccessButtons(new Model.AccessButtonInfo()
                 {
                     Form = form1,
@@ -1362,7 +1363,7 @@ namespace EMR.ER
         {
             try
             {
-                
+
                 emr.evaluation_time = DataHelpers.ConvertSQLDateTime(dtpk_evaluation_time.SelectedDate);
 
                 emr.chief_complaint = txt_chief_complaint.Value;
@@ -1383,7 +1384,7 @@ namespace EMR.ER
                 }
 
                 emr.habits = JsonConvert.SerializeObject(habits);
-                
+
                 emr.home_medications = txt_home_medications.Value;
                 emr.allergies = txt_allergies.Value;
                 emr.relevant_family_history = txt_relevant_family_history.Value;

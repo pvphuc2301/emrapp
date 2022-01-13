@@ -294,7 +294,7 @@
                 </div>
                 <div class="card-body" style="padding: 0">
                     <div class="table-responsive">
-                        <telerik:RadGrid ID="RadGridHC" runat="server" Width="100%" OnNeedDataSource="RadGridHC_NeedDataSource" AllowSorting="true" AllowFilteringByColumn="false" CssClass="table" BorderWidth="0" AutoGenerateColumns="False" AllowMultiRowSelection="False" GridLines="None" EnableLinqExpressions="false" ShowFooter="false">
+                        <telerik:RadGrid ID="RadGridHC" runat="server" Width="100%" OnNeedDataSource="RadGridHC_NeedDataSource" AllowPaging="true" AllowSorting="true" AllowFilteringByColumn="false" CssClass="table" BorderWidth="0" AutoGenerateColumns="False" AllowMultiRowSelection="False" GridLines="None" EnableLinqExpressions="false" ShowFooter="false">
                             <MasterTableView DataKeyNames="visible_patient_id" AllowMultiColumnSorting="True" Width="100%" Name="Master" TableLayout="Fixed"
                                 HeaderStyle-HorizontalAlign="Left" HeaderStyle-ForeColor="#457">
                                 <Columns>

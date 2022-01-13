@@ -229,6 +229,7 @@ namespace EMR.Other
 
             return myDataTable;
         }
+
         protected void RadGridHC_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             dynamic response = WebHelpers.GetAPI("api/hck/queue/" + specialty_id);
@@ -238,7 +239,7 @@ namespace EMR.Other
             }
 
             //string TableName = RadGridHC.MasterTableView.Name;
-           // string query = GetQueryHC(specialty_id);
+            // string query = GetQueryHC(specialty_id);
 
             //if (!string.IsNullOrEmpty(query))
             //{

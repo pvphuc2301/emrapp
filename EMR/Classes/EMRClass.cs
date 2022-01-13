@@ -5257,7 +5257,15 @@ namespace EMR
         public dynamic delete_date_time { get; set; }
         public dynamic document_type_rcd { get; set; }
         public dynamic documentid { get; set; }
+        //Update V2.0
+        public dynamic infected_with_covid { get; set; }
+        public dynamic received_1_dose { get; set; }
+        public dynamic received_2_dose { get; set; }
+        public dynamic received_additional { get; set; }
+        public dynamic other_vaccinations { get; set; }
+        public dynamic not_yet_vaccinations { get; set; }
         #endregion
+
         public static Dictionary<string, string> ChiefComplaintCode = new Dictionary<string, string>()
         {
             { "R", "Resuscitation/ Hồi sức" },
@@ -5314,7 +5322,7 @@ namespace EMR
                 // this = new OutpatientMedicalRecord();
                 tbl = WebHelpers.GetJSONToDataTable(response.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                
+
             }
         }
         public EmergencyMedicalRecord(dynamic document_id, dynamic use_name)
@@ -5497,7 +5505,7 @@ namespace EMR
             {
                 tbl = WebHelpers.GetJSONToDataTable(res.Data);
                 WebHelpers.BindingDatafield(tbl, this);
-                
+
             }
         }
         public dynamic[] Update(string loc)

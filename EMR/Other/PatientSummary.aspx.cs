@@ -1,9 +1,12 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -27,7 +30,7 @@ namespace EMR
         public string varVPID = "";
         public string ConnStringEMR = "";
         PatientVisitInfo patientVisitInfo;
-
+        private ExcelPackage EXCEL_PACKAGE;
         protected string loc;
         protected string locChanged;
         protected void Page_Load(object sender, EventArgs e)
@@ -53,12 +56,23 @@ namespace EMR
                 LoadRootLAB_RAD(RadTreeView2, TreeNodeExpandMode.ServerSideCallBack);
                 LoadRootScan(RadTreeView3, TreeNodeExpandMode.ServerSideCallBack);
                 LoadRootScan(RadTreeView4, TreeNodeExpandMode.ServerSideCallBack, "/" + (string)Session["company_code"]);
-
+                
             }
 
             PostBackEvent();
 
             LeftMenuAccess();
+
+            
+        }
+
+        private void LoadEMRDoc()
+        {
+            var path = Server.MapPath("~/EMR_Doc.xlsx");
+            
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+
+            EXCEL_PACKAGE = new ExcelPackage(new FileInfo(path));
         }
 
         private void LeftMenuAccess()
@@ -268,6 +282,7 @@ namespace EMR
             }
             return mydataTable;
         }
+
         protected void RadTreeView3_NodeClick(object sender, RadTreeNodeEventArgs e)
         {
             if (e.Node.Level != 0)
@@ -289,6 +304,7 @@ namespace EMR
         {
             PopulateNodeOnDemand(e, TreeNodeExpandMode.ServerSideCallBack);
         }
+
         private DataTable GetChildNodes(string ParentID)
         {
             //DataHelpers.LoadPatientVisitInfomation(ParentID);
@@ -305,6 +321,7 @@ namespace EMR
             }
             return mydataTable;
         }
+
         public string ReturnForm_Name(object varStatus, object varFormName, object varDr, object varCreatedDateTime)
         {
             string tmp = "";
@@ -398,26 +415,57 @@ namespace EMR
                         TempDocId.Value = docid;
                         TempDocName.Value = e.Node.Text;
 
+                        string ContentUrl = "/";
+
+                        LoadEMRDoc();
+                        var version = EXCEL_PACKAGE.Workbook.Worksheets["Version"];
+
                         switch (loc)
                         {
                             case "AIH":
-                                MainContent.ContentUrl = $"/{data.url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}&pvid={patientVisitInfo.patient_visit_id}&loc={loc}";
+
+                                if (version != null)
+                                {
+                                    string version_extension = "";
+
+                                    int exrow = 1;
+
+                                    while (version.Cells["A" + exrow].Value != null)
+                                    {
+                                        if (version.Cells["A" + exrow].Value.ToString() == modelId)
+                                        {
+                                            if (version.Cells["B" + exrow].Value != null)
+                                            {
+                                                version_extension = version.Cells["B" + exrow].Value.ToString();
+                                            }
+                                        }
+                                        exrow++;
+                                    }
+
+                                    //string a = version.Cells["B2"].Value.ToString();
+                                    string ModelUrl = data.url;
+                                    var urlArr = ModelUrl.Split('.');
+
+                                    data.url = urlArr[0] + version_extension + "." + urlArr[1];
+                                }
+
                                 break;
                             case "CLI":
-                                MainContent.ContentUrl = $"/DBP/{data.url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}&pvid={patientVisitInfo.patient_visit_id}&loc={loc}";
+                                ContentUrl += "DBP/";
                                 break;
                         }
 
-                        //return string.Format("/{0}?modelId={1}&docId={2}&pId={3}&vpId={4}", data.url, varModelID, varDocID, varPID, varVPID);
+                        MainContent.ContentUrl = ContentUrl + $"{data.url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}&pvid={patientVisitInfo.patient_visit_id}&loc={loc}";
 
+                        //MainContent.ContentUrl = $"/{data.url}?modelId={modelId}&docId={docid}&pId={varPID}&vpId={varVPID}&pvid={patientVisitInfo.patient_visit_id}&loc={loc}";
+
+                        //return string.Format("/{0}?modelId={1}&docId={2}&pId={3}&vpId={4}", data.url, varModelID, varDocID, varPID, varVPID);
                     }
                 }
                 else
                 {
                     MainContent.ContentUrl = $"index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}";
                 }
-
-                
             }
         }
 

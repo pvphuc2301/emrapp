@@ -41,8 +41,8 @@ namespace EMR
     public enum ControlState { View, Edit }
     public static class WebHelpers
     {
-        //public static string URL = "http://172.16.0.88:8080/";//PRO
-        public static string URL = "http://172.16.0.78:8088/";//UAT
+        public static string URL = "http://172.16.0.88:8080/";//PRO
+        //public static string URL = "http://172.16.0.78:8088/";//UAT
 
         #region API
         public static dynamic PostAPI(string url, dynamic obj)
