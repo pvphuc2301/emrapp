@@ -61,7 +61,7 @@
                                 <icon:House runat="server" ID="House" />
                             </a>
                         </li>--%>
-                        <li class="nav-item dropdown">
+                        <%--<li class="nav-item dropdown">
                             <a class="nav-link btn-link  waves-effect waves-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                  <icon:GeoAlt runat="server" ID="GeoAlt" />
                                 <asp:Label runat="server" ID="lbl_company_code"></asp:Label>
@@ -75,7 +75,25 @@
                                     CLI
                                 </a>
                             </div>
-                        </li>
+                        </li>--%>
+
+                                    <li class="nav-item dropdown">
+                                        <%--<a class="nav-link btn-link  waves-effect waves-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--%>
+                                        <a class="nav-link btn-link  waves-effect waves-primary">
+                                            <%--<span class="text-primary"><icon:GeoAlt runat="server" ID="GeoAlt" /></span>--%>
+                                            <asp:Label runat="server" ID="lbl_location"></asp:Label>
+                                        </a>
+
+                                        <%--<div class="dropdown-menu dropdown-menu-right animated flipInY" aria-labelledby="btnGroupDrop1">
+                                            <a runat="server" onclick="__doPostBack('location_Change', 'AIH')" id="location_aih" class="dropdown-item disabled" href="javascript:void(0)">
+                                                AIH
+                                            </a>
+                                            <div class="dropdown-divider m-0"></div>
+                                            <a runat="server" onclick="__doPostBack('location_Change', 'CLI')" id="location_cli" class="dropdown-item disabled" href="#">
+                                                CLI
+                                            </a>
+                                        </div>--%>
+                                    </li>
                         
                         <li class="nav-item dropdown">
                             <a class="nav-link btn-link waves-effect waves-primary icon-badge-container" href="../other/sendlogview.aspx?view=mail" title="Mail" target="MainContent">
@@ -120,7 +138,8 @@
                                     LOGOUT
                                 </a>
                                 <div class="text-center">
-                                    <img width="150" src="../images/AIH_PI_FULL.png" alt="homepage" class="dark-logo" />
+                                    <asp:Image Width="150" runat="server" ID="ImgSite" />
+                                    <%--<img width="150" src="../images/AIH_PI_FULL.png" alt="homepage" class="dark-logo" />--%>
                                 </div>
                             </div>
                         </li>

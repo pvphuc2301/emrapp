@@ -42,40 +42,13 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl header;
 
         /// <summary>
-        /// GeoAlt control.
+        /// lbl_location control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UserControl GeoAlt;
-
-        /// <summary>
-        /// lbl_company_code control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_company_code;
-
-        /// <summary>
-        /// location_aih control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor location_aih;
-
-        /// <summary>
-        /// location_cli control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor location_cli;
+        protected global::System.Web.UI.WebControls.Label lbl_location;
 
         /// <summary>
         /// lblUserName control.
@@ -130,6 +103,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlAnchor btnLogout;
+
+        /// <summary>
+        /// ImgSite control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Image ImgSite;
 
         /// <summary>
         /// RadTabStrip2 control.

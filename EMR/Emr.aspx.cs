@@ -54,18 +54,24 @@ namespace EMR
 
         private void BindLocation()
         {
-            lbl_company_code.Text = (string)Session["company_code"];
-            switch ((string)Session["company_code"])
+            lbl_location.Text = loc;
+            string ImgUrl = "";
+            switch (loc)
             {
                 case "AIH":
-                    location_cli.Visible = true;
-                    location_aih.Visible = false;
+                    lbl_location.ToolTip = "Bệnh Viện Quốc Tế Mỹ";
+                    ImgUrl = "../images/AIH_PI_FULL.png";
+                    //location_cli.Visible = true;
+                    //location_aih.Visible = false;
                     break;
                 case "CLI":
-                    location_cli.Visible = false;
-                    location_aih.Visible = true;
+                    lbl_location.ToolTip = "Phòng Khám Quốc Tế Mỹ";
+                    ImgUrl = "../images/DBP/AIH_CLINIC_logo_final_02.png";
+                    //location_cli.Visible = false;
+                    //location_aih.Visible = true;
                     break;
             }
+            ImgSite.ImageUrl = ImgUrl;
         }
     }
 }

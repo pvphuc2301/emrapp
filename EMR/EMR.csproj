@@ -214,7 +214,10 @@
     <Content Include="images\logo-opacity.png" />
     <Content Include="images\PaintAssess.png" />
     <Content Include="images\prt_header.png" />
+    <Content Include="IPD\DisCerV20.aspx" />
+    <Content Include="IPD\InpIniMedAssV20.aspx" />
     <Content Include="IPD\ObsGynIniAss.aspx" />
+    <Content Include="IPD\ObsGynIniAssV20.aspx" />
     <Content Include="IPD\SurgicalReport.aspx" />
     <Content Include="OPD\OutPatIniNurAss_v1.aspx" />
     <Content Include="Other\FormMenu.aspx" />
@@ -491,12 +494,33 @@
     <Compile Include="icons\ExclamationTriangle.ascx.designer.cs">
       <DependentUpon>ExclamationTriangle.ascx</DependentUpon>
     </Compile>
+    <Compile Include="IPD\DisCerV20.aspx.cs">
+      <DependentUpon>DisCerV20.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IPD\DisCerV20.aspx.designer.cs">
+      <DependentUpon>DisCerV20.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IPD\InpIniMedAssV20.aspx.cs">
+      <DependentUpon>InpIniMedAssV20.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IPD\InpIniMedAssV20.aspx.designer.cs">
+      <DependentUpon>InpIniMedAssV20.aspx</DependentUpon>
+    </Compile>
     <Compile Include="IPD\ObsGynIniAss.aspx.cs">
       <DependentUpon>ObsGynIniAss.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="IPD\ObsGynIniAss.aspx.designer.cs">
       <DependentUpon>ObsGynIniAss.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IPD\ObsGynIniAssV20.aspx.cs">
+      <DependentUpon>ObsGynIniAssV20.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IPD\ObsGynIniAssV20.aspx.designer.cs">
+      <DependentUpon>ObsGynIniAssV20.aspx</DependentUpon>
     </Compile>
     <Compile Include="IPD\SurgicalReport.aspx.cs">
       <DependentUpon>SurgicalReport.aspx</DependentUpon>

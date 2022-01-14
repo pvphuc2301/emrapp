@@ -327,10 +327,10 @@ namespace EMR.Print
             query += "LEFT OUTER JOIN OrionHIS_PRO.dbo.ph_prescription_order_dosage_instruction_nl_view ";
             query += "AS phdoe ON phdoe.ph_prescription_order_id = pro.ph_prescription_order_id ";
             query += "AND phdoe.localization_supported_culture_rcd = 'en-GB' ";
-            query += "WHERE ig.item_group_code IN ('PHA.DS', 'PHA.COSM' ) AND pro.ph_prescription_order_type_rcd NOT IN('CAN', 'SAVED','DIS') ";
+            query += "WHERE ig.item_group_code IN ('PHA.DS', 'PHA.COSM', 'C01.PHA.DS', 'C01.PHA.COSM'  ) AND pro.ph_prescription_order_type_rcd NOT IN('CAN', 'SAVED','DIS') ";
             query += "AND(pro.ph_prescription_id = '" + varPharID + "') ";
             if (varType == "TV")
-                query += "AND (ig.item_group_code IN ( 'PHA.DS', 'PHA.COSM' )) ";
+                query += "AND (ig.item_group_code IN ( 'PHA.DS', 'PHA.COSM', 'C01.PHA.DS', 'C01.PHA.COSM'  )) ";
             else
                 query += "AND (ig.item_group_code LIKE 'PHA.MED%') AND (ig.item_group_code NOT IN('PHA.MED5.PSY', 'PHA.MED5.NAR')) ";
 
