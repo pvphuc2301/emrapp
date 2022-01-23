@@ -43,6 +43,9 @@ namespace EMR.Other
             ConnClass ConnStr = new ConnClass();
             ConnStringEMR = ConnStr.SQL_EMRConnString;
             ConnStringHC = ConnStr.SQL_HCConnString;
+
+            heathcheck_wrapper.Visible = (loc == "AIH");
+            
         }
 
         private void PostBackEvent(object sender, EventArgs e)
@@ -237,7 +240,7 @@ namespace EMR.Other
             {
                 RadGridHC.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
             }
-
+            
             //string TableName = RadGridHC.MasterTableView.Name;
             // string query = GetQueryHC(specialty_id);
 

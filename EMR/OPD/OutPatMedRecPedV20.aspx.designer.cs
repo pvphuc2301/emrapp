@@ -7,11 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EMR.IPD
+namespace EMR.OPD
 {
 
 
-    public partial class InpIniMedAssV20
+    public partial class OutPatMedRecPed_v02
     {
 
         /// <summary>
@@ -33,13 +33,13 @@ namespace EMR.IPD
         protected global::Telerik.Web.UI.RadScriptManager RadScriptManager1;
 
         /// <summary>
-        /// UpPrintForm control.
+        /// Upd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpPrintForm;
+        protected global::System.Web.UI.UpdatePanel Upd;
 
         /// <summary>
         /// prt_fullname control.
@@ -48,34 +48,16 @@ namespace EMR.IPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_fullname;
+        protected global::System.Web.UI.WebControls.Label prt_fullname;
 
         /// <summary>
-        /// prt_gender control.
+        /// prt_dob control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_gender;
-
-        /// <summary>
-        /// prt_DOB control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_DOB;
-
-        /// <summary>
-        /// prt_vpid control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_vpid;
+        protected global::System.Web.UI.WebControls.Label prt_dob;
 
         /// <summary>
         /// BarCode control.
@@ -87,6 +69,15 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.PlaceHolder BarCode;
 
         /// <summary>
+        /// prt_vpid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_vpid;
+
+        /// <summary>
         /// print_content control.
         /// </summary>
         /// <remarks>
@@ -94,6 +85,15 @@ namespace EMR.IPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl print_content;
+
+        /// <summary>
+        /// prt_day_of_visit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_day_of_visit;
 
         /// <summary>
         /// prt_chief_complaint control.
@@ -105,22 +105,22 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label prt_chief_complaint;
 
         /// <summary>
-        /// prt_cur_med_history control.
+        /// prt_medical_history control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_cur_med_history;
+        protected global::System.Web.UI.WebControls.Label prt_medical_history;
 
         /// <summary>
-        /// prt_cur_medication control.
+        /// prt_current_medication control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_cur_medication;
+        protected global::System.Web.UI.WebControls.Label prt_current_medication;
 
         /// <summary>
         /// prt_personal control.
@@ -195,49 +195,13 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label prt_immunization;
 
         /// <summary>
-        /// prt_habits_smoking control.
+        /// prt_family control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_habits_smoking;
-
-        /// <summary>
-        /// prt_habits_alcohol control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_habits_alcohol;
-
-        /// <summary>
-        /// prt_habits_drugs control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_habits_drugs;
-
-        /// <summary>
-        /// prt_habits_physical_exercise control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_habits_physical_exercise;
-
-        /// <summary>
-        /// prt_habits_other control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_habits_other;
+        protected global::System.Web.UI.WebControls.Label prt_family;
 
         /// <summary>
         /// prt_allergy control.
@@ -249,13 +213,22 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label prt_allergy;
 
         /// <summary>
-        /// prt_family control.
+        /// prt_allergy_note_wrapper control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_family;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_allergy_note_wrapper;
+
+        /// <summary>
+        /// prt_allergy_note control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_allergy_note;
 
         /// <summary>
         /// prt_vs_temperature control.
@@ -267,13 +240,13 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label prt_vs_temperature;
 
         /// <summary>
-        /// prt_vs_heart_rate control.
+        /// prt_pulse control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_vs_heart_rate;
+        protected global::System.Web.UI.WebControls.Label prt_pulse;
 
         /// <summary>
         /// prt_vs_weight control.
@@ -330,40 +303,22 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label prt_vs_spO2;
 
         /// <summary>
-        /// prt_physical_exam control.
+        /// prt_physical_examination control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_physical_exam;
+        protected global::System.Web.UI.WebControls.Label prt_physical_examination;
 
         /// <summary>
-        /// prt_psy_consul_required control.
+        /// prt_laboratory_indications_results control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_psy_consul_required;
-
-        /// <summary>
-        /// prt_laboratory_result control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_laboratory_result;
-
-        /// <summary>
-        /// prt_add_investigation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_add_investigation;
+        protected global::System.Web.UI.WebControls.Label prt_laboratory_indications_results;
 
         /// <summary>
         /// prt_initial_diagnosis control.
@@ -375,13 +330,13 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label prt_initial_diagnosis;
 
         /// <summary>
-        /// prt_diff_diagnosis control.
+        /// prt_differential_diagnosis control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_diff_diagnosis;
+        protected global::System.Web.UI.WebControls.Label prt_differential_diagnosis;
 
         /// <summary>
         /// prt_associated_conditions control.
@@ -393,31 +348,76 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label prt_associated_conditions;
 
         /// <summary>
-        /// prt_treatment_plan control.
+        /// prt_treatment control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_treatment_plan;
+        protected global::System.Web.UI.WebControls.Label prt_treatment;
 
         /// <summary>
-        /// prt_discharge_plan control.
+        /// prt_medicine control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_discharge_plan;
+        protected global::System.Web.UI.WebControls.Label prt_medicine;
 
         /// <summary>
-        /// prt_signature_date control.
+        /// prt_spec_opinion_requested control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_signature_date;
+        protected global::System.Web.UI.WebControls.Label prt_spec_opinion_requested;
+
+        /// <summary>
+        /// prt_spec_opinion_requested_note_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_spec_opinion_requested_note_wrapper;
+
+        /// <summary>
+        /// prt_spec_opinion_requested_note control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_spec_opinion_requested_note;
+
+        /// <summary>
+        /// prt_specific_education_required control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_specific_education_required;
+
+        /// <summary>
+        /// prt_next_appointment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_next_appointment;
+
+        /// <summary>
+        /// prt_signature_doctor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_signature_doctor;
 
         /// <summary>
         /// RadWindowManager control.
@@ -546,15 +546,6 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.ValidationSummary valSum;
 
         /// <summary>
-        /// lblPid control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPid;
-
-        /// <summary>
         /// lblFirstName control.
         /// </summary>
         /// <remarks>
@@ -645,13 +636,13 @@ namespace EMR.IPD
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl currentLog;
 
         /// <summary>
-        /// HyperLink1 control.
+        /// LinkViewLastestVersion control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink HyperLink1;
+        protected global::System.Web.UI.WebControls.HyperLink LinkViewLastestVersion;
 
         /// <summary>
         /// RadLabel1 control.
@@ -690,67 +681,58 @@ namespace EMR.IPD
         protected global::EMR.TextField txt_chief_complaint;
 
         /// <summary>
-        /// lbl_cur_med_history control.
+        /// lbl_medical_history control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_cur_med_history;
+        protected global::System.Web.UI.WebControls.Label lbl_medical_history;
 
         /// <summary>
-        /// cur_med_history_wrapper control.
+        /// medical_history_wrapper control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl cur_med_history_wrapper;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl medical_history_wrapper;
 
         /// <summary>
-        /// txt_cur_med_history control.
+        /// txt_medical_history control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_cur_med_history;
+        protected global::EMR.TextField txt_medical_history;
 
         /// <summary>
-        /// lbl_cur_medication control.
+        /// lbl_current_medication control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_cur_medication;
+        protected global::System.Web.UI.WebControls.Label lbl_current_medication;
 
         /// <summary>
-        /// cur_medication_wrapper control.
+        /// current_medication_wrapper control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl cur_medication_wrapper;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl current_medication_wrapper;
 
         /// <summary>
-        /// txt_cur_medication control.
+        /// txt_current_medication control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_cur_medication;
-
-        /// <summary>
-        /// lbl_personal control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_personal;
+        protected global::EMR.TextField txt_current_medication;
 
         /// <summary>
         /// personal_wrapper control.
@@ -769,6 +751,15 @@ namespace EMR.IPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.TextField txt_personal;
+
+        /// <summary>
+        /// lbl_personal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_personal;
 
         /// <summary>
         /// lbl_infected_with_covid control.
@@ -843,274 +834,58 @@ namespace EMR.IPD
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_not_yet_vaccinations_true;
 
         /// <summary>
-        /// lbl_immunization control.
+        /// lbl_other_vaccinations control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_immunization;
+        protected global::System.Web.UI.WebControls.Label lbl_other_vaccinations;
 
         /// <summary>
-        /// immunization_wrapper control.
+        /// other_vaccinations_wrapper control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl immunization_wrapper;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl other_vaccinations_wrapper;
 
         /// <summary>
-        /// txt_immunization control.
+        /// txt_other_vaccinations control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_immunization;
+        protected global::EMR.TextField txt_other_vaccinations;
 
         /// <summary>
-        /// lbl_habits_smoking control.
+        /// family_wrapper control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_habits_smoking;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl family_wrapper;
 
         /// <summary>
-        /// habits_smoking_wrapper control.
+        /// txt_family control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl habits_smoking_wrapper;
+        protected global::EMR.TextField txt_family;
 
         /// <summary>
-        /// rad_habits_smoking_false control.
+        /// lbl_family control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_habits_smoking_false;
-
-        /// <summary>
-        /// rad_habits_smoking_true control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_habits_smoking_true;
-
-        /// <summary>
-        /// XSquare3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UserControl XSquare3;
-
-        /// <summary>
-        /// txt_habits_smoking_pack control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_habits_smoking_pack;
-
-        /// <summary>
-        /// lbl_habits_alcohol control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_habits_alcohol;
-
-        /// <summary>
-        /// habits_alcohol_wrapper control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl habits_alcohol_wrapper;
-
-        /// <summary>
-        /// rad_habits_alcohol_false control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_habits_alcohol_false;
-
-        /// <summary>
-        /// rad_habits_alcohol_true control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_habits_alcohol_true;
-
-        /// <summary>
-        /// XSquare4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UserControl XSquare4;
-
-        /// <summary>
-        /// txt_habits_alcohol_note control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField txt_habits_alcohol_note;
-
-        /// <summary>
-        /// lbl_habits_drugs control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_habits_drugs;
-
-        /// <summary>
-        /// habits_drugs_wrapper control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl habits_drugs_wrapper;
-
-        /// <summary>
-        /// rad_habits_drugs_false control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_habits_drugs_false;
-
-        /// <summary>
-        /// rad_habits_drugs_true control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_habits_drugs_true;
-
-        /// <summary>
-        /// XSquare5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UserControl XSquare5;
-
-        /// <summary>
-        /// txt_habits_drugs_note control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField txt_habits_drugs_note;
-
-        /// <summary>
-        /// lbl_habits_physical_exercise control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_habits_physical_exercise;
-
-        /// <summary>
-        /// habits_physical_exercise_wrapper control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl habits_physical_exercise_wrapper;
-
-        /// <summary>
-        /// rad_habits_physical_exercise_false control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_habits_physical_exercise_false;
-
-        /// <summary>
-        /// rad_habits_physical_exercise_true control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_habits_physical_exercise_true;
-
-        /// <summary>
-        /// XSquare6 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UserControl XSquare6;
-
-        /// <summary>
-        /// txt_habits_phy_exer_note control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField txt_habits_phy_exer_note;
-
-        /// <summary>
-        /// lbl_habits_other control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_habits_other;
-
-        /// <summary>
-        /// habits_other_wrapper control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl habits_other_wrapper;
-
-        /// <summary>
-        /// txt_habits_other control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField txt_habits_other;
+        protected global::System.Web.UI.WebControls.Label lbl_family;
 
         /// <summary>
         /// lbl_allergy control.
@@ -1149,13 +924,13 @@ namespace EMR.IPD
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_allergy_true;
 
         /// <summary>
-        /// XSquare2 control.
+        /// XSquare38 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UserControl XSquare2;
+        protected global::System.Web.UI.UserControl XSquare38;
 
         /// <summary>
         /// txt_allergy_note control.
@@ -1165,33 +940,6 @@ namespace EMR.IPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.TextField txt_allergy_note;
-
-        /// <summary>
-        /// lbl_family control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_family;
-
-        /// <summary>
-        /// family_wrapper control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl family_wrapper;
-
-        /// <summary>
-        /// txt_family control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField txt_family;
 
         /// <summary>
         /// updatepnl_vital_sign control.
@@ -1210,276 +958,6 @@ namespace EMR.IPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnUpdateVitalSign;
-
-        /// <summary>
-        /// btnVSFreeText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnVSFreeText;
-
-        /// <summary>
-        /// cbVSFreeText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbVSFreeText;
-
-        /// <summary>
-        /// lbl_vs_temperature control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_vs_temperature;
-
-        /// <summary>
-        /// vs_temperature_wrapper control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl vs_temperature_wrapper;
-
-        /// <summary>
-        /// txt_vs_temperature control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_temperature;
-
-        /// <summary>
-        /// lbl_vs_weight control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_vs_weight;
-
-        /// <summary>
-        /// vs_weight_wrapper control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl vs_weight_wrapper;
-
-        /// <summary>
-        /// txt_vs_weight control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_weight;
-
-        /// <summary>
-        /// lbl_vs_height control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_vs_height;
-
-        /// <summary>
-        /// vs_height_wrapper control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl vs_height_wrapper;
-
-        /// <summary>
-        /// txt_vs_height control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_height;
-
-        /// <summary>
-        /// lbl_vs_BMI control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_vs_BMI;
-
-        /// <summary>
-        /// vs_BMI_wrapper control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl vs_BMI_wrapper;
-
-        /// <summary>
-        /// txt_vs_bmi control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_bmi;
-
-        /// <summary>
-        /// bmiStr control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label bmiStr;
-
-        /// <summary>
-        /// lbl_vs_pulse control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_vs_pulse;
-
-        /// <summary>
-        /// vs_pulse_wrapper control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl vs_pulse_wrapper;
-
-        /// <summary>
-        /// txt_vs_pulse control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_pulse;
-
-        /// <summary>
-        /// lbl_vs_heart_rate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_vs_heart_rate;
-
-        /// <summary>
-        /// vs_heart_rate_wrapper control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl vs_heart_rate_wrapper;
-
-        /// <summary>
-        /// txt_vs_heart_rate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_heart_rate;
-
-        /// <summary>
-        /// lbl_vs_respiratory_rate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_vs_respiratory_rate;
-
-        /// <summary>
-        /// vs_respiratory_rate_wrapper control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl vs_respiratory_rate_wrapper;
-
-        /// <summary>
-        /// txt_vs_respiratory_rate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_respiratory_rate;
-
-        /// <summary>
-        /// lbl_vs_blood_pressure control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_vs_blood_pressure;
-
-        /// <summary>
-        /// vs_blood_pressure_wrapper control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl vs_blood_pressure_wrapper;
-
-        /// <summary>
-        /// txt_vs_blood_pressure control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_blood_pressure;
-
-        /// <summary>
-        /// lbl_vs_spO2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_vs_spO2;
-
-        /// <summary>
-        /// vs_spO2_wrapper control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl vs_spO2_wrapper;
-
-        /// <summary>
-        /// txt_vs_spO2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputText txt_vs_spO2;
 
         /// <summary>
         /// vs_temperature control.
@@ -1563,139 +1041,58 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label vs_spo2;
 
         /// <summary>
-        /// lbl_physical_exam control.
+        /// physical_examination_wrapper control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_physical_exam;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl physical_examination_wrapper;
 
         /// <summary>
-        /// physical_exam_wrapper control.
+        /// txt_physical_examination control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl physical_exam_wrapper;
+        protected global::EMR.TextField txt_physical_examination;
 
         /// <summary>
-        /// txt_physical_exam control.
+        /// lbl_physical_examination control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_physical_exam;
+        protected global::System.Web.UI.WebControls.Label lbl_physical_examination;
 
         /// <summary>
-        /// lbl_psy_consul_required control.
+        /// lbl_laboratory_indications_results control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_psy_consul_required;
+        protected global::System.Web.UI.WebControls.Label lbl_laboratory_indications_results;
 
         /// <summary>
-        /// psy_consul_required_wrapper control.
+        /// laboratory_indications_results_wrapper control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl psy_consul_required_wrapper;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl laboratory_indications_results_wrapper;
 
         /// <summary>
-        /// rad_psy_consul_required_false control.
+        /// txt_laboratory_indications_results control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_psy_consul_required_false;
-
-        /// <summary>
-        /// rad_psy_consul_required_true control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_psy_consul_required_true;
-
-        /// <summary>
-        /// XSquare1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UserControl XSquare1;
-
-        /// <summary>
-        /// lbl_laboratory_result control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_laboratory_result;
-
-        /// <summary>
-        /// laboratory_result_wrapper control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl laboratory_result_wrapper;
-
-        /// <summary>
-        /// txt_laboratory_result control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField txt_laboratory_result;
-
-        /// <summary>
-        /// lbl_add_investigation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_add_investigation;
-
-        /// <summary>
-        /// add_investigation_wrapper control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl add_investigation_wrapper;
-
-        /// <summary>
-        /// txt_add_investigation control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField txt_add_investigation;
-
-        /// <summary>
-        /// lbl_initial_diagnosis control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_initial_diagnosis;
+        protected global::EMR.TextField txt_laboratory_indications_results;
 
         /// <summary>
         /// initial_diagnosis_wrapper control.
@@ -1716,67 +1113,67 @@ namespace EMR.IPD
         protected global::EMR.TextField txt_initial_diagnosis;
 
         /// <summary>
-        /// lbl_diagnosis control.
+        /// lbl_initial_diagnosis control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_diagnosis;
+        protected global::System.Web.UI.WebControls.Label lbl_initial_diagnosis;
 
         /// <summary>
-        /// diagnosis_wrapper control.
+        /// Div3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl diagnosis_wrapper;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div3;
 
         /// <summary>
-        /// txt_diagnosis control.
+        /// TextField2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_diagnosis;
+        protected global::EMR.TextField TextField2;
 
         /// <summary>
-        /// lbl_diff_diagnosis control.
+        /// Label1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_diff_diagnosis;
+        protected global::System.Web.UI.WebControls.Label Label1;
 
         /// <summary>
-        /// diff_diagnosis_wrapper control.
+        /// differential_diagnosis_wrapper control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl diff_diagnosis_wrapper;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl differential_diagnosis_wrapper;
 
         /// <summary>
-        /// txt_diff_diagnosis control.
+        /// txt_differential_diagnosis control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_diff_diagnosis;
+        protected global::EMR.TextField txt_differential_diagnosis;
 
         /// <summary>
-        /// lbl_associated_conditions control.
+        /// lbl_differential_diagnosis control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_associated_conditions;
+        protected global::System.Web.UI.WebControls.Label lbl_differential_diagnosis;
 
         /// <summary>
         /// associated_conditions_wrapper control.
@@ -1797,67 +1194,301 @@ namespace EMR.IPD
         protected global::EMR.TextField txt_associated_conditions;
 
         /// <summary>
-        /// lbl_treatment_plan control.
+        /// lbl_associated_conditions control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_treatment_plan;
+        protected global::System.Web.UI.WebControls.Label lbl_associated_conditions;
 
         /// <summary>
-        /// treatment_plan_wrapper control.
+        /// UpdatePanel1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl treatment_plan_wrapper;
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
-        /// txt_treatment_plan control.
+        /// lbl_treatment_code control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_treatment_plan;
+        protected global::System.Web.UI.WebControls.Label lbl_treatment_code;
 
         /// <summary>
-        /// lbl_discharge_plan control.
+        /// treatment_code_wrapper control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_discharge_plan;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl treatment_code_wrapper;
 
         /// <summary>
-        /// discharge_plan_wrapper control.
+        /// rad_treatment_code_opd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl discharge_plan_wrapper;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_treatment_code_opd;
 
         /// <summary>
-        /// txt_discharge_plan control.
+        /// rad_treatment_code_ipd control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.TextField txt_discharge_plan;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_treatment_code_ipd;
 
         /// <summary>
-        /// btnDeleteModal control.
+        /// rad_treatment_code_trf control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl btnDeleteModal;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_treatment_code_trf;
+
+        /// <summary>
+        /// Radio3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox Radio3;
+
+        /// <summary>
+        /// XSquare5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UserControl XSquare5;
+
+        /// <summary>
+        /// current_medication_field control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl current_medication_field;
+
+        /// <summary>
+        /// lbl_medicine control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_medicine;
+
+        /// <summary>
+        /// medicine_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl medicine_wrapper;
+
+        /// <summary>
+        /// txt_medicine control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_medicine;
+
+        /// <summary>
+        /// tranfer_field control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tranfer_field;
+
+        /// <summary>
+        /// lbl_tranfer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_tranfer;
+
+        /// <summary>
+        /// tranfer_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl tranfer_wrapper;
+
+        /// <summary>
+        /// txt_tranfer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_tranfer;
+
+        /// <summary>
+        /// lbl_spec_opinion_requested control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_spec_opinion_requested;
+
+        /// <summary>
+        /// spec_opinion_requested_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl spec_opinion_requested_wrapper;
+
+        /// <summary>
+        /// rad_spec_opinion_requested_false control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_spec_opinion_requested_false;
+
+        /// <summary>
+        /// rad_spec_opinion_requested_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_spec_opinion_requested_true;
+
+        /// <summary>
+        /// XSquare3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UserControl XSquare3;
+
+        /// <summary>
+        /// txt_spec_opinion_requested_note control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_spec_opinion_requested_note;
+
+        /// <summary>
+        /// specific_education_required_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl specific_education_required_wrapper;
+
+        /// <summary>
+        /// txt_specific_education_required control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_specific_education_required;
+
+        /// <summary>
+        /// lbl_specific_education_required control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_specific_education_required;
+
+        /// <summary>
+        /// bool_next_appointment_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl bool_next_appointment_wrapper;
+
+        /// <summary>
+        /// rad_bool_next_appointment_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_bool_next_appointment_true;
+
+        /// <summary>
+        /// rad_bool_next_appointment_false control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_bool_next_appointment_false;
+
+        /// <summary>
+        /// XSquare1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UserControl XSquare1;
+
+        /// <summary>
+        /// dtpk_date_next_appointment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDateTimePicker dtpk_date_next_appointment;
+
+        /// <summary>
+        /// txt_next_appointment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_next_appointment;
+
+        /// <summary>
+        /// lbl_date_next_appointment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_date_next_appointment;
 
         /// <summary>
         /// btnComplete control.
@@ -1876,6 +1507,15 @@ namespace EMR.IPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnSave;
+
+        /// <summary>
+        /// btnDeleteModal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl btnDeleteModal;
 
         /// <summary>
         /// btnAmend control.
@@ -1930,5 +1570,14 @@ namespace EMR.IPD
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.UserControls.PopupShowDelay PopupShowDelay;
+
+        /// <summary>
+        /// clearSession control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton clearSession;
     }
 }

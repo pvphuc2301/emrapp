@@ -1,4 +1,5 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EmerMedRecV20.aspx.cs" Inherits="EMR.ER.EmerMedRecV21" ValidateRequest="false" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EmerMedRecV21.aspx.cs" Inherits="EMR.ER.EmerMedRecV211" ValidateRequest="false" %>
+
 
 <%@ Register Src="~/UserControls/Alert.ascx" TagPrefix="uc1" TagName="Alert" %>
 <%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="webUI" TagName="TextField" %>
@@ -49,7 +50,7 @@
         }
 
         .v20:after {
-           content: 'Version: 2.0';
+           content: 'Version: 2.1';
             font-size: 10px;
             color: #343a40;
             position: absolute;
@@ -1972,7 +1973,6 @@
     <script src="../scripts/alertify.js"></script>
 
     <script>
-        
         var elem = window.parent.parent.document.getElementById("myProgress");
         progress(elem);
 
@@ -1994,6 +1994,7 @@
             }
 
             let printedTime = document.getElementById("printedTime");
+
             if (printedTime) {
                 const date = new Date();
                 let day = date.getDate() > 9 ? date.getDate() : "0" + date.getDate();

@@ -41,14 +41,27 @@ namespace EMR.IPD
             loc = (string)Session["company_code"];
             locChanged = (string)Session["const_company_code"];
 
-            PAGE_URL = $"/IPD/ObsGynIniAss.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+            string url = Request.RawUrl.Split('.')[0];
+            var urlArr = url.Split('/');
+            url = urlArr[urlArr.Length - 1];
+
+            PAGE_URL = $"/IPD/{url}.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
             if (!IsPostBack)
             {
                 Initial();
+                SetDefaultValue();
             }
 
             PostBackEvent();
+        }
+
+        private void SetDefaultValue()
+        {
+            if(RadGrid1.Items.Count <= 1)
+            {
+                rad_infected_with_covid_false.Checked = true;
+            }
         }
 
         #region Binding Data
@@ -159,6 +172,23 @@ namespace EMR.IPD
 
                 //2 Antecedent medical history
                 txt_personal.Value = ogia.personal;
+
+                //Update V2.0
+                cb_received_1_dose_true.Disabled
+                    = cb_received_2_dose_true.Disabled
+                    = cb_received_additional_true.Disabled
+                    = cb_not_yet_vaccinations_true.Disabled
+                    = false;
+
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_" + ogia.infected_with_covid);
+
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + ogia.received_1_dose);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + ogia.received_2_dose);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + ogia.received_additional);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + ogia.not_yet_vaccinations);
+
+                txt_other_vaccinations.Value = ogia.other_vaccinations;
+
                 txt_family.Value = ogia.family;
 
                 //3 Gynecological history
@@ -219,6 +249,7 @@ namespace EMR.IPD
         {
             try
             {
+
                 lbl_reason_admission.Text = WebHelpers.FormatString(ogia.reason_admission);
                 lbl_is_obs_gyn.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.is_obs_gyn, "SẢN KHOA/ OBSTETRICS", "PHỤ KHOA/ GYNECOLOGY"));
 
@@ -310,6 +341,21 @@ namespace EMR.IPD
                 //}
                 //2
                 lbl_personal.Text = WebHelpers.FormatString(ogia.personal);
+                cb_received_1_dose_true.Disabled
+                    = cb_received_2_dose_true.Disabled
+                    = cb_received_additional_true.Disabled
+                    = cb_not_yet_vaccinations_true.Disabled
+                    = true;
+
+                lbl_infected_with_covid.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.infected_with_covid));
+
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + ogia.received_1_dose);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + ogia.received_2_dose);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + ogia.received_additional);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + ogia.not_yet_vaccinations);
+
+                lbl_other_vaccinations.Text = ogia.other_vaccinations;
+
                 lbl_family.Text = WebHelpers.FormatString(ogia.family);
                 //3
                 lbl_age_of_menarhce.Text = WebHelpers.FormatString(ogia.age_of_menarhce);
@@ -441,6 +487,31 @@ namespace EMR.IPD
                 prt_gyn_med_history.Text = ogia.gyn_med_history;
                 prt_gyn_cur_medication.Text = ogia.gyn_cur_medication;
                 prt_personal.Text = ogia.personal;
+                prt_infected_with_covid_false.Text
+                    = prt_infected_with_covid_true.Text
+                    = prt_received_1_dose_true.Text
+                    = prt_received_2_dose_true.Text
+                    = prt_received_additional_true.Text
+                    = prt_not_yet_vaccinations_true.Text
+                    = "❏";
+
+                Label infected_with_covid = FindControl("prt_infected_with_covid_" + ogia.infected_with_covid);
+                if (infected_with_covid != null) infected_with_covid.Text = "☒";
+
+                Label received_1_dose = FindControl("prt_received_1_dose_" + ogia.received_1_dose);
+                if (received_1_dose != null) received_1_dose.Text = "☒";
+
+                Label received_2_dose = FindControl("prt_received_2_dose_" + ogia.received_2_dose);
+                if (received_2_dose != null) received_2_dose.Text = "☒";
+
+                Label received_additional = FindControl("prt_received_additional_" + ogia.received_additional);
+                if (received_additional != null) received_additional.Text = "☒";
+
+                Label not_yet_vaccinations = FindControl("prt_not_yet_vaccinations_" + ogia.not_yet_vaccinations);
+                if (not_yet_vaccinations != null) not_yet_vaccinations.Text = "☒";
+
+                prt_other_vaccinations.Text = "• Tiêm vắc xin khác (ghi rõ)/ <span class=\"text-primary\">Other vaccinations (specify)</span>: " + ogia.other_vaccinations;
+
                 prt_family.Text = ogia.family;
                 prt_age_of_menarhce.Text = WebHelpers.FormatString(ogia.age_of_menarhce, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                 prt_menstrual_cycle.Text = WebHelpers.FormatString(Convert.ToString(ogia.menstrual_cycle), "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
@@ -857,6 +928,15 @@ namespace EMR.IPD
 
                 //2
                 ogia.personal = txt_personal.Value;
+
+                //Update v2.0
+                ogia.infected_with_covid = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_");
+                ogia.received_1_dose = cb_received_1_dose_true.Checked;
+                ogia.received_2_dose = cb_received_2_dose_true.Checked;
+                ogia.received_additional = cb_received_additional_true.Checked;
+                ogia.other_vaccinations = txt_other_vaccinations.Value;
+                ogia.not_yet_vaccinations = cb_not_yet_vaccinations_true.Checked;
+
                 ogia.family = txt_family.Value;
                 ogia.gyn_abdo_sur_scars = cb_gyn_abdo_sur_scars_true.Checked;
 
@@ -970,6 +1050,7 @@ namespace EMR.IPD
                 //loadRadGridHistoryLog();
 
                 RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Ogia.Logs(varDocID, loc), out string _SignatureDate, out string _SignatureName);
+                
                 SignatureDate = _SignatureDate;
                 SignatureName = _SignatureName;
 

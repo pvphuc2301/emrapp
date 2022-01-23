@@ -691,8 +691,6 @@
                                                 </div>
                                             </fieldset>
 
-
-
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <label class="control-label h4">III. Khám bệnh/ <span class="text-primary">Physical Examination:</span></label>
@@ -706,6 +704,9 @@
                                                             <label class="control-label">Dấu hiệu sinh tồn/ <span class="text-primary">Vital signs</span></label>
                                                             <div>
                                                                 <asp:LinkButton runat="server" ID="btnUpdateVitalSign" OnClick="btnUpdateVitalSign_Click" CssClass="btn btn-sm btn-secondary waves-effect">Update</asp:LinkButton>
+                                                                <asp:LinkButton runat="server" ID="btnVSFreeText" OnClick="btnVSFreeText_Click" CssClass="btn btn-sm btn-secondary waves-effect">New Vital Sign</asp:LinkButton>
+                                                                <asp:CheckBox Style="display: none" runat="server" ID="cbVSFreeText" />
+
                                                                 <asp:UpdateProgress runat="server" AssociatedUpdatePanelID="updatepnl_vital_sign">
                                                                     <ProgressTemplate>
                                                                         <div class="loader1 ml-2">
@@ -716,6 +717,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                     <div class="row">
                                                         <div class="col-md-12 gt-2-a">
                                                             <label></label>
@@ -767,6 +769,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                 </ContentTemplate>
                                                 <Triggers>
                                                     <asp:AsyncPostBackTrigger ControlID="btnUpdateVitalSign" />

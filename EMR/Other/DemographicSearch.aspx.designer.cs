@@ -141,6 +141,15 @@ namespace EMR.Other
         protected global::Telerik.Web.UI.RadGrid RadGrid2;
 
         /// <summary>
+        /// heathcheck_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl heathcheck_wrapper;
+
+        /// <summary>
         /// btn_my_hc control.
         /// </summary>
         /// <remarks>

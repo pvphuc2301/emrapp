@@ -11,7 +11,7 @@ using Telerik.Web.UI;
 
 namespace EMR.ER
 {
-    public partial class EmerMedRecV21 : System.Web.UI.Page
+    public partial class EmerMedRecV211 : System.Web.UI.Page
     {
         EmergencyMedicalRecord emr;
         PatientInfo patientInfo;
@@ -54,17 +54,9 @@ namespace EMR.ER
             if (!IsPostBack)
             {
                 Initial();
-                SetDefaultValue();
             }
 
             PostBackEventHandler();
-        }
-        private void SetDefaultValue()
-        {
-            if (RadGrid1.Items.Count <= 1)
-            {
-                rad_infected_with_covid_false.Checked = true;
-            }
         }
         private void PostBackEventHandler()
         {
@@ -104,9 +96,10 @@ namespace EMR.ER
                 {
                     bool.TryParse(value, out bool IsChecked);
                     discharge_field.Visible = IsChecked;
-                } catch(Exception ex) { }
+                }
+                catch (Exception ex) { }
             }
-            
+
             //WebHelpers.VisibleControl(rad_discharge_True.Checked, discharge_field);
         }
         private void specialist_opinion_change(string value = "")
@@ -134,7 +127,7 @@ namespace EMR.ER
             {
                 WebHelpers.VisibleControl(false, transfer_hos_field);
             }
-            
+
             WebHelpers.VisibleControl(rad_transfer_hospital_True.Checked, transfer_hos_field);
         }
         private void emergency_surgery_change(string value = "")
@@ -161,7 +154,7 @@ namespace EMR.ER
             {
                 WebHelpers.VisibleControl(false, hos_req_field);
             }
-            
+
             WebHelpers.VisibleControl(rad_hospitalisation_required_True.Checked, hos_req_field);
         }
 
@@ -254,12 +247,12 @@ namespace EMR.ER
 
                 //Update V2.0
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_" + emr.infected_with_covid);
-                
+
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + emr.received_1_dose);
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + emr.received_2_dose);
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + emr.received_additional);
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + emr.not_yet_vaccinations);
-                
+
                 txt_other_vaccinations.Value = emr.other_vaccinations;
 
                 //DataObj.Value = JsonConvert.SerializeObject(emr);

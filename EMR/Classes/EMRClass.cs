@@ -3036,6 +3036,13 @@ namespace EMR
         public dynamic associated_conditions { get; set; }
         public dynamic treatment_plan { get; set; }
         public dynamic discharge_plan { get; set; }
+
+        public dynamic infected_with_covid { get; set; }
+        public dynamic received_1_dose { get; set; }
+        public dynamic received_2_dose { get; set; }
+        public dynamic received_additional { get; set; }
+        //public dynamic other_vaccinations { get; set; }
+        public dynamic not_yet_vaccinations { get; set; }
         #endregion
 
         public Iima(
@@ -3251,6 +3258,13 @@ namespace EMR
         public dynamic spec_opinion_req_text { get; set; }
         public dynamic pecific_edu_req { get; set; }
         public dynamic next_appointment { get; set; }
+        //Update V2.0
+        public dynamic infected_with_covid { get; set; }
+        public dynamic received_1_dose { get; set; }
+        public dynamic received_2_dose { get; set; }
+        public dynamic received_additional { get; set; }
+        public dynamic other_vaccinations { get; set; }
+        public dynamic not_yet_vaccinations { get; set; }
         #endregion
 
         public Mrfv(
@@ -4105,6 +4119,14 @@ namespace EMR
         public dynamic delete_date_time { get; set; }
         public dynamic document_type_rcd { get; set; }
         public dynamic documentid { get; set; }
+
+        //Update V2.0
+        public dynamic infected_with_covid { get; set; }
+        public dynamic received_1_dose { get; set; }
+        public dynamic received_2_dose { get; set; }
+        public dynamic received_additional { get; set; }
+        public dynamic other_vaccinations { get; set; }
+        public dynamic not_yet_vaccinations { get; set; }
         #endregion
 
         public static Dictionary<string, string> TREATMENT_CODE = new Dictionary<string, string>()
@@ -4663,7 +4685,13 @@ namespace EMR
         public dynamic treatment_plan { get; set; }
         public dynamic discharge_plan { get; set; }
 
-
+        //Update V2.0
+        public dynamic infected_with_covid { get; set; }
+        public dynamic received_1_dose { get; set; }
+        public dynamic received_2_dose { get; set; }
+        public dynamic received_additional { get; set; }
+        public dynamic other_vaccinations { get; set; }
+        public dynamic not_yet_vaccinations { get; set; }
         #endregion
 
         public static string OBS_HISTORY_TEMPLATE = "[{\"id\":1,\"label\":\"Năm/ Year\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":2,\"label\":\"Sanh đủ tháng/ term delivery\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":3,\"label\":\"Sanh non tháng/ preterm delivery\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":4,\"label\":\"Sảy thai/ miscarriage\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":5,\"label\":\"Hút thai/ aspiration abortion\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":6,\"label\":\"Nạo thai/ dilation and evacuation\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":7,\"label\":\"Thủ thuật Kovac/ Kovac’s procedure\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":8,\"label\":\"Thai ngoài tử cung/ ectopic\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":9,\"label\":\"Thai trứng/ molar pregnancy\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":10,\"label\":\"Thai lưu/ stillbirth\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":11,\"label\":\"Sinh sống/ living child\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":12,\"label\":\"Cân nặng/ weight\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":13,\"label\":\"Phương pháp sinh/ delivery mode\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"},{\"id\":14,\"label\":\"Biến chứng/ complication\",\"grav_1\":\"\",\"grav_2\":\"\",\"grav_3\":\"\",\"grav_4\":\"\",\"grav_5\":\"\",\"grav_6\":\"\"}]";

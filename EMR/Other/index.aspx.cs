@@ -1,10 +1,13 @@
-﻿using EMR.Model;
+﻿using EMR.Classes;
+using EMR.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -440,6 +443,53 @@ namespace EMR.Other
                         if (response4.Status == System.Net.HttpStatusCode.OK)
                         {
                             string url = $"../{_params[1]}?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={PVID}&modelId={modelID}&docId={docId}";
+
+                            string ContentUrl = "/";
+
+                            var path = Server.MapPath("~/EMR_Doc.xlsx");
+
+                            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+
+                            ExcelPackage EXCEL_PACKAGE = new ExcelPackage(new FileInfo(path));
+
+                            var version = EXCEL_PACKAGE.Workbook.Worksheets["Version"];
+
+                            switch (loc)
+                            {
+                                case "AIH":
+
+                                    if (version != null)
+                                    {
+                                        string version_extension = "";
+
+                                        int exrow = 1;
+
+                                        while (version.Cells["A" + exrow].Value != null)
+                                        {
+                                            if (version.Cells["A" + exrow].Value.ToString() == modelID)
+                                            {
+                                                if (version.Cells["B" + exrow].Value != null)
+                                                {
+                                                    version_extension = version.Cells["B" + exrow].Value.ToString();
+                                                }
+                                            }
+                                            exrow++;
+                                        }
+
+                                        //string a = version.Cells["B2"].Value.ToString();
+                                        string ModelUrl = data.url;
+                                        var urlArr = ModelUrl.Split('.');
+
+                                        data.url = urlArr[0] + version_extension + "." + urlArr[1];
+                                    }
+
+                                    break;
+                                case "CLI":
+                                    ContentUrl += "DBP/";
+                                    break;
+                            }
+
+                            url = ContentUrl + $"{data.url}?modelId={modelID}&docId={docId}&pId={varPID}&vpId={varVPID}&pvid={patientVisitInfo.patient_visit_id}&loc={loc}";
 
                             if (WebHelpers.CanOpenForm(Page, docId, DocumentStatus.DRAFT, (string)Session["emp_id"], loc, locChanged, (string)Session["access_authorize"]))
                             {

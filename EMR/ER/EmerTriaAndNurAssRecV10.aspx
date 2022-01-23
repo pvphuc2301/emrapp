@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EmerTriaAndNurAssRecV10.aspx.cs" Inherits="EMR.ER.EmerTriaAndNurAssRecV10" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EmerTriaAndNurAssRecV10.aspx.cs" Inherits="EMR.ER.EmerTriaAndNurAssRecV10" ValidateRequest="false" %>
 
 <%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="webUI" TagName="TextField" %>
 <%@ Register Src="~/UserControls/AmendReason.ascx" TagPrefix="webUI" TagName="AmendReason" %>
