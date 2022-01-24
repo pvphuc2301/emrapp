@@ -52,17 +52,20 @@
         }
 
          span.frac {
-  display: inline-block;
-  text-align: center;
-  vertical-align: middle;
-}
-span.frac > tuso, span.frac > mauso {
-  display: block;
-  font: inherit;
-  padding: 0 0.2em;
-}
-span.frac > tuso {border-bottom: 0.08em solid;}
-span.frac > span {display: none;}
+          display: inline-block;
+          text-align: center;
+          vertical-align: middle;
+        }
+
+        span.frac > tuso, span.frac > mauso {
+          display: block;
+          font: inherit;
+          padding: 0 0.2em;
+        }
+
+        span.frac > tuso { border-bottom: 0.08em solid; }
+
+        span.frac > span { display: none; }
 
         .v20:after {
            content: 'Version: 2.0';

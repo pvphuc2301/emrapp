@@ -55,17 +55,6 @@ namespace EMR.IPD
             {
                 Initial();
                 SetDefaultValue();
-                //67 - C
-                //LoadSettings(67, 4);
-
-                //Methods a = new Methods();
-                //var b = a.LoadSettings(67, 4);
-
-                //object vs_free_text;
-
-                //b.TryGetValue("VS Free Text", out vs_free_text);
-
-                //btnVSFreeText.Visible = vs_free_text != null ? bool.Parse(vs_free_text.ToString()) : false;
             }
         }
 
@@ -93,6 +82,7 @@ namespace EMR.IPD
         {
             try
             {
+                btnVSFreeText.Visible = true;
                 cb_received_1_dose_true.Disabled
                     = cb_received_2_dose_true.Disabled
                     = cb_received_additional_true.Disabled
@@ -180,6 +170,7 @@ namespace EMR.IPD
         {
             try
             {
+                btnVSFreeText.Visible = false;
                 cb_received_1_dose_true.Disabled
                     = cb_received_2_dose_true.Disabled
                     = cb_received_additional_true.Disabled

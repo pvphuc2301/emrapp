@@ -12,7 +12,7 @@ using Telerik.Web.UI;
 
 namespace EMR
 {
-    public partial class OutPatMedRec : System.Web.UI.Page
+    public partial class OutPatMedRecV10 : System.Web.UI.Page
     {
         Omr omr;
         PatientInfo patientInfo;
@@ -43,9 +43,11 @@ namespace EMR
             loc = (string)Session["company_code"];
             locChanged = (string)Session["const_company_code"];
 
-            PAGE_URL = Request.RawUrl;
+            string url = Request.RawUrl.Split('.')[0];
+            var urlArr = url.Split('/');
+            url = urlArr[urlArr.Length - 1];
 
-            //PAGE_URL = $"/OPD/OutPatMedRec.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+            PAGE_URL = $"/OPD/{url}.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
             if (!IsPostBack)
             {
@@ -113,7 +115,7 @@ namespace EMR
         {
             try
             {
-                //Permissions.AllowNewVitalSign(form1, DocumentStatus.DRAFT);
+                btnVSFreeText.Visible = true;
 
                 patientInfo = new PatientInfo(varPID);
                 txt_amend_reason.Text = "";
@@ -174,26 +176,26 @@ namespace EMR
 
                 WebHelpers.VisibleControl(true, btnUpdateVitalSign);
 
-                //txt_vs_temperature.Disabled
-                // = txt_vs_weight.Disabled
-                // = txt_vs_height.Disabled
-                // = txt_vs_bmi.Disabled
-                // = txt_vs_pulse.Disabled
-                // = txt_vs_heart_rate.Disabled
-                // = txt_vs_respiratory_rate.Disabled
-                // = txt_vs_blood_pressure.Disabled
-                // = txt_vs_spO2.Disabled
-                // = !cbVSFreeText.Checked;
+                txt_vs_temperature.Disabled
+                 = txt_vs_weight.Disabled
+                 = txt_vs_height.Disabled
+                 = txt_vs_bmi.Disabled
+                 = txt_vs_pulse.Disabled
+                 = txt_vs_heart_rate.Disabled
+                 = txt_vs_respiratory_rate.Disabled
+                 = txt_vs_blood_pressure.Disabled
+                 = txt_vs_spO2.Disabled
+                 = !cbVSFreeText.Checked;
 
-                //txt_vs_temperature.Value = omr.vs_temperature;
-                //txt_vs_heart_rate.Value = omr.vs_heart_rate;
-                //txt_vs_weight.Value = omr.vs_weight;
-                //txt_vs_respiratory_rate.Value = omr.vs_respiratory_rate;
-                //txt_vs_height.Value = omr.vs_height;
-                //txt_vs_blood_pressure.Value = omr.vs_blood_pressure;
-                //txt_vs_bmi.Value = omr.vs_BMI;
-                //txt_vs_spO2.Value = omr.vs_spO2;
-                //txt_vs_pulse.Value = omr.vs_pulse;
+                txt_vs_temperature.Value = omr.vs_temperature;
+                txt_vs_heart_rate.Value = omr.vs_heart_rate;
+                txt_vs_weight.Value = omr.vs_weight;
+                txt_vs_respiratory_rate.Value = omr.vs_respiratory_rate;
+                txt_vs_height.Value = omr.vs_height;
+                txt_vs_blood_pressure.Value = omr.vs_blood_pressure;
+                txt_vs_bmi.Value = omr.vs_BMI;
+                txt_vs_spO2.Value = omr.vs_spO2;
+                txt_vs_pulse.Value = omr.vs_pulse;
 
                 txt_laboratory_indications_results.Value = WebHelpers.TextToHtmlTag(omr.laboratory_indications_results);
                 txt_additional_investigation.Value = WebHelpers.TextToHtmlTag(omr.additional_investigation);
@@ -228,7 +230,7 @@ namespace EMR
         {
             try
             {
-                //Permissions.AllowNewVitalSign(form1, DocumentStatus.FINAL);
+                btnVSFreeText.Visible = false;
                 //1
                 lbl_chief_complain.Text = WebHelpers.TextToHtmlTag(omr.chief_complain);
                 lbl_current_medication.Text = WebHelpers.TextToHtmlTag(omr.current_medication);
@@ -261,15 +263,16 @@ namespace EMR
                 lbl_immunization.Text = WebHelpers.TextToHtmlTag(omr.immunization);
                 //
                 WebHelpers.VisibleControl(false, btnUpdateVitalSign);
-                //txt_vs_temperature.Value = omr.vs_temperature;
-                //txt_vs_weight.Value = omr.vs_weight;
-                //txt_vs_height.Value = omr.vs_height;
-                //txt_vs_bmi.Value = omr.vs_BMI;
-                //txt_vs_pulse.Value = omr.vs_pulse;
-                //txt_vs_heart_rate.Value = omr.vs_heart_rate;
-                //txt_vs_respiratory_rate.Value = omr.vs_respiratory_rate;
-                //txt_vs_blood_pressure.Value = omr.vs_blood_pressure;
-                //txt_vs_spO2.Value = omr.vs_spO2;
+                
+                lbl_vs_temperature.Text = omr.vs_temperature + " °C";
+                lbl_vs_weight.Text = omr.vs_weight + " Kg";
+                lbl_vs_height.Text = omr.vs_height + " cm";
+                lbl_vs_BMI.Text = omr.vs_BMI + " (Kg/m 2)";
+                lbl_vs_pulse.Text = omr.vs_pulse + " cm";
+                lbl_vs_heart_rate.Text = omr.vs_heart_rate + " /phút (m)";
+                lbl_vs_respiratory_rate.Text = omr.vs_respiratory_rate + " /phút (m)";
+                lbl_vs_blood_pressure.Text = omr.vs_blood_pressure + " mmHg";
+                lbl_vs_spO2.Text = omr.vs_spO2 + " %";
 
                 lbl_physical_examination.Text = WebHelpers.TextToHtmlTag(omr.physical_examination);
 
@@ -461,15 +464,15 @@ namespace EMR
         }
         public void LoadVitalSigns(dynamic vs)
         {
-            //txt_vs_temperature.Value = WebHelpers.FormatString(vs.vs_temperature);
-            //txt_vs_heart_rate.Value = WebHelpers.FormatString(vs.vs_heart_rate);
-            //txt_vs_weight.Value = WebHelpers.FormatString(vs.vs_weight);
-            //txt_vs_respiratory_rate.Value = WebHelpers.FormatString(vs.vs_respiratory_rate);
-            //txt_vs_height.Value = WebHelpers.FormatString(vs.vs_height);
-            //txt_vs_bmi.Value = WebHelpers.FormatString(vs.vs_BMI);
-            //txt_vs_blood_pressure.Value = WebHelpers.FormatString(vs.vs_blood_pressure);
-            //txt_vs_spO2.Value = WebHelpers.FormatString(vs.vs_spO2);
-            //txt_vs_pulse.Value = WebHelpers.FormatString(vs.pulse);
+            txt_vs_temperature.Value = vs.vs_temperature;
+            txt_vs_heart_rate.Value = vs.vs_heart_rate;
+            txt_vs_weight.Value = vs.vs_weight;
+            txt_vs_respiratory_rate.Value = vs.vs_respiratory_rate;
+            txt_vs_height.Value = vs.vs_height;
+            txt_vs_bmi.Value = vs.vs_BMI;
+            txt_vs_blood_pressure.Value = vs.vs_blood_pressure;
+            txt_vs_spO2.Value = vs.vs_spO2;
+            txt_vs_pulse.Value = vs.pulse;
         }
         protected void btnHome_Click(object sender, EventArgs e)
         {
@@ -510,15 +513,15 @@ namespace EMR
                 omr.allergy_note = WebHelpers.GetBool(omr.allergy, txt_allergy_note.Value, null);
                 omr.immunization = txt_immunization.Value;
                 //II.
-                //omr.vs_temperature = txt_vs_temperature.Value;
-                //omr.vs_weight = txt_vs_weight.Value;
-                //omr.vs_height = txt_vs_height.Value;
-                //omr.vs_BMI = txt_vs_bmi.Value;
-                //omr.vs_pulse = txt_vs_pulse.Value;
-                //omr.vs_heart_rate = txt_vs_heart_rate.Value;
-                //omr.vs_respiratory_rate = txt_vs_respiratory_rate.Value;
-                //omr.vs_blood_pressure = txt_vs_blood_pressure.Value;
-                //omr.vs_spO2 = txt_vs_spO2.Value;
+                omr.vs_temperature = txt_vs_temperature.Value;
+                omr.vs_weight = txt_vs_weight.Value;
+                omr.vs_height = txt_vs_height.Value;
+                omr.vs_BMI = txt_vs_bmi.Value;
+                omr.vs_pulse = txt_vs_pulse.Value;
+                omr.vs_heart_rate = txt_vs_heart_rate.Value;
+                omr.vs_respiratory_rate = txt_vs_respiratory_rate.Value;
+                omr.vs_blood_pressure = txt_vs_blood_pressure.Value;
+                omr.vs_spO2 = txt_vs_spO2.Value;
                 omr.physical_examination = txt_physical_examination.Value.Replace("<br>", "");
                 omr.psy_consult_required = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_psy_consult_required_");
                 //IV.
@@ -680,17 +683,22 @@ namespace EMR
 
         protected void btnNewVitalSign_Click(object sender, EventArgs e)
         {
-            //cbVSFreeText.Checked = !cbVSFreeText.Checked;
-            //txt_vs_temperature.Disabled
-            //     = txt_vs_weight.Disabled
-            //     = txt_vs_height.Disabled
-            //     = txt_vs_bmi.Disabled
-            //     = txt_vs_pulse.Disabled
-            //     = txt_vs_heart_rate.Disabled
-            //     = txt_vs_respiratory_rate.Disabled
-            //     = txt_vs_blood_pressure.Disabled
-            //     = txt_vs_spO2.Disabled
-            //     = !cbVSFreeText.Checked;
+            
+        }
+
+        protected void btnVSFreeText_Click(object sender, EventArgs e)
+        {
+            cbVSFreeText.Checked = !cbVSFreeText.Checked;
+            txt_vs_temperature.Disabled
+                 = txt_vs_weight.Disabled
+                 = txt_vs_height.Disabled
+                 //= txt_vs_bmi.Disabled
+                 = txt_vs_pulse.Disabled
+                 = txt_vs_heart_rate.Disabled
+                 = txt_vs_respiratory_rate.Disabled
+                 = txt_vs_blood_pressure.Disabled
+                 = txt_vs_spO2.Disabled
+                 = !cbVSFreeText.Checked;
         }
     }
 }

@@ -223,6 +223,7 @@
     <Content Include="OPD\MedRecForVacV20.aspx" />
     <Content Include="OPD\OutPatIniNurAssV20.aspx" />
     <Content Include="OPD\OutPatIniNurAss_v1.aspx" />
+    <Content Include="OPD\OutPatMedRecV10.aspx" />
     <Content Include="OPD\OutPatMedRecPedV20.aspx" />
     <Content Include="Other\FormMenu.aspx" />
     <Content Include="Other\Settings.aspx" />
@@ -331,6 +332,7 @@
     <Content Include="UserControls\UCPatientInfo.ascx" />
     <Content Include="zxing.dll" />
     <Content Include="Print\Print.rar" />
+    <None Include="Properties\PublishProfiles\DEV.pubxml" />
     <None Include="Properties\PublishProfiles\PRO.pubxml" />
     <None Include="scripts\jquery.validate-vsdoc.js" />
     <Content Include="scripts\jquery.unobtrusive-ajax.js" />
@@ -368,9 +370,8 @@
   <ItemGroup>
     <Compile Include="Classes\ConnClass.cs" />
     <Compile Include="Classes\EMRClass.cs" />
-    <Compile Include="Classes\Methods.cs">
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
+    <Compile Include="Classes\Methods.cs" />
+    <Compile Include="Classes\Permissions.cs" />
     <Compile Include="Classes\WebHelpers.cs" />
     <Compile Include="Classes\MISClass.cs" />
     <Compile Include="Classes\TienIchWeb.cs" />
@@ -566,6 +567,13 @@
     </Compile>
     <Compile Include="OPD\OutPatIniNurAss_v1.aspx.designer.cs">
       <DependentUpon>OutPatIniNurAss_v1.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPD\OutPatMedRecV10.aspx.cs">
+      <DependentUpon>OutPatMedRecV10.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPD\OutPatMedRecV10.aspx.designer.cs">
+      <DependentUpon>OutPatMedRecV10.aspx</DependentUpon>
     </Compile>
     <Compile Include="OPD\OutPatMedRecPedV20.aspx.cs">
       <DependentUpon>OutPatMedRecPedV20.aspx</DependentUpon>

@@ -1086,24 +1086,6 @@ namespace EMR
         protected global::System.Web.UI.WebControls.LinkButton btnUpdateVitalSign;
 
         /// <summary>
-        /// btnVSFreeText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnVSFreeText;
-
-        /// <summary>
-        /// cbVSFreeText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox cbVSFreeText;
-
-        /// <summary>
         /// vs_temperature control.
         /// </summary>
         /// <remarks>

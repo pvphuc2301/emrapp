@@ -82,6 +82,7 @@ namespace EMR.OPD
         {
             try
             {
+                btnVSFreeText.Visible = true;
                 txt_amend_reason.Text = "";
                 txt_chief_complaint.Value = WebHelpers.TextToHtmlTag(mrnv.chief_complaint);
                 txt_cur_med_history.Value = WebHelpers.TextToHtmlTag(mrnv.cur_med_history);
@@ -95,17 +96,28 @@ namespace EMR.OPD
                     txt_allergy_note.Value = WebHelpers.TextToHtmlTag(mrnv.allergy_text);
                 }
 
-                vs_temperature.Text = mrnv.vs_temperature;
-                vs_heart_rate.Text = mrnv.vs_heart_rate;
-                vs_weight.Text = mrnv.vs_weight;
-                vs_respiratory_rate.Text = mrnv.vs_respiratory_rate;
-                vs_height.Text = mrnv.vs_height;
-                vs_blood_pressure.Text = mrnv.vs_blood_pressure;
-                vs_BMI.Text = mrnv.vs_BMI;
-                vs_spO2.Text = mrnv.vs_SpO2;
-                vs_pulse.Text = mrnv.vs_pulse;
+                txt_vs_temperature.Disabled
+                 = txt_vs_weight.Disabled
+                 = txt_vs_height.Disabled
+                 = txt_vs_bmi.Disabled
+                 = txt_vs_pulse.Disabled
+                 = txt_vs_heart_rate.Disabled
+                 = txt_vs_respiratory_rate.Disabled
+                 = txt_vs_blood_pressure.Disabled
+                 = txt_vs_spO2.Disabled
+                 = !cbVSFreeText.Checked;
 
-                WebHelpers.VisibleControl(true, btnUpdateVitalSigns);
+                txt_vs_temperature.Value = mrnv.vs_temperature;
+                txt_vs_heart_rate.Value = mrnv.vs_heart_rate;
+                txt_vs_weight.Value = mrnv.vs_weight;
+                txt_vs_respiratory_rate.Value = mrnv.vs_respiratory_rate;
+                txt_vs_height.Value = mrnv.vs_height;
+                txt_vs_blood_pressure.Value = mrnv.vs_blood_pressure;
+                txt_vs_bmi.Value = mrnv.vs_BMI;
+                txt_vs_spO2.Value = mrnv.vs_SpO2;
+                txt_vs_pulse.Value = mrnv.vs_pulse;
+
+                WebHelpers.VisibleControl(true, btnUpdateVitalSign);
 
                 txt_scr_before_vacc_1.Value = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_1);
                 txt_scr_before_vacc_2.Value = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_2);
@@ -146,7 +158,7 @@ namespace EMR.OPD
         {
             try
             {
-
+                btnVSFreeText.Visible = false;
                 //I
                 lbl_chief_complaint.Text = WebHelpers.TextToHtmlTag(mrnv.chief_complaint);
                 //II
@@ -160,15 +172,15 @@ namespace EMR.OPD
                 lbl_allergy.Text = WebHelpers.GetBool(mrnv.allergy, "Có, ghi rõ/ Yes, specify <br>" + WebHelpers.TextToHtmlTag(mrnv.allergy_text));
 
                 //vital signs
-                vs_temperature.Text = mrnv.vs_temperature;
-                vs_weight.Text = mrnv.vs_weight;
-                vs_height.Text = mrnv.vs_height;
-                vs_BMI.Text = mrnv.vs_BMI;
-                vs_pulse.Text = mrnv.vs_pulse;
-                vs_respiratory_rate.Text = mrnv.vs_respiratory_rate;
-                vs_blood_pressure.Text = mrnv.vs_blood_pressure;
-                vs_spO2.Text = mrnv.vs_SpO2;
-                WebHelpers.VisibleControl(false, btnUpdateVitalSigns);
+                lbl_vs_temperature.Text = mrnv.vs_temperature + " °C";
+                lbl_vs_weight.Text = mrnv.vs_weight + " Kg";
+                lbl_vs_height.Text = mrnv.vs_height + " cm";
+                lbl_vs_BMI.Text = mrnv.vs_BMI + " (Kg/m 2)";
+                lbl_vs_pulse.Text = mrnv.vs_pulse + " cm";
+                lbl_vs_respiratory_rate.Text = mrnv.vs_respiratory_rate + " /phút (m)";
+                lbl_vs_blood_pressure.Text = mrnv.vs_blood_pressure + " mmHg";
+                lbl_vs_spO2.Text = mrnv.vs_SpO2 + " %";
+                WebHelpers.VisibleControl(false, btnUpdateVitalSign);
 
                 lbl_scr_before_vacc_1.Text = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_1);
                 lbl_scr_before_vacc_2.Text = WebHelpers.TextToHtmlTag(mrnv.scr_before_vacc_2);
@@ -382,32 +394,17 @@ namespace EMR.OPD
             Initial();
         }
 
-        protected void btnUpdateVitalSigns_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                patientVisitInfo = new PatientVisitInfo(varPVID, loc);
-                dynamic response = VitalSign.Update(patientVisitInfo.patient_visit_id, patientVisitInfo.visit_type, loc);
-                if (response.Status == System.Net.HttpStatusCode.OK)
-                {
-                    dynamic vs = JsonConvert.DeserializeObject(response.Data);
-
-                    LoadVitalSigns(vs);
-                }
-            }
-            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
-        }
         public void LoadVitalSigns(dynamic vs)
         {
-            vs_temperature.Text = WebHelpers.FormatString(vs.vs_temperature);
-            vs_heart_rate.Text = WebHelpers.FormatString(vs.vs_heart_rate);
-            vs_weight.Text = WebHelpers.FormatString(vs.vs_weight);
-            vs_respiratory_rate.Text = WebHelpers.FormatString(vs.vs_respiratory_rate);
-            vs_height.Text = WebHelpers.FormatString(vs.vs_height);
-            vs_BMI.Text = WebHelpers.FormatString(vs.vs_BMI);
-            vs_blood_pressure.Text = WebHelpers.FormatString(vs.vs_blood_pressure);
-            vs_spO2.Text = WebHelpers.FormatString(vs.vs_spO2);
-            vs_pulse.Text = WebHelpers.FormatString(vs.pulse);
+            txt_vs_temperature.Value = WebHelpers.FormatString(vs.vs_temperature);
+            txt_vs_heart_rate.Value = WebHelpers.FormatString(vs.vs_heart_rate);
+            txt_vs_weight.Value = WebHelpers.FormatString(vs.vs_weight);
+            txt_vs_respiratory_rate.Value = WebHelpers.FormatString(vs.vs_respiratory_rate);
+            txt_vs_height.Value = WebHelpers.FormatString(vs.vs_height);
+            txt_vs_bmi.Value = WebHelpers.FormatString(vs.vs_BMI);
+            txt_vs_blood_pressure.Value = WebHelpers.FormatString(vs.vs_blood_pressure);
+            txt_vs_spO2.Value = WebHelpers.FormatString(vs.vs_spO2);
+            txt_vs_pulse.Value = WebHelpers.FormatString(vs.pulse);
         }
         protected void grid_appointed_vaccine_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
@@ -536,15 +533,15 @@ namespace EMR.OPD
                 mrnv.allergy = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_allergy_");
                 mrnv.allergy_text = txt_allergy_note.Value;
                 //III
-                mrnv.vs_temperature = vs_temperature.Text;
-                mrnv.vs_heart_rate = vs_heart_rate.Text;
-                mrnv.vs_weight = vs_weight.Text;
-                mrnv.vs_height = vs_height.Text;
-                mrnv.vs_respiratory_rate = vs_respiratory_rate.Text;
-                mrnv.vs_BMI = vs_BMI.Text;
-                mrnv.vs_blood_pressure = vs_blood_pressure.Text;
-                mrnv.vs_SpO2 = vs_spO2.Text;
-                mrnv.vs_pulse = vs_pulse.Text;
+                mrnv.vs_temperature = txt_vs_temperature.Value;
+                mrnv.vs_heart_rate = txt_vs_heart_rate.Value;
+                mrnv.vs_weight = txt_vs_weight.Value;
+                mrnv.vs_height = txt_vs_height.Value;
+                mrnv.vs_respiratory_rate = txt_vs_respiratory_rate.Value;
+                mrnv.vs_BMI = txt_vs_bmi.Value;
+                mrnv.vs_blood_pressure = txt_vs_blood_pressure.Value;
+                mrnv.vs_SpO2 = txt_vs_spO2.Value;
+                mrnv.vs_pulse = txt_vs_pulse.Value;
                 //
                 mrnv.scr_before_vacc_1 = txt_scr_before_vacc_1.Value;
                 mrnv.scr_before_vacc_2 = txt_scr_before_vacc_2.Value;
@@ -600,6 +597,37 @@ namespace EMR.OPD
         protected void clearSession_Click(object sender, EventArgs e)
         {
             WebHelpers.clearSessionDoc(Page, varDocID, loc);
+        }
+
+        protected void btnVSFreeText_Click(object sender, EventArgs e)
+        {
+            cbVSFreeText.Checked = !cbVSFreeText.Checked;
+            txt_vs_temperature.Disabled
+                 = txt_vs_weight.Disabled
+                 = txt_vs_height.Disabled
+                 //= txt_vs_bmi.Disabled
+                 = txt_vs_pulse.Disabled
+                 = txt_vs_heart_rate.Disabled
+                 = txt_vs_respiratory_rate.Disabled
+                 = txt_vs_blood_pressure.Disabled
+                 = txt_vs_spO2.Disabled
+                 = !cbVSFreeText.Checked;
+        }
+
+        protected void btnUpdateVitalSign_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                patientVisitInfo = new PatientVisitInfo(varPVID, loc);
+                dynamic response = VitalSign.Update(patientVisitInfo.patient_visit_id, patientVisitInfo.visit_type, loc);
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic vs = JsonConvert.DeserializeObject(response.Data);
+
+                    LoadVitalSigns(vs);
+                }
+            }
+            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }
     }
 }

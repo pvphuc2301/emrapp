@@ -66,7 +66,7 @@ namespace EMR
         private void BindingDataFormEdit(POMR pomr)
         {
             try {
-                
+                btnVSFreeText.Visible = true;
                 txt_amend_reason.Text = "";
 
                 // I. Lý do đến khám/ Chief complaint:
@@ -89,15 +89,27 @@ namespace EMR
                 // DẤU HIỆU SINH TỒN/ VITAL SIGNS:
 
                 WebHelpers.VisibleControl(true, btnUpdateVitalSign);
-                vs_temperature.Text = pomr.vs_temperature;
-                vs_heart_rate.Text = pomr.vs_heart_rate;
-                vs_weight.Text = pomr.vs_weight;
-                vs_respiratory_rate.Text = pomr.vs_respiratory_rate;
-                vs_height.Text = pomr.vs_height;
-                vs_blood_pressure.Text = pomr.vs_blood_pressure;
-                vs_bmi.Text = pomr.vs_BMI;
-                vs_spo2.Text = pomr.vs_spO2;
-                vs_pulse.Text = pomr.vs_pulse;
+
+                txt_vs_temperature.Disabled
+                = txt_vs_weight.Disabled
+                = txt_vs_height.Disabled
+                = txt_vs_bmi.Disabled
+                = txt_vs_pulse.Disabled
+                = txt_vs_heart_rate.Disabled
+                = txt_vs_respiratory_rate.Disabled
+                = txt_vs_blood_pressure.Disabled
+                = txt_vs_spO2.Disabled
+                = !cbVSFreeText.Checked;
+
+                txt_vs_temperature.Value = pomr.vs_temperature;
+                txt_vs_heart_rate.Value = pomr.vs_heart_rate;
+                txt_vs_weight.Value = pomr.vs_weight;
+                txt_vs_respiratory_rate.Value = pomr.vs_respiratory_rate;
+                txt_vs_height.Value = pomr.vs_height;
+                txt_vs_blood_pressure.Value = pomr.vs_blood_pressure;
+                txt_vs_bmi.Value = pomr.vs_BMI;
+                txt_vs_spO2.Value = pomr.vs_spO2;
+                txt_vs_pulse.Value = pomr.vs_pulse;
 
                 txt_physical_examination.Value = WebHelpers.TextToHtmlTag(pomr.physical_examination);
 
@@ -151,6 +163,7 @@ namespace EMR
         {
             try
             {
+                btnVSFreeText.Visible = false;
                 //1
                 lbl_chief_complaint.Text = WebHelpers.TextToHtmlTag(pomr.chief_complaint);
                 lbl_current_medication.Text = WebHelpers.TextToHtmlTag(pomr.current_medication);
@@ -163,15 +176,15 @@ namespace EMR
 
                 lbl_family.Text = WebHelpers.TextToHtmlTag(pomr.family);
                 WebHelpers.VisibleControl(false, btnUpdateVitalSign);
-                vs_temperature.Text = pomr.vs_temperature;
-                vs_weight.Text = pomr.vs_weight;
-                vs_height.Text = pomr.vs_height;
-                vs_bmi.Text = pomr.vs_BMI;
-                vs_pulse.Text = pomr.vs_pulse;
-                vs_heart_rate.Text = pomr.vs_heart_rate;
-                vs_respiratory_rate.Text = pomr.vs_respiratory_rate;
-                vs_blood_pressure.Text = pomr.vs_blood_pressure;
-                vs_spo2.Text = pomr.vs_spO2;
+                lbl_vs_temperature.Text = pomr.vs_temperature + " °C";
+                lbl_vs_weight.Text = pomr.vs_weight + " Kg";
+                lbl_vs_height.Text = pomr.vs_height + " cm";
+                lbl_vs_BMI.Text = pomr.vs_BMI + " (Kg/m 2)";
+                lbl_vs_pulse.Text = pomr.vs_pulse + " cm";
+                lbl_vs_heart_rate.Text = pomr.vs_heart_rate + " /phút (m)";
+                lbl_vs_respiratory_rate.Text = pomr.vs_respiratory_rate + " /phút (m)";
+                lbl_vs_blood_pressure.Text = pomr.vs_blood_pressure + " mmHg";
+                lbl_vs_spO2.Text = pomr.vs_spO2 + " %";
 
                 lbl_physical_examination.Text = WebHelpers.TextToHtmlTag(pomr.physical_examination);
 
@@ -368,15 +381,15 @@ namespace EMR
         }
         public void LoadVitalSigns(dynamic vs)
         {
-            vs_temperature.Text = WebHelpers.FormatString(vs.vs_temperature);
-            vs_heart_rate.Text = WebHelpers.FormatString(vs.vs_heart_rate);
-            vs_weight.Text = WebHelpers.FormatString(vs.vs_weight);
-            vs_respiratory_rate.Text = WebHelpers.FormatString(vs.vs_respiratory_rate);
-            vs_height.Text = WebHelpers.FormatString(vs.vs_height);
-            vs_bmi.Text = WebHelpers.FormatString(vs.vs_BMI);
-            vs_blood_pressure.Text = WebHelpers.FormatString(vs.vs_blood_pressure);
-            vs_spo2.Text = WebHelpers.FormatString(vs.vs_spO2);
-            vs_pulse.Text = WebHelpers.FormatString(vs.pulse);
+            txt_vs_temperature.Value = vs.vs_temperature;
+            txt_vs_heart_rate.Value = vs.vs_heart_rate;
+            txt_vs_weight.Value = vs.vs_weight;
+            txt_vs_respiratory_rate.Value = vs.vs_respiratory_rate;
+            txt_vs_height.Value = vs.vs_height;
+            txt_vs_bmi.Value = vs.vs_BMI;
+            txt_vs_blood_pressure.Value = vs.vs_blood_pressure;
+            txt_vs_spO2.Value = vs.vs_spO2;
+            txt_vs_pulse.Value = vs.pulse;
         }
         protected void btnHome_Click(object sender, EventArgs e)
         {
@@ -472,15 +485,15 @@ namespace EMR
                 pomr.allergy_note = WebHelpers.GetBool(pomr.allergy, txt_allergy_note.Value, null);
                 //II.
 
-                pomr.vs_temperature = vs_temperature.Text;
-                pomr.vs_weight = vs_weight.Text;
-                pomr.vs_height = vs_height.Text;
-                pomr.vs_BMI = vs_bmi.Text;
-                pomr.vs_pulse = vs_pulse.Text;
-                pomr.vs_heart_rate = vs_heart_rate.Text;
-                pomr.vs_respiratory_rate = vs_respiratory_rate.Text;
-                pomr.vs_blood_pressure = vs_blood_pressure.Text;
-                pomr.vs_spO2 = vs_spo2.Text;
+                pomr.vs_temperature = txt_vs_temperature.Value;
+                pomr.vs_weight = txt_vs_weight.Value;
+                pomr.vs_height = txt_vs_height.Value;
+                pomr.vs_BMI = txt_vs_bmi.Value;
+                pomr.vs_pulse = txt_vs_pulse.Value;
+                pomr.vs_heart_rate = txt_vs_heart_rate.Value;
+                pomr.vs_respiratory_rate = txt_vs_respiratory_rate.Value;
+                pomr.vs_blood_pressure = txt_vs_blood_pressure.Value;
+                pomr.vs_spO2 = txt_vs_spO2.Value;
 
                 pomr.physical_examination = txt_physical_examination.Value.Replace("<br>", "");
                 //IV.
@@ -607,6 +620,21 @@ namespace EMR
         {
             WebHelpers.clearSessionDoc(Page, varDocID, loc);
 
+        }
+
+        protected void btnVSFreeText_Click(object sender, EventArgs e)
+        {
+            cbVSFreeText.Checked = !cbVSFreeText.Checked;
+            txt_vs_temperature.Disabled
+                 = txt_vs_weight.Disabled
+                 = txt_vs_height.Disabled
+                 //= txt_vs_bmi.Disabled
+                 = txt_vs_pulse.Disabled
+                 = txt_vs_heart_rate.Disabled
+                 = txt_vs_respiratory_rate.Disabled
+                 = txt_vs_blood_pressure.Disabled
+                 = txt_vs_spO2.Disabled
+                 = !cbVSFreeText.Checked;
         }
     }
 }

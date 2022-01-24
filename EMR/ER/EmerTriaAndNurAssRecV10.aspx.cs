@@ -45,7 +45,11 @@ namespace EMR.ER
             loc = (string)Session["company_code"];
             locChanged = (string)Session["const_company_code"];
 
-            PAGE_URL = $"/ER/EmerTriaAndNurAssRec.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+            string url = Request.RawUrl.Split('.')[0];
+            var urlArr = url.Split('/');
+            url = urlArr[urlArr.Length - 1];
+
+            PAGE_URL = $"/ER/{url}.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
             if (!IsPostBack)
             {

@@ -1148,6 +1148,7 @@
         formGroup_init();
         checkboxRadiobutton_init();
         InputFilter("data-type='number'");
+        InputFilter("data-type='number1'", /^\d*\.?\/?\d*$/);
 
         if (document.getElementById('txt_vs_bmi') != null) { setbmiStr(document.getElementById('txt_vs_bmi').value); }
 
