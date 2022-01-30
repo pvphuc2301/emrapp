@@ -83,6 +83,7 @@ namespace EMR.OPD
             try
             {
                 btnVSFreeText.Visible = true;
+
                 txt_amend_reason.Text = "";
                 txt_chief_complaint.Value = WebHelpers.TextToHtmlTag(mrnv.chief_complaint);
                 txt_cur_med_history.Value = WebHelpers.TextToHtmlTag(mrnv.cur_med_history);

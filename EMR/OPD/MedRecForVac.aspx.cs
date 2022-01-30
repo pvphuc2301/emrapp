@@ -82,6 +82,7 @@ namespace EMR.OPD
             try
             {
                 btnVSFreeText.Visible = true;
+                btnUpdateVitalSign.Visible = true;
                 txt_amend_reason.Text = "";
                 txt_chief_complaint.Value = WebHelpers.TextToHtmlTag(mrfv.chief_complaint);
                 txt_cur_med_history.Value = WebHelpers.TextToHtmlTag(mrfv.cur_med_history);
@@ -416,8 +417,8 @@ namespace EMR.OPD
             txt_vs_height.Value = vs.vs_height;
             txt_vs_bmi.Value = vs.vs_BMI;
             txt_vs_blood_pressure.Value = vs.vs_blood_pressure;
-            txt_vs_spO2.Value = vs.vs_SpO2;
-            txt_vs_pulse.Value = vs.vs_pulse;
+            txt_vs_spO2.Value = vs.vs_spO2;
+            txt_vs_pulse.Value = vs.pulse;
         }
         #endregion
 
@@ -449,9 +450,16 @@ namespace EMR.OPD
                 SignatureDate = _SignatureDate;
                 SignatureName = _SignatureName;
 
+                txt_vs_temperature.Value = mrfv.vs_temperature;
+                txt_vs_heart_rate.Value = mrfv.vs_heart_rate;
+                txt_vs_weight.Value = mrfv.vs_weight;
+                txt_vs_respiratory_rate.Value = mrfv.vs_respiratory_rate;
+                txt_vs_height.Value = mrfv.vs_height;
+                txt_vs_bmi.Value = mrfv.vs_BMI;
+                txt_vs_blood_pressure.Value = mrfv.vs_blood_pressure;
+                txt_vs_spO2.Value = mrfv.vs_SpO2;
+                txt_vs_pulse.Value = mrfv.vs_pulse;
 
-                LoadVitalSigns(mrfv);
-                
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
 
                 if (mrfv.status == DocumentStatus.FINAL)
