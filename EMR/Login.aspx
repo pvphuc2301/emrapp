@@ -12,8 +12,10 @@
     <link href="./styles/default.css" rel="stylesheet" />
     <link href="./styles/style.css" rel="stylesheet" />
     <link href="./styles/myStyle.css" rel="stylesheet" />
+    <link href="./styles/style-login.css" rel="stylesheet" />
+
     <style>
-        .login-register {
+        /*.login-register {
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center center;
@@ -94,71 +96,69 @@
     -webkit-transform: scale(1.0);
     transform: scale(1.0);
   }
-}
+}*/
     </style>
+
 </head>
 <body>
     <form id="form1" runat="server">
         <asp:ScriptManager runat="server" ID="ScriptManager1" ></asp:ScriptManager>
         <asp:UpdatePanel ID="up" runat="server">
             <ContentTemplate>
-            <section id="wrapper">
-                <div class="login-register">
-                    <div class="login-box card" style="width: 354px;">
-                        <div class="card-body">
-
-                            <h3 class="text-center m-b-20">Sign In</h3>
-                            <div class="form-group ">
-                                <div class="col-xs-12 mb-2">
-                                    <input class="form-control" type="text" placeholder="Username"
-                                        name="username" id="UserName" runat="server"/>
-                                </div>
+                <div class="card" style="width: 354px; margin: auto; padding: 10px; margin-top: 50px">
+                    <div class="card-body">
+                        <h3 class="text-center m-b-20">Sign In</h3>
+                        <div class="form-group">
+                            <div class="col-xs-12 mb-2">
+                                <input class="form-control" type="text" placeholder="Username"
+                                    name="username" id="UserName" runat="server"/>
                             </div>
-                            <div class="form-group">
-                                <div class="col-xs-12  mb-2">
-                                    <div class="input-group mb-3">
-                                        <input class="form-control" type="password" placeholder="Password"
-                                        name="password" id="Password" runat="server" />
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('Password', 'EyeIcon')">
-                                                <div id="EyeIcon">
-                                                    <webUI:Eye runat="server" id="Eye" />
-                                                </div>
-                                            </button>
-                                        </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-xs-12  mb-2">
+                                <div class="input-group mb-3">
+                                    <input class="form-control" type="password" placeholder="Password"
+                                    name="password" id="Password" runat="server" />
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button" onclick="togglePassword('Password', 'EyeIcon')">
+                                            <div id="EyeIcon">
+                                                <webUI:Eye runat="server" id="Eye" />
+                                            </div>
+                                        </button>
                                     </div>
-
-                                    
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-md-12 mb-2">
-                                    <div class="d-flex no-block align-items-center">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="customCheck1" />
-                                            <label class="custom-control-label" for="customCheck1">Remember this user ID and password on this computer and automatically log me in the next time I access Clinical Portal</label>
-                                        </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12 mb-2">
+                                <div class="d-flex no-block align-items-center">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="customCheck1" />
+                                        <label class="custom-control-label" for="customCheck1">Remember this user ID and password on this computer and automatically log me in the next time I access Clinical Portal</label>
                                     </div>
-                                    <p><asp:Label ID="lblInfo" CssClass="text-danger" runat="server"></asp:Label></p>
                                 </div>
+                                <p><asp:Label ID="lblInfo" CssClass="text-danger" runat="server"></asp:Label></p>
                             </div>
-                            <div class="form-group text-center">
-                                <asp:LinkButton runat="server" ID="btnLogin" OnClick="cmdLogin_Click" CssClass="btn btn-primary w-100 waves-effect">Login</asp:LinkButton>
-                                <asp:UpdateProgress ID="UpdateProgress1" DynamicLayout="true" runat="server" >
-                                    <ProgressTemplate>
-                                        <div class="spinner">
-                                            <div class="bounce1"></div>
-                                            <div class="bounce2"></div>
-                                            <div class="bounce3"></div>
-                                        </div>
-                                        <div>Loading...</div>
-                                    </ProgressTemplate>
-                                </asp:UpdateProgress>
-                            </div>
+                        </div>
+                        <div class="form-group text-center">
+                            <asp:LinkButton runat="server" ID="btnLogin" OnClick="cmdLogin_Click" CssClass="btn btn-primary w-100 waves-effect">
+                                <div class="waviy">
+                                    Login
+                                    <div style="display: inline-block">
+                                        <asp:UpdateProgress ID="UpdateProgress1" DynamicLayout="true" runat="server" >
+                                            <ProgressTemplate>
+                                                <span style="--i:1">.</span>
+                                                <span style="--i:2">.</span>
+                                                <span style="--i:3">.</span>
+                                                <span style="--i:4">.</span>
+                                            </ProgressTemplate>
+                                        </asp:UpdateProgress>
+                                    </div>
+                                </div>
+                            </asp:LinkButton>
                         </div>
                     </div>
                 </div>
-            </section>
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>

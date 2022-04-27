@@ -9,7 +9,7 @@ using Telerik.Web.UI;
 
 namespace EMR.IPD
 {
-    public partial class DisCerV20 : System.Web.UI.Page
+    public partial class DisCerV10 : System.Web.UI.Page
     {
         Disc disc;
         PatientInfo patientInfo;
@@ -106,18 +106,27 @@ namespace EMR.IPD
         {
             try
             {
-                bool IsLocal = (patientInfo.nationality_e == "Viet Nam");
-                
+                //bool IsLocal = (patientInfo.nationality_e == "Viet Nam");
+
                 prt_disc_ward_desc.Text = disc.disc_ward_desc;
 
                 prt_dob.Text = WebHelpers.FormatDateTime(patientInfo.DOB);
                 prt_vpid.Text = patientInfo.visible_patient_id;
 
-                prt_address.Text = patientInfo.GetAddress(IsLocal);
-                prt_gender.Text = patientInfo.GetGender(IsLocal);
-                prt_occupation.Text = patientInfo.GetOccupation(IsLocal);
-                prt_nationality.Text = patientInfo.GetNationality(IsLocal);
-                prt_fullname.Text = patientInfo.GetFullName(IsLocal);
+                prt_address.Text = patientInfo.GetAddress(true);
+                prt_address_e.Text = $"/ {patientInfo.GetAddress(false)}";
+
+                prt_gender.Text = patientInfo.GetGender(true);
+                prt_gender_e.Text = $"/ {patientInfo.GetGender(false)}";
+
+                prt_occupation.Text = patientInfo.GetOccupation(true);
+                prt_occupation_e.Text = $"/ {patientInfo.GetOccupation(false)}";
+
+                prt_nationality.Text = patientInfo.GetNationality(true);
+                prt_nationality_e.Text = $"/ {patientInfo.GetNationality(false)}";
+
+                prt_fullname.Text = patientInfo.GetFullName(true);
+                prt_patient_name_e.Text = $"/ {patientInfo.GetFullName(false)}";
 
                 prt_valid_from.Text = WebHelpers.FormatDateTime(disc.valid_from);
                 //prt_to.Text
@@ -156,7 +165,7 @@ namespace EMR.IPD
                     }
                 }
 
-                prt_address.Text = patientInfo.Address;
+                
 
                 bool isValidDateTime;
 
@@ -192,17 +201,6 @@ namespace EMR.IPD
                     prt_day.Text = (day.Length <= 1 ? "0" : "") + day;
                     prt_month.Text = (month.Length <= 1 ? "0" : "") + month;
                     prt_year.Text = year;
-                }
-
-                DateTime.TryParse(Convert.ToString(patientVisitInfo.actual_visit_date_time), out DateTime admission_time);
-
-                if(admission_time != null)
-                {
-                    prt_admission_hour.Text = (admission_time.Hour.ToString().Length <= 1 ? "0" : "") + admission_time.Hour.ToString();
-                    prt_admission_minute.Text = (admission_time.Minute.ToString().Length <= 1 ? "0" : "") + admission_time.Minute.ToString();
-                    prt_admission_day.Text = (admission_time.Day.ToString().Length <= 1 ? "0" : "") + admission_time.Day.ToString();
-                    prt_admission_month.Text = (admission_time.Month.ToString().Length <= 1 ? "0" : "") + admission_time.Month.ToString();
-                    prt_admission_year.Text = admission_time.Year.ToString();
                 }
 
                 var DiscDateTime = WebHelpers.ConvertDateTime(disc.disc_date_time, out bool isValid1, out string disc_date_time);

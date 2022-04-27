@@ -195,7 +195,8 @@ namespace EMR
                 patientVisitInfo = new PatientVisitInfo(varPVID, loc);
 
                 WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
-                prt_fullname.InnerText = string.Format("{0} - {1}", patientInfo.FullName, patientInfo.Gender);
+                prt_fullname.InnerText = $"{patientInfo.GetFullName(true)} - {patientInfo.GetGender(true)}";
+                prt_patient_name_e.InnerText = $"{patientInfo.GetFullName(false)} - {patientInfo.GetGender(false)}";
 
                 prt_DOB.InnerText = "DOB: " + WebHelpers.FormatDateTime(patientInfo.DOB, "dd-MM-yyyy", "");
 

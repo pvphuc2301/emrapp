@@ -1,5 +1,15 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="ImagingReport.ascx.cs" Inherits="EMR.ImagingReport" %>
-<style>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="ImagingReportTest.aspx.cs" Inherits="EMR.Test.ImagingReportTest" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link href="../styles/style.css" rel="stylesheet" />
+    <link href="../styles/myStyle.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="TabStyle.css" />
+
+    <style>
     html body blockquote {
         margin: 0;
         margin-left: 2em;
@@ -26,8 +36,10 @@
         height: calc(100% - 73px);
     }
 </style>
-
-<%--<div class="recipeImage qsf-ib">--%>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <%--<div class="recipeImage qsf-ib">--%>
     <div class="w-100">
     <%--<div>--%>
         <div style="width: 702px; margin: 0 auto;">
@@ -110,3 +122,6 @@
         </div>
     </div>
 <%--</div>--%>
+    </form>
+</body>
+</html>

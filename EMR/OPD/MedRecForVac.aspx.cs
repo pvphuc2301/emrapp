@@ -29,7 +29,7 @@ namespace EMR.OPD
         public string SignatureName { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!WebHelpers.CheckSession(this)) return;
+            if (!WebHelpers.CheckSession(this)) return;
 
             varDocID = Request.QueryString["docId"];
             varDocIdLog = Request.QueryString["docIdLog"];
@@ -40,14 +40,27 @@ namespace EMR.OPD
             loc = (string)Session["company_code"];
             locChanged = (string)Session["const_company_code"];
 
-            PAGE_URL = $"/OPD/MedRecForVac.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+            string url = Request.RawUrl.Split('.')[0];
+            var urlArr = url.Split('/');
+            url = urlArr[urlArr.Length - 1];
+
+            PAGE_URL = $"/OPD/{url}.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
             if (!IsPostBack)
             {
                 Initial();
+                SetDefaultValue();
             }
-
         }
+
+        private void SetDefaultValue()
+        {
+            if (RadGrid1.Items.Count <= 1)
+            {
+                rad_infected_with_covid_false.Checked = true;
+            }
+        }
+
         private void LoadPatientInfo()
         {
             lblFirstName.Text = patientInfo.first_name_l;
@@ -88,6 +101,22 @@ namespace EMR.OPD
                 txt_cur_med_history.Value = WebHelpers.TextToHtmlTag(mrfv.cur_med_history);
                 txt_cur_medications.Value = WebHelpers.TextToHtmlTag(mrfv.cur_medications);
                 txt_personal.Value = WebHelpers.TextToHtmlTag(mrfv.personal);
+                //Update V2.0
+                cb_received_1_dose_true.Disabled
+                    = cb_received_2_dose_true.Disabled
+                    = cb_received_additional_true.Disabled
+                    = cb_not_yet_vaccinations_true.Disabled
+                    = false;
+
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_" + mrfv.infected_with_covid);
+
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + mrfv.received_1_dose);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + mrfv.received_2_dose);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + mrfv.received_additional);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + mrfv.received_additional);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + mrfv.not_yet_vaccinations);
+                txt_other_vaccinations.Value = mrfv.other_vaccinations;
+
                 txt_family.Value = WebHelpers.TextToHtmlTag(mrfv.family);
 
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_allergy_" + mrfv.allergy, "false");
@@ -145,21 +174,38 @@ namespace EMR.OPD
                 DataObj.Value = JsonConvert.SerializeObject(mrfv);
                 Session["docid"] = mrfv.document_id;
                 WebHelpers.AddScriptFormEdit(Page, mrfv, (string)Session["emp_id"], loc);
-                
-            } catch(Exception ex)
+
+            }
+            catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
         }
-         private void BindingDataFormView(Mrfv mrfv)
+        private void BindingDataFormView(Mrfv mrfv)
         {
             try
             {
+                cb_received_1_dose_true.Disabled
+                    = cb_received_2_dose_true.Disabled
+                    = cb_received_additional_true.Disabled
+                    = cb_not_yet_vaccinations_true.Disabled
+                    = true;
+
                 btnVSFreeText.Visible = false;
                 lbl_chief_complaint.Text = WebHelpers.TextToHtmlTag(mrfv.chief_complaint);
                 lbl_cur_med_history.Text = WebHelpers.TextToHtmlTag(mrfv.cur_med_history);
                 lbl_cur_medications.Text = WebHelpers.TextToHtmlTag(mrfv.cur_medications);
                 lbl_personal.Text = WebHelpers.TextToHtmlTag(mrfv.personal);
+
+                // Update 2.0
+                lbl_infected_with_covid.Text = WebHelpers.FormatString(WebHelpers.GetBool(mrfv.infected_with_covid));
+
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + mrfv.received_1_dose);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + mrfv.received_2_dose);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + mrfv.received_additional);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + mrfv.not_yet_vaccinations);
+                lbl_other_vaccinations.Text = mrfv.other_vaccinations;
+
                 lbl_family.Text = WebHelpers.TextToHtmlTag(mrfv.family);
 
                 if (mrfv.allergy != null)
@@ -208,8 +254,8 @@ namespace EMR.OPD
                 lbl_pecific_edu_req.Text = WebHelpers.TextToHtmlTag(mrfv.pecific_edu_req);
                 lbl_next_appointment.Text = WebHelpers.TextToHtmlTag(mrfv.next_appointment);
             }
-            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
-            
+            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
+
         }
         private void BindingDataFormPrint(Mrfv mrfv)
         {
@@ -230,18 +276,38 @@ namespace EMR.OPD
                 prt_cur_med_history.Text = WebHelpers.TextToHtmlTag(mrfv.cur_med_history);
                 prt_cur_medications.Text = WebHelpers.TextToHtmlTag(mrfv.cur_medications);
                 prt_personal.Text = WebHelpers.TextToHtmlTag(mrfv.personal);
+                //Update 2.0
+                Label infected_with_covid = FindControl("prt_infected_with_covid_" + mrfv.infected_with_covid);
+                if (infected_with_covid != null) infected_with_covid.Text = "☒";
+
+                Label received_1_dose = FindControl("prt_received_1_dose_" + mrfv.received_1_dose);
+                if (received_1_dose != null) received_1_dose.Text = "☒";
+
+                Label received_2_dose = FindControl("prt_received_2_dose_" + mrfv.received_2_dose);
+                if (received_2_dose != null) received_2_dose.Text = "☒";
+
+                Label received_additional = FindControl("prt_received_additional_" + mrfv.received_additional);
+                if (received_additional != null) received_additional.Text = "☒";
+
+                Label not_yet_vaccinations = FindControl("prt_not_yet_vaccinations_" + mrfv.not_yet_vaccinations);
+                if (not_yet_vaccinations != null) not_yet_vaccinations.Text = "☒";
+
+                prt_other_vaccinations.Text = "Tiêm vắc xin khác (ghi rõ)/ <span class=\"text-primary\">Other vaccinations (specify):</span>&nbsp;" + mrfv.other_vaccinations;
+
                 prt_family.Text = WebHelpers.TextToHtmlTag(mrfv.family);
 
                 prt_allergy.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class='text-primary'>No</span>", Value = false }, new Option { Text = "Có/ <span class='text-primary'>Yes</span>", Value = true }, mrfv.allergy, "display: grid; grid-template-columns: 1fr 1fr");
 
                 if (mrfv.allergy != null)
                 {
-                    if (mrfv.allergy) {
+                    if (mrfv.allergy)
+                    {
                         prt_allergy_note_wrapper.Visible = true;
-                        prt_allergy_note.Text = WebHelpers.TextToHtmlTag(mrfv.allergy_text); 
-                    } 
-                    else {
-                        prt_allergy_note_wrapper.Visible = false; 
+                        prt_allergy_note.Text = WebHelpers.TextToHtmlTag(mrfv.allergy_text);
+                    }
+                    else
+                    {
+                        prt_allergy_note_wrapper.Visible = false;
                     }
                 }
 
@@ -253,7 +319,7 @@ namespace EMR.OPD
                 prt_vs_respiratory_rate.Text = mrfv.vs_respiratory_rate;
                 prt_vs_blood_pressure.Text = mrfv.vs_blood_pressure;
                 prt_vs_spO2.Text = mrfv.vs_SpO2;
-                
+
                 prt_scr_before_vacc_1.Text += WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_1);
                 prt_scr_before_vacc_2.Text += WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_2);
                 prt_scr_before_vacc_3.Text += WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_3);
@@ -321,8 +387,8 @@ namespace EMR.OPD
                 prt_specific_edu_req.Text = WebHelpers.TextToHtmlTag(mrfv.pecific_edu_req);
                 prt_next_appointment.Text = $"● Hẹn lần khám tới/ <span class='text-primary'>Next appointment: </span>{WebHelpers.TextToHtmlTag(mrfv.next_appointment)}";
             }
-            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
-            
+            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
+
         }
         #endregion
 
@@ -331,9 +397,9 @@ namespace EMR.OPD
         {
             if (Page.IsValid)
             {
-                Mrfv  mrfv = new Mrfv(varDocID, loc);
+                Mrfv mrfv = new Mrfv(varDocID, loc);
                 mrfv.status = DocumentStatus.FINAL;
-                
+
                 UpdateData(mrfv);
                 WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
             }
@@ -361,7 +427,7 @@ namespace EMR.OPD
                     Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
@@ -428,7 +494,6 @@ namespace EMR.OPD
             try
             {
                 Mrfv mrfv;
-
 
                 patientInfo = new PatientInfo(varPID);
                 patientVisitInfo = new PatientVisitInfo(varPVID, loc);
@@ -527,10 +592,19 @@ namespace EMR.OPD
                 mrfv.cur_med_history = txt_cur_med_history.Value;
                 mrfv.cur_medications = txt_cur_medications.Value;
                 mrfv.personal = txt_personal.Value;
+                 
+                //Update v2.0
+                mrfv.infected_with_covid = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_");
+                mrfv.received_1_dose = cb_received_1_dose_true.Checked;
+                mrfv.received_2_dose = cb_received_2_dose_true.Checked;
+                mrfv.received_additional = cb_received_additional_true.Checked;
+                mrfv.other_vaccinations = txt_other_vaccinations.Value;
+                mrfv.not_yet_vaccinations = cb_not_yet_vaccinations_true.Checked;
+
                 mrfv.family = txt_family.Value;
 
                 mrfv.allergy = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_allergy_");
-                if(rad_allergy_true.Checked)
+                if (rad_allergy_true.Checked)
                     mrfv.allergy_text = txt_allergy_note.Value;
 
                 mrfv.vs_temperature = txt_vs_temperature.Value;
@@ -563,9 +637,9 @@ namespace EMR.OPD
                 mrfv.treatment_desc = WebHelpers.GetDicDesc(mrfv.treatment_code, Mrfv.TREATMENT_CODE);
 
                 mrfv.spec_opinion_req = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_spec_opinion_req_");
-                if(rad_spec_opinion_req_true.Checked)
+                if (rad_spec_opinion_req_true.Checked)
                     mrfv.spec_opinion_req_text = txt_spec_opinion_req_text.Value;
-                
+
                 mrfv.pecific_edu_req = txt_pecific_edu_req.Value;
                 mrfv.next_appointment = txt_next_appointment.Value;
 
@@ -585,7 +659,8 @@ namespace EMR.OPD
                     WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 WebHelpers.SendError(Page, ex);
             }
         }

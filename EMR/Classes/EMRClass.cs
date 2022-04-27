@@ -4,6 +4,276 @@ using System.Data;
 using System.Linq;
 using System.Web;
 
+namespace EMR.DBP
+{
+    public class Oina
+    {
+        #region Properties
+        public static string api = "api/oina";
+        public dynamic vs_temperature { get; set; }
+        public dynamic user_name { get; set; }
+        public dynamic vs_heart_rate { get; set; }
+        public dynamic vs_weight { get; set; }
+        public dynamic vs_respiratory_rate { get; set; }
+        public dynamic vs_height { get; set; }
+        public dynamic vs_BMI { get; set; }
+        public dynamic vs_blood_pressure { get; set; }
+        public dynamic vs_spO2 { get; set; }
+        public dynamic pulse { get; set; }
+        public dynamic chief_complaint { get; set; }
+        public dynamic allergy { get; set; }
+        public dynamic allergy_note { get; set; }
+        public dynamic mental_status { get; set; }
+        public dynamic mental_status_note { get; set; }
+        public dynamic paint_score_code { get; set; }
+        public dynamic paint_score_description { get; set; }
+        public dynamic fall_risk { get; set; }
+        public dynamic fall_risk_assistance { get; set; }
+        public dynamic nutrition_status_code { get; set; }
+        public dynamic nutrition_status_description { get; set; }
+        public dynamic housing_code { get; set; }
+        public dynamic housing_description { get; set; }
+        public dynamic prioritization_code { get; set; }
+        public dynamic prioritization_description { get; set; }
+        public dynamic assessment_date_time { get; set; }
+        public dynamic document_id { get; set; }
+        public dynamic model_id { get; set; }
+        public dynamic patient_visit_id { get; set; }
+        public dynamic status { get; set; }
+        public dynamic created_user_id { get; set; }
+        public dynamic created_name_e { get; set; }
+        public dynamic created_name_l { get; set; }
+        public dynamic created_date_time { get; set; }
+        public dynamic modified_user_id { get; set; }
+        public dynamic modified_name_e { get; set; }
+        public dynamic modified_name_l { get; set; }
+        public dynamic modified_date_time { get; set; }
+        public dynamic submited_user_id { get; set; }
+        public dynamic submited_name_e { get; set; }
+        public dynamic submited_name_l { get; set; }
+        public dynamic submited_date_time { get; set; }
+        public dynamic signed_user_id { get; set; }
+        public dynamic signed_name_e { get; set; }
+        public dynamic signed_name_l { get; set; }
+        public dynamic signed_date_time { get; set; }
+        public dynamic delete_user_id { get; set; }
+        public dynamic delete_name_e { get; set; }
+        public dynamic delete_name_l { get; set; }
+        public dynamic delete_date_time { get; set; }
+        public dynamic document_type_rcd { get; set; }
+        public dynamic amend_reason { get; set; }
+        #endregion
+
+        public static Dictionary<string, string> NUTRITION_STATUS_CODE = new Dictionary<string, string>()
+        {
+            { "U", "Suy dinh dưỡng/ Undernutrition" },
+            { "O", "Thừa cân hoặc béo phì/ Overweight or obesity" },
+            { "N", "Bình thường/ Normal" },
+        };
+
+        public static Dictionary<string, string> PAINT_SCORE_CODE = new Dictionary<string, string>()
+        {
+            { "0", "Không đau/ No hurt" },
+            { "1", "Đau rất ít/ Little hurt" },
+            { "2", "Đau nhẹ/ Slight hurt" },
+            { "3", "Đau vừa/ Considerable hurt" },
+            { "4", "Đau nhiều/ Serious hurt" },
+            { "5", "Rất đau/ Worst hurt" },
+        };
+
+        public static Dictionary<string, string> HOUSING_CODE = new Dictionary<string, string>()
+        {
+            { "ALN", "Sống một mình<div> Lives alone</div>" },
+            { "REL", "Sống với người thân<div> With relatives</div>" },
+        };
+
+        public static Dictionary<string, string> PRIORITIZATION_CODE = new Dictionary<string, string>()
+        {
+            { "IM", "Cần được khám ngay/ Immediate consulting requirement" },
+            { "WA", "Có thể chờ khám trong khoảng thời gian xác định/ Be able to wait for consultation at a specific time" },
+        };
+
+        /// <summary>
+        /// Load document
+        /// </summary>
+        /// <param name="vs_temperature"></param>
+        /// <param name="vs_heart_rate"></param>
+        /// <param name="vs_weight"></param>
+        /// <param name="vs_respiratory_rate"></param>
+        /// <param name="vs_height"></param>
+        /// <param name="vs_BMI"></param>
+        /// <param name="vs_blood_pressure"></param>
+        /// <param name="vs_spO2"></param>
+        /// <param name="pulse"></param>
+        /// <param name="chief_complaint"></param>
+        /// <param name="allergy"></param>
+        /// <param name="allergy_note"></param>
+        /// <param name="mental_status"></param>
+        /// <param name="mental_status_note"></param>
+        /// <param name="paint_score_code"></param>
+        /// <param name="paint_score_description"></param>
+        /// <param name="fall_risk"></param>
+        /// <param name="fall_risk_assistance"></param>
+        /// <param name="nutrition_status_code"></param>
+        /// <param name="nutrition_status_description"></param>
+        /// <param name="housing_code"></param>
+        /// <param name="housing_description"></param>
+        /// <param name="prioritization_code"></param>
+        /// <param name="prioritization_description"></param>
+        /// <param name="assessment_date_time"></param>
+        /// <param name="document_id"></param>
+        /// <param name="model_id"></param>
+        /// <param name="patient_visit_id"></param>
+        /// <param name="status"></param>
+        /// <param name="created_user_id"></param>
+        /// <param name="created_name_e"></param>
+        /// <param name="created_name_l"></param>
+        /// <param name="created_date_time"></param>
+        /// <param name="modified_user_id"></param>
+        /// <param name="modified_name_e"></param>
+        /// <param name="modified_name_l"></param>
+        /// <param name="modified_date_time"></param>
+        /// <param name="submited_user_id"></param>
+        /// <param name="submited_name_e"></param>
+        /// <param name="submited_name_l"></param>
+        /// <param name="submited_date_time"></param>
+        /// <param name="signed_user_id"></param>
+        /// <param name="signed_name_e"></param>
+        /// <param name="signed_name_l"></param>
+        /// <param name="signed_date_time"></param>
+        /// <param name="delete_user_id"></param>
+        /// <param name="delete_name_e"></param>
+        /// <param name="delete_name_l"></param>
+        /// <param name="delete_date_time"></param>
+        /// <param name="document_type_rcd"></param>
+        /// <param name="amend_reason"></param>
+        public Oina(dynamic vs_temperature, dynamic vs_heart_rate, dynamic vs_weight, dynamic vs_respiratory_rate, dynamic vs_height, dynamic vs_BMI, dynamic vs_blood_pressure, dynamic vs_spO2, dynamic pulse, dynamic chief_complaint, dynamic allergy, dynamic allergy_note, dynamic mental_status, dynamic mental_status_note, dynamic paint_score_code, dynamic paint_score_description, dynamic fall_risk, dynamic fall_risk_assistance, dynamic nutrition_status_code, dynamic nutrition_status_description, dynamic housing_code, dynamic housing_description, dynamic prioritization_code, dynamic prioritization_description, dynamic assessment_date_time, dynamic document_id, dynamic model_id, dynamic patient_visit_id, dynamic status, dynamic created_user_id, dynamic created_name_e, dynamic created_name_l, dynamic created_date_time, dynamic modified_user_id, dynamic modified_name_e, dynamic modified_name_l, dynamic modified_date_time, dynamic submited_user_id, dynamic submited_name_e, dynamic submited_name_l, dynamic submited_date_time, dynamic signed_user_id, dynamic signed_name_e, dynamic signed_name_l, dynamic signed_date_time, dynamic delete_user_id, dynamic delete_name_e, dynamic delete_name_l, dynamic delete_date_time, dynamic document_type_rcd, dynamic amend_reason)
+        {
+            this.vs_temperature = vs_temperature;
+            this.vs_heart_rate = vs_heart_rate;
+            this.vs_weight = vs_weight;
+            this.vs_respiratory_rate = vs_respiratory_rate;
+            this.vs_height = vs_height;
+            this.vs_BMI = vs_BMI;
+            this.vs_blood_pressure = vs_blood_pressure;
+            this.vs_spO2 = vs_spO2;
+            this.pulse = pulse;
+            this.chief_complaint = chief_complaint;
+            this.allergy = allergy;
+            this.allergy_note = allergy_note;
+            this.mental_status = mental_status;
+            this.mental_status_note = mental_status_note;
+            this.paint_score_code = paint_score_code;
+            this.paint_score_description = paint_score_description;
+            this.fall_risk = fall_risk;
+            this.fall_risk_assistance = fall_risk_assistance;
+            this.nutrition_status_code = nutrition_status_code;
+            this.nutrition_status_description = nutrition_status_description;
+            this.assessment_date_time = assessment_date_time;
+            this.document_id = document_id;
+            this.model_id = model_id;
+            this.patient_visit_id = patient_visit_id;
+            this.status = status;
+            this.created_user_id = created_user_id;
+            this.created_name_e = created_name_e;
+            this.created_name_l = created_name_l;
+            this.created_date_time = created_date_time;
+            this.modified_user_id = modified_user_id;
+            this.modified_name_e = modified_name_e;
+            this.modified_name_l = modified_name_l;
+            this.modified_date_time = modified_date_time;
+            this.submited_user_id = submited_user_id;
+            this.submited_name_e = submited_name_e;
+            this.submited_date_time = submited_date_time;
+            this.signed_user_id = signed_user_id;
+            this.signed_name_e = signed_name_e;
+            this.signed_name_l = signed_name_l;
+            this.signed_date_time = signed_date_time;
+            this.delete_user_id = delete_user_id;
+            this.delete_name_e = delete_name_e;
+            this.delete_name_l = delete_name_l;
+            this.delete_date_time = delete_date_time;
+            this.document_type_rcd = document_type_rcd;
+            this.amend_reason = amend_reason;
+        }
+
+        public Oina(string document_id, string loc)
+        {
+            dynamic response = WebHelpers.GetAPI($"{api}/get/{loc}/{document_id}");
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
+
+                WebHelpers.BindingDatafield(db, this);
+            }
+        }
+        public static DataTable Logs(string document_id, string loc)
+        {
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
+            DataTable db = new DataTable();
+            if (res.Status == System.Net.HttpStatusCode.OK)
+            {
+                db = WebHelpers.GetJSONToDataTable(res.Data);
+            }
+            return db;
+        }
+        public Oina(string document_id, bool viewLog, string loc)
+        {
+            DataTable tbl = new DataTable();
+            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
+            if (res.Status == System.Net.HttpStatusCode.OK)
+            {
+                tbl = WebHelpers.GetJSONToDataTable(res.Data);
+                WebHelpers.BindingDatafield(tbl, this);
+
+            }
+        }
+        public dynamic[] Update(string loc)
+        {
+            dynamic[] message = new dynamic[2];
+
+            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
+            message[0] = response1;
+
+            if (response1.Status == System.Net.HttpStatusCode.OK)
+            {
+                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
+                message[1] = response2;
+            }
+            return message;
+        }
+
+        public static dynamic[] Delete(string userName, string docid, string loc)
+        {
+            dynamic[] message = new dynamic[2];
+            try
+            {
+                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
+
+                message[0] = response;
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
+                    message[1] = response1;
+                }
+
+                return message;
+            }
+            catch (Exception ex)
+            {
+                dynamic response = new System.Dynamic.ExpandoObject();
+                response.Status = System.Net.HttpStatusCode.NotFound;
+                response.Data = ex.Message;
+
+                message[0] = response;
+                return message;
+            }
+        }
+    }
+}
+
 namespace EMR
 {
     public class VitalSign
@@ -132,6 +402,15 @@ namespace EMR
                 return age;
             } 
         }
+
+        internal string GetFullName(bool IsLocal)
+        {
+            string Local = this.first_name_l + " " + this.last_name_l;
+            string Other = this.first_name_e + " " + this.last_name_e;
+
+            return IsLocal ? Local : Other;
+        }
+
         public string FirstName { get { return first_name_l; } }
         public string LastName { get { return last_name_l; } }
         public string FullName 
@@ -171,6 +450,28 @@ namespace EMR
             get { 
                 return title_l;
             }
+        }
+        public string GetAddress(bool IsLocal)
+        {
+            string Local = string.Format("{0} {1} {2} {3}", this.address_line_l, this.address_subregion_l, this.address_region_l, this.address_country_l);
+            string Other = string.Format("{0} {1} {2} {3}", this.address_line_e, this.address_subregion_e, this.address_region_e, this.address_country_e);
+            return IsLocal ? Local : Other;
+        }
+        public string GetTitle(bool IsLocal)
+        {
+            return IsLocal ? this.title_l : this.title_e;
+        }
+        public string GetGender(bool IsLocal)
+        {
+            return IsLocal ? gender_l : gender_e;
+        }
+        public string GetOccupation(bool IsLocal)
+        {
+            return IsLocal ? occupation_l : occupation_e;
+        }
+        public string GetNationality(bool IsLocal)
+        {
+            return IsLocal ? nationality_l : nationality_e;
         }
         #endregion
     }
@@ -3725,6 +4026,25 @@ namespace EMR
         public dynamic delete_date_time { get; set; }
         public dynamic document_type_rcd { get; set; }
         public dynamic amend_reason { get; set; }
+
+        //Update 21.2.2022
+        public dynamic communicable_disease_screening { get; set; }
+        public dynamic barrier_to_care { get; set; }
+        public dynamic fall_risk_factors { get; set; }
+        public dynamic fall_risk_questions { get; set; }
+        public dynamic intervention { get; set; }
+        public dynamic nutritional_status_screening { get; set; }
+        public dynamic nutritional_status { get; set; }
+        public dynamic nutritional_conclude { get; set; }
+        public dynamic patient_education_needs { get; set; }
+        public dynamic immediate_consulting_requirement { get; set; }
+        public dynamic flacc { get; set; }
+        public dynamic flacc_conclude { get; set; }
+
+        public dynamic npass { get; set; }
+        public dynamic npass_conclude { get; set; }
+        public dynamic document_version { get; set; }
+
         #endregion
 
         public static Dictionary<string, string> NUTRITION_STATUS_CODE = new Dictionary<string, string>()
@@ -4370,6 +4690,14 @@ namespace EMR
         public dynamic specific_education_required { get; set; }
 
         public dynamic next_appointment { get; set; }
+
+        //Update V2.0
+        public dynamic infected_with_covid { get; set; }
+        public dynamic received_1_dose { get; set; }
+        public dynamic received_2_dose { get; set; }
+        public dynamic received_additional { get; set; }
+        // public dynamic other_vaccinations { get; set; } load immunization
+        public dynamic not_yet_vaccinations { get; set; } 
         #endregion
 
         public static Dictionary<string, string> TREATMENT_CODE = new Dictionary<string, string>()

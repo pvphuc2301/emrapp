@@ -8,6 +8,13 @@
         <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="TabStyle.css" />
+    <%--<style>
+        #RadTabStrip1 .rtsLI {
+            height: 33px;
+            text-align: left;
+            overflow: hidden;
+        }
+    </style>--%>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -33,23 +40,76 @@
         <script type="text/javascript">
             /* <![CDATA[ */
             function onTabSelecting(sender, args) {
- 
+
                 if (args.get_tab().get_pageViewID()) {
                     args.get_tab().set_postBack(false);
                 }
             }
             /* ]]> */
         </script>
-        <telerik:RadTabStrip RenderMode="Lightweight" OnClientTabSelecting="onTabSelecting" ID="RadTabStrip1" SelectedIndex="0" runat="server" MultiPageID="RadMultiPage1" Skin="MetroTouch" Width="100%" Align="Justify" Orientation="HorizontalTop" OnTabClick="RadTabStrip1_TabClick">
-        </telerik:RadTabStrip>
-        <div class="recipeImage qsf-ib">
-            <telerik:RadMultiPage ID="RadMultiPage1" runat="server" SelectedIndex="0" OnPageViewCreated="RadMultiPage1_PageViewCreated">
-            </telerik:RadMultiPage>
+        <div style="display: flex;">
+            <div id="tabstrip_wrapper">
+                <telerik:RadTabStrip RenderMode="Lightweight" OnClientTabSelecting="onTabSelecting" ID="RadTabStrip1" SelectedIndex="0" runat="server" 
+                    MultiPageID="RadMultiPage1" Skin="MetroTouch" Align="Justify" Orientation="VerticalLeft" OnTabClick="RadTabStrip1_TabClick">
+                </telerik:RadTabStrip>
+            </div>
+            
+            <%--<div class="recipeImage qsf-ib">--%>
+                <telerik:RadMultiPage ID="RadMultiPage1" runat="server" SelectedIndex="0" OnPageViewCreated="RadMultiPage1_PageViewCreated">
+                </telerik:RadMultiPage>
+            <%--</div>--%>
         </div>
+        <div id="cardcontent"  class="card" style="position: fixed; padding: 10px;"></div>
     </div>  
     </form>
 
+    <%--<script src="../scripts/jquery-3.2.1.min.js"></script>
+    <script src="../scripts/bootstrap.min.js"></script>--%>
+    <script src="../scripts/myScript.js"></script>
+    <%--<script src="../scripts/contenteditable.min.js"></script>
+    <script src="../scripts/waves.js"></script>
+    <script src="../scripts/alertify.js"></script>--%>
+
      <script>
+
+         loadtitle();
+
+         function beforeAsyncPostBack() {
+             //var curtime = new Date();
+         }
+
+         function afterAsyncPostBack() {
+             loadtitle();
+         }
+
+         function loadtitle() {
+             let rtsLink = document.getElementsByClassName("rtsLink");
+             let cardcontent = document.getElementById("cardcontent");
+
+             for (let i = 0; i < rtsLink.length; i++) {
+                 rtsLink[i].addEventListener("mouseover", function (e) {
+
+                     cardcontent.hidden = "";
+                     cardcontent.innerHTML = rtsLink[i].innerHTML;
+                     cardcontent.style.top = e.clientY + 'px';
+                     cardcontent.style.left = e.clientX + "px";
+                 });
+
+                 rtsLink[i].addEventListener("mouseout", function (e) {
+                     cardcontent.hidden = "hidden";
+                     cardcontent.innerHTML = "";
+                 });
+             }
+         }
+
+         document.getElementById("tabstrip_wrapper").style.height = window.innerHeight + "px";
+         document.getElementById("tabstrip_wrapper").style.overflowY = "scroll";
+
+         document.getElementById("RadMultiPage1Panel").style.height = window.innerHeight + "px";
+         document.getElementById("RadMultiPage1Panel").style.width = "100%";
+         document.getElementById("RadMultiPage1Panel").style.overflowY = "scroll";
+         document.getElementById("RadMultiPage1Panel").style.paddingBottom = "10px";
+
          let MsoNormal = document.getElementsByTagName("p");
          //.getElementsByClassName("MsoNormal");
          for (let i = 0; i < MsoNormal.length; i++) {
@@ -83,3 +143,4 @@
      </script>
 </body>
 </html>
+

@@ -24,7 +24,7 @@ namespace EMR.Other
         {
             if (!WebHelpers.CheckSession(this, "../login.aspx?ReturnUrl=", false)) return;
             
-            loc = Request.QueryString["loc"];
+            loc = (string)Session["company_code"];
 
             if (!IsPostBack)
             {
@@ -176,6 +176,7 @@ namespace EMR.Other
             txt_pid.Value = pid;
 
             dynamic response = WebHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=4&keyword=" + pid);
+            //dynamic response = WebHelpers.GetAPI($"api/Patient/demographic-search-facility?f_code={loc}&pageIndex=1&pageSize=4&keyword=" + pid);
 
             if (response.Status == System.Net.HttpStatusCode.OK)
             {

@@ -203,14 +203,16 @@ namespace EMR
 
                 prt_vpid.Text = patientInfo.visible_patient_id;
                 WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
-                prt_patient_name.Text = $"{patientInfo.FullName} ({patientInfo.Title})";
+                prt_patient_name_l.Text = $"{patientInfo.GetFullName(true)} ({patientInfo.GetTitle(true)})";
+                prt_patient_name_e.Text = $"/ {patientInfo.GetFullName(false)} ({patientInfo.GetTitle(false)})";
 
                 prt_dob.Text = WebHelpers.FormatDateTime(patientInfo.date_of_birth);
                 
                 if(patientInfo.Gender == "Male" || patientInfo.Gender == "Nam")
                 {
                     prt_male.Text = "☒";
-                } else if (patientInfo.Gender == "Female" || patientInfo.Gender == "Nữ")
+                }
+                else if (patientInfo.Gender == "Female" || patientInfo.Gender == "Nữ")
                 {
                     prt_female.Text = "☒";
                 }

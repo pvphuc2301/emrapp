@@ -77,7 +77,7 @@ namespace EMR.DBP.OPD
         }
         protected void btnHome_Click(object sender, EventArgs e)
         {
-            Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
+            Response.Redirect($"../../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
         }
         protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
         {
@@ -479,7 +479,20 @@ namespace EMR.DBP.OPD
                 omr.vs_respiratory_rate = vs_respiratory_rate.Text;
                 omr.vs_blood_pressure = vs_blood_pressure.Text;
                 omr.vs_spO2 = vs_spo2.Text;
-                omr.physical_examination = txt_physical_examination.Value.Replace("<br>", "");
+
+                string physical_examination = txt_physical_examination.Value;
+
+                while (physical_examination.Contains("<br>"))
+                {
+                    physical_examination = physical_examination.Replace("<br>", "\n");
+                }
+
+                while (physical_examination.Contains("\n\n"))
+                {
+                    physical_examination = physical_examination.Replace("\n\n", "\n");
+                }
+
+                omr.physical_examination = physical_examination;
                 omr.psy_consult_required = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_psy_consult_required_");
                 //IV.
                 omr.laboratory_indications_results = txt_laboratory_indications_results.Value;

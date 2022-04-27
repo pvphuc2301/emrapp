@@ -86,8 +86,7 @@
                                     <h4>Y LỆNH THUỐC NỘI TRÚ</h4>
                                     <h5>MEDICATION ADMINISTRATION RECORD</h5>
                                 </div>
-                                <div style="width: 120px">
-                                </div>
+                                <div style="width: 120px"></div>
                             </div>
 
                             <div style="height: 10px; padding-bottom: 4px;" class="mb-2">
@@ -379,6 +378,7 @@
     <script>
         function FormatGrid() {
             document.getElementById("print_content").style.height = "407px";
+            document.getElementById("print_content").style.border = "0.1px solid #fff";
             document.getElementById("print_content").style.overflowY = "scroll";
 
             let lbl_lst = JSON.parse(document.getElementById("lbl_lst").value);
@@ -428,7 +428,7 @@
             //let printContent = document.querySelector("#printContent");
 
             //console.log(customPage.innerText);
-
+             
             if (customPage.innerText == '') {
                 totalPage = getTotalPages();
             } else {

@@ -11,7 +11,7 @@ using Telerik.Web.UI;
 
 namespace EMR.OPD
 {
-    public partial class MedRecForVacV20 : System.Web.UI.Page
+    public partial class MedRecForVacV10 : System.Web.UI.Page
     {
         PatientInfo patientInfo;
         PatientVisitInfo patientVisitInfo;
@@ -40,7 +40,11 @@ namespace EMR.OPD
             loc = (string)Session["company_code"];
             locChanged = (string)Session["const_company_code"];
 
-            PAGE_URL = $"/OPD/MedRecForVac.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+            string url = Request.RawUrl.Split('.')[0];
+            var urlArr = url.Split('/');
+            url = urlArr[urlArr.Length - 1];
+
+            PAGE_URL = $"/OPD/{url}.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
             if (!IsPostBack)
             {
@@ -68,16 +72,6 @@ namespace EMR.OPD
         #region Binding Data
         private void BindingDataForm(Mrfv mrfv, bool state)
         {
-            vs_temperature.Text = mrfv.vs_temperature;
-            vs_heart_rate.Text = mrfv.vs_heart_rate;
-            vs_weight.Text = mrfv.vs_weight;
-            vs_respiratory_rate.Text = mrfv.vs_respiratory_rate;
-            vs_height.Text = mrfv.vs_height;
-            vs_blood_pressure.Text = mrfv.vs_blood_pressure;
-            vs_BMI.Text = mrfv.vs_BMI;
-            vs_spO2.Text = mrfv.vs_SpO2;
-            vs_pulse.Text = mrfv.vs_pulse;
-
             if (state)
             {
                 BindingDataFormEdit(mrfv);
@@ -87,63 +81,74 @@ namespace EMR.OPD
                 BindingDataFormView(mrfv);
             }
         }
-        private void BindingDataFormEdit(Mrfv model)
+        private void BindingDataFormEdit(Mrfv mrfv)
         {
             try
             {
+                btnVSFreeText.Visible = true;
+                btnUpdateVitalSign.Visible = true;
                 txt_amend_reason.Text = "";
-                txt_chief_complaint.Value = WebHelpers.TextToHtmlTag(model.chief_complaint);
-                txt_cur_med_history.Value = WebHelpers.TextToHtmlTag(model.cur_med_history);
-                txt_cur_medications.Value = WebHelpers.TextToHtmlTag(model.cur_medications);
-                txt_personal.Value = WebHelpers.TextToHtmlTag(model.personal);
-                //Update V2.0
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_" + model.infected_with_covid);
+                txt_chief_complaint.Value = WebHelpers.TextToHtmlTag(mrfv.chief_complaint);
+                txt_cur_med_history.Value = WebHelpers.TextToHtmlTag(mrfv.cur_med_history);
+                txt_cur_medications.Value = WebHelpers.TextToHtmlTag(mrfv.cur_medications);
+                txt_personal.Value = WebHelpers.TextToHtmlTag(mrfv.personal);
+                txt_family.Value = WebHelpers.TextToHtmlTag(mrfv.family);
 
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + model.received_1_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + model.received_2_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + model.received_additional);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + model.received_additional);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + model.not_yet_vaccinations);
-                txt_other_vaccinations.Text = model.other_vaccinations;
-
-                txt_family.Value = WebHelpers.TextToHtmlTag(model.family);
-
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_allergy_" + model.allergy, "false");
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_allergy_" + mrfv.allergy, "false");
                 if (rad_allergy_true.Checked)
                 {
-                    txt_allergy_note.Value = WebHelpers.TextToHtmlTag(model.allergy_text);
+                    txt_allergy_note.Value = WebHelpers.TextToHtmlTag(mrfv.allergy_text);
                 }
 
                 //
-                WebHelpers.VisibleControl(true, btnUpdateVitalSigns);
+                txt_vs_temperature.Disabled
+                 = txt_vs_weight.Disabled
+                 = txt_vs_height.Disabled
+                 = txt_vs_bmi.Disabled
+                 = txt_vs_pulse.Disabled
+                 = txt_vs_heart_rate.Disabled
+                 = txt_vs_respiratory_rate.Disabled
+                 = txt_vs_blood_pressure.Disabled
+                 = txt_vs_spO2.Disabled
+                 = !cbVSFreeText.Checked;
 
-                txt_scr_before_vacc_1.Value = WebHelpers.TextToHtmlTag(model.scr_before_vacc_1);
-                txt_scr_before_vacc_2.Value = WebHelpers.TextToHtmlTag(model.scr_before_vacc_2);
-                txt_scr_before_vacc_3.Value = WebHelpers.TextToHtmlTag(model.scr_before_vacc_3);
-                txt_scr_before_vacc_4.Value = WebHelpers.TextToHtmlTag(model.scr_before_vacc_4);
-                txt_scr_before_vacc_5.Value = WebHelpers.TextToHtmlTag(model.scr_before_vacc_5);
-                txt_scr_before_vacc_6.Value = WebHelpers.TextToHtmlTag(model.scr_before_vacc_6);
-                txt_scr_before_vacc_7.Value = WebHelpers.TextToHtmlTag(model.scr_before_vacc_7);
-                txt_scr_before_vacc_8.Value = WebHelpers.TextToHtmlTag(model.scr_before_vacc_8);
+                txt_vs_temperature.Value = mrfv.vs_temperature;
+                txt_vs_heart_rate.Value = mrfv.vs_heart_rate;
+                txt_vs_weight.Value = mrfv.vs_weight;
+                txt_vs_respiratory_rate.Value = mrfv.vs_respiratory_rate;
+                txt_vs_height.Value = mrfv.vs_height;
+                txt_vs_blood_pressure.Value = mrfv.vs_blood_pressure;
+                txt_vs_bmi.Value = mrfv.vs_BMI;
+                txt_vs_spO2.Value = mrfv.vs_SpO2;
+                txt_vs_pulse.Value = mrfv.vs_pulse;
 
-                ViewState[grid_appointed_vaccine.ID] = WebHelpers.BindingDataGridView(grid_appointed_vaccine, WebHelpers.GetJSONToDataTable(model.appointed_vaccine), Mrfv.APPOINTED_VACCINE, btn_grid_appointed_vaccine_add);
+                txt_scr_before_vacc_1.Value = WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_1);
+                txt_scr_before_vacc_2.Value = WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_2);
+                txt_scr_before_vacc_3.Value = WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_3);
+                txt_scr_before_vacc_4.Value = WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_4);
+                txt_scr_before_vacc_5.Value = WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_5);
+                txt_scr_before_vacc_6.Value = WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_6);
+                txt_scr_before_vacc_7.Value = WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_7);
+                txt_scr_before_vacc_8.Value = WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_8);
 
-                txt_additional_investigations.Value = WebHelpers.TextToHtmlTag(model.additional_investigations);
-                txt_initial_diagnosis.Value = WebHelpers.TextToHtmlTag(model.initial_diagnosis);
-                txt_differential_diagnosis.Value = WebHelpers.TextToHtmlTag(model.differential_diagnosis);
-                txt_associated_conditions.Value = WebHelpers.TextToHtmlTag(model.associated_conditions);
+                ViewState[grid_appointed_vaccine.ID] = WebHelpers.BindingDataGridView(grid_appointed_vaccine, WebHelpers.GetJSONToDataTable(mrfv.appointed_vaccine), Mrfv.APPOINTED_VACCINE, btn_grid_appointed_vaccine_add);
 
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_treatment_code_" + model.treatment_code, "opd");
+                txt_additional_investigations.Value = WebHelpers.TextToHtmlTag(mrfv.additional_investigations);
+                txt_initial_diagnosis.Value = WebHelpers.TextToHtmlTag(mrfv.initial_diagnosis);
+                txt_differential_diagnosis.Value = WebHelpers.TextToHtmlTag(mrfv.differential_diagnosis);
+                txt_associated_conditions.Value = WebHelpers.TextToHtmlTag(mrfv.associated_conditions);
 
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_spec_opinion_req_" + model.spec_opinion_req, "false");
-                txt_spec_opinion_req_text.Value = WebHelpers.GetBool(model.spec_opinion_req, WebHelpers.TextToHtmlTag(model.spec_opinion_req_text), "");
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_treatment_code_" + mrfv.treatment_code, "opd");
 
-                txt_pecific_edu_req.Value = model.pecific_edu_req;
-                txt_next_appointment.Value = model.next_appointment;
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_spec_opinion_req_" + mrfv.spec_opinion_req, "false");
+                txt_spec_opinion_req_text.Value = WebHelpers.GetBool(mrfv.spec_opinion_req, WebHelpers.TextToHtmlTag(mrfv.spec_opinion_req_text), "");
 
-                DataObj.Value = JsonConvert.SerializeObject(model);
-                Session["docid"] = model.document_id;
-                WebHelpers.AddScriptFormEdit(Page, model, (string)Session["emp_id"], loc);
+                txt_pecific_edu_req.Value = mrfv.pecific_edu_req;
+                txt_next_appointment.Value = mrfv.next_appointment;
+
+                DataObj.Value = JsonConvert.SerializeObject(mrfv);
+                Session["docid"] = mrfv.document_id;
+                WebHelpers.AddScriptFormEdit(Page, mrfv, (string)Session["emp_id"], loc);
 
             }
             catch (Exception ex)
@@ -151,65 +156,62 @@ namespace EMR.OPD
                 WebHelpers.SendError(Page, ex);
             }
         }
-        private void BindingDataFormView(Mrfv model)
+        private void BindingDataFormView(Mrfv mrfv)
         {
             try
             {
-                cb_received_1_dose_true.Disabled
-                    = cb_received_2_dose_true.Disabled
-                    = cb_received_additional_true.Disabled
-                    = cb_not_yet_vaccinations_true.Disabled
-                    = true;
+                btnVSFreeText.Visible = false;
+                lbl_chief_complaint.Text = WebHelpers.TextToHtmlTag(mrfv.chief_complaint);
+                lbl_cur_med_history.Text = WebHelpers.TextToHtmlTag(mrfv.cur_med_history);
+                lbl_cur_medications.Text = WebHelpers.TextToHtmlTag(mrfv.cur_medications);
+                lbl_personal.Text = WebHelpers.TextToHtmlTag(mrfv.personal);
+                lbl_family.Text = WebHelpers.TextToHtmlTag(mrfv.family);
 
-                lbl_chief_complaint.Text = WebHelpers.TextToHtmlTag(model.chief_complaint);
-                lbl_cur_med_history.Text = WebHelpers.TextToHtmlTag(model.cur_med_history);
-                lbl_cur_medications.Text = WebHelpers.TextToHtmlTag(model.cur_medications);
-                lbl_personal.Text = WebHelpers.TextToHtmlTag(model.personal);
-                // Update 2.0
-                lbl_infected_with_covid.Text = WebHelpers.FormatString(WebHelpers.GetBool(model.infected_with_covid));
-
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + model.received_1_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + model.received_2_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + model.received_additional);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + model.not_yet_vaccinations);
-                lbl_other_vaccinations.Text = model.other_vaccinations;
-                lbl_family.Text = WebHelpers.TextToHtmlTag(model.family);
-
-                if (model.allergy != null)
+                if (mrfv.allergy != null)
                 {
-                    lbl_allergy.Text = model.allergy ? "Có, ghi rõ/ Yes, specify <br>" + WebHelpers.TextToHtmlTag(model.allergy_text) : "Không/ No";
+                    lbl_allergy.Text = mrfv.allergy ? "Có, ghi rõ/ Yes, specify <br>" + WebHelpers.TextToHtmlTag(mrfv.allergy_text) : "Không/ No";
                 }
 
                 //vital signs
-                WebHelpers.VisibleControl(false, btnUpdateVitalSigns);
+                WebHelpers.VisibleControl(false, btnUpdateVitalSign);
+
+                lbl_vs_temperature.Text = mrfv.vs_temperature + " °C";
+                lbl_vs_weight.Text = mrfv.vs_weight + " Kg";
+                lbl_vs_height.Text = mrfv.vs_height + " cm";
+                lbl_vs_BMI.Text = mrfv.vs_BMI + " (Kg/m 2)";
+                lbl_vs_pulse.Text = mrfv.vs_pulse + " cm";
+                lbl_vs_heart_rate.Text = mrfv.vs_heart_rate + " /phút (m)";
+                lbl_vs_respiratory_rate.Text = mrfv.vs_respiratory_rate + " /phút (m)";
+                lbl_vs_blood_pressure.Text = mrfv.vs_blood_pressure + " mmHg";
+                lbl_vs_spO2.Text = mrfv.vs_SpO2 + " %";
 
                 //
-                lbl_scr_before_vacc_1.Text = WebHelpers.TextToHtmlTag(model.scr_before_vacc_1);
-                lbl_scr_before_vacc_2.Text = WebHelpers.TextToHtmlTag(model.scr_before_vacc_2);
-                lbl_scr_before_vacc_3.Text = WebHelpers.TextToHtmlTag(model.scr_before_vacc_3);
-                lbl_scr_before_vacc_4.Text = WebHelpers.TextToHtmlTag(model.scr_before_vacc_4);
-                lbl_scr_before_vacc_5.Text = WebHelpers.TextToHtmlTag(model.scr_before_vacc_5);
-                lbl_scr_before_vacc_6.Text = WebHelpers.TextToHtmlTag(model.scr_before_vacc_6);
-                lbl_scr_before_vacc_7.Text = WebHelpers.TextToHtmlTag(model.scr_before_vacc_7);
-                lbl_scr_before_vacc_8.Text = WebHelpers.TextToHtmlTag(model.scr_before_vacc_8);
+                lbl_scr_before_vacc_1.Text = WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_1);
+                lbl_scr_before_vacc_2.Text = WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_2);
+                lbl_scr_before_vacc_3.Text = WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_3);
+                lbl_scr_before_vacc_4.Text = WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_4);
+                lbl_scr_before_vacc_5.Text = WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_5);
+                lbl_scr_before_vacc_6.Text = WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_6);
+                lbl_scr_before_vacc_7.Text = WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_7);
+                lbl_scr_before_vacc_8.Text = WebHelpers.TextToHtmlTag(mrfv.scr_before_vacc_8);
 
                 // Appointed Vaccine
-                WebHelpers.LoadDataGridView(grid_appointed_vaccine, WebHelpers.GetJSONToDataTable(model.appointed_vaccine), Mrfv.APPOINTED_VACCINE, btn_grid_appointed_vaccine_add);
+                WebHelpers.LoadDataGridView(grid_appointed_vaccine, WebHelpers.GetJSONToDataTable(mrfv.appointed_vaccine), Mrfv.APPOINTED_VACCINE, btn_grid_appointed_vaccine_add);
 
-                lbl_additional_investigations.Text = WebHelpers.TextToHtmlTag(model.additional_investigations);
+                lbl_additional_investigations.Text = WebHelpers.TextToHtmlTag(mrfv.additional_investigations);
 
-                lbl_initial_diagnosis.Text = WebHelpers.TextToHtmlTag(model.initial_diagnosis);
-                lbl_differential_diagnosis.Text = WebHelpers.TextToHtmlTag(model.differential_diagnosis);
-                lbl_associated_conditions.Text = WebHelpers.TextToHtmlTag(model.associated_conditions);
-                lbl_treatment_desc.Text = WebHelpers.TextToHtmlTag(model.treatment_desc);
+                lbl_initial_diagnosis.Text = WebHelpers.TextToHtmlTag(mrfv.initial_diagnosis);
+                lbl_differential_diagnosis.Text = WebHelpers.TextToHtmlTag(mrfv.differential_diagnosis);
+                lbl_associated_conditions.Text = WebHelpers.TextToHtmlTag(mrfv.associated_conditions);
+                lbl_treatment_desc.Text = WebHelpers.TextToHtmlTag(mrfv.treatment_desc);
 
-                if (model.spec_opinion_req != null)
+                if (mrfv.spec_opinion_req != null)
                 {
-                    lbl_spec_opinion_req.Text = WebHelpers.GetBool(model.spec_opinion_req, "Có, ghi rõ/ Yes, specify <br>" + WebHelpers.TextToHtmlTag(model.spec_opinion_req_text), "Không/ No");
+                    lbl_spec_opinion_req.Text = WebHelpers.GetBool(mrfv.spec_opinion_req, "Có, ghi rõ/ Yes, specify <br>" + WebHelpers.TextToHtmlTag(mrfv.spec_opinion_req_text), "Không/ No");
                 }
 
-                lbl_pecific_edu_req.Text = WebHelpers.TextToHtmlTag(model.pecific_edu_req);
-                lbl_next_appointment.Text = WebHelpers.TextToHtmlTag(model.next_appointment);
+                lbl_pecific_edu_req.Text = WebHelpers.TextToHtmlTag(mrfv.pecific_edu_req);
+                lbl_next_appointment.Text = WebHelpers.TextToHtmlTag(mrfv.next_appointment);
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
 
@@ -233,14 +235,6 @@ namespace EMR.OPD
                 prt_cur_med_history.Text = WebHelpers.TextToHtmlTag(mrfv.cur_med_history);
                 prt_cur_medications.Text = WebHelpers.TextToHtmlTag(mrfv.cur_medications);
                 prt_personal.Text = WebHelpers.TextToHtmlTag(mrfv.personal);
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_" + mrfv.infected_with_covid);
-
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + mrfv.received_1_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + mrfv.received_2_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + mrfv.received_additional);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + mrfv.not_yet_vaccinations);
-                
-                prt_other_vaccinations.Text = "Tiêm vắc xin khác (ghi rõ)/ <span class=\"text-primary\">Other vaccinations (specify):</span>";
                 prt_family.Text = WebHelpers.TextToHtmlTag(mrfv.family);
 
                 prt_allergy.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class='text-primary'>No</span>", Value = false }, new Option { Text = "Có/ <span class='text-primary'>Yes</span>", Value = true }, mrfv.allergy, "display: grid; grid-template-columns: 1fr 1fr");
@@ -333,8 +327,6 @@ namespace EMR.OPD
                 //
                 prt_specific_edu_req.Text = WebHelpers.TextToHtmlTag(mrfv.pecific_edu_req);
                 prt_next_appointment.Text = $"● Hẹn lần khám tới/ <span class='text-primary'>Next appointment: </span>{WebHelpers.TextToHtmlTag(mrfv.next_appointment)}";
-
-
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
 
@@ -422,41 +414,18 @@ namespace EMR.OPD
         {
             Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
         }
-        protected void btnUpdateVitalSigns_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                patientVisitInfo = new PatientVisitInfo(varPVID, loc);
-                dynamic response = VitalSign.Update(patientVisitInfo.patient_visit_id, patientVisitInfo.visit_type, loc);
-                if (response.Status == System.Net.HttpStatusCode.OK)
-                {
-                    dynamic vs = JsonConvert.DeserializeObject(response.Data);
-
-                    vs_temperature.Text = WebHelpers.FormatString(vs.vs_temperature);
-                    vs_heart_rate.Text = WebHelpers.FormatString(vs.vs_heart_rate);
-                    vs_weight.Text = WebHelpers.FormatString(vs.vs_weight);
-                    vs_respiratory_rate.Text = WebHelpers.FormatString(vs.vs_respiratory_rate);
-                    vs_height.Text = WebHelpers.FormatString(vs.vs_height);
-                    vs_BMI.Text = WebHelpers.FormatString(vs.vs_BMI);
-                    vs_blood_pressure.Text = WebHelpers.FormatString(vs.vs_blood_pressure);
-                    vs_spO2.Text = WebHelpers.FormatString(vs.vs_spO2);
-                    vs_pulse.Text = WebHelpers.FormatString(vs.pulse);
-                }
-            }
-            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
-        }
 
         public void LoadVitalSigns(dynamic vs)
         {
-            vs_temperature.Text = WebHelpers.FormatString(vs.vs_temperature);
-            vs_heart_rate.Text = WebHelpers.FormatString(vs.vs_heart_rate);
-            vs_weight.Text = WebHelpers.FormatString(vs.vs_weight);
-            vs_respiratory_rate.Text = WebHelpers.FormatString(vs.vs_respiratory_rate);
-            vs_height.Text = WebHelpers.FormatString(vs.vs_height);
-            vs_BMI.Text = WebHelpers.FormatString(vs.vs_BMI);
-            vs_blood_pressure.Text = WebHelpers.FormatString(vs.vs_blood_pressure);
-            vs_spO2.Text = WebHelpers.FormatString(vs.vs_SpO2);
-            vs_pulse.Text = WebHelpers.FormatString(vs.vs_pulse);
+            txt_vs_temperature.Value = vs.vs_temperature;
+            txt_vs_heart_rate.Value = vs.vs_heart_rate;
+            txt_vs_weight.Value = vs.vs_weight;
+            txt_vs_respiratory_rate.Value = vs.vs_respiratory_rate;
+            txt_vs_height.Value = vs.vs_height;
+            txt_vs_bmi.Value = vs.vs_BMI;
+            txt_vs_blood_pressure.Value = vs.vs_blood_pressure;
+            txt_vs_spO2.Value = vs.vs_spO2;
+            txt_vs_pulse.Value = vs.pulse;
         }
         #endregion
 
@@ -488,8 +457,15 @@ namespace EMR.OPD
                 SignatureDate = _SignatureDate;
                 SignatureName = _SignatureName;
 
-
-                LoadVitalSigns(mrfv);
+                txt_vs_temperature.Value = mrfv.vs_temperature;
+                txt_vs_heart_rate.Value = mrfv.vs_heart_rate;
+                txt_vs_weight.Value = mrfv.vs_weight;
+                txt_vs_respiratory_rate.Value = mrfv.vs_respiratory_rate;
+                txt_vs_height.Value = mrfv.vs_height;
+                txt_vs_bmi.Value = mrfv.vs_BMI;
+                txt_vs_blood_pressure.Value = mrfv.vs_blood_pressure;
+                txt_vs_spO2.Value = mrfv.vs_SpO2;
+                txt_vs_pulse.Value = mrfv.vs_pulse;
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
 
@@ -558,29 +534,21 @@ namespace EMR.OPD
                 mrfv.cur_med_history = txt_cur_med_history.Value;
                 mrfv.cur_medications = txt_cur_medications.Value;
                 mrfv.personal = txt_personal.Value;
-                //Update v2.0
-                mrfv.infected_with_covid = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_");
-                mrfv.received_1_dose = cb_received_1_dose_true.Checked;
-                mrfv.received_2_dose = cb_received_2_dose_true.Checked;
-                mrfv.received_additional = cb_received_additional_true.Checked;
-                mrfv.other_vaccinations = txt_other_vaccinations.Value;
-                mrfv.not_yet_vaccinations = cb_not_yet_vaccinations_true.Checked;
-
                 mrfv.family = txt_family.Value;
 
                 mrfv.allergy = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_allergy_");
                 if (rad_allergy_true.Checked)
                     mrfv.allergy_text = txt_allergy_note.Value;
 
-                mrfv.vs_temperature = vs_temperature.Text;
-                mrfv.vs_heart_rate = vs_heart_rate.Text;
-                mrfv.vs_weight = vs_weight.Text;
-                mrfv.vs_height = vs_height.Text;
-                mrfv.vs_respiratory_rate = vs_respiratory_rate.Text;
-                mrfv.vs_BMI = vs_BMI.Text;
-                mrfv.vs_blood_pressure = vs_blood_pressure.Text;
-                mrfv.vs_SpO2 = vs_spO2.Text;
-                mrfv.vs_pulse = vs_pulse.Text;
+                mrfv.vs_temperature = txt_vs_temperature.Value;
+                mrfv.vs_heart_rate = txt_vs_heart_rate.Value;
+                mrfv.vs_weight = txt_vs_weight.Value;
+                mrfv.vs_height = txt_vs_height.Value;
+                mrfv.vs_respiratory_rate = txt_vs_respiratory_rate.Value;
+                mrfv.vs_BMI = txt_vs_bmi.Value;
+                mrfv.vs_blood_pressure = txt_vs_blood_pressure.Value;
+                mrfv.vs_SpO2 = txt_vs_spO2.Value;
+                mrfv.vs_pulse = txt_vs_pulse.Value;
 
                 mrfv.scr_before_vacc_1 = txt_scr_before_vacc_1.Value;
                 mrfv.scr_before_vacc_2 = txt_scr_before_vacc_2.Value;
@@ -635,6 +603,36 @@ namespace EMR.OPD
         protected void clearSession_Click(object sender, EventArgs e)
         {
             WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
+        }
+
+        protected void btnVSFreeText_Click(object sender, EventArgs e)
+        {
+            cbVSFreeText.Checked = !cbVSFreeText.Checked;
+            txt_vs_temperature.Disabled
+                 = txt_vs_weight.Disabled
+                 = txt_vs_height.Disabled
+                 //= txt_vs_bmi.Disabled
+                 = txt_vs_pulse.Disabled
+                 = txt_vs_heart_rate.Disabled
+                 = txt_vs_respiratory_rate.Disabled
+                 = txt_vs_blood_pressure.Disabled
+                 = txt_vs_spO2.Disabled
+                 = !cbVSFreeText.Checked;
+        }
+
+        protected void btnUpdateVitalSign_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                patientVisitInfo = new PatientVisitInfo(varPVID, loc);
+                dynamic response = VitalSign.Update(patientVisitInfo.patient_visit_id, patientVisitInfo.visit_type, loc);
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    dynamic vs = JsonConvert.DeserializeObject(response.Data);
+                    LoadVitalSigns(vs);
+                }
+            }
+            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }
     }
 }

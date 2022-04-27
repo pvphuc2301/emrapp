@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -9,9 +8,9 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 
-namespace EMR
+namespace EMR.DBP.OPD
 {
-    public partial class PediatricOutpatientMedicalRecord : System.Web.UI.Page
+    public partial class OutPatMedRecPed : System.Web.UI.Page
     {
         POMR pomr;
         PatientInfo patientInfo;
@@ -40,27 +39,15 @@ namespace EMR
             varPID = Request.QueryString["pId"];
             loc = (string)Session["company_code"];
             locChanged = (string)Session["const_company_code"];
-            
-            string url = Request.RawUrl.Split('.')[0];
-            var urlArr = url.Split('/');
-            url = urlArr[urlArr.Length - 1];
 
-            PAGE_URL = $"/OPD/{url}.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+            PAGE_URL = $"/OPD/OutPatMedRecPed.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
             if (!IsPostBack)
             {
                 Initial();
-                SetDefaultValue();
             }
 
             PostBackEventHandler();
-        }
-        private void SetDefaultValue()
-        {
-            if (RadGrid1.Items.Count <= 1)
-            {
-                rad_infected_with_covid_false.Checked = true;
-            }
         }
 
         #region Binding Data
@@ -77,24 +64,9 @@ namespace EMR
         }
         private void BindingDataFormEdit(POMR pomr)
         {
-            try 
+            try
             {
-                //Update V2.0
-                cb_received_1_dose_true.Disabled
-                    = cb_received_2_dose_true.Disabled
-                    = cb_received_additional_true.Disabled
-                    = cb_not_yet_vaccinations_true.Disabled
-                    = false;
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_" + pomr.infected_with_covid);
 
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + pomr.received_1_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + pomr.received_2_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + pomr.received_additional);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + pomr.not_yet_vaccinations);
-
-                txt_other_vaccinations.Value = pomr.other_vaccinations;
-
-                btnVSFreeText.Visible = true;
                 txt_amend_reason.Text = "";
 
                 // I. Lý do đến khám/ Chief complaint:
@@ -117,29 +89,17 @@ namespace EMR
                 // DẤU HIỆU SINH TỒN/ VITAL SIGNS:
 
                 WebHelpers.VisibleControl(true, btnUpdateVitalSign);
+                vs_temperature.Text = pomr.vs_temperature;
+                vs_heart_rate.Text = pomr.vs_heart_rate;
+                vs_weight.Text = pomr.vs_weight;
+                vs_respiratory_rate.Text = pomr.vs_respiratory_rate;
+                vs_height.Text = pomr.vs_height;
+                vs_blood_pressure.Text = pomr.vs_blood_pressure;
+                vs_bmi.Text = pomr.vs_BMI;
+                vs_spo2.Text = pomr.vs_spO2;
+                vs_pulse.Text = pomr.vs_pulse;
 
-                txt_vs_temperature.Disabled
-                = txt_vs_weight.Disabled
-                = txt_vs_height.Disabled
-                = txt_vs_bmi.Disabled
-                = txt_vs_pulse.Disabled
-                = txt_vs_heart_rate.Disabled
-                = txt_vs_respiratory_rate.Disabled
-                = txt_vs_blood_pressure.Disabled
-                = txt_vs_spO2.Disabled
-                = !cbVSFreeText.Checked;
-
-                txt_vs_temperature.Value = pomr.vs_temperature;
-                txt_vs_heart_rate.Value = pomr.vs_heart_rate;
-                txt_vs_weight.Value = pomr.vs_weight;
-                txt_vs_respiratory_rate.Value = pomr.vs_respiratory_rate;
-                txt_vs_height.Value = pomr.vs_height;
-                txt_vs_blood_pressure.Value = pomr.vs_blood_pressure;
-                txt_vs_bmi.Value = pomr.vs_BMI;
-                txt_vs_spO2.Value = pomr.vs_spO2;
-                txt_vs_pulse.Value = pomr.vs_pulse;
-
-                txt_physical_examination.Value = pomr.physical_examination.Replace("\n", "<br>");
+                txt_physical_examination.Value = WebHelpers.TextToHtmlTag(pomr.physical_examination);
 
                 txt_laboratory_indications_results.Value = WebHelpers.TextToHtmlTag(pomr.laboratory_indications_results);
                 // V.Kết luận/ Conclusion:
@@ -165,7 +125,7 @@ namespace EMR
 
                 txt_specific_education_required.Value = WebHelpers.TextToHtmlTag(pomr.specific_education_required);
 
-                if(pomr.bool_next_appointment != null)
+                if (pomr.bool_next_appointment != null)
                 {
                     WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_bool_next_appointment_" + pomr.bool_next_appointment);
                     if (pomr.bool_next_appointment)
@@ -191,43 +151,27 @@ namespace EMR
         {
             try
             {
-                cb_received_1_dose_true.Disabled
-                    = cb_received_2_dose_true.Disabled
-                    = cb_received_additional_true.Disabled
-                    = cb_not_yet_vaccinations_true.Disabled
-                    = true;
-
-                lbl_infected_with_covid.Text = WebHelpers.FormatString(WebHelpers.GetBool(pomr.infected_with_covid));
-
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + pomr.received_1_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + pomr.received_2_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + pomr.received_additional);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + pomr.not_yet_vaccinations);
-
-                lbl_other_vaccinations.Text = pomr.other_vaccinations;
-
-                btnVSFreeText.Visible = false;
                 //1
                 lbl_chief_complaint.Text = WebHelpers.TextToHtmlTag(pomr.chief_complaint);
                 lbl_current_medication.Text = WebHelpers.TextToHtmlTag(pomr.current_medication);
                 //2
                 lbl_personal.Text = WebHelpers.TextToHtmlTag(pomr.personal);
-            
+
                 lbl_medical_history.Text = WebHelpers.TextToHtmlTag(pomr.medical_history);
 
                 lbl_allergy.Text = WebHelpers.TextToHtmlTag(WebHelpers.GetBool(pomr.allergy, "Có, ghi rõ/ Yes, specify: " + pomr.allergy_note));
 
                 lbl_family.Text = WebHelpers.TextToHtmlTag(pomr.family);
                 WebHelpers.VisibleControl(false, btnUpdateVitalSign);
-                lbl_vs_temperature.Text = pomr.vs_temperature + " °C";
-                lbl_vs_weight.Text = pomr.vs_weight + " Kg";
-                lbl_vs_height.Text = pomr.vs_height + " cm";
-                lbl_vs_BMI.Text = pomr.vs_BMI + " (Kg/m 2)";
-                lbl_vs_pulse.Text = pomr.vs_pulse + " cm";
-                lbl_vs_heart_rate.Text = pomr.vs_heart_rate + " /phút (m)";
-                lbl_vs_respiratory_rate.Text = pomr.vs_respiratory_rate + " /phút (m)";
-                lbl_vs_blood_pressure.Text = pomr.vs_blood_pressure + " mmHg";
-                lbl_vs_spO2.Text = pomr.vs_spO2 + " %";
+                vs_temperature.Text = pomr.vs_temperature;
+                vs_weight.Text = pomr.vs_weight;
+                vs_height.Text = pomr.vs_height;
+                vs_bmi.Text = pomr.vs_BMI;
+                vs_pulse.Text = pomr.vs_pulse;
+                vs_heart_rate.Text = pomr.vs_heart_rate;
+                vs_respiratory_rate.Text = pomr.vs_respiratory_rate;
+                vs_blood_pressure.Text = pomr.vs_blood_pressure;
+                vs_spo2.Text = pomr.vs_spO2;
 
                 lbl_physical_examination.Text = WebHelpers.TextToHtmlTag(pomr.physical_examination);
 
@@ -235,11 +179,12 @@ namespace EMR
                 if (pomr.treatment_code == "OPD")
                 {
                     lbl_medicine.Text = WebHelpers.TextToHtmlTag(pomr.medicine);
-                } else if (pomr.treatment_code == "TRF")
+                }
+                else if (pomr.treatment_code == "TRF")
                 {
                     lbl_tranfer.Text = WebHelpers.TextToHtmlTag(pomr.tranfer);
                 }
-                
+
                 lbl_laboratory_indications_results.Text = WebHelpers.TextToHtmlTag(pomr.laboratory_indications_results);
                 lbl_initial_diagnosis.Text = WebHelpers.TextToHtmlTag(pomr.initial_diagnosis);
                 lbl_differential_diagnosis.Text = WebHelpers.TextToHtmlTag(pomr.differential_diagnosis);
@@ -247,7 +192,7 @@ namespace EMR
                 lbl_treatment_code.Text = WebHelpers.TextToHtmlTag(pomr.treatment_desc);
 
                 lbl_spec_opinion_requested.Text = WebHelpers.TextToHtmlTag(WebHelpers.GetBool(pomr.spec_opinion_requested, "Có, ghi rõ/ Yes, specify: " + pomr.spec_opinion_requested_note));
-                
+
                 lbl_specific_education_required.Text = WebHelpers.TextToHtmlTag(pomr.specific_education_required);
 
                 lbl_date_next_appointment.Text = WebHelpers.TextToHtmlTag(WebHelpers.GetBool(pomr.bool_next_appointment, "Calendar<br>" + WebHelpers.FormatDateTime(pomr.date_next_appointment), "Text<br>" + pomr.txt_next_appointment));
@@ -260,7 +205,8 @@ namespace EMR
         }
         private void BindingDataFormPrint(POMR pomr)
         {
-            try {
+            try
+            {
 
                 patientInfo = new PatientInfo(varPID);
                 patientVisitInfo = new PatientVisitInfo(varPVID, loc);
@@ -272,24 +218,6 @@ namespace EMR
                 prt_chief_complaint.Text = WebHelpers.TextToHtmlTag(pomr.chief_complaint);
                 prt_medical_history.Text = WebHelpers.TextToHtmlTag(pomr.medical_history);
                 prt_personal.Text = WebHelpers.TextToHtmlTag(pomr.personal);
-                //Update 2.0
-                Label infected_with_covid = FindControl("prt_infected_with_covid_" + pomr.infected_with_covid);
-                if (infected_with_covid != null) infected_with_covid.Text = "☒";
-
-                Label received_1_dose = FindControl("prt_received_1_dose_" + pomr.received_1_dose);
-                if (received_1_dose != null) received_1_dose.Text = "☒";
-
-                Label received_2_dose = FindControl("prt_received_2_dose_" + pomr.received_2_dose);
-                if (received_2_dose != null) received_2_dose.Text = "☒";
-
-                Label received_additional = FindControl("prt_received_additional_" + pomr.received_additional);
-                if (received_additional != null) received_additional.Text = "☒";
-
-                Label not_yet_vaccinations = FindControl("prt_not_yet_vaccinations_" + pomr.not_yet_vaccinations);
-                if (not_yet_vaccinations != null) not_yet_vaccinations.Text = "☒";
-
-                prt_other_vaccinations.Text = pomr.other_vaccinations;
-
                 prt_family.Text = WebHelpers.TextToHtmlTag(pomr.family);
 
                 prt_allergy.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, pomr.allergy, "display: grid; grid-template-columns: 1fr 1fr; width: 250px");
@@ -330,7 +258,8 @@ namespace EMR
                 {
                     prt_medicine.Visible = true;
                     prt_medicine.Text = WebHelpers.TextToHtmlTag(pomr.medicine);
-                } else if(pomr.treatment_code == "TRF")
+                }
+                else if (pomr.treatment_code == "TRF")
                 {
                     prt_medicine.Visible = true;
                     prt_medicine.Text = WebHelpers.TextToHtmlTag(pomr.tranfer);
@@ -372,7 +301,7 @@ namespace EMR
             {
                 POMR pomr = new POMR(varDocID, loc);
                 pomr.status = DocumentStatus.FINAL;
-                
+
                 UpdateData(pomr);
                 WebHelpers.clearSessionDoc(Page, varDocID, loc);
             }
@@ -437,24 +366,24 @@ namespace EMR
                     LoadVitalSigns(vs);
                 }
             }
-            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
-            
+            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
+
         }
         public void LoadVitalSigns(dynamic vs)
         {
-            txt_vs_temperature.Value = vs.vs_temperature;
-            txt_vs_heart_rate.Value = vs.vs_heart_rate;
-            txt_vs_weight.Value = vs.vs_weight;
-            txt_vs_respiratory_rate.Value = vs.vs_respiratory_rate;
-            txt_vs_height.Value = vs.vs_height;
-            txt_vs_bmi.Value = vs.vs_BMI;
-            txt_vs_blood_pressure.Value = vs.vs_blood_pressure;
-            txt_vs_spO2.Value = vs.vs_spO2;
-            txt_vs_pulse.Value = vs.pulse;
+            vs_temperature.Text = WebHelpers.FormatString(vs.vs_temperature);
+            vs_heart_rate.Text = WebHelpers.FormatString(vs.vs_heart_rate);
+            vs_weight.Text = WebHelpers.FormatString(vs.vs_weight);
+            vs_respiratory_rate.Text = WebHelpers.FormatString(vs.vs_respiratory_rate);
+            vs_height.Text = WebHelpers.FormatString(vs.vs_height);
+            vs_bmi.Text = WebHelpers.FormatString(vs.vs_BMI);
+            vs_blood_pressure.Text = WebHelpers.FormatString(vs.vs_blood_pressure);
+            vs_spo2.Text = WebHelpers.FormatString(vs.vs_spO2);
+            vs_pulse.Text = WebHelpers.FormatString(vs.pulse);
         }
         protected void btnHome_Click(object sender, EventArgs e)
         {
-            Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
+            Response.Redirect($"../../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
         }
 
         #region METHODS
@@ -462,7 +391,7 @@ namespace EMR
         {
             try
             {
-                
+
                 patientInfo = new PatientInfo(varPID);
                 patientVisitInfo = new PatientVisitInfo(varPVID, loc);
                 if (varDocIdLog != null)
@@ -483,7 +412,7 @@ namespace EMR
                 SignatureName = _SignatureName;
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-                
+
                 if (pomr.status == DocumentStatus.FINAL)
                 {
                     BindingDataForm(pomr, WebHelpers.LoadFormControl(form1, pomr, ControlState.View, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
@@ -541,29 +470,20 @@ namespace EMR
                 pomr.current_medication = txt_current_medication.Value;
                 //2.
                 pomr.personal = txt_personal.Value;
-
-                //Update v2.0
-                pomr.infected_with_covid = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_");
-                pomr.received_1_dose = cb_received_1_dose_true.Checked;
-                pomr.received_2_dose = cb_received_2_dose_true.Checked;
-                pomr.received_additional = cb_received_additional_true.Checked;
-                pomr.other_vaccinations = txt_other_vaccinations.Value;
-                pomr.not_yet_vaccinations = cb_not_yet_vaccinations_true.Checked;
-
                 pomr.family = txt_family.Value;
                 pomr.allergy = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_allergy_");
                 pomr.allergy_note = WebHelpers.GetBool(pomr.allergy, txt_allergy_note.Value, null);
                 //II.
 
-                pomr.vs_temperature = txt_vs_temperature.Value;
-                pomr.vs_weight = txt_vs_weight.Value;
-                pomr.vs_height = txt_vs_height.Value;
-                pomr.vs_BMI = txt_vs_bmi.Value;
-                pomr.vs_pulse = txt_vs_pulse.Value;
-                pomr.vs_heart_rate = txt_vs_heart_rate.Value;
-                pomr.vs_respiratory_rate = txt_vs_respiratory_rate.Value;
-                pomr.vs_blood_pressure = txt_vs_blood_pressure.Value;
-                pomr.vs_spO2 = txt_vs_spO2.Value;
+                pomr.vs_temperature = vs_temperature.Text;
+                pomr.vs_weight = vs_weight.Text;
+                pomr.vs_height = vs_height.Text;
+                pomr.vs_BMI = vs_bmi.Text;
+                pomr.vs_pulse = vs_pulse.Text;
+                pomr.vs_heart_rate = vs_heart_rate.Text;
+                pomr.vs_respiratory_rate = vs_respiratory_rate.Text;
+                pomr.vs_blood_pressure = vs_blood_pressure.Text;
+                pomr.vs_spO2 = vs_spo2.Text;
 
                 string physical_examination = txt_physical_examination.Value;
 
@@ -634,7 +554,8 @@ namespace EMR
         private void rad_treatment_code_change(string code)
         {
             WebHelpers.VisibleControl(false, current_medication_field, tranfer_field);
-            if(code == null) {
+            if (code == null)
+            {
                 rad_treatment_code_ipd.Checked = rad_treatment_code_opd.Checked = rad_treatment_code_trf.Checked = false;
                 return;
             }
@@ -702,21 +623,6 @@ namespace EMR
         {
             WebHelpers.clearSessionDoc(Page, varDocID, loc);
 
-        }
-
-        protected void btnVSFreeText_Click(object sender, EventArgs e)
-        {
-            cbVSFreeText.Checked = !cbVSFreeText.Checked;
-            txt_vs_temperature.Disabled
-                 = txt_vs_weight.Disabled
-                 = txt_vs_height.Disabled
-                 //= txt_vs_bmi.Disabled
-                 = txt_vs_pulse.Disabled
-                 = txt_vs_heart_rate.Disabled
-                 = txt_vs_respiratory_rate.Disabled
-                 = txt_vs_blood_pressure.Disabled
-                 = txt_vs_spO2.Disabled
-                 = !cbVSFreeText.Checked;
         }
     }
 }

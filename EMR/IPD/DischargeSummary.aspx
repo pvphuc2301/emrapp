@@ -46,7 +46,7 @@
                                         </div>
                                         <div style="width: 150px; text-align: left; font-size: 11px">
                                             <div runat="server" id="prt_fullname"></div>
-                                            <div runat="server" id="prt_gender"></div>
+                                            <div runat="server" id="prt_patient_name_e"></div>
                                             <div class="d-block" runat="server" id="prt_DOB"></div>
                                             <div runat="server" id="prt_vpid" class="d-block font-bold"></div>
                                             <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
@@ -227,6 +227,14 @@
 
                                 <div class="d-grid no-block justify-content-end">
                                     <%--<asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="LinkButton1" CssClass="btn btn-danger">Delete</asp:LinkButton>--%>
+                                </div>
+                            </ContentTemplate>
+                        </telerik:RadWindow>
+                        <telerik:RadWindow Height="130px" VisibleStatusbar="false" Width="220px" RenderMode="Lightweight" ID="RadWindow4" Title="Chọn ngôn ngữ" runat="server">
+                            <ContentTemplate>
+                                <div class="text-center" style="margin-top: 20px">
+                                    <asp:LinkButton runat="server" OnClientClick="printForm(true); return false;" ID="LinkButton1" CssClass="btn btn-secondary waves-effect">Tiếng Việt</asp:LinkButton>
+                                    <asp:LinkButton runat="server" OnClientClick="printForm(false); return false;" ID="LinkButton2" CssClass="btn btn-secondary waves-effect">Song ngữ</asp:LinkButton>
                                 </div>
                             </ContentTemplate>
                         </telerik:RadWindow>
@@ -766,7 +774,7 @@
 
                                                             <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                            <asp:LinkButton runat="server" OnClientClick="window.print(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                            <asp:LinkButton runat="server" OnClientClick="showWindow('RadWindow4'); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                             <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                                     </div>
@@ -811,6 +819,22 @@
             }, 1000);
         }
 
+        function printForm(isLocal) {
+            document.getElementById("prt_patient_name_e").style.display = "none";
+            document.getElementById("prt_fullname").style.display = "none";
+
+            if (isLocal) {
+                document.getElementById("prt_fullname").style.display = "";
+
+            } else {
+                document.getElementById("prt_patient_name_e").style.display = "";
+            }
+
+            var radWindow = $find('<%=RadWindow4.ClientID %>');
+            radWindow.close();
+
+            window.print();
+        }
 
         function UpdateNode() {
             window.parent.window.document.querySelector("#RAD_SPLITTER_PANE_EXT_CONTENT_LeftMenu").src = window.parent.window.document.querySelector("#RAD_SPLITTER_PANE_EXT_CONTENT_LeftMenu").src;

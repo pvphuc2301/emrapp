@@ -67,7 +67,10 @@
                                         <div class="d-grid mt-1" style="grid-template-columns: 2fr 1fr; margin-bottom: 6px;">
                                             <div class="d-grid" style="grid-template-columns: auto 1fr">
                                                 <webUI:PrtRowS1 FontBold="true" FixedWidth="155" Title="Họ tên bệnh nhân:" SubTitle="Patient's Name" runat="server" />
-                                                <asp:Label runat="server" ID="prt_patient_name" />
+                                                <div>
+                                                    <asp:Label runat="server" ID="prt_patient_name_l" />
+                                                    <asp:Label runat="server" ID="prt_patient_name_e" />
+                                                </div>
                                             </div>
 
                                             <div class="d-grid" style="grid-template-columns: auto 1fr">
@@ -215,30 +218,40 @@
                     </ContentTemplate>
                 </telerik:RadWindow>
                 <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow2" Title="Warning" runat="server">
-                            <ContentTemplate>
-                                <div class="text-center">
-                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                    <h4 class="mt-4 mb-4">Delete document?</h4>
-                                </div>
+                    <ContentTemplate>
+                        <div class="text-center">
+                            <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                            <h4 class="mt-4 mb-4">Delete document?</h4>
+                        </div>
 
-                                <div class="d-grid no-block justify-content-end">
-                                    <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger">Delete</asp:LinkButton>
-                                </div>
-                            </ContentTemplate>
-                        </telerik:RadWindow>
-                        <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow3" Title="Warning" runat="server">
-                            <ContentTemplate>
-                                <div class="text-center">
-                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                    <h4 class="mt-4">Denied!</h4>
-                                    <label runat="server" id="lblUserBlock" />
-                                </div>
+                        <div class="d-grid no-block justify-content-end">
+                            <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger">Delete</asp:LinkButton>
+                        </div>
+                    </ContentTemplate>
+                </telerik:RadWindow>
 
-                                <div class="d-grid no-block justify-content-end">
-                                    <%--<asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="LinkButton1" CssClass="btn btn-danger">Delete</asp:LinkButton>--%>
-                                </div>
-                            </ContentTemplate>
-                        </telerik:RadWindow>
+                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow3" Title="Warning" runat="server">
+                    <ContentTemplate>
+                        <div class="text-center">
+                            <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                            <h4 class="mt-4">Denied!</h4>
+                            <label runat="server" id="lblUserBlock" />
+                        </div>
+
+                        <div class="d-grid no-block justify-content-end">
+                            <%--<asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="LinkButton1" CssClass="btn btn-danger">Delete</asp:LinkButton>--%>
+                        </div>
+                    </ContentTemplate>
+                </telerik:RadWindow>
+
+                <telerik:RadWindow  Height="130px" VisibleStatusbar="false" Width="220px" RenderMode="Lightweight" ID="RadWindow4" Title="Chọn ngôn ngữ" runat="server">
+                    <ContentTemplate>
+                        <div class="text-center" style="margin-top: 20px">
+                            <asp:LinkButton runat="server" OnClientClick="printForm(true); return false;" ID="LinkButton1" CssClass="btn btn-secondary waves-effect">Tiếng Việt</asp:LinkButton>
+                            <asp:LinkButton runat="server" OnClientClick="printForm(false); return false;" ID="LinkButton2" CssClass="btn btn-secondary waves-effect">Song ngữ</asp:LinkButton>
+                        </div>
+                    </ContentTemplate>
+                </telerik:RadWindow>
             </Windows>
         </telerik:RadWindowManager>
 
@@ -389,18 +402,18 @@
                                     <div class="form-body collapse show" id="collapseOne">
 
                                         <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
-                                                        <span class="mr-2">You are viewing an old version of this document</span>
-                                                        <asp:HyperLink OnLoad="LinkViewLastestVersion_Load" ID="LinkViewLastestVersion" CssClass="btn-link" Text="View Latest Version" runat="server" />
-                                                    </div>
+                                            <div class="col-md-12">
+                                                <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
+                                                    <span class="mr-2">You are viewing an old version of this document</span>
+                                                    <asp:HyperLink OnLoad="LinkViewLastestVersion_Load" ID="LinkViewLastestVersion" CssClass="btn-link" Text="View Latest Version" runat="server" />
+                                                </div>
 
-                                                    <div class="alert alert-info d-flex align-items-center">
-                                                        <telerik:RadLabel runat="server" ID="RadLabel1" />
-                                                        <a class="btn-link" href="javascript:void(0)" onclick="showWindow('RadWindow1')">View History</a>
-                                                    </div>
+                                                <div class="alert alert-info d-flex align-items-center">
+                                                    <telerik:RadLabel runat="server" ID="RadLabel1" />
+                                                    <a class="btn-link" href="javascript:void(0)" onclick="showWindow('RadWindow1')">View History</a>
                                                 </div>
                                             </div>
+                                        </div>
 
                                         <fieldset class="row mb-2">
                                             <legend>
@@ -533,7 +546,7 @@
 
                                                 <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                <asp:LinkButton runat="server" OnClientClick="window.print(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                <asp:LinkButton runat="server" OnClientClick="showWindow('RadWindow4'); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                 <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                             </div>
@@ -577,6 +590,17 @@
 
         function beforeAsyncPostBack() {
             var curtime = new Date();
+        }
+
+        function printForm(isLocal) {
+            let StyleDisplay = isLocal ? "none" : "";
+
+            document.getElementById("prt_patient_name_e").style.display = StyleDisplay;
+
+            var radWindow = $find('<%=RadWindow4.ClientID %>');
+            radWindow.close();
+
+            window.print();
         }
 
         function afterAsyncPostBack() {

@@ -618,7 +618,7 @@ namespace EMR.IPD
 
                 if (ogia.obs_mem_condition_code == "RU")
                 {
-                    DateTime obs_rup_of_mem_at = WebHelpers.ConvertDateTime(ogia.obs_rup_of_mem_at, out bool IsValidDateTime1);
+                    DateTime? obs_rup_of_mem_at = WebHelpers.ConvertDateTime(ogia.obs_rup_of_mem_at, out bool IsValidDateTime1);
                     if (IsValidDateTime1)
                     {
                         prt_obs_rup_of_mem_at.Text = $"{ WebHelpers.FormatDateTime(obs_rup_of_mem_at, "HH")} giờ/ hour { WebHelpers.FormatDateTime(obs_rup_of_mem_at, "mm")} phút/ minute ngày/ date { WebHelpers.FormatDateTime(obs_rup_of_mem_at, "dd/MM/yyyy")}";

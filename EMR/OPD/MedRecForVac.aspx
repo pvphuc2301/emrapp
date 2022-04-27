@@ -40,8 +40,8 @@
             }
         }
 
-        .v20:after {
-           content: 'Version: 2.0';
+        .version:after {
+           content: 'Version: 2.1';
             font-size: 10px;
             color: #343a40;
             position: absolute;
@@ -102,7 +102,7 @@
                         <tbody class="report-content">
                             <tr>
                                 <td class="report-content-cell">
-                                    <div style="position: relative;" class="main" runat="server" id="print_content">
+                                    <div style="position: relative; border: .1px solid #fff" class="main" runat="server" id="print_content">
                                         <img style="height: 1px" src="../images/logo-opacity.png" />
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
@@ -155,6 +155,35 @@
                                             <asp:Label runat="server" ID="prt_personal"></asp:Label>
                                         </div>
 
+                                        <div style="margin-left: 10px; text-align: justify; font-size: 14.5px; font-family: Tahoma;">
+                                            Đã từng nhiễm COVID-19 trong vòng 6 tháng qua</span>/ <span class="text-primary">Have been infected with COVID-19 within the last 6 months:</span>
+                                        </div>
+
+                                        <div style="margin-left: 10px;">
+                                            <asp:Label CssClass="ml-4" Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_infected_with_covid_true" Text="❏"/>&nbsp;Có/ Yes
+                                            <asp:Label CssClass="ml-4" Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_infected_with_covid_false" Text="❏"/>&nbsp;Không/ No
+                                        </div>
+
+                                        <div style="margin-left: 10px">
+                                            <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                                <asp:Label Style="font-weight: bold;" runat="server">Tiền sử tiêm chủng</span>/ <span class="text-primary">Immunization history:</span> </asp:Label>
+                                            </div>
+                                            <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                                <asp:Label runat="server">• Tiêm vắc xin phòng COVID-19/ <span class="text-primary">COVID-19 vaccination:</span> </asp:Label>
+                                            </div>
+                                            <div >
+                                                <asp:Label CssClass="ml-4" Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_received_1_dose_true" Text="❏"/>&nbsp;Đã tiêm mũi 1/ <span class="text-primary">Received 1<sup>st</sup> dose</span>
+                                                <asp:Label CssClass="ml-4" Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_received_2_dose_true" Text="❏"/>&nbsp;Đã tiêm mũi 2/ <span class="text-primary">Received 2<sup>nd</sup> dose</span>
+                                            </div>
+                                            <div >
+                                                <asp:Label CssClass="ml-4" Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_received_additional_true" Text="❏"/>&nbsp;Đã tiêm mũi bổ sung, nhắc lại/ <span class="text-primary">Received additional, booster dose</span>
+                                                <asp:Label CssClass="ml-4" Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_not_yet_vaccinations_true" Text="❏"/>&nbsp;Chưa tiêm/ <span class="text-primary">Not yet</span>
+                                            </div>
+                                        </div>
+
+                                        <div style="margin-left: 10px">
+                                            <asp:Label runat="server" ID="prt_other_vaccinations"/>
+                                        </div>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FixedLeft="5" FontBold="true" CssClass="text-inline" Order="❖" Title="Gia đình/ " SubTitle="Family:" runat="server" />
@@ -211,46 +240,53 @@
                                         </table>
 
                                         <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Order="•" Title="Khám sàng lọc trước tiêm chủng/ " SubTitle="Screening before vaccination:" runat="server" />
-
-                                        <div class="d-grid" style="grid-template-columns: 10px 1fr">
+                                        
+                                        <div style="display: grid; grid-template-columns: 10px auto 1fr">
                                             <div></div>
-                                            <asp:Label Text="1. Sốc, phản ứng nặng sau lần tiêm chủng trước/<span class='text-primary'>Shock, severe reaction after previous vaccination: </span>" runat="server" ID="prt_scr_before_vacc_1"></asp:Label>
-
+                                            <div>1.&nbsp;</div>
+                                            <asp:Label Text="Sốc, phản ứng nặng sau lần tiêm chủng trước/<span class='text-primary'>Shock, severe reaction after previous vaccination: </span>" runat="server" ID="prt_scr_before_vacc_1"></asp:Label>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 10px 1fr">
+                                        <div style="display: grid; grid-template-columns: 10px auto 1fr">
                                             <div></div>
-                                            <asp:Label Text="2. Đang mắc bệnh cấp tính hoặc bệnh mạn tính tiến triển/ <span class='text-primary'>Are suffering from an acute or progressive chronic disease</span>: " runat="server" ID="prt_scr_before_vacc_2"></asp:Label>
+                                            <div>2.&nbsp;</div>
+                                            <asp:Label Text="Đang mắc bệnh cấp tính hoặc bệnh mạn tính tiến triển/ <span class='text-primary'>Are suffering from an acute or progressive chronic disease</span>: " runat="server" ID="prt_scr_before_vacc_2"></asp:Label>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 10px 1fr">
+                                        <div style="display: grid; grid-template-columns: 10px auto 1fr">
                                             <div></div>
-                                            <asp:Label Text="3. Đang hoặc mới kết thúc đợt điều trị corticoid liều cao (prednison > 2mg/kg/ngày), hóa trị, xạ trị, dùng gammaglobulin/ <span class='text-primary'>At or just after a high-dose corticosteroid treatment (prednison > 2mg / kg / day), chemotherapy, radiationand gammaglobulin:</span> " runat="server" ID="prt_scr_before_vacc_3"></asp:Label>
+                                            <div>3.&nbsp;</div>
+                                            <asp:Label Text="Đang hoặc mới kết thúc đợt điều trị corticoid liều cao (prednison > 2mg/kg/ngày), hóa trị, xạ trị, dùng gammaglobulin/ <span class='text-primary'>At or just after a high-dose corticosteroid treatment (prednison > 2mg / kg / day), chemotherapy, radiationand gammaglobulin:</span> " runat="server" ID="prt_scr_before_vacc_3"></asp:Label>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 10px 1fr">
+                                        <div style="display: grid; grid-template-columns: 10px auto 1fr">
                                             <div></div>
-                                            <asp:Label Text="4. Sốt/Hạ thân nhiệt (Sốt: nhiệt độ ≥ 38°C; Hạ thân nhiệt: nhiệt độ ≤ 35,5°C)/ <span class='text-primary'>Fever / Hypothermia (Fever:temperature ≥ 37.5 ° C; Hypothermia: temperature ≤ 35.5 ° C):</span> " runat="server" ID="prt_scr_before_vacc_4"></asp:Label>
+                                            <div>4.&nbsp;</div>
+                                            <asp:Label Text="Sốt/Hạ thân nhiệt (Sốt: nhiệt độ ≥ 38°C; Hạ thân nhiệt: nhiệt độ ≤ 35,5°C)/ <span class='text-primary'>Fever / Hypothermia (Fever:temperature ≥ 37.5 ° C; Hypothermia: temperature ≤ 35.5 ° C):</span> " runat="server" ID="prt_scr_before_vacc_4"></asp:Label>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 10px 1fr">
+                                        <div style="display: grid; grid-template-columns: 10px auto 1fr">
                                             <div></div>
-                                            <asp:Label Text="5. Nghe tim bất thường/ <span class='text-primary'>Hearing abnormalities:</span> " runat="server" ID="prt_scr_before_vacc_5"></asp:Label>
+                                            <div>5.&nbsp;</div>
+                                            <asp:Label Text="Nghe tim bất thường/ <span class='text-primary'>Hearing abnormalities:</span> " runat="server" ID="prt_scr_before_vacc_5"></asp:Label>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 10px 1fr">
+                                        <div style="display: grid; grid-template-columns: 10px auto 1fr">
                                             <div></div>
-                                            <asp:Label Text="6. Nhịp thở, nghe phổi bất thường/ <span class='text-primary'>Abnormal breathing, pulmonary listening:</span> " runat="server" ID="prt_scr_before_vacc_6"></asp:Label>
+                                            <div>6.&nbsp;</div>
+                                            <asp:Label Text="Nhịp thở, nghe phổi bất thường/ <span class='text-primary'>Abnormal breathing, pulmonary listening:</span> " runat="server" ID="prt_scr_before_vacc_6"></asp:Label>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 10px 1fr">
+                                        <div style="display: grid; grid-template-columns: 10px auto 1fr">
                                             <div></div>
-                                            <asp:Label Text="7. Tri giác bất thường (li bì hoặc kích thích)/ <span class='text-primary'>Abnormal perception (li or stimulation):</span> " runat="server" ID="prt_scr_before_vacc_7"></asp:Label>
+                                            <div>7.&nbsp;</div>
+                                            <asp:Label Text="Tri giác bất thường (li bì hoặc kích thích)/ <span class='text-primary'>Abnormal perception (li or stimulation):</span> " runat="server" ID="prt_scr_before_vacc_7"></asp:Label>
                                         </div>
 
-                                        <div class="d-grid" style="grid-template-columns: 10px 1fr">
+                                        <div style="display: grid; grid-template-columns: 10px auto 1fr">
                                             <div></div>
-                                            <asp:Label Text="8. Các chống chỉ định khác, nếu có ghi rõ/ <span class='text-primary'>Other contraindications, if yes specified:</span> " runat="server" ID="prt_scr_before_vacc_8"></asp:Label>
+                                            <div>8.&nbsp;</div>
+                                            <asp:Label Text="Các chống chỉ định khác, nếu có ghi rõ/ <span class='text-primary'>Other contraindications, if yes specified:</span> " runat="server" ID="prt_scr_before_vacc_8"></asp:Label>
                                         </div>
 
                                         <webUI:PrtRowS1 FontBold="true" CssClass="text-inline" Order="IV." Title="Chỉ định và kết quả xét nghiệm/ " SubTitle="Laboratory indications and results" runat="server" />
@@ -557,7 +593,7 @@
                                     </div>
                                     <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"></a>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body version">
                                     <div class="form-body collapse show" id="collapseOne">
 
                                         <div class="row">
@@ -626,6 +662,61 @@
                                                     <webUI:TextField runat="server" ID="txt_personal" />
                                                 </div>
                                                 <asp:Label runat="server" ID="lbl_personal" />
+                                            </div>
+
+                                            <div class="add-v20 col-md-12 mb-2">
+                                                <label class="control-label">Đã từng nhiễm COVID-19 trong vòng 6 tháng qua/ <span class="text-primary">Have been infected with COVID-19 within the last 6 months:</span></label>
+                                                <div class="dg gtc-1">
+                                                    <div></div>
+                                                    <asp:Label runat="server" ID="lbl_infected_with_covid"></asp:Label>
+                                                    <div runat="server" id="infected_with_covid_wrapper">
+                                                        <div class="custom-control custom-radio d-inline-block">
+                                                            <input type="radio" onchange="radioButtonChange(this)" runat="server" id="rad_infected_with_covid_true" name="rad_infected_with_covid" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_infected_with_covid_true">Có/ <span class="text-primary">Yes</span></label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio d-inline-block">
+                                                            <input disabled-for="allergy_field" onchange="radioButtonChange(this)" type="radio" runat="server" id="rad_infected_with_covid_false" name="rad_infected_with_covid" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_infected_with_covid_false">Không/ <span class="text-primary">No</span></label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div><label class="control-label">Tiền sử tiêm chủng/ <span class="text-primary">Immunization history:</span></label></div>
+                                            
+                                                <div class="mb-2">
+                                                    <label class="control-label">• Tiêm vắc xin phòng COVID-19/ <span class="text-primary">COVID-19 vaccination:</span></label>
+                                                
+                                                    <div>
+                                                        <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_received_1_dose_true" />
+                                                            <span class="custom-control-label">Đã tiêm mũi 1/ <span class="text-primary">Received 1<sup>st</sup> dose</span></span>
+                                                        </label>
+
+                                                        <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_received_2_dose_true" />
+                                                            <span class="custom-control-label">Đã tiêm mũi 2/ <span class="text-primary">Received 2<sup>st</sup> dose</span></span>
+                                                        </label>
+
+                                                        <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_received_additional_true" />
+                                                            <span class="custom-control-label">Đã tiêm mũi bổ sung, nhắc lại/ <span class="text-primary">Received additional, booster dose</span></span>
+                                                        </label>
+
+                                                        <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_not_yet_vaccinations_true" />
+                                                            <span class="custom-control-label">Chưa tiêm/ <span class="text-primary">Not yet</span></span>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="dg gtc-1">
+                                                        <label class="control-label">• Tiêm vắc xin khác (ghi rõ)/ <span class="text-primary">Other vaccinations (specify):</span></label>
+                                                        <asp:Label runat="server" ID="lbl_other_vaccinations"></asp:Label>
+                                                        <div class="form-group" runat="server" id="other_vaccinations_wrapper">
+                                                            <webUI:TextField runat="server" ID="txt_other_vaccinations" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </div>
 
                                             <div class="col-12 mb-2 gt-2-a">
@@ -1215,7 +1306,7 @@
             $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
             setTimeout(function () {
                 if (document.getElementById("alertify-logs"))
-                document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
+                    document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
             }, 1000);
         }
 

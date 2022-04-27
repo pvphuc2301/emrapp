@@ -185,6 +185,7 @@
     <Content Include="DBP\OPD\MedicalCertificate.aspx" />
     <Content Include="DBP\OPD\OutPatIniNurAss.aspx" />
     <Content Include="DBP\OPD\OutPatMedRec.aspx" />
+    <Content Include="DBP\OPD\OutPatMedRecPed.aspx" />
     <Content Include="Emr.aspx" />
     <Content Include="emrbyvisit\opdTab.aspx" />
     <Content Include="emr\emrinfor.aspx" />
@@ -215,16 +216,18 @@
     <Content Include="images\logo-opacity.png" />
     <Content Include="images\PaintAssess.png" />
     <Content Include="images\prt_header.png" />
+    <Content Include="IPD\DisCerV10.aspx" />
     <Content Include="IPD\DisCerV20.aspx" />
     <Content Include="IPD\InpIniMedAssV20.aspx" />
     <Content Include="IPD\ObsGynIniAss.aspx" />
     <Content Include="IPD\ObsGynIniAssV20.aspx" />
     <Content Include="IPD\SurgicalReport.aspx" />
-    <Content Include="OPD\MedRecForVacV20.aspx" />
+    <Content Include="OPD\MedRecForVacV10.aspx" />
     <Content Include="OPD\OutPatIniNurAssV20.aspx" />
     <Content Include="OPD\OutPatIniNurAss_v1.aspx" />
+    <Content Include="OPD\OutPatMedRecPedV10.aspx" />
     <Content Include="OPD\OutPatMedRecV10.aspx" />
-    <Content Include="OPD\OutPatMedRecPedV20.aspx" />
+    <Content Include="OPD\OutPatMedRecV20.aspx" />
     <Content Include="Other\FormMenu.aspx" />
     <Content Include="Other\Settings.aspx" />
     <Content Include="Other\Test.aspx" />
@@ -313,7 +316,9 @@
     <Content Include="scripts\jquery-2.2.1.min.js" />
     <Content Include="styles\alertify.css" />
     <Content Include="styles\print.css" />
+    <Content Include="styles\style-login.css" />
     <Content Include="styles\sweetalert.min.css" />
+    <Content Include="Test\ImagingReportTest.aspx" />
     <Content Include="UserControls\Barcode.ascx" />
     <Content Include="UserControls\CustomPagination.ascx" />
     <Content Include="UserControls\PopupException.ascx" />
@@ -410,6 +415,13 @@
     </Compile>
     <Compile Include="DBP\OPD\OutPatMedRec.aspx.designer.cs">
       <DependentUpon>OutPatMedRec.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DBP\OPD\OutPatMedRecPed.aspx.cs">
+      <DependentUpon>OutPatMedRecPed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DBP\OPD\OutPatMedRecPed.aspx.designer.cs">
+      <DependentUpon>OutPatMedRecPed.aspx</DependentUpon>
     </Compile>
     <Compile Include="Emr.aspx.cs">
       <DependentUpon>Emr.aspx</DependentUpon>
@@ -509,6 +521,13 @@
     <Compile Include="icons\ExclamationTriangle.ascx.designer.cs">
       <DependentUpon>ExclamationTriangle.ascx</DependentUpon>
     </Compile>
+    <Compile Include="IPD\DisCerV10.aspx.cs">
+      <DependentUpon>DisCerV10.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IPD\DisCerV10.aspx.designer.cs">
+      <DependentUpon>DisCerV10.aspx</DependentUpon>
+    </Compile>
     <Compile Include="IPD\DisCerV20.aspx.cs">
       <DependentUpon>DisCerV20.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -547,12 +566,12 @@
     <Compile Include="Model\AccessButtonInfo.cs" />
     <Compile Include="Model\PatientHistoryVm.cs" />
     <Compile Include="Model\sendRequestVm.cs" />
-    <Compile Include="OPD\MedRecForVacV20.aspx.cs">
-      <DependentUpon>MedRecForVacV20.aspx</DependentUpon>
+    <Compile Include="OPD\MedRecForVacV10.aspx.cs">
+      <DependentUpon>MedRecForVacV10.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="OPD\MedRecForVacV20.aspx.designer.cs">
-      <DependentUpon>MedRecForVacV20.aspx</DependentUpon>
+    <Compile Include="OPD\MedRecForVacV10.aspx.designer.cs">
+      <DependentUpon>MedRecForVacV10.aspx</DependentUpon>
     </Compile>
     <Compile Include="OPD\OutPatIniNurAssV20.aspx.cs">
       <DependentUpon>OutPatIniNurAssV20.aspx</DependentUpon>
@@ -568,6 +587,13 @@
     <Compile Include="OPD\OutPatIniNurAss_v1.aspx.designer.cs">
       <DependentUpon>OutPatIniNurAss_v1.aspx</DependentUpon>
     </Compile>
+    <Compile Include="OPD\OutPatMedRecPedV10.aspx.cs">
+      <DependentUpon>OutPatMedRecPedV10.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPD\OutPatMedRecPedV10.aspx.designer.cs">
+      <DependentUpon>OutPatMedRecPedV10.aspx</DependentUpon>
+    </Compile>
     <Compile Include="OPD\OutPatMedRecV10.aspx.cs">
       <DependentUpon>OutPatMedRecV10.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -575,12 +601,12 @@
     <Compile Include="OPD\OutPatMedRecV10.aspx.designer.cs">
       <DependentUpon>OutPatMedRecV10.aspx</DependentUpon>
     </Compile>
-    <Compile Include="OPD\OutPatMedRecPedV20.aspx.cs">
-      <DependentUpon>OutPatMedRecPedV20.aspx</DependentUpon>
+    <Compile Include="OPD\OutPatMedRecV20.aspx.cs">
+      <DependentUpon>OutPatMedRecV20.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="OPD\OutPatMedRecPedV20.aspx.designer.cs">
-      <DependentUpon>OutPatMedRecPedV20.aspx</DependentUpon>
+    <Compile Include="OPD\OutPatMedRecV20.aspx.designer.cs">
+      <DependentUpon>OutPatMedRecV20.aspx</DependentUpon>
     </Compile>
     <Compile Include="Other\FormMenu.aspx.cs">
       <DependentUpon>FormMenu.aspx</DependentUpon>
@@ -1016,6 +1042,13 @@
     </Compile>
     <Compile Include="Report\TestTasb.aspx.designer.cs">
       <DependentUpon>TestTasb.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Test\ImagingReportTest.aspx.cs">
+      <DependentUpon>ImagingReportTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Test\ImagingReportTest.aspx.designer.cs">
+      <DependentUpon>ImagingReportTest.aspx</DependentUpon>
     </Compile>
     <Compile Include="UserControls\Alert.ascx.cs">
       <DependentUpon>Alert.ascx</DependentUpon>

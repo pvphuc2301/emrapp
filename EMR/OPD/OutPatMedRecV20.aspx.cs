@@ -1,8 +1,6 @@
-﻿using EMR.Classes;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -10,9 +8,9 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 
-namespace EMR
+namespace EMR.OPD
 {
-    public partial class OutPatMedRec : System.Web.UI.Page
+    public partial class OutPatMedRecV20 : System.Web.UI.Page
     {
         Omr omr;
         PatientInfo patientInfo;
@@ -43,11 +41,9 @@ namespace EMR
             loc = (string)Session["company_code"];
             locChanged = (string)Session["const_company_code"];
 
-            string url = Request.RawUrl.Split('.')[0];
-            var urlArr = url.Split('/');
-            url = urlArr[urlArr.Length - 1];
+            PAGE_URL = Request.RawUrl;
 
-            PAGE_URL = $"/OPD/{url}.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+            //PAGE_URL = $"/OPD/OutPatMedRec.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
             if (!IsPostBack)
             {
@@ -57,15 +53,13 @@ namespace EMR
 
             PostBackEventHandler();
         }
-
         private void SetDefaultValue()
         {
             if (RadGrid1.Items.Count <= 1)
             {
-                rad_infected_with_covid_false.Checked = true;
+
             }
         }
-
         private void LoadPatientInfo()
         {
             lblFirstName.Text = patientInfo.first_name_l;
@@ -124,7 +118,7 @@ namespace EMR
         {
             try
             {
-                btnVSFreeText.Visible = true;
+                //Permissions.AllowNewVitalSign(form1, DocumentStatus.DRAFT);
 
                 patientInfo = new PatientInfo(varPID);
                 txt_amend_reason.Text = "";
@@ -169,22 +163,6 @@ namespace EMR
                 // 2.Tiền sử bệnh/ Antecedent Medical History:
                 txt_personal.Value = WebHelpers.TextToHtmlTag(omr.personal);
 
-                //Update V2.0
-                cb_received_1_dose_true.Disabled
-                    = cb_received_2_dose_true.Disabled
-                    = cb_received_additional_true.Disabled
-                    = cb_not_yet_vaccinations_true.Disabled
-                    = false;
-
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_" + omr.infected_with_covid);
-
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + omr.received_1_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + omr.received_2_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + omr.received_additional);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + omr.received_additional);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + omr.not_yet_vaccinations);
-                //txt_other_vaccinations.Value = WebHelpers.TextToHtmlTag(omr.immunization); // omr.other_vaccinations;
-
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_allergy_" + omr.allergy);
 
                 txt_allergy_note.Value = WebHelpers.GetBool(omr.allergy, WebHelpers.TextToHtmlTag(omr.allergy_note), "");
@@ -201,26 +179,26 @@ namespace EMR
 
                 WebHelpers.VisibleControl(true, btnUpdateVitalSign);
 
-                txt_vs_temperature.Disabled
-                 = txt_vs_weight.Disabled
-                 = txt_vs_height.Disabled
-                 = txt_vs_bmi.Disabled
-                 = txt_vs_pulse.Disabled
-                 = txt_vs_heart_rate.Disabled
-                 = txt_vs_respiratory_rate.Disabled
-                 = txt_vs_blood_pressure.Disabled
-                 = txt_vs_spO2.Disabled
-                 = !cbVSFreeText.Checked;
+                //txt_vs_temperature.Disabled
+                // = txt_vs_weight.Disabled
+                // = txt_vs_height.Disabled
+                // = txt_vs_bmi.Disabled
+                // = txt_vs_pulse.Disabled
+                // = txt_vs_heart_rate.Disabled
+                // = txt_vs_respiratory_rate.Disabled
+                // = txt_vs_blood_pressure.Disabled
+                // = txt_vs_spO2.Disabled
+                // = !cbVSFreeText.Checked;
 
-                txt_vs_temperature.Value = omr.vs_temperature;
-                txt_vs_heart_rate.Value = omr.vs_heart_rate;
-                txt_vs_weight.Value = omr.vs_weight;
-                txt_vs_respiratory_rate.Value = omr.vs_respiratory_rate;
-                txt_vs_height.Value = omr.vs_height;
-                txt_vs_blood_pressure.Value = omr.vs_blood_pressure;
-                txt_vs_bmi.Value = omr.vs_BMI;
-                txt_vs_spO2.Value = omr.vs_spO2;
-                txt_vs_pulse.Value = omr.vs_pulse;
+                //txt_vs_temperature.Value = omr.vs_temperature;
+                //txt_vs_heart_rate.Value = omr.vs_heart_rate;
+                //txt_vs_weight.Value = omr.vs_weight;
+                //txt_vs_respiratory_rate.Value = omr.vs_respiratory_rate;
+                //txt_vs_height.Value = omr.vs_height;
+                //txt_vs_blood_pressure.Value = omr.vs_blood_pressure;
+                //txt_vs_bmi.Value = omr.vs_BMI;
+                //txt_vs_spO2.Value = omr.vs_spO2;
+                //txt_vs_pulse.Value = omr.vs_pulse;
 
                 txt_laboratory_indications_results.Value = WebHelpers.TextToHtmlTag(omr.laboratory_indications_results);
                 txt_additional_investigation.Value = WebHelpers.TextToHtmlTag(omr.additional_investigation);
@@ -255,7 +233,7 @@ namespace EMR
         {
             try
             {
-                btnVSFreeText.Visible = false;
+                //Permissions.AllowNewVitalSign(form1, DocumentStatus.FINAL);
                 //1
                 lbl_chief_complain.Text = WebHelpers.TextToHtmlTag(omr.chief_complain);
                 lbl_current_medication.Text = WebHelpers.TextToHtmlTag(omr.current_medication);
@@ -282,38 +260,21 @@ namespace EMR
 
                 lbl_medical_history.Text = WebHelpers.TextToHtmlTag(omr.medical_history);
 
-                // Update 2.0
-                cb_received_1_dose_true.Disabled
-                    = cb_received_2_dose_true.Disabled
-                    = cb_received_additional_true.Disabled
-                    = cb_not_yet_vaccinations_true.Disabled
-                    = true;
-
-                lbl_infected_with_covid.Text = WebHelpers.FormatString(WebHelpers.GetBool(omr.infected_with_covid));
-
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + omr.received_1_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + omr.received_2_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + omr.received_additional);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + omr.not_yet_vaccinations);
-                lbl_immunization.Text = WebHelpers.TextToHtmlTag(omr.immunization);
-                //lbl_other_vaccinations.Text = omr.other_vaccinations;
-
                 lbl_allergy.Text = WebHelpers.GetBool(omr.allergy, "Có, ghi rõ/ Yes, specify: " + WebHelpers.TextToHtmlTag(omr.allergy_note));
 
                 lbl_family.Text = WebHelpers.TextToHtmlTag(omr.family);
-
+                lbl_immunization.Text = WebHelpers.TextToHtmlTag(omr.immunization);
                 //
                 WebHelpers.VisibleControl(false, btnUpdateVitalSign);
-
-                lbl_vs_temperature.Text = omr.vs_temperature + " °C";
-                lbl_vs_weight.Text = omr.vs_weight + " Kg";
-                lbl_vs_height.Text = omr.vs_height + " cm";
-                lbl_vs_BMI.Text = omr.vs_BMI + " (Kg/m 2)";
-                lbl_vs_pulse.Text = omr.vs_pulse + " cm";
-                lbl_vs_heart_rate.Text = omr.vs_heart_rate + " /phút (m)";
-                lbl_vs_respiratory_rate.Text = omr.vs_respiratory_rate + " /phút (m)";
-                lbl_vs_blood_pressure.Text = omr.vs_blood_pressure + " mmHg";
-                lbl_vs_spO2.Text = omr.vs_spO2 + " %";
+                //txt_vs_temperature.Value = omr.vs_temperature;
+                //txt_vs_weight.Value = omr.vs_weight;
+                //txt_vs_height.Value = omr.vs_height;
+                //txt_vs_bmi.Value = omr.vs_BMI;
+                //txt_vs_pulse.Value = omr.vs_pulse;
+                //txt_vs_heart_rate.Value = omr.vs_heart_rate;
+                //txt_vs_respiratory_rate.Value = omr.vs_respiratory_rate;
+                //txt_vs_blood_pressure.Value = omr.vs_blood_pressure;
+                //txt_vs_spO2.Value = omr.vs_spO2;
 
                 lbl_physical_examination.Text = WebHelpers.TextToHtmlTag(omr.physical_examination);
 
@@ -358,34 +319,8 @@ namespace EMR
                 prt_chief_complaint.Text = WebHelpers.TextToHtmlTag(omr.chief_complain, false);
                 prt_medical_history.Text = WebHelpers.TextToHtmlTag(omr.medical_history, false);
                 prt_personal.Text = WebHelpers.TextToHtmlTag(omr.personal, false);
-                // Update 2.0
-                prt_infected_with_covid_false.Text
-                    = prt_infected_with_covid_true.Text
-                    = prt_received_1_dose_true.Text
-                    = prt_received_2_dose_true.Text
-                    = prt_received_additional_true.Text
-                    = prt_not_yet_vaccinations_true.Text
-                    = "❏";
-
-                Label infected_with_covid = FindControl("prt_infected_with_covid_" + omr.infected_with_covid);
-                if (infected_with_covid != null) infected_with_covid.Text = "☒";
-
-                Label received_1_dose = FindControl("prt_received_1_dose_" + omr.received_1_dose);
-                if (received_1_dose != null) received_1_dose.Text = "☒";
-
-                Label received_2_dose = FindControl("prt_received_2_dose_" + omr.received_2_dose);
-                if (received_2_dose != null) received_2_dose.Text = "☒";
-
-                Label received_additional = FindControl("prt_received_additional_" + omr.received_additional);
-                if (received_additional != null) received_additional.Text = "☒";
-
-                Label not_yet_vaccinations = FindControl("prt_not_yet_vaccinations_" + omr.not_yet_vaccinations);
-                if (not_yet_vaccinations != null) not_yet_vaccinations.Text = "☒";
-
-                //prt_other_vaccinations.Text = "Tiêm vắc xin khác (ghi rõ)/ <span class=\"text-primary\">Other vaccinations (specify):</span>";
-                prt_immunization.Text = WebHelpers.TextToHtmlTag(omr.immunization, false);
-
                 prt_family.Text = WebHelpers.TextToHtmlTag(omr.family, false);
+                prt_immunization.Text = WebHelpers.TextToHtmlTag(omr.immunization, false);
                 prt_current_medication.Text = WebHelpers.TextToHtmlTag(omr.current_medication, false);
                 //IV.
                 //1.
@@ -532,15 +467,15 @@ namespace EMR
         }
         public void LoadVitalSigns(dynamic vs)
         {
-            txt_vs_temperature.Value = vs.vs_temperature;
-            txt_vs_heart_rate.Value = vs.vs_heart_rate;
-            txt_vs_weight.Value = vs.vs_weight;
-            txt_vs_respiratory_rate.Value = vs.vs_respiratory_rate;
-            txt_vs_height.Value = vs.vs_height;
-            txt_vs_bmi.Value = vs.vs_BMI;
-            txt_vs_blood_pressure.Value = vs.vs_blood_pressure;
-            txt_vs_spO2.Value = vs.vs_spO2;
-            txt_vs_pulse.Value = vs.pulse;
+            //txt_vs_temperature.Value = WebHelpers.FormatString(vs.vs_temperature);
+            //txt_vs_heart_rate.Value = WebHelpers.FormatString(vs.vs_heart_rate);
+            //txt_vs_weight.Value = WebHelpers.FormatString(vs.vs_weight);
+            //txt_vs_respiratory_rate.Value = WebHelpers.FormatString(vs.vs_respiratory_rate);
+            //txt_vs_height.Value = WebHelpers.FormatString(vs.vs_height);
+            //txt_vs_bmi.Value = WebHelpers.FormatString(vs.vs_BMI);
+            //txt_vs_blood_pressure.Value = WebHelpers.FormatString(vs.vs_blood_pressure);
+            //txt_vs_spO2.Value = WebHelpers.FormatString(vs.vs_spO2);
+            //txt_vs_pulse.Value = WebHelpers.FormatString(vs.pulse);
         }
         protected void btnHome_Click(object sender, EventArgs e)
         {
@@ -561,13 +496,9 @@ namespace EMR
                 omr.current_medication = txt_current_medication.Value;
                 //2.
                 omr.personal = txt_personal.Value;
-                //Update v2.0
-                omr.infected_with_covid = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_");
-                omr.received_1_dose = cb_received_1_dose_true.Checked;
-                omr.received_2_dose = cb_received_2_dose_true.Checked;
-                omr.received_additional = cb_received_additional_true.Checked;
-                //omr.other_vaccinations = txt_other_vaccinations.Value;
-                omr.not_yet_vaccinations = cb_not_yet_vaccinations_true.Checked;
+
+                omr.habits_smoking = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_habits_smoking_");
+                omr.habits_smoking_pack = txt_habits_smoking_pack.Value;
 
                 omr.habits_alcohol = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_habits_alcohol_");
                 omr.habits_alcohol_note = txt_habits_alcohol_note.Value;
@@ -585,29 +516,16 @@ namespace EMR
                 omr.allergy_note = WebHelpers.GetBool(omr.allergy, txt_allergy_note.Value, null);
                 omr.immunization = txt_immunization.Value;
                 //II.
-                omr.vs_temperature = txt_vs_temperature.Value;
-                omr.vs_weight = txt_vs_weight.Value;
-                omr.vs_height = txt_vs_height.Value;
-                omr.vs_BMI = txt_vs_bmi.Value;
-                omr.vs_pulse = txt_vs_pulse.Value;
-                omr.vs_heart_rate = txt_vs_heart_rate.Value;
-                omr.vs_respiratory_rate = txt_vs_respiratory_rate.Value;
-                omr.vs_blood_pressure = txt_vs_blood_pressure.Value;
-                omr.vs_spO2 = txt_vs_spO2.Value;
-
-                string physical_examination = txt_physical_examination.Value;
-
-                while (physical_examination.Contains("<br>"))
-                {
-                    physical_examination = physical_examination.Replace("<br>", "\n");
-                }
-
-                while (physical_examination.Contains("\n\n"))
-                {
-                    physical_examination = physical_examination.Replace("\n\n", "\n");
-                }
-
-                omr.physical_examination = physical_examination;
+                //omr.vs_temperature = txt_vs_temperature.Value;
+                //omr.vs_weight = txt_vs_weight.Value;
+                //omr.vs_height = txt_vs_height.Value;
+                //omr.vs_BMI = txt_vs_bmi.Value;
+                //omr.vs_pulse = txt_vs_pulse.Value;
+                //omr.vs_heart_rate = txt_vs_heart_rate.Value;
+                //omr.vs_respiratory_rate = txt_vs_respiratory_rate.Value;
+                //omr.vs_blood_pressure = txt_vs_blood_pressure.Value;
+                //omr.vs_spO2 = txt_vs_spO2.Value;
+                omr.physical_examination = txt_physical_examination.Value.Replace("<br>", "");
                 omr.psy_consult_required = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_psy_consult_required_");
                 //IV.
                 omr.laboratory_indications_results = txt_laboratory_indications_results.Value;
@@ -768,22 +686,17 @@ namespace EMR
 
         protected void btnNewVitalSign_Click(object sender, EventArgs e)
         {
-
-        }
-
-        protected void btnVSFreeText_Click(object sender, EventArgs e)
-        {
-            cbVSFreeText.Checked = !cbVSFreeText.Checked;
-            txt_vs_temperature.Disabled
-                 = txt_vs_weight.Disabled
-                 = txt_vs_height.Disabled
-                 //= txt_vs_bmi.Disabled
-                 = txt_vs_pulse.Disabled
-                 = txt_vs_heart_rate.Disabled
-                 = txt_vs_respiratory_rate.Disabled
-                 = txt_vs_blood_pressure.Disabled
-                 = txt_vs_spO2.Disabled
-                 = !cbVSFreeText.Checked;
+            //cbVSFreeText.Checked = !cbVSFreeText.Checked;
+            //txt_vs_temperature.Disabled
+            //     = txt_vs_weight.Disabled
+            //     = txt_vs_height.Disabled
+            //     = txt_vs_bmi.Disabled
+            //     = txt_vs_pulse.Disabled
+            //     = txt_vs_heart_rate.Disabled
+            //     = txt_vs_respiratory_rate.Disabled
+            //     = txt_vs_blood_pressure.Disabled
+            //     = txt_vs_spO2.Disabled
+            //     = !cbVSFreeText.Checked;
         }
     }
 }

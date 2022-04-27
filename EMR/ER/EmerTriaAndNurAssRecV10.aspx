@@ -2514,7 +2514,11 @@
         function btnPrint_Click() {
             let printContent = document.querySelector("#printContent");
             printContent.setAttribute("style", "display: block");
-            
+
+<%--            let prt_medications_used = document.getElementById("<%=prt_medications_used.ClientID%>");
+            let lbl_current_medication = document.getElementById("<%=lbl_current_medication.ClientID%>");
+            if (prt_medications_used != null && lbl_current_medication != null) prt_medications_used.innerHTML = "Thuốc đã dùng/ <span class='text-primary'><i>Medications used</i>:&nbsp;</span>" + lbl_current_medication.innerText;--%>
+
             let total = Math.ceil(printContent.offsetHeight / 1096);
 
             for (let i = 1; i <= total; i++) {

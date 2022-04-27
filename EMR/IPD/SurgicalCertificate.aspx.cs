@@ -109,7 +109,9 @@ namespace EMR
             {
                 prt_vpid.Text = prt_vpid1.Text = patientInfo.visible_patient_id;
 
-                prt_fullname.Text = patientInfo.FullName;
+                prt_fullname.Text = patientInfo.GetFullName(true);
+                prt_patient_name_e.Text = $"/ {patientInfo.GetFullName(false)}";
+
                 prt_dob.Text = WebHelpers.FormatDateTime(patientInfo.date_of_birth);
                 WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
 
@@ -122,7 +124,8 @@ namespace EMR
                     prt_female.Text = "☒";
                 }
 
-                prt_address.Text = patientInfo.Address;
+                prt_address.Text = patientInfo.GetAddress(true);
+                prt_address_e.Text = $"/ {patientInfo.GetAddress(false)}";
 
                 prt_admission_date.Text = WebHelpers.FormatDateTime(surc.admission_date);
                 prt_procedure_date.Text = WebHelpers.FormatDateTime(surc.procedure_date);

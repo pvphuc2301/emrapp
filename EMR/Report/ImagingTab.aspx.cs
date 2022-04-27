@@ -50,6 +50,7 @@ namespace EMR
                 foreach (DataRow row in mydataTable.Rows)
                 {
                     tmp = Convert.ToString(row["procedure_name_e"]);
+                    //varTabName = tmp + "<br />" + string.Format("{0:dd/MMM/yyyy h:m}", row["completed_date_time"]) + "<br />" + row.Field<string>("created_name_e");
                     varTabName = tmp + "<br />" + string.Format("{0:dd/MMM/yyyy h:m}", row["completed_date_time"]) + "<br />" + row.Field<string>("created_name_e");
                     if (!string.IsNullOrEmpty(tmp))
                     {

@@ -65,6 +65,18 @@ namespace EMR
                     currentLog.Visible = false;
                 }
 
+                //Update
+                if (oina.document_version != null && Int32.Parse(oina.document_version) == 2)
+                {
+                    string url = Request.RawUrl.Split('.')[0];
+                    var urlArr = url.Split('/');
+                    url = urlArr[urlArr.Length - 1];
+
+                    PAGE_URL = $"/OPD/OutPatIniNurAssV20.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+
+                    Response.Redirect(PAGE_URL, false);
+                }
+
                 LoadPatientInfo();
 
                 RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Oina.Logs(varDocID, loc), out string _SignatureDate, out string _SignatureName);

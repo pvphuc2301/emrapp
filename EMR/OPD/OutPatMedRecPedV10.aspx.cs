@@ -10,7 +10,7 @@ using Telerik.Web.UI;
 
 namespace EMR.OPD
 {
-    public partial class OutPatMedRecPed_v02 : System.Web.UI.Page
+    public partial class OutPatMedRecPedV10 : System.Web.UI.Page
     {
         POMR pomr;
         PatientInfo patientInfo;
@@ -66,11 +66,6 @@ namespace EMR.OPD
         {
             try
             {
-                cb_received_1_dose_true.Disabled
-                    = cb_received_2_dose_true.Disabled
-                    = cb_received_additional_true.Disabled
-                    = cb_not_yet_vaccinations_true.Disabled
-                    = false;
 
                 txt_amend_reason.Text = "";
 
@@ -88,6 +83,7 @@ namespace EMR.OPD
                 txt_family.Value = WebHelpers.TextToHtmlTag(pomr.family);
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_allergy_" + pomr.allergy);
                 txt_allergy_note.Value = WebHelpers.GetBool(pomr.allergy, WebHelpers.TextToHtmlTag(pomr.allergy_note), "");
+
 
                 // III.Khám bệnh/ Physical Examination:
                 // DẤU HIỆU SINH TỒN/ VITAL SIGNS:
@@ -155,11 +151,6 @@ namespace EMR.OPD
         {
             try
             {
-                cb_received_1_dose_true.Disabled
-                    = cb_received_2_dose_true.Disabled
-                    = cb_received_additional_true.Disabled
-                    = cb_not_yet_vaccinations_true.Disabled
-                    = true;
                 //1
                 lbl_chief_complaint.Text = WebHelpers.TextToHtmlTag(pomr.chief_complaint);
                 lbl_current_medication.Text = WebHelpers.TextToHtmlTag(pomr.current_medication);
@@ -216,6 +207,7 @@ namespace EMR.OPD
         {
             try
             {
+
                 patientInfo = new PatientInfo(varPID);
                 patientVisitInfo = new PatientVisitInfo(varPVID, loc);
                 prt_fullname.Text = patientInfo.FullName + " " + patientInfo.Title;
@@ -294,16 +286,6 @@ namespace EMR.OPD
                 {
                     prt_next_appointment.Text = pomr.bool_next_appointment ? WebHelpers.FormatDateTime(pomr.date_next_appointment) : pomr.txt_next_appointment;
                 }
-
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_" + pomr.infected_with_covid);
-
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + pomr.received_1_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + pomr.received_2_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + pomr.received_additional);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + pomr.not_yet_vaccinations);
-
-
-                prt_immunization.Text = "Tiêm vắc xin khác (ghi rõ)/ <span class=\"text-primary\">Other vaccinations (specify):</span>";
 
                 prt_signature_doctor.Text = SignatureName;
             }

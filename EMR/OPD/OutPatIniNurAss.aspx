@@ -154,9 +154,8 @@
                                         </div>
 
                                         <div style="margin-bottom: 6px">
-                                        <webUI:PrtRowS1 FontBold="true" Order="III." Title="ĐÁNH GIÁ CÁC YẾU TỐ XÃ HỘI CỦA NGƯỜI BỆNH(DUY NHẤT CHO LẦN KHÁM ĐẦU TIÊN):" SubTitle="SOCIAL FACTORS ASSESSMENT(ONLY FOR THE FIRST VISIT)" runat="server" />
-                                            </div>
-
+                                            <webUI:PrtRowS1 FontBold="true" Order="III." Title="ĐÁNH GIÁ CÁC YẾU TỐ XÃ HỘI CỦA NGƯỜI BỆNH(DUY NHẤT CHO LẦN KHÁM ĐẦU TIÊN):" SubTitle="SOCIAL FACTORS ASSESSMENT(ONLY FOR THE FIRST VISIT)" runat="server" />
+                                        </div>
 
                                         <div class="d-grid" style="grid-template-columns: auto 1fr; margin-bottom: 6px">
                                             <webUI:PrtRowS1 FontBold="true" FixedLeft="30" FixedWidth="152" Title="Tình trạng sinh sống:" SubTitle="Housing" runat="server" />

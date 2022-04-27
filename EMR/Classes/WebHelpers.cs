@@ -42,8 +42,9 @@ namespace EMR
     public enum ControlState { View, Edit }
     public static class WebHelpers
     {
-        public static string URL = "http://172.16.0.88:8080/";//PRO
-        //public static string URL = "http://172.16.0.78:8088/";//UAT
+        //http://172.16.0.78:8088/swagger/index.html
+        //public static string URL = "http://172.16.0.88:8080/";//PRO
+        public static string URL = "http://172.16.0.78:8088/";//UAT
 
         public static void GrantPermission(Page page, string user)
         {
@@ -231,7 +232,40 @@ namespace EMR
             //    return result;
             //}
         }
+        public static dynamic GetAPI1(string url)
+        {
+            dynamic result = new System.Dynamic.ExpandoObject();
 
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = "GET";
+            request.ContentType = "application/json";
+            long length = 0;
+            try
+            {
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    length = response.ContentLength;
+                    WebResponse response1 = request.GetResponse();
+                    Stream dataStream = response1.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+                    var responseFromServer = reader.ReadToEnd();
+                    //var res = response1;
+                    reader.Close();
+                    dataStream.Close();
+                    response.Close();
+
+                    result.Status = response.StatusCode;
+                    result.Data = responseFromServer;
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Status = System.Net.HttpStatusCode.NotFound;
+                result.Data = ex.Message;
+                return result;
+            }
+        }
         public static dynamic GetAPI(string url)
         {
             dynamic result = new System.Dynamic.ExpandoObject();
@@ -1234,7 +1268,9 @@ namespace EMR
             switch (model.AccessAuthorize)
             {
                 case "View":
-                    VisibleControl(false, btnAmend, btnPrint, btnComplete, btnSave, btnDelete);
+                    //Edit: quyền view có thể print
+                    //VisibleControl(false, btnAmend, btnPrint, btnComplete, btnSave, btnDelete);
+                    VisibleControl(false, btnAmend, btnComplete, btnSave, btnDelete);
                     break;
             }
 

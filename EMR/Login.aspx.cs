@@ -32,11 +32,12 @@ namespace Emr_client.Emr
 
         protected void cmdLogin_Click(object sender, System.EventArgs e)
         {
+            btnLogin.Enabled = false;
             try
             {
                 
                 bool isLogin = false;// string current_session = "";
-
+                
                 if (!UserName.Value.Contains("@"))
                 {
                     isLogin = IsAuthenticated(UserName.Value, Password.Value);
@@ -64,7 +65,7 @@ namespace Emr_client.Emr
                     lblInfo.Text = "Login Failed!";
             }
             catch(Exception ex) { WebHelpers.SendError(Page, ex); }
-            
+            btnLogin.Enabled = true;
         }
         
         public void put_session_value(string varUserAccount, string varUserPW)

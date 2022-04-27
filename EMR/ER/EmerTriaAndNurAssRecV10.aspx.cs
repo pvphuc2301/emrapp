@@ -527,7 +527,7 @@ namespace EMR.ER
                 prt_vs_head_circum.Text = WebHelpers.FormatString(ena.vs_head_circum, "&nbsp;&nbsp;&nbsp;&nbsp;");
 
                 prt_allergy.Text = $"Dị ứng/ <span class='text-primary'><i>Allergy</i></span>:&nbsp; {ena.allergy}";
-                prt_medications_used.Text = $"Thuốc đã dùng/ <span class='text-primary'><i>Medications used</i>:&nbsp;</span> {ena.past_medical_history}";
+                prt_medications_used.Text = $"Thuốc đã dùng/ <span class='text-primary'><i>Medications used</i>:&nbsp;</span> {ena.current_medication}";
 
                 DataTable skin_integrity = WebHelpers.GetJSONToDataTable(ena.skin_integrity);
                 if (skin_integrity != null)
