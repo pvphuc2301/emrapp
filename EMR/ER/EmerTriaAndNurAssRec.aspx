@@ -1,4 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EmerTriaAndNurAssRec.aspx.cs" Inherits="EMR.EmergencyTriageAndNursingAssessmentRecord" ValidateRequest="false" %>
+
+
 <%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="webUI" TagName="TextField" %>
 <%@ Register Src="~/UserControls/AmendReason.ascx" TagPrefix="webUI" TagName="AmendReason" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrintWindow.ascx" TagPrefix="webUI" TagName="PrintWindow" %>
@@ -45,6 +47,15 @@
             font-size: 14.6667px;
             font-weight: bold;
             margin-bottom: 0;
+        }
+
+        .v10:after {
+           content: 'Version: 1.0';
+            font-size: 10px;
+            color: #343a40;
+            position: absolute;
+            right: 10px;
+            bottom: 4px;
         }
 /*
         .border{ border-color: #000 !important; }
@@ -395,10 +406,10 @@
                                                         <asp:Label runat="server" ID="prt_rhythm_regular"/>&nbsp;Đều/ <i class="text-primary">Regular</i>
                                                         <asp:Label runat="server" ID="prt_rhythm_inregular"/>&nbsp;Không đều/ <i class="text-primary">Irregular</i>
                                                     </div>
-                                                    <%--<div>
+                                                    <div>
                                                         <asp:Label runat="server" ID="prt_rhythm_cardiac_arrest"/>&nbsp;Ngưng tim/ <i class="text-primary">Cardiac arrest</i>
                                                         <asp:Label runat="server" ID="prt_rhythm_chest_pain"/>&nbsp;Đau ngực/ <i class="text-primary">Chest pain</i>
-                                                    </div>--%>
+                                                    </div>
                                                     <div>
                                                         <asp:Label runat="server" ID="prt_rhythm_others"/>
                                                     </div>
@@ -467,7 +478,7 @@
                                                 <td class="p-2">
                                                     <asp:Label runat="server" ID="prt_blood_glucose_note" />
                                                 </td>
-                                                <td class="p-2 text-right">
+                                                <td class="p-2 text-center">
                                                     <asp:Label runat="server" ID="prt_blood_glucose_signature" />
                                                 </td>
                                             </tr>
@@ -480,7 +491,7 @@
                                                 <td class="p-2">
                                                     Bác sĩ đọc kết quả/ <i class="text-primary">Reviewed by Dr.</i> <asp:Label runat="server" ID="prt_ecg_note" />
                                                 </td>
-                                                <td class="p-2 text-right">
+                                                <td class="p-2 text-center">
                                                     <asp:Label runat="server" ID="prt_ecg_signature" />
                                                 </td>
                                             </tr>
@@ -492,7 +503,7 @@
                                                 <td class="p-2">
                                                     <asp:Label runat="server" ID="prt_urine_cath_note" />
                                                 </td>
-                                                <td class="p-2 text-right">
+                                                <td class="p-2 text-center">
                                                     <asp:Label runat="server" ID="prt_urine_cath_signature" />
                                                 </td>
                                             </tr>
@@ -505,7 +516,7 @@
                                                 <td class="p-2">
                                                     <asp:Label runat="server" ID="prt_splint_cast_dressing_note" />
                                                 </td>
-                                                <td class="p-2 text-right">
+                                                <td class="p-2 text-center">
                                                     <asp:Label runat="server" ID="prt_splint_cast_dressing_signature" />
                                                 </td>
                                             </tr>
@@ -517,7 +528,7 @@
                                                 <td class="p-2">
                                                     <asp:Label runat="server" ID="prt_procedure_other_note" />
                                                 </td>
-                                                <td class="p-2 text-right">
+                                                <td class="p-2 text-center">
                                                     <asp:Label runat="server" ID="prt_procedure_other_signature" />
                                                 </td>
                                             </tr>
@@ -701,7 +712,7 @@
                 <div class="cssclsNoPrint">
                     <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0; border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
-                      <li>Emergency Triage And Nursing Assessment Record</li>
+                      <li>Emergency Triage And Nursing Assessment Record</small></li>
                     </ul>
                     <div id="print_content1" style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
                         <asp:HiddenField runat="server" ID="DataObj" />
@@ -839,14 +850,13 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="card">
+                                <div class="card v10">
                                     <div class="card-header">
                                         <h4 class="text-primary">Emergency Triage And Nursing Assessment Record</h4>
                                         <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"></a>
                                     </div>
                                     <div class="card-body collapse show" id="collapseOne">
                                         <div class="form-body">
-
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
@@ -893,7 +903,7 @@
                                                         <div class="mb-2">
                                                             <webUI:TextField runat="server" ID="txt_chief_complaint" />
                                                         </div>
-                                                        <div >
+                                                        <div>
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_triage_code_1" runat="server" name="rad_triage_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_triage_code_1">1-Hồi sức/ <span class="text-primary">Resuscitation</span></label>
@@ -922,11 +932,11 @@
                                                 </div>
                                             </fieldset>
 
-                                            <fieldset class="row mb-2" runat="server" id="arrival_mode_code_wrapper">
+                                            <fieldset class="row mb-2">
                                                 <div class="col-md-12 gt-2-a">
                                                     <label class="control-label mb-2">Đến khoa bằng/ <span class="text-primary">Mode of arrival:</span></label>
                                                     <asp:Label runat="server" ID="lbl_arrival_mode_desc"></asp:Label>
-                                                    <div>
+                                                    <div runat="server" id="arrival_mode_code_wrapper">
                                                         <div class="custom-control custom-radio d-inline-block mr-2">
                                                             <input type="radio" id="rad_arrival_mode_code_WAL" runat="server" name="rad_arrival_mode_code" class="custom-control-input" />
                                                             <label class="custom-control-label" for="rad_arrival_mode_code_WAL">Tự đến/ <span class="text-primary">Walk-in</span></label>
@@ -1438,7 +1448,7 @@
                                             <fieldset class="row mb-2">
                                                 <label class="col-md-12 control-label mb-2 h5">ĐÁNH GIÁ THỂ CHẤT CÁC CƠ QUAN/ <span class="text-primary">ASSESSMENT BY SYSTEM:</span></label>
 
-                                                <%--<div class="col-md-12 gt-2-a mb-2">
+                                                <div class="col-md-12 gt-2-a mb-2">
                                                     <label class="control-label">Số phòng/ <span class="text-primary">Room number:</span></label>
                                                     <asp:Label runat="server" ID="lbl_room_number"/>
                                                     <div runat="server" id="room_number_wrapper" class="form-group w-n">
@@ -1452,7 +1462,7 @@
                                                     <div runat="server" id="time_of_assessment_wrapper" class="form-group w-n">
                                                         <telerik:RadDateTimePicker runat="server" ID="dtpk_time_of_assessment" Width="200px" />
                                                     </div>
-                                                </div>--%>
+                                                </div>
 
                                                 <div class="col-md-12 gt-2-a mb-2">
                                                     <label class="control-label">Tổng trạng chung/ <span class="text-primary">General appearance:</span></label>
@@ -1594,14 +1604,14 @@
                                                             <input type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_inregular_true" />
                                                             <span class="custom-control-label">Không đều/ <span class="text-primary">Inregular</span></span>
                                                         </label>
-                                                        <%--<label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
+                                                        <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
                                                             <input type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_cardiac_arrest_true" />
                                                             <span class="custom-control-label">Ngưng tim/ <span class="text-primary">Cardiac arrest</span></span>
                                                         </label>
                                                         <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
                                                             <input type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_chest_pain_true" />
                                                             <span class="custom-control-label">Đau ngực/ <span class="text-primary">Chest pain</span></span>
-                                                        </label>--%>
+                                                        </label>
                                                         <label class="custom-control mb-1 custom-checkbox d-inline-block mr-2">
                                                             <input disabled-for="rhythm_field" type="checkbox" class="custom-control-input" runat="server" id="cb_rhythm_others_true" />
                                                             <span class="custom-control-label">Khác/ <span class="text-primary">Others:</span></span>
@@ -1705,9 +1715,9 @@
                                                                 <td>
                                                                     <div>Ghi chú/ <span class="text-primary">Notes</span></div>
                                                                 </td>
-                                                                <%--<td style="width: 180px;">
+                                                                <td style="width: 180px;">
                                                                     <div>Ký tên/ <span class="text-primary">Signature</span></div>
-                                                                </td>--%>
+                                                                </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>
@@ -1725,12 +1735,12 @@
                                                                         <webUI:TextField runat="server" ID="txt_blood_glucose_note" TextMode="SingleLine" />
                                                                     </div>
                                                                 </td>
-                                                                <%--<td>
+                                                                <td>
                                                                     <asp:Label runat="server" ID="lbl_blood_glucose_signature"></asp:Label>
                                                                     <div runat="server" id="blood_glucose_signature_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_blood_glucose_signature" TextMode="SingleLine" />
                                                                     </div>
-                                                                </td>--%>
+                                                                </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Điện tim/ECG
@@ -1747,12 +1757,12 @@
                                                                         <webUI:TextField runat="server" ID="txt_ecg_note" TextMode="SingleLine" />
                                                                     </div>
                                                                 </td>
-                                                                <%--<td>
+                                                                <td>
                                                                     <asp:Label runat="server" ID="lbl_ecg_signature"></asp:Label>
                                                                     <div runat="server" id="ecg_signature_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_ecg_signature" TextMode="SingleLine" />
                                                                     </div>
-                                                                </td>--%>
+                                                                </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Thông tiểu/Urine cath
@@ -1769,12 +1779,12 @@
                                                                         <webUI:TextField runat="server" ID="txt_urine_cath_note" TextMode="SingleLine" />
                                                                     </div>
                                                                 </td>
-                                                                <%--<td>
+                                                                <td>
                                                                     <asp:Label runat="server" ID="lbl_urine_cath_signature"></asp:Label>
                                                                     <div runat="server" id="urine_cath_signature_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_urine_cath_signature" TextMode="SingleLine" />
                                                                     </div>
-                                                                </td>--%>
+                                                                </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Nẹp/Bó bột/Thay băng Splint/Cast/Dressing
@@ -1792,12 +1802,12 @@
                                                                     <webUI:TextField runat="server" ID="txt_splint_cast_dressing_note" TextMode="SingleLine" />
                                                                     </div>
                                                                 </td>
-                                                                <%--<td>
+                                                                <td>
                                                                     <asp:Label runat="server" ID="lbl_splint_cast_dressing_signature"></asp:Label>
                                                                     <div runat="server" id="splint_cast_dressing_signature_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_splint_cast_dressing_signature" TextMode="SingleLine" />
                                                                     </div>
-                                                                </td>--%>
+                                                                </td>
                                                             </tr>
                                                             <tr>
                                                                 <td>Khác/Others
@@ -1814,12 +1824,12 @@
                                                                         <webUI:TextField runat="server" ID="txt_procedure_other_note" TextMode="SingleLine" />
                                                                     </div>
                                                                 </td>
-                                                                <%--<td>
+                                                                <td>
                                                                     <asp:Label runat="server" ID="lbl_procedure_other_signature"></asp:Label>
                                                                     <div runat="server" id="procedure_other_signature_wrapper">
                                                                         <webUI:TextField runat="server" ID="txt_procedure_other_signature" TextMode="SingleLine" />
                                                                     </div>
-                                                                </td>--%>
+                                                                </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
@@ -2164,14 +2174,14 @@
                                                                             <webUI:TextField Value='<%#Eval("patient_condition") %>' ID="patient_condition" runat="server" TextMode="SingleLine" />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
-                                                                    <%--<asp:TemplateField>
+                                                                    <asp:TemplateField>
                                                                         <HeaderTemplate>
                                                                             <div style="width: 300px">Can thiệp điều dưỡng/ <span class="text-primary">Nursing Intervention</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <webUI:TextField Value='<%#Eval("nursing_intervention") %>' ID="nursing_intervention" runat="server" TextMode="SingleLine" />
                                                                         </ItemTemplate>
-                                                                    </asp:TemplateField>--%>
+                                                                    </asp:TemplateField>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
                                                                             <div style="width: 300px">Ký/Ghi tên ĐD/ <span class="text-primary">Signature & RN's name</span></div>
@@ -2231,7 +2241,7 @@
                                                     </div>
                                                     <div class="text-right">
                                                         <div class="btn btn-default waves-effect" data-dismiss="modal">Close</div>
-                                                        <asp:LinkButton OnClick="btnDelete_Click" OnClientClick="window.removeEventListener('beforeunload',comfirm_leave_page,true);" runat="server" ID="btnDelete" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
+                                                        <asp:LinkButton OnClick="btnDelete_Click" OnClientClick="window.removeEventListener('beforeunload',comfirm_leave_page,true);" runat="server" ID="LinkButton1" CssClass="btn btn-danger waves-effect">Delete</asp:LinkButton>
                                                     </div>
                                                 </ModalBody>
                                             </webUI:PopupModal>
@@ -2505,13 +2515,17 @@
         function btnPrint_Click() {
             let printContent = document.querySelector("#printContent");
             printContent.setAttribute("style", "display: block");
-            
+
+<%--            let prt_medications_used = document.getElementById("<%=prt_medications_used.ClientID%>");
+            let lbl_current_medication = document.getElementById("<%=lbl_current_medication.ClientID%>");
+            if (prt_medications_used != null && lbl_current_medication != null) prt_medications_used.innerHTML = "Thuốc đã dùng/ <span class='text-primary'><i>Medications used</i>:&nbsp;</span>" + lbl_current_medication.innerText;--%>
+
             let total = Math.ceil(printContent.offsetHeight / 1096);
 
             for (let i = 1; i <= total; i++) {
                 let div = document.createElement("div");
                 div.setAttribute("class", "watermark page");
-                div.setAttribute("style", "top: " + ( 1093 * (i - 1)) + "px");
+                div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px");
                 div.setAttribute("data-page", "Page " + i + " of " + total);
                 document.getElementById("print_content").append(div);
             }

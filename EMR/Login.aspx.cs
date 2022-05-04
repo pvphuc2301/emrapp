@@ -23,6 +23,7 @@ namespace Emr_client.Emr
         
         protected void Page_Load(object sender, EventArgs e)
         {
+            if(WebHelpers.IsDEVELOP()) { WebHelpers.AddJS(Page, "alert('You are using EMR version DEV. Just for testing!')"); }
             //if (Convert.ToString(Session["company_code"]) == "AIHC")
             {
                 ConnClass ConnStr = new ConnClass();

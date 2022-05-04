@@ -27,6 +27,35 @@
         .watermark {
             height: 945px;
         }
+
+        .dg-1 {
+            display: grid;
+            width: 100%;
+            grid-template-columns: 200px 1fr;
+        }
+
+        @media only screen and (max-width: 600px) {
+          .dg-1 {
+            display: block !important;
+          }
+        }
+
+        .v20:after {
+           content: 'Version: 2.0';
+            font-size: 10px;
+            color: #343a40;
+            position: absolute;
+            right: 10px;
+            bottom: 4px;
+        }
+
+        .add-v20 {
+            /*background-color: #44ff0021;*/
+        }
+
+        .del-v20 {
+            /*background-color: #ff000052;*/
+        }
     </style>
 </head>
 <body>
@@ -182,6 +211,42 @@
                                     <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
                                         - Cá nhân/ Personal: <asp:Label ID="prt_personal" runat="server" />
                                     </div>
+
+                                    <div class="row mb-2 ">
+                                            <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                                <asp:Label runat="server"> Đã từng nhiễm COVID-19 trong vòng 6 tháng qua</span>/ <span class="text-primary">Have been infected with COVID-19 within the last 6 months:</span> </asp:Label>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-2 ">
+                                            <div  class="col-12 ">
+                                                <asp:Label CssClass="ml-4" Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_infected_with_covid_true" Text="❏"/>&nbsp;Có/ Yes
+                                                <asp:Label CssClass="ml-4" Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_infected_with_covid_false" Text="❏"/>&nbsp;Không/ No
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-2 ">
+                                            <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                                <asp:Label runat="server">Tiền sử tiêm chủng</span>/ <span class="text-primary">Immunization history:</span> </asp:Label>
+                                            </div>
+                                            <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
+                                                <asp:Label runat="server">• Tiêm vắc xin phòng COVID-19/ <span class="text-primary">COVID-19 vaccination:</span> </asp:Label>
+                                            </div>
+                                            <div  class="col-12 ">
+                                                <asp:Label CssClass="ml-4" Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_received_1_dose_true" Text="❏"/>&nbsp;Đã tiêm mũi 1/ <span class="text-primary">Received 1<sup>st</sup> dose</span>
+                                                <asp:Label CssClass="ml-4" Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_received_2_dose_true" Text="❏"/>&nbsp;Đã tiêm mũi 2/ <span class="text-primary">Received 2<sup>nd</sup> dose</span>
+                                            </div>
+                                            <div  class="col-12 ">
+                                                <asp:Label CssClass="ml-4" Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_received_additional_true" Text="❏"/>&nbsp;Đã tiêm mũi bổ sung, nhắc lại/ <span class="text-primary">Received additional, booster dose</span>
+                                                <asp:Label CssClass="ml-4" Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_not_yet_vaccinations_true" Text="❏"/>&nbsp;Chưa tiêm/ <span class="text-primary">Not yet</span>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-2 ">
+                                            <div  class="col-12 ">
+                                                <asp:Label runat="server" ID="prt_other_vaccinations"/>
+                                            </div>
+                                        </div>
+
 
                                     <div style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
                                         - Gia đình/ Family: <asp:Label ID="prt_family" runat="server" />
@@ -591,7 +656,7 @@
                 <div class="cssclsNoPrint">
                     <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd; border-radius: 0;">
                       <li><asp:LinkButton runat="server" ID="btnHome" OnClick="btnHome_Click" >Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
-                      <li>Discharge Summary</li>
+                      <li>OBSTETRIC & GYNECOLOGICAL INITIAL ASSESSMENT</li>
                     </ul>
                     <div style="overflow: scroll; height: calc(100vh - 43px); overflow-x: hidden;">
                         <asp:HiddenField runat="server" ID="DataObj" />
@@ -734,7 +799,7 @@
 
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="card">
+                                <div class="card v20">
                                     <div class="card-header">
                                         <h4 class="text-primary">OBSTETRIC & GYNECOLOGICAL INITIAL ASSESSMENT</h4>
                                         <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"></a>
@@ -1033,6 +1098,7 @@
                                                         <legend>
                                                             <label class="control-label">2. Tiền sử bệnh/ <span class="text-primary">Antecedent medical history:</span></label>
                                                         </legend>
+
                                                         <div class="col-md-12 mb-2  gt-2-a">
                                                             <label class="control-label mb-1">Bản thân/ <span class="text-primary">Personal</span></label>
                                                             <asp:Label runat="server" ID="lbl_personal" />
@@ -1040,6 +1106,62 @@
                                                                 <webUI:TextField runat="server" ID="txt_personal" />
                                                             </div>
                                                         </div>
+
+                                                        <div class="add-v20 col-md-12 mb-2">
+                                                            <label class="control-label"><span class="font-bold">Đã từng nhiễm COVID-19 trong vòng 6 tháng qua</span>/ <span class="text-primary">Have been infected with COVID-19 within the last 6 months:</span></label>
+                                                            <div class="dg-1">
+                                                                <div></div>
+                                                                <asp:Label runat="server" ID="lbl_infected_with_covid"></asp:Label>
+                                                                <div runat="server" id="infected_with_covid_wrapper">
+                                                                    <div class="custom-control custom-radio d-inline-block">
+                                                                        <input type="radio" onchange="radioButtonChange(this)" runat="server" id="rad_infected_with_covid_true" name="rad_infected_with_covid" class="custom-control-input" />
+                                                                        <label class="custom-control-label" for="rad_infected_with_covid_true">Có/ <span class="text-primary">Yes</span></label>
+                                                                    </div>
+                                                                    <div class="custom-control custom-radio d-inline-block">
+                                                                        <input disabled-for="allergy_field" onchange="radioButtonChange(this)" type="radio" runat="server" id="rad_infected_with_covid_false" name="rad_infected_with_covid" class="custom-control-input" />
+                                                                        <label class="custom-control-label" for="rad_infected_with_covid_false">Không/ <span class="text-primary">No</span></label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div><label class="control-label"><span class="font-bold">Tiền sử tiêm chủng</span>/ <span class="text-primary">Immunization history:</span></label></div>
+                                            
+                                                            <div class="mb-2">
+                                                                <label class="control-label">• Tiêm vắc xin phòng COVID-19/ <span class="text-primary">COVID-19 vaccination:</span></label>
+                                                
+                                                                <div>
+                                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_received_1_dose_true" />
+                                                                        <span class="custom-control-label">Đã tiêm mũi 1/ <span class="text-primary">Received 1<sup>st</sup> dose</span></span>
+                                                                    </label>
+
+                                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_received_2_dose_true" />
+                                                                        <span class="custom-control-label">Đã tiêm mũi 2/ <span class="text-primary">Received 2<sup>st</sup> dose</span></span>
+                                                                    </label>
+
+                                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_received_additional_true" />
+                                                                        <span class="custom-control-label">Đã tiêm mũi bổ sung, nhắc lại/ <span class="text-primary">Received additional, booster dose</span></span>
+                                                                    </label>
+
+                                                                    <label class="custom-control custom-checkbox d-inline-block mr-2">
+                                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_not_yet_vaccinations_true" />
+                                                                        <span class="custom-control-label">Chưa tiêm/ <span class="text-primary">Not yet</span></span>
+                                                                    </label>
+                                                                </div>
+
+                                                                <div class="dg-1">
+                                                                    <label class="control-label">• Tiêm vắc xin khác (ghi rõ)/ <span class="text-primary">Other vaccinations (specify):</span></label>
+                                                                    <asp:Label runat="server" ID="lbl_other_vaccinations"></asp:Label>
+                                                                    <div class="form-group" runat="server" id="other_vaccinations_wrapper">
+                                                                        <webUI:TextField runat="server" ID="txt_other_vaccinations" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
                                                         <div class="col-md-12 mb-2  gt-2-a">
                                                             <label class="control-label mb-1">Gia đình/ <span class="text-primary">Family</span></label>
                                                             <asp:Label runat="server" ID="lbl_family" />
@@ -1867,7 +1989,7 @@
             $("[data-mode='SingleLine']").keypress(function (e) { return e.which != 13; });
             setTimeout(function () {
                 if (document.getElementById("alertify-logs"))
-                document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
+                    document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
             }, 1000);
         }
 

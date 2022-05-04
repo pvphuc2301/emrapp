@@ -191,11 +191,6 @@
     <Content Include="emr\emrinfor.aspx" />
     <Content Include="emr\emrview.aspx" />
     <Content Include="ER\EmerMedRec.aspx" />
-    <Content Include="ER\EmerMedRecV10.aspx" />
-    <Content Include="ER\EmerMedRecV20.aspx" />
-    <Content Include="ER\EmerMedRecV21.aspx" />
-    <Content Include="ER\EmerTriaAndNurAssRecV10.aspx" />
-    <Content Include="ER\EmerTriaAndNurAssRecV20.aspx" />
     <Content Include="icons\ArrowRepeat.ascx" />
     <Content Include="icons\ChatRight.ascx" />
     <Content Include="icons\CheckCircle.ascx" />
@@ -216,18 +211,9 @@
     <Content Include="images\logo-opacity.png" />
     <Content Include="images\PaintAssess.png" />
     <Content Include="images\prt_header.png" />
-    <Content Include="IPD\DisCerV10.aspx" />
-    <Content Include="IPD\DisCerV20.aspx" />
-    <Content Include="IPD\InpIniMedAssV20.aspx" />
     <Content Include="IPD\ObsGynIniAss.aspx" />
-    <Content Include="IPD\ObsGynIniAssV20.aspx" />
     <Content Include="IPD\SurgicalReport.aspx" />
-    <Content Include="OPD\MedRecForVacV10.aspx" />
     <Content Include="OPD\OutPatIniNurAssV20.aspx" />
-    <Content Include="OPD\OutPatIniNurAss_v1.aspx" />
-    <Content Include="OPD\OutPatMedRecPedV10.aspx" />
-    <Content Include="OPD\OutPatMedRecV10.aspx" />
-    <Content Include="OPD\OutPatMedRecV20.aspx" />
     <Content Include="Other\FormMenu.aspx" />
     <Content Include="Other\Settings.aspx" />
     <Content Include="Other\Test.aspx" />
@@ -375,7 +361,6 @@
   <ItemGroup>
     <Compile Include="Classes\ConnClass.cs" />
     <Compile Include="Classes\EMRClass.cs" />
-    <Compile Include="Classes\Methods.cs" />
     <Compile Include="Classes\Permissions.cs" />
     <Compile Include="Classes\WebHelpers.cs" />
     <Compile Include="Classes\MISClass.cs" />
@@ -458,41 +443,6 @@
     <Compile Include="ER\EmerMedRec.aspx.designer.cs">
       <DependentUpon>EmerMedRec.aspx</DependentUpon>
     </Compile>
-    <Compile Include="ER\EmerMedRecV10.aspx.cs">
-      <DependentUpon>EmerMedRecV10.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ER\EmerMedRecV10.aspx.designer.cs">
-      <DependentUpon>EmerMedRecV10.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ER\EmerMedRecV20.aspx.cs">
-      <DependentUpon>EmerMedRecV20.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ER\EmerMedRecV20.aspx.designer.cs">
-      <DependentUpon>EmerMedRecV20.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ER\EmerMedRecV21.aspx.cs">
-      <DependentUpon>EmerMedRecV21.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ER\EmerMedRecV21.aspx.designer.cs">
-      <DependentUpon>EmerMedRecV21.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ER\EmerTriaAndNurAssRecV10.aspx.cs">
-      <DependentUpon>EmerTriaAndNurAssRecV10.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ER\EmerTriaAndNurAssRecV10.aspx.designer.cs">
-      <DependentUpon>EmerTriaAndNurAssRecV10.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="ER\EmerTriaAndNurAssRecV20.aspx.cs">
-      <DependentUpon>EmerTriaAndNurAssRecV20.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ER\EmerTriaAndNurAssRecV20.aspx.designer.cs">
-      <DependentUpon>EmerTriaAndNurAssRecV20.aspx</DependentUpon>
-    </Compile>
     <Compile Include="icons\ChatRight.ascx.cs">
       <DependentUpon>ChatRight.ascx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -521,40 +471,12 @@
     <Compile Include="icons\ExclamationTriangle.ascx.designer.cs">
       <DependentUpon>ExclamationTriangle.ascx</DependentUpon>
     </Compile>
-    <Compile Include="IPD\DisCerV10.aspx.cs">
-      <DependentUpon>DisCerV10.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="IPD\DisCerV10.aspx.designer.cs">
-      <DependentUpon>DisCerV10.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="IPD\DisCerV20.aspx.cs">
-      <DependentUpon>DisCerV20.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="IPD\DisCerV20.aspx.designer.cs">
-      <DependentUpon>DisCerV20.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="IPD\InpIniMedAssV20.aspx.cs">
-      <DependentUpon>InpIniMedAssV20.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="IPD\InpIniMedAssV20.aspx.designer.cs">
-      <DependentUpon>InpIniMedAssV20.aspx</DependentUpon>
-    </Compile>
     <Compile Include="IPD\ObsGynIniAss.aspx.cs">
       <DependentUpon>ObsGynIniAss.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="IPD\ObsGynIniAss.aspx.designer.cs">
       <DependentUpon>ObsGynIniAss.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="IPD\ObsGynIniAssV20.aspx.cs">
-      <DependentUpon>ObsGynIniAssV20.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="IPD\ObsGynIniAssV20.aspx.designer.cs">
-      <DependentUpon>ObsGynIniAssV20.aspx</DependentUpon>
     </Compile>
     <Compile Include="IPD\SurgicalReport.aspx.cs">
       <DependentUpon>SurgicalReport.aspx</DependentUpon>
@@ -566,47 +488,12 @@
     <Compile Include="Model\AccessButtonInfo.cs" />
     <Compile Include="Model\PatientHistoryVm.cs" />
     <Compile Include="Model\sendRequestVm.cs" />
-    <Compile Include="OPD\MedRecForVacV10.aspx.cs">
-      <DependentUpon>MedRecForVacV10.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OPD\MedRecForVacV10.aspx.designer.cs">
-      <DependentUpon>MedRecForVacV10.aspx</DependentUpon>
-    </Compile>
     <Compile Include="OPD\OutPatIniNurAssV20.aspx.cs">
       <DependentUpon>OutPatIniNurAssV20.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="OPD\OutPatIniNurAssV20.aspx.designer.cs">
       <DependentUpon>OutPatIniNurAssV20.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OPD\OutPatIniNurAss_v1.aspx.cs">
-      <DependentUpon>OutPatIniNurAss_v1.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OPD\OutPatIniNurAss_v1.aspx.designer.cs">
-      <DependentUpon>OutPatIniNurAss_v1.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OPD\OutPatMedRecPedV10.aspx.cs">
-      <DependentUpon>OutPatMedRecPedV10.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OPD\OutPatMedRecPedV10.aspx.designer.cs">
-      <DependentUpon>OutPatMedRecPedV10.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OPD\OutPatMedRecV10.aspx.cs">
-      <DependentUpon>OutPatMedRecV10.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OPD\OutPatMedRecV10.aspx.designer.cs">
-      <DependentUpon>OutPatMedRecV10.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OPD\OutPatMedRecV20.aspx.cs">
-      <DependentUpon>OutPatMedRecV20.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="OPD\OutPatMedRecV20.aspx.designer.cs">
-      <DependentUpon>OutPatMedRecV20.aspx</DependentUpon>
     </Compile>
     <Compile Include="Other\FormMenu.aspx.cs">
       <DependentUpon>FormMenu.aspx</DependentUpon>
@@ -1327,7 +1214,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

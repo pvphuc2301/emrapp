@@ -2235,7 +2235,7 @@
                                                                     BMI = <span class="frac"><tuso>Cân nặng (kg)</tuso><mauso>Chiều cao (m) * Chiều cao (m)</mauso></span>
                                                                     BMI = <span class="frac"><tuso>Body weight (kg)</tuso><mauso>Body height (m) * Body height (m)</mauso></span>
                                                                 </td>
-                                                                <td style="width: 200px" class="text-center">
+                                                                <td style="width: 240px" class="text-center">
                                                                     <asp:Label runat="server" ID="lbl_bmi"></asp:Label>
                                                                 </td>
                                                             </tr>
@@ -2295,7 +2295,7 @@
                                                                     Cân nặng theo chiều dài/chiều cao ≤ <span class="font-bold"> -2 độ lệch tiêu chuẩn (SD)</span> <br />
                                                                     <span class="text-primary">Weight for length/height ≤ -2 standard devivation (SD)</span>
                                                                 </td>
-                                                                <td style="width: 200px" class="p-1 text-center">
+                                                                <td style="width: 240px" class="p-1 text-center">
                                                                     <div class="custom-control custom-radio d-inline-block">
                                                                         <input type="radio" runat="server" id="rad_ns_l_2" name="rad_nutrition_status"
                                                                             class="custom-control-input"
@@ -2430,7 +2430,7 @@
                                                         <table class="table-bordered" style="width: 100%">
                                                             <tr>
                                                                 <td class="p-1 text-center">Giảm > 10%/ <span class="text-primary">Weight loss > 10%</span></td>
-                                                                <td style="width: 200px" class="p-1 text-center">
+                                                                <td style="width: 240px" class="p-1 text-center">
                                                                     <div class="custom-control custom-radio d-inline-block">
                                                                         <input type="radio" runat="server" id="rad_ns_loss_weight_2" name="rad_ns_loss_weight"
                                                                             class="custom-control-input"
@@ -2472,7 +2472,7 @@
                                                         <table class="table-bordered" style="width: 100%">
                                                             <tr>
                                                                 <td class="p-1 text-center">Ăn uống kém hơn <span class="font-bold">5 ngày</span> gần đây/ <span class="text-primary">Eating less than the last 5 days</span></td>
-                                                                <td style="width: 200px" class="p-1 text-center">
+                                                                <td style="width: 240px" class="p-1 text-center">
                                                                     <div class="custom-control custom-radio d-inline-block">
                                                                         <input type="radio" runat="server" id="rad_ns_food_intake_2" name="rad_ns_food_intake"
                                                                             class="custom-control-input"

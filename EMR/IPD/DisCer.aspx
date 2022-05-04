@@ -74,9 +74,13 @@
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 325px 275px 139px">
-                                            <div>
+                                            <div style="display: grid; grid-gap: 4px; grid-template-columns: auto 1fr">
                                                 <webUI:Label runat="server" SubTitle="Patient's Name" Title="Họ tên người bệnh:" />
-                                                <asp:Label runat="server" ID="prt_fullname" />
+                                                <div style="display: inline-block">
+                                                    <asp:Label runat="server" ID="prt_fullname" />
+                                                    <asp:Label runat="server" ID="prt_patient_name_e" />
+                                                </div>
+
                                             </div>
 
                                             <div>
@@ -84,20 +88,30 @@
                                                 <asp:Label runat="server" ID="prt_dob" />
                                             </div>
 
-                                            <div>
+                                            <div style="display: grid; grid-gap: 4px; grid-template-columns: auto 1fr">
                                                 <webUI:Label runat="server" SubTitle="Gender" Title="Giới tính:" />
-                                                <asp:Label runat="server" ID="prt_gender" />
+                                                <div style="display: inline-block">
+                                                    <asp:Label runat="server" ID="prt_gender" />
+                                                    <asp:Label runat="server" ID="prt_gender_e" />
+                                                </div>
+
                                             </div>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 325px 1fr">
-                                            <div>
+                                            <div style="display: grid; grid-gap: 4px; grid-template-columns: auto 1fr">
                                                 <webUI:Label runat="server" SubTitle="Nationality" Title="Dân tộc:" />
-                                                <asp:Label CssClass="align-top" runat="server" ID="prt_nationality" />
+                                                <div style="display: inline-block">
+                                                    <asp:Label CssClass="align-top" runat="server" ID="prt_nationality" />
+                                                    <asp:Label runat="server" ID="prt_nationality_e" />
+                                                </div>
                                             </div>
-                                            <div>
+                                            <div style="display: grid; grid-gap: 4px; grid-template-columns: auto 1fr">
                                                 <webUI:Label runat="server" SubTitle="Occupation" Title="Nghề nghiệp:" />
-                                                <asp:Label CssClass="align-top" runat="server" ID="prt_occupation" />
+                                                <div style="display: inline-block">
+                                                    <asp:Label CssClass="align-top" runat="server" ID="prt_occupation" />
+                                                    <asp:Label CssClass="align-top" runat="server" ID="prt_occupation_e" />
+                                                </div>
                                             </div>
                                         </div>
 
@@ -128,7 +142,10 @@
 
                                         <div class="d-grid" style="grid-template-columns: 150px 1fr">
                                             <webUI:Label runat="server" SubTitle="Address" Title="Địa chỉ:" />
-                                            <asp:Label CssClass="align-top" runat="server" ID="prt_address" />
+                                            <div style="display: inline-block">
+                                                <asp:Label CssClass="align-top" runat="server" ID="prt_address" />
+                                                <asp:Label CssClass="align-top" runat="server" ID="prt_address_e" />
+                                            </div>
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 150px 1fr">
@@ -281,7 +298,6 @@
                                                 <ItemTemplate>
                                                     <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
         </telerik:RadLabel>
-                                           
                                                     <asp:HyperLink CssClass="btn-link" Text="View Log" runat="server" NavigateUrl='<%# GetLogUrl(Eval("document_log_id")) %>'></asp:HyperLink>
                                                 </ItemTemplate>
                                             </telerik:GridTemplateColumn>
@@ -316,6 +332,14 @@
 
                                 <div class="d-grid no-block justify-content-end">
                                     <%--<asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="LinkButton1" CssClass="btn btn-danger">Delete</asp:LinkButton>--%>
+                                </div>
+                            </ContentTemplate>
+                        </telerik:RadWindow>
+                        <telerik:RadWindow Height="130px" VisibleStatusbar="false" Width="220px" RenderMode="Lightweight" ID="RadWindow4" Title="Chọn ngôn ngữ" runat="server">
+                            <ContentTemplate>
+                                <div class="text-center" style="margin-top: 20px">
+                                    <asp:LinkButton runat="server" OnClientClick="printForm(true); return false;" ID="LinkButton1" CssClass="btn btn-secondary waves-effect">Tiếng Việt</asp:LinkButton>
+                                    <asp:LinkButton runat="server" OnClientClick="printForm(false); return false;" ID="LinkButton2" CssClass="btn btn-secondary waves-effect">Song ngữ</asp:LinkButton>
                                 </div>
                             </ContentTemplate>
                         </telerik:RadWindow>
@@ -583,7 +607,7 @@
 
                                                 <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
-                                                <asp:LinkButton runat="server" OnClientClick="window.print(); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
+                                                <asp:LinkButton runat="server" OnClientClick="showWindow('RadWindow4'); return false;" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                 <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
                                             </div>
@@ -636,6 +660,20 @@
             }, 1000);
         }
 
+        function printForm(isLocal) {
+            let StyleDisplay = isLocal ? "none" : "";
+
+            document.getElementById("prt_patient_name_e").style.display = StyleDisplay;
+            document.getElementById("prt_gender_e").style.display = StyleDisplay;
+            document.getElementById("prt_nationality_e").style.display = StyleDisplay;
+            document.getElementById("prt_occupation_e").style.display = StyleDisplay;
+            document.getElementById("prt_address_e").style.display = StyleDisplay;
+            
+            var radWindow = $find('<%=RadWindow4.ClientID %>');
+            radWindow.close();
+
+            window.print();
+        }
     </script>
 </body>
 </html>

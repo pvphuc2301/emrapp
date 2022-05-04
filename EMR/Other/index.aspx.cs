@@ -2,7 +2,6 @@
 using EMR.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -287,7 +286,7 @@ namespace EMR.Other
             objMail.IsBodyHtml = true;
 
             objMail.BodyEncoding = System.Text.Encoding.UTF8;
-            objMail.CC.Add(qc_mail[0]);
+            //objMail.CC.Add(qc_mail[0]);
             //objMail.CC.Add(qc_mail[1]);
             //objMail.CC.Add(qc_mail[2]);
 
@@ -298,7 +297,10 @@ namespace EMR.Other
                                //smtpMail.Credentials = new NetworkCredential(MailAddressFrom.Address, txtPassword.Text);
             smtpMail.Credentials = new NetworkCredential(MailAddressFrom.Address, "AIH2@18!@");//"AIH2@18!@"
                                                                                                //if (!string.IsNullOrEmpty(varFr) && !string.IsNullOrEmpty(varToMail))
+            if (!WebHelpers.IsDEVELOP())
+            {
                 smtpMail.Send(objMail);
+            }
             //update 17/10/2021
             //string apiString1 = $"api/patient/allow-doc-app/{pvid}/{varUserName}?full_name={varFullName}&email={varEmail}";
             string appUserName = "trang.tranthi";
@@ -446,42 +448,42 @@ namespace EMR.Other
 
                             string ContentUrl = "/";
 
-                            var path = Server.MapPath("~/EMR_Doc.xlsx");
+                            //var path = Server.MapPath("~/EMR_Doc.xlsx");
 
-                            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+                            //ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
 
-                            ExcelPackage EXCEL_PACKAGE = new ExcelPackage(new FileInfo(path));
+                            //ExcelPackage EXCEL_PACKAGE = new ExcelPackage(new FileInfo(path));
 
-                            var version = EXCEL_PACKAGE.Workbook.Worksheets["Version"];
+                            //var version = EXCEL_PACKAGE.Workbook.Worksheets["Version"];
 
                             switch (loc)
                             {
                                 case "AIH":
 
-                                    if (version != null)
-                                    {
-                                        string version_extension = "";
+                                    //if (version != null)
+                                    //{
+                                    //    string version_extension = "";
 
-                                        int exrow = 1;
+                                    //    int exrow = 1;
 
-                                        while (version.Cells["A" + exrow].Value != null)
-                                        {
-                                            if (version.Cells["A" + exrow].Value.ToString() == modelID)
-                                            {
-                                                if (version.Cells["B" + exrow].Value != null)
-                                                {
-                                                    version_extension = version.Cells["B" + exrow].Value.ToString();
-                                                }
-                                            }
-                                            exrow++;
-                                        }
+                                    //    while (version.Cells["A" + exrow].Value != null)
+                                    //    {
+                                    //        if (version.Cells["A" + exrow].Value.ToString() == modelID)
+                                    //        {
+                                    //            if (version.Cells["B" + exrow].Value != null)
+                                    //            {
+                                    //                version_extension = version.Cells["B" + exrow].Value.ToString();
+                                    //            }
+                                    //        }
+                                    //        exrow++;
+                                    //    }
 
-                                        //string a = version.Cells["B2"].Value.ToString();
-                                        string ModelUrl = data.url;
-                                        var urlArr = ModelUrl.Split('.');
+                                    //    //string a = version.Cells["B2"].Value.ToString();
+                                    //    string ModelUrl = data.url;
+                                    //    var urlArr = ModelUrl.Split('.');
 
-                                        data.url = urlArr[0] + version_extension + "." + urlArr[1];
-                                    }
+                                    //    data.url = urlArr[0] + version_extension + "." + urlArr[1];
+                                    //}
 
                                     break;
                                 case "CLI":

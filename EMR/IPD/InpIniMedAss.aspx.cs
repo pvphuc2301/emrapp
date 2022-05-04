@@ -30,7 +30,7 @@ namespace EMR
         public string SignatureName { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!WebHelpers.CheckSession(this)) return;
+            if (!WebHelpers.CheckSession(this)) return;
 
             varDocID = Request.QueryString["docId"];
             varDocIdLog = Request.QueryString["docIdLog"];
@@ -41,11 +41,26 @@ namespace EMR
             loc = (string)Session["company_code"];
             locChanged = (string)Session["const_company_code"];
 
-            PAGE_URL = $"/IPD/InpIniMedAss.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+            string url = Request.RawUrl.Split('.')[0];
+            var urlArr = url.Split('/');
+            url = urlArr[urlArr.Length - 1];
+
+            //PAGE_URL = $"/ER/{url}.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+
+            PAGE_URL = $"/IPD/{url}.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
             if (!IsPostBack)
             {
                 Initial();
+                SetDefaultValue();
+            }
+        }
+
+        private void SetDefaultValue()
+        {
+            if (RadGrid1.Items.Count <= 1)
+            {
+                rad_infected_with_covid_false.Checked = true;
             }
         }
 
@@ -65,6 +80,13 @@ namespace EMR
         {
             try
             {
+                btnVSFreeText.Visible = true;
+                cb_received_1_dose_true.Disabled
+                    = cb_received_2_dose_true.Disabled
+                    = cb_received_additional_true.Disabled
+                    = cb_not_yet_vaccinations_true.Disabled
+                    = false;
+
                 txt_amend_reason.Text = "";
                 txt_chief_complaint.Value = WebHelpers.TextToHtmlTag(iima.chief_complaint);
                 txt_cur_med_history.Value = WebHelpers.TextToHtmlTag(iima.cur_med_history);
@@ -90,19 +112,31 @@ namespace EMR
 
                 txt_family.Value = WebHelpers.TextToHtmlTag(iima.family);
                 txt_immunization.Value = WebHelpers.TextToHtmlTag(iima.immunization);
-                vs_temperature.Text = iima.vs_temperature;
-                vs_heart_rate.Text = iima.vs_heart_rate;
-                vs_weight.Text = iima.vs_weight;
-                vs_height.Text = iima.vs_height;
-                vs_respiratory_rate.Text = iima.vs_respiratory_rate;
-                vs_bmi.Text = iima.vs_BMI;
-                vs_blood_pressure.Text = iima.vs_blood_pressure;
-                vs_spo2.Text = iima.vs_spO2;
-                vs_pulse.Text = iima.vs_pulse;
+
+                txt_vs_temperature.Disabled
+                 = txt_vs_weight.Disabled
+                 = txt_vs_height.Disabled
+                 = txt_vs_bmi.Disabled
+                 = txt_vs_pulse.Disabled
+                 = txt_vs_heart_rate.Disabled
+                 = txt_vs_respiratory_rate.Disabled
+                 = txt_vs_blood_pressure.Disabled
+                 = txt_vs_spO2.Disabled
+                 = !cbVSFreeText.Checked;
+
+                txt_vs_temperature.Value = iima.vs_temperature;
+                txt_vs_heart_rate.Value = iima.vs_heart_rate;
+                txt_vs_weight.Value = iima.vs_weight;
+                txt_vs_height.Value = iima.vs_height;
+                txt_vs_respiratory_rate.Value = iima.vs_respiratory_rate;
+                txt_vs_bmi.Value = iima.vs_BMI;
+                txt_vs_blood_pressure.Value = iima.vs_blood_pressure;
+                txt_vs_spO2.Value = iima.vs_spO2;
+                txt_vs_pulse.Value = iima.vs_pulse;
                 txt_physical_exam.Value = WebHelpers.TextToHtmlTag(iima.physical_exam);
 
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), $"rad_psy_consul_required_" + iima.psy_consul_required);
-                
+
                 txt_laboratory_result.Value = WebHelpers.TextToHtmlTag(iima.laboratory_result);
                 txt_add_investigation.Value = WebHelpers.TextToHtmlTag(iima.add_investigation);
                 txt_initial_diagnosis.Value = WebHelpers.TextToHtmlTag(iima.initial_diagnosis);
@@ -111,6 +145,14 @@ namespace EMR
                 txt_associated_conditions.Value = WebHelpers.TextToHtmlTag(iima.associated_conditions);
                 txt_treatment_plan.Value = WebHelpers.TextToHtmlTag(iima.treatment_plan);
                 txt_discharge_plan.Value = WebHelpers.TextToHtmlTag(iima.discharge_plan);
+
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_" + iima.infected_with_covid);
+
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + iima.received_1_dose);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + iima.received_2_dose);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + iima.received_additional);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + iima.not_yet_vaccinations);
+
                 WebHelpers.VisibleControl(true, btnUpdateVitalSign);
 
                 //DataObj.Value = JsonConvert.SerializeObject(iima);
@@ -126,6 +168,12 @@ namespace EMR
         {
             try
             {
+                btnVSFreeText.Visible = false;
+                cb_received_1_dose_true.Disabled
+                    = cb_received_2_dose_true.Disabled
+                    = cb_received_additional_true.Disabled
+                    = cb_not_yet_vaccinations_true.Disabled
+                    = true;
                 //I
                 lbl_chief_complaint.Text = WebHelpers.TextToHtmlTag(iima.chief_complaint);
                 //II
@@ -144,15 +192,16 @@ namespace EMR
                 lbl_immunization.Text = WebHelpers.TextToHtmlTag(iima.immunization);
                 //
                 WebHelpers.VisibleControl(false, btnUpdateVitalSign);
-                vs_temperature.Text = iima.vs_temperature;
-                vs_heart_rate.Text = iima.vs_heart_rate;
-                vs_weight.Text = iima.vs_weight;
-                vs_respiratory_rate.Text = iima.vs_respiratory_rate;
-                vs_height.Text = iima.vs_height;
-                vs_blood_pressure.Text = iima.vs_blood_pressure;
-                vs_bmi.Text = iima.vs_BMI;
-                vs_spo2.Text = iima.vs_spO2;
-                vs_pulse.Text = iima.vs_pulse;
+
+                lbl_vs_temperature.Text = iima.vs_temperature + " °C";
+                lbl_vs_heart_rate.Text = iima.vs_heart_rate + " /phút (m)";
+                lbl_vs_weight.Text = iima.vs_weight + " Kg";
+                lbl_vs_respiratory_rate.Text = iima.vs_respiratory_rate + " /phút (m)";
+                lbl_vs_height.Text = iima.vs_height + " cm";
+                lbl_vs_blood_pressure.Text = iima.vs_blood_pressure + " mmHg";
+                lbl_vs_BMI.Text = iima.vs_BMI + " (Kg/m 2)";
+                lbl_vs_spO2.Text = iima.vs_spO2 + " %";
+                lbl_vs_pulse.Text = iima.vs_pulse + " cm";
                 lbl_physical_exam.Text = WebHelpers.TextToHtmlTag(iima.physical_exam);
                 lbl_psy_consul_required.Text = WebHelpers.GetBool(iima.psy_consul_required);
                 //IV
@@ -165,8 +214,16 @@ namespace EMR
                 lbl_associated_conditions.Text = WebHelpers.TextToHtmlTag(iima.associated_conditions);
                 lbl_treatment_plan.Text = WebHelpers.TextToHtmlTag(iima.treatment_plan);
                 lbl_discharge_plan.Text = WebHelpers.TextToHtmlTag(iima.discharge_plan);
+
+                lbl_infected_with_covid.Text = WebHelpers.FormatString(WebHelpers.GetBool(iima.infected_with_covid));
+
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + iima.received_1_dose);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + iima.received_2_dose);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + iima.received_additional);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + iima.not_yet_vaccinations);
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
@@ -185,31 +242,32 @@ namespace EMR
 
                 prt_vpid.InnerText = string.Format("{0} - {1} - {2}", patientInfo.visible_patient_id, patientVisitInfo.visit_type, patientVisitInfo.visit_code);
 
-
                 //I
                 prt_chief_complaint.Text = WebHelpers.TextToHtmlTag(iima.chief_complaint);
                 //II
                 //1
                 prt_cur_med_history.Text = WebHelpers.TextToHtmlTag(iima.cur_med_history);
                 prt_cur_medication.Text = WebHelpers.TextToHtmlTag(iima.cur_medication);
-                
+
                 //2
                 prt_personal.Text = WebHelpers.TextToHtmlTag(iima.personal);
                 //Habits
-                prt_habits_smoking.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, ghi số gói trong năm/ Yes, specify pack years " + WebHelpers.GetBool(iima.habits_smoking, iima.habits_smoking_pack, ""), Value = true }, iima.habits_smoking, "display: grid; grid-template-columns:90px auto;");
+                prt_habits_smoking.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"text-primary\">No</span>", Value = false }, new Option { Text = "Có, ghi số gói trong năm/ <span class=\"text-primary\">Yes, specify pack years</span> " + WebHelpers.GetBool(iima.habits_smoking, iima.habits_smoking_pack, ""), Value = true }, iima.habits_smoking, "display: grid; grid-template-columns:90px auto;");
 
-                prt_habits_alcohol.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, ghi rõ/ Yes, specify " + WebHelpers.GetBool(iima.habits_alcohol, iima.habits_alcohol_note, ""), Value = true }, iima.habits_alcohol, "display: grid; grid-template-columns:90px auto;");
+                prt_habits_alcohol.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"text-primary\">No</span>", Value = false }, new Option { Text = "Có, ghi rõ/ <span class=\"text-primary\">Yes, specify</span> " + WebHelpers.GetBool(iima.habits_alcohol, iima.habits_alcohol_note, ""), Value = true }, iima.habits_alcohol, "display: grid; grid-template-columns:90px auto;");
 
-                prt_habits_drugs.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, ghi rõ/ Yes, specify " + WebHelpers.GetBool(iima.habits_drugs, iima.habits_drugs_note, ""), Value = true }, iima.habits_drugs, "display: grid; grid-template-columns:90px auto;");
+                prt_habits_drugs.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"text-primary\">No</span>", Value = false }, new Option { Text = "Có, ghi rõ/ <span class=\"text-primary\">Yes, specify</span> " + WebHelpers.GetBool(iima.habits_drugs, iima.habits_drugs_note, ""), Value = true }, iima.habits_drugs, "display: grid; grid-template-columns:90px auto;");
 
-                prt_habits_physical_exercise.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, ghi rõ/ Yes, specify " + WebHelpers.GetBool(iima.habits_physical_exercise, iima.habits_phy_exer_note, ""), Value = true }, iima.habits_physical_exercise, "display: grid; grid-template-columns:90px auto;");
+                prt_habits_physical_exercise.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"text-primary\">No</span>", Value = false }, new Option { Text = "Có, ghi rõ/ <span class=\"text-primary\">Yes, specify</span> " + WebHelpers.GetBool(iima.habits_physical_exercise, iima.habits_phy_exer_note, ""), Value = true }, iima.habits_physical_exercise, "display: grid; grid-template-columns:90px auto;");
 
-                prt_allergy.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, ghi rõ/ Yes, specify " + WebHelpers.GetBool(iima.allergy, iima.allergy_note, ""), Value = true }, iima.allergy, "display: grid; grid-template-columns:90px auto;");
+                prt_habits_other.Text = "Khác/ Other, Ghi rõ/ Specify: " + iima.habits_other;
+
+                prt_allergy.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"text-primary\">No</span>", Value = false }, new Option { Text = "Có, ghi rõ/ <span class=\"text-primary\">Yes, specify</span> " + WebHelpers.GetBool(iima.allergy, iima.allergy_note, ""), Value = true }, iima.allergy, "display: grid; grid-template-columns:90px auto;");
                 //
                 prt_family.Text = WebHelpers.TextToHtmlTag(iima.family);
-                
+
                 prt_immunization.Text = WebHelpers.TextToHtmlTag(iima.immunization);
-                
+
                 //III
                 prt_vs_temperature.Text = iima.vs_temperature;
                 prt_vs_heart_rate.Text = iima.vs_heart_rate;
@@ -222,7 +280,7 @@ namespace EMR
                 //prt_vs_pulse.Text = iima.vs_pulse;
                 prt_physical_exam.Text = WebHelpers.TextToHtmlTag(iima.physical_exam);
 
-                prt_psy_consul_required.Text = WebHelpers.CreateOptions(new Option { Text = "No/ Không", Value = false }, new Option { Text = "Yes/ Có", Value = true }, iima.psy_consul_required, "display: grid; grid-template-columns:90px auto;");
+                prt_psy_consul_required.Text = WebHelpers.CreateOptions(new Option { Text = "No/ <span class=\"text-primary\">Không</span>", Value = false }, new Option { Text = "Yes/ <span class=\"text-primary\">Có</span>", Value = true }, iima.psy_consul_required, "display: grid; grid-template-columns:90px auto;");
 
                 //IV.
                 prt_laboratory_result.Text = WebHelpers.TextToHtmlTag(iima.laboratory_result);
@@ -234,8 +292,33 @@ namespace EMR
                 prt_treatment_plan.Text = WebHelpers.TextToHtmlTag(iima.treatment_plan);
                 prt_discharge_plan.Text = WebHelpers.TextToHtmlTag(iima.discharge_plan);
                 //prt_diagnosis.Text = iima.diagnosis;
-                prt_signature_date.Text = DateTime.Now.ToString("dd/MM/yyyy");
 
+                prt_infected_with_covid_false.Text
+                    = prt_infected_with_covid_true.Text
+                    = prt_received_1_dose_true.Text
+                    = prt_received_2_dose_true.Text
+                    = prt_received_additional_true.Text
+                    = prt_not_yet_vaccinations_true.Text
+                    = "❏";
+
+                Label infected_with_covid = FindControl("prt_infected_with_covid_" + iima.infected_with_covid);
+                if (infected_with_covid != null) infected_with_covid.Text = "☒";
+
+                Label received_1_dose = FindControl("prt_received_1_dose_" + iima.received_1_dose);
+                if (received_1_dose != null) received_1_dose.Text = "☒";
+
+                Label received_2_dose = FindControl("prt_received_2_dose_" + iima.received_2_dose);
+                if (received_2_dose != null) received_2_dose.Text = "☒";
+
+                Label received_additional = FindControl("prt_received_additional_" + iima.received_additional);
+                if (received_additional != null) received_additional.Text = "☒";
+
+                Label not_yet_vaccinations = FindControl("prt_not_yet_vaccinations_" + iima.not_yet_vaccinations);
+                if (not_yet_vaccinations != null) not_yet_vaccinations.Text = "☒";
+
+                prt_immunization.Text = "- Tiêm vắc xin khác (ghi rõ)/ <span class=\"text-primary\">Other vaccinations (specify)</span>: " + iima.immunization;
+
+                prt_signature_date.Text = DateTime.Now.ToString("dd/MM/yyyy");
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }
@@ -248,7 +331,7 @@ namespace EMR
             {
                 Iima iima = new Iima(varDocID, loc);
                 iima.status = DocumentStatus.FINAL;
-                
+
                 UpdateData(iima);
                 WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
             }
@@ -296,8 +379,8 @@ namespace EMR
                     //get access button
                 }
             }
-            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
-            
+            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
+
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
@@ -313,22 +396,22 @@ namespace EMR
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
                     dynamic vs = JsonConvert.DeserializeObject(response.Data);
-LoadVitalSigns(vs);
+                    LoadVitalSigns(vs);
                 }
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }
         public void LoadVitalSigns(dynamic vs)
         {
-            vs_temperature.Text = WebHelpers.FormatString(vs.vs_temperature);
-            vs_heart_rate.Text = WebHelpers.FormatString(vs.vs_heart_rate);
-            vs_weight.Text = WebHelpers.FormatString(vs.vs_weight);
-            vs_respiratory_rate.Text = WebHelpers.FormatString(vs.vs_respiratory_rate);
-            vs_height.Text = WebHelpers.FormatString(vs.vs_height);
-            vs_bmi.Text = WebHelpers.FormatString(vs.vs_BMI);
-            vs_blood_pressure.Text = WebHelpers.FormatString(vs.vs_blood_pressure);
-            vs_spo2.Text = WebHelpers.FormatString(vs.vs_spO2);
-            vs_pulse.Text = WebHelpers.FormatString(vs.pulse);
+            txt_vs_temperature.Value = WebHelpers.FormatString(vs.vs_temperature);
+            txt_vs_heart_rate.Value = WebHelpers.FormatString(vs.vs_heart_rate);
+            txt_vs_weight.Value = WebHelpers.FormatString(vs.vs_weight);
+            txt_vs_respiratory_rate.Value = WebHelpers.FormatString(vs.vs_respiratory_rate);
+            txt_vs_height.Value = WebHelpers.FormatString(vs.vs_height);
+            txt_vs_bmi.Value = WebHelpers.FormatString(vs.vs_BMI);
+            txt_vs_blood_pressure.Value = WebHelpers.FormatString(vs.vs_blood_pressure);
+            txt_vs_spO2.Value = WebHelpers.FormatString(vs.vs_spO2);
+            txt_vs_pulse.Value = WebHelpers.FormatString(vs.pulse);
         }
         protected void btnHome_Click(object sender, EventArgs e)
         {
@@ -363,7 +446,7 @@ LoadVitalSigns(vs);
                 SignatureName = _SignatureName;
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-                
+
                 if (iima.status == DocumentStatus.FINAL)
                 {
                     BindingDataForm(iima, WebHelpers.LoadFormControl(form1, iima, ControlState.View, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
@@ -391,7 +474,7 @@ LoadVitalSigns(vs);
                 WebHelpers.SendError(Page, ex);
             }
         }
-        
+
         private void LoadPatientInfo()
         {
             lblFirstName.Text = patientInfo.first_name_l;
@@ -443,7 +526,8 @@ LoadVitalSigns(vs);
         }
         public void UpdateData(Iima iima)
         {
-            try { 
+            try
+            {
 
                 iima.chief_complaint = txt_chief_complaint.Value;
                 iima.cur_med_history = txt_cur_med_history.Value;
@@ -469,15 +553,26 @@ LoadVitalSigns(vs);
 
                 iima.family = txt_family.Value;
                 iima.immunization = txt_immunization.Value;
-                iima.vs_temperature = vs_temperature.Text;
-                iima.vs_heart_rate = vs_heart_rate.Text;
-                iima.vs_weight = vs_weight.Text;
-                iima.vs_height = vs_height.Text;
-                iima.vs_respiratory_rate = vs_respiratory_rate.Text;
-                iima.vs_BMI = vs_bmi.Text;
-                iima.vs_blood_pressure = vs_blood_pressure.Text;
-                iima.vs_spO2 = vs_spo2.Text;
-                iima.vs_pulse = vs_pulse.Text;
+                //iima.vs_temperature = vs_temperature.Text;
+                //iima.vs_heart_rate = vs_heart_rate.Text;
+                //iima.vs_weight = vs_weight.Text;
+                //iima.vs_height = vs_height.Text;
+                //iima.vs_respiratory_rate = vs_respiratory_rate.Text;
+                //iima.vs_BMI = vs_bmi.Text;
+                //iima.vs_blood_pressure = vs_blood_pressure.Text;
+                //iima.vs_spO2 = vs_spo2.Text;
+                //iima.vs_pulse = vs_pulse.Text;
+
+                iima.vs_temperature = txt_vs_temperature.Value;
+                iima.vs_heart_rate = txt_vs_heart_rate.Value;
+                iima.vs_weight = txt_vs_weight.Value;
+                iima.vs_height = txt_vs_height.Value;
+                iima.vs_respiratory_rate = txt_vs_respiratory_rate.Value;
+                iima.vs_BMI = txt_vs_bmi.Value;
+                iima.vs_blood_pressure = txt_vs_blood_pressure.Value;
+                iima.vs_spO2 = txt_vs_spO2.Value;
+                iima.vs_pulse = txt_vs_pulse.Value;
+
                 iima.physical_exam = txt_physical_exam.Value;
 
                 iima.psy_consul_required = WebHelpers.getRadioButton(form1, "rad_psy_consul_required_");
@@ -490,6 +585,13 @@ LoadVitalSigns(vs);
                 iima.associated_conditions = txt_associated_conditions.Value;
                 iima.treatment_plan = txt_treatment_plan.Value;
                 iima.discharge_plan = txt_discharge_plan.Value;
+
+                iima.infected_with_covid = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_");
+                iima.received_1_dose = cb_received_1_dose_true.Checked;
+                iima.received_2_dose = cb_received_2_dose_true.Checked;
+                iima.received_additional = cb_received_additional_true.Checked;
+                iima.immunization = txt_immunization.Value;
+                iima.not_yet_vaccinations = cb_not_yet_vaccinations_true.Checked;
 
                 if (JsonConvert.SerializeObject(iima) == DataObj.Value)
                 {
@@ -504,7 +606,6 @@ LoadVitalSigns(vs);
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
                     WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
-                    
                     Initial();
                 }
             }
@@ -528,6 +629,21 @@ LoadVitalSigns(vs);
             patientVisitInfo = new PatientVisitInfo(varPVID, loc);
             BindingDataFormPrint(iima);
             WebHelpers.AddJS(Page, "btnPrint_Click()");
+        }
+
+        protected void btnVSFreeText_Click(object sender, EventArgs e)
+        {
+            cbVSFreeText.Checked = !cbVSFreeText.Checked;
+            txt_vs_temperature.Disabled
+                 = txt_vs_weight.Disabled
+                 = txt_vs_height.Disabled
+                 //= txt_vs_bmi.Disabled
+                 = txt_vs_pulse.Disabled
+                 = txt_vs_heart_rate.Disabled
+                 = txt_vs_respiratory_rate.Disabled
+                 = txt_vs_blood_pressure.Disabled
+                 = txt_vs_spO2.Disabled
+                 = !cbVSFreeText.Checked;
         }
     }
 }

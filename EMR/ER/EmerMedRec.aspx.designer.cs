@@ -177,6 +177,69 @@ namespace EMR.ER
         protected global::System.Web.UI.WebControls.Label prt_past_med_his_surs;
 
         /// <summary>
+        /// prt_infected_with_covid_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_infected_with_covid_true;
+
+        /// <summary>
+        /// prt_infected_with_covid_false control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_infected_with_covid_false;
+
+        /// <summary>
+        /// prt_received_1_dose_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_received_1_dose_true;
+
+        /// <summary>
+        /// prt_received_2_dose_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_received_2_dose_true;
+
+        /// <summary>
+        /// prt_received_additional_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_received_additional_true;
+
+        /// <summary>
+        /// prt_not_yet_vaccinations_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_not_yet_vaccinations_true;
+
+        /// <summary>
+        /// prt_other_vaccinations control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_other_vaccinations;
+
+        /// <summary>
         /// lbl_habits_A control.
         /// </summary>
         /// <remarks>
@@ -1203,6 +1266,105 @@ namespace EMR.ER
         protected global::System.Web.UI.WebControls.CustomValidator CustomValidator33;
 
         /// <summary>
+        /// lbl_infected_with_covid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_infected_with_covid;
+
+        /// <summary>
+        /// infected_with_covid_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl infected_with_covid_wrapper;
+
+        /// <summary>
+        /// rad_infected_with_covid_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_infected_with_covid_true;
+
+        /// <summary>
+        /// rad_infected_with_covid_false control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_infected_with_covid_false;
+
+        /// <summary>
+        /// cb_received_1_dose_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_received_1_dose_true;
+
+        /// <summary>
+        /// cb_received_2_dose_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_received_2_dose_true;
+
+        /// <summary>
+        /// cb_received_additional_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_received_additional_true;
+
+        /// <summary>
+        /// cb_not_yet_vaccinations_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_not_yet_vaccinations_true;
+
+        /// <summary>
+        /// lbl_other_vaccinations control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_other_vaccinations;
+
+        /// <summary>
+        /// other_vaccinations_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl other_vaccinations_wrapper;
+
+        /// <summary>
+        /// txt_other_vaccinations control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_other_vaccinations;
+
+        /// <summary>
         /// lbl_habits control.
         /// </summary>
         /// <remarks>
@@ -1554,6 +1716,33 @@ namespace EMR.ER
         protected global::System.Web.UI.WebControls.CustomValidator CustomValidator19;
 
         /// <summary>
+        /// lbl_comfirmed_diagnosis control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_comfirmed_diagnosis;
+
+        /// <summary>
+        /// comfirmed_diagnosis_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl comfirmed_diagnosis_wrapper;
+
+        /// <summary>
+        /// txt_comfirmed_diagnosis control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_comfirmed_diagnosis;
+
+        /// <summary>
         /// lbl_diferential_diagnosis control.
         /// </summary>
         /// <remarks>
@@ -1624,33 +1813,6 @@ namespace EMR.ER
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CustomValidator CustomValidator21;
-
-        /// <summary>
-        /// lbl_comfirmed_diagnosis control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_comfirmed_diagnosis;
-
-        /// <summary>
-        /// comfirmed_diagnosis_wrapper control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl comfirmed_diagnosis_wrapper;
-
-        /// <summary>
-        /// txt_comfirmed_diagnosis control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField txt_comfirmed_diagnosis;
 
         /// <summary>
         /// UpdatePanel6 control.
@@ -1761,15 +1923,6 @@ namespace EMR.ER
         protected global::EMR.TextField txt_name_of_specialist;
 
         /// <summary>
-        /// specialist_opinion_field1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl specialist_opinion_field1;
-
-        /// <summary>
         /// lbl_time_contaced control.
         /// </summary>
         /// <remarks>
@@ -1822,15 +1975,6 @@ namespace EMR.ER
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadDateTimePicker dtpk_time_provided;
-
-        /// <summary>
-        /// specialist_opinion_field2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl specialist_opinion_field2;
 
         /// <summary>
         /// lbl_spec_opinion_summarised control.
@@ -2085,15 +2229,6 @@ namespace EMR.ER
         protected global::System.Web.UI.WebControls.CustomValidator CustomValidator23;
 
         /// <summary>
-        /// discharge_field1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl discharge_field1;
-
-        /// <summary>
         /// lbl_specify_care_instructions control.
         /// </summary>
         /// <remarks>
@@ -2130,15 +2265,6 @@ namespace EMR.ER
         protected global::System.Web.UI.WebControls.CustomValidator CustomValidator24;
 
         /// <summary>
-        /// discharge_field2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl discharge_field2;
-
-        /// <summary>
         /// lbl_discharge_time control.
         /// </summary>
         /// <remarks>
@@ -2173,6 +2299,15 @@ namespace EMR.ER
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator18;
+
+        /// <summary>
+        /// UpdatePanel2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
 
         /// <summary>
         /// lbl_referred_to_OPD control.
@@ -2544,15 +2679,6 @@ namespace EMR.ER
         protected global::System.Web.UI.WebControls.CustomValidator CustomValidator27;
 
         /// <summary>
-        /// emr_sur_field1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl emr_sur_field1;
-
-        /// <summary>
         /// lbl_brief_summary control.
         /// </summary>
         /// <remarks>
@@ -2587,15 +2713,6 @@ namespace EMR.ER
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CustomValidator CustomValidator28;
-
-        /// <summary>
-        /// emr_sur_field2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl emr_sur_field2;
 
         /// <summary>
         /// lbl_time_of_leaving_emer_e control.
@@ -2751,15 +2868,6 @@ namespace EMR.ER
         protected global::System.Web.UI.WebControls.CustomValidator CustomValidator29;
 
         /// <summary>
-        /// transfer_hos_field1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl transfer_hos_field1;
-
-        /// <summary>
         /// lbl_status_before_transfer control.
         /// </summary>
         /// <remarks>
@@ -2794,15 +2902,6 @@ namespace EMR.ER
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CustomValidator CustomValidator30;
-
-        /// <summary>
-        /// transfer_hos_field2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl transfer_hos_field2;
 
         /// <summary>
         /// lbl_time_of_leaving_emer_a control.

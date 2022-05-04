@@ -42,16 +42,29 @@ namespace EMR.IPD
             loc = (string)Session["company_code"];
             locChanged = (string)Session["const_company_code"];
 
-            PAGE_URL = $"/IPD/ObsGynIniAss.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+            string url = Request.RawUrl.Split('.')[0];
+            var urlArr = url.Split('/');
+            url = urlArr[urlArr.Length - 1];
+
+            PAGE_URL = $"/IPD/{url}.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
             if (!IsPostBack)
             {
                 Initial();
+                SetDefaultValue();
             }
 
             PostBackEvent();
         }
-        
+
+        private void SetDefaultValue()
+        {
+            if (RadGrid1.Items.Count <= 1)
+            {
+                rad_infected_with_covid_false.Checked = true;
+            }
+        }
+
         #region Binding Data
         private void BindingDataForm(Ogia ogia, bool state)
         {
@@ -75,84 +88,84 @@ namespace EMR.IPD
 
                 //if (ogia.is_obs_gyn)
                 //{
-                    txt_reason_admission.Value = ogia.reason_admission;
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_is_obs_gyn_" + ogia.is_obs_gyn);
-                    txt_lmp_from.Value = ogia.lmp_from;
-                    txt_lmp_to.Value = ogia.lmp_to;
-                    txt_ges_age_days.Value = Convert.ToString(ogia.ges_age_days);
-                    txt_ges_age_weeks.Value = Convert.ToString(ogia.ges_age_weeks);
-                    txt_prenatal_visit.Value = ogia.prenatal_visit;
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_tetanus_vaccination_" + ogia.tetanus_vaccination);
-                    txt_tetanus_vaccin_time.Value = ogia.tetanus_vaccin_time;
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_gbs_disease_" + ogia.gbs_disease);
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_gbs_bacteriuria_" + ogia.gbs_bacteriuria);
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_gbs_vaginal_" + ogia.gbs_vaginal);
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_ges_diabetes_" + ogia.ges_diabetes);
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_other_ges_abnormal_" + ogia.other_ges_abnormal);
+                txt_reason_admission.Value = ogia.reason_admission;
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_is_obs_gyn_" + ogia.is_obs_gyn);
+                txt_lmp_from.Value = ogia.lmp_from;
+                txt_lmp_to.Value = ogia.lmp_to;
+                txt_ges_age_days.Value = Convert.ToString(ogia.ges_age_days);
+                txt_ges_age_weeks.Value = Convert.ToString(ogia.ges_age_weeks);
+                txt_prenatal_visit.Value = ogia.prenatal_visit;
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_tetanus_vaccination_" + ogia.tetanus_vaccination);
+                txt_tetanus_vaccin_time.Value = ogia.tetanus_vaccin_time;
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_gbs_disease_" + ogia.gbs_disease);
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_gbs_bacteriuria_" + ogia.gbs_bacteriuria);
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_gbs_vaginal_" + ogia.gbs_vaginal);
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_ges_diabetes_" + ogia.ges_diabetes);
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_other_ges_abnormal_" + ogia.other_ges_abnormal);
 
-                    txt_other_ges_abnormal_note.Value = ogia.other_ges_abnormal_note;
+                txt_other_ges_abnormal_note.Value = ogia.other_ges_abnormal_note;
 
-                    WebHelpers.DataBind(dtpk_labor_trig_at_time, ogia.labor_trig_at_time);
+                WebHelpers.DataBind(dtpk_labor_trig_at_time, ogia.labor_trig_at_time);
 
-                    txt_preliminary_signs.Value = ogia.preliminary_signs;
-                    txt_progression.Value = ogia.progression;
-                    txt_obs_cur_medication.Value = ogia.obs_cur_medication;
+                txt_preliminary_signs.Value = ogia.preliminary_signs;
+                txt_progression.Value = ogia.progression;
+                txt_obs_cur_medication.Value = ogia.obs_cur_medication;
 
-                    //2
-                    //External exam
-                    WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_obs_pre_cicatrice_" + ogia.obs_pre_cicatrice);
-                    tetanus_vaccination_change(Convert.ToString(ogia.tetanus_vaccination));
-                    txt_obs_uterine_shape.Value = ogia.obs_uterine_shape;
-                    txt_obs_posture.Value = ogia.obs_posture;
-                    txt_obs_fundal_height.Value = ogia.obs_fundal_height;
-                    txt_obs_abdominal_circum.Value = ogia.obs_abdominal_circum;
-                    txt_obs_uterine_con.Value = ogia.obs_uterine_con;
-                    txt_obs_fetal_heart_rate.Value = ogia.obs_fetal_heart_rate;
-                    txt_obs_breasts.Value = ogia.obs_breasts;
+                //2
+                //External exam
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_obs_pre_cicatrice_" + ogia.obs_pre_cicatrice);
+                tetanus_vaccination_change(Convert.ToString(ogia.tetanus_vaccination));
+                txt_obs_uterine_shape.Value = ogia.obs_uterine_shape;
+                txt_obs_posture.Value = ogia.obs_posture;
+                txt_obs_fundal_height.Value = ogia.obs_fundal_height;
+                txt_obs_abdominal_circum.Value = ogia.obs_abdominal_circum;
+                txt_obs_uterine_con.Value = ogia.obs_uterine_con;
+                txt_obs_fetal_heart_rate.Value = ogia.obs_fetal_heart_rate;
+                txt_obs_breasts.Value = ogia.obs_breasts;
 
-                    //Internal exam
-                    txt_obs_vulva.Value = ogia.obs_vulva;
-                    txt_obs_vagina.Value = ogia.obs_vagina;
-                    txt_obs_perineum.Value = ogia.obs_perineum;
-                    txt_obs_cervix.Value = ogia.obs_cervix;
-                    txt_obs_adnexa.Value = ogia.obs_adnexa;
+                //Internal exam
+                txt_obs_vulva.Value = ogia.obs_vulva;
+                txt_obs_vagina.Value = ogia.obs_vagina;
+                txt_obs_perineum.Value = ogia.obs_perineum;
+                txt_obs_cervix.Value = ogia.obs_cervix;
+                txt_obs_adnexa.Value = ogia.obs_adnexa;
 
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_obs_mem_condition_code_" + ogia.obs_mem_condition_code);
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_obs_mem_condition_code_" + ogia.obs_mem_condition_code);
 
-                    obs_mem_condition_code_change(ogia.obs_mem_condition_code);
+                obs_mem_condition_code_change(ogia.obs_mem_condition_code);
 
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_obs_mem_con_attri_code_" + ogia.obs_mem_con_attri_code);
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_obs_mem_con_attri_code_" + ogia.obs_mem_con_attri_code);
 
                 WebHelpers.BindDateTimePicker(dtpk_obs_rup_of_mem_at, ogia.obs_rup_of_mem_at);
 
-                    WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_obs_feat_amniotic_", WebHelpers.GetJSONToDataTable(ogia.obs_feat_amniotic));
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_obs_feat_amniotic_", WebHelpers.GetJSONToDataTable(ogia.obs_feat_amniotic));
 
-                    txt_obs_color_amniotic.Value = ogia.obs_color_amniotic;
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_obs_presentation_code_" + ogia.obs_presentation_code);
-                    txt_obs_presentation_other.Value = ogia.obs_presentation_other;
-                    txt_obs_fetal_position.Value = ogia.obs_fetal_position;
-                    txt_obs_pelvic_exam.Value = ogia.obs_pelvic_exam;
-                    txt_obs_bishop_score.Value = ogia.obs_bishop_score;
+                txt_obs_color_amniotic.Value = ogia.obs_color_amniotic;
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_obs_presentation_code_" + ogia.obs_presentation_code);
+                txt_obs_presentation_other.Value = ogia.obs_presentation_other;
+                txt_obs_fetal_position.Value = ogia.obs_fetal_position;
+                txt_obs_pelvic_exam.Value = ogia.obs_pelvic_exam;
+                txt_obs_bishop_score.Value = ogia.obs_bishop_score;
 
                 //}
                 //else
                 //{
-                    txt_gyn_med_history.Value = ogia.gyn_med_history;
-                    txt_gyn_cur_medication.Value = ogia.gyn_cur_medication;
-                    //III
-                    //2
-                    //External exam
-                    WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_gyn_abdo_sur_scars_" + ogia.gyn_abdo_sur_scars);
-                    txt_gyn_reason.Value = ogia.gyn_reason;
-                    txt_gyn_uterine_height.Value = ogia.gyn_uterine_height;
-                    //Internal exam
-                    txt_gyn_vulva.Value = ogia.gyn_vulva;
-                    txt_gyn_perineum.Value = ogia.gyn_perineum;
-                    txt_gyn_vagina.Value = ogia.gyn_vagina;
-                    txt_gyn_discharge.Value = ogia.gyn_discharge;
-                    txt_gyn_cervix.Value = ogia.gyn_cervix;
-                    txt_gyn_adnexa.Value = ogia.gyn_adnexa;
-                    txt_gyn_douglas_pouchs.Value = ogia.gyn_douglas_pouchs;
+                txt_gyn_med_history.Value = ogia.gyn_med_history;
+                txt_gyn_cur_medication.Value = ogia.gyn_cur_medication;
+                //III
+                //2
+                //External exam
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_gyn_abdo_sur_scars_" + ogia.gyn_abdo_sur_scars);
+                txt_gyn_reason.Value = ogia.gyn_reason;
+                txt_gyn_uterine_height.Value = ogia.gyn_uterine_height;
+                //Internal exam
+                txt_gyn_vulva.Value = ogia.gyn_vulva;
+                txt_gyn_perineum.Value = ogia.gyn_perineum;
+                txt_gyn_vagina.Value = ogia.gyn_vagina;
+                txt_gyn_discharge.Value = ogia.gyn_discharge;
+                txt_gyn_cervix.Value = ogia.gyn_cervix;
+                txt_gyn_adnexa.Value = ogia.gyn_adnexa;
+                txt_gyn_douglas_pouchs.Value = ogia.gyn_douglas_pouchs;
 
                 //}
 
@@ -160,6 +173,23 @@ namespace EMR.IPD
 
                 //2 Antecedent medical history
                 txt_personal.Value = ogia.personal;
+
+                //Update V2.0
+                cb_received_1_dose_true.Disabled
+                    = cb_received_2_dose_true.Disabled
+                    = cb_received_additional_true.Disabled
+                    = cb_not_yet_vaccinations_true.Disabled
+                    = false;
+
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_" + ogia.infected_with_covid);
+
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + ogia.received_1_dose);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + ogia.received_2_dose);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + ogia.received_additional);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + ogia.not_yet_vaccinations);
+
+                txt_other_vaccinations.Value = ogia.other_vaccinations;
+
                 txt_family.Value = ogia.family;
 
                 //3 Gynecological history
@@ -170,7 +200,7 @@ namespace EMR.IPD
                 txt_marriage_age.Value = Convert.ToString(ogia.marriage_age);
                 txt_age_menopause.Value = ogia.age_menopause;
                 txt_previous_gyn_diseases.Value = ogia.previous_gyn_diseases;
-                
+
                 //4
                 WebHelpers.DataBind(grid_obs_history, WebHelpers.GetJSONToDataTable(ogia.obs_history));
                 WebHelpers.DisabledGridView(grid_obs_history, false);
@@ -180,7 +210,7 @@ namespace EMR.IPD
                 txt_general_appearance.Value = ogia.general_appearance;
                 WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_edema_" + ogia.edema);
                 txt_edema_note.Value = ogia.edema_note;
-                
+
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_obs_rup_of_mem_code_" + ogia.obs_rup_of_mem_code);
 
                 txt_cardio_system.Value = ogia.cardio_system;
@@ -195,7 +225,7 @@ namespace EMR.IPD
                 txt_other_findings.Value = ogia.other_findings;
 
                 WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_psy_consul_required_" + ogia.psy_consul_required);
-                
+
                 //IV.
                 txt_lab_result.Value = ogia.lab_result;
                 txt_add_investigations.Value = ogia.add_investigations;
@@ -210,14 +240,17 @@ namespace EMR.IPD
                 DataObj.Value = JsonConvert.SerializeObject(ogia);
                 Session["docid"] = ogia.document_id;
                 WebHelpers.AddScriptFormEdit(Page, ogia, (string)Session["emp_id"], loc);
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
         }
         private void BindingDataFormView(Ogia ogia)
         {
-            try {
+            try
+            {
+
                 lbl_reason_admission.Text = WebHelpers.FormatString(ogia.reason_admission);
                 lbl_is_obs_gyn.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.is_obs_gyn, "SẢN KHOA/ OBSTETRICS", "PHỤ KHOA/ GYNECOLOGY"));
 
@@ -225,89 +258,105 @@ namespace EMR.IPD
 
                 //if (ogia.is_obs_gyn)
                 //{
-                    lbl_lmp_from.Text = WebHelpers.FormatString(ogia.lmp_from);
-                    lbl_lmp_to.Text = WebHelpers.FormatString(ogia.lmp_to);
-                    lbl_ges_age_weeks.Text = $"{WebHelpers.FormatString(ogia.ges_age_weeks)} tuần/ weeks {WebHelpers.FormatString(ogia.ges_age_days)} ngày/ days";
-                    lbl_prenatal_visit.Text = WebHelpers.FormatString(ogia.prenatal_visit);
-                
+                lbl_lmp_from.Text = WebHelpers.FormatString(ogia.lmp_from);
+                lbl_lmp_to.Text = WebHelpers.FormatString(ogia.lmp_to);
+                lbl_ges_age_weeks.Text = $"{WebHelpers.FormatString(ogia.ges_age_weeks)} tuần/ weeks {WebHelpers.FormatString(ogia.ges_age_days)} ngày/ days";
+                lbl_prenatal_visit.Text = WebHelpers.FormatString(ogia.prenatal_visit);
+
                 tetanus_vaccination_change(Convert.ToString(ogia.tetanus_vaccination));
 
                 lbl_tetanus_vaccination.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.tetanus_vaccination, $"Có/ Yes {WebHelpers.FormatString(ogia.tetanus_vaccin_time)} lần/ times", "Chưa/ Not yet"));
 
-                    lbl_gbs_disease.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.gbs_disease));
-                    lbl_gbs_bacteriuria.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.gbs_bacteriuria));
+                lbl_gbs_disease.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.gbs_disease));
+                lbl_gbs_bacteriuria.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.gbs_bacteriuria));
 
-                    lbl_gbs_vaginal.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.gbs_vaginal));
+                lbl_gbs_vaginal.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.gbs_vaginal));
 
-                    lbl_ges_diabetes.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.ges_diabetes));
-                    lbl_other_ges_abnormal.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.other_ges_abnormal, $"Có/ Yes {ogia.other_ges_abnormal_note}"));
-                    lbl_labor_trig_at_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ogia.labor_trig_at_time, "dd-MM-yyyy HH:mm"));
-                    lbl_preliminary_signs.Text = WebHelpers.FormatString(ogia.preliminary_signs);
-                    lbl_progression.Text = WebHelpers.FormatString(ogia.progression);
-                    lbl_obs_cur_medication.Text = WebHelpers.FormatString(ogia.obs_cur_medication);
+                lbl_ges_diabetes.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.ges_diabetes));
+                lbl_other_ges_abnormal.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.other_ges_abnormal, $"Có/ Yes {ogia.other_ges_abnormal_note}"));
+                lbl_labor_trig_at_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(ogia.labor_trig_at_time, "dd-MM-yyyy HH:mm"));
+                lbl_preliminary_signs.Text = WebHelpers.FormatString(ogia.preliminary_signs);
+                lbl_progression.Text = WebHelpers.FormatString(ogia.progression);
+                lbl_obs_cur_medication.Text = WebHelpers.FormatString(ogia.obs_cur_medication);
 
-                    //2.
-                    lbl_obs_pre_cicatrice.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.obs_pre_cicatrice, "Yes", "No"));
-                    lbl_obs_uterine_shape.Text = WebHelpers.FormatString(ogia.obs_uterine_shape);
-                    lbl_obs_posture.Text = WebHelpers.FormatString(ogia.obs_posture) + " cm";
-                    lbl_obs_fundal_height.Text = WebHelpers.FormatString(ogia.obs_fundal_height) + " cm";
-                    lbl_obs_abdominal_circum.Text = WebHelpers.FormatString(ogia.obs_abdominal_circum);
-                    lbl_obs_uterine_con.Text = WebHelpers.FormatString(ogia.obs_uterine_con);
-                    lbl_obs_fetal_heart_rate.Text = WebHelpers.FormatString(ogia.obs_fetal_heart_rate) + " lần/phút/ bpm";
-                    lbl_obs_breasts.Text = WebHelpers.FormatString(ogia.obs_breasts);
+                //2.
+                lbl_obs_pre_cicatrice.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.obs_pre_cicatrice, "Yes", "No"));
+                lbl_obs_uterine_shape.Text = WebHelpers.FormatString(ogia.obs_uterine_shape);
+                lbl_obs_posture.Text = WebHelpers.FormatString(ogia.obs_posture) + " cm";
+                lbl_obs_fundal_height.Text = WebHelpers.FormatString(ogia.obs_fundal_height) + " cm";
+                lbl_obs_abdominal_circum.Text = WebHelpers.FormatString(ogia.obs_abdominal_circum);
+                lbl_obs_uterine_con.Text = WebHelpers.FormatString(ogia.obs_uterine_con);
+                lbl_obs_fetal_heart_rate.Text = WebHelpers.FormatString(ogia.obs_fetal_heart_rate) + " lần/phút/ bpm";
+                lbl_obs_breasts.Text = WebHelpers.FormatString(ogia.obs_breasts);
 
-                    //
-                    lbl_obs_vulva.Text = WebHelpers.FormatString(ogia.obs_vulva);
-                    lbl_obs_vagina.Text = WebHelpers.FormatString(ogia.obs_vagina);
-                    lbl_obs_perineum.Text = WebHelpers.FormatString(ogia.obs_perineum);
-                    lbl_obs_cervix.Text = WebHelpers.FormatString(ogia.obs_cervix);
-                    lbl_obs_adnexa.Text = WebHelpers.FormatString(ogia.obs_adnexa);
+                //
+                lbl_obs_vulva.Text = WebHelpers.FormatString(ogia.obs_vulva);
+                lbl_obs_vagina.Text = WebHelpers.FormatString(ogia.obs_vagina);
+                lbl_obs_perineum.Text = WebHelpers.FormatString(ogia.obs_perineum);
+                lbl_obs_cervix.Text = WebHelpers.FormatString(ogia.obs_cervix);
+                lbl_obs_adnexa.Text = WebHelpers.FormatString(ogia.obs_adnexa);
 
-                    obs_mem_condition_code_change(ogia.obs_mem_condition_code);
-                    if(ogia.obs_mem_condition_code == "RU")
-                    {
-                        lbl_obs_rup_of_mem_at.Text = WebHelpers.FormatDateTime(ogia.obs_rup_of_mem_at);
-                    }else if(ogia.obs_mem_condition_code == "IN")
-                    {
-                        lbl_obs_mem_con_attri_desc.Text = ogia.obs_mem_con_attri_desc;
-                    }
+                obs_mem_condition_code_change(ogia.obs_mem_condition_code);
+                if (ogia.obs_mem_condition_code == "RU")
+                {
+                    lbl_obs_rup_of_mem_at.Text = WebHelpers.FormatDateTime(ogia.obs_rup_of_mem_at);
+                }
+                else if (ogia.obs_mem_condition_code == "IN")
+                {
+                    lbl_obs_mem_con_attri_desc.Text = ogia.obs_mem_con_attri_desc;
+                }
 
-                    lbl_obs_mem_condition_code.Text = WebHelpers.FormatString(ogia.obs_mem_condition_desc);
-                
-                    lbl_obs_rup_of_mem_code.Text = WebHelpers.FormatString(ogia.obs_rup_of_mem_desc);
+                lbl_obs_mem_condition_code.Text = WebHelpers.FormatString(ogia.obs_mem_condition_desc);
 
-                    lbl_obs_feat_amniotic.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(ogia.obs_feat_amniotic));
+                lbl_obs_rup_of_mem_code.Text = WebHelpers.FormatString(ogia.obs_rup_of_mem_desc);
 
-                    lbl_obs_color_amniotic.Text = WebHelpers.FormatString(ogia.obs_color_amniotic);
+                lbl_obs_feat_amniotic.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(ogia.obs_feat_amniotic));
 
-                    lbl_obs_presentation_code.Text = ogia.obs_presentation_desc + (ogia.obs_presentation_code == "OTH" ? WebHelpers.FormatString(ogia.obs_presentation_other) : "");
+                lbl_obs_color_amniotic.Text = WebHelpers.FormatString(ogia.obs_color_amniotic);
 
-                    lbl_obs_fetal_position.Text = WebHelpers.FormatString(ogia.obs_fetal_position);
-                    lbl_obs_pelvic_exam.Text = WebHelpers.FormatString(ogia.obs_pelvic_exam);
-                    lbl_obs_bishop_score.Text = WebHelpers.FormatString(ogia.obs_bishop_score) + " điểm/ points";
+                lbl_obs_presentation_code.Text = ogia.obs_presentation_desc + (ogia.obs_presentation_code == "OTH" ? WebHelpers.FormatString(ogia.obs_presentation_other) : "");
+
+                lbl_obs_fetal_position.Text = WebHelpers.FormatString(ogia.obs_fetal_position);
+                lbl_obs_pelvic_exam.Text = WebHelpers.FormatString(ogia.obs_pelvic_exam);
+                lbl_obs_bishop_score.Text = WebHelpers.FormatString(ogia.obs_bishop_score) + " điểm/ points";
 
                 //}
                 //else
                 //{
-                    lbl_gyn_med_history.Text = WebHelpers.FormatString(ogia.gyn_med_history);
-                    lbl_gyn_cur_medication.Text = WebHelpers.FormatString(ogia.gyn_cur_medication);
-                    
-                    //2
-                    //External exam
-                    lbl_gyn_abdo_sur_scars.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.gyn_abdo_sur_scars));
-                    lbl_gyn_reason.Text = WebHelpers.FormatString(ogia.gyn_reason);
-                    lbl_gyn_uterine_height.Text = WebHelpers.FormatString(ogia.gyn_uterine_height);
-                    //Internal Examination
-                    lbl_gyn_vulva.Text = WebHelpers.FormatString(ogia.gyn_vulva);
-                    lbl_gyn_perineum.Text = WebHelpers.FormatString(ogia.gyn_perineum);
-                    lbl_gyn_vagina.Text = WebHelpers.FormatString(ogia.gyn_vagina);
-                    lbl_gyn_discharge.Text = WebHelpers.FormatString(ogia.gyn_discharge);
-                    lbl_gyn_cervix.Text = WebHelpers.FormatString(ogia.gyn_cervix);
-                    lbl_gyn_adnexa.Text = WebHelpers.FormatString(ogia.gyn_adnexa);
-                    lbl_gyn_douglas_pouchs.Text = WebHelpers.FormatString(ogia.gyn_douglas_pouchs);
+                lbl_gyn_med_history.Text = WebHelpers.FormatString(ogia.gyn_med_history);
+                lbl_gyn_cur_medication.Text = WebHelpers.FormatString(ogia.gyn_cur_medication);
+
+                //2
+                //External exam
+                lbl_gyn_abdo_sur_scars.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.gyn_abdo_sur_scars));
+                lbl_gyn_reason.Text = WebHelpers.FormatString(ogia.gyn_reason);
+                lbl_gyn_uterine_height.Text = WebHelpers.FormatString(ogia.gyn_uterine_height);
+                //Internal Examination
+                lbl_gyn_vulva.Text = WebHelpers.FormatString(ogia.gyn_vulva);
+                lbl_gyn_perineum.Text = WebHelpers.FormatString(ogia.gyn_perineum);
+                lbl_gyn_vagina.Text = WebHelpers.FormatString(ogia.gyn_vagina);
+                lbl_gyn_discharge.Text = WebHelpers.FormatString(ogia.gyn_discharge);
+                lbl_gyn_cervix.Text = WebHelpers.FormatString(ogia.gyn_cervix);
+                lbl_gyn_adnexa.Text = WebHelpers.FormatString(ogia.gyn_adnexa);
+                lbl_gyn_douglas_pouchs.Text = WebHelpers.FormatString(ogia.gyn_douglas_pouchs);
                 //}
                 //2
                 lbl_personal.Text = WebHelpers.FormatString(ogia.personal);
+                cb_received_1_dose_true.Disabled
+                    = cb_received_2_dose_true.Disabled
+                    = cb_received_additional_true.Disabled
+                    = cb_not_yet_vaccinations_true.Disabled
+                    = true;
+
+                lbl_infected_with_covid.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.infected_with_covid));
+
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + ogia.received_1_dose);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + ogia.received_2_dose);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + ogia.received_additional);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + ogia.not_yet_vaccinations);
+
+                lbl_other_vaccinations.Text = ogia.other_vaccinations;
+
                 lbl_family.Text = WebHelpers.FormatString(ogia.family);
                 //3
                 lbl_age_of_menarhce.Text = WebHelpers.FormatString(ogia.age_of_menarhce);
@@ -349,7 +398,8 @@ namespace EMR.IPD
                 lbl_treatment_plan.Text = WebHelpers.FormatString(ogia.treatment_plan);
                 lbl_discharge_plan.Text = WebHelpers.FormatString(ogia.discharge_plan);
 
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
@@ -438,6 +488,31 @@ namespace EMR.IPD
                 prt_gyn_med_history.Text = ogia.gyn_med_history;
                 prt_gyn_cur_medication.Text = ogia.gyn_cur_medication;
                 prt_personal.Text = ogia.personal;
+                prt_infected_with_covid_false.Text
+                    = prt_infected_with_covid_true.Text
+                    = prt_received_1_dose_true.Text
+                    = prt_received_2_dose_true.Text
+                    = prt_received_additional_true.Text
+                    = prt_not_yet_vaccinations_true.Text
+                    = "❏";
+
+                Label infected_with_covid = FindControl("prt_infected_with_covid_" + ogia.infected_with_covid);
+                if (infected_with_covid != null) infected_with_covid.Text = "☒";
+
+                Label received_1_dose = FindControl("prt_received_1_dose_" + ogia.received_1_dose);
+                if (received_1_dose != null) received_1_dose.Text = "☒";
+
+                Label received_2_dose = FindControl("prt_received_2_dose_" + ogia.received_2_dose);
+                if (received_2_dose != null) received_2_dose.Text = "☒";
+
+                Label received_additional = FindControl("prt_received_additional_" + ogia.received_additional);
+                if (received_additional != null) received_additional.Text = "☒";
+
+                Label not_yet_vaccinations = FindControl("prt_not_yet_vaccinations_" + ogia.not_yet_vaccinations);
+                if (not_yet_vaccinations != null) not_yet_vaccinations.Text = "☒";
+
+                prt_other_vaccinations.Text = "• Tiêm vắc xin khác (ghi rõ)/ <span class=\"text-primary\">Other vaccinations (specify)</span>: " + ogia.other_vaccinations;
+
                 prt_family.Text = ogia.family;
                 prt_age_of_menarhce.Text = WebHelpers.FormatString(ogia.age_of_menarhce, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                 prt_menstrual_cycle.Text = WebHelpers.FormatString(Convert.ToString(ogia.menstrual_cycle), "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
@@ -523,7 +598,7 @@ namespace EMR.IPD
                         (control as Label).Text = "☒";
                     }
                 }
-               
+
                 prt_obs_uterine_shape.Text = WebHelpers.FormatString(ogia.obs_uterine_shape, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
                 prt_obs_posture.Text = ogia.obs_posture;
                 prt_obs_fundal_height.Text = WebHelpers.FormatString(ogia.obs_fundal_height, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
@@ -544,7 +619,7 @@ namespace EMR.IPD
 
                 if (ogia.obs_mem_condition_code == "RU")
                 {
-                    DateTime obs_rup_of_mem_at = WebHelpers.ConvertDateTime(ogia.obs_rup_of_mem_at, out bool IsValidDateTime1);
+                    DateTime? obs_rup_of_mem_at = WebHelpers.ConvertDateTime(ogia.obs_rup_of_mem_at, out bool IsValidDateTime1);
                     if (IsValidDateTime1)
                     {
                         prt_obs_rup_of_mem_at.Text = $"{ WebHelpers.FormatDateTime(obs_rup_of_mem_at, "HH")} giờ/ hour { WebHelpers.FormatDateTime(obs_rup_of_mem_at, "mm")} phút/ minute ngày/ date { WebHelpers.FormatDateTime(obs_rup_of_mem_at, "dd/MM/yyyy")}";
@@ -603,7 +678,7 @@ namespace EMR.IPD
                 prt_treatment_plan.Text = ogia.treatment_plan;
                 prt_discharge_plan.Text = ogia.discharge_plan;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
@@ -618,7 +693,7 @@ namespace EMR.IPD
             {
                 Ogia ogia = new Ogia(varDocID, loc);
                 ogia.status = DocumentStatus.FINAL;
-                
+
                 UpdateData(ogia);
                 WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
             }
@@ -645,7 +720,7 @@ namespace EMR.IPD
                     Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
@@ -691,8 +766,9 @@ namespace EMR.IPD
 
         private void tetanus_vaccination_change(string v)
         {
-            if (string.IsNullOrEmpty(v)) {
-                rad_tetanus_vaccination_false.Checked = rad_tetanus_vaccination_true.Checked = tetanus_vaccin_time_field.Visible = false; 
+            if (string.IsNullOrEmpty(v))
+            {
+                rad_tetanus_vaccination_false.Checked = rad_tetanus_vaccination_true.Checked = tetanus_vaccin_time_field.Visible = false;
                 return;
             }
 
@@ -710,13 +786,13 @@ namespace EMR.IPD
         {
             try
             {
-                
+
                 //I
                 ogia.reason_admission = txt_reason_admission.Value;
                 //II
                 ogia.is_obs_gyn = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_is_obs_gyn_");
-                
-                if(ogia.is_obs_gyn == true)
+
+                if (ogia.is_obs_gyn == true)
                 {
                     ogia.lmp_from = txt_lmp_from.Value;
                     ogia.lmp_to = txt_lmp_to.Value;
@@ -767,12 +843,12 @@ namespace EMR.IPD
 
                     ogia.obs_rup_of_mem_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_obs_rup_of_mem_code_", Ogia.OBS_RUP_OF_MEM_CODE);
                     ogia.obs_rup_of_mem_desc = WebHelpers.GetDicDesc(ogia.obs_rup_of_mem_code, Ogia.OBS_RUP_OF_MEM_CODE);
-                    
+
                     ogia.obs_feat_amniotic = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_obs_feat_amniotic_", Ogia.OBS_FEAT_AMNIOTIC);
                     ogia.obs_color_amniotic = txt_obs_color_amniotic.Value;
                     ogia.obs_presentation_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_obs_presentation_code_", Ogia.OBS_PRESENTATION_CODE);
                     ogia.obs_presentation_desc = WebHelpers.GetDicDesc(ogia.obs_presentation_code, Ogia.OBS_PRESENTATION_CODE);
-                    
+
                     if (ogia.obs_presentation_code == "O")
                     { ogia.obs_presentation_other = txt_obs_presentation_other.Value; }
 
@@ -797,7 +873,7 @@ namespace EMR.IPD
                     ogia.gyn_adnexa = null;
                     ogia.gyn_douglas_pouchs = null;
                 }
-                else if(ogia.is_obs_gyn == false)
+                else if (ogia.is_obs_gyn == false)
                 {
                     //II
                     //1
@@ -850,9 +926,18 @@ namespace EMR.IPD
                     ogia.obs_bishop_score = null;
                     ogia.labor_trig_at_time = null;
                 }
-                
+
                 //2
                 ogia.personal = txt_personal.Value;
+
+                //Update v2.0
+                ogia.infected_with_covid = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_");
+                ogia.received_1_dose = cb_received_1_dose_true.Checked;
+                ogia.received_2_dose = cb_received_2_dose_true.Checked;
+                ogia.received_additional = cb_received_additional_true.Checked;
+                ogia.other_vaccinations = txt_other_vaccinations.Value;
+                ogia.not_yet_vaccinations = cb_not_yet_vaccinations_true.Checked;
+
                 ogia.family = txt_family.Value;
                 ogia.gyn_abdo_sur_scars = cb_gyn_abdo_sur_scars_true.Checked;
 
@@ -893,7 +978,7 @@ namespace EMR.IPD
                 ogia.associated_conditions = txt_associated_conditions.Value;
                 ogia.treatment_plan = txt_treatment_plan.Value;
                 ogia.discharge_plan = txt_discharge_plan.Value;
-                
+
                 if (JsonConvert.SerializeObject(ogia) == DataObj.Value)
                 {
                     WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
@@ -948,7 +1033,7 @@ namespace EMR.IPD
         {
             try
             {
-                
+
                 patientInfo = new PatientInfo(varPID);
                 patientVisitInfo = new PatientVisitInfo(varPVID, loc);
                 if (varDocIdLog != null)
@@ -966,6 +1051,7 @@ namespace EMR.IPD
                 //loadRadGridHistoryLog();
 
                 RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Ogia.Logs(varDocID, loc), out string _SignatureDate, out string _SignatureName);
+
                 SignatureDate = _SignatureDate;
                 SignatureName = _SignatureName;
 
@@ -983,6 +1069,7 @@ namespace EMR.IPD
                 }
 
                 //WebHelpers.getAccessButtons(form1, ogia.status, (string)Session["access_authorize"], loc == locChanged, varDocIdLog != null);
+
                 WebHelpers.getAccessButtons(new Model.AccessButtonInfo()
                 {
                     Form = form1,

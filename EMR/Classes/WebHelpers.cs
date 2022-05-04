@@ -43,49 +43,8 @@ namespace EMR
     public static class WebHelpers
     {
         //http://172.16.0.78:8088/swagger/index.html
-        //public static string URL = "http://172.16.0.88:8080/";//PRO
-        public static string URL = "http://172.16.0.78:8088/";//UAT
-
-        public static void GrantPermission(Page page, string user)
-        {
-            var path = page.Server.MapPath("~/EMR_Doc.xlsx");
-
-            ExcelPackage EXCEL_PACKAGE;
-
-            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
-
-            EXCEL_PACKAGE = new ExcelPackage(new FileInfo(path));
-
-            var permission = EXCEL_PACKAGE.Workbook.Worksheets["Permission"];
-
-            //var dynamicObject = new System.Dynamic.ExpandoObject() as IDictionary<string, Object>;
-
-            int excol = 66; //66:B
-            int exrow = 2;
-
-            while (permission.Cells[(char)excol + "1"].Value != null
-                && Convert.ToString(permission.Cells[(char)excol + "1"].Value) == user)
-            {
-                while (permission.Cells[(char)excol + Convert.ToString(exrow)].Value != null
-                    && Convert.ToString(permission.Cells[(char)excol + Convert.ToString(exrow)].Value) == "x")
-                {
-                    switch (Convert.ToString(permission.Cells["A" + Convert.ToString(exrow)].Value))
-                    {
-                        case "Input New VitalSign":
-
-                            try
-                            {
-                                page.Form.FindControl("btnNewVitalSign").Visible = true;
-                            }
-                            catch (Exception ex) { }
-
-                            break;
-                    }
-                }
-            }
-
-            //return dynamicObject;
-        }
+        public static string URL = "http://172.16.0.88:8080/";//PRO
+        //public static string URL = "http://172.16.0.78:8088/";//UAT
 
         #region API
         public static dynamic PostAPI(string url, dynamic obj)
@@ -303,6 +262,10 @@ namespace EMR
         #endregion
 
         #region Methods
+        public static bool IsDEVELOP()
+        {
+            return URL == "http://172.16.0.78:8088/";
+        }
         public static DataTable GetJSONToDataTable(string JSONData)
         {
             if (JSONData == null) { return null; }

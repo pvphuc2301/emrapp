@@ -229,6 +229,9 @@ namespace EMR.Report
                                //smtpMail.Credentials = new NetworkCredential(MailAddressFrom.Address, txtPassword.Text);
             smtpMail.Credentials = new NetworkCredential(MailAddressFrom.Address, "AIH2@18!@");//"AIH2@18!@"
                                                                                                //if (!string.IsNullOrEmpty(varFr) && !string.IsNullOrEmpty(varToMail))
+            //Không gửi mail đối với version DEV
+            if (WebHelpers.IsDEVELOP()) return;
+
             if (!string.IsNullOrEmpty(varToMail))
                 smtpMail.Send(objMail);
 

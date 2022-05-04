@@ -1130,7 +1130,7 @@ namespace EMR.OPD
 
             prt_ns_loss_weight_0.CssClass = "";
             prt_ns_loss_weight_1.CssClass = "";
-            prt_ns_loss_weight_2.CssClass = "";
+            prt_ns_loss_weight_2.CssClass = ""; 
 
             prt_ns_food_intake_0.CssClass = "";
             prt_ns_food_intake_2.CssClass = "";
@@ -1159,19 +1159,21 @@ namespace EMR.OPD
                 if (nutritional_status.total_score != null)
                 {
                     prt_ns_total_score.Text = nutritional_status.total_score;
-
-                    switch (Convert.ToInt32(nutritional_status.total_score))
+                    try
                     {
-                        case 0:
-                            prt_nutritional_conclude_0.Text = "☒";
-                            break;
-                        case 1:
-                            prt_nutritional_conclude_1.Text = "☒";
-                            break;
-                        default:
-                            prt_nutritional_conclude_2.Text = "☒";
-                            break;
-                    }
+                        switch (Convert.ToInt32(nutritional_status.total_score))
+                        {
+                            case 0:
+                                prt_nutritional_conclude_0.Text = "☒";
+                                break;
+                            case 1:
+                                prt_nutritional_conclude_1.Text = "☒";
+                                break;
+                            default:
+                                prt_nutritional_conclude_2.Text = "☒";
+                                break;
+                        }
+                    } catch(Exception ex) { Console.WriteLine(nutritional_status.total_score + " can not convert to Integer"); }
                 }
             }
 

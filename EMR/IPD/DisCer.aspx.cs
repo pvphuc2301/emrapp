@@ -32,7 +32,7 @@ namespace EMR
         public DateTime associated_visit_closed { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            if(!WebHelpers.CheckSession(this)) return;
+            if (!WebHelpers.CheckSession(this)) return;
 
             varDocID = Request.QueryString["docId"];
             varDocIdLog = Request.QueryString["docIdLog"];
@@ -77,8 +77,8 @@ namespace EMR
                 lbl_notes.Text = WebHelpers.TextToHtmlTag(disc.notes);
                 lbl_signature_date.Text = WebHelpers.FormatDateTime(disc.signature_date, "dd-MMM-yyyy");
             }
-            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
-            
+            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
+
         }
         private void BindingDataFormEdit(Disc disc)
         {
@@ -101,28 +101,42 @@ namespace EMR
                 //Session["docid"] = disc.document_id;
                 WebHelpers.AddScriptFormEdit(Page, disc, (string)Session["emp_id"], loc);
             }
-            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
-            
+            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
+
         }
         private void BindingDataFormPrint(Disc disc)
         {
             try
             {
+                //bool IsLocal = (patientInfo.nationality_e == "Viet Nam");
+
                 prt_disc_ward_desc.Text = disc.disc_ward_desc;
 
-                prt_fullname.Text = patientInfo.FullName;
                 prt_dob.Text = WebHelpers.FormatDateTime(patientInfo.DOB);
                 prt_vpid.Text = patientInfo.visible_patient_id;
-                prt_gender.Text = patientInfo.Gender;
-                prt_nationality.Text = patientInfo.GetNationality();
-                prt_occupation.Text = patientInfo.GetOccupation();
+
+                prt_address.Text = patientInfo.GetAddress(true);
+                prt_address_e.Text = $"/ {patientInfo.GetAddress(false)}";
+
+                prt_gender.Text = patientInfo.GetGender(true);
+                prt_gender_e.Text = $"/ {patientInfo.GetGender(false)}";
+
+                prt_occupation.Text = patientInfo.GetOccupation(true);
+                prt_occupation_e.Text = $"/ {patientInfo.GetOccupation(false)}";
+
+                prt_nationality.Text = patientInfo.GetNationality(true);
+                prt_nationality_e.Text = $"/ {patientInfo.GetNationality(false)}";
+
+                prt_fullname.Text = patientInfo.GetFullName(true);
+                prt_patient_name_e.Text = $"/ {patientInfo.GetFullName(false)}";
+
                 prt_valid_from.Text = WebHelpers.FormatDateTime(disc.valid_from);
                 //prt_to.Text
                 //prt_no_health_insurance.Text = "<span style=\"border:1px solid #0000\" >" + disc.no_health_insurance + "</span>";
 
                 string no_health_insurance = disc.no_health_insurance;
                 prt_no1.Text = prt_no2.Text = prt_no3.Text = prt_no4.Text = prt_no5.Text = prt_no6.Text = " ";
-                if(no_health_insurance != null)
+                if (no_health_insurance != null)
                 {
                     for (int i = 0; i < no_health_insurance.Length; i++)
                     {
@@ -152,8 +166,8 @@ namespace EMR
                         }
                     }
                 }
-                
-                prt_address.Text = patientInfo.Address;
+
+
 
                 bool isValidDateTime;
 
@@ -216,7 +230,7 @@ namespace EMR
                 prt_notes.Text = WebHelpers.TextToHtmlTag(disc.notes, false);
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
-            
+
         }
         #endregion
 
@@ -227,7 +241,7 @@ namespace EMR
             {
                 Disc disc = new Disc(Request.QueryString["docId"], loc);
                 disc.status = DocumentStatus.FINAL;
-                
+
                 UpdateData(disc);
                 WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
             }
@@ -288,7 +302,7 @@ namespace EMR
         #endregion
 
         #region Methods
-        
+
         protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
         {
             string result = WebHelpers.getLogText(status, created_name, created_date_time, modified_name, modified_date_time, amend_reason);
@@ -417,7 +431,7 @@ namespace EMR
 
         protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if(e.CommandName == "Select")
+            if (e.CommandName == "Select")
             {
                 Response.Redirect(PAGE_URL);
             }

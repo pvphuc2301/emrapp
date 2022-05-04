@@ -1,23 +1,8 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using OfficeOpenXml;
+﻿using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Script.Serialization;
-using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
 using Telerik.Web.UI;
-using Telerik.Windows.Documents.Flow.Model.Fields;
 
 namespace EMR
 {
@@ -30,7 +15,6 @@ namespace EMR
         public string varVPID = "";
         public string ConnStringEMR = "";
         PatientVisitInfo patientVisitInfo;
-        private ExcelPackage EXCEL_PACKAGE;
         protected string loc;
         protected string locChanged;
         protected void Page_Load(object sender, EventArgs e)
@@ -40,7 +24,7 @@ namespace EMR
             varPID = Request.QueryString["pid"];
             varVPID = Request.QueryString["vpid"];
             loc = (string)Session["company_code"];
-            loc = (string)Session["const_company_code"];
+            locChanged = (string)Session["const_company_code"];
 
             ConnClass ConnStr = new ConnClass();
 
@@ -64,15 +48,6 @@ namespace EMR
             LeftMenuAccess();
 
             
-        }
-
-        private void LoadEMRDoc()
-        {
-            var path = Server.MapPath("~/EMR_Doc.xlsx");
-            
-            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
-
-            EXCEL_PACKAGE = new ExcelPackage(new FileInfo(path));
         }
 
         private void LeftMenuAccess()
@@ -417,37 +392,9 @@ namespace EMR
 
                         string ContentUrl = "/";
 
-                        LoadEMRDoc();
-                        var version = EXCEL_PACKAGE.Workbook.Worksheets["Version"];
-
                         switch (loc)
                         {
                             case "AIH":
-
-                                if (version != null)
-                                {
-                                    string version_extension = "";
-
-                                    int exrow = 1;
-
-                                    while (version.Cells["A" + exrow].Value != null)
-                                    {
-                                        if (version.Cells["A" + exrow].Value.ToString() == modelId)
-                                        {
-                                            if (version.Cells["B" + exrow].Value != null)
-                                            {
-                                                version_extension = version.Cells["B" + exrow].Value.ToString();
-                                            }
-                                        }
-                                        exrow++;
-                                    }
-
-                                    //string a = version.Cells["B2"].Value.ToString();
-                                    string ModelUrl = data.url;
-                                    var urlArr = ModelUrl.Split('.');
-
-                                    data.url = urlArr[0] + version_extension + "." + urlArr[1];
-                                }
 
                                 break;
                             case "CLI":

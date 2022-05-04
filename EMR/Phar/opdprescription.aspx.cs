@@ -13,7 +13,7 @@ namespace EMR.Print
 {
     public partial class opdprescription : System.Web.UI.Page
     {
-        private string ConnStringHIS = ""; private string visitType = ""; private string varPresType;
+        private string ConnStringHIS = ""; private string visitType = ""; private string varPresType; private string visit_type;
         public string varPID = ""; private string varPV_ID = ""; private string varPharID = ""; private string varVbID = ""; private bool oldVisit = false;
         public string loc { get; set; }
         protected void Page_Load(object sender, EventArgs e)
@@ -26,7 +26,20 @@ namespace EMR.Print
             varPV_ID = Request.QueryString["vid"];
             varPharID = Request.QueryString["phar"];
             varPresType = Request.QueryString["pres_type"];
+            //visit_type = Request.QueryString["visit_type"];
             loc = (string)Session["company_code"];
+
+            dynamic response = WebHelpers.GetAPI($"api/emr/patient-visit/{loc}/{varPV_ID}");
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                DataTable tbTemp = WebHelpers.GetJSONToDataTable(response.Data);
+                try
+                {
+                    visit_type = Convert.ToString(tbTemp.Rows[0]["visit_type"]);
+                } catch(Exception ex) { WebHelpers.AddJS(Page, "alert('can not get visit type')"); }
+            }
+            
 
             if (!IsPostBack && !string.IsNullOrEmpty(varPID))
             {
@@ -132,7 +145,7 @@ namespace EMR.Print
             //    jsString = "api/emr/vital-sign-ipd/" + varPV_ID;
             //    string _jsonData = WebHelpers.GetAPI(jsString);
             
-            jsString = $"api/emr/vital-sign/{loc}/{varPV_ID}/" + varPresType;
+            jsString = $"api/emr/vital-sign/{loc}/{varPV_ID}/" + visit_type;
             dynamic response = WebHelpers.GetAPI(jsString);
 
             if (response.Status == System.Net.HttpStatusCode.OK)
