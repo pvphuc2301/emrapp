@@ -155,14 +155,16 @@
                         <telerik:RadTab Text="Demographic Search"></telerik:RadTab>
                         <telerik:RadTab Text="Admin"></telerik:RadTab>
                         <telerik:RadTab Text="Allow Update EMR"></telerik:RadTab>
-                        <%--<telerik:RadTab Text="Settings"></telerik:RadTab>--%>
+                        <telerik:RadTab Text="Session"></telerik:RadTab>
                     </Tabs>
                 </telerik:RadTabStrip>
             <div>
                 <telerik:RadMultiPage runat="server" ID="RadMultiPage2" SelectedIndex="0" CssClass="innerMultiPage">
                     <telerik:RadPageView id="DemographicSearch" runat="server"></telerik:RadPageView>
                     <telerik:RadPageView runat="server" ContentUrl="~/Other/AdminGroup.aspx" ID="RadPageView1"></telerik:RadPageView>
-                    <telerik:RadPageView runat="server" ContentUrl="~/Report/AllowUpdateEMR.aspx" ID="RadPageView3"></telerik:RadPageView>
+                    <telerik:RadPageView runat="server" ContentUrl="~/Report/AllowUpdateEMR.aspx" ID="RadPageView2"></telerik:RadPageView>
+                    <telerik:RadPageView runat="server" ContentUrl="~/Other/SessionEMR.aspx" ID="RadPageView3"></telerik:RadPageView>
+
                     <%--<telerik:RadPageView runat="server" ContentUrl="~/Other/Settings.aspx" ID="RadPageView2"></telerik:RadPageView>--%>
                 </telerik:RadMultiPage>
             </div>

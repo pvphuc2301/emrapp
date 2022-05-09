@@ -25,11 +25,11 @@ namespace EMR
 
                 if ((string)Session["group_access"] == "ADM")
                 {
-                    WebHelpers.VisibleControl(true, RadTabStrip2.Tabs[1], RadTabStrip2.Tabs[2]);
+                    WebHelpers.VisibleControl(true, RadTabStrip2.Tabs[1], RadTabStrip2.Tabs[2], RadTabStrip2.Tabs[3]);
                 }
                 else
                 {
-                    WebHelpers.VisibleControl(false, RadTabStrip2.Tabs[1], RadTabStrip2.Tabs[2]);
+                    WebHelpers.VisibleControl(false, RadTabStrip2.Tabs[1], RadTabStrip2.Tabs[2], RadTabStrip2.Tabs[3]);
                 }
             }
             lblUserName.Text = (string)Session["UserName"];

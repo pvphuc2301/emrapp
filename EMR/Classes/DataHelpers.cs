@@ -21,6 +21,35 @@ namespace EMR
             return age;
         }
 
+        public static dynamic GetAgeAsString(DateTime dob)
+        {
+            DateTime now = DateTime.Now;
+            
+            string AgeStr = string.Empty;
+            int age = DataHelpers.CalculateAge(dob);
+
+            int days = (now.Date - dob.Date).Days;
+            int month = ((now.Year - dob.Year) * 12) + now.Month - dob.Month;
+            
+            if (age <= 5)
+            {
+                if (days <= 30)
+                {
+                    AgeStr = days.ToString() + " Ngày/Days";
+                }
+                else
+                {
+                    AgeStr = month.ToString() + " Tháng/Months";
+                }
+            }
+            else
+            {
+                AgeStr = age.ToString();
+            }
+
+            return AgeStr;
+        }
+
         public static string ConvertSQLDateTime(DateTime? _datetime)
         {
             try

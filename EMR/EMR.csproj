@@ -215,6 +215,7 @@
     <Content Include="IPD\SurgicalReport.aspx" />
     <Content Include="OPD\OutPatIniNurAssV20.aspx" />
     <Content Include="Other\FormMenu.aspx" />
+    <Content Include="Other\SessionEMR.aspx" />
     <Content Include="Other\Settings.aspx" />
     <Content Include="Other\Test.aspx" />
     <Content Include="Phar\medicalAdRec.aspx" />
@@ -304,6 +305,7 @@
     <Content Include="styles\print.css" />
     <Content Include="styles\style-login.css" />
     <Content Include="styles\sweetalert.min.css" />
+    <Content Include="Test\CalculateAge.aspx" />
     <Content Include="Test\ImagingReportTest.aspx" />
     <Content Include="UserControls\Barcode.ascx" />
     <Content Include="UserControls\CustomPagination.ascx" />
@@ -501,6 +503,13 @@
     </Compile>
     <Compile Include="Other\FormMenu.aspx.designer.cs">
       <DependentUpon>FormMenu.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Other\SessionEMR.aspx.cs">
+      <DependentUpon>SessionEMR.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Other\SessionEMR.aspx.designer.cs">
+      <DependentUpon>SessionEMR.aspx</DependentUpon>
     </Compile>
     <Compile Include="Other\Settings.aspx.cs">
       <DependentUpon>Settings.aspx</DependentUpon>
@@ -930,6 +939,13 @@
     <Compile Include="Report\TestTasb.aspx.designer.cs">
       <DependentUpon>TestTasb.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Test\CalculateAge.aspx.cs">
+      <DependentUpon>CalculateAge.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Test\CalculateAge.aspx.designer.cs">
+      <DependentUpon>CalculateAge.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Test\ImagingReportTest.aspx.cs">
       <DependentUpon>ImagingReportTest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1214,7 +1230,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

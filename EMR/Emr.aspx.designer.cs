@@ -150,6 +150,15 @@ namespace EMR
         protected global::Telerik.Web.UI.RadPageView RadPageView1;
 
         /// <summary>
+        /// RadPageView2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadPageView RadPageView2;
+
+        /// <summary>
         /// RadPageView3 control.
         /// </summary>
         /// <remarks>

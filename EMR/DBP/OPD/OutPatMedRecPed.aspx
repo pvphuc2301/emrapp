@@ -923,7 +923,7 @@
 
             for (let i = 1; i <= total; i++) {
                 let div = document.createElement("div");
-                div.setAttribute("class", "watermark page");
+                div.setAttribute("class", "page");
                 div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px;");
                 div.setAttribute("data-page", "Page " + i + " of " + total);
                 document.getElementById("print_content").append(div);

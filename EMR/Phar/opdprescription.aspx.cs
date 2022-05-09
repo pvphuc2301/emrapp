@@ -116,22 +116,35 @@ namespace EMR.Print
                     lbSex.Text = "Nữ/ Woman";
                 //lbSex.Text = data.gender_e;
                 lbPID.Text = data.visible_patient_id;
-                ptAge = DataHelpers.CalculateAge(DateTime.Parse(data.date_of_birth.ToString())).ToString();
+                //ptAge = DataHelpers.CalculateAge(DateTime.Parse(data.date_of_birth.ToString())).ToString();
+
+                ptAge = DataHelpers.GetAgeAsString(DateTime.Parse(data.date_of_birth.ToString()));
 
                 lbBirthday.Text = data.date_of_birth.ToString("dd-MM-yyyy");
                 lbAddress.Text = data.address_line_l + " " + data.address_subregion_l + " " + data.address_region_l;
 
-                if (!string.IsNullOrEmpty(ptAge))
-                {
-                    lbAge.Text = MISClass.Return_Age(data.date_of_birth, ptAge);
+                lbAge.Text = ptAge;
 
-                    if (Convert.ToInt16(ptAge) < 18)
-                    {
-                        lbGuardianText.Visible = true;
-                        lbGuardian.Visible = true;
-                        lbGuardian.Text = data.contact_name_l;
-                    }
+                int YearInt;
+                if (!int.TryParse(ptAge, out YearInt) && YearInt < 18)
+                {
+                    lbGuardianText.Visible = true;
+                    lbGuardian.Visible = true;
+                    lbGuardian.Text = data.contact_name_l;
                 }
+                //if (!string.IsNullOrEmpty(ptAge))
+                //{
+                //    lbAge.Text = MISClass.Return_Age(data.date_of_birth, ptAge);
+
+                //    if (Convert.ToInt16(ptAge) < 18)
+                //    {
+                //        lbGuardianText.Visible = true;
+                //        lbGuardian.Visible = true;
+                //        lbGuardian.Text = data.contact_name_l;
+                //    }
+                //}
+
+
                 lbPrintDate.Text = "Printed date: " + string.Format("{0:dd/MMM/yyyy hh:mm tt}", DateTime.Now);
             }
         }

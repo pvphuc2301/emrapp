@@ -20,4 +20,5 @@ public class ConnClass
     public string SQL_HIS_C01ConnString = @"Data Source=172.16.0.7;Initial Catalog=OrionHIS_PRO;User ID=sa;Password=P@ssword1;";
 
     public string SQL_EMR_C01ConnString = @"Server=172.16.0.88;Database=EMR_PRO;User Id=sa;Password=!aih@123$;";
+    public string SQL_EMR_AIH_78ConnString = @"Server=172.16.0.78;Database=EMR_AIH;User Id=sa;Password=AiHWH@123;";
 }
