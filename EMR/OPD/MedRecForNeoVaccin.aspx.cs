@@ -282,21 +282,21 @@ namespace EMR.OPD
                         //
                         td = new HtmlTableCell();
 
-                        td.InnerText = Convert.ToString(row["drug_name"]);
+                        td.InnerHtml = Convert.ToString(row["drug_name"]);
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["strength"].ToString();
+                        td.InnerHtml = row["strength"].ToString();
                         td.Align = "Center";
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["router"].ToString();
+                        td.InnerHtml = row["router"].ToString();
                         td.Align = "Center";
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        td.InnerText = row["reason"].ToString();
+                        td.InnerHtml = row["reason"].ToString();
                         tr.Cells.Add(td);
 
                         prt_appointed_vaccine.Rows.Add(tr);
