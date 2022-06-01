@@ -421,6 +421,12 @@ namespace EMR.IPD
 
                 prt_reason_admission.Text = ogia.reason_admission;
 
+                div_obs.Visible
+                    = div_for_obstetric.Visible
+                    = div_gyn.Visible
+                    = div_for_gyneacology.Visible
+                    = false;
+
                 if (ogia.is_obs_gyn != null)
                 {
                     if (ogia.is_obs_gyn == true)
@@ -454,9 +460,10 @@ namespace EMR.IPD
 
                 prt_gbs_vaginal.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, ogia.gbs_vaginal, "display: grid;grid-template-columns:1fr 1fr;");
 
-                prt_ges_diabetes.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, ogia.gbs_vaginal, "display: grid;grid-template-columns:150px auto;");
+                //fixed
+                prt_ges_diabetes.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, ogia.ges_diabetes, "display: grid;grid-template-columns:150px auto;");
 
-                prt_other_ges_abnormal.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, chi tiết/ Yes, specify: " + ogia.other_ges_abnormal_note, Value = true }, ogia.gbs_vaginal, "display: grid;grid-template-columns:150px auto;");
+                prt_other_ges_abnormal.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, chi tiết/ Yes, specify: " + ogia.other_ges_abnormal_note, Value = true }, ogia.other_ges_abnormal, "display: grid;grid-template-columns:150px auto;");
 
                 dynamic labor_trig_at_time = WebHelpers.ConvertDateTime(ogia.labor_trig_at_time, out bool IsValidDateTime);
 
@@ -587,7 +594,7 @@ namespace EMR.IPD
                 prt_integumentary_system.Text = ogia.integumentary_system;
                 prt_ophthalmology.Text = ogia.ophthalmology;
                 prt_other_findings.Text = ogia.other_findings;
-                prt_integumentary_system.Text = ogia.integumentary_system;
+                //prt_integumentary_system.Text = ogia.integumentary_system;
 
                 prt_psy_consul_required.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, ogia.psy_consul_required, "display: grid;grid-template-columns:1fr 1fr;");
 
@@ -673,7 +680,8 @@ namespace EMR.IPD
                 prt_lab_result.Text = ogia.lab_result;
                 prt_add_investigations.Text = ogia.add_investigations;
                 prt_initial_diagnosis.Text = ogia.initial_diagnosis;
-                prt_diagnosis.Text = ogia.diagnosis;
+                //prt_diagnosis.Text = ogia.diagnosis;
+                prt_diff_diagnosis.Text = ogia.diff_diagnosis;
                 prt_associated_conditions.Text = ogia.associated_conditions;
                 prt_treatment_plan.Text = ogia.treatment_plan;
                 prt_discharge_plan.Text = ogia.discharge_plan;

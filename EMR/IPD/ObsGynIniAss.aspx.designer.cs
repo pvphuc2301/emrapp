@@ -942,13 +942,13 @@ namespace EMR.IPD
         protected global::System.Web.UI.WebControls.Label prt_initial_diagnosis;
 
         /// <summary>
-        /// prt_diagnosis control.
+        /// prt_diff_diagnosis control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_diagnosis;
+        protected global::System.Web.UI.WebControls.Label prt_diff_diagnosis;
 
         /// <summary>
         /// prt_associated_conditions control.

@@ -79,7 +79,56 @@
 
             .tbFooter td {
                 border: none !important;
-            }			
+            }	
+            
+            .malert {
+                color: #856404;
+                background-color: #fff3cd;
+                border-color: #ffeeba;
+                border: 1px solid transparent;
+                border-radius: 0.25rem;
+                padding: 0.75rem 1.25rem;
+            }
+
+            #malert1 {
+                position: fixed; 
+                top: 0; 
+                left: 0; 
+                right: 0; 
+                bottom: 0; 
+                opacity: 1.04; 
+                display: none;
+                background-color: rgba(0,0,0,0.4);
+            }
+
+            .mbtn {
+                display: inline-block;
+                font-weight: 400;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: middle;
+                user-select: none;
+                border: 1px solid transparent;
+                padding: 0.375rem 0.75rem;
+                font-size: 1rem;
+                line-height: 1.5;
+                border-radius: 0.25rem;
+                transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+                cursor: pointer;
+            }
+
+            .mbtn.mbtn-primary {
+                color: #fff;
+                background-color: #007bff;
+                border-color: #007bff;
+                
+            }
+
+            .mbtn.mbtn-secondary {
+                color: #fff;
+                background-color: #6c757d;
+                border-color: #6c757d;
+            }
     </style>
     <link id="Link1" rel="stylesheet" type="text/css" href="phar.css" runat="server" />
 </head>
@@ -269,7 +318,7 @@
                     </telerik:RadAjaxPanel>
 			    </div>	
                 <div id="Div1" runat="server" style="position: relative; float: left; padding-right: 0px;padding-left: 100px;">
-                    <button onclick="javascript:window.print()" class="cssclsNoPrint" style="width:150px">Print</button>
+                    <button onclick="return Print()" class="cssclsNoPrint" style="width:150px">Print</button>
                 </div>
                 <div id="Div2" runat="server" style="position: relative; float: left; padding-right: 0px;padding-left: 60px;">
                     <asp:Button runat="server" ID="PrintDT" Text="Xem đơn thuốc" CssClass="cssclsNoPrint"
@@ -313,10 +362,47 @@
                 </td> 
                                                
             </tr>                        
-        </table>        
+        </table>   
+        
+        <div id="malert1" class="cssclsNoPrint">
+            <div class="malert" style="display: block; margin-top: -140px;position: fixed; left: 50%; top: 50%; margin-left: -256px;">
+                <h4>Cảnh báo</h4>
+                <div style="color: #000">Đơn thuốc thiếu thông tin <span style="color: red">cân nặng/chiều cao</span></div>
+                <p>Nhấn phím F5 để tải lại thông tin hoặc nhấn tiếp tục in để in</p>
+                <div>
+                    <div onclick="ConfirmPrint()" class="mbtn mbtn-primary">Tiếp tục in</div>
+                    <div onclick="ClosePrint()" class="mbtn mbtn-secondary">Đóng</div>
+                </div>
+            </div>
+        </div>
+
     </footer>
         <asp:SqlDataSource ID="DoctorDataSource" runat="server" ConnectionString="" />
     </form>
+
+    <script type="text/javascript">
+        let malert1 = document.getElementById("malert1");
+        function ClosePrint() {
+            malert1.style.display = "none";
+        }
+        function ConfirmPrint() {
+            malert1.style.display = "none";
+            window.print();
+        }
+        function Print() {
+
+            let lblHeight = document.getElementById("<%=lbHeight.ClientID%>").innerText;
+                let lbWeight = document.getElementById("<%=lbWeight.ClientID%>").innerText;
+            console.log(lblHeight == "");
+            console.log(lbWeight == "");
+            if (lblHeight == "" || lbWeight == "") {
+                malert1.style.display = "block";
+            } else {
+                window.print();
+            }
+
+            return false;
+        }
+    </script>
 </body>
-   
 </html>

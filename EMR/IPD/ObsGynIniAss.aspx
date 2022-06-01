@@ -559,7 +559,7 @@
                                     </div>
 
                                     <div style="margin-left: 20px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                        <b>Chẩn đoán phân biệt</b>/ Differential diagnosis: <asp:Label ID="prt_diagnosis" runat="server" />
+                                        <b>Chẩn đoán phân biệt</b>/ Differential diagnosis: <asp:Label ID="prt_diff_diagnosis" runat="server" />
                                     </div>
 
                                     <div style="margin-left: 20px; text-align: justify; font-size: 14.5px; font-family: Tahoma">
@@ -1994,16 +1994,19 @@
         }
 
         function btnPrint_Click() {
+  
+            //if (document.getElementById("prt_diagnosis")) {
+            //    document.getElementById("prt_diagnosis").innerText = document.getElementById("lbl_diff_diagnosis").innerText;
+            //}
 
-            if (document.getElementById("prt_diagnosis")) {
-                document.getElementById("prt_diagnosis").innerText = document.getElementById("lbl_diff_diagnosis").innerText;
-            }
-
-            if (document.getElementById("lbl_is_obs_gyn").innerText == "SẢN KHOA/ OBSTETRICS") {
-                document.getElementById("div_for_gyneacology").setAttribute("style", "display: none");
-            } else {
-                document.getElementById("div_for_obstetric").setAttribute("style", "display: none");
-            }
+            //if (document.getElementById("lbl_is_obs_gyn").innerText == "SẢN KHOA/ OBSTETRICS")
+            //{
+            //    document.getElementById("div_for_gyneacology").setAttribute("style", "display: none");
+            //}
+            //else
+            //{
+            //    document.getElementById("div_for_obstetric").setAttribute("style", "display: none");
+            //}
 
             let printContent = document.querySelector("#printContent");
             printContent.setAttribute("style", "display: block");
