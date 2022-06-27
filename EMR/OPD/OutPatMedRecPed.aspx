@@ -1175,8 +1175,8 @@
             window.print();
         }
 
-        let vs_heart_rate = document.getElementById("vs_heart_rate");
-        document.getElementById("prt_pulse").innerText = vs_heart_rate.innerText;
+        let vs_heart_rate = document.getElementById("lbl_vs_heart_rate");
+        document.getElementById("prt_pulse").innerText = vs_heart_rate.innerText.replace("/phút (m)", "");
     </script>
 
 </body>

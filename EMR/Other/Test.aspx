@@ -20,7 +20,26 @@
 </head>
 <body>
     <form id="form1" runat="server">
+        <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
         <asp:Button runat="server" ID="btnSend" Text="Send"  OnClick="btnSend_Click"/>
+
+        <telerik:RadDateTimePicker ID="dtpkRequest" runat="server" Culture="en-US" Width="200px">
+            <TimeView runat="server" CellSpacing="-1" TimeFormat="HH:mm"></TimeView>
+            <TimePopupButton ImageUrl="" HoverImageUrl=""></TimePopupButton>
+            <Calendar runat="server" UseRowHeadersAsSelectors="False" UseColumnHeadersAsSelectors="False"
+                EnableWeekends="True" FastNavigationNextText="&lt;&lt;">
+            </Calendar>
+            <DateInput runat="server" DisplayDateFormat="MM/dd/yyyy HH:mm" DateFormat="MM/dd/yyyy HH:mm" LabelWidth="40%">
+                <EmptyMessageStyle Resize="None"></EmptyMessageStyle>
+                <ReadOnlyStyle Resize="None"></ReadOnlyStyle>
+                <FocusedStyle Resize="None"></FocusedStyle>
+                <DisabledStyle Resize="None"></DisabledStyle>
+                <InvalidStyle Resize="None"></InvalidStyle>
+                <HoveredStyle Resize="None"></HoveredStyle>
+                <EnabledStyle Resize="None"></EnabledStyle>
+            </DateInput>
+            <DatePopupButton ImageUrl="" HoverImageUrl=""></DatePopupButton>
+        </telerik:RadDateTimePicker>
     </form>
 
     <script src="../scripts/jquery-3.2.1.min.js"></script>

@@ -541,7 +541,17 @@
                                             <label class="control-label mb-1 mr-2"><span class="text-primary">Discharge date time:</span></label>
                                             <asp:Label runat="server" ID="lbl_disc_date_time"></asp:Label>
                                             <div class="d-inline-block" runat="server" id="disc_date_time_wrapper">
-                                                <telerik:RadDateTimePicker runat="server" ID="dtpk_disc_date_time" Width="204px" />
+                                                <telerik:RadDateTimePicker runat="server" ID="dtpk_disc_date_time" Width="204px">
+                                                    <%--<DateInput runat="server" DisplayDateFormat="MM/dd/yyyy HH:mm" DateFormat="MM/dd/yyyy HH:mm" LabelWidth="40%">
+                                                        <EmptyMessageStyle Resize="None"></EmptyMessageStyle>
+                                                        <ReadOnlyStyle Resize="None"></ReadOnlyStyle>
+                                                        <FocusedStyle Resize="None"></FocusedStyle>
+                                                        <DisabledStyle Resize="None"></DisabledStyle>
+                                                        <InvalidStyle Resize="None"></InvalidStyle>
+                                                        <HoveredStyle Resize="None"></HoveredStyle>
+                                                        <EnabledStyle Resize="None"></EnabledStyle>
+                                                    </DateInput>--%>
+                                                </telerik:RadDateTimePicker>
                                             </div>
                                         </div>
                                     </div>
