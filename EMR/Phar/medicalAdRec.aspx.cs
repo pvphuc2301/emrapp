@@ -21,7 +21,7 @@ namespace EMR.Phar
         public string[] allow_user = new string[5] { "tuan.cao", "chung.nguyen", "long.do", "", "" };
         public bool admin_print = false; string UserID = "";
         public string loc = "AIH"; public string varPresType = "ERO";
-
+        
         protected void Page_Load(object sender, EventArgs e)
         {
             ConnClass ConnStr = new ConnClass();
@@ -358,21 +358,33 @@ namespace EMR.Phar
 
         public void load_vital_sign(string visitID)
         {
-            string jsString = "";
-            //if (visitType == "OPD")
-            //    jsString = "api/emr/vital-sign-opd/" + varPV_ID;
-            //else if (visitType == "IPD")
-            //    jsString = "api/emr/vital-sign-ipd/" + varPV_ID;
-            //    string _jsonData = WebHelpers.GetAPI(jsString);
-
-            jsString = $"api/emr/vital-sign/{loc}/{visitID}/{varPresType}";
-            dynamic response = WebHelpers.GetAPI(jsString);
-
-            if (response.Status == System.Net.HttpStatusCode.OK)
+            try
             {
-                dynamic data = JObject.Parse(response.Data);
-                lblWeight.Text = data.vs_weight;
-                lblHeight.Text = data.vs_height;
+                string jsString = "";
+                //if (visitType == "OPD")
+                //    jsString = "api/emr/vital-sign-opd/" + varPV_ID;
+                //else if (visitType == "IPD")
+                //    jsString = "api/emr/vital-sign-ipd/" + varPV_ID;
+                //    string _jsonData = WebHelpers.GetAPI(jsString);
+
+                dynamic response = WebHelpers.GetAPI($"api/emr/patient-visit/{loc}/{visitID}");
+
+                if (response.Status == System.Net.HttpStatusCode.OK)
+                {
+                    string PatientVisit = WebHelpers.GetJSONToDataTable(response.Data).Rows[0]["visit_type_group_rcd"];
+
+                    response = WebHelpers.GetAPI($"api/emr/vital-sign/{loc}/{visitID}/{PatientVisit}");
+                    if (response.Status == System.Net.HttpStatusCode.OK)
+                    {
+                        dynamic data = JObject.Parse(response.Data);
+                        lblWeight.Text = data.vs_weight;
+                        lblHeight.Text = data.vs_height;
+                    }
+                }
+            } 
+            catch(Exception ex) 
+            { 
+
             }
         }
 
