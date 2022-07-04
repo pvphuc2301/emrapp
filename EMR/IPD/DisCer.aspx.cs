@@ -1,49 +1,46 @@
-﻿using EMR.UserControls;
+﻿using EMR.Model;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 
 namespace EMR
 {
-    public partial class DischargeCertificate : System.Web.UI.Page
+    public partial class DischargeCertificate : System.Web.UI.Page, IEmrFormModel<Disc>
     {
         Disc disc;
         PatientInfo patientInfo;
         PatientVisitInfo patientVisitInfo;
-        public string PAGE_URL { get; set; }
-        public string loc { get; set; }
-        public string locChanged { get; set; }
-        public string varDocID { get; set; }
-        public string varDocIdLog { get; set; }
-        public string varModelID { get; set; }
-        public string varPVID { get; set; }
-        public string varVPID { get; set; }
-        public string varPID { get; set; }
-
+        public string PAGE_URL { get => $"/IPD/DisCer.aspx?loc={Location}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}"; }
+        public string Location { get => (string)Session["company_code"]; }
+        public string LocationChanged { get => (string)Session["const_company_code"]; }
+        public string varDocID { get => Request.QueryString["docId"] ?? throw new ArgumentNullException("document id cannot be null."); }
+        public string varDocIdLog { get => Request.QueryString["docIdLog"]; }
+        public string varModelID { get => Request.QueryString["modelId"] ?? throw new ArgumentNullException("Model id cannot be null."); }
+        public string varPVID { get => Request.QueryString["pvId"] ?? throw new ArgumentNullException("Patient visit id cannot be null."); }
+        public string varVPID { get => Request.QueryString["vpId"]?? throw new ArgumentNullException("Visible patient id cannot be null."); }
+        public string varPID { get => Request.QueryString["pId"] ?? throw new ArgumentNullException("Patient id cannot be null."); }
         public string SignatureDate { get; set; }
         public string SignatureName { get; set; }
         public DateTime associated_visit_admited { get; set; }
         public DateTime associated_visit_closed { get; set; }
+
+        public string AccessAuthorize { get => (string)Session["access_authorize"]; }
+
+        public string GroupAccess { get => (string)Session["group_access"]; }
+
+        public bool IsLocationChanged { get => Location != LocationChanged; }
+
+        public string EmpId { get => (string)Session["emp_id"]; }
+
+        public string UserId { get => (string)Session["UserId"]; }
+
+        public bool IsViewLog => varDocIdLog != null;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!WebHelpers.CheckSession(this)) return;
-
-            varDocID = Request.QueryString["docId"];
-            varDocIdLog = Request.QueryString["docIdLog"];
-            varModelID = Request.QueryString["modelId"];
-            varPVID = Request.QueryString["pvId"];
-            varVPID = Request.QueryString["vpId"];
-            varPID = Request.QueryString["pId"];
-            loc = (string)Session["company_code"];
-            locChanged = (string)Session["const_company_code"];
-
-            PAGE_URL = $"/IPD/DisCer.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
             if (!IsPostBack)
             {
@@ -52,7 +49,7 @@ namespace EMR
         }
 
         #region Binding Data
-        private void BindingDataForm(Disc disc, bool state)
+        public void BindingDataForm(Disc disc, bool state)
         {
             if (state)
             {
@@ -63,7 +60,7 @@ namespace EMR
                 BindingDataFormView(disc);
             }
         }
-        private void BindingDataFormView(Disc disc)
+        public void BindingDataFormView(Disc disc)
         {
             try
             {
@@ -77,16 +74,18 @@ namespace EMR
                 lbl_notes.Text = WebHelpers.TextToHtmlTag(disc.notes);
                 lbl_signature_date.Text = WebHelpers.FormatDateTime(disc.signature_date, "dd-MMM-yyyy");
             }
-            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
-
+            catch (Exception ex) 
+            { 
+                WebHelpers.SendError(Page, ex);
+            }
         }
-        private void BindingDataFormEdit(Disc disc)
+        public void BindingDataFormEdit(Disc disc)
         {
             try
             {
                 txt_amend_reason.Text = "";
 
-                WebHelpers.DataBind(form1, select_disc_ward_code, Disc.DISC_WARD_CODE, disc.disc_ward_code);
+                WebHelpers.DataBind(form1, select_disc_ward_code, EmrDictionary.DISC_WARD_CODE, disc.disc_ward_code);
 
                 txt_no_health_insurance.Value = disc.no_health_insurance;
                 dpk_valid_from.SelectedDate = disc.valid_from;
@@ -97,19 +96,18 @@ namespace EMR
                 txt_notes.Value = WebHelpers.TextToHtmlTag(disc.notes);
                 dpk_signature_date.SelectedDate = disc.signature_date;
 
-                //DataObj.Value = JsonConvert.SerializeObject(disc);
-                //Session["docid"] = disc.document_id;
-                WebHelpers.AddScriptFormEdit(Page, disc, (string)Session["emp_id"], loc);
+                WebHelpers.AddScriptFormEdit(Page, disc, EmpId, Location);
             }
-            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
+            catch (Exception ex) 
+            { 
+                WebHelpers.SendError(Page, ex); 
+            }
 
         }
-        private void BindingDataFormPrint(Disc disc)
+        public void BindingDataFormPrint(Disc disc)
         {
             try
             {
-                //bool IsLocal = (patientInfo.nationality_e == "Viet Nam");
-
                 prt_disc_ward_desc.Text = disc.disc_ward_desc;
 
                 prt_dob.Text = WebHelpers.FormatDateTime(patientInfo.DOB);
@@ -131,9 +129,7 @@ namespace EMR
                 prt_patient_name_e.Text = $"/ {patientInfo.GetFullName(false)}";
 
                 prt_valid_from.Text = WebHelpers.FormatDateTime(disc.valid_from);
-                //prt_to.Text
-                //prt_no_health_insurance.Text = "<span style=\"border:1px solid #0000\" >" + disc.no_health_insurance + "</span>";
-
+                
                 string no_health_insurance = disc.no_health_insurance;
                 prt_no1.Text = prt_no2.Text = prt_no3.Text = prt_no4.Text = prt_no5.Text = prt_no6.Text = " ";
                 if (no_health_insurance != null)
@@ -167,8 +163,6 @@ namespace EMR
                     }
                 }
 
-
-
                 bool isValidDateTime;
 
                 //if (patientVisitInfo.associated_visit_id != Convert.ToString(Guid.Empty) && Convert.ToString(patientVisitInfo.visit_type).Trim() == "ERO")
@@ -176,7 +170,7 @@ namespace EMR
 
                 if (patientVisitInfo.associated_visit_id != Convert.ToString(Guid.Empty))
                 {
-                    PatientVisitInfo patientVisitInfo1 = new PatientVisitInfo(patientVisitInfo.associated_visit_id, loc);
+                    PatientVisitInfo patientVisitInfo1 = new PatientVisitInfo(patientVisitInfo.associated_visit_id, Location);
 
                     associated_visit_admited = WebHelpers.ConvertDateTime(patientVisitInfo1.actual_visit_date_time, out isValidDateTime, out string admitted_time1);
 
@@ -239,18 +233,17 @@ namespace EMR
         {
             if (Page.IsValid)
             {
-                Disc disc = new Disc(Request.QueryString["docId"], loc);
+                Disc disc = new Disc(varDocID, Location);
                 disc.status = DocumentStatus.FINAL;
 
                 UpdateData(disc);
-                WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
             }
         }
         protected void btnSave_Click(object sender, EventArgs e)
         {
             if (Page.IsValid)
             {
-                Disc disc = new Disc(varDocID, loc);
+                Disc disc = new Disc(varDocID, Location);
                 disc.status = DocumentStatus.DRAFT;
 
                 UpdateData(disc);
@@ -260,12 +253,12 @@ namespace EMR
         {
             try
             {
-                dynamic result = Disc.Delete((string)Session["UserId"], Request.QueryString["docId"], loc)[0];
+                dynamic result = (new Disc(varDocID, Location)).Delete(UserId, Location)[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
-                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
-                    Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
+                    WebHelpers.clearSessionDoc(Page, varDocID, Location);
+                    Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={Location}");
                 }
             }
             catch (Exception ex)
@@ -275,15 +268,15 @@ namespace EMR
         }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            if (WebHelpers.CanOpenForm(Page, (string)varDocID, DocumentStatus.DRAFT, (string)Session["emp_id"], loc, locChanged, (string)Session["access_authorize"]))
+            if (WebHelpers.CanOpenForm(Page, varDocID, DocumentStatus.DRAFT, EmpId, Location, LocationChanged, AccessAuthorize))
             {
-                Disc disc = new Disc(varDocID, loc);
+                Disc disc = new Disc(varDocID, Location);
 
                 WebHelpers.VisibleControl(false, btnAmend, btnPrint);
                 WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
 
                 //load form control
-                WebHelpers.LoadFormControl(form1, disc, ControlState.Edit, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]);
+                WebHelpers.LoadFormControl(form1, disc, ControlState.Edit, IsViewLog, !IsLocationChanged, AccessAuthorize);
                 //binding data
                 BindingDataFormEdit(disc);
                 //get access button
@@ -291,23 +284,20 @@ namespace EMR
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            WebHelpers.clearSessionDoc(Page, varDocID, loc);
+            WebHelpers.clearSessionDoc(Page, varDocID, Location);
             Initial();
         }
 
         protected void btnHome_Click(object sender, EventArgs e)
         {
-            Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
+            Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={Location}");
         }
         #endregion
 
         #region Methods
 
-        protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
-        {
-            string result = WebHelpers.getLogText(status, created_name, created_date_time, modified_name, modified_date_time, amend_reason);
-            return result;
-        }
+        protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason) => WebHelpers.getLogText(status, created_name, created_date_time, modified_name, modified_date_time, amend_reason);
+        
         protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
         {
             GridDataItem item = (e.Item as GridDataItem);
@@ -320,25 +310,22 @@ namespace EMR
                 Response.Redirect(url);
             }
         }
-        protected string GetLogUrl(object doc_log_id)
-        {
-            return PAGE_URL + $"&docIdLog={doc_log_id}";
-        }
-        public string GetDocIdLink(string args)
-        {
-            return PAGE_URL;
-        }
-        protected void RadButton1_Click(object sender, EventArgs e)
-        {
-            Response.Redirect(PAGE_URL);
-        }
-        protected void UpdateData(Disc disc)
+        protected string GetLogUrl(object doc_log_id) => PAGE_URL + $"&docIdLog={doc_log_id}";
+        
+        protected void RadButton1_Click(object sender, EventArgs e) => Response.Redirect(PAGE_URL);
+        
+        /// <summary>
+        /// <para>Step 1: Check valid data</para>
+        /// <para>Step 2: Update data</para>
+        /// </summary>
+        /// <param name="disc"></param>
+        public void UpdateData(Disc disc)
         {
             try
             {
                 disc.no_discharge = disc.no_discharge;
                 disc.disc_ward_code = select_disc_ward_code.Value;
-                disc.disc_ward_desc = WebHelpers.GetDicDesc(disc.disc_ward_code, Disc.DISC_WARD_CODE);
+                disc.disc_ward_desc = WebHelpers.GetDicDesc(disc.disc_ward_code, EmrDictionary.DISC_WARD_CODE);
                 disc.no_health_insurance = txt_no_health_insurance.Value;
                 disc.valid_from = DataHelpers.ConvertSQLDateTime(dpk_valid_from.SelectedDate);
                 disc.disc_date_time = DataHelpers.ConvertSQLDateTime(dtpk_disc_date_time.SelectedDate);
@@ -354,9 +341,9 @@ namespace EMR
                 }
 
                 disc.amend_reason = txt_amend_reason.Text;
-                disc.user_name = (string)Session["UserID"];
+                disc.user_name = UserId;
 
-                dynamic result = disc.Update(loc)[0];
+                dynamic result = disc.Update(Location)[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
@@ -365,56 +352,51 @@ namespace EMR
                     Initial();
                 }
             }
-            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
+            catch (Exception ex) 
+            { 
+                WebHelpers.SendError(Page, ex); 
+            }
+            finally
+            {
+                WebHelpers.clearSessionDoc(Page, varDocID, Location);
+            }
         }
-        protected void Initial()
+        public void Initial()
         {
             try
             {
                 patientInfo = new PatientInfo(varPID);
-                patientVisitInfo = new PatientVisitInfo(varPVID, loc);
+                patientVisitInfo = new PatientVisitInfo(varPVID, Location);
 
-                if (varDocIdLog != null)
-                {
-                    disc = new Disc(varDocIdLog, true, loc);
-                    currentLog.Visible = true;
-                }
-                else
-                {
-                    disc = new Disc(varDocID, loc);
-                    currentLog.Visible = false;
-                }
+                disc = new Disc(varDocID, Location, varDocIdLog);
+                currentLog.Visible = !string.IsNullOrEmpty(varDocIdLog);
 
                 LoadPatientInfo();
 
-                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Disc.Logs(varDocID, loc), out string _SignatureDate, out string _SignatureName);
+                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, disc.Logs(Location), out string _SignatureDate, out string _SignatureName);
                 SignatureDate = _SignatureDate;
                 SignatureName = _SignatureName;
-
-                //loadRadGridHistoryLog();
 
                 WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
 
                 if (disc.status == DocumentStatus.FINAL)
                 {
-                    BindingDataForm(disc, WebHelpers.LoadFormControl(form1, disc, ControlState.View, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
+                    BindingDataForm(disc, WebHelpers.LoadFormControl(form1, disc, ControlState.View, IsViewLog, !IsLocationChanged, AccessAuthorize));
                     BindingDataFormPrint(disc);
                 }
                 else if (disc.status == DocumentStatus.DRAFT)
                 {
-                    BindingDataForm(disc, WebHelpers.LoadFormControl(form1, disc, ControlState.Edit, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
+                    BindingDataForm(disc, WebHelpers.LoadFormControl(form1, disc, ControlState.Edit, IsViewLog, !IsLocationChanged, AccessAuthorize));
                 }
 
-                //WebHelpers.getAccessButtons(form1, disc.status, (string)Session["access_authorize"], loc == locChanged, varDocIdLog != null);
-
-                WebHelpers.getAccessButtons(new Model.AccessButtonInfo()
+                WebHelpers.getAccessButtons(new AccessButtonInfo()
                 {
                     Form = form1,
                     DocStatus = disc.status,
-                    AccessGroup = (string)Session["group_access"],
-                    AccessAuthorize = (string)Session["access_authorize"],
-                    IsSameCompanyCode = loc == locChanged,
-                    IsViewLog = varDocIdLog != null
+                    AccessGroup = GroupAccess,
+                    AccessAuthorize = AccessAuthorize,
+                    IsSameCompanyCode = !IsLocationChanged,
+                    IsViewLog = IsViewLog
                 });
             }
             catch (Exception ex)
@@ -424,23 +406,8 @@ namespace EMR
         }
         #endregion
 
-        protected void clearSession_Click(object sender, EventArgs e)
-        {
-            WebHelpers.clearSessionDoc(Page, varDocID, loc);
-        }
-
-        protected void GridView1_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandName == "Select")
-            {
-                Response.Redirect(PAGE_URL);
-            }
-        }
-
-        protected void LinkViewLastestVersion_Load(object sender, EventArgs e)
-        {
-            (sender as HyperLink).NavigateUrl = PAGE_URL;
-        }
+        protected void LinkViewLastestVersion_Load(object sender, EventArgs e) => (sender as HyperLink).NavigateUrl = PAGE_URL;
+        
         private void LoadPatientInfo()
         {
             lblFirstName.Text = patientInfo.first_name_l;
@@ -458,5 +425,6 @@ namespace EMR
             WebHelpers.ConvertDateTime(patientVisitInfo.ActualVisitDateTime, out bool isValid1, out string ActualVisitDateTime, "dd-MM-yyyy");
             lblVisitDate.Text = ActualVisitDateTime;
         }
+
     }
 }

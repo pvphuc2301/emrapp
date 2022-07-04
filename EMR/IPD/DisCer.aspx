@@ -643,7 +643,6 @@
                         </div>
                     </div>
                 </div>
-                <asp:LinkButton runat="server" OnClick="clearSession_Click" ID="clearSession"></asp:LinkButton>
             </ContentTemplate>
         </asp:UpdatePanel>
     </form>

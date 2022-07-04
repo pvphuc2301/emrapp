@@ -43,8 +43,8 @@ namespace EMR
     public static class WebHelpers
     {
         //http://172.16.0.78:8088/swagger/index.html
-        public static string URL = "http://172.16.0.88:8080/";//PRO
-        //public static string URL = "http://172.16.0.78:8088/";//UAT
+        //public static string URL = "http://172.16.0.88:8080/";//PRO
+        public static string URL = "http://172.16.0.78:8088/";//UAT
 
         #region API
         public static dynamic PostAPI(string url, dynamic obj)
@@ -349,6 +349,12 @@ namespace EMR
             BarCode.Controls.Clear();
             BarCode.Controls.Add(image);
         }
+        /// <summary>
+        /// <para>Description: Clear document session from database</para>
+        /// </summary>
+        /// <param name="page"></param>
+        /// <param name="docId"></param>
+        /// <param name="loc"></param>
         internal static void clearSessionDoc(Page page, string docId, string loc)
         {
             if (!string.IsNullOrEmpty(docId))
@@ -606,6 +612,21 @@ namespace EMR
             }
             return visible;
         }
+        /// <summary>
+        /// <para>Description: Display control whether edit or view</para>
+        /// <para>User can edit form if:</para>
+        /// <para>- State is edit</para>
+        /// <para>- View Log is false</para>
+        /// <para>- Location is not changed</para>
+        /// <para>- Access Authorize is FullAccess</para>
+        /// </summary>
+        /// <param name="form1"></param>
+        /// <param name="obj">Model</param>
+        /// <param name="state">View, Edit</param>
+        /// <param name="viewLog">Is View Log</param>
+        /// <param name="company_code">True - Not changed, False - Changed</param>
+        /// <param name="access_authorize">FullAccess</param>
+        /// <returns></returns>
         internal static bool LoadFormControl(HtmlForm form1, dynamic obj, ControlState state, bool viewLog, bool company_code, string access_authorize = "")
         {
             //1 - edit
@@ -1380,6 +1401,14 @@ namespace EMR
             value = (value == null) ? false : value;
             return GetBool(value, "☒", "❏");
         }
+        /// <summary>
+        /// <para>Description: Check session timeout</para>
+        /// <para>If User Id from session is null -> go to login page.</para>
+        /// </summary>
+        /// <param name="_page">Current Page</param>
+        /// <param name="redirecturl">Go to Login Page</param>
+        /// <param name="showDelay"></param>
+        /// <returns></returns>
         internal static bool CheckSession(Page _page, string redirecturl = "../login.aspx?ReturnUrl=", bool showDelay = true)
         {
             string UserID = (string)_page.Session["UserID"];

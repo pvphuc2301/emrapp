@@ -183,7 +183,7 @@ namespace EMR
         {
             try
             {
-                dynamic result = Disc.Delete((string)Session["UserID"], varDocID, loc)[0];
+                dynamic result = Somr.Delete((string)Session["UserID"], varDocID, loc)[0];
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
                     WebHelpers.clearSessionDoc(Page, varDocID, loc);

@@ -489,6 +489,10 @@
       <DependentUpon>SurgicalReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Model\AccessButtonInfo.cs" />
+    <Compile Include="Model\Disc.cs" />
+    <Compile Include="Model\EmrDictionary.cs" />
+    <Compile Include="Model\EmrDocument.cs" />
+    <Compile Include="Model\IEmrFormModel.cs" />
     <Compile Include="Model\PatientHistoryVm.cs" />
     <Compile Include="Model\sendRequestVm.cs" />
     <Compile Include="OPD\OutPatIniNurAssV20.aspx.cs">
@@ -1231,7 +1235,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

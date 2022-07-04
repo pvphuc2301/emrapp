@@ -1359,138 +1359,138 @@ namespace EMR
         #endregion
     }
 
-    public class Disc
-    {
+    //public class Disc
+    //{
 
-        #region Properties
-        public static string api = "api/disc";
-        public dynamic document_id { get; set; }
-        public dynamic user_name { get; set; }
-        public dynamic status { get; set; }
-        public dynamic amend_reason { get; set; }
-        public dynamic no_discharge { get; set; }
-        public dynamic disc_ward_code { get; set; }
-        public dynamic disc_ward_desc { get; set; }
-        public dynamic no_health_insurance { get; set; }
-        public dynamic valid_from { get; set; }
-        public dynamic disc_date_time { get; set; }
-        public dynamic diagnosis { get; set; }
-        public dynamic disc_medication { get; set; }
-        public dynamic followup_instruc { get; set; }
-        public dynamic notes { get; set; }
-        public dynamic signature_date { get; set; }
-        #endregion
+    //    #region Properties
+    //    public static string api = "api/disc";
+    //    public dynamic document_id { get; set; }
+    //    public dynamic user_name { get; set; }
+    //    public dynamic status { get; set; }
+    //    public dynamic amend_reason { get; set; }
+    //    public dynamic no_discharge { get; set; }
+    //    public dynamic disc_ward_code { get; set; }
+    //    public dynamic disc_ward_desc { get; set; }
+    //    public dynamic no_health_insurance { get; set; }
+    //    public dynamic valid_from { get; set; }
+    //    public dynamic disc_date_time { get; set; }
+    //    public dynamic diagnosis { get; set; }
+    //    public dynamic disc_medication { get; set; }
+    //    public dynamic followup_instruc { get; set; }
+    //    public dynamic notes { get; set; }
+    //    public dynamic signature_date { get; set; }
+    //    #endregion
 
-        public static Dictionary<string, string> DISC_WARD_CODE = new Dictionary<string, string>()
-        {
-            { "", "" },
-            { "K18", "Khoa Nhi – Săn sóc đặc biệt sơ sinh" },
-            { "K03", "Khoa Nội Tổng Hợp" },
-            { "K26", "Khoa Gây mê – Hồi sức" },
-            { "K19", "Khoa Ngoại Tổng Hợp" },
-            { "K02", "Khoa Cấp cứu" },
-            { "K27", "Khoa Sản – Phụ khoa" },
-            { "K48", "Khoa Hồi sức tích cực – Chống độc" },
-        };
+    //    public static Dictionary<string, string> DISC_WARD_CODE = new Dictionary<string, string>()
+    //    {
+    //        { "", "" },
+    //        { "K18", "Khoa Nhi – Săn sóc đặc biệt sơ sinh" },
+    //        { "K03", "Khoa Nội Tổng Hợp" },
+    //        { "K26", "Khoa Gây mê – Hồi sức" },
+    //        { "K19", "Khoa Ngoại Tổng Hợp" },
+    //        { "K02", "Khoa Cấp cứu" },
+    //        { "K27", "Khoa Sản – Phụ khoa" },
+    //        { "K48", "Khoa Hồi sức tích cực – Chống độc" },
+    //    };
 
-        public Disc(dynamic document_id, dynamic user_name, dynamic status, dynamic amend_reason,
-            dynamic no_discharge, dynamic disc_ward_code, dynamic disc_ward_desc, dynamic no_health_insurance,
-            dynamic valid_from, dynamic disc_date_time, dynamic diagnosis, dynamic disc_medication, dynamic followup_instruc, dynamic notes, dynamic signature_date )
-        {
-            this.document_id = document_id;
-            this.user_name = user_name;
-            this.status = status;
-            this.amend_reason = amend_reason;
-            this.no_discharge = no_discharge;
-            this.disc_ward_code = disc_ward_code;
-            this.disc_ward_desc = disc_ward_desc;
-            this.no_health_insurance = no_health_insurance;
-            this.valid_from = valid_from;
-            this.disc_date_time = disc_date_time;
-            this.diagnosis = diagnosis;
-            this.disc_medication = disc_medication;
-            this.followup_instruc = followup_instruc;
-            this.notes = notes;
-            this.signature_date = signature_date;
-        }
-        public Disc(dynamic document_id, string loc)
-        {
-            dynamic response = WebHelpers.GetAPI($"{api}/get/{loc}/{document_id}");
+    //    public Disc(dynamic document_id, dynamic user_name, dynamic status, dynamic amend_reason,
+    //        dynamic no_discharge, dynamic disc_ward_code, dynamic disc_ward_desc, dynamic no_health_insurance,
+    //        dynamic valid_from, dynamic disc_date_time, dynamic diagnosis, dynamic disc_medication, dynamic followup_instruc, dynamic notes, dynamic signature_date )
+    //    {
+    //        this.document_id = document_id;
+    //        this.user_name = user_name;
+    //        this.status = status;
+    //        this.amend_reason = amend_reason;
+    //        this.no_discharge = no_discharge;
+    //        this.disc_ward_code = disc_ward_code;
+    //        this.disc_ward_desc = disc_ward_desc;
+    //        this.no_health_insurance = no_health_insurance;
+    //        this.valid_from = valid_from;
+    //        this.disc_date_time = disc_date_time;
+    //        this.diagnosis = diagnosis;
+    //        this.disc_medication = disc_medication;
+    //        this.followup_instruc = followup_instruc;
+    //        this.notes = notes;
+    //        this.signature_date = signature_date;
+    //    }
+    //    public Disc(dynamic document_id, string loc)
+    //    {
+    //        dynamic response = WebHelpers.GetAPI($"{api}/get/{loc}/{document_id}");
 
-            if(response.Status == System.Net.HttpStatusCode.OK)
-            {
-                DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
+    //        if(response.Status == System.Net.HttpStatusCode.OK)
+    //        {
+    //            DataTable db = WebHelpers.GetJSONToDataTable(response.Data);
 
-                WebHelpers.BindingDatafield(db, this);
-            }
-        }
+    //            WebHelpers.BindingDatafield(db, this);
+    //        }
+    //    }
 
-        public static DataTable Logs(string document_id, string loc)
-        {
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
-            DataTable db = new DataTable();
-            if (res.Status == System.Net.HttpStatusCode.OK)
-            {
-                db = WebHelpers.GetJSONToDataTable(res.Data);
-            }
-            return db;
-        }
-        public Disc(string document_id, bool viewLog, string loc)
-        {
-            DataTable tbl = new DataTable();
-            dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
-            if (res.Status == System.Net.HttpStatusCode.OK)
-            {
-                tbl = WebHelpers.GetJSONToDataTable(res.Data);
-                WebHelpers.BindingDatafield(tbl, this);
+    //    public static DataTable Logs(string document_id, string loc)
+    //    {
+    //        dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
+    //        DataTable db = new DataTable();
+    //        if (res.Status == System.Net.HttpStatusCode.OK)
+    //        {
+    //            db = WebHelpers.GetJSONToDataTable(res.Data);
+    //        }
+    //        return db;
+    //    }
+    //    public Disc(string document_id, bool viewLog, string loc)
+    //    {
+    //        DataTable tbl = new DataTable();
+    //        dynamic res = WebHelpers.GetAPI($"{api}/get-log/{loc}/{document_id}");
+    //        if (res.Status == System.Net.HttpStatusCode.OK)
+    //        {
+    //            tbl = WebHelpers.GetJSONToDataTable(res.Data);
+    //            WebHelpers.BindingDatafield(tbl, this);
                 
-            }
-        }
-        #region METHODS
-        public dynamic[] Update(string loc)
-        {
-            dynamic[] message = new dynamic[2];
+    //        }
+    //    }
+    //    #region METHODS
+    //    public dynamic[] Update(string loc)
+    //    {
+    //        dynamic[] message = new dynamic[2];
 
-            dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
-            message[0] = response1;
+    //        dynamic response1 = WebHelpers.PostAPI($"{api}/edit/{loc}", this);
+    //        message[0] = response1;
 
-            if (response1.Status == System.Net.HttpStatusCode.OK)
-            {
-                dynamic response2 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
-                message[1] = response2;
-            }
+    //        if (response1.Status == System.Net.HttpStatusCode.OK)
+    //        {
+    //            dynamic response2 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
+    //            message[1] = response2;
+    //        }
 
-            return message;
-        }
-        public static dynamic[] Delete(string userName, string docid, string loc)
-        {
-            dynamic[] message = new dynamic[2];
-            try
-            {
-                dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
+    //        return message;
+    //    }
+    //    public static dynamic[] Delete(string userName, string docid, string loc)
+    //    {
+    //        dynamic[] message = new dynamic[2];
+    //        try
+    //        {
+    //            dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{userName}/{docid}");
 
-                message[0] = response;
+    //            message[0] = response;
 
-                if (response.Status == System.Net.HttpStatusCode.OK)
-                {
-                    dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
-                    message[1] = response1;
-                }
+    //            if (response.Status == System.Net.HttpStatusCode.OK)
+    //            {
+    //                dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{docid}");
+    //                message[1] = response1;
+    //            }
 
-                return message;
-            }
-            catch (Exception ex)
-            {
-                dynamic response = new System.Dynamic.ExpandoObject();
-                response.Status = System.Net.HttpStatusCode.NotFound;
-                response.Data = ex.Message;
+    //            return message;
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            dynamic response = new System.Dynamic.ExpandoObject();
+    //            response.Status = System.Net.HttpStatusCode.NotFound;
+    //            response.Data = ex.Message;
 
-                message[0] = response;
-                return message;
-            }
-        }
-        #endregion
-    }
+    //            message[0] = response;
+    //            return message;
+    //        }
+    //    }
+    //    #endregion
+    //}
 
     public class Diss
     {
