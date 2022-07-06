@@ -5532,6 +5532,7 @@ namespace EMR
     #endregion
 
     #region Trai
+    
     public partial class EmergencyMedicalRecord
     {
         #region Properties

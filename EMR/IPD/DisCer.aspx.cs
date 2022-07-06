@@ -25,18 +25,14 @@ namespace EMR
         public string SignatureName { get; set; }
         public DateTime associated_visit_admited { get; set; }
         public DateTime associated_visit_closed { get; set; }
-
         public string AccessAuthorize { get => (string)Session["access_authorize"]; }
-
         public string GroupAccess { get => (string)Session["group_access"]; }
-
         public bool IsLocationChanged { get => Location != LocationChanged; }
-
         public string EmpId { get => (string)Session["emp_id"]; }
-
         public string UserId { get => (string)Session["UserId"]; }
-
         public bool IsViewLog => varDocIdLog != null;
+
+        public Disc FormModel => throw new NotImplementedException();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -47,7 +43,6 @@ namespace EMR
                 Initial();
             }
         }
-
         #region Binding Data
         public void BindingDataForm(Disc disc, bool state)
         {
@@ -102,7 +97,6 @@ namespace EMR
             { 
                 WebHelpers.SendError(Page, ex); 
             }
-
         }
         public void BindingDataFormPrint(Disc disc)
         {
@@ -132,6 +126,7 @@ namespace EMR
                 
                 string no_health_insurance = disc.no_health_insurance;
                 prt_no1.Text = prt_no2.Text = prt_no3.Text = prt_no4.Text = prt_no5.Text = prt_no6.Text = " ";
+
                 if (no_health_insurance != null)
                 {
                     for (int i = 0; i < no_health_insurance.Length; i++)
@@ -223,11 +218,12 @@ namespace EMR
                 prt_followup_instruc.Text = WebHelpers.TextToHtmlTag(disc.followup_instruc);
                 prt_notes.Text = WebHelpers.TextToHtmlTag(disc.notes, false);
             }
-            catch (Exception ex) { WebHelpers.SendError(Page, ex); }
-
+            catch (Exception ex) 
+            { 
+                WebHelpers.SendError(Page, ex); 
+            }
         }
         #endregion
-
         #region Actions
         protected void btnComplete_Click(object sender, EventArgs e)
         {
@@ -287,17 +283,13 @@ namespace EMR
             WebHelpers.clearSessionDoc(Page, varDocID, Location);
             Initial();
         }
-
         protected void btnHome_Click(object sender, EventArgs e)
         {
             Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={Location}");
         }
         #endregion
-
         #region Methods
-
         protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason) => WebHelpers.getLogText(status, created_name, created_date_time, modified_name, modified_date_time, amend_reason);
-        
         protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
         {
             GridDataItem item = (e.Item as GridDataItem);
@@ -311,9 +303,7 @@ namespace EMR
             }
         }
         protected string GetLogUrl(object doc_log_id) => PAGE_URL + $"&docIdLog={doc_log_id}";
-        
         protected void RadButton1_Click(object sender, EventArgs e) => Response.Redirect(PAGE_URL);
-        
         /// <summary>
         /// <para>Step 1: Check valid data</para>
         /// <para>Step 2: Update data</para>
@@ -405,9 +395,7 @@ namespace EMR
             }
         }
         #endregion
-
         protected void LinkViewLastestVersion_Load(object sender, EventArgs e) => (sender as HyperLink).NavigateUrl = PAGE_URL;
-        
         private void LoadPatientInfo()
         {
             lblFirstName.Text = patientInfo.first_name_l;
@@ -426,5 +414,14 @@ namespace EMR
             lblVisitDate.Text = ActualVisitDateTime;
         }
 
+        public void SetDefaultValue()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void PostBackEventHandler()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

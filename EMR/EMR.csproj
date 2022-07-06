@@ -492,6 +492,7 @@
     <Compile Include="Model\Disc.cs" />
     <Compile Include="Model\EmrDictionary.cs" />
     <Compile Include="Model\EmrDocument.cs" />
+    <Compile Include="Model\EmrViewModel.cs" />
     <Compile Include="Model\IEmrFormModel.cs" />
     <Compile Include="Model\PatientHistoryVm.cs" />
     <Compile Include="Model\sendRequestVm.cs" />
@@ -1235,7 +1236,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

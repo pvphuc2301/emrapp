@@ -357,15 +357,6 @@ namespace EMR.ER
         protected global::System.Web.UI.WebControls.Label prt_initial_diagnosis;
 
         /// <summary>
-        /// prt_comfirmed_diagnosis control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_comfirmed_diagnosis;
-
-        /// <summary>
         /// prt_diferential_diagnosis control.
         /// </summary>
         /// <remarks>
@@ -382,6 +373,15 @@ namespace EMR.ER
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label prt_associated_conditions;
+
+        /// <summary>
+        /// prt_comfirmed_diagnosis control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_comfirmed_diagnosis;
 
         /// <summary>
         /// lbl_specialist_opinion_False control.
@@ -463,6 +463,15 @@ namespace EMR.ER
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTable prt_progress_note;
+
+        /// <summary>
+        /// prt_conclusions control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_conclusions;
 
         /// <summary>
         /// lbl_discharge_False control.
@@ -3118,5 +3127,14 @@ namespace EMR.ER
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.UserControls.PopupShowDelay PopupShowDelay;
+
+        /// <summary>
+        /// clearSession control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton clearSession;
     }
 }

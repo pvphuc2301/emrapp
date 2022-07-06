@@ -180,6 +180,7 @@ public class TienIchWeb
         }
         catch (WebException ex)
         {
+            Console.WriteLine(ex.Message);
             //MessageBox.Show(ex.Message);
             return null;
         }
@@ -218,6 +219,7 @@ public class TienIchWeb
         }
         catch (WebException ex)
         {
+            Console.WriteLine(ex.Message);
             //MessageBox.Show(ex.Message);
             return null;
         }
@@ -257,6 +259,7 @@ public class TienIchWeb
         }
         catch (WebException ex)
         {
+            Console.WriteLine(ex.Message);
             //MessageBox.Show(ex.Message);
             return null;
         }

@@ -14,7 +14,7 @@ namespace EMR.Classes
             {
                 form.FindControl("btnNewVitalSign").Visible = (status == DocumentStatus.DRAFT);
             }
-            catch(Exception ex) { }
+            catch(Exception ex) { Console.WriteLine(ex.Message); }
         }
     }
 }

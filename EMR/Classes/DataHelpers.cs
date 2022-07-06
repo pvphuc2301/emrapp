@@ -57,7 +57,8 @@ namespace EMR
                 return ((DateTime)_datetime).ToString("yyyy-MM-ddTHH:mm:ss");
             } 
             catch (Exception ex) 
-            { 
+            {
+                Console.WriteLine(ex.Message);
                 return null; 
             }
         }

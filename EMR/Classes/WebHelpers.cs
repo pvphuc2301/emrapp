@@ -325,7 +325,7 @@ namespace EMR
 
                     select.Items.Add(item);
                 }
-                catch (Exception ex) { }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
             }
 
             var item1 = select.Items.FindByValue(selectedItem);
@@ -400,6 +400,7 @@ namespace EMR
                     }
                     catch (Exception ex)
                     {
+                        Console.WriteLine(ex.Message);
                     }
 
                 }
@@ -420,6 +421,7 @@ namespace EMR
                     }
                     catch (Exception ex)
                     {
+                        Console.WriteLine(ex.Message);
                     }
                     i++;
                 }
@@ -473,7 +475,7 @@ namespace EMR
                                 row[text2.ID] = DataHelpers.ConvertSQLDateTime(DateTime.Parse(text2.SelectedDate.ToString()));
                             }
                         }
-                        catch (Exception ex) { }
+                        catch (Exception ex) { Console.WriteLine(ex.Message); }
                     }
 
                     table.Rows.Add(row);
@@ -1584,7 +1586,7 @@ namespace EMR
                 }
                 else return null;
             }
-            catch (Exception ex) { return null; }
+            catch (Exception ex) { Console.WriteLine(ex.Message); return null; }
         }
         internal static string DisplayCheckBox(dynamic _source, string gap = "<br>")
         {

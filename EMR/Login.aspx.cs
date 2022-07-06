@@ -139,6 +139,7 @@ namespace Emr_client.Emr
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 // Failed to authenticate. Most likely it is caused by unknown user
                 // id or bad strPassword.
                 //strError = ex.Message;

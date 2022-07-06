@@ -37,7 +37,7 @@ namespace EMR.Print
                 try
                 {
                     visit_type = Convert.ToString(tbTemp.Rows[0]["visit_type"]);
-                } catch(Exception ex) { WebHelpers.AddJS(Page, "alert('can not get visit type')"); }
+                } catch(Exception ex) { Console.WriteLine(ex.Message); WebHelpers.AddJS(Page, "alert('can not get visit type')"); }
             }
             
 

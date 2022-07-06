@@ -19,5 +19,46 @@ namespace EMR.Model
             { "K27", "Khoa Sản – Phụ khoa" },
             { "K48", "Khoa Hồi sức tích cực – Chống độc" },
         };
+        #region Emergency Medical Record (Assessment)
+        public static Dictionary<string, string> ChiefComplaintCode = new Dictionary<string, string>()
+        {
+            { "R", "Resuscitation/ Hồi sức" },
+            { "E", "Emergency/ Cấp cứu" },
+            { "U", "Urgent/ Khẩn trương" },
+            { "L", "Less urgent/ Trì hoãn" },
+            { "N", "Non-Urgent/ Không cấp cứu" },
+        };
+        //public class PatientPischarge
+        public static Dictionary<string, string> PatientDischarge = new Dictionary<string, string>()
+        {
+            { "IMP", "Improved/ Có cải thiện" },
+            { "UNC", "Unchanged/ Không thay đổi" },
+            { "UNS", "Unstable/ Không ổn định" }
+        };
+        //public class Habits
+        public static Dictionary<string, string> Habits = new Dictionary<string, string>()
+        {
+            { "A", "Alcohol/ Rượu" },
+            { "S", "Smoking/ Thuốc lá" },
+            { "D", "Drugs/ Chất gây nghiện" },
+            { "O", "Other, specify/ Khác ghi rõ" }
+        };
+        public static Dictionary<string, string> Treatment = new Dictionary<string, string>()
+        {
+            { "id", "" },
+            { "time", "DateTime" },
+            { "medication", "" },
+            { "dose", "" },
+            { "route", "" },
+            { "comment", "" },
+        };
+        public static Dictionary<string, string> ProgressNote = new Dictionary<string, string>()
+        {
+            { "id", "" },
+            { "time", "DateTime" },
+            { "progress", "" },
+            { "appropriate_order", "" },
+        };
+        #endregion
     }
 }

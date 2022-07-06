@@ -1173,7 +1173,7 @@ namespace EMR.OPD
                                 prt_nutritional_conclude_2.Text = "☒";
                                 break;
                         }
-                    } catch(Exception ex) { Console.WriteLine(nutritional_status.total_score + " can not convert to Integer"); }
+                    } catch(Exception ex) { Console.WriteLine(ex.Message); Console.WriteLine(nutritional_status.total_score + " can not convert to Integer"); }
                 }
             }
 

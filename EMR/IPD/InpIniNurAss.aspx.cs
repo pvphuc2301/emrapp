@@ -2261,7 +2261,7 @@ namespace EMR
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex.Message);
             }
         }
         protected void severity_of_disease_change(string v)
@@ -2313,7 +2313,7 @@ namespace EMR
             }
             catch (Exception ex)
             {
-
+                Console.WriteLine(ex.Message);
             }
         }
         protected void initial_screening_change(string v)

@@ -360,7 +360,6 @@ namespace EMR.Phar
         {
             try
             {
-                string jsString = "";
                 //if (visitType == "OPD")
                 //    jsString = "api/emr/vital-sign-opd/" + varPV_ID;
                 //else if (visitType == "IPD")
@@ -383,8 +382,8 @@ namespace EMR.Phar
                 }
             } 
             catch(Exception ex) 
-            { 
-
+            {
+                Console.WriteLine(ex.Message);
             }
         }
 
