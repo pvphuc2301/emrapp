@@ -213,6 +213,7 @@
     <Content Include="images\prt_header.png" />
     <Content Include="IPD\ObsGynIniAss.aspx" />
     <Content Include="IPD\SurgicalReport.aspx" />
+    <Content Include="OPD\OutPatIniNurAssRV03.aspx" />
     <Content Include="OPD\OutPatIniNurAssV20.aspx" />
     <Content Include="Other\FormMenu.aspx" />
     <Content Include="Other\SessionEMR.aspx" />
@@ -364,6 +365,7 @@
   <ItemGroup>
     <Compile Include="Classes\ConnClass.cs" />
     <Compile Include="Classes\EMRClass.cs" />
+    <Compile Include="Classes\EMRHelpers.cs" />
     <Compile Include="Classes\Permissions.cs" />
     <Compile Include="Classes\WebHelpers.cs" />
     <Compile Include="Classes\MISClass.cs" />
@@ -494,8 +496,16 @@
     <Compile Include="Model\EmrDocument.cs" />
     <Compile Include="Model\EmrViewModel.cs" />
     <Compile Include="Model\IEmrFormModel.cs" />
+    <Compile Include="Model\OinaRv03.cs" />
     <Compile Include="Model\PatientHistoryVm.cs" />
     <Compile Include="Model\sendRequestVm.cs" />
+    <Compile Include="OPD\OutPatIniNurAssRV03.aspx.cs">
+      <DependentUpon>OutPatIniNurAssRV03.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPD\OutPatIniNurAssRV03.aspx.designer.cs">
+      <DependentUpon>OutPatIniNurAssRV03.aspx</DependentUpon>
+    </Compile>
     <Compile Include="OPD\OutPatIniNurAssV20.aspx.cs">
       <DependentUpon>OutPatIniNurAssV20.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1236,7 +1246,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

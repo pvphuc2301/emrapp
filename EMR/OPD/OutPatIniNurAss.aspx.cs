@@ -72,7 +72,7 @@ namespace EMR
                     var urlArr = url.Split('/');
                     url = urlArr[urlArr.Length - 1];
 
-                    PAGE_URL = $"/OPD/OutPatIniNurAssV20.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+                    PAGE_URL = $"/OPD/OutPatIniNurAssRV03.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
                     Response.Redirect(PAGE_URL, false);
                 }

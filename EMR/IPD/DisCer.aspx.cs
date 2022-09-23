@@ -32,7 +32,11 @@ namespace EMR
         public string UserId { get => (string)Session["UserId"]; }
         public bool IsViewLog => varDocIdLog != null;
 
-        public Disc FormModel => throw new NotImplementedException();
+        public Disc Model => throw new NotImplementedException();
+
+        public string signature_date => throw new NotImplementedException();
+
+        public string signature_name => throw new NotImplementedException();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -420,6 +424,31 @@ namespace EMR
         }
 
         public void PostBackEventHandler()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void BindingDataForm(bool state)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void BindingDataFormView()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void BindingDataFormEdit()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void BindingDataFormPrint()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateModel()
         {
             throw new NotImplementedException();
         }

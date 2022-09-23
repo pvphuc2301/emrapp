@@ -4,7 +4,7 @@ namespace EMR.Model
 {
     public interface IEmrFormModel<T>
     {
-        T FormModel { get; }
+        T Model { get; }
         /// <summary>
         /// <para>Description: User login</para>
         /// <para>Ex: hisuser</para>
@@ -40,18 +40,18 @@ namespace EMR.Model
         /// <summary>
         /// <para>Description: Ngày ký</para>
         /// </summary>
-        string SignatureDate { get; }
+        string signature_date { get; }
         /// <summary>
         /// <para>Description: Chữ ký</para>
         /// </summary>
-        string SignatureName { get; }
+        string signature_name { get; }
         void Initial();
         void SetDefaultValue();
         void PostBackEventHandler();
-        void BindingDataForm(T disc, bool state);
-        void BindingDataFormView(T disc);
-        void BindingDataFormEdit(T disc);
-        void BindingDataFormPrint(T disc);
-        void UpdateData(T disc);
+        void BindingDataForm(bool state);
+        void BindingDataFormView();
+        void BindingDataFormEdit();
+        void BindingDataFormPrint();
+        void UpdateModel();
     }
 }

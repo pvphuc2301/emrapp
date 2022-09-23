@@ -13,6 +13,26 @@ namespace EMR.Model
         dynamic user_name { get; }
         dynamic status { get; }
         dynamic amend_reason { get; }
+        dynamic created_user_id { get; set; }
+        dynamic created_name_e { get; set; }
+        dynamic created_name_l { get; set; }
+        dynamic created_date_time { get; set; }
+        dynamic modified_user_id { get; set; }
+        dynamic modified_name_e { get; set; }
+        dynamic modified_name_l { get; set; }
+        dynamic modified_date_time { get; set; }
+        dynamic submited_user_id { get; set; }
+        dynamic submited_name_e { get; set; }
+        dynamic submited_name_l { get; set; }
+        dynamic submited_date_time { get; set; }
+        dynamic signed_user_id { get; set; }
+        dynamic signed_name_e { get; set; }
+        dynamic signed_name_l { get; set; }
+        dynamic signed_date_time { get; set; }
+        dynamic delete_user_id { get; set; }
+        dynamic delete_name_e { get; set; }
+        dynamic delete_name_l { get; set; }
+        dynamic delete_date_time { get; set; }
         dynamic[] Update(string locParam);
         dynamic[] Delete(string userNameParam, string locParam);
         DataTable Logs(string loc);
@@ -28,6 +48,27 @@ namespace EMR.Model
         public dynamic amend_reason { get; set; }
 
         public abstract string api { get; }
+        public dynamic created_user_id  { get; set; }
+        public dynamic created_name_e  { get; set; }
+        public dynamic created_name_l  { get; set; }
+        public dynamic created_date_time  { get; set; }
+        public dynamic modified_user_id  { get; set; }
+        public dynamic modified_name_e  { get; set; }
+        public dynamic modified_name_l  { get; set; }
+        public dynamic modified_date_time  { get; set; }
+        public dynamic submited_user_id  { get; set; }
+        public dynamic submited_name_e  { get; set; }
+        public dynamic submited_name_l  { get; set; }
+        public dynamic submited_date_time  { get; set; }
+        public dynamic signed_user_id  { get; set; }
+        public dynamic signed_name_e  { get; set; }
+        public dynamic signed_name_l  { get; set; }
+        public dynamic signed_date_time  { get; set; }
+        public dynamic delete_user_id  { get; set; }
+        public dynamic delete_name_e  { get; set; }
+        public dynamic delete_name_l  { get; set; }
+        public dynamic delete_date_time  { get; set; }
+
         public EmrDocument(string document_id, string location)
         {
             _ = document_id ?? throw new NullReferenceException("document id cannot be null");

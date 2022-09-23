@@ -55,6 +55,12 @@ namespace EMR.ER
 
         public string SignatureName { get; set; }
 
+        public EmrViewModel Model => throw new NotImplementedException();
+
+        public string signature_date => throw new NotImplementedException();
+
+        public string signature_name => throw new NotImplementedException();
+
         //public string PAGE_URL { get; set; }
         //public string loc { get; set; }
         //public string locChanged { get; set; }
@@ -1800,6 +1806,31 @@ namespace EMR.ER
         {
             BindingDataFormPrint(new EmrViewModel(varDocID, Location, varDocIdLog));
             WebHelpers.AddJS(Page, "btnPrint_Click()");
+        }
+
+        public void BindingDataForm(bool state)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void BindingDataFormView()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void BindingDataFormEdit()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void BindingDataFormPrint()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateModel()
+        {
+            throw new NotImplementedException();
         }
     }
 }

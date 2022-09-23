@@ -6,8 +6,46 @@ using System.Threading.Tasks;
 
 namespace EMR.Model
 {
+    public class PAIN_ASSESSMENT_TYPE {
+        public const string NumericAndFaces = "NaF";
+        public const string FLACC = "FLACC";
+        public const string N_PASS = "NPASS";
+        public const string Non_Verbal = "NONV";
+    }
+
     public class EmrDictionary
     {
+        #region 
+        public static Dictionary<string, string> NUTRITION_STATUS_CODE = new Dictionary<string, string>()
+        {
+            { "U", "Suy dinh dưỡng/ Undernutrition" },
+            { "O", "Thừa cân hoặc béo phì/ Overweight or obesity" },
+            { "N", "Bình thường/ Normal" },
+        };
+
+        public static Dictionary<string, string> PAINT_SCORE_CODE = new Dictionary<string, string>()
+        {
+            { "0", "Không đau/ No hurt" },
+            { "1", "Đau rất ít/ Little hurt" },
+            { "2", "Đau nhẹ/ Slight hurt" },
+            { "3", "Đau vừa/ Considerable hurt" },
+            { "4", "Đau nhiều/ Serious hurt" },
+            { "5", "Rất đau/ Worst hurt" },
+        };
+
+        public static Dictionary<string, string> HOUSING_CODE = new Dictionary<string, string>()
+        {
+            { "ALN", "Sống một mình<div> Lives alone</div>" },
+            { "REL", "Sống với người thân<div> With relatives</div>" },
+        };
+
+        public static Dictionary<string, string> PRIORITIZATION_CODE = new Dictionary<string, string>()
+        {
+            { "IM", "Cần được khám ngay/ Immediate consulting requirement" },
+            { "WA", "Có thể chờ khám trong khoảng thời gian xác định/ Be able to wait for consultation at a specific time" },
+        };
+        #endregion
+
         public static Dictionary<string, string> DISC_WARD_CODE = new Dictionary<string, string>()
         {
             { "", "" },
