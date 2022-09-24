@@ -1396,7 +1396,8 @@ namespace EMR
             {
                 return result ? returnTrue : returnFalse;
             }
-            return "#invalid";
+            return null;
+            //return "#invalid";
         }
         public static string GetCheckedIcon(bool? value)
         {

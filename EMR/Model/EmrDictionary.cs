@@ -6,6 +6,11 @@ using System.Threading.Tasks;
 
 namespace EMR.Model
 {
+    public class PRIORITIZATION_CODE
+    {
+        public const string IMMEDIATE_CONSULTING_REQUIREMENT = "IM";
+        public const string BE_ABLE_TO_WAIT_FOR_CONSULTATION_AT_A_SPECIFIC_TIME = "WA";
+    }
     public class PAIN_ASSESSMENT_TYPE {
         public const string NumericAndFaces = "NaF";
         public const string FLACC = "FLACC";
@@ -15,7 +20,39 @@ namespace EMR.Model
 
     public class EmrDictionary
     {
-        #region 
+        #region
+        public static Dictionary<string, string> INTERVENTION = new Dictionary<string, string>()
+        {
+            { "UNI", "Phòng ngừa té ngã thường quy/ Universe fall risk prevention" },
+            { "STI", "Dán sticker nguy cơ ngã/ Stick fall-risk on patient's shirt" },
+            { "EDU", "Thông báo nguy cơ té ngã cho người bệnh/ người nhà/ Educate the fall risk to patient/ Relatives" },
+            { "ASS", "Trợ giúp người bệnh di chuyển, đi lại/ Assist patient with transfer/ ambulation" },
+            { "STR", "Cung cấp dụng cụ hỗ trợ di chuyển (Băng ca, xe đẩy...)/ Assist patient with transfer/ ambulation (Stretcher, wheelchair)" },
+            { "EPA", "Hướng dẫn ba mẹ/ người thân bệnh nhi luôn quan sát bé cẩn thận và luôn ở cùng bé/ Educate Parents to keep an eye on their children closely and never let him/her alone" },
+            { "INS", "Hướng dẫn ba mẹ/ người thân bệnh nhi hạn chế cho bé chạy nhảy/ Instruct Parents/ accompanying family members limit the child to run." },
+            { "ENC", "Khuyến khích di chuyển bằng nôi/ xe nôi đối với trẻ sơ sinh và nhủ nhi/ Encourage parents/ Caregivers to use cribs for newborn/ neonatal in moving" },
+            { "PFR", "Đeo vòng tay nguy cơ ngã khi/ Place Fall Risk ID bracelet on patient in cases of" }
+        };
+        public static Dictionary<string, string> FALL_RISK_FACTORS = new Dictionary<string, string>()
+        {
+            { "AGR", "Tuổi > 65/ Age > 65" },
+            { "PRE", "Phụ nữ có thai/ Pregnant women" },
+            { "INA", "Không có khả năng đứng lên từ ghế/ Inability to rise from a chair." },
+            { "POD", "Mất trí nhớ/ Presence of dementia" },
+            { "IMP", "Giảm/ Mất thị lực/ Patients with visual impairments" },
+            { "EAR", "Bệnh nhân có vấn đề về tai có triệu chứng chóng mặt/ Patients have ear problems with complaints of dizziness and/or vertigo." },
+            { "PSY", "Đang sử dụng bất kỳ thuốc thuộc nhóm an thần/ Any Administered Psycholeptics: Diazepam, Tofisopam, Eszopiclone, Midazolam, Rotudin, Etifoxine chlorhydrate" },
+            { "ADE", "Đang sử dụng bất kỳ thuốc thuộc nhóm chống trầm cảm/ Any Administered Antidepressant: Citalopram, SERTRAline, Amitriptyline, Mirtazapine" },
+            { "APS", "Đang sử dụng bất kỳ thuốc thuộc nhóm điều trị loạn thần/ Any administered antipsychotic: Haloperidol, Olanzapine, Quetiapine, Risperidone, Olanzapine, Quetiapine" },
+            { "ACO", "Đang sử dụng bất kỳ thuốc chống đông máu/ Any administered anticoagulant: Heparin Sodium, Anoxaparin, Rivaroxaban, Acenocoumarol..." },
+            { "ALE", "Tuổi < 3/ Age < 3" },
+            { "AMB", "Sử dụng phương tiện hỗ trợ đi lại (gậy/nạng/khung tập đi)/ Ambulatory devices (canes, crutches, and walkers)" },
+            { "PAT", "Dáng đi yếu hoặc mất thăng bằng/ Patients with gait or balance disturbances" },
+            { "AEP", "Đang sử dụng bất kỳ loại thuốc thuộc nhóm chống động kinh, chống co giật/ Any administered Antiepileptics, Anticonvulsants: Cardamazepine, Divolproex Sodium, Gabapentin, Lamotrigine, Phenobarbital, Phenytoin, Topiramate, Valproic Acid, Levetiracetam, Pregabalin" },
+            { "AHY", "Đang sử dụng bất kỳ thuốc thuộc nhóm điều trị tăng huyết áp/ Any administered Antihypertensive Medication: Captopril, Perindopril and amlodipine, Irbesartan and diuretics, Valsartan, Nifedipine, Lisinopril, Furosemide + Spironolacton, BISOprolol, METOprolol succinate..." },
+            { "NFR", "Không có yếu tố nguy cơ/ No fall risk." },
+        };
+
         public static Dictionary<string, string> NUTRITION_STATUS_CODE = new Dictionary<string, string>()
         {
             { "U", "Suy dinh dưỡng/ Undernutrition" },
@@ -57,6 +94,7 @@ namespace EMR.Model
             { "K27", "Khoa Sản – Phụ khoa" },
             { "K48", "Khoa Hồi sức tích cực – Chống độc" },
         };
+
         #region Emergency Medical Record (Assessment)
         public static Dictionary<string, string> ChiefComplaintCode = new Dictionary<string, string>()
         {

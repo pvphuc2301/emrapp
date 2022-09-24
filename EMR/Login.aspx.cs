@@ -65,7 +65,10 @@ namespace Emr_client.Emr
                 else
                     lblInfo.Text = "Login Failed!";
             }
-            catch(Exception ex) { WebHelpers.SendError(Page, ex); }
+            catch(Exception ex) 
+            { 
+                WebHelpers.SendError(Page, ex);
+            }
             btnLogin.Enabled = true;
         }
         

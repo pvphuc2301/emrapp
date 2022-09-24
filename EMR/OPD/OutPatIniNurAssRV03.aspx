@@ -20,6 +20,7 @@
 <%@ Register Src="~/UserControls/PrintTemplate/Signature1.ascx" TagPrefix="webUI" TagName="Signature1" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrtRowS2.ascx" TagPrefix="webUI" TagName="PrtRowS2" %>
 <%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="webUI" TagName="PopupShowDelay" %>
+<%@ Register Src="~/UserControls/UserControlPatientInfo.ascx" TagPrefix="webUI" TagName="PatientInfo" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -1106,115 +1107,7 @@
                         <asp:ValidationSummary ID="valSum" DisplayMode="BulletList" CssClass="validationSummary" runat="server" ValidationGroup="Group1" HeaderText="Please complete the highlighted field(s)." />
                     </asp:Panel>
 
-                    <div class="row">
-                        <div class="col-lg-12" id="accordionExample">
-                            <div class="card">
-                                <div class="card-body collapse show" id="collapsePatientInfo" aria-labelledby="headingPatientInfo">
-                                    <h5 class="box-title">Thông tin bệnh nhân/ Patient Detail</h5>
-                                    <hr style="margin: 8px 0 12px 0;" />
-                                    <div class="row">
-                                        <div class="col-sm-6" style="display: flex">
-                                            <div class="w-5 text-sm-right">
-                                                <label class="control-label text-sm-right mr-3">First Name:</label>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <asp:Label runat="server" ID="lblFirstName" CssClass="control-label text-sm-right"></asp:Label>
-                                            </div>
-                                        </div>
-
-                                        <!--/span-->
-                                        <div class="col-sm-6" style="display: flex">
-                                            <div class="w-5 text-sm-right">
-                                                <label class="control-label text-sm-right mr-3">Last Name:</label>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <asp:Label runat="server" ID="lblLastName" CssClass="control-label text-sm-right"></asp:Label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--/row-->
-                                    <div class="row">
-                                        <div class="col-sm-6" style="display: flex">
-                                            <div class="w-5 text-sm-right">
-                                                <label class="control-label text-sm-right mr-3">Gender:</label>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <asp:Label runat="server" ID="lblGender" CssClass="control-label text-sm-right"></asp:Label>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6" style="display: flex">
-                                            <div class="w-5 text-sm-right">
-                                                <label class="control-label text-sm-right mr-3">Date of Birth:</label>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <asp:Label runat="server" ID="lblDoB" CssClass="control-label text-sm-right"></asp:Label>
-                                            </div>
-                                        </div>
-                                        <!--/span-->
-                                    </div>
-                                    <!--/row-->
-                                    <div class="row">
-                                        <div class="col-sm-6" style="display: flex">
-                                            <div class="w-5 text-sm-right">
-                                                <label class="control-label text-sm-right mr-3">Contact Person:</label>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <asp:Label runat="server" ID="lblContactPerson" CssClass="control-label text-sm-right"></asp:Label>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6" style="display: flex">
-                                            <div class="w-5 text-sm-right">
-                                                <label class="control-label text-sm-right mr-3">Relationship:</label>
-
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <asp:Label runat="server" ID="lblRelationship" CssClass="control-label text-sm-right"></asp:Label>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <!--/row-->
-                                    <div class="row">
-                                        <div class="col-lg-6 d-sm-flex">
-                                            <div class="w-5 text-sm-right">
-                                                <label class="control-label text-sm-right mr-3">Address:</label>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <asp:Label runat="server" ID="lblPatientAddress" CssClass="control-label text-sm-right"></asp:Label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--/row-->
-                                    <!--/row-->
-                                    <!-- Header: Patient Visit Info -->
-                                    <h5 class="box-title">Thông tin lần khám/ Visit Detail <span class="text-danger">*</span></h5>
-                                    <hr style="margin: 8px 0 12px 0;" />
-
-                                    <div class="row">
-                                        <div class="col-sm-6" style="display: flex">
-                                            <div class="w-5 text-sm-right">
-                                                <label class="control-label text-sm-right mr-3">Encounter:</label>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <asp:Label runat="server" ID="lblVisitCode" CssClass="control-label text-sm-right"></asp:Label>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-6" style="display: flex">
-                                            <div class="w-5 text-sm-right">
-                                                <label class="control-label text-sm-right mr-3">Admit Date:</label>
-                                            </div>
-                                            <div class="flex-grow-1">
-                                                <asp:Label runat="server" ID="lblVisitDate" CssClass="control-label text-sm-right"></asp:Label>
-                                            </div>
-                                        </div>
-                                        <!--/span-->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <webUI:PatientInfo runat="server" ID="uc_patientInfo"></webUI:PatientInfo>
 
                     <div class="row">
                         <div class="col-lg-12">
@@ -1578,48 +1471,62 @@
                                         <div><span class="font-bold">5. Đánh giá đau</span>/ <i class="text-primary">Pain assessment:</i></div>
                                         <div>Điều dưỡng đánh giá chọn một trong các thang điểm đau bên dưới phù hợp với từng người bệnh.</div>
                                         <div><i class="text-primary">Nurses select one of the following pain scales in consistent with each sort of patient.</i></div>
-
-                                        <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
-                                            <ContentTemplate>
                                                 <div runat="server" id="pain_assessment_scale_wrapper" style="display: grid; grid-template-columns: 160px repeat(4, 100px); grid-gap: 6px">
-                                                    <div class="custom-control custom-radio">
-                                                        <input type="radio" 
-                                                                runat="server" 
-                                                                id="rad_naf_true" 
-                                                                name="rad_pain_assessment" 
-                                                                class="custom-control-input"
-                                                                onclick="__doPostBack('pain_assessment_change', 'field_naf')"  />
-                                                        <label class="custom-control-label" for="rad_naf_true">Numeric and Faces</label>
-                                                    </div>
-                                                    <div class="custom-control custom-radio">
-                                                        <input type="radio" 
-                                                                runat="server" 
-                                                                id="rad_flacc_true" 
-                                                                name="rad_pain_assessment" 
-                                                                class="custom-control-input" 
-                                                                onclick="__doPostBack('pain_assessment_change', 'field_flacc')" />
-                                                        <label class="custom-control-label" for="rad_flacc_true">FLACC</label>
-                                                    </div>
-                                                    <div class="custom-control custom-radio">
-                                                        <input type="radio" 
-                                                                runat="server" 
-                                                                id="rad_npass_true" 
-                                                                name="rad_pain_assessment" 
-                                                                class="custom-control-input" 
-                                                                onclick="__doPostBack('pain_assessment_change', 'field_npass')" />
-                                                        <label class="custom-control-label" for="rad_npass_true">N-PASS</label>
-                                                    </div>
-                                                    <div class="custom-control custom-radio">
-                                                        <input type="radio" 
-                                                                runat="server" 
-                                                                id="rad_nonv_true" 
-                                                                name="rad_pain_assessment" 
-                                                                class="custom-control-input" 
-                                                                onclick="__doPostBack('pain_assessment_change', 'field_nonv')" />
-                                                        <label class="custom-control-label" for="rad_nonv_true">Non-verbal</label>
-                                                    </div>
+                                                    <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
+                                                        <ContentTemplate>
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" 
+                                                                        runat="server" 
+                                                                        id="rad_naf_true" 
+                                                                        name="rad_pain_assessment" 
+                                                                        class="custom-control-input"
+                                                                        onclick="__doPostBack('pain_assessment_change', 'field_naf')"  />
+                                                                <label class="custom-control-label" for="rad_naf_true">Numeric and Faces</label>
+                                                            </div>
+                                                        </ContentTemplate>
+                                                    </asp:UpdatePanel>
+                                                     <asp:UpdatePanel ID="UpdatePanel11" runat="server" UpdateMode="Conditional">
+                                                        <ContentTemplate>
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" 
+                                                                        runat="server" 
+                                                                        id="rad_flacc_true" 
+                                                                        name="rad_pain_assessment" 
+                                                                        class="custom-control-input" 
+                                                                        onclick="__doPostBack('pain_assessment_change', 'field_flacc')" />
+                                                                <label class="custom-control-label" for="rad_flacc_true">FLACC</label>
+                                                            </div>
+                                                        </ContentTemplate>
+                                                    </asp:UpdatePanel>
+                                                    <asp:UpdatePanel ID="UpdatePanel13" runat="server" UpdateMode="Conditional">
+                                                        <ContentTemplate>
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" 
+                                                                        runat="server" 
+                                                                        id="rad_npass_true" 
+                                                                        name="rad_pain_assessment" 
+                                                                        class="custom-control-input" 
+                                                                        onclick="__doPostBack('pain_assessment_change', 'field_npass')" />
+                                                                <label class="custom-control-label" for="rad_npass_true">N-PASS</label>
+                                                            </div>
+                                                        </ContentTemplate>
+                                                    </asp:UpdatePanel>
+                                                    <asp:UpdatePanel ID="UpdatePanel14" runat="server" UpdateMode="Conditional">
+                                                        <ContentTemplate>
+                                                            <div class="custom-control custom-radio">
+                                                                <input type="radio" 
+                                                                        runat="server" 
+                                                                        id="rad_nonv_true" 
+                                                                        name="rad_pain_assessment" 
+                                                                        class="custom-control-input" 
+                                                                        onclick="__doPostBack('pain_assessment_change', 'field_nonv')" />
+                                                                <label class="custom-control-label" for="rad_nonv_true">Non-verbal</label>
+                                                            </div>
+                                                        </ContentTemplate>
+                                                    </asp:UpdatePanel>
                                                 </div>
-
+                                        <asp:UpdatePanel ID="UpdatePanel18" runat="server" UpdateMode="Conditional">
+                                            <ContentTemplate>
                                                 <section id="field_naf" runat="server">
                                                     <div><span class="font-bold">Bằng số và Hình mặt (≥ 4 tuổi)/ <i class="text-primary">Numeric and Faces (≥ 4 years): </i></span><asp:Label runat="server" ID="lbl_paint_score_description" /></div>
                                                     <div runat="server" id="paint_score_code_wrapper">
@@ -1678,140 +1585,173 @@
                                                         </div>
                                                     </div>
                                                 </section>
-
+                                                <%--  --%>
                                                 <section runat="server" id="field_flacc">
                                                     <div><span class="font-bold">FLACC (2 tháng - < 4 tuổi) và bệnh nhi dưới 16 tuổi không nói được</span>/ <i class="text-primary">2 month to < 4 years old and non-verbal pediatric patient (patient < 16 years old)</i></div>
                                                     <table class="table-bordered">
-                                                            <tr>
-                                                                <td class="text-center" rowspan="2"><span class="font-bold">Các Hạng Mục</span> <br /><i class="text-primary">Category</i></td>
-                                                                <td class="text-center" colspan="3"><span class="font-bold">ĐIỂM HÀNH VI</span>/ <i class="text-primary">BEHAVIOUR SCORE</i></td>
-                                                                <td class="text-center" rowspan="2" style="width: 80px"><span class="font-bold">Điểm</span><br /><i class="text-primary">Score</i></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td style="width: 25%" class="text-center font-bold">0</td>
-                                                                <td style="width: 25%" class="text-center font-bold">1</td>
-                                                                <td style="width: 25%" class="text-center font-bold">2</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">Mặt <br /><i class="text-primary">Face</i></td>
-                                                                <td>Không biểu hiện cụ thể hoặc đang mỉm cười. <br /><i class="text-primary">No particular expression or is smiling</i></td>
-                                                                <td>Thỉnh thoảng nhăn mặt hoặc cau mày, thường xuyên run cằm, nghiến răng <br /><i class="text-primary">Occasional grimace or frown, frequent to constant quivering of chin, clenched jaw</i></td>
-                                                                <td>Lãnh đạm, thời ơ <br /><i class="text-primary">Withdrawn, disinterested</i></td>
-                                                                <td class="text-center">
-                                                                    <asp:Label runat="server" ID="lbl_flacc_face" />
-                                                                    <div runat="server" id="flacc_face_wrapper">
-                                                                        <input id="txt_flacc_face"
-                                                                               data-type="number"
-                                                                               style="width: 120px"
-                                                                               runat="server"
-                                                                               class="form-control text-right" />
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">Chân <br /><i class="text-primary">Legs</i></td>
-                                                                <td>Vị trí bình thường hoặc Yên tĩnh và thư giãn. <br /><i class="text-primary">Normal position or Is calm and relaxed</i></td>
-                                                                <td>Khó chịu, bồn chồn, căng thẳng <br /><i class="text-primary">Uneasy, restless, tense</i></td>
-                                                                <td>Đá chân hoặc bất động hoặc bồn chồn. <br /><i class="text-primary">Kicking or legs drawn up immobility or extremely restless</i></td>
-                                                                <td class="text-center">
-                                                                    <asp:Label runat="server" ID="lbl_flacc_legs" />
-                                                                    <div runat="server" id="flacc_legs_wrapper">
-                                                                        <input id="txt_flacc_legs"
-                                                                               data-type="number"
-                                                                               style="width: 120px"
-                                                                               runat="server"
-                                                                               class="form-control text-right" />
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">Cử động <br /><i class="text-primary">Activity</i></td>
-                                                                <td>
-                                                                    Nằm im/ <i class="text-primary">Lying quietly</i><br />
-                                                                    Tư thế bình thường/ <i class="text-primary">Normal position</i><br />
-                                                                    Đi lại dễ dàng/ <i class="text-primary">Moves easily</i>
-                                                                </td>
-                                                                <td>Loay hoay, luôn thay đổi tư thế/ <i class="text-primary">Squirming, Shifting back and forth</i></td>
-                                                                <td>Khóc thét hoặc hét lên khi bị chạm vào hoặc cử động/ <i class="text-primary">High-pitched cry or scream when touched or moved</i></td>
-                                                                <td class="text-center">
-                                                                    <asp:Label runat="server" ID="lbl_flacc_activity" />
-                                                                    <div runat="server" id="flacc_activity_wrapper">
-                                                                        <input id="txt_flacc_activity"
-                                                                               data-type="number"
-                                                                               style="width: 120px"
-                                                                               runat="server"
-                                                                               class="form-control text-right" />
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">Khóc <br />
-                                                                <i class="text-primary">Cry</i></td>
-                                                                <td>
-                                                                    Không khóc/ <i class="text-primary">No cry</i><br />
-                                                                    Thức hoặc ngủ <br /><i class="text-primary">Awake or sleep</i>
-                                                                </td>
-                                                                <td>
-                                                                    Rên ri, thỉnh thoảng than phiền <br />
-                                                                    <i class="text-primary">Moans and whimpers, occasional complaint</i>
-                                                                </td>
-                                                                <td>
-                                                                    Khóc liên tục, hét lên, nức nở, than phiền thường xuyên <br />
-                                                                    <i class="text-primary">Crying steadily, screams, sobs, frequent complaint</i>
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    <asp:Label runat="server" ID="lbl_flacc_cry" />
-                                                                    <div runat="server" id="flacc_cry_wrapper">
-                                                                        <input id="txt_flacc_cry"
-                                                                               data-type="number"
-                                                                               style="width: 120px"
-                                                                               runat="server"
-                                                                               class="form-control text-right" />
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">
-                                                                    Xoa dịu <br />
-                                                                    <span class="text-primary">An ủi</span> <br />
-                                                                    <i class="text-primary">Consolability</i>
-                                                                </td>
-                                                                <td>
-                                                                    Hài lòng, thử giãn <br />
-                                                                    <i class="text-primary">Contents, relaxed</i>
-                                                                </td>
-                                                                <td>
-                                                                    An ủi bằng thỉnh thoảng chạm, ôm hoặc nói chuyện, dễ bị phân tâm. <br />
-                                                                    <i class="text-primary">Reassured by occasional touching, hugging or talking to, easily distracted</i>
-                                                                </td>
-                                                                <td>
-                                                                    Không an ủi được <br />
-                                                                    <i class="text-primary">Inconsolable</i>
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    <asp:Label runat="server" ID="lbl_flacc_consolability" />
-                                                                    <div runat="server" id="flacc_consolability_wrapper">
-                                                                        <input id="txt_flacc_consolability"
-                                                                               data-type="number"
-                                                                               style="width: 120px"
-                                                                               runat="server"
-                                                                               class="form-control text-right" />
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-right" colspan="4"><span class="font-bold">Tổng điểm</span>/ <i class="text-primary">Total score</i></td>
-                                                                <td class="text-center">
-                                                                    <asp:Label runat="server" ID="flacc_total_score" />
-                                                                </td>
-                                                            </tr>
-                                                        </table>
+                                                        <tr>
+                                                            <td class="text-center" rowspan="2"><span class="font-bold">Các Hạng Mục</span> <br /><i class="text-primary">Category</i></td>
+                                                            <td class="text-center" colspan="3"><span class="font-bold">ĐIỂM HÀNH VI</span>/ <i class="text-primary">BEHAVIOUR SCORE</i></td>
+                                                            <td class="text-center" rowspan="2" style="width: 80px"><span class="font-bold">Điểm</span><br /><i class="text-primary">Score</i></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 25%" class="text-center font-bold">0</td>
+                                                            <td style="width: 25%" class="text-center font-bold">1</td>
+                                                            <td style="width: 25%" class="text-center font-bold">2</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">Mặt <br /><i class="text-primary">Face</i></td>
+                                                            <td>Không biểu hiện cụ thể hoặc đang mỉm cười. <br /><i class="text-primary">No particular expression or is smiling</i></td>
+                                                            <td>Thỉnh thoảng nhăn mặt hoặc cau mày, thường xuyên run cằm, nghiến răng <br /><i class="text-primary">Occasional grimace or frown, frequent to constant quivering of chin, clenched jaw</i></td>
+                                                            <td>Lãnh đạm, thời ơ <br /><i class="text-primary">Withdrawn, disinterested</i></td>
+                                                            <td class="text-center">
+                                                                <asp:Label runat="server" ID="lbl_flacc_face" />
+                                                                <div runat="server" id="flacc_face_wrapper">
+                                                                    <asp:UpdatePanel ID="up_flacc_face" runat="server" UpdateMode="Conditional">
+                                                                        <ContentTemplate>
+                                                                            <input id="txt_flacc_face"
+                                                                                    data-type="number"
+                                                                                    style="width: 120px"
+                                                                                    runat="server"
+                                                                                    onchange="__doPostBack('flacc_change', '')"
+                                                                                    class="form-control text-right" />
+                                                                        </ContentTemplate>
+                                                                    </asp:UpdatePanel>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">Chân <br /><i class="text-primary">Legs</i></td>
+                                                            <td>Vị trí bình thường hoặc Yên tĩnh và thư giãn. <br /><i class="text-primary">Normal position or Is calm and relaxed</i></td>
+                                                            <td>Khó chịu, bồn chồn, căng thẳng <br /><i class="text-primary">Uneasy, restless, tense</i></td>
+                                                            <td>Đá chân hoặc bất động hoặc bồn chồn. <br /><i class="text-primary">Kicking or legs drawn up immobility or extremely restless</i></td>
+                                                            <td class="text-center">
+                                                                <asp:Label runat="server" ID="lbl_flacc_legs" />
+                                                                <div runat="server" id="flacc_legs_wrapper">
+                                                                    <asp:UpdatePanel ID="up_flacc_legs" runat="server" UpdateMode="Conditional">
+                                                                        <ContentTemplate>
+                                                                            <input id="txt_flacc_legs"
+                                                                                    data-type="number"
+                                                                                    style="width: 120px"
+                                                                                    runat="server"
+                                                                                    onchange="__doPostBack('flacc_change', '')"
+                                                                                    class="form-control text-right" />
+                                                                        </ContentTemplate>
+                                                                    </asp:UpdatePanel>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">Cử động <br /><i class="text-primary">Activity</i></td>
+                                                            <td>
+                                                                Nằm im/ <i class="text-primary">Lying quietly</i><br />
+                                                                Tư thế bình thường/ <i class="text-primary">Normal position</i><br />
+                                                                Đi lại dễ dàng/ <i class="text-primary">Moves easily</i>
+                                                            </td>
+                                                            <td>Loay hoay, luôn thay đổi tư thế/ <i class="text-primary">Squirming, Shifting back and forth</i></td>
+                                                            <td>Khóc thét hoặc hét lên khi bị chạm vào hoặc cử động/ <i class="text-primary">High-pitched cry or scream when touched or moved</i></td>
+                                                            <td class="text-center">
+                                                                <asp:Label runat="server" ID="lbl_flacc_activity" />
+                                                                <div runat="server" id="flacc_activity_wrapper">
+                                                                    <asp:UpdatePanel ID="up_flacc_activity" runat="server" UpdateMode="Conditional">
+                                                                        <ContentTemplate>
+                                                                            <input id="txt_flacc_activity"
+                                                                                    data-type="number"
+                                                                                    style="width: 120px"
+                                                                                    runat="server"
+                                                                                    onchange="__doPostBack('flacc_change', '')"
+                                                                                    class="form-control text-right" />
+                                                                        </ContentTemplate>
+                                                                    </asp:UpdatePanel>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">Khóc <br />
+                                                            <i class="text-primary">Cry</i></td>
+                                                            <td>
+                                                                Không khóc/ <i class="text-primary">No cry</i><br />
+                                                                Thức hoặc ngủ <br /><i class="text-primary">Awake or sleep</i>
+                                                            </td>
+                                                            <td>
+                                                                Rên ri, thỉnh thoảng than phiền <br />
+                                                                <i class="text-primary">Moans and whimpers, occasional complaint</i>
+                                                            </td>
+                                                            <td>
+                                                                Khóc liên tục, hét lên, nức nở, than phiền thường xuyên <br />
+                                                                <i class="text-primary">Crying steadily, screams, sobs, frequent complaint</i>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <asp:Label runat="server" ID="lbl_flacc_cry" />
+                                                                <div runat="server" id="flacc_cry_wrapper">
+                                                                    <asp:UpdatePanel ID="up_flacc_cry" runat="server" UpdateMode="Conditional">
+                                                                        <ContentTemplate>
+                                                                            <input id="txt_flacc_cry"
+                                                                                    data-type="number"
+                                                                                    style="width: 120px"
+                                                                                    runat="server"
+                                                                                    onchange="__doPostBack('flacc_change', '')"
+                                                                                    class="form-control text-right" />
+                                                                        </ContentTemplate>
+                                                                    </asp:UpdatePanel>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                Xoa dịu <br />
+                                                                <span class="text-primary">An ủi</span> <br />
+                                                                <i class="text-primary">Consolability</i>
+                                                            </td>
+                                                            <td>
+                                                                Hài lòng, thử giãn <br />
+                                                                <i class="text-primary">Contents, relaxed</i>
+                                                            </td>
+                                                            <td>
+                                                                An ủi bằng thỉnh thoảng chạm, ôm hoặc nói chuyện, dễ bị phân tâm. <br />
+                                                                <i class="text-primary">Reassured by occasional touching, hugging or talking to, easily distracted</i>
+                                                            </td>
+                                                            <td>
+                                                                Không an ủi được <br />
+                                                                <i class="text-primary">Inconsolable</i>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <asp:Label runat="server" ID="lbl_flacc_consolability" />
+                                                                <div runat="server" id="flacc_consolability_wrapper">
+                                                                    <asp:UpdatePanel ID="up_flacc_consolability" runat="server" UpdateMode="Conditional">
+                                                                        <ContentTemplate>
+                                                                            <input id="txt_flacc_consolability"
+                                                                                    data-type="number"
+                                                                                    style="width: 120px"
+                                                                                    runat="server"
+                                                                                    onchange="__doPostBack('flacc_change', '')"
+                                                                                    class="form-control text-right" />
+                                                                        </ContentTemplate>
+                                                                    </asp:UpdatePanel>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="text-right" colspan="4"><span class="font-bold">Tổng điểm</span>/ <i class="text-primary">Total score</i></td>
+                                                            <td class="text-center">
+                                                                <asp:UpdatePanel ID="up_flacc_total_score" runat="server" UpdateMode="Conditional">
+                                                                    <ContentTemplate>
+                                                                        <asp:Label runat="server" ID="d_flacc_total_score" />
+                                                                    </ContentTemplate>
+                                                                </asp:UpdatePanel>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                     <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 6px">
                                                         <div><span class="font-bold">Kết luận</span>/ <i class="text-primary">Conclude</i>:</div>
-                                                        <asp:TextBox Style="background-color: #fff;color: #000;" runat="server" ID="d_flacc_conclude" Enabled="false" CssClass="border-0" ></asp:TextBox>
+                                                        <asp:UpdatePanel ID="up_flacc_conclude" runat="server" UpdateMode="Conditional">
+                                                            <ContentTemplate>
+                                                                <asp:Label runat="server" ID="d_flacc_conclude" />
+                                                            </ContentTemplate>
+                                                        </asp:UpdatePanel>
                                                     </div>
                                                 </section>
-                                                
+                                                <%--  --%>
                                                 <section runat="server" id="field_npass">
                                                     <div><span class="font-bold">Thang điểm đánh giá đau và an thần cho trẻ sơ sinh và nhũ nhi (< 2 tháng tuổi)</span>/ <i class="text-primary">Neonatal and infantile pain, sedation scale (N-PASS) (<2 months)</i></div>
                                                     <table class="mb-2 table-bordered">
@@ -1873,11 +1813,16 @@
                                                             <td class="text-center">
                                                                 <asp:Label runat="server" ID="lbl_npass_crying" />
                                                                 <div runat="server" id="npass_crying_wrapper">
-                                                                    <input id="txt_npass_crying"
-                                                                           data-type="number"
-                                                                           style="width: 120px"
-                                                                           runat="server"
-                                                                           class="form-control text-right" />
+                                                                    <asp:UpdatePanel ID="up_npass_crying" runat="server" UpdateMode="Conditional">
+                                                                        <ContentTemplate>
+                                                                            <input id="txt_npass_crying"
+                                                                                    data-type="number"
+                                                                                    style="width: 120px"
+                                                                                    runat="server"
+                                                                                    onchange="__doPostBack('npass_change', '')"
+                                                                                    class="form-control text-right" />
+                                                                        </ContentTemplate>
+                                                                    </asp:UpdatePanel>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -1909,11 +1854,16 @@
                                                             <td class="text-center">
                                                                 <asp:Label runat="server" ID="lbl_npass_behavior" />
                                                                 <div runat="server" id="npass_behavior_wrapper">
-                                                                    <input id="txt_npass_behavior"
-                                                                               data-type="number"
-                                                                               style="width: 120px"
-                                                                               runat="server"
-                                                                               class="form-control text-right" />
+                                                                    <asp:UpdatePanel ID="up_npass_behavior" runat="server" UpdateMode="Conditional">
+                                                                        <ContentTemplate>
+                                                                            <input id="txt_npass_behavior"
+                                                                                        data-type="number"
+                                                                                        style="width: 120px"
+                                                                                        runat="server"
+                                                                                        onchange="__doPostBack('npass_change', '')"
+                                                                                        class="form-control text-right" />
+                                                                        </ContentTemplate>
+                                                                    </asp:UpdatePanel>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -1945,11 +1895,16 @@
                                                             <td class="text-center">
                                                                 <asp:Label runat="server" ID="lbl_npass_facial_expression" />
                                                                 <div runat="server" id="npass_facial_expression_wrapper">
-                                                                    <input id="txt_npass_facial_expression"
-                                                                               data-type="number"
-                                                                               style="width: 120px"
-                                                                               runat="server"
-                                                                               class="form-control text-right" />
+                                                                    <asp:UpdatePanel ID="up_npass_facial_expression" runat="server" UpdateMode="Conditional">
+                                                                        <ContentTemplate>
+                                                                            <input id="txt_npass_facial_expression"
+                                                                                        data-type="number"
+                                                                                        style="width: 120px"
+                                                                                        runat="server"
+                                                                                        onchange="__doPostBack('npass_change', '')"
+                                                                                        class="form-control text-right" />
+                                                                        </ContentTemplate>
+                                                                    </asp:UpdatePanel>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -1981,11 +1936,16 @@
                                                             <td class="text-center">
                                                                 <asp:Label runat="server" ID="lbl_npass_extremities_tone" />
                                                                 <div runat="server" id="npass_extremities_tone_wrapper">
-                                                                    <input id="txt_npass_extremities_tone"
-                                                                               data-type="number"
-                                                                               style="width: 120px"
-                                                                               runat="server"
-                                                                               class="form-control text-right" />
+                                                                    <asp:UpdatePanel ID="up_npass_extremities_tone" runat="server" UpdateMode="Conditional">
+                                                                        <ContentTemplate>
+                                                                            <input id="txt_npass_extremities_tone"
+                                                                                        data-type="number"
+                                                                                        style="width: 120px"
+                                                                                        runat="server"
+                                                                                        onchange="__doPostBack('npass_change', '')"
+                                                                                        class="form-control text-right" />
+                                                                        </ContentTemplate>
+                                                                    </asp:UpdatePanel>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -2017,11 +1977,16 @@
                                                             <td class="text-center">
                                                                 <asp:Label runat="server" ID="lbl_npass_vital_signs" />
                                                                 <div runat="server" id="txt_npass_vital_signs_wrapper">
-                                                                    <input id="txt_npass_vital_signs"
-                                                                               data-type="number"
-                                                                               style="width: 120px"
-                                                                               runat="server"
-                                                                               class="form-control text-right" />
+                                                                    <asp:UpdatePanel ID="up_npass_vital_signs" runat="server" UpdateMode="Conditional">
+                                                                        <ContentTemplate>
+                                                                            <input id="txt_npass_vital_signs"
+                                                                                        data-type="number"
+                                                                                        style="width: 120px"
+                                                                                        runat="server"
+                                                                                        onchange="__doPostBack('npass_change', '')"
+                                                                                        class="form-control text-right" />
+                                                                        </ContentTemplate>
+                                                                    </asp:UpdatePanel>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -2035,11 +2000,16 @@
                                                             <td class="text-center">
                                                                 <asp:Label runat="server" ID="lbl_npass_gestation_3" />
                                                                 <div runat="server" id="npass_gestation_3_wrapper">
-                                                                    <input id="txt_npass_gestation_3"
-                                                                               data-type="number"
-                                                                               style="width: 120px"
-                                                                               runat="server"
-                                                                               class="form-control text-right" />
+                                                                    <asp:UpdatePanel ID="up_npass_gestation_3" runat="server" UpdateMode="Conditional">
+                                                                        <ContentTemplate>
+                                                                            <input id="txt_npass_gestation_3"
+                                                                                        data-type="number"
+                                                                                        style="width: 120px"
+                                                                                        runat="server"
+                                                                                        onchange="__doPostBack('npass_change', '')"
+                                                                                        class="form-control text-right" />
+                                                                        </ContentTemplate>
+                                                                    </asp:UpdatePanel>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -2048,11 +2018,16 @@
                                                             <td class="text-center">
                                                                 <asp:Label runat="server" ID="lbl_npass_gestation_2" />
                                                                 <div runat="server" id="npass_gestation_2_wrapper">
-                                                                    <input id="txt_npass_gestation_2"
-                                                                               data-type="number"
-                                                                               style="width: 120px"
-                                                                               runat="server"
-                                                                               class="form-control text-right" />
+                                                                    <asp:UpdatePanel ID="up_npass_gestation_2" runat="server" UpdateMode="Conditional">
+                                                                        <ContentTemplate>
+                                                                            <input id="txt_npass_gestation_2"
+                                                                                        data-type="number"
+                                                                                        style="width: 120px"
+                                                                                        runat="server"
+                                                                                        onchange="__doPostBack('npass_change', '')"
+                                                                                        class="form-control text-right" />
+                                                                        </ContentTemplate>
+                                                                    </asp:UpdatePanel>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -2061,26 +2036,40 @@
                                                             <td class="text-center">
                                                                 <asp:Label runat="server" ID="lbl_npass_gestation_1" />
                                                                 <div runat="server" id="npass_gestation_1_wrapper">
-                                                                    <input id="txt_npass_gestation_1"
-                                                                               data-type="number"
-                                                                               style="width: 120px"
-                                                                               runat="server"
-                                                                               class="form-control text-right" />
+                                                                    <asp:UpdatePanel ID="up_npass_gestation_1" runat="server" UpdateMode="Conditional">
+                                                                        <ContentTemplate>
+                                                                            <input id="txt_npass_gestation_1"
+                                                                                        data-type="number"
+                                                                                        style="width: 120px"
+                                                                                        runat="server"
+                                                                                        onchange="__doPostBack('npass_change', '')"
+                                                                                        class="form-control text-right" />
+                                                                        </ContentTemplate>
+                                                                    </asp:UpdatePanel>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="text-right" colspan="6"><span class="font-bold">Tổng điểm</span>/ <i class="text-primary">Total score</i></td>
                                                             <td class="text-center">
-                                                                <asp:Label runat="server" ID="lbl_npass_total_score" ></asp:Label>
+                                                                <asp:UpdatePanel ID="up_npass_total_score" runat="server" UpdateMode="Conditional">
+                                                                    <ContentTemplate>
+                                                                        <asp:Label runat="server" ID="d_npass_total_score" ></asp:Label>
+                                                                    </ContentTemplate>
+                                                                </asp:UpdatePanel>
                                                             </td>
                                                         </tr>
                                                     </table>
                                                     <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 6px">
                                                         <div><span class="font-bold">Kết luận</span>/ <i class="text-primary">Conclude</i>:</div>
-                                                        <asp:TextBox Style="background-color: #fff;color: #000;" runat="server" ID="d_npass_conclude" Enabled="false" CssClass="border-0" ></asp:TextBox>
+                                                        <asp:UpdatePanel ID="up_npass_conclude" runat="server" UpdateMode="Conditional">
+                                                            <ContentTemplate>
+                                                                <asp:Label runat="server" ID="d_npass_conclude" />
+                                                            </ContentTemplate>
+                                                        </asp:UpdatePanel>
                                                     </div>
                                                 </section>
+                                                <%--  --%>
                                                 <section runat="server" id="field_nonv">
                                                     <div>Đối với người bệnh không nói được điều dưỡng đánh giá riêng trên biểu mẫu (AIH-FRM-021 - Thang điểm theo dõi phản ứng đau của người bệnh không nói được)</div>
                                                     <div><i class="text-primary">Nurses use a separated form to evaluate non-verbal patients (AIH-FRM-021 - Behavioural pain scale for non-verbal adult patient)</i></div>
@@ -2556,7 +2545,7 @@
                                             </ContentTemplate>
                                         </asp:UpdatePanel>
                                         <div><span class="font-bold">8. Sàng lọc dinh dưỡng</span>/ <i class="text-primary">Nutrition screening:</i></div>
-                                        <asp:UpdatePanel ID="UpdatePanel5" runat="server" UpdateMode="Conditional">
+                                        <asp:UpdatePanel ID="up_nutrition_screening" runat="server" UpdateMode="Conditional">
                                             <ContentTemplate>
                                                 <table class="table-bordered w-100 mb-2">
                                                     <tr>
@@ -2564,7 +2553,7 @@
                                                             <div>BMI = Chỉ số khối cơ thể / BMI</div>
                                                         </td>
                                                         <td class="text-center" style="width: 120px">
-                                                            <asp:Label runat="server" ID="lbl_bmi"></asp:Label>
+                                                            <asp:Label runat="server" ID="d_bmi"></asp:Label>
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -2576,7 +2565,7 @@
                                                         <td class="text-center">
                                                             <asp:Label runat="server" ID="lbl_previous_weight"/>
                                                             <div class="form-group d-inline-block" runat="server" id="previous_weight_wrapper">
-                                                                <input onchange="__doPostBack('txt_previous_weight_TextChanged', false)" 
+                                                                <input onchange="__doPostBack('previous_weight_changed', false)" 
                                                                        id="txt_previous_weight"
                                                                        data-type="number"
                                                                        style="width: 160px"
@@ -2591,7 +2580,7 @@
                                                             <div><i class="text-primary">% weight change</i></div>
                                                         </td>
                                                         <td class="text-center">
-                                                            <asp:Label runat="server" ID="lbl_weight_change"></asp:Label>
+                                                            <asp:Label runat="server" ID="d_weight_change"></asp:Label>
                                                         </td>
                                                     </tr>
                                                 </table>
@@ -2890,7 +2879,7 @@
                                                     </table>
 
                                                     <asp:HiddenField runat="server" ID="ns_food_intake_score" />
-                                        
+                                                    
                                                     <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 6px">
                                                         <div><span class="font-bold">Kết luận </span>/ <i class="text-primary">Conclude</i>:</div>
                                                         <div><asp:Label runat="server" ID="d_nutritional_conclude" /></div>
@@ -3098,7 +3087,6 @@
     <script src="../scripts/sweetalert.min.js"></script>
     <script src="../scripts/alertify.js"></script>
     <script>
-
         function openRadWindow() {
             var radwindow = $find('<%=RadWindow1.ClientID %>');
             radwindow.show();
@@ -3121,68 +3109,6 @@
         function beforeAsyncPostBack() {
             var curtime = new Date();
         }
-        //flacc
-        var txt_flacc_face;
-        var txt_flacc_legs;
-        var txt_flacc_activity;
-        var txt_flacc_cry;
-        var txt_flacc_consolability;
-        var flacc_total_score;
-        var d_flacc_conclude;
-        //npass
-        var txt_npass_crying;
-        var txt_npass_behavior;
-        var txt_npass_facial_expression;
-        var txt_npass_extremities_tone;
-        var txt_npass_vital_signs;
-        var txt_npass_gestation_3;
-        var txt_npass_gestation_2;
-        var txt_npass_gestation_1;
-        var lbl_npass_total_score;
-        var d_npass_conclude;
-
-        function flacc_load_element() {
-            txt_flacc_face = document.getElementById("<%=txt_flacc_face.ClientID%>");
-            txt_flacc_legs = document.getElementById("<%=txt_flacc_legs.ClientID%>");
-            txt_flacc_activity = document.getElementById("<%=txt_flacc_activity.ClientID%>");
-            txt_flacc_cry = document.getElementById("<%=txt_flacc_cry.ClientID%>");
-            txt_flacc_consolability = document.getElementById("<%=txt_flacc_consolability.ClientID%>");
-            flacc_total_score = document.getElementById("<%=flacc_total_score.ClientID%>");
-            d_flacc_conclude = document.getElementById("<%=d_flacc_conclude.ClientID%>");
-
-            if (txt_flacc_face) txt_flacc_face.addEventListener("blur", CalculateFLACC);
-            if (txt_flacc_legs) txt_flacc_legs.addEventListener("blur", CalculateFLACC);
-            if (txt_flacc_activity) txt_flacc_activity.addEventListener("blur", CalculateFLACC);
-            if (txt_flacc_cry) txt_flacc_cry.addEventListener("blur", CalculateFLACC);
-            if (txt_flacc_consolability) txt_flacc_consolability.addEventListener("blur", CalculateFLACC);
-        };
-
-
-        function npass_load_element() {
-            //npass
-            txt_npass_crying = document.getElementById("<%=txt_npass_crying.ClientID%>");
-            txt_npass_behavior = document.getElementById("<%=txt_npass_behavior.ClientID%>");
-            txt_npass_facial_expression = document.getElementById("<%=txt_npass_facial_expression.ClientID%>");
-            txt_npass_extremities_tone = document.getElementById("<%=txt_npass_extremities_tone.ClientID%>");
-            txt_npass_vital_signs = document.getElementById("<%=txt_npass_vital_signs.ClientID%>");
-            txt_npass_gestation_3 = document.getElementById("<%=txt_npass_gestation_3.ClientID%>");
-            txt_npass_gestation_2 = document.getElementById("<%=txt_npass_gestation_2.ClientID%>");
-            txt_npass_gestation_1 = document.getElementById("<%=txt_npass_gestation_1.ClientID%>");
-            lbl_npass_total_score = document.getElementById("<%=lbl_npass_total_score.ClientID%>");
-            d_npass_conclude = document.getElementById("<%=d_npass_conclude.ClientID%>");
-
-            if (txt_npass_crying) txt_npass_crying.addEventListener("blur", CalculateNPASS);
-            if (txt_npass_behavior) txt_npass_behavior.addEventListener("blur", CalculateNPASS);
-            if (txt_npass_facial_expression) txt_npass_facial_expression.addEventListener("blur", CalculateNPASS);
-            if (txt_npass_extremities_tone) txt_npass_extremities_tone.addEventListener("blur", CalculateNPASS);
-            if (txt_npass_vital_signs) txt_npass_vital_signs.addEventListener("blur", CalculateNPASS);
-            if (txt_npass_gestation_3) txt_npass_gestation_3.addEventListener("blur", CalculateNPASS);
-            if (txt_npass_gestation_2) txt_npass_gestation_2.addEventListener("blur", CalculateNPASS);
-            if (txt_npass_gestation_1) txt_npass_gestation_1.addEventListener("blur", CalculateNPASS);
-        };
-
-        flacc_load_element();
-        npass_load_element();
 
         function afterAsyncPostBack() {
             formGroup_init();
@@ -3195,82 +3121,6 @@
                 if (document.getElementById("alertify-logs"))
                 document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
             }, 1000);
-
-            flacc_load_element();
-
-            npass_load_element();
-            
-        }
-
-        function CalculateFLACC() {
-            var total =
-                (isNaN(parseInt(txt_flacc_face.value)) ? 0 : parseInt(txt_flacc_face.value))
-                + (isNaN(parseInt(txt_flacc_legs.value)) ? 0 : parseInt(txt_flacc_legs.value))
-                + (isNaN(parseInt(txt_flacc_activity.value)) ? 0 : parseInt(txt_flacc_activity.value))
-                + (isNaN(parseInt(txt_flacc_cry.value)) ? 0 : parseInt(txt_flacc_cry.value))
-                + (isNaN(parseInt(txt_flacc_consolability.value)) ? 0 : parseInt(txt_flacc_consolability.value))
-
-            console.log(total);
-
-            flacc_total_score.innerText = total;
-
-            let flacc_conclude_str;
-
-            switch (total) {
-                case 0:
-                    flacc_conclude_str = "Không đau/ No pain (0)";
-                    break;
-                case 1:
-                case 2:
-                case 3:
-                    flacc_conclude_str = "Đau nhẹ/ Slight pain (1 - 3)";
-                    break;
-                case 4:
-                case 5:
-                case 6:
-                    flacc_conclude_str = "Đau vừa/ Considerable pain (4 - 6)";
-                    break;
-                case 7:
-                case 8:
-                case 9:
-                case 10:
-                    flacc_conclude_str = "Rất đau/ Worst pain (7 - 10)";
-                    break;
-            }
-
-            d_flacc_conclude.value = flacc_conclude_str;
-        }
-
-        function CalculateNPASS() {
-            var total =
-                (isNaN(parseInt(txt_npass_crying.value)) ? 0 : parseInt(txt_npass_crying.value))
-                + (isNaN(parseInt(txt_npass_behavior.value)) ? 0 : parseInt(txt_npass_behavior.value))
-                + (isNaN(parseInt(txt_npass_facial_expression.value)) ? 0 : parseInt(txt_npass_facial_expression.value))
-                + (isNaN(parseInt(txt_npass_extremities_tone.value)) ? 0 : parseInt(txt_npass_extremities_tone.value))
-                + (isNaN(parseInt(txt_npass_vital_signs.value)) ? 0 : parseInt(txt_npass_vital_signs.value))
-                + (isNaN(parseInt(txt_npass_gestation_3.value)) ? 0 : parseInt(txt_npass_gestation_3.value))
-                + (isNaN(parseInt(txt_npass_gestation_2.value)) ? 0 : parseInt(txt_npass_gestation_2.value))
-                + (isNaN(parseInt(txt_npass_gestation_1.value)) ? 0 : parseInt(txt_npass_gestation_1.value))
-
-            lbl_npass_total_score.innerText = total;
-
-            let conclude;
-
-            switch (total) {
-                case 0:
-                    conclude = "Không đau/ No pain";
-                    break;
-                case 1:
-                case 2:
-                case 3:
-                    conclude = "Đau nhẹ/ Slight pain (1 - 3)";
-                    break;
-                default:
-                    conclude = "Đau vừa - nhiều/ Considerable - Serious pain";
-                    break;
-            }
-
-            d_npass_conclude.value = conclude;
         }
 
         function btnPrint_Click() {
@@ -3285,43 +3135,10 @@
             //    div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px;");
             //    div.setAttribute("data-page", "Page " + i + " of " + total);
             //    document.getElementById("print_content").append(div);
-
             //}
 
             setTimeout(() => { printContent.setAttribute("style", "display: none"); }, 100);
             window.print();
-        }
-
-        <%--loadprintform();
-
-        function loadprintform() {
-            
-            let chief_complaint = document.getElementById("<%= lbl_chief_complaint.ClientID %>").innerText;
-            let allergy = document.getElementById("<%= lbl_allergy.ClientID %>").innerText;
-            let mental_status = document.getElementById("<%= lbl_mental_status.ClientID %>").innerText;
-            
-            document.getElementById("prt_chief_complaint").innerText = "1. Lý do đến khám/ Chief complaint: " + chief_complaint;
-            document.getElementById("prt_allergy").innerText = "2. Dị ứng/ Allergy: " + allergy;
-            document.getElementById("prt_mental_status").innerHTML = "3. Trạng thái tinh thần/ Mental status: <br>Đáp ứng phù hợp/ Appropriate response: " + allergy;
-            
-        }--%>
-
-        function CalculateBmi1() {
-            let vs_height = document.getElementById('txt_vs_height');
-            let vs_weight = document.getElementById('txt_vs_weight');
-            let vs_bmi = document.getElementById('txt_vs_bmi');
-            let lbl_vs_bmi = document.getElementById('lbl_bmi');
-
-            if (vs_height.value == "" || vs_weight.value == "") {
-                vs_bmi.value = "";
-                setbmiStr("");
-            }
-            else {
-                vs_bmi.value = (vs_weight.value / ((vs_height.value / 100) * (vs_height.value / 100))).toFixed(1);
-                setbmiStr(vs_bmi.value);
-            };
-
-            lbl_vs_bmi.innerText = vs_bmi.value;
         }
     </script>
 </body>

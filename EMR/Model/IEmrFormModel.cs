@@ -46,7 +46,6 @@ namespace EMR.Model
         /// </summary>
         string signature_name { get; }
         void Initial();
-        void SetDefaultValue();
         void PostBackEventHandler();
         void BindingDataForm(bool state);
         void BindingDataFormView();

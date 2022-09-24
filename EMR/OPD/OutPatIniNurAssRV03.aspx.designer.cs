@@ -1518,85 +1518,13 @@ namespace EMR
         protected global::System.Web.UI.WebControls.ValidationSummary valSum;
 
         /// <summary>
-        /// lblFirstName control.
+        /// uc_patientInfo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFirstName;
-
-        /// <summary>
-        /// lblLastName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblLastName;
-
-        /// <summary>
-        /// lblGender control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblGender;
-
-        /// <summary>
-        /// lblDoB control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDoB;
-
-        /// <summary>
-        /// lblContactPerson control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblContactPerson;
-
-        /// <summary>
-        /// lblRelationship control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblRelationship;
-
-        /// <summary>
-        /// lblPatientAddress control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPatientAddress;
-
-        /// <summary>
-        /// lblVisitCode control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblVisitCode;
-
-        /// <summary>
-        /// lblVisitDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblVisitDate;
+        protected global::EMR.UserControls.UserControlPatientInfo uc_patientInfo;
 
         /// <summary>
         /// currentLog control.
@@ -2130,15 +2058,6 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_injectious_risk_false;
 
         /// <summary>
-        /// UpdatePanel3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel3;
-
-        /// <summary>
         /// pain_assessment_scale_wrapper control.
         /// </summary>
         /// <remarks>
@@ -2146,6 +2065,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl pain_assessment_scale_wrapper;
+
+        /// <summary>
+        /// UpdatePanel3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel3;
 
         /// <summary>
         /// rad_naf_true control.
@@ -2157,6 +2085,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_naf_true;
 
         /// <summary>
+        /// UpdatePanel11 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel11;
+
+        /// <summary>
         /// rad_flacc_true control.
         /// </summary>
         /// <remarks>
@@ -2164,6 +2101,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_flacc_true;
+
+        /// <summary>
+        /// UpdatePanel13 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel13;
 
         /// <summary>
         /// rad_npass_true control.
@@ -2175,6 +2121,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_npass_true;
 
         /// <summary>
+        /// UpdatePanel14 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel14;
+
+        /// <summary>
         /// rad_nonv_true control.
         /// </summary>
         /// <remarks>
@@ -2182,6 +2137,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_nonv_true;
+
+        /// <summary>
+        /// UpdatePanel18 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel18;
 
         /// <summary>
         /// field_naf control.
@@ -2292,6 +2256,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl flacc_face_wrapper;
 
         /// <summary>
+        /// up_flacc_face control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel up_flacc_face;
+
+        /// <summary>
         /// txt_flacc_face control.
         /// </summary>
         /// <remarks>
@@ -2317,6 +2290,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl flacc_legs_wrapper;
+
+        /// <summary>
+        /// up_flacc_legs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel up_flacc_legs;
 
         /// <summary>
         /// txt_flacc_legs control.
@@ -2346,6 +2328,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl flacc_activity_wrapper;
 
         /// <summary>
+        /// up_flacc_activity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel up_flacc_activity;
+
+        /// <summary>
         /// txt_flacc_activity control.
         /// </summary>
         /// <remarks>
@@ -2371,6 +2362,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl flacc_cry_wrapper;
+
+        /// <summary>
+        /// up_flacc_cry control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel up_flacc_cry;
 
         /// <summary>
         /// txt_flacc_cry control.
@@ -2400,6 +2400,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl flacc_consolability_wrapper;
 
         /// <summary>
+        /// up_flacc_consolability control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel up_flacc_consolability;
+
+        /// <summary>
         /// txt_flacc_consolability control.
         /// </summary>
         /// <remarks>
@@ -2409,13 +2418,31 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_flacc_consolability;
 
         /// <summary>
-        /// flacc_total_score control.
+        /// up_flacc_total_score control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label flacc_total_score;
+        protected global::System.Web.UI.UpdatePanel up_flacc_total_score;
+
+        /// <summary>
+        /// d_flacc_total_score control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label d_flacc_total_score;
+
+        /// <summary>
+        /// up_flacc_conclude control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel up_flacc_conclude;
 
         /// <summary>
         /// d_flacc_conclude control.
@@ -2424,7 +2451,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox d_flacc_conclude;
+        protected global::System.Web.UI.WebControls.Label d_flacc_conclude;
 
         /// <summary>
         /// field_npass control.
@@ -2454,6 +2481,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl npass_crying_wrapper;
 
         /// <summary>
+        /// up_npass_crying control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel up_npass_crying;
+
+        /// <summary>
         /// txt_npass_crying control.
         /// </summary>
         /// <remarks>
@@ -2479,6 +2515,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl npass_behavior_wrapper;
+
+        /// <summary>
+        /// up_npass_behavior control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel up_npass_behavior;
 
         /// <summary>
         /// txt_npass_behavior control.
@@ -2508,6 +2553,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl npass_facial_expression_wrapper;
 
         /// <summary>
+        /// up_npass_facial_expression control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel up_npass_facial_expression;
+
+        /// <summary>
         /// txt_npass_facial_expression control.
         /// </summary>
         /// <remarks>
@@ -2533,6 +2587,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl npass_extremities_tone_wrapper;
+
+        /// <summary>
+        /// up_npass_extremities_tone control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel up_npass_extremities_tone;
 
         /// <summary>
         /// txt_npass_extremities_tone control.
@@ -2562,6 +2625,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl txt_npass_vital_signs_wrapper;
 
         /// <summary>
+        /// up_npass_vital_signs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel up_npass_vital_signs;
+
+        /// <summary>
         /// txt_npass_vital_signs control.
         /// </summary>
         /// <remarks>
@@ -2587,6 +2659,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl npass_gestation_3_wrapper;
+
+        /// <summary>
+        /// up_npass_gestation_3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel up_npass_gestation_3;
 
         /// <summary>
         /// txt_npass_gestation_3 control.
@@ -2616,6 +2697,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl npass_gestation_2_wrapper;
 
         /// <summary>
+        /// up_npass_gestation_2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel up_npass_gestation_2;
+
+        /// <summary>
         /// txt_npass_gestation_2 control.
         /// </summary>
         /// <remarks>
@@ -2643,6 +2733,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl npass_gestation_1_wrapper;
 
         /// <summary>
+        /// up_npass_gestation_1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel up_npass_gestation_1;
+
+        /// <summary>
         /// txt_npass_gestation_1 control.
         /// </summary>
         /// <remarks>
@@ -2652,13 +2751,31 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_npass_gestation_1;
 
         /// <summary>
-        /// lbl_npass_total_score control.
+        /// up_npass_total_score control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_npass_total_score;
+        protected global::System.Web.UI.UpdatePanel up_npass_total_score;
+
+        /// <summary>
+        /// d_npass_total_score control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label d_npass_total_score;
+
+        /// <summary>
+        /// up_npass_conclude control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel up_npass_conclude;
 
         /// <summary>
         /// d_npass_conclude control.
@@ -2667,7 +2784,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox d_npass_conclude;
+        protected global::System.Web.UI.WebControls.Label d_npass_conclude;
 
         /// <summary>
         /// field_nonv control.
@@ -3372,22 +3489,22 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cb_intervention_pfr;
 
         /// <summary>
-        /// UpdatePanel5 control.
+        /// up_nutrition_screening control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel5;
+        protected global::System.Web.UI.UpdatePanel up_nutrition_screening;
 
         /// <summary>
-        /// lbl_bmi control.
+        /// d_bmi control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_bmi;
+        protected global::System.Web.UI.WebControls.Label d_bmi;
 
         /// <summary>
         /// lbl_previous_weight control.
@@ -3417,13 +3534,13 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputText txt_previous_weight;
 
         /// <summary>
-        /// lbl_weight_change control.
+        /// d_weight_change control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_weight_change;
+        protected global::System.Web.UI.WebControls.Label d_weight_change;
 
         /// <summary>
         /// UpdatePanel4 control.
@@ -4017,7 +4134,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        ///protected global::System.Web.UI.WebControls.LinkButton btnDelete;
+        /// protected global::System.Web.UI.WebControls.LinkButton btnDelete;
 
         /// <summary>
         /// PopupShowDelay control.
