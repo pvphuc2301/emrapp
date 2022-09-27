@@ -7244,7 +7244,7 @@ applicable for children and pregnant</span>)
                                                 <label class="control-label mb-1 mr-2">Ngày giờ/ <span class="text-primary">Date & Time:</span></label>
                                                 <asp:Label runat="server" ID="lbl_assess_date_time"></asp:Label>
                                                 <div class="form-group d-inline-block" runat="server" id="assess_date_time_wrapper">
-                                                    <telerik:RadDateTimePicker runat="server" ID="dtpk_assess_date_time" Width="200px" />
+                                                    <telerik:RadDateTimePicker runat="server" ID="dtpk_assess_date_time" Width="200px" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
                                                     <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator1" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="dtpk_assess_date_time" ErrorMessage="field is required"
                                                         ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>--%>
                                                 </div>

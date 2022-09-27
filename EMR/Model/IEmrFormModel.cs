@@ -45,12 +45,5 @@ namespace EMR.Model
         /// <para>Description: Chữ ký</para>
         /// </summary>
         string signature_name { get; }
-        void Initial();
-        void PostBackEventHandler();
-        void BindingDataForm(bool state);
-        void BindingDataFormView();
-        void BindingDataFormEdit();
-        void BindingDataFormPrint();
-        void UpdateModel();
     }
 }

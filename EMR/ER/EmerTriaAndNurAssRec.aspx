@@ -878,7 +878,7 @@
                                                     </label>
                                                     <asp:Label runat="server" ID="lbl_triage_time"></asp:Label>
                                                     <div runat="server" id="triage_time_wrapper">
-                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_triage_time" Width="200px" />
+                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_triage_time" Width="200px" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
                                                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="dtpk_triage_time" ErrorMessage="Triage Date Time is required"
                                         ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                                     </div>
@@ -1460,7 +1460,7 @@
                                                     <label class="control-label">Thời điểm đánh giá/ <span class="text-primary">Time of assessment:</span></label>
                                                     <asp:Label runat="server" ID="lbl_time_of_assessment"/>
                                                     <div runat="server" id="time_of_assessment_wrapper" class="form-group w-n">
-                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_time_of_assessment" Width="200px" />
+                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_time_of_assessment" Width="200px" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
                                                     </div>
                                                 </div>
 
@@ -1726,7 +1726,7 @@
                                                                 <td>
                                                                     <asp:Label runat="server" ID="lbl_blood_glucose_date_time"></asp:Label>
                                                                     <div class="form-group" runat="server" id="blood_glucose_date_time_wrapper">
-                                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_blood_glucose_date_time" Width="200px" />
+                                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_blood_glucose_date_time" Width="200px" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
                                                                     </div>
                                                                 </td>
                                                                 <td>
@@ -1748,7 +1748,7 @@
                                                                 <td>
                                                                     <asp:Label runat="server" ID="lbl_ecg_date_time"></asp:Label>
                                                                     <div class="form-group" runat="server" id="ecg_date_time_wrapper">
-                                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_ecg_date_time" Width="200px" />
+                                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_ecg_date_time" Width="200px" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
                                                                     </div>
                                                                 </td>
                                                                 <td>
@@ -1770,7 +1770,7 @@
                                                                 <td>
                                                                     <asp:Label runat="server" ID="lbl_urine_cath_date_time"></asp:Label>
                                                                     <div runat="server" id="urine_cath_date_time_wrapper">
-                                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_urine_cath_date_time" Width="200px" />
+                                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_urine_cath_date_time" Width="200px" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
                                                                     </div>
                                                                 </td>
                                                                 <td>
@@ -1792,7 +1792,7 @@
                                                                 <td>
                                                                     <asp:Label runat="server" ID="lbl_splint_cast_dressing_date_time"></asp:Label>
                                                                     <div runat="server" id="splint_cast_dressing_date_time_wrapper">
-                                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_splint_cast_dressing_date_time" Width="200px" />
+                                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_splint_cast_dressing_date_time" Width="200px" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
                                                                     </div>
                                                                 </td>
                                                                 <td>
@@ -1815,7 +1815,7 @@
                                                                 <td data-label="Thời gian/ Time">
                                                                     <asp:Label runat="server" ID="lbl_procedure_other_date_time"></asp:Label>
                                                                     <div runat="server" id="procedure_other_date_time_wrapper">
-                                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_procedure_other_date_time" Width="200px" />
+                                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_procedure_other_date_time" Width="200px" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
                                                                     </div>
                                                                 </td>
                                                                 <td>
@@ -2068,7 +2068,7 @@
                                                 <div class="col-md-12">
                                                     <asp:Label runat="server" ID="lbl_discharge_date_time"></asp:Label>
                                                     <div runat="server" id="discharge_date_time_wrapper" class="d-inline-block mr-2">
-                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_discharge_date_time" Width="200px" />
+                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_discharge_date_time" Width="200px" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
                                                     </div>
                                                     <div class="d-inline-block mr-2">
                                                         <label class="control-label d-inline-block mr-2">bởi BS/ <span class="text-primary">by Dr.</span></label>
@@ -2101,7 +2101,7 @@
                                                 <div class="col-md-12">
                                                     <asp:Label runat="server" ID="lbl_admited_date_time"></asp:Label>
                                                     <div class="d-inline-block mr-2" runat="server" id="admited_date_time_wrapper">
-                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_admited_date_time" Width="200px" />
+                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_admited_date_time" Width="200px" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
                                                     </div>
 
                                                     <asp:Label runat="server" ID="lbl_admited_by"></asp:Label>
@@ -2144,7 +2144,7 @@
                                                 <div class="col-md-12">
                                                     <asp:Label runat="server" ID="lbl_noticed_time"></asp:Label>
                                                     <div class="d-inline-block mr-2" runat="server" id="noticed_time_wrapper">
-                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_noticed_time" Width="200px" />
+                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_noticed_time" Width="200px" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
                                                     </div>
                                                 </div>
                                             </fieldset>
@@ -2162,7 +2162,7 @@
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <div class="form-group">
-                                                                                <telerik:RadDateTimePicker ID="date_time" SelectedDate='<%# GetDateTime(Eval("date_time")) %>' Width="200px" runat="server" />
+                                                                                <telerik:RadDateTimePicker ID="date_time" SelectedDate='<%# GetDateTime(Eval("date_time")) %>' Width="200px" runat="server" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
                                                                             </div>
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>

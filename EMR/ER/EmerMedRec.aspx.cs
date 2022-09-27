@@ -1,147 +1,19 @@
-﻿using EMR.Model;
-using EMR.UserControls;
+﻿using EMR.Classes;
+using EMR.Model;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 
 namespace EMR.ER
 {
-    public partial class EmerMedRec : System.Web.UI.Page, IEmrFormModel<EmrViewModel>
+    public partial class EmerMedRec : EmrPage, IEmrFormModel<EmrViewModel>
     {
-        //EmergencyMedicalRecord emr;
-        public EmrViewModel FormModel { get; set; }
-        public PatientInfo patientInfo;
-        public PatientVisitInfo patientVisitInfo;
-
-        public string UserId { get => (string)Session["UserID"]; }
-
-        public string EmpId { get => (string)Session["emp_id"]; }
-
-        public string GroupAccess { get => (string)Session["group_access"]; }
-
-        public string AccessAuthorize { get => (string)Session["access_authorize"]; }
-
-        public string PAGE_URL { get => $"/ER/EmerMedRec.aspx?loc={Location}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}"; }
-        public string PAGE_URL_DEFAULT { get => $"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={Location}"; }
-
-        public string Location { get => (string)Session["company_code"]; }
-
-        public string LocationChanged { get => (string)Session["const_company_code"]; }
-
-        public bool IsLocationChanged { get => Location != LocationChanged; }
-
-        public string varDocID { get => Request.QueryString["docId"]; }
-
-        public string varDocIdLog { get => Request.QueryString["docIdLog"]; }
-
-        public bool IsViewLog { get => varDocIdLog != null; }
-
-        public string varModelID { get => Request.QueryString["modelId"]; }
-
-        public string varPVID { get => Request.QueryString["pvId"]; }
-
-        public string varVPID { get => Request.QueryString["vpId"]; }
-
-        public string varPID { get => Request.QueryString["pId"]; }
-
-        public string SignatureDate { get; set; }
-
-        public string SignatureName { get; set; }
-
-        public EmrViewModel Model => throw new NotImplementedException();
-
-        public string signature_date => throw new NotImplementedException();
-
-        public string signature_name => throw new NotImplementedException();
-
-        //public string PAGE_URL { get; set; }
-        //public string loc { get; set; }
-        //public string locChanged { get; set; }
-        //public string varDocID { get; set; }
-        //public string varDocIdLog { get; set; }
-        //public string varModelID { get; set; }
-        //public string varPVID { get; set; }
-        //public string varVPID { get; set; }
-        //public string varPID { get; set; }
-
-        //public string SignatureDate { get; set; }
-        //public string SignatureName { get; set; }
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            Session["UserID"] = "hisuser";
-            Session["emp_id"] = "8b38e1b7-374c-409a-8b2b-d8556683d4ce";
-
-            Session["group_access"] = "DOC";
-            Session["access_authorize"] = "FullAccess";
-            Session["company_code"] = "AIH";
-            Session["const_company_code"] = "AIH";
-
-            if (varPID == null) Response.Redirect($"/ER/EmerMedRec.aspx?loc={Location}&pId=d5cda8bb-c776-11e8-b0cd-d89ef37d43fa&vpId=900000488&pvid=b3b72f37-2a6a-11ec-9add-94e23c4418b1&modelId=3efd8bc6-d254-4a53-a253-ff823d7ee5a4&docId=6ecccc57-498b-4e4c-928b-70c0ca96bb82");
-
-            if (!WebHelpers.CheckSession(this)) return;
-
-            //varDocID = Request.QueryString["docId"];
-            //varDocIdLog = Request.QueryString["docIdLog"];
-            //varModelID = Request.QueryString["modelId"];
-            //varPVID = Request.QueryString["pvId"];
-            //varVPID = Request.QueryString["vpId"];
-            //varPID = Request.QueryString["pId"];
-            //loc = (string)Session["company_code"];
-            //locChanged = (string)Session["const_company_code"];
-
-            //string rawurl =  Request.RawUrl;
-
-            //PAGE_URL = Request.RawUrl;
-
-            //string url = Request.RawUrl.Split('.')[0];
-            //var urlArr = url.Split('/');
-            //url = urlArr[urlArr.Length - 1];
-
-            //PAGE_URL = $"/ER/{url}.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
-
-            if (!IsPostBack)
-            {
-                Initial();
-                SetDefaultValue();
-            }
-
-            PostBackEventHandler();
-        }
-        public void SetDefaultValue()
-        {
-            if (RadGrid1.Items.Count <= 1)
-            {
-                rad_infected_with_covid_false.Checked = true;
-            }
-        }
-        public void PostBackEventHandler()
-        {
-            switch (Request["__EVENTTARGET"])
-            {
-                case "hos_req_change":
-                    hos_req_change(Request["__EVENTARGUMENT"]);
-                    break;
-                case "emergency_surgery_change":
-                    emergency_surgery_change(Request["__EVENTARGUMENT"]);
-                    break;
-                case "transfer_hospital_change":
-                    transfer_hospital_change(Request["__EVENTARGUMENT"]);
-                    break;
-                case "specialist_opinion_change":
-                    specialist_opinion_change(Request["__EVENTARGUMENT"]);
-                    break;
-                case "discharge_change":
-                    discharge_change(Request["__EVENTARGUMENT"]);
-                    break;
-            }
-        }
+        public override string form_url { get; set; } = "ER/EmerMedRec";
+        public EmrViewModel Model { get; set; }
         private void discharge_change(string value = "")
         {
             if (value == "clear")
@@ -224,1091 +96,14 @@ namespace EMR.ER
             WebHelpers.VisibleControl(rad_hospitalisation_required_True.Checked, hos_req_field);
         }
 
-        #region Binding Data
-        public void BindingDataForm(EmrViewModel EmrViewModel, bool state)
-        {
-            if (state)
-            {
-                BindingDataFormEdit(EmrViewModel);
-            }
-            else
-            {
-                BindingDataFormView(EmrViewModel);
-            }
-        }
-        public void BindingDataFormEdit(EmrViewModel EmrViewModel)
-        {
-            try
-            {
-                cb_received_1_dose_true.Disabled
-                    = cb_received_2_dose_true.Disabled
-                    = cb_received_additional_true.Disabled
-                    = cb_not_yet_vaccinations_true.Disabled
-                    = false;
-
-                txt_amend_reason.Text = "";
-                WebHelpers.BindDateTimePicker(dtpk_evaluation_time, EmrViewModel.evaluation_time);
-                txt_chief_complaint.Value = EmrViewModel.chief_complaint;
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_chief_complaint_code_" + EmrViewModel.chief_complaint_code);
-                txt_history_of_present.Value = EmrViewModel.history_of_present;
-                txt_past_med_his_meds.Value = EmrViewModel.past_med_his_meds;
-                txt_past_med_his_surs.Value = EmrViewModel.past_med_his_surs;
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_habits_", WebHelpers.GetJSONToDataTable(EmrViewModel.habits), "cde");
-                txt_habits_other.Value = EmrViewModel.habits_other;
-                txt_home_medications.Value = EmrViewModel.home_medications;
-                txt_allergies.Value = EmrViewModel.allergies;
-                txt_relevant_family_history.Value = EmrViewModel.relevant_family_history;
-                txt_finding.Value = EmrViewModel.finding;
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_required_code_" + EmrViewModel.required_code, "false");
-                txt_required_text.Value = EmrViewModel.required_text;
-                txt_investigations_results.Value = EmrViewModel.investigations_results;
-                txt_initial_diagnosis.Value = EmrViewModel.initial_diagnosis;
-                txt_diferential_diagnosis.Value = EmrViewModel.diferential_diagnosis;
-                txt_associated_conditions.Value = EmrViewModel.associated_conditions;
-                txt_comfirmed_diagnosis.Value = EmrViewModel.comfirmed_diagnosis;
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_specialist_opinion_" + EmrViewModel.specialist_opinion, "false");
-                specialist_opinion_change(Convert.ToString(EmrViewModel.specialist_opinion));
-                txt_name_of_specialist.Value = EmrViewModel.name_of_specialist;
-                WebHelpers.BindDateTimePicker(dtpk_time_contaced, EmrViewModel.time_contaced);
-                WebHelpers.BindDateTimePicker(dtpk_time_provided, EmrViewModel.time_provided);
-                txt_spec_opinion_summarised.Value = EmrViewModel.spec_opinion_summarised;
-
-                ViewState[grid_Treatment.ID] = WebHelpers.BindingDataGridView(grid_Treatment, WebHelpers.GetJSONToDataTable(EmrViewModel.treatment), EmergencyMedicalRecord.Treatment, btn_grid_Treatment_add);
-
-                ViewState[grid_progress_note.ID] = WebHelpers.BindingDataGridView(grid_progress_note, WebHelpers.GetJSONToDataTable(EmrViewModel.progress_note), EmergencyMedicalRecord.ProgressNote, btn_grid_progress_note_add);
-
-                txt_conclusions.Value = EmrViewModel.conclusions;
-                //2
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_discharge_" + EmrViewModel.discharge, "false");
-                discharge_change(Convert.ToString(EmrViewModel.discharge));
-                txt_prescription.Value = EmrViewModel.prescription;
-                txt_specify_care_instructions.Value = EmrViewModel.specify_care_instructions;
-                WebHelpers.BindDateTimePicker(dtpk_discharge_time, EmrViewModel.discharge_time);
-                //3
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_referred_to_OPD_" + EmrViewModel.referred_to_OPD, "false");
-                txt_referred_to_OPD_text.Value = EmrViewModel.referred_to_OPD_text;
-                //4
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_hospitalisation_required_" + EmrViewModel.hospitalisation_required, "false");
-                txt_reason.Value = EmrViewModel.reason;
-                txt_ward.Value = EmrViewModel.ward;
-                WebHelpers.BindDateTimePicker(dtpk_time_of_leaving_emergency, EmrViewModel.time_of_leaving_emergency);
-                hos_req_change(Convert.ToString(EmrViewModel.hospitalisation_required));
-                //5
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_emergency_surgery_" + EmrViewModel.emergency_surgery, "false");
-                txt_pre_operative_diagnosis.Value = EmrViewModel.pre_operative_diagnosis;
-                txt_brief_summary.Value = EmrViewModel.brief_summary;
-                WebHelpers.BindDateTimePicker(dtpk_time_of_leaving_emer_e, EmrViewModel.time_of_leaving_emer_e);
-                emergency_surgery_change(Convert.ToString(EmrViewModel.emergency_surgery));
-                //6
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_transfer_hospital_" + EmrViewModel.transfer_hospital, "false");
-                txt_reason_for_transfer.Value = EmrViewModel.reason_for_transfer;
-                txt_status_before_transfer.Value = EmrViewModel.status_before_transfer;
-                WebHelpers.BindDateTimePicker(dtpk_time_of_leaving_emer_a, EmrViewModel.time_of_leaving_emer_a);
-                transfer_hospital_change(Convert.ToString(EmrViewModel.transfer_hospital));
-                //
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_patient_discharge_", WebHelpers.GetJSONToDataTable(EmrViewModel.patient_discharge), "cde");
-                txt_patient_discharge.Value = EmrViewModel.txt_patient_discharge;
-                //
-                txt_icd_10.Value = EmrViewModel.icd_10;
-
-                //Update V2.0
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_" + EmrViewModel.infected_with_covid);
-
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + EmrViewModel.received_1_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + EmrViewModel.received_2_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + EmrViewModel.received_additional);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + EmrViewModel.not_yet_vaccinations);
-
-                txt_other_vaccinations.Value = EmrViewModel.other_vaccinations;
-
-                //DataObj.Value = JsonConvert.SerializeObject(EmrViewModel);
-                Session["docid"] = EmrViewModel.document_id;
-                WebHelpers.AddScriptFormEdit(Page, EmrViewModel, EmpId, Location);
-            }
-            catch (Exception ex)
-            {
-                WebHelpers.SendError(Page, ex);
-            }
-        }
-        public void BindingDataFormView(EmrViewModel EmrViewModel)
-        {
-            try
-            {
-
-                cb_received_1_dose_true.Disabled
-                    = cb_received_2_dose_true.Disabled
-                    = cb_received_additional_true.Disabled
-                    = cb_not_yet_vaccinations_true.Disabled
-                    = true;
-
-                lbl_infected_with_covid.Text = WebHelpers.FormatString(WebHelpers.GetBool(EmrViewModel.infected_with_covid));
-
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + EmrViewModel.received_1_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + EmrViewModel.received_2_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + EmrViewModel.received_additional);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + EmrViewModel.not_yet_vaccinations);
-
-                lbl_other_vaccinations.Text = EmrViewModel.other_vaccinations;
-
-                lbl_evaluation_time.Text = WebHelpers.FormatDateTime(EmrViewModel.evaluation_time, "dd-MMM-yyyy HH:mm");
-                lbl_chief_complaint.Text = WebHelpers.FormatString(EmrViewModel.chief_complaint);
-                lbl_chief_complaint_desc.Text = WebHelpers.FormatString(EmrViewModel.chief_complaint_desc);
-                lbl_history_of_present.Text = WebHelpers.FormatString(EmrViewModel.history_of_present);
-                lbl_past_med_his_meds.Text = WebHelpers.FormatString(EmrViewModel.past_med_his_meds);
-                lbl_past_med_his_surs.Text = WebHelpers.FormatString(EmrViewModel.past_med_his_surs);
-
-                lbl_habits.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(EmrViewModel.habits));
-                lbl_habits.Text += WebHelpers.FormatString(EmrViewModel.habits_other);
-                lbl_home_medications.Text = WebHelpers.FormatString(EmrViewModel.home_medications);
-                lbl_allergies.Text = WebHelpers.FormatString(EmrViewModel.allergies);
-                lbl_relevant_family_history.Text = WebHelpers.FormatString(EmrViewModel.relevant_family_history);
-
-                lbl_finding.Text = WebHelpers.FormatString(EmrViewModel.finding);
-                lbl_required_code.Text = WebHelpers.FormatString(WebHelpers.GetBool(EmrViewModel.required_code));
-                lbl_required_code.Text += WebHelpers.FormatString(EmrViewModel.required_text);
-                lbl_investigations_results.Text = WebHelpers.FormatString(EmrViewModel.investigations_results);
-                lbl_initial_diagnosis.Text = WebHelpers.FormatString(EmrViewModel.initial_diagnosis);
-                lbl_diferential_diagnosis.Text = WebHelpers.FormatString(EmrViewModel.diferential_diagnosis);
-                lbl_associated_conditions.Text = WebHelpers.FormatString(EmrViewModel.associated_conditions);
-                lbl_comfirmed_diagnosis.Text = WebHelpers.FormatString(EmrViewModel.comfirmed_diagnosis);
-                lbl_specialist_opinion.Text = WebHelpers.FormatString(WebHelpers.GetBool(EmrViewModel.specialist_opinion));
-
-                specialist_opinion_change(Convert.ToString(EmrViewModel.specialist_opinion));
-
-                lbl_name_of_specialist.Text = WebHelpers.FormatString(EmrViewModel.name_of_specialist);
-                lbl_time_contaced.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(EmrViewModel.time_contaced));
-                lbl_time_provided.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(EmrViewModel.time_provided));
-
-                lbl_spec_opinion_summarised.Text = WebHelpers.FormatString(EmrViewModel.spec_opinion_summarised);
-
-                WebHelpers.LoadDataGridView(grid_Treatment, WebHelpers.GetJSONToDataTable(EmrViewModel.treatment), Iina.SKIN_ANNO, btn_grid_Treatment_add);
-
-                WebHelpers.LoadDataGridView(grid_progress_note, WebHelpers.GetJSONToDataTable(EmrViewModel.progress_note), Iina.SKIN_ANNO, btn_grid_progress_note_add);
-
-                WebHelpers.VisibleControl(false, btn_grid_Treatment_add, btn_grid_progress_note_add);
-
-                lbl_conclusions.Text = WebHelpers.FormatString(EmrViewModel.conclusions);
-                lbl_discharge.Text = WebHelpers.FormatString(WebHelpers.GetBool(EmrViewModel.discharge));
-                lbl_prescription.Text = WebHelpers.FormatString(EmrViewModel.prescription);
-                lbl_specify_care_instructions.Text = WebHelpers.FormatString(EmrViewModel.specify_care_instructions);
-                lbl_discharge_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(EmrViewModel.discharge_time, "dd-MMM-yyyy HH:mm"));
-                lbl_referred_to_OPD.Text = WebHelpers.FormatString(WebHelpers.GetBool(EmrViewModel.referred_to_OPD, "Yes,specify/ Có, ghi rõ" + "<br/>" + WebHelpers.FormatString(EmrViewModel.referred_to_OPD_text)));
-
-                lbl_hospitalisation_required.Text = WebHelpers.FormatString(WebHelpers.GetBool(EmrViewModel.hospitalisation_required));
-                lbl_reason.Text = WebHelpers.FormatString(EmrViewModel.reason);
-                lbl_ward.Text = WebHelpers.FormatString(EmrViewModel.ward);
-                lbl_time_of_leaving_emergency.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(EmrViewModel.time_of_leaving_emergency, "dd-MMM-yyyy HH:mm"));
-                lbl_emergency_surgery.Text = WebHelpers.FormatString(WebHelpers.GetBool(EmrViewModel.emergency_surgery));
-                lbl_pre_operative_diagnosis.Text = WebHelpers.FormatString(EmrViewModel.pre_operative_diagnosis);
-                lbl_brief_summary.Text = WebHelpers.FormatString(EmrViewModel.brief_summary);
-                lbl_time_of_leaving_emer_e.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(EmrViewModel.time_of_leaving_emer_e, "dd-MMM-yyyy HH:mm"));
-
-                if (EmrViewModel.hospitalisation_required != null)
-                {
-                    rad_hospitalisation_required_True.Checked = EmrViewModel.hospitalisation_required;
-                }
-
-                discharge_change(Convert.ToString(EmrViewModel.discharge));
-
-                hos_req_change(Convert.ToString(EmrViewModel.hospitalisation_required));
-
-                if (EmrViewModel.emergency_surgery != null)
-                {
-                    rad_emergency_surgery_True.Checked = EmrViewModel.emergency_surgery;
-                }
-
-                emergency_surgery_change(Convert.ToString(EmrViewModel.emergency_surgery));
-
-                if (EmrViewModel.transfer_hospital != null)
-                {
-                    rad_transfer_hospital_True.Checked = EmrViewModel.transfer_hospital;
-                }
-
-                transfer_hospital_change(Convert.ToString(EmrViewModel.transfer_hospital));
-
-                lbl_transfer_hospital.Text = WebHelpers.FormatString(WebHelpers.GetBool(EmrViewModel.transfer_hospital));
-                lbl_reason_for_transfer.Text = WebHelpers.FormatString(EmrViewModel.reason_for_transfer);
-                lbl_status_before_transfer.Text = WebHelpers.FormatString(EmrViewModel.status_before_transfer);
-                lbl_time_of_leaving_emer_a.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(EmrViewModel.time_of_leaving_emer_a, "dd-MMM-yyyy HH:mm"));
-                lbl_patient_discharge.Text = WebHelpers.FormatString(WebHelpers.DisplayCheckBox(EmrViewModel.patient_discharge));
-                lbl_txt_patient_discharge.Text = WebHelpers.FormatString(EmrViewModel.txt_patient_discharge);
-                lbl_icd_10.Text = WebHelpers.FormatString(EmrViewModel.icd_10);
-
-            }
-            catch (Exception ex)
-            {
-                WebHelpers.SendError(Page, ex);
-            }
-
-        }
-        public void BindingDataFormPrint(EmrViewModel EmrViewModel)
-        {
-            #region
-            //try
-            //{
-            //    Patient patient = Patient.Instance();
-            //    div_pecialistopinion.Visible= div_discharge_field.Visible = div_hos_req_field .Visible= div_emr_sur_field.Visible= div_transfer_hos_field.Visible = false;
-
-            //    prt_fullname.Text = DataHelpers.patient.first_name_l + " " + DataHelpers.patient.last_name_l;
-            //    prt_dob.Text = WebHelpers.FormatDateTime(DataHelpers.patient.date_of_birth) + "| " + DataHelpers.patient.gender_l;
-            //    prt_vpid.Text = DataHelpers.patient.visible_patient_id;
-            //    prt_evaluation_time.Text = WebHelpers.FormatDateTime(emr.evaluation_time, "dd/MM/yyyy HH:mm tt");
-            //    //WebHelpers.FormatDateTime(emr.evaluation_time, "dd/MM/yyyy HH:mm tt");
-            //    WebHelpers.gen_BarCode(patient.visible_patient_id, BarCode);
-            //    prt_chief_complaint.Text = emr.chief_complaint;
-
-            //    if (emr.chief_complaint_code != null)
-            //    {
-            //        //((HtmlInputRadioButton)FindControl("rad_chief_complaint_code_" + emr.chief_complaint_code)).Checked = true;
-            //        if (emr.chief_complaint_code == "R")
-            //        {
-            //            lbl_chief_complaint_code_R.Text = "☒";
-            //            lbl_chief_complaint_code_E.Text = "❏";
-            //            lbl_chief_complaint_code_U.Text = "❏";
-            //            lbl_chief_complaint_code_L.Text = "❏";
-            //            lbl_chief_complaint_code_N.Text = "❏";
-
-            //        }
-            //        else if (emr.chief_complaint_code == "E")
-            //        {
-            //            lbl_chief_complaint_code_R.Text = "❏";
-            //            lbl_chief_complaint_code_E.Text = "☒";
-            //            lbl_chief_complaint_code_U.Text = "❏";
-            //            lbl_chief_complaint_code_L.Text = "❏";
-            //            lbl_chief_complaint_code_N.Text = "❏";
-
-            //        }
-            //        else if (emr.chief_complaint_code == "U")
-            //        {
-            //            lbl_chief_complaint_code_R.Text = "❏";
-            //            lbl_chief_complaint_code_E.Text = "❏";
-            //            lbl_chief_complaint_code_U.Text = "☒";
-            //            lbl_chief_complaint_code_L.Text = "❏";
-            //            lbl_chief_complaint_code_N.Text = "❏";
-
-            //        }
-            //        else if (emr.chief_complaint_code == "L")
-            //        {
-            //            lbl_chief_complaint_code_R.Text = "❏";
-            //            lbl_chief_complaint_code_E.Text = "❏";
-            //            lbl_chief_complaint_code_U.Text = "❏";
-            //            lbl_chief_complaint_code_L.Text = "☒";
-            //            lbl_chief_complaint_code_N.Text = "❏";
-
-            //        }
-            //        else if (emr.chief_complaint_code == "N")
-            //        {
-            //            lbl_chief_complaint_code_R.Text = "❏";
-            //            lbl_chief_complaint_code_E.Text = "❏";
-            //            lbl_chief_complaint_code_U.Text = "❏";
-            //            lbl_chief_complaint_code_L.Text = "❏";
-            //            lbl_chief_complaint_code_N.Text = "☒";
-
-            //        }
-            //    }
-            //    if (emr.chief_complaint_code == null || emr.chief_complaint_code=="")
-            //    {
-
-            //        lbl_chief_complaint_code_R.Text = "❏";
-            //        lbl_chief_complaint_code_E.Text = "❏";
-            //        lbl_chief_complaint_code_U.Text = "❏";
-            //        lbl_chief_complaint_code_L.Text = "❏";
-            //        lbl_chief_complaint_code_N.Text = "❏";
-            //    }
-
-            //    prt_history_of_present.Text = emr.history_of_present;
-            //    //Meds
-            //    prt_past_med_his_meds.Text = emr.past_med_his_meds;
-            //    //Surgical
-            //    prt_past_med_his_surs.Text = emr.past_med_his_surs;
-            //    string habits_temp = emr.habits;
-            //    if (habits_temp != null)
-            //    {
-            //        List<Habits_Temp> Habits_Temps = JsonConvert.DeserializeObject<List<Habits_Temp>>(habits_temp);
-            //        lbl_habits_A.Text = "❏";
-            //        lbl_habits_S.Text = "❏";
-            //        lbl_habits_D.Text = "❏";
-            //        foreach (Habits_Temp locAvpu in Habits_Temps)
-            //        {
-
-            //            string cde = locAvpu.cde;
-            //            if (cde != null)
-            //            {
-            //                if (cde == "A")
-            //                {
-            //                    lbl_habits_A.Text = "☒";
-            //                }
-            //                if (cde == "S")
-            //                {
-            //                    lbl_habits_S.Text = "☒";
-            //                }
-            //                if (cde == "D")
-            //                {
-            //                    lbl_habits_D.Text = "☒";
-            //                }
-            //            }
-
-            //        }
-            //    }
-            //    if (habits_temp == null && habits_temp == "")
-            //    {
-            //        lbl_habits_A.Text = "❏";
-            //        lbl_habits_S.Text = "❏";
-            //        lbl_habits_D.Text = "❏";
-            //    }
-
-            //    lbl_habits_other.Text = emr.habits_other;
-            //    prt_home_medications.Text = emr.home_medications;
-            //    prt_allergies.Text = emr.allergies;
-            //    prt_relevant_family_history.Text = emr.relevant_family_history;
-            //    prt_finding.Text = emr.finding;
-            //    if (emr.required_code != null)
-            //    {
-            //        ((HtmlInputRadioButton)FindControl("rad_required_code_" + emr.required_code)).Checked = true;
-            //        if (emr.required_code = true)
-            //        {
-            //            lbl_required_code_True.Text = "☒";
-            //            lbl_required_code_False.Text = "❏";
-            //        }
-            //        if (emr.required_code = false)
-            //        {
-            //            lbl_required_code_True.Text = "❏";
-            //            lbl_required_code_False.Text = "☒";
-            //        }
-            //    }
-            //    if (emr.required_code == null && emr.required_code == "")
-            //    {
-
-            //        lbl_required_code_True.Text = "❏";
-            //        lbl_required_code_False.Text = "❏";
-
-            //    }
-
-            //    lbl_required_text.Text = emr.required_text;
-            //    prt_investigations_results.Text = emr.investigations_results;
-            //    prt_initial_diagnosis.Text = emr.initial_diagnosis;
-            //    prt_diferential_diagnosis.Text = emr.diferential_diagnosis;
-            //    prt_associated_conditions.Text = emr.associated_conditions;
-            //    prt_comfirmed_diagnosis.Text = emr.comfirmed_diagnosis;
-            //    if (emr.specialist_opinion != null)
-            //    {
-            //        if (emr.specialist_opinion == true)
-            //        {
-            //            lbl_specialist_opinion_True.Text = "☒";
-            //            lbl_specialist_opinion_False.Text = "❏";
-            //            div_pecialistopinion.Visible = true;
-            //        }
-            //        if (emr.specialist_opinion == false)
-            //        {
-            //            lbl_specialist_opinion_True.Text = "❏";
-            //            lbl_specialist_opinion_False.Text = "☒";
-            //        }
-
-            //    }
-
-            //    if ( emr.specialist_opinion ==null && emr.specialist_opinion =="")
-            //    {
-            //        lbl_specialist_opinion_True.Text = "❏";
-            //        lbl_specialist_opinion_False.Text = "❏";
-            //    }
-
-            //    prt_name_of_specialist.Text = emr.name_of_specialist;
-            //    if (emr.time_contaced != null)
-            //    {
-            //        prt_time_contaced.Text = emr.time_contaced.ToString("dd/MM/yyyy HH:mm tt");
-            //    }
-            //    if (emr.time_provided != null)
-            //    {
-            //        prt_time_provided.Text = emr.time_provided.ToString("dd/MM/yyyy HH:mm tt");
-            //    }
-            //    prt_spec_opinion_summarised.Text = emr.spec_opinion_summarised;
-
-            //    string json_treatment = emr.treatment;
-            //    lbl_Treatment.DataSource = JsonConvert.DeserializeObject<DataTable>(json_treatment);
-            //    lbl_Treatment.DataBind();
-
-            //    string json_progress_note = emr.progress_note;
-            //    lbl_progress_note.DataSource = JsonConvert.DeserializeObject<DataTable>(json_progress_note);
-            //    lbl_progress_note.DataBind();
-
-            //    prt_conclusions.Text = emr.conclusions;
-            //    if (emr.discharge != null)
-            //    {
-            //        if (emr.discharge == true)
-            //        {
-            //            lbl_discharge_True.Text = "☒";
-            //            lbl_discharge_False.Text = "❏";
-            //            div_discharge_field.Visible = true;
-            //        }
-            //        if (emr.discharge == false)
-            //        {
-            //            lbl_discharge_True.Text = "❏";
-            //            lbl_discharge_False.Text = "☒";
-            //        }
-
-            //    }
-            //    if (emr.discharge == null)
-            //    {
-            //        lbl_discharge_True.Text = "❏";
-            //        lbl_discharge_False.Text = "❏";
-            //    }
-
-            //    prt_prescription.Text = emr.prescription;
-            //    prt_specify_care_instructions.Text = emr.specify_care_instructions;
-            //    if (emr.discharge_time != null)
-            //    {
-            //        prt_discharge_time.Text = WebHelpers.FormatDateTime(emr.discharge_time, "dd/MM/yyyy HH:mm tt");
-            //    }
-            //    if (emr.referred_to_OPD != null)
-            //    {
-            //        if (emr.referred_to_OPD == true)
-            //        {
-            //            lbl_referred_to_OPD_True.Text = "☒";
-            //            lbl_referred_to_OPD_False.Text = "❏";
-            //        }
-            //        if (emr.referred_to_OPD == false)
-            //        {
-            //            lbl_referred_to_OPD_True.Text = "❏";
-            //            lbl_referred_to_OPD_False.Text = "☒";
-            //        }
-            //    }
-            //    if (emr.referred_to_OPD == null)
-            //    {
-
-            //        lbl_referred_to_OPD_True.Text = "❏";
-            //        lbl_referred_to_OPD_False.Text = "❏";
-
-            //    }
-
-            //    lbl_referred_to_OPD_text.Text = emr.referred_to_OPD_text;
-            //    if (emr.hospitalisation_required != null)
-            //    {
-            //        ((HtmlInputRadioButton)FindControl("rad_hospitalisation_required_" + emr.hospitalisation_required)).Checked = true;
-            //        if (emr.hospitalisation_required == true)
-            //        {
-            //            lbl_hospitalisation_required_True.Text = "☒";
-            //            lbl_hospitalisation_required_False.Text = "❏";
-            //            div_hos_req_field.Visible = true;
-            //        }
-            //        if (emr.hospitalisation_required == false)
-            //        {
-            //            lbl_hospitalisation_required_True.Text = "❏";
-            //            lbl_hospitalisation_required_False.Text = "☒";
-            //        }
-            //    }
-            //    if (emr.hospitalisation_required == null && emr.hospitalisation_required == "")
-            //    {
-
-            //        lbl_hospitalisation_required_True.Text = "❏";
-            //        lbl_hospitalisation_required_False.Text = "❏";
-
-            //    }
-
-            //    prt_reason.Text = emr.reason;
-            //    prt_ward.Text = emr.ward;
-
-            //    if (emr.discharge_time != null)
-            //    {
-            //        prt_time_of_leaving_emergency.Text = WebHelpers.FormatDateTime(emr.time_of_leaving_emergency, "dd/MM/yyyy HH:mm tt");
-            //    }
-            //    if (emr.emergency_surgery != null)
-            //    {
-            //        ((HtmlInputRadioButton)FindControl("rad_emergency_surgery_" + emr.emergency_surgery)).Checked = true;
-            //        if (emr.emergency_surgery == true)
-            //        {
-            //            lbl_emergency_surgery_True.Text = "☒";
-            //            lbl_emergency_surgery_False.Text = "❏";
-            //            div_emr_sur_field.Visible = true;
-            //        }
-            //        if (emr.emergency_surgery == false)
-            //        {
-            //            lbl_emergency_surgery_True.Text = "❏";
-            //            lbl_emergency_surgery_False.Text = "☒";
-            //        }
-            //    }
-            //    if (emr.emergency_surgery == null)
-            //    {
-
-            //        lbl_emergency_surgery_True.Text = "❏";
-            //        lbl_emergency_surgery_False.Text = "❏";
-
-            //    }
-
-            //    lbl_preoperative_diagnosis.Text = emr.pre_operative_diagnosis;
-            //    prt_brief_summary.Text = emr.pre_operative_diagnosis;
-
-            //    if (emr.time_of_leaving_emer_e != null)
-            //    {
-            //        prt_time_of_leaving_emer_e.Text = WebHelpers.FormatDateTime(emr.time_of_leaving_emer_e, "dd/MM/yyyy HH:mm tt");
-            //    }
-            //    if (emr.transfer_hospital != null)
-            //    {
-            //        ((HtmlInputRadioButton)FindControl("rad_transfer_hospital_" + emr.transfer_hospital)).Checked = true;
-            //        if (emr.transfer_hospital == true)
-            //        {
-            //            lbl_transfer_hospital_True.Text = "☒";
-            //            lbl_transfer_hospital_False.Text = "❏";
-            //            div_transfer_hos_field.Visible = true;
-            //        }
-            //        if (emr.transfer_hospital == false)
-            //        {
-            //            lbl_transfer_hospital_True.Text = "❏";
-            //            lbl_transfer_hospital_False.Text = "☒";
-            //        }
-            //    }
-            //    if (emr.transfer_hospital == null)
-            //    {
-
-            //        lbl_transfer_hospital_True.Text = "❏";
-            //        lbl_transfer_hospital_False.Text = "❏";
-
-            //    }
-
-            //    prt_reason_for_transfer.Text = emr.reason_for_transfer;
-            //    prt_status_before_transfer.Text = emr.status_before_transfer;
-            //    if (emr.time_of_leaving_emer_a != null)
-            //    {
-            //        prt_time_of_leaving_emer_a.Text = WebHelpers.FormatDateTime(emr.time_of_leaving_emer_a, "dd/MM/yyyy HH:mm tt");
-            //    }
-            //    string patient_discharge_temp = emr.patient_discharge;
-            //    if (patient_discharge_temp != null && patient_discharge_temp != "")
-            //    {
-            //        List<PDT> patient_discharge_temps = JsonConvert.DeserializeObject<List<PDT>>(patient_discharge_temp);
-            //        lbl_patient_discharge_IMP.Text = "❏";
-            //        lbl_patient_discharge_UNC.Text = "❏";
-            //        lbl_patient_discharge_UNS.Text = "❏";
-            //        foreach (PDT PDTS in patient_discharge_temps)
-            //        {
-
-            //            string cde = PDTS.cde;
-            //            if (cde != null)
-            //            {
-            //                if (cde == "IMP")
-            //                {
-            //                    lbl_patient_discharge_IMP.Text = "☒";
-            //                }
-            //                if (cde == "UNC")
-            //                {
-            //                    lbl_patient_discharge_UNC.Text = "☒";
-            //                }
-            //                if (cde == "UNS")
-            //                {
-            //                    lbl_patient_discharge_UNS.Text = "☒";
-            //                }
-            //            }
-
-            //        }
-            //    }
-            //    if (patient_discharge_temp == null || patient_discharge_temp == "")
-            //    {
-            //        lbl_patient_discharge_IMP.Text = "❏";
-            //        lbl_patient_discharge_UNC.Text = "❏";
-            //        lbl_patient_discharge_UNS.Text = "❏";
-            //    }
-
-            //    txt_patient_discharge.Value = emr.txt_patient_discharge;
-            //    lbl_patient_discharge.Text = emr.txt_patient_discharge;
-            //    prt_patient_discharge.Text = emr.txt_patient_discharge;
-            //    prt_icd_10.Text = emr.icd_10;
-
-
-            //    lbl_date.Text = emr.created_date_time.ToString("dd");
-            //    lbl_month.Text = emr.created_date_time.ToString("MM");
-            //    lbl_year.Text = emr.created_date_time.ToString("yyyy");
-            //    lbl_created_name_l.Text = emr.created_name_l;
-            //}
-            //catch (Exception ex)
-            //{
-            //    WebHelpers.SendError(Page, ex);
-            //}
-            #endregion
-
-            try
-            {
-                patientInfo = new PatientInfo(varPID);
-
-                div_pecialistopinion.Visible = div_discharge_field.Visible = div_hos_req_field.Visible = div_emr_sur_field.Visible = div_transfer_hos_field.Visible = false;
-
-                div_pecialistopinion.Visible = div_discharge_field.Visible = div_hos_req_field.Visible = div_emr_sur_field.Visible = div_transfer_hos_field.Visible = false;
-                WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
-                prt_fullname.Text = patientInfo.FullName;
-                prt_dob.Text = WebHelpers.FormatDateTime(patientInfo.date_of_birth) + "| " + patientInfo.Gender;
-                prt_vpid.Text = patientInfo.visible_patient_id;
-                prt_evaluation_time.Text = WebHelpers.FormatDateTime(EmrViewModel.evaluation_time, "HH:mm, dd/MM/yyyy");
-                //WebHelpers.FormatDateTime(EmrViewModel.evaluation_time, "dd/MM/yyyy HH:mm tt");
-
-                prt_chief_complaint.Text = EmrViewModel.chief_complaint;
-                lbl_chief_complaint_code_R.Text = "❏";
-                lbl_chief_complaint_code_E.Text = "❏";
-                lbl_chief_complaint_code_U.Text = "❏";
-                lbl_chief_complaint_code_L.Text = "❏";
-                lbl_chief_complaint_code_N.Text = "❏";
-                if (EmrViewModel.chief_complaint_code != null)
-                {
-                    //((HtmlInputRadioButton)FindControl("rad_chief_complaint_code_" + EmrViewModel.chief_complaint_code)).Checked = true;
-                    if (EmrViewModel.chief_complaint_code == "R")
-                    {
-                        lbl_chief_complaint_code_R.Text = "☒";
-
-                    }
-                    else if (EmrViewModel.chief_complaint_code == "E")
-                    {
-                        lbl_chief_complaint_code_E.Text = "☒";
-
-                    }
-                    else if (EmrViewModel.chief_complaint_code == "U")
-                    {
-                        lbl_chief_complaint_code_U.Text = "☒";
-
-                    }
-                    else if (EmrViewModel.chief_complaint_code == "L")
-                    {
-                        lbl_chief_complaint_code_L.Text = "☒";
-
-                    }
-                    else if (EmrViewModel.chief_complaint_code == "N")
-                    {
-                        lbl_chief_complaint_code_N.Text = "☒";
-
-                    }
-                }
-
-                if (EmrViewModel.chief_complaint_code == null || EmrViewModel.chief_complaint_code == "")
-                {
-
-                    lbl_chief_complaint_code_R.Text = "❏";
-                    lbl_chief_complaint_code_E.Text = "❏";
-                    lbl_chief_complaint_code_U.Text = "❏";
-                    lbl_chief_complaint_code_L.Text = "❏";
-                    lbl_chief_complaint_code_N.Text = "❏";
-                }
-
-                prt_history_of_present.Text = EmrViewModel.history_of_present;
-                //Meds
-                prt_past_med_his_meds.Text = EmrViewModel.past_med_his_meds;
-                //Surgical
-                prt_past_med_his_surs.Text = EmrViewModel.past_med_his_surs;
-                string habits_temp = EmrViewModel.habits;
-                if (habits_temp != null)
-                {
-                    List<Habits_Temp> Habits_Temps = JsonConvert.DeserializeObject<List<Habits_Temp>>(habits_temp);
-
-                    foreach (Habits_Temp locAvpu in Habits_Temps)
-                    {
-                        string cde = locAvpu.cde;
-                        if (cde != null)
-                        {
-                            if (cde == "A")
-                            {
-                                lbl_habits_A.Text = "☒";
-                            }
-                            if (cde == "S")
-                            {
-                                lbl_habits_S.Text = "☒";
-                            }
-                            if (cde == "D")
-                            {
-                                lbl_habits_D.Text = "☒";
-                            }
-                        }
-                    }
-                }
-
-                if (habits_temp == null && habits_temp == "")
-                {
-                    lbl_habits_A.Text = "❏";
-                    lbl_habits_S.Text = "❏";
-                    lbl_habits_D.Text = "❏";
-                }
-
-                lbl_habits_other.Text = EmrViewModel.habits_other;
-                prt_home_medications.Text = EmrViewModel.home_medications;
-                prt_allergies.Text = EmrViewModel.allergies;
-                prt_relevant_family_history.Text = EmrViewModel.relevant_family_history;
-                prt_finding.Text = EmrViewModel.finding;
-
-                if (EmrViewModel.required_code != null)
-                {
-                    ((HtmlInputRadioButton)FindControl("rad_required_code_" + EmrViewModel.required_code)).Checked = true;
-                    if (EmrViewModel.required_code = true)
-                    {
-                        lbl_required_code_True.Text = "☒";
-                        lbl_required_code_False.Text = "❏";
-                    }
-                    if (EmrViewModel.required_code = false)
-                    {
-                        lbl_required_code_True.Text = "❏";
-                        lbl_required_code_False.Text = "☒";
-                    }
-                }
-                if (EmrViewModel.required_code == null && EmrViewModel.required_code == "")
-                {
-
-                    lbl_required_code_True.Text = "❏";
-                    lbl_required_code_False.Text = "❏";
-
-                }
-
-                lbl_required_text.Text = EmrViewModel.required_text;
-                prt_investigations_results.Text = EmrViewModel.investigations_results;
-                prt_initial_diagnosis.Text = EmrViewModel.initial_diagnosis;
-                prt_diferential_diagnosis.Text = EmrViewModel.diferential_diagnosis;
-                prt_associated_conditions.Text = EmrViewModel.associated_conditions;
-                prt_comfirmed_diagnosis.Text = EmrViewModel.comfirmed_diagnosis;
-                if (EmrViewModel.specialist_opinion != null)
-                {
-                    if (EmrViewModel.specialist_opinion == true)
-                    {
-                        lbl_specialist_opinion_True.Text = "☒";
-                        lbl_specialist_opinion_False.Text = "❏";
-                        div_pecialistopinion.Visible = true;
-                    }
-                    if (EmrViewModel.specialist_opinion == false)
-                    {
-                        lbl_specialist_opinion_True.Text = "❏";
-                        lbl_specialist_opinion_False.Text = "☒";
-                    }
-
-                }
-
-                if (EmrViewModel.specialist_opinion == null && EmrViewModel.specialist_opinion == "")
-                {
-                    lbl_specialist_opinion_True.Text = "❏";
-                    lbl_specialist_opinion_False.Text = "❏";
-                }
-
-                prt_name_of_specialist.Text = EmrViewModel.name_of_specialist;
-                if (EmrViewModel.time_contaced != null)
-                {
-                    prt_time_contaced.Text = EmrViewModel.time_contaced.ToString("HH:mm");
-                }
-                if (EmrViewModel.time_provided != null)
-                {
-                    prt_time_provided.Text = EmrViewModel.time_provided.ToString("HH:mm");
-                }
-                prt_spec_opinion_summarised.Text = EmrViewModel.spec_opinion_summarised;
-
-                DataTable treatment = WebHelpers.GetJSONToDataTable(EmrViewModel.treatment);
-
-                if (treatment != null)
-                {
-                    foreach (DataRow row in treatment.Rows)
-                    {
-                        HtmlTableRow tr = new HtmlTableRow();
-                        HtmlTableCell td;
-                        HtmlGenericControl p;
-                        //
-                        td = new HtmlTableCell();
-                        p = new HtmlGenericControl("lable") { InnerHtml = WebHelpers.FormatDateTime(Convert.ToString(row["time"]), "dd/MM/yyyy HH:mm tt") };
-                        td.Controls.Add(p);
-                        tr.Cells.Add(td);
-                        //
-                        td = new HtmlTableCell();
-                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["medication"]) };
-                        td.Controls.Add(p);
-                        tr.Cells.Add(td);
-                        //
-                        td = new HtmlTableCell();
-                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["dose"]) };
-                        td.Controls.Add(p);
-                        td.Align = "Center";
-                        tr.Cells.Add(td);
-                        //
-                        td = new HtmlTableCell();
-                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["route"]) };
-                        td.Controls.Add(p);
-                        td.Align = "Center";
-
-                        tr.Cells.Add(td);
-                        //
-                        td = new HtmlTableCell();
-                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["comment"]) };
-                        td.Controls.Add(p);
-                        tr.Cells.Add(td);
-
-                        prt_treatment.Rows.Add(tr);
-                    }
-                }
-
-                DataTable progress_note = WebHelpers.GetJSONToDataTable(EmrViewModel.progress_note);
-
-                if (progress_note != null)
-                {
-                    foreach (DataRow row in progress_note.Rows)
-                    {
-                        HtmlTableRow tr = new HtmlTableRow();
-                        HtmlTableCell td;
-                        HtmlGenericControl p;
-                        //
-                        td = new HtmlTableCell();
-                        p = new HtmlGenericControl("lable") { InnerHtml = WebHelpers.FormatDateTime(Convert.ToString(row["time"]), "dd/MM/yyyy HH:mm tt") };
-                        td.Controls.Add(p);
-                        tr.Cells.Add(td);
-                        //
-                        td = new HtmlTableCell();
-                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["progress"]) };
-                        td.Controls.Add(p);
-                        tr.Cells.Add(td);
-                        //
-                        td = new HtmlTableCell();
-                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["appropriate_order"]) };
-                        td.Controls.Add(p);
-                        td.Align = "Center";
-                        tr.Cells.Add(td);
-
-                        prt_progress_note.Rows.Add(tr);
-                    }
-                }
-
-                //prt_conclusions.Text = EmrViewModel.conclusions;
-                if (EmrViewModel.discharge != null)
-                {
-                    if (EmrViewModel.discharge == true)
-                    {
-                        lbl_discharge_True.Text = "☒";
-                        lbl_discharge_False.Text = "❏";
-                        div_discharge_field.Visible = true;
-                    }
-                    if (EmrViewModel.discharge == false)
-                    {
-                        lbl_discharge_True.Text = "❏";
-                        lbl_discharge_False.Text = "☒";
-                    }
-
-                }
-                if (EmrViewModel.discharge == null)
-                {
-                    lbl_discharge_True.Text = "❏";
-                    lbl_discharge_False.Text = "❏";
-                }
-
-                prt_prescription.Text = EmrViewModel.prescription;
-                prt_specify_care_instructions.Text = EmrViewModel.specify_care_instructions;
-                if (EmrViewModel.discharge_time != null)
-                {
-                    prt_discharge_time.Text = WebHelpers.FormatDateTime(EmrViewModel.discharge_time, "HH:mm");
-                }
-                if (EmrViewModel.referred_to_OPD != null)
-                {
-                    if (EmrViewModel.referred_to_OPD == true)
-                    {
-                        lbl_referred_to_OPD_True.Text = "☒";
-                        lbl_referred_to_OPD_False.Text = "❏";
-                    }
-                    if (EmrViewModel.referred_to_OPD == false)
-                    {
-                        lbl_referred_to_OPD_True.Text = "❏";
-                        lbl_referred_to_OPD_False.Text = "☒";
-                    }
-                }
-                if (EmrViewModel.referred_to_OPD == null)
-                {
-
-                    lbl_referred_to_OPD_True.Text = "❏";
-                    lbl_referred_to_OPD_False.Text = "❏";
-
-                }
-
-                lbl_referred_to_OPD_text.Text = EmrViewModel.referred_to_OPD_text;
-                if (EmrViewModel.hospitalisation_required != null)
-                {
-                    ((HtmlInputRadioButton)FindControl("rad_hospitalisation_required_" + EmrViewModel.hospitalisation_required)).Checked = true;
-                    if (EmrViewModel.hospitalisation_required == true)
-                    {
-                        lbl_hospitalisation_required_True.Text = "☒";
-                        lbl_hospitalisation_required_False.Text = "❏";
-                        div_hos_req_field.Visible = true;
-                    }
-                    if (EmrViewModel.hospitalisation_required == false)
-                    {
-                        lbl_hospitalisation_required_True.Text = "❏";
-                        lbl_hospitalisation_required_False.Text = "☒";
-                    }
-                }
-                if (EmrViewModel.hospitalisation_required == null && EmrViewModel.hospitalisation_required == "")
-                {
-
-                    lbl_hospitalisation_required_True.Text = "❏";
-                    lbl_hospitalisation_required_False.Text = "❏";
-
-                }
-
-                prt_reason.Text = EmrViewModel.reason;
-                prt_ward.Text = EmrViewModel.ward;
-
-                if (EmrViewModel.time_of_leaving_emergency != null)
-                {
-                    prt_time_of_leaving_emergency.Text = WebHelpers.FormatDateTime(EmrViewModel.time_of_leaving_emergency, "HH:mm");
-                }
-                if (EmrViewModel.emergency_surgery != null)
-                {
-                    ((HtmlInputRadioButton)FindControl("rad_emergency_surgery_" + EmrViewModel.emergency_surgery)).Checked = true;
-                    if (EmrViewModel.emergency_surgery == true)
-                    {
-                        lbl_emergency_surgery_True.Text = "☒";
-                        lbl_emergency_surgery_False.Text = "❏";
-                        div_emr_sur_field.Visible = true;
-                    }
-                    if (EmrViewModel.emergency_surgery == false)
-                    {
-                        lbl_emergency_surgery_True.Text = "❏";
-                        lbl_emergency_surgery_False.Text = "☒";
-                    }
-                }
-                if (EmrViewModel.emergency_surgery == null)
-                {
-
-                    lbl_emergency_surgery_True.Text = "❏";
-                    lbl_emergency_surgery_False.Text = "❏";
-
-                }
-
-                lbl_preoperative_diagnosis.Text = EmrViewModel.pre_operative_diagnosis;
-                prt_brief_summary.Text = EmrViewModel.pre_operative_diagnosis;
-
-                if (EmrViewModel.time_of_leaving_emer_e != null)
-                {
-                    prt_time_of_leaving_emer_e.Text = WebHelpers.FormatDateTime(EmrViewModel.time_of_leaving_emer_e, "HH:mm");
-                }
-                if (EmrViewModel.transfer_hospital != null)
-                {
-                    ((HtmlInputRadioButton)FindControl("rad_transfer_hospital_" + EmrViewModel.transfer_hospital)).Checked = true;
-                    if (EmrViewModel.transfer_hospital == true)
-                    {
-                        lbl_transfer_hospital_True.Text = "☒";
-                        lbl_transfer_hospital_False.Text = "❏";
-                        div_transfer_hos_field.Visible = true;
-                    }
-                    if (EmrViewModel.transfer_hospital == false)
-                    {
-                        lbl_transfer_hospital_True.Text = "❏";
-                        lbl_transfer_hospital_False.Text = "☒";
-                    }
-                }
-                if (EmrViewModel.transfer_hospital == null)
-                {
-
-                    lbl_transfer_hospital_True.Text = "❏";
-                    lbl_transfer_hospital_False.Text = "❏";
-
-                }
-
-                prt_reason_for_transfer.Text = EmrViewModel.reason_for_transfer;
-                prt_status_before_transfer.Text = EmrViewModel.status_before_transfer;
-                if (EmrViewModel.time_of_leaving_emer_a != null)
-                {
-                    prt_time_of_leaving_emer_a.Text = WebHelpers.FormatDateTime(EmrViewModel.time_of_leaving_emer_a, "HH:mm");
-                }
-                string patient_discharge_temp = EmrViewModel.patient_discharge;
-                if (patient_discharge_temp != null && patient_discharge_temp != "")
-                {
-                    List<PDT> patient_discharge_temps = JsonConvert.DeserializeObject<List<PDT>>(patient_discharge_temp);
-                    prt_patient_discharge_IMP.Text = "❏";
-                    prt_patient_discharge_UNC.Text = "❏";
-                    prt_patient_discharge_UNS.Text = "❏";
-                    foreach (PDT PDTS in patient_discharge_temps)
-                    {
-
-                        string cde = PDTS.cde;
-                        if (cde != null)
-                        {
-                            if (cde == "IMP")
-                            {
-                                prt_patient_discharge_IMP.Text = "☒";
-                            }
-                            if (cde == "UNC")
-                            {
-                                prt_patient_discharge_UNC.Text = "☒";
-                            }
-                            if (cde == "UNS")
-                            {
-                                prt_patient_discharge_UNS.Text = "☒";
-                            }
-                        }
-
-                    }
-                }
-                if (patient_discharge_temp == null || patient_discharge_temp == "")
-                {
-                    prt_patient_discharge_IMP.Text = "❏";
-                    prt_patient_discharge_UNC.Text = "❏";
-                    prt_patient_discharge_UNS.Text = "❏";
-                }
-
-                txt_patient_discharge.Value = EmrViewModel.txt_patient_discharge;
-                prt_patient_discharge.Text = EmrViewModel.txt_patient_discharge;
-                prt_icd_10.Text = EmrViewModel.icd_10;
-
-                prt_infected_with_covid_false.Text
-                    = prt_infected_with_covid_true.Text
-                    = prt_received_1_dose_true.Text
-                    = prt_received_2_dose_true.Text
-                    = prt_received_additional_true.Text
-                    = prt_not_yet_vaccinations_true.Text
-                    = "❏";
-
-                Label infected_with_covid = FindControl("prt_infected_with_covid_" + EmrViewModel.infected_with_covid);
-                if (infected_with_covid != null) infected_with_covid.Text = "☒";
-
-                Label received_1_dose = FindControl("prt_received_1_dose_" + EmrViewModel.received_1_dose);
-                if (received_1_dose != null) received_1_dose.Text = "☒";
-
-                Label received_2_dose = FindControl("prt_received_2_dose_" + EmrViewModel.received_2_dose);
-                if (received_2_dose != null) received_2_dose.Text = "☒";
-
-                Label received_additional = FindControl("prt_received_additional_" + EmrViewModel.received_additional);
-                if (received_additional != null) received_additional.Text = "☒";
-
-                Label not_yet_vaccinations = FindControl("prt_not_yet_vaccinations_" + EmrViewModel.not_yet_vaccinations);
-                if (not_yet_vaccinations != null) not_yet_vaccinations.Text = "☒";
-
-                prt_other_vaccinations.Text = "• Tiêm vắc xin khác (ghi rõ)/ <span class=\"text-primary\">Other vaccinations (specify)</span>: " + EmrViewModel.other_vaccinations;
-
-                //DateTime signature_date = (DateTime)Session["signature_date"];
-                //string signature_doctor = (string)Session["signature_doctor"];
-
-                //if(signature_date != null)
-                //{
-                //    lbl_date.Text = signature_date.ToString("dd");
-                //    lbl_month.Text = signature_date.ToString("MM");
-                //    lbl_year.Text = signature_date.ToString("yyyy");
-                //}
-
-                //lbl_created_name_l.Text = signature_doctor;
-            }
-            catch (Exception ex)
-            {
-                WebHelpers.SendError(Page, ex);
-            }
-        }
-        #endregion
-
         #region Events
-        protected void btnComplete_Click(object sender, EventArgs e)
-        {
-            if (Page.IsValid)
-            {
-                FormModel = new EmrViewModel(varDocID, Location);
-                FormModel.status = DocumentStatus.FINAL;
-
-                UpdateData(FormModel);
-            }
-        }
-        protected void btnSave_Click(object sender, EventArgs e)
-        {
-            if (Page.IsValid)
-            {
-                FormModel = new EmrViewModel(varDocID, Location);
-                FormModel.status = DocumentStatus.DRAFT;
-
-                UpdateData(FormModel);
-            }
-        }
         protected void btnDelete_Click(object sender, EventArgs e)
         {
             try
             {
-                dynamic result = (new EmrViewModel(varDocID, Location)).Delete(UserId, Location)[0];
+                Model = new EmrViewModel(varDocID, Location);
+
+                dynamic result = Model.Delete(UserId, Location)[0];
 
                 if (result.Status == System.Net.HttpStatusCode.OK)
                 {
@@ -1323,24 +118,19 @@ namespace EMR.ER
         }
         protected void btnAmend_Click(object sender, EventArgs e)
         {
-            if (WebHelpers.CanOpenForm(Page, varDocID, DocumentStatus.DRAFT, EmpId, Location, LocationChanged, AccessAuthorize))
+            if (CheckOpenForm)
             {
-                FormModel = new EmrViewModel(varDocID, Location);
-
-                WebHelpers.VisibleControl(false, btnAmend, btnPrint);
-                WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
-
-                //load form control
-                WebHelpers.LoadFormControl(form1, FormModel, ControlState.Edit, IsViewLog, !IsLocationChanged, AccessAuthorize);
-                //binding data
-                BindingDataFormEdit(FormModel);
-                //get access button
+                Model = new EmrViewModel(varDocID, Location);
+                HideControl(btnAmend, btnPrint);
+                ShowControl(btnComplete, btnCancel, amendReasonWraper);
+                LoadFormControl(form1, Model, ControlState.Edit);
+                BindingDataFormEdit();
             }
         }
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             WebHelpers.clearSessionDoc(Page, varDocID, Location);
-            Initial();
+            Init_Page();
         }
         protected void gridTreatment_RowDataBound(object sender, GridViewRowEventArgs e)
         {
@@ -1358,9 +148,6 @@ namespace EMR.ER
         }
         protected void btn_grid_Treatment_add_Click(object sender, EventArgs e)
         {
-
-
-
             ViewState[grid_Treatment.ID] = WebHelpers.AddRow((DataTable)ViewState[grid_Treatment.ID], grid_Treatment, EmergencyMedicalRecord.Treatment);
         }
         protected void grid_Treatment_RowDeleting(object sender, GridViewDeleteEventArgs e)
@@ -1370,85 +157,14 @@ namespace EMR.ER
         protected void btn_grid_progress_note_add_Click(object sender, EventArgs e)
         {
             ViewState[grid_progress_note.ID] = WebHelpers.AddRow((DataTable)ViewState[grid_progress_note.ID], grid_progress_note, EmergencyMedicalRecord.ProgressNote);
-
         }
         protected void grid_progress_note_RowDeleting(object sender, GridViewDeleteEventArgs e)
         {
             ViewState[((GridView)sender).ID] = WebHelpers.DeleteRow((DataTable)ViewState[((GridView)sender).ID], (GridView)sender, e.RowIndex);
         }
-        protected void btnHome_Click(object sender, EventArgs e) => Response.Redirect(PAGE_URL_DEFAULT);
-        
         #endregion
 
         #region Functions
-        public void Initial()
-        {
-            try
-            {
-                patientInfo = new PatientInfo(varPID);
-                patientVisitInfo = new PatientVisitInfo(varPVID, Location);
-
-                FormModel = new EmrViewModel(varDocID, Location, varDocIdLog);
-                currentLog.Visible = !string.IsNullOrEmpty(varDocIdLog);
-
-                LoadPatientInfo();
-                //loadRadGridHistoryLog();
-
-                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, FormModel.Logs(Location), out string SignatureDate, out string SignatureName);
-                //SignatureDate = _SignatureDate;
-                //SignatureName = _SignatureName;
-
-                WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-
-                //if (EmrViewModel.status == DocumentStatus.FINAL)
-                //{
-                //    BindingDataForm(EmrViewModel, WebHelpers.LoadFormControl(form1, EmrViewModel, ControlState.View, IsViewLog, !IsLocationChanged, AccessAuthorize));
-
-                //    BindingDataFormPrint(EmrViewModel);
-                //}
-                //else if (EmrViewModel.status == DocumentStatus.DRAFT)
-                //{
-                //    BindingDataForm(EmrViewModel, WebHelpers.LoadFormControl(form1, EmrViewModel, ControlState.Edit, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
-                //}
-
-                BindingDataForm(FormModel, WebHelpers.LoadFormControl(form1, FormModel, FormModel.status == DocumentStatus.FINAL ? ControlState.View : ControlState.Edit, IsViewLog, !IsLocationChanged, AccessAuthorize));
-
-                // WebHelpers.getAccessButtons(form1, emr.status, (string)Session["access_authorize"], loc == locChanged, varDocIdLog != null);
-                
-                WebHelpers.getAccessButtons(new AccessButtonInfo()
-                {
-                    Form = form1,
-                    DocStatus = FormModel.status,
-                    AccessGroup = GroupAccess,
-                    AccessAuthorize = AccessAuthorize,
-                    IsSameCompanyCode = !IsLocationChanged,
-                    IsViewLog = IsViewLog
-                });
-            }
-            catch (Exception ex)
-            {
-                WebHelpers.SendError(Page, ex);
-            }
-        }
-
-        private void LoadPatientInfo()
-        {
-            lblFirstName.Text = patientInfo.first_name_l;
-            lblLastName.Text = patientInfo.last_name_l;
-            lblGender.Text = patientInfo.gender_l;
-
-            WebHelpers.ConvertDateTime(patientInfo.DOB, out bool isValid, out string DOB, "dd-MM-yyyy");
-            lblDoB.Text = DOB + " (" + patientInfo.Age + "t)";
-
-            lblPatientAddress.Text = patientInfo.Address;
-            lblContactPerson.Text = patientInfo.Contact;
-
-            lblVisitCode.Text = patientVisitInfo.VisitCode;
-
-            WebHelpers.ConvertDateTime(patientVisitInfo.ActualVisitDateTime, out bool isValid1, out string ActualVisitDateTime, "dd-MM-yyyy");
-            lblVisitDate.Text = ActualVisitDateTime;
-        }
-        protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason) => WebHelpers.getLogText(status, created_name, created_date_time, modified_name, modified_date_time, amend_reason);
         protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
         {
             GridDataItem item = (e.Item as GridDataItem);
@@ -1461,193 +177,7 @@ namespace EMR.ER
                 Response.Redirect(url);
             }
         }
-        protected string GetLogUrl(object doc_log_id) => PAGE_URL + $"&docIdLog={doc_log_id}";
         protected void LinkViewLastestVersion_Load(object sender, EventArgs e) => (sender as HyperLink).NavigateUrl = PAGE_URL;
-        public void UpdateData(EmrViewModel EmrViewModel)
-        {
-            try
-            {
-
-                EmrViewModel.evaluation_time = DataHelpers.ConvertSQLDateTime(dtpk_evaluation_time.SelectedDate);
-                EmrViewModel.chief_complaint = txt_chief_complaint.Value;
-                EmrViewModel.chief_complaint_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_chief_complaint_code_", EmergencyMedicalRecord.ChiefComplaintCode);
-                EmrViewModel.chief_complaint_desc = WebHelpers.GetDicDesc(EmrViewModel.chief_complaint_code, EmergencyMedicalRecord.ChiefComplaintCode);
-                EmrViewModel.history_of_present = txt_history_of_present.Value;
-                EmrViewModel.past_med_his_meds = txt_past_med_his_meds.Value;
-                EmrViewModel.past_med_his_surs = txt_past_med_his_surs.Value;
-                EmrViewModel.habits = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_habits_", EmergencyMedicalRecord.Habits, out DataTable habits, "cde");
-
-                if (cb_habits_O.Checked)
-                {
-                    EmrViewModel.habits_other = txt_habits_other.Value;
-                }
-
-                EmrViewModel.habits = JsonConvert.SerializeObject(habits);
-                EmrViewModel.home_medications = txt_home_medications.Value;
-                EmrViewModel.allergies = txt_allergies.Value;
-                EmrViewModel.relevant_family_history = txt_relevant_family_history.Value;
-                EmrViewModel.finding = txt_finding.Value;
-
-                if (rad_required_code_True.Checked)
-                {
-                    EmrViewModel.required_code = true;
-                    EmrViewModel.required_text = txt_required_text.Value;
-                }
-                if (rad_required_code_False.Checked)
-                {
-                    EmrViewModel.required_code = false;
-                    EmrViewModel.required_text = "";
-                }
-
-                EmrViewModel.investigations_results = txt_investigations_results.Value;
-                EmrViewModel.initial_diagnosis = txt_initial_diagnosis.Value;
-                EmrViewModel.diferential_diagnosis = txt_diferential_diagnosis.Value;
-                EmrViewModel.associated_conditions = txt_associated_conditions.Value;
-                EmrViewModel.comfirmed_diagnosis = txt_comfirmed_diagnosis.Value;
-
-                if (rad_specialist_opinion_True.Checked)
-                {
-                    EmrViewModel.specialist_opinion = true;
-                    EmrViewModel.name_of_specialist = txt_name_of_specialist.Value;
-                    EmrViewModel.time_contaced = DataHelpers.ConvertSQLDateTime(dtpk_time_contaced.SelectedDate);
-                    EmrViewModel.time_provided = DataHelpers.ConvertSQLDateTime(dtpk_time_provided.SelectedDate);
-                    EmrViewModel.spec_opinion_summarised = txt_spec_opinion_summarised.Value;
-
-                }
-                if (rad_specialist_opinion_False.Checked)
-                {
-                    EmrViewModel.specialist_opinion = false;
-                    EmrViewModel.name_of_specialist = "";
-                    EmrViewModel.time_contaced = null;
-                    EmrViewModel.time_provided = null;
-                    EmrViewModel.spec_opinion_summarised = "";
-
-                }
-                //DataTable Treatment_tb = new DataTable();
-                //foreach (KeyValuePair<string, string> col in EmergencyMedicalRecord.Treatment)
-                //{
-                //    Treatment_tb.Columns.Add(col.Key);
-                //}
-                EmrViewModel.treatment = WebHelpers.GetDataGridView(grid_Treatment, EmergencyMedicalRecord.Treatment);
-
-                //DataTable Progress_note_tb = new DataTable();
-                //foreach (KeyValuePair<string, string> col in EmergencyMedicalRecord.ProgressNote)
-                //{
-                //    Progress_note_tb.Columns.Add(col.Key);
-                //}
-                //emr.progress_note = WebHelpers.GetJSONFromTable(grid_progress_note, Progress_note_tb);
-                EmrViewModel.progress_note = WebHelpers.GetDataGridView(grid_progress_note, EmergencyMedicalRecord.ProgressNote);
-
-                EmrViewModel.conclusions = txt_conclusions.Value;
-                if (rad_discharge_True.Checked)
-                {
-                    EmrViewModel.discharge = true;
-                    EmrViewModel.prescription = txt_prescription.Value;
-                    EmrViewModel.specify_care_instructions = txt_specify_care_instructions.Value;
-                    EmrViewModel.discharge_time = DataHelpers.ConvertSQLDateTime(dtpk_discharge_time.SelectedDate);
-
-                }
-                if (rad_discharge_False.Checked)
-                {
-                    EmrViewModel.discharge = false;
-                    EmrViewModel.prescription = "";
-                    EmrViewModel.specify_care_instructions = "";
-                    EmrViewModel.discharge_time = null;
-                }
-                if (rad_referred_to_OPD_True.Checked)
-                {
-                    EmrViewModel.referred_to_OPD = true;
-                    EmrViewModel.referred_to_OPD_text = txt_referred_to_OPD_text.Value;
-                }
-                if (rad_referred_to_OPD_False.Checked)
-                {
-                    EmrViewModel.referred_to_OPD = false;
-                    EmrViewModel.referred_to_OPD_text = "";
-
-                }
-                if (rad_hospitalisation_required_True.Checked)
-                {
-                    EmrViewModel.hospitalisation_required = true;
-                    EmrViewModel.reason = txt_reason.Value;
-                    EmrViewModel.ward = txt_ward.Value;
-                    EmrViewModel.time_of_leaving_emergency = DataHelpers.ConvertSQLDateTime(dtpk_time_of_leaving_emergency.SelectedDate);
-                }
-                if (rad_hospitalisation_required_False.Checked)
-                {
-                    EmrViewModel.hospitalisation_required = false;
-                    EmrViewModel.reason = "";
-                    EmrViewModel.ward = "";
-                    EmrViewModel.time_of_leaving_emergency = null;
-                }
-                if (rad_emergency_surgery_True.Checked)
-                {
-                    EmrViewModel.emergency_surgery = true;
-                    EmrViewModel.pre_operative_diagnosis = txt_pre_operative_diagnosis.Value;
-                    EmrViewModel.brief_summary = txt_brief_summary.Value;
-                    EmrViewModel.time_of_leaving_emer_e = DataHelpers.ConvertSQLDateTime(dtpk_time_of_leaving_emer_e.SelectedDate);
-                }
-                if (rad_emergency_surgery_False.Checked)
-                {
-                    EmrViewModel.emergency_surgery = false;
-                    EmrViewModel.pre_operative_diagnosis = "";
-                    EmrViewModel.brief_summary = "";
-                    EmrViewModel.time_of_leaving_emer_e = null;
-                }
-                if (rad_transfer_hospital_True.Checked)
-                {
-                    EmrViewModel.transfer_hospital = true;
-                    EmrViewModel.reason_for_transfer = txt_reason_for_transfer.Value;
-                    EmrViewModel.status_before_transfer = txt_status_before_transfer.Value;
-                    EmrViewModel.time_of_leaving_emer_a = DataHelpers.ConvertSQLDateTime(dtpk_time_of_leaving_emer_a.SelectedDate);
-                }
-                if (rad_transfer_hospital_False.Checked)
-                {
-                    EmrViewModel.transfer_hospital = false;
-                    EmrViewModel.reason_for_transfer = "";
-                    EmrViewModel.status_before_transfer = "";
-                    EmrViewModel.time_of_leaving_emer_a = null;
-                }
-
-                EmrViewModel.patient_discharge = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_patient_discharge_", EmergencyMedicalRecord.PatientDischarge, "cde");
-
-                EmrViewModel.txt_patient_discharge = txt_patient_discharge.Value;
-
-                EmrViewModel.icd_10 = txt_icd_10.Value;
-
-                if (JsonConvert.SerializeObject(EmrViewModel) == DataObj.Value)
-                {
-                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
-                }
-
-                //Update v2.0
-                EmrViewModel.infected_with_covid = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_");
-                EmrViewModel.received_1_dose = cb_received_1_dose_true.Checked;
-                EmrViewModel.received_2_dose = cb_received_2_dose_true.Checked;
-                EmrViewModel.received_additional = cb_received_additional_true.Checked;
-                EmrViewModel.other_vaccinations = txt_other_vaccinations.Value;
-                EmrViewModel.not_yet_vaccinations = cb_not_yet_vaccinations_true.Checked;
-                
-                EmrViewModel.amend_reason = txt_amend_reason.Text;
-                EmrViewModel.user_name = UserId;
-
-                dynamic result = EmrViewModel.Update(Location)[0];
-
-                if (result.Status == System.Net.HttpStatusCode.OK)
-                {
-                    WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
-                    Initial();
-                }
-            }
-            catch (Exception ex)
-            {
-                WebHelpers.SendError(Page, ex);
-            }
-            finally
-            {
-                WebHelpers.clearSessionDoc(Page, varDocID, Location);
-            }
-        }
-
         protected DateTime? GetDateTime(object value)
         {
             DateTime? dateTime = null;
@@ -1791,46 +321,925 @@ namespace EMR.ER
         }
         #endregion
 
-        public class Habits_Temp
+        public override void BindingDataFormEdit()
         {
-            public string cde { get; set; }
-            public string desc { get; set; }
-        }
-        public class PDT
-        {
-            public string cde { get; set; }
-            public string desc { get; set; }
+            try
+            {
+                txt_amend_reason.Text = "";
+
+                cb_received_1_dose_true.Disabled
+                    = cb_received_2_dose_true.Disabled
+                    = cb_received_additional_true.Disabled
+                    = cb_not_yet_vaccinations_true.Disabled
+                    = false;
+                #region Ngày, giờ bắt đầu đánh giá/ Starting date, time of the assessmen
+                BindingDateTimePicker(dtpk_evaluation_time, Model.evaluation_time);
+                #endregion
+
+                #region Lý do đến khám/ Chief complaint
+                txt_chief_complaint.Value = Model.chief_complaint;
+                BindingInputRadioButton($"{nameof(Model.chief_complaint_code)}_{Model.chief_complaint_code}");
+                #endregion
+
+                #region Bệnh Sử/ History of present illness(HPI)
+                txt_history_of_present.Value = Model.history_of_present;
+                #endregion
+
+                #region Tiền sử bệnh/ Past medical history (PMH)
+                txt_past_med_his_meds.Value = Model.past_med_his_meds;
+                txt_past_med_his_surs.Value = Model.past_med_his_surs;
+                #endregion
+
+                #region Đã từng nhiễm COVID-19 trong vòng 6 tháng qua/ Have been infected with COVID-19 within the last 6 months
+                BindingInputRadioButton($"{nameof(Model.infected_with_covid)}_{Model.infected_with_covid}");
+                #endregion
+
+                #region Tiền sử tiêm chủng/ Immunization history
+                BindingInputCheckBox($"{nameof(Model.received_1_dose)}_{Model.received_1_dose}");
+                BindingInputCheckBox($"{nameof(Model.received_2_dose)}_{Model.received_2_dose}");
+                BindingInputCheckBox($"{nameof(Model.received_additional)}_{Model.received_additional}");
+                BindingInputCheckBox($"{nameof(Model.not_yet_vaccinations)}_{Model.not_yet_vaccinations}");
+                txt_other_vaccinations.Value = Model.other_vaccinations;
+                #endregion
+
+                #region Thói quen/ Habits
+                DataTable habits_tb = EMRHelpers.ConvertToDataTable(Model.habits);
+                if (habits_tb != null)
+                {
+                    BindingInputCheckBox(nameof(Model.habits), habits_tb, "cde");
+                }
+                txt_habits_other.Value = Model.habits_other;
+                #endregion
+
+                #region Thuốc dùng tại nhà/ Home medications
+                txt_home_medications.Value = Model.home_medications;
+                #endregion
+
+                #region Tiền sử dị ứng/ Allergies
+                txt_allergies.Value = Model.allergies;
+                #endregion
+
+
+                #region Tiền sử bệnh người thân/ Relevant family history
+                txt_relevant_family_history.Value = Model.relevant_family_history;
+                #endregion
+
+                #region Khám lâm sàng liên quan/ Physical examination
+                //Kết quả tìm thấy/ Findings (General and Diagnostic support)
+                txt_finding.Value = Model.finding;
+
+                //Yêu cầu khám chuyên khoa tâm lý/ Psychological assessment required
+                BindingInputRadioButton($"{nameof(Model.required_code)}_{Model.required_code}");
+                txt_required_text.Value = Model.required_text;
+                #endregion
+
+                //Kết quả khảo sát/ Investigations Results (Labs, Imaging...)
+                txt_investigations_results.Value = Model.investigations_results;
+                //Chẩn đoán ban đầu/ Initial diagnosis
+                txt_initial_diagnosis.Value = Model.initial_diagnosis;
+                //Chuẩn đoán xác định/ Diagnosis
+                txt_comfirmed_diagnosis.Value = Model.comfirmed_diagnosis;
+                //Chẩn đoán phân biệt/ Differential diagnosis
+                txt_diferential_diagnosis.Value = Model.diferential_diagnosis;
+                //Bệnh kèm theo/ Associated conditions
+                txt_associated_conditions.Value = Model.associated_conditions;
+
+                #region Ý kiến của bác sĩ chuyên khoa/ Specialist opinion
+                specialist_opinion_change(Convert.ToString(Model.specialist_opinion));
+                BindingInputRadioButton($"{nameof(Model.specialist_opinion)}_{Model.specialist_opinion}");
+                txt_name_of_specialist.Value = Model.name_of_specialist;
+                BindingDateTimePicker(dtpk_time_contaced, Model.time_contaced);
+                BindingDateTimePicker(dtpk_time_provided, Model.time_provided);
+                txt_spec_opinion_summarised.Value = Model.spec_opinion_summarised;
+                #endregion
+
+                //1. Điều trị tại khoa cấp cứu/ Treatment in Emergency
+                ViewState[grid_Treatment.ID] = WebHelpers.BindingDataGridView(grid_Treatment, WebHelpers.GetJSONToDataTable(Model.treatment), EmergencyMedicalRecord.Treatment, btn_grid_Treatment_add);
+                //Diễn tiến/ Progress Note
+                ViewState[grid_progress_note.ID] = WebHelpers.BindingDataGridView(grid_progress_note, WebHelpers.GetJSONToDataTable(Model.progress_note), EmergencyMedicalRecord.ProgressNote, btn_grid_progress_note_add);
+                txt_conclusions.Value = Model.conclusions; // Hide
+                #region 2. Xuất viện/ Discharge
+                BindingInputRadioButton($"{nameof(Model.discharge)}_{Model.discharge}");
+                discharge_change(Convert.ToString(Model.discharge));
+                txt_prescription.Value = Model.prescription;
+                txt_specify_care_instructions.Value = Model.specify_care_instructions;
+                BindingDateTimePicker(dtpk_discharge_time, Model.discharge_time);
+                #endregion
+
+                #region 3. Chuyển sang khám ngoại trú/ Referred to OPD
+                BindingInputRadioButton($"{nameof(Model.referred_to_OPD)}_{Model.referred_to_OPD}");
+                txt_referred_to_OPD_text.Value = Model.referred_to_OPD_text;
+                #endregion
+
+                #region 4. Yêu cầu nhập viện/ Hospitalisation required
+                BindingInputRadioButton($"{nameof(Model.hospitalisation_required)}_{Model.hospitalisation_required}");
+                txt_reason.Value = Model.reason;
+                txt_ward.Value = Model.ward;
+                BindingDateTimePicker(dtpk_time_of_leaving_emergency, Model.time_of_leaving_emergency);
+                hos_req_change(Convert.ToString(Model.hospitalisation_required));
+                #endregion
+
+                #region 5. Nếu phẫu thuật cấp cứu/ In case of emergency surgery
+                BindingInputRadioButton($"{nameof(Model.emergency_surgery)}_{Model.emergency_surgery}");
+                txt_pre_operative_diagnosis.Value = Model.pre_operative_diagnosis;
+                txt_brief_summary.Value = Model.brief_summary;
+                BindingDateTimePicker(dtpk_time_of_leaving_emer_e, Model.time_of_leaving_emer_e);
+                emergency_surgery_change(Convert.ToString(Model.emergency_surgery));
+                #endregion
+
+                #region 6. Nếu chuyển đến BV khác/ In case of transfer to another hospital
+                BindingInputRadioButton($"{nameof(Model.transfer_hospital)}_{Model.transfer_hospital}");
+                txt_reason_for_transfer.Value = Model.reason_for_transfer;
+                txt_status_before_transfer.Value = Model.status_before_transfer;
+                BindingDateTimePicker(dtpk_time_of_leaving_emer_a, Model.time_of_leaving_emer_a);
+                transfer_hospital_change(Convert.ToString(Model.transfer_hospital));
+                #endregion
+
+                #region Tình trạng của bệnh nhân khi xuất viện/ Patient's Condition at Discharge
+                DataTable patient_discharge_dt = EMRHelpers.ConvertToDataTable(Model.patient_discharge);
+                if(patient_discharge_dt != null)
+                {
+                    BindingInputCheckBox(nameof(Model.patient_discharge), patient_discharge_dt, "cde");
+                }
+                txt_patient_discharge.Value = Model.txt_patient_discharge;
+                #endregion
+
+                //Mã ICD-10/ ICD-10 Code(S)
+                txt_icd_10.Value = Model.icd_10;
+
+                //DataObj.Value = JsonConvert.SerializeObject(Model);
+                Session["docid"] = Model.document_id;
+                WebHelpers.AddScriptFormEdit(Page, Model, EmpId, Location);
+            }
+            catch (Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
         }
 
-        protected void btnPrint_Click(object sender, EventArgs e)
+        public override void BindingDataFormPrint()
         {
-            BindingDataFormPrint(new EmrViewModel(varDocID, Location, varDocIdLog));
-            WebHelpers.AddJS(Page, "btnPrint_Click()");
+            try
+            {
+                WebHelpers.gen_BarCode(Patient.visible_patient_id, BarCode);
+                prt_fullname.Text = Patient.FullName;
+                prt_dob.Text = WebHelpers.FormatDateTime(Patient.date_of_birth) + "| " + Patient.Gender;
+                prt_vpid.Text = Patient.visible_patient_id;
+
+                #region Ngày, giờ bắt đầu đánh giá / Starting date, time of the assessment
+                prt_evaluation_time.Text = WebHelpers.FormatDateTime(Model.evaluation_time, "HH:mm, dd/MM/yyyy");
+                #endregion
+
+                #region Lý do đến khám/ Chief complaint/ Reason of consultation
+                prt_chief_complaint_code_R.Text
+                 = prt_chief_complaint_code_E.Text
+                 = prt_chief_complaint_code_U.Text
+                 = prt_chief_complaint_code_L.Text
+                 = prt_chief_complaint_code_N.Text 
+                 = "❏";
+
+                prt_chief_complaint.Text = Model.chief_complaint;
+                BindingLabel($"{nameof(Model.chief_complaint_code)}_{Model.chief_complaint_code}", "☒");
+                #endregion
+
+                #region Bệnh sử / History of present illness (HPI)
+                prt_history_of_present.Text = Model.history_of_present;
+                #endregion
+
+                #region Tiền sử bệnh / Past medical history (PMH)
+                prt_past_med_his_meds.Text = Model.past_med_his_meds;
+                prt_past_med_his_surs.Text = Model.past_med_his_surs;
+                #endregion
+
+                #region Đã từng nhiễm COVID-19 trong vòng 6 tháng qua/ Have been infected with COVID-19 within the last 6 months
+                prt_infected_with_covid_false.Text
+                    = prt_infected_with_covid_true.Text 
+                    = "❏";
+                BindingLabel($"{nameof(Model.infected_with_covid)}_{Model.infected_with_covid}", "☒");
+                #endregion
+
+                #region Tiền sử tiêm chủng/ Immunization history
+                    prt_received_1_dose_true.Text
+                    = prt_received_2_dose_true.Text
+                    = prt_received_additional_true.Text
+                    = prt_not_yet_vaccinations_true.Text
+                    = "❏";
+                BindingLabel($"{nameof(Model.received_1_dose)}_{Model.received_1_dose}", "☒");
+                BindingLabel($"{nameof(Model.received_2_dose)}_{Model.received_2_dose}", "☒");
+                BindingLabel($"{nameof(Model.received_additional)}_{Model.received_additional}", "☒");
+                BindingLabel($"{nameof(Model.not_yet_vaccinations)}_{Model.not_yet_vaccinations}", "☒");
+                prt_other_vaccinations.Text = "• Tiêm vắc xin khác (ghi rõ)/ <span class=\"text-primary\">Other vaccinations (specify)</span>: " + Model.other_vaccinations;
+                #endregion
+
+                #region Thói quen/ Habits
+                prt_habits_a.Text 
+                    = prt_habits_d.Text 
+                    = prt_habits_s.Text 
+                    = "❏";
+                DataTable habits = EMRHelpers.ConvertToDataTable(Model.habits);
+                if (habits != null)
+                {
+                    BindingLabel($"{nameof(Model.habits)}", habits, "☒", "cde");
+                }
+                prt_habits_other.Text = Model.habits_other;
+                #endregion
+
+                #region Thuốc dùng tại nhà/ Home medications
+                prt_home_medications.Text = Model.home_medications;
+                #endregion
+
+                #region Tiền sử dị ứng/ Allergies
+                prt_allergies.Text = Model.allergies;
+                #endregion
+
+                #region Tiền sử bệnh người thân/ Relevant family history
+                prt_relevant_family_history.Text = Model.relevant_family_history;
+                #endregion
+
+                #region Khám lâm sàng liên quan/ Physical examination
+                //* Kết quả tìm thấy/ Findings (General and Diagnostic support)
+                prt_finding.Text = Model.finding;
+                //* Yêu cầu khám chuyên khoa tâm lý/ Psychological assessment required
+                prt_required_code_false.Text
+                    = prt_required_code_true.Text
+                    = "❏";
+                BindingLabel($"{nameof(Model.required_code)}_{Model.required_code}", "☒");
+                prt_required_text.Text = Model.required_text;
+                #endregion
+
+                #region Kết quả khảo sát/ Investigations Results (Labs, imaging...)
+                prt_investigations_results.Text = Model.investigations_results;
+                #endregion
+
+                #region Chẩn đoán sơ bộ/ Initial diagnosis
+                prt_initial_diagnosis.Text = Model.initial_diagnosis;
+                #endregion
+
+                #region Chẩn đoán phân biệt/ Diferential diagnosis
+                prt_diferential_diagnosis.Text = Model.diferential_diagnosis;
+                #endregion
+
+                #region Bệnh kèm theo/ Associated conditions
+                prt_associated_conditions.Text = Model.associated_conditions;
+                #endregion
+
+                #region Chẩn đoán xác định/ Comfirmed Diagnosis
+                prt_comfirmed_diagnosis.Text = Model.comfirmed_diagnosis;
+                #endregion
+
+                #region Ý kiến của bác sỹ chuyên khoa/ Specialist opinion
+                prt_specialist_opinion_false.Text
+                    = prt_specialist_opinion_true.Text
+                    = "❏";
+                HideControl(field_specialist_opinion);
+                BindingLabel($"{nameof(Model.specialist_opinion)}_{Model.specialist_opinion}", "☒");
+                if(Model.specialist_opinion != null && Model.specialist_opinion)
+                {
+                    ShowControl(field_specialist_opinion);
+                    prt_name_of_specialist.Text = Model.name_of_specialist;
+                    if (Model.time_contaced != null)
+                    {
+                        prt_time_contaced.Text = Model.time_contaced.ToString("HH:mm");
+                    }
+                    if (Model.time_provided != null)
+                    {
+                        prt_time_provided.Text = Model.time_provided.ToString("HH:mm");
+                    }
+                    prt_spec_opinion_summarised.Text = Model.spec_opinion_summarised;
+                }
+                #endregion
+
+                #region 1. Treatment in Emergency/Điều trị tại khoa cấp cứu
+                if (Model.treatment != null)
+                {
+                    DataTable treatment = EMRHelpers.ConvertToDataTable(Model.treatment);
+                    if (treatment != null)
+                    {
+                        foreach (DataRow row in treatment.Rows)
+                        {
+                            HtmlTableRow tr = new HtmlTableRow();
+                            HtmlTableCell td;
+                            HtmlGenericControl p;
+                            //
+                            td = new HtmlTableCell();
+                            p = new HtmlGenericControl("lable") { InnerHtml = WebHelpers.FormatDateTime(Convert.ToString(row["time"]), "dd/MM/yyyy HH:mm tt") };
+                            td.Controls.Add(p);
+                            tr.Cells.Add(td);
+                            //
+                            td = new HtmlTableCell();
+                            p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["medication"]) };
+                            td.Controls.Add(p);
+                            tr.Cells.Add(td);
+                            //
+                            td = new HtmlTableCell();
+                            p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["dose"]) };
+                            td.Controls.Add(p);
+                            td.Align = "Center";
+                            tr.Cells.Add(td);
+                            //
+                            td = new HtmlTableCell();
+                            p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["route"]) };
+                            td.Controls.Add(p);
+                            td.Align = "Center";
+
+                            tr.Cells.Add(td);
+                            //
+                            td = new HtmlTableCell();
+                            p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["comment"]) };
+                            td.Controls.Add(p);
+                            tr.Cells.Add(td);
+
+                            prt_treatment.Rows.Add(tr);
+                        }
+                    }
+                }
+                #endregion
+
+                #region Progress Note
+                if (Model.progress_note != null)
+                {
+                    DataTable progress_note = EMRHelpers.ConvertToDataTable(Model.progress_note);
+                    if (progress_note != null)
+                    {
+                        foreach (DataRow row in progress_note.Rows)
+                        {
+                            HtmlTableRow tr = new HtmlTableRow();
+                            HtmlTableCell td;
+                            HtmlGenericControl p;
+                            //
+                            td = new HtmlTableCell();
+                            p = new HtmlGenericControl("lable") { InnerHtml = WebHelpers.FormatDateTime(Convert.ToString(row["time"]), "dd/MM/yyyy HH:mm tt") };
+                            td.Controls.Add(p);
+                            tr.Cells.Add(td);
+                            //
+                            td = new HtmlTableCell();
+                            p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["progress"]) };
+                            td.Controls.Add(p);
+                            tr.Cells.Add(td);
+                            //
+                            td = new HtmlTableCell();
+                            p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["appropriate_order"]) };
+                            td.Controls.Add(p);
+                            td.Align = "Center";
+                            tr.Cells.Add(td);
+
+                            prt_progress_note.Rows.Add(tr);
+                        }
+                    }
+                }
+                #endregion
+
+                #region 2. Xuất viện/ Discharge
+                prt_discharge_false.Text
+                    = prt_discharge_true.Text
+                    = "❏";
+                HideControl(div_discharge_field);
+                BindingLabel($"{nameof(Model.discharge)}_{Model.discharge}", "☒");
+                if(Model.discharge != null && Model.discharge)
+                {
+                    ShowControl(div_discharge_field);
+                    prt_prescription.Text = Model.prescription;
+                    prt_specify_care_instructions.Text = Model.specify_care_instructions;
+                    if (Model.discharge_time != null)
+                    {
+                        prt_discharge_time.Text = WebHelpers.FormatDateTime(Model.discharge_time, "HH:mm");
+                    }
+                }
+                #endregion
+
+                #region 3. Khám ngoại trú/Referred to OPD
+                prt_referred_to_opd_false.Text
+                    = prt_referred_to_opd_true.Text
+                    = "❏";
+                BindingLabel($"{nameof(Model.referred_to_OPD)}_{Model.referred_to_OPD}", "☒");
+                prt_referred_to_opd_text.Text = Model.referred_to_OPD_text;
+                #endregion
+
+                #region 4. Yêu cầu nhập viện/ Hospitalisation required
+                prt_hospitalisation_required_false.Text
+                    = prt_hospitalisation_required_true.Text
+                    = "❏";
+                HideControl(div_hos_req_field);
+                BindingLabel($"{nameof(Model.hospitalisation_required)}_{Model.hospitalisation_required}", "☒");
+                if(Model.hospitalisation_required != null && Model.hospitalisation_required)
+                {
+                    ShowControl(div_hos_req_field);
+                    prt_reason.Text = Model.reason;
+                    prt_ward.Text = Model.ward;
+                    if (Model.time_of_leaving_emergency != null)
+                    {
+                        prt_time_of_leaving_emergency.Text = WebHelpers.FormatDateTime(Model.time_of_leaving_emergency, "HH:mm");
+                    }
+                }
+                #endregion
+
+                #region 5. Nếu phẫu thuật cấp cứu/ In case of emergency surgery
+                prt_emergency_surgery_false.Text
+                    = prt_emergency_surgery_true.Text
+                    = "❏";
+                HideControl(div_emr_sur_field);
+                BindingLabel($"{nameof(Model.emergency_surgery)}_{Model.emergency_surgery}", "☒");
+                if(Model.emergency_surgery != null && Model.emergency_surgery)
+                {
+                    ShowControl(div_emr_sur_field);
+                    prt_preoperative_diagnosis.Text = Model.pre_operative_diagnosis;
+                    prt_brief_summary.Text = Model.pre_operative_diagnosis;
+
+                    if (Model.time_of_leaving_emer_e != null)
+                    {
+                        prt_time_of_leaving_emer_e.Text = WebHelpers.FormatDateTime(Model.time_of_leaving_emer_e, "HH:mm");
+                    }
+                }
+                #endregion
+
+                #region 6. Nếu chuyển đến BV khác/ In case of transfer to another hospital
+                prt_transfer_hospital_false.Text
+                    = prt_transfer_hospital_true.Text
+                    = "❏";
+                HideControl(div_transfer_hos_field);
+                BindingLabel($"{nameof(Model.transfer_hospital)}_{Model.transfer_hospital}", "☒");
+                if(Model.transfer_hospital != null && Model.transfer_hospital)
+                {
+                    ShowControl(div_transfer_hos_field);
+                    prt_reason_for_transfer.Text = Model.reason_for_transfer;
+                    prt_status_before_transfer.Text = Model.status_before_transfer;
+                    if (Model.time_of_leaving_emer_a != null)
+                    {
+                        prt_time_of_leaving_emer_a.Text = WebHelpers.FormatDateTime(Model.time_of_leaving_emer_a, "HH:mm");
+                    }
+                }
+                #endregion
+
+                #region Tình trạng bệnh nhân khi rời khoa Cấp Cứu/ Patient's Condition at Discharge from Emergency
+                prt_patient_discharge_IMP.Text 
+                    = prt_patient_discharge_UNC.Text 
+                    = prt_patient_discharge_UNS.Text 
+                    = "❏";
+                DataTable patient_discharge = EMRHelpers.ConvertToDataTable(Model.patient_discharge);
+                if(patient_discharge != null)
+                {
+                    BindingLabel(nameof(Model.patient_discharge), patient_discharge, "☒", "cde");
+                }
+                prt_patient_discharge.Text = Model.txt_patient_discharge;
+                #endregion
+
+                #region Mã ICD-10/ ICD-10 Code(S)
+                prt_icd_10.Text = Model.icd_10;
+                #endregion
+
+                try
+                {
+                    prt_printed_date_time.Text = string.Format("Ngày/Date {0}, Giờ/Time {1}", DateTime.Now.ToString("dd/MM/yyyy"), DateTime.Now.ToString("HH:mm"));
+                } 
+                catch(Exception ex)
+                {
+
+                }
+                //DateTime signature_date = (DateTime)Session["signature_date"];
+                //string signature_doctor = (string)Session["signature_doctor"];
+
+                //if(signature_date != null)
+                //{
+                //    lbl_date.Text = signature_date.ToString("dd");
+                //    lbl_month.Text = signature_date.ToString("MM");
+                //    lbl_year.Text = signature_date.ToString("yyyy");
+                //}
+
+                //lbl_created_name_l.Text = signature_doctor;
+            }
+            catch (Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
         }
 
-        public void BindingDataForm(bool state)
+        public override void BindingDataFormView()
         {
-            throw new NotImplementedException();
+            try
+            {
+                #region Ngày, giờ bắt đầu đánh giá/ Starting date, time of the assessmen
+                lbl_evaluation_time.Text = WebHelpers.FormatDateTime(Model.evaluation_time, "dd-MMM-yyyy HH:mm");
+                #endregion
+
+                #region Lý do đến khám/ Chief complaint
+                lbl_chief_complaint.Text = WebHelpers.FormatString(Model.chief_complaint);
+                lbl_chief_complaint_desc.Text = WebHelpers.FormatString(Model.chief_complaint_desc);
+                #endregion
+
+                #region Bệnh Sử/ History of present illness(HPI)
+                lbl_history_of_present.Text = WebHelpers.FormatString(Model.history_of_present);
+                #endregion
+
+                #region Tiền sử bệnh/ Past medical history (PMH)
+                lbl_past_med_his_meds.Text = WebHelpers.FormatString(Model.past_med_his_meds);
+                lbl_past_med_his_surs.Text = WebHelpers.FormatString(Model.past_med_his_surs);
+                #endregion
+
+                #region Đã từng nhiễm COVID-19 trong vòng 6 tháng qua/ Have been infected with COVID-19 within the last 6 months
+                lbl_infected_with_covid.Text = WebHelpers.FormatString(WebHelpers.GetBool(Model.infected_with_covid));
+                #endregion
+
+                #region Tiền sử tiêm chủng/ Immunization history
+                cb_received_1_dose_true.Disabled
+                    = cb_received_2_dose_true.Disabled
+                    = cb_received_additional_true.Disabled
+                    = cb_not_yet_vaccinations_true.Disabled
+                    = true;
+                BindingInputCheckBox($"{nameof(Model.received_1_dose)}_{Model.received_1_dose}");
+                BindingInputCheckBox($"{nameof(Model.received_2_dose)}_{Model.received_2_dose}");
+                BindingInputCheckBox($"{nameof(Model.received_additional)}_{Model.received_additional}");
+                BindingInputCheckBox($"{nameof(Model.not_yet_vaccinations)}_{Model.not_yet_vaccinations}");
+                lbl_other_vaccinations.Text = Model.other_vaccinations;
+                #endregion
+
+                #region Thói quen/ Habits
+                DataTable habits_tb = EMRHelpers.ConvertToDataTable(Model.habits);
+                if(habits_tb != null)
+                {
+                    lbl_habits.Text = WebHelpers.FormatString(DisplayCheckBox(habits_tb));
+                }
+                lbl_habits.Text += WebHelpers.FormatString(Model.habits_other);
+                #endregion
+
+                #region Thuốc dùng tại nhà/ Home medications
+                lbl_home_medications.Text = WebHelpers.FormatString(Model.home_medications);
+                #endregion
+
+                #region Tiền sử dị ứng/ Allergies
+                lbl_allergies.Text = WebHelpers.FormatString(Model.allergies);
+                #endregion
+
+                #region Tiền sử bệnh người thân/ Relevant family history
+                lbl_relevant_family_history.Text = WebHelpers.FormatString(Model.relevant_family_history);
+                #endregion
+
+                #region Khám lâm sàng liên quan/ Physical examination
+                lbl_finding.Text = WebHelpers.FormatString(Model.finding);
+                lbl_required_code.Text = WebHelpers.FormatString(WebHelpers.GetBool(Model.required_code)) + " " + WebHelpers.FormatString(Model.required_text);
+                #endregion
+
+                #region Kết quả khảo sát/ Investigations Results (Labs, Imaging...)
+                lbl_investigations_results.Text = WebHelpers.FormatString(Model.investigations_results);
+                #endregion
+
+                #region Chẩn đoán ban đầu/ Initial diagnosis
+                lbl_initial_diagnosis.Text = WebHelpers.FormatString(Model.initial_diagnosis);
+                #endregion
+
+                #region Chẩn đoán xác định/ Diagnosis
+                lbl_comfirmed_diagnosis.Text = WebHelpers.FormatString(Model.comfirmed_diagnosis);
+                #endregion
+
+                #region Chẩn đoán phân biệt/ Differential diagnosis
+                lbl_diferential_diagnosis.Text = WebHelpers.FormatString(Model.diferential_diagnosis);
+                #endregion
+
+                #region Bệnh kèm theo/ Associated conditions
+                lbl_associated_conditions.Text = WebHelpers.FormatString(Model.associated_conditions);
+                #endregion
+
+                #region Ý kiến của bác sĩ chuyên khoa/ Specialist opinion
+                lbl_specialist_opinion.Text = WebHelpers.FormatString(WebHelpers.GetBool(Model.specialist_opinion));
+                if(Model.specialist_opinion != null)
+                {
+                    rad_specialist_opinion_True.Checked = Model.specialist_opinion;
+                }
+                specialist_opinion_change(Convert.ToString(Model.specialist_opinion));
+
+                lbl_name_of_specialist.Text = WebHelpers.FormatString(Model.name_of_specialist);
+                lbl_time_contaced.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(Model.time_contaced));
+                lbl_time_provided.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(Model.time_provided));
+                lbl_spec_opinion_summarised.Text = WebHelpers.FormatString(Model.spec_opinion_summarised);
+                #endregion
+
+                //Kế hoạch chăm sóc/ Care Plan
+                #region 1. Điều trị tại khoa cấp cứu/ Treatment in Emergency
+                HideControl(btn_grid_Treatment_add, btn_grid_progress_note_add);
+                DataTable dtTreatment = EMRHelpers.ConvertToDataTable(Model.treatment);
+                if(dtTreatment != null)
+                {
+                    WebHelpers.LoadDataGridView(grid_Treatment, dtTreatment, Iina.SKIN_ANNO, btn_grid_Treatment_add);
+                }
+                DataTable dtProgressNote = EMRHelpers.ConvertToDataTable(Model.progress_note);
+                if(dtProgressNote != null)
+                {
+                    WebHelpers.LoadDataGridView(grid_progress_note, dtProgressNote, Iina.SKIN_ANNO, btn_grid_progress_note_add);
+                }
+                lbl_conclusions.Text = WebHelpers.FormatString(Model.conclusions); // Hide
+                #endregion
+
+                #region 2. Xuất viện/ Discharge
+                discharge_change(Convert.ToString(Model.discharge));
+                lbl_discharge.Text = WebHelpers.FormatString(WebHelpers.GetBool(Model.discharge));
+                lbl_prescription.Text = WebHelpers.FormatString(Model.prescription);
+                lbl_specify_care_instructions.Text = WebHelpers.FormatString(Model.specify_care_instructions);
+                lbl_discharge_time.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(Model.discharge_time, "dd-MMM-yyyy HH:mm"));
+                #endregion
+
+                #region 3. Chuyển sang khám ngoại trú/ Referred to OPD
+                lbl_referred_to_OPD.Text = WebHelpers.FormatString(WebHelpers.GetBool(Model.referred_to_OPD, "Yes,specify/ Có, ghi rõ" + "<br/>" + WebHelpers.FormatString(Model.referred_to_OPD_text)));
+                #endregion
+
+                #region 4. Yêu cầu nhập viện/ Hospitalisation required
+                if (Model.hospitalisation_required != null)
+                {
+                    rad_hospitalisation_required_True.Checked = Model.hospitalisation_required;
+                }
+                hos_req_change(Convert.ToString(Model.hospitalisation_required));
+                lbl_hospitalisation_required.Text = WebHelpers.FormatString(WebHelpers.GetBool(Model.hospitalisation_required));
+                lbl_reason.Text = WebHelpers.FormatString(Model.reason);
+                lbl_ward.Text = WebHelpers.FormatString(Model.ward);
+                lbl_time_of_leaving_emergency.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(Model.time_of_leaving_emergency, "dd-MMM-yyyy HH:mm"));
+                #endregion
+
+                #region 5. Nếu phẫu thuật cấp cứu/ In case of emergency surgery
+                if (Model.emergency_surgery != null)
+                {
+                    rad_emergency_surgery_True.Checked = Model.emergency_surgery;
+                }
+
+                emergency_surgery_change(Convert.ToString(Model.emergency_surgery));
+                lbl_emergency_surgery.Text = WebHelpers.FormatString(WebHelpers.GetBool(Model.emergency_surgery));
+                lbl_pre_operative_diagnosis.Text = WebHelpers.FormatString(Model.pre_operative_diagnosis);
+                lbl_brief_summary.Text = WebHelpers.FormatString(Model.brief_summary);
+                lbl_time_of_leaving_emer_e.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(Model.time_of_leaving_emer_e, "dd-MMM-yyyy HH:mm"));
+                #endregion
+
+                #region 6. Nếu chuyển đến BV khác/ In case of transfer to another hospital
+                if (Model.transfer_hospital != null)
+                {
+                    rad_transfer_hospital_True.Checked = Model.transfer_hospital;
+                }
+
+                transfer_hospital_change(Convert.ToString(Model.transfer_hospital));
+
+                lbl_transfer_hospital.Text = WebHelpers.FormatString(WebHelpers.GetBool(Model.transfer_hospital));
+                lbl_reason_for_transfer.Text = WebHelpers.FormatString(Model.reason_for_transfer);
+                lbl_status_before_transfer.Text = WebHelpers.FormatString(Model.status_before_transfer);
+                lbl_time_of_leaving_emer_a.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(Model.time_of_leaving_emer_a, "dd-MMM-yyyy HH:mm"));
+                #endregion
+
+                #region Tình trạng của bệnh nhân khi xuất viện/ Patient's Condition at Discharge
+                DataTable patient_discharge = EMRHelpers.ConvertToDataTable(Model.patient_discharge);
+                if(patient_discharge != null)
+                {
+                    lbl_patient_discharge.Text = WebHelpers.FormatString(DisplayCheckBox(patient_discharge));
+                }
+                lbl_txt_patient_discharge.Text = WebHelpers.FormatString(Model.txt_patient_discharge);
+                #endregion
+
+                #region Mã ICD-10/ ICD-10 Code(S)
+                lbl_icd_10.Text = WebHelpers.FormatString(Model.icd_10);
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
         }
 
-        public void BindingDataFormView()
+        public override void Init_Page()
         {
-            throw new NotImplementedException();
+            Patient = new PatientInfo(varPID);
+            PatientVisit = new PatientVisitInfo(varPVID, Location);
+
+            Model = new EmrViewModel(varDocID, Location, varDocIdLog);
+            currentLog.Visible = !string.IsNullOrEmpty(varDocIdLog);
+            uc_patientInfo.Patient = Patient;
+            uc_patientInfo.PatientVisit = PatientVisit;
+
+            RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Model.Logs(Location), out string signature_date, out string signature_name);
+
+            HideControl(btnCancel, amendReasonWraper);
+
+            if (Model.status == DocumentStatus.FINAL)
+            {
+                BindingDataForm(form1, Model, ControlState.View);
+                BindingDataFormPrint();
+            }
+            else if (Model.status == DocumentStatus.DRAFT)
+            {
+                BindingDataForm(form1, Model, ControlState.Edit);
+            }
+
+            WebHelpers.getAccessButtons(new AccessButtonInfo()
+            {
+                Form = form1,
+                DocStatus = Model.status,
+                AccessGroup = GroupAccess,
+                AccessAuthorize = AccessAuthorize,
+                IsSameCompanyCode = !IsLocationChanged,
+                IsViewLog = IsViewLog
+            });
         }
 
-        public void BindingDataFormEdit()
+        public override void PostBackEventHandler()
         {
-            throw new NotImplementedException();
+            switch (Request["__EVENTTARGET"])
+            {
+                case "hos_req_change":
+                    hos_req_change(Request["__EVENTARGUMENT"]);
+                    break;
+                case "emergency_surgery_change":
+                    emergency_surgery_change(Request["__EVENTARGUMENT"]);
+                    break;
+                case "transfer_hospital_change":
+                    transfer_hospital_change(Request["__EVENTARGUMENT"]);
+                    break;
+                case "specialist_opinion_change":
+                    specialist_opinion_change(Request["__EVENTARGUMENT"]);
+                    break;
+                case "discharge_change":
+                    discharge_change(Request["__EVENTARGUMENT"]);
+                    break;
+            }
         }
 
-        public void BindingDataFormPrint()
+        public override void UpdateModel(string status)
         {
-            throw new NotImplementedException();
-        }
+            try
+            {
+                Model = new EmrViewModel(varDocID, Location);
+                Model.status = status;
 
-        public void UpdateModel()
-        {
-            throw new NotImplementedException();
+                Model.evaluation_time = DataHelpers.ConvertSQLDateTime(dtpk_evaluation_time.SelectedDate);
+                Model.chief_complaint = txt_chief_complaint.Value;
+                Model.chief_complaint_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_chief_complaint_code_", EmergencyMedicalRecord.ChiefComplaintCode);
+                Model.chief_complaint_desc = WebHelpers.GetDicDesc(Model.chief_complaint_code, EmergencyMedicalRecord.ChiefComplaintCode);
+                Model.history_of_present = txt_history_of_present.Value;
+                Model.past_med_his_meds = txt_past_med_his_meds.Value;
+                Model.past_med_his_surs = txt_past_med_his_surs.Value;
+                Model.habits = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_habits_", EmergencyMedicalRecord.Habits, out DataTable habits, "cde");
+
+                if (cb_habits_O.Checked)
+                {
+                    Model.habits_other = txt_habits_other.Value;
+                }
+
+                Model.habits = JsonConvert.SerializeObject(habits);
+                Model.home_medications = txt_home_medications.Value;
+                Model.allergies = txt_allergies.Value;
+                Model.relevant_family_history = txt_relevant_family_history.Value;
+                Model.finding = txt_finding.Value;
+
+                if (rad_required_code_True.Checked)
+                {
+                    Model.required_code = true;
+                    Model.required_text = txt_required_text.Value;
+                }
+                if (rad_required_code_False.Checked)
+                {
+                    Model.required_code = false;
+                    Model.required_text = "";
+                }
+
+                Model.investigations_results = txt_investigations_results.Value;
+                Model.initial_diagnosis = txt_initial_diagnosis.Value;
+                Model.diferential_diagnosis = txt_diferential_diagnosis.Value;
+                Model.associated_conditions = txt_associated_conditions.Value;
+                Model.comfirmed_diagnosis = txt_comfirmed_diagnosis.Value;
+
+                if (rad_specialist_opinion_True.Checked)
+                {
+                    Model.specialist_opinion = true;
+                    Model.name_of_specialist = txt_name_of_specialist.Value;
+                    Model.time_contaced = DataHelpers.ConvertSQLDateTime(dtpk_time_contaced.SelectedDate);
+                    Model.time_provided = DataHelpers.ConvertSQLDateTime(dtpk_time_provided.SelectedDate);
+                    Model.spec_opinion_summarised = txt_spec_opinion_summarised.Value;
+
+                }
+                if (rad_specialist_opinion_False.Checked)
+                {
+                    Model.specialist_opinion = false;
+                    Model.name_of_specialist = "";
+                    Model.time_contaced = null;
+                    Model.time_provided = null;
+                    Model.spec_opinion_summarised = "";
+
+                }
+                //DataTable Treatment_tb = new DataTable();
+                //foreach (KeyValuePair<string, string> col in EmergencyMedicalRecord.Treatment)
+                //{
+                //    Treatment_tb.Columns.Add(col.Key);
+                //}
+                Model.treatment = WebHelpers.GetDataGridView(grid_Treatment, EmergencyMedicalRecord.Treatment);
+
+                //DataTable Progress_note_tb = new DataTable();
+                //foreach (KeyValuePair<string, string> col in EmergencyMedicalRecord.ProgressNote)
+                //{
+                //    Progress_note_tb.Columns.Add(col.Key);
+                //}
+                //emr.progress_note = WebHelpers.GetJSONFromTable(grid_progress_note, Progress_note_tb);
+                Model.progress_note = WebHelpers.GetDataGridView(grid_progress_note, EmergencyMedicalRecord.ProgressNote);
+
+                Model.conclusions = txt_conclusions.Value;
+                if (rad_discharge_True.Checked)
+                {
+                    Model.discharge = true;
+                    Model.prescription = txt_prescription.Value;
+                    Model.specify_care_instructions = txt_specify_care_instructions.Value;
+                    Model.discharge_time = DataHelpers.ConvertSQLDateTime(dtpk_discharge_time.SelectedDate);
+
+                }
+                if (rad_discharge_False.Checked)
+                {
+                    Model.discharge = false;
+                    Model.prescription = "";
+                    Model.specify_care_instructions = "";
+                    Model.discharge_time = null;
+                }
+                if (rad_referred_to_OPD_True.Checked)
+                {
+                    Model.referred_to_OPD = true;
+                    Model.referred_to_OPD_text = txt_referred_to_OPD_text.Value;
+                }
+                if (rad_referred_to_OPD_False.Checked)
+                {
+                    Model.referred_to_OPD = false;
+                    Model.referred_to_OPD_text = "";
+
+                }
+                if (rad_hospitalisation_required_True.Checked)
+                {
+                    Model.hospitalisation_required = true;
+                    Model.reason = txt_reason.Value;
+                    Model.ward = txt_ward.Value;
+                    Model.time_of_leaving_emergency = DataHelpers.ConvertSQLDateTime(dtpk_time_of_leaving_emergency.SelectedDate);
+                }
+                if (rad_hospitalisation_required_False.Checked)
+                {
+                    Model.hospitalisation_required = false;
+                    Model.reason = "";
+                    Model.ward = "";
+                    Model.time_of_leaving_emergency = null;
+                }
+                if (rad_emergency_surgery_True.Checked)
+                {
+                    Model.emergency_surgery = true;
+                    Model.pre_operative_diagnosis = txt_pre_operative_diagnosis.Value;
+                    Model.brief_summary = txt_brief_summary.Value;
+                    Model.time_of_leaving_emer_e = DataHelpers.ConvertSQLDateTime(dtpk_time_of_leaving_emer_e.SelectedDate);
+                }
+                if (rad_emergency_surgery_False.Checked)
+                {
+                    Model.emergency_surgery = false;
+                    Model.pre_operative_diagnosis = "";
+                    Model.brief_summary = "";
+                    Model.time_of_leaving_emer_e = null;
+                }
+                if (rad_transfer_hospital_True.Checked)
+                {
+                    Model.transfer_hospital = true;
+                    Model.reason_for_transfer = txt_reason_for_transfer.Value;
+                    Model.status_before_transfer = txt_status_before_transfer.Value;
+                    Model.time_of_leaving_emer_a = DataHelpers.ConvertSQLDateTime(dtpk_time_of_leaving_emer_a.SelectedDate);
+                }
+                if (rad_transfer_hospital_False.Checked)
+                {
+                    Model.transfer_hospital = false;
+                    Model.reason_for_transfer = "";
+                    Model.status_before_transfer = "";
+                    Model.time_of_leaving_emer_a = null;
+                }
+
+                Model.patient_discharge = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_patient_discharge_", EmergencyMedicalRecord.PatientDischarge, "cde");
+
+                Model.txt_patient_discharge = txt_patient_discharge.Value;
+
+                Model.icd_10 = txt_icd_10.Value;
+
+                if (JsonConvert.SerializeObject(Model) == DataObj.Value)
+                {
+                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
+                }
+
+                //Update v2.0
+                Model.infected_with_covid = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_");
+                Model.received_1_dose = cb_received_1_dose_true.Checked;
+                Model.received_2_dose = cb_received_2_dose_true.Checked;
+                Model.received_additional = cb_received_additional_true.Checked;
+                Model.other_vaccinations = txt_other_vaccinations.Value;
+                Model.not_yet_vaccinations = cb_not_yet_vaccinations_true.Checked;
+
+                Model.amend_reason = txt_amend_reason.Text;
+                Model.user_name = UserId;
+
+                dynamic result = Model.Update(Location)[0];
+
+                if (result.Status == System.Net.HttpStatusCode.OK)
+                {
+                    WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
+                    Init_Page();
+                }
+            }
+            catch (Exception ex)
+            {
+                WebHelpers.SendError(Page, ex);
+            }
+            finally
+            {
+                WebHelpers.clearSessionDoc(Page, varDocID, Location);
+            }
         }
     }
 }

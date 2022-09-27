@@ -370,9 +370,13 @@ namespace EMR.Phar
 
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
-                    string PatientVisit = WebHelpers.GetJSONToDataTable(response.Data).Rows[0]["visit_type_group_rcd"];
-
-                    response = WebHelpers.GetAPI($"api/emr/vital-sign/{loc}/{visitID}/{PatientVisit}");
+                    string visit_type_group = WebHelpers.GetJSONToDataTable(response.Data).Rows[0]["visit_type_group_rcd"];
+                    string visit_type = WebHelpers.GetJSONToDataTable(response.Data).Rows[0]["visit_type"];
+                    if(visit_type_group == "IPD" && visit_type.Trim() == "ONU")
+                    {
+                        visit_type_group = "OPD";
+                    }
+                    response = WebHelpers.GetAPI($"api/emr/vital-sign/{loc}/{visitID}/{visit_type_group}");
                     if (response.Status == System.Net.HttpStatusCode.OK)
                     {
                         dynamic data = JObject.Parse(response.Data);

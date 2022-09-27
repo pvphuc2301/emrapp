@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Telerik.Web.UI.Map;
 
 namespace EMR.Model
 {
@@ -18,8 +19,8 @@ namespace EMR.Model
         public dynamic history_of_present { get; set; }
         public dynamic past_med_his_meds { get; set; }
         public dynamic past_med_his_surs { get; set; }
-        public dynamic habits { get; set; }
-        public dynamic habits_other { get; set; }
+        public string habits { get; set; }
+        public string habits_other { get; set; }
         public dynamic home_medications { get; set; }
         public dynamic allergies { get; set; }
         public dynamic relevant_family_history { get; set; }
@@ -36,8 +37,8 @@ namespace EMR.Model
         public dynamic time_contaced { get; set; }
         public dynamic time_provided { get; set; }
         public dynamic spec_opinion_summarised { get; set; }
-        public dynamic treatment { get; set; }
-        public dynamic progress_note { get; set; }
+        public string treatment { get; set; }
+        public string progress_note { get; set; }
         public dynamic conclusions { get; set; }
         public dynamic discharge { get; set; }
         public dynamic prescription { get; set; }
@@ -57,8 +58,8 @@ namespace EMR.Model
         public dynamic reason_for_transfer { get; set; }
         public dynamic status_before_transfer { get; set; }
         public dynamic time_of_leaving_emer_a { get; set; }
-        public dynamic patient_discharge { get; set; }
-        public dynamic txt_patient_discharge { get; set; }
+        public string patient_discharge { get; set; }
+        public string txt_patient_discharge { get; set; }
         public dynamic icd_10 { get; set; }
         public dynamic model_id { get; set; }
         public dynamic patient_visit_id { get; set; }
@@ -94,10 +95,19 @@ namespace EMR.Model
         #endregion
         public EmrViewModel(string document_id, string location) : base(document_id, location)
         {
+            DefaultModel(location);
         }
 
         public EmrViewModel(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
         {
+            DefaultModel(location);
+        }
+        public void DefaultModel(string location)
+        {
+            if (Logs(location)?.Rows.Count == 1)
+            {
+                infected_with_covid = false;
+            }
         }
     }
 }

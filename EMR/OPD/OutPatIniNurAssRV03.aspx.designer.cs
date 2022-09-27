@@ -312,58 +312,58 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_naf_wrapper;
 
         /// <summary>
-        /// prt_pain_score_code_0 control.
+        /// prt_paint_score_code_0 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_pain_score_code_0;
+        protected global::System.Web.UI.WebControls.Label prt_paint_score_code_0;
 
         /// <summary>
-        /// prt_pain_score_code_1 control.
+        /// prt_paint_score_code_1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_pain_score_code_1;
+        protected global::System.Web.UI.WebControls.Label prt_paint_score_code_1;
 
         /// <summary>
-        /// prt_pain_score_code_2 control.
+        /// prt_paint_score_code_2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_pain_score_code_2;
+        protected global::System.Web.UI.WebControls.Label prt_paint_score_code_2;
 
         /// <summary>
-        /// prt_pain_score_code_3 control.
+        /// prt_paint_score_code_3 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_pain_score_code_3;
+        protected global::System.Web.UI.WebControls.Label prt_paint_score_code_3;
 
         /// <summary>
-        /// prt_pain_score_code_4 control.
+        /// prt_paint_score_code_4 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_pain_score_code_4;
+        protected global::System.Web.UI.WebControls.Label prt_paint_score_code_4;
 
         /// <summary>
-        /// prt_pain_score_code_5 control.
+        /// prt_paint_score_code_5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_pain_score_code_5;
+        protected global::System.Web.UI.WebControls.Label prt_paint_score_code_5;
 
         /// <summary>
         /// prt_flacc_wrapper control.
@@ -735,6 +735,15 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_fall_risk_factor_nfr;
 
         /// <summary>
+        /// prt_fall_risk_factor_nfr_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_fall_risk_factor_nfr_wrapper;
+
+        /// <summary>
         /// prt_fall_risk_factor control.
         /// </summary>
         /// <remarks>
@@ -744,148 +753,139 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_fall_risk_factor;
 
         /// <summary>
-        /// prt_fall_risk_factor_agr control.
+        /// prt_fall_risk_factors_agr control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factor_agr;
+        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factors_agr;
 
         /// <summary>
-        /// prt_fall_risk_factor_pre control.
+        /// prt_fall_risk_factors_pre control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factor_pre;
+        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factors_pre;
 
         /// <summary>
-        /// prt_fall_risk_factor_ina control.
+        /// prt_fall_risk_factors_ina control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factor_ina;
+        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factors_ina;
 
         /// <summary>
-        /// prt_fall_risk_factor_pod control.
+        /// prt_fall_risk_factors_pod control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factor_pod;
+        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factors_pod;
 
         /// <summary>
-        /// prt_fall_risk_factor_imp control.
+        /// prt_fall_risk_factors_imp control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factor_imp;
+        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factors_imp;
 
         /// <summary>
-        /// prt_fall_risk_factor_ear control.
+        /// prt_fall_risk_factors_ear control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factor_ear;
+        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factors_ear;
 
         /// <summary>
-        /// prt_fall_risk_factor_psy control.
+        /// prt_fall_risk_factors_psy control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factor_psy;
+        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factors_psy;
 
         /// <summary>
-        /// prt_fall_risk_factor_ade control.
+        /// prt_fall_risk_factors_ade control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factor_ade;
+        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factors_ade;
 
         /// <summary>
-        /// prt_fall_risk_factor_aps control.
+        /// prt_fall_risk_factors_aps control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factor_aps;
+        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factors_aps;
 
         /// <summary>
-        /// prt_fall_risk_factor_aco control.
+        /// prt_fall_risk_factors_aco control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factor_aco;
+        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factors_aco;
 
         /// <summary>
-        /// prt_fall_risk_factor_ale control.
+        /// prt_fall_risk_factors_ale control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factor_ale;
+        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factors_ale;
 
         /// <summary>
-        /// prt_fall_risk_factor_amb control.
+        /// prt_fall_risk_factors_amb control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factor_amb;
+        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factors_amb;
 
         /// <summary>
-        /// prt_fall_risk_factor_pat control.
+        /// prt_fall_risk_factors_pat control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factor_pat;
+        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factors_pat;
 
         /// <summary>
-        /// prt_fall_risk_factor_aep control.
+        /// prt_fall_risk_factors_aep control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factor_aep;
+        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factors_aep;
 
         /// <summary>
-        /// prt_fall_risk_factor_ahy control.
+        /// prt_fall_risk_factors_ahy control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factor_ahy;
-
-        /// <summary>
-        /// prt_fall_risk_factor_nfr_wrapper control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_fall_risk_factor_nfr_wrapper;
+        protected global::System.Web.UI.WebControls.Label prt_fall_risk_factors_ahy;
 
         /// <summary>
         /// prt_fallen_true control.
@@ -1050,13 +1050,13 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_weight_change;
 
         /// <summary>
-        /// Table1 control.
+        /// Table2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlTable Table1;
+        protected global::System.Web.UI.HtmlControls.HtmlTable Table2;
 
         /// <summary>
         /// prt_ns_l_2 control.
@@ -1086,6 +1086,15 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_ns_l_0;
 
         /// <summary>
+        /// Table3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTable Table3;
+
+        /// <summary>
         /// prt_ns_g_2 control.
         /// </summary>
         /// <remarks>
@@ -1111,6 +1120,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label prt_ns_g_0;
+
+        /// <summary>
+        /// Table1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTable Table1;
 
         /// <summary>
         /// prt_ns_a_2 control.
@@ -1455,6 +1473,24 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblUserBlock;
 
         /// <summary>
+        /// RadWindowError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadWindow RadWindowError;
+
+        /// <summary>
+        /// ErrorMessageId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label ErrorMessageId;
+
+        /// <summary>
         /// btnHome control.
         /// </summary>
         /// <remarks>
@@ -1462,15 +1498,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnHome;
-
-        /// <summary>
-        /// DataObj control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField DataObj;
 
         /// <summary>
         /// messagePlaceHolder control.
@@ -1554,15 +1581,6 @@ namespace EMR
         protected global::Telerik.Web.UI.RadLabel RadLabel1;
 
         /// <summary>
-        /// UpdatePanel12 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel12;
-
-        /// <summary>
         /// lbl_vs_temperature control.
         /// </summary>
         /// <remarks>
@@ -1608,6 +1626,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl vs_weight_wrapper;
 
         /// <summary>
+        /// UpdatePanel12 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel12;
+
+        /// <summary>
         /// txt_vs_weight control.
         /// </summary>
         /// <remarks>
@@ -1633,6 +1660,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl vs_height_wrapper;
+
+        /// <summary>
+        /// UpdatePanel5 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel5;
 
         /// <summary>
         /// txt_vs_height control.
@@ -1851,13 +1887,13 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl allergy_wrapper;
 
         /// <summary>
-        /// UpdatePanel8 control.
+        /// up_allergy control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel8;
+        protected global::System.Web.UI.UpdatePanel up_allergy;
 
         /// <summary>
         /// rad_allergy_false control.
@@ -3759,13 +3795,13 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_ns_food_intake_0;
 
         /// <summary>
-        /// lbl_ns_total_score control.
+        /// d_ns_total_score control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_ns_total_score;
+        protected global::System.Web.UI.WebControls.Label d_ns_total_score;
 
         /// <summary>
         /// ns_food_intake_score control.
@@ -4134,7 +4170,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        /// protected global::System.Web.UI.WebControls.LinkButton btnDelete;
+        //// protected global::System.Web.UI.WebControls.LinkButton btnDelete;
 
         /// <summary>
         /// PopupShowDelay control.

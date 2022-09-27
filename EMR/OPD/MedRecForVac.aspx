@@ -694,7 +694,7 @@
 
                                                         <label class="custom-control custom-checkbox d-inline-block mr-2">
                                                             <input type="checkbox" class="custom-control-input" runat="server" id="cb_received_2_dose_true" />
-                                                            <span class="custom-control-label">Đã tiêm mũi 2/ <span class="text-primary">Received 2<sup>st</sup> dose</span></span>
+                                                            <span class="custom-control-label">Đã tiêm mũi 2/ <span class="text-primary">Received 2<sup>nd</sup> dose</span></span>
                                                         </label>
 
                                                         <label class="custom-control custom-checkbox d-inline-block mr-2">

@@ -1065,7 +1065,7 @@
                                                             <label class="control-label mb-1">Chuyển dạ khởi phát lúc/ <span class="text-primary">Labor triggered at:</span></label>
                                                             <asp:Label runat="server" ID="lbl_labor_trig_at_time" />
                                                             <div class="d-inline-block" runat="server" id="labor_trig_at_time_wrapper">
-                                                                <telerik:RadDateTimePicker runat="server" ID="dtpk_labor_trig_at_time" Width="200px" CssClass="ml-2 edit" />
+                                                                <telerik:RadDateTimePicker runat="server" ID="dtpk_labor_trig_at_time" Width="200px" CssClass="ml-2 edit" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
                                                             </div>
                                                         </div>
 

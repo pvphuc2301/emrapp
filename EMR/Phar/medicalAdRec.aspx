@@ -356,6 +356,7 @@
                             <div class="d-grid mt-2" style="grid-template-columns: 1fr 1fr; grid-gap: 5px; margin-bottom: 110px">
                                 <div></div>
                                 <div class="text-center" style="break-inside: avoid !important; page-break-inside: avoid !important">
+                                    <div id="prtPrintDate"></div>
                                     <div><span style="font-size: 14.5px; font-family: Tahoma" class="font-bold">Họ tên, chữ ký & MSNV của Bác sĩ</span></div>
                                     <div><span style="font-size: 14.5px; font-family: Tahoma" class="text-primary"><i>Doctor’s full name, signature & ID</i></span></div>
                                 </div>
@@ -415,6 +416,16 @@
         }
 
         function btnPrint_Click() {
+            let prtPrintDate = document.getElementById("prtPrintDate");
+            if (prtPrintDate) {
+                const date = new Date();
+                let day = date.getDate() > 9 ? date.getDate() : "0" + date.getDate();
+                let month = date.getMonth() + 1 > 9 ? date.getMonth() + 1 : "0" + (date.getMonth() + 1);
+                let hour = date.getHours() > 9 ? date.getHours() : "0" + date.getHours();
+                let minute = date.getMinutes() > 9 ? date.getMinutes() : "0" + date.getMinutes();
+                prtPrintDate.innerHTML = "Ngày/Date: " + day + "/" + month + "/" + date.getFullYear() + ", Giờ/Time " + hour + ":" + minute;
+            }
+
             let totalPage = 1;
 
             let customPage = document.getElementById('custom_page');

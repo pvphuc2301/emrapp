@@ -373,6 +373,9 @@
     <Compile Include="Classes\ConnClass.cs" />
     <Compile Include="Classes\EMRClass.cs" />
     <Compile Include="Classes\EMRHelpers.cs" />
+    <Compile Include="Classes\EmrPage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Classes\Permissions.cs" />
     <Compile Include="Classes\WebHelpers.cs" />
     <Compile Include="Classes\MISClass.cs" />
@@ -498,11 +501,18 @@
       <DependentUpon>SurgicalReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Model\AccessButtonInfo.cs" />
+    <Compile Include="Model\BARRIER_TO_CARE.cs" />
+    <Compile Include="Model\COMMUNICABLE_DISEASE_SCREENING.cs" />
     <Compile Include="Model\Disc.cs" />
     <Compile Include="Model\EmrDictionary.cs" />
     <Compile Include="Model\EmrDocument.cs" />
     <Compile Include="Model\EmrViewModel.cs" />
+    <Compile Include="Model\FALL_RISK_QUESTION.cs" />
+    <Compile Include="Model\FLACC.cs" />
     <Compile Include="Model\IEmrFormModel.cs" />
+    <Compile Include="Model\NPASS.cs" />
+    <Compile Include="Model\NUTRITION_SCREENING.cs" />
+    <Compile Include="Model\NUTRITION_STATUS.cs" />
     <Compile Include="Model\OinaRv03.cs" />
     <Compile Include="Model\PatientHistoryVm.cs" />
     <Compile Include="Model\sendRequestVm.cs" />
@@ -1263,7 +1273,7 @@
           </servers>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

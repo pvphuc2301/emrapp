@@ -21,6 +21,24 @@ namespace EMR.Model
     public class EmrDictionary
     {
         #region
+        public static Dictionary<string, string> PATIENT_EDUCATION_NEEDS = new Dictionary<string, string>()
+        {
+            { "FAL", "Phòng ngừa té ngã/ Fall risk prevention" },
+            { "WOU", "Chăm sóc vết thương/ Wound care" },
+            { "DIE", "Chế độ ăn uống/ Diet" },
+            { "PAI", "Đau/ Pain" },
+            { "OTH", "" },
+        };
+        public static Dictionary<string, string> IM_CONSUL_REQ = new Dictionary<string, string>()
+        {
+            { "EME", "Tình trạng nặng cần xử lí ngay/ Emergency cases" },
+            { "CHI", "Trẻ em dưới 6 tuổi/ Children are under 6 years of age" },
+            { "SER", "Người khuyết tật nặng/ Servere disabilities" },
+            { "PAT", "Người bệnh trên 80 tuổi/ Patient are over 80 years of age" },
+            { "PRE", "Phụ nữ có thai trên 24 tuần/ Prenancy is over 24 weeks" },
+            { "BOO", "Người bệnh có hẹn/ Booked appointment patients" },
+            { "OTH", "" },
+        };
         public static Dictionary<string, string> INTERVENTION = new Dictionary<string, string>()
         {
             { "UNI", "Phòng ngừa té ngã thường quy/ Universe fall risk prevention" },
@@ -72,8 +90,8 @@ namespace EMR.Model
 
         public static Dictionary<string, string> HOUSING_CODE = new Dictionary<string, string>()
         {
-            { "ALN", "Sống một mình<div> Lives alone</div>" },
-            { "REL", "Sống với người thân<div> With relatives</div>" },
+            { "ALN", "Sống một mình/ Lives alone" },
+            { "REL", "Sống với người thân/ With relatives" },
         };
 
         public static Dictionary<string, string> PRIORITIZATION_CODE = new Dictionary<string, string>()

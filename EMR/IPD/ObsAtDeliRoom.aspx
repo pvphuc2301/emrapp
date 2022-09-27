@@ -539,7 +539,7 @@
                                                     <div class="align-top">
                                                         <asp:Label  runat="server"  id="lbl_admis_delivery"></asp:Label>
                                                         <div class="form-group d-inline-block" runat="server" id="admis_delivery_wrapper">
-                                                            <telerik:RadDateTimePicker runat="server" ID="dtpk_admis_delivery" Width="200px" />
+                                                            <telerik:RadDateTimePicker runat="server" ID="dtpk_admis_delivery" Width="200px" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
                                                             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" Display="Dynamic" ValidationGroup="Group2" runat="server" ControlToValidate="dtpk_admis_delivery" ErrorMessage="Please enter amend reason"
                                         ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                                         </div>
@@ -572,7 +572,7 @@
                                                     <label class="control-label mb-1">Sinh lúc/ <span class="text-primary">Delivered at:</span></label>
                                                     <asp:Label runat="server" ID="lbl_delivery_at"></asp:Label>
                                                     <div class="form-group d-inline-block" runat="server" id="delivery_at_wrapper">
-                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_delivery_at" Width="200px" />
+                                                        <telerik:RadDateTimePicker runat="server" ID="dtpk_delivery_at" Width="200px" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
                                                         <asp:RequiredFieldValidator ID="RequiredFieldValidator3" Display="Dynamic" ValidationGroup="Group2" runat="server" ControlToValidate="dtpk_delivery_at" ErrorMessage="Please enter amend reason"
                                     ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                                     </div>
@@ -775,7 +775,7 @@
                                                         <asp:Label runat="server" ID="lbl_pacental_deli_dt"></asp:Label>
                                                         <div class="d-inline-block mb-2" runat="server" id="pacental_deli_dt_wrapper">
                                                             <div class="form-group d-inline-block">
-                                                                <telerik:RadDateTimePicker runat="server" ID="dtpk_pacental_deli_dt" Width="200px" />
+                                                                <telerik:RadDateTimePicker runat="server" ID="dtpk_pacental_deli_dt" Width="200px" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
                                                                 <asp:RequiredFieldValidator ID="RequiredFieldValidator4" Display="Dynamic" ValidationGroup="Group2" runat="server" ControlToValidate="dtpk_pacental_deli_dt" ErrorMessage="vào lúc/ At is required"
                                     ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                                                             </div>
@@ -1063,7 +1063,7 @@
                                                                         <ItemTemplate>
                                                                             <div class="form-group">
                                                                                 <%--<telerik:RadDateTimePicker ID="date_time" SelectedDate='<%# DBNull.Value.Equals(Eval("date_time")) ? null : Eval("date_time") %>' Width="200px" runat="server" />--%>
-                                                                                <telerik:RadDateTimePicker ID="date_time" Width="200px" runat="server" />
+                                                                                <telerik:RadDateTimePicker ID="date_time" Width="200px" runat="server" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
                                                                                 <asp:HiddenField ID="date_time_check" runat="server" Value='<%# Eval("date_time") %>' />
                                                                             </div>
                                                                         </ItemTemplate>

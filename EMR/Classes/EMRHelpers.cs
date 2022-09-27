@@ -65,24 +65,34 @@ namespace EMR.Classes
         /// </summary>
         /// <param name="JSONData"></param>
         /// <returns></returns>
-        public static DataTable ConvertToDataTable(this string JSONData)
+        public static DataTable ConvertToDataTable(string JSONData)
         {
-            if (JSONData == null) { return null; }
-            DataTable dt;
-            dynamic jsonObject = null;
-
-            if (JSONData.Substring(0, 1) == "[")
+            try
             {
-                jsonObject = JsonConvert.DeserializeObject(JSONData);
-            }
-            else if (JSONData.Substring(0, 1) == "{")
-            {
-                JSONData = "[" + JSONData + "]";
-                jsonObject = JsonConvert.DeserializeObject(JSONData);
-            }
+                if (string.IsNullOrEmpty(JSONData)) 
+                { 
+                    return null; 
+                }
+                DataTable dt;
+                dynamic jsonObject = null;
 
-            dt = JsonConvert.DeserializeObject<DataTable>(Convert.ToString(jsonObject));
-            return dt;
+                if (JSONData.Substring(0, 1) == "[")
+                {
+                    jsonObject = JsonConvert.DeserializeObject(JSONData);
+                }
+                else if (JSONData.Substring(0, 1) == "{")
+                {
+                    JSONData = "[" + JSONData + "]";
+                    jsonObject = JsonConvert.DeserializeObject(JSONData);
+                }
+
+                dt = JsonConvert.DeserializeObject<DataTable>(Convert.ToString(jsonObject));
+                return dt;
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
         }
         #region HtmlForm
         /// <summary>
@@ -170,12 +180,10 @@ namespace EMR.Classes
             return PAGE_URL + $"&docIdLog={doc_log_id}";
         }
 
-        public static string JSON_STR_SEPARATION(dynamic json)
+        public static string JSON_STR_SEPARATION(DataTable data)
         {
-            if (json == null) return null;
-            DataTable dt = WebHelpers.GetJSONToDataTable(json);
             string value = "";
-            foreach (DataRow dr in dt.Rows)
+            foreach (DataRow dr in data.Rows)
             {
                 if (Convert.ToString(dr["code"]) == "OTH")
                     value += $"Trường hợp khác/ Other: ";
