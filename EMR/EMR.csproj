@@ -59,10 +59,30 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\BarcodeLib.dll</HintPath>
     </Reference>
+    <Reference Include="Emr.Ris.ImagingEncode, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\Emr.Ris.ImagingEncode.dll</HintPath>
+    </Reference>
+    <Reference Include="Emr.WebServices, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\Emr.WebServices.dll</HintPath>
+    </Reference>
     <Reference Include="EPPlus, Version=5.8.4.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
       <HintPath>..\packages\EPPlus.5.8.4\lib\net45\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IdentityModel.Abstractions, Version=6.25.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Abstractions.6.25.0\lib\net45\Microsoft.IdentityModel.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens, Version=6.25.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.JsonWebTokens.6.25.0\lib\net45\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging, Version=6.25.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Logging.6.25.0\lib\net45\Microsoft.IdentityModel.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens, Version=6.25.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Tokens.6.25.0\lib\net45\Microsoft.IdentityModel.Tokens.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.1.4.1\lib\net45\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
     </Reference>
@@ -81,6 +101,9 @@
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.DirectoryServices.AccountManagement" />
     <Reference Include="System.DirectoryServices.Protocols" />
+    <Reference Include="System.IdentityModel.Tokens.Jwt, Version=6.25.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IdentityModel.Tokens.Jwt.6.25.0\lib\net45\System.IdentityModel.Tokens.Jwt.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Security" />
     <Reference Include="System.Threading.Tasks" />
@@ -185,7 +208,12 @@
     <Content Include="App_Data\RadCaptcha\X.wav" />
     <Content Include="App_Data\RadCaptcha\Y.wav" />
     <Content Include="App_Data\RadCaptcha\Z.wav" />
-    <Content Include="BarcodeLib.dll" />
+    <Content Include="images\booking_for_surgery_procedure_1.jpg" />
+    <Content Include="images\iina_pain_assessment.png" />
+    <Content Include="IPD\BookForSurPro.aspx" />
+    <Content Include="OPD\AdmissionRequest.aspx" />
+    <Content Include="IPD\InpIniNurAssRV05.aspx" />
+    <Content Include="Libraries\BarcodeLib.dll" />
     <Content Include="Dashboard.aspx" />
     <Content Include="DashboardTest.aspx" />
     <Content Include="DBP\OPD\MedicalCertificate.aspx" />
@@ -202,6 +230,8 @@
     <Content Include="icons\CheckCircle.ascx" />
     <Content Include="icons\Envelope.ascx" />
     <Content Include="icons\ExclamationTriangle.ascx" />
+    <Content Include="icons\fontawesome\circle-info-solid.svg" />
+    <Content Include="icons\fontawesome\info-solid.svg" />
     <Content Include="icons\GeoAlt.ascx" />
     <Content Include="icons\Pencil.ascx" />
     <Content Include="icons\X.ascx" />
@@ -213,14 +243,19 @@
     <Content Include="images\ExcellentCare-removebg-preview.png" />
     <Content Include="images\ExcellentCare.png" />
     <Content Include="images\Footer.jpg" />
+    <Content Include="images\getsitelogo.png" />
     <Content Include="images\Image-1.jpg" />
     <Content Include="images\logo-opacity.png" />
     <Content Include="images\PaintAssess.png" />
     <Content Include="images\prt_header.png" />
     <Content Include="IPD\ObsGynIniAss.aspx" />
     <Content Include="IPD\SurgicalReport.aspx" />
+    <Content Include="Libraries\Emr.Ris.ImagingEncode.dll" />
+    <Content Include="Libraries\Emr.WebServices.dll" />
     <Content Include="OPD\OutPatIniNurAssRV03.aspx" />
     <Content Include="OPD\OutPatIniNurAssV20.aspx" />
+    <Content Include="OPD\OutPatMedRecPedRV01.aspx" />
+    <Content Include="OPD\OutPatMedRecRV01.aspx" />
     <Content Include="Other\FormMenu.aspx" />
     <Content Include="Other\SessionEMR.aspx" />
     <Content Include="Other\Settings.aspx" />
@@ -264,7 +299,7 @@
     <Content Include="IPD\SurgicalCertificate.aspx" />
     <Content Include="Login.aspx" />
     <Content Include="Logout.aspx" />
-    <Content Include="OnBarcode.Barcode.BarcodeScanner.dll" />
+    <Content Include="Libraries\OnBarcode.Barcode.BarcodeScanner.dll" />
     <Content Include="OPD\MedicalCertificate.aspx" />
     <Content Include="OPD\MedRecForNeoVaccin.aspx" />
     <Content Include="OPD\MedRecForVac.aspx" />
@@ -298,6 +333,7 @@
     <Content Include="Report\rxHistory.aspx" />
     <Content Include="Report\Style1.css" />
     <Content Include="Report\TabStyle.css" />
+    <Content Include="Report\ImageLink.aspx" />
     <Content Include="Report\TestTasb.aspx" />
     <Content Include="scripts\alertify.js" />
     <Content Include="scripts\checkValidFields.js" />
@@ -308,7 +344,10 @@
     <Content Include="scripts\inpIniNurAss.js" />
     <Content Include="scripts\jquery-2.2.1.js" />
     <Content Include="scripts\jquery-2.2.1.min.js" />
+    <Content Include="scripts\image-editor.js" />
     <Content Include="styles\alertify.css" />
+    <Content Include="styles\css\fontawesome-all.css" />
+    <Content Include="styles\print-10.2022.css" />
     <Content Include="styles\print.css" />
     <Content Include="styles\style-login.css" />
     <Content Include="styles\sweetalert.min.css" />
@@ -331,7 +370,7 @@
     <Content Include="UserControls\PrintTemplate\Signature2.ascx" />
     <Content Include="UserControls\TextField1.ascx" />
     <Content Include="UserControls\UCPatientInfo.ascx" />
-    <Content Include="zxing.dll" />
+    <Content Include="Libraries\zxing.dll" />
     <Content Include="Print\Print.rar" />
     <None Include="Properties\PublishProfiles\DEV.pubxml" />
     <None Include="Properties\PublishProfiles\EMR_PRO.pubxml" />
@@ -370,6 +409,7 @@
     <Content Include="styles\listView.css" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\BarcodeGenerator.cs" />
     <Compile Include="Classes\ConnClass.cs" />
     <Compile Include="Classes\EMRClass.cs" />
     <Compile Include="Classes\EMRHelpers.cs" />
@@ -395,6 +435,28 @@
     <Compile Include="DashboardTest.aspx.designer.cs">
       <DependentUpon>DashboardTest.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Data\AIH\Dictionary\AdreDictionary.cs" />
+    <Compile Include="Data\AIH\Dictionary\BfspDictionary.cs" />
+    <Compile Include="Data\AIH\Dictionary\fEmrDictionary.cs" />
+    <Compile Include="Data\AIH\Dictionary\IinaDictionary.cs" />
+    <Compile Include="Data\AIH\Dictionary\MrfvDictionaryV1.cs" />
+    <Compile Include="Data\AIH\Dictionary\MrnvDictionaryV1.cs" />
+    <Compile Include="Data\AIH\Dictionary\OmrDictionaryV1.cs" />
+    <Compile Include="Data\AIH\Dictionary\PomrDictionaryV1.cs" />
+    <Compile Include="Data\AIH\Model\Adre.cs" />
+    <Compile Include="Data\AIH\Model\Bfsp.cs" />
+    <Compile Include="Data\AIH\Model\EmrV1.cs" />
+    <Compile Include="Data\AIH\Model\EmrV2.cs" />
+    <Compile Include="Data\AIH\Model\Iina.cs" />
+    <Compile Include="Data\AIH\Model\McV1.cs" />
+    <Compile Include="Data\AIH\Model\MrfvV1.cs" />
+    <Compile Include="Data\AIH\Model\MrnvV1.cs" />
+    <Compile Include="Data\AIH\Model\OmrV1.cs" />
+    <Compile Include="Data\AIH\Model\PomrV1.cs" />
+    <Compile Include="Data\AIH\Model\ScocM.cs" />
+    <Compile Include="Data\AIH\Model\UusrV1.cs" />
+    <Compile Include="Data\Shared\Services\EmrService.cs" />
+    <Compile Include="Data\Shared\Services\PatientService.cs" />
     <Compile Include="DBP\OPD\MedicalCertificate.aspx.cs">
       <DependentUpon>MedicalCertificate.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -486,6 +548,27 @@
     <Compile Include="icons\ExclamationTriangle.ascx.designer.cs">
       <DependentUpon>ExclamationTriangle.ascx</DependentUpon>
     </Compile>
+    <Compile Include="IPD\BookForSurPro.aspx.cs">
+      <DependentUpon>BookForSurPro.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IPD\BookForSurPro.aspx.designer.cs">
+      <DependentUpon>BookForSurPro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPD\AdmissionRequest.aspx.cs">
+      <DependentUpon>AdmissionRequest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPD\AdmissionRequest.aspx.designer.cs">
+      <DependentUpon>AdmissionRequest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IPD\InpIniNurAssRV05.aspx.cs">
+      <DependentUpon>InpIniNurAssRV05.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IPD\InpIniNurAssRV05.aspx.designer.cs">
+      <DependentUpon>InpIniNurAssRV05.aspx</DependentUpon>
+    </Compile>
     <Compile Include="IPD\ObsGynIniAss.aspx.cs">
       <DependentUpon>ObsGynIniAss.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -514,6 +597,7 @@
     <Compile Include="Model\NUTRITION_SCREENING.cs" />
     <Compile Include="Model\NUTRITION_STATUS.cs" />
     <Compile Include="Model\OinaRv03.cs" />
+    <Compile Include="Model\PageSetup.cs" />
     <Compile Include="Model\PatientHistoryVm.cs" />
     <Compile Include="Model\sendRequestVm.cs" />
     <Compile Include="OPD\OutPatIniNurAssRV03.aspx.cs">
@@ -529,6 +613,19 @@
     </Compile>
     <Compile Include="OPD\OutPatIniNurAssV20.aspx.designer.cs">
       <DependentUpon>OutPatIniNurAssV20.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPD\OutPatMedRecPedRV01.aspx.cs">
+      <DependentUpon>OutPatMedRecPedRV01.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="OPD\OutPatMedRecPedRV01.aspx.designer.cs">
+      <DependentUpon>OutPatMedRecPedRV01.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPD\OutPatMedRecRV01.aspx.cs">
+      <DependentUpon>OutPatMedRecRV01.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="OPD\OutPatMedRecRV01.aspx.designer.cs">
+      <DependentUpon>OutPatMedRecRV01.aspx</DependentUpon>
     </Compile>
     <Compile Include="Other\FormMenu.aspx.cs">
       <DependentUpon>FormMenu.aspx</DependentUpon>
@@ -965,6 +1062,13 @@
     <Compile Include="Report\rxHistory.aspx.designer.cs">
       <DependentUpon>rxHistory.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Report\ImageLink.aspx.cs">
+      <DependentUpon>ImageLink.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Report\ImageLink.aspx.designer.cs">
+      <DependentUpon>ImageLink.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Report\TestTasb.aspx.cs">
       <DependentUpon>TestTasb.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1241,7 +1345,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\node_modules\html5-editor\" />
-    <Folder Include="DataEntities\" />
     <Folder Include="Pages\" />
   </ItemGroup>
   <ItemGroup>
@@ -1249,6 +1352,15 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Emr.Utility\Emr.Utility.csproj">
+      <Project>{1CDC3829-A634-4F14-AD9A-B4FC9B3736FF}</Project>
+      <Name>Emr.Utility</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />

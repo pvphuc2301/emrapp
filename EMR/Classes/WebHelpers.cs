@@ -21,7 +21,6 @@ using Telerik.Web.UI;
 
 namespace EMR
 {
-
     #region GLOBAL VARIABLES
     public static class GLOBAL_VAL
     {
@@ -132,14 +131,13 @@ namespace EMR
                     //string vpid = page.Request["vpid"];
                     //page.Response.Redirect($"../other/patientsummary.aspx?pid={pid}&vpid={vpid}&blocked={employee.full_name_l}", false);
 
-                    AddJS(page, "showBlock('RadWindow3', \"This document is blocked by " + employee.full_name_e + "\");");
+                    AddJS(page, "ShowBlock(\"This document is blocked by " + employee.full_name_e + "\");");
 
                     //ScriptManager.RegisterStartupScript(page, page.GetType(), "document_block", "setTimeout(()=>{ sweetAlert(\"Denied!\", \"This document is blocked by " + employee.full_name_e + "\", \"error\");},0);", true);
                     return false;
                 }
                 else { return false; }
             }
-
             return true;
         }
 
@@ -480,7 +478,7 @@ namespace EMR
 
                     table.Rows.Add(row);
                 }
-            } catch (Exception ex) { }
+            } catch (Exception ex) { Console.WriteLine(ex.Message); }
 
             return GetDataTableToJSON(table);
         }
@@ -941,7 +939,7 @@ namespace EMR
                                 _dataTable.Rows[r][control.ID] = ((RadTimePicker)control).SelectedTime;
                             }
                         }
-                        catch (Exception ex) { }
+                        catch (Exception ex) { Console.WriteLine(ex.Message); }
                     }
                 }
 
@@ -951,6 +949,7 @@ namespace EMR
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return null;
             }
         }
@@ -994,13 +993,13 @@ namespace EMR
                                 row[control.ID] = DataHelpers.ConvertSQLDateTime(control.SelectedDate);
                             }
                         }
-                        catch (Exception ex) { }
+                        catch (Exception ex) { Console.WriteLine(ex.Message); }
                     }
 
                     table.Rows.Add(row);
                 }
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
 
             return GetDataTableToJSON(table);
         }
@@ -1076,6 +1075,7 @@ namespace EMR
                 return bitImage;
             }catch(Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return null;
             }
         }
@@ -1157,7 +1157,6 @@ namespace EMR
                 if (((HtmlInputRadioButton)form.FindControl(radioButtonID + code.Key)).Checked)
                 {
                     return code.Key;
-                    break;
                 }
             }
             return null;
@@ -1344,13 +1343,13 @@ namespace EMR
                                 control.EnableTyping = !disabled;
                             }
                         }
-                        catch (Exception ex) { }
+                        catch (Exception ex) { Console.WriteLine(ex.Message); }
                     }
                 }
 
                 gridView.Columns[gridView.Columns.Count - 1].Visible = !disabled;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
 
         }
         public static void BindDateTimePicker(RadDateTimePicker radDateTimePicker, dynamic datetime)
@@ -1374,7 +1373,7 @@ namespace EMR
             {
                 radDatePicker.SelectedDate = datetime;
             }
-            catch (Exception ex) { }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
         }
         public static string GetSignatureTemplate1(string dateTime, string title_l, string title_e, string subTitle_l, string subTitle_e, string fullname)
         {
@@ -1461,7 +1460,7 @@ namespace EMR
                         table.Rows.Add(dtRow);
                     }
                 }
-                catch (Exception ex) { }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
             }
             _table = table;
             if (_table.Rows.Count > 0) return JsonConvert.SerializeObject(table);
@@ -1487,7 +1486,7 @@ namespace EMR
                         table.Rows.Add(dtRow);
                     }
                 }
-                catch (Exception ex) { }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
             }
             _table = table;
             if (_table.Rows.Count > 0) return JsonConvert.SerializeObject(table);
@@ -1513,7 +1512,7 @@ namespace EMR
                         table.Rows.Add(dtRow);
                     }
                 }
-                catch (Exception ex) { }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
             }
             if (table.Rows.Count > 0) return JsonConvert.SerializeObject(table);
             return null;
@@ -1552,7 +1551,7 @@ namespace EMR
                         }
                     }
                 }
-                catch (Exception ex) { }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
             }
 
             return table;
@@ -1566,10 +1565,9 @@ namespace EMR
                     if (((HtmlInputRadioButton)_form.FindControl(_radiobuttonID + code.Key)).Checked)
                     {
                         return code.Key;
-                        break;
                     }
                 }
-                catch (Exception ex) { }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
             }
             return null;
         }

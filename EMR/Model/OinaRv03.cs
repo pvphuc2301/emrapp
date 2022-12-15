@@ -84,7 +84,7 @@ namespace EMR.Model
             {
                 return null;
             }
-            return Math.Abs(Math.Round(((current_weight - previous_weight) * 100) / previous_weight, 1));
+            return Math.Round(((current_weight - previous_weight) * 100) / previous_weight, 1);
         }
 
         public static double BmiCal(double vs_weight, double vs_height)
@@ -183,6 +183,11 @@ namespace EMR.Model
 
         public OinaRv01(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
         {
+        }
+
+        protected override void DefaultDocument()
+        {
+            
         }
     }
 }

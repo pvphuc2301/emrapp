@@ -1,4 +1,7 @@
 ﻿using EMR.Classes;
+using EMR.Data.AIH.Dictionary;
+using EMR.Data.AIH.Model;
+using EMR.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,85 +15,26 @@ using Telerik.Web.UI;
 
 namespace EMR
 {
-    public partial class OutPatMedRec : System.Web.UI.Page
+    public partial class OutPatMedRec : EmrPage, IEmrFormModel<OmrV1>
     {
-        Omr omr;
-        PatientInfo patientInfo;
-        PatientVisitInfo patientVisitInfo;
-        public string PAGE_URL { get; set; }
-        public string loc { get; set; }
-        public string locChanged { get; set; }
-        public string varDocID { get; set; }
-        public string varDocIdLog { get; set; }
-        public string varModelID { get; set; }
-        public string varPVID { get; set; }
-        public string varVPID { get; set; }
-        public string varPID { get; set; }
-
-        public string SignatureDate { get; set; }
-        public string SignatureName { get; set; }
-
-        protected void Page_Load(object sender, EventArgs e)
+        public override string form_url { get; set; } = $"OPD/{nameof(OutPatMedRec)}";
+        public OmrV1 Model { get; set; }
+        public override dynamic InitModel()
         {
-            if (!WebHelpers.CheckSession(this)) { return; }
-
-            varDocID = Request.QueryString["docId"];
-            varDocIdLog = Request.QueryString["docIdLog"];
-            varModelID = Request.QueryString["modelId"];
-            varPVID = Request.QueryString["pvId"];
-            varVPID = Request.QueryString["vpId"];
-            varPID = Request.QueryString["pId"];
-            loc = (string)Session["company_code"];
-            locChanged = (string)Session["const_company_code"];
-
-            string url = Request.RawUrl.Split('.')[0];
-            var urlArr = url.Split('/');
-            url = urlArr[urlArr.Length - 1];
-
-            PAGE_URL = $"/OPD/{url}.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
-
-            if (!IsPostBack)
+            //if (WebHelpers.IsDEVELOP())
             {
-                Initial();
-                SetDefaultValue();
+                form_url = form_url + "RV01";
+                Response.Redirect(PAGE_URL);
             }
-
-            PostBackEventHandler();
+            return Model = new OmrV1(varDocID, Location, varDocIdLog);
         }
-
-        private void SetDefaultValue()
-        {
-            if (RadGrid1.Items.Count <= 1)
-            {
-                rad_infected_with_covid_false.Checked = true;
-            }
-        }
-
-        private void LoadPatientInfo()
-        {
-            lblFirstName.Text = patientInfo.first_name_l;
-            lblLastName.Text = patientInfo.last_name_l;
-            lblGender.Text = patientInfo.gender_l;
-
-            WebHelpers.ConvertDateTime(patientInfo.DOB, out bool isValid, out string DOB, "dd-MM-yyyy");
-            lblDoB.Text = DOB + " (" + patientInfo.Age + "t)";
-
-            lblPatientAddress.Text = patientInfo.Address;
-            lblContactPerson.Text = patientInfo.Contact;
-
-            lblVisitCode.Text = patientVisitInfo.VisitCode;
-
-            WebHelpers.ConvertDateTime(patientVisitInfo.ActualVisitDateTime, out bool isValid1, out string ActualVisitDateTime, "dd-MM-yyyy");
-            lblVisitDate.Text = ActualVisitDateTime;
-        }
-        private void PostBackEventHandler()
+        public override void PostBackEventHandler()
         {
             switch (Request["__EVENTTARGET"])
             {
                 case "rad_treatment_code_change":
                     rad_treatment_code_change((string)Request["__EVENTARGUMENT"]);
                     break;
-
             }
         }
 
@@ -109,48 +53,37 @@ namespace EMR
         }
 
         #region Binding Data
-        private void BindingDataForm(Omr omr, bool state)
-        {
-            if (state)
-            {
-                BindingDataFormEdit(omr);
-            }
-            else
-            {
-                BindingDataFormView(omr);
-            }
-        }
-        private void BindingDataFormEdit(Omr omr)
+        public override void BindingDataFormEdit()
         {
             try
             {
                 btnVSFreeText.Visible = true;
 
-                patientInfo = new PatientInfo(varPID);
+                Patient = new PatientInfo(varPID);
                 txt_amend_reason.Text = "";
 
-                if (DataHelpers.CalculateAge(patientInfo.date_of_birth) >= 18)
+                if (DataHelpers.CalculateAge(Patient.date_of_birth) >= 18)
                 {
                     habits_field.Visible = true;
 
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_habits_smoking_" + omr.habits_smoking);
+                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_habits_smoking_" + Model.habits_smoking);
 
-                    txt_habits_smoking_pack.Value = WebHelpers.GetBool(omr.habits_smoking, omr.habits_smoking_pack, "");
+                    txt_habits_smoking_pack.Value = WebHelpers.GetBool(Model.habits_smoking, Model.habits_smoking_pack, "");
 
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_habits_alcohol_" + omr.habits_alcohol);
+                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_habits_alcohol_" + Model.habits_alcohol);
 
-                    txt_habits_alcohol_note.Value = WebHelpers.GetBool(omr.habits_alcohol, WebHelpers.TextToHtmlTag(omr.habits_alcohol_note), "");
+                    txt_habits_alcohol_note.Value = WebHelpers.GetBool(Model.habits_alcohol, WebHelpers.TextToHtmlTag(Model.habits_alcohol_note), "");
 
 
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_habits_drugs_" + omr.habits_drugs);
+                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_habits_drugs_" + Model.habits_drugs);
 
-                    txt_habits_drugs_note.Value = WebHelpers.GetBool(omr.habits_drugs, WebHelpers.TextToHtmlTag(omr.habits_drugs_note), "");
+                    txt_habits_drugs_note.Value = WebHelpers.GetBool(Model.habits_drugs, WebHelpers.TextToHtmlTag(Model.habits_drugs_note), "");
 
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_habits_physical_exercise_" + omr.habits_physical_exercise);
+                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_habits_physical_exercise_" + Model.habits_physical_exercise);
 
-                    txt_habits_phy_exer_note.Value = WebHelpers.GetBool(omr.habits_physical_exercise, WebHelpers.TextToHtmlTag(omr.habits_phy_exer_note), "");
+                    txt_habits_phy_exer_note.Value = WebHelpers.GetBool(Model.habits_physical_exercise, WebHelpers.TextToHtmlTag(Model.habits_phy_exer_note), "");
 
-                    txt_habits_other.Value = WebHelpers.TextToHtmlTag(omr.habits_other);
+                    txt_habits_other.Value = WebHelpers.TextToHtmlTag(Model.habits_other);
                 }
                 else
                 {
@@ -158,16 +91,16 @@ namespace EMR
                 }
 
                 // I. Lý do đến khám/ Chief complaint:
-                txt_chief_complain.Value = WebHelpers.TextToHtmlTag(omr.chief_complain);
+                txt_chief_complain.Value = WebHelpers.TextToHtmlTag(Model.chief_complain);
 
                 // II. Bệnh sử/ Medical History:
                 // 1.Bệnh sử hiện tại / Current Medical History:
-                txt_medical_history.Value = WebHelpers.TextToHtmlTag(omr.medical_history);
+                txt_medical_history.Value = WebHelpers.TextToHtmlTag(Model.medical_history);
 
-                txt_current_medication.Value = WebHelpers.TextToHtmlTag(omr.current_medication);
+                txt_current_medication.Value = WebHelpers.TextToHtmlTag(Model.current_medication);
 
                 // 2.Tiền sử bệnh/ Antecedent Medical History:
-                txt_personal.Value = WebHelpers.TextToHtmlTag(omr.personal);
+                txt_personal.Value = WebHelpers.TextToHtmlTag(Model.personal);
 
                 //Update V2.0
                 cb_received_1_dose_true.Disabled
@@ -176,28 +109,28 @@ namespace EMR
                     = cb_not_yet_vaccinations_true.Disabled
                     = false;
 
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_" + omr.infected_with_covid);
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_" + Model.infected_with_covid);
 
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + omr.received_1_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + omr.received_2_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + omr.received_additional);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + omr.received_additional);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + omr.not_yet_vaccinations);
-                //txt_other_vaccinations.Value = WebHelpers.TextToHtmlTag(omr.immunization); // omr.other_vaccinations;
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + Model.received_1_dose);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + Model.received_2_dose);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + Model.received_additional);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + Model.received_additional);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + Model.not_yet_vaccinations);
+                //txt_other_vaccinations.Value = WebHelpers.TextToHtmlTag(Model.immunization); // Model.other_vaccinations;
 
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_allergy_" + omr.allergy);
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_allergy_" + Model.allergy);
 
-                txt_allergy_note.Value = WebHelpers.GetBool(omr.allergy, WebHelpers.TextToHtmlTag(omr.allergy_note), "");
+                txt_allergy_note.Value = WebHelpers.GetBool(Model.allergy, WebHelpers.TextToHtmlTag(Model.allergy_note), "");
 
-                txt_family.Value = WebHelpers.TextToHtmlTag(omr.family);
-                txt_immunization.Value = WebHelpers.TextToHtmlTag(omr.immunization);
+                txt_family.Value = WebHelpers.TextToHtmlTag(Model.family);
+                txt_immunization.Value = WebHelpers.TextToHtmlTag(Model.immunization);
 
                 // III.Khám bệnh/ Physical Examination:
                 // DẤU HIỆU SINH TỒN/ VITAL SIGNS:
 
-                txt_physical_examination.Value = WebHelpers.TextToHtmlTag(omr.physical_examination);
+                txt_physical_examination.Value = WebHelpers.TextToHtmlTag(Model.physical_examination);
 
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_psy_consult_required_" + omr.psy_consult_required, "false");
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_psy_consult_required_" + Model.psy_consult_required, "false");
 
                 WebHelpers.VisibleControl(true, btnUpdateVitalSign);
 
@@ -212,75 +145,76 @@ namespace EMR
                  = txt_vs_spO2.Disabled
                  = !cbVSFreeText.Checked;
 
-                txt_vs_temperature.Value = omr.vs_temperature;
-                txt_vs_heart_rate.Value = omr.vs_heart_rate;
-                txt_vs_weight.Value = omr.vs_weight;
-                txt_vs_respiratory_rate.Value = omr.vs_respiratory_rate;
-                txt_vs_height.Value = omr.vs_height;
-                txt_vs_blood_pressure.Value = omr.vs_blood_pressure;
-                txt_vs_bmi.Value = omr.vs_BMI;
-                txt_vs_spO2.Value = omr.vs_spO2;
-                txt_vs_pulse.Value = omr.vs_pulse;
+                txt_vs_temperature.Value = Model.vs_temperature;
+                txt_vs_heart_rate.Value = Model.vs_heart_rate;
+                txt_vs_weight.Value = Model.vs_weight;
+                txt_vs_respiratory_rate.Value = Model.vs_respiratory_rate;
+                txt_vs_height.Value = Model.vs_height;
+                txt_vs_blood_pressure.Value = Model.vs_blood_pressure;
+                txt_vs_bmi.Value = Model.vs_BMI;
+                txt_vs_spO2.Value = Model.vs_spO2;
+                txt_vs_pulse.Value = Model.vs_pulse;
 
-                txt_laboratory_indications_results.Value = WebHelpers.TextToHtmlTag(omr.laboratory_indications_results);
-                txt_additional_investigation.Value = WebHelpers.TextToHtmlTag(omr.additional_investigation);
+                txt_laboratory_indications_results.Value = WebHelpers.TextToHtmlTag(Model.laboratory_indications_results);
+                txt_additional_investigation.Value = WebHelpers.TextToHtmlTag(Model.additional_investigation);
                 // V.Kết luận/ Conclusion:
-                //txtDiagnosis.Text = omr1.diagnosis;
-                txt_initial_diagnosis.Value = WebHelpers.TextToHtmlTag(omr.initial_diagnosis);
-                txt_diagnosis.Value = WebHelpers.TextToHtmlTag(omr.diagnosis);
-                txt_differential_diagnosis.Value = WebHelpers.TextToHtmlTag(omr.differential_diagnosis);
-                txt_associated_conditions.Value = WebHelpers.TextToHtmlTag(omr.associated_conditions);
+                //txtDiagnosis.Text = Model1.diagnosis;
+                txt_initial_diagnosis.Value = WebHelpers.TextToHtmlTag(Model.initial_diagnosis);
+                txt_diagnosis.Value = WebHelpers.TextToHtmlTag(Model.diagnosis);
+                txt_differential_diagnosis.Value = WebHelpers.TextToHtmlTag(Model.differential_diagnosis);
+                txt_associated_conditions.Value = WebHelpers.TextToHtmlTag(Model.associated_conditions);
 
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_treatment_code_" + omr.treatment_code, "opd");
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_treatment_code_" + Model.treatment_code, "opd");
 
                 // 5.Current medications
-                rad_treatment_code_change(omr.treatment_code);
-                txt_medicine.Value = WebHelpers.TextToHtmlTag(omr.medicine);
+                rad_treatment_code_change(Model.treatment_code);
+                txt_medicine.Value = WebHelpers.TextToHtmlTag(Model.medicine);
 
-                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_spec_opinion_requested_" + omr.spec_opinion_requested, "false");
-                txt_spec_opinion_requested_note.Value = WebHelpers.GetBool(omr.spec_opinion_requested, WebHelpers.TextToHtmlTag(omr.spec_opinion_requested_note), "");
+                WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_spec_opinion_requested_" + Model.spec_opinion_requested, "false");
+                txt_spec_opinion_requested_note.Value = WebHelpers.GetBool(Model.spec_opinion_requested, WebHelpers.TextToHtmlTag(Model.spec_opinion_requested_note), "");
 
-                txt_specific_education_required.Value = WebHelpers.TextToHtmlTag(omr.specific_education_required);
-                txt_next_appointment.Value = WebHelpers.TextToHtmlTag(omr.next_appointment);
+                txt_specific_education_required.Value = WebHelpers.TextToHtmlTag(Model.specific_education_required);
+                txt_next_appointment.Value = WebHelpers.TextToHtmlTag(Model.next_appointment);
 
-                DataObj.Value = JsonConvert.SerializeObject(omr);
+                DataObj.Value = JsonConvert.SerializeObject(Model);
 
-                Session["docid"] = omr.document_id;
-                WebHelpers.AddScriptFormEdit(Page, omr, (string)Session["emp_id"], loc);
+                Session["docid"] = Model.document_id;
+                WebHelpers.AddScriptFormEdit(Page, Model, (string)Session["emp_id"], Location);
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }
 
-        private void BindingDataFormView(Omr omr)
+        public override void BindingDataFormView()
         {
             try
             {
+                LoadBarCode();
                 btnVSFreeText.Visible = false;
                 //1
-                lbl_chief_complain.Text = WebHelpers.TextToHtmlTag(omr.chief_complain);
-                lbl_current_medication.Text = WebHelpers.TextToHtmlTag(omr.current_medication);
+                lbl_chief_complain.Text = WebHelpers.TextToHtmlTag(Model.chief_complain);
+                lbl_current_medication.Text = WebHelpers.TextToHtmlTag(Model.current_medication);
                 //2
-                lbl_personal.Text = WebHelpers.TextToHtmlTag(omr.personal);
-                if (DataHelpers.CalculateAge(patientInfo.date_of_birth) >= 18)
+                lbl_personal.Text = WebHelpers.TextToHtmlTag(Model.personal);
+                if (DataHelpers.CalculateAge(Patient.date_of_birth) >= 18)
                 {
                     habits_field.Visible = true;
 
-                    lbl_habits_smoking.Text = WebHelpers.TextToHtmlTag(WebHelpers.GetBool(omr.habits_smoking, "Có, ghi số gói trong năm/ Yes, specify pack years: " + omr.habits_smoking_pack));
+                    lbl_habits_smoking.Text = WebHelpers.TextToHtmlTag(WebHelpers.GetBool(Model.habits_smoking, "Có, ghi số gói trong năm/ Yes, specify pack years: " + Model.habits_smoking_pack));
 
-                    lbl_habits_alcohol.Text = WebHelpers.TextToHtmlTag(WebHelpers.GetBool(omr.habits_alcohol, "Có, ghi rõ/ Yes, specify: " + omr.habits_alcohol_note));
+                    lbl_habits_alcohol.Text = WebHelpers.TextToHtmlTag(WebHelpers.GetBool(Model.habits_alcohol, "Có, ghi rõ/ Yes, specify: " + Model.habits_alcohol_note));
 
-                    lbl_habits_drugs.Text = WebHelpers.TextToHtmlTag(WebHelpers.GetBool(omr.habits_drugs, "Có, ghi rõ/ Yes, specify: " + omr.habits_drugs_note));
+                    lbl_habits_drugs.Text = WebHelpers.TextToHtmlTag(WebHelpers.GetBool(Model.habits_drugs, "Có, ghi rõ/ Yes, specify: " + Model.habits_drugs_note));
 
-                    lbl_habits_physical_exercise.Text = WebHelpers.TextToHtmlTag(WebHelpers.GetBool(omr.habits_physical_exercise, "Có, ghi rõ/ Yes, specify: " + omr.habits_phy_exer_note));
+                    lbl_habits_physical_exercise.Text = WebHelpers.TextToHtmlTag(WebHelpers.GetBool(Model.habits_physical_exercise, "Có, ghi rõ/ Yes, specify: " + Model.habits_phy_exer_note));
 
-                    lbl_habits_other.Text = WebHelpers.GetValue(omr.habits_other);
+                    lbl_habits_other.Text = WebHelpers.GetValue(Model.habits_other);
                 }
                 else
                 {
                     habits_field.Visible = false;
                 }
 
-                lbl_medical_history.Text = WebHelpers.TextToHtmlTag(omr.medical_history);
+                lbl_medical_history.Text = WebHelpers.TextToHtmlTag(Model.medical_history);
 
                 // Update 2.0
                 cb_received_1_dose_true.Disabled
@@ -289,75 +223,73 @@ namespace EMR
                     = cb_not_yet_vaccinations_true.Disabled
                     = true;
 
-                lbl_infected_with_covid.Text = WebHelpers.FormatString(WebHelpers.GetBool(omr.infected_with_covid));
+                lbl_infected_with_covid.Text = WebHelpers.FormatString(WebHelpers.GetBool(Model.infected_with_covid));
 
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + omr.received_1_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + omr.received_2_dose);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + omr.received_additional);
-                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + omr.not_yet_vaccinations);
-                lbl_immunization.Text = WebHelpers.TextToHtmlTag(omr.immunization);
-                //lbl_other_vaccinations.Text = omr.other_vaccinations;
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_1_dose_" + Model.received_1_dose);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_2_dose_" + Model.received_2_dose);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_received_additional_" + Model.received_additional);
+                WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_not_yet_vaccinations_" + Model.not_yet_vaccinations);
+                lbl_immunization.Text = WebHelpers.TextToHtmlTag(Model.immunization);
+                //lbl_other_vaccinations.Text = Model.other_vaccinations;
 
-                lbl_allergy.Text = WebHelpers.GetBool(omr.allergy, "Có, ghi rõ/ Yes, specify: " + WebHelpers.TextToHtmlTag(omr.allergy_note));
+                lbl_allergy.Text = WebHelpers.GetBool(Model.allergy, "Có, ghi rõ/ Yes, specify: " + WebHelpers.TextToHtmlTag(Model.allergy_note));
 
-                lbl_family.Text = WebHelpers.TextToHtmlTag(omr.family);
+                lbl_family.Text = WebHelpers.TextToHtmlTag(Model.family);
 
                 //
                 WebHelpers.VisibleControl(false, btnUpdateVitalSign);
 
-                lbl_vs_temperature.Text = omr.vs_temperature + " °C";
-                lbl_vs_weight.Text = omr.vs_weight + " Kg";
-                lbl_vs_height.Text = omr.vs_height + " cm";
-                lbl_vs_BMI.Text = omr.vs_BMI + " (Kg/m 2)";
-                lbl_vs_pulse.Text = omr.vs_pulse + " cm";
-                lbl_vs_heart_rate.Text = omr.vs_heart_rate + " /phút (m)";
-                lbl_vs_respiratory_rate.Text = omr.vs_respiratory_rate + " /phút (m)";
-                lbl_vs_blood_pressure.Text = omr.vs_blood_pressure + " mmHg";
-                lbl_vs_spO2.Text = omr.vs_spO2 + " %";
+                lbl_vs_temperature.Text = Model.vs_temperature + " °C";
+                lbl_vs_weight.Text = Model.vs_weight + " Kg";
+                lbl_vs_height.Text = Model.vs_height + " cm";
+                lbl_vs_BMI.Text = Model.vs_BMI + " (Kg/m 2)";
+                lbl_vs_pulse.Text = Model.vs_pulse + " cm";
+                lbl_vs_heart_rate.Text = Model.vs_heart_rate + " /phút (m)";
+                lbl_vs_respiratory_rate.Text = Model.vs_respiratory_rate + " /phút (m)";
+                lbl_vs_blood_pressure.Text = Model.vs_blood_pressure + " mmHg";
+                lbl_vs_spO2.Text = Model.vs_spO2 + " %";
 
-                lbl_physical_examination.Text = WebHelpers.TextToHtmlTag(omr.physical_examination);
+                lbl_physical_examination.Text = WebHelpers.TextToHtmlTag(Model.physical_examination);
 
-                rad_treatment_code_change(omr.treatment_code);
-                if (omr.treatment_code == "OPD") { lbl_medicine.Text = WebHelpers.TextToHtmlTag(omr.medicine); }
+                rad_treatment_code_change(Model.treatment_code);
+                if (Model.treatment_code == "OPD") { lbl_medicine.Text = WebHelpers.TextToHtmlTag(Model.medicine); }
 
-                lbl_psy_consult_required.Text = WebHelpers.GetBool(omr.psy_consult_required);
+                lbl_psy_consult_required.Text = WebHelpers.GetBool(Model.psy_consult_required);
 
                 //IV.
-                lbl_laboratory_indications_results.Text = WebHelpers.TextToHtmlTag(omr.laboratory_indications_results);
-                lbl_additional_investigation.Text = WebHelpers.TextToHtmlTag(omr.additional_investigation);
+                lbl_laboratory_indications_results.Text = WebHelpers.TextToHtmlTag(Model.laboratory_indications_results);
+                lbl_additional_investigation.Text = WebHelpers.TextToHtmlTag(Model.additional_investigation);
                 //V
-                lbl_initial_diagnosis.Text = WebHelpers.TextToHtmlTag(omr.initial_diagnosis);
-                lbl_diagnosis.Text = WebHelpers.TextToHtmlTag(omr.diagnosis);
-                lbl_differential_diagnosis.Text = WebHelpers.TextToHtmlTag(omr.differential_diagnosis);
-                lbl_associated_conditions.Text = WebHelpers.TextToHtmlTag(omr.associated_conditions);
-                lbl_treatment_code.Text = WebHelpers.TextToHtmlTag(omr.treatment_desc);
+                lbl_initial_diagnosis.Text = WebHelpers.TextToHtmlTag(Model.initial_diagnosis);
+                lbl_diagnosis.Text = WebHelpers.TextToHtmlTag(Model.diagnosis);
+                lbl_differential_diagnosis.Text = WebHelpers.TextToHtmlTag(Model.differential_diagnosis);
+                lbl_associated_conditions.Text = WebHelpers.TextToHtmlTag(Model.associated_conditions);
+                lbl_treatment_code.Text = WebHelpers.TextToHtmlTag(Model.treatment_desc);
 
-                lbl_spec_opinion_requested.Text = WebHelpers.GetBool(omr.spec_opinion_requested, "Có, ghi rõ/ Yes, specify: " + WebHelpers.TextToHtmlTag(omr.spec_opinion_requested_note));
+                lbl_spec_opinion_requested.Text = WebHelpers.GetBool(Model.spec_opinion_requested, "Có, ghi rõ/ Yes, specify: " + WebHelpers.TextToHtmlTag(Model.spec_opinion_requested_note));
 
-                lbl_specific_education_required.Text = WebHelpers.TextToHtmlTag(omr.specific_education_required);
-                lbl_next_appointment.Text = WebHelpers.TextToHtmlTag(omr.next_appointment);
+                lbl_specific_education_required.Text = WebHelpers.TextToHtmlTag(Model.specific_education_required);
+                lbl_next_appointment.Text = WebHelpers.TextToHtmlTag(Model.next_appointment);
             }
             catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
-
         }
-        private void BindingDataFormPrint(Omr omr)
+        public override void BindingDataFormPrint()
         {
             try
             {
-                patientInfo = new PatientInfo(varPID);
-                patientVisitInfo = new PatientVisitInfo(varPVID, loc);
+                prt_fullname.Text = Patient.FullName + $" ({Patient.Title})";
+                prt_dob.Text = WebHelpers.FormatDateTime(Patient.date_of_birth) + " | " + Patient.Gender;
+                prt_vpid.Text = Patient.visible_patient_id;
 
-                prt_fullname.Text = patientInfo.FullName + $" ({patientInfo.Title})";
-                prt_dob.Text = WebHelpers.FormatDateTime(patientInfo.date_of_birth) + " | " + patientInfo.Gender;
-                prt_vpid.Text = patientInfo.visible_patient_id;
-                WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
-                prt_day_of_visit.Text = WebHelpers.FormatDateTime(patientVisitInfo.actual_visit_date_time);
-                prt_chief_complaint.Text = WebHelpers.TextToHtmlTag(omr.chief_complain, false);
-                prt_medical_history.Text = WebHelpers.TextToHtmlTag(omr.medical_history, false);
-                prt_personal.Text = WebHelpers.TextToHtmlTag(omr.personal, false);
+                LoadBarCode();
+                
+                prt_day_of_visit.Text = WebHelpers.FormatDateTime(PatientVisit.actual_visit_date_time);
+                prt_chief_complaint.Text = WebHelpers.TextToHtmlTag(Model.chief_complain, false);
+                prt_medical_history.Text = WebHelpers.TextToHtmlTag(Model.medical_history, false);
+                prt_personal.Text = WebHelpers.TextToHtmlTag(Model.personal, false);
                 // Update 2.0
                 prt_infected_with_covid_false.Text
                     = prt_infected_with_covid_true.Text
@@ -367,69 +299,81 @@ namespace EMR
                     = prt_not_yet_vaccinations_true.Text
                     = "❏";
 
-                Label infected_with_covid = FindControl("prt_infected_with_covid_" + omr.infected_with_covid);
+                Label infected_with_covid = FindControl("prt_infected_with_covid_" + Model.infected_with_covid);
                 if (infected_with_covid != null) infected_with_covid.Text = "☒";
 
-                Label received_1_dose = FindControl("prt_received_1_dose_" + omr.received_1_dose);
+                Label received_1_dose = FindControl("prt_received_1_dose_" + Model.received_1_dose);
                 if (received_1_dose != null) received_1_dose.Text = "☒";
 
-                Label received_2_dose = FindControl("prt_received_2_dose_" + omr.received_2_dose);
+                Label received_2_dose = FindControl("prt_received_2_dose_" + Model.received_2_dose);
                 if (received_2_dose != null) received_2_dose.Text = "☒";
 
-                Label received_additional = FindControl("prt_received_additional_" + omr.received_additional);
+                Label received_additional = FindControl("prt_received_additional_" + Model.received_additional);
                 if (received_additional != null) received_additional.Text = "☒";
 
-                Label not_yet_vaccinations = FindControl("prt_not_yet_vaccinations_" + omr.not_yet_vaccinations);
+                Label not_yet_vaccinations = FindControl("prt_not_yet_vaccinations_" + Model.not_yet_vaccinations);
                 if (not_yet_vaccinations != null) not_yet_vaccinations.Text = "☒";
 
                 //prt_other_vaccinations.Text = "Tiêm vắc xin khác (ghi rõ)/ <span class=\"text-primary\">Other vaccinations (specify):</span>";
-                prt_immunization.Text = WebHelpers.TextToHtmlTag(omr.immunization, false);
+                prt_immunization.Text = WebHelpers.TextToHtmlTag(Model.immunization, false);
 
-                prt_family.Text = WebHelpers.TextToHtmlTag(omr.family, false);
-                prt_current_medication.Text = WebHelpers.TextToHtmlTag(omr.current_medication, false);
+                prt_family.Text = WebHelpers.TextToHtmlTag(Model.family, false);
+                prt_current_medication.Text = WebHelpers.TextToHtmlTag(Model.current_medication, false);
                 //IV.
                 //1.
-                prt_vs_temperature.Text = omr.vs_temperature;
-                prt_vs_weight.Text = omr.vs_weight;
-                prt_vs_height.Text = omr.vs_height;
-                prt_vs_BMI.Text = omr.vs_BMI;
-                prt_pulse.Text = omr.vs_heart_rate;
+                prt_vs_temperature.Text = Model.vs_temperature;
+                prt_vs_weight.Text = Model.vs_weight;
+                prt_vs_height.Text = Model.vs_height;
+                prt_vs_BMI.Text = Model.vs_BMI;
+                prt_pulse.Text = Model.vs_heart_rate;
 
-                prt_vs_respiratory_rate.Text = omr.vs_respiratory_rate;
-                prt_vs_blood_pressure.Text = omr.vs_blood_pressure;
-                prt_vs_spO2.Text = omr.vs_spO2;
+                prt_vs_respiratory_rate.Text = Model.vs_respiratory_rate;
+                prt_vs_blood_pressure.Text = Model.vs_blood_pressure;
+                prt_vs_spO2.Text = Model.vs_spO2;
                 //2.
-                prt_physical_examination.Text = WebHelpers.TextToHtmlTag(omr.physical_examination, false);
+                prt_physical_examination.Text = WebHelpers.TextToHtmlTag(Model.physical_examination, false);
 
-                prt_psy_consult_required.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, omr.psy_consult_required, "display: grid; grid-template-columns: 1fr 1fr; width: 250px");
+                prt_psy_consult_required_true.Text
+                    = prt_psy_consult_required_false.Text
+                    = "❏";
+                BindingLabel(nameof(Model.psy_consult_required) + "_" + Model.psy_consult_required, "☒");
+                
+                prt_laboratory_indications_results.Text = WebHelpers.TextToHtmlTag(Model.laboratory_indications_results, false);
+                prt_additional_investigation.Text = WebHelpers.TextToHtmlTag(Model.additional_investigation, false);
+                prt_initial_diagnosis.Text = WebHelpers.TextToHtmlTag(Model.initial_diagnosis, false);
+                prt_diagnosis.Text = WebHelpers.TextToHtmlTag(Model.diagnosis, false);
+                prt_differential_diagnosis.Text = WebHelpers.TextToHtmlTag(Model.differential_diagnosis, false);
+                prt_associated_conditions.Text = WebHelpers.TextToHtmlTag(Model.associated_conditions, false);
 
-                prt_laboratory_indications_results.Text = WebHelpers.TextToHtmlTag(omr.laboratory_indications_results, false);
-                prt_additional_investigation.Text = WebHelpers.TextToHtmlTag(omr.additional_investigation, false);
-                prt_initial_diagnosis.Text = WebHelpers.TextToHtmlTag(omr.initial_diagnosis, false);
-                prt_diagnosis.Text = WebHelpers.TextToHtmlTag(omr.diagnosis, false);
-                prt_differential_diagnosis.Text = WebHelpers.TextToHtmlTag(omr.differential_diagnosis, false);
-                prt_associated_conditions.Text = WebHelpers.TextToHtmlTag(omr.associated_conditions, false);
+                //prt_treatment.Text = WebHelpers.CreateOptions(OmrDictionaryV1.TREATMENT_CODE, (string)Model.treatment_code, "display: grid; grid-template-columns: auto 1fr 1fr; gap: 6px");
 
-                prt_treatment.Text = WebHelpers.CreateOptions(Omr.TREATMENT_CODE, (string)omr.treatment_code, "display: grid; grid-template-columns: 1fr 1fr 1fr;");
+                prt_treatment_code_ipd.Text
+                    = prt_treatment_code_opd.Text
+                    = prt_treatment_code_trf.Text
+                    = "❏";
+                BindingLabel(nameof(Model.treatment_code) + "_" + Model.treatment_code, "☒");
 
-                if (omr.treatment_code == "OPD")
+                if (Model.treatment_code == "OPD")
                 {
                     prt_medicine.Visible = true;
-                    prt_medicine.Text = WebHelpers.TextToHtmlTag(omr.medicine, false);
+                    prt_medicine.Text = WebHelpers.TextToHtmlTag(Model.medicine, false);
                 }
                 else
                 {
                     prt_medicine.Visible = false;
                 }
 
-                prt_spec_opinion_requested.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, omr.spec_opinion_requested, "display: grid; grid-template-columns: 1fr 1fr; width: 250px");
-
-                if (omr.spec_opinion_requested != null)
+                prt_spec_opinion_requested_true.Text
+                    = prt_spec_opinion_requested_false.Text
+                    = "❏";
+                BindingLabel(nameof(Model.spec_opinion_requested) + "_" + Model.spec_opinion_requested, "☒");
+                
+                if (Model.spec_opinion_requested != null)
                 {
-                    if (omr.spec_opinion_requested)
+                    if (Model.spec_opinion_requested)
                     {
                         prt_spec_opinion_requested_note_wrapper.Visible = true;
-                        prt_spec_opinion_requested_note.Text = WebHelpers.TextToHtmlTag(omr.spec_opinion_requested_note, false);
+                        prt_spec_opinion_requested_note.Text = WebHelpers.TextToHtmlTag(Model.spec_opinion_requested_note, false);
                     }
                     else
                     {
@@ -437,9 +381,11 @@ namespace EMR
                     }
                 }
 
-                prt_specific_education_required.Text = WebHelpers.TextToHtmlTag(omr.specific_education_required, false);
+                prt_specific_education_required.Text = WebHelpers.TextToHtmlTag(Model.specific_education_required, false);
 
-                prt_next_appointment.Text = WebHelpers.TextToHtmlTag(omr.next_appointment, false);
+                prt_next_appointment.Text = WebHelpers.TextToHtmlTag(Model.next_appointment, false);
+
+                uplPrintPage.Update();
             }
             catch (Exception ex)
             {
@@ -449,78 +395,12 @@ namespace EMR
         #endregion
 
         #region Events
-        protected void btnComplete_Click(object sender, EventArgs e)
-        {
-            if (Page.IsValid)
-            {
-                Omr omr = new Omr(Request.QueryString["docId"], loc);
-                omr.status = DocumentStatus.FINAL;
-
-                UpdateData(omr);
-                WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
-            }
-        }
-        protected void btnSave_Click(object sender, EventArgs e)
-        {
-            if (Page.IsValid)
-            {
-                Omr omr = new Omr(Request.QueryString["docId"], loc);
-                omr.status = DocumentStatus.DRAFT;
-
-                UpdateData(omr);
-
-            }
-        }
-        protected void btnDelete_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                dynamic result = POMR.Delete((string)Session["UserId"], Request.QueryString["docId"], loc)[0];
-
-                if (result.Status == System.Net.HttpStatusCode.OK)
-                {
-                    WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
-
-                    string url = $"../other/index.aspx?pid={varPID}&vpid={varVPID}";
-                    WebHelpers.AddJS(Page, "DeleteNode(\"" + url + "\");");
-
-                    //Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&req_act=1");
-                }
-            }
-            catch (Exception ex)
-            {
-                WebHelpers.SendError(Page, ex);
-            }
-        }
-        protected void btnAmend_Click(object sender, EventArgs e)
-        {
-            if (WebHelpers.CanOpenForm(Page, Request.QueryString["docId"], DocumentStatus.DRAFT, (string)Session["emp_id"], loc, locChanged, (string)Session["access_authorize"]))
-            {
-                Omr omr = new Omr(Request.QueryString["docId"], loc);
-
-                WebHelpers.VisibleControl(false, btnAmend, btnPrint);
-                WebHelpers.VisibleControl(true, btnComplete, btnCancel, amendReasonWraper);
-
-                //load form control
-                WebHelpers.LoadFormControl(form1, omr, ControlState.Edit, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]);
-                //binding data
-                BindingDataFormEdit(omr);
-                //get access button
-            }
-
-        }
-
-        protected void btnCancel_Click(object sender, EventArgs e)
-        {
-            Initial();
-            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
-        }
         protected void btnUpdateVitalSign_Click(object sender, EventArgs e)
         {
             try
             {
-                patientVisitInfo = new PatientVisitInfo(varPVID, loc);
-                dynamic response = VitalSign.Update(patientVisitInfo.patient_visit_id, patientVisitInfo.visit_type, loc);
+                PatientVisit = new PatientVisitInfo(varPVID, Location);
+                dynamic response = VitalSign.Update(PatientVisit.patient_visit_id, PatientVisit.visit_type, Location);
                 if (response.Status == System.Net.HttpStatusCode.OK)
                 {
                     dynamic vs = JsonConvert.DeserializeObject(response.Data);
@@ -542,58 +422,54 @@ namespace EMR
             txt_vs_spO2.Value = vs.vs_spO2;
             txt_vs_pulse.Value = vs.pulse;
         }
-        protected void btnHome_Click(object sender, EventArgs e)
-        {
-            Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}");
-        }
         #endregion
 
         #region Functions
-        protected void UpdateData(Omr omr)
+        public override void BindingControlToModel()
         {
             try
             {
                 //I.
-                omr.chief_complain = txt_chief_complain.Value;
+                Model.chief_complain = txt_chief_complain.Value;
                 //II.
                 //1.
-                omr.medical_history = txt_medical_history.Value;
-                omr.current_medication = txt_current_medication.Value;
+                Model.medical_history = txt_medical_history.Value;
+                Model.current_medication = txt_current_medication.Value;
                 //2.
-                omr.personal = txt_personal.Value;
+                Model.personal = txt_personal.Value;
                 //Update v2.0
-                omr.infected_with_covid = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_");
-                omr.received_1_dose = cb_received_1_dose_true.Checked;
-                omr.received_2_dose = cb_received_2_dose_true.Checked;
-                omr.received_additional = cb_received_additional_true.Checked;
+                Model.infected_with_covid = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_");
+                Model.received_1_dose = cb_received_1_dose_true.Checked;
+                Model.received_2_dose = cb_received_2_dose_true.Checked;
+                Model.received_additional = cb_received_additional_true.Checked;
                 //omr.other_vaccinations = txt_other_vaccinations.Value;
-                omr.not_yet_vaccinations = cb_not_yet_vaccinations_true.Checked;
+                Model.not_yet_vaccinations = cb_not_yet_vaccinations_true.Checked;
 
-                omr.habits_alcohol = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_habits_alcohol_");
-                omr.habits_alcohol_note = txt_habits_alcohol_note.Value;
+                Model.habits_alcohol = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_habits_alcohol_");
+                Model.habits_alcohol_note = txt_habits_alcohol_note.Value;
 
-                omr.habits_drugs = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_habits_drugs_");
-                omr.habits_drugs_note = txt_habits_drugs_note.Value;
+                Model.habits_drugs = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_habits_drugs_");
+                Model.habits_drugs_note = txt_habits_drugs_note.Value;
 
-                omr.habits_physical_exercise = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_habits_physical_exercise_");
-                omr.habits_phy_exer_note = txt_habits_phy_exer_note.Value;
+                Model.habits_physical_exercise = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_habits_physical_exercise_");
+                Model.habits_phy_exer_note = txt_habits_phy_exer_note.Value;
 
-                omr.habits_other = txt_habits_other.Value;
+                Model.habits_other = txt_habits_other.Value;
 
-                omr.family = txt_family.Value;
-                omr.allergy = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_allergy_");
-                omr.allergy_note = WebHelpers.GetBool(omr.allergy, txt_allergy_note.Value, null);
-                omr.immunization = txt_immunization.Value;
+                Model.family = txt_family.Value;
+                Model.allergy = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_allergy_");
+                Model.allergy_note = WebHelpers.GetBool(Model.allergy, txt_allergy_note.Value, null);
+                Model.immunization = txt_immunization.Value;
                 //II.
-                omr.vs_temperature = txt_vs_temperature.Value;
-                omr.vs_weight = txt_vs_weight.Value;
-                omr.vs_height = txt_vs_height.Value;
-                omr.vs_BMI = txt_vs_bmi.Value;
-                omr.vs_pulse = txt_vs_pulse.Value;
-                omr.vs_heart_rate = txt_vs_heart_rate.Value;
-                omr.vs_respiratory_rate = txt_vs_respiratory_rate.Value;
-                omr.vs_blood_pressure = txt_vs_blood_pressure.Value;
-                omr.vs_spO2 = txt_vs_spO2.Value;
+                Model.vs_temperature = txt_vs_temperature.Value;
+                Model.vs_weight = txt_vs_weight.Value;
+                Model.vs_height = txt_vs_height.Value;
+                Model.vs_BMI = txt_vs_bmi.Value;
+                Model.vs_pulse = txt_vs_pulse.Value;
+                Model.vs_heart_rate = txt_vs_heart_rate.Value;
+                Model.vs_respiratory_rate = txt_vs_respiratory_rate.Value;
+                Model.vs_blood_pressure = txt_vs_blood_pressure.Value;
+                Model.vs_spO2 = txt_vs_spO2.Value;
 
                 string physical_examination = txt_physical_examination.Value;
 
@@ -607,107 +483,41 @@ namespace EMR
                     physical_examination = physical_examination.Replace("\n\n", "\n");
                 }
 
-                omr.physical_examination = physical_examination;
-                omr.psy_consult_required = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_psy_consult_required_");
+                Model.physical_examination = physical_examination;
+                Model.psy_consult_required = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_psy_consult_required_");
                 //IV.
-                omr.laboratory_indications_results = txt_laboratory_indications_results.Value;
-                omr.additional_investigation = txt_additional_investigation.Value;
+                Model.laboratory_indications_results = txt_laboratory_indications_results.Value;
+                Model.additional_investigation = txt_additional_investigation.Value;
                 //V.
-                omr.initial_diagnosis = txt_initial_diagnosis.Value;
-                omr.diagnosis = txt_diagnosis.Value;
-                omr.differential_diagnosis = txt_differential_diagnosis.Value;
-                omr.associated_conditions = txt_associated_conditions.Value;
+                Model.initial_diagnosis = txt_initial_diagnosis.Value;
+                Model.diagnosis = txt_diagnosis.Value;
+                Model.differential_diagnosis = txt_differential_diagnosis.Value;
+                Model.associated_conditions = txt_associated_conditions.Value;
 
-                omr.treatment_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_treatment_code_", Omr.TREATMENT_CODE);
-                omr.treatment_desc = WebHelpers.GetDicDesc(omr.treatment_code, Omr.TREATMENT_CODE);
+                Model.treatment_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_treatment_code_", OmrDictionaryV1.TREATMENT_CODE);
+                Model.treatment_desc = WebHelpers.GetDicDesc(Model.treatment_code, Omr.TREATMENT_CODE);
 
                 //5.
-                if (omr.treatment_code == "OPD") { omr.medicine = txt_medicine.Value; }
+                if (Model.treatment_code == "OPD") { Model.medicine = txt_medicine.Value; }
 
-                omr.spec_opinion_requested = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_spec_opinion_requested_");
-                omr.spec_opinion_requested_note = WebHelpers.GetBool(omr.spec_opinion_requested, txt_spec_opinion_requested_note.Value, null);
+                Model.spec_opinion_requested = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_spec_opinion_requested_");
+                Model.spec_opinion_requested_note = WebHelpers.GetBool(Model.spec_opinion_requested, txt_spec_opinion_requested_note.Value, null);
 
-                omr.specific_education_required = txt_specific_education_required.Value;
+                Model.specific_education_required = txt_specific_education_required.Value;
 
-                omr.next_appointment = txt_next_appointment.Value;
+                Model.next_appointment = txt_next_appointment.Value;
 
-                if (JsonConvert.SerializeObject(omr) == DataObj.Value)
+                if (JsonConvert.SerializeObject(Model) == DataObj.Value)
                 {
                     WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
                 }
 
-                omr.amend_reason = txt_amend_reason.Text;
-                omr.user_name = (string)Session["UserID"];
-
-                dynamic result = omr.Update(loc)[0];
-
-                if (result.Status == System.Net.HttpStatusCode.OK)
-                {
-                    Initial();
-                    WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
-                }
+                Model.amend_reason = txt_amend_reason.Text;
             }
             catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
-        }
-        public void Initial()
-        {
-            try
-            {
-                patientInfo = new PatientInfo(varPID);
-                patientVisitInfo = new PatientVisitInfo(varPVID, loc);
-
-                if (varDocIdLog != null)
-                {
-                    omr = new Omr(varDocIdLog, true, loc);
-                    currentLog.Visible = true;
-                }
-                else
-                {
-                    omr = new Omr(varDocID, loc);
-                    currentLog.Visible = false;
-                }
-
-                LoadPatientInfo();
-
-                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Omr.Logs(varDocID, loc), out string _SignatureDate, out string _SignatureName);
-                SignatureDate = _SignatureDate;
-                SignatureName = _SignatureName;
-
-                WebHelpers.VisibleControl(false, btnCancel, amendReasonWraper);
-
-                if (omr.status == DocumentStatus.FINAL)
-                {
-                    btnAmend.Visible = true;
-                    BindingDataForm(omr, WebHelpers.LoadFormControl(form1, omr, ControlState.View, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
-                    BindingDataFormPrint(omr);
-                }
-                else if (omr.status == DocumentStatus.DRAFT)
-                {
-                    BindingDataForm(omr, WebHelpers.LoadFormControl(form1, omr, ControlState.Edit, varDocIdLog != null, loc == locChanged, (string)Session["access_authorize"]));
-                }
-
-                WebHelpers.getAccessButtons(new Model.AccessButtonInfo()
-                {
-                    Form = form1,
-                    DocStatus = omr.status,
-                    AccessGroup = (string)Session["group_access"],
-                    AccessAuthorize = (string)Session["access_authorize"],
-                    IsSameCompanyCode = loc == locChanged,
-                    IsViewLog = varDocIdLog != null
-                });
-            }
-            catch (Exception ex)
-            {
-                WebHelpers.SendError(Page, ex);
-            }
-        }
-
-        protected void LinkViewLastestVersion_Load(object sender, EventArgs e)
-        {
-            (sender as HyperLink).NavigateUrl = PAGE_URL;
         }
         protected string GetLogUrl(object doc_log_id)
         {
@@ -717,22 +527,6 @@ namespace EMR
         {
             string result = WebHelpers.getLogText(status, created_name, created_date_time, modified_name, modified_date_time, amend_reason);
             return result;
-        }
-        protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
-        {
-            GridDataItem item = (e.Item as GridDataItem);
-            if (e.CommandName.Equals("Open"))
-            {
-                string doc_log_id = item.GetDataKeyValue("document_log_id").ToString();
-
-                string url = PAGE_URL + $"&docIdLog={doc_log_id}";
-
-                Response.Redirect(url);
-            }
-        }
-        protected void RadButton1_Click(object sender, EventArgs e)
-        {
-            Response.Redirect(PAGE_URL);
         }
         #endregion
 
@@ -760,17 +554,16 @@ namespace EMR
 
         #endregion
 
-        protected void clearSession_Click(object sender, EventArgs e)
-        {
-            WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
-
-        }
-
         protected void btnNewVitalSign_Click(object sender, EventArgs e)
         {
 
         }
-
+        private void LoadBarCode()
+        {
+            IBarcodeGenerator barcodeGenerator = new BarcodeGenerator();
+            BarCode.Controls.Clear();
+            BarCode.Controls.Add(barcodeGenerator.Generator(Patient.visible_patient_id));
+        }
         protected void btnVSFreeText_Click(object sender, EventArgs e)
         {
             cbVSFreeText.Checked = !cbVSFreeText.Checked;

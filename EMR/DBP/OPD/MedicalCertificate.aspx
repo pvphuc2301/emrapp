@@ -27,6 +27,18 @@
     <link href="../../styles/style.css" rel="stylesheet" />
     <link href="../../styles/myStyle.css" rel="stylesheet" />
     <link href="../../styles/alertify.css" rel="stylesheet" />
+    <style>
+
+.cssclsNoScreen .header-info {
+            display: flex;
+            align-items: center;
+            height: 80px;
+        }
+.header-info-title {
+flex-grow: 1;
+    text-align: center;
+}
+</style>
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
@@ -40,7 +52,7 @@
                             <tr>
                                 <th class="report-header-cell">
                                     <div class="header-info">
-                                        <img src="../../images/DBP/AIH_CLINIC_logo_final_02.png" />
+                                        <img style="width: 200px;" src="../../images/DBP/AIH_CLINIC_logo_final_02.png" />
                                         <div class="header-info-title">
                                             <h4>GIẤY CHỨNG NHẬN ĐIỀU TRỊ</h4>
                                             <h5>MEDICAL CERTIFICATE</h5>

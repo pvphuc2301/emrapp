@@ -17,8 +17,13 @@
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
-    <link href="../styles/print.css" rel="stylesheet" />
     <style>
+        .fs10 {
+            font-size: 10pt !important;
+        }
+        .fs10 .en {
+            font-size: 9pt !important;
+        }
         .table-bordered td, .table-bordered th {
             padding: 4px;
         }
@@ -65,975 +70,1190 @@
           border-collapse: collapse;
         }
 
-         span.frac {
-          display: inline-block;
-          text-align: center;
-          vertical-align: middle;
-        }
-
-        span.frac > tuso, span.frac > mauso {
-          display: block;
-          font: inherit;
-          padding: 0 0.2em;
-        }
-
-        span.frac > tuso { border-bottom: 0.08em solid; }
-
-        span.frac > span { display: none; }
-
-        .v20:after {
-           content: 'Version: 2.0';
-            font-size: 10px;
-            color: #343a40;
-            position: absolute;
-            right: 10px;
-            bottom: 4px;
-        }
-
         .circle {
             border: 1px solid #000;
             border-radius: 50%;
             width: 21px;
+            height: 21px;
+            line-height: 1.5;
             display: inline-block;
         }
-
-        @media print {
+        .cursor-wait {
+            pointer-events: none;
+            background-color: #007bff;
+            border-color: #007bff;
+            opacity: .65;
+        }
+        /*@media print {
             body
             {
-                font-size: 14.5px; 
-                font-family: Tahoma;
-            }
-            i {
+                font-family: 'Times New Roman' !important;
+                font-size: 11pt !important;*/
+                /*font-size: 14.5px; 
+                font-family: Tahoma;*/
+            /*}
+            i {*/
                 /*color: #007297 !important;*/
-                color: #007297;
+                /*color: #007297;
+                font-size: 10pt;
             }
-        }
-
+        }*/
         @page {
-            margin-left: 0;
-            margin-right: 0;
-            size: A4;
-            margin: 0; 
+            margin-top: 10px;
         }
+        #print_content {
+		    line-height: initial !important;
+	    }
     </style>
+    <link href="../styles/print-10.2022.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
-        <div class="cssclsNoScreen" id="printContent" style="font-family: Tahoma !important; font-size: 14.5px">
-            <table class="report-container">
-                <thead class="report-header">
-                    <tr>
-                        <th class="report-header-cell">
-                            <div style="display: flex; align-items: center; height: 86px; padding: 0 12px">
-                                <img style="width: 180px" src="../images/AIH_PI_FULL.png" />
-                                <div style="text-align: center; align-self: center;">
-                                    <div style="line-height: 12pt"><span style="font-size: 12pt; font-weight: bold">PHIẾU ĐÁNH GIÁ ĐIỀU DƯỠNG BAN ĐẦU DÀNH CHO BỆNH NGOẠI TRÚ</span></div>
-                                    <div style="line-height: 12pt"><span style="font-size: 11pt; font-weight: bold; color: #0070c0"><i>OUTPATIENT INITIAL NURSING ASSESSMENT</i></span></div>
-                                </div>
-                                <div></div>
-                            </div>
-                            <div style="height: 20px; position: relative;">
-                                <span style="position:absolute; left: 0; top: 50%; width: 190px; border: 2px solid #e20e5a; display: inline-block;"></span>
-                                <span style="position:absolute; left: 190px; top: 50%; right: 0; border: 2px solid #007297; display: inline-block;"></span>
-                            </div>
-                        </th>
-                    </tr>
-                </thead>
-
-                <tbody class="report-content">
-                    <tr>
-                        <td class="report-content-cell">
-                            <div style="position: relative; padding: 0 28px" class="main" runat="server" id="print_content">
-                                <div style="display: grid; grid-template-columns: 280px 1fr; grid-gap: 12px;">
-                                    <div>
-                                        <div style="border: 1px dashed #000; padding: 6px; display: grid; grid-gap: 6px">
-                                            <div>Họ tên: <asp:Label runat="server" ID="prt_fullname"/></div>
-                                            <div>Ngày sinh: <asp:Label runat="server" ID="prt_dob"/></div>
-                                            <div>Giới tính: <asp:Label runat="server" ID="prt_gender"/></div>
-                                            <div>PID: <asp:Label runat="server" ID="prt_pid"/></div>
+        <%--<div class="cssclsNoScreen" id="printContent" style="font-family: Tahoma !important; font-size: 14.5px">--%>
+        <%-- Print page --%>
+        <asp:UpdatePanel runat="server" ID="uplPrintPage">
+            <ContentTemplate>
+                <div class="cssclsNoScreen" id="print_page" runat="server">
+                    <table class="report-container">
+                        <thead class="report-header">
+                            <tr>
+                                <th class="report-header-cell">
+                                    <div runat="server" id="print_header">
+                                        <div style="display: flex; align-items: center; padding: 0 18px">
+                                            <img style="width: 180px" src="../images/AIH_PI_FULL.png" />
+                                            <div style="text-align: center; align-self: center; flex-grow: 1">
+                                                <div><span style="font-size: 12pt; font-weight: bold">PHIẾU ĐÁNH GIÁ ĐIỀU DƯỠNG BAN ĐẦU DÀNH CHO BỆNH NGOẠI TRÚ</span></div>
+                                                <div class="en"><i style="font-size: 11pt; font-weight: bold">OUTPATIENT INITIAL NURSING ASSESSMENT</i></div>
+                                            </div>
+                                            <div></div>
+                                        </div>
+                                        <div style="height: 12px; position: relative; margin-top: -4px">
+                                            <span style="position:absolute; left: 0; top: 50%; width: 190px; border: 2px solid #e20e5a; display: inline-block;"></span>
+                                            <span style="position:absolute; left: 190px; top: 50%; right: 0; border: 2px solid #007297; display: inline-block;"></span>
                                         </div>
                                     </div>
-                                    <div style="display: grid; grid-template-columns: auto auto auto auto 1fr; grid-gap: 6px;">
-                                        <div>
-                                            <div><span style="font-weight: bold">Thời gian bắt đầu đánh giá: </span> </div>
-                                            <div><i style="font-weight: bold">Time of assessment:</i></div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="report-content">
+                            <tr>
+                                <td class="report-content-cell">
+                                    <div class="main" runat="server" id="print_content">
+                                        <div style="display: grid; grid-template-columns: 260px 1fr; gap: 6px;">
+                                            <div>
+                                                <div style="border: 1px dashed #000; padding: 6px; display: grid; grid-gap: 6px; line-height: 19pt">
+                                                    <div>Họ tên: <asp:Label runat="server" ID="prt_fullname"/></div>
+                                                    <div>Ngày sinh: <asp:Label runat="server" ID="prt_dob"/></div>
+                                                    <div>Giới tính: <asp:Label runat="server" ID="prt_gender"/></div>
+                                                    <div>PID: <asp:Label runat="server" ID="prt_pid"/></div>
+                                                </div>
+                                            </div>
+                                            <div style="display: grid; grid-template-columns: auto auto auto auto 1fr; padding-top: 24pt">
+                                                <div>
+                                                    <div><span style="font-weight: bold">Thời gian bắt đầu đánh giá:</span></div>
+                                                    <div class="en"><span style="font-weight: bold">Time of assessment</span></div>
+                                                </div>
+                                                <div>
+                                                    <div><span style="font-weight: bold">&nbsp;Ngày </span><asp:Label runat="server" ID="prt_date_of_assessment"></asp:Label>;</div>
+                                                    <div class="en"><span style="font-weight: bold">Date</span></div>
+                                                </div>
+                                                <div>
+                                                    <div><span style="font-weight: bold">&nbsp;Giờ: </span><asp:Label runat="server" ID="prt_time_of_assessment"></asp:Label></div>
+                                                    <div class="en"><span style="font-weight: bold">Time</span></div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <div><span style="font-weight: bold">Ngày</span></div>
-                                            <div><i style="font-weight: bold">Date</i></div>
+                                        <%--<div>&nbsp;</div>--%>
+                                        <%-- margin-right: -80px;  --%>
+                                        <div style="margin-top: 6px;"><span class="font-bold">I.&nbsp;&nbsp;DẤU HIỆU SINH TỒN VÀ CÁC CHỈ SỐ ĐO LƯỜNG/ <span class="en">VITAL SIGNS AND PHYSICAL MEASUREMENTS</span></span></div>
+                                        <div style="display: grid; grid-template-columns: 150px 150px 190px 1fr">
+                                            <div>
+                                                <div>- Nhiệt độ: <asp:Label runat="server" ID="prt_vs_temperature" /> °C</div>
+                                                <div style="margin-left: 8px;" class="en">Temperature</div>
+                                            </div>
+                                            <%--  --%>
+                                            <div>
+                                                <div>- Mạch: <asp:Label runat="server" ID="prt_vs_heart_rate" /> nhịp/phút</div>
+                                                <div style="margin-left: 8px;" class="en">Pulse</div>
+                                            </div>
+                                            <%--  --%>
+                                            <div>
+                                                <div>- HA: <asp:Label runat="server" ID="prt_vs_blood_pressure" /> mmHg</div>
+                                                <div style="margin-left: 8px;" class="en">Blood pressure</div>
+                                            </div>
+                                            <%--  --%>
+                                            <div>
+                                                <div>- Nhịp thở: <asp:Label runat="server" ID="prt_vs_respiratory_rate" /> lần/phút</div>
+                                                <div style="margin-left: 8px;" class="en">Respiratory rate &nbsp;&nbsp;bpm</div>
+                                            </div>
+                                            <%--  --%>
+                                            <div>
+                                                <div>- Cân nặng: <asp:Label runat="server" ID="prt_vs_weight" /> kg</div>
+                                                <div style="margin-left: 8px;" class="en">Weight</div>
+                                            </div>
+                                            <%--  --%>
+                                            <div>
+                                                <div>- Chiều cao: <asp:Label runat="server" ID="prt_vs_height" /> cm</div>
+                                                <div style="margin-left: 8px;" class="en">Height</div>
+                                            </div>
+                                            <%--  --%>
+                                            <div style="grid-column: 3/5; display: flex; flex-direction: row">
+                                                <div>
+                                                    <div>- Vòng đầu (trẻ em <2 tuổi): <asp:Label runat="server" ID="prt_pulse" /> cm</div> 
+                                                    <div style="margin-left: 8px;" class="en">Head circumference (children <2 years old)</div>
+                                                </div>
+                                                <div>- SpO <sub>2</sub>: <asp:Label runat="server" ID="prt_vs_spO2" /> %</div>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <asp:Label runat="server" ID="prt_date_of_assessment"></asp:Label>;
+                                        <%--  --%>
+                                        <div><span class="font-bold">II. ĐÁNH GIÁ/ <span class="en">ASSESSMENT</span></span></div>
+                                        <div><span class="font-bold">1. Lý do đến khám/ <span class="en">Chief complaint: </span></span><asp:Label runat="server" ID="prt_chief_complaint" /></div>
+                                        <div style="display: grid; grid-template-columns: 150px 100px 1fr; grid-gap: 10px">
+                                            <div><span class="font-bold">2. Dị ứng/ <span class="en">Allergy:</span></span></div>
+                                            <div><asp:Label runat="server" ID="prt_allergy_false" /> Không/ <span class="en">No</span></div>
+                                            <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px">
+                                                <asp:Label runat="server" ID="prt_allergy_true" />
+                                                <div>
+                                                 Có, ghi rõ/ <span class="en">Yes, specify: </span><asp:Label runat="server" ID="prt_allergy_note" />
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <div><span style="font-weight: bold">Giờ</span></div>
-                                            <div><i style="font-weight: bold">Time</i></div>
+                                        <div><span class="font-bold">3. Trạng thái tinh thần/ <span class="en">Mental status:</span></span></div>
+                                        <div style="margin-left: 16px; display: grid; grid-template-columns: 280px 80px 1fr; grid-gap: 10px">
+                                            <div>Đáp ứng phù hợp/ <span class="en">Appropriate response:</span></div>
+                                            <div><asp:Label runat="server" ID="prt_mental_status_true" /> Có/ <span class="en">Yes</span></div>
+                                            <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px">
+                                                <asp:Label runat="server" ID="prt_mental_status_false" /> 
+                                                <div>Không, ghi rõ/ <span class="en">No, specify: </span><asp:Label runat="server" ID="prt_mental_status_note" /></div>
+                                            </div>
                                         </div>
-                                        <asp:Label runat="server" ID="prt_time_of_assessment"></asp:Label>
-                                    </div>
-                                </div>
-                                <div>&nbsp;</div>
-                                <div><span class="font-bold">I. DẤU HIỆU SINH TỒN VÀ CÁC CHỈ SỐ ĐO LƯỜNG/ <i class="text-primary">VITAL SIGNS AND PHYSICAL MEASUREMENTS</i></span></div>
-                                <div style="display: grid; grid-template-columns: repeat(4, 25%)">
-                                    <div>
-                                        <div>- Nhiệt độ: <asp:Label runat="server" ID="prt_vs_temperature" /> °C</div> 
-                                        <div style="margin-left: 8px"><i class="text-primary">Temperature</i></div>
-                                    </div>
-                                    <div>
-                                        <div>- Mạch: <asp:Label runat="server" ID="prt_vs_heart_rate" /> nhịp/phút</div> 
-                                        <div style="margin-left: 8px"><i class="text-primary">Pulse</i></div>
-                                    </div>
-
+                                        <div><span class="font-bold">4. Tầm soát bệnh lây nhiễm (dành cho những bệnh tạo thành dịch)</span></div>
+                                        <div class="en" style="margin-left: 16px"><span class="font-bold">Communicable disease screening (for diseases that cause epidemics)</span></div>
                                         <div>
-                                        <div>- HA: <asp:Label runat="server" ID="prt_vs_blood_pressure" /> mmHg</div> 
-                                        <div style="margin-left: 8px"><i class="text-primary">Blood pressure</i></div>
-                                    </div>
-
-                                    <div>
-                                        <div>- Nhịp thở: <asp:Label runat="server" ID="prt_vs_respiratory_rate" /> lần/phút</div> 
-                                        <div style="margin-left: 8px"><i class="text-primary">Respiratory rate</i></div>
-                                    </div>
-
-                                    <div>
-                                        <div>- Cân nặng: <asp:Label runat="server" ID="prt_vs_weight" /> kg</div> 
-                                        <div style="margin-left: 8px"><i class="text-primary">Weight</i></div>
-                                    </div>
-
-                                    <div>
-                                        <div>- Chiều cao: <asp:Label runat="server" ID="prt_vs_height" /> cm</div> 
-                                        <div style="margin-left: 8px"><i class="text-primary">Height</i></div>
-                                    </div>
-
-                                    <div style="grid-column: 3/5; display: flex; flex-direction: row">
-                                        <div>
-                                            <div>- Vòng đầu (trẻ em <2 tuổi): <asp:Label runat="server" ID="prt_pulse" /> cm</div> 
-                                            <div style="margin-left: 8px"><i class="text-primary">Head circumference (children <2 years old)</i></div>
+                                            <table class="table-bordered" style="table-layout: fixed; width: 100%">
+                                                <tr>
+                                                    <td style="width: 125px;" class="text-center">
+                                                        <div class="font-bold">Phân loại</div>
+                                                        <div class="en"><span>Category</span></div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <div class="font-bold">Tiêu chí</div>
+                                                        <div class="en">Criteria</div>
+                                                    </td>
+                                                    <td style="width: 50px;" class="text-center">
+                                                        <div class="font-bold">Có</div>
+                                                        <div class="en">Yes</div>
+                                                    </td>
+                                                    <td style="width: 55px;" class="text-center">
+                                                        <div class="font-bold">Không</div>
+                                                        <div class="en">No</div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <div>Triệu chứng </div>
+                                                        <div class="en">Signs and symptoms</div>
+                                                    </td>
+                                                    <td class="p-1">
+                                                        <div>Sốt > 38°C và ho, khó thở, tiêu chảy,...</div>
+                                                        <div class="en">Fever > 38°C and cough, dyspnea, diarrhea</div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <asp:Label runat="server" ID="prt_high_fever_true" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <asp:Label runat="server" ID="prt_high_fever_false" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center" rowspan="2">Dịch tễ <br /><span class="en">Epidemiology</span></td>
+                                                    <td class="p-1">
+                                                        <div>Đi từ hay tiếp xúc với người đi từ vùng dịch trong vòng 2 tuần </div>
+                                                        <div class="en">History of travel and in contact with injectious disease outbreak in the past 2 weeks</div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <asp:Label runat="server" ID="prt_contact_infectious_disease_true" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <asp:Label runat="server" ID="prt_contact_infectious_disease_false" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="p-1">
+                                                        <div>Tiếp xúc gần với người bị sốt, ho, khó thở </div>
+                                                        <div class="en">Had close contact with someone who has fever, cough, dyspnea</div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <asp:Label runat="server" ID="prt_close_contact_true" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <asp:Label runat="server" ID="prt_close_contact_false" />
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">
+                                                        <div>Đánh giá </div>
+                                                        <div class="en">Assessment</div>
+                                                    </td>
+                                                    <td class="p-1">
+                                                        <div>Có nguy cơ truyền nhiễm</div>
+                                                        <div class="en">Injectious risk</div>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <asp:Label runat="server" ID="prt_injectious_risk_true" />
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <asp:Label runat="server" ID="prt_injectious_risk_false" />
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </div>
-
-                                        <div>- SpO <sub>2</sub>: <asp:Label runat="server" ID="prt_vs_spO2" /> %</div>
-                                    </div>
-                                </div>
                                         
-                                <div><span class="font-bold">II. ĐÁNH GIÁ/ <i class="text-primary">ASSESSMENT</i></span></div>
+                                        <div style="margin-left: 28px">
+                                            <div>• Nếu <span class="font-bold">"CÓ"</span> yếu tố nguy cơ triệu chứng, chuyển bệnh nhân sang phòng khám sàng lọc</div>
+                                            <div class="en" style="margin-left: 6px"><i>If <span class="font-bold">"YES"</span> Signs and symptom risks, transfer patient to screening clinic.</i></div>
+                                            <div>• Nếu <span class="font-bold">"CÓ"</span> yếu tố nguy cơ dịch tể, chuyển bệnh nhân đến phòng cách ly áp lực âm cấp cứu</div>
+                                            <div class="en" style="margin-left: 6px"><i>If <span class="font-bold">"YES"</span> epidemic risks, transfer patient to Isolation room in Emergency Department.</i></div>
+                                            <div>• Nếu <span class="font-bold">"KHÔNG"</span> tiếp tục hoàn thành tiểu mục <span class="font-bold">5, 6, 7, 8</span></div>
+                                            <div class="en" style="margin-left: 6px"><i>If <span class="font-bold">"NO"</span> complete part 5, 6, 7, 8 assessment.</i></div>
+                                        </div>
                                         
-                                <div><span class="font-bold">1. Lý do đến khám/ <i class="text-primary">Chief complaint: </i></span><asp:Label runat="server" ID="prt_chief_complaint" /></div>
+                                        <div><span class="font-bold">5. Đánh giá đau/ <span class="en">Pain assessment:</span></span></div>
+                                        <div style="margin-left: 16px">
+                                            <div>Điều dưỡng đánh giá chọn một trong các thang điểm đau bên dưới phù hợp với từng người bệnh.</div>
+                                            <div class="en">Nurses select one of the following pain scales in consistent with each sort of patient.</div>
+                                        </div>
 
-                                <div style="display: grid; grid-template-columns: auto auto 1fr; grid-gap: 10px">
-                                    <div><span class="font-bold">2. Dị ứng/ <i class="text-primary">Allergy:</i></span></div>
-                                    <div><asp:Label runat="server" ID="prt_allergy_false" /> Không/ <i class="text-primary">No</i></div>
-                                    <div><asp:Label runat="server" ID="prt_allergy_true" /> Có, ghi rõ/ <i class="text-primary">Yes, specify: </i><asp:Label runat="server" ID="prt_allergy_note" /></div>
-                                </div>
+                                        <section runat="server" id="prt_naf_wrapper" style="display: grid; grid-template-columns: 300px 1fr; grid-gap: 10px; margin-left: 16px">
+                                            <div style="grid-column: 1/3"><span class="font-bold">Bằng số và Hình mặt (≥ 4 tuổi)/ <span class="en">Numeric and Faces (≥ 4 years):</span></span></div>
+                                            <div>
+                                                <div style="display: inline-block"><asp:Label runat="server" ID="prt_paint_score_code_0" /> Không đau (0) <div style="margin-left: 16px"><span class="en">No hurt</span></div> </div>
+                                                <div style="display: inline-block"><asp:Label runat="server" ID="prt_paint_score_code_1" /> Đau rất ít (1 - 2)<div style="margin-left: 16px"><span class="en">Little hurt</span></div></div>
+                                                <div style="display: inline-block"><asp:Label runat="server" ID="prt_paint_score_code_2" /> Đau nhẹ (3 - 4)<div style="margin-left: 16px"><span class="en">Slight hurt</span></div></div>
+                                                <div style="display: inline-block"><asp:Label runat="server" ID="prt_paint_score_code_3" /> Đau vừa (5 - 6)<div style="margin-left: 16px"><span class="en">Considerable hurt</span></div></div>
+                                                <div style="display: inline-block"><asp:Label runat="server" ID="prt_paint_score_code_4" /> Đau nhiều (7 - 8)<div style="margin-left: 16px"><span class="en">Serious hurt</span></div></div>
+                                                <div style="display: inline-block"><asp:Label runat="server" ID="prt_paint_score_code_5" /> Rất đau (9 - 10)<div style="margin-left: 16px"><span class="en">Worst hurt</span></div></div>
+                                            </div>
+                                            <div>
+                                                <img src="../images/2021-12-27_14-08-55.png" />
+                                            </div>
+                                        </section>
+
+                                        <section runat="server" id="prt_flacc_wrapper">
+                                            <div style="margin-left: 16px; font-weight: bold; text-decoration: underline">
+                                                <div>FLACC (2 tháng đến < 4 tuổi) và bệnh nhi dưới 16 tuổi không nói được</div>
+                                                <div class="en">2 month to < 4 years old and non-verbal pediatric patient (patient < 16 years old)</div>
+                                            </div>
+                                            <div>
+                                                <table class="table-bordered" style="table-layout: fixed; width: 100%; margin-bottom: -1px">
+                                                    <tr class="text-center font-bold">
+                                                        <td rowspan="2" style="width: 85px">
+                                                            <div>Các mục</div>
+                                                            <div class="en"><span>Category</span></div>
+                                                        </td>
+                                                        <td colspan="3">
+                                                            <div>ĐIỂM HÀNH VI/ <span class="en">BEHAVIOUR SCORE</span></div>
+                                                        </td>
+                                                        <td rowspan="2" style="width: 50px">
+                                                            <div>Điểm</div>
+                                                            <div class="en">Score</div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center font-bold p-1">0</td>
+                                                        <td class="text-center font-bold p-1">1</td>
+                                                        <td class="text-center font-bold p-1">2</td>
+                                                    </tr>
+                                                </table>
+                                                <table class="table-bordered mb-2" style="table-layout: fixed; width: 100%;">
+                                                    <tr>
+                                                        <td class="text-center p-1" style="width: 85px">
+                                                            <div>Mặt</div>
+                                                            <div class="en">Face</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Không biểu hiện cụ thể hoặc đang mỉm cười.
+                                                            <span class="en">No particular expression or is smiling</span>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Thỉnh thoảng nhăn mặt hoặc cau mày, thường xuyên run cằm, nghiến răng 
+                                                            <span class="en">Occasional grimace or frown, frequent to constant quivering of chin, clenched jaw</span>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Lãnh đạm, thời ơ
+                                                            <span class="en">Withdrawn, disinterested</span>
+                                                        </td>
+                                                        <td class="p-1 text-center" style="width: 50px">
+                                                            <asp:Label runat="server" ID="prt_flacc_face" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center p-1">
+                                                            <div>Chân</div>
+                                                            <div class="en">Legs</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Vị trí bình thường hoặc Yên tĩnh và thư giãn. 
+                                                            <span class="en">Normal position or Is calm and relaxed</span>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Khó chịu, bồn chồn, căng thẳng 
+                                                            <span class="en">Uneasy, restless, tense</span>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Đá chân hoặc bất động hoặc bồn chồn. 
+                                                            <span class="en">Kicking or legs drawn up immobility or extremely restless</span>
+                                                        </td>
+                                                        <td class="p-1 text-center">
+                                                            <asp:Label runat="server" ID="prt_flacc_legs" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center p-1">
+                                                            <div>Cử động</div>
+                                                            <div class="en">Activity</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Nằm im/ <span class="en">Lying quietly</span><br />
+                                                            Tư thế bình thường/ <span class="en">Normal position</span><br />
+                                                            Đi lại dễ dàng/ <span class="en">Moves easily</span>
+                                                        </td>
+                                                        <td class="p-1 align-top">Loay hoay, luôn thay đổi tư thế/ <span class="en">Squirming, Shifting back and forth</span></td>
+                                                        <td class="p-1 align-top">Khóc thét hoặc hét lên khi bị chạm vào hoặc cử động/ <span class="en">High-pitched cry or scream when touched or moved</span></td>
+                                                        <td class="p-1 text-center">
+                                                            <asp:Label runat="server" ID="prt_flacc_activity" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center p-1">
+                                                            <div>Khóc</div>
+                                                            <div class="en">Cry</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            <div>Không khóc/ <span>No cry</span></div>
+                                                            <div>Thức hoặc ngủ <span class="en">Awake or sleep</span></div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            <div>Rên ri, thỉnh thoảng than phiền</div>
+                                                            <div class="en">Moans and whimpers, occasional complaint</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            <div>Khóc liên tục, hét lên, nức nở, than phiền thường xuyên</div>
+                                                            <div class="en">Crying steadily, screams, sobs, frequent complaint</div>
+                                                        </td>
+                                                        <td class="p-1 text-center">
+                                                            <asp:Label runat="server" ID="prt_flacc_cry" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center p-1">
+                                                            Xoa dịu  An ủi <span class="en">Consolability</span>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Hài lòng, thử giãn <span class="en">Contents, relaxed</span>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            <div>An ủi bằng thỉnh thoảng chạm, ôm hoặc nói chuyện, dễ bị phân tâm.</div>
+                                                            <div class="en">Reassured by occasional touching, hugging or talking to, easily distracted</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            <div>Không an ủi được</div>
+                                                            <div class="en">Inconsolable</div>
+                                                        </td>
+                                                        <td class="p-1 text-center">
+                                                            <asp:Label runat="server" ID="prt_flacc_consolability" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="p-1 text-right font-bold" colspan="4">Tổng điểm/ <span class="en">Total score</span></td>
+                                                        <td class="text-center">
+                                                            <asp:Label runat="server" ID="prt_flacc_total_score" />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div style="display: grid; grid-template-columns: 75px repeat(4, auto); gap: 6px; margin-left: 16px;">
+                                                <div class="font-bold">
+                                                    <div>Kết luận: </div>
+                                                    <div class="en">Conclude</div>
+                                                </div>
+                                                <div>
+                                                    <div><asp:Label runat="server" ID="prt_flacc_conclude_0" /> Không đau (0)</div>
+                                                    <div class="en" style="margin-left: 16px"><span>No risk of malnutrition</span></div>
+                                                </div>
+                                                <div>
+                                                    <div><asp:Label runat="server" ID="prt_flacc_conclude_1" /> Đau nhẹ (1-3) </div>
+                                                    <div class="en" style="margin-left: 16px"><span>Slight pain</span></div>
+                                                </div>
+                                                <div>
+                                                    <div><asp:Label runat="server" ID="prt_flacc_conclude_2" /> Đau vừa (4-6) </div>
+                                                    <div class="en" style="margin-left: 16px"><span>Considerable pain</span></div>
+                                                </div>
+                                                <div>
+                                                    <div><asp:Label runat="server" ID="prt_flacc_conclude_3" /> Rất đau (7-10)</div>
+                                                    <div class="en" style="margin-left: 16px"><span>Worst pain</span></div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                
+                                        <section runat="server" id="prt_npass_wrapper">
+                                            <div style="margin-left: 16px; text-decoration: underline" class="font-bold">Thang điểm đánh giá đau và an thần cho trẻ sơ sinh và nhũ nhi (< 2 tháng tuổi)</div>
+                                            <div style="margin-left: 16px; text-decoration: underline" class="font-bold en">Neonatal and infantile pain, sedation scale (N-PASS) (<2 months)</div>
+                                            <div>
+                                                <table class="table-bordered fs10" style="table-layout: fixed; width: 100%; margin-bottom: -1px">
+                                                    <tr>
+                                                        <td style="width: 90px" class="font-bold text-center" rowspan="2">
+                                                            <div>Tiêu chí</div>
+                                                            <div>đánh giá</div>
+                                                            <div class="en"><i>Assessment</i></div>
+                                                            <div class="en"><i>criteria</i></div>
+                                                        </td>
+                                                        <td colspan="2" class="font-bold text-center">
+                                                            <div>An thần</div>
+                                                            <div class="en">Sedation</div>
+                                                        </td>
+                                                        <td class="font-bold text-center">
+                                                            <div>Bình thường</div>
+                                                            <div class="en">Normal</div>
+                                                        </td>
+                                                        <td colspan="2" class="font-bold text-center">
+                                                            <div>Đau</div>
+                                                            <div class="en">Pain</div>
+                                                        </td>
+                                                        <td class="font-bold text-center" rowspan="2" style="width: 50px">
+                                                            <div>Điểm</div>
+                                                            <div class="en">Score</div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center font-bold">-2</td>
+                                                        <td class="text-center font-bold">-1</td>
+                                                        <td class="text-center font-bold">0</td>
+                                                        <td class="text-center font-bold">1</td>
+                                                        <td class="text-center font-bold">2</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">
+                                                            Khóc
+                                                            <div class="en">Crying</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Không khóc với kích thích đau
+                                                            <div class="en">No cry with painful stimuli</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Rên rỉ, khóc yếu với kích thích đau
+                                                            <div class="en">Moans or cries minimally with painful stimuli</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Khóc tự nhiên, Không bứt rứt
+                                                            <div class="en">Appropriate crying Not irritable</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Bứt rứt, quấy khóc ngắt quãng, có thể dỗ được
+                                                            <div class="en">Irritable or crying at intervals Consolable</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Khóc cao giọng, liên tục, không thể dỗ được
+                                                            <div class="en">High-pitched or silent-continuous cry Inconsolable</div>
+                                                        </td>
+                                                        <td class="p-1 text-center">
+                                                            <asp:Label runat="server" ID="prt_npass_crying" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">
+                                                            Biểu hiện
+                                                            <div class="en">Behavior</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Không đáp ứng với bất kỳ kích thích
+                                                            <div class="en">No arousal to any stimuli</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Nhúc nhích nhẹ khi bị kích thích
+                                                            <div class="en">Arouses minimally to stimuli little spontaneous movement</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Cử động phù hợp tuổi thai
+                                                            <div class="en">Appropriate for gestational age</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Vặn mình, thường thức giấc
+                                                            <div class="en">Restless, squirming Awakens frequently</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Uốn éo, không ngủ yên
+                                                            <div class="en">Arching, kicking Constantly awake or Arouses minimally/ no movement (not sedated)</div>
+                                                        </td>
+                                                        <td class="p-1 text-center">
+                                                            <asp:Label runat="server" ID="prt_npass_behavior" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">
+                                                            Vẻ mặt
+                                                            <div class="en">Facial expression</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Không thay đổi với kích thích
+                                                            <div class="en">No expression</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Thay đổi nhẹ với kích thích
+                                                            <div class="en">Minimal expression with stimuli</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            <div>Thư giãn</div>
+                                                            <div>Relaxed,</div>
+                                                            <div class="en">Appropriate</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Nhăn mặt, không liên tục
+                                                            <div class="en">Any pain expression intermittent</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Nhăn mặt liên tục
+                                                            <div class="en">Any pain expression continual</div>
+                                                        </td>
+                                                        <td class="p-1 text-center">
+                                                            <asp:Label runat="server" ID="prt_npass_facial_expression" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">
+                                                            <div>Trương lực chỉ</div>
+                                                            <div class="en">Extremities tone</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Mềm oặt, không phản xạ nắm
+                                                            <div class="en">No grasp reflexes </div>
+                                                            <div class="en">Flaccid tone</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Giảm trương lực, phản xạ nắm yếu
+                                                            <div class="en">Weak grasp reflex decrease muscle tone</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Trương lực bình thường, tay chân thư giãn
+                                                            <div class="en">Relaxed hands and feet Normal tone</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Các ngón chân quặp lại, không liên tục, tay nắm lại hoặc xèo ra. Không gồng người
+                                                            <div class="en">Intermittent clenched toes, fists or finger splay Body is not tense</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Các ngón chân quặp lại liên tục, tay nắm lại hoặc xèo ra. Gồng người
+                                                            <div class="en">Continual clenched toes, fists, or finger splay. Body is tense</div>
+                                                        </td>
+                                                        <td class="p-1 text-center">
+                                                            <asp:Label runat="server" ID="prt_npass_extremities_tone" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">
+                                                            Dấu hiệu <br /> sinh tồn
+                                                            <div class="en">Vital signs</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            <div>Không dao động khi bị kích thích </div>
+                                                            <div>Thở yếu</div>
+                                                            <div>Ngưng thở</div>
+                                                            <div>No variability with stimuli </div>
+                                                            <div>Hypoventilation or  apnea</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Thay đổi dưới 10% so với giới hạn  bình thường khi bị  kích thích
+                                                            <div class="en">Decrease 10%  variability from  baseline with stimuli</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Nằm trong giới hạn bình thường theo tuổi thai 
+                                                            <div class="en">Within baseline or  normal for  gestational age</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Tăng 10-20% so  với giới hạn bình  thường SpO2 76  -85% khi bị kích  thích, hồi phục  nhanh
+                                                            <div class="en">Increase 10-20% from  baseline  SaO2 76-85% with  stimulation - quick toes, fists or finger  splay Body is not  tense</div>
+                                                        </td>
+                                                        <td class="p-1 align-top">
+                                                            Tăng trên 20% so  với giới hạn bình  thường  SpO2 dưới 75%  khi bị kích thích,  hồi phục chậm  
+                                                            <div class="en">Increase 20% from  baseline  SaO2 ≤ 75% with stimulation - slow  Out of sync with vent</div>
+                                                        </td>
+                                                        <td class="p-1 text-center">
+                                                            <asp:Label runat="server" ID="prt_npass_vital_signs" />
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                                <table class="table-bordered mb-2 fs10" style="table-layout: fixed; width: 100%; page-break-inside: avoid;">
+                                                    <tr>
+                                                        <td style="width: 90px" class="text-center" rowspan="3">
+                                                            <div>Tuổi thai <br /> hiệu chỉnh</div>
+                                                            <div class="en">Gestation (Corrected age)</div>
+                                                        </td>
+                                                        <td class="text-center" colspan="5">< 28 tuần / <span class="en"><28 weeks</span>: <span class="font-bold">+3</span></td>
+                                                        <td class="p-1 text-center" style="width: 50px">
+                                                            <asp:Label runat="server" ID="prt_npass_gestation_3" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center" colspan="5">28-31 tuần / <span class="en">28-31 weeks</span>: <span class="font-bold">+2</span></td>
+                                                        <td class="p-1 text-center">
+                                                            <asp:Label runat="server" ID="prt_npass_gestation_2" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center" colspan="5">32-35 tuần / <span class="en">32-35 weeks</span>: <span class="font-bold">+1</span></td>
+                                                        <td class="p-1 text-center">
+                                                            <asp:Label runat="server" ID="prt_npass_gestation_1" />
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-right font-bold" colspan="6">Tổng điểm/ <span class="en">Total score</span></td>
+                                                        <td class="text-center">
+                                                            <asp:Label runat="server" ID="prt_npass_total_score" ></asp:Label>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
                                             
-                                <div><span class="font-bold">3. Trạng thái tinh thần/ <i class="text-primary">Mental status:</i></span></div>
-                                        
-                                <div style="margin-left: 16px; display: grid; grid-template-columns: auto auto 1fr; grid-gap: 10px">
-                                    <div>Đáp ứng phù hợp/ <i class="text-primary">Appropriate response:</i></div>
-                                    <div><asp:Label runat="server" ID="prt_mental_status_true" /> Có/ <i class="text-primary">Yes</i></div>
-                                    <div><asp:Label runat="server" ID="prt_mental_status_false" /> Không, ghi rõ/ <i class="text-primary">No, specify: </i><asp:Label runat="server" ID="prt_mental_status_note" /></div>
-                                </div>
+                                            <div style="display: grid; grid-template-columns: 100px 1fr 1fr 200px; gap: 10px; margin-left: 16px;" class="mt-2 mb-2">
+                                                <div class="font-bold">
+                                                    <div>Kết luận: </div>
+                                                    <div class="en">Conclude</div>
+                                                </div>
+                                                <div>
+                                                    <div><asp:Label runat="server" ID="prt_npass_conclude_0" /> Không đau (0) </div>
+                                                    <div style="margin-left: 18px" class="en">No pain</div>
+                                                </div>
+                                                <div>
+                                                    <div><asp:Label runat="server" ID="prt_npass_conclude_1" /> Đau nhẹ (1-3)</div>
+                                                    <div style="margin-left: 18px" class="en">Slight pain</div>
+                                                </div>
+                                                <div>
+                                                    <div><asp:Label runat="server" ID="prt_npass_conclude_2" /> Đau vừa – nhiều (> 3)</div>
+                                                    <div style="margin-left: 18px" class="en">Considerable - Serious pain</div>
+                                                </div>
+                                            </div>
+                                        </section>
+                                            
+                                        <section runat="server" id="prt_nonv_wrapper" class="pt1">
+                                            <div>Đối với người bệnh không nói được điều dưỡng đánh giá riêng trên biểu mẫu (AIH-FRM-021 - Thang điểm theo dõi phản ứng đau của người bệnh không nói được)</div>
+                                            <div class="en">Nurses use a separated form to evaluate non-verbal patients (AIH-FRM-021 - Behavioural pain scale for non-verbal adult patient)</div>
+                                        </section>
 
-                                <div><span class="font-bold">4. Tầm soát bệnh lây nhiễm (dành cho những bệnh tạo thành dịch)</span></div>
-                                <div style="margin-left: 16px"><i class="text-primary font-bold">Communicable disease screening (for diseases that cause epidemics)</i></div>
+                                        <div><span class="font-bold">6. Trở ngại chăm sóc/ <span class="en">Barrier to care</span></span></div>
 
-                                <div style="margin-left: 16px;">
-                                    <table class="table-bordered mb-2" style="table-layout: fixed; width: 100%">
-                                        <tr>
-                                            <td style="width: 150px;" class="text-center p-1"><span class="font-bold">Phân loại <br /><i class="text-primary">Category</i></span></td>
-                                            <td class="text-center p-1"><span class="font-bold">Tiêu chí <br /><span class="text-primary">Criteria</span></span></td>
-                                            <td style="width: 50px;" class="text-center p-1"><span class="font-bold">Có <br /><i class="text-primary">Yes</i></span></td>
-                                            <td style="width: 50px;" class="text-center p-1"><span class="font-bold">Không <br /><i class="text-primary">No</i></span></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center p-1">Triệu chứng <br /><i class="text-primary">Signs and symptoms</i></td>
-                                            <td class="p-1">Sốt > 38°C và ho, khó thở, tiêu chảy,... <br /><i class="text-primary">Fever > 38°C and cough, dyspnea, diarrhea</i></td>
-                                            <td class="text-center p-1">
-                                                <asp:Label runat="server" ID="prt_high_fever_true" />
-                                            </td>
-                                            <td class="text-center p-1">
-                                                <asp:Label runat="server" ID="prt_high_fever_false" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center p-1" rowspan="2">Dịch tễ <br /><i class="text-primary">Epidemiology</i></td>
-                                            <td class="p-1">Đi từ hay tiếp xúc với người đi từ vùng dịch trong vòng 2 tuần <br /><i class="text-primary">History of travel and in contact with injectious disease outbreak in the past 2 weeks</i></td>
-                                            <td class="text-center p-1">
-                                                <asp:Label runat="server" ID="prt_contact_infectious_disease_true" />
-                                            </td>
-                                            <td class="text-center p-1">
-                                                <asp:Label runat="server" ID="prt_contact_infectious_disease_false" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="p-1">Tiếp xúc gần với người bị sốt, ho, khó thở <br /><i class="text-primary">Had close contact with someone who has fever, cough, dyspnea</i></td>
-                                            <td class="text-center p-1">
-                                                <asp:Label runat="server" ID="prt_close_contact_true" />
-                                            </td>
-                                            <td class="text-center p-1">
-                                                <asp:Label runat="server" ID="prt_close_contact_false" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center p-1">Đánh giá <br /> <i class="text-primary">Assessment</i></td>
-                                            <td class="p-1">Có nguy cơ truyền nhiễm <br /> <i class="text-primary">Injectious risk</i></td>
-                                            <td class="text-center p-1">
-                                                <asp:Label runat="server" ID="prt_injectious_risk_true" />
-                                            </td>
-                                            <td class="text-center p-1">
-                                                <asp:Label runat="server" ID="prt_injectious_risk_false" />
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                                        
-                                <div style="margin-left: 16px">
-                                    <div>• Nếu <span class="font-bold">"CÓ"</span> yếu tố nguy cơ triệu chứng, chuyển bệnh nhân sang phòng khám sàng lọc</div>
-                                    <div style="margin-left: 6px"><i class="text-primary">If <span class="font-bold">"YES"</span> Signs and symptom risks, transfer patient to screening clinic.</i></div>
-                                    <div>• Nếu <span class="font-bold">"CÓ"</span> yếu tố nguy cơ dịch tể, chuyển bệnh nhân đến phòng cách ly áp lực âm cấp cứu</div>
-                                    <div style="margin-left: 6px"><i class="text-primary">If <span class="font-bold">"YES"</span> epidemic risks, transfer patient to Isolation room in Emergency Department.</i></div>
-                                    <div>• Nếu <span class="font-bold">"KHÔNG"</span> tiếp tục hoàn thành tiểu mục <span class="font-bold">5, 6, 7, 8</span></div>
-                                    <div style="margin-left: 6px"><i class="text-primary">If <span class="font-bold">"NO"</span> complete part 5, 6, 7, 8 assessment.</i></div>
-                                </div>
-                                        
-                                <div><span class="font-bold">5. Đánh giá đau/ <i class="text-primary">Pain assessment:</i></span></div>
+                                        <div style="margin-left: 16px; display: grid; grid-template-columns: 160px auto auto 1fr; grid-gap: 10px">
+                                            <div>
+                                                <div>- Trở ngại về ngôn ngữ:</div>
+                                                <div class="en" style="margin-left: 10px">Language Barriers</div>
+                                            </div>
+                                            <div>
+                                                <div><asp:Label runat="server" ID="prt_btc_language_false" /> Không</div>
+                                                <div class="en" style="margin-left: 16px">No</div>
+                                            </div>
+                                            <div>
+                                                <div><asp:Label runat="server" ID="prt_btc_language_true" />  Có, giải thích:</div>
+                                                <div class="en" style="margin-left: 16px">Yes, explain</div>
+                                            </div>
+                                            <asp:Label runat="server" ID="prt_btc_language_note" />
+                                        </div>
 
-                                <div style="margin-left: 16px">
-                                    <div>Điều dưỡng đánh giá chọn một trong các thang điểm đau bên dưới phù hợp với từng người bệnh.</div>
-                                    <div><i class="text-primary">Nurses select one of the following pain scales in consistent with each sort of patient.</i></div>
-                                </div>
+                                        <div style="margin-left: 16px; display: grid; grid-template-columns: 160px auto auto 1fr; grid-gap: 10px">
+                                            <div>
+                                                <div>- Trở ngại về nhận thức:</div>
+                                                <div class="en" style="margin-left: 10px"><i>Cognitive Barriers</i></div>
+                                            </div>
+                                            <div>
+                                                <div><asp:Label runat="server" ID="prt_btc_cognitive_false" /> Không</div>
+                                                <div class="en" style="margin-left: 16px"><i>No</i></div></div>
+                                            <div>
+                                                <div><asp:Label runat="server" ID="prt_btc_cognitive_true" /> Có, giải thích:</div>
+                                                <div class="en" style="margin-left: 16px"><i>Yes, explain</i></div>
+                                            </div>
+                                            <asp:Label runat="server" ID="prt_btc_cognitive_note" />
+                                        </div>
+
+                                        <div style="margin-left: 16px; display: grid; grid-template-columns: 160px auto auto 1fr; grid-gap: 10px">
+                                            <div>
+                                                <div>- Trở ngại về Giác quan:</div>
+                                                <div class="en" style="margin-left: 16px"><i>Sensory Barriers</i></div>
+                                            </div>
+                                            <div>
+                                                <div><asp:Label runat="server" ID="prt_btc_sensory_false" /> Không</div>
+                                                <div class="en" style="margin-left: 16px"><i>No</i></div>
+                                            </div>
+                                            <div>
+                                                <div><asp:Label runat="server" ID="prt_btc_sensory_true" /> Có, giải thích:</div>
+                                                <div class="en" style="margin-left: 16px"><i>Yes, explain</i></div>
+                                            </div>
+                                            <asp:Label runat="server" ID="prt_btc_sensory_note" />
+                                        </div>
+
+                                        <div style="margin-left: 16px; display: grid; grid-template-columns: 160px auto auto 1fr; grid-gap: 10px">
+                                            <div>
+                                                <div>- Trở ngại về Tôn giáo:</div>
+                                                <div class="en" style="margin-left: 10px"><i>Religious Barriers</i></div>
+                                            </div>
+                                            <div>
+                                                <div><asp:Label runat="server" ID="prt_btc_religious_false" /> Không</div>
+                                                <div class="en" style="margin-left: 16px"><i>No</i></div></div>
+                                            <div>
+                                                <div><asp:Label runat="server" ID="prt_btc_religious_true" /> Có, giải thích:</div>
+                                                <div class="en" style="margin-left: 16px"><i>Yes, explain</i></div>
+                                            </div>
+                                            <asp:Label runat="server" ID="prt_btc_religious_note" />
+                                        </div>
+
+                                        <div style="margin-left: 16px; display: grid; grid-template-columns: 160px auto auto 1fr; grid-gap: 10px">
+                                            <div>
+                                                <div>- Trở ngại về Văn hóa:</div>
+                                                <div class="en" style="margin-left: 10px"><i>Cultural Barriers</i></div>
+                                            </div>
+                                            <div>
+                                                <div><asp:Label runat="server" ID="prt_btc_cultural_false" /> Không</div>
+                                                <div class="en" style="margin-left: 16px"><i>No</i></div>
+                                            </div>
+                                            <div>
+                                                <div><asp:Label runat="server" ID="prt_btc_cultural_true" /> Có, giải thích:</div>
+                                                <div class="en" style="margin-left: 16px"><i>Yes, explain</i></div>
+                                            </div>
+                                            <asp:Label runat="server" ID="prt_btc_cultural_note" />
+                                        </div>
+
+                                        <div class="font-bold">7. Tầm soát nguy cơ té ngã/ <span class="en">Fall risk screening</span></div>
+
+                                        <div style="margin-left: 16px;">
+                                            <span class="font-bold">- Các yếu tố nguy cơ/ <span class="en">Fall risk factors: </span></span>
+                                            <asp:Label runat="server" ID="prt_fall_risk_factor_nfr">Không có yếu tố nguy cơ/ No fall risk</asp:Label>
+                                        </div>
+
+                                        <div runat="server" id="prt_fall_risk_factor_nfr_wrapper">
+                                            <div runat="server" id="prt_fall_risk_factor" style="margin-left: 25px; display: grid; grid-template-columns: 350px 1fr; grid-gap: 6px">
+                                                <div>
+                                                    <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px">
+                                                        <asp:Label runat="server" ID="prt_fall_risk_factors_agr" /> 
+                                                        <div>Tuổi > 65/ <span class="en">Age > 65</span></div>
+                                                    </div>
+                                                    <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px">
+                                                        <asp:Label runat="server" ID="prt_fall_risk_factors_pre" /> 
+                                                        <div>Phụ nữ có thai/ <span class="en">Pregnant women</span></div>
+                                                    </div>
+                                                    <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px">
+                                                        <asp:Label runat="server" ID="prt_fall_risk_factors_ina" /> 
+                                                        <div>Không có khả năng đứng lên từ ghế/ <span class="en">Inability to rise from a chair</span></div>
+                                                    </div>
+                                                    <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px">
+                                                        <asp:Label runat="server" ID="prt_fall_risk_factors_pod" /> 
+                                                        <div>Mất trí nhớ/ <span class="en">Presence of dementia</span></div>
+                                                    </div>
+                                                    <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px">
+                                                        <asp:Label runat="server" ID="prt_fall_risk_factors_imp" />
+                                                        <div>Giảm/ Mất thị lực/ <span class="en">Patients with visual impairments</span></div>
+                                                    </div>
+                                                    <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px">
+                                                        <asp:Label runat="server" ID="prt_fall_risk_factors_ear" /> 
+                                                        <div>Bệnh nhân có vấn đề về tai có triệu chứng chóng mặt/ <span class="en">Patients have ear problems with complaints of dizziness and/or vertigo</span></div>
+                                                    </div>
+                                                    <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px">
+                                                        <asp:Label runat="server" ID="prt_fall_risk_factors_psy" /> 
+                                                        <div>Đang sử dụng bất kỳ thuốc thuộc nhóm an thần/ <span class="en">Any Administered Psycholeptics:</span> Diazepam, Tofisopam, Eszopiclone, Midazolam, Rotudin, Etifoxine chlorhydrate</div>
+                                                    </div>
+                                                    <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px">
+                                                        <asp:Label runat="server" ID="prt_fall_risk_factors_ade" /> 
+                                                        <div>Đang sử dụng bất kỳ thuốc thuộc nhóm chống trầm cảm/ <span class="en">Any Administered Antidepressant:</span> Citalopram, SERTRAline, Amitriptyline, Mirtazapine</div>
+                                                    </div>
+                                                    <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px">
+                                                        <asp:Label runat="server" ID="prt_fall_risk_factors_aps" /> 
+                                                        <div>Đang sử dụng bất kỳ thuốc thuộc nhóm điều trị loạn thần/ <span class="en">Any administered antipsychotic: Haloperidol, Olanzapine, Quetiapine, Risperidone, Olanzapine, Quetiapine</span></div>
+                                                    </div>
+                                                    <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px">
+                                                        <asp:Label runat="server" ID="prt_fall_risk_factors_aco" />
+                                                        <div>Đang sử dụng bất kỳ thuốc chống đông máu/ <span class="en">Any administered anticoagulant: Heparin Sodium, Anoxaparin, Rivaroxaban, Acenocoumarol...</span></div>
+                                                    </div>
+                                                    <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px;display: none">
+                                                        <asp:Label runat="server" ID="prt_fall_risk_factors_nfr" />
+                                                        <div>Không có yếu tố nguy cơ/ <span class="en">No fall risk</span></div>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px">
+                                                        <asp:Label runat="server" ID="prt_fall_risk_factors_ale" /> 
+                                                        <div>Tuổi < 3/ <span class="en">Age < 3</span></div>
+                                                    </div>
+                                                    <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px">
+                                                        <asp:Label runat="server" ID="prt_fall_risk_factors_amb" /> 
+                                                        <div>Sử dụng phương tiện hỗ trợ đi lại (gậy/nạng/khung tập đi)/ <span class="en">mbulatory devices (canes, crutches, and walkers)</span></div>
+                                                    </div>
+                                                    <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px">
+                                                        <asp:Label runat="server" ID="prt_fall_risk_factors_pat" /> 
+                                                        <div>Dáng đi yếu hoặc mất thăng bằng/ <span class="en">Patients with gait or balance disturbances</span></div>
+                                                    </div>
+                                                    <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px">
+                                                        <asp:Label runat="server" ID="prt_fall_risk_factors_aep" /> 
+                                                        <div>Đang sử dụng bất kỳ loại thuốc thuộc nhóm chống động kinh, chống co giật/ <span class="en">Any administered Antiepileptics, Anticonvulsants: Cardamazepine, Divolproex Sodium, Gabapentin, Lamotrigine, Phenobarbital, Phenytoin, Topiramate, Valproic Acid, Levetiracetam, Pregabalin</span></div>
+                                                    </div>
+                                                    <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px">
+                                                        <asp:Label runat="server" ID="prt_fall_risk_factors_ahy" /> 
+                                                        <div>Đang sử dụng bất kỳ thuốc thuộc nhóm điều trị tăng huyết áp/ <span class="en">Any administered Antihypertensive Medication: Captopril, Perindopril and amlodipine, Irbesartan and diuretics, Valsartan, Nifedipine, Lisinopril, Furosemide + Spironolacton, BISOprolol, METOprolol succinate...</span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div style="margin-left: 16px" class="font-bold">- Câu hỏi sàng lọc/ <span class="en">The fall risk screening questions:</span></div>
+                                        
+                                            <div style="margin-left: 16px; display: grid; grid-template-columns: 1fr 220px; gap: 6px;">
+                                                <div>
+                                                    <div>a. Anh/chị/ông/bà có từng bị ngã trong 12 tháng gần đây không?</div>
+                                                    <div class="en" style="margin-left: 16px">Have you fallen in the past year?</div>
+                                                </div>
+                                                <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 24px">
+                                                    <div>
+                                                        <div><asp:Label runat="server" ID="prt_fallen_true"/> Có</div>
+                                                        <div class="en" style="margin-left: 18px">Yes</div>
+                                                    </div>
+                                                    <div>
+                                                        <asp:Label runat="server" ID="prt_fallen_false"/> Không 
+                                                        <div class="en" style="margin-left: 18px">No</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div style="margin-left: 16px; display: grid; grid-template-columns: auto 1fr; gap: 6px;">
+                                                <div>
+                                                    <div>b. Anh/chị/ông/bà có cảm thấy bị mất thăng bằng lúc đứng dậy hoặc lúc đi không?</div>
+                                                    <div class="en" style="margin-left: 16px"><i>Do you feel unsteady when standing or walking?</i></div>
+                                                </div>
+                                                <div style="display: grid; grid-template-columns: auto 1fr; gap: 6px">
+                                                    <div>
+                                                        <div><asp:Label runat="server" ID="prt_feel_unsteady_true" /> Có </div>
+                                                        <div><span style="margin-left: 18px" class="en" ><i>Yes</i></span> </div>
+                                                    </div>
+                                                    <div>
+                                                        <div><asp:Label runat="server" ID="prt_feel_unsteady_false" /> Không  </div>
+                                                        <div><span style="margin-left: 18px" class="en" ><i>No</i></span> </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div style="margin-left: 16px; display: grid; grid-template-columns: 1fr 220px; gap: 6px;">
+                                                <div>
+                                                    <div>c. Anh/chị/ông/bà có lo sợ bị ngã không?</div>
+                                                    <div class="en" style="margin-left: 16px"><i>Do you worry about falling?</i></div>
+                                                </div>
+                                                <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 24px">
+                                                    <div>
+                                                        <div><asp:Label runat="server" ID="prt_worry_about_falling_true" /> Có </div>
+                                                        <div class="en" style="margin-left: 18px">Yes</div>
+                                                    </div>
+                                                    <div>
+                                                        <div><asp:Label runat="server" ID="prt_worry_about_falling_false" /> Không</div>
+                                                        <div class="en" style="margin-left: 18px">No</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                            <div style="margin-left: 16px">- <span class="font-bold"> Can thiệp/ <span class="en">Intervention</span>:</span></div>
                                     
-                                <section runat="server" id="prt_naf_wrapper" style="display: grid; grid-template-columns: 300px 1fr; grid-gap: 10px; margin-left: 16px">
-                                    <div style="grid-column: 1/3"><span class="font-bold">Bằng số và Hình mặt (≥ 4 tuổi)/ <i class="text-primary">Numeric and Faces (≥ 4 years):</i></span></div>
-                                    <div>
-                                        <div style="display: inline-block"><asp:Label runat="server" ID="prt_paint_score_code_0" /> Không đau (0) <div style="margin-left: 16px"><i class="text-primary">No hurt</i></div> </div>
-                                        <div style="display: inline-block"><asp:Label runat="server" ID="prt_paint_score_code_1" /> Đau rất ít (1 - 2)<div style="margin-left: 16px"><i class="text-primary">Little hurt</i></div></div>
-                                        <div style="display: inline-block"><asp:Label runat="server" ID="prt_paint_score_code_2" /> Đau nhẹ (3 - 4)<div style="margin-left: 16px"><i class="text-primary">Slight hurt</i></div></div>
-                                        <div style="display: inline-block"><asp:Label runat="server" ID="prt_paint_score_code_3" /> Đau vừa (5 - 6)<div style="margin-left: 16px"><i class="text-primary">Considerable hurt</i></div></div>
-                                        <div style="display: inline-block"><asp:Label runat="server" ID="prt_paint_score_code_4" /> Đau nhiều (7 - 8)<div style="margin-left: 16px"><i class="text-primary">Serious hurt</i></div></div>
-                                        <div style="display: inline-block"><asp:Label runat="server" ID="prt_paint_score_code_5" /> Rất đau (9 - 10)<div style="margin-left: 16px"><i class="text-primary">Worst hurt</i></div></div>
-                                    </div>
-                                    <div>
-                                        <img src="../images/2021-12-27_14-08-55.png" />
-                                    </div>
-                                </section>
+                                            <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px;margin-left: 16px">
+                                                <asp:Label runat="server" ID="prt_intervention_uni" /> 
+                                                <div>Phòng ngừa té ngã thường quy/ <span class="en">Universe fall risk prevention</span></div>
+                                            </div>
+                                            <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px;margin-left: 16px">
+                                                <asp:Label runat="server" ID="prt_intervention_sti" /> 
+                                                <div>Dán sticker nguy cơ ngã/ <span class="en">Stick fall-risk on patient's shirt</span></div>
+                                            </div>
+                                            <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px;margin-left: 16px">
+                                                <asp:Label runat="server" ID="prt_intervention_edu" /> 
+                                                <div>Thông báo nguy cơ té ngã cho người bệnh/ người nhà/ <span class="en">Educate the fall risk to patient/ Relatives</span></div>
+                                            </div>
+                                            <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px;margin-left: 16px">
+                                                <asp:Label runat="server" ID="prt_intervention_ass" /> 
+                                                <div>Trợ giúp người bệnh di chuyển, đi lại/ <span class="en">Assist patient with transfer/ ambulation</span></div>
+                                            </div>
+                                            <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px;margin-left: 16px">
+                                                <asp:Label runat="server" ID="prt_intervention_str" /> 
+                                                <div>Cung cấp dụng cụ hỗ trợ di chuyển (Băng ca, xe đẩy...)/ <span class="en">Assist patient with transfer/ ambulation (Stretcher, wheelchair)</span></div>
+                                            </div>
+                                            <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px;margin-left: 16px">
+                                                <asp:Label runat="server" ID="prt_intervention_epa" /> 
+                                                <div>Hướng dẫn ba mẹ/ người thân bệnh nhi luôn quan sát bé cẩn thận và luôn ở cùng bé/ <span class="en">Educate Parents to keep an eye on their children closely and never let him/her alone</span></div>
+                                            </div>
+                                            <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px;margin-left: 16px">
+                                                <asp:Label runat="server" ID="prt_intervention_ins" /> 
+                                                <div>Hướng dẫn ba mẹ/ người thân bệnh nhi hạn chế cho bé chạy nhảy/ Instruct Parents/ <span class="en">accompanying family members limit the child to run</span></div>
+                                            </div>
+                                            <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px;margin-left: 16px">
+                                                <asp:Label runat="server" ID="prt_intervention_enc" /> 
+                                                <div>Khuyến khích di chuyển bằng nôi/ xe nôi đối với trẻ sơ sinh và nhủ nhi/ <span class="en">Encourage parents/ Caregivers to use cribs for newborn/ neonatal in moving</span></div>
+                                            </div>
+                                            <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 4px;margin-left: 16px">
+                                                <asp:Label runat="server" ID="prt_intervention_pfr" /> 
+                                                <div>Đeo vòng tay nguy cơ ngã khi/ <span class="en">Place Fall Risk ID bracelet on patient in cases of:</span></div>
+                                            </div>
+                                            <div style="margin-left: 16px">• Người bệnh có chỉ định nhập viện nguy cơ té ngã cao/ <span class="en">High fall risk patients with admission order</span></div>
+                                            <div style="margin-left: 16px; margin-right: -10px">• Người bệnh sau thủ thuật có gây tê hoặc gây mê/ <span class="en">Patients after procedure under local or general anesthesia</span></div>
+                                            <div style="margin-left: 16px">• Người bệnh hóa trị liệu/ <span class="en">Patients with chemotherapy</span></div>
+                                            <div style="margin-left: 16px">• Người bệnh được truyền dịch/ <span class="en">Patients with fluid infusion</span></div>
+                                        </div>
 
-                                <section runat="server" id="prt_flacc_wrapper">
-                                    <div style="margin-left: 16px"><label class="control-label font-bold">FLACC (2 tháng đến < 4 tuổi) và bệnh nhi dưới 16 tuổi không nói được/ <span class="text-primary">2 month to < 4 years old and non-verbal pediatric patient (patient < 16 years old)</span></label></div>
-                                    <div style="margin-left: 16px;">
-                                        <table class="table-bordered mb-2" style="table-layout: fixed; width: 100%">
+                                        <div><span class="font-bold">8. Sàng lọc dinh dưỡng/ <span class="en">Nutrition screening:</span></span></div>
+
+                                        <table class="table-bordered" style="width: 100%">
                                             <tr>
-                                                <td class="text-center font-bold p-1" style="border-bottom: none; width: 100px">Các Hạng Mục</td>
-                                                <td class="text-center font-bold p-1" colspan="3">ĐIỂM HÀNH VI/ <span class="text-primary">BEHAVIOUR SCORE</span></td>
-                                                <td class="text-center font-bold p-1" rowspan="2" style="width: 50px">Điểm <br /><span class="text-primary">Score</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td style="border-top: none;"><span class="text-primary">Category</span></td>
-                                                <td class="text-center font-bold p-1">0</td>
-                                                <td class="text-center font-bold p-1">1</td>
-                                                <td class="text-center font-bold p-1">2</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center p-1">Mặt <br /><span class="text-primary">Face</span></td>
-                                                <td class="p-1">Không biểu hiện cụ thể hoặc đang mỉm cười. <br /><span class="text-primary">No particular expression or is smiling</span></td>
-                                                <td class="p-1">Thỉnh thoảng nhăn mặt hoặc cau mày, thường xuyên run cằm, nghiến răng <br /><span class="text-primary">Occasional grimace or frown, frequent to constant quivering of chin, clenched jaw</span></td>
-                                                <td class="p-1">Lãnh đạm, thời ơ <br /><span class="text-primary">Withdrawn, disinterested</span></td>
-                                                <td  class="p-1 text-center">
-                                                    <asp:Label runat="server" ID="prt_flacc_face" />
+                                                <td class="p-1">
+                                                    <span class="font-bold">BMI</span> = Chỉ số khối cơ thể / BMI
+                                                </td>
+                                                <td style="width: 80px" class="text-center">
+                                                    <asp:Label runat="server" ID="prt_bmi"></asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="text-center p-1">Chân <br /><span class="text-primary">Legs</span></td>
-                                                <td class="p-1">Vị trí bình thường hoặc Yên tĩnh và thư giãn. <br /><span class="text-primary">Normal position or Is calm and relaxed</span></td>
-                                                <td class="p-1">Khó chịu, bồn chồn, căng thẳng <br /><span class="text-primary">Uneasy, restless, tense</span></td>
-                                                <td class="p-1">Đá chân hoặc bất động hoặc bồn chồn. <br /><span class="text-primary">Kicking or legs drawn up immobility or extremely restless</span></td>
-                                                <td class="p-1 text-center">
-                                                    <asp:Label runat="server" ID="prt_flacc_legs" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center p-1">Cử động <br /><span class="text-primary">Activity</span></td>
                                                 <td class="p-1">
-                                                    Nằm im/ <span class="text-primary">Lying quietly</span><br />
-                                                    Tư thế bình thường/ <span class="text-primary">Normal position</span><br />
-                                                    Đi lại dễ dàng/ <span class="text-primary">Moves easily</span>
+                                                    <div><span class="font-bold">Cân nặng 3 tháng trước/ <span class="en">The weight of 3 last month</span></span></div>
+                                                    <div>* Đối với trẻ sơ sinh < 3 tháng tuổi, điền thông tin cân nặng lúc sinh</div>
+                                                    <div class="en"><i>For infants < 3 months old, please insert birth weight</i></div>
                                                 </td>
-                                                <td class="p-1">Loay hoay, luôn thay đổi tư thế/ <span class="text-primary">Squirming, Shifting back and forth</span></td>
-                                                <td class="p-1">Khóc thét hoặc hét lên khi bị chạm vào hoặc cử động/ <span class="text-primary">High-pitched cry or scream when touched or moved</span></td>
-                                                <td class="p-1 text-center">
-                                                    <asp:Label runat="server" ID="prt_flacc_activity" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center p-1">Khóc <br />
-                                                <span class="text-primary">Cry</span></td>
-                                                <td class="p-1">
-                                                    Không khóc/ <span class="text-primary">No cry</span><br />
-                                                    Thức hoặc ngủ <br /><span class="text-primary">Awake or sleep</span>
-                                                </td>
-                                                <td class="p-1">
-                                                    Rên ri, thỉnh thoảng than phiền <br />
-                                                    <span class="text-primary">Moans and whimpers, occasional complaint</span>
-                                                </td>
-                                                <td class="p-1">
-                                                    Khóc liên tục, hét lên, nức nở, than phiền thường xuyên <br />
-                                                    <span class="text-primary">Crying steadily, screams, sobs, frequent complaint</span>
-                                                </td>
-                                                <td class="p-1 text-center">
-                                                    <asp:Label runat="server" ID="prt_flacc_cry" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center p-1">
-                                                    Xoa dịu <br />
-                                                    <span class="text-primary">An ủi</span> <br />
-                                                    <span class="text-primary">Consolability</span>
-                                                </td>
-                                                <td class="p-1">
-                                                    Hài lòng, thử giãn <br />
-                                                    <span class="text-primary">Contents, relaxed</span>
-                                                </td>
-                                                <td class="p-1">
-                                                    An ủi bằng thỉnh thoảng chạm, ôm hoặc nói chuyện, dễ bị phân tâm. <br />
-                                                    <span class="text-primary">Reassured by occasional touching, hugging or talking to, easily distracted</span>
-                                                </td>
-                                                <td class="p-1">
-                                                    Không an ủi được <br />
-                                                    <span class="text-primary">Inconsolable</span>
-                                                </td>
-                                                <td class="p-1 text-center">
-                                                    <asp:Label runat="server" ID="prt_flacc_consolability" />
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="p-1 text-right font-bold" colspan="4">Tổng điểm/ <span class="text-primary">Total score</span></td>
                                                 <td class="text-center">
-                                                    <asp:Label runat="server" ID="prt_flacc_total_score" />
+                                                    <asp:Label runat="server" ID="prt_previous_weight"/>&nbsp;kg
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-1">
+                                                    <div><span class="font-bold">% cân nặng thay đổi</span></div>
+                                                    <div class="en"><span class="font-bold">% weight change</span></div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <asp:Label runat="server" ID="prt_weight_change"></asp:Label>&nbsp;%
                                                 </td>
                                             </tr>
                                         </table>
-                                    </div>
 
-                                    <div style="display: grid; grid-template-columns: 100px 1fr 1fr 1fr 1fr; grid-gap: 10px; margin-left: 16px;" class="mt-2 mb-2">
-                                        <div class="font-bold">Kết luận: <div>Conclude</div></div>
-                                        <div><asp:Label runat="server" ID="prt_flacc_conclude_0" />Không đau (0) <div>No risk of malnutrition</div></div>
-                                        <div><asp:Label runat="server" ID="prt_flacc_conclude_1" />Đau nhẹ (1-3) <div>Slight pain</div></div>
-                                        <div><asp:Label runat="server" ID="prt_flacc_conclude_2" />Đau vừa (4-6) <div>Considerable pain</div></div>
-                                        <div><asp:Label runat="server" ID="prt_flacc_conclude_3" />Rất đau (7-10) <div>Worst pain</div></div>
-                                    </div>
-                                </section>
+                                        <div class="text-center mt-1">Khoanh tròn chỉ 1 số trong mỗi câu/ <span class="en">Circle only 1 number in each criterion</span></div>
 
-                                <section runat="server" id="prt_npass_wrapper">
-                                    <div class="mb-1" style="margin-left: 16px; text-decoration: underline">
-                                        <label class="control-label font-bold">Thang điểm đánh giá đau và an thần cho trẻ sơ sinh và nhũ nhi (< 2 tháng tuổi) <br /> 
-                                            <span class="text-primary">Neonatal and infantile pain, sedation scale (N-PASS) (<2 months)</span></label>
-                                    </div>
-                                    <div>&nbsp;</div>
-                                    <div>&nbsp;</div>
-                                    <div style="margin-left: 16px;">
-                                        <table class="table-bordered mb-2" style="table-layout: fixed; width: 100%">
+                                        <div><span class="font-bold mt-2">- Tình trạng dinh dưỡng/ <span class="en">Nutrition status:</span></span></div>
+                                        
+                                        <div>(Lưu ý; Không áp dụng cho phụ nữ mang thai/ <span class="en">Note: Not applicable for pregnant women)</span></div>
+
+                                        <table class="table-bordered" style="width: 100%; page-break-inside: avoid;margin-bottom: -1px">
                                             <tr>
-                                                <td  class="font-bold p-1 text-center" rowspan="2">
-                                                    Tiêu chí <br />
-                                                    đánh giá <br />
-                                                    <i class="text-primary">Assessment <br />
-                                                    criteria</i>
+                                                <td rowspan="3" class="text-center font-bold">
+                                                    <div>Trẻ ≤ 5 tuổi </div>
+                                                    <div class="en">Children ≤ 5 years old</div>
                                                 </td>
-                                                <td colspan="2" class="font-bold p-1 text-center">
-                                                    An thần <br />
-                                                    <i class="text-primary">Sedation</i>
+                                                <td class="p-1 text-center" style="width: 430px">
+                                                    <div>Cân nặng theo chiều dài/chiều cao ≤ <span class="font-bold"> -2 độ lệch tiêu chuẩn (SD)</span></div>
+                                                    <div class="en">Weight for length/height ≤ <span class="font-bold">-2 standard deviation (SD)</span></div>
                                                 </td>
-                                                <td class="font-bold p-1 text-center">
-                                                    Bình thường <br />
-                                                    <i class="text-primary">Normal</i>
-                                                </td>
-                                                <td colspan="2" class="font-bold p-1 text-center">
-                                                    Đau <br />
-                                                    <i class="text-primary">Pain</i>
-                                                </td>
-                                                <td class="font-bold p-1 text-center" rowspan="2" style="width: 50px">
-                                                    Điểm <br />
-                                                    <i class="text-primary">Score</i>
+                                                <td style="width: 80px" class="p-1 text-center">
+                                                    <asp:Label runat="server" ID="prt_ns_l_2">2</asp:Label>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td class="text-center p-1 font-bold">-2</td>
-                                                <td class="text-center p-1 font-bold">-1</td>
-                                                <td class="text-center p-1 font-bold">0</td>
-                                                <td class="text-center p-1 font-bold">1</td>
-                                                <td class="text-center p-1 font-bold">2</td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="text-center p-1">
-                                                    Khóc <br />
-                                                    <i class="text-primary">Crying</i>
-                                                </td>
-                                                <td class="p-1 align-top">
-                                                    Không khóc với <br /> kích thích đau <br />
-                                                    <span class="text-primary">No cry with painful stimuli</span>
-                                                </td>
-                                                <td class="p-1 align-top">
-                                                    Rên rỉ, khóc yếu <br /> với kích thích đau <br />
-                                                    <i class="text-primary">Moans or cries <br /> minimally with <br /> painful stimuli</i>
-                                                </td>
-                                                <td class="p-1 align-top">
-                                                    Khóc tự nhiên, <br />
-                                                    Không bứt rứt <br />
-                                                    <i class="text-primary">Appropriate crying <br /> Not irritable</i>
-                                                </td>
-                                                <td class="p-1 align-top">
-                                                    Bứt rứt, quấy khóc <br /> ngắt quãng, có thể <br /> dỗ được <br />
-                                                    <i class="text-primary">Irritable or crying at <br /> intervals Consolable</i>
-                                                </td>
-                                                <td class="p-1 align-top">
-                                                    Khóc cao giọng, <br /> liên tục, không thể <br /> dỗ được <br />
-                                                    <i class="text-primary">High-pitched or <br /> silent-continuous cry <br /> Inconsolable</i>
+                                                <td class="p-1 text-center">
+                                                    <div>Cân nặng theo chiều dài/chiều cao ≤ <span class="font-bold">-1 độ lệch tiêu chuẩn (SD) </span></div>
+                                                    <div class="en">Weight for length/height ≤ <span class="font-bold">-1 standard deviation (SD)</span></div>
                                                 </td>
                                                 <td class="p-1 text-center">
-                                                    <asp:Label runat="server" ID="prt_npass_crying" />
+                                                    <asp:Label runat="server" ID="prt_ns_l_1">1</asp:Label>
                                                 </td>
                                             </tr>
-
                                             <tr>
-                                                <td class="text-center p-1">
-                                                    Biểu hiện <br />
-                                                    <span class="text-primary">Behavior</span>
-                                                </td>
-                                                <td class="p-1 align-top">
-                                                    Không đáp ứng với <br /> bất kỳ kích thích<br />
-                                                    <i class="text-primary">No arousal to any <br /> stimuli</i>
-                                                </td>
-                                                <td class="p-1 align-top">
-                                                    Nhúc nhích nhẹ <br /> khi bị kích thích<br />
-                                                    <i class="text-primary">Arouses minimally to <br /> stimuli little <br /> spontaneous <br /> movement</i>
-                                                </td>
-                                                <td class="p-1 align-top">
-                                                    Cử động phù hợp <br /> tuổi thai<br />
-                                                    <i class="text-primary">Appropriate for <br /> gestational age</i>
-                                                </td>
-                                                <td class="p-1 align-top">
-                                                    Vặn mình, thường thức giấc <br />
-                                                    <i class="text-primary">Restless, squirming <br /> Awakens frequently</i>
-                                                </td>
-                                                <td class="p-1 align-top">
-                                                    Uốn éo, không ngủ <br /> yên <br />
-                                                    <i class="text-primary">Arching, kicking <br /> Constantly awake or <br /> Arouses minimally/ <br /> no movement (not <br /> sedated)</i>
+                                                <td class="p-1 text-center">
+                                                    <div>Cân nặng theo chiều dài/chiều cao > <span class="font-bold">-1 độ lệch tiêu chuẩn (SD)</span></div>
+                                                    <div class="en">Weight for length/height > <span class="font-bold">-1 standard deviation (SD)</span></div>
                                                 </td>
                                                 <td class="p-1 text-center">
-                                                    <asp:Label runat="server" ID="prt_npass_behavior" />
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="text-center p-1">
-                                                    Vẻ mặt <br />
-                                                    <i class="text-primary">Facial <br /> expression</i>
-                                                </td>
-                                                <td class="p-1">
-                                                    Không thay đổi với<br /> kích thích <br />
-                                                    <span class="text-primary">No expression</span>
-                                                </td>
-                                                <td class="p-1">
-                                                    Thay đổi nhẹ với<br /> kích thích <br />
-                                                    <i class="text-primary">Minimal expression <br /> with stimuli</i>
-                                                </td>
-                                                <td class="p-1">
-                                                    Thư giãn<br /> Relaxed,<br />
-                                                    <i class="text-primary">Appropriate</i>
-                                                </td>
-                                                <td class="p-1">
-                                                    Nhăn mặt, không <br /> liên tục
-                                                    <i class="text-primary">Any pain expression <br /> intermittent</i>
-                                                </td>
-                                                <td class="p-1">
-                                                    Nhăn mặt liên tục <br /> Any pain expression <br /> 
-                                                    <i class="text-primary">continual</i>
-                                                </td>
-                                                <td class="p-1 text-center">
-                                                    <asp:Label runat="server" ID="prt_npass_facial_expression" />
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="text-center p-1">
-                                                    Trương lực <br /> chỉ
-                                                    <i class="text-primary">Extremities<br /> tone</i>
-                                                </td>
-                                                <td class="p-1">
-                                                    Mềm oặt, không<br /> phản xạ nắm<br />
-                                                    <i class="text-primary">No grasp reflexes <br /> Flaccid tone</i>
-                                                </td>
-                                                <td class="p-1">
-                                                    Giảm trương lực,<br /> phản xạ nắm yếu <br />
-                                                    <i class="text-primary">Weak grasp reflex <br /> decrease muscle <br /> tone</i>
-                                                </td>
-                                                <td class="p-1">
-                                                    Trương lực bình<br /> thường, tay chân<br /> thư giãn <br />
-                                                    <i class="text-primary">Relaxed hands and feet Normal tone</i>
-                                                </td>
-                                                <td class="p-1">
-                                                    Các ngón chân <br /> quặp lại, không liên tục, tay nắm lại hoặc xèo ra. Không gồng người
-                                                    <i class="text-primary">Intermittent clenched <br /> toes, fists or finger <br /> splay Body is not <br /> tense</i>
-                                                </td>
-                                                <td class="p-1">
-                                                    Các ngón chân quặp lại liên tục, tay nắm lại hoặc xèo ra. Gồng người <br />
-                                                    <i class="text-primary">Continual clenched <br /> toes, fists, or finger <br /> splay. Body is tense</i>
-                                                </td>
-                                                <td class="p-1 text-center">
-                                                    <asp:Label runat="server" ID="prt_npass_extremities_tone" />
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="text-center p-1">
-                                                    Dấu hiệu <br /> sinh tồn
-                                                    <i class="text-primary">Vital signs</i>
-                                                </td>
-                                                <td class="p-1">
-                                                    Không dao động khi<br /> bị kích thích<br /> Thở yếu <br /> Ngưng thở
-                                                    <i class="text-primary">No variability with <br /> stimuli <br /> Hypoventilation or <br /> apnea</i>
-                                                </td>
-                                                <td class="p-1">
-                                                    Thay đổi dưới 10%<br /> so với giới hạn <br /> bình thường khi bị <br /> kích thích
-                                                    <i class="text-primary">Decrease 10% <br /> variability from <br /> baseline with stimuli</i>
-                                                </td>
-                                                <td class="p-1">
-                                                    Nằm trong giới<br /> hạn bình thường<br /> theo tuổi thai <br />
-                                                    <i class="text-primary">Within baseline or <br /> normal for <br /> gestational age</i>
-                                                </td>
-                                                <td class="p-1">
-                                                    Tăng 10-20% so <br /> với giới hạn bình <br /> thường SpO2 76 <br /> -85% khi bị kích <br /> thích, hồi phục <br /> nhanh
-                                                    <i class="text-primary">Increase 10-20% from <br /> baseline <br /> SaO2 76-85% with <br /> stimulation - quick<br /> toes, fists or finger <br /> splay Body is not <br /> tense</i>
-                                                </td>
-                                                <td class="p-1">
-                                                    Tăng trên 20% so <br /> với giới hạn bình <br /> thường <br /> SpO2 dưới 75% <br /> khi bị kích thích, <br /> hồi phục chậm <br /> <br />
-                                                    <i class="text-primary">Increase 20% from <br /> baseline <br /> SaO2 ≤ 75% with stimulation - slow <br /> Out of sync with vent</i>
-                                                </td>
-                                                <td class="p-1 text-center">
-                                                    <asp:Label runat="server" ID="prt_npass_vital_signs" />
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="text-center p-1" rowspan="3">
-                                                    Tuổi thai <br />
-                                                    hiệu chỉnh <br />
-                                                    <i class="text-primary">Gestation <br />
-                                                    (Corrected age)</i>
-                                                </td>
-                                                <td class="text-center" colspan="5">< 28 tuần / <i class="text-primary"><28 weeks</i>: <span class="font-bold">+3</span></td>
-                                                <td class="p-1 text-center">
-                                                    <asp:Label runat="server" ID="prt_npass_gestation_3" />
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="text-center" colspan="5">28-31 tuần / <i class="text-primary">28-31 weeks</i>: <span class="font-bold">+2</span></td>
-                                                <td class="p-1 text-center">
-                                                    <asp:Label runat="server" ID="prt_npass_gestation_2" />
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="text-center" colspan="5">32-35 tuần / <i class="text-primary">32-35 weeks</i>: <span class="font-bold">+1</span></td>
-                                                <td class="p-1 text-center">
-                                                    <asp:Label runat="server" ID="prt_npass_gestation_1" />
-                                                </td>
-                                            </tr>
-
-                                            <tr>
-                                                <td class="text-right font-bold p-1" colspan="6">Tổng điểm/ <i class="text-primary">Total score</i></td>
-                                                <td class="text-center">
-                                                    <asp:Label runat="server" ID="prt_npass_total_score" ></asp:Label>
+                                                    <asp:Label runat="server" ID="prt_ns_l_0">0</asp:Label>
                                                 </td>
                                             </tr>
                                         </table>
-                                    </div>
-                                            
-                                    <div style="display: grid; grid-template-columns: 100px 1fr 1fr 1fr; grid-gap: 10px; margin-left: 16px;" class="mt-2 mb-2">
-                                        <div class="font-bold">Kết luận: <div><i class="text-primary">Conclude</i></div></div>
-                                        <div><asp:Label runat="server" ID="prt_npass_conclude_0" /> Không đau (0) <div style="margin-left: 18px"><i class="text-primary">No pain</i></div></div>
-                                        <div><asp:Label runat="server" ID="prt_npass_conclude_1" /> Đau nhẹ (1-3) <div style="margin-left: 18px"><i class="text-primary">Slight pain</i></div></div>
-                                        <div><asp:Label runat="server" ID="prt_npass_conclude_2" /> Đau vừa – nhiều (> 3) <div style="margin-left: 18px"><i class="text-primary">Considerable - Serious pain</i></div></div>
-                                    </div>
-                                </section>
-                                            
-                                <section runat="server" id="prt_nonv_wrapper" class="pt1">
-                                    <div>
-                                        Đối với người bệnh không nói được điều dưỡng đánh giá riêng trên biểu mẫu (AIH-FRM-021 - Thang điểm theo dõi phản ứng đau của người bệnh không nói được)
-                                        <br />
-                                        <i class="text-primary"> Nurses use a separated form to evaluate non-verbal patients (AIH-FRM-021 - Behavioural pain scale for non-verbal adult patient)</i>
-                                    </div>
-                                </section>
 
-                                <div><span class="font-bold">6. Trở ngại chăm sóc/ <i class="text-primary">Barrier to care</i></span></div>
+                                        <table class="table-bordered" style="width: 100%; page-break-inside: avoid;margin-bottom: -1px">
+                                            <tr>
+                                                <td rowspan="3" class="text-center">
+                                                    <div class="font-bold">Trẻ > 5 tuổi </div>
+                                                    <div class="en">Children > 5 years old</div>
+                                                </td>
+                                                <td class="p-1 text-center" style="width: 430px">
+                                                    BMI theo tuổi ≤ <span class="font-bold"> -2SD</span>/<span class="en">BMI for age ≤ <span class="font-bold">-2SD</span></span>
+                                                </td>
+                                                <td class="p-1 text-center" style="width: 80px"><asp:Label runat="server" ID="prt_ns_g_2">2</asp:Label></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-1 text-center">
+                                                    BMI theo tuổi ≤ <span class="font-bold"> -1SD</span>/<span class="en">BMI for age ≤ <span class="font-bold">-1SD</span></span>
+                                                </td>
+                                                <td class="p-1 text-center"><asp:Label runat="server" ID="prt_ns_g_1">1</asp:Label></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-1 text-center">
+                                                    BMI theo tuổi > <span class="font-bold"> -1SD</span>/<span class="en">BMI for age > <span class="font-bold">-1SD</span></span>
+                                                </td>
+                                                <td class="p-1 text-center"><asp:Label runat="server" ID="prt_ns_g_0">0</asp:Label></td>
+                                            </tr>
+                                        </table>
 
-                                <div style="margin-left: 16px; display: grid; grid-template-columns: 150px auto auto 1fr; grid-gap: 10px">
-                                    <div>
-                                        - Trở ngại về ngôn ngữ:
-                                        <div style="margin-left: 16px"><i class="text-primary">Language Barriers</i></div>
-                                    </div>
-                                    <div><asp:Label runat="server" ID="prt_btc_language_false" /> Không<div style="margin-left: 16px"><i class="text-primary">No</i></div></div>
-                                    <div><asp:Label runat="server" ID="prt_btc_language_true" /> Có, giải thích:<div style="margin-left: 16px"><i class="text-primary">Yes, explain</i></div></div>
-                                    <asp:Label runat="server" ID="prt_btc_language_note" />
-                                </div>
+                                        <table class="table-bordered" style="width: 100%; page-break-inside: avoid">
+                                            <tr>
+                                                <td class="p-1 text-center" rowspan="3">
+                                                    <div class="font-bold">Người lớn</div>
+                                                    <div class="en">Adult patients</div>
+                                                </td>
+                                                <td class="p-1 text-center" style="width: 430px">
+                                                    BMI < <span class="font-bold"> 18,5</span>
+                                                </td>
+                                                <td class="p-1 text-center" style="width: 80px"><asp:Label runat="server" ID="prt_ns_a_2">2</asp:Label></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-1 text-center">
+                                                    BMI từ /<span class="en">from </span><span class="font-bold"> 18,5 - 20</span>
+                                                </td>
+                                                <td class="p-1 text-center"><asp:Label runat="server" ID="prt_ns_a_1">1</asp:Label></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-1 text-center">
+                                                    BMI ><span class="text-bold"><span class="font-bold">20</span></span>
+                                                </td>
+                                                <td class="p-1 text-center"><asp:Label runat="server" ID="prt_ns_a_0">0</asp:Label></td>
+                                            </tr>
+                                        </table>
 
-                                <div style="margin-left: 16px; display: grid; grid-template-columns: 150px auto auto 1fr; grid-gap: 10px">
-                                    <div>
-                                        - Trở ngại về nhận thức:
-                                        <div style="margin-left: 16px"><i class="text-primary">Cognitive Barriers</i></div>
-                                    </div>
-                                    <div><asp:Label runat="server" ID="prt_btc_cognitive_false" /> Không<div style="margin-left: 16px"><i class="text-primary">No</i></div></div>
-                                    <div><asp:Label runat="server" ID="prt_btc_cognitive_true" /> Có, giải thích:<div style="margin-left: 16px"><i class="text-primary">Yes, explain</i></div></div>
-                                    <asp:Label runat="server" ID="prt_btc_cognitive_note" />
-                                </div>
+                                        <div><span class="font-bold mt-2">- Sụt cân không chủ ý trong 3 tháng gần đây/ <span class="en">Unintentional weight loss in the last 3 months:</></span></div>
+                                        <div><span style="font-size: 10pt">Lưu ý: Xem "% cân nặng thay đổi" ở trên, nếu số liệu = 0: Không sụt cân; nếu số liệu <0: sụt cân; nếu số liệu >0: tăng cân</span></div>
+                                        <div class="en"><span style="font-size: 9.5pt">Note: Based on the box "% weight change" above: if data =0; no weight loss, if data <0: weight loss, if data >0: weight gain</span></div>
 
-                                <div style="margin-left: 16px; display: grid; grid-template-columns: 150px auto auto 1fr; grid-gap: 10px">
-                                    <div>
-                                        - Trở ngại về Giác quan:
-                                        <div style="margin-left: 16px"><i class="text-primary">Sensory Barriers</i></div>
-                                    </div>
-                                    <div><asp:Label runat="server" ID="prt_btc_sensory_false" /> Không<div style="margin-left: 16px"><i class="text-primary">No</i></div></div>
-                                    <div><asp:Label runat="server" ID="prt_btc_sensory_true" /> Có, giải thích:<div style="margin-left: 16px"><i class="text-primary">Yes, explain</i></div></div>
-                                    <asp:Label runat="server" ID="prt_btc_sensory_note" />
-                                </div>
+                                        <table class="table-bordered" style="width: 100%">
+                                            <tr>
+                                                <td class="p-1 text-center">Giảm > <span class="font-bold">10%</span>/ <span class="en">Weight loss > <span class="font-bold">10%</span></span></td>
+                                                <td style="width: 80px" class="p-1 text-center"><asp:Label runat="server" ID="prt_ns_loss_weight_2">2</asp:Label></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-1 text-center">Giảm từ <span class="font-bold">5 - 10%</span> / <span class="en">Weight loss from <span class="font-bold">5 - 10%</span></span></td>
+                                                <td class="p-1 text-center"><asp:Label runat="server" ID="prt_ns_loss_weight_1">1</asp:Label></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-1 text-center">
+                                                    Giảm < <span class="font-bold">5%</span> / <span class="en">Weight loss < <span class="font-bold">5%</span></span>
+                                                    <div>Hoặc <span class="font-bold">không sụt cân</span>/ <span class="en">Or <span class="font-bold">no weight loss</span></span></div>
+                                                    <div>Hoặc <span class="font-bold">tăng cân</span>/ <span class="en">Or <span class="font-bold">weight gain</span></span></div>
+                                                </td>
+                                                <td class="p-1 text-center"><asp:Label runat="server" ID="prt_ns_loss_weight_0">0</asp:Label></td>
+                                            </tr>
+                                        </table>
 
-                                <div style="margin-left: 16px; display: grid; grid-template-columns: 150px auto auto 1fr; grid-gap: 10px">
-                                    <div>
-                                        - Trở ngại về Tôn giáo:
-                                        <div style="margin-left: 16px"><i class="text-primary">Religious Barriers</i></div>
-                                    </div>
-                                    <div><asp:Label runat="server" ID="prt_btc_religious_false" /> Không<div style="margin-left: 16px"><i class="text-primary">No</i></div></div>
-                                    <div><asp:Label runat="server" ID="prt_btc_religious_true" /> Có, giải thích:<div style="margin-left: 16px"><i class="text-primary">Yes, explain</i></div></div>
-                                    <asp:Label runat="server" ID="prt_btc_religious_note" />
-                                </div>
+                                        <div><span class="font-bold mt-2">- Khả năng ăn uống/ <span class="en">Food intake:</span></span></div>
 
-                                <div style="margin-left: 16px; display: grid; grid-template-columns: 150px auto auto 1fr; grid-gap: 10px">
-                                    <div>
-                                        - Trở ngại về Văn hóa:
-                                        <div style="margin-left: 16px"><i class="text-primary">Cultural Barriers</i></div>
-                                    </div>
-                                    <div><asp:Label runat="server" ID="prt_btc_cultural_false" /> Không<div style="margin-left: 16px"><i class="text-primary">No</i></div></div>
-                                    <div><asp:Label runat="server" ID="prt_btc_cultural_true" /> Có, giải thích:<div style="margin-left: 16px"><i class="text-primary">Yes, explain</i></div></div>
-                                    <asp:Label runat="server" ID="prt_btc_cultural_note" />
-                                </div>
+                                        <table class="table-bordered" style="width: 100%">
+                                            <tr>
+                                                <td class="p-1 text-center">Ăn uống kém hơn <span class="font-bold">5 ngày</span> gần đây/ <span class="en">Eating less than the last <span class="font-bold">5 days</span></i></td>
+                                                <td style="width: 80px" class="p-1 text-center">
+                                                    <asp:Label runat="server" ID="prt_ns_food_intake_2">2</asp:Label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-1 text-center">Ăn uống bình thường/ <span class="en">Eating normally</span></td>
+                                                <td class="p-1 text-center"><asp:Label runat="server" ID="prt_ns_food_intake_0">0</asp:Label></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="p-1 text-right font-bold">Tổng điểm/ <span class="en">Total score</span></td>
+                                                <td class="text-center">
+                                                    <asp:Label runat="server" ID="prt_ns_total_score" />
+                                                </td>
+                                            </tr>
+                                        </table>
 
-                                <div class="font-bold">7. Tầm soát nguy cơ té ngã/ <i class="text-primary">Fall risk screening</i></div>
+                                        <div style="display: grid; grid-template-columns: 1fr auto auto; gap: 6px;" class="mt-2 mb-2">
+                                            <div>
+                                                <div><span class="font-bold">Kết luận:</span></div>
+                                                <div class="en">Conclude</div>
+                                            </div>
+                                            <div>
+                                                <div><asp:Label runat="server" ID="prt_nutritional_conclude_0" /> Không có nguy cơ thiếu dinh dưỡng (<2)</div>
+                                                <div class="en" style="margin-left: 14px"><i>No risk of malnutrition</i></div>
+                                            </div>
+                                            <div>
+                                                <div><asp:Label runat="server" ID="prt_nutritional_conclude_2" /> Có nguy cơ thiếu dinh dưỡng (≥2)</div>
+                                                <div class="en" style="margin-left: 14px"><i>Risk of malnutrition</i></div>
+                                            </div>
+                                        </div>
 
-                                <div style="margin-left: 16px;"><span class="font-bold">- Các yếu tố nguy cơ/ <i class="text-primary">Fall risk factors: </i></span><asp:Label runat="server" ID="prt_fall_risk_factor_nfr">Không có yếu tố nguy cơ/ No fall risk</asp:Label></div>
+                                        <div><span style="font-weight: bold">III. ĐÁNH GIÁ CÁC YẾU TỐ KINH TẾ XÃ HỘI CỦA NGƯỜI BỆNH</span></div>
+                                        <div class="en" style="margin-left: 24px; font-weight: bold">SOCIAL ECONOMICS FACTOR ASSESSMENT</div>
                                     
-                                <div runat="server" id="prt_fall_risk_factor_nfr_wrapper">
-                                    <div runat="server" id="prt_fall_risk_factor" style="margin-left: 32px; display: grid; grid-template-columns: 400px 1fr; grid-gap: 10px">
-                                        <div>
-                                            <div><asp:Label runat="server" ID="prt_fall_risk_factors_agr" /> Tuổi > 65/ <i class="text-primary">Age > 65</i></div>
-                                            <div><asp:Label runat="server" ID="prt_fall_risk_factors_pre" /> Phụ nữ có thai/ <i class="text-primary">Pregnant women</i></div>
-                                            <div><asp:Label runat="server" ID="prt_fall_risk_factors_ina" /> Không có khả năng đứng lên từ ghế/ <i class="text-primary">Inability to rise from a chair</i></div>
-                                            <div><asp:Label runat="server" ID="prt_fall_risk_factors_pod" /> Mất trí nhớ/ <i class="text-primary">Presence of dementia</i></div>
-                                            <div><asp:Label runat="server" ID="prt_fall_risk_factors_imp" /> Giảm/ Mất thị lực/ <i class="text-primary">Patients with visual impairments</i></div>
-                                            <div><asp:Label runat="server" ID="prt_fall_risk_factors_ear" /> Bệnh nhân có vấn đề về tai có triệu chứng chóng mặt/ <i class="text-primary">Patients have ear problems with complaints of dizziness and/or vertigo</i></div>
-                                            <div><asp:Label runat="server" ID="prt_fall_risk_factors_psy" /> Đang sử dụng bất kỳ thuốc thuộc nhóm an thần/ <i class="text-primary">Any Administered Psycholeptics:</i> Diazepam, Tofisopam, Eszopiclone, Midazolam, Rotudin, Etifoxine chlorhydrate</div>
-                                            <div><asp:Label runat="server" ID="prt_fall_risk_factors_ade" /> Đang sử dụng bất kỳ thuốc thuộc nhóm chống trầm cảm/ <i class="text-primary">Any Administered Antidepressant:</i> Citalopram, SERTRAline, Amitriptyline, Mirtazapine</div>
-                                            <div><asp:Label runat="server" ID="prt_fall_risk_factors_aps" /> Đang sử dụng bất kỳ thuốc thuộc nhóm điều trị loạn thần/ <i class="text-primary">Any administered antipsychotic: Haloperidol, Olanzapine, Quetiapine, Risperidone, Olanzapine, Quetiapine</i></div>
-                                            <div><asp:Label runat="server" ID="prt_fall_risk_factors_aco" /> Đang sử dụng bất kỳ thuốc chống đông máu/ <i class="text-primary">Any administered anticoagulant: Heparin Sodium, Anoxaparin, Rivaroxaban, Acenocoumarol...</i></div>
-                                            <%--<div><asp:Label runat="server" ID="prt_fall_risk_factor_nfr" />Không có yếu tố nguy cơ/ <i class="text-primary">No fall risk</i></div>--%>
+                                        <div style="margin-left: 18px; display: grid; grid-template-columns: 1fr auto auto; gap: 6px;">
+                                            <div>Tình trạng sinh sống/ <span class="en">Housing:</span></div>
+                                            <div><asp:Label runat="server" ID="prt_housing_code_aln" /> Sống một mình/ <span class="en">Lives alone</span></div>
+                                            <div><asp:Label runat="server" ID="prt_housing_code_rel" /> Sống với người thân/ <span class="en">With relatives</span></div>
                                         </div>
-                                        <div>
-                                            <div><asp:Label runat="server" ID="prt_fall_risk_factors_ale" /> Tuổi < 3/ <i class="text-primary">Age < 3</i></div>
-                                            <div><asp:Label runat="server" ID="prt_fall_risk_factors_amb" /> Sử dụng phương tiện hỗ trợ đi lại (gậy/nạng/khung tập đi)/ <i class="text-primary">mbulatory devices (canes, crutches, and walkers)</i></div>
-                                            <div><asp:Label runat="server" ID="prt_fall_risk_factors_pat" /> Dáng đi yếu hoặc mất thăng bằng/ <i class="text-primary">Patients with gait or balance disturbances</i></div>
-                                            <div><asp:Label runat="server" ID="prt_fall_risk_factors_aep" /> Đang sử dụng bất kỳ loại thuốc thuộc nhóm chống động kinh, chống co giật/ <i class="text-primary">Any administered Antiepileptics, Anticonvulsants: Cardamazepine, Divolproex Sodium, Gabapentin, Lamotrigine, Phenobarbital, Phenytoin, Topiramate, Valproic Acid, Levetiracetam, Pregabalin</i></div>
-                                            <div><asp:Label runat="server" ID="prt_fall_risk_factors_ahy" /> Đang sử dụng bất kỳ thuốc thuộc nhóm điều trị tăng huyết áp/ <i class="text-primary">Any administered Antihypertensive Medication: Captopril, Perindopril and amlodipine, Irbesartan and diuretics, Valsartan, Nifedipine, Lisinopril, Furosemide + Spironolacton, BISOprolol, METOprolol succinate...</i></div>
-                                        </div>
-                                    </div>
-                                    <div style="margin-left: 16px" class="font-bold">- Câu hỏi sàng lọc/ <i class="text-primary">The fall risk screening questions:</i></div>
+
+                                        <div class="font-bold">IV. MỨC ĐỘ ƯU TIÊN/ <span class="en">PRIORITIZATION</span></div>
+                                
+                                        <div style="margin-left: 24px; margin-right: -15px; margin-bottom: 6px"><asp:Label runat="server" ID="prt_prioritization_code" /></div>
                                         
-                                    <div style="margin-left: 32px; display: grid; grid-template-columns: 1fr 220px; gap: 6px;">
-                                        <div>
-                                            <div>a. Anh/chị/ông/bà có từng bị ngã trong 12 tháng gần đây không?</div>
-                                            <div style="margin-left: 16px"><i class="text-primary">Have you fallen in the past year?</i></div>
-                                        </div>  
-                                        <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 24px">
-                                            <div><asp:Label runat="server" ID="prt_fallen_true" /> Có/ <i class="text-primary">Yes</i></div>
-                                            <div><asp:Label runat="server" ID="prt_fallen_false" /> Không/ <i class="text-primary">No</i></div>
-                                        </div>
-                                    </div>
-                                        
-                                    <div style="margin-left: 32px; display: grid; grid-template-columns: auto 1fr; gap: 6px;">
-                                        <div>
-                                            <div>b. Anh/chị/ông/bà có cảm thấy bị mất thăng bằng lúc đứng dậy hoặc lúc đi không?</div>
-                                            <div style="margin-left: 16px"><i class="text-primary">Do you feel unsteady when standing or walking?</i></div>
-                                        </div>
-                                        <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 24px">
-                                            <div><asp:Label runat="server" ID="prt_feel_unsteady_true" /> Có/ <i class="text-primary">Yes</i></div>
-                                            <div><asp:Label runat="server" ID="prt_feel_unsteady_false" /> Không/<i class="text-primary">No</i></div>
+                                        <asp:PlaceHolder runat="server" ID="ph_prt_im_consul_req">
+                                            <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_im_consul_req_eme" /> Tình trạng nặng cần xử trí ngay/ <span class="en">Emergency cases</span></div>
+                                            <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_im_consul_req_chi" /> Trẻ em dưới 6 tuổi/ <span class="en">Children are under 6 years of age</span></div>
+                                            <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_im_consul_req_ser" /> Người khuyết tật nặng/ <span class="en">Servere disabilities</span></div>
+                                            <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_im_consul_req_pat" /> Người bệnh trên 80 tuổi/ <span class="en">Patient are over 80 years of age</span></div>
+                                            <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_im_consul_req_pre" /> Phụ nữ có thai trên 24 tuần/ <span class="en">Prenancy is over 24 weeks.</span></div>
+                                            <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_im_consul_req_boo" /> Người bệnh có hẹn/ <span class="en">Booked appointment patients.</span></div>
+                                            <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_im_consul_req_oth" /> Trường hợp khác/ <span class="en">Other:</span> <asp:Label runat="server" ID="prt_im_consul_req_oth_note" /></div>
+                                        </asp:PlaceHolder>
+                                
+                                        <div class="font-bold">V. NHU CẦU GIÁO DỤC SỨC KHỎE/ <span class="en">PATIENT EDUCATION NEEDS</span></div>
+
+                                        <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_patient_education_need_fal" /> Phòng ngừa té ngã/ <span class="en">Fall risk prevention</span></div>
+                                        <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_patient_education_need_wou" /> Chăm sóc vết thương/ <span class="en">Wound care</span></div>
+                                        <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_patient_education_need_die" /> Chế độ ăn uống/ <span class="en">Diet</span></div>
+                                        <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_patient_education_need_pai" /> Đau/ <span class="en">Pain</span></div>
+                                        <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_patient_education_need_oth" /> Khác/ <span class="en">Others: </span><asp:Label runat="server" ID="prt_patient_education_need_oth_note" /></div>
+
+                                        <div>&nbsp;</div>
+                                        <div style="display: grid; grid-template-columns: 1fr auto; grid-gap: 5px">
+                                            <div></div>
+                                            <div style="text-align: center; break-inside: avoid !important; page-break-inside: avoid !important">
+                                                <div><asp:Label runat="server" ID="prt_signature_date"></asp:Label></div>
+                                                <div><span style="font-weight: bold">Điều dưỡng đánh giá/ <span class="en">Assessment done by nurse</span></span></div>
+                                                <div><span>(Họ tên, chữ ký và MSNV)/ <span class="en">(Full name, signature and ID)</span></span></div>
+                                                <div><asp:Label runat="server" ID="prt_signature_name" /></div>
+                                            </div>
                                         </div>
                                     </div>
-                                        
-                                    <div style="margin-left: 32px; display: grid; grid-template-columns: 1fr 220px; gap: 6px;">
-                                        <div>
-                                            <div>c. Anh/chị/ông/bà có lo sợ bị ngã không?</div>
-                                            <div style="margin-left: 16px"><i class="text-primary">Do you worry about falling?</i></div>
-                                        </div>
-                                        <div style="display: grid; grid-template-columns: auto 1fr; grid-gap: 24px">
-                                            <div><asp:Label runat="server" ID="prt_worry_about_falling_true" /> Có/ <i class="text-primary">Yes</i></div>
-                                            <div><asp:Label runat="server" ID="prt_worry_about_falling_false" /> Không/ <i class="text-primary">No</i></div>
-                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot class="report-footer">
+                            <tr>
+                                <td class="report-footer-cell" style="border: 1px solid #000;" runat="server" id="print_footer">
+                                    <img style="width: 100%" src="../images/ExcellentCare.png" />
+                                    <div class="footer-info" style="padding: 0 18px">
+                                        <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
+                                        <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Tp. Thủ Đức, Tp.HCM</div>
+                                        <div>Tel: 028 3910 9999</div>
+                                        <div>www.aih.com.vn</div>
                                     </div>
-                                        
-                                    <div style="margin-left: 16px">- <span class="font-bold"> Can thiệp/ <i class="text-primary">Intervention</i>:</span></div>
-
-                                    <div style="margin-left: 16px"><asp:Label runat="server" ID="prt_intervention_uni" /> Phòng ngừa té ngã thường quy/ <i class="text-primary">Universe fall risk prevention</i></div>
-                                    <div style="margin-left: 16px"><asp:Label runat="server" ID="prt_intervention_sti" /> Dán sticker nguy cơ ngã/ <i class="text-primary">Stick fall-risk on patient's shirt</i></div>
-                                    <div style="margin-left: 16px"><asp:Label runat="server" ID="prt_intervention_edu" /> Thông báo nguy cơ té ngã cho người bệnh/ người nhà/ <i class="text-primary">Educate the fall risk to patient/ Relatives</i></div>
-                                    <div style="margin-left: 16px"><asp:Label runat="server" ID="prt_intervention_ass" /> Trợ giúp người bệnh di chuyển, đi lại/ <i class="text-primary">Assist patient with transfer/ ambulation</i></div>
-                                    <div style="margin-left: 16px"><asp:Label runat="server" ID="prt_intervention_str" /> Cung cấp dụng cụ hỗ trợ di chuyển (Băng ca, xe đẩy...)/ <i class="text-primary">Assist patient with transfer/ ambulation (Stretcher, wheelchair)</i></div>
-                                    <div style="margin-left: 16px"><asp:Label runat="server" ID="prt_intervention_epa" /> Hướng dẫn ba mẹ/ người thân bệnh nhi luôn quan sát bé cẩn thận và luôn ở cùng bé/ <i class="text-primary">Educate Parents to keep an eye on their children closely and never let him/her alone</i></div>
-                                    <div style="margin-left: 16px"><asp:Label runat="server" ID="prt_intervention_ins" /> Hướng dẫn ba mẹ/ người thân bệnh nhi hạn chế cho bé chạy nhảy/ Instruct Parents/ <i class="text-primary">accompanying family members limit the child to run</i></div>
-                                    <div style="margin-left: 16px"><asp:Label runat="server" ID="prt_intervention_enc" /> Khuyến khích di chuyển bằng nôi/ xe nôi đối với trẻ sơ sinh và nhủ nhi/ <i class="text-primary">Encourage parents/ Caregivers to use cribs for newborn/ neonatal in moving</i></div>
-                                    <div style="margin-left: 16px"><asp:Label runat="server" ID="prt_intervention_pfr" /> Đeo vòng tay nguy cơ ngã khi/ <i class="text-primary">Place Fall Risk ID bracelet on patient in cases of:</i></div>
-                                        
-                                    <div style="margin-left: 48px">• Người bệnh có chỉ định nhập viện nguy cơ té ngã cao/ <i class="text-primary">High fall risk patients with admission order</i></div>
-                                    <div style="margin-left: 48px">• Người bệnh sau thủ thuật có gây tê hoặc gây mê/ <i class="text-primary">Patients after procedure under local or general anesthesia</i></div>
-                                    <div style="margin-left: 48px">• Người bệnh hóa trị liệu/ <i class="text-primary">Patients with chemotherapy</i></div>
-                                    <div style="margin-left: 48px">• Người bệnh được truyền dịch/ <i class="text-primary">Patients with fluid infusion</i></div>
-                                </div>
-                                <div><span class="font-bold">8. Sàng lọc dinh dưỡng/ <i class="text-primary">Nutrition screening:</i></span></div>
-                                <table class="table-bordered" style="width: 100%">
-                                    <tr>
-                                        <td class="p-1">
-                                            <span class="font-bold">BMI</span> = Chỉ số khối cơ thể / BMI
-                                        </td>
-                                        <td style="width: 100px" class="text-center">
-                                            <asp:Label runat="server" ID="prt_bmi"></asp:Label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-1">
-                                            <div><span class="font-bold">Cân nặng 3 tháng trước/ <i class="text-primary">The weight of 3 last month</i></span></div>
-                                            <div>* Đối với trẻ sơ sinh < 3 tháng tuổi, điền thông tin cân nặng lúc sinh</div>
-                                            <div><i class="text-primary">For infants < 3 months old, please insert birth weight</i></div>
-                                        </td>
-                                        <td class="text-center">
-                                            <asp:Label runat="server" ID="prt_previous_weight"/>&nbsp;Kg
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-1">
-                                            <div><span class="font-bold">% cân nặng thay đổi</span></div>
-                                            <div><i class="text-primary font-bold">% weight change</i></div>
-                                        </td>
-                                        <td class="text-center">
-                                            <asp:Label runat="server" ID="prt_weight_change"></asp:Label>&nbsp;%
-                                        </td>
-                                    </tr>
-                                </table>
-
-                                <div class="text-center mt-2">Khoanh tròn chỉ 1 số trong mỗi câu/ <i class="text-primary">Circle only 1 number in each criterion</i></div>
-
-                                <div><span class="font-bold mt-2">- Tình trạng dinh dưỡng/ <i class="text-primary">Nutrition status:</i></span></div>
-                                        
-                                <div>(Lưu ý; Không áp dụng cho phụ nữ mang thai/ <i class="text-primary">Note: Not applicable for pregnant women)</i></div>
-
-                                    <table class="table-bordered" style="width: 100%; page-break-inside: avoid" runat="server" id="Table2">
-                                        <tr>
-                                        <td rowspan="3" class="text-center"><span class="font-bold">Trẻ ≤ 5 tuổi <br /> <i class="text-primary">Children ≤ 5 years old</i></span></td>
-                                        <td class="p-1 text-center" style="width: 450px">
-                                            Cân nặng theo chiều dài/chiều cao ≤ <span class="font-bold"> -2 độ lệch tiêu chuẩn (SD)</span> <br />
-                                            <i class="text-primary">Weight for length/height ≤ <span class="font-bold">-2 standard deviation (SD)</span></i>
-                                        </td>
-                                        <td style="width: 100px" class="p-1 text-center">
-                                            <asp:Label runat="server" ID="prt_ns_l_2">2</asp:Label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-1 text-center">
-                                            Cân nặng theo chiều dài/chiều cao ≤ <span class="font-bold">-1 độ lệch tiêu chuẩn (SD) </span> <br />
-                                            <i class="text-primary">Weight for length/height ≤ <span class="font-bold">-1 standard deviation (SD)</span></i>
-                                        </td>
-                                        <td class="p-1 text-center">
-                                            <asp:Label runat="server" ID="prt_ns_l_1">1</asp:Label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-1 text-center">
-                                            Cân nặng theo chiều dài/chiều cao > <span class="font-bold">-1 độ lệch tiêu chuẩn (SD)</span> <br />
-                                            <i class="text-primary">Weight for length/height > <span class="font-bold">-1 standard deviation (SD)</span></i>
-                                        </td>
-                                        <td class="p-1 text-center">
-                                            <asp:Label runat="server" ID="prt_ns_l_0">0</asp:Label>
-                                        </td>
-                                    </tr>
-                                    </table>
-                                <table class="table-bordered" style="width: 100%; page-break-inside: avoid" runat="server" id="Table3">
-                                    <tr>
-                                        <td rowspan="3" class="text-center"><span class="font-bold">Trẻ > 5 tuổi <br /> <i class="text-primary">Children > 5 years old</i></span></td>
-                                        <td class="p-1 text-center" style="width: 450px">
-                                            BMI theo tuổi ≤ <span class="font-bold"> -2SD</span>/<i class="text-primary">BMI for age ≤ <span class="font-bold">-2SD</span></i>
-                                        </td>
-                                        <td class="p-1 text-center" style="width: 100px"><asp:Label runat="server" ID="prt_ns_g_2">2</asp:Label></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-1 text-center">
-                                            BMI theo tuổi ≤ <span class="font-bold"> -1SD</span>/<i class="text-primary">BMI for age ≤ <span class="font-bold">-1SD</span></i>
-                                        </td>
-                                        <td class="p-1 text-center"><asp:Label runat="server" ID="prt_ns_g_1">1</asp:Label></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-1 text-center">
-                                            BMI theo tuổi > <span class="font-bold"> -1SD</span>/<i class="text-primary">BMI for age > <span class="font-bold">-1SD</span></i>
-                                        </td>
-                                        <td class="p-1 text-center"><asp:Label runat="server" ID="prt_ns_g_0">0</asp:Label></td>
-                                    </tr>
-                                </table>
-                                <table class="table-bordered" style="width: 100%; page-break-inside: avoid" runat="server" id="Table1">
-                                    <tr>
-                                        <td class="p-1 text-center" rowspan="3"><span class="font-bold">Người lớn <br /> <i class="text-primary">Adult patients</i></span></td>
-                                        <td class="p-1 text-center" style="width: 450px">
-                                            BMI < <span class="font-bold"> 18,5</span>
-                                        </td>
-                                        <td class="p-1 text-center" style="width: 100px"><asp:Label runat="server" ID="prt_ns_a_2">2</asp:Label></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-1 text-center">
-                                            BMI từ /<i class="text-primary">from </i><span class="font-bold"> 18,5 - 20</span>
-                                        </td>
-                                        <td class="p-1 text-center"><asp:Label runat="server" ID="prt_ns_a_1">1</asp:Label></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-1 text-center">
-                                            BMI ><span class="text-bold"><span class="font-bold">20</span></span>
-                                        </td>
-                                        <td class="p-1 text-center"><asp:Label runat="server" ID="prt_ns_a_0">0</asp:Label></td>
-                                    </tr>
-                                </table>
-
-                                <div><span class="font-bold mt-2">- Sụt cân không chủ ý trong 3 tháng gần đây/ <i class="text-primary">Unintentional weight loss in the last 3 months:</i></span></div>
-                                <div><span style="font-size: 9.5pt">Lưu ý: Xem "% cân nặng thay đổi" ở trên, nếu số liệu = 0: Không sụt cân; nếu số liệu <0: sụt cân; nếu số liệu >0: tăng cân</span></div>
-                                <div><span style="font-size: 9.5pt"><i class="text-primary">Note: Based on the box "% weight change" above: if data =0; no weight loss, if data <0: weight loss, if data >0: weight gain</i></span></div>
-
-                                <table class="table-bordered" style="width: 100%">
-                                    <tr>
-                                        <td class="p-1 text-center">Giảm > <span class="font-bold">10%</span>/ <i class="text-primary">Weight loss > <span class="font-bold">10%</span></i></td>
-                                        <td style="width: 100px" class="p-1 text-center"><asp:Label runat="server" ID="prt_ns_loss_weight_2">2</asp:Label></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-1 text-center">Giảm từ <span class="font-bold">5 - 10%</span> / <i class="text-primary">Weight loss from <span class="font-bold">5 - 10%</span></i></td>
-                                        <td class="p-1 text-center"><asp:Label runat="server" ID="prt_ns_loss_weight_1">1</asp:Label></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-1 text-center">
-                                            Giảm < <span class="font-bold">5%</span> / <i class="text-primary">Weight loss < <span class="font-bold">5%</span></i>
-                                            <div>Hoặc <span class="font-bold">không sụt cân</span>/ <i class="text-primary">Or <span class="font-bold">no weight loss</span></i></div>
-                                            <div>Hoặc <span class="font-bold">tăng cân</span>/ <i class="text-primary">Or <span class="font-bold">weight gain</span></i></div>
-                                        </td>
-                                        <td class="p-1 text-center"><asp:Label runat="server" ID="prt_ns_loss_weight_0">0</asp:Label></td>
-                                    </tr>
-                                </table>
-
-                                <div><span class="font-bold mt-2">- Khả năng ăn uống/ <i class="text-primary">Food intake:</i></span></div>
-
-                                <table class="table-bordered" style="width: 100%">
-                                    <tr>
-                                        <td class="p-1 text-center">Ăn uống kém hơn <span class="font-bold">5 ngày</span> gần đây/ <i class="text-primary">Eating less than the last <span class="font-bold">5 days</span></i></td>
-                                        <td style="width: 100px" class="p-1 text-center">
-                                            <asp:Label runat="server" ID="prt_ns_food_intake_2">2</asp:Label>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-1 text-center">Ăn uống bình thường/ <i class="text-primary">Eating normally</i></td>
-                                        <td class="p-1 text-center"><asp:Label runat="server" ID="prt_ns_food_intake_0">0</asp:Label></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="p-1 text-right font-bold">Tổng điểm/ <i class="text-primary">Total score</i></td>
-                                        <td class="text-center">
-                                            <asp:Label runat="server" ID="prt_ns_total_score" />
-                                        </td>
-                                    </tr>
-                                </table>
-
-                                <div style="display: grid; grid-template-columns: 120px 1fr 1fr; grid-gap: 10px;" class="mt-2 mb-2">
-                                    <div><span class="font-bold">Kết luận: <br /> <i class="text-primary">Conclude</i></span></div>
-                                    <div><asp:Label runat="server" ID="prt_nutritional_conclude_0" /> Không có nguy cơ thiếu dinh dưỡng (<2)<div style="margin-left: 14px"><i class="text-primary">No risk of malnutrition</i></div></div>
-                                    <div><asp:Label runat="server" ID="prt_nutritional_conclude_2" /> Có nguy cơ thiếu dinh dưỡng (≥2)<div style="margin-left: 14px"><i class="text-primary">Risk of malnutrition</i></div></div>
-                                </div>
-
-                                <div><span style="font-weight: bold">III. ĐÁNH GIÁ CÁC YẾU TỐ KINH TẾ XÃ HỘI CỦA NGƯỜI BỆNH</span></div>
-                                <div style="margin-left: 24px"><span style="font-weight: bold"><i class="text-primary">SOCIAL ECONOMICS FACTOR ASSESSMENT</i></span></div>
-                                    
-                                <div style="margin-left: 24px; display: grid; grid-template-columns: auto auto 1fr; grid-gap: 10px;">
-                                    <div>Tình trạng sinh sống/ <i class="text-primary">Housing:</i></div>
-                                    <div><asp:Label runat="server" ID="prt_housing_code_aln" /> Sống một mình/ <i class="text-primary">Lives alone</i></div>
-                                    <div><asp:Label runat="server" ID="prt_housing_code_rel" /> Sống với người thân/ <i class="text-primary">With relatives</i></div>
-                                </div>
-
-                                <div class="font-bold">IV. MỨC ĐỘ ƯU TIÊN/ <i class="text-primary">PRIORITIZATION</i></div>
-                                        
-                                <div style="margin-left: 24px"><asp:Label runat="server" ID="prt_prioritization_code" /></div>
-                                        
-                                <asp:PlaceHolder runat="server" ID="ph_prt_im_consul_req">
-                                    <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_im_consul_req_eme" /> Tình trạng nặng cần xử trí ngay/ <i class="text-primary">Emergency cases</i></div>
-                                    <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_im_consul_req_chi" /> Trẻ em dưới 6 tuổi/ <i class="text-primary">Children are under 6 years of age</i></div>
-                                    <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_im_consul_req_ser" /> Người khuyết tật nặng/ <i class="text-primary">Servere disabilities</i></div>
-                                    <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_im_consul_req_pat" /> Người bệnh trên 80 tuổi/ <i class="text-primary">Patient are over 80 years of age</i></div>
-                                    <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_im_consul_req_pre" /> Phụ nữ có thai trên 24 tuần/ <i class="text-primary">Prenancy is over 24 weeks.</i></div>
-                                    <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_im_consul_req_boo" /> Người bệnh có hẹn/ <i class="text-primary">Booked appointment patients.</i></div>
-                                    <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_im_consul_req_oth" /> Trường hợp khác/ <i class="text-primary">Other:</i> <asp:Label runat="server" ID="prt_im_consul_req_oth_note" /></div>
-                                </asp:PlaceHolder>
-                                        
-                                <div class="font-bold">V. NHU CẦU GIÁO DỤC SỨC KHỎE/ <i class="text-primary">PATIENT EDUCATION NEEDS</i></div>
-
-                                <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_patient_education_need_fal" /> Phòng ngừa té ngã/ <i class="text-primary">Fall risk prevention</i></div>
-                                <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_patient_education_need_wou" /> Chăm sóc vết thương/ <i class="text-primary">Wound care</i></div>
-                                <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_patient_education_need_die" /> Chế độ ăn uống/ <i class="text-primary">Diet</i></div>
-                                <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_patient_education_need_pai" /> Đau/ <i class="text-primary">Pain</i></div>
-                                <div style="margin-left: 34px"><asp:Label runat="server" ID="prt_patient_education_need_oth" /> Khác/ <i class="text-primary">Others: </i><asp:Label runat="server" ID="prt_patient_education_need_oth_note" /></div>
-                                        
-                                <div>&nbsp;</div>
-                                <div style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 5px">
-                                    <div></div>
-                                    <div style="text-align: center; break-inside: avoid !important; page-break-inside: avoid !important">
-                                        <div><asp:Label runat="server" ID="prt_signature_date"></asp:Label></div>
-                                        <div><span style="font-weight: bold">Điều dưỡng đánh giá/ <i>Assessment done by nurse</i></span></div>
-                                        <div><span>(Họ tên, chữ ký và MSNV)/ <i>(Full name, signature and ID)</i></span></div>
-                                        <div><asp:Label runat="server" ID="prt_signature_name" /></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-
-                <tfoot class="report-footer">
-                    <tr>
-                        <td class="report-footer-cell" style="font-size: 10px">
-                            <img style="width: 100%" src="../images/ExcellentCare.png" />
-                            <div class="footer-info" style="padding: 0 12px 12px 12px">
-                                <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
-                                <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Tp. Thủ Đức, Tp.HCM</div>
-                                <div>Tel: 028 3910 9999</div>
-                                <div>www.aih.com.vn</div>
-                            </div>
-                        </td>
-                        <td class="report-footer-space"></td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-            
-        <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" MaxHeight="400">
-            <Windows>
-                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History" runat="server">
+                                </td>
+                                <td class="report-footer-space" runat="server" id="print_footer_space"></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+        <%--<telerik:RadWindow IconUrl="/images/AIH_Logo.jpg" Width="500" Modal="true" VisibleStatusbar="false" Behaviors="Close,Move" Opacity="1" BackColor="#515e7b80" ID="rwndLogHistory" Title="Version History" runat="server">
+            <ContentTemplate>
+                <asp:UpdatePanel runat="server" ID="uplLogHistory" UpdateMode="Conditional">
                     <ContentTemplate>
-                        <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
+                        <telerik:RadGrid ShowHeader="false" ID="rgdLogHistory" OnLoad="rgdLogHistory_Load" runat="server" AllowSorting="true" OnItemDataBound="rgdLogHistory_ItemDataBound" OnItemCommand="RadGrid1_ItemCommand">
                             <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
                                 <Columns>
                                     <telerik:GridTemplateColumn>
                                         <ItemTemplate>
-                                            <telerik:RadLabel runat="server" 
-                                                                ID="RadLabel1" 
-                                                                Text='<%# LogInfor(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
-                                            </telerik:RadLabel>
-                                            <asp:HyperLink CssClass="btn-link" Text="View Log" runat="server" NavigateUrl='<%# LogUrl(Eval("document_log_id"))%>'></asp:HyperLink>
+                                            <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# LogInfor(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'></telerik:RadLabel>
+                                            <asp:LinkButton CommandName="Open" PostBackUrl='<%# LogUrl(Eval("document_log_id"))%>' ToolTip="View Log" runat="server" ID="rlbtnViewLog">
+                                                [view]
+                                            </asp:LinkButton>
                                         </ItemTemplate>
                                     </telerik:GridTemplateColumn>
                                 </Columns>
@@ -1044,44 +1264,9 @@
                             </ClientSettings>
                         </telerik:RadGrid>
                     </ContentTemplate>
-                </telerik:RadWindow>
-                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow2" Title="Warning" runat="server">
-                    <ContentTemplate>
-                        <div class="text-center">
-                            <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                            <h4 class="mt-4 mb-4">Delete document?</h4>
-                        </div>
-
-                        <div class="d-grid no-block justify-content-end">
-                            <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger">Delete</asp:LinkButton>
-                        </div>
-                    </ContentTemplate>
-                </telerik:RadWindow>
-                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow3" Title="Warning" runat="server">
-                    <ContentTemplate>
-                        <div class="text-center">
-                            <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                            <h4 class="mt-4">Denied!</h4>
-                            <label runat="server" id="lblUserBlock" />
-                        </div>
-                        <div class="d-grid no-block justify-content-end">
-                            <%--<asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="LinkButton1" CssClass="btn btn-danger">Delete</asp:LinkButton>--%>
-                        </div>
-                    </ContentTemplate>
-                </telerik:RadWindow>
-                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindowError" Title="Errors" runat="server">
-                    <ContentTemplate>
-                        <div class="text-center">
-                            <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                            <asp:Label runat="server" ID="ErrorMessageId" />
-                        </div>
-                        <div class="d-grid no-block justify-content-end">
-                            <%--<asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="LinkButton1" CssClass="btn btn-danger">Delete</asp:LinkButton>--%>
-                        </div>
-                    </ContentTemplate>
-                </telerik:RadWindow>
-            </Windows>
-        </telerik:RadWindowManager>
+                </asp:UpdatePanel>
+            </ContentTemplate>
+        </telerik:RadWindow>--%>
 
         <div class="cssclsNoPrint">
             <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0; border-bottom: 1px solid #ddd; border-radius: 0;">
@@ -1092,14 +1277,10 @@
                 <asp:Panel runat="server" ID="messagePlaceHolder">
                     <div class="card" runat="server" id="amendReasonWraper">
                         <div class="card-body">
-                            <h5>Lý do thay đổi/ <span class="text-primary">amend reason: </span>
-                                <br />
-                                <span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
+                            <h5>Lý do thay đổi/ <span class="text-primary">amend reason: </span><br /><span class="text-danger">* </span><small>Nội dung lý do thay đổi phải trên 3 ký tự</small></h5>
                             <div class="form-group mb-2">
-
                                 <asp:TextBox runat="server" TextMode="MultiLine" ID="txt_amend_reason" CssClass="form-control" />
-
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" Display="Dynamic" ValidationGroup="Group2" runat="server" ControlToValidate="txt_amend_reason" ErrorMessage="Please enter amend reason"
                                     ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>
                             </div>
                         </div>
@@ -1108,42 +1289,45 @@
                 </asp:Panel>
                 <%-- Patient Info --%>
                 <webUI:PatientInfo runat="server" ID="uc_patientInfo"></webUI:PatientInfo>
-
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="card v20">
+                        <div class="card">
                             <div class="card-header">
                                 <h4 class="text-primary">Outpatient Initial Nursing Assessment</h4>
                                 <a href="javascript:void(0)" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"></a>
                             </div>
                             <div class="card-body collapse show" id="collapseOne">
                                 <div class="form-body mb-4">
+                                    <%-- Update 08/10/2022 --%>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="alert alert-warning d-flex align-items-center" runat="server" id="currentLog">
+                                            <div class="alert alert-warning d-flex align-items-center" runat="server" id="LastestVersion">
+                                                <span class="mr-2"><i class="fa fa-exclamation-triangle" style="font-size:24px"></i></span>
                                                 <span class="mr-2">You are viewing an old version of this document</span>
-                                                <asp:HyperLink OnLoad="LinkViewLastestVersion_Load" ID="LinkViewLastestVersion" CssClass="btn-link" Text="View Latest Version" runat="server" />
+                                                <asp:LinkButton OnClick="GoToLastestVersion" ID="hlkLastestVersion" Text="[View latest version]" runat="server"></asp:LinkButton>
                                             </div>
-
                                             <div class="alert alert-info d-flex align-items-center">
-                                                <telerik:RadLabel runat="server" ID="RadLabel1" />
-                                                <a class="btn-link" href="javascript:void(0)" onclick="openRadWindow()">View History</a>
+                                                <span class="mr-2"><i style="font-size: 24px;" class="fa fa-exclamation-circle"></i></span>
+                                                <telerik:RadLabel runat="server" ID="rlblLogHistory" />
+                                                <asp:UpdatePanel runat="server" ID="uplViewHistory">
+                                                    <ContentTemplate>
+                                                        <asp:LinkButton runat="server" ID="lbtnViewHistory" OnClick="ViewHistory" Text="[View History]"></asp:LinkButton>
+                                                    </ContentTemplate>
+                                                </asp:UpdatePanel>
                                             </div>
                                         </div>
                                     </div>
-
                                     <div><span class="font-bold">I. DẤU HIỆU SINH TỒN VÀ CÁC CHỈ SỐ ĐO LƯỜNG</span>/ <i class="text-primary">VITAL SIGNS AND PHYSICAL MEASUREMENTS</i></div>
-
                                     <div style="display: grid; grid-gap: 4px; grid-template-columns: 240px 1fr" class="mb-2">
                                         <div class="text-right">Nhiệt độ/ <i class="text-primary">Temperature:</i></div>
                                         <div>
                                             <asp:Label runat="server" ID="lbl_vs_temperature"/>
                                             <div runat="server" id="vs_temperature_wrapper" style="display: inline-block">
                                                 <input id="txt_vs_temperature" 
-                                                        data-type="number" 
-                                                        style="width: 160px" 
-                                                        runat="server" 
-                                                        class="form-control text-right" />
+                                                       data-type="number" 
+                                                       style="width: 160px" 
+                                                       runat="server" 
+                                                       class="form-control text-right" />
                                             </div>
                                             °C
                                         </div>
@@ -2989,9 +3173,7 @@
                                             </div>
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
-
                                     <div><span class="font-bold">V. NHU CẦU GIÁO DỤC SỨC KHỎE</span>/ <i class="text-primary">PATIENT EDUCATION NEEDS</i></div>
-
                                     <div style="margin-left: 120px">
                                         <asp:Label runat="server" ID="lbl_patient_education_needs"/>
                                         <div runat="server" id="patient_education_needs_wrapper" class="mb-2">
@@ -3042,44 +3224,35 @@
                                             </asp:UpdatePanel>
                                         </div>
                                     </div>
-                                <div class="row mb-2">
-                                    <div class="col-md-12">
-                                        <div class="form-actions">
-                                            <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="CompleteForm" ID="btnComplete"  CssClass="btn btn-primary" >Complete</asp:LinkButton>
-
-                                            <asp:LinkButton ValidationGroup="Group1" OnClick="SaveForm" ID="btnSave" runat="server" CssClass="btn btn-primary" >Save</asp:LinkButton>
-
-                                            <div runat="server" onclick="showWindow('RadWindow2')" id="btnDeleteModal" class="btn btn-danger">Delete</div>
-
-                                            <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary">Amend</asp:LinkButton>
-
-                                            <asp:LinkButton runat="server" OnClientClick="btnPrint_Click(); return false;" ID="btnPrint" CssClass="btn btn-secondary">Print</asp:LinkButton>
-
-                                            <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary">Cancel</asp:LinkButton>
+                                    <div class="row mb-2">
+                                        <div class="col-md-12">
+                                            <div class="form-actions" style="display: flex; gap: 6px">
+                                                <asp:UpdatePanel runat="server" ID="UpdatePanel8">
+                                                    <ContentTemplate>
+                                                        <asp:LinkButton ValidationGroup="Group2" runat="server" OnClick="CompleteDocument" ID="btnComplete" CssClass="btn btn-primary">Complete</asp:LinkButton>
+                                                    </ContentTemplate>
+                                                </asp:UpdatePanel>
+                                                <asp:LinkButton ValidationGroup="Group1" OnClick="SaveDocument" ID="btnSave" runat="server" CssClass="btn btn-primary">Save</asp:LinkButton>
+                                                <asp:UpdatePanel runat="server" ID="uplPrintDocument">
+                                                    <ContentTemplate>
+                                                        <asp:LinkButton runat="server" OnClick="DeleteDocument" ID="btnDelete" CssClass="btn btn-danger">Delete</asp:LinkButton>
+                                                    </ContentTemplate>
+                                                </asp:UpdatePanel>
+                                                <asp:LinkButton runat="server" OnClick="AmendDocument" ID="btnAmend" CssClass="btn btn-secondary">Amend</asp:LinkButton>
+                                                <asp:UpdatePanel runat="server" ID="UpdatePanel15">
+                                                    <ContentTemplate>
+                                                        <asp:LinkButton runat="server" OnClick="PrintDocument" ID="btnPrint" CssClass="btn btn-secondary">Print</asp:LinkButton>
+                                                    </ContentTemplate>
+                                                </asp:UpdatePanel>
+                                                <asp:LinkButton runat="server" OnClick="CancelAmendDocument" ID="btnCancel" CssClass="btn btn-secondary">Cancel</asp:LinkButton>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <webUI:PopupModal ClientIDMode="Static" runat="server" ID="myModal">
-                                    <ModalBody>
-                                        <div class="text-center">
-                                            <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                            <h4 class="mt-4 mb-4">Delete document?
-                                            </h4>
-                                        </div>
-                                        <div class="text-right">
-                                            <div class="btn btn-default" data-dismiss="modal">Close</div>
-                                                <asp:LinkButton OnClick="btnDelete_Click" OnClientClick="window.removeEventListener('beforeunload',comfirm_leave_page,true);" runat="server" ID="btnDelete" CssClass="btn btn-danger">Delete</asp:LinkButton>
-                                        </div>
-                                    </ModalBody>
-                                </webUI:PopupModal>
-
-                                <webUI:PopupShowDelay runat="server" ID="PopupShowDelay" />
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
             </div>
         </div>
     </form>
@@ -3091,22 +3264,24 @@
     <script src="../scripts/waves.js"></script>
     <script src="../scripts/sweetalert.min.js"></script>
     <script src="../scripts/alertify.js"></script>
+    <script type="text/javascript">
+        function print_document() {
+            let print_page = document.querySelector("#print_page");
+            print_page.style.display = "block";
+            setTimeout(() => { print_page.style.display = "none"; }, 100);
+            window.print();
+        }
+        function show_window(rwndID) {
+            var oWnd = $find(rwndID);
+            oWnd.show();
+        }
+        <%--function select_print_language() {
+            var oWnd = $find("<%=rwndPrint.ClientID %>");
+            oWnd.show();
+        }--%>
+    </script>
     <script>
-        function openRadWindow() {
-            var radwindow = $find('<%=RadWindow1.ClientID %>');
-            radwindow.show();
-        }
-
-        function openRadWindowError() {
-            var radwindow = $find('<%= RadWindowError.ClientID %>');
-            radwindow.show();
-        }
-
-        document.getElementById("print_content").style.border = "0.1px solid #fff";
-
-        var elem = window.parent.parent.document.getElementById("myProgress");
-        progress(elem);
-
+        
         formGroup_init();
         checkboxRadiobutton_init();
         InputFilter("data-type='number'");
@@ -3131,24 +3306,23 @@
                 document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
             }, 1000);
         }
+        //function btnPrint_Click() {
+        //    let printContent = document.querySelector("#printContent");
+        //    printContent.setAttribute("style", "display: block");
 
-        function btnPrint_Click() {
-            let printContent = document.querySelector("#printContent");
-            printContent.setAttribute("style", "display: block");
+        //    let total = Math.ceil(printContent.offsetHeight / 1096);
 
-            let total = Math.ceil(printContent.offsetHeight / 1096);
+        //    //for (let i = 1; i <= total; i++) {
+        //    //    let div = document.createElement("div");
+        //    //    div.setAttribute("class", "watermark page");
+        //    //    div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px;");
+        //    //    div.setAttribute("data-page", "Page " + i + " of " + total);
+        //    //    document.getElementById("print_content").append(div);
+        //    //}
 
-            //for (let i = 1; i <= total; i++) {
-            //    let div = document.createElement("div");
-            //    div.setAttribute("class", "watermark page");
-            //    div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px;");
-            //    div.setAttribute("data-page", "Page " + i + " of " + total);
-            //    document.getElementById("print_content").append(div);
-            //}
-
-            setTimeout(() => { printContent.setAttribute("style", "display: none"); }, 100);
-            window.print();
-        }
+        //    setTimeout(() => { printContent.setAttribute("style", "display: none"); }, 100);
+        //    window.print();
+        //}
     </script>
 </body>
 </html>

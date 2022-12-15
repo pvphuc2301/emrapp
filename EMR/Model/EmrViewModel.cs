@@ -63,26 +63,6 @@ namespace EMR.Model
         public dynamic icd_10 { get; set; }
         public dynamic model_id { get; set; }
         public dynamic patient_visit_id { get; set; }
-        public dynamic created_user_id { get; set; }
-        public dynamic created_name_e { get; set; }
-        public dynamic created_name_l { get; set; }
-        public dynamic created_date_time { get; set; }
-        public dynamic modified_user_id { get; set; }
-        public dynamic modified_name_e { get; set; }
-        public dynamic modified_name_l { get; set; }
-        public dynamic modified_date_time { get; set; }
-        public dynamic submited_user_id { get; set; }
-        public dynamic submited_name_e { get; set; }
-        public dynamic submited_name_l { get; set; }
-        public dynamic submited_date_time { get; set; }
-        public dynamic signed_user_id { get; set; }
-        public dynamic signed_name_e { get; set; }
-        public dynamic signed_name_l { get; set; }
-        public dynamic signed_date_time { get; set; }
-        public dynamic delete_user_id { get; set; }
-        public dynamic delete_name_e { get; set; }
-        public dynamic delete_name_l { get; set; }
-        public dynamic delete_date_time { get; set; }
         public dynamic document_type_rcd { get; set; }
         public dynamic documentid { get; set; }
         //Update V2.0
@@ -92,22 +72,18 @@ namespace EMR.Model
         public dynamic received_additional { get; set; }
         public dynamic other_vaccinations { get; set; }
         public dynamic not_yet_vaccinations { get; set; }
+        public EmrViewModel() { }
         #endregion
         public EmrViewModel(string document_id, string location) : base(document_id, location)
         {
-            DefaultModel(location);
         }
 
         public EmrViewModel(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
         {
-            DefaultModel(location);
         }
-        public void DefaultModel(string location)
+        protected override void DefaultDocument()
         {
-            if (Logs(location)?.Rows.Count == 1)
-            {
-                infected_with_covid = false;
-            }
+            infected_with_covid = false;
         }
     }
 }

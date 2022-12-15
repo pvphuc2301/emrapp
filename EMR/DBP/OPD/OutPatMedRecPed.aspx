@@ -28,6 +28,14 @@
     <link href="../../styles/myStyle.css" rel="stylesheet" />
     <link href="../../styles/alertify.css" rel="stylesheet" />
     <link href="../../styles/print.css" rel="stylesheet" />
+    <style>
+@page {
+    margin-top: 13px;
+    margin-bottom: 13px;
+    margin-left: 28px;
+    margin-right: 28px;
+}
+</style>
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
@@ -919,16 +927,16 @@
             let printContent = document.querySelector("#printContent");
             printContent.setAttribute("style", "display: block");
 
-            let total = Math.ceil(printContent.offsetHeight / 1096);
+            //let total = Math.ceil(printContent.offsetHeight / 1096);
 
-            for (let i = 1; i <= total; i++) {
-                let div = document.createElement("div");
-                div.setAttribute("class", "page");
-                div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px;");
-                div.setAttribute("data-page", "Page " + i + " of " + total);
-                document.getElementById("print_content").append(div);
+            //for (let i = 1; i <= total; i++) {
+            //    let div = document.createElement("div");
+            //    div.setAttribute("class", "page");
+            //    div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px;");
+            //    div.setAttribute("data-page", "Page " + i + " of " + total);
+            //    document.getElementById("print_content").append(div);
 
-            }
+            //}
 
             setTimeout(() => { printContent.setAttribute("style", "display: none"); }, 100);
             window.print();

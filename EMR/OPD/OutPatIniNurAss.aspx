@@ -28,6 +28,7 @@
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
+    <link href="../styles/print-10.2022.css" rel="stylesheet" />
     <style type="text/css">
         table { page-break-after:auto }
         tr    { page-break-inside:avoid; page-break-after:auto }
@@ -37,6 +38,18 @@
         .report-footer-space {
             height: 0;
         }
+        @page {
+            margin-top: 10px;
+        }
+        .cursor-wait {
+            pointer-events: none;
+            background-color: #007bff;
+            border-color: #007bff;
+            opacity: .65;
+        }
+        #print_content {
+		    line-height: initial !important;
+	    }
     </style>
 </head>
 <body>
@@ -44,26 +57,30 @@
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
         <asp:UpdatePanel ID="UpPrintForm" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <div class="cssclsNoScreen" style="font-family: Tahoma !important; font-size: 13.3048px !important;">
+                <div class="cssclsNoScreen" id="print_page" runat="server" style="font-family: 'Times New Roman' !important; width: 210mm; overflow: hidden">
                     <table class="report-container">
                         <thead class="report-header">
                             <tr>
                                 <th class="report-header-cell">
-                                    <div class="header-info">
-                                        <img src="../images/AIH_PI_FULL.png" />
-                                        <%--<img style="width: 100px !important" src="../images/Image-1.jpg" />--%>
-                                        <div class="header-info-title">
-                                            <h4 >PHIẾU ĐÁNH GIÁ ĐIỀU<br />DƯỠNG BỆNH NGOẠI TRÚ</h4>
-                                            <h5 >OUTPATIENT INITIAL NURSING ASSESSMENT</h5>
+                                    <div runat="server" id="print_header" style="width: 210mm; height: 2.5cm">
+                                        <div style="display: flex; align-items: center; padding: 0 18px">
+                                            <img style="width: 180px" src="../images/AIH_PI_FULL.png" />
+                                            <div style="text-align: center; align-self: center; flex-grow: 1">
+                                                <div><span style="font-size: 12pt; font-weight: bold">PHIẾU ĐÁNH GIÁ ĐIỀU DƯỠNG BỆNH NGOẠI TRÚ</span></div>
+                                                <div class="en"><i style="font-size: 11pt; font-weight: bold">OUTPATIENT INITIAL NURSING ASSESSMENT</i></div>
+                                            </div>
+                                            <div style="width: 150px; text-align: left; font-size: 11px">
+                                                <asp:Label runat="server" ID="prt_fullname" CssClass="d-block"></asp:Label>
+                                                <asp:Label CssClass="d-block" runat="server" ID="prt_DOB"></asp:Label>
+                                                <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
+                                                <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
+                                            </div>
                                         </div>
-                                        <div style="width: 150px; text-align: left; font-size: 11px">
-                                            <asp:Label runat="server" ID="prt_fullname" CssClass="d-block"></asp:Label>
-                                            <asp:Label CssClass="d-block" runat="server" ID="prt_DOB"></asp:Label>
-                                            <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
-                                            <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
+                                        <div style="height: 12px; position: relative; margin-top: -4px">
+                                            <span style="position:absolute; left: 0; top: 50%; width: 190px; border: 2px solid #e20e5a; display: inline-block;"></span>
+                                            <span style="position:absolute; left: 190px; top: 50%; right: 0; border: 2px solid #007297; display: inline-block;"></span>
                                         </div>
                                     </div>
-                                    <webUI:Line runat="server" ID="Line" />
                                 </th>
                             </tr>
                         </thead>
@@ -71,7 +88,7 @@
                         <tbody class="report-content">
                             <tr>
                                 <td class="report-content-cell">
-                                    <div class="main">
+                                    <div class="main" runat="server" id="print_content" style="font-size: 12pt; margin: 0 1.5cm 0 2cm; line-height: 1.5">
                                         <div style="margin-bottom: 6px">
                                             <webUI:PrtRowS1 Order="I." FontBold="true" Title="DẤU HIỆU SINH TỒN:" SubTitle="VITAL SIGNS" runat="server" />
                                         </div>
@@ -79,10 +96,10 @@
                                         <table class="table-bordered mb-2" style="table-layout: fixed; width: 100%">
                                             <tr>
                                                 <td class="p-2">Nhiệt độ/ Temperature (C degree)</td>
-                                                <td class="p-2 text-right" style="width: 100px;">
+                                                <td class="p-2 text-right" style="width: 90px;">
                                                     <asp:Label runat="server" ID="prt_vs_temperature" /></td>
                                                 <td class="p-2">Mạch/ Pulse (/min)</td>
-                                                <td class="p-2 text-right" style="width: 100px;">
+                                                <td class="p-2 text-right" style="width: 90px;">
                                                     <asp:Label runat="server" ID="prt_pulse" /></td>
                                             </tr>
                                             <tr>
@@ -185,17 +202,16 @@
 
                         <tfoot class="report-footer">
                             <tr>
-                                <td class="report-footer-cell" style="font-size: 10px">
-                                    <%--<img style="width: 100%" src="../images/Footer.jpg" />--%>
-                                    <img style="width: 100%" src="../images/ExcellentCare.png" />
-                                    <div class="footer-info">
+                                <td class="report-footer-cell" runat="server" id="print_footer" style="height: 2cm; width: 210mm">
+                                    <div style="margin-left: -18px"><img style="width: 210mm" src="../images/ExcellentCare.png" /></div>
+                                    <div class="footer-info" style="padding: 0 18px">
                                         <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
-                                        <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>
+                                        <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Tp. Thủ Đức, Tp.HCM</div>
                                         <div>Tel: 028 3910 9999</div>
                                         <div>www.aih.com.vn</div>
                                     </div>
                                 </td>
-                                <td class="report-footer-space"></td>
+                                <td class="report-footer-space" runat="server" id="print_footer_space" style="height: 2cm; width: 210mm"></td>
                             </tr>
                         </tfoot>
                     </table>

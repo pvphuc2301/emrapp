@@ -30,7 +30,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbRadRequestNo;
+        protected global::System.Web.UI.WebControls.LinkButton lbRadRequestNo;
 
         /// <summary>
         /// lbFullName control.

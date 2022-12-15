@@ -268,38 +268,38 @@ function popupShowDelay(sessionTimeout) {
 }
 
 function comfirm_leave_page(event) {
-    let doc_id = sessionStorage.getItem('doc_id');
-    let location = sessionStorage.getItem('location');
-    let emp_id = sessionStorage.getItem('emp_id');
-    //let obj = JSON.parse(sessionStorage.getItem(doc_id));
+    //let doc_id = sessionStorage.getItem('doc_id');
+    //let location = sessionStorage.getItem('location');
+    //let emp_id = sessionStorage.getItem('emp_id');
+    ////let obj = JSON.parse(sessionStorage.getItem(doc_id));
 
-    setTimeout(function () {
-        setTimeout(function () {
-            $.get('http://172.16.0.88:8080/api/emr/check-session/' + location + '/' + doc_id + '/' + emp_id, function (data) {  });
-        }, 2000);
-    }, 1);
+    //setTimeout(function () {
+    //    setTimeout(function () {
+    //        //$.get('http://172.16.0.88:8080/api/emr/check-session/' + location + '/' + doc_id + '/' + emp_id, function (data) {  });
+    //    }, 2000);
+    //}, 1);
 
-    __doPostBack("clearSession", "");
-    document.getElementById("clearSession").click();
+    //__doPostBack("clearSession", "");
+    //document.getElementById("clearSession").click();
 
-    //console.log(document.getElementById("clearSession"));
+    ////console.log(document.getElementById("clearSession"));
 
-    //$.post('http://172.16.0.88:8080/api/emr/clear-session/' + location + '/' + doc_id);
+    ////$.post('http://172.16.0.88:8080/api/emr/clear-session/' + location + '/' + doc_id);
 
-    //$.ajax({
-    //    url: 'http://172.16.0.88:8080/api/emr/clear-session/' + location + '/' + doc_id,
-    //    type: 'POST',
-    //    dataType: 'application/json',
-    //    data: "{}",
-    //    success: function (data, textStatus, xhr) {
-    //        console.log(data);
-    //    },
-    //    error: function (xhr, textStatus, errorThrown) {
-    //        console.log('Error in Operation');
-    //    }
-    //});
-    event.returnValue = '';
-    return "You are leaving the page";
+    ////$.ajax({
+    ////    url: 'http://172.16.0.88:8080/api/emr/clear-session/' + location + '/' + doc_id,
+    ////    type: 'POST',
+    ////    dataType: 'application/json',
+    ////    data: "{}",
+    ////    success: function (data, textStatus, xhr) {
+    ////        console.log(data);
+    ////    },
+    ////    error: function (xhr, textStatus, errorThrown) {
+    ////        console.log('Error in Operation');
+    ////    }
+    ////});
+    //event.returnValue = '';
+    //return "You are leaving the page";
 }
 
 function editFormEvent(doc, location, emp_id) {

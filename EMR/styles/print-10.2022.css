@@ -1,0 +1,118 @@
+@page {
+    size: A4;
+    margin-top: 5px;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+}
+
+@media print {
+    .en {
+        color: #0070c0 !important;
+        font-size: 11pt !important;
+        line-height: 1.5 !important;
+        font-style: italic;
+    }
+
+    .watermark {
+        background-repeat: no-repeat;
+        background-image: url("../images/logo-opacity.png") !important;
+        background-position-y: -10px;
+        background-position-x: center;
+        z-index: -1;
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 950px;
+    }
+
+    table {
+        page-break-after: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    td {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+
+    table tr td {
+        padding: 4px;
+    }
+
+    .page:after {
+        content: attr(data-page);
+        position: absolute;
+        bottom: 1px;
+        left: 0;
+        right: 0;
+        text-align: center;
+    }
+
+    .cssclsNoPrint {
+        display: none
+    }
+
+    .report-footer .report-footer-cell {
+        display: inline-block;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
+    .footer-info {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        font-size: 12px;
+    }
+
+    .report-footer-space {
+        height: 55px;
+    }
+
+    .cssclsNoScreen .header-info {
+        display: flex;
+        align-items: center;
+        height: 80px;
+    }
+
+        .cssclsNoScreen .header-info img {
+            width: 200px;
+        }
+
+        .cssclsNoScreen .header-info .header-info-title {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+            .cssclsNoScreen .header-info .header-info-title h4 {
+                color: #007297;
+                font-size: 20.6963px;
+                font-weight: bold;
+                margin-bottom: 4px;
+            }
+
+    .cssclsNoScreen .text-primary {
+        color: #007297 !important;
+    }
+
+    .cssclsNoScreen .header-info .header-info-title h5 {
+        color: #e20e5a;
+        font-size: 14.6667px;
+        margin-bottom: 0;
+    }
+}

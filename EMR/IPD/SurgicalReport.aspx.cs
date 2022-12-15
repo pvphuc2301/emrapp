@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using EMR.Classes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -97,6 +98,7 @@ namespace EMR.IPD
         {
             try
             {
+                LoadBarCode();
                 //3
                 lbl_procedure_date.Text = WebHelpers.FormatDateTime(surr.procedure_date, "dd-MMM-yyyy");
                 lbl_start_time.Text = WebHelpers.FormatString(surr.start_time);
@@ -135,7 +137,7 @@ namespace EMR.IPD
                 patientVisitInfo = new PatientVisitInfo(varPVID, loc);
 
                 prt_vpid.Text = patientInfo.visible_patient_id;
-                WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
+                LoadBarCode();
                 prt_FullName.Text = patientInfo.FullName;
                 prt_admission_date.Text = WebHelpers.FormatDateTime(patientVisitInfo.actual_visit_date_time);
 
@@ -409,6 +411,12 @@ namespace EMR.IPD
         {
             WebHelpers.clearSessionDoc(Page, varDocID, loc);
 
+        }
+        private void LoadBarCode()
+        {
+            IBarcodeGenerator barcodeGenerator = new BarcodeGenerator();
+            BarCode.Controls.Clear();
+            BarCode.Controls.Add(barcodeGenerator.Generator(patientInfo.visible_patient_id));
         }
     }
 }

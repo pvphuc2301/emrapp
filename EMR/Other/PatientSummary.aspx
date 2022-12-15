@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PatientSummary.aspx.cs" Inherits="EMR.PatientSummary" Async="true" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="PatientSummary.aspx.cs" Inherits="EMR.PatientSummary" ValidateRequest="false" %>
 
 <%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="icon" TagName="ExclamationTriangle" %>
 
@@ -12,6 +12,7 @@
     <link href="../styles/telerik-custom.css" rel="stylesheet" />
     <link href="../styles/style-custom.css" rel="stylesheet" />
     <link href="../styles/sweetalert.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <style>
         .sidebar-wrapper .sidebar-menu ul li a {
             padding: 0;
@@ -92,6 +93,30 @@
             left: calc(100% + 1em);
             transform: translate3d(15px, -50%, 0);
         }
+
+        /*.rwTitleBar {
+            background-color: #fff;
+        }
+
+        .TelerikModalOverlay {
+            opacity: 0 !important;
+            background-color: unset;
+        }
+
+        .RadWindow_Bootstrap {
+            border: 1px solid #597189 !important;
+            border-radius: 0 !important;
+        }
+        
+        .rwCustomIcon {
+            background-size: contain !important;
+        }
+        .RadWindow_Bootstrap .rwTitleWrapper{*/
+            /*background-color: #fff;*/
+        /*}
+        .RadWindow_Bootstrap .rwContent {
+            border-top: none !important;
+        }*/
     </style>
 
 </head>
@@ -100,11 +125,7 @@
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
          <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <%--<div style="overflow: hidden; height: 100vh; margin-top: 15px;">--%>
-                <%--<asp:HiddenField runat="server" ID="_TRANSACTION" />--%>
-                <input type="hidden" runat="server" id="_TRANSACTION" />
-                <%--<asp:TextBox runat="server" ID="_TRANSACTION" />--%>
-
+                <a id="reload_treeview"></a>
                 <div style="overflow: hidden; height: 100vh;">
                     <telerik:RadSplitter runat="server" ID="RadSplitter1" SplitBarsSize="4" Width="100%" Height="100%">
                         <telerik:RadPane runat="server" Width="220" Height="100%" MinWidth="150" MaxWidth="550">
@@ -114,9 +135,7 @@
                                         <ul class="text-nowrap" style="padding: 0;">
                                             <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px; margin-top: 12px;">
                                                 <h5 class="title">Complex Document</h5>
-                                                <telerik:RadGrid OnNeedDataSource="radGridComplexDoc_NeedDataSource" OnItemCommand="radGridComplexDoc_ItemCommand" CssClass="table" BorderWidth="0" AutoGenerateColumns="false" ShowHeader="false"
-                                    ID="radGridComplexDoc" ItemStyle-Height="25px" runat="server"
-                                        >
+                                                <telerik:RadGrid ID="radGridComplexDoc" OnNeedDataSource="radGridComplexDoc_NeedDataSource" OnItemCommand="radGridComplexDoc_ItemCommand" CssClass="table" BorderWidth="0" AutoGenerateColumns="false" ShowHeader="false"  ItemStyle-Height="25px" runat="server">
                                                     <MasterTableView DataKeyNames="document_id,model_id,status,url">
                                                         <Columns>
                                                             <telerik:GridTemplateColumn ItemStyle-BorderWidth="0" SortExpression="visible_patient_id" DataField="visible_patient_id" ItemStyle-Height="25px">
@@ -144,7 +163,9 @@
                                             <%--Load LAB and IMG Document--%>
                                             <li style="border-bottom: 1px solid #ddd; margin-bottom: 4px;">
                                                 <h5 class="title">Clinical Reports</h5>
-                                                <telerik:RadTreeView OnNodeClick="RadTreeView2_NodeClick" ID="RadTreeView2" runat="server" OnNodeExpand="RadTreeView2_NodeExpand"/></li>
+                                                <telerik:RadTreeView OnNodeClick="RadTreeView2_NodeClick" ID="RadTreeView2" runat="server" OnNodeExpand="RadTreeView2_NodeExpand">
+                                                </telerik:RadTreeView>
+                                            </li>
                                             <%--End Load LAB and IMG Document--%>
 
                                             <%--Load Scan Document--%>
@@ -167,54 +188,85 @@
                         <telerik:RadPane ID="MainContent" runat="server" />
                     </telerik:RadSplitter>
                 </div>
-
-                <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" MaxHeight="270">
-                <Windows>
-                    <telerik:RadWindow RenderMode="Lightweight" Modal="true" ID="RadWindow3" Title="Warning" runat="server">
-                        <ContentTemplate>
-                            <div class="text-center">
-                                <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                <h4 class="mt-4">Denied!</h4>
-                                <label runat="server" id="lblUserBlock" />
-                            </div>
-
-                            <div class="d-grid no-block justify-content-end">
-                                <%--<asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="LinkButton1" CssClass="btn btn-danger">Delete</asp:LinkButton>--%>
-                            </div>
-                        </ContentTemplate>
-                    </telerik:RadWindow>
-
-                </Windows>
-            </telerik:RadWindowManager>
-
-                <div id="tooltip__item" class="tooltip__item">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th colspan="2" class="title mb-2 font-bold"></th>
-                            </tr>
-                            <tr>
-                                <td style="width: 90px;">Category</td>
-                                <td class="category"></td>
-                            </tr>
-                            <tr>
-                                <td>Author</td>
-                                <td class="author"></td>
-                            </tr>
-                            <tr>
-                                <td>Visit</td>
-                                <td class="visit"></td>
-                            </tr>
-                            <tr>
-                                <td>Lasted updated</td>
-                                <td class="lastedUpdated"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
             </ContentTemplate>
         </asp:UpdatePanel>
+        <%--  --%>
+        <telerik:RadWindow RenderMode="Lightweight" Modal="true" ID="rwndUserBlock" Title="" IconUrl="/" runat="server" Width="500" Height="195" VisibleStatusbar="false" Behaviors="Close" Opacity="1">
+            <ContentTemplate>
+                <div style="display: grid; grid-template-columns: 64px 1fr; gap: 6px">
+                    <div><i class="fa fa-exclamation-triangle text-danger" style="font-size:64px;"></i></div>
+                    <div>
+                        <div class="text-danger">Denied!</div>
+                        <label runat="server" id="lblUserBlock" />
+                    </div>
+                </div>
+            </ContentTemplate>
+        </telerik:RadWindow>
+
+        <telerik:RadWindow RenderMode="Lightweight" Modal="true" ID="RadWindowError" Title="" IconUrl="/" runat="server" Width="500" Height="195" VisibleStatusbar="false" Behaviors="Move,Close" Opacity="1">
+            <ContentTemplate>
+                <div style="display: grid; grid-template-columns: 64px 1fr; gap: 6px">
+                    <div><i class="fa fa-exclamation-triangle text-danger" style="font-size:64px;"></i></div>
+                    <div>
+                        <label runat="server" id="lblErrorMessage" />
+                    </div>
+                </div>
+            </ContentTemplate>
+        </telerik:RadWindow>
+        <%--  --%>
+        <telerik:RadWindow IconUrl="../images/getsitelogo.png" ID="rwndDeleteDocument" Title="" runat="server" Width="500" Height="195" Modal="true" VisibleStatusbar="false" Behaviors="Close" Opacity="1" BackColor="#515e7b80">
+            <ContentTemplate>
+                <asp:UpdatePanel runat="server" ID="uplDeleteDocument" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <div class="rwDialog">
+                            <a id="DeleteDocumentTrigger"></a>
+                            <asp:HiddenField runat="server" ID="hfdDeleteDocument" />
+                            <div style="display: grid; grid-template-columns: auto 1fr">
+                                <span class="mr-2"><i class="fa fa-exclamation-triangle" style="font-size:64px; color: #ff8d08"></i></span>
+                                <p>Delete document?</p>
+                            </div>
+                            <div class="rwDialogButtons">
+                                <asp:LinkButton runat="server" OnClick="btnDeleteDocument_Click" ID="btnDeleteDocument" CssClass="btn btn-danger">Delete</asp:LinkButton>
+                                <div class="btn btn-secondary" onclick="CloseRadWindow('rwndDeleteDocument')">Cancel</div>
+                            </div>
+                        </div>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </ContentTemplate>
+        </telerik:RadWindow>
+        <%--  --%>
+        <telerik:RadWindow Modal="true" CssClass="NoIconUrl" MinWidth="600px" VisibleStatusbar="false" Behaviors="Close,Move" Opacity="1" BackColor="#515e7b80" ID="rwndLogHistory" Title="Version History" runat="server">
+            <ContentTemplate>
+                <asp:UpdatePanel runat="server" ID="uplLogHistory" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <a id="btnLogHistory"></a>
+                        <asp:HiddenField runat="server" ID="PAGE_URL" />
+                        <telerik:RadGrid ShowHeader="false" ID="rgdLogHistory" runat="server" AllowSorting="true" OnItemDataBound="rgdLogHistory_ItemDataBound" OnItemCommand="rgdLogHistory_ItemCommand">
+                            <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
+                                <Columns>
+                                    <telerik:GridTemplateColumn>
+                                        <ItemTemplate>
+                                            <div style="display: grid; grid-template-columns: 1fr auto">
+                                                <div style="white-space: nowrap"><telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'></telerik:RadLabel></div>
+                                                <div><asp:LinkButton CommandName="Open" ToolTip="View Log" runat="server" ID="rlbtnViewLog">[view]</asp:LinkButton></div>
+                                            </div>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+                                </Columns>
+                            </MasterTableView>
+                            <SelectedItemStyle CssClass="SelectedStyle" />
+                            <ClientSettings>
+                                <Selecting AllowRowSelect="true" />
+                            </ClientSettings>
+                        </telerik:RadGrid>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </ContentTemplate>
+        </telerik:RadWindow>
+        <%--  --%>
+        <telerik:RadNotification AutoCloseDelay="3000000" RenderMode="Lightweight" ID="RadNotification1" runat="server" EnableRoundedCorners="true"
+                    EnableShadow="true" Text="Update success" OffsetX="-20" OffsetY="-20" VisibleTitlebar="false" Title="" TitleIcon="none" Width="300" Height="60">
+        </telerik:RadNotification>
     </form>
 
     <script src="../scripts/jquery-3.2.1.min.js"></script>
@@ -225,6 +277,75 @@
     <script src="../scripts/waves.js"></script>
     <script src="../scripts/sweetalert.min.js"></script>
     <script>
+        function ConfirmDeleteDocument(args) {
+            ShowRadWindow("<%=rwndDeleteDocument.ClientID %>");
+            var DeleteDocumentTrigger = document.getElementById("DeleteDocumentTrigger");
+            DeleteDocumentTrigger.onclick = () => __doPostBack('delete_document', args);
+            DeleteDocumentTrigger.click();
+        }
+        function ShowBlock(args) {
+            var rwndUserBlock = $find("<%=rwndUserBlock.ClientID %>");
+            var msg = document.getElementById("<%=lblUserBlock.ClientID %>");
+            msg.innerHTML = args;
+            rwndUserBlock.show();
+        }
+
+        function Error(title, content) {
+            var rwndError = $find("<%=RadWindowError.ClientID %>");
+            var msg = document.getElementById("<%=lblErrorMessage.ClientID %>");
+            msg.innerHTML = "<div class='font-bold'>Something went wrong</div><div>Please contact IT support.</div>";
+            rwndError.show();
+        }
+
+        function complete_document(url) {
+            var notification = $find("<%=RadNotification1.ClientID %>");
+            notification.show();
+            var reload_treeview = document.getElementById("reload_treeview");
+            reload_treeview.onclick = () => __doPostBack('complete_document', url);
+            reload_treeview.click();
+        }
+        function delete_document() {
+            ShowRadWindow("<%=RadNotification1.ClientID %>")
+            CloseRadWindow("<%=rwndDeleteDocument.ClientID %>");
+        }
+        function log_history(page_url) {
+            var btnLogHistory = document.getElementById("btnLogHistory");
+            btnLogHistory.onclick = () => __doPostBack('document_log', page_url);
+            btnLogHistory.click();
+            var oWnd = $find("<%=rwndLogHistory.ClientID %>");
+            oWnd.show();
+        }
+
+        function CloseRadWindow(RadWindowClientID) {
+            var window = $find(RadWindowClientID);
+            window.close();
+        }
+
+        function ShowRadWindow(RadWindowClientID) {
+            var window = $find(RadWindowClientID);
+            window.show();
+        }
+
+        function close_window(windowID) {
+            var window = $find(windowID);
+            window.close();
+        }
+
+        function Notification(message) {
+            var notification = $find("<%=RadNotification1.ClientID %>");
+            notification.show();
+        }
+
+        function reload_complex_document(url) {
+            __doPostBack("reload_complex_document", url);
+        }
+
+        function reload_treeview(url) {
+            var reload_treeview = document.getElementById("reload_treeview");
+            reload_treeview.onclick = () => __doPostBack('reload_treeview', url);
+            reload_treeview.click();
+        }
+
         let _scrollTop;
 
         function beforeAsyncPostBack() {
@@ -236,7 +357,6 @@
 
         function afterAsyncPostBack() {
             $('#DocumentList').modal('show');
-            
             $("#menuLeft").scrollTop(_scrollTop);
         }
 

@@ -29,11 +29,15 @@
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
-    <link href="../styles/print.css" rel="stylesheet" />
+    <link href="../styles/print-10.2022.css" rel="stylesheet" />
+    <link href="../styles/telerik-custom.css" rel="stylesheet" />
     <style>
-        .watermark {
-            height: 945px;
+        @page{
+            margin-top: 15px;
         }
+        #print_content {
+		    line-height: initial !important;
+	    }
     </style>
 </head>
 <body>
@@ -42,28 +46,30 @@
 
         <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <div class="cssclsNoScreen" id="printContent">
+                <div class="cssclsNoScreen" id="print_page" runat="server" style="font-family: 'Times New Roman' !important; width: 210mm; overflow: hidden">
                 <table class="report-container">
                     <thead class="report-header">
                         <tr>
                             <th class="report-header-cell">
-                                <div class="header-info">
-                                    <img width="200" src="../images/AIH_PI_FULL.png" />
-                                    <div class="header-info-title">
-                                        <h4 style="font-size: 19px">THEO DÕI THAI PHỤ TẠI PHÒNG SINH</h4>
-                                        <h5>OBSTETRIC OBSERVATION AT DELIVERY ROOM</h5>
+                                <div runat="server" id="print_header" style="width: 210mm; height: 2.5cm">
+                                    <div style="display: flex; align-items: center; padding: 0 18px">
+                                        <img style="width: 180px" src="../images/AIH_PI_FULL.png" />
+                                        <div style="text-align: center; align-self: center; flex-grow: 1">
+                                            <div><span style="font-size: 12pt; font-weight: bold">THEO DÕI THAI PHỤ TẠI PHÒNG SINH</span></div>
+                                            <div class="en"><i style="font-size: 11pt; font-weight: bold">OBSTETRIC OBSERVATION AT DELIVERY ROOM</i></div>
+                                        </div>
+                                        <div style="width: 150px; text-align: center; font-size: 11px">
+                                            <div runat="server" id="prt_fullname"></div>
+                                            <div runat="server" id="prt_gender"></div>
+                                            <div class="d-block" runat="server" id="prt_DOB"></div>
+                                            <div runat="server" id="prt_vpid" class="d-block font-bold"></div>
+                                            <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
+                                        </div>
                                     </div>
-                                    <div style="width: 160px; text-align: left; font-size: 11px">
-                                        <div runat="server" id="prt_fullname"></div>
-                                        <div runat="server" id="prt_gender"></div>
-                                        <div class="d-block" runat="server" id="prt_DOB"></div>
-                                        <div runat="server" id="prt_vpid" class="d-block font-bold"></div>
-                                        <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
+                                    <div style="height: 12px; position: relative; margin-top: -4px">
+                                        <span style="position:absolute; left: 0; top: 50%; width: 190px; border: 2px solid #e20e5a; display: inline-block;"></span>
+                                        <span style="position:absolute; left: 190px; top: 50%; right: 0; border: 2px solid #007297; display: inline-block;"></span>
                                     </div>
-                                </div>
-                                <div style="height: 25px">
-                                    <span style="width: 190px; border-bottom-style: solid; border-bottom-color: #e20e5a; border-bottom-width: 5px; display: inline-block; font-size: 26.6667px;"></span>
-                                    <span style="display: inline-block; border-bottom-style: solid; border-bottom-color: #007297; border-bottom-width: 5px; width: calc(100% - 191px); margin-left: -5px;"></span>
                                 </div>
                             </th>
                         </tr>
@@ -71,225 +77,197 @@
                     <tbody class="report-content">
                         <tr>
                             <td class="report-content-cell">
-                                <div style="position: relative" class="main" runat="server" id="print_content">
-                                    <img style="height: 1px" src="../images/logo-opacity.png" />
+                                <div class="main" runat="server" id="print_content" style="font-size: 12pt; margin: 0 1.5cm 0 2cm; line-height: 1.5">
+                                    <div>
+                                        Nhập phòng sinh lúc/ <span class="en">Admission to Delivery room at: </span>
+                                        <asp:Label runat="server" ID="prt_admis_delivery_hour"/> giờ/<span class="en">hour </span>
+                                        <asp:Label runat="server" ID="prt_admis_delivery_minute"/> phút/ <span class="en">minute</span>, ngày/ <span class="en">date </span>
+                                        <asp:Label runat="server" ID="prt_admis_delivery_date"/>
+                                    </div>
+
+                                    <div class="d-grid" style="grid-template-columns: 1fr 250px">
+                                        <div>Người theo dõi/ <span class="en">Observer's name: </span><asp:Label runat="server" ID="prt_obs_name"/></div>
+                                        <div>Chức danh/ <span class="en">Initial: </span><asp:Label runat="server" ID="prt_obs_initial"/></div>
+                                    </div>
                                     
-                                    <div class="mb-1">
-                                        Nhập phòng sinh lúc/ Admission to Delivery room at: <asp:Label runat="server" ID="prt_admis_delivery_hour"/> giờ/hour <asp:Label runat="server" ID="prt_admis_delivery_minute"/> phút/ minute, ngày/ date <asp:Label runat="server" ID="prt_admis_delivery_date"/>
+                                    <div>
+                                        <span class="font-bold">1. Đặc điểm trẻ sơ sinh</span>/ <span class="en">Neonatal features:</span>
                                     </div>
 
-                                    <div class="mb-1 d-grid" style="grid-template-columns: 1fr 250px">
-                                        <div>Người theo dõi/ Observer's name: <asp:Label runat="server" ID="prt_obs_name"/></div>
-                                        <div>Chức danh/ Initial: <asp:Label runat="server" ID="prt_obs_initial"/></div>
-                                    </div>
-                                    
-                                    <div class="mb-1">
-                                        <b>1. Đặc điểm trẻ sơ sinh</b>/ Neonatal features:
+                                    <div>
+                                        - Sinh lúc/ <span class="en">Delivered at: </span><asp:Label runat="server" ID="prt_delivery_at_hour"/> giờ/<span class="en">hour </span><asp:Label runat="server" ID="prt_delivery_at_minute"/> phút/ <span class="en">minute</span>, ngày/ <span class="en">date </span><asp:Label runat="server" ID="prt_delivery_at_date"/>
                                     </div>
 
-                                    <div class="mb-1">
-                                        - Sinh lúc/ Delivered at: <asp:Label runat="server" ID="prt_delivery_at_hour"/> giờ/hour <asp:Label runat="server" ID="prt_delivery_at_minute"/> phút/ minute, ngày/ date <asp:Label runat="server" ID="prt_delivery_at_date"/>
+                                    <div>
+                                        - Điểm số Apgar/ <span class="en">Apgar score:</span> phút thứ nhất/ <span class="en">1st minute:</span> <asp:Label runat="server" ID="prt_apgar_score_1"/> điểm/ <span class="en">points</span>, phút thứ 5/ <span class="en">5th minute: </span><asp:Label runat="server" ID="prt_apgar_score_5"/> điểm/ <span class="en">points</span>, phút thứ 10/ <span class="en">10th minute:</span> <asp:Label runat="server" ID="prt_apgar_score_10"/> điểm/ <span class="en">points</span>
                                     </div>
 
-                                    <div class="mb-1">
-                                        - Điểm số Apgar/ Apgar score: phút thứ nhất/ 1st minute: <asp:Label runat="server" ID="prt_apgar_score_1"/> điểm/ points, phút thứ 5/ 5th minute: <asp:Label runat="server" ID="prt_apgar_score_5"/> điểm/ points, phút thứ 10/ 10th minute: <asp:Label runat="server" ID="prt_apgar_score_10"/> điểm/ points
+                                    <div>
+                                        - Cân nặng lúc sinh/ <span class="en">WOB: </span><asp:Label runat="server" ID="prt_weight_of_birth"/> gram, Chiều dài/ <span class="en">length:</span> <asp:Label runat="server" ID="prt_length_of_birth"/> cm, Vòng đầu/ <span class="en">Head circumference: </span><asp:Label runat="server" ID="prt_head_circum"/> cm
                                     </div>
 
-                                    <div class="mb-1">
-                                        - Cân nặng lúc sinh/ WOB: <asp:Label runat="server" ID="prt_weight_of_birth"/> gram, Chiều dài/ length: <asp:Label runat="server" ID="prt_length_of_birth"/> cm, Vòng đầu/ Head circumference: <asp:Label runat="server" ID="prt_head_circum"/> cm
-                                    </div>
-
-                                    <div class="mb-1 d-grid" style="grid-template-columns: auto 1fr">
-                                        <div>Trẻ/ Newborn:&nbsp;</div>
+                                    <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                        <div>Trẻ/ <span class="en">Newborn:</span>&nbsp;</div>
                                         <div>
-                                            <div class="d-grid" style="grid-template-columns: 130px 90px 1fr">
-                                                - Đơn thai/ Singleton:
+                                            <div class="d-grid" style="grid-template-columns: 140px 100px 1fr">
+                                                <div>- Đơn thai/ <span class="en">Singleton:</span></div>
                                                 <div>
-                                                    <asp:Label runat="server" Text="❏" ID="prt_singleton_sex_m"/> Nam/ Male
+                                                    <asp:Label runat="server" Text="❏" ID="prt_singleton_sex_m"/> Nam/ <span class="en">Male</span>
                                                 </div>
                                                 <div>
-                                                    <asp:Label runat="server" Text="❏" ID="prt_singleton_sex_f"/> Nữ/ Female
+                                                    <asp:Label runat="server" Text="❏" ID="prt_singleton_sex_f"/> Nữ/ <span class="en">Female</span>
                                                 </div>
                                             </div>
-                                            <div class="d-grid" style="grid-template-columns: 130px 90px 1fr">
-                                                - Đa thai/ Multiple: 
+                                            <div class="d-grid" style="grid-template-columns: 140px 100px 1fr">
+                                                <div>- Đa thai/ <span class="en">Multiple: </span></div>
                                                 <div>
-                                                    <asp:Label runat="server" Text="❏" ID="prt_multiple_sex_m"/> Nam/ Male
+                                                    <asp:Label runat="server" Text="❏" ID="prt_multiple_sex_m"/> Nam/ <span class="en">Male</span>
                                                 </div>
                                                 <div>
-                                                    <asp:Label runat="server" Text="❏" ID="prt_multiple_sex_f"/> Nữ/ Female
+                                                    <asp:Label runat="server" Text="❏" ID="prt_multiple_sex_f"/> Nữ/ <span class="en">Female</span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="mb-1 d-grid" style="grid-template-columns: auto 1fr">
-                                        - Dị tật bẩm sinh/ Birth defect:&nbsp;
+                                    <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                        <div>- Dị tật bẩm sinh/ <span class="en">Birth defect:</span>&nbsp;</div>
                                         <asp:Label runat="server" ID="prt_birth_defect"/>
                                     </div>
 
-                                    <div class="mb-1">
-                                        - Tình trạng trẻ sơ sinh sau sinh/ Neonatal status after birth: <asp:Label runat="server" ID="prt_neonatal_status"/>
-                                    </div>
+                                    <div>- Tình trạng trẻ sơ sinh sau sinh/ <span class="en">Neonatal status after birth: </span><asp:Label runat="server" ID="prt_neonatal_status"/></div>
 
-                                    <div class="mb-1 d-grid" style="grid-template-columns: auto 1fr">
-                                        - Can thiệp và kết quả/ Intervention and results:&nbsp;
+                                    <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                        <div>- Can thiệp và kết quả/ <span class="en">Intervention and results:</span>&nbsp;</div>
                                         <asp:Label runat="server" ID="prt_intervention"/>
                                     </div>
 
-                                    <div class="mb-1 d-grid" style="grid-template-columns: auto 1fr">
-                                        <b>2. Sổ nhau/ Placenta delivery: &nbsp;</b> <asp:Label runat="server" ID="prt_placenta_deli"/>
+                                    <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                        <span class="font-bold">2. Sổ nhau/ <span class="en">Placenta delivery:</span> &nbsp;</span> <asp:Label runat="server" ID="prt_placenta_deli"/>
                                     </div>
 
-                                    <div class="mb-1">
-                                       - At: <asp:Label runat="server" ID="prt_pacental_deli_dt_h"/> hour <asp:Label runat="server" ID="prt_pacental_deli_dt_m"/> minute day <asp:Label runat="server" ID="prt_pacental_deli_dt"/>
+                                    <div>- <span class="en">At:</span> <asp:Label runat="server" ID="prt_pacental_deli_dt_h"/> <span class="en">hour </span><asp:Label runat="server" ID="prt_pacental_deli_dt_m"/><span class="en"> minute day </span><asp:Label runat="server" ID="prt_pacental_deli_dt"/></div>
+
+                                    <div>- Cách sổ nhau/ <span class="en">Placenta delivery mode: </span><asp:Label runat="server" ID="prt_placenta_deli_mode"/></div>
+
+                                    <div>- Cân nặng/ <span class="en">Weight:</span> <asp:Label runat="server" ID="prt_placenta_weight"/> gram</div>
+
+                                    <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                       <div>- Dây rốn quấn cổ/ <span class="en">Umbilical coil:</span> &nbsp;</div>
+                                        <asp:Label runat="server" ID="prt_umbilical_coil"/>
                                     </div>
 
-                                    <div class="mb-1">
-                                       - Cách sổ nhau/ Placenta delivery mode: <asp:Label runat="server" ID="prt_placenta_deli_mode"/>
+                                    <div>- Chiều dài dây rốn/ <span class="en">Umbilical length: </span><asp:Label runat="server" ID="prt_umbilical_length"/> cm</div>
+
+                                    <div>Lượng máu mất sau khi sổ nhau/ <span class="en">Quantity of blood loss after placenta delivery: </span><asp:Label runat="server" ID="prt_blood_loss"/> ml</div>
+
+                                    <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                        <div>Can thiệp và kết quả/ <span class="en">Intervention and results:</span> &nbsp;</div>
+                                        <asp:Label runat="server" ID="prt_p_intervention"/>
                                     </div>
 
-                                    <div class="mb-1">
-                                       - Cân nặng/ Weight: <asp:Label runat="server" ID="prt_placenta_weight"/> gram
-                                    </div>
+                                    <div><span class="font-bold">3. Tình trạng sản phụ sau sinh/ <span class="en">Maternal status after delivery:</span></span></div>
 
-                                    <div class="mb-1 d-grid" style="grid-template-columns: auto 1fr">
-                                       - Dây rốn quấn cổ/ Umbilical coil: &nbsp;<asp:Label runat="server" ID="prt_umbilical_coil"/>
-                                    </div>
+                                    <div>SpO2: <asp:Label runat="server" ID="prt_spO2"/> %</div>
 
-                                    <div class="mb-1">
-                                       - Chiều dài dây rốn/ Umbilical length: <asp:Label runat="server" ID="prt_umbilical_length"/> cm
-                                    </div>
+                                    <div>T°: <asp:Label runat="server" ID="prt_temp"/> °C</div>
 
-                                    <div class="mb-1">
-                                        Lượng máu mất sau khi sổ nhau/ Quantity of blood loss after placenta delivery: <asp:Label runat="server" ID="prt_blood_loss"/> ml
-                                    </div>
+                                    <div>Huyết áp/ <span class="en">BP:</span> <asp:Label runat="server" ID="prt_BP"/> mmHg</div>
 
-                                    <div class="mb-1 d-grid" style="grid-template-columns: auto 1fr">
-                                        Can thiệp và kết quả/ Intervention and results: &nbsp;<asp:Label runat="server" ID="prt_p_intervention"/>
-                                    </div>
+                                    <div>Nhịp tim/ <span class="en">HR:</span> <asp:Label runat="server" ID="prt_HR"/> lần/phút/bpm</div>
 
-                                    <div class="mb-1">
-                                        <b>3. Tình trạng sản phụ sau sinh/ Maternal status after delivery: </b>
-                                    </div>
+                                    <div>Nhịp thở/ <span class="en">RR:</span> <asp:Label runat="server" ID="prt_RR"/> lần/phút/bpm</div>
 
-                                    <div class="mb-1">
-                                        SpO2: <asp:Label runat="server" ID="prt_spO2"/> %
-                                    </div>
+                                    <div><span class="font-bold">Tổng trạng chung/ <span class="en">General appearance:</span></span></div>
 
-                                    <div class="mb-1">
-                                        T°: <asp:Label runat="server" ID="prt_temp"/> °C
-                                    </div>
+                                    <div>- Phương pháp sinh/ <span class="en">Delivery mode:</span></div>
 
-                                    <div class="mb-1">
-                                        Huyết áp/ BP: <asp:Label runat="server" ID="prt_BP"/> mmHg
-                                    </div>
-
-                                    <div class="mb-1">
-                                        Nhịp tim/ HR: <asp:Label runat="server" ID="prt_HR"/> lần/phút/bpm
-                                    </div>
-
-                                    <div class="mb-1">
-                                        Nhịp thở/ RR: <asp:Label runat="server" ID="prt_RR"/> lần/phút/bpm
-                                    </div>
-
-                                    <div class="mb-1">
-                                        <b>Tổng trạng chung/ General appearance:</b>
-                                    </div>
-
-                                    <div class="mb-1">
-                                        - Phương pháp sinh/ <b>Delivery mode:</b>
-                                    </div>
-
-                                    <div class="mb-1" style="margin-left: 20px">
+                                    <div style="margin-left: 20px">
                                         <div class="d-grid" style="grid-template-columns: 1fr 1fr">
                                             <div>
-                                                <div>Sanh ngã âm đạo/ <b>Vaginal delivery:</b></div>
-                                                <div><asp:Label runat="server" Text="❏" ID="prt_vaginal_deli_code_s"/> Sanh tự nhiên/ Spontaneous</div>
-                                                <div><asp:Label runat="server" Text="❏" ID="prt_vaginal_deli_code_v"/> Sanh hút/ Vacuum-assisted</div>
-                                                <div><asp:Label runat="server" Text="❏" ID="prt_vaginal_deli_code_f"/> Sanh kềm/ Forceps-assisted</div>
+                                                <div>Sanh ngã âm đạo/ <span class="en">Vaginal delivery:</span></div>
+                                                <div><asp:Label runat="server" Text="❏" ID="prt_vaginal_deli_code_s"/> Sanh tự nhiên/ <span class="en">Spontaneous</span></div>
+                                                <div><asp:Label runat="server" Text="❏" ID="prt_vaginal_deli_code_v"/> Sanh hút/ <span class="en">Vacuum-assisted</span></div>
+                                                <div><asp:Label runat="server" Text="❏" ID="prt_vaginal_deli_code_f"/> Sanh kềm/ <span class="en">Forceps-assisted</span></div>
                                             </div>
                                             <div>
-                                                <div>Sanh mổ/ <b>C-Section:</b></div>
-                                                <div><asp:Label runat="server" Text="❏" ID="prt_section_code_el"/> Mổ chương trình/ Elective</div>
-                                                <div><asp:Label runat="server" Text="❏" ID="prt_section_code_em"/> Mổ cấp cứu/ Emergency</div>
+                                                <div>Sanh mổ/ <span class="en">C-Section:</span></div>
+                                                <div><asp:Label runat="server" Text="❏" ID="prt_section_code_el"/> Mổ chương trình/ <span class="en">Elective</span></div>
+                                                <div><asp:Label runat="server" Text="❏" ID="prt_section_code_em"/> Mổ cấp cứu/ <span class="en">Emergency</span></div>
                                             </div>
                                         </div>
-
                                     </div>
 
-                                    <div class="mb-1" style="margin-left: 20px">
-                                        - Lí do can thiệp, nếu có/ Reason for intervention, if yes: <asp:Label runat="server" ID="prt_interven_reason"/>
+                                    <div style="margin-left: 20px">- Lí do can thiệp, nếu có/ <span class="en">Reason for intervention, if yes: </span><asp:Label runat="server" ID="prt_interven_reason"/></div>
+
+                                    <div class="d-grid" style="grid-template-columns: 180px 150px 1fr">
+                                        <div>- Tầng sinh môn/ <span class="en">Perineum: </span></div>
+                                        <div><asp:Label runat="server" Text="❏" ID="prt_pre_intact_true"/> Nguyên vẹn/ <span class="en">Intact</span></div>
+                                        <div><asp:Label runat="server" Text="❏" ID="prt_prt_pre_lacera_true"/> Rách, độ/ <span class="en">Laceration, degree:</span> <asp:Label runat="server" ID="prt_pre_lacera_degree"/></div>
                                     </div>
 
-                                    <div class="d-grid" style="grid-template-columns: 170px 140px 1fr">
-                                        - Tầng sinh môn/ Perineum: 
-                                        <div>
-                                            <asp:Label runat="server" Text="❏" ID="prt_pre_intact_true"/> Nguyên vẹn/ Intact
+                                    <div><asp:Label runat="server" ID="prt_pre_episiotomy_true" Text="❏"/> Cắt/ <span class="en">Episiotomy</span>. Nếu có, cách khâu và loại chỉ/ <span class="en">If yes, suture and silk type:</span> <asp:Label runat="server" ID="prt_pre_episiotomy_st" /></div>
+
+                                    <div class="d-grid" style="grid-template-columns: auto 1fr">
+                                        <div>Cổ tử cung/ <span class="en">Cervix:</span> &nbsp;</div>
+                                        <div style="display: grid; grid-template-columns: 150px 1fr">
+                                            <div><asp:Label runat="server" Text="❏" ID="prt_cervix_intact_true"/> Nguyên vẹn/ <span class="en">Intact</span></div>
+                                            <div><asp:Label runat="server" Text="❏" ID="prt_cervix_intact_false"/> Rách/ <span class="en">Laceration</span></div>
                                         </div>
-                                        <div>
-                                            <asp:Label runat="server" Text="❏" ID="prt_prt_pre_lacera_true"/> Rách, độ/ Laceration, degree: <asp:Label runat="server" ID="prt_pre_lacera_degree"/> 
-                                        </div>
                                     </div>
 
-                                    <div class="mb-1">
-                                        <asp:Label runat="server" ID="prt_pre_episiotomy_true" Text="❏"/> Cắt/ Episiotomy. Nếu có, cách khâu và loại chỉ/ If yes, suture and silk type: <asp:Label runat="server" ID="prt_pre_episiotomy_st" />
-                                    </div>
+                                    <div><span class="font-bold">4. Thông tin phẫu thuật (nếu có)/ <span class="en">Operation details</span></span> <span class="en">(if possible):</span></div>
 
-                                    <div class="mb-1 d-grid" style="grid-template-columns: auto 1fr">
-                                        Cổ tử cung/ Cervix: &nbsp;<asp:Label runat="server" ID="prt_cervix_intact" />
-                                    </div>
+                                    <div>Chẩn đoán tiền phẫu/ <span class="en">Preoperative diagnosis: </span><asp:Label runat="server" ID="prt_preo_diagnosis" /></div>
 
-                                    <div class="mb-1">
-                                        <b>4. Thông tin phẫu thuật (nếu có)/ Operation details</b> (if possible):
-                                    </div>
+                                    <div>Chẩn đoán hậu phẫu/ <span class="en">Postoperative diagnosis:</span> <asp:Label runat="server" ID="prt_post_diagnosis" /></div>
 
-                                    <div class="mb-1">
-                                        Chẩn đoán tiền phẫu/ Preoperative diagnosis: <asp:Label runat="server" ID="prt_preo_diagnosis" />
-                                    </div>
-
-                                    <div class="mb-1">
-                                        Chẩn đoán hậu phẫu/ Postoperative diagnosis: <asp:Label runat="server" ID="prt_post_diagnosis" />
-                                    </div>
-
-                                    <table style="width: 721px;" class="table-bordered mb-1" runat="server" id="prt_operations">
+                                    <table style="table-layout: fixed; width: 100%" class="table-bordered" runat="server" id="prt_operations">
                                         <tr>
-                                            <td class="p-2 text-center" style="width: 100px"><b>Giờ, ngày <br />
-                                            Hour, date</b></td>
-                                            <td class="p-2 text-center" style="width: 230px"><b>Phương pháp phẫu thuật và vô <br /> cảm/ Surgical and Anesthesia methods</b></td>
-                                            <td class="p-2 text-center"  style="width: 110px"><b>Phẫu thuật viên <br />
-                                            Surgeon</b></td>
-                                            <td class="p-2 text-center" style="width: 90px"><b>Bác sĩ gây mê <br />
-                                            Anesthesiologist</b></td>
+                                            <td class="p-1 text-center" style="width: 125px">
+                                                <div>Giờ, ngày</div>
+                                                <div class="en">Hour, date</div>
+                                            </td>
+                                            <td class="p-1 text-center" style="width: 239px">
+                                                <div>Phương pháp phẫu thuật và vô cảm/ <span class="en">Surgical and Anesthesia methods</span></div>
+                                            </td>
+                                            <td class="p-1 text-center">
+                                                <div>Phẫu thuật viên</div>
+                                                <div class="en">Surgeon</div>
+                                            </td>
+                                            <td class="p-2 text-center">
+                                                <div>Bác sĩ gây mê</div>
+                                                <div class="en">Anesthesiologist</div>
+                                            </td>
                                         </tr>
                                     </table>
 
-                                    <div class="mb-1 d-grid" style="grid-template-columns: 170px 1fr">
-                                        - Tai biến/ Incident: &nbsp;<asp:Label runat="server" ID="prt_sur_incident" />
+                                    <div class="d-grid" style="grid-template-columns: 180px 1fr">
+                                        <div>- Tai biến/ <span class="en">Incident:</span> &nbsp;</div>
+                                        <asp:Label runat="server" ID="prt_sur_incident" />
                                     </div>
 
-                                    <div class="mb-1 d-grid" style="grid-template-columns: 170px 1fr">
-                                        - Biến chứng/ Complication: &nbsp;<asp:Label runat="server" ID="prt_sur_complication" />
+                                    <div class="d-grid" style="grid-template-columns: 180px 1fr">
+                                        <div>- Biến chứng/ <span class="en">Complication:</span> &nbsp;</div>
+                                        <asp:Label runat="server" ID="prt_sur_complication" />
                                     </div>
 
-                                    <div class="mb-1">
-                                        <b>5. Kế hoạch điều trị/ Treatment plan: </b> <asp:Label runat="server" ID="prt_treatment_plan" />
-                                    </div>
+                                    <div><span class="font-bold">5. Kế hoạch điều trị/ <span class="en">Treatment plan:</span> </span> <asp:Label runat="server" ID="prt_treatment_plan" /></div>
 
                                     <div class="d-grid" style="grid-template-columns: 1fr 1fr; grid-gap: 5px">
                                         <div></div>
                                         <div class="text-center" style="break-inside: avoid !important; page-break-inside: avoid !important">
-                                            <div><span style="font-size: 14.5px; font-family: Tahoma" class="font-bold">Họ tên, chữ ký & MSNV của Bác sĩ</span></div>
-                                            <div><span style="font-size: 14.5px; font-family: Tahoma" class="text-primary"><i>Doctor’s full name, signature & ID</i></span></div>
+                                            <div><span class="font-bold">Họ tên, chữ ký & MSNV của Bác sĩ</span></div>
+                                            <div class="en">Doctor’s full name, signature & ID</div>
                                         </div>
                                     </div>
 
                                     <div class="d-grid" style="grid-template-columns: 1fr 1fr; grid-gap: 5px; display: none;">
                                         <div></div>
                                         <div>
-                                            <div>Ngày giờ/ Date & time: <asp:Label runat="server" ID="prt_signature_date"/></div>
-                                            <div>Họ tên bác sĩ và mã số nhân viên/ Doctor's name and ID:</div>
-                                            <div>Chữ ký/ Signature</div>
+                                            <div>Ngày giờ/ <span class="en">Date & time:</span> <asp:Label runat="server" ID="prt_signature_date"/></div>
+                                            <div>Họ tên bác sĩ và mã số nhân viên/ <span class="en">Doctor's name and ID:</span></div>
+                                            <div>Chữ ký/ <span class="en">Signature</span></div>
                                         </div>
                                     </div>
 
@@ -299,16 +277,16 @@
                     </tbody>
                     <tfoot class="report-footer">
                         <tr>
-                            <td class="report-footer-cell">
-                                <img style="width: 100%" src="../images/ExcellentCare.png" />
-                                <div class="footer-info">
+                            <td class="report-footer-cell" runat="server" id="print_footer" style="height: 2cm; width: 210mm">
+                                <div style="margin-left: -18px"><img style="width: 210mm" src="../images/ExcellentCare.png" /></div>
+                                <div class="footer-info" style="padding: 0 18px">
                                     <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
-                                    <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>
+                                    <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Tp. Thủ Đức, Tp.HCM</div>
                                     <div>Tel: 028 3910 9999</div>
                                     <div>www.aih.com.vn</div>
                                 </div>
                             </td>
-                            <td class="report-footer-space"></td>
+                            <td class="report-footer-space" runat="server" id="print_footer_space" style="height: 2cm; width: 210mm"></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -316,7 +294,7 @@
 
                 <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" MaxHeight="400">
                     <Windows>
-                        <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History" runat="server">
+                        <telerik:RadWindow CssClass="NoIconUrl" VisibleStatusbar="false" MinWidth="600" RenderMode="Lightweight" ID="RadWindow1" Title="Version History" runat="server">
                             <ContentTemplate>
                                 <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
                                     <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
@@ -337,7 +315,7 @@
                                 </telerik:RadGrid>
                             </ContentTemplate>
                         </telerik:RadWindow>
-                        <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow2" Title="Warning" runat="server">
+                        <telerik:RadWindow CssClass="NoIconUrl" RenderMode="Lightweight" ID="RadWindow2" Title="Warning" runat="server">
                             <ContentTemplate>
                                 <div class="text-center">
                                     <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
@@ -349,7 +327,7 @@
                                 </div>
                             </ContentTemplate>
                         </telerik:RadWindow>
-                        <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow3" Title="Warning" runat="server">
+                        <telerik:RadWindow CssClass="NoIconUrl" RenderMode="Lightweight" ID="RadWindow3" Title="Warning" runat="server">
                             <ContentTemplate>
                                 <div class="text-center">
                                     <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
@@ -1128,7 +1106,7 @@
                                                             <input type="radio" id="rad_sur_incident_false" name="rad_sur_incident" class="custom-control-input" runat="server" />
                                                             <label class="custom-control-label" for="rad_sur_incident_false">Không/ <span class="text-primary">No</span></label>
                                                         </div>
-                                                        <div class="custom-control custom-radio mb-1 d-inline-block">
+                                                        <div class="custom-control custom-radio d-inline-block">
                                                             <input type="radio" id="rad_sur_incident_true" name="rad_sur_incident" class="custom-control-input" disabled-for="sur_incident_note_field" runat="server" />
                                                             <label class="custom-control-label" for="rad_sur_incident_true">Có, chi tiết/ <span class="text-primary">Yes, specify:</span></label>
                                                             <a href="javascript:void(0)" data-clear="rad_sur_incident" onclick="clear_radiobutton(this)">
@@ -1209,9 +1187,6 @@
                                                     </div>
                                                 </ModalBody>
                                             </webUI:PopupModal>
-
-                                            <Button:PopupShowDelay runat="server" ID="PopupShowDelay" />
-
                                         </div>
                                     </div>
                                 </div>
@@ -1251,14 +1226,8 @@
 
         function btnPrint_Click() {
 
-            if (document.getElementById("lbl_cervix_intact").innerText == "Nguyên vẹn/ Intact") {
-                document.getElementById("prt_cervix_intact").innerHTML = '<div style="display: grid;grid-template-columns:150px auto;"><div style="display: grid; grid-template-columns: auto 1fr;"> ☒ <span class="ml-1">Nguyên vẹn/ Intact</span></div><div style="display: grid; grid-template-columns: auto 1fr;"> ❏ <span class="ml-1">Rách/ Laceration</span></div></div>';
-            } else if (document.getElementById("lbl_cervix_intact").innerText == "Rách/ Laceration") {
-                document.getElementById("prt_cervix_intact").innerHTML = '<div style="display: grid;grid-template-columns:150px auto;"><div style="display: grid; grid-template-columns: auto 1fr;"> ❏ <span class="ml-1">Nguyên vẹn/ Intact</span></div><div style="display: grid; grid-template-columns: auto 1fr;"> ☒ <span class="ml-1">Rách/ Laceration</span></div></div>'
-            }
-
-            let printContent = document.querySelector("#printContent");
-            printContent.setAttribute("style", "display: block");
+            let printContent = document.querySelector("#print_content");
+            printContent.style.display = "block";
 
             let total = Math.ceil(printContent.offsetHeight / 1096);
 
@@ -1266,7 +1235,7 @@
                 let div = document.createElement("div");
                 div.setAttribute("class", "watermark page");
                 div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px");
-                div.setAttribute("data-page", "Page " + i + " of " + total);
+                //div.setAttribute("data-page", "Page " + i + " of " + total);
                 document.getElementById("print_content").append(div);
             }
 

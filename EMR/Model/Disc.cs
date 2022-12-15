@@ -29,5 +29,9 @@ namespace EMR.Model
         public Disc(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
         {
         }
+
+        protected override void DefaultDocument()
+        {
+        }
     }
 }

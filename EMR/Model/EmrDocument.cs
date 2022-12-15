@@ -39,14 +39,11 @@ namespace EMR.Model
     }
     public abstract class EmrDocument : IEmrDocument
     {
+        #region properties
         public dynamic document_id { get; set; }
-
         public dynamic user_name { get; set; }
-
         public dynamic status { get; set; }
-
         public dynamic amend_reason { get; set; }
-
         public abstract string api { get; }
         public dynamic created_user_id  { get; set; }
         public dynamic created_name_e  { get; set; }
@@ -68,7 +65,12 @@ namespace EMR.Model
         public dynamic delete_name_e  { get; set; }
         public dynamic delete_name_l  { get; set; }
         public dynamic delete_date_time  { get; set; }
+        public dynamic document_log_id { get; set; }
+        #endregion
+        public EmrDocument()
+        {
 
+        }
         public EmrDocument(string document_id, string location)
         {
             _ = document_id ?? throw new NullReferenceException("document id cannot be null");
@@ -78,6 +80,10 @@ namespace EMR.Model
             if (response.Status == System.Net.HttpStatusCode.OK)
             {
                 WebHelpers.BindingDatafield(WebHelpers.GetJSONToDataTable(response.Data), this);
+                if (Logs(location)?.Rows.Count == 1)
+                {
+                    DefaultDocument();
+                }
             }
         }
         public EmrDocument(string document_id, string location, string document_log_id)
@@ -86,12 +92,17 @@ namespace EMR.Model
             _ = location ?? throw new NullReferenceException("location cannot be null");
 
             dynamic res = string.IsNullOrEmpty(document_log_id) ? WebHelpers.GetAPI($"{api}/get/{location}/{document_id}") : WebHelpers.GetAPI($"{api}/get-log/{location}/{document_log_id}");
-
+            this.document_log_id = document_log_id;
             if (res.Status == System.Net.HttpStatusCode.OK)
             {
                 WebHelpers.BindingDatafield(WebHelpers.GetJSONToDataTable(res.Data), this);
+                if (Logs(location)?.Rows.Count == 1)
+                {
+                    DefaultDocument();
+                }
             }
         }
+        protected abstract void DefaultDocument();
         /// <returns>Message: <para>[0] - Form message</para> <para>[1] - Log message</para></returns>
         public dynamic[] Delete(string userNameParam, string locParam)
         {

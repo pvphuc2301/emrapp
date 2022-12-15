@@ -33,13 +33,13 @@ namespace EMR
         protected global::Telerik.Web.UI.RadScriptManager RadScriptManager1;
 
         /// <summary>
-        /// UpdatePanel1 control.
+        /// uplPrintPage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
+        protected global::System.Web.UI.UpdatePanel uplPrintPage;
 
         /// <summary>
         /// prt_disc_ward_desc control.
@@ -159,58 +159,13 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_to;
 
         /// <summary>
-        /// prt_no1 control.
+        /// prt_no control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_no1;
-
-        /// <summary>
-        /// prt_no2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_no2;
-
-        /// <summary>
-        /// prt_no3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_no3;
-
-        /// <summary>
-        /// prt_no4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_no4;
-
-        /// <summary>
-        /// prt_no5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_no5;
-
-        /// <summary>
-        /// prt_no6 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_no6;
+        protected global::System.Web.UI.WebControls.Label prt_no;
 
         /// <summary>
         /// prt_address control.
@@ -492,67 +447,13 @@ namespace EMR
         protected global::Telerik.Web.UI.RadWindowManager RadWindowManager;
 
         /// <summary>
-        /// RadWindow1 control.
+        /// rwndPrint control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadWindow RadWindow1;
-
-        /// <summary>
-        /// RadGrid1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid RadGrid1;
-
-        /// <summary>
-        /// RadWindow2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadWindow RadWindow2;
-
-        /// <summary>
-        /// btnDelete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton btnDelete;
-
-        /// <summary>
-        /// RadWindow3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadWindow RadWindow3;
-
-        /// <summary>
-        /// lblUserBlock control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblUserBlock;
-
-        /// <summary>
-        /// RadWindow4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadWindow RadWindow4;
+        protected global::Telerik.Web.UI.RadWindow rwndPrint;
 
         /// <summary>
         /// LinkButton1 control.
@@ -645,31 +546,49 @@ namespace EMR
         protected global::EMR.UserControls.UserControlPatientInfo uc_patientInfo;
 
         /// <summary>
-        /// currentLog control.
+        /// LastestVersion control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl currentLog;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl LastestVersion;
 
         /// <summary>
-        /// LinkViewLastestVersion control.
+        /// hlkLastestVersion control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink LinkViewLastestVersion;
+        protected global::System.Web.UI.WebControls.LinkButton hlkLastestVersion;
 
         /// <summary>
-        /// RadLabel1 control.
+        /// rlblLogHistory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadLabel RadLabel1;
+        protected global::Telerik.Web.UI.RadLabel rlblLogHistory;
+
+        /// <summary>
+        /// uplViewHistory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel uplViewHistory;
+
+        /// <summary>
+        /// lbtnViewHistory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lbtnViewHistory;
 
         /// <summary>
         /// lbl_disc_ward_desc control.
@@ -915,6 +834,15 @@ namespace EMR
         protected global::Telerik.Web.UI.RadDatePicker dpk_signature_date;
 
         /// <summary>
+        /// UpdatePanel2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel2;
+
+        /// <summary>
         /// btnComplete control.
         /// </summary>
         /// <remarks>
@@ -933,13 +861,22 @@ namespace EMR
         protected global::System.Web.UI.WebControls.LinkButton btnSave;
 
         /// <summary>
-        /// btnDeleteModal control.
+        /// uplPrintDocument control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl btnDeleteModal;
+        protected global::System.Web.UI.UpdatePanel uplPrintDocument;
+
+        /// <summary>
+        /// btnDelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnDelete;
 
         /// <summary>
         /// btnAmend control.
@@ -949,6 +886,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnAmend;
+
+        /// <summary>
+        /// UpdatePanel1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
         /// btnPrint control.
@@ -967,32 +913,5 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnCancel;
-
-        /// <summary>
-        /// myModal control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UserControl myModal;
-
-        /// <summary>
-        /// btnDelete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        /// protected global::System.Web.UI.WebControls.LinkButton btnDelete;
-
-        /// <summary>
-        /// PopupShowDelay control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.UserControls.PopupShowDelay PopupShowDelay;
     }
 }

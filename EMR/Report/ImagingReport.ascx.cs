@@ -1,16 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
-using Newtonsoft.Json.Linq;
+using Emr.Ris.ImagingEncode;
+using Emr.WebServices;
 
 namespace EMR
 {
     public partial class ImagingReport : System.Web.UI.UserControl
     {
         public string varPID = "";
+        public string UserId { get => (string)Session["UserId"]; }
         protected void Page_Load(object sender, EventArgs e)
         {
             //WebHelpers.AddJS(Page, "showInfo()");
@@ -111,6 +109,23 @@ namespace EMR
             }
 
             return result;
+        }
+        protected void lbRadRequestNo_Click(object sender, EventArgs e)
+        {
+            ImagingEncodeService imagingEncodeService = new ImagingEncodeService(new WebService() { BaseAddress = "http://172.16.0.88:8081" });
+            
+            var result = imagingEncodeService.GetImagingEncode(UserId, lbRadRequestNo.Text, varPID);
+
+            if (result.encodeLink != null)
+            {
+                string script = string.Format("function f(){{ encodeLink(\"" + result.encodeLink + "\");Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "encodeLink", script, true);
+            }
+            else if (result.patientencode != null)
+            {
+                string script = string.Format("function f(){{ openwnd(\"/Report/ImageLink.aspx?pe=" + result.patientencode + "\");Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "openwnd", script, true);
+            }
         }
     }
 }

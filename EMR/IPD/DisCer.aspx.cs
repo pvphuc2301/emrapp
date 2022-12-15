@@ -1,6 +1,8 @@
 ﻿using EMR.Model;
 using Newtonsoft.Json;
 using System;
+using System.Data;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 
@@ -12,6 +14,7 @@ namespace EMR
         public Disc Model { get; set; }
         public DateTime associated_visit_admited { get; set; }
         public DateTime associated_visit_closed { get; set; }
+        public override dynamic InitModel() => Model = new Disc(varDocID, Location, varDocIdLog);
         #region Binding Data
         public override void BindingDataFormView()
         {
@@ -44,7 +47,7 @@ namespace EMR
 
                 dpk_valid_from.SelectedDate = Model.valid_from;
 
-                BindingDateTimePicker(dtpk_disc_date_time, Model.disc_date_time);
+                BindingRadDateTimePicker(dtpk_disc_date_time, Model.disc_date_time);
                 txt_diagnosis.Value = WebHelpers.TextToHtmlTag(Model.diagnosis);
                 txt_disc_medication.Value = WebHelpers.TextToHtmlTag(Model.disc_medication);
                 txt_followup_instruc.Value = WebHelpers.TextToHtmlTag(Model.followup_instruc);
@@ -53,7 +56,7 @@ namespace EMR
 
                 WebHelpers.AddScriptFormEdit(Page, Model, EmpId, Location);
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             { 
                 WebHelpers.SendError(Page, ex); 
             }
@@ -84,39 +87,40 @@ namespace EMR
 
                 prt_valid_from.Text = WebHelpers.FormatDateTime(Model.valid_from);
                 
-                string no_health_insurance = Model.no_health_insurance;
-                prt_no1.Text = prt_no2.Text = prt_no3.Text = prt_no4.Text = prt_no5.Text = prt_no6.Text = " ";
+                prt_no.Text = Model.no_health_insurance;
+                //string no_health_insurance = Model.no_health_insurance;
+                //prt_no1.Text = prt_no2.Text = prt_no3.Text = prt_no4.Text = prt_no5.Text = prt_no6.Text = " ";
 
-                if (no_health_insurance != null)
-                {
-                    for (int i = 0; i < no_health_insurance.Length; i++)
-                    {
-                        if (i <= 1)
-                        {
-                            prt_no1.Text += no_health_insurance[i];
-                        }
-                        else if (i <= 2)
-                        {
-                            prt_no2.Text += no_health_insurance[i];
-                        }
-                        else if (i <= 4)
-                        {
-                            prt_no3.Text += no_health_insurance[i];
-                        }
-                        else if (i <= 7)
-                        {
-                            prt_no4.Text += no_health_insurance[i];
-                        }
-                        else if (i <= 10)
-                        {
-                            prt_no5.Text += no_health_insurance[i];
-                        }
-                        else if (i <= 13)
-                        {
-                            prt_no6.Text += no_health_insurance[i];
-                        }
-                    }
-                }
+                //if (no_health_insurance != null)
+                //{
+                //    for (int i = 0; i < no_health_insurance.Length; i++)
+                //    {
+                //        if (i <= 1)
+                //        {
+                //            prt_no1.Text += no_health_insurance[i];
+                //        }
+                //        else if (i <= 2)
+                //        {
+                //            prt_no2.Text += no_health_insurance[i];
+                //        }
+                //        else if (i <= 4)
+                //        {
+                //            prt_no3.Text += no_health_insurance[i];
+                //        }
+                //        else if (i <= 7)
+                //        {
+                //            prt_no4.Text += no_health_insurance[i];
+                //        }
+                //        else if (i <= 10)
+                //        {
+                //            prt_no5.Text += no_health_insurance[i];
+                //        }
+                //        else if (i <= 13)
+                //        {
+                //            prt_no6.Text += no_health_insurance[i];
+                //        }
+                //    }
+                //}
 
                 bool isValidDateTime;
 
@@ -184,139 +188,23 @@ namespace EMR
             }
         }
         #endregion
-        #region Actions
-        protected void btnDelete_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Model = new Disc(varDocID, Location);
-                dynamic result = Model.Delete(UserId, Location)[0];
-                if (result.Status == System.Net.HttpStatusCode.OK)
-                {
-                    WebHelpers.clearSessionDoc(Page, varDocID, Location);
-                    Response.Redirect(PAGE_URL_DEFAULT);
-                }
-            }
-            catch (Exception ex)
-            {
-                WebHelpers.SendError(Page, ex);
-            }
-        }
-        protected void btnAmend_Click(object sender, EventArgs e)
-        {
-            if (CheckOpenForm)
-            {
-                Model = new Disc(varDocID, Location);
-                HideControl(btnAmend, btnPrint);
-                ShowControl(btnComplete, btnCancel, amendReasonWraper);
-                LoadFormControl(form1, Model, ControlState.Edit);
-                BindingDataFormEdit();
-            }
-        }
-        protected void btnCancel_Click(object sender, EventArgs e)
-        {
-            WebHelpers.clearSessionDoc(Page, varDocID, Location);
-            Init_Page();
-        }
-        #endregion
         #region Methods
-        protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
-        {
-            GridDataItem item = (e.Item as GridDataItem);
-            if (e.CommandName.Equals("Open"))
-            {
-                string doc_log_id = item.GetDataKeyValue("document_log_id").ToString();
-
-                string url = PAGE_URL + $"&docIdLog={doc_log_id}";
-
-                Response.Redirect(url);
-            }
-        }
-        /// <summary>
-        /// <para>Step 1: Check valid data</para>
-        /// <para>Step 2: Update data</para>
-        /// </summary>
-        /// <param name="disc"></param>
-        public override void UpdateModel(string status)
-        {
-            try
-            {
-                Model = new Disc(varDocID, Location);
-                Model.status = status;
-
-                Model.no_discharge = Model.no_discharge;
-                Model.disc_ward_code = select_disc_ward_code.Value;
-                Model.disc_ward_desc = WebHelpers.GetDicDesc(Model.disc_ward_code, EmrDictionary.DISC_WARD_CODE);
-                Model.no_health_insurance = txt_no_health_insurance.Value;
-                Model.valid_from = DataHelpers.ConvertSQLDateTime(dpk_valid_from.SelectedDate);
-                Model.disc_date_time = DataHelpers.ConvertSQLDateTime(dtpk_disc_date_time.SelectedDate);
-                Model.diagnosis = txt_diagnosis.Value;
-                Model.disc_medication = txt_disc_medication.Value;
-                Model.followup_instruc = txt_followup_instruc.Value;
-                Model.notes = txt_notes.Value;
-                Model.signature_date = DataHelpers.ConvertSQLDateTime(dpk_signature_date.SelectedDate);
-
-                if (JsonConvert.SerializeObject(Model) == DataObj.Value)
-                {
-                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
-                }
-
-                Model.amend_reason = txt_amend_reason.Text;
-                Model.user_name = UserId;
-
-                dynamic result = Model.Update(Location)[0];
-
-                if (result.Status == System.Net.HttpStatusCode.OK)
-                {
-                    WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
-                    Init_Page();
-                }
-            }
-            catch (Exception ex) 
-            { 
-                WebHelpers.SendError(Page, ex); 
-            }
-            finally
-            {
-                WebHelpers.clearSessionDoc(Page, varDocID, Location);
-            }
-        }
-        public override void Init_Page()
-        {
-            Patient = new PatientInfo(varPID);
-            PatientVisit = new PatientVisitInfo(varPVID, Location);
-
-            Model = new Disc(varDocID, Location, varDocIdLog);
-            currentLog.Visible = !string.IsNullOrEmpty(varDocIdLog);
-            uc_patientInfo.Patient = Patient;
-            uc_patientInfo.PatientVisit = PatientVisit;
-
-            RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Model.Logs(Location), out string signature_date, out string signature_name);
-
-            HideControl(btnCancel, amendReasonWraper);
-
-            if (Model.status == DocumentStatus.FINAL)
-            {
-                BindingDataForm(form1, Model, ControlState.View);
-                BindingDataFormPrint();
-            }
-            else if (Model.status == DocumentStatus.DRAFT)
-            {
-                BindingDataForm(form1, Model, ControlState.Edit);
-            }
-
-            WebHelpers.getAccessButtons(new AccessButtonInfo()
-            {
-                Form = form1,
-                DocStatus = Model.status,
-                AccessGroup = GroupAccess,
-                AccessAuthorize = AccessAuthorize,
-                IsSameCompanyCode = !IsLocationChanged,
-                IsViewLog = IsViewLog
-            });
-        }
         #endregion
         public override void PostBackEventHandler() { }
-        protected void LinkViewLastestVersion_Load(object sender, EventArgs e) => (sender as HyperLink).NavigateUrl = PAGE_URL;
+        public override void BindingControlToModel()
+        {
+            Model.no_discharge = Model.no_discharge;
+            Model.disc_ward_code = select_disc_ward_code.Value;
+            Model.disc_ward_desc = WebHelpers.GetDicDesc(Model.disc_ward_code, EmrDictionary.DISC_WARD_CODE);
+            Model.no_health_insurance = txt_no_health_insurance.Value;
+            Model.valid_from = DataHelpers.ConvertSQLDateTime(dpk_valid_from.SelectedDate);
+            Model.disc_date_time = DataHelpers.ConvertSQLDateTime(dtpk_disc_date_time.SelectedDate);
+            Model.diagnosis = txt_diagnosis.Value;
+            Model.disc_medication = txt_disc_medication.Value;
+            Model.followup_instruc = txt_followup_instruc.Value;
+            Model.notes = txt_notes.Value;
+            Model.signature_date = DataHelpers.ConvertSQLDateTime(dpk_signature_date.SelectedDate);
+            Model.amend_reason = txt_amend_reason.Text;
+        }
     }
 }

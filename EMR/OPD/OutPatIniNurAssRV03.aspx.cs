@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
@@ -12,48 +13,12 @@ namespace EMR
 {
     public partial class OutPatIniNurAssRV03 : EmrPage, IEmrFormModel<OinaRv03>
     {
-        public override string form_url { get; set; } = "OPD/OutPatIniNurAssRV03";
+        public override string form_url { get; set; } = $"OPD/{nameof(OutPatIniNurAssRV03)}";
         public OinaRv03 Model { get; set; }
-        public override void Init_Page()
+        public override dynamic InitModel()
         {
-            try
-            {
-                Patient = new PatientInfo(varPID);
-                PatientVisit = new PatientVisitInfo(varPVID, Location);
-
-                Model = new OinaRv03(varDocID, Location, varDocIdLog);
-                currentLog.Visible = !string.IsNullOrEmpty(varDocIdLog);
-                uc_patientInfo.Patient = Patient;
-                uc_patientInfo.PatientVisit = PatientVisit;
-
-                RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Model.Logs(Location), out string signature_date, out string signature_name);
-
-                HideControl(btnCancel, amendReasonWraper);
-
-                if (Model.status == DocumentStatus.FINAL)
-                {
-                    BindingDataForm(form1, Model, ControlState.View);
-                    BindingDataFormPrint();
-                }
-                else if (Model.status == DocumentStatus.DRAFT)
-                {
-                    BindingDataForm(form1, Model, ControlState.Edit);
-                }
-
-                WebHelpers.getAccessButtons(new AccessButtonInfo()
-                {
-                    Form = form1,
-                    DocStatus = Model.status,
-                    AccessGroup = GroupAccess,
-                    AccessAuthorize = AccessAuthorize,
-                    IsSameCompanyCode = !IsLocationChanged,
-                    IsViewLog = IsViewLog
-                });
-            }
-            catch (Exception ex)
-            {
-                WebHelpers.SendError(Page, ex);
-            }
+            Model = new OinaRv03(varDocID, Location, varDocIdLog);
+            return Model;
         }
         public override void PostBackEventHandler()
         {
@@ -173,7 +138,7 @@ namespace EMR
             field_allergy_true.Visible = false;
             btc_change("field_allergy", value);
         }
-        private void npass_change()  
+        private void npass_change()
         {
             int? npass_total_score = NPASS.CalculateTotalScore(txt_npass_crying.Value, txt_npass_behavior.Value, txt_npass_facial_expression.Value, txt_npass_extremities_tone.Value, txt_npass_vital_signs.Value, txt_npass_gestation_3.Value, txt_npass_gestation_2.Value, txt_npass_gestation_1.Value);
             d_npass_total_score.Text = Convert.ToString(npass_total_score);
@@ -212,7 +177,315 @@ namespace EMR
             }
             d_weight_change.Text = weight_change;
         }
+
         #region Binding Data
+        public override void BindingDataFormView()
+        {
+            try
+            {
+                HideControl(txt_flacc_face,
+                    txt_flacc_legs,
+                    txt_flacc_activity,
+                    txt_flacc_cry,
+                    txt_flacc_consolability,
+                    txt_npass_crying,
+                    txt_npass_behavior,
+                    txt_npass_facial_expression,
+                    txt_npass_extremities_tone,
+                    txt_npass_vital_signs,
+                    txt_npass_gestation_3,
+                    txt_npass_gestation_2,
+                    txt_npass_gestation_1);
+
+                ShowControl(lbl_flacc_face,
+                    lbl_flacc_legs,
+                    lbl_flacc_activity,
+                    lbl_flacc_cry,
+                    lbl_flacc_consolability,
+                    lbl_npass_crying,
+                    lbl_npass_behavior,
+                    lbl_npass_facial_expression,
+                    lbl_npass_extremities_tone,
+                    lbl_npass_vital_signs,
+                    lbl_npass_gestation_3,
+                    lbl_npass_gestation_2,
+                    lbl_npass_gestation_1);
+
+                #region I. DẤU HIỆU SINH TỒN VÀ CÁC CHỈ SỐ ĐO LƯỜNG/ VITAL SIGNS AND PHYSICAL MEASUREMENTS
+                lbl_vs_temperature.Text = Model.vs_temperature;
+                lbl_vs_heart_rate.Text = Model.vs_heart_rate;
+                lbl_vs_weight.Text = Model.vs_weight;
+                lbl_vs_height.Text = Model.vs_height;
+                lbl_vs_respiratory_rate.Text = Model.vs_respiratory_rate;
+                lbl_vs_bmi.Text = Model.vs_BMI;
+                lbl_vs_blood_pressure.Text = Model.vs_blood_pressure;
+                lbl_pulse.Text = Model.pulse;
+                lbl_vs_spo2.Text = Model.vs_spO2;
+                //lbl_assessment_date_time.Text = WebHelpers.FormatDateTime(Model.assessment_date_time, "dd-MM-yyyy HH:mm");
+                #endregion
+
+                #region II. ĐÁNH GIÁ/ ASSESSMENT
+
+                #region 1. Lý do đến khám/ Chief complaint
+                lbl_chief_complaint.Text = EMRHelpers.ConvertToHtml(Model.chief_complaint);
+                #endregion
+
+                #region 2. Dị ứng/ Allergy
+                lbl_allergy.Text = WebHelpers.GetBool(Model.allergy, $"Có, ghi rõ/ Yes, specify: { EMRHelpers.ConvertToHtml(Model.allergy_note)}");
+                #endregion
+
+                #region 3. Trạng thái tinh thần/ Mental status
+                lbl_mental_status.Text = WebHelpers.GetBool(Model.mental_status, "Có/ Yes", $"Không, ghi rõ/ No, specify: {EMRHelpers.ConvertToHtml(Model.mental_status_note)}");
+                #endregion
+
+                #region 4. Tầm soát bệnh lây nhiễm/ Communicable disease screening
+                rad_high_fever_false.Disabled
+                    = rad_high_fever_true.Disabled
+                    = rad_contact_infectious_disease_false.Disabled
+                    = rad_contact_infectious_disease_true.Disabled
+                    = rad_close_contact_false.Disabled
+                    = rad_close_contact_true.Disabled
+                    = rad_injectious_risk_false.Disabled
+                    = rad_injectious_risk_true.Disabled
+                    = true;
+
+                if (Model.communicable_disease_screening != null)
+                {
+                    COMMUNICABLE_DISEASE_SCREENING communicable_disease_screening = new COMMUNICABLE_DISEASE_SCREENING(Model.communicable_disease_screening);
+
+                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_high_fever_" + communicable_disease_screening.high_fever);
+                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_contact_infectious_disease_" + communicable_disease_screening.contact_infectious_disease);
+                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_close_contact_" + communicable_disease_screening.close_contact);
+                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_injectious_risk_" + communicable_disease_screening.injectious_risk);
+                }
+                #endregion
+
+                #region 5. Đánh giá đau/ Pain assessment
+                HideControl(field_naf, field_flacc, field_npass, field_nonv);
+                switch (Model.pain_assessment_type)
+                {
+                    case PAIN_ASSESSMENT_TYPE.NumericAndFaces:
+                        rad_naf_true.Checked = true;
+                        pain_assessment_change(nameof(field_naf));
+                        lbl_paint_score_description.Text = EMRHelpers.ConvertToHtml(Model.paint_score_description);
+                        break;
+                    case PAIN_ASSESSMENT_TYPE.FLACC:
+                        if (Model.flacc != null)
+                        {
+                            FLACC flacc = new FLACC(Model.flacc);
+
+                            lbl_flacc_face.Text = Convert.ToString(flacc.face);
+                            lbl_flacc_legs.Text = Convert.ToString(flacc.legs);
+                            lbl_flacc_activity.Text = Convert.ToString(flacc.activity);
+                            lbl_flacc_cry.Text = Convert.ToString(flacc.cry);
+                            lbl_flacc_consolability.Text = Convert.ToString(flacc.consolability);
+                            d_flacc_total_score.Text = Convert.ToString(flacc.total_score);
+                            d_flacc_conclude.Text = Model.flacc_conclude;
+                        }
+                        rad_flacc_true.Checked = true;
+                        pain_assessment_change(nameof(field_flacc));
+                        break;
+                    case PAIN_ASSESSMENT_TYPE.N_PASS:
+                        if (Model.npass != null)
+                        {
+                            NPASS npass = new NPASS(Model.npass);
+                            lbl_npass_crying.Text = npass.crying;
+                            lbl_npass_behavior.Text = npass.behavior;
+                            lbl_npass_facial_expression.Text = npass.facial_expression;
+                            lbl_npass_extremities_tone.Text = npass.extremities_tone;
+                            lbl_npass_vital_signs.Text = npass.vital_signs;
+                            lbl_npass_gestation_3.Text = npass.gestation_3;
+                            lbl_npass_gestation_2.Text = npass.gestation_2;
+                            lbl_npass_gestation_1.Text = npass.gestation_1;
+                            d_npass_total_score.Text = Convert.ToString(npass.total_score);
+                            d_npass_conclude.Text = Model.npass_conclude;
+                        }
+                        rad_npass_true.Checked = true;
+                        pain_assessment_change(nameof(field_npass));
+                        break;
+                    case PAIN_ASSESSMENT_TYPE.Non_Verbal:
+                        rad_nonv_true.Checked = true;
+                        pain_assessment_change(nameof(field_nonv));
+                        break;
+                }
+                HideControl(pain_assessment_scale_wrapper);
+                #endregion
+
+                #region 6. Trở ngại chăm sóc/ Barrier to care
+                ShowControl(lbl_btc_language, lbl_btc_cognitive, lbl_btc_sensory, lbl_btc_religious, lbl_btc_cultural);
+                HideControl(btc_language_wrapper, btc_cognitive_wrapper, btc_sensory_wrapper, btc_religious_wrapper, btc_cultural_wrapper);
+
+                if(Model.barrier_to_care != null)
+                {
+                    BARRIER_TO_CARE barrier_to_care = new BARRIER_TO_CARE(Model.barrier_to_care);
+                
+                    lbl_btc_language.Text = barrier_to_care.btc_language != null ? WebHelpers.FormatString(WebHelpers.GetBool(Convert.ToBoolean(Convert.ToString(barrier_to_care.btc_language)), $"Có, Giải thích/Yes Explain: {WebHelpers.FormatString(barrier_to_care.btc_language_note)}")) : "";
+                    lbl_btc_cognitive.Text = barrier_to_care.btc_cognitive != null ? WebHelpers.FormatString(WebHelpers.GetBool(Convert.ToBoolean(Convert.ToString(barrier_to_care.btc_cognitive)), $"Có, Giải thích/Yes Explain: {WebHelpers.FormatString(barrier_to_care.btc_cognitive_note)}")) : "";
+                    lbl_btc_sensory.Text = barrier_to_care.btc_sensory != null ? WebHelpers.FormatString(WebHelpers.GetBool(Convert.ToBoolean(Convert.ToString(barrier_to_care.btc_sensory)), $"Có, Giải thích/Yes Explain: {WebHelpers.FormatString(barrier_to_care.btc_sensory_note)}")) : "";
+                    lbl_btc_religious.Text = barrier_to_care.btc_religious != null ? WebHelpers.FormatString(WebHelpers.GetBool(Convert.ToBoolean(Convert.ToString(barrier_to_care.btc_religious)), $"Có, Giải thích/Yes Explain: {WebHelpers.FormatString(barrier_to_care.btc_religious_note)}")) : "";
+                    lbl_btc_cultural.Text = barrier_to_care.btc_cultural != null ? WebHelpers.FormatString(WebHelpers.GetBool(Convert.ToBoolean(Convert.ToString(barrier_to_care.btc_cultural)), $"Có, Giải thích/Yes Explain: {WebHelpers.FormatString(barrier_to_care.btc_cultural_note)}")) : "";
+                }
+                #endregion
+
+                #region 7. Tầm soát nguy cơ té ngã/ Fall risk screening
+                ShowControl(lbl_no_fall_risk, lbl_fallen, lbl_feel_unsteady, lbl_worry_about_falling);
+                HideControl(field_no_fall_risks_false, no_fall_risk_wrapper);
+                
+                DataTable fall_risk_factors = EMRHelpers.ConvertToDataTable(Model.fall_risk_factors);
+                
+                if (fall_risk_factors != null)
+                {
+                    #region - Các yếu tố nguy cơ/ Fall risk factors
+                    
+                    lbl_no_fall_risk.Text = WebHelpers.FormatString(DisplayCheckBox(fall_risk_factors));
+
+                    WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_fall_risk_factors_", fall_risk_factors);
+                    
+                    var cb_FallRiskFactors_nfr = FindControl("rad_no_fall_risks_" + cb_fall_risk_factors_nfr.Checked);
+
+                    if (cb_FallRiskFactors_nfr != null)
+                    {
+                        //btc_change("field_nutrition_status", Convert.ToString(nutritional_status.ns_code));
+                        ((HtmlInputRadioButton)cb_FallRiskFactors_nfr).Checked = true;
+                    }
+
+                    rad_fallen_false.Checked = cb_fall_risk_factors_nfr.Checked;
+
+                    field_no_fall_risks_false.Visible = !cb_fall_risk_factors_nfr.Checked;
+                    #endregion
+
+                    if (!cb_fall_risk_factors_nfr.Checked)
+                    {
+                        HideControl(fall_risk_factors_field, fallen_field, feel_unsteady_field, worry_about_falling_field, intervention_field);
+
+                        #region - Câu hỏi sàng lọc/ The fall risk screen question
+                        if (Model.fall_risk_questions != null)
+                        {
+                            try
+                            {
+                                FALL_RISK_QUESTION frq = new FALL_RISK_QUESTION(Model.fall_risk_questions);
+
+                                lbl_fallen.Text = WebHelpers.FormatString(WebHelpers.GetBool(Convert.ToBoolean(Convert.ToString(frq.fallen))));
+                                lbl_feel_unsteady.Text = WebHelpers.FormatString(WebHelpers.GetBool(Convert.ToBoolean(Convert.ToString(frq.feel_unsteady))));
+                                lbl_worry_about_falling.Text = WebHelpers.FormatString(WebHelpers.GetBool(Convert.ToBoolean(Convert.ToString(frq.worry_about_falling))));
+                            }
+                            catch(Exception ex)
+                            {
+                                Console.WriteLine(ex.Message);
+                            }
+                        }
+                        #endregion
+                        //
+                        //WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_fallen_" + fall_risk_questions.fallen);
+                        //WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_feel_unsteady_" + fall_risk_questions.feel_unsteady);
+                        //WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_worry_about_falling_" + fall_risk_questions.worry_about_falling);
+                        #region - Can thiệp/ Intervention
+                        DataTable intervention = EMRHelpers.ConvertToDataTable(Model.intervention);
+                        if(intervention != null)
+                        {
+                            lbl_intervention.Text = WebHelpers.FormatString(DisplayCheckBox(intervention));
+                        }
+                        #endregion
+                        //WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_intervention_", WebHelpers.GetJSONToDataTable(oina.intervention));
+                    }
+                }
+                #endregion
+
+                #region 8. Sàng lọc dinh dưỡng/ Nutrition screening
+                d_bmi.Text = Model.vs_BMI;
+                HideControl(previous_weight_wrapper);
+                ShowControl(lbl_previous_weight);
+                if (Model.nutritional_status_screening != null)
+                {
+                    NUTRITION_SCREENING ns = new NUTRITION_SCREENING(Model.nutritional_status_screening);
+                    
+                    lbl_previous_weight.Text = ns.previous_weight;
+                    d_weight_change.Text = ns.weight_change;
+                }
+
+                #region - Tình trạng dinh dưỡng/ Nutrition status
+
+                HideControl(field_nutrition_status_l, field_nutrition_status_g, field_nutrition_status_a);
+                
+                rad_ns_g.Disabled
+                    = rad_ns_g_0.Disabled
+                    = rad_ns_g_1.Disabled
+                    = rad_ns_g_2.Disabled
+                    = rad_ns_l.Disabled
+                    = rad_ns_l_0.Disabled
+                    = rad_ns_l_1.Disabled
+                    = rad_ns_l_2.Disabled
+                    = rad_ns_a.Disabled
+                    = rad_ns_a_0.Disabled
+                    = rad_ns_a_1.Disabled
+                    = rad_ns_a_2.Disabled
+                    = rad_ns_loss_weight_0.Disabled
+                    = rad_ns_loss_weight_1.Disabled
+                    = rad_ns_loss_weight_2.Disabled
+                    = rad_ns_food_intake_0.Disabled
+                    = rad_ns_food_intake_2.Disabled
+                    = true;
+
+                if (Model.nutritional_status != null)
+                {
+                    NUTRITION_STATUS ns = new NUTRITION_STATUS(Model.nutritional_status);
+                    
+                    //
+                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_ns_" + ns.ns_code);
+                    btc_change("field_nutrition_status", Convert.ToString(ns.ns_code));
+
+                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_ns_" + ns.ns_code + "_" + ns.ns_score);
+                    ns_age_score.Value = ns.ns_score;
+
+                    #region - Sụt cân không chủ ý trong 3 tháng gần đây/ Unintentional weight loss in the last 3 months:
+                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_ns_loss_weight_" + ns.loss_weight);
+                    ns_loss_weight_score.Value = ns.loss_weight;
+                    #endregion
+
+                    #region - Khả năng ăn uống/ Food intake
+                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_ns_food_intake_" + ns.food_intake);
+                    ns_food_intake_score.Value = ns.food_intake;
+                    #endregion
+
+                    d_ns_total_score.Text = ns.total_score;
+
+                    d_nutritional_conclude.Text = Model.nutritional_conclude;
+                }
+                #endregion
+
+                #endregion
+                
+                #endregion
+
+                #region III. ĐÁNH GIÁ CÁC YẾU TỐ XÃ HỘI CỦA NGƯỜI BỆNH/ SOCIAL FACTORS ASSESSMENT
+                lbl_housing_description.Text = EMRHelpers.ConvertToHtml(Model.housing_description);
+                #endregion
+
+                #region IV. MỨC ĐỘ ƯU TIÊN/ PRIORITIZATION
+                immediate_consulting_requirement.Visible = false;
+                lbl_prioritization_description.Text = EMRHelpers.ConvertToHtml(Model.prioritization_description);
+                DataTable immediate_consulting_requirement_tb = EMRHelpers.ConvertToDataTable(Model.immediate_consulting_requirement);
+                if(immediate_consulting_requirement_tb != null)
+                {
+                    lbl_immediate_consulting_requirement.Text = EMRHelpers.JSON_STR_SEPARATION(immediate_consulting_requirement_tb);
+                }
+                #endregion
+
+                #region V. NHU CẦU GIÁO DỤC SỨC KHỎE/ PATIENT EDUCATION NEEDS
+                DataTable patient_education_needs_tb = EMRHelpers.ConvertToDataTable(Model.patient_education_needs);
+                if(patient_education_needs_tb != null)
+                {
+                    lbl_patient_education_needs.Text = EMRHelpers.JSON_STR_SEPARATION(patient_education_needs_tb);
+                }
+                #endregion
+                //lbl_assessment_date_time.Text = WebHelpers.FormatDateTime(oina.assessment_date_time, "dd-MM-yyyy HH:mm");
+                
+            }
+            catch (Exception ex) 
+            { 
+                WebHelpers.SendError(Page, ex);
+            }
+        }
         public override void BindingDataFormEdit()
         {
             try
@@ -518,7 +791,7 @@ namespace EMR
 
                 if (!string.IsNullOrEmpty(ErrorMessage))
                 {
-                    ErrorMessageId.Text = ErrorMessage;
+                    //ErrorMessageId.Text = ErrorMessage;
                     LogErrors();
                 }
             }
@@ -527,323 +800,21 @@ namespace EMR
                 WebHelpers.SendError(Page, ex);
             }
         }
-        public override void BindingDataFormView()
-        {
-            try
-            {
-                HideControl(txt_flacc_face,
-                    txt_flacc_legs,
-                    txt_flacc_activity,
-                    txt_flacc_cry,
-                    txt_flacc_consolability,
-                    txt_npass_crying,
-                    txt_npass_behavior,
-                    txt_npass_facial_expression,
-                    txt_npass_extremities_tone,
-                    txt_npass_vital_signs,
-                    txt_npass_gestation_3,
-                    txt_npass_gestation_2,
-                    txt_npass_gestation_1);
-
-                ShowControl(lbl_flacc_face,
-                    lbl_flacc_legs,
-                    lbl_flacc_activity,
-                    lbl_flacc_cry,
-                    lbl_flacc_consolability,
-                    lbl_npass_crying,
-                    lbl_npass_behavior,
-                    lbl_npass_facial_expression,
-                    lbl_npass_extremities_tone,
-                    lbl_npass_vital_signs,
-                    lbl_npass_gestation_3,
-                    lbl_npass_gestation_2,
-                    lbl_npass_gestation_1);
-
-                #region I. DẤU HIỆU SINH TỒN VÀ CÁC CHỈ SỐ ĐO LƯỜNG/ VITAL SIGNS AND PHYSICAL MEASUREMENTS
-                lbl_vs_temperature.Text = Model.vs_temperature;
-                lbl_vs_heart_rate.Text = Model.vs_heart_rate;
-                lbl_vs_weight.Text = Model.vs_weight;
-                lbl_vs_height.Text = Model.vs_height;
-                lbl_vs_respiratory_rate.Text = Model.vs_respiratory_rate;
-                lbl_vs_bmi.Text = Model.vs_BMI;
-                lbl_vs_blood_pressure.Text = Model.vs_blood_pressure;
-                lbl_pulse.Text = Model.pulse;
-                lbl_vs_spo2.Text = Model.vs_spO2;
-                //lbl_assessment_date_time.Text = WebHelpers.FormatDateTime(Model.assessment_date_time, "dd-MM-yyyy HH:mm");
-                #endregion
-
-                #region II. ĐÁNH GIÁ/ ASSESSMENT
-
-                #region 1. Lý do đến khám/ Chief complaint
-                lbl_chief_complaint.Text = EMRHelpers.ConvertToHtml(Model.chief_complaint);
-                #endregion
-
-                #region 2. Dị ứng/ Allergy
-                lbl_allergy.Text = WebHelpers.GetBool(Model.allergy, $"Có, ghi rõ/ Yes, specify: { EMRHelpers.ConvertToHtml(Model.allergy_note)}");
-                #endregion
-
-                #region 3. Trạng thái tinh thần/ Mental status
-                lbl_mental_status.Text = WebHelpers.GetBool(Model.mental_status, "Có/ Yes", $"Không, ghi rõ/ No, specify: {EMRHelpers.ConvertToHtml(Model.mental_status_note)}");
-                #endregion
-
-                #region 4. Tầm soát bệnh lây nhiễm/ Communicable disease screening
-                rad_high_fever_false.Disabled
-                    = rad_high_fever_true.Disabled
-                    = rad_contact_infectious_disease_false.Disabled
-                    = rad_contact_infectious_disease_true.Disabled
-                    = rad_close_contact_false.Disabled
-                    = rad_close_contact_true.Disabled
-                    = rad_injectious_risk_false.Disabled
-                    = rad_injectious_risk_true.Disabled
-                    = true;
-
-                if (Model.communicable_disease_screening != null)
-                {
-                    COMMUNICABLE_DISEASE_SCREENING communicable_disease_screening = new COMMUNICABLE_DISEASE_SCREENING(Model.communicable_disease_screening);
-
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_high_fever_" + communicable_disease_screening.high_fever);
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_contact_infectious_disease_" + communicable_disease_screening.contact_infectious_disease);
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_close_contact_" + communicable_disease_screening.close_contact);
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_injectious_risk_" + communicable_disease_screening.injectious_risk);
-                }
-                #endregion
-
-                #region 5. Đánh giá đau/ Pain assessment
-                HideControl(field_naf, field_flacc, field_npass, field_nonv);
-                switch (Model.pain_assessment_type)
-                {
-                    case PAIN_ASSESSMENT_TYPE.NumericAndFaces:
-                        rad_naf_true.Checked = true;
-                        pain_assessment_change(nameof(field_naf));
-                        lbl_paint_score_description.Text = EMRHelpers.ConvertToHtml(Model.paint_score_description);
-                        break;
-                    case PAIN_ASSESSMENT_TYPE.FLACC:
-                        if (Model.flacc != null)
-                        {
-                            FLACC flacc = new FLACC(Model.flacc);
-
-                            lbl_flacc_face.Text = Convert.ToString(flacc.face);
-                            lbl_flacc_legs.Text = Convert.ToString(flacc.legs);
-                            lbl_flacc_activity.Text = Convert.ToString(flacc.activity);
-                            lbl_flacc_cry.Text = Convert.ToString(flacc.cry);
-                            lbl_flacc_consolability.Text = Convert.ToString(flacc.consolability);
-                            d_flacc_total_score.Text = Convert.ToString(flacc.total_score);
-                            d_flacc_conclude.Text = Model.flacc_conclude;
-                        }
-                        rad_flacc_true.Checked = true;
-                        pain_assessment_change(nameof(field_flacc));
-                        break;
-                    case PAIN_ASSESSMENT_TYPE.N_PASS:
-                        if (Model.npass != null)
-                        {
-                            NPASS npass = new NPASS(Model.npass);
-                            lbl_npass_crying.Text = npass.crying;
-                            lbl_npass_behavior.Text = npass.behavior;
-                            lbl_npass_facial_expression.Text = npass.facial_expression;
-                            lbl_npass_extremities_tone.Text = npass.extremities_tone;
-                            lbl_npass_vital_signs.Text = npass.vital_signs;
-                            lbl_npass_gestation_3.Text = npass.gestation_3;
-                            lbl_npass_gestation_2.Text = npass.gestation_2;
-                            lbl_npass_gestation_1.Text = npass.gestation_1;
-                            d_npass_total_score.Text = Convert.ToString(npass.total_score);
-                            d_npass_conclude.Text = Model.npass_conclude;
-                        }
-                        rad_npass_true.Checked = true;
-                        pain_assessment_change(nameof(field_npass));
-                        break;
-                    case PAIN_ASSESSMENT_TYPE.Non_Verbal:
-                        rad_nonv_true.Checked = true;
-                        pain_assessment_change(nameof(field_nonv));
-                        break;
-                }
-                HideControl(pain_assessment_scale_wrapper);
-                #endregion
-
-                #region 6. Trở ngại chăm sóc/ Barrier to care
-                ShowControl(lbl_btc_language, lbl_btc_cognitive, lbl_btc_sensory, lbl_btc_religious, lbl_btc_cultural);
-                HideControl(btc_language_wrapper, btc_cognitive_wrapper, btc_sensory_wrapper, btc_religious_wrapper, btc_cultural_wrapper);
-
-                if(Model.barrier_to_care != null)
-                {
-                    BARRIER_TO_CARE barrier_to_care = new BARRIER_TO_CARE(Model.barrier_to_care);
-                
-                    lbl_btc_language.Text = barrier_to_care.btc_language != null ? WebHelpers.FormatString(WebHelpers.GetBool(Convert.ToBoolean(Convert.ToString(barrier_to_care.btc_language)), $"Có, Giải thích/Yes Explain: {WebHelpers.FormatString(barrier_to_care.btc_language_note)}")) : "";
-                    lbl_btc_cognitive.Text = barrier_to_care.btc_cognitive != null ? WebHelpers.FormatString(WebHelpers.GetBool(Convert.ToBoolean(Convert.ToString(barrier_to_care.btc_cognitive)), $"Có, Giải thích/Yes Explain: {WebHelpers.FormatString(barrier_to_care.btc_cognitive_note)}")) : "";
-                    lbl_btc_sensory.Text = barrier_to_care.btc_sensory != null ? WebHelpers.FormatString(WebHelpers.GetBool(Convert.ToBoolean(Convert.ToString(barrier_to_care.btc_sensory)), $"Có, Giải thích/Yes Explain: {WebHelpers.FormatString(barrier_to_care.btc_sensory_note)}")) : "";
-                    lbl_btc_religious.Text = barrier_to_care.btc_religious != null ? WebHelpers.FormatString(WebHelpers.GetBool(Convert.ToBoolean(Convert.ToString(barrier_to_care.btc_religious)), $"Có, Giải thích/Yes Explain: {WebHelpers.FormatString(barrier_to_care.btc_religious_note)}")) : "";
-                    lbl_btc_cultural.Text = barrier_to_care.btc_cultural != null ? WebHelpers.FormatString(WebHelpers.GetBool(Convert.ToBoolean(Convert.ToString(barrier_to_care.btc_cultural)), $"Có, Giải thích/Yes Explain: {WebHelpers.FormatString(barrier_to_care.btc_cultural_note)}")) : "";
-                }
-                #endregion
-
-                #region 7. Tầm soát nguy cơ té ngã/ Fall risk screening
-                ShowControl(lbl_no_fall_risk, lbl_fallen, lbl_feel_unsteady, lbl_worry_about_falling);
-                HideControl(field_no_fall_risks_false, no_fall_risk_wrapper);
-                
-                DataTable fall_risk_factors = EMRHelpers.ConvertToDataTable(Model.fall_risk_factors);
-                
-                if (fall_risk_factors != null)
-                {
-                    #region - Các yếu tố nguy cơ/ Fall risk factors
-                    
-                    lbl_no_fall_risk.Text = WebHelpers.FormatString(DisplayCheckBox(fall_risk_factors));
-
-                    WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_fall_risk_factors_", fall_risk_factors);
-                    
-                    var cb_FallRiskFactors_nfr = FindControl("rad_no_fall_risks_" + cb_fall_risk_factors_nfr.Checked);
-
-                    if (cb_FallRiskFactors_nfr != null)
-                    {
-                        //btc_change("field_nutrition_status", Convert.ToString(nutritional_status.ns_code));
-                        ((HtmlInputRadioButton)cb_FallRiskFactors_nfr).Checked = true;
-                    }
-
-                    rad_fallen_false.Checked = cb_fall_risk_factors_nfr.Checked;
-
-                    field_no_fall_risks_false.Visible = !cb_fall_risk_factors_nfr.Checked;
-                    #endregion
-
-                    if (!cb_fall_risk_factors_nfr.Checked)
-                    {
-                        HideControl(fall_risk_factors_field, fallen_field, feel_unsteady_field, worry_about_falling_field, intervention_field);
-
-                        #region - Câu hỏi sàng lọc/ The fall risk screen question
-                        if (Model.fall_risk_questions != null)
-                        {
-                            try
-                            {
-                                FALL_RISK_QUESTION frq = new FALL_RISK_QUESTION(Model.fall_risk_questions);
-
-                                lbl_fallen.Text = WebHelpers.FormatString(WebHelpers.GetBool(Convert.ToBoolean(Convert.ToString(frq.fallen))));
-                                lbl_feel_unsteady.Text = WebHelpers.FormatString(WebHelpers.GetBool(Convert.ToBoolean(Convert.ToString(frq.feel_unsteady))));
-                                lbl_worry_about_falling.Text = WebHelpers.FormatString(WebHelpers.GetBool(Convert.ToBoolean(Convert.ToString(frq.worry_about_falling))));
-                            }
-                            catch(Exception ex)
-                            {
-
-                            }
-                        }
-                        #endregion
-                        //
-                        //WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_fallen_" + fall_risk_questions.fallen);
-                        //WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_feel_unsteady_" + fall_risk_questions.feel_unsteady);
-                        //WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_worry_about_falling_" + fall_risk_questions.worry_about_falling);
-                        #region - Can thiệp/ Intervention
-                        DataTable intervention = EMRHelpers.ConvertToDataTable(Model.intervention);
-                        if(intervention != null)
-                        {
-                            lbl_intervention.Text = WebHelpers.FormatString(DisplayCheckBox(intervention));
-                        }
-                        #endregion
-                        //WebHelpers.DataBind(form1, new HtmlInputCheckBox(), "cb_intervention_", WebHelpers.GetJSONToDataTable(oina.intervention));
-                    }
-                }
-                #endregion
-
-                #region 8. Sàng lọc dinh dưỡng/ Nutrition screening
-                d_bmi.Text = Model.vs_BMI;
-                HideControl(previous_weight_wrapper);
-                ShowControl(lbl_previous_weight);
-                if (Model.nutritional_status_screening != null)
-                {
-                    NUTRITION_SCREENING ns = new NUTRITION_SCREENING(Model.nutritional_status_screening);
-                    
-                    lbl_previous_weight.Text = ns.previous_weight;
-                    d_weight_change.Text = ns.weight_change;
-                }
-
-                #region - Tình trạng dinh dưỡng/ Nutrition status
-
-                HideControl(field_nutrition_status_l, field_nutrition_status_g, field_nutrition_status_a);
-                
-                rad_ns_g.Disabled
-                    = rad_ns_g_0.Disabled
-                    = rad_ns_g_1.Disabled
-                    = rad_ns_g_2.Disabled
-                    = rad_ns_l.Disabled
-                    = rad_ns_l_0.Disabled
-                    = rad_ns_l_1.Disabled
-                    = rad_ns_l_2.Disabled
-                    = rad_ns_a.Disabled
-                    = rad_ns_a_0.Disabled
-                    = rad_ns_a_1.Disabled
-                    = rad_ns_a_2.Disabled
-                    = rad_ns_loss_weight_0.Disabled
-                    = rad_ns_loss_weight_1.Disabled
-                    = rad_ns_loss_weight_2.Disabled
-                    = rad_ns_food_intake_0.Disabled
-                    = rad_ns_food_intake_2.Disabled
-                    = true;
-
-                if (Model.nutritional_status != null)
-                {
-                    NUTRITION_STATUS ns = new NUTRITION_STATUS(Model.nutritional_status);
-                    
-                    //
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_ns_" + ns.ns_code);
-                    btc_change("field_nutrition_status", Convert.ToString(ns.ns_code));
-
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_ns_" + ns.ns_code + "_" + ns.ns_score);
-                    ns_age_score.Value = ns.ns_score;
-
-                    #region - Sụt cân không chủ ý trong 3 tháng gần đây/ Unintentional weight loss in the last 3 months:
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_ns_loss_weight_" + ns.loss_weight);
-                    ns_loss_weight_score.Value = ns.loss_weight;
-                    #endregion
-
-                    #region - Khả năng ăn uống/ Food intake
-                    WebHelpers.DataBind(form1, new HtmlInputRadioButton(), "rad_ns_food_intake_" + ns.food_intake);
-                    ns_food_intake_score.Value = ns.food_intake;
-                    #endregion
-
-                    d_ns_total_score.Text = ns.total_score;
-
-                    d_nutritional_conclude.Text = Model.nutritional_conclude;
-                }
-                #endregion
-
-                #endregion
-                
-                #endregion
-
-                #region III. ĐÁNH GIÁ CÁC YẾU TỐ XÃ HỘI CỦA NGƯỜI BỆNH/ SOCIAL FACTORS ASSESSMENT
-                lbl_housing_description.Text = EMRHelpers.ConvertToHtml(Model.housing_description);
-                #endregion
-
-                #region IV. MỨC ĐỘ ƯU TIÊN/ PRIORITIZATION
-                immediate_consulting_requirement.Visible = false;
-                lbl_prioritization_description.Text = EMRHelpers.ConvertToHtml(Model.prioritization_description);
-                DataTable immediate_consulting_requirement_tb = EMRHelpers.ConvertToDataTable(Model.immediate_consulting_requirement);
-                if(immediate_consulting_requirement_tb != null)
-                {
-                    lbl_immediate_consulting_requirement.Text = EMRHelpers.JSON_STR_SEPARATION(immediate_consulting_requirement_tb);
-                }
-                #endregion
-
-                #region V. NHU CẦU GIÁO DỤC SỨC KHỎE/ PATIENT EDUCATION NEEDS
-                DataTable patient_education_needs_tb = EMRHelpers.ConvertToDataTable(Model.patient_education_needs);
-                if(patient_education_needs_tb != null)
-                {
-                    lbl_patient_education_needs.Text = EMRHelpers.JSON_STR_SEPARATION(patient_education_needs_tb);
-                }
-                #endregion
-                //lbl_assessment_date_time.Text = WebHelpers.FormatDateTime(oina.assessment_date_time, "dd-MM-yyyy HH:mm");
-                
-            }
-            catch (Exception ex) 
-            { 
-                WebHelpers.SendError(Page, ex);
-            }
-        }
         public override void BindingDataFormPrint()
         {
+            #region Patient Info
             prt_fullname.Text = $"{Patient.FullName}";
-            prt_dob.Text = $"{WebHelpers.FormatDateTime(Patient.DOB)}";
+            prt_dob.Text = $"{WebHelpers.FormatDateTime(Patient.DOB, "dd/MM/yyyy")}";
             prt_gender.Text = Patient.Gender;
             prt_pid.Text = Patient.visible_patient_id;
+            #endregion
 
+            #region Thời gian bắt đầu đánh giá/ Time of assessment
             prt_date_of_assessment.Text = Model.assessment_date_time.ToString("dd/MM/yyyy");
             prt_time_of_assessment.Text = Model.assessment_date_time.ToString("HH:mm");
+            #endregion
 
+            #region I. DẤU HIỆU SINH TỒN VÀ CÁC CHỈ SỐ ĐO LƯỜNG/ VITAL SIGNS AND PHYSICAL MEASUREMENTS
             prt_vs_temperature.Text = Model.vs_temperature;
             prt_vs_weight.Text = Model.vs_weight;
             prt_vs_height.Text = Model.vs_height;
@@ -852,6 +823,10 @@ namespace EMR
             prt_vs_respiratory_rate.Text = Model.vs_respiratory_rate;
             prt_vs_blood_pressure.Text = Model.vs_blood_pressure;
             prt_vs_spO2.Text = Model.vs_spO2;
+            #endregion
+
+            #region II. ĐÁNH GIÁ/ ASSESSMENT
+            //1. Lý do đến khám/ Chief complaint
             prt_chief_complaint.Text = Model.chief_complaint;
 
             #region 2. Dị ứng/ Allergy
@@ -1025,16 +1000,18 @@ namespace EMR
             #endregion
 
             #region 7. Tầm soát nguy cơ té ngã/ Fall risk screening
-            prt_fall_risk_factors_agr.Text
-                = prt_fall_risk_factors_pre.Text
-                = prt_fall_risk_factors_ina.Text
-                = prt_fall_risk_factors_pod.Text
-                = prt_fall_risk_factors_ear.Text
-                = prt_fall_risk_factors_ale.Text
-                = prt_fall_risk_factors_amb.Text
-                = prt_fall_risk_factors_pat.Text
-                = prt_fall_risk_factors_imp.Text
-                = "❏";
+            foreach (KeyValuePair<string, string> dictionary in EmrDictionary.FALL_RISK_FACTORS)
+            {
+                try
+                {
+                    ((Label)FindControl($"prt_fall_risk_factors_{dictionary.Key}")).Text = "❏";
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
             HideControl(prt_fall_risk_factor_nfr_wrapper, prt_fall_risk_factor_nfr);
             if (Model.fall_risk_factors != null)
             {
@@ -1071,16 +1048,18 @@ namespace EMR
                 BindingLabel($"{nameof(fall_risk_questions.worry_about_falling)}_{fall_risk_questions.worry_about_falling}", "☒");
             }
 
-            prt_intervention_uni.Text
-                = prt_intervention_sti.Text
-                = prt_intervention_edu.Text
-                = prt_intervention_ass.Text
-                = prt_intervention_str.Text
-                = prt_intervention_epa.Text
-                = prt_intervention_ins.Text
-                = prt_intervention_enc.Text
-                = prt_intervention_pfr.Text
-                = "❏";
+            foreach (KeyValuePair<string, string> dictionary in EmrDictionary.INTERVENTION)
+            {
+                try
+                {
+                    ((Label)FindControl($"prt_intervention_{dictionary.Key}")).Text = "❏";
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+            }
+
             DataTable intervention = EMRHelpers.ConvertToDataTable(Model.intervention);
             if (intervention != null)
             {
@@ -1167,6 +1146,7 @@ namespace EMR
                 }
             }
             #endregion
+            #endregion
 
             #region III. ĐÁNH GIÁ CÁC YẾU TỐ XÃ HỘI CỦA NGƯỜI BỆNH/ SOCIAL FACTORS ASSESSMENT
             prt_housing_code_aln.Text
@@ -1236,52 +1216,10 @@ namespace EMR
 
             prt_signature_date.Text = $"Ngày/ <i>Date: </i> {DateTime.Now.ToString("dd/MM/yyyy")} Giờ/<i>Time: </i> {DateTime.Now.ToString("HH:mm")}";
         }
-        #endregion
-        #region Events
-        protected void btnAmend_Click(object sender, EventArgs e)
-        {
-            if (CheckOpenForm)
-            {
-                Model = new OinaRv03(varDocID, Location);
-                HideControl(btnAmend, btnPrint);
-                ShowControl(btnComplete, btnCancel, amendReasonWraper);
-                LoadFormControl(form1, Model, ControlState.Edit);
-                BindingDataFormEdit();
-            }
-        }
-        protected void btnCancel_Click(object sender, EventArgs e)
-        {
-            WebHelpers.clearSessionDoc(Page, varDocID, Location);
-            Init_Page();
-        }
-        protected void btnDelete_Click(object sender, EventArgs e)
+        public override void BindingControlToModel()
         {
             try
             {
-                Model = new OinaRv03(varDocID, Location);
-                
-                dynamic result = Model.Delete(UserId, Location)[0];
-
-                if (result.Status == System.Net.HttpStatusCode.OK)
-                {
-                    WebHelpers.clearSessionDoc(Page, varDocID, Location);
-                    Response.Redirect($"../other/index.aspx?pid={varPID}&vpid={varVPID}&loc={Location}");
-                }
-            }
-            catch (Exception ex)
-            {
-                WebHelpers.SendError(Page, ex);
-            }
-        }
-        #endregion
-        #region METHODS
-        public override void UpdateModel(string status)
-        {
-            try
-            {
-                Model = new OinaRv03(varDocID, Location);
-                Model.status = status;
-
                 #region I. DẤU HIỆU SINH TỒN VÀ CÁC CHỈ SỐ ĐO LƯỜNG/ VITAL SIGNS AND PHYSICAL MEASUREMENTS
                 Model.vs_temperature = txt_vs_temperature.Value;
                 Model.vs_heart_rate = txt_vs_heart_rate.Value;
@@ -1501,12 +1439,12 @@ namespace EMR
                 #endregion
 
                 #region III. ĐÁNH GIÁ CÁC YẾU TỐ XÃ HỘI CỦA NGƯỜI BỆNH/ SOCIAL FACTORS ASSESSMENT
-                Model.housing_code = FindHtmlInputRadioButton(form1, nameof(Model.housing_code), EmrDictionary.HOUSING_CODE); //WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_prioritization_code_", );
+                Model.housing_code = FindHtmlInputRadioButton(nameof(Model.housing_code), EmrDictionary.HOUSING_CODE); //WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_prioritization_code_", );
                 Model.housing_description = WebHelpers.GetDicDesc(Model.housing_code, EmrDictionary.HOUSING_CODE);
                 #endregion
 
                 #region IV. MỨC ĐỘ ƯU TIÊN/ PRIORITIZATION
-                Model.prioritization_code = FindHtmlInputRadioButton(form1, nameof(Model.prioritization_code), EmrDictionary.PRIORITIZATION_CODE);
+                Model.prioritization_code = FindHtmlInputRadioButton(nameof(Model.prioritization_code), EmrDictionary.PRIORITIZATION_CODE);
                 string im_consul_req_result = string.Empty;
                 if (Model.prioritization_code == PRIORITIZATION_CODE.IMMEDIATE_CONSULTING_REQUIREMENT)
                 {
@@ -1554,36 +1492,15 @@ namespace EMR
                 }
 
                 Model.amend_reason = txt_amend_reason.Text;
-                Model.user_name = UserId;
-
-                dynamic result = Model.Update(Location)[0];
-                if (result.Status == System.Net.HttpStatusCode.OK)
-                {
-                    WebHelpers.Notification(Page, CONST_MESSAGE.MESSAGE_SAVE_SUCCESS);
-                    Init_Page();
-                }
             }
             catch (Exception ex)
             {
                 WebHelpers.SendError(Page, ex);
             }
         }
-        protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
-        {
-            GridDataItem item = (e.Item as GridDataItem);
-            if (e.CommandName.Equals("Open"))
-            {
-                string doc_log_id = item.GetDataKeyValue("document_log_id").ToString();
+        #endregion
 
-                string url = PAGE_URL + $"&docIdLog={doc_log_id}";
-
-                Response.Redirect(url);
-            }
-        }
-        protected void LinkViewLastestVersion_Load(object sender, EventArgs e)
-        {
-            (sender as HyperLink).NavigateUrl = PAGE_URL;
-        }
+        #region METHODS
         private void btc_change(string field, string value)
         {
             var control = FindControl($"{field}_{value}");
@@ -1758,17 +1675,14 @@ namespace EMR
         {
             //args.IsValid = txt_fall_risk_assistance.Value.Length <= 256;
         }
-        
         protected void CustomValidatorMentalStatus_ServerValidate(object source, ServerValidateEventArgs args)
         {
             args.IsValid = rad_mental_status_true.Checked || rad_mental_status_false.Checked;
         }
-
         protected void CustomValidatorFallRisk_ServerValidate(object source, ServerValidateEventArgs args)
         {
             //args.IsValid = rad_fall_risk_true.Checked || rad_fall_risk_false.Checked;
         }
         #endregion
-
     }
 }

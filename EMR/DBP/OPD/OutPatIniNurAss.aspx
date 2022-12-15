@@ -42,6 +42,13 @@
                 background-image: none !important;
             }
         }
+        .cssclsNoScreen .header-info {
+            display: flex;
+        }
+.header-info-title {
+flex-grow: 1;
+    text-align: center;
+}
     </style>
 </head>
 <body>

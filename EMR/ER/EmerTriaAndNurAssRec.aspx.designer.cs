@@ -42,6 +42,15 @@ namespace EMR
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
 
         /// <summary>
+        /// print_header control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl print_header;
+
+        /// <summary>
         /// prt_vpid control.
         /// </summary>
         /// <remarks>
@@ -49,15 +58,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label prt_vpid;
-
-        /// <summary>
-        /// prt_barcode control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.UserControls.Barcode prt_barcode;
 
         /// <summary>
         /// print_content control.
@@ -1210,6 +1210,24 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlTable prt_nursing_note;
+
+        /// <summary>
+        /// print_footer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell print_footer;
+
+        /// <summary>
+        /// print_footer_space control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell print_footer_space;
 
         /// <summary>
         /// RadWindowManager control.
@@ -4191,15 +4209,6 @@ namespace EMR
         protected global::System.Web.UI.WebControls.LinkButton btnSave;
 
         /// <summary>
-        /// btnDeleteModal control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl btnDeleteModal;
-
-        /// <summary>
         /// btnAmend control.
         /// </summary>
         /// <remarks>
@@ -4225,6 +4234,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnCancel;
+
+        /// <summary>
+        /// btnDeleteModal control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl btnDeleteModal;
 
         /// <summary>
         /// myModal control.

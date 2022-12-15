@@ -35,6 +35,19 @@
                 background-image: none !important;
             }
         }
+        .cssclsNoScreen .header-info {
+            display: flex;
+        }
+.header-info-title {
+flex-grow: 1;
+    text-align: center;
+}
+@page {
+    margin-top: 13px;
+    margin-bottom: 13px;
+    margin-left: 28px;
+    margin-right: 28px;
+}
     </style>
 </head>
 <body>
@@ -53,12 +66,12 @@
                                             <h4>BỆNH ÁN NGOẠI TRÚ</h4>
                                             <h5>OUTPATIENT MEDICAL RECORD</h5>
                                         </div>
-                                        <%--<div style="width: 120px; text-align: left; font-size: 11px">
+                                        <div style="width: 120px; text-align: left; font-size: 11px">
                                             <asp:Label CssClass="d-block" runat="server" ID="prt_fullname"></asp:Label>
                                             <asp:Label class="d-block" CssClass="d-block" runat="server" ID="prt_dob"></asp:Label>
                                             <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
                                             <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
-                                        </div>--%>
+                                        </div>
                                     </div>
                                     <div style="height: 20px;">
                                         <span style="width: 190px; border-bottom-style: solid; border-bottom-color: #e20e5a; border-bottom-width: 5px; display: inline-block; font-size: 26.6667px;"></span>
@@ -1062,17 +1075,17 @@
             let printContent = document.querySelector("#printContent");
             printContent.setAttribute("style", "display: block");
 
-            let total = Math.ceil(printContent.offsetHeight / 1096);
+            //let total = Math.ceil(printContent.offsetHeight / 1096);
 
-            for (let i = 1; i <= total; i++) {
-                let div = document.createElement("div");
-                div.setAttribute("class", "watermark page");
-                //div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px;");
-                div.setAttribute("style", "top: " + (1088 * (i - 1)) + "px;");
-                div.setAttribute("id", "page" + i);
-                div.setAttribute("data-page", "Page " + i + " of " + total);
-                document.getElementById("print_content").append(div);
-            }
+            //for (let i = 1; i <= total; i++) {
+            //    let div = document.createElement("div");
+            //    div.setAttribute("class", "watermark page");
+            //    //div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px;");
+            //    div.setAttribute("style", "top: " + (1088 * (i - 1)) + "px;");
+            //    div.setAttribute("id", "page" + i);
+            //    div.setAttribute("data-page", "Page " + i + " of " + total);
+            //    document.getElementById("print_content").append(div);
+            //}
 
             setTimeout(() => { printContent.setAttribute("style", "display: none"); }, 100);
             window.print();

@@ -42,6 +42,24 @@ namespace EMR
         protected global::System.Web.UI.UpdatePanel Upd;
 
         /// <summary>
+        /// print_page control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl print_page;
+
+        /// <summary>
+        /// print_header control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl print_header;
+
+        /// <summary>
         /// BarCode control.
         /// </summary>
         /// <remarks>
@@ -60,13 +78,13 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_vpid;
 
         /// <summary>
-        /// Line control.
+        /// print_content control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.PrintTemplate.Line Line;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl print_content;
 
         /// <summary>
         /// prt_fullname control.
@@ -112,15 +130,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label prt_female;
-
-        /// <summary>
-        /// PrtRowS1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.UserControls.PrintTemplate.PrtRowS1 PrtRowS1;
 
         /// <summary>
         /// prt_vpid1 control.
@@ -220,6 +229,24 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label prt_rh;
+
+        /// <summary>
+        /// print_footer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell print_footer;
+
+        /// <summary>
+        /// print_footer_space control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell print_footer_space;
 
         /// <summary>
         /// RadWindowManager control.

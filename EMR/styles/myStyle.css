@@ -1,3 +1,5 @@
+
+
 @media print {
     .cssclsNoPrint {
         display: none
@@ -49,7 +51,7 @@
     border-bottom: 1px solid #000;
 }
 
-.cssclsNoScreen {
+/*.cssclsNoScreen {
     font-family: Tahoma !important;
     font-size: 13.3048px !important;
 }
@@ -83,7 +85,7 @@
                 color: #e20e5a;
                 font-size: 14.6667px;
                 margin-bottom: 0;
-            }
+            }*/
 
                 @media screen {
                     .cssclsNoScreen {
@@ -564,11 +566,11 @@
         display: block;
     }
 
-    .prt-row-s1 .prt-subtitle, .prt-row-s2 .prt-subtitle, .prt-gender .prt-subtitle {
+    /*.prt-row-s1 .prt-subtitle, .prt-row-s2 .prt-subtitle, .prt-gender .prt-subtitle {
         color: #007297 !important;
-    }
+    }*/
 
-@page {
+/*@page {
     padding-top: 0;
     padding-bottom: 0;
     page-break-inside: avoid;
@@ -577,7 +579,7 @@
     margin-bottom: 13px;
     margin-left: 50px;
     margin-right: 50px;
-}
+}*/
 
 .input-group-text {
     background-color: transparent !important;

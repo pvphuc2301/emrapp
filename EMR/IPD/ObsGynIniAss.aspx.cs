@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using EMR.Classes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -251,6 +252,8 @@ namespace EMR.IPD
             try
             {
 
+                LoadBarCode();
+
                 lbl_reason_admission.Text = WebHelpers.FormatString(ogia.reason_admission);
                 lbl_is_obs_gyn.Text = WebHelpers.FormatString(WebHelpers.GetBool(ogia.is_obs_gyn, "SẢN KHOA/ OBSTETRICS", "PHỤ KHOA/ GYNECOLOGY"));
 
@@ -412,7 +415,8 @@ namespace EMR.IPD
                 patientInfo = new PatientInfo(varPID);
                 patientVisitInfo = new PatientVisitInfo(varPVID, loc);
 
-                WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
+                LoadBarCode();
+
                 prt_fullname.InnerText = string.Format("{0} - {1}", patientInfo.FullName, patientInfo.Gender);
 
                 prt_DOB.InnerText = "DOB: " + WebHelpers.FormatDateTime(patientInfo.DOB, "dd-MM-yyyy", "");
@@ -431,13 +435,13 @@ namespace EMR.IPD
                 {
                     if (ogia.is_obs_gyn == true)
                     {
-                        prt_title.Text = "SẢN KHOA/ OBSTETRICS";
+                        prt_title.Text = "SẢN KHOA/ <span class=\"en\">OBSTETRICS</span>";
                         div_obs.Visible = true;
                         div_for_obstetric.Visible = true;
                     }
                     else
                     {
-                        prt_title.Text = "PHỤ KHOA/ GYNECOLOGY";
+                        prt_title.Text = "PHỤ KHOA/ <span class=\"en\">GYNECOLOGY</span>";
                         div_gyn.Visible = true;
                         div_for_gyneacology.Visible = true;
                     }
@@ -452,25 +456,25 @@ namespace EMR.IPD
                 prt_ges_age_weeks.Text = WebHelpers.FormatString(Convert.ToString(ogia.ges_age_weeks), "&nbsp;&nbsp;&nbsp;&nbsp;");
                 prt_prenatal_visit.Text = ogia.prenatal_visit;
 
-                prt_tetanus_vaccination.Text = WebHelpers.CreateOptions(new Option { Text = "Chưa/ Not yet", Value = false }, new Option { Text = "Có/yes, " + ogia.tetanus_vaccin_time + " Lần/times", Value = true }, ogia.tetanus_vaccination, "display: grid;grid-template-columns:200px auto;");
+                prt_tetanus_vaccination.Text = WebHelpers.CreateOptions(new Option { Text = "Chưa/ <span class=\"en\">Not yet</span>", Value = false }, new Option { Text = "Có/ <span class=\"en\">yes</span>, " + ogia.tetanus_vaccin_time + " Lần/<span class=\"en\">times</span>", Value = true }, ogia.tetanus_vaccination, "display: grid;grid-template-columns:200px auto;");
 
-                prt_gbs_disease.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, ogia.gbs_disease, "display: grid;grid-template-columns:1fr 1fr;");
+                prt_gbs_disease.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"en\">No</span>", Value = false }, new Option { Text = "Có/ <span class=\"en\">Yes</span>", Value = true }, ogia.gbs_disease, "display: grid;grid-template-columns:1fr 1fr;");
 
-                prt_gbs_bacteriuria.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, ogia.gbs_bacteriuria, "display: grid;grid-template-columns:1fr 1fr;");
+                prt_gbs_bacteriuria.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"en\">No</span>", Value = false }, new Option { Text = "Có/ <span class=\"en\">Yes</span>", Value = true }, ogia.gbs_bacteriuria, "display: grid;grid-template-columns:1fr 1fr;");
 
-                prt_gbs_vaginal.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, ogia.gbs_vaginal, "display: grid;grid-template-columns:1fr 1fr;");
+                prt_gbs_vaginal.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"en\">No</span>", Value = false }, new Option { Text = "Có/ <span class=\"en\">Yes</span>", Value = true }, ogia.gbs_vaginal, "display: grid;grid-template-columns:1fr 1fr;");
 
                 //fixed
-                prt_ges_diabetes.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, ogia.ges_diabetes, "display: grid;grid-template-columns:150px auto;");
+                prt_ges_diabetes.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"en\">No</span>", Value = false }, new Option { Text = "Có/ <span class=\"en\">Yes</span>", Value = true }, ogia.ges_diabetes, "display: grid;grid-template-columns:150px auto;");
 
-                prt_other_ges_abnormal.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, chi tiết/ Yes, specify: " + ogia.other_ges_abnormal_note, Value = true }, ogia.other_ges_abnormal, "display: grid;grid-template-columns:150px auto;");
+                prt_other_ges_abnormal.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"en\">No</span>", Value = false }, new Option { Text = "Có, chi tiết/ <span class=\"en\">Yes, specify: </span>" + ogia.other_ges_abnormal_note, Value = true }, ogia.other_ges_abnormal, "display: grid;grid-template-columns:150px auto;");
 
                 dynamic labor_trig_at_time = WebHelpers.ConvertDateTime(ogia.labor_trig_at_time, out bool IsValidDateTime);
 
                 if (IsValidDateTime)
                 {
-                    prt_labor_trig_at_time.Text = labor_trig_at_time.ToString("HH") + "&nbsp;giờ/ hour "
-                                                + labor_trig_at_time.ToString("mm") + "&nbsp;phút/ minute&nbsp;"
+                    prt_labor_trig_at_time.Text = labor_trig_at_time.ToString("HH") + "&nbsp;giờ/ <span class=\"en\">hour </span>"
+                                                + labor_trig_at_time.ToString("mm") + "&nbsp;phút/ <span class=\"en\">minute</span>&nbsp;"
                                                 + labor_trig_at_time.ToString("dd/MM/yyyy");
                 }
 
@@ -518,7 +522,7 @@ namespace EMR.IPD
                 Label not_yet_vaccinations = FindControl("prt_not_yet_vaccinations_" + ogia.not_yet_vaccinations);
                 if (not_yet_vaccinations != null) not_yet_vaccinations.Text = "☒";
 
-                prt_other_vaccinations.Text = "• Tiêm vắc xin khác (ghi rõ)/ <span class=\"text-primary\">Other vaccinations (specify)</span>: " + ogia.other_vaccinations;
+                prt_other_vaccinations.Text = "• Tiêm vắc xin khác (ghi rõ)/ <span class=\"en\">Other vaccinations (specify)</span>: " + ogia.other_vaccinations;
 
                 prt_family.Text = ogia.family;
                 prt_age_of_menarhce.Text = WebHelpers.FormatString(ogia.age_of_menarhce, "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
@@ -580,7 +584,7 @@ namespace EMR.IPD
 
                 prt_general_appearance.Text = ogia.general_appearance;
 
-                prt_edema.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, chi tiết/ Yes, specify: " + WebHelpers.GetBool(ogia.edema, ogia.edema_note, ""), Value = true }, ogia.edema, "display: grid;grid-template-columns:150px auto;");
+                prt_edema.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"en\">No</span>", Value = false }, new Option { Text = "Có, chi tiết/ <span class=\"en\">Yes, specify: </span>" + WebHelpers.GetBool(ogia.edema, ogia.edema_note, ""), Value = true }, ogia.edema, "display: grid;grid-template-columns:150px auto;");
 
                 prt_cardio_system.Text = ogia.cardio_system;
                 prt_respiratory_system.Text = ogia.respiratory_system;
@@ -596,7 +600,7 @@ namespace EMR.IPD
                 prt_other_findings.Text = ogia.other_findings;
                 //prt_integumentary_system.Text = ogia.integumentary_system;
 
-                prt_psy_consul_required.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, ogia.psy_consul_required, "display: grid;grid-template-columns:1fr 1fr;");
+                prt_psy_consul_required.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"en\">No</span>", Value = false }, new Option { Text = "Có/ <span class=\"en\">Yes</span>", Value = true }, ogia.psy_consul_required, "display: grid; grid-template-columns:auto 1fr; gap:6px");
 
                 {
                     Control control = FindControl("prt_obs_pre_cicatrice_" + ogia.obs_pre_cicatrice);
@@ -620,7 +624,7 @@ namespace EMR.IPD
                 prt_obs_cervix.Text = ogia.obs_cervix;
                 prt_obs_adnexa.Text = ogia.obs_adnexa;
 
-                prt_obs_mem_condition_code.Text = WebHelpers.CreateOptions(new Option { Text = "Nguyên vẹn/ Intact", Value = "IN" }, new Option { Text = "Đã vỡ/ Ruptured", Value = "RU" }, ogia.obs_mem_condition_code, "display: grid;grid-template-columns:150px auto;");
+                prt_obs_mem_condition_code.Text = WebHelpers.CreateOptions(new Option { Text = "Nguyên vẹn/ <span class=\"en\">Intact</span>", Value = "IN" }, new Option { Text = "Đã vỡ/ <span class=\"en\">Ruptured</span>", Value = "RU" }, ogia.obs_mem_condition_code, "display: grid;grid-template-columns:150px auto;");
 
                 obs_mem_condition_code_ru_field.Visible = ogia.obs_mem_condition_code == "RU";
 
@@ -629,9 +633,9 @@ namespace EMR.IPD
                     DateTime? obs_rup_of_mem_at = WebHelpers.ConvertDateTime(ogia.obs_rup_of_mem_at, out bool IsValidDateTime1);
                     if (IsValidDateTime1)
                     {
-                        prt_obs_rup_of_mem_at.Text = $"{ WebHelpers.FormatDateTime(obs_rup_of_mem_at, "HH")} giờ/ hour { WebHelpers.FormatDateTime(obs_rup_of_mem_at, "mm")} phút/ minute ngày/ date { WebHelpers.FormatDateTime(obs_rup_of_mem_at, "dd/MM/yyyy")}";
+                        prt_obs_rup_of_mem_at.Text = $"{ WebHelpers.FormatDateTime(obs_rup_of_mem_at, "HH")} giờ/ <span class=\"en\">hour</span> { WebHelpers.FormatDateTime(obs_rup_of_mem_at, "mm")} phút/ <span class=\"en\">minute</span> ngày/ <span class=\"en\">date</span> { WebHelpers.FormatDateTime(obs_rup_of_mem_at, "dd/MM/yyyy")}";
                     }
-                    prt_obs_rup_of_mem_code.Text = WebHelpers.CreateOptions(new Option { Text = "Tự nhiên/ Spontaneous", Value = "IN" }, new Option { Text = "Can thiệp/ Interventional", Value = "RU" }, ogia.obs_rup_of_mem_code, "display: grid;grid-template-columns:200px auto;");
+                    prt_obs_rup_of_mem_code.Text = WebHelpers.CreateOptions(new Option { Text = "Tự nhiên/ <span class=\"en\">Spontaneous</span>", Value = "IN" }, new Option { Text = "Can thiệp/ <span class=\"en\">Interventional</span>", Value = "RU" }, ogia.obs_rup_of_mem_code, "display: grid;grid-template-columns:200px auto;");
                 }
 
                 DataTable obs_feat_amniotic = WebHelpers.GetJSONToDataTable(ogia.obs_feat_amniotic);
@@ -1167,6 +1171,12 @@ namespace EMR.IPD
         {
             WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
 
+        }
+        private void LoadBarCode()
+        {
+            IBarcodeGenerator barcodeGenerator = new BarcodeGenerator();
+            BarCode.Controls.Clear();
+            BarCode.Controls.Add(barcodeGenerator.Generator(patientInfo.visible_patient_id));
         }
     }
 }

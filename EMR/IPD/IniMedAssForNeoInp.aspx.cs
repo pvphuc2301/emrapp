@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using EMR.Classes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -99,6 +100,7 @@ namespace EMR
         {
             try
             {
+                LoadBarCode();
                 lbl_admission_reason.Text = WebHelpers.TextToHtmlTag(imani.admission_reason);
                 lbl_cur_med_history.Text = WebHelpers.TextToHtmlTag(imani.cur_med_history);
                 lbl_cur_medication.Text = WebHelpers.TextToHtmlTag(imani.cur_medication);
@@ -127,6 +129,7 @@ namespace EMR
         {
             try
             {
+                LoadBarCode();
                 prt_fullname.Text = patientInfo.FullName;
                 prt_dob.Text = WebHelpers.FormatDateTime(patientInfo.DOB) + " | " + patientInfo.Gender;
                 prt_vpid.Text = patientInfo.visible_patient_id;
@@ -146,7 +149,9 @@ namespace EMR
 
                 //prt_signature_date.Text = $"Ngày/date {signatureDate} tháng/month {signatureMonth} năm/year {signatureYear}";
 
-                WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
+                IBarcodeGenerator barcodeGenerator = new BarcodeGenerator();
+                BarCode.Controls.Clear();
+                BarCode.Controls.Add(barcodeGenerator.Generator(patientInfo.visible_patient_id));
                 prt_admission_reason.Text = WebHelpers.TextToHtmlTag(imani.admission_reason);
                 prt_cur_med_history.Text = WebHelpers.TextToHtmlTag(imani.cur_med_history);
                 prt_cur_medication.Text = WebHelpers.TextToHtmlTag(imani.cur_medication);
@@ -400,6 +405,12 @@ namespace EMR
         {
             WebHelpers.clearSessionDoc(Page, varDocID, loc);
 
+        }
+        private void LoadBarCode()
+        {
+            IBarcodeGenerator barcodeGenerator = new BarcodeGenerator();
+            BarCode.Controls.Clear();
+            BarCode.Controls.Add(barcodeGenerator.Generator(patientInfo.visible_patient_id));
         }
     }
 }

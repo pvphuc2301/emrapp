@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using EMR.Classes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -89,6 +90,7 @@ namespace EMR
         {
             try
             {
+                LoadBarCode();
                 lbl_form_date.Text = WebHelpers.FormatDateTime(somr.form_date);
                 lbl_to_date.Text = WebHelpers.FormatDateTime(somr.to_date);
                 lbl_chief_complaint.Text = WebHelpers.TextToHtmlTag(somr.chief_complaint);
@@ -111,7 +113,7 @@ namespace EMR
                 prt_fullname.Text = string.Format("{0} ({1})", patientInfo.FullName, patientInfo.Title);
                 prt_dob.Text = string.Format("{0} | {1}", WebHelpers.FormatDateTime(patientInfo.date_of_birth), patientInfo.Gender);
                 prt_vpid.Text = patientInfo.visible_patient_id;
-                WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
+                LoadBarCode();
                 prt_department.Text = patientVisitInfo.getDept();
                 prt_form_date.Text = WebHelpers.FormatDateTime(somr.form_date);
                 prt_to_date.Text = WebHelpers.FormatDateTime(somr.to_date);
@@ -126,7 +128,7 @@ namespace EMR
 
                 string signature_date = WebHelpers.FormatDateTime(SignatureDate, "dd-MM-yyyy", "");
 
-                prt_signature_date1.Text = prt_signature_date2.Text = "Ngày/ Date: " + signature_date;
+                prt_signature_date1.Text = prt_signature_date2.Text = signature_date;
             }
             catch (Exception ex)
             {
@@ -342,6 +344,12 @@ namespace EMR
         protected void clearSession_Click(object sender, EventArgs e)
         {
             WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
+        }
+        private void LoadBarCode()
+        {
+            IBarcodeGenerator barcodeGenerator = new BarcodeGenerator();
+            BarCode.Controls.Clear();
+            BarCode.Controls.Add(barcodeGenerator.Generator(patientInfo.visible_patient_id));
         }
     }
 }

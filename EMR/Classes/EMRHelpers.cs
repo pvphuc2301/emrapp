@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
@@ -179,7 +181,6 @@ namespace EMR.Classes
         {
             return PAGE_URL + $"&docIdLog={doc_log_id}";
         }
-
         public static string JSON_STR_SEPARATION(DataTable data)
         {
             string value = "";
@@ -206,6 +207,11 @@ namespace EMR.Classes
                 return str;
             }
             return str;
+        }
+        public static void UpdateLeftMenu(Page page)
+        {
+            string script = string.Format("function f(){{ window.parent.reload_treeview();Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
+            ScriptManager.RegisterStartupScript(page, page.GetType(), "someKey", script, true);
         }
     }
 }

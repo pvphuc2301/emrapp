@@ -35,7 +35,21 @@ namespace EMR
                     }
                 }
             }
+
+            
+
+            //string EVENTTARGET = Request["__EVENTTARGET"];
+
+            //switch (EVENTTARGET)
+            //{
+            //    case "ShowRwnd":
+            //        string script = string.Format("function f(){{ showrwnd(\"" + RadWindowViewImage.clie + "\");Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
+
+            //        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "showrwnd", script, true);
+            //        break;
+            //}
         }
+        
         public void get_report_id()
         {
             string apiURL = "api/patient/menu-rad-list/" + Request.QueryString["vid"];

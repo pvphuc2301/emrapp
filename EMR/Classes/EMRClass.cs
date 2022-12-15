@@ -276,6 +276,11 @@ namespace EMR.DBP
 
 namespace EMR
 {
+    public class VisitType
+    {
+        public const string OPD = "OPD";
+        public const string IPD = "IPD";
+    }
     public class VitalSign
     {
         public static dynamic Update(string pvid, string type, string loc)

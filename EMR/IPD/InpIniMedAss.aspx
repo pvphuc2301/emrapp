@@ -23,27 +23,8 @@
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
-    <link href="../styles/print.css" rel="stylesheet" />
+    <%--<link href="../styles/print.css" rel="stylesheet" />--%>
     <style>
-        @media print {
-            .page:after {
-                bottom: 3px;
-            }
-
-            .watermark {
-                height: 945px;
-            }
-        }
-
-        .v20:after {
-           content: 'Version: 2.0';
-            font-size: 10px;
-            color: #343a40;
-            position: absolute;
-            right: 10px;
-            bottom: 4px;
-        }
-
         .dg {
             display: grid;
             width: 100%;
@@ -63,34 +44,46 @@
           }
         }
     </style>
+    <link href="../styles/print-10.2022.css" rel="stylesheet" />
+    <link href="../styles/telerik-custom.css" rel="stylesheet" />
+    <style>
+        @page {
+            margin-top: 10px;
+        }
+        #print_content {
+		    line-height: initial !important;
+	    }
+    </style>
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
         <asp:UpdatePanel ID="UpPrintForm" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <div class="cssclsNoScreen" id="printContent">
+                <div class="cssclsNoScreen" id="print_page" runat="server" style="font-family: 'Times New Roman' !important; width: 210mm; overflow: hidden">
                     <table class="report-container">
                         <thead class="report-header">
                             <tr>
                                 <th class="report-header-cell">
-                                    <div class="header-info">
-                                        <img width="200" src="../images/AIH_PI_FULL.png" />
-                                        <div class="header-info-title">
-                                            <h4>BỆNH ÁN NỘI TRÚ</h4>
-                                            <h5>INPATIENT INITIAL MEDICAL ASSESSMENT</h5>
+                                    <div runat="server" id="print_header" style="width: 210mm; height: 2.5cm">
+                                        <div style="display: flex; align-items: center; padding: 0 18px">
+                                            <img style="width: 180px" src="../images/AIH_PI_FULL.png" />
+                                            <div style="text-align: center; align-self: center; flex-grow: 1">
+                                                <div><span style="font-size: 12pt; font-weight: bold">BỆNH ÁN NỘI TRÚ</span></div>
+                                                <div class="en"><i style="font-size: 11pt; font-weight: bold">INPATIENT INITIAL MEDICAL ASSESSMENT</i></div>
+                                            </div>
+                                            <div style="width: 160px; text-align: left; font-size: 11px">
+                                                <div runat="server" id="prt_fullname"></div>
+                                                <div runat="server" id="prt_gender"></div>
+                                                <div class="d-block" runat="server" id="prt_DOB"></div>
+                                                <div runat="server" id="prt_vpid" class="d-block font-bold"></div>
+                                                <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
+                                            </div>
                                         </div>
-                                        <div style="width: 160px; text-align: left; font-size: 11px">
-                                            <div runat="server" id="prt_fullname"></div>
-                                            <div runat="server" id="prt_gender"></div>
-                                            <div class="d-block" runat="server" id="prt_DOB"></div>
-                                            <div runat="server" id="prt_vpid" class="d-block font-bold"></div>
-                                            <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
+                                        <div style="height: 12px; position: relative; margin-top: -4px">
+                                            <span style="position:absolute; left: 0; top: 50%; width: 190px; border: 2px solid #e20e5a; display: inline-block;"></span>
+                                            <span style="position:absolute; left: 190px; top: 50%; right: 0; border: 2px solid #007297; display: inline-block;"></span>
                                         </div>
-                                    </div>
-                                    <div style="height: 25px">
-                                        <span style="width: 190px; border-bottom-style: solid; border-bottom-color: #e20e5a; border-bottom-width: 5px; display: inline-block; font-size: 26.6667px;"></span>
-                                        <span style="display: inline-block; border-bottom-style: solid; border-bottom-color: #007297; border-bottom-width: 5px; width: calc(100% - 191px); margin-left: -5px;"></span>
                                     </div>
                                 </th>
                             </tr>
@@ -98,203 +91,132 @@
                         <tbody class="report-content">
                             <tr>
                                 <td class="report-content-cell">
-                                    <div style="position: relative" class="main" runat="server" id="print_content">
-                                        <img style="height: 1px" src="../images/logo-opacity.png" />
-                                        
-                                        <div class="mb-1">
-                                            <b>I. Lí do nhập viện</b>/ Reason for admission: <asp:Label runat="server" ID="prt_chief_complaint"/>
+                                    <div class="main" runat="server" id="print_content" style="font-size: 12pt; margin: 0 1.5cm 0 2cm; line-height: 1.5;">
+                                        <div><span class="font-bold">I. Lí do nhập viện</span>/ <span class="en">Reason for admission: </span><asp:Label runat="server" ID="prt_chief_complaint"/></div>
+                                        <div><span class="font-bold">II. Bệnh sử</span>/ <span class="en">Medical history:</span></div>
+                                        <div><span class="font-bold">1. Bệnh sử hiện tại</span>/ <span class="en">Current medical history:</span> <asp:Label runat="server" ID="prt_cur_med_history"/></div>
+                                        <div><span class="font-bold">* Thuốc đang sử dụng</span>/ <span class="en">Current medications: </span><asp:Label runat="server" ID="prt_cur_medication"/></div>
+                                        <div><span class="font-bold">2. Tiền sử bệnh</span>/ <span class="en">Antecedent medical history: </span></div>
+                                        <div style="margin-left: 10px"><span class="font-bold">- Bản thân</span>/ <span class="en">Personal: </span><asp:Label runat="server" ID="prt_personal"/></div>
+                                        <div style="margin-left: 10px; height: 26px"><asp:Label runat="server"> Đã từng nhiễm COVID-19 trong vòng 6 tháng qua</span>/ <span class="en">Have been infected with COVID-19 within the last 6 months:</span></asp:Label></div>
+                                        <div style="margin-left: 100px">
+                                            <asp:Label CssClass="ml-4" runat="server" ID="prt_infected_with_covid_true" Text="❏"/> Có/ <span class="en">Yes</span>
+                                            <asp:Label CssClass="ml-4" runat="server" ID="prt_infected_with_covid_false" Text="❏"/> Không/ <span class="en">No</span>
                                         </div>
-
-                                        <div class="mb-1">
-                                            <b>II. Bệnh sử</b>/ Medical history:
-                                        </div>
-
-                                        <div class="mb-1">
-                                            <b>1. Bệnh sử hiện tại</b>/ Current medical history: <asp:Label runat="server" ID="prt_cur_med_history"/>
-                                        </div>
-
-                                        <div class="mb-1">
-                                            <b>* Thuốc đang sử dụng</b>/ Current medications: <asp:Label runat="server" ID="prt_cur_medication"/>
-                                        </div>
-
-                                        <div class="mb-1">
-                                            <b>2. Tiền sử bệnh</b>/ Antecedent medical history:
-                                        </div>
-
-                                        <div class="mb-1" style="margin-left: 10px">
-                                            <b>- Bản thân</b>/ Personal: <asp:Label runat="server" ID="prt_personal"/>
-                                        </div>
-
-                                        <div class="row mb-2 " style="margin-left: 10px">
-                                            <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                                <asp:Label runat="server"> Đã từng nhiễm COVID-19 trong vòng 6 tháng qua</span>/ <span class="text-primary">Have been infected with COVID-19 within the last 6 months:</span> </asp:Label>
+                                        <div style="margin-left: 10px">
+                                            <div><asp:Label runat="server">Tiền sử tiêm chủng</span>/ <span class="en">Immunization history:</span> </asp:Label></div>
+                                            <div><asp:Label runat="server">• Tiêm vắc xin phòng COVID-19/ <span class="en">COVID-19 vaccination:</span> </asp:Label></div>
+                                            <div>
+                                                <asp:Label CssClass="ml-4" runat="server" ID="prt_received_1_dose_true" Text="❏"/> Đã tiêm mũi 1/ <span class="en">Received 1<sup>st</sup> dose</span>
+                                                <asp:Label CssClass="ml-4" runat="server" ID="prt_received_2_dose_true" Text="❏"/> Đã tiêm mũi 2/ <span class="en">Received 2<sup>nd</sup> dose</span>
+                                            </div>
+                                            <div>
+                                                <asp:Label CssClass="ml-4" runat="server" ID="prt_received_additional_true" Text="❏"/> Đã tiêm mũi bổ sung, nhắc lại/ <span class="en">Received additional, booster dose</span>
+                                                <asp:Label CssClass="ml-4" runat="server" ID="prt_not_yet_vaccinations_true" Text="❏"/> Chưa tiêm/ <span class="en">Not yet</span>
                                             </div>
                                         </div>
+                                        <div style="margin-left: 10px"><asp:Label runat="server" ID="prt_immunization"/></div>
 
-                                        <div class="row mb-2 " style="margin-left: 10px">
-                                            <div  class="col-12 ">
-                                                <asp:Label CssClass="ml-4" Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_infected_with_covid_true" Text="❏"/>&nbsp;Có/ Yes
-                                                <asp:Label CssClass="ml-4" Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_infected_with_covid_false" Text="❏"/>&nbsp;Không/ No
-                                            </div>
+                                        <div style="margin-left: 20px">• Thói quen/ <span class="en">Habits:</span></div>
+
+                                        <div class="d-grid" style="grid-template-columns: 160px 1fr; margin-left: 10px">
+                                            <div>Hút thuốc lá/ <span class="en">Smoking:</span></div>
+                                            <asp:Label runat="server" ID="prt_habits_smoking"/>
                                         </div>
 
-                                        <div class="row mb-2 " style="margin-left: 10px">
-                                            <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                                <asp:Label runat="server">Tiền sử tiêm chủng</span>/ <span class="text-primary">Immunization history:</span> </asp:Label>
-                                            </div>
-                                            <div class="col-12 " style="text-align: justify; font-size: 14.5px; font-family: Tahoma">
-                                                <asp:Label runat="server">• Tiêm vắc xin phòng COVID-19/ <span class="text-primary">COVID-19 vaccination:</span> </asp:Label>
-                                            </div>
-                                            <div  class="col-12 ">
-                                                <asp:Label CssClass="ml-4" Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_received_1_dose_true" Text="❏"/>&nbsp;Đã tiêm mũi 1/ <span class="text-primary">Received 1<sup>st</sup> dose</span>
-                                                <asp:Label CssClass="ml-4" Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_received_2_dose_true" Text="❏"/>&nbsp;Đã tiêm mũi 2/ <span class="text-primary">Received 2<sup>nd</sup> dose</span>
-                                            </div>
-                                            <div  class="col-12 ">
-                                                <asp:Label CssClass="ml-4" Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_received_additional_true" Text="❏"/>&nbsp;Đã tiêm mũi bổ sung, nhắc lại/ <span class="text-primary">Received additional, booster dose</span>
-                                                <asp:Label CssClass="ml-4" Style="font-size: 14.5px; font-family: Tahoma" runat="server" ID="prt_not_yet_vaccinations_true" Text="❏"/>&nbsp;Chưa tiêm/ <span class="text-primary">Not yet</span>
-                                            </div>
+                                        <div class="d-grid" style="grid-template-columns: 160px 1fr; margin-left: 10px">
+                                            <div>Uống rượu/ <span class="en">Alcohol:</span></div>
+                                            <asp:Label runat="server" ID="prt_habits_alcohol"/>
                                         </div>
 
-                                        <div class="row mb-2 " style="margin-left: 10px">
-                                            <div  class="col-12 ">
-                                                <asp:Label runat="server" ID="prt_immunization"/>
-                                            </div>
+                                        <div class="d-grid" style="grid-template-columns: 160px 1fr; margin-left: 10px">
+                                            <div>Chất gây nghiện/ <span class="en">Drugs:</span></div>
+                                            <asp:Label runat="server" ID="prt_habits_drugs"/>
                                         </div>
 
-                                        <div class="mb-1" style="margin-left: 20px">
-                                            • Thói quen/ Habits:
-                                        </div>
+                                        <div style="margin-left: 10px">Tập thể dục thường xuyên/ <span class="en">Regular physical exercise:</span></div>
 
-                                        <div class="mb-1 d-grid" style="grid-template-columns: 150px 1fr; margin-left: 10px">
-                                            Hút thuốc lá/ Smoking: <asp:Label runat="server" ID="prt_habits_smoking"/>
-                                        </div>
-
-                                        <div class="mb-1 d-grid" style="grid-template-columns: 150px 1fr; margin-left: 10px">
-                                            Uống rượu/ Alcohol: <asp:Label runat="server" ID="prt_habits_alcohol"/>
-                                        </div>
-
-                                        <div class="mb-1 d-grid" style="grid-template-columns: 150px 1fr; margin-left: 10px">
-                                            Chất gây nghiện/ Drugs: <asp:Label runat="server" ID="prt_habits_drugs"/>
-                                        </div>
-
-                                        <div class="mb-1" style="margin-left: 10px">
-                                            Tập thể dục thường xuyên/ Regular physical exercise:
-                                        </div>
-
-                                        <div class="mb-1 d-grid" style="grid-template-columns: 150px 1fr; margin-left: 10px">
+                                        <div class="d-grid" style="grid-template-columns: 160px 1fr; margin-left: 10px">
                                             <div></div>
                                             <asp:Label runat="server" ID="prt_habits_physical_exercise"/>
                                         </div>
 
-                                        <div class="mb-1" style="margin-left: 10px">
+                                        <div style="margin-left: 10px">
                                             <asp:Label runat="server" ID="prt_habits_other"/>
                                         </div>
 
-                                        <div class="mb-1 d-grid" style="grid-template-columns: 150px 1fr; margin-left: 10px">
-                                            Tiền sử dị ứng/ Allergy: <asp:Label runat="server" ID="prt_allergy"/>
+                                        <div class="d-grid" style="grid-template-columns: 160px 1fr; margin-left: 10px">
+                                            <div>Tiền sử dị ứng/ <span class="en">Allergy:</span></div>
+                                            <asp:Label runat="server" ID="prt_allergy"/>
                                         </div>
 
-                                        <div class="mb-1" style="margin-left: 10px">
-                                            <b>- Gia đình</b>/ Family: <asp:Label runat="server" ID="prt_family"/>
-                                        </div>
+                                        <div style="margin-left: 10px"><span class="font-bold">- Gia đình</span>/ <span class="en">Family:</span><asp:Label runat="server" ID="prt_family"/></div>
 
-                                        <div class="mb-1">
-                                            <b>III. Khám bệnh</b>/ Physical Examination:
-                                        </div>
+                                        <div><span class="font-bold">III. Khám bệnh</span>/ <span class="en">Physical Examination:</span></div>
 
-                                        <div class="mb-1" style="margin-left: 20px">
-                                            <b>DẤU HIỆU SINH TỒN</b>/ VITAL SIGNS
-                                        </div>
+                                        <div style="margin-left: 20px"><span class="font-bold">DẤU HIỆU SINH TỒN</span>/ <span class="en">VITAL SIGNS</span></div>
 
-                                        <table class="table-bordered mb-2" style="table-layout: fixed; width: 100%;">
+                                        <table class="table-bordered" style="table-layout: fixed; width: 100%;">
                                             <tr>
-                                                <td class="p-2">Nhiệt độ/ Temperature (C degree)</td>
-                                                <td class="p-2 text-right" style="width: 100px;">
-                                                    <asp:Label runat="server" ID="prt_vs_temperature" /></td>
-                                                <td class="p-2">Nhịp tim/ Heart rate (/min)</td>
-                                                <td class="p-2 text-right" style="width: 100px;">
-                                                    <asp:Label runat="server" ID="prt_vs_heart_rate" /></td>
+                                                <td class="p-2">Nhiệt độ/ <span class="en">Temperature</span> (C degree)</td>
+                                                <td class="p-2 text-right" style="width: 80px;"><asp:Label runat="server" ID="prt_vs_temperature" /></td>
+                                                <td class="p-2">Nhịp tim/ <span class="en">Heart rate</span> (/min)</td>
+                                                <td class="p-2 text-right" style="width: 80px;"><asp:Label runat="server" ID="prt_vs_heart_rate" /></td>
                                             </tr>
                                             <tr>
-                                                <td class="p-2">Cân nặng/ Weight (Kg)</td>
-                                                <td class="p-2 text-right">
-                                                    <asp:Label runat="server" ID="prt_vs_weight" /></td>
-                                                <td class="p-2">Nhịp thở/ Respiratory Rate (/min)</td>
-                                                <td class="p-2 text-right">
-                                                    <asp:Label runat="server" ID="prt_vs_respiratory_rate" /></td>
+                                                <td class="p-2">Cân nặng/ <span class="en">Weight</span> (Kg)</td>
+                                                <td class="p-2 text-right"><asp:Label runat="server" ID="prt_vs_weight" /></td>
+                                                <td class="p-2">Nhịp thở/ <span class="en">Respiratory Rate</span> (/min)</td>
+                                                <td class="p-2 text-right"><asp:Label runat="server" ID="prt_vs_respiratory_rate" /></td>
                                             </tr>
                                             <tr>
-                                                <td class="p-2">Chiều cao/Height (cm)</td>
-                                                <td class="p-2 text-right">
-                                                    <asp:Label runat="server" ID="prt_vs_height" /></td>
-                                                <td class="p-2">Huyết áp/Blood pressure (mmHg)</td>
-                                                <td class="p-2 text-right">
-                                                    <asp:Label runat="server" ID="prt_vs_blood_pressure" /></td>
+                                                <td class="p-2">Chiều cao/ <span class="en">Height</span> (cm)</td>
+                                                <td class="p-2 text-right"><asp:Label runat="server" ID="prt_vs_height" /></td>
+                                                <td class="p-2">Huyết áp/ <span class="en">Blood pressure</span> (mmHg)</td>
+                                                <td class="p-2 text-right"><asp:Label runat="server" ID="prt_vs_blood_pressure" /></td>
                                             </tr>
                                             <tr>
-                                                <td class="p-2">Chỉ số khối cơ thể/ BMI (Kg/m2)</td>
-                                                <td class="p-2 text-right">
-                                                    <asp:Label runat="server" ID="prt_vs_BMI" /></td>
-                                                <td class="p-2">Độ bão hòa Oxy/ SpO2 (%)</td>
-                                                <td class="p-2 text-right">
-                                                    <asp:Label runat="server" ID="prt_vs_spO2" /></td>
+                                                <td class="p-2">Chỉ số khối cơ thể/ <span class="en">BMI</span> (Kg/m2)</td>
+                                                <td class="p-2 text-right"><asp:Label runat="server" ID="prt_vs_BMI" /></td>
+                                                <td class="p-2">Độ bão hòa Oxy/ <span class="en">SpO2</span> (%)</td>
+                                                <td class="p-2 text-right"><asp:Label runat="server" ID="prt_vs_spO2" /></td>
                                             </tr>
                                         </table>
 
-                                        <div class="mb-1" style="margin-left: 20px">
-                                            <asp:Label runat="server" ID="prt_physical_exam"/>
-                                        </div>
-
-                                        <div class="mb-1 d-grid" style="grid-template-columns: auto 1fr; margin-left: 10px">
-                                            <div><b>❖ Yêu cầu khám chuyên khoa tâm lý</b>/ Psychological consultation required:&nbsp;</div>
+                                        <div style="margin-left: 20px"><asp:Label runat="server" ID="prt_physical_exam"/></div>
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; gap: 6px; margin-left: 6px">
+                                            <div><span class="font-bold">❖ Yêu cầu khám chuyên khoa tâm lý</span>/ <span class="en">Psychological consultation required: </span></div>
                                             <asp:Label runat="server" ID="prt_psy_consul_required"/>
                                         </div>
-
-                                        <div class="mb-1">
-                                            <b>IV. Chỉ định và kết quả xét nghiệm</b>/ Laboratory indications and results:
-                                        </div>
-
-                                        <div class="mb-1" style="margin-left: 20px">
-                                            <asp:Label runat="server" ID="prt_laboratory_result"/>
-                                        </div>
-
-                                        <div class="mb-1" style="margin-left: 20px">
-                                            <asp:Label runat="server" ID="prt_add_investigation"/>
-                                        </div>
-
-                                        <div class="mb-1">
-                                            <b>V. Kết luận</b>/ Conclusion:
-                                        </div>
-                            
-                                        <div class="mb-1 d-grid" style="grid-template-columns: auto 1fr; margin-left: 20px">
-                                            <div>Chẩn đoán ban đầu/ Initial diagnosis:&nbsp;</div>
+                                        <div><span class="font-bold">IV. Chỉ định và kết quả xét nghiệm</span>/ <span class="en">Laboratory indications and results:</span></div>
+                                        <div style="margin-left: 20px"><asp:Label runat="server" ID="prt_laboratory_result"/></div>
+                                        <div style="margin-left: 20px"><asp:Label runat="server" ID="prt_add_investigation"/></div>
+                                        <div><span class="font-bold">V. Kết luận</span>/ <span class="en">Conclusion:</span></div>
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; margin-left: 20px">
+                                            <div>Chẩn đoán ban đầu/ <span class="en">Initial diagnosis: </span></div>
                                             <asp:Label runat="server" ID="prt_initial_diagnosis"/>
                                         </div>
-
-                                        <div class="mb-1 d-grid" style="grid-template-columns: auto 1fr; margin-left: 20px">
-                                            <div>Chẩn đoán phân biệt/ Differential diagnosis:&nbsp;</div>
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; margin-left: 20px">
+                                            <div>Chẩn đoán phân biệt/ <span class="en">Differential diagnosis:</span></div>
                                             <asp:Label runat="server" ID="prt_diff_diagnosis"/>
                                         </div>
-
-                                        <div class="mb-1 d-grid" style="grid-template-columns: auto 1fr; margin-left: 20px">
-                                            <div>Bệnh kèm theo/ Associated conditions:&nbsp;</div>
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; margin-left: 20px">
+                                            <div>Bệnh kèm theo/ <span class="en">Associated conditions: </span></div>
                                             <asp:Label runat="server" ID="prt_associated_conditions"/>
                                         </div>
-
-                                        <div class="mb-1 d-grid" style="grid-template-columns: auto 1fr; margin-left: 20px">
-                                            <div>Kế hoạch điều trị/ Treatment Plan:&nbsp;</div>
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; margin-left: 20px">
+                                            <div>Kế hoạch điều trị/ <span class="en">Treatment Plan: </span></div>
                                             <asp:Label runat="server" ID="prt_treatment_plan"/>
                                         </div>
-
-                                        <div class="mb-1 d-grid" style="grid-template-columns: auto 1fr; margin-left: 20px">
-                                            <div>Kế hoạch xuất viện/ Discharge plan:&nbsp;</div>
+                                        <div class="d-grid" style="grid-template-columns: auto 1fr; margin-left: 20px">
+                                            <div>Kế hoạch xuất viện/ <span class="en">Discharge plan:</span></div>
                                             <asp:Label runat="server" ID="prt_discharge_plan"/>
                                         </div>
-
-                                        <div class="mt-4" style="margin-left: 20px">
-                                            <div>Ngày giờ/ Date & time: <asp:Label runat="server" ID="prt_signature_date"/></div>
-                                            <div>Họ tên bác sĩ và mã số nhân viên/ Doctor's name and ID:</div>
-                                            <div>Chữ ký/ Signature</div>
+                                        <div>&nbsp;</div>
+                                        <div style="margin-left: 20px">
+                                            <div>Ngày giờ/ <span class="en">Date & time: </span><asp:Label runat="server" ID="prt_signature_date"/></div>
+                                            <div>Họ tên bác sĩ và mã số nhân viên/ <span class="en">Doctor's name and ID: </span></div>
+                                            <div>Chữ ký/ <span class="en">Signature: </span></div>
                                         </div>
                                     </div>
                                 </td>
@@ -302,16 +224,16 @@
                         </tbody>
                         <tfoot class="report-footer">
                             <tr>
-                                <td class="report-footer-cell">
-                                    <img style="width: 100%" src="../images/ExcellentCare.png" />
-                                    <div class="footer-info">
+                                <td class="report-footer-cell" runat="server" id="print_footer" style="height: 2cm; width: 210mm">
+                                    <div style="margin-left: -18px"><img style="width: 210mm" src="../images/ExcellentCare.png" /></div>
+                                    <div class="footer-info" style="padding: 0 18px">
                                         <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
-                                        <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>
+                                        <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Tp. Thủ Đức, Tp.HCM</div>
                                         <div>Tel: 028 3910 9999</div>
                                         <div>www.aih.com.vn</div>
                                     </div>
                                 </td>
-                                <td class="report-footer-space"></td>
+                                <td class="report-footer-space" runat="server" id="print_footer_space" style="height: 2cm; width: 210mm"></td>
                             </tr>
                         </tfoot>
                     </table>
@@ -319,16 +241,14 @@
 
                 <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" MaxHeight="400">
                     <Windows>
-                        <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History" runat="server">
+                        <telerik:RadWindow CssClass="NoIconUrl" VisibleStatusbar="false" MinWidth="600" RenderMode="Lightweight" ID="RadWindow1" Title="Version History" runat="server">
                             <ContentTemplate>
                                 <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
                                     <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
                                         <Columns>
                                             <telerik:GridTemplateColumn>
                                                 <ItemTemplate>
-                                                    <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
-        </telerik:RadLabel>
-                                           
+                                                    <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'></telerik:RadLabel>
                                                     <asp:HyperLink CssClass="btn-link" Text="View Log" runat="server" NavigateUrl='<%# GetLogUrl(Eval("document_log_id")) %>'></asp:HyperLink>
                                                 </ItemTemplate>
                                             </telerik:GridTemplateColumn>
@@ -341,7 +261,7 @@
                                 </telerik:RadGrid>
                             </ContentTemplate>
                         </telerik:RadWindow>
-                        <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow2" Title="Warning" runat="server">
+                        <telerik:RadWindow CssClass="NoIconUrl" RenderMode="Lightweight" ID="RadWindow2" Title="Warning" runat="server">
                             <ContentTemplate>
                                 <div class="text-center">
                                     <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
@@ -353,7 +273,7 @@
                                 </div>
                             </ContentTemplate>
                         </telerik:RadWindow>
-                        <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow3" Title="Warning" runat="server">
+                        <telerik:RadWindow CssClass="NoIconUrl" RenderMode="Lightweight" ID="RadWindow3" Title="Warning" runat="server">
                             <ContentTemplate>
                                 <div class="text-center">
                                     <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
@@ -1092,8 +1012,6 @@
                                         <div class="row mb-2">
                                             <div class="col-md-12">
                                                 <div class="form-actions">
-                                                    <div runat="server" onclick="showWindow('RadWindow2')" id="btnDeleteModal" class="btn btn-danger">Delete</div>
-
                                                     <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
 
                                                     <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
@@ -1103,6 +1021,8 @@
                                                     <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary waves-effect">Print</asp:LinkButton>
 
                                                     <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
+
+                                                    <div runat="server" onclick="showWindow('RadWindow2')" id="btnDeleteModal" class="btn btn-danger">Delete</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1169,20 +1089,20 @@
             }, 1000);
         }
 
-        function printDiv() {
-            var printContents = document.getElementById("print_content").innerHTML;
-            var originalContents = document.body.innerHTML;
+        //function printDiv() {
+        //    var printContents = document.getElementById("print_content").innerHTML;
+        //    var originalContents = document.body.innerHTML;
 
-            document.body.innerHTML = printContents;
+        //    document.body.innerHTML = printContents;
 
-            window.print();
+        //    window.print();
 
-            document.body.innerHTML = originalContents;
-        }
+        //    document.body.innerHTML = originalContents;
+        //}
 
         function btnPrint_Click() {
-            let printContent = document.querySelector("#printContent");
-            printContent.setAttribute("style", "display: block");
+            let printContent = document.querySelector("#print_content");
+            printContent.style.display = "block";
 
             let total = Math.ceil(printContent.offsetHeight / 1096);
 
@@ -1190,7 +1110,7 @@
                 let div = document.createElement("div");
                 div.setAttribute("class", "watermark page");
                 div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px");
-                div.setAttribute("data-page", "Page " + i + " of " + total);
+                //div.setAttribute("data-page", "Page " + i + " of " + total);
                 document.getElementById("print_content").append(div);
             }
 

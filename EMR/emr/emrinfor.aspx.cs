@@ -416,42 +416,6 @@ namespace EMR
             }
         }
 
-        [WebMethod()]
-        public static string lblURL_click(string status, string docId)
-        {
-            return "";
-            //string location = (string)HttpContext.Current.Session["location"];
-            //string empId = (string)HttpContext.Current.Session["emp_id"];
-
-            //try
-            //{
-            //    if (status == DocumentStatus.DRAFT && location == loc)
-            //    {
-            //        dynamic result = WebHelpers.GetAPI($"api/emr/check-session/{DataHelpers._LOCATION}/{docId}/{empId}");
-
-            //        if (result.Status == System.Net.HttpStatusCode.OK)
-            //        {
-            //            dynamic obj = JObject.Parse(result.Data);
-            //            dynamic employee = obj["items"];
-
-            //            //false - open denied
-            //            if ((bool)obj.status)
-            //            {
-            //                return "Ok";
-            //            }
-            //            //ScriptManager.RegisterStartupScript(page, page.GetType(), "document_block", "setTimeout(()=>{ sweetAlert(\"Denied!\", \"This document is blocked by " + employee.full_name_e + "\", \"error\");},0);", true);
-            //            return employee.full_name_e;
-            //        }
-            //        else { return "Fail"; }
-            //    }
-            //    return "Fail";
-            //}
-            //catch (Exception ex)
-            //{
-            //    return "Fail";
-            //}
-        }
-
         private void BindLocation()
         {
 

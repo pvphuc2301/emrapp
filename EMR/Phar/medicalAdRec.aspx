@@ -65,11 +65,25 @@
         }
 
         .report-footer-space {
-            height: 200px;
-            /*border: 1px solid #000;*/
+            height: 180px;
+            border: 1px solid #000;
         }
 
         thead { display: table-header-group; }
+
+        @media print 
+        {
+            #prt_info, 
+            #print_content 
+            {
+                margin-right: 1.5cm !important;
+                margin-left: 2cm !important;
+            }
+            #printContent {
+                width: 210mm;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -95,7 +109,6 @@
                             </div>
 
                             <div class="border p-1" style="overflow: hidden;" id="prt_info">
-                                
                                 <div style="line-height: 15px;">
                                     <div class="d-grid" style="grid-template-columns: 1fr 1fr;">
                                         <div class="d-grid m-0 p-0" style="grid-template-columns: auto 1fr;">
@@ -223,7 +236,6 @@
                                     <div style="border: 1px solid #000; height: 437px; width: 100%; box-sizing: border-box; page-break-inside: avoid">2</div>
                                     <div style="border: 1px solid #000; height: 432px; width: 100%; box-sizing: border-box; page-break-inside: avoid">3</div>--%>
                                     
-
                                     <telerik:RadGrid ID="RadGrid2" GridLines="None" runat="server" AllowAutomaticDeletes="True" AutoGenerateColumns="False" ShowFooter="False" OnItemDataBound="RadGrid1_ItemDataBound" OnNeedDataSource="RadGrid1_NeedDataSource" ItemStyle-BackColor="White" CssClass="rgview" Skin="">
                                         <MasterTableView HeaderStyle-HorizontalAlign="Center" HeaderStyle-Font-Bold="true" HeaderStyle-Font-Size="Small" 
                                             HeaderStyle-ForeColor="Black" ItemStyle-Font-Size="Smaller" AlternatingItemStyle-Font-Size="Smaller"
@@ -343,7 +355,6 @@
                 </MasterTableView>
         </telerik:RadGrid>
                                     
-
                                 </div>
                             </div>
                         </td>
@@ -353,7 +364,7 @@
                 <tfoot class="report-footer cssclsNoScreen">
                     <tr>
                         <td class="report-footer-cell">
-                            <div class="d-grid mt-2" style="grid-template-columns: 1fr 1fr; grid-gap: 5px; margin-bottom: 110px">
+                            <div class="d-grid mt-2" style="grid-template-columns: 1fr 1fr; grid-gap: 5px; margin-bottom: 90px">
                                 <div></div>
                                 <div class="text-center" style="break-inside: avoid !important; page-break-inside: avoid !important">
                                     <div id="prtPrintDate"></div>
@@ -447,11 +458,11 @@
             }
 
             for (let i = 1; i <= totalPage; i++) {
-                let div = document.createElement("div");
-                div.setAttribute("class", "watermark page");
-                div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px;");
-                div.setAttribute("data-page", "Page " + i + " of " + totalPage);
-                document.getElementById("print_content").append(div);
+                //let div = document.createElement("div");
+                //div.setAttribute("class", "watermark page");
+                //div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px;");
+                //div.setAttribute("data-page", "Page " + i + " of " + totalPage);
+                //document.getElementById("print_content").append(div);
             }
 
             //console.log('offsetHeight', document.getElementById("prt_info").offsetHeight);

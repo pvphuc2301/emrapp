@@ -43,7 +43,7 @@
                     <td style="width: 194px;">Mã bệnh nhân/ <span class="text-primary">PID:</span></td>
                     <td style="width: 156px;"><asp:Label ID="lbPID" runat="server"></asp:Label></td>
                     <td style="width: 186px;"><span class="text-primary">RPID:</span></td>
-                    <td style="width: 144px;"><asp:Label ID="lbRadRequestNo" runat="server"></asp:Label></td>
+                    <td style="width: 144px;"><asp:LinkButton runat="server" ID="lbRadRequestNo" Text="View Image" OnClick="lbRadRequestNo_Click"></asp:LinkButton></td>
                 </tr>
                 <tr>
                     <td>Họ Tên/ <span class="text-primary">Patient Name:</span></td>
@@ -110,3 +110,18 @@
         </div>
     </div>
 <%--</div>--%>
+
+<%--<script>
+    
+    function openwnd(url) {
+        window.open(url, '_blank').focus();
+    }
+    function encodeLink(token) {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+        openwnd(jsonPayload);
+    }
+</script>--%>

@@ -53,9 +53,9 @@
     <form id="form1" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
         <header class="topbar" id="header" runat="server" style="position: sticky; top: 0; border-bottom: 1px solid #E8E9F0; border-left: 2px solid #E8E9F0;">
-                        <nav class="navbar top-navbar navbar-expand-md navbar-white bg-white border-bottom-2 border-darkgrey">
-                            <div class="navbar-collapse">
-                                <ul class="navbar-nav my-lg-0 ml-auto">
+            <nav class="navbar top-navbar navbar-expand-md navbar-white bg-white border-bottom-2 border-darkgrey">
+                <div class="navbar-collapse">
+                    <ul class="navbar-nav my-lg-0 ml-auto">
                         <%--<li class="nav-item dropdown">
                             <a class="nav-link btn-link  waves-effect waves-primary" href="javascript:void(0)">
                                 <icon:House runat="server" ID="House" />
@@ -77,23 +77,23 @@
                             </div>
                         </li>--%>
 
-                                    <li class="nav-item dropdown">
-                                        <%--<a class="nav-link btn-link  waves-effect waves-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--%>
-                                        <a class="nav-link btn-link  waves-effect waves-primary">
-                                            <%--<span class="text-primary"><icon:GeoAlt runat="server" ID="GeoAlt" /></span>--%>
-                                            <asp:Label runat="server" ID="lbl_location"></asp:Label>
-                                        </a>
+                        <li class="nav-item dropdown">
+                            <%--<a class="nav-link btn-link  waves-effect waves-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--%>
+                            <a class="nav-link btn-link  waves-effect waves-primary">
+                                <%--<span class="text-primary"><icon:GeoAlt runat="server" ID="GeoAlt" /></span>--%>
+                                <asp:Label runat="server" ID="lbl_location"></asp:Label>
+                            </a>
 
-                                        <%--<div class="dropdown-menu dropdown-menu-right animated flipInY" aria-labelledby="btnGroupDrop1">
-                                            <a runat="server" onclick="__doPostBack('location_Change', 'AIH')" id="location_aih" class="dropdown-item disabled" href="javascript:void(0)">
-                                                AIH
-                                            </a>
-                                            <div class="dropdown-divider m-0"></div>
-                                            <a runat="server" onclick="__doPostBack('location_Change', 'CLI')" id="location_cli" class="dropdown-item disabled" href="#">
-                                                CLI
-                                            </a>
-                                        </div>--%>
-                                    </li>
+                            <%--<div class="dropdown-menu dropdown-menu-right animated flipInY" aria-labelledby="btnGroupDrop1">
+                                <a runat="server" onclick="__doPostBack('location_Change', 'AIH')" id="location_aih" class="dropdown-item disabled" href="javascript:void(0)">
+                                    AIH
+                                </a>
+                                <div class="dropdown-divider m-0"></div>
+                                <a runat="server" onclick="__doPostBack('location_Change', 'CLI')" id="location_cli" class="dropdown-item disabled" href="#">
+                                    CLI
+                                </a>
+                            </div>--%>
+                        </li>
                         
                         <li class="nav-item dropdown">
                             <a class="nav-link btn-link waves-effect waves-primary icon-badge-container" href="../other/sendlogview.aspx?view=mail" title="Mail" target="MainContent">
@@ -144,9 +144,9 @@
                             </div>
                         </li>
                     </ul>
-                            </div>
-                        </nav>
-                    </header>
+                </div>
+            </nav>
+        </header>
         
         <div style="display: grid; grid-template-columns: auto 1fr; height:100vh;">
             <telerik:RadTabStrip RenderMode="Lightweight" runat="server" ID="RadTabStrip2"  MultiPageID="RadMultiPage2"

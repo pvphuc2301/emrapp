@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using EMR.Classes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -168,6 +169,8 @@ namespace EMR
         {
             try
             {
+                LoadBarCode();
+
                 btnVSFreeText.Visible = false;
                 cb_received_1_dose_true.Disabled
                     = cb_received_2_dose_true.Disabled
@@ -235,7 +238,8 @@ namespace EMR
                 patientInfo = new PatientInfo(varPID);
                 patientVisitInfo = new PatientVisitInfo(varPVID, loc);
 
-                WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
+                LoadBarCode();
+
                 prt_fullname.InnerText = string.Format("{0} - {1}", patientInfo.FullName, patientInfo.Gender);
 
                 prt_DOB.InnerText = "DOB: " + WebHelpers.FormatDateTime(patientInfo.DOB, "dd-MM-yyyy", "");
@@ -252,17 +256,17 @@ namespace EMR
                 //2
                 prt_personal.Text = WebHelpers.TextToHtmlTag(iima.personal);
                 //Habits
-                prt_habits_smoking.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"text-primary\">No</span>", Value = false }, new Option { Text = "Có, ghi số gói trong năm/ <span class=\"text-primary\">Yes, specify pack years</span> " + WebHelpers.GetBool(iima.habits_smoking, iima.habits_smoking_pack, ""), Value = true }, iima.habits_smoking, "display: grid; grid-template-columns:90px auto;");
+                prt_habits_smoking.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"en\">No</span>", Value = false }, new Option { Text = "Có, ghi số gói trong năm/ <span class=\"en\">Yes, specify pack years</span> " + WebHelpers.GetBool(iima.habits_smoking, iima.habits_smoking_pack, ""), Value = true }, iima.habits_smoking, "display: grid; grid-template-columns:90px auto;");
 
-                prt_habits_alcohol.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"text-primary\">No</span>", Value = false }, new Option { Text = "Có, ghi rõ/ <span class=\"text-primary\">Yes, specify</span> " + WebHelpers.GetBool(iima.habits_alcohol, iima.habits_alcohol_note, ""), Value = true }, iima.habits_alcohol, "display: grid; grid-template-columns:90px auto;");
+                prt_habits_alcohol.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"en\">No</span>", Value = false }, new Option { Text = "Có, ghi rõ/ <span class=\"en\">Yes, specify</span> " + WebHelpers.GetBool(iima.habits_alcohol, iima.habits_alcohol_note, ""), Value = true }, iima.habits_alcohol, "display: grid; grid-template-columns:90px auto;");
 
-                prt_habits_drugs.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"text-primary\">No</span>", Value = false }, new Option { Text = "Có, ghi rõ/ <span class=\"text-primary\">Yes, specify</span> " + WebHelpers.GetBool(iima.habits_drugs, iima.habits_drugs_note, ""), Value = true }, iima.habits_drugs, "display: grid; grid-template-columns:90px auto;");
+                prt_habits_drugs.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"en\">No</span>", Value = false }, new Option { Text = "Có, ghi rõ/ <span class=\"en\">Yes, specify</span> " + WebHelpers.GetBool(iima.habits_drugs, iima.habits_drugs_note, ""), Value = true }, iima.habits_drugs, "display: grid; grid-template-columns:90px auto;");
 
-                prt_habits_physical_exercise.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"text-primary\">No</span>", Value = false }, new Option { Text = "Có, ghi rõ/ <span class=\"text-primary\">Yes, specify</span> " + WebHelpers.GetBool(iima.habits_physical_exercise, iima.habits_phy_exer_note, ""), Value = true }, iima.habits_physical_exercise, "display: grid; grid-template-columns:90px auto;");
+                prt_habits_physical_exercise.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"en\">No</span>", Value = false }, new Option { Text = "Có, ghi rõ/ <span class=\"en\">Yes, specify</span> " + WebHelpers.GetBool(iima.habits_physical_exercise, iima.habits_phy_exer_note, ""), Value = true }, iima.habits_physical_exercise, "display: grid; grid-template-columns:90px auto;");
 
                 prt_habits_other.Text = "Khác/ Other, Ghi rõ/ Specify: " + iima.habits_other;
 
-                prt_allergy.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"text-primary\">No</span>", Value = false }, new Option { Text = "Có, ghi rõ/ <span class=\"text-primary\">Yes, specify</span> " + WebHelpers.GetBool(iima.allergy, iima.allergy_note, ""), Value = true }, iima.allergy, "display: grid; grid-template-columns:90px auto;");
+                prt_allergy.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"en\">No</span>", Value = false }, new Option { Text = "Có, ghi rõ/ <span class=\"en\">Yes, specify</span> " + WebHelpers.GetBool(iima.allergy, iima.allergy_note, ""), Value = true }, iima.allergy, "display: grid; grid-template-columns:90px auto;");
                 //
                 prt_family.Text = WebHelpers.TextToHtmlTag(iima.family);
 
@@ -280,7 +284,7 @@ namespace EMR
                 //prt_vs_pulse.Text = iima.vs_pulse;
                 prt_physical_exam.Text = WebHelpers.TextToHtmlTag(iima.physical_exam);
 
-                prt_psy_consul_required.Text = WebHelpers.CreateOptions(new Option { Text = "No/ <span class=\"text-primary\">Không</span>", Value = false }, new Option { Text = "Yes/ <span class=\"text-primary\">Có</span>", Value = true }, iima.psy_consul_required, "display: grid; grid-template-columns:90px auto;");
+                prt_psy_consul_required.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ <span class=\"en\">No</span>", Value = false }, new Option { Text = "Có/ <span class=\"en\">Yes</span>", Value = true }, iima.psy_consul_required, "display: grid; grid-template-columns:90px auto;");
 
                 //IV.
                 prt_laboratory_result.Text = WebHelpers.TextToHtmlTag(iima.laboratory_result);
@@ -316,7 +320,7 @@ namespace EMR
                 Label not_yet_vaccinations = FindControl("prt_not_yet_vaccinations_" + iima.not_yet_vaccinations);
                 if (not_yet_vaccinations != null) not_yet_vaccinations.Text = "☒";
 
-                prt_immunization.Text = "- Tiêm vắc xin khác (ghi rõ)/ <span class=\"text-primary\">Other vaccinations (specify)</span>: " + iima.immunization;
+                prt_immunization.Text = "- Tiêm vắc xin khác (ghi rõ)/ <span class=\"en\">Other vaccinations (specify)</span>: " + iima.immunization;
 
                 prt_signature_date.Text = DateTime.Now.ToString("dd/MM/yyyy");
             }
@@ -644,6 +648,12 @@ namespace EMR
                  = txt_vs_blood_pressure.Disabled
                  = txt_vs_spO2.Disabled
                  = !cbVSFreeText.Checked;
+        }
+        private void LoadBarCode()
+        {
+            IBarcodeGenerator barcodeGenerator = new BarcodeGenerator();
+            BarCode.Controls.Clear();
+            BarCode.Controls.Add(barcodeGenerator.Generator(patientInfo.visible_patient_id));
         }
     }
 }

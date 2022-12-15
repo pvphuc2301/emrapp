@@ -1,4 +1,5 @@
-﻿using EMR.UserControls;
+﻿using EMR.Classes;
+using EMR.UserControls;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -88,6 +89,7 @@ namespace EMR
         {
             try
             {
+                LoadBarCode(); 
                 lbl_disc_reason_desc.Text = WebHelpers.TextToHtmlTag(diss.disc_reason_desc);
                 lbl_date_of_hospital.Text = WebHelpers.FormatDateTime(diss.date_of_hospital, "dd-MMM-yyyy");
                 lbl_date_of_discharge.Text = WebHelpers.FormatDateTime(diss.date_of_discharge, "dd-MMM-yyyy");
@@ -194,7 +196,8 @@ namespace EMR
                 patientInfo = new PatientInfo(varPID);
                 patientVisitInfo = new PatientVisitInfo(varPVID, loc);
 
-                WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
+                LoadBarCode();
+                
                 prt_fullname.InnerText = $"{patientInfo.GetFullName(true)} - {patientInfo.GetGender(true)}";
                 prt_patient_name_e.InnerText = $"{patientInfo.GetFullName(false)} - {patientInfo.GetGender(false)}";
 
@@ -555,6 +558,12 @@ namespace EMR
         protected void clearSession_Click(object sender, EventArgs e)
         {
             WebHelpers.clearSessionDoc(Page, varDocID, loc);
+        }
+        private void LoadBarCode()
+        {
+            IBarcodeGenerator barcodeGenerator = new BarcodeGenerator();
+            BarCode.Controls.Clear();
+            BarCode.Controls.Add(barcodeGenerator.Generator(patientInfo.visible_patient_id));
         }
     }
 }

@@ -2,15 +2,40 @@
     padding-top: 0 !important;
     padding-bottom: 0 !important;
 }
-
 .RadGrid {
     line-height: 25px !important;
 }
-
 .RadInputDisabled a, .RadInputDisabled .riTextBox {
     opacity: 1 !important;
     border: none !important;
 }
 .RadGrid_Bootstrap .rgRow, .RadGrid_Bootstrap .rgAltRow, .RadGrid_Bootstrap .rgEditRow, .RadGrid_Bootstrap .rgFooter, .RadGrid_Bootstrap .rgGroupHeader {
     height: 25px !important;
+}
+.rwIcon.rwCustomIcon {
+    background-size: contain;
+}
+.RadWindow_Bootstrap .rwTitleBar {
+    background-color: #eeeef2;
+    color: #545455;
+}
+.RadWindow_Bootstrap .rwContent {
+    background-color: #f5f5f5;
+}
+.RadWindow.NoIconUrl .rwIcon {
+    display: none;
+}
+.RadWindow.NoIconUrl .rwTitle {
+    padding-left: 0 !important;
+}
+.TelerikModalOverlay {
+    opacity: 0 !important;
+    background-color: unset;
+}
+.RadWindow_Bootstrap {
+    border: 1px solid #597189 !important;
+    border-radius: 0 !important;
+}
+.RadGrid_Bootstrap .rgSelectedCell a, .RadGrid_Bootstrap .rgSelectedRow a {
+    color: #000;
 }

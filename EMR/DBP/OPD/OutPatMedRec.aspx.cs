@@ -167,10 +167,11 @@ namespace EMR.DBP.OPD
                 patientInfo = new PatientInfo(varPID);
                 patientVisitInfo = new PatientVisitInfo(varPVID, loc);
 
-                //prt_fullname.Text = patientInfo.FullName + $" ({patientInfo.Title})";
-                //prt_dob.Text = WebHelpers.FormatDateTime(patientInfo.date_of_birth) + " | " + patientInfo.Gender;
-                //prt_vpid.Text = patientInfo.visible_patient_id;
-                //WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
+                prt_fullname.Text = patientInfo.FullName + $" ({patientInfo.Title})";
+                prt_dob.Text = WebHelpers.FormatDateTime(patientInfo.date_of_birth) + " | " + patientInfo.Gender;
+                prt_vpid.Text = patientInfo.visible_patient_id;
+                WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
+
                 prt_day_of_visit.Text = WebHelpers.FormatDateTime(patientVisitInfo.actual_visit_date_time);
                 prt_chief_complaint.Text = WebHelpers.TextToHtmlTag(omr.chief_complain, false);
                 prt_medical_history.Text = WebHelpers.TextToHtmlTag(omr.medical_history, false);

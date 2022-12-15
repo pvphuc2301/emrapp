@@ -1,6 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="EmerTriaAndNurAssRec.aspx.cs" Inherits="EMR.EmergencyTriageAndNursingAssessmentRecord" ValidateRequest="false" %>
 
-
 <%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="webUI" TagName="TextField" %>
 <%@ Register Src="~/UserControls/AmendReason.ascx" TagPrefix="webUI" TagName="AmendReason" %>
 <%@ Register Src="~/UserControls/PrintTemplate/PrintWindow.ascx" TagPrefix="webUI" TagName="PrintWindow" %>
@@ -18,7 +17,6 @@
 <%@ Register Src="~/icons/Pencil.ascx" TagPrefix="icon" TagName="Pencil" %>
 
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title></title>
@@ -28,90 +26,194 @@
     <link href="../styles/alertify.css" rel="stylesheet" />
     <link href="../styles/print.css" rel="stylesheet" />
     <style>
-         @media print {
-            * {
-                font-family: "Times New Roman", Times, serif;
+        .border { border-color: #000 !important; }
+        @page { size: A4; margin-top: 15px; margin-right: 0; margin-bottom: 0; margin-left: 0; }
+
+        @media print {
+    body
+    {
+        font-family: 'Times New Roman' !important;
+        /*font-size: 11pt !important;*/
+        /*font-size: 14.5px; 
+        font-family: Tahoma;*/
+    }
+    .en {
+        color: #0070c0 !important;
+        font-size: 11pt !important;
+        line-height: 1.5 !important;
+        font-style: italic;
+    }
+    /*i {*/
+        /*color: #007297 !important;*/
+        /*color: #007297;
+        font-size: 10pt;
+    }*/
+
+    .watermark {
+        background-repeat: no-repeat;
+        background-image: url("../images/logo-opacity.png") !important;
+        background-position-y: -10px;
+        background-position-x: center;
+        z-index: -1;
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 950px;
+    }
+
+    table {
+        page-break-after: auto
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    td {
+        page-break-inside: avoid;
+        page-break-after: auto
+    }
+
+    thead {
+        display: table-header-group
+    }
+
+    tfoot {
+        display: table-footer-group
+    }
+
+    table tr td {
+        padding: 4px;
+    }
+
+    .page:after {
+        content: attr(data-page);
+        position: absolute;
+        bottom: 1px;
+        left: 0;
+        right: 0;
+        text-align: center;
+    }
+
+    .cssclsNoPrint {
+        display: none
+    }
+
+    .report-footer .report-footer-cell {
+        display: inline-block;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
+
+    .footer-info {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        font-size: 12px;
+    }
+
+    .report-footer-space {
+        height: 55px;
+    }
+
+    .cssclsNoScreen .header-info {
+        display: flex;
+        align-items: center;
+        height: 80px;
+    }
+
+        .cssclsNoScreen .header-info img {
+            width: 200px;
+        }
+
+        .cssclsNoScreen .header-info .header-info-title {
+            flex-grow: 1;
+            text-align: center;
+        }
+
+            .cssclsNoScreen .header-info .header-info-title h4 {
+                color: #007297;
+                font-size: 20.6963px;
+                font-weight: bold;
+                margin-bottom: 4px;
             }
-         }
-         .border{ border-color: #000 !important; }
 
-         .header-info-title h4 {
-            color: #007297;
-            font-size: 14.6667px;
-            font-weight: bold;
-            margin-bottom: 0;
-        }
+    .cssclsNoScreen .text-primary {
+        color: #007297 !important;
+    }
 
-        .header-info-title h5 {
-            color: #e20e5a;
-            font-size: 14.6667px;
-            font-weight: bold;
-            margin-bottom: 0;
-        }
-
-        .v10:after {
-           content: 'Version: 1.0';
-            font-size: 10px;
-            color: #343a40;
-            position: absolute;
-            right: 10px;
-            bottom: 4px;
-        }
+    .cssclsNoScreen .header-info .header-info-title h5 {
+        color: #e20e5a;
+        font-size: 14.6667px;
+        margin-bottom: 0;
+    }
+}
 /*
-        .border{ border-color: #000 !important; }
 
-        #canvas {
-            border: 2px solid #000; 
-        }
 
-        @page {
-            margin-top: 13px;
-            margin-bottom: 13px;
-            margin-left: 28px;
-            margin-right: 28px;
-        }
 
-        .RadGrid_Bootstrap .rgRow > td, .RadGrid_Bootstrap .rgAltRow > td, .RadGrid_Bootstrap .rgEditRow > td, .RadGrid_Bootstrap .rgFooter > td, .RadGrid_Bootstrap .rgFilterRow > td, .RadGrid_Bootstrap .rgHeader, .RadGrid_Bootstrap .rgResizeCol, .RadGrid_Bootstrap .rgGroupHeader td {
-            padding: 4px !important;
-        }
+@media print {
+    body { font-family: 'Times New Roman' !important; }
+    table { page-break-after: auto }
+    tr { page-break-inside: avoid; page-break-after: auto }
+    td { page-break-inside: avoid; page-break-after: auto }
+    thead { display: table-header-group }
+    tfoot { display: table-footer-group }
+    table tr td { padding: 4px; }
+    .en { color: #0070c0 !important; font-size: 11pt !important; line-height: 1.5 !important; font-style: italic; }
+    .watermark { background-repeat: no-repeat; background-image: url("../images/logo-opacity.png") !important; background-position-y: -10px; background-position-x: center; z-index: -1; position: absolute; left: 0; right: 0; height: 297mm; }
+    .cssclsNoPrint { display: none }
+    .report-header, .report-footer { display: inline-block; position: fixed; left: 0; right: 0; background-color: #fff; }
+    .report-header-cell { top: 0; }
+    .report-footer-cell { bottom: 0; }
+    
+    .footer-info { display: flex; justify-content: space-between; width: 100%; font-size: 12px; }*/
+    
 
-        .header-info-title {
-            
-        }
 
-        .header-info-title h4 {
-            color: #007297;
-            font-size: 14.6667px;
-            font-weight: bold;
-            margin-bottom: 0;
-        }
+    /*.cssclsNoScreen .header-info {
+        display: flex;
+        align-items: center;
+        height: 80px;
+    }*/
 
-        .header-info-title h5 {
-            color: #e20e5a;
-            font-size: 14.6667px;
-            font-weight: bold;
-            margin-bottom: 0;
-        }
+        /*.cssclsNoScreen .header-info img {
+            width: 200px;
+        }*/
 
-        table { page-break-after:auto }
-        tr    { page-break-inside:avoid; page-break-after:auto }
-        td    { page-break-inside:avoid; page-break-after:auto }
-        thead { display:table-header-group }
-        tfoot { display:table-footer-group }
-
-        .report-footer-space {
-            height: 45px;
-        }
-
-        .page:after {
-            content: attr(data-page);
-            position: absolute;
-            bottom: 1px;
-            left: 0;
-            right: 0;
+        /*.cssclsNoScreen .header-info .header-info-title {
+            flex-grow: 1;
             text-align: center;
         }*/
 
+            /*.cssclsNoScreen .header-info .header-info-title h4 {
+                color: #007297;
+                font-size: 20.6963px;
+                font-weight: bold;
+                margin-bottom: 4px;
+            }*/
+
+    /*.cssclsNoScreen .text-primary {
+        color: #007297 !important;
+    }*/
+
+    /*.cssclsNoScreen .header-info .header-info-title h5 {
+        color: #e20e5a;
+        font-size: 14.6667px;
+        margin-bottom: 0;
+    }*/
+
+    /*.report-header-space,
+    .report-footer-space {
+        height: 2cm
+    }
+}*/
+    #print_content {
+		    line-height: initial !important;
+	    }
     </style>
 </head>
 <body>
@@ -119,38 +221,38 @@
         <telerik:RadScriptManager runat="server" ID="RadScriptManager1" />
         <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <div class="cssclsNoScreen" id="printContent">
+                <div class="cssclsNoScreen" id="print_page" style="width: 210mm; overflow: hidden">
                     <table class="report-container">
                         <thead class="report-header">
                             <tr>
-                                <th class="report-header-cell">
-                                    <div class="header-info1" style="display: flex; align-items: center; height: 75px;">
-                                        <img style="width: 200px" src="../images/AIH_PI_FULL.png" />
-                                        <div style="flex-grow: 1"></div>
-                                        <div class="header-info-title">
-                                            <div class="border text-center p-1 mb-1">
-                                                <h4>PHÂN LOẠI CẤP CỨU & ĐÁNH GIÁ ĐIỀU DƯỠNG</h4>
-                                                <h5>EMERGENCY TRIAGE AND NURSING ASSESSMENT RECORD</h5>
+                                <th class="report-header-cell" style="width: 210mm; height: 2.5cm; background-color: #fff; display: inline-block; position: fixed; top: 0; left: 0; right: 0; z-index: 10000">
+                                    <div runat="server" id="print_header">
+                                        <div style="display: flex; align-items: center; padding: 0 18px">
+                                            <img style="width: 180px" src="../images/AIH_PI_FULL.png" />
+                                            <div style="flex-grow: 1"></div>
+                                            <div style="align-self: center; flex-grow: 1">
+                                                <div style="text-align: center;" class="border">
+                                                    <div><span style="font-size: 12pt; font-weight: bold">PHÂN LOẠI CẤP CỨU & ĐÁNH GIÁ ĐIỀU DƯỠNG</span></div>
+                                                    <div><i style="font-size: 11pt; font-weight: bold; color: #0070c0">EMERGENCY TRIAGE AND NURSING ASSESSMENT RECORD</i></div>
+                                                </div>
+                                                <div>MÃ SỐ NGƯỜI BỆNH/ <span class="en">PID: </span><asp:Label runat="server" ID="prt_vpid" CssClass=" font-bold"/></div>
                                             </div>
-                                            MÃ SỐ NGƯỜI BỆNH/ <span class="text-primary">PID:</span>&nbsp;<asp:Label runat="server" ID="prt_vpid" CssClass=" font-bold"/>
                                         </div>
-                                        <div style="display: none;">
-                                            <webUI:Barcode runat="server" ID="prt_barcode" Width="120" Height="22" />
+                                        <div style="height: 12px; position: relative;">
+                                            <span style="position:absolute; left: 0; top: 50%; width: 190px; border: 2px solid #e20e5a; display: inline-block;"></span>
+                                            <span style="position:absolute; left: 190px; top: 50%; right: 0; border: 2px solid #007297; display: inline-block;"></span>
                                         </div>
-                                    </div>
-                                    <div style="height: 25px">
-                                        <span style="width: 190px; border-bottom-style: solid; border-bottom-color: #e20e5a; border-bottom-width: 5px; display: inline-block; font-size: 26.6667px;"></span>
-                                        <span style="display: inline-block; border-bottom-style: solid; border-bottom-color: #007297; border-bottom-width: 5px; width: calc(100% - 191px); margin-left: -5px;"></span>
                                     </div>
                                 </th>
+                                <th class="report-header-space" style="height: 2.5cm; width: 210mm;"></th>
                             </tr>
                         </thead>
 
                         <tbody class="report-content">
                             <tr>
                                 <td class="report-content-cell">
-                                    <div style="position: relative" class="main" runat="server" id="print_content">
-                                        <img style="height: 1px" src="../images/logo-opacity.png" />
+                                    <div class="main" runat="server" id="print_content" style="position: relative; width: 210mm; padding-left: 1.5cm; padding-right: 1cm; line-height: 2">
+                                        <%--<img style="height: 1px" src="../images/logo-opacity.png" />--%>
 
                                         <div class="border p-1 mb-1">
                                             <asp:Label runat="server" ID="prtdate"></asp:Label>
@@ -226,26 +328,29 @@
                                         </div>
 
                                         <div class="border p-1 mb-1">
-                                            <%--<asp:Label runat="server" ID="prt_vital_signs"></asp:Label>--%>
                                             <div>
-                                                <b>Dấu sinh hiệu</b>/ <span class='text-primary'><i>Vital signs</i></span>:&nbsp;&nbsp;&nbsp;<b>Huyết áp</b>/ <span class='text-primary'><i>BP</i></span>: <asp:Label runat="server" ID="prt_vs_blood_pressure" /><b>&nbsp;mmHg&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mạch</b>/ <span class='text-primary'><i>Pulse</i></span>: <asp:Label runat="server" ID="prt_vs_heart_rate" /> <b>lần/phút/bpm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nhiệt độ</b>/ <span class='text-primary'><i>Temp</i></span>: <asp:Label runat="server" ID="prt_vs_temperature" /> <b>°C <br />
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Gồm trẻ em</b>/<span class='text-primary'><i>Including child aged</i></span> <b>&gt;= 3 tuổi</b>/<span class='text-primary'><i>years old</i></span>) <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Nhịp thở</b>/<span class='text-primary'><i>Resp</i></span>: <asp:Label runat="server" ID="prt_vs_resp" /> <b>lần/phút</b>/min. <b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Độ bão hòa oxy</b>/<span class='text-primary'><i>O2Sat</i></span>: <asp:Label runat="server" ID="prt_vs_spo2" /> <b>%</b>
+                                                <b>Dấu sinh hiệu</b>/ <span class='text-primary'><i>Vital signs</i></span>: <b>Huyết áp</b>/ <span class='text-primary'><i>BP</i></span>: <asp:Label runat="server" ID="prt_vs_blood_pressure" /><b>&nbsp;mmHg&nbsp;Mạch</b>/ <span class='text-primary'><i>Pulse</i></span>: <asp:Label runat="server" ID="prt_vs_heart_rate" /> <b>lần/phút/bpm&nbsp;Nhiệt độ</b>/ <span class='text-primary'><i>Temp</i></span>: <asp:Label runat="server" ID="prt_vs_temperature" /> <b>°C <br />
+                                                    (Gồm trẻ em</b>/<span class='text-primary'><i>Including child aged</i></span> <b>&gt;= 3 tuổi</b>/<span class='text-primary'><i>years old</i></span>) <b>Nhịp thở</b>/<span class='text-primary'><i>Resp</i></span>: <asp:Label runat="server" ID="prt_vs_resp" /> <b>lần/phút</b>/min. <b>&nbsp;Độ bão hòa oxy</b>/ <span class='text-primary'><i>O2Sat</i></span>: <asp:Label runat="server" ID="prt_vs_spo2" /> <b>%</b>
                                             </div>
-                                            <div style="display: grid; grid-template-columns: 1fr auto auto auto auto">
+                                            <div style="display: grid; grid-template-columns: 115px auto auto auto auto">
                                                 <div>
                                                     <b>Tri giác</b>/<span class="text-primary"><i>LOC-AVPU</i></span>
                                                 </div>
                                                 <div>
-                                                    <asp:Label runat="server" ID="prt_loc_avpu_a" Text="❏"/>&nbsp;<b>Tỉnh</b>/<span class="text-primary"><i>A-Alert</i></span>&nbsp;
+                                                    <asp:Label runat="server" ID="prt_loc_avpu_a" Text="❏"/>&nbsp;<b>Tỉnh</b>/ <br /> 
+                                                    <span class="text-primary"><i>A-Alert</i></span>&nbsp;
                                                 </div>
                                                 <div>
-                                                    <asp:Label runat="server" ID="prt_loc_avpu_v" Text="❏"/>&nbsp;<b>Đáp ứng Lời nói</b>/<span class="text-primary"><i>V-Verbal</i></span>&nbsp;
+                                                    <asp:Label runat="server" ID="prt_loc_avpu_v" Text="❏"/>&nbsp;<b>Đáp ứng Lời nói</b>/ <br /> 
+                                                    <span class="text-primary"><i>V-Verbal</i></span>&nbsp;
                                                 </div>
                                                 <div>
-                                                    <asp:Label runat="server" ID="prt_loc_avpu_p" Text="❏"/>&nbsp;<b>Đáp ứng Đau</b>/<span class="text-primary"><i>P-Painful</i></span>&nbsp;
+                                                    <asp:Label runat="server" ID="prt_loc_avpu_p" Text="❏"/>&nbsp;<b>Đáp ứng Đau</b>/ <br />
+                                                    <span class="text-primary"><i>P-Painful</i></span>&nbsp;
                                                 </div>
                                                 <div>
-                                                    <asp:Label runat="server" ID="prt_loc_avpu_u" Text="❏"/>&nbsp;<b>Không đáp ứng</b>/<span class="text-primary"><i>U-Unresponsive</i></span>
+                                                    <asp:Label runat="server" ID="prt_loc_avpu_u" Text="❏"/>&nbsp;<b>Không đáp ứng</b>/ <br />
+                                                    <span class="text-primary"><i>U-Unresponsive</i></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -274,6 +379,7 @@
                                         </div>
 
                                         <div class="border p-1 mb-1">
+                                            <span>Thuốc đã dùng/ <span class='text-primary'><i>Medications used</i>:&nbsp;</span></span>
                                             <asp:Label runat="server" ID="prt_medications_used"/>
                                         </div>
 
@@ -312,6 +418,8 @@
                                                     <asp:Label runat="server" ID="prt_discharge_plan_ra" Text="❏"/>&nbsp;Cần trợ  giúp sinh hoạt hàng ngày/ <span class="text-primary"><i>Require assistance with daily living</i></span><br />
                                                     <asp:Label runat="server" ID="prt_discharge_plan_hf" Text="❏"/>&nbsp;Nguy cơ ngã cao/ <span class="text-primary"><i>High falling risk</i></span><br />
                                                 </div>
+                                                <div>Nơi cư trú sau khi xuất viện</div>
+                                                <div><span class="text-primary">Place of residence after discharge</span></div>
                                                 <div class="ml-2">
                                                     <asp:Label runat="server" ID="prt_dis_after_discharge_code_h" Text="❏"/>&nbsp;Nhà riêng/ <span class="text-primary"><i>Private home</i></span><br />
                                                     <asp:Label runat="server" ID="prt_dis_after_discharge_code_o" Text="❏"/>&nbsp;Cơ sở y tế khác/ <span class="text-primary"><i>Other healthcare facility</i></span><br />
@@ -353,7 +461,7 @@
                                         
                                         <div class="border p-1 mb-1">
                                             <div class="font-bold">ĐÁNH GIÁ THỂ CHẤT CÁC CƠ QUAN/ <span class="text-primary"><i>ASSESSMENT BY SYSTEM</i></span></div>
-                                            <div style="display: grid; grid-template-columns: 1fr 1fr">
+                                            <div style="display: grid; grid-template-columns: 1fr 360px">
                                                 <div>
                                                     Số phòng/ <span class="text-primary"><i>Room number</i></span>:&nbsp;<asp:Label runat="server" ID="prt_room_number"></asp:Label>
                                                 </div>
@@ -377,21 +485,21 @@
                                                 <b>Thần kinh</b>/ <i class='text-primary'>Neuro</i>: GCS: Mắt/<i class='text-primary'>E</i>&nbsp;<asp:Label runat="server" ID="prt_eye"/>&nbsp; Lời nói/<i class='text-primary'>V</i>&nbsp;<asp:Label runat="server" ID="prt_voice"/>&nbsp; Vận động/<i class='text-primary'>M</i>&nbsp;<asp:Label runat="server" ID="prt_motion"/>&nbsp;
                                             </div>
 
-                                            <div style="margin-left: 120px;">
+                                            <div style="margin-left: 125px;">
                                                 <asp:Label CssClass="mr-1" runat="server" ID="prt_alert"/>Tỉnh táo/ <i class="text-primary">Alert</i>
                                                 <asp:Label CssClass="ml-2 mr-1" runat="server" ID="prt_coma"/>Hôn mê/ <i class="text-primary">Coma</i><br />
                                                 <asp:Label CssClass="mr-1" runat="server" ID="prt_other" />
                                             </div>
 
-                                            <div style="display: grid; grid-template-columns: 120px auto">
-                                                <label><b>Hô hấp</b>/ <i class="text-primary">Respiratory</i></label>
+                                            <div style="display: grid; grid-template-columns: 125px auto">
+                                                <div><b>Hô hấp</b>/ <i class="text-primary">Respiratory</i></div>
                                                 <div>
                                                     <asp:Label CssClass="ml-1" runat="server" ID="prt_respiratory_reg" Text="❏"/>&nbsp;Thở đều/ <i class="text-primary">Regular</i>
                                                     <asp:Label CssClass="ml-1" runat="server" ID="prt_respiratory_nre" Text="❏"/>&nbsp;Thở không đều/ <i class="text-primary">Regular</i>
-                                                    <asp:Label CssClass="ml-1" runat="server" ID="prt_respiratory_tac" Text="❏"/>&nbsp;Thở nhanh/<i class="text-primary">Tachypneic</i>
-                                                    <asp:Label CssClass="ml-1" runat="server" ID="prt_respiratory_sha" Text="❏"/>&nbsp;Thở nông/<i class="text-primary">Shallow</i><br />
+                                                    <asp:Label CssClass="ml-1" runat="server" ID="prt_respiratory_tac" Text="❏"/>&nbsp;Thở nhanh/<i class="text-primary">Tachypneic</i><br />
+                                                    <asp:Label CssClass="ml-1" runat="server" ID="prt_respiratory_sha" Text="❏"/>&nbsp;Thở nông/<i class="text-primary">Shallow</i>
                                                     <asp:Label CssClass="ml-1" runat="server" ID="prt_respiratory_lab" Text="❏"/>&nbsp;Thở gắng sức/<i class="text-primary">Labored</i>
-                                                    <asp:Label CssClass="ml-1" runat="server" ID="prt_respiratory_ret" Text="❏"/>&nbsp;Co kéo/<i class="text-primary">Retractions</i>
+                                                    <asp:Label CssClass="ml-1" runat="server" ID="prt_respiratory_ret" Text="❏"/>&nbsp;Co kéo/<i class="text-primary">Retractions</i><br />
                                                     <asp:Label CssClass="ml-1" runat="server" ID="prt_respiratory_cou" Text="❏"/>&nbsp;Ho/<i class="text-primary">Cough</i>
                                                     <asp:Label CssClass="ml-1" runat="server" ID="prt_respiratory_spu" Text="❏"/>&nbsp;Có đàm/<i class="text-primary">Sputum</i><br />
                                                     <asp:Label CssClass="ml-1" runat="server" ID="prt_respiratory_oth" Text="❏"/>&nbsp;Khác/<i class="text-primary">Others:</i>
@@ -416,7 +524,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="d-grid" style="grid-template-columns: 125px 1fr">
+                                            <div class="d-grid" style="grid-template-columns: 130px 1fr">
                                                 <div>
                                                     <b>Tâm lý</b>/ <i class="text-primary">Psychosocial</i>:
                                                 </div>
@@ -437,7 +545,7 @@
                                                 <asp:Label runat="server" ID="prt_other_systems_abnormal" />&nbsp;Bất thường/ <i class="text-primary">Abnormal</i>, Ghi rõ/ <i class="text-primary">Specify</i>: <asp:Label runat="server" ID="prt_others_systems_str"/>
                                             </div>
 
-                                           <div class="d-grid" style="grid-template-columns: 60px 1fr">
+                                           <div class="d-grid" style="grid-template-columns: 80px 1fr">
                                                <label><b>Sản-phụ</b>:</label>
                                                <div>
                                                    <asp:Label runat="server" ID="prt_lmp" Text="❏"/>&nbsp;Kinh cuối/ <i class="text-primary">LMP&nbsp;</i><asp:Label runat="server" ID="prt_lmp_note"/>
@@ -463,12 +571,12 @@
                                             </div>
                                         </div>
 
-                                        <table class="table-bordered mb-1">
+                                        <table class="table-bordered mb-1" style="width: calc(210mm - 2.5cm)">
                                             <tr>
                                                 <td class="p-2 text-center" style="width: 180px"><b>Can thiệp</b><br /> <i class="text-primary">Procedure</i></td>
-                                                <td class="p-2 text-center" style="width: 130px"><b>Thời gian</b><br /> <i class="text-primary">Time</i></td>
-                                                <td class="p-2 text-center"  style="width: 311px"><b>Ghi chú</b><br /> <i class="text-primary">Notes</i></td>
-                                                <td class="p-2 text-center" style="width: 100px"><b>Ký tên</b><br /><i class="text-primary">Signature</i></td>
+                                                <td class="p-2 text-center" style="width: 110px"><b>Thời gian</b><br /> <i class="text-primary">Time</i></td>
+                                                <td class="p-2 text-center" style="width: 327.213px"><b>Ghi chú</b><br /> <i class="text-primary">Notes</i></td>
+                                                <td class="p-2 text-center" style="width: 80px"><b>Ký tên</b><br /><i class="text-primary">Signature</i></td>
                                             </tr>
                                             <tr>
                                                 <td class="p-2"><b>Đường huyết mao mạch</b><br /> <i class="text-primary">Capillary Blood glucose</i></td>
@@ -534,50 +642,70 @@
                                             </tr>
                                         </table>
                                         
-                                        <table style="width: 721px;" class="table-bordered mb-1" runat="server" id="prt_assessment_system">
+                                        <table class="table-bordered mb-1" runat="server" id="prt_assessment_system" style="width: calc(210mm - 2.5cm)">
                                             <tr>
                                                 <td style="width: 40px" class="text-center"><i class="text-primary">Time</i></td>
                                                 <td style="width: 40px" class="text-center"><i class="text-primary">RR <br /> l/p</i></td>
                                                 <td style="width: 45px" class="text-center"><i class="text-primary">O2Sat %</i></td>
-                                                <td style="width: 45px" class="text-center"><i class="text-primary">HR bpm</i></td>
+                                                <td style="width: 40px" class="text-center"><i class="text-primary">HR bpm</i></td>
                                                 <td style="width: 45px" class="text-center"><i class="text-primary">BP mmHg</i></td>
-                                                <td style="width: 45px" class="text-center"><i class="text-primary">Temp °C</i></td>
-                                                <td style="width: 45px" class="text-center"><i class="text-primary">GCS</i></td>
-                                                <td style="width: 45px" class="text-center"><i class="text-primary">Pain /10</i></td>
+                                                <td style="width: 40px" class="text-center"><i class="text-primary">Temp °C</i></td>
+                                                <td style="width: 40px" class="text-center"><i class="text-primary">GCS</i></td>
+                                                <td style="width: 40px" class="text-center"><i class="text-primary">Pain /10</i></td>
                                                 <td style="width: 65px" class="text-center"><i class="text-primary">ATS scale</i></td>
-                                                <td style="width: 206px" class="text-center"><i class="text-primary">Tái đánh giá & Can thiệp <br /> Re-Assessment & Intervention</i></td>
-                                                <td style="width: 100px" class="text-center"><i class="text-primary">Điều dưỡng <br />RN's Initial</i></td>
+                                                <td style="width: 222.213px" class="text-center"><i class="text-primary">Tái đánh giá & Can thiệp <br /> Re-Assessment & Intervention</i></td>
+                                                <td style="width: 80px" class="text-center"><i class="text-primary">Điều dưỡng <br />RN's Initial</i></td>
                                             </tr>
                                         </table>
 
-                                        <table style="width: 721px;" class="table-bordered mb-1" runat="server" id="prt_direct_medication">
+                                        <div>&nbsp;</div>
+                                        
+                                        <table class="table-bordered mb-1" style="margin-bottom: -1px; page-break-inside: avoid; width: calc(210mm - 2.5cm)">
                                             <tr>
                                                 <td rowspan="2" style="width: 40px" class="text-center"><b>Giờ</b>/ <i class="text-primary">Time</i></td>
                                                 <td class="text-center" colspan="4">
                                                     <b>Y lệnh thuốc & dịch truyền trực tiếp</b><br /><i class='text-primary'>Direct Medication & IV fluids Order</i>
                                                 </td>
-                                                <td rowspan="2" style="width: 70px" class="text-center"><b>BÁC SĨ</b><br />
-                                                            <i class="text-primary">DOCTOR</i></td>
-                                                <td rowspan="2" style="width: 70px" class="text-center"><b>GHI CHÚ</b><br />
-                                                            <i class="text-primary">COMMENT</i></td>
-                                                <td rowspan="2" style="width: 40px" class="text-center"><b>Giờ</b>/<br />
-                                                            <i class="text-primary">Time</i></td>
-                                                <td rowspan="2" style="width: 100px" class="text-center"><b>Chữ kí/ Tên <br /> & MSNV</b><br />
-                                                            <i class="text-primary">Signature/ <br /> Name & ID</i></td>
+                                                <td rowspan="2" style="width: 97.213px" class="text-center">
+                                                    <div>BÁC SĨ</div>
+                                                    <div><i class="text-primary">DOCTOR</i></div>
+                                                </td>
+                                                <td rowspan="2" style="width: 75px" class="text-center">
+                                                    <div>GHI CHÚ</div>
+                                                    <div><i class="text-primary">COMMENT</i></div>
+                                                </td>
+                                                <td rowspan="2" style="width: 40px" class="text-center">
+                                                    <div>Giờ/</div>
+                                                    <div><i class="text-primary">Time</i></div>
+                                                </td>
+                                                <td rowspan="2" style="width: 80px" class="text-center">
+                                                    <div>Chữ kí/ Tên & MSNV</div>
+                                                    <div><i class="text-primary">Signature/ Name & ID</i></div>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <td style="width: 180px" class="text-center"><b>THUỐC</b>/<i class="text-primary">MEDICATION</span> <br />
-                                                                <b>DỊCH TRUYỀN</b>/<i class="text-primary">IV FLUIDS</i></td>
-                                                <td style="width: 70px" class="text-center"><b>LIỀU</b><br />
-                                                            <i class="text-primary">DOSE</i></td>
-                                                <td style="width: 75px" class="text-center"> <b>ĐƯỜNG DÙNG</b><br />
-                                                            <i class="text-primary">ROUTE</i></td>
-                                                <td style="width: 70px" class="text-center"><b>TỐC ĐỘ</b><br />
-                                                            <i class="text-primary">RATE</i></td>
+                                                <td style="width: 175px" class="text-center">
+                                                    <div>THUỐC/ <i class="text-primary">MEDICATION</i></div>
+                                                    <div>DỊCH TRUYỀN/ <i class="text-primary">IV FLUIDS</i></div>
+                                                </td>
+                                                <td style="width: 70px" class="text-center">
+                                                    <div>LIỀU</div>
+                                                    <div><i class="text-primary">DOSE</i></div>
+                                                </td>
+                                                <td style="width: 70px" class="text-center">
+                                                    <div>ĐƯỜNG DÙNG</div>
+                                                    <div><i class="text-primary">ROUTE</i></div>
+                                                </td>
+                                                <td style="width: 50px" class="text-center">
+                                                    <div>TỐC ĐỘ</div>
+                                                    <div><i class="text-primary">RATE</i></div>
+                                                </td>
                                             </tr>
                                         </table>
+                                        
+                                        <table class="table-bordered mb-1" style="margin-bottom: -1px; page-break-inside: avoid; width: calc(210mm - 2.5cm); margin-top: -5px" runat="server" id="prt_direct_medication"></table>
 
-                                        <div class="mb-1" style="height: 90px; display: grid; grid-template-columns: 1fr 1fr; page-break-inside:avoid; page-break-after:auto">
+                                        <div class="mb-1" style="display: grid; grid-template-columns: 1fr 1fr; page-break-inside:avoid; page-break-after:auto">
                                             <div class="border border-right-0 p-1">
                                                 <div>
                                                     <div  class="d-inline-block">
@@ -619,20 +747,20 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                        <table style="width: 721px;" class="table-bordered mb-1" runat="server" id="prt_nursing_note">
+
+                                        <table class="table-bordered mb-1" style="width: calc(210mm - 2.5cm);" runat="server" id="prt_nursing_note">
                                             <tr>
-                                                <td class="text-center" colspan="5">
-                                                    <b>PHIẾU GHI CHÚ ĐIỀU DƯỠNG</b> <br />
-                                                    <i class="text-primary">NURSING NOTES</i>
+                                                <td colspan="5" style="text-align: center">
+                                                    <div>PHIẾU GHI CHÚ ĐIỀU DƯỠNG</div>
+                                                    <div><span class="en">NURSING NOTES</span></div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td style="width: 50px" class="text-center"><b>NGÀY</b><br /> <i class="text-primary">DATE </i><br /> <b>dd/mm/yyyy</b></td>
-                                                <td style="width: 40px" class="text-center"><b>GIỜ <br /> PHÚT <br /></b> <i class="text-primary">TIME</i> <br /> <b>hh/mm</b></td>
-                                                <td style="width: 340px" class="text-center"><b>THEO DÕI DIỄN TIẾN </b><br /> <i class="text-primary">PATIENT CONDITION</i></td>
-                                                <td style="width: 150px" class="text-center"><b>CAN THIỆP ĐIỀU DƯỠNG </b><br /> <i class="text-primary">NURSING INTERVENTION</i></td>
-                                                <td style="width: 100px" class="text-center">KÝ/GHI TÊN ĐD <br /> <i class="text-primary">RN'S NAME & <br /> SIGNATURE</i></td>
+                                                <td style="width: 90px" class="text-center"><b>NGÀY</b><br /> <i class="text-primary">DATE </i><br /> <b>dd/mm/yyyy</b></td>
+                                                <td style="width: 50px" class="text-center"><b>GIỜ <br /> PHÚT <br /></b> <i class="text-primary">TIME</i> <br /> <b>hh/mm</b></td>
+                                                <td style="width: 227.213px" class="text-center"><b>THEO DÕI DIỄN TIẾN </b><br /> <i class="text-primary">PATIENT CONDITION</i></td>
+                                                <td style="width: 210px" class="text-center"><b>CAN THIỆP ĐIỀU DƯỠNG </b><br /> <i class="text-primary">NURSING INTERVENTION</i></td>
+                                                <td style="width: 120px" class="text-center">KÝ/GHI TÊN ĐD <br /> <i class="text-primary">RN'S NAME & <br /> SIGNATURE</i></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -642,16 +770,16 @@
 
                         <tfoot class="report-footer">
                             <tr>
-                                <td class="report-footer-cell">
-                                    <img style="width: 100%" src="../images/ExcellentCare.png" />
-                                    <div class="footer-info">
+                                <td class="report-footer-cell" runat="server" id="print_footer" style="height: 2cm; width: 210mm; background-color: #fff" >
+                                    <div style="margin-left: -18px"><img style="width: 210mm" src="../images/ExcellentCare.png" /></div>
+                                    <div class="footer-info" style="padding: 0 18px">
                                         <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
-                                        <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>
+                                        <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Tp. Thủ Đức, Tp.HCM</div>
                                         <div>Tel: 028 3910 9999</div>
                                         <div>www.aih.com.vn</div>
                                     </div>
                                 </td>
-                                <td class="report-footer-space"></td>
+                                <td class="report-footer-space" runat="server" id="print_footer_space" style="height: 2cm; width: 210mm; background-color: #fff;"></td>
                             </tr>
                         </tfoot>
                     </table>
@@ -1298,8 +1426,9 @@
 
                                                         <label class="custom-control custom-checkbox d-inline-block">
                                                             <input type="checkbox" class="custom-control-input" runat="server" id="cb_discharge_plan_hf" />
-                                                            <span class="custom-control-label">Nguy cơ ngã cao/ <span class="text-primary">high fall risk</span> Nơi cư trú sau khi xuất viện <span class="text-primary">Place of residence after discharge</span></span>
+                                                            <span class="custom-control-label">Nguy cơ ngã cao/ <span class="text-primary">high fall risk</span> </span>
                                                         </label>
+                                                        <%--Nơi cư trú sau khi xuất viện <span class="text-primary">Place of residence after discharge</span>--%>
                                                     </div>
                                                 </div>
                                             </fieldset>
@@ -1324,7 +1453,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 gt-2-a">
-                                                    <label class="control-label mb-1 mr-2">Người chăm sóc sau khi xuất viện <span class="text-primary">People who will look after patient after discharge:</span></label>
+                                                    <label class="control-label mb-1 mr-2">Người chăm sóc sau khi xuất viện/ <span class="text-primary">People who will look after patient after discharge:</span></label>
                                                     <asp:Label runat="server" ID="lbl_caregiver_after_discharge"/>
                                                         <div runat="server" id="caregiver_after_discharge_wrapper">
                                                         <webUI:TextField runat="server" ID="txt_caregiver_after_discharge" />
@@ -2218,17 +2347,18 @@
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
                                                     <div class="form-actions">
+                                                        
                                                         <asp:LinkButton ValidationGroup="Group1" runat="server" OnClick="btnComplete_Click" ID="btnComplete" CssClass="btn btn-primary waves-effect">Complete</asp:LinkButton>
 
                                                         <asp:LinkButton ValidationGroup="Group1" OnClick="btnSave_Click" ID="btnSave" runat="server" CssClass="btn btn-primary waves-effect">Save</asp:LinkButton>
-
-                                                        <div runat="server" onclick="showWindow('RadWindow2')" id="btnDeleteModal" class="btn btn-danger">Delete</div>
 
                                                         <asp:LinkButton runat="server" OnClick="btnAmend_Click" ID="btnAmend" CssClass="btn btn-secondary waves-effect">Amend</asp:LinkButton>
 
                                                         <asp:LinkButton runat="server" OnClick="btnPrint_Click" ID="btnPrint" CssClass="btn btn-secondary">Print</asp:LinkButton>
 
                                                         <asp:LinkButton runat="server" OnClick="btnCancel_Click" ID="btnCancel" CssClass="btn btn-secondary waves-effect">Cancel</asp:LinkButton>
+
+                                                        <div runat="server" onclick="showWindow('RadWindow2')" id="btnDeleteModal" class="btn btn-danger">Delete</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -2513,24 +2643,25 @@
         }
 
         function btnPrint_Click() {
-            let printContent = document.querySelector("#printContent");
-            printContent.setAttribute("style", "display: block");
+            let print_page = document.querySelector("#print_page");
+            print_page.style.display = "block";
 
-<%--            let prt_medications_used = document.getElementById("<%=prt_medications_used.ClientID%>");
+<%--        let prt_medications_used = document.getElementById("<%=prt_medications_used.ClientID%>");
             let lbl_current_medication = document.getElementById("<%=lbl_current_medication.ClientID%>");
-            if (prt_medications_used != null && lbl_current_medication != null) prt_medications_used.innerHTML = "Thuốc đã dùng/ <span class='text-primary'><i>Medications used</i>:&nbsp;</span>" + lbl_current_medication.innerText;--%>
+            if (prt_medications_used != null && lbl_current_medication != null) 
+                prt_medications_used.innerHTML = "Thuốc đã dùng/ <span class='text-primary'><i>Medications used</i>:&nbsp;</span>" + lbl_current_medication.innerText;--%>
 
-            let total = Math.ceil(printContent.offsetHeight / 1096);
+            let total = Math.ceil(print_page.offsetHeight / 1096);
 
             for (let i = 1; i <= total; i++) {
                 let div = document.createElement("div");
                 div.setAttribute("class", "watermark page");
                 div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px");
-                div.setAttribute("data-page", "Page " + i + " of " + total);
+                //div.setAttribute("data-page", "Page " + i + " of " + total);
                 document.getElementById("print_content").append(div);
             }
 
-            setTimeout(() => { printContent.setAttribute("style", "display: none"); }, 100);
+            setTimeout(() => { print_page.style.display = "none"; }, 100);
 
             window.print();
         }

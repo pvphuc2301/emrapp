@@ -31,34 +31,45 @@
     <link href="../styles/myStyle.css" rel="stylesheet" />
     <link href="../styles/sweetalert.min.css" rel="stylesheet" />
     <link href="../styles/alertify.css" rel="stylesheet" />
-    <link href="../styles/print.css" rel="stylesheet" />
+    <link href="../styles/print-10.2022.css" rel="stylesheet" />
+    <link href="../styles/telerik-custom.css" rel="stylesheet" />
+    <style>
+        @page {
+            margin-top: 10px;
+        }
+        #print_content {
+		    line-height: initial !important;
+	    }
+    </style>
 </head>
 <body>
     <form method="post" action="#" id="form1" runat="server">
         <telerik:RadScriptManager runat="server" ID="RadScriptManager2" />
         <asp:UpdatePanel ID="Upd" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
-                <div class="cssclsNoScreen" id="printContent" style="font-family: Tahoma !important; font-size: 13.3048px !important;">
+                <div class="cssclsNoScreen" id="print_page" runat="server" style="font-family: 'Times New Roman' !important; width: 210mm; overflow: hidden">
                     <table class="report-container">
                         <thead class="report-header" >
                             <tr>
                                 <th class="report-header-cell">
-                                    <div class="header-info" style="display: flex; align-items: center; height: 80px;">
-                                        <img style="width: 200px" src="../images/AIH_PI_FULL.png" />
-                                        <div class="header-info-title">
-                                            <h4>BỆNH ÁN SƠ SINH NỘI TRÚ</h4>
-                                            <h5 style="font-size:12.5px;">INITIAL MEDICAL ASSESSMENT FOR NEONATAL INPATIENTS</h5>
+                                    <div runat="server" id="print_header" style="width: 210mm; height: 2.5cm">
+                                        <div style="display: flex; align-items: center; padding: 0 18px">
+                                            <img style="width: 180px" src="../images/AIH_PI_FULL.png" />
+                                            <div style="text-align: center; align-self: center; flex-grow: 1">
+                                                <div><span style="font-size: 12pt; font-weight: bold">BỆNH ÁN SƠ SINH NỘI TRÚ</span></div>
+                                                <div class="en"><i style="font-size: 11pt; font-weight: bold">INITIAL MEDICAL ASSESSMENT FOR NEONATAL INPATIENTS</i></div>
+                                            </div>
+                                            <div style="width: 130px; text-align: left; font-size: 11px">
+                                                <asp:Label runat="server" ID="prt_fullname" CssClass="d-block"></asp:Label>
+                                                <asp:Label runat="server" ID="prt_dob" CssClass="d-block"></asp:Label>
+                                                <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
+                                                <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
+                                            </div>
                                         </div>
-                                        <div style="width: 120px; text-align: left; font-size: 11px">
-                                            <asp:Label runat="server" ID="prt_fullname" CssClass="d-block"></asp:Label>
-                                            <asp:Label runat="server" ID="prt_dob" CssClass="d-block"></asp:Label>
-                                            <asp:PlaceHolder ID="BarCode" runat="server"></asp:PlaceHolder>
-                                            <asp:Label runat="server" ID="prt_vpid" CssClass="d-block font-bold"></asp:Label>
+                                        <div style="height: 12px; position: relative; margin-top: -4px">
+                                            <span style="position:absolute; left: 0; top: 50%; width: 190px; border: 2px solid #e20e5a; display: inline-block;"></span>
+                                            <span style="position:absolute; left: 190px; top: 50%; right: 0; border: 2px solid #007297; display: inline-block;"></span>
                                         </div>
-                                    </div>
-                                    <div style="height: 20px;">
-                                        <span style="width: 190px; border-bottom-style: solid; border-bottom-color: #e20e5a; border-bottom-width: 5px; display: inline-block; font-size: 26.6667px;"></span>
-                                        <span style="display: inline-block; border-bottom-style: solid; border-bottom-color: #007297; border-bottom-width: 5px; width: calc(100% - 191px); margin-left: -5px;"></span>
                                     </div>
                                 </th>
                             </tr>
@@ -67,8 +78,7 @@
                         <tbody class="report-content">
                             <tr>
                                 <td class="report-content-cell">
-                                    <div style="position: relative;" class="main" runat="server" id="print_content">
-                                        <img style="height: 1px" src="../images/logo-opacity.png" />
+                                    <div class="main" runat="server" id="print_content" style="font-size: 12pt; margin: 0 1.5cm 0 2cm; line-height: 1.5;">
                                         
                                         <div class="d-grid mb-1" style="grid-template-columns: auto 1fr">
                                             <webUI:PrtRowS1 FontBold="true" Order="I. " Title="Admission reason:" SubTitle="Lí do nhập viện" runat="server" />
@@ -201,16 +211,16 @@
 
                         <tfoot class="report-footer">
                             <tr>
-                                <td class="report-footer-cell" style="font-size: 10px">
-                                    <img style="width: 100%" src="../images/ExcellentCare.png" />
-                                    <div class="footer-info">
+                                <td class="report-footer-cell" runat="server" id="print_footer" style="height: 2cm; width: 210mm">
+                                    <div style="margin-left: -18px"><img style="width: 210mm" src="../images/ExcellentCare.png" /></div>
+                                    <div class="footer-info" style="padding: 0 18px">
                                         <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
-                                        <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Quận 2, Tp.HCM</div>
+                                        <div>Số 6, Đường Bắc Nam 3, Phường An Phú, Tp. Thủ Đức, Tp.HCM</div>
                                         <div>Tel: 028 3910 9999</div>
                                         <div>www.aih.com.vn</div>
                                     </div>
                                 </td>
-                                <td class="report-footer-space"></td>
+                                <td class="report-footer-space" runat="server" id="print_footer_space" style="height: 2cm; width: 210mm"></td>
                             </tr>
                         </tfoot>
                     </table>
@@ -218,16 +228,14 @@
 
                 <telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" Height="400">
             <Windows>
-                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow1" Title="Version History" runat="server">
+                <telerik:RadWindow CssClass="NoIconUrl" VisibleStatusbar="false" MinWidth="600" RenderMode="Lightweight" ID="RadWindow1" Title="Version History" runat="server">
                     <ContentTemplate>
                         <telerik:RadGrid ShowHeader="false" ID="RadGrid1" runat="server" AllowSorting="true" OnItemCommand="RadGrid1_ItemCommand">
                             <MasterTableView AutoGenerateColumns="False" DataKeyNames="document_id,document_log_id">
                                 <Columns>
                                     <telerik:GridTemplateColumn>
                                         <ItemTemplate>
-                                            <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'>
-</telerik:RadLabel>
-                                           
+                                            <telerik:RadLabel runat="server" ID="RadLabel1" Text='<%# GetHistoryName(Eval("status"),Eval("created_name_e"), Eval("created_date_time"), Eval("modified_name_e"), Eval("modified_date_time"), Eval("amend_reason")) %>'></telerik:RadLabel>
                                             <asp:HyperLink CssClass="btn-link" Text="View Log" runat="server" NavigateUrl='<%# GetLogUrl(Eval("document_log_id")) %>'></asp:HyperLink>
                                         </ItemTemplate>
                                     </telerik:GridTemplateColumn>
@@ -240,31 +248,31 @@
                         </telerik:RadGrid>
                     </ContentTemplate>
                 </telerik:RadWindow>
-                <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow2" Title="Warning" runat="server">
-                            <ContentTemplate>
-                                <div class="text-center">
-                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                    <h4 class="mt-4 mb-4">Delete document?</h4>
-                                </div>
+                <telerik:RadWindow CssClass="NoIconUrl" RenderMode="Lightweight" ID="RadWindow2" Title="Warning" runat="server">
+                    <ContentTemplate>
+                        <div class="text-center">
+                            <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                            <h4 class="mt-4 mb-4">Delete document?</h4>
+                        </div>
 
-                                <div class="d-grid no-block justify-content-end">
-                                    <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger">Delete</asp:LinkButton>
-                                </div>
-                            </ContentTemplate>
-                        </telerik:RadWindow>
-                        <telerik:RadWindow RenderMode="Lightweight" ID="RadWindow3" Title="Warning" runat="server">
-                            <ContentTemplate>
-                                <div class="text-center">
-                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                    <h4 class="mt-4">Denied!</h4>
-                                    <label runat="server" id="lblUserBlock" />
-                                </div>
+                        <div class="d-grid no-block justify-content-end">
+                            <asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="btnDelete" CssClass="btn btn-danger">Delete</asp:LinkButton>
+                        </div>
+                    </ContentTemplate>
+                </telerik:RadWindow>
+                <telerik:RadWindow CssClass="NoIconUrl" RenderMode="Lightweight" ID="RadWindow3" Title="Warning" runat="server">
+                    <ContentTemplate>
+                        <div class="text-center">
+                            <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
+                            <h4 class="mt-4">Denied!</h4>
+                            <label runat="server" id="lblUserBlock" />
+                        </div>
 
-                                <div class="d-grid no-block justify-content-end">
-                                    <%--<asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="LinkButton1" CssClass="btn btn-danger">Delete</asp:LinkButton>--%>
-                                </div>
-                            </ContentTemplate>
-                        </telerik:RadWindow>
+                        <div class="d-grid no-block justify-content-end">
+                            <%--<asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="LinkButton1" CssClass="btn btn-danger">Delete</asp:LinkButton>--%>
+                        </div>
+                    </ContentTemplate>
+                </telerik:RadWindow>
             </Windows>
         </telerik:RadWindowManager>
 
@@ -696,8 +704,8 @@
         let physical_exam = document.getElementById("lbl_physical_exam").innerText;
 
         function btnPrint_Click() {
-            let printContent = document.querySelector("#printContent");
-            printContent.setAttribute("style", "display: block");
+            let printContent = document.querySelector("#print_content");
+            printContent.style.display = "block";
 
             let total = Math.ceil(printContent.offsetHeight / 1096);
 
@@ -705,7 +713,7 @@
                 let div = document.createElement("div");
                 div.setAttribute("class", "watermark page");
                 div.setAttribute("style", "top: " + (1093 * (i - 1)) + "px;");
-                div.setAttribute("data-page", "Page " + i + " of " + total);
+                //div.setAttribute("data-page", "Page " + i + " of " + total);
                 document.getElementById("print_content").append(div);
                 
             }

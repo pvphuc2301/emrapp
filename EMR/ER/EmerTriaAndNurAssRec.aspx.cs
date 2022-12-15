@@ -476,7 +476,7 @@ namespace EMR
                 patientVisitInfo = new PatientVisitInfo(varPVID, loc);
 
                 //prt_pid.Text = 
-                prt_vpid.Text = prt_barcode.Text = patientInfo.visible_patient_id;
+                prt_vpid.Text = patientInfo.visible_patient_id;
 
                 prtdate.Text = $"<b>Ngày</b>/<span class='text-primary'><i>Date</i></span>: {WebHelpers.FormatString(WebHelpers.FormatDateTime(patientVisitInfo.actual_visit_date_time, "dd/MM/yyyy"), "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")} <b>Giờ</b>/ <span class='text-primary'><i>Triage Time</i></span>: {WebHelpers.FormatString(WebHelpers.FormatDateTime(ena.triage_time, "HH:mm"), "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;")} <b>Khu vực</b>/ <span class='text-primary'><i>Triage Area</i></span> #: {ena.triage_area}";
 
@@ -530,7 +530,8 @@ namespace EMR
                 prt_vs_head_circum.Text = WebHelpers.FormatString(ena.vs_head_circum, "&nbsp;&nbsp;&nbsp;&nbsp;");
 
                 prt_allergy.Text = $"Dị ứng/ <span class='text-primary'><i>Allergy</i></span>:&nbsp; {ena.allergy}";
-                prt_medications_used.Text = $"Thuốc đã dùng/ <span class='text-primary'><i>Medications used</i>:&nbsp;</span> {ena.current_medication}";
+                prt_medications_used.Text = ena.current_medication;
+                
 
                 DataTable skin_integrity = WebHelpers.GetJSONToDataTable(ena.skin_integrity);
                 if (skin_integrity != null)
@@ -776,46 +777,55 @@ namespace EMR
                         td = new HtmlTableCell();
                         p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["dir_med_time"]) };
                         td.Controls.Add(p);
+                        td.Attributes.Add("style", "width: 40px");
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
                         p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["dir_medication"]) };
                         td.Controls.Add(p);
+                        td.Attributes.Add("style", "width: 175px");
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
                         p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["dir_med_dose"]) };
                         td.Controls.Add(p);
+                        td.Attributes.Add("style", "width: 70px");
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
                         p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["dir_med_route"]) };
                         td.Controls.Add(p);
+                        td.Attributes.Add("style", "width: 70px");
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
                         p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["dir_med_rate"]) };
                         td.Controls.Add(p);
+                        td.Attributes.Add("style", "width: 50px");
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
                         p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["dir_med_doctor"]) };
                         td.Controls.Add(p);
+                        td.Attributes.Add("style", "width: 97.213px");
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
                         p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["dir_med_comment"]) };
                         td.Controls.Add(p);
+                        td.Attributes.Add("style", "width: 75px");
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
                         p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["dir_med_time2"]) };
                         td.Controls.Add(p);
+                        td.Attributes.Add("style", "width: 40px");
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
                         p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["dir_med_initial"]) };
                         td.Controls.Add(p);
+                        td.Attributes.Add("style", "width: 80px");
                         tr.Cells.Add(td);
 
                         prt_direct_medication.Rows.Add(tr);
@@ -874,7 +884,14 @@ namespace EMR
                         tr.Cells.Add(td);
                         //
                         td = new HtmlTableCell();
-                        p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["nursing_intervention"]) };
+                        try
+                        {
+                            p = new HtmlGenericControl("lable") { InnerHtml = Convert.ToString(row["nursing_intervention"]) };
+                        } catch(Exception ex) 
+                        {
+                            p = new HtmlGenericControl("lable") { InnerHtml = "" };
+                            Console.WriteLine(ex.Message); 
+                        }
                         td.Controls.Add(p);
                         tr.Cells.Add(td);
                         //

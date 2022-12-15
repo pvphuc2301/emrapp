@@ -1,13 +1,26 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using EMR.Model;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Specialized;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Script.Serialization;
+using System.Web.UI;
 using Telerik.Web.UI;
+using Telerik.Web.UI.Map;
 
 namespace EMR
 {
     public partial class PatientSummary : System.Web.UI.Page
     {
+        HttpClient client = new HttpClient();
+
         public string varPID = "";
         public bool showPopup = false;
         public bool isDraft = false;
@@ -17,6 +30,7 @@ namespace EMR
         PatientVisitInfo patientVisitInfo;
         protected string loc;
         protected string locChanged;
+        public string UserId { get => (string)Session["UserId"]; }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!WebHelpers.CheckSession(this)) { return; }
@@ -40,14 +54,9 @@ namespace EMR
                 LoadRootLAB_RAD(RadTreeView2, TreeNodeExpandMode.ServerSideCallBack);
                 LoadRootScan(RadTreeView3, TreeNodeExpandMode.ServerSideCallBack);
                 LoadRootScan(RadTreeView4, TreeNodeExpandMode.ServerSideCallBack, "/" + (string)Session["company_code"]);
-                
             }
-
             PostBackEvent();
-
             LeftMenuAccess();
-
-            
         }
 
         private void LeftMenuAccess()
@@ -70,14 +79,175 @@ namespace EMR
                     break;
             }
         }
+        //protected async Task RunAsync(string api, string document_id)
+        //{
+        //    client.BaseAddress = new Uri(WebHelpers.URL);
+        //    client.DefaultRequestHeaders.Accept.Clear();
+        //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+        //    api = "api/emr";
+        //    document_id = "fe098a2d-9f76-4da5-9493-3ab67f79b54c";
+
+        //    HttpResponseMessage response = await client.GetAsync($"{api}/get-log-list/{loc}/{document_id}");
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        string data = await response.Content.ReadAsStringAsync();
+        //        JavaScriptSerializer JSserializer = new JavaScriptSerializer();
+        //        dynamic jarr = JArray.Parse(data);
+
+        //        //string paramater_value = obj.paramater_value;
+
+        //    }
+        //}
+        #region log document
+        protected void rgdLogHistory_ItemDataBound(object sender, GridItemEventArgs e)
+        {
+            //if(e.Item is GridDataItem)
+            //{
+            //    GridDataItem item = (e.Item as GridDataItem);
+            //    //string document_log_id;
+            //    //string document_id;
+
+            //    string dl_id = (e.Item.DataItem as DataRowView)[nameof(document_log_id)].ToString();
+                
+            //    if (dl_id == document_log_id)
+            //    {
+            //        item.Selected = true;
+            //    }
+            //}
+        }
+        protected void rgdLogHistory_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            GridDataItem item = (e.Item as GridDataItem);
+            if (e.CommandName.Equals("Open"))
+            {
+                string doc_log_id = item.GetDataKeyValue("document_log_id").ToString();
+                string url = PAGE_URL.Value + $"&docIdLog={doc_log_id}";
+                item.Selected = true;
+                MainContent.ContentUrl = url;
+                Upd.Update();
+
+                string script = string.Format("function f(){{ close_window(\"" + rwndLogHistory.ClientID + "\");Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "close_log_history", script, true);
+            }
+        }
+        protected string GetLogUrl(object doc_log_id)
+        {
+            return PAGE_URL.Value + $"&docIdLog={doc_log_id}";
+        }
+        protected string GetHistoryName(object status, object created_name, object created_date_time, object modified_name, object modified_date_time, object amend_reason)
+        {
+            string result = WebHelpers.getLogText(status, created_name, created_date_time, modified_name, modified_date_time, amend_reason);
+            return result;
+        }
+        #endregion
+        string document_log_id = "";
+        private void SelectDocument(string args)
+        {
+            NameValueCollection nameValueCollection = HttpUtility.ParseQueryString(args);
+            string document_id = nameValueCollection["docId"];
+            string patient_visit_id = nameValueCollection["pvid"];
+
+            RadTreeView1.Nodes.Clear();
+            LoadRootNodes(RadTreeView1, TreeNodeExpandMode.ServerSideCallBack);
+
+            RadTreeNode rtn1 = RadTreeView1.FindNodeByValue(patient_visit_id);
+            PopulateNodeOnDemand(rtn1, TreeNodeExpandMode.ServerSideCallBack);
+            var item = RadTreeView1.FindNodeByAttribute("docId", document_id);
+            if (item != null)
+            {
+                item.Selected = true;
+                MainContent.ContentUrl = args;
+            }
+        }
         private void PostBackEvent()
         {
-            switch (Request["__EVENTTARGET"])
+            string target = Request["__EVENTTARGET"];
+            string args = Request["__EVENTARGUMENT"];
+            string document_id;
+            string patient_visit_id;
+            string page_url_arg;
+            NameValueCollection nameValueCollection;
+            string api;
+
+            switch (target)
             {
-                case "RefreshMenu":
-                    
+                case "reload_treeview":
+                    SelectDocument(args);
                     break;
+                case "document_log":
+                    //RunAsync("", args).GetAwaiter().GetResult();
+                    page_url_arg = args;
+                    nameValueCollection = HttpUtility.ParseQueryString(args);
+                    api = nameValueCollection["api"];
+                    document_id = nameValueCollection["docId"];
+                    document_log_id = nameValueCollection["docId"];
+
+                    string page_url = page_url_arg.Substring(0, page_url_arg.IndexOf("api") - 1);
+
+                    string url = MainContent.ContentUrl;
+
+                    dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
+                    DataTable db = new DataTable();
+                    
+                    if (res.Status == System.Net.HttpStatusCode.OK)
+                    {
+                        db = WebHelpers.GetJSONToDataTable(res.Data);
+                    }
+                    WebHelpers.loadRadGridHistoryLog(rgdLogHistory, db, out string signature_date, out string signature_name);
+                    //string url = 
+                    //PAGE_URL.Value = String.Join("", nameValueCollection.Cast<string>().Select(e => nameValueCollection[e]);
+                    PAGE_URL.Value = page_url;
+                    break;
+                case "complete_document":
+                    try
+                    {
+                        nameValueCollection = HttpUtility.ParseQueryString(args);
+
+                        document_id = nameValueCollection["docId"];
+                        patient_visit_id = nameValueCollection["pvid"];
+
+                        RadTreeView1.Nodes.Clear();
+                        LoadRootNodes(RadTreeView1, TreeNodeExpandMode.ServerSideCallBack);
+
+                        RadTreeNode rtn1 = RadTreeView1.FindNodeByValue(patient_visit_id);
+                        PopulateNodeOnDemand(rtn1, TreeNodeExpandMode.ServerSideCallBack);
+                        var item = RadTreeView1.FindNodeByAttribute("docId", document_id);
+                        if (item != null)
+                        {
+                            item.Selected = true;
+                            MainContent.ContentUrl = args;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    break;
+                case "delete_document":
+                    hfdDeleteDocument.Value = args;
+                    break;
+                case "block_document":
+
+                    break;
+                case "reload_complex_document":
+                    try
+                    {
+                        document_id = args.Substring(args.IndexOf("docId") + 6, 36);
+                        radGridComplexDoc.Rebind();
+                        var ComplexDocitem = radGridComplexDoc.MasterTableView.FindItemByKeyValue(nameof(document_id), document_id);
+                        if (ComplexDocitem != null && WebHelpers.CanOpenForm(Page, document_id, DocumentStatus.DRAFT, (string)Session["emp_id"], loc, locChanged, (string)Session["access_authorize"]))
+                        {
+                            ComplexDocitem.Selected = true;
+                            MainContent.ContentUrl = args;
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    break;
+
             }
         }
 
@@ -303,7 +473,59 @@ namespace EMR
             tmp = varStatus.ToString() + "_" + varFormName.ToString() + " " + varDr.ToString() + " (" + WebHelpers.ConvertDateTime(varCreatedDateTime.ToString(), out bool isValid, out string datetime).ToString("HH:mm") + ")";
             return tmp;
         }
+        private void PopulateNodeOnDemand(RadTreeNode e, TreeNodeExpandMode expandMode)
+        {
+            DataTable data = GetChildNodes(e.Value);
+            string ParentID = e.Value;
 
+            foreach (DataRow row in data.Rows)
+            {
+                RadTreeNode node = new RadTreeNode();
+
+                node.Text = ReturnForm_Name(row["status"], row["model_name"], row["created_name_e"], row["created_date_time"]);
+                node.Value = row["model_name"].ToString();
+                string document_id = row["document_id"].ToString();
+                node.Attributes["docId"] = document_id;
+                node.Attributes["modelId"] = row["model_id"].ToString();
+                node.Attributes["status"] = row["status"].ToString();
+                node.Attributes["model_type_rcd"] = row["model_type_rcd"].ToString();
+                node.Attributes["created_name_l"] = row["created_name_l"].ToString();
+                node.Attributes["modified_date_time"] = row["modified_date_time"].ToString();
+                node.Attributes["modified_name_l"] = row["modified_name_l"].ToString();
+                node.Attributes["patient_visit_id"] = ParentID;
+
+                //node.Attributes.Add("data-modified-datetime", row["modified_date_time"].ToString());
+                //node.Attributes.Add("data-modified-name", row["modified_name_l"].ToString());
+                //node.Attributes.Add("data-title", ReturnForm_Name(row["status"], row["model_name"], row["created_name_e"]));
+                //node.Attributes.Add("data-category", "");
+                //node.Attributes.Add("data-visit", "");
+                //node.Attributes.Add("data-author", row["created_name_e"].ToString());
+
+                node.CssClass = "list-item";
+
+                dynamic temp = new System.Dynamic.ExpandoObject();
+                temp.modelId = row["model_id"].ToString();
+                temp.docId = row["document_id"].ToString();
+                temp.pid = varPID;
+                temp.status = row["status"].ToString();
+                temp.vpid = varPID;
+
+                //node.Attributes.Add("onclick", "lblURL_click(__doPostBack('lblURL_click','" + JsonConvert.SerializeObject(temp) + "'))");
+
+                //if (Convert.ToInt32(row["ChildrenCount"]) > 0)
+                //{
+                //    node.ExpandMode = expandMode;
+                //}
+                //   node.NavigateUrl = row["URL"].ToString() + "?id=" + ParentID;// row["CategoryID"].ToString();
+                node.NavigateUrl = "javascript:void(0);";
+                //node.NavigateUrl = Return_Doc_URL(row["model_id"], row["document_id"], row["patient_visit_id"]);// '// row["model_name"].ToString();
+                node.Target = "MainContent";
+
+                e.Nodes.Add(node);
+            }
+
+            e.Expanded = true;
+        }
         private void PopulateNodeOnDemand(RadTreeNodeEventArgs e, TreeNodeExpandMode expandMode)
         {
             DataTable data = GetChildNodes(e.Node.Value);
@@ -315,8 +537,8 @@ namespace EMR
 
                 node.Text = ReturnForm_Name(row["status"], row["model_name"], row["created_name_e"], row["created_date_time"]);
                 node.Value = row["model_name"].ToString();
-
-                node.Attributes["docId"] = row["document_id"].ToString();
+                string document_id = row["document_id"].ToString();
+                node.Attributes["docId"] = document_id;
                 node.Attributes["modelId"] = row["model_id"].ToString();
                 node.Attributes["status"] = row["status"].ToString();
                 node.Attributes["model_type_rcd"] = row["model_type_rcd"].ToString();
@@ -502,7 +724,7 @@ namespace EMR
         {
             PopulateScanOnDemand("/" + loc, e, TreeNodeExpandMode.ServerSideCallBack);
         }
-
+        #region Complex Document
         protected void radGridComplexDoc_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             string apiURL = $"api/emr/menu-doc-complex/{loc}/{varPID}";
@@ -517,7 +739,6 @@ namespace EMR
                 radGridComplexDoc.DataSource = mydataTable;
             }
         }
-
         protected void radGridComplexDoc_ItemCommand(object sender, GridCommandEventArgs e)
         {
             GridDataItem item = (e.Item as GridDataItem);
@@ -549,6 +770,35 @@ namespace EMR
                 }
 
                 MainContent.ContentUrl = URL;
+            }
+        }
+
+        #endregion
+
+        protected void btnDeleteDocument_Click(object sender, EventArgs e)
+        {
+            dynamic obj = JsonConvert.DeserializeObject<dynamic>(hfdDeleteDocument.Value);
+
+            string patient_visit_id = obj.patient_visit_id;
+            string api = obj.api;
+            string document_id = obj.document_id;
+            //dynamic delete_document = JsonConvert.DeserializeObject<dynamic>(hfdDeleteDocument.Value);
+
+            dynamic response = WebHelpers.PostAPI($"api/emr/document-del/{loc}/{UserId}/{document_id}");
+
+            if (response.Status == System.Net.HttpStatusCode.OK)
+            {
+                dynamic response1 = WebHelpers.PostAPI($"{api}/log/{loc}/{document_id}");
+
+                string script = string.Format("function f(){{ delete_document();Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "delete_document", script, true);
+                RadTreeView1.Nodes.Clear();
+                LoadRootNodes(RadTreeView1, TreeNodeExpandMode.ServerSideCallBack);
+                RadTreeNode rtn1 = RadTreeView1.FindNodeByValue(patient_visit_id);
+                PopulateNodeOnDemand(rtn1, TreeNodeExpandMode.ServerSideCallBack);
+
+                MainContent.ContentUrl = $"index.aspx?pid={varPID}&vpid={varVPID}&loc={loc}";
+                Upd.Update();
             }
         }
     }

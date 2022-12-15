@@ -42,6 +42,24 @@ namespace EMR
         protected global::System.Web.UI.UpdatePanel UpPrintForm;
 
         /// <summary>
+        /// print_page control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl print_page;
+
+        /// <summary>
+        /// print_header control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl print_header;
+
+        /// <summary>
         /// prt_fullname control.
         /// </summary>
         /// <remarks>
@@ -78,13 +96,13 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_vpid;
 
         /// <summary>
-        /// Line control.
+        /// print_content control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::EMR.UserControls.PrintTemplate.Line Line;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl print_content;
 
         /// <summary>
         /// prt_vs_temperature control.
@@ -265,6 +283,24 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label prt_signature_name;
+
+        /// <summary>
+        /// print_footer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell print_footer;
+
+        /// <summary>
+        /// print_footer_space control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableCell print_footer_space;
 
         /// <summary>
         /// RadWindowManager control.
@@ -1299,7 +1335,7 @@ namespace EMR
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        /// protected global::System.Web.UI.WebControls.LinkButton btnDelete;
+        ///protected global::System.Web.UI.WebControls.LinkButton btnDelete;
 
         /// <summary>
         /// PopupShowDelay control.

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using EMR.Classes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -135,6 +136,7 @@ namespace EMR
                 txt_preo_diagnosis.Value = WebHelpers.TextToHtmlTag(oadr.preo_diagnosis);
                 txt_post_diagnosis.Value = WebHelpers.TextToHtmlTag(oadr.post_diagnosis);
                 //
+                btn_grid_operations_add.Visible = true;
                 ViewState[grid_operations.ID] = WebHelpers.BindingDataGridView(grid_operations, WebHelpers.GetJSONToDataTable(oadr.operations), Oadr.OPERATION, btn_grid_operations_add);
                 //
                 WebHelpers.DataBind(form2, new HtmlInputRadioButton(), "rad_sur_incident_" + oadr.sur_incident);
@@ -153,6 +155,8 @@ namespace EMR
         {
             try
             {
+                LoadBarCode();
+
                 lbl_admis_delivery.Text = WebHelpers.FormatDateTime(oadr.admis_delivery, "dd-MM-yyyy HH:mm");
                 lbl_obs_name.Text = WebHelpers.TextToHtmlTag(oadr.obs_name);
                 lbl_obs_initial.Text = WebHelpers.TextToHtmlTag(oadr.obs_initial);
@@ -212,14 +216,17 @@ namespace EMR
                 lbl_cervix_intact.Text = WebHelpers.GetBool(oadr.cervix_intact, "Nguyên vẹn/ Intact", "Rách/ Laceration");
 
                 //4.
+                
+                #region 4. Thông tin phẫu thuật (nếu có)/ Operation details (if possible)
                 lbl_preo_diagnosis.Text = WebHelpers.TextToHtmlTag(oadr.preo_diagnosis);
                 lbl_post_diagnosis.Text = WebHelpers.TextToHtmlTag(oadr.post_diagnosis);
-
+                btn_grid_operations_add.Visible = false;
                 WebHelpers.LoadDataGridView(grid_operations, WebHelpers.GetJSONToDataTable(oadr.operations), Oadr.OPERATION, btn_grid_operations_add);
 
                 lbl_sur_incident.Text = WebHelpers.FormatString(WebHelpers.GetBool(oadr.sur_incident, "Có, ghi rõ/ Yes, specify: " + oadr.sur_incident_note));
 
                 lbl_sur_complication.Text = WebHelpers.FormatString(WebHelpers.GetBool(oadr.sur_complication, "Có, ghi rõ/ Yes, specify: " + oadr.sur_complication_note));
+                #endregion
 
                 //5.
                 lbl_treatment_plan.Text = WebHelpers.FormatString(oadr.treatment_plan);
@@ -234,7 +241,8 @@ namespace EMR
                 patientInfo = new PatientInfo(varPID);
                 patientVisitInfo = new PatientVisitInfo(varPVID, loc);
 
-                WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
+                LoadBarCode();
+
                 prt_fullname.InnerText = string.Format("{0} - {1}", patientInfo.FullName, patientInfo.Gender);
 
                 prt_DOB.InnerText = "DOB: " + WebHelpers.FormatDateTime(patientInfo.DOB, "dd-MM-yyyy", "");
@@ -296,11 +304,11 @@ namespace EMR
                     }
                 }
 
-                prt_birth_defect.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, chi tiết/ Yes, specify: " + WebHelpers.GetBool(oadr.birth_defect, oadr.birth_defect_note, ""), Value = true }, oadr.birth_defect, "display: grid;grid-template-columns:90px auto;");
+                prt_birth_defect.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, chi tiết/ Yes, specify: " + WebHelpers.GetBool(oadr.birth_defect, oadr.birth_defect_note, ""), Value = true }, oadr.birth_defect, "display: grid;grid-template-columns:100px auto;");
 
                 prt_neonatal_status.Text = oadr.neonatal_status;
 
-                prt_intervention.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, chi tiết/ Yes, specify: " + WebHelpers.GetBool(oadr.intervention, oadr.intervention_note, ""), Value = true }, oadr.intervention, "display: grid;grid-template-columns:90px auto;");
+                prt_intervention.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có, chi tiết/ Yes, specify: " + WebHelpers.GetBool(oadr.intervention, oadr.intervention_note, ""), Value = true }, oadr.intervention, "display: grid;grid-template-columns:100px auto;");
 
                 prt_placenta_deli.Text = WebHelpers.CreateOptions(new Option { Text = "Bằng tay/ Manual", Value = true }, new Option { Text = "Tự nhiên/ Spontaneous", Value = false }, oadr.placenta_deli, "display: grid;grid-template-columns:1fr 1fr;");
 
@@ -317,13 +325,13 @@ namespace EMR
                 prt_placenta_deli_mode.Text = oadr.placenta_deli_mode;
                 prt_placenta_weight.Text = oadr.placenta_weight;
 
-                prt_umbilical_coil.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, oadr.umbilical_coil, "display: grid;grid-template-columns:90px auto;");
+                prt_umbilical_coil.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ Yes", Value = true }, oadr.umbilical_coil, "display: grid;grid-template-columns:100px auto;");
 
                 prt_umbilical_length.Text = oadr.umbilical_length;
                 
                 prt_blood_loss.Text = oadr.blood_loss;
 
-                prt_p_intervention.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ chi tiết/ Yes, specify: " + WebHelpers.GetBool(oadr.p_intervention, oadr.p_intervention_note, ""), Value = true }, oadr.p_intervention, "display: grid;grid-template-columns:90px auto;");
+                prt_p_intervention.Text = WebHelpers.CreateOptions(new Option { Text = "Không/ No", Value = false }, new Option { Text = "Có/ chi tiết/ Yes, specify: " + WebHelpers.GetBool(oadr.p_intervention, oadr.p_intervention_note, ""), Value = true }, oadr.p_intervention, "display: grid;grid-template-columns:100px auto;");
                 prt_spO2.Text = oadr.spO2;
                 prt_temp.Text = oadr.temp;
                 prt_BP.Text = oadr.bp;
@@ -376,7 +384,16 @@ namespace EMR
                     }
                 }
 
-                prt_cervix_intact.Text = WebHelpers.CreateOptions(new Option { Text = "Nguyên vẹn/ Intact", Value = false }, new Option { Text = "Rách/ Laceration", Value = true }, oadr.cervix_intact, "display: grid;grid-template-columns:150px auto;");
+                {
+                    prt_cervix_intact_true.Text
+                        = prt_cervix_intact_false.Text
+                        = "❏";
+                    var control = FindControl("prt_cervix_intact_" + oadr.cervix_intact);
+                    if (control != null)
+                    {
+                        (control as Label).Text = "☒";
+                    }
+                }
 
                 prt_preo_diagnosis.Text = oadr.preo_diagnosis;
                 prt_post_diagnosis.Text = oadr.post_diagnosis;
@@ -785,6 +802,13 @@ namespace EMR
             oadr = new Oadr(varDocID, loc);
             BindingDataFormPrint(oadr);
             WebHelpers.AddJS(Page, "btnPrint_Click()");
+        }
+
+        private void LoadBarCode()
+        {
+            IBarcodeGenerator barcodeGenerator = new BarcodeGenerator();
+            BarCode.Controls.Clear();
+            BarCode.Controls.Add(barcodeGenerator.Generator(patientInfo.visible_patient_id));
         }
     }
 }

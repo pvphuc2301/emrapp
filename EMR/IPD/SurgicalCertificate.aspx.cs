@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using EMR.Classes;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -90,6 +91,7 @@ namespace EMR
         {
             try
             {
+                LoadBarCode();
                 lbl_discharge_date.Text = WebHelpers.FormatString(WebHelpers.FormatDateTime(surc.discharge_date));
                 lbl_preo_diagnosis.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surc.preo_diagnosis));
                 lbl_name_of_procedure.Text = WebHelpers.FormatString(WebHelpers.TextToHtmlTag(surc.name_of_procedure));
@@ -113,7 +115,8 @@ namespace EMR
                 prt_patient_name_e.Text = $"/ {patientInfo.GetFullName(false)}";
 
                 prt_dob.Text = WebHelpers.FormatDateTime(patientInfo.date_of_birth);
-                WebHelpers.gen_BarCode(patientInfo.visible_patient_id, BarCode);
+                
+                LoadBarCode();
 
                 if (patientInfo.Gender == "Male" || patientInfo.Gender == "Nam")
                 {
@@ -353,6 +356,12 @@ namespace EMR
         {
             WebHelpers.clearSessionDoc(Page, Request.QueryString["docId"], loc);
 
+        }
+        private void LoadBarCode()
+        {
+            IBarcodeGenerator barcodeGenerator = new BarcodeGenerator();
+            BarCode.Controls.Clear();
+            BarCode.Controls.Add(barcodeGenerator.Generator(patientInfo.visible_patient_id));
         }
     }
 }

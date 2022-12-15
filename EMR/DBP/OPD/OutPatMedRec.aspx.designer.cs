@@ -42,6 +42,42 @@ namespace EMR.DBP.OPD
         protected global::System.Web.UI.UpdatePanel Upd;
 
         /// <summary>
+        /// prt_fullname control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_fullname;
+
+        /// <summary>
+        /// prt_dob control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_dob;
+
+        /// <summary>
+        /// BarCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.PlaceHolder BarCode;
+
+        /// <summary>
+        /// prt_vpid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_vpid;
+
+        /// <summary>
         /// print_content control.
         /// </summary>
         /// <remarks>
@@ -1650,7 +1686,7 @@ namespace EMR.DBP.OPD
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        /// protected global::System.Web.UI.WebControls.LinkButton btnDelete;
+        ///protected global::System.Web.UI.WebControls.LinkButton btnDelete;
 
         /// <summary>
         /// PopupShowDelay control.

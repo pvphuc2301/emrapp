@@ -441,7 +441,7 @@ namespace EMR.Other
                 RadGrid3.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
             }
         }
-
+        
         protected void RadGrid4_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             string url = "api/emr/patient-history-list?day=30&user_name=" + (string)Session["UserId"];

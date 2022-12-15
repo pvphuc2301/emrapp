@@ -69,9 +69,35 @@
     <%--<script src="../scripts/contenteditable.min.js"></script>
     <script src="../scripts/waves.js"></script>
     <script src="../scripts/alertify.js"></script>--%>
+    <script>
+        function showrwnd(radwndId) {
+            console.log(radwndId);
+            var window = $find(radwndId);
+            window.show();
+        }
+        function openwnd(url) {
+            window.open(url, '_blank').focus();
+        }
+        
+        function parseJwt(token) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        };
+        function encodeLink(token) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            openwnd(jsonPayload);
+        }
+    </script>
 
      <script>
-
          loadtitle();
 
          function beforeAsyncPostBack() {

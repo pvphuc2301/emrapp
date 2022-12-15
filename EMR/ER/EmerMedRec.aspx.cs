@@ -1,19 +1,25 @@
 ﻿using EMR.Classes;
+using EMR.Data.AIH.Dictionary;
+using EMR.Data.AIH.Model;
 using EMR.Model;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
-using Telerik.Web.UI;
 
 namespace EMR.ER
 {
-    public partial class EmerMedRec : EmrPage, IEmrFormModel<EmrViewModel>
+    public partial class EmerMedRec : EmrPage, IEmrFormModel<EmrV2>
     {
         public override string form_url { get; set; } = "ER/EmerMedRec";
-        public EmrViewModel Model { get; set; }
+        public EmrV2 Model { get; set; }
+        public override dynamic InitModel() {
+            Model = new EmrV2(varDocID, Location, varDocIdLog);
+            return Model;
+        }
         private void discharge_change(string value = "")
         {
             if (value == "clear")
@@ -97,41 +103,6 @@ namespace EMR.ER
         }
 
         #region Events
-        protected void btnDelete_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                Model = new EmrViewModel(varDocID, Location);
-
-                dynamic result = Model.Delete(UserId, Location)[0];
-
-                if (result.Status == System.Net.HttpStatusCode.OK)
-                {
-                    WebHelpers.clearSessionDoc(Page, varDocID, Location);
-                    Response.Redirect(PAGE_URL_DEFAULT);
-                }
-            }
-            catch (Exception ex)
-            {
-                WebHelpers.SendError(Page, ex);
-            }
-        }
-        protected void btnAmend_Click(object sender, EventArgs e)
-        {
-            if (CheckOpenForm)
-            {
-                Model = new EmrViewModel(varDocID, Location);
-                HideControl(btnAmend, btnPrint);
-                ShowControl(btnComplete, btnCancel, amendReasonWraper);
-                LoadFormControl(form1, Model, ControlState.Edit);
-                BindingDataFormEdit();
-            }
-        }
-        protected void btnCancel_Click(object sender, EventArgs e)
-        {
-            WebHelpers.clearSessionDoc(Page, varDocID, Location);
-            Init_Page();
-        }
         protected void gridTreatment_RowDataBound(object sender, GridViewRowEventArgs e)
         {
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -165,19 +136,6 @@ namespace EMR.ER
         #endregion
 
         #region Functions
-        protected void RadGrid1_ItemCommand(object sender, GridCommandEventArgs e)
-        {
-            GridDataItem item = (e.Item as GridDataItem);
-            if (e.CommandName.Equals("Open"))
-            {
-                string doc_log_id = item.GetDataKeyValue("document_log_id").ToString();
-
-                string url = PAGE_URL + $"&docIdLog={doc_log_id}";
-
-                Response.Redirect(url);
-            }
-        }
-        protected void LinkViewLastestVersion_Load(object sender, EventArgs e) => (sender as HyperLink).NavigateUrl = PAGE_URL;
         protected DateTime? GetDateTime(object value)
         {
             DateTime? dateTime = null;
@@ -191,6 +149,10 @@ namespace EMR.ER
         #endregion
 
         #region Validation
+        protected void txt_amend_reason_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_amend_reason.Text);
+        }
         protected void chief_complaint_code_ServerValidate(object source, ServerValidateEventArgs args)
         {
             args.IsValid = rad_chief_complaint_code_E.Checked || rad_chief_complaint_code_L.Checked || rad_chief_complaint_code_N.Checked || rad_chief_complaint_code_R.Checked || rad_chief_complaint_code_U.Checked;
@@ -258,6 +220,7 @@ namespace EMR.ER
         protected void investigations_results_ServerValidate(object source, ServerValidateEventArgs args)
         {
             args.IsValid = !string.IsNullOrEmpty(txt_investigations_results.Value);
+            
         }
         protected void initial_diagnosis_ServerValidate(object source, ServerValidateEventArgs args)
         {
@@ -273,7 +236,7 @@ namespace EMR.ER
         }
         protected void conclusions_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            //args.IsValid = !string.IsNullOrEmpty(txt_conclusions.Value);
+            args.IsValid = !string.IsNullOrEmpty(txt_conclusions.Value);
         }
         protected void prescription_ServerValidate(object source, ServerValidateEventArgs args)
         {
@@ -299,13 +262,37 @@ namespace EMR.ER
         {
             args.IsValid = !string.IsNullOrEmpty(txt_brief_summary.Value);
         }
+        protected void transfer_hospital_name_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_transfer_hospital_name.Value);
+        }
+        protected void transfer_hospital_employee_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_transfer_hospital_employee.Value);
+        }
+        protected void transfer_hospital_phone_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_transfer_hospital_phone.Value);
+        }
         protected void reason_for_transfer_ServerValidate(object source, ServerValidateEventArgs args)
         {
             args.IsValid = !string.IsNullOrEmpty(txt_reason_for_transfer.Value);
         }
+        protected void dtpk_evaluation_time_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = dtpk_evaluation_time.SelectedDate != null;
+        }
         protected void status_before_transfer_ServerValidate(object source, ServerValidateEventArgs args)
         {
             args.IsValid = !string.IsNullOrEmpty(txt_status_before_transfer.Value);
+        }
+        protected void comfirmed_diagnosis_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_comfirmed_diagnosis.Value);
+        }
+        protected void dtpk_time_of_leaving_emer_a_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = dtpk_time_of_leaving_emer_a.SelectedDate != null;
         }
         protected void icd_10_ServerValidate(object source, ServerValidateEventArgs args)
         {
@@ -333,7 +320,7 @@ namespace EMR.ER
                     = cb_not_yet_vaccinations_true.Disabled
                     = false;
                 #region Ngày, giờ bắt đầu đánh giá/ Starting date, time of the assessmen
-                BindingDateTimePicker(dtpk_evaluation_time, Model.evaluation_time);
+                BindingRadDateTimePicker(dtpk_evaluation_time, Model.evaluation_time);
                 #endregion
 
                 #region Lý do đến khám/ Chief complaint
@@ -408,8 +395,8 @@ namespace EMR.ER
                 specialist_opinion_change(Convert.ToString(Model.specialist_opinion));
                 BindingInputRadioButton($"{nameof(Model.specialist_opinion)}_{Model.specialist_opinion}");
                 txt_name_of_specialist.Value = Model.name_of_specialist;
-                BindingDateTimePicker(dtpk_time_contaced, Model.time_contaced);
-                BindingDateTimePicker(dtpk_time_provided, Model.time_provided);
+                BindingRadDateTimePicker(dtpk_time_contaced, Model.time_contaced);
+                BindingRadDateTimePicker(dtpk_time_provided, Model.time_provided);
                 txt_spec_opinion_summarised.Value = Model.spec_opinion_summarised;
                 #endregion
 
@@ -417,13 +404,13 @@ namespace EMR.ER
                 ViewState[grid_Treatment.ID] = WebHelpers.BindingDataGridView(grid_Treatment, WebHelpers.GetJSONToDataTable(Model.treatment), EmergencyMedicalRecord.Treatment, btn_grid_Treatment_add);
                 //Diễn tiến/ Progress Note
                 ViewState[grid_progress_note.ID] = WebHelpers.BindingDataGridView(grid_progress_note, WebHelpers.GetJSONToDataTable(Model.progress_note), EmergencyMedicalRecord.ProgressNote, btn_grid_progress_note_add);
-                txt_conclusions.Value = Model.conclusions; // Hide
+                txt_conclusions.Value = Model.conclusions;
                 #region 2. Xuất viện/ Discharge
                 BindingInputRadioButton($"{nameof(Model.discharge)}_{Model.discharge}");
                 discharge_change(Convert.ToString(Model.discharge));
                 txt_prescription.Value = Model.prescription;
                 txt_specify_care_instructions.Value = Model.specify_care_instructions;
-                BindingDateTimePicker(dtpk_discharge_time, Model.discharge_time);
+                BindingRadDateTimePicker(dtpk_discharge_time, Model.discharge_time);
                 #endregion
 
                 #region 3. Chuyển sang khám ngoại trú/ Referred to OPD
@@ -435,7 +422,7 @@ namespace EMR.ER
                 BindingInputRadioButton($"{nameof(Model.hospitalisation_required)}_{Model.hospitalisation_required}");
                 txt_reason.Value = Model.reason;
                 txt_ward.Value = Model.ward;
-                BindingDateTimePicker(dtpk_time_of_leaving_emergency, Model.time_of_leaving_emergency);
+                BindingRadDateTimePicker(dtpk_time_of_leaving_emergency, Model.time_of_leaving_emergency);
                 hos_req_change(Convert.ToString(Model.hospitalisation_required));
                 #endregion
 
@@ -443,15 +430,18 @@ namespace EMR.ER
                 BindingInputRadioButton($"{nameof(Model.emergency_surgery)}_{Model.emergency_surgery}");
                 txt_pre_operative_diagnosis.Value = Model.pre_operative_diagnosis;
                 txt_brief_summary.Value = Model.brief_summary;
-                BindingDateTimePicker(dtpk_time_of_leaving_emer_e, Model.time_of_leaving_emer_e);
+                BindingRadDateTimePicker(dtpk_time_of_leaving_emer_e, Model.time_of_leaving_emer_e);
                 emergency_surgery_change(Convert.ToString(Model.emergency_surgery));
                 #endregion
 
                 #region 6. Nếu chuyển đến BV khác/ In case of transfer to another hospital
                 BindingInputRadioButton($"{nameof(Model.transfer_hospital)}_{Model.transfer_hospital}");
+                txt_transfer_hospital_name.Value = Model.transfer_hospital_name;
+                txt_transfer_hospital_employee.Value = Model.transfer_hospital_employee;
+                txt_transfer_hospital_phone.Value = Model.transfer_hospital_phone;
                 txt_reason_for_transfer.Value = Model.reason_for_transfer;
                 txt_status_before_transfer.Value = Model.status_before_transfer;
-                BindingDateTimePicker(dtpk_time_of_leaving_emer_a, Model.time_of_leaving_emer_a);
+                BindingRadDateTimePicker(dtpk_time_of_leaving_emer_a, Model.time_of_leaving_emer_a);
                 transfer_hospital_change(Convert.ToString(Model.transfer_hospital));
                 #endregion
 
@@ -476,26 +466,26 @@ namespace EMR.ER
                 WebHelpers.SendError(Page, ex);
             }
         }
-
         public override void BindingDataFormPrint()
         {
             try
             {
-                WebHelpers.gen_BarCode(Patient.visible_patient_id, BarCode);
-                prt_fullname.Text = Patient.FullName;
-                prt_dob.Text = WebHelpers.FormatDateTime(Patient.date_of_birth) + "| " + Patient.Gender;
-                prt_vpid.Text = Patient.visible_patient_id;
+                //WebHelpers.gen_BarCode(Patient.visible_patient_id, BarCode);
+                prt_patient_name.Text = Patient.FullName;
+                prt_dob.Text = WebHelpers.FormatDateTime(Patient.date_of_birth);
+                prt_gender.Text = Patient.Gender;
+                prt_pid.Text = Patient.visible_patient_id;
 
                 #region Ngày, giờ bắt đầu đánh giá / Starting date, time of the assessment
                 prt_evaluation_time.Text = WebHelpers.FormatDateTime(Model.evaluation_time, "HH:mm, dd/MM/yyyy");
                 #endregion
 
                 #region Lý do đến khám/ Chief complaint/ Reason of consultation
-                prt_chief_complaint_code_R.Text
-                 = prt_chief_complaint_code_E.Text
-                 = prt_chief_complaint_code_U.Text
-                 = prt_chief_complaint_code_L.Text
-                 = prt_chief_complaint_code_N.Text 
+                prt_chief_complaint_code_r.Text
+                 = prt_chief_complaint_code_e.Text
+                 = prt_chief_complaint_code_u.Text
+                 = prt_chief_complaint_code_l.Text
+                 = prt_chief_complaint_code_n.Text 
                  = "❏";
 
                 prt_chief_complaint.Text = Model.chief_complaint;
@@ -591,11 +581,11 @@ namespace EMR.ER
                 prt_specialist_opinion_false.Text
                     = prt_specialist_opinion_true.Text
                     = "❏";
-                HideControl(field_specialist_opinion);
+                HideControl(specialist_opinion_collapse);
                 BindingLabel($"{nameof(Model.specialist_opinion)}_{Model.specialist_opinion}", "☒");
                 if(Model.specialist_opinion != null && Model.specialist_opinion)
                 {
-                    ShowControl(field_specialist_opinion);
+                    ShowControl(specialist_opinion_collapse);
                     prt_name_of_specialist.Text = Model.name_of_specialist;
                     if (Model.time_contaced != null)
                     {
@@ -622,7 +612,7 @@ namespace EMR.ER
                             HtmlGenericControl p;
                             //
                             td = new HtmlTableCell();
-                            p = new HtmlGenericControl("lable") { InnerHtml = WebHelpers.FormatDateTime(Convert.ToString(row["time"]), "dd/MM/yyyy HH:mm tt") };
+                            p = new HtmlGenericControl("lable") { InnerHtml = WebHelpers.FormatDateTime(Convert.ToString(row["time"]), "dd/MM/yyyy HH:mm") };
                             td.Controls.Add(p);
                             tr.Cells.Add(td);
                             //
@@ -668,7 +658,7 @@ namespace EMR.ER
                             HtmlGenericControl p;
                             //
                             td = new HtmlTableCell();
-                            p = new HtmlGenericControl("lable") { InnerHtml = WebHelpers.FormatDateTime(Convert.ToString(row["time"]), "dd/MM/yyyy HH:mm tt") };
+                            p = new HtmlGenericControl("lable") { InnerHtml = WebHelpers.FormatDateTime(Convert.ToString(row["time"]), "dd/MM/yyyy HH:mm") };
                             td.Controls.Add(p);
                             tr.Cells.Add(td);
                             //
@@ -687,6 +677,7 @@ namespace EMR.ER
                         }
                     }
                 }
+                prt_conclusions.Text = Model.conclusions;
                 #endregion
 
                 #region 2. Xuất viện/ Discharge
@@ -761,6 +752,9 @@ namespace EMR.ER
                 if(Model.transfer_hospital != null && Model.transfer_hospital)
                 {
                     ShowControl(div_transfer_hos_field);
+                    prt_transfer_hospital_name.Text = Model.transfer_hospital_name;
+                    prt_transfer_hospital_employee.Text = Model.transfer_hospital_employee;
+                    prt_transfer_hospital_phone.Text = Model.transfer_hospital_phone;
                     prt_reason_for_transfer.Text = Model.reason_for_transfer;
                     prt_status_before_transfer.Text = Model.status_before_transfer;
                     if (Model.time_of_leaving_emer_a != null)
@@ -771,9 +765,9 @@ namespace EMR.ER
                 #endregion
 
                 #region Tình trạng bệnh nhân khi rời khoa Cấp Cứu/ Patient's Condition at Discharge from Emergency
-                prt_patient_discharge_IMP.Text 
-                    = prt_patient_discharge_UNC.Text 
-                    = prt_patient_discharge_UNS.Text 
+                prt_patient_discharge_imp.Text 
+                    = prt_patient_discharge_unc.Text 
+                    = prt_patient_discharge_uns.Text 
                     = "❏";
                 DataTable patient_discharge = EMRHelpers.ConvertToDataTable(Model.patient_discharge);
                 if(patient_discharge != null)
@@ -789,7 +783,7 @@ namespace EMR.ER
 
                 try
                 {
-                    prt_printed_date_time.Text = string.Format("Ngày/Date {0}, Giờ/Time {1}", DateTime.Now.ToString("dd/MM/yyyy"), DateTime.Now.ToString("HH:mm"));
+                    prt_printed_datetime.Text = string.Format("Ngày/<span class=\"en\">Date</span> {0}, Giờ/<span class=\"en\">Time</span> {1}", DateTime.Now.ToString("dd/MM/yyyy"), DateTime.Now.ToString("HH:mm"));
                 } 
                 catch(Exception ex)
                 {
@@ -812,7 +806,6 @@ namespace EMR.ER
                 WebHelpers.SendError(Page, ex);
             }
         }
-
         public override void BindingDataFormView()
         {
             try
@@ -856,9 +849,14 @@ namespace EMR.ER
                 DataTable habits_tb = EMRHelpers.ConvertToDataTable(Model.habits);
                 if(habits_tb != null)
                 {
-                    lbl_habits.Text = WebHelpers.FormatString(DisplayCheckBox(habits_tb));
+                    //lbl_habits.Text = WebHelpers.FormatString(DisplayCheckBox(habits_tb));
+                    lbl_habits.Text = ConcatCheckBoxAsString(habits_tb, (KeyValuePair<string, object> dictionary) => {
+                        if (Convert.ToString(dictionary.Key) == "O") return dictionary.Value + ": " + Model.habits_other;
+                        return dictionary.Value;
+                    }, "cde");
                 }
-                lbl_habits.Text += WebHelpers.FormatString(Model.habits_other);
+
+                //lbl_habits.Text += WebHelpers.FormatString(Model.habits_other);
                 #endregion
 
                 #region Thuốc dùng tại nhà/ Home medications
@@ -875,7 +873,8 @@ namespace EMR.ER
 
                 #region Khám lâm sàng liên quan/ Physical examination
                 lbl_finding.Text = WebHelpers.FormatString(Model.finding);
-                lbl_required_code.Text = WebHelpers.FormatString(WebHelpers.GetBool(Model.required_code)) + " " + WebHelpers.FormatString(Model.required_text);
+
+                lbl_required_code.Text = WebHelpers.FormatString(WebHelpers.GetBool(Model.required_code, "Có, ghi rõ/ Yes, specify: " + WebHelpers.FormatString(Model.required_text)));
                 #endregion
 
                 #region Kết quả khảo sát/ Investigations Results (Labs, Imaging...)
@@ -925,7 +924,7 @@ namespace EMR.ER
                 {
                     WebHelpers.LoadDataGridView(grid_progress_note, dtProgressNote, Iina.SKIN_ANNO, btn_grid_progress_note_add);
                 }
-                lbl_conclusions.Text = WebHelpers.FormatString(Model.conclusions); // Hide
+                lbl_conclusions.Text = WebHelpers.FormatString(Model.conclusions);
                 #endregion
 
                 #region 2. Xuất viện/ Discharge
@@ -972,7 +971,9 @@ namespace EMR.ER
                 }
 
                 transfer_hospital_change(Convert.ToString(Model.transfer_hospital));
-
+                lbl_transfer_hospital_name.Text = WebHelpers.FormatString(Model.transfer_hospital_name);
+                lbl_transfer_hospital_employee.Text = WebHelpers.FormatString(Model.transfer_hospital_employee);
+                lbl_transfer_hospital_phone.Text = WebHelpers.FormatString(Model.transfer_hospital_phone);
                 lbl_transfer_hospital.Text = WebHelpers.FormatString(WebHelpers.GetBool(Model.transfer_hospital));
                 lbl_reason_for_transfer.Text = WebHelpers.FormatString(Model.reason_for_transfer);
                 lbl_status_before_transfer.Text = WebHelpers.FormatString(Model.status_before_transfer);
@@ -997,42 +998,216 @@ namespace EMR.ER
                 WebHelpers.SendError(Page, ex);
             }
         }
-
-        public override void Init_Page()
+        public override void BindingControlToModel() 
         {
-            Patient = new PatientInfo(varPID);
-            PatientVisit = new PatientVisitInfo(varPVID, Location);
+            #region Ngày, giờ bắt đầu đánh giá/ Starting date, time of the assessmen
+            Model.evaluation_time = DataHelpers.ConvertSQLDateTime(dtpk_evaluation_time.SelectedDate);
+            #endregion
 
-            Model = new EmrViewModel(varDocID, Location, varDocIdLog);
-            currentLog.Visible = !string.IsNullOrEmpty(varDocIdLog);
-            uc_patientInfo.Patient = Patient;
-            uc_patientInfo.PatientVisit = PatientVisit;
+            #region Lý do đến khám/ Chief complaint
+            Model.chief_complaint = txt_chief_complaint.Value;
+            Model.chief_complaint_code = FindHtmlInputRadioButton(nameof(Model.chief_complaint_code), fEmrDictionary.CHIEF_COMPLAINT_CODE);
+            Model.chief_complaint_desc = WebHelpers.GetDicDesc(Model.chief_complaint_code, fEmrDictionary.CHIEF_COMPLAINT_CODE);
+            //Model.chief_complaint_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_chief_complaint_code_", EmergencyMedicalRecord.ChiefComplaintCode);
+            //Model.chief_complaint_desc = WebHelpers.GetDicDesc(Model.chief_complaint_code, EmergencyMedicalRecord.ChiefComplaintCode);
+            #endregion
 
-            RadLabel1.Text = WebHelpers.loadRadGridHistoryLog(RadGrid1, Model.Logs(Location), out string signature_date, out string signature_name);
+            #region Bệnh Sử/ History of present illness(HPI)
+            Model.history_of_present = txt_history_of_present.Value;
+            #endregion
 
-            HideControl(btnCancel, amendReasonWraper);
+            #region Tiền sử bệnh/ Past medical history (PMH)
+            //Nội/ Meds
+            Model.past_med_his_meds = txt_past_med_his_meds.Value;
+            //Ngoại/ Surgical
+            Model.past_med_his_surs = txt_past_med_his_surs.Value;
+            #endregion
 
-            if (Model.status == DocumentStatus.FINAL)
+            #region Đã từng nhiễm COVID-19 trong vòng 6 tháng qua/ Have been infected with COVID-19 within the last 6 months
+            Model.infected_with_covid = FindHtmlInputRadioButton(nameof(Model.infected_with_covid)); // WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_");
+            //Tiền sử tiêm chủng/ Immunization history
+            Model.received_1_dose = cb_received_1_dose_true.Checked;
+            Model.received_2_dose = cb_received_2_dose_true.Checked;
+            Model.received_additional = cb_received_additional_true.Checked;
+            Model.not_yet_vaccinations = cb_not_yet_vaccinations_true.Checked;
+            Model.other_vaccinations = txt_other_vaccinations.Value;
+            #endregion
+
+            #region Thói quen/ Habits
+            string habits_other = null;
+            Model.habits = FindHtmlInputCheckBoxAsString(nameof(Model.habits), fEmrDictionary.HABITS, (KeyValuePair<string, object> dictionary) => {
+                if (Convert.ToString(dictionary.Key) == "O") {
+                    habits_other = txt_habits_other.Value;
+                }
+                return null;
+            }, "cde");
+            Model.habits_other = habits_other;
+            #endregion
+
+            #region Thuốc dùng tại nhà/ Home medications
+            Model.home_medications = txt_home_medications.Value;
+            #endregion
+
+            #region Tiền sử dị ứng/ Allergies
+            Model.allergies = txt_allergies.Value;
+            #endregion
+
+            #region Tiền sử bệnh người thân/ Relevant family history
+            Model.relevant_family_history = txt_relevant_family_history.Value;
+            #endregion
+
+            //Khám lâm sàng liên quan/ Physical examination
+            #region • Kết quả tìm thấy/ Findings (General and Diagnostic support)
+            Model.finding = txt_finding.Value;
+            #endregion
+
+            Model.required_code = FindHtmlInputRadioButton(nameof(Model.required_code));
+            Model.required_text = EMRHelpers.ConvertBooleanToString(Model.required_code, txt_required_text.Value, null);
+
+            Model.investigations_results = txt_investigations_results.Value;
+            Model.initial_diagnosis = txt_initial_diagnosis.Value;
+            Model.diferential_diagnosis = txt_diferential_diagnosis.Value;
+            Model.associated_conditions = txt_associated_conditions.Value;
+            Model.comfirmed_diagnosis = txt_comfirmed_diagnosis.Value;
+
+            if (rad_specialist_opinion_True.Checked)
             {
-                BindingDataForm(form1, Model, ControlState.View);
-                BindingDataFormPrint();
+                Model.specialist_opinion = true;
+                Model.name_of_specialist = txt_name_of_specialist.Value;
+                Model.time_contaced = DataHelpers.ConvertSQLDateTime(dtpk_time_contaced.SelectedDate);
+                Model.time_provided = DataHelpers.ConvertSQLDateTime(dtpk_time_provided.SelectedDate);
+                Model.spec_opinion_summarised = txt_spec_opinion_summarised.Value;
             }
-            else if (Model.status == DocumentStatus.DRAFT)
+            else
             {
-                BindingDataForm(form1, Model, ControlState.Edit);
+                Model.specialist_opinion = false;
+                Model.name_of_specialist = "";
+                Model.time_contaced = null;
+                Model.time_provided = null;
+                Model.spec_opinion_summarised = "";
             }
 
-            WebHelpers.getAccessButtons(new AccessButtonInfo()
+            #region treatment
+            DataTable treatment = RetrieveGridViewData(grid_Treatment, fEmrDictionary.TREATMENT);
+            string treatment_result = null;
+            if (treatment != null)
             {
-                Form = form1,
-                DocStatus = Model.status,
-                AccessGroup = GroupAccess,
-                AccessAuthorize = AccessAuthorize,
-                IsSameCompanyCode = !IsLocationChanged,
-                IsViewLog = IsViewLog
-            });
+                treatment_result = JsonConvert.SerializeObject(treatment);
+            }
+            Model.treatment = treatment_result;
+            #endregion
+
+            #region progress_note
+            DataTable Progress_note_tb = new DataTable();
+            foreach (KeyValuePair<string, string> col in EmergencyMedicalRecord.ProgressNote)
+            {
+                Progress_note_tb.Columns.Add(col.Key);
+            }
+            DataTable progress_note = RetrieveGridViewData(grid_progress_note, fEmrDictionary.PROGRESS_NOTE);
+            string progress_note_result = null;
+            if (progress_note != null)
+            {
+                progress_note_result = JsonConvert.SerializeObject(progress_note);
+            }
+            Model.progress_note = progress_note_result;
+
+            #endregion
+
+            Model.conclusions = txt_conclusions.Value;
+
+            if (rad_discharge_True.Checked)
+            {
+                Model.discharge = true;
+                Model.prescription = txt_prescription.Value;
+                Model.specify_care_instructions = txt_specify_care_instructions.Value;
+                Model.discharge_time = DataHelpers.ConvertSQLDateTime(dtpk_discharge_time.SelectedDate);
+            }
+            else
+            {
+                Model.discharge = false;
+                Model.prescription = null;
+                Model.specify_care_instructions = null;
+                Model.discharge_time = null;
+            }
+
+            if (rad_referred_to_OPD_True.Checked)
+            {
+                Model.referred_to_OPD = true;
+                Model.referred_to_OPD_text = txt_referred_to_OPD_text.Value;
+            }
+            else
+            {
+                Model.referred_to_OPD = false;
+                Model.referred_to_OPD_text = null;
+            }
+
+            if (rad_hospitalisation_required_True.Checked)
+            {
+                Model.hospitalisation_required = true;
+                Model.reason = txt_reason.Value;
+                Model.ward = txt_ward.Value;
+                Model.time_of_leaving_emergency = DataHelpers.ConvertSQLDateTime(dtpk_time_of_leaving_emergency.SelectedDate);
+            }
+            else
+            {
+                Model.hospitalisation_required = false;
+                Model.reason = null;
+                Model.ward = null;
+                Model.time_of_leaving_emergency = null;
+            }
+
+            if (rad_emergency_surgery_True.Checked)
+            {
+                Model.emergency_surgery = true;
+                Model.pre_operative_diagnosis = txt_pre_operative_diagnosis.Value;
+                Model.brief_summary = txt_brief_summary.Value;
+                Model.time_of_leaving_emer_e = DataHelpers.ConvertSQLDateTime(dtpk_time_of_leaving_emer_e.SelectedDate);
+            }
+            else
+            {
+                Model.emergency_surgery = false;
+                Model.pre_operative_diagnosis = null;
+                Model.brief_summary = null;
+                Model.time_of_leaving_emer_e = null;
+            }
+            #region 6. Nếu chuyển đến BV khác/ In case of transfer to another hospital
+            if (rad_transfer_hospital_True.Checked)
+            {
+                Model.transfer_hospital = true;
+                Model.reason_for_transfer = txt_reason_for_transfer.Value;
+                Model.transfer_hospital_name = txt_transfer_hospital_name.Value;
+                Model.transfer_hospital_employee = txt_transfer_hospital_employee.Value;
+                Model.transfer_hospital_phone = txt_transfer_hospital_phone.Value;
+                Model.status_before_transfer = txt_status_before_transfer.Value;
+                Model.time_of_leaving_emer_a = DataHelpers.ConvertSQLDateTime(dtpk_time_of_leaving_emer_a.SelectedDate);
+            }
+            else
+            {
+                Model.transfer_hospital = false;
+                Model.reason_for_transfer = null;
+                Model.transfer_hospital_name = null;
+                Model.transfer_hospital_employee = null;
+                Model.transfer_hospital_phone = null;
+                Model.status_before_transfer = null;
+                Model.time_of_leaving_emer_a = null;
+            }
+            #endregion
+
+            #region Tình trạng của bệnh nhân khi xuất viện/ Patient's Condition at Discharge
+            Model.patient_discharge = FindHtmlInputCheckBoxAsString(nameof(Model.patient_discharge), fEmrDictionary.PATIENT_DISCHARGE, "cde");
+            Model.txt_patient_discharge = txt_patient_discharge.Value;
+            #endregion
+
+            //Mã ICD-10/ ICD-10 Code(S)
+            Model.icd_10 = txt_icd_10.Value;
+
+            if (JsonConvert.SerializeObject(Model) == DataObj.Value)
+            {
+                WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
+            }
+
+            Model.amend_reason = txt_amend_reason.Text;
         }
-
         public override void PostBackEventHandler()
         {
             switch (Request["__EVENTTARGET"])
@@ -1054,192 +1229,6 @@ namespace EMR.ER
                     break;
             }
         }
-
-        public override void UpdateModel(string status)
-        {
-            try
-            {
-                Model = new EmrViewModel(varDocID, Location);
-                Model.status = status;
-
-                Model.evaluation_time = DataHelpers.ConvertSQLDateTime(dtpk_evaluation_time.SelectedDate);
-                Model.chief_complaint = txt_chief_complaint.Value;
-                Model.chief_complaint_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_chief_complaint_code_", EmergencyMedicalRecord.ChiefComplaintCode);
-                Model.chief_complaint_desc = WebHelpers.GetDicDesc(Model.chief_complaint_code, EmergencyMedicalRecord.ChiefComplaintCode);
-                Model.history_of_present = txt_history_of_present.Value;
-                Model.past_med_his_meds = txt_past_med_his_meds.Value;
-                Model.past_med_his_surs = txt_past_med_his_surs.Value;
-                Model.habits = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_habits_", EmergencyMedicalRecord.Habits, out DataTable habits, "cde");
-
-                if (cb_habits_O.Checked)
-                {
-                    Model.habits_other = txt_habits_other.Value;
-                }
-
-                Model.habits = JsonConvert.SerializeObject(habits);
-                Model.home_medications = txt_home_medications.Value;
-                Model.allergies = txt_allergies.Value;
-                Model.relevant_family_history = txt_relevant_family_history.Value;
-                Model.finding = txt_finding.Value;
-
-                if (rad_required_code_True.Checked)
-                {
-                    Model.required_code = true;
-                    Model.required_text = txt_required_text.Value;
-                }
-                if (rad_required_code_False.Checked)
-                {
-                    Model.required_code = false;
-                    Model.required_text = "";
-                }
-
-                Model.investigations_results = txt_investigations_results.Value;
-                Model.initial_diagnosis = txt_initial_diagnosis.Value;
-                Model.diferential_diagnosis = txt_diferential_diagnosis.Value;
-                Model.associated_conditions = txt_associated_conditions.Value;
-                Model.comfirmed_diagnosis = txt_comfirmed_diagnosis.Value;
-
-                if (rad_specialist_opinion_True.Checked)
-                {
-                    Model.specialist_opinion = true;
-                    Model.name_of_specialist = txt_name_of_specialist.Value;
-                    Model.time_contaced = DataHelpers.ConvertSQLDateTime(dtpk_time_contaced.SelectedDate);
-                    Model.time_provided = DataHelpers.ConvertSQLDateTime(dtpk_time_provided.SelectedDate);
-                    Model.spec_opinion_summarised = txt_spec_opinion_summarised.Value;
-
-                }
-                if (rad_specialist_opinion_False.Checked)
-                {
-                    Model.specialist_opinion = false;
-                    Model.name_of_specialist = "";
-                    Model.time_contaced = null;
-                    Model.time_provided = null;
-                    Model.spec_opinion_summarised = "";
-
-                }
-                //DataTable Treatment_tb = new DataTable();
-                //foreach (KeyValuePair<string, string> col in EmergencyMedicalRecord.Treatment)
-                //{
-                //    Treatment_tb.Columns.Add(col.Key);
-                //}
-                Model.treatment = WebHelpers.GetDataGridView(grid_Treatment, EmergencyMedicalRecord.Treatment);
-
-                //DataTable Progress_note_tb = new DataTable();
-                //foreach (KeyValuePair<string, string> col in EmergencyMedicalRecord.ProgressNote)
-                //{
-                //    Progress_note_tb.Columns.Add(col.Key);
-                //}
-                //emr.progress_note = WebHelpers.GetJSONFromTable(grid_progress_note, Progress_note_tb);
-                Model.progress_note = WebHelpers.GetDataGridView(grid_progress_note, EmergencyMedicalRecord.ProgressNote);
-
-                Model.conclusions = txt_conclusions.Value;
-                if (rad_discharge_True.Checked)
-                {
-                    Model.discharge = true;
-                    Model.prescription = txt_prescription.Value;
-                    Model.specify_care_instructions = txt_specify_care_instructions.Value;
-                    Model.discharge_time = DataHelpers.ConvertSQLDateTime(dtpk_discharge_time.SelectedDate);
-
-                }
-                if (rad_discharge_False.Checked)
-                {
-                    Model.discharge = false;
-                    Model.prescription = "";
-                    Model.specify_care_instructions = "";
-                    Model.discharge_time = null;
-                }
-                if (rad_referred_to_OPD_True.Checked)
-                {
-                    Model.referred_to_OPD = true;
-                    Model.referred_to_OPD_text = txt_referred_to_OPD_text.Value;
-                }
-                if (rad_referred_to_OPD_False.Checked)
-                {
-                    Model.referred_to_OPD = false;
-                    Model.referred_to_OPD_text = "";
-
-                }
-                if (rad_hospitalisation_required_True.Checked)
-                {
-                    Model.hospitalisation_required = true;
-                    Model.reason = txt_reason.Value;
-                    Model.ward = txt_ward.Value;
-                    Model.time_of_leaving_emergency = DataHelpers.ConvertSQLDateTime(dtpk_time_of_leaving_emergency.SelectedDate);
-                }
-                if (rad_hospitalisation_required_False.Checked)
-                {
-                    Model.hospitalisation_required = false;
-                    Model.reason = "";
-                    Model.ward = "";
-                    Model.time_of_leaving_emergency = null;
-                }
-                if (rad_emergency_surgery_True.Checked)
-                {
-                    Model.emergency_surgery = true;
-                    Model.pre_operative_diagnosis = txt_pre_operative_diagnosis.Value;
-                    Model.brief_summary = txt_brief_summary.Value;
-                    Model.time_of_leaving_emer_e = DataHelpers.ConvertSQLDateTime(dtpk_time_of_leaving_emer_e.SelectedDate);
-                }
-                if (rad_emergency_surgery_False.Checked)
-                {
-                    Model.emergency_surgery = false;
-                    Model.pre_operative_diagnosis = "";
-                    Model.brief_summary = "";
-                    Model.time_of_leaving_emer_e = null;
-                }
-                if (rad_transfer_hospital_True.Checked)
-                {
-                    Model.transfer_hospital = true;
-                    Model.reason_for_transfer = txt_reason_for_transfer.Value;
-                    Model.status_before_transfer = txt_status_before_transfer.Value;
-                    Model.time_of_leaving_emer_a = DataHelpers.ConvertSQLDateTime(dtpk_time_of_leaving_emer_a.SelectedDate);
-                }
-                if (rad_transfer_hospital_False.Checked)
-                {
-                    Model.transfer_hospital = false;
-                    Model.reason_for_transfer = "";
-                    Model.status_before_transfer = "";
-                    Model.time_of_leaving_emer_a = null;
-                }
-
-                Model.patient_discharge = WebHelpers.GetData(form1, new HtmlInputCheckBox(), "cb_patient_discharge_", EmergencyMedicalRecord.PatientDischarge, "cde");
-
-                Model.txt_patient_discharge = txt_patient_discharge.Value;
-
-                Model.icd_10 = txt_icd_10.Value;
-
-                if (JsonConvert.SerializeObject(Model) == DataObj.Value)
-                {
-                    WebHelpers.Notification(Page, CONST_MESSAGE.SAVE_ERROR_NOCHANGES, "error"); return;
-                }
-
-                //Update v2.0
-                Model.infected_with_covid = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_infected_with_covid_");
-                Model.received_1_dose = cb_received_1_dose_true.Checked;
-                Model.received_2_dose = cb_received_2_dose_true.Checked;
-                Model.received_additional = cb_received_additional_true.Checked;
-                Model.other_vaccinations = txt_other_vaccinations.Value;
-                Model.not_yet_vaccinations = cb_not_yet_vaccinations_true.Checked;
-
-                Model.amend_reason = txt_amend_reason.Text;
-                Model.user_name = UserId;
-
-                dynamic result = Model.Update(Location)[0];
-
-                if (result.Status == System.Net.HttpStatusCode.OK)
-                {
-                    WebHelpers.Notification(Page, GLOBAL_VAL.MESSAGE_SAVE_SUCCESS);
-                    Init_Page();
-                }
-            }
-            catch (Exception ex)
-            {
-                WebHelpers.SendError(Page, ex);
-            }
-            finally
-            {
-                WebHelpers.clearSessionDoc(Page, varDocID, Location);
-            }
-        }
+        
     }
 }
