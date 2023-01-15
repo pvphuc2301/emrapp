@@ -2,17 +2,17 @@
 
 namespace EMR.Data.AIH.Model
 {
-    public class UusrV1 : EmrDocument
+    public class UusrModel : EmrDocument
     {
-        public UusrV1()
+        public UusrModel()
         {
         }
 
-        public UusrV1(string document_id, string location) : base(document_id, location)
+        public UusrModel(string document_id, string location) : base(document_id, location)
         {
         }
 
-        public UusrV1(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
+        public UusrModel(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
         {
         }
 

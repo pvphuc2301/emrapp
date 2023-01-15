@@ -53,10 +53,10 @@ namespace EMR.Data.Shared.Services
         public dynamic lu_updated { get; set; }
         #endregion
     }
-    public class PatientService
+    public static class PatientService
     {
-        private HttpClient http = new HttpClient() { BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings["WebService"]) };
-        public PatientInfo GetPatient(Guid patient_id)
+        private static HttpClient http = new HttpClient() { BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings["WebService"]) };
+        public static PatientInfo GetPatient(Guid patient_id)
         {
             Task<HttpResponseMessage> responseTask = http.GetAsync($"api/emr/demographic/{patient_id}");
             responseTask.Wait();
@@ -64,7 +64,7 @@ namespace EMR.Data.Shared.Services
             var result = responseTask.Result.Content.ReadAsStringAsync().Result;
             return JsonConvert.DeserializeObject<PatientInfo>(result);
         }
-        public IEnumerable<PatientVisitInfo> GetPatientVisit(Guid patient_visit_id, string Location)
+        public static IEnumerable<PatientVisitInfo> GetPatientVisit(Guid patient_visit_id, string Location)
         {
             Task<HttpResponseMessage> responseTask = http.GetAsync($"api/emr/patient-visit/{Location}/{patient_visit_id}");
             responseTask.Wait();

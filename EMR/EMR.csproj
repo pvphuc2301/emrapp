@@ -416,6 +416,9 @@
     <Compile Include="Classes\EmrPage.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Classes\EmrPageV01.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Classes\Permissions.cs" />
     <Compile Include="Classes\WebHelpers.cs" />
     <Compile Include="Classes\MISClass.cs" />
@@ -439,24 +442,28 @@
     <Compile Include="Data\AIH\Dictionary\BfspDictionary.cs" />
     <Compile Include="Data\AIH\Dictionary\fEmrDictionary.cs" />
     <Compile Include="Data\AIH\Dictionary\IinaDictionary.cs" />
-    <Compile Include="Data\AIH\Dictionary\MrfvDictionaryV1.cs" />
-    <Compile Include="Data\AIH\Dictionary\MrnvDictionaryV1.cs" />
-    <Compile Include="Data\AIH\Dictionary\OmrDictionaryV1.cs" />
-    <Compile Include="Data\AIH\Dictionary\PomrDictionaryV1.cs" />
-    <Compile Include="Data\AIH\Model\Adre.cs" />
-    <Compile Include="Data\AIH\Model\Bfsp.cs" />
-    <Compile Include="Data\AIH\Model\EmrV1.cs" />
-    <Compile Include="Data\AIH\Model\EmrV2.cs" />
-    <Compile Include="Data\AIH\Model\Iina.cs" />
-    <Compile Include="Data\AIH\Model\McV1.cs" />
-    <Compile Include="Data\AIH\Model\MrfvV1.cs" />
-    <Compile Include="Data\AIH\Model\MrnvV1.cs" />
-    <Compile Include="Data\AIH\Model\OmrV1.cs" />
-    <Compile Include="Data\AIH\Model\PomrV1.cs" />
-    <Compile Include="Data\AIH\Model\ScocM.cs" />
-    <Compile Include="Data\AIH\Model\UusrV1.cs" />
+    <Compile Include="Data\AIH\Dictionary\MrfvDictionary.cs" />
+    <Compile Include="Data\AIH\Dictionary\MrnvDictionary.cs" />
+    <Compile Include="Data\AIH\Dictionary\OmrDictionary.cs" />
+    <Compile Include="Data\AIH\Dictionary\PomrDictionary.cs" />
+    <Compile Include="Data\AIH\Model\AdreModel.cs" />
+    <Compile Include="Data\AIH\Model\BfspModel.cs" />
+    <Compile Include="Data\AIH\Model\EmrModel.cs" />
+    <Compile Include="Data\AIH\Model\IinaModel.cs" />
+    <Compile Include="Data\AIH\Model\McModel.cs" />
+    <Compile Include="Data\AIH\Model\MrfvModel.cs" />
+    <Compile Include="Data\AIH\Model\MrnvModel.cs" />
+    <Compile Include="Data\AIH\Model\OmrModel.cs" />
+    <Compile Include="Data\AIH\Model\PomrModel.cs" />
+    <Compile Include="Data\AIH\Model\ScocModel.cs" />
+    <Compile Include="Data\AIH\Model\UusrModel.cs" />
+    <Compile Include="Data\Shared\Models\ACCESS_AUTHORIZE.cs" />
+    <Compile Include="Data\Shared\Models\AppointmentTodayListModel.cs" />
+    <Compile Include="Data\Shared\Models\DataPaging.cs" />
+    <Compile Include="Data\Shared\Models\OutpatientTodayListModel.cs" />
     <Compile Include="Data\Shared\Services\EmrService.cs" />
     <Compile Include="Data\Shared\Services\PatientService.cs" />
+    <Compile Include="Data\Shared\Services\WebApiService.cs" />
     <Compile Include="DBP\OPD\MedicalCertificate.aspx.cs">
       <DependentUpon>MedicalCertificate.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1345,6 +1352,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\node_modules\html5-editor\" />
+    <Folder Include="Data\DBP\Dictionary\" />
+    <Folder Include="Data\DBP\Model\" />
     <Folder Include="Pages\" />
   </ItemGroup>
   <ItemGroup>
@@ -1360,6 +1369,10 @@
     <ProjectReference Include="..\Emr.Utility\Emr.Utility.csproj">
       <Project>{1CDC3829-A634-4F14-AD9A-B4FC9B3736FF}</Project>
       <Name>Emr.Utility</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EmrLib\EmrLib.csproj">
+      <Project>{d9b455b7-16c6-4723-a76d-a1b7b1e873d7}</Project>
+      <Name>EmrLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

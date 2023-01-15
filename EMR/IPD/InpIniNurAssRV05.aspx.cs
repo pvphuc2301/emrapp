@@ -13,13 +13,13 @@ using System.Web.UI.WebControls;
 
 namespace EMR
 {
-    public partial class InpIniNurAssRV05 : EmrPage, IEmrFormModel<IinaRV05>
+    public partial class InpIniNurAssRV05 : EmrPage, IEmrFormModel<IinaModel>
     {
         public override string form_url { get; set; } = "IPD/InpIniNurAssRV05";
-        public IinaRV05 Model { get; set; }
+        public IinaModel Model { get; set; }
         public override dynamic InitModel()
         {
-            return Model = new IinaRV05(varDocID, Location, varDocIdLog);
+            return Model = new IinaModel(varDocID, Location, varDocIdLog);
         }
         public override void BindingDataFormEdit()
         {
@@ -2648,7 +2648,7 @@ namespace EMR
         //    string url = $"/IPD/InpIniNurAss.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
         //    Response.Redirect(url);
         //}
-        private bool ShowFinalScreening(IinaRV05 iina)
+        private bool ShowFinalScreening(IinaModel iina)
         {
             if (iina.bmi_out_range != null) { if (iina.bmi_out_range) return true; }
             if (iina.loss_weight != null) { if (iina.loss_weight) return true; }

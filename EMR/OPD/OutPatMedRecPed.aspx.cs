@@ -10,17 +10,17 @@ using Telerik.Web.UI;
 
 namespace EMR
 {
-    public partial class PediatricOutpatientMedicalRecord : EmrPage, IEmrFormModel<PomrV1>
+    public partial class PediatricOutpatientMedicalRecord : EmrPage, IEmrFormModel<PomrModel>
     {
         public override string form_url { get; set; } = $"OPD/OutPatMedRecPed";
-        public PomrV1 Model { get; set; }
+        public PomrModel Model { get; set; }
         public override dynamic InitModel() {
             //if (WebHelpers.IsDEVELOP())
             {
                 form_url = form_url + "RV01";
                 Response.Redirect(PAGE_URL);
             }
-            return Model = new PomrV1(varDocID, Location, varDocIdLog); 
+            return Model = new PomrModel(varDocID, Location, varDocIdLog); 
         }
         #region Binding Data
         public override void BindingDataFormEdit()

@@ -6,12 +6,12 @@ using System.Web.UI.HtmlControls;
 
 namespace EMR
 {
-    public partial class SummaryOfComplexOutpatientCases : EmrPage, IEmrFormModel<ScocM>
+    public partial class SummaryOfComplexOutpatientCases : EmrPage, IEmrFormModel<ScocModel>
     {
         public override string form_url { get; set; } = $"OPD/SumOfComOutpCase";
         public new string varPVID { get; }
-        public ScocM Model { get; set; }
-        public override dynamic InitModel() => Model = new ScocM(varDocID, Location, varDocIdLog);
+        public ScocModel Model { get; set; }
+        public override dynamic InitModel() => Model = new ScocModel(varDocID, Location, varDocIdLog);
         #region Events
         //protected void btnComplete_Click(object sender, EventArgs e)
         //{

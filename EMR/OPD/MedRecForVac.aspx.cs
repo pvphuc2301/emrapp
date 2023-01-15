@@ -15,11 +15,11 @@ using Telerik.Web.UI;
 
 namespace EMR.OPD
 {
-    public partial class MedRecForVac : EmrPage, IEmrFormModel<MrfvV1>
+    public partial class MedRecForVac : EmrPage, IEmrFormModel<MrfvModel>
     {
         public override string form_url { get; set; } = $"OPD/{nameof(MedRecForVac)}";
-        public MrfvV1 Model { get; set; }
-        public override dynamic InitModel() => Model = new MrfvV1(varDocID, Location, varDocIdLog);
+        public MrfvModel Model { get; set; }
+        public override dynamic InitModel() => Model = new MrfvModel(varDocID, Location, varDocIdLog);
         #region Binding Data
         public override void BindingDataFormView()
         {
@@ -310,7 +310,7 @@ namespace EMR.OPD
                 prt_differential_diagnosis.Text = WebHelpers.TextToHtmlTag(Model.differential_diagnosis);
                 prt_associated_conditions.Text = WebHelpers.TextToHtmlTag(Model.associated_conditions);
 
-                foreach (var item in MrfvDictionaryV1.TREATMENT_CODE)
+                foreach (var item in MrfvDictionary.TREATMENT_CODE)
                 {
                     BindingLabel($"{nameof(Model.treatment_code)}_{item.Key}", "❏");
                 }

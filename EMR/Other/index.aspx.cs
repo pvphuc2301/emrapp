@@ -1,4 +1,5 @@
 ﻿using EMR.Classes;
+using EMR.Data.Shared.Services;
 using EMR.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -44,6 +45,24 @@ namespace EMR.Other
             if (!IsPostBack)
             {
                 LoadPatientInfo();
+                string script = string.Format("function f(){{ clearSession();Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "clear_session", script, true);
+            }
+            PostBackEventHandler();
+        }
+        public void PostBackEventHandler()
+        {
+            switch (Request["__EVENTTARGET"])
+            {
+                case "clear_session":
+                    WebApiService webApiService = new WebApiService();
+                    var response = webApiService.emr_clear_session(Guid.Parse(Request["__EVENTARGUMENT"]), loc);
+                    if(response.IsSuccessStatusCode) 
+                    {
+                        string script = string.Format("function f(){{ localStorage.removeItem(\"document_id\");Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "clear_session", script, true);
+                    }
+                    break;
             }
         }
         protected async Task RunAsync()

@@ -1,34 +1,35 @@
 ﻿using EMR.Data.AIH.Model;
 using EMR.Model;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-
-using System.Text;
 using System.Threading.Tasks;
-using System.Web;
-using Telerik.Web.UI.Map;
-using Telerik.Windows.Documents.Spreadsheet.Expressions.Functions;
 
 namespace EMR.Data.Shared.Services
 {
-    public class EmrService<T> where T : new()
+    public static class EmrService<T> where T : new()
     {
-        public string Location { get; set; }
-        private HttpClient http = new HttpClient() { BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings["WebService"]) };
-        public T Get(Guid document_id)
+        private static HttpClient http = new HttpClient() { BaseAddress = new Uri(System.Configuration.ConfigurationManager.AppSettings["WebService"]) };
+        public static T Get(Guid document_id, string location)
         {
             T Model = new T();
-            Task<HttpResponseMessage> responseTask = http.GetAsync($"{(Model as EmrDocument).api}/get/{Location}/{document_id}");
+            Task<HttpResponseMessage> responseTask = http.GetAsync($"{(Model as EmrDocument).api}/get/{location}/{document_id}");
             responseTask.Wait();
             var result = responseTask.Result.Content.ReadAsStringAsync().Result;
             Model = JsonConvert.DeserializeObject<T>(result);
             return Model;
         }
-        public IEnumerable<T> GetLogs(Guid document_id, string location)
+        public static T GetLog(Guid document_id, string location)
+        {
+            T Model = new T();
+            Task<HttpResponseMessage> responseTask = http.GetAsync($"{(Model as EmrDocument).api}/get-log/{location}/{document_id}");
+            responseTask.Wait();
+            var result = responseTask.Result.Content.ReadAsStringAsync().Result;
+            Model = JsonConvert.DeserializeObject<T>(result);
+            return Model;
+        }
+        public static IEnumerable<T> GetLogs(Guid document_id, string location)
         {
             T Model = new T();
             Task<HttpResponseMessage> responseTask = http.GetAsync($"{(Model as EmrDocument).api}/get-log-list/{location}/{document_id}");
@@ -45,9 +46,7 @@ namespace EMR.Data.Shared.Services
         //    responseTask.Wait();
         //    return responseTask.Result;
         //}
-
-
-        public T Get(EmrDocument document, string location)
+        public static T Get(EmrDocument document, string location)
         {
             Task<HttpResponseMessage> responseTask = http.GetAsync($"{document.api}/get/{location}/{document.document_id}");
             responseTask.Wait();
@@ -61,14 +60,14 @@ namespace EMR.Data.Shared.Services
 
             //return result;
         }
-        public HttpResponseMessage Log(EmrDocument document, string location)
+        public static HttpResponseMessage Log(EmrDocument document, string location)
         {
             StringContent httpContent = new StringContent("", System.Text.Encoding.UTF8, "application/json");
             Task<HttpResponseMessage> responseTask = http.PostAsync($"{document.api}/log/{location}/{document.document_id}", httpContent);
             responseTask.Wait();
             return responseTask.Result;
         }
-        public HttpResponseMessage Update(EmrDocument document, string location)
+        public static HttpResponseMessage Update(EmrDocument document, string location)
         {
             string json = JsonConvert.SerializeObject(document);
             StringContent httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
@@ -76,7 +75,7 @@ namespace EMR.Data.Shared.Services
             responseTask.Wait();
             return responseTask.Result;
         }
-        async Task<T> GetURI(Uri u)
+        async static Task<T> GetURI(Uri u)
         {
             var response = string.Empty;
             using (var client = new HttpClient())

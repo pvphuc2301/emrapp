@@ -12,12 +12,12 @@ using System.Web.UI.WebControls;
 
 namespace EMR.ER
 {
-    public partial class EmerMedRec : EmrPage, IEmrFormModel<EmrV2>
+    public partial class EmerMedRec : EmrPage, IEmrFormModel<EmrModel>
     {
         public override string form_url { get; set; } = "ER/EmerMedRec";
-        public EmrV2 Model { get; set; }
+        public EmrModel Model { get; set; }
         public override dynamic InitModel() {
-            Model = new EmrV2(varDocID, Location, varDocIdLog);
+            Model = new EmrModel(varDocID, Location, varDocIdLog);
             return Model;
         }
         private void discharge_change(string value = "")

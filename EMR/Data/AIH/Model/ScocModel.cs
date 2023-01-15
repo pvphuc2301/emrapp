@@ -1,23 +1,19 @@
 ﻿using EMR.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EMR.Data.AIH.Model
 {
-    public class ScocM : EmrDocument
+    public class ScocModel : EmrDocument
     {
-        public ScocM()
+        public ScocModel()
         {
         }
 
-        public ScocM(string document_id, string location) : base(document_id, location)
+        public ScocModel(string document_id, string location) : base(document_id, location)
         {
         }
 
-        public ScocM(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
+        public ScocModel(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
         {
         }
 

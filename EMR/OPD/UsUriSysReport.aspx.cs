@@ -3,21 +3,14 @@ using EMR.Data.AIH.Model;
 using EMR.Model;
 using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-using Telerik.Web.UI;
 
 namespace EMR
 {
-    public partial class USUrinarySystemReport : EmrPage, IEmrFormModel<UusrV1>
+    public partial class USUrinarySystemReport : EmrPage, IEmrFormModel<UusrModel>
     {
         public override string form_url { get; set; } = $"OPD/UsUriSysReport";
-        public UusrV1 Model { get; set; }
-        public override dynamic InitModel() => Model = new UusrV1(varDocID, Location, varDocIdLog);
+        public UusrModel Model { get; set; }
+        public override dynamic InitModel() => Model = new UusrModel(varDocID, Location, varDocIdLog);
 
         #region Binding Data
         public override void BindingDataFormEdit()

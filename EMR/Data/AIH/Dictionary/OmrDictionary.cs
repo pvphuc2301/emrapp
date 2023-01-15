@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EMR.Data.AIH.Dictionary
 {
-    public class MrnvDictionaryV1
+    public class OmrDictionary
     {
         public static Dictionary<string, string> TREATMENT_CODE = new Dictionary<string, string>()
         {
@@ -14,13 +14,10 @@ namespace EMR.Data.AIH.Dictionary
             { "IPD", "Nhập viện/Admission" },
             { "TRF", "Chuyển viện/Transfer" },
         };
-        public static Dictionary<string, string> APPOINTED_VACCINE = new Dictionary<string, string>()
+        public static Dictionary<string, string> NUTRITIONAL_CONSULTATION_REQUIRED = new Dictionary<string, string>()
         {
-            { "id", "" },
-            { "drug_name", "" },
-            { "strength", "" },
-            { "router", "" },
-            { "reason", "" },
+            { "N", "Có/ Yes" },
+            { "Y", "Không, lý do/ No, reason" }
         };
     }
 }

@@ -15,13 +15,13 @@ using Telerik.Web.UI;
 
 namespace EMR.OPD
 {
-    public partial class MedRecForNeoVaccin : EmrPage, IEmrFormModel<MrnvV1>
+    public partial class MedRecForNeoVaccin : EmrPage, IEmrFormModel<MrnvModel>
     {
         public override string form_url { get; set; } = $"OPD/{nameof(MedRecForNeoVaccin)}";
-        public MrnvV1 Model { get; set; }
+        public MrnvModel Model { get; set; }
         public override dynamic InitModel()
         {
-            Model = new MrnvV1(varDocID, Location, varDocIdLog);
+            Model = new MrnvModel(varDocID, Location, varDocIdLog);
             return Model;
         }
         #region Binding Data
@@ -67,7 +67,7 @@ namespace EMR.OPD
                 lbl_scr_before_vacc_9.Text = WebHelpers.TextToHtmlTag(Model.scr_before_vacc_9);
 
                 // Appointed Vaccine
-                WebHelpers.LoadDataGridView(grid_appointed_vaccine, WebHelpers.GetJSONToDataTable(Model.appointed_vaccine), MrnvDictionaryV1.APPOINTED_VACCINE, btn_grid_appointed_vaccine_add);
+                WebHelpers.LoadDataGridView(grid_appointed_vaccine, WebHelpers.GetJSONToDataTable(Model.appointed_vaccine), MrnvDictionary.APPOINTED_VACCINE, btn_grid_appointed_vaccine_add);
 
                 lbl_additional_investigations.Text = WebHelpers.TextToHtmlTag(Model.additional_investigations);
                 //V
@@ -139,7 +139,7 @@ namespace EMR.OPD
                 txt_scr_before_vacc_8.Value = WebHelpers.TextToHtmlTag(Model.scr_before_vacc_8);
                 txt_scr_before_vacc_9.Value = WebHelpers.TextToHtmlTag(Model.scr_before_vacc_9);
 
-                ViewState[grid_appointed_vaccine.ID] = WebHelpers.BindingDataGridView(grid_appointed_vaccine, WebHelpers.GetJSONToDataTable(Model.appointed_vaccine), MrnvDictionaryV1.APPOINTED_VACCINE, btn_grid_appointed_vaccine_add);
+                ViewState[grid_appointed_vaccine.ID] = WebHelpers.BindingDataGridView(grid_appointed_vaccine, WebHelpers.GetJSONToDataTable(Model.appointed_vaccine), MrnvDictionary.APPOINTED_VACCINE, btn_grid_appointed_vaccine_add);
 
                 txt_additional_investigations.Value = WebHelpers.TextToHtmlTag(Model.additional_investigations);
                 txt_initial_diagnosis.Value = WebHelpers.TextToHtmlTag(Model.initial_diagnosis);
@@ -252,7 +252,7 @@ namespace EMR.OPD
                 prt_differential_diagnosis.Text = WebHelpers.TextToHtmlTag(Model.differential_diagnosis);
                 prt_associated_conditions.Text = WebHelpers.TextToHtmlTag(Model.associated_conditions);
 
-                foreach (var item in MrnvDictionaryV1.TREATMENT_CODE)
+                foreach (var item in MrnvDictionary.TREATMENT_CODE)
                 {
                     BindingLabel($"{nameof(Model.treatment_code)}_{item.Key}", "❏");
                 }
@@ -308,7 +308,7 @@ namespace EMR.OPD
             Model.scr_before_vacc_8 = txt_scr_before_vacc_8.Value;
             Model.scr_before_vacc_9 = txt_scr_before_vacc_9.Value;
             //IV
-            Model.appointed_vaccine = WebHelpers.GetDataGridView(grid_appointed_vaccine, MrnvDictionaryV1.APPOINTED_VACCINE);
+            Model.appointed_vaccine = WebHelpers.GetDataGridView(grid_appointed_vaccine, MrnvDictionary.APPOINTED_VACCINE);
 
             Model.additional_investigations = txt_additional_investigations.Value;
             //V
@@ -316,8 +316,8 @@ namespace EMR.OPD
             Model.differential_diagnosis = txt_differential_diagnosis.Value;
             Model.associated_conditions = txt_associated_conditions.Value;
 
-            Model.treatment_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_treatment_code_", MrnvDictionaryV1.TREATMENT_CODE);
-            Model.treatment_desc = WebHelpers.GetDicDesc(Model.treatment_code, MrnvDictionaryV1.TREATMENT_CODE);
+            Model.treatment_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_treatment_code_", MrnvDictionary.TREATMENT_CODE);
+            Model.treatment_desc = WebHelpers.GetDicDesc(Model.treatment_code, MrnvDictionary.TREATMENT_CODE);
 
             Model.spec_opinion_req = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_spec_opinion_req_");
             Model.spec_opinion_req_text = txt_spec_opinion_req_text.Value;
@@ -349,7 +349,7 @@ namespace EMR.OPD
         {
             try
             {
-                ViewState[grid_appointed_vaccine.ID] = WebHelpers.AddRow((DataTable)ViewState[grid_appointed_vaccine.ID], grid_appointed_vaccine, MrnvDictionaryV1.APPOINTED_VACCINE);
+                ViewState[grid_appointed_vaccine.ID] = WebHelpers.AddRow((DataTable)ViewState[grid_appointed_vaccine.ID], grid_appointed_vaccine, MrnvDictionary.APPOINTED_VACCINE);
             }
             catch (Exception ex)
             {

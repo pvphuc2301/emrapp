@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EMR.Data.AIH.Model
 {
-    public class EmrV1 : EmrDocument
+    public class EmrModel : EmrDocument
     {
         #region Props
         public override string api { get => "api/emr"; }
@@ -71,18 +71,21 @@ namespace EMR.Data.AIH.Model
         public dynamic received_additional { get; set; }
         public dynamic other_vaccinations { get; set; }
         public dynamic not_yet_vaccinations { get; set; }
-        public EmrV1() { }
+        public EmrModel() { }
         #endregion
-        public EmrV1(string document_id, string location) : base(document_id, location)
+        public EmrModel(string document_id, string location) : base(document_id, location)
         {
         }
 
-        public EmrV1(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
+        public EmrModel(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
         {
         }
         protected override void DefaultDocument()
         {
             infected_with_covid = false;
         }
+        public string transfer_hospital_name { get; set; }
+        public string transfer_hospital_employee { get; set; }
+        public string transfer_hospital_phone { get; set; }
     }
 }

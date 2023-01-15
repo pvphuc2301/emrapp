@@ -15,10 +15,10 @@ using Telerik.Web.UI;
 
 namespace EMR
 {
-    public partial class OutPatMedRec : EmrPage, IEmrFormModel<OmrV1>
+    public partial class OutPatMedRec : EmrPage, IEmrFormModel<OmrModel>
     {
         public override string form_url { get; set; } = $"OPD/{nameof(OutPatMedRec)}";
-        public OmrV1 Model { get; set; }
+        public OmrModel Model { get; set; }
         public override dynamic InitModel()
         {
             //if (WebHelpers.IsDEVELOP())
@@ -26,7 +26,7 @@ namespace EMR
                 form_url = form_url + "RV01";
                 Response.Redirect(PAGE_URL);
             }
-            return Model = new OmrV1(varDocID, Location, varDocIdLog);
+            return Model = new OmrModel(varDocID, Location, varDocIdLog);
         }
         public override void PostBackEventHandler()
         {
@@ -494,7 +494,7 @@ namespace EMR
                 Model.differential_diagnosis = txt_differential_diagnosis.Value;
                 Model.associated_conditions = txt_associated_conditions.Value;
 
-                Model.treatment_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_treatment_code_", OmrDictionaryV1.TREATMENT_CODE);
+                Model.treatment_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_treatment_code_", OmrDictionary.TREATMENT_CODE);
                 Model.treatment_desc = WebHelpers.GetDicDesc(Model.treatment_code, Omr.TREATMENT_CODE);
 
                 //5.

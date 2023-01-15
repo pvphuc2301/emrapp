@@ -50,14 +50,14 @@ namespace EMR
         public int food_intake { get; set; }
         public int total_score { get; set; }
     }
-    public partial class OutPatMedRecRV01 : EmrPage, IEmrFormModel<OmrV1>
+    public partial class OutPatMedRecRV01 : EmrPage, IEmrFormModel<OmrModel>
     {
         public override string form_url { get; set; } = $"OPD/{nameof(OutPatMedRecRV01)}";
-        public OmrV1 Model { get; set; }
+        public OmrModel Model { get; set; }
         public override dynamic InitModel()
         {
             LoadPatient();
-            Model = new OmrV1(varDocID, Location, varDocIdLog);
+            Model = new OmrModel(varDocID, Location, varDocIdLog);
             
             if (Model.Logs(Location)?.Rows.Count == 1)
             {
@@ -660,7 +660,7 @@ namespace EMR
                 Model.differential_diagnosis = txt_differential_diagnosis.Value;
                 Model.associated_conditions = txt_associated_conditions.Value;
 
-                Model.treatment_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_treatment_code_", OmrDictionaryV1.TREATMENT_CODE);
+                Model.treatment_code = WebHelpers.GetData(form1, new HtmlInputRadioButton(), "rad_treatment_code_", OmrDictionary.TREATMENT_CODE);
                 Model.treatment_desc = WebHelpers.GetDicDesc(Model.treatment_code, Omr.TREATMENT_CODE);
 
                 //5.
@@ -747,7 +747,7 @@ namespace EMR
 
         protected void btnUpdateNutritionScreening_Click(object sender, EventArgs e)
         {
-            Model = new OmrV1(varDocID, Location, varDocIdLog);
+            Model = new OmrModel(varDocID, Location, varDocIdLog);
             var result = WebHelpers.GetAPI($"api/emr/nutrition-status/{Location}/{varPVID}");
             if (result.Status == System.Net.HttpStatusCode.OK)
             {

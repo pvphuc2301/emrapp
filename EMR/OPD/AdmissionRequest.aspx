@@ -27,6 +27,7 @@
     <link href="../styles/alertify.css" rel="stylesheet" />
     <link href="../styles/print-10.2022.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" rel="stylesheet" />
     <style>
         @page {
             /*margin-left: 65px; 
@@ -35,17 +36,16 @@
 /*            margin-left: 1.8cm; 
 	        margin-right: 1.5cm;*/
         }
+        @media print {
+            .alertify-logs {
+                display: none !important;
+            }
+        }
         .cursor-wait {
             pointer-events: none;
             background-color: #007bff;
             border-color: #007bff;
             opacity: .65;
-        }
-        #print_content {
-		    line-height: initial !important;
-	    }
-        .font-10 {
-            font-size: 10pt  !important;
         }
     </style>
     <link href="../styles/telerik-custom.css" rel="stylesheet" />
@@ -59,29 +59,26 @@
             font-size: 9pt;
         }
         .font-10 {
-            font-size: 10pt;
+            font-size: 10pt !important;
+        }
+        .font-11 {
+            font-size: 11pt !important;
         }
         .font-12 {
             font-size: 12pt !important;
         }
-
-        .font-11 {
-            font-size: 11pt !important;
-        }
-
-        .font-10 {
-            font-size: 10pt  !important;
-        }
         #print_content {
             margin-left: 1.5cm !important;
+            line-height: initial !important;
+            margin: 0 1.6cm 0 2cm !important;
         }
         #print_header {
             width: 210mm;
             height: 2cm !important;
         }
-        #print_content {
-		    line-height: initial !important;
-	    }
+        .line-height-1d2 {
+            line-height: 1.2;
+        }
     </style>
 </head>
 <body>
@@ -180,55 +177,55 @@
                                         <div style="display: grid; grid-template-columns: 18px 1fr;">
                                             <div></div>
                                             <div style="display: grid; grid-template-columns: 18px 1fr 18px 1fr 18px 1fr;">
-                                                <div><asp:Label CssClass="align-top" runat="server" ID="prt_admission_department_code_day" Text="❏"></asp:Label></div>
+                                                <div><asp:Label CssClass="line-height-1d2" runat="server" ID="prt_admission_department_code_day" Text="❏"></asp:Label></div>
                                                 <div>
                                                     <div><span class="font-bold">Khoa điều trị trong ngày</span></div>
                                                     <div><span class="subtitle font-10">Daycare ward</span></div>
                                                 </div>
 
-                                                <div><asp:Label CssClass="align-top" runat="server" ID="prt_admission_department_code_med"  Text="❏"></asp:Label></div>
+                                                <div><asp:Label CssClass="line-height-1d2" runat="server" ID="prt_admission_department_code_med"  Text="❏"></asp:Label></div>
                                                 <div>
                                                     <div><span class="font-bold">Khoa Nội</span></div>
                                                     <div><span class="subtitle font-10">Medical ward</span></div>
                                                 </div>
 
-                                                <div><asp:Label CssClass="align-top" runat="server" ID="prt_admission_department_code_sur"  Text="❏"></asp:Label> </div>
+                                                <div><asp:Label CssClass="line-height-1d2" runat="server" ID="prt_admission_department_code_sur"  Text="❏"></asp:Label> </div>
                                                 <div>
                                                     <div><span class="font-bold">Khoa ngoại</span></div>
                                                     <div><span class="subtitle font-10">Surgery ward</span></div>
                                                 </div>
 
-                                                <div><asp:Label CssClass="align-top" runat="server" ID="prt_admission_department_code_obg" Text="❏"></asp:Label></div>
+                                                <div><asp:Label CssClass="line-height-1d2" runat="server" ID="prt_admission_department_code_obg" Text="❏"></asp:Label></div>
                                                 <div>
                                                     <div><span class="font-bold">Khoa sản</span></div>
                                                     <div><span class="subtitle font-10">OBG ward</span></div>
                                                 </div>
 
-                                                <div><asp:Label CssClass="align-top" runat="server" ID="prt_admission_department_code_icu"  Text="❏"></asp:Label></div>
+                                                <div><asp:Label CssClass="line-height-1d2" runat="server" ID="prt_admission_department_code_icu"  Text="❏"></asp:Label></div>
                                                 <div>
                                                     <div><span class="font-bold">Hồi sức tích cực</span></div>
                                                     <div><span class="subtitle font-10">ICU</span></div>
                                                 </div>
 
-                                                <div><asp:Label CssClass="align-top" runat="server" ID="prt_admission_department_code_ped"  Text="❏"></asp:Label> </div>
+                                                <div><asp:Label CssClass="line-height-1d2" runat="server" ID="prt_admission_department_code_ped"  Text="❏"></asp:Label> </div>
                                                 <div>
                                                     <div><span class="font-bold">Nhi khoa</span></div>
                                                     <div><span class="subtitle font-10">Pediatric ward</span></div>
                                                 </div>
 
-                                                <div><asp:Label CssClass="align-top" runat="server" ID="prt_admission_department_code_del" Text="❏"></asp:Label></div>
+                                                <div><asp:Label CssClass="line-height-1d2" runat="server" ID="prt_admission_department_code_del" Text="❏"></asp:Label></div>
                                                 <div>
                                                     <div><span class="font-bold">Phòng sanh</span></div>
                                                     <div><span class="subtitle font-10">Delivery suite</span></div>
                                                 </div>
 
-                                                <div><asp:Label CssClass="align-top" runat="server" ID="prt_admission_department_code_ope"  Text="❏"></asp:Label></div>
+                                                <div><asp:Label CssClass="line-height-1d2" runat="server" ID="prt_admission_department_code_ope"  Text="❏"></asp:Label></div>
                                                 <div>
                                                     <div><span class="font-bold">Phòng mổ</span></div>
                                                     <div><span class="subtitle font-10">Operating Theatre/OT</span></div>
                                                 </div>
 
-                                                <div><asp:Label CssClass="align-top" runat="server" ID="prt_admission_department_code_oth"  Text="❏"></asp:Label> </div>
+                                                <div><asp:Label CssClass="line-height-1d2" runat="server" ID="prt_admission_department_code_oth"  Text="❏"></asp:Label> </div>
                                                 <div>
                                                     <div><span class="font-bold">Khác</span>:<asp:Label runat="server" ID="prt_admission_department_other"></asp:Label></div>
                                                     <div><span class="subtitle font-10">Other</span></div>
@@ -274,14 +271,14 @@
                                                     <div class="subtitle font-10">Other information:</div>
                                                 </div>
                                                 <div class="d-grid" style="grid-template-columns: 18px auto">
-                                                    <div><asp:Label CssClass="align-top" runat="server" ID="prt_other_information_code_n"  Text="❏"></asp:Label></div>
+                                                    <div><asp:Label CssClass="line-height-1d2" runat="server" ID="prt_other_information_code_n"  Text="❏"></asp:Label></div>
                                                     <div>
                                                         <div>Không</div>
                                                         <div class="subtitle font-10">No</div>
                                                     </div>
                                                 </div>
                                                 <div class="d-grid" style="grid-template-columns: 18px auto 1fr">
-                                                    <div><asp:Label CssClass="align-top" runat="server" ID="prt_other_information_code_y"  Text="❏"></asp:Label></div>
+                                                    <div><asp:Label CssClass="line-height-1d2" runat="server" ID="prt_other_information_code_y"  Text="❏"></asp:Label></div>
                                                     <div>
                                                         <div>Có, vui lòng ghi rõ:</div>
                                                         <div class="subtitle font-10">Yes, specify</div>
@@ -299,14 +296,14 @@
                                                     <div class="subtitle font-10">Special request:</div>
                                                 </div>
                                                 <div class="d-grid" style="grid-template-columns: 18px auto">
-                                                    <div><asp:Label CssClass="align-top" runat="server" ID="prt_special_request_code_n"  Text="❏"></asp:Label></div>
+                                                    <div><asp:Label CssClass="line-height-1d2" runat="server" ID="prt_special_request_code_n"  Text="❏"></asp:Label></div>
                                                     <div>
                                                         <div>Không</div> 
                                                         <div class="subtitle font-10">No</div>
                                                     </div>
                                                 </div>
                                                 <div class="d-grid" style="grid-template-columns: 18px auto 1fr">
-                                                    <div><asp:Label CssClass="align-top" runat="server" ID="prt_special_request_code_y"  Text="❏"></asp:Label></div>
+                                                    <div><asp:Label CssClass="line-height-1d2" runat="server" ID="prt_special_request_code_y"  Text="❏"></asp:Label></div>
                                                     <div>
                                                         <div>Có, vui lòng ghi rõ:</div>
                                                         <div class="subtitle font-10">Yes, specify</div>
@@ -587,18 +584,10 @@
                             <div class="row mb-2">
                                 <div class="col-md-12">
                                     <div class="form-actions" style="display: flex; gap: 6px">
-                                        <asp:UpdatePanel runat="server" ID="UpdatePanel2">
-                                            <ContentTemplate>
-                                                <asp:LinkButton OnClick="CompleteDocument1" ValidationGroup="Group2" runat="server"  ID="btnComplete" CssClass="btn btn-primary">Complete</asp:LinkButton>
-                                            </ContentTemplate>
-                                        </asp:UpdatePanel>
-                                        <asp:LinkButton OnClick="SaveDocument" ValidationGroup="Group1"  ID="btnSave" runat="server" CssClass="btn btn-primary">Save</asp:LinkButton>
-                                        <asp:UpdatePanel runat="server" ID="uplPrintDocument">
-                                            <ContentTemplate>
-                                                <asp:LinkButton OnClick="DeleteDocument" runat="server" ID="btnDelete" CssClass="btn btn-danger">Delete</asp:LinkButton>
-                                            </ContentTemplate>
-                                        </asp:UpdatePanel>
-                                        <asp:LinkButton OnClick="AmendDocument" runat="server"  ID="btnAmend" CssClass="btn btn-secondary">Amend</asp:LinkButton>
+                                        <asp:LinkButton OnClick="CompleteDocument" ValidationGroup="Group2" runat="server"  ID="btnComplete" CssClass="btn btn-primary">Complete</asp:LinkButton>
+                                        <asp:LinkButton OnClick="SaveDocument" ValidationGroup="Group1" ID="btnSave" runat="server" CssClass="btn btn-primary">Save</asp:LinkButton>
+                                        <asp:LinkButton OnClientClick="window.parent.ConfirmDeleted(); return false" runat="server" ID="btnDelete" CssClass="btn btn-danger">Delete</asp:LinkButton>
+                                        <asp:LinkButton OnClick="AmendDocument" runat="server" ID="btnAmend" CssClass="btn btn-secondary">Amend</asp:LinkButton>
                                         <asp:UpdatePanel runat="server" ID="UpdatePanel1">
                                             <ContentTemplate>
                                                 <asp:LinkButton runat="server" OnClick="PrintDocument" ID="btnPrint" CssClass="btn btn-secondary">Print</asp:LinkButton>
@@ -618,44 +607,15 @@
     <script src="../scripts/bootstrap.min.js"></script>
     <script src="../scripts/myScript.js"></script>
     <script src="../scripts/contenteditable.min.js"></script>
-    <script src="../scripts/waves.js"></script>
     <script src="../scripts/sweetalert.min.js"></script>
     <script src="../scripts/alertify.js"></script>
     <script type="text/javascript">
-        function print_document() {
-            //var print_header = document.getElementById("print_header");
-            //var height = print_header.style.height.substring(0, print_header.style.height.length - 2);
-            //console.log(height);
-            //var newHeight = parseFloat(height);
-
-            //console.log(newHeight);
-
-            //print_header.style.height = newHeight + "px";
-
-            //console.log(print_header.style.height);
-
-            let print_page = document.querySelector("#print_page");
-            print_page.style.display = "block";
-            setTimeout(() => { print_page.style.display = "none"; }, 100);
-            window.print();
-        }
-        function show_window(rwndID) {
-            var oWnd = $find(rwndID);
-            oWnd.show();
-        }
         var elem = window.parent.parent.document.getElementById("myProgress");
         progress(elem);
 
-        function beforeAsyncPostBack() {
-            var curtime = new Date();
-        }
+        function beforeAsyncPostBack() { }
+        function afterAsyncPostBack() { }
 
-        function afterAsyncPostBack() {
-            setTimeout(function () {
-                if (document.getElementById("alertify-logs"))
-                document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
-            }, 1000);
-        }
         function print_document() {
             let print_page = document.querySelector("#print_page");
             print_page.style.display = "block";
@@ -663,10 +623,10 @@
             window.print();
         }
 
-        function btnPrint_Click() {
-            setTimeout(() => { printContent.setAttribute("style", "display: none"); }, 100);
-            window.print();
-        }
+        //function btnPrint_Click() {
+        //    setTimeout(() => { printContent.setAttribute("style", "display: none"); }, 100);
+        //    window.print();
+        //}
     </script>
 </body>
 </html>

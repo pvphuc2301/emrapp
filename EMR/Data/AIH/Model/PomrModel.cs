@@ -1,24 +1,19 @@
-﻿using EMR.Model;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json.Linq;
+using EMR.Model;
 
 namespace EMR.Data.AIH.Model
 {
-    public class PomrV1 : EmrDocument
+    public class PomrModel : EmrDocument
     {
-        public PomrV1()
+        public PomrModel()
         {
         }
 
-        public PomrV1(string document_id, string location) : base(document_id, location)
+        public PomrModel(string document_id, string location) : base(document_id, location)
         {
         }
 
-        public PomrV1(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
+        public PomrModel(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
         {
         }
 

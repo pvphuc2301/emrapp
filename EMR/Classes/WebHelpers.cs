@@ -43,8 +43,8 @@ namespace EMR
     {
         //http://172.16.0.78:8088/swagger/index.html
         //public static string URL = "http://172.16.0.88:8080/";//PRO
-        public static string URL = "http://172.16.0.78:8088/";//UAT
-
+        //public static string URL = "http://172.16.0.78:8088/";//UAT
+        public static string URL = System.Configuration.ConfigurationManager.AppSettings["WebService"];
         #region API
         public static dynamic PostAPI(string url, dynamic obj)
         {

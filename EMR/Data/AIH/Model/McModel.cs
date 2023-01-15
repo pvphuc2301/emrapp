@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EMR.Data.AIH.Model
 {
-    public class McV1 : EmrDocument
+    public class McModel : EmrDocument
     {
         public override string api => "api/mc";
         #region Properties
@@ -23,10 +23,10 @@ namespace EMR.Data.AIH.Model
         public dynamic treatment_plan { get; set; }
         #endregion
         
-        public McV1(string document_id, string location) : base(document_id, location)
+        public McModel(string document_id, string location) : base(document_id, location)
         {
         }
-        public McV1(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
+        public McModel(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
         {
         }
 

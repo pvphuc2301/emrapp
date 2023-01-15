@@ -14,11 +14,11 @@ using Telerik.Web.UI;
 
 namespace EMR
 {
-    public partial class MedicalCertificate : EmrPage, IEmrFormModel<McV1>
+    public partial class MedicalCertificate : EmrPage, IEmrFormModel<McModel>
     {
         public override string form_url { get; set; } = $"OPD/{nameof(MedicalCertificate)}";
-        public McV1 Model { get; set; }
-        public override dynamic InitModel() => Model = new McV1(varDocID, Location, varDocIdLog);
+        public McModel Model { get; set; }
+        public override dynamic InitModel() => Model = new McModel(varDocID, Location, varDocIdLog);
 
         #region Binding Data
         public override void BindingDataFormView()

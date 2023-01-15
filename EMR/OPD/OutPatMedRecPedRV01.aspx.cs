@@ -11,13 +11,13 @@ using Telerik.Web.UI;
 
 namespace EMR
 {
-    public partial class OutPatMedRecPedRV01 : EmrPage, IEmrFormModel<PomrV1>
+    public partial class OutPatMedRecPedRV01 : EmrPage, IEmrFormModel<PomrModel>
     {
         public override string form_url { get; set; } = $"OPD/OutPatMedRecPedRV01";
-        public PomrV1 Model { get; set; }
+        public PomrModel Model { get; set; }
         public override dynamic InitModel() {
             LoadPatient();
-            Model = new PomrV1(varDocID, Location, varDocIdLog);
+            Model = new PomrModel(varDocID, Location, varDocIdLog);
 
             if (Model.Logs(Location)?.Rows.Count == 1)
             {
@@ -649,7 +649,7 @@ namespace EMR
         }
         protected void btnUpdateNutritionScreening_Click(object sender, EventArgs e)
         {
-            Model = new PomrV1(varDocID, Location, varDocIdLog);
+            Model = new PomrModel(varDocID, Location, varDocIdLog);
             var result = WebHelpers.GetAPI($"api/emr/nutrition-status/{Location}/{varPVID}");
             if (result.Status == System.Net.HttpStatusCode.OK)
             {

@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace EMR.Data.AIH.Model
 {
-    public class IinaRV05 : EmrDocument
+    public class IinaModel : EmrDocument
     {
-        public IinaRV05()
+        public IinaModel()
         {
         }
-        public IinaRV05(string document_id, string location) : base(document_id, location)
+        public IinaModel(string document_id, string location) : base(document_id, location)
         {
         }
-        public IinaRV05(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
+        public IinaModel(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
         {
         }
         #region Properties

@@ -79,7 +79,8 @@
                     oWnd.show();
                 }
                 function showWindow2() {
-                    var oWnd = $find("<%= rwndFormDoc.ClientID %>"); oWnd.show();
+                    var oWnd = $find("<%= rwndFormDoc.ClientID %>");
+                    oWnd.show();
                 }
 
                 //function AddNode(value, url) {
@@ -93,7 +94,7 @@
                 //    //var node = treeTemp.findNodeByText("New Node");
 
                 //    //node.set_text(value);
-                    
+
                 //    //nodeParent.get_nodes().add(node);
 
                 //    //node.select();
@@ -112,7 +113,7 @@
                 //    };
 
                 //    LeftMenu.src = replaceUrlParam(LeftMenu.src, "item", JSON.stringify(item));
-                    
+
                 //    //window.location.href = url;
                 //}
 
@@ -377,6 +378,14 @@
     <script src="../scripts/jquery-3.2.1.min.js"></script>
     <script src="../scripts/bootstrap.min.js"></script>
     <script>
+
+        function clearSession() {
+            let documentid = localStorage.getItem("document_id");
+            if (documentid) {
+                console.log(documentid);
+                __doPostBack('clear_session', documentid);
+            }
+        }
 
         Sys.Application.add_init(appl_init);
 

@@ -1,32 +1,23 @@
 ﻿using EMR.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EMR.Data.AIH.Model
 {
-    public class MrfvV1 : EmrDocument
+    public class MrnvModel : EmrDocument
     {
-        public MrfvV1()
+        public MrnvModel()
         {
         }
 
-        public MrfvV1(string document_id, string location) : base(document_id, location)
+        public MrnvModel(string document_id, string location) : base(document_id, location)
         {
         }
 
-        public MrfvV1(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
+        public MrnvModel(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
         {
         }
 
-        protected override void DefaultDocument()
-        {
-            infected_with_covid = false;
-        }
-        public override string api => "api/mrfv";
-        #region properties
+        public override string api => "api/mrnv";
+        #region Properties
         public dynamic chief_complaint { get; set; }
         public dynamic cur_med_history { get; set; }
         public dynamic cur_medications { get; set; }
@@ -51,6 +42,7 @@ namespace EMR.Data.AIH.Model
         public dynamic scr_before_vacc_6 { get; set; }
         public dynamic scr_before_vacc_7 { get; set; }
         public dynamic scr_before_vacc_8 { get; set; }
+        public dynamic scr_before_vacc_9 { get; set; }
         public dynamic appointed_vaccine { get; set; }
         public dynamic additional_investigations { get; set; }
         public dynamic initial_diagnosis { get; set; }
@@ -62,13 +54,11 @@ namespace EMR.Data.AIH.Model
         public dynamic spec_opinion_req_text { get; set; }
         public dynamic pecific_edu_req { get; set; }
         public dynamic next_appointment { get; set; }
-        //Update V2.0
-        public dynamic infected_with_covid { get; set; }
-        public dynamic received_1_dose { get; set; }
-        public dynamic received_2_dose { get; set; }
-        public dynamic received_additional { get; set; }
-        public dynamic other_vaccinations { get; set; }
-        public dynamic not_yet_vaccinations { get; set; }
+
+        protected override void DefaultDocument()
+        {
+
+        }
         #endregion
     }
 }

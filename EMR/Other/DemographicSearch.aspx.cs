@@ -1,4 +1,7 @@
-﻿using EMR.Model;
+﻿using EMR.Data.Shared.Models;
+using EMR.Data.Shared.Services;
+using EMR.Model;
+using EmrLib.Utility;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -45,7 +48,7 @@ namespace EMR.Other
             ConnStringHC = ConnStr.SQL_HCConnString;
 
             heathcheck_wrapper.Visible = (loc == "AIH");
-            
+            heathcheck_wrapper.Visible = false;
         }
 
         private void PostBackEvent(object sender, EventArgs e)
@@ -85,12 +88,6 @@ namespace EMR.Other
         //        }
         //    }
         //}
-
-        protected void RadGrid2_ItemDataBound(object sender, GridItemEventArgs e)
-        {
-
-        }
-
         protected void RadGrid1_ItemDataBound(object sender, GridItemEventArgs e)
         {
             if (e.Item is GridDataItem)
@@ -114,43 +111,55 @@ namespace EMR.Other
             }
         }
 
-
         #region RadGrid1
         protected void RadGrid1_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            dynamic response = WebHelpers.GetAPI("api/Patient/outpatient-today-list?keyword=" + Session["UserID"] + "&pageIndex=1&pageSize=100");
+            WebApiService webApiService = new WebApiService();
+            string userid = Convert.ToString(Session["UserID"]);
+            DataPaging<OutpatientTodayListModel> AppointmentTodayList = webApiService.get_outpatient_today_list(userid, 1, 100);
+            RadGrid1.DataSource = AppointmentTodayList.Items;
 
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                JObject json = JObject.Parse(response.Data);
-                string strJSON = "";
-                strJSON += json["items"];
+            //dynamic response = WebHelpers.GetAPI("api/Patient/outpatient-today-list?keyword=" + Session["UserID"] + "&pageIndex=1&pageSize=100");
 
-                RadGrid1.DataSource = WebHelpers.GetJSONToDataTable(strJSON);
-            }
+            //if (response.Status == System.Net.HttpStatusCode.OK)
+            //{
+            //    JObject json = JObject.Parse(response.Data);
+            //    string strJSON = "";
+            //    strJSON += json["items"];
+
+            //    RadGrid1.DataSource = WebHelpers.GetJSONToDataTable(strJSON);
+            //}
         }
         #endregion
 
         #region RadGrid2
         protected void RadGrid2_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            dynamic response = WebHelpers.GetAPI("api/Patient/appoinment-today-list?keyword=" + Session["UserID"] + "&pageIndex=1&pageSize=4");
+            WebApiService webApiService = new WebApiService();
+            string userid = Convert.ToString(Session["UserID"]);
+            DataPaging<AppointmentTodayListModel> AppointmentTodayList = webApiService.get_appointment_today_list(userid, 1, 100);
+            RadGrid2.DataSource = AppointmentTodayList.Items;
+            //dynamic response = WebHelpers.GetAPI("api/Patient/appoinment-today-list?keyword=" + Session["UserID"] + "&pageIndex=1&pageSize=4");
 
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                JObject json = JObject.Parse(response.Data);
-                string strJSON = "";
-                strJSON += json["items"];
-
-                RadGrid2.DataSource = WebHelpers.GetJSONToDataTable(strJSON);
-            }
+            //if (response.Status == System.Net.HttpStatusCode.OK)
+            //{
+            //    JObject json = JObject.Parse(response.Data);
+            //    string strJSON = "";
+            //    strJSON += json["items"];
+            //    RadGrid2.DataSource = WebHelpers.GetJSONToDataTable(strJSON);
+            //}
         }
 
         #endregion
 
         protected string GetAge(object value)
         {
-            return DataHelpers.CalculateAge(DateTime.Parse(Convert.ToString(value))).ToString();
+            if(DateTime.TryParse(value.ToString(),out DateTime date_of_birth))
+            {
+                return EmrHelper.CalculateAge(date_of_birth).ToString();
+            }
+            return String.Empty;
+            //return DataHelpers.CalculateAge(DateTime.Parse(Convert.ToString(value))).ToString();
         }
 
         #region RadGrid5
@@ -169,22 +178,28 @@ namespace EMR.Other
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            string pid = "000000000" + txt_pid.Value;
+            string pid = EmrHelper.FormatPID(txt_pid.Value);
+            WebApiService webApiService = new WebApiService();
+            IEnumerable<DemographicSearchModel> DemographicSearchModel = webApiService.get_demographic_search(1, 4, pid);
+            RadGrid5.DataSource = DemographicSearchModel;
+            RadGrid5.Rebind();
 
-            pid = "9" + pid.Substring(pid.Length - 8, 8);
+            //string pid = "000000000" + txt_pid.Value;
 
-            txt_pid.Value = pid;
+            //pid = "9" + pid.Substring(pid.Length - 8, 8);
 
-            dynamic response = WebHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=4&keyword=" + pid);
-            //dynamic response = WebHelpers.GetAPI($"api/Patient/demographic-search-facility?f_code={loc}&pageIndex=1&pageSize=4&keyword=" + pid);
+            //txt_pid.Value = pid;
 
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                RadGrid5.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+            //dynamic response = WebHelpers.GetAPI("api/Patient/demographic-search?pageIndex=1&pageSize=4&keyword=" + pid);
+            ////dynamic response = WebHelpers.GetAPI($"api/Patient/demographic-search-facility?f_code={loc}&pageIndex=1&pageSize=4&keyword=" + pid);
 
-                RadGrid5.Rebind();
-                //RadGrid5.DataBind();
-            }
+            //if (response.Status == System.Net.HttpStatusCode.OK)
+            //{
+            //    RadGrid5.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+
+            //    RadGrid5.Rebind();
+            //    //RadGrid5.DataBind();
+            //}
         }
         protected void btnComplete_Click(object sender, EventArgs e)
         {
@@ -236,12 +251,12 @@ namespace EMR.Other
 
         protected void RadGridHC_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            dynamic response = WebHelpers.GetAPI("api/hck/queue/" + specialty_id);
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                RadGridHC.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
-            }
-            
+            //dynamic response = WebHelpers.GetAPI("api/hck/queue/" + specialty_id);
+            //if (response.Status == System.Net.HttpStatusCode.OK)
+            //{
+            //    RadGridHC.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+            //}
+
             //string TableName = RadGridHC.MasterTableView.Name;
             // string query = GetQueryHC(specialty_id);
 
@@ -433,24 +448,30 @@ namespace EMR.Other
 
         protected void RadGrid3_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            string url = "api/emr/patient-history-list?day=7&user_name=" + (string)Session["UserId"];
-            dynamic response = WebHelpers.GetAPI(url);
+            WebApiService webApiService = new WebApiService();
+            IEnumerable<PatientHistory> patientHistories = webApiService.get_patient_histories(7, (string)Session["UserId"]);
+            RadGrid3.DataSource = patientHistories;
 
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                RadGrid3.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
-            }
+            //string url = "api/emr/patient-history-list?day=7&user_name=" + (string)Session["UserId"];
+            //dynamic response = WebHelpers.GetAPI(url);
+            //if (response.Status == System.Net.HttpStatusCode.OK)
+            //{
+            //    RadGrid3.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+            //}
         }
         
         protected void RadGrid4_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            string url = "api/emr/patient-history-list?day=30&user_name=" + (string)Session["UserId"];
-            dynamic response = WebHelpers.GetAPI(url);
-
-            if (response.Status == System.Net.HttpStatusCode.OK)
-            {
-                RadGrid4.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
-            }
+            WebApiService webApiService = new WebApiService();
+            IEnumerable<PatientHistory> patientHistories = webApiService.get_patient_histories(30, (string)Session["UserId"]);
+            RadGrid4.DataSource = patientHistories;
+            
+            //string url = "api/emr/patient-history-list?day=30&user_name=" + (string)Session["UserId"];
+            //dynamic response = WebHelpers.GetAPI(url);
+            //if (response.Status == System.Net.HttpStatusCode.OK)
+            //{
+            //    RadGrid4.DataSource = WebHelpers.GetJSONToDataTable(response.Data);
+            //}
         }
 
         protected void RadGrid3_ItemCommand(object sender, GridCommandEventArgs e)

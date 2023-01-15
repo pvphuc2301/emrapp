@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EMR.Data.AIH.Dictionary
 {
-    public class MrfvDictionaryV1
+    public class MrnvDictionary
     {
         public static Dictionary<string, string> TREATMENT_CODE = new Dictionary<string, string>()
         {

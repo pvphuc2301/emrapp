@@ -1,15 +1,10 @@
-﻿using EMR.UserControls;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data;
-using System.IO;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
-using Telerik.Web.UI.ImageEditor;
-using System.Web.Script.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -270,8 +265,10 @@ namespace EMR
 
                 DataObj.Value = JsonConvert.SerializeObject(ena);
 
-                Session["docid"] = ena.document_id;
-                WebHelpers.AddScriptFormEdit(Page, ena, (string)Session["emp_id"], loc);
+                //Session["docid"] = ena.document_id;
+                //WebHelpers.AddScriptFormEdit(Page, ena, (string)Session["emp_id"], loc);
+
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "localStorage_addItem", "window.localStorage.setItem(\"document_id\", \"" + varDocID + "\");", true);
             }
             catch (Exception ex) { WebHelpers.SendError(Page, ex); }
         }

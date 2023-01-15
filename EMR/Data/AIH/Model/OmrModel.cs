@@ -3,17 +3,17 @@ using Newtonsoft.Json.Linq;
 
 namespace EMR.Data.AIH.Model
 {
-    public class OmrV1 : EmrDocument
+    public class OmrModel : EmrDocument
     {
-        public OmrV1()
+        public OmrModel()
         {
         }
 
-        public OmrV1(string document_id, string location) : base(document_id, location)
+        public OmrModel(string document_id, string location) : base(document_id, location)
         {
         }
 
-        public OmrV1(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
+        public OmrModel(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
         {
         }
 
@@ -76,7 +76,7 @@ namespace EMR.Data.AIH.Model
         #endregion
         protected override void DefaultDocument()
         {
-            
+
         }
         public void SetDefaultDocument(string location, string patient_visit_id)
         {

@@ -1,4 +1,4 @@
-﻿using Emr.Utility;
+﻿using EmrLib.Session;
 using EMR.Data.AIH.Dictionary;
 using EMR.Data.AIH.Model;
 using EMR.Data.Shared.Services;
@@ -8,173 +8,98 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
-using Telerik.Web.UI.Chat;
+using EmrLib.Utility;
 
 namespace EMR
 {
-    public partial class BookForSurPro : Page
+    public partial class BookForSurPro : EmrPageV01
     {
-        EmrService<Bfsp> _emrService;
-        PatientService _patientService;
-        public PatientInfo Patient;
-        public string model_id { get => Request.QueryString["modelId"] ?? throw new ArgumentNullException("Model id cannot be null."); }
-        public string visible_patient_id { get => Request.QueryString["vpId"] ?? throw new ArgumentNullException("Visible patient id cannot be null."); }
-        public string PAGE_URL { get => $"/{form_url}.aspx?loc={Location}&pId={varPID}&vpId={visible_patient_id}&pvid={patient_visit_id}&modelId={model_id}&docId={varDocID}"; }
-        public string UserId { get => (string)Session["UserId"]; }
-        public string GroupAccess { get => (string)Session["group_access"]; }
-        public string Location { get => (string)Session["company_code"]; }
-        public string varDocID { get => Request.QueryString["docId"] ?? throw new ArgumentNullException("document id cannot be null."); }
-        public string varPID { get => Request.QueryString["pId"] ?? throw new ArgumentNullException("Patient id cannot be null."); }
-        public string patient_visit_id { get => Request.QueryString["pvId"]; }
-        public string form_url { get; set; } = "IPD/BookForSurPro";
-        public Bfsp Model { get; set; }
-        public DateTime associated_visit_admited { get; set; }
-        public DateTime associated_visit_closed { get; set; }
-        public void InitModel() { 
-            _emrService = new EmrService<Bfsp>() { Location = Location };
-            Model = _emrService.Get(Guid.Parse(varDocID));
-        }
-        protected void Page_Load(object sender, EventArgs e)
+        public override string form_url { get; set; } = "IPD/BookForSurPro";
+        public BfspModel Model { get; set; }
+        public override dynamic InitModel()
+            => Model = new BfspModel(varDocID);
+        public override dynamic GetModel()
         {
-            if (!WebHelpers.CheckSession(this))
+            if(varDocIdLog == null)
             {
-                return;
+                Model = EmrService<BfspModel>.Get(Guid.Parse(varDocID), Location);
             }
-            if (!IsPostBack)
+            else
             {
-                InitModel();
-
-                IEnumerable<Bfsp> Logs = _emrService.GetLogs(Guid.Parse(varDocID), Location);
-                if (Logs.Count() == 1)
-                {
-                    Model.hair_removal_diagram = BfspDictionary.HAIR_REMOVAL_DIAGRAM;
-                }
-
-                InitPage();
-
-                LastestVersion.Visible = varDocIdLog != null;
-
-                string last_updated_date_time = WebHelpers.GetLogLastDateTime(Model.created_date_time, Model.modified_date_time);
-                string last_updated_doctor = WebHelpers.GetLogLastName(Model.created_name_e, Model.modified_name_e);
-                last_updated_date_time = WebHelpers.FormatDateTime(last_updated_date_time, "dd-MMM-yyyy HH:mm tt", "");
-                rlblLogHistory.Text = $"Last updated by <i>{last_updated_doctor}</i> on <b><i>{last_updated_date_time}</i></b>";
-
-                _patientService = new PatientService();
-                uc_patientInfo.Patient = _patientService.GetPatient(Guid.Parse(varPID));
-                IEnumerable<PatientVisitInfo> PatientVisit = _patientService.GetPatientVisit(Guid.Parse(patient_visit_id), Location);
+                Model = EmrService<BfspModel>.GetLog(Guid.Parse(varDocIdLog), Location);
+            }
+            return Model;
+        }
+        public override void LoadPatient()
+        {
+            if(uc_patientInfo.Patient == null)
+            {
+                uc_patientInfo.Patient = PatientService.GetPatient(Guid.Parse(varPID));
+                IEnumerable<PatientVisitInfo> PatientVisit = PatientService.GetPatientVisit(Guid.Parse(varPVID), Location);
                 uc_patientInfo.PatientVisit = PatientVisit.FirstOrDefault();
             }
-            else
+        }
+        public override void SetDefaultModel()
+        {
+            IEnumerable<BfspModel> Logs = EmrService<BfspModel>.GetLogs(Guid.Parse(varDocID), Location);
+            if (Logs.Count() == 1)
             {
-                PostBackEventHandler();
+                Model.hair_removal_diagram = BfspDictionary.HAIR_REMOVAL_DIAGRAM;
             }
         }
-        protected void GoToLastestVersion(object sender, EventArgs e)
-        {
-            Response.Redirect(PAGE_URL);
-        }
-        private void InitPage()
-        {
-            LoadPermissions();
+        //protected void Page_Load(object sender, EventArgs e)
+        //{
+        //    if (!CheckSession())
+        //    {
+        //        return;
+        //    }
+        //    if (!IsPostBack)
+        //    {
+        //        InitModel();
+
+        //        IEnumerable<Bfsp> Logs = _emrService.GetLogs(Guid.Parse(varDocID), Location);
+        //        if (Logs.Count() == 1)
+        //        {
+        //            Model.hair_removal_diagram = BfspDictionary.HAIR_REMOVAL_DIAGRAM;
+        //        }
+
+        //        InitPage();
+
+        //        LastestVersion.Visible = varDocIdLog != null;
+        //        LoadLogHistoryText();
+
+        //        _patientService = new PatientService();
+        //        uc_patientInfo.Patient = _patientService.GetPatient(Guid.Parse(varPID));
+        //        IEnumerable<PatientVisitInfo> PatientVisit = _patientService.GetPatientVisit(Guid.Parse(varPVID), Location);
+        //        uc_patientInfo.PatientVisit = PatientVisit.FirstOrDefault();
+        //    }
+        //    else
+        //    {
+        //        PostBackEventHandler();
+        //    }
+        //}
+        //private void InitPage()
+        //{
+        //    LoadPermissions();
             
-            amendReasonWraper.Visible = false;
-            if (Model.status == DocumentStatus.FINAL)
-            {
-                BindingDataForm(ControlState.View);
-                _patientService = new PatientService();
-                Patient = _patientService.GetPatient(Guid.Parse(varPID));
-                BindingDataFormPrint();
-            }
-            else
-            {
-                BindingDataForm(ControlState.Edit);
-            }
-        }
-
-        protected void ViewHistory(object sender, EventArgs e)
-        {
-            string page_url = PAGE_URL + "&api=" + Bfsp._api;
-            string script = string.Format("function f(){{ parent.log_history(\"" + page_url + "\");Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "show_log_history", script, true);
-        }
-        protected void LoadPermissions()
-        {
-            bool IsSameCompanyCode = !IsLocationChanged;
-
-            btnCancel.Visible = false;
-
-            if (!IsSameCompanyCode || IsViewLog)
-            {
-                btnComplete.Visible
-                    = btnSave.Visible
-                    = btnDelete.Visible
-                    = btnAmend.Visible
-                    = btnPrint.Visible
-                    = false;
-                return;
-            }
-
-            if (Model.status == DocumentStatus.FINAL)
-            {
-                btnAmend.Visible
-                    = btnPrint.Visible
-                    = true;
-                btnComplete.Visible
-                    = btnSave.Visible
-                    = btnDelete.Visible
-                    = false;
-            }
-            else
-            {
-                btnAmend.Visible
-                    = btnPrint.Visible
-                    = false;
-                btnComplete.Visible
-                    = btnSave.Visible
-                    = btnDelete.Visible
-                    = true;
-            }
-
-            switch (AccessAuthorize)
-            {
-                case "View":
-                    btnAmend.Visible
-                        = btnComplete.Visible
-                        = btnSave.Visible
-                        = btnDelete.Visible
-                        = false;
-                    break;
-            }
-
-            if (GroupAccess == "ADM")
-            {
-                btnDelete.Visible = true;
-            }
-        }
+        //    amendReasonWraper.Visible = false;
+        //    if (Model.status == DocumentStatus.FINAL)
+        //    {
+        //        BindingDataForm(ControlState.View);
+        //        BindingDataFormPrint();
+        //    }
+        //    else
+        //    {
+        //        BindingDataForm(ControlState.Edit);
+        //    }
+        //}
         #region Binding Data
-        public void BindingDataForm(ControlState state)
-        {
-            if (LoadFormControl(state))
-            {
-                BindingDataFormEdit();
-            }
-            else
-            {
-                BindingDataFormView();
-            }
-        }
-        public string AccessAuthorize { get => (string)Session["access_authorize"]; }
-        public string LocationChanged { get => (string)Session["const_company_code"]; }
-        public string varDocIdLog { get => Request.QueryString["docIdLog"]; }
-        public bool IsViewLog => varDocIdLog != null;
-        public bool IsLocationChanged { get => Location != LocationChanged; }
-        protected bool LoadFormControl(ControlState state)
+        public override bool LoadFormControl(ControlState state)
         {
             //1 - edit
             bool Visible = (AccessAuthorize == "FullAccess" && !IsLocationChanged && state == ControlState.Edit && !IsViewLog) ? true : false;
@@ -190,12 +115,12 @@ namespace EMR
                 = dtpk_performance_date_time.Visible
                 = txt_surgical_time.Visible
                 = infected_case_wrapper.Visible
-                = txt_special_equipment.Visible
-                = txt_implant.Visible
-                = txt_special_consumable.Visible
-                = txt_frozen_section.Visible
-                = txt_anatomical_pathology.Visible
-                = txt_other_please_specify.Visible
+                = special_equipment_wrapper.Visible
+                = implant_wrapper.Visible
+                = special_consumable_wrapper.Visible
+                = frozen_section_wrapper.Visible
+                = anatomical_pathology_wrapper.Visible
+                = other_please_specify_wrapper.Visible
                 = surgical_equipment_wrapper.Visible
                 = position_patient_wrapper.Visible
                 = type_anaesthesia_wrapper.Visible
@@ -225,213 +150,140 @@ namespace EMR
                 = lbl_preoperative_preparation_code.Visible
                 = lbl_hair_removal.Visible
                 = !Visible;
-            //foreach (var prop in ModelRef.GetType().GetProperties())
-            //{
-            //    var control1 = FindControl(prop.Name + "_wrapper");
-            //    var control2 = FindControl("lbl_" + prop.Name);
-
-            //    if (control1 != null)
-            //    {
-            //        control1.Visible = visible;
-            //    }
-            //    if (control2 != null)
-            //    {
-            //        control2.Visible = !visible;
-            //    }
-            //}
-
+            
             return Visible;
         }
-        protected void BindingLabel(string LabelId, string value, string prefix = "prt")
+        public override bool UpdateModel()
         {
-            var lable = FindControl($"{prefix}_{LabelId}");
-            if (lable != null)
-                ((Label)lable).Text = value;
-        }
-        public void BindingInputRadioButton(string ControlID, string Prefix = "rad")
-        {
-            var control = FindControl(Prefix + "_" + ControlID);
-            if (control != null)
-            {
-                ((HtmlInputRadioButton)control).Checked = true;
-            }
-        }
-        protected void UpdateModel()
-        {
-            _emrService = new EmrService<Bfsp>();
-            var response = _emrService.Update(Model, Location);
+            //_emrService = new EmrService<Bfsp>();
+            var response = EmrService<BfspModel>.Update(Model, Location);
 
             if (response.IsSuccessStatusCode)
             {
-                var LogResponse = _emrService.Log(Model, Location);
+                var LogResponse = EmrService<BfspModel>.Log(Model, Location);
                 if (!LogResponse.IsSuccessStatusCode)
                 {
-                    //Thông báo lỗi ghi log
+                    Alert("Error", "Can not write log", "error");
                 }
-                InitModel();
-                string last_updated_date_time = WebHelpers.GetLogLastDateTime(Model.created_date_time, Model.modified_date_time);
-                string last_updated_doctor = WebHelpers.GetLogLastName(Model.created_name_e, Model.modified_name_e);
-                last_updated_date_time = WebHelpers.FormatDateTime(last_updated_date_time, "dd-MMM-yyyy HH:mm tt", "");
-                rlblLogHistory.Text = $"Last updated by <i>{last_updated_doctor}</i> on <b><i>{last_updated_date_time}</i></b>";
-
-                if (Model.status == DocumentStatus.FINAL)
-                {
-                    WebHelpers.PostAPI($"api/emr/clear-session/{Location}/{varDocID}");
-                }
-                string script = string.Format("function f(){{ window.parent.Notification('" + response.Content + "');Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "show_message", script, true);
-
-                
             }
             else
             {
-                //Thông báo lỗi
-                string script = string.Format("function f(){{ window.parent.Error('" + response.StatusCode + "', '" + response.ReasonPhrase + "');Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "show_message", script, true);
-            }
-        }
-        public string EmpId { get => (string)Session["emp_id"]; }
-        protected bool AllowDocumentModifer(string docStatus)
-        {
-            //    CanOpenForm(Page page, string docid, string docStatus, string emp_id, string company_code, string const_company_code, string access_authorize = "")
-            //{
-            if (Location == LocationChanged && docStatus == DocumentStatus.FINAL)
-            {
-                return true;
-            }
-            if (docStatus == DocumentStatus.DRAFT && AccessAuthorize == "FullAccess")
-            {
-                dynamic result = WebHelpers.GetAPI($"api/emr/check-session/{Location}/{varDocID}/{EmpId}");
-
-                if (result.Status == System.Net.HttpStatusCode.OK)
-                {
-                    dynamic obj = JObject.Parse(result.Data);
-                    dynamic employee = obj["items"];
-
-                    //false - open denied
-                    if (Convert.ToBoolean(obj.status))
-                    {
-                        return true;
-                    }
-
-                    //string pid = page.Request["pid"];
-                    //string vpid = page.Request["vpid"];
-                    //page.Response.Redirect($"../other/patientsummary.aspx?pid={pid}&vpid={vpid}&blocked={employee.full_name_l}", false);
-                    string content = "window.parent.ShowBlock(\"This document is blocked by " + employee.full_name_e + "\");";
-                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), DateTime.Now.ToString(), "setTimeout(()=> { " + content + " },100);", true);
-
-                    //ScriptManager.RegisterStartupScript(page, page.GetType(), "document_block", "setTimeout(()=>{ sweetAlert(\"Denied!\", \"This document is blocked by " + employee.full_name_e + "\", \"error\");},0);", true);
-                    return false;
-                }
-                else
-                {
-                    return false;
-                }
+                Alert("Error", "Can not update data", "error");
+                return false;
             }
             return true;
-            //    }
+        }
+        //public override void PrintDocument(object sender, EventArgs e)
+        //{
+        //    //dynamic rwndPrint = FindControl("rwndPrint");
+        //    //PrintSetup();
+        //    InitModel();
+        //    _patientService = new PatientService();
+        //    Patient = _patientService.GetPatient(Guid.Parse(varPID));
+        //    //if (rwndPrint != null)
+        //    //{
+        //    //    string script = string.Format("function f(){{ window.select_print_language();Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
+        //    //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "print_document", script, true);
+        //    //}
+        //    //else
+        //    //{
+        //    //    string script = string.Format("function f(){{ window.print_document();Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
+        //    //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "print_document", script, true);
+        //    //}
+        //    //ModelRef = InitModel();
+        //    //Patient = new PatientInfo(varPID);
+        //    //PatientVisit = new PatientVisitInfo(patient_visit_id, Location);
+        //    //BindingDataFormPrint();
+        //    string script = string.Format("function f(){{ window.print_document();Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
+        //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "print_document", script, true);
+        //}
+        //public override void CancelAmendDocument(object sender, EventArgs e)
+        //{
+        //    var response = SessionChecker.ClearSession(Location, Guid.Parse(varDocID));
 
-        }
-        protected void CancelAmendDocument(object sender, EventArgs e)
-        {
-            WebHelpers.PostAPI($"api/emr/clear-session/{Location}/{varDocID}");
-            
-            btnCancel.Visible
-                = btnComplete.Visible
-                 = false;
-            btnAmend.Visible
-                = btnPrint.Visible
-                = true;
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        btnCancel.Visible
+        //            = btnComplete.Visible
+        //            = false;
+        //        btnAmend.Visible
+        //            = btnPrint.Visible
+        //            = true;
 
-            InitModel();
-            InitPage();
-        }
-        protected void AmendDocument(object sender, EventArgs e)
-        {
-            if (AllowDocumentModifer(DocumentStatus.DRAFT))
-            {
-                InitModel();
-                btnAmend.Visible
-                    = btnPrint.Visible
-                    = false;
-                btnComplete.Visible
-                    = btnCancel.Visible
-                    = amendReasonWraper.Visible
-                    = true;
+        //        InitModel();
+        //        InitPage();
+        //    }
+        //    else
+        //    {
+        //        string script = string.Format("function f(){{ window.parent.ShowBlock('Cannot clear session');Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
+        //        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "error", script, true);
+        //    }
+        //}
+        //public override void AmendDocument(object sender, EventArgs e)
+        //{
+        //    var item = SessionChecker.FindBlockedSession(Location, Guid.Parse(varDocID), Guid.Parse(EmpId));
+        //    if(item != null)
+        //    {
+        //        string script = string.Format("function f(){{ window.parent.ShowBlock('This document is blocked by " + item.full_name_l + "');Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
+        //        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "block_document", script, true);
+        //    }
+        //    else
+        //    {
+        //        InitModel();
+        //        btnAmend.Visible
+        //            = btnPrint.Visible
+        //            = false;
+        //        btnComplete.Visible
+        //            = btnCancel.Visible
+        //            = amendReasonWraper.Visible
+        //            = true;
 
-                LoadFormControl(ControlState.Edit);
-                BindingDataFormEdit();
+        //        LoadFormControl(ControlState.Edit);
+        //        BindingDataFormEdit();
+        //    }
+        //}
+        //public override void DeleteDocument(object sender, EventArgs e)
+        //{
+        //    var args = JsonConvert.SerializeObject(new { document_id = varDocID, api = Bfsp._api, patient_visit_id = patient_visit_id });
+        //    string script = string.Format("function f(){{ window.parent.ConfirmDeleteDocument('{0}');Sys.Application.remove_load(f);}}Sys.Application.add_load(f);", args);
+        //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "confirm_delete_document", script, true);
+        //}
+        //public override void CompleteDocument(object sender, EventArgs e)
+        //{
+        //    if (Page.IsValid)
+        //    {
+        //        try
+        //        {
+        //            (sender as LinkButton).CssClass += "cursor-wait";
+        //            Model = new Bfsp(varDocID);
+        //            Model.status = DocumentStatus.FINAL;
+        //            Model.user_name = UserId;
+        //            BindingControlToModel();
+        //            UpdateModel();
+        //            InitPage();
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Console.WriteLine(ex.Message);
+        //            WebHelpers.SendError(Page, ex);
+        //        }
+        //    }
+        //}
+        //public override void SaveDocument(object sender, EventArgs e)
+        //{
+        //    if (Page.IsValid)
+        //    {
+        //        Model = new Bfsp(varDocID);
+        //        Model.status = DocumentStatus.DRAFT;
+        //        Model.user_name = UserId;
+        //        BindingControlToModel();
+        //        UpdateModel();
+        //    }
+        //}
+        public override void BindingDataFormPrint()
+        {
+            Patient = PatientService.GetPatient(Guid.Parse(varPID));
 
-            }
-            //else
-            //{
-            //    string script = string.Format("function f(){{ window.parent.ShowBlock();Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
-            //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "block_document", script, true);
-            //}
-        }
-        protected void DeleteDocument(object sender, EventArgs e)
-        {
-            var args = JsonConvert.SerializeObject(new { document_id = varDocID, api = Bfsp._api, patient_visit_id = patient_visit_id });
-            string script = string.Format("function f(){{ window.parent.ConfirmDeleteDocument('{0}');Sys.Application.remove_load(f);}}Sys.Application.add_load(f);", args);
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "confirm_delete_document", script, true);
-        }
-        protected void CompleteDocument(object sender, EventArgs e)
-        {
-            if (Page.IsValid)
-            {
-                try
-                {
-                    (sender as LinkButton).CssClass += "cursor-wait";
-                    Model = new Bfsp(varDocID);
-                    Model.status = DocumentStatus.FINAL;
-                    Model.user_name = UserId;
-                    BindingControlToModel();
-                    UpdateModel();
-                    InitPage();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                    WebHelpers.SendError(Page, ex);
-                }
-            }
-        }
-        protected void SaveDocument(object sender, EventArgs e)
-        {
-            if (Page.IsValid)
-            {
-                Model = new Bfsp(varDocID);
-                Model.status = DocumentStatus.DRAFT;
-                Model.user_name = UserId;
-                BindingControlToModel();
-                UpdateModel();
-            }
-        }
-        protected void BindingRadDateTimePicker(RadDateTimePicker RadDateTimePicker, dynamic datetime)
-        {
-            try
-            {
-                if (datetime == null) return;
-                if (datetime is DateTime)
-                {
-                    RadDateTimePicker.SelectedDate = datetime;
-                    return;
-                }
-                if (datetime is string)
-                {
-                    if (DateTime.TryParse(datetime, out DateTime result))
-                    {
-                        RadDateTimePicker.SelectedDate = result;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
-        }
-        public void BindingDataFormPrint()
-        {
             prt_patient_name.Text = Patient.FullName;
             prt_dob.Text = WebHelpers.FormatDateTime(Patient.date_of_birth, "dd/MM/yyyy");
             prt_gender.Text = Patient.Gender;
@@ -496,10 +348,11 @@ namespace EMR
 
             if (DateTime.TryParse(Model.booking_time, out DateTime booking_time))
             {
-                prt_booking_time.Text = booking_time.ToString("HH:mm; dd/MM/yyyy");
+                prt_booking_date.Text = booking_time.ToString("dd/MM/yyyy");
+                prt_booking_time.Text = booking_time.ToString("HH:mm");
             }
         }
-        public void BindingDataFormView()
+        public override void BindingDataFormView()
         {
             lbl_preoperative_diagnosis.Text = Model.preoperative_diagnosis;
             lbl_surgeon.Text = Model.surgeon;
@@ -557,13 +410,11 @@ namespace EMR
             }
             lbl_hair_removal.Text = Model.hair_removal_desc;
             hair_removal_diagram_data_base64.Value = Model.hair_removal_diagram;
-
+            prt_hair_removal_diagram.Src = Model.hair_removal_diagram; //print form
 
         }
-        public void BindingDataFormEdit()
+        public override void BindingDataFormEdit()
         {
-            amendReasonWraper.Visible = Model.status == DocumentStatus.FINAL;
-
             txt_preoperative_diagnosis.Value = Model.preoperative_diagnosis;
             txt_surgeon.Value = Model.surgeon;
             txt_assistant_surgeon.Value = Model.assistant_surgeon;
@@ -574,12 +425,12 @@ namespace EMR
             BindingInputRadioButton(nameof(Model.admitted_code) + "_" + Model.admitted_code);
             if (rad_admitted_code_ipd.Checked)
             {
-                txt_admitted_specify.Visible = true;
+                admitted_specify_wrapper.Visible = true;
                 txt_admitted_specify.Value = Model.admitted_specify;
             }
             else
             {
-                txt_admitted_specify.Visible = false;
+                admitted_specify_wrapper.Visible = false;
             }
 
             BindingRadDateTimePicker(dtpk_performance_date_time, Model.performance_date_time);
@@ -597,14 +448,14 @@ namespace EMR
             txt_other_please_specify.Value = Model.other_please_specify;
 
             BindingInputRadioButton(nameof(Model.surgical_equipment_code) + "_" + Model.surgical_equipment_code);
-            txt_surgical_equipment_note.Visible = rad_surgical_equipment_code_oth.Checked;
+            surgical_equipment_note_wrapper.Visible = rad_surgical_equipment_code_oth.Checked;
             if (rad_surgical_equipment_code_oth.Checked)
             {
                 txt_surgical_equipment_note.Value = Model.surgical_equipment_note;
             }
             
             BindingInputRadioButton(nameof(Model.position_patient_code) + "_" + Model.position_patient_code);
-            txt_position_patient_specify.Visible = rad_position_patient_code_oth.Checked;
+            position_patient_specify_wrapper.Visible = rad_position_patient_code_oth.Checked;
             lateral_specify_wrapper.Visible = rad_position_patient_code_lat.Checked;
             if (rad_position_patient_code_lat.Checked)
             {
@@ -616,14 +467,14 @@ namespace EMR
             }
 
             BindingInputRadioButton(nameof(Model.type_anaesthesia_code) + "_" + Model.type_anaesthesia_code);
-            txt_type_anaesthesia_note.Visible = rad_type_anaesthesia_code_oth.Checked;
+            type_anaesthesia_note_wrapper.Visible = rad_type_anaesthesia_code_oth.Checked;
             if (rad_type_anaesthesia_code_oth.Checked)
             {
                 txt_type_anaesthesia_note.Value = Model.type_anaesthesia_note;
             }
 
             BindingInputRadioButton(nameof(Model.preoperative_preparation_code) + "_" + Model.preoperative_preparation_code);
-            txt_preoperative_preparation_note.Visible = rad_preoperative_preparation_code_oth.Checked;
+            preoperative_preparation_note_wrapper.Visible = rad_preoperative_preparation_code_oth.Checked;
             if (rad_preoperative_preparation_code_oth.Checked)
             {
                 txt_preoperative_preparation_note.Value = Model.preoperative_preparation_note;
@@ -632,32 +483,31 @@ namespace EMR
             BindingInputRadioButton(nameof(Model.hair_removal_code) + "_" + Model.hair_removal_code);
 
             hair_removal_diagram_data_base64.Value = Model.hair_removal_diagram;
-
+            base.BindingDataFormEdit();
         }
-        
         #endregion
-        public void PostBackEventHandler() 
+        public override void PostBackEventHandler()
         {
             switch (Request["__EVENTTARGET"])
             {
                 case "admitted_code":
                     if (Request["__EVENTARGUMENT"] == BfspDictionary.ADMITTED_CODE_IPD)
                     {
-                        txt_admitted_specify.Visible = true;
+                        admitted_specify_wrapper.Visible = true;
                     }
                     else
                     {
-                        txt_admitted_specify.Visible = false;
+                        admitted_specify_wrapper.Visible = false;
                     }
                     break;
                 case "surgical_equipment_code":
                     if (Request["__EVENTARGUMENT"] == BfspDictionary.SURGICAL_EQUIPMENT_CODE_OTH)
                     {
-                        txt_surgical_equipment_note.Visible = true;
+                        surgical_equipment_note_wrapper.Visible = true;
                     }
                     else
                     {
-                        txt_surgical_equipment_note.Visible = false;
+                        surgical_equipment_note_wrapper.Visible = false;
                     }
                     break;
                 case "position_patient_code":
@@ -698,40 +548,129 @@ namespace EMR
                 case "type_anaesthesia_code":
                     if (Request["__EVENTARGUMENT"] == BfspDictionary.TYPE_ANAESTHESIA_CODE_OTH)
                     {
-                        txt_type_anaesthesia_note.Visible = true;
+                        type_anaesthesia_note_wrapper.Visible = true;
                     }
                     else
                     {
-                        txt_type_anaesthesia_note.Visible = false;
+                        type_anaesthesia_note_wrapper.Visible = false;
                     }
                     break;
                 case "preoperative_preparation_code":
                     if (Request["__EVENTARGUMENT"] == BfspDictionary.PREOPERATIVE_PREPARATION_CODE_OTH)
                     {
-                        txt_preoperative_preparation_note.Visible = true;
+                        preoperative_preparation_note_wrapper.Visible = true;
                     }
                     else
                     {
-                        txt_preoperative_preparation_note.Visible = false;
+                        preoperative_preparation_note_wrapper.Visible = false;
                     }
                     break;
             }
-            
         }
-        protected string FindHtmlInputRadioButton(string ControlID, Dictionary<string, string> DataSource, string Prefix = "rad")
+        #region Validate
+        protected void preoperative_diagnosis_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            foreach (KeyValuePair<string, string> code in DataSource)
-            {
-                if (((HtmlInputRadioButton)FindControl(Prefix + "_" + ControlID + "_" + code.Key)).Checked)
-                {
-                    return code.Key;
-                }
-            }
-            return null;
+            args.IsValid = !string.IsNullOrEmpty(txt_preoperative_diagnosis.Text);
         }
-        public void BindingControlToModel()
+        protected void surgeon_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            
+            args.IsValid = !string.IsNullOrEmpty(txt_surgeon.Text);
+        }
+        protected void assistant_surgeon_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_assistant_surgeon.Text);
+        }
+        protected void performance_method_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_performance_method.Text);
+        }
+        protected void admitted_code_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_admitted_code_day.Checked || rad_admitted_code_ipd.Checked;
+        }
+        protected void admitted_specify_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_admitted_specify.Text);
+        }
+        protected void performance_date_time_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = dtpk_performance_date_time.SelectedDate != null;
+        }
+        protected void surgical_time_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_surgical_time.Text);
+        }
+        protected void infected_case_code_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_infected_case_code_y.Checked || rad_infected_case_code_n.Checked;
+        }
+        protected void special_equipment_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_special_equipment.Text);
+        }
+        protected void implant_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_implant.Text);
+        }
+        protected void special_consumable_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_special_consumable.Text);
+        }
+        protected void frozen_section_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_frozen_section.Text);
+        }
+        protected void anatomical_pathology_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_anatomical_pathology.Text);
+        }
+        protected void other_please_specify_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_other_please_specify.Text);
+        }
+        protected void surgical_equipment_code_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_surgical_equipment_code_no.Checked || rad_surgical_equipment_code_car.Checked || rad_surgical_equipment_code_end.Checked || rad_surgical_equipment_code_oth.Checked;
+        }
+        protected void surgical_equipment_note_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_surgical_equipment_note.Text);
+        }
+        protected void position_patient_code_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_position_patient_code_sup.Checked || rad_position_patient_code_pro.Checked || rad_position_patient_code_lat.Checked || rad_position_patient_code_lit.Checked || rad_position_patient_code_oth.Checked;
+        }
+        protected void lateral_specify_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_lateral_specify_left.Checked || rad_lateral_specify_right.Checked;
+        }
+        protected void position_patient_specify_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_position_patient_specify.Text);
+        }
+        protected void type_anaesthesia_code_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_type_anaesthesia_code_gen.Checked || rad_type_anaesthesia_code_reg.Checked || rad_type_anaesthesia_code_oth.Checked;
+        }
+        protected void type_anaesthesia_note_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_type_anaesthesia_note.Text);
+        }
+        protected void preoperative_preparation_code_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_preoperative_preparation_code_no.Checked || rad_preoperative_preparation_code_gic.Checked || rad_preoperative_preparation_code_cat.Checked || rad_preoperative_preparation_code_oth.Checked;
+        }
+        protected void preoperative_preparation_note_wrapper_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_preoperative_preparation_note.Text);
+        }
+        protected void hair_removal_code_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_hair_removal_code_n.Checked || rad_hair_removal_code_y.Checked;
+        }
+        #endregion
+        public override void BindingControlToModel()
+        {
             Model.preoperative_diagnosis = txt_preoperative_diagnosis.Value;
             Model.surgeon = txt_surgeon.Value;
             Model.assistant_surgeon = txt_assistant_surgeon.Value;
@@ -751,7 +690,11 @@ namespace EMR
                 }
             }
 
-            Model.performance_date_time = DateTimeProvider.ConvertSQLDateTime(dtpk_performance_date_time.SelectedDate);
+            if(dtpk_performance_date_time.SelectedDate != null)
+            {
+                Model.performance_date_time = EmrHelper.ConvertSQLDateTime((DateTime)dtpk_performance_date_time.SelectedDate);
+            }
+
             //Model.duration_using_room
             Model.surgical_time = txt_surgical_time.Text;
             
@@ -824,36 +767,8 @@ namespace EMR
             }
 
             Model.hair_removal_diagram = hair_removal_diagram_data_base64.Value;
-            Model.booking_time = DateTimeProvider.ConvertSQLDateTime(DateTime.Now);
+            Model.booking_time = EmrHelper.ConvertSQLDateTime(DateTime.Now);
         }
-        public void PrintDocument(object sender, EventArgs e)
-        {
-
-            //dynamic rwndPrint = FindControl("rwndPrint");
-            //PrintSetup();
-            InitModel();
-            _patientService = new PatientService();
-            Patient = _patientService.GetPatient(Guid.Parse(varPID));
-            
-            //if (rwndPrint != null)
-            //{
-            //    string script = string.Format("function f(){{ window.select_print_language();Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
-            //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "print_document", script, true);
-            //}
-            //else
-            //{
-            //    string script = string.Format("function f(){{ window.print_document();Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
-            //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "print_document", script, true);
-            //}
-
-            //ModelRef = InitModel();
-            //Patient = new PatientInfo(varPID);
-            //PatientVisit = new PatientVisitInfo(patient_visit_id, Location);
-            //BindingDataFormPrint();
-            string script = string.Format("function f(){{ window.print_document();Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "print_document", script, true);
-        }
-
         protected void txt_surgical_time_TextChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrEmpty((sender as TextBox).Text))

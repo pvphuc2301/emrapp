@@ -285,7 +285,7 @@
                                         </div>
                                         
                                         <div class="border p-1 mb-1">
-                                            <b>Than phiền chính</b>/ <span class="text-primary"><i>Chieft complaint</i></span>: <asp:Label runat="server" ID="prt_chieft_complaint"></asp:Label>
+                                            <b>Than phiền chính</b>/ <span class="text-primary"><i>Chief complaint</i></span>: <asp:Label runat="server" ID="prt_chieft_complaint"></asp:Label>
                                         </div>
 
                                         <div class="d-grid mb-1" style="grid-template-columns: 1fr 1fr 1fr auto 1fr">

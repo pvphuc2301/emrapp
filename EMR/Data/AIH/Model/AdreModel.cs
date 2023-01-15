@@ -9,22 +9,19 @@ using Telerik.Web.UI.Map;
 
 namespace EMR.Data.AIH.Model
 {
-    public class Adre : EmrDocument
+    public class AdreModel : EmrDocument
     {
-        public bool IsFirstCreated(string location) => Logs(location)?.Rows.Count == 1;
-        public Adre()
-        {
-        }
-
-        public Adre(string document_id, string location)
+        public AdreModel() { }
+        public AdreModel(string document_id)
         {
             this.document_id = Guid.Parse(document_id);
         }
-
-        public Adre(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
+        public AdreModel(string document_id, string location) : base(document_id, location)
         {
         }
-
+        public AdreModel(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
+        {
+        }
         public override string api => "api/admis";
         #region Properties
         public string admitting_doctor { get; set; }

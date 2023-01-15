@@ -1,13 +1,9 @@
 ﻿using EMR.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EMR.Data.AIH.Model
 {
-    public class Bfsp : EmrDocument
+    public class BfspModel : EmrDocument
     {
         #region Properties
         /// <summary>
@@ -121,13 +117,13 @@ namespace EMR.Data.AIH.Model
         /// </summary>
         public string hair_removal_diagram { get; set; }
         #endregion
-        public Bfsp() { }
-        public Bfsp(string document_id) { this.document_id = document_id; }
-        public Bfsp(string document_id, string location) : base(document_id, location)
+        public BfspModel() { }
+        public BfspModel(string document_id) { this.document_id = document_id; }
+        public BfspModel(string document_id, string location) : base(document_id, location)
         {
         }
 
-        public Bfsp(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
+        public BfspModel(string document_id, string location, string document_log_id) : base(document_id, location, document_log_id)
         {
         }
 
