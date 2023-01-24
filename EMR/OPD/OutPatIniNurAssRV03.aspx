@@ -257,8 +257,8 @@
                                                         <div class="en">Signs and symptoms</div>
                                                     </td>
                                                     <td class="p-1">
-                                                        <div>Sốt > 38°C và ho, khó thở, tiêu chảy,...</div>
-                                                        <div class="en">Fever > 38°C and cough, dyspnea, diarrhea</div>
+                                                        <div>Sốt kèm ho, đau họng, nổi mẫn hoặc mệt mỏi, đau đầu….</div>
+                                                        <div class="en">Fever with cough, sore throat, rash or fatigue, headache….</div>
                                                     </td>
                                                     <td class="text-center">
                                                         <asp:Label runat="server" ID="prt_high_fever_true" />
@@ -270,8 +270,8 @@
                                                 <tr>
                                                     <td class="text-center" rowspan="2">Dịch tễ <br /><span class="en">Epidemiology</span></td>
                                                     <td class="p-1">
-                                                        <div>Đi từ hay tiếp xúc với người đi từ vùng dịch trong vòng 2 tuần </div>
-                                                        <div class="en">History of travel and in contact with injectious disease outbreak in the past 2 weeks</div>
+                                                        <div>Người có yếu tố dịch tễ hay tiếp xúc với người đi từ vùng dịch trong vòng 15 ngày</div>
+                                                        <div class="en">People with epidemiological factors or in contact with people traveling from epidemic areas within 15 days</div>
                                                     </td>
                                                     <td class="text-center">
                                                         <asp:Label runat="server" ID="prt_contact_infectious_disease_true" />
@@ -282,8 +282,8 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="p-1">
-                                                        <div>Tiếp xúc gần với người bị sốt, ho, khó thở </div>
-                                                        <div class="en">Had close contact with someone who has fever, cough, dyspnea</div>
+                                                        <div>Tiếp xúc gần với người có từ 3 triệu chứng: sốt, ho, khó thở, mệt mỏi….</div>
+                                                        <div class="en">Close contact with someone with at least 3 symptoms of fever, cough, fatigue, etc.</div>
                                                     </td>
                                                     <td class="text-center">
                                                         <asp:Label runat="server" ID="prt_close_contact_true" />
@@ -299,7 +299,7 @@
                                                     </td>
                                                     <td class="p-1">
                                                         <div>Có nguy cơ truyền nhiễm</div>
-                                                        <div class="en">Injectious risk</div>
+                                                        <div class="en">Infectious risk</div>
                                                     </td>
                                                     <td class="text-center">
                                                         <asp:Label runat="server" ID="prt_injectious_risk_true" />
@@ -311,13 +311,14 @@
                                             </table>
                                         </div>
                                         
-                                        <div style="margin-left: 28px">
-                                            <div>• Nếu <span class="font-bold">"CÓ"</span> yếu tố nguy cơ triệu chứng, chuyển bệnh nhân sang phòng khám sàng lọc</div>
-                                            <div class="en" style="margin-left: 6px"><i>If <span class="font-bold">"YES"</span> Signs and symptom risks, transfer patient to screening clinic.</i></div>
-                                            <div>• Nếu <span class="font-bold">"CÓ"</span> yếu tố nguy cơ dịch tể, chuyển bệnh nhân đến phòng cách ly áp lực âm cấp cứu</div>
-                                            <div class="en" style="margin-left: 6px"><i>If <span class="font-bold">"YES"</span> epidemic risks, transfer patient to Isolation room in Emergency Department.</i></div>
-                                            <div>• Nếu <span class="font-bold">"KHÔNG"</span> tiếp tục hoàn thành tiểu mục <span class="font-bold">5, 6, 7, 8</span></div>
-                                            <div class="en" style="margin-left: 6px"><i>If <span class="font-bold">"NO"</span> complete part 5, 6, 7, 8 assessment.</i></div>
+                                        <div style="margin-left: 28px" class="mt-1">
+                                            <div>a) Nếu <span class="font-bold">"CÓ"</span> yếu tố nguy cơ dịch tễ, mà không có triệu chứng, hướng dẫn khám bình thường.</div>
+                                            <div class="en" style="margin-left: 6px"><i>If <span class="font-bold">"YES"</span> epidemiological risk factors, no symptoms risk factors, transfer the patient to OPD clinics.</i></div>
+                                            <div>b) <span class="font-bold">"CÓ"</span> yếu tố nguy cơ dịch tễ và kèm ít nhất 01 triệu chứng, chuyển người bệnh xuống phòng khám sàng lọc cấp cứu</div>
+                                            <div class="en" style="margin-left: 6px"><i><span class="font-bold">"YES"</span> epidemiological risk factors and at least 01 symptom, transfer the patient to the screening clinic in the emergency department.</i></div>
+                                            <div>c) Nếu <span class="font-bold">"CÓ"</span> từ 03 triệu chứng, chuyển người bệnh xuống phòng khám sàng lọc cấp cứu.</div>
+                                            <div class="en" style="margin-left: 6px"><i>If <span class="font-bold">"YES"</span> 03 or more symptoms, transfer the patient to the screening clinic in the emergency department.</i></div>
+                                            <div>Nếu <span class="font-bold">"KHÔNG"</span> tiếp tục hoàn thành tiểu mục 5, 6, 7, 8/ <i class="text-primary">If <span class="font-bold">"NO"</span> complete part 5, 6, 7, 8 assessment.</i></div>
                                         </div>
                                         
                                         <div><span class="font-bold">5. Đánh giá đau/ <span class="en">Pain assessment:</span></span></div>
@@ -1545,7 +1546,9 @@
                                             </tr>
                                             <tr>
                                                 <td class="text-center">Triệu chứng <br /><i class="text-primary">Signs and symptoms</i></td>
-                                                <td>Sốt > 38 C và ho, khó thở, tiêu chảy,... <br /><i class="text-primary">Fever > 38 C and cough, dyspnea, diarrhea</i></td>
+                                                <td>
+                                                   <div> Sốt kèm ho, đau họng, nổi mẫn hoặc mệt mỏi, đau đầu….</div>
+                                                    <div class="text-primary"> Fever with cough, sore throat, rash or fatigue, headache….</div>
                                                 <td>
                                                     <div class="custom-control custom-radio">
                                                         <input type="radio" 
@@ -1571,7 +1574,9 @@
                                             </tr>
                                             <tr>
                                                 <td class="text-center" rowspan="2">Dịch tễ <br /><i class="text-primary">Epidemiology</i></td>
-                                                <td>Đi từ hay tiếp xúc với người đi từ vùng dịch trong vòng 2 tuần <br /><i class="text-primary">History of travel and in contact with injectious disease outbreak in the past 2 weeks</i></td>
+                                                <td>
+                                                    <div> Người có yếu tố dịch tễ hay tiếp xúc với người đi từ vùng dịch trong vòng 15 ngày</div>
+                                                    <div class="text-primary">People with epidemiological factors or in contact with people traveling from epidemic areas within 15 days</div>
                                                 <td>
                                                     <div class="custom-control custom-radio">
                                                         <input type="radio" 
@@ -1596,7 +1601,9 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Tiếp xúc gần với người bị sốt, ho, khó thở <br /><i class="text-primary">Had close contact with someone who has fever, cough, dyspnea</i></td>
+                                                <td>
+                                                    <div>Tiếp xúc gần với người có từ 3 triệu chứng: sốt, ho, khó thở, mệt mỏi….</div>
+                                                    <div class="text-primary">Close contact with someone with at least 3 symptoms of fever, cough, fatigue, etc.</div>
                                                 <td>
                                                     <div class="custom-control custom-radio">
                                                         <input type="radio" 
@@ -1622,7 +1629,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="text-center">Đánh giá <br /> <i class="text-primary">Assessment</i></td>
-                                                <td>Có nguy cơ truyền nhiễm <br /> <i class="text-primary">Injectious risk</i></td>
+                                                <td>Có nguy cơ truyền nhiễm <br /> <i class="text-primary">Infectious risk</i></td>
                                                 <td>
                                                     <div class="custom-control custom-radio">
                                                         <input type="radio"
@@ -1651,9 +1658,13 @@
                                     </asp:UpdatePanel>
 
                                     <div class="mb-2">
-                                        <div>• Nếu <span class="font-bold">"CÓ"</span> yếu tố nguy cơ triệu chứng, chuyển bệnh nhân sang phòng khám sàng lọc/ <i class="text-primary">If <span class="font-bold">"YES"</span> Signs and symptom risks, transfer patient to screening clinic.</i></div>
-                                        <div>• Nếu <span class="font-bold">"CÓ"</span> yếu tố nguy cơ dịch tể, chuyển bệnh nhân đến phòng cách ly áp lực âm cấp cứu/ <i class="text-primary">If <span class="font-bold">"YES"</span> epidemic risks, transfer patient to Isolation room in Emergency Department.</i></div>
-                                        <div>• Nếu <span class="font-bold">"KHÔNG"</span> tiếp tục hoàn thành tiểu mục 5, 6, 7, 8/ <i class="text-primary">If <span class="font-bold">"NO"</span> complete part 5, 6, 7, 8 assessment.</i></div>
+                                        <div>a) Nếu <span class="font-bold">"CÓ"</span> yếu tố nguy cơ dịch tễ, mà không có triệu chứng, hướng dẫn khám bình thường.</div>
+                                        <div class="text-primary" style="margin-left: 6px"><i>If <span class="font-bold">"YES"</span> epidemiological risk factors, no symptoms risk factors, transfer the patient to OPD clinics.</i></div>
+                                        <div>b) <span class="font-bold">"CÓ"</span> yếu tố nguy cơ dịch tễ và kèm ít nhất 01 triệu chứng, chuyển người bệnh xuống phòng khám sàng lọc cấp cứu</div>
+                                        <div class="text-primary" style="margin-left: 6px"><i><span class="font-bold">"YES"</span> epidemiological risk factors and at least 01 symptom, transfer the patient to the screening clinic in the emergency department.</i></div>
+                                        <div>c) Nếu <span class="font-bold">"CÓ"</span> từ 03 triệu chứng, chuyển người bệnh xuống phòng khám sàng lọc cấp cứu.</div>
+                                        <div class="text-primary" style="margin-left: 6px"><i>If <span class="font-bold">"YES"</span> 03 or more symptoms, transfer the patient to the screening clinic in the emergency department.</i></div>
+                                        <div>Nếu <span class="font-bold">"KHÔNG"</span> tiếp tục hoàn thành tiểu mục 5, 6, 7, 8/ <i class="text-primary">If <span class="font-bold">"NO"</span> complete part 5, 6, 7, 8 assessment.</i></div>
                                     </div>
                                             
                                     <div><span class="font-bold">5. Đánh giá đau</span>/ <i class="text-primary">Pain assessment:</i></div>
