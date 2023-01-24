@@ -140,7 +140,7 @@
                                             </div>
                                             <div style="line-height: 1.7 !important">
                                                 <div>
-                                                    <span style="font-weight: bold">Chẩn đoán trước phẫu thuật</span>/ <span class="subtitle font-10">Preoperative diagnosis: </span>
+                                                    <span style="font-weight: bold">Chẩn đoán trước phẫu thuật/thủ thuật</span>/ <span class="subtitle font-10">Preoperative diagnosis: </span>
                                                     <asp:Label runat="server" ID="prt_preoperative_diagnosis"/>
                                                 </div>
                                                 <div>
@@ -152,28 +152,35 @@
                                                     <asp:Label runat="server" ID="prt_assistant_surgeon"/>
                                                 </div>
                                                 <div>
-                                                    <span style="font-weight: bold">Phương pháp mổ</span>/ <span class="subtitle font-10">Performance method: </span>
+                                                    <span style="font-weight: bold">Phương pháp phẫu thuật/ thủ thuật</span>/ <span class="subtitle font-10">Performance method: </span>
                                                     <asp:Label runat="server" ID="prt_performance_method"/>
                                                 </div>
-                                                <div>
+                                                <%--<div>
                                                     <span style="font-weight: bold">Tên gói mổ</span>/ <span class="subtitle font-10">Package name: </span>
                                                     <asp:Label runat="server" ID="prt_package_name"/>
                                                 </div>
                                                 <div>
                                                     <span style="font-weight: bold">Mã gói mổ</span>/ <span class="subtitle font-10">Package Code: </span>
                                                     <asp:Label runat="server" ID="prt_package_code"/>
-                                                </div>
+                                                </div>--%>
                                             </div>
                                         </div>
 
-                                        <div class="line-height-1d15"><span style="font-weight: bold">Hình thức nhập viện</span>/ <span class="subtitle font-10">Admitted to: </span></div>
+                                        <div class="line-height-1d15"><span style="font-weight: bold">Nhập tại</span>/ <span class="subtitle font-10">Admitted to: </span></div>
                                         
-                                        <div style="display: grid; grid-template-columns: 220px 1fr; margin-left: 100px">
+                                        <div style="display: grid; grid-template-columns: 190px 130px 1fr;">
                                             <div style="display: grid;grid-template-columns: 15px 1fr">
                                                 <asp:Label runat="server" ID="prt_admitted_code_day" Text="❏" CssClass="line-height-1d2"></asp:Label>
                                                 <div class="line-height-1">
                                                     <div>Khoa điều trị trong ngày</div>
                                                     <div><span class="subtitle font-10">Dayward</span></div>
+                                                </div>
+                                            </div>
+                                            <div style="display: grid;grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" ID="prt_admitted_code_end" Text="❏" CssClass="line-height-1d2"></asp:Label>
+                                                <div class="line-height-1">
+                                                    <div>Đơn vị Nội soi</div>
+                                                    <div><span class="subtitle font-10">Endoscopy Unit</span></div>
                                                 </div>
                                             </div>
                                             <div style="display: grid;grid-template-columns: 15px auto 1fr">
@@ -186,9 +193,9 @@
                                             </div>
                                         </div>
 
-                                        <div class="line-height-1d5"><span style="font-weight: bold">Thời gian mổ (dự kiến)</span>/ <span class="subtitle font-10">Surgery time (expected):</span> <asp:Label runat="server" ID="prt_performance_date_time"/></div>
+                                        <div class="line-height-1d5"><span style="font-weight: bold">Thời gian phẫu thuật/ thủ thuật (dự kiến)</span>/ <span class="subtitle font-10">Surgical/ Procedural time (expected): </span><asp:Label runat="server" ID="prt_performance_date_time"/></div>
 
-                                        <div class="line-height-1d5"><span style="font-weight: bold">Thời gian dự kiến sử dụng phòng mổ</span>/ <span class="subtitle font-10">Duration of using OT room: </span></div>
+                                        <div class="line-height-1d5"><span style="font-weight: bold">Thời gian sử dụng phòng mổ/ phòng nội soi (dự kiến)</span>/ <span class="subtitle font-10">Duration of using OT/ Endoscopy room (expected):</span></div>
 
                                         <div class="line-height-1d15" style="display: grid; grid-template-columns: 1fr auto auto auto auto auto">
                                             <div></div>
@@ -226,7 +233,17 @@
                                             </div>
                                         </div>
                                         
-                                        <div class="line-height-1d15 mb-1"><span style="font-weight: bold">Các cấy ghép / vật tư / dụng cụ đặc biệt/ </span><span class="subtitle font-10">Implants/consumables/special equipment</span></div>
+                                        <div class="line-height-1d15 mb-1" style="display: grid;grid-template-columns: 490px 100px 1fr">
+                                            <div><span style="font-weight: bold">Các cấy ghép / vật tư / dụng cụ đặc biệt/ </span><span class="subtitle font-10">Implants/consumables/special equipment</span></div>
+                                            <div style="display: grid;grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" ID="prt_equipment_n" Text="❏" CssClass="line-height-1d2"></asp:Label>
+                                                <div>Không/ <span class="subtitle font-10">No</span></div>
+                                            </div>
+                                            <div style="display: grid;grid-template-columns: 15px 1fr">
+                                                <asp:Label runat="server" ID="prt_equipment_y" Text="❏" CssClass="line-height-1d2"></asp:Label>
+                                                <div>Có/ <span class="subtitle font-10">Yes</span></div>
+                                            </div>
+                                        </div>
 
                                         <table class="table-bordered line-height-1d15 mb-2" style="width: calc(210mm - 3.6cm)">
                                             <tr>
@@ -474,7 +491,7 @@
             </Windows>
         </telerik:RadWindowManager>--%>
 
-        <div class="cssclsNoPrint" >
+        <div class="cssclsNoPrint">
             <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd;border-radius:0;">
                 <li><asp:LinkButton runat="server" ID="btnHome" OnClick="RedirectToPatientSummary">Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
                 <li>BOOKING FOR SURGERY/PROCEDURE</li>
@@ -526,16 +543,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div>Chẩn đoán trước phẫu thuật/<span class="text-primary">Preoperative diagnosis:</span></div>
+                            <div>Chẩn đoán trước phẫu thuật/thủ thuật<span class="text-primary">Preoperative diagnosis:</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <asp:Label runat="server" ID="lbl_preoperative_diagnosis" />
                                 <div>
                                     <aih:TextField runat="server" ID="txt_preoperative_diagnosis" />
-                                    <asp:CustomValidator ID="CustomValidator1" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="preoperative_diagnosis_ServerValidate"></asp:CustomValidator>
+                                    <%--<asp:CustomValidator ID="CustomValidator1" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="preoperative_diagnosis_ServerValidate"></asp:CustomValidator>--%>
                                 </div>
                             </div>
-                            <div>Phẫu thuật viên chính/<span class="text-primary">Surgeon</span></div>
+                            <div>Phẫu thuật viên chính/<span class="text-primary">Surgeon</span><span class="text-danger"> *</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <asp:Label runat="server" ID="lbl_surgeon" />
@@ -544,7 +561,7 @@
                                     <asp:CustomValidator ID="CustomValidator2" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="surgeon_ServerValidate"></asp:CustomValidator>
                                 </div>
                             </div>
-                            <div>Phẫu thuật viên phụ/<span class="text-primary">Assistant surgeon</span></div>
+                            <div>Phẫu thuật viên phụ/<span class="text-primary">Assistant surgeon</span><span class="text-danger"> *</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <asp:Label runat="server" ID="lbl_assistant_surgeon" />
@@ -553,7 +570,7 @@
                                     <asp:CustomValidator ID="CustomValidator3" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="assistant_surgeon_ServerValidate"></asp:CustomValidator>
                                 </div>
                             </div>
-                            <div>Phương pháp mổ/<span class="text-primary">Performance method</span></div>
+                            <div>Phương pháp phẫu thuật/ thủ thuật/<span class="text-primary">Performance method</span><span class="text-danger"> *</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <asp:Label runat="server" ID="lbl_performance_method" />
@@ -562,7 +579,7 @@
                                     <asp:CustomValidator ID="CustomValidator4" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="performance_method_ServerValidate"></asp:CustomValidator>
                                 </div>
                             </div>
-                            <div>Tên gói mổ/<span class="text-primary">Package name</span></div>
+                            <%--<div>Tên gói mổ/<span class="text-primary">Package name</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <asp:Label runat="server" ID="lbl_package_name" />
@@ -577,8 +594,8 @@
                                 <div>
                                     <aih:TextField runat="server" ID="txt_package_code" />
                                 </div>
-                            </div>
-                            <div>Hình thức nhập viện/<span class="text-primary">Admitted to</span></div>
+                            </div>--%>
+                            <div>Nhập tại/<span class="text-primary">Admitted to</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <asp:Label runat="server" ID="lbl_admitted_code" />
@@ -590,20 +607,23 @@
                                                 <label class="custom-control-label" for="rad_admitted_code_day">Khoa điều trị trong ngày/ <span class="text-primary">Dayward</span></label>
                                             </div>
                                             <div class="custom-control custom-radio d-inline-block">
+                                                <input type="radio" onchange="__doPostBack('admitted_code','END')" runat="server" id="rad_admitted_code_end" name="rad_admitted_code" class="custom-control-input" />
+                                                <label class="custom-control-label" for="rad_admitted_code_end">Đơn vị Nội soi/ <span class="text-primary">Endoscopy Unit</span></label>
+                                            </div>
+                                            <div class="custom-control custom-radio d-inline-block">
                                                 <input onchange="__doPostBack('admitted_code','IPD')" type="radio" runat="server" id="rad_admitted_code_ipd" name="rad_admitted_code" class="custom-control-input" />
                                                 <label class="custom-control-label" for="rad_admitted_code_ipd">Khoa Nội trú, ghi rõ/ <span class="text-primary">IPD, specify</span></label>
                                             </div>
-                                            <asp:CustomValidator ID="CustomValidator5" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="admitted_code_ServerValidate"></asp:CustomValidator>
-                                            
+                                            <%--<asp:CustomValidator ID="CustomValidator5" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="admitted_code_ServerValidate"></asp:CustomValidator>--%>
                                             <div runat="server" id="admitted_specify_wrapper">
                                                 <aih:TextField runat="server" ID="txt_admitted_specify" />
-                                                <asp:CustomValidator ID="CustomValidator6" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="admitted_specify_ServerValidate"></asp:CustomValidator>
+                                                <%--<asp:CustomValidator ID="CustomValidator6" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="admitted_specify_ServerValidate"></asp:CustomValidator>--%>
                                             </div>
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
                                 </div>
                             </div>
-                            <div>Thời gian mổ (dự kiến)/ <span class="text-primary">Surgery time (expected)</span></div>
+                            <div>Thời gian phẫu thuật/ thủ thuật (dự kiến)/ <span class="text-primary">Surgical/ Procedural time (expected)</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <asp:Label runat="server" ID="lbl_performance_date_time" />
@@ -611,28 +631,28 @@
                                     <asp:UpdatePanel runat="server" UpdateMode="Conditional">
                                         <ContentTemplate>
                                             <telerik:RadDateTimePicker AutoPostBackControl="Both" Width="180px" ID="dtpk_performance_date_time" runat="server" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
-                                            <asp:CustomValidator ID="CustomValidator7" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="performance_date_time_ServerValidate"></asp:CustomValidator>
+                                            <%--<asp:CustomValidator ID="CustomValidator7" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="performance_date_time_ServerValidate"></asp:CustomValidator>--%>
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
                                 </div>
                             </div>
-                            <div>Thời gian dự kiến sử dụng phòng mổ/<span class="text-primary">Duration of using OT room</span></div>
+                            <div>Thời gian sử dụng phòng mổ/ phòng nội soi (dự kiến)<span class="text-primary">Duration of using OT/ Endoscopy room (expected)</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <div>
                                     <asp:UpdatePanel runat="server" UpdateMode="Conditional">
                                         <ContentTemplate>
-                                    <div>Chuẩn bị tiền mê 15 phút / <span class="text-primary">Premedication: 15 mins</span></div>
+                                    <div>Chuẩn bị tiền mê: <span class="font-bold"> 15 phút </span>/ <span class="text-primary">Pre-anesthesia preparation: <span class="font-bold">15 mins</span></span></div>
                                     
                                     <div>
-                                        + Thời gian phẫu thuật / <span class="text-primary">Surgical time</span>
+                                        + Thời gian phẫu thuật/ thủ thuật / <span class="text-primary">Surgical/ Procedural time</span><span class="text-danger"> *</span>
                                         <asp:Label runat="server" ID="lbl_surgical_time" />
-                                        <asp:TextBox AutoPostBack="true" runat="server" ID="txt_surgical_time" Width="120px" OnTextChanged="txt_surgical_time_TextChanged" TextMode="Number"></asp:TextBox><span class="text-primary">mins</span>
+                                        <asp:TextBox CssClass="form-control" AutoPostBack="true" runat="server" ID="txt_surgical_time" Width="120px" OnTextChanged="txt_surgical_time_TextChanged" TextMode="Number"></asp:TextBox><span class="text-primary">mins</span>
                                         <asp:CustomValidator ID="CustomValidator8" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="surgical_time_ServerValidate"></asp:CustomValidator>
                                     </div>
                                     
                                     <div>
-                                        + Thời gian thoát mê 15 phút / <span class="text-primary">Emergence 15 mins</span>
+                                        + Thời gian thoát mê: <span class="font-bold">15 phút</span> / <span class="text-primary">Anesthesia release: <span class="font-bold">15 mins</span></span>
                                     </div>
                                     <div>
                                         = <asp:Label runat="server" ID="lbl_duration_using_room" /><span class="text-primary">mins</span>
@@ -656,19 +676,38 @@
                                                 <input onchange="__doPostBack('infected_case_code','')" type="radio" runat="server" id="rad_infected_case_code_n" name="rad_infected_case_code" class="custom-control-input" />
                                                 <label class="custom-control-label" for="rad_infected_case_code_n">Không/ <span class="text-primary">No</span></label>
                                             </div>
-                                            <asp:CustomValidator ID="CustomValidator9" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="infected_case_code_ServerValidate"></asp:CustomValidator>
+                                            <%--<asp:CustomValidator ID="CustomValidator9" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="infected_case_code_ServerValidate"></asp:CustomValidator>--%>
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
                                 </div>
                             </div>
-                            <div>Các cấy ghép / vật tư / dụng cụ đặc biệt/ <span class="text-primary">InfectedImplants/consumables/special equipment</span></div>
+                            <div>Các cấy ghép / vật tư / dụng cụ đặc biệt/ <span class="text-primary">Implants/consumables/special equipment</span><span class="text-danger"> *</span></div>
+                            <div style="display: grid; grid-template-columns: 200px 1fr">
+                                <div></div>
+                                <asp:Label runat="server" ID="lbl_equipment" />
+                                <div runat="server" id="equipment_wrapper">
+                                    <asp:UpdatePanel runat="server" UpdateMode="Conditional">
+                                        <ContentTemplate>
+                                            <div class="custom-control custom-radio d-inline-block">
+                                                <input onchange="__doPostBack('equipment','')" type="radio" runat="server" id="rad_equipment_n" name="rad_equipment" class="custom-control-input" />
+                                                <label class="custom-control-label" for="rad_equipment_n">Không/ <span class="text-primary">No</span></label>
+                                            </div>
+                                            <div class="custom-control custom-radio d-inline-block">
+                                                <input onchange="__doPostBack('equipment','')" type="radio" runat="server" id="rad_equipment_y" name="rad_equipment" class="custom-control-input" />
+                                                <label class="custom-control-label" for="rad_equipment_y">Có/ <span class="text-primary">Yes</span></label>
+                                            </div>
+                                            <asp:CustomValidator ID="CustomValidator26" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="equipment_ServerValidate"></asp:CustomValidator>
+                                        </ContentTemplate>
+                                    </asp:UpdatePanel>
+                                </div>
+                            </div>
                             <div>Dụng cụ đặc biệt/<span class="text-primary">Special Equipment</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <asp:Label runat="server" ID="lbl_special_equipment" />
                                 <div runat="server" id="special_equipment_wrapper">
                                     <aih:TextField runat="server" ID="txt_special_equipment" />
-                                    <asp:CustomValidator ID="CustomValidator10" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="special_equipment_ServerValidate"></asp:CustomValidator>
+                                    <%--<asp:CustomValidator ID="CustomValidator10" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="special_equipment_ServerValidate"></asp:CustomValidator>--%>
                                 </div>
                             </div>
                             <div>Cấy ghép/<span class="text-primary">Implant</span></div>
@@ -677,7 +716,7 @@
                                 <asp:Label runat="server" ID="lbl_implant" />
                                 <div runat="server" id="implant_wrapper">
                                     <aih:TextField runat="server" ID="txt_implant" />
-                                    <asp:CustomValidator ID="CustomValidator11" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="implant_ServerValidate"></asp:CustomValidator>
+                                    <%--<asp:CustomValidator ID="CustomValidator11" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="implant_ServerValidate"></asp:CustomValidator>--%>
                                 </div>
                             </div>
                             <div>Vật tư tiêu hao đặc biệt/<span class="text-primary">Special Consumable</span></div>
@@ -686,7 +725,7 @@
                                 <asp:Label runat="server" ID="lbl_special_consumable" />
                                 <div runat="server" id="special_consumable_wrapper">
                                     <aih:TextField runat="server" ID="txt_special_consumable" />
-                                    <asp:CustomValidator ID="CustomValidator12" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="special_consumable_ServerValidate"></asp:CustomValidator>
+                                    <%--<asp:CustomValidator ID="CustomValidator12" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="special_consumable_ServerValidate"></asp:CustomValidator>--%>
                                 </div>
                             </div>
                             <div>Sinh thiết tức thì/<span class="text-primary">Frozen section</span></div>
@@ -695,7 +734,7 @@
                                 <asp:Label runat="server" ID="lbl_frozen_section" />
                                 <div runat="server" id="frozen_section_wrapper">
                                     <aih:TextField runat="server" ID="txt_frozen_section" />
-                                    <asp:CustomValidator ID="CustomValidator13" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="frozen_section_ServerValidate"></asp:CustomValidator>
+                                    <%--<asp:CustomValidator ID="CustomValidator13" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="frozen_section_ServerValidate"></asp:CustomValidator>--%>
                                 </div>
                             </div>
                             <div>Giải phẫu bệnh/ <span class="text-primary">Anatomical pathology</span></div>
@@ -704,10 +743,10 @@
                                 <asp:Label runat="server" ID="lbl_anatomical_pathology" />
                                 <div runat="server" id="anatomical_pathology_wrapper">
                                     <aih:TextField runat="server" ID="txt_anatomical_pathology" />
-                                    <asp:CustomValidator ID="CustomValidator14" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="anatomical_pathology_ServerValidate"></asp:CustomValidator>
+                                    <%--<asp:CustomValidator ID="CustomValidator14" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="anatomical_pathology_ServerValidate"></asp:CustomValidator>--%>
                                 </div>
                             </div>
-                            <div>Khác, xin nêu rõ/<span class="text-primary">Other, please specify</span></div>
+                            <div>Khác, xin nêu rõ/<span class="text-primary">Other, please specify:</span><span class="text-danger"> *</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <asp:Label runat="server" ID="lbl_other_please_specify" />
@@ -716,7 +755,7 @@
                                     <asp:CustomValidator ID="CustomValidator15" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="other_please_specify_ServerValidate"></asp:CustomValidator>
                                 </div>
                             </div>
-                            <div>Thiết bị/ <span class="text-primary">Equipment</span></div>
+                            <div>Thiết bị/ <span class="text-primary">Equipment</span><span class="text-danger"> *</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <asp:Label runat="server" ID="lbl_surgical_equipment_code" />
@@ -748,7 +787,7 @@
                                     </asp:UpdatePanel>
                                 </div>
                             </div>
-                            <div>Tư thế bệnh nhân/ <span class="text-primary">Position of patient</span></div>
+                            <div>Tư thế bệnh nhân/ <span class="text-primary">Position of patient</span><span class="text-danger"> *</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <asp:Label runat="server" ID="lbl_position_patient_code" />
@@ -797,7 +836,7 @@
                                     </asp:UpdatePanel>
                                 </div>
                             </div>
-                            <div>Phương pháp vô cảm/ <span class="text-primary">Type of Anaesthesia</span></div>
+                            <div>Phương pháp vô cảm/ <span class="text-primary">Type of Anaesthesia</span><span class="text-danger"> *</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <asp:Label runat="server" ID="lbl_type_anaesthesia_code" />
@@ -825,7 +864,7 @@
                                     </asp:UpdatePanel>
                                 </div>
                             </div>
-                            <div>Chuẩn bị tiền phẫu/ <span class="text-primary">Preoperative preparation</span></div>
+                            <div>Chuẩn bị tiền phẫu/ <span class="text-primary">Preoperative preparation</span><span class="text-danger"> *</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <asp:Label runat="server" ID="lbl_preoperative_preparation_code" />
@@ -857,7 +896,7 @@
                                     </asp:UpdatePanel>
                                 </div>
                             </div>
-                            <div>Cạo tóc (lông)/ <span class="text-primary">Hair removal</span></div>
+                            <div>Cạo tóc (lông)/ <span class="text-primary">Hair removal</span><span class="text-danger"> *</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <div>

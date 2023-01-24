@@ -109,12 +109,13 @@ namespace EMR
                 = txt_surgeon.Visible
                 = txt_assistant_surgeon.Visible
                 = txt_performance_method.Visible
-                = txt_package_name.Visible
-                = txt_package_code.Visible
+                //= txt_package_name.Visible
+                //= txt_package_code.Visible
                 = admitted_wrapper.Visible
                 = dtpk_performance_date_time.Visible
                 = txt_surgical_time.Visible
                 = infected_case_wrapper.Visible
+                = equipment_wrapper.Visible
                 = special_equipment_wrapper.Visible
                 = implant_wrapper.Visible
                 = special_consumable_wrapper.Visible
@@ -132,11 +133,12 @@ namespace EMR
                 = lbl_surgeon.Visible
                 = lbl_assistant_surgeon.Visible
                 = lbl_performance_method.Visible
-                = lbl_package_name.Visible
-                = lbl_package_code.Visible
+                //= lbl_package_name.Visible
+                //= lbl_package_code.Visible
                 = lbl_admitted_code.Visible
                 = lbl_performance_date_time.Visible
                 = lbl_surgical_time.Visible
+                = lbl_equipment.Visible
                 = lbl_infected_case_code.Visible
                 = lbl_special_equipment.Visible
                 = lbl_implant.Visible
@@ -293,8 +295,8 @@ namespace EMR
             prt_surgeon.Text = Model.surgeon;
             prt_assistant_surgeon.Text = Model.assistant_surgeon;
             prt_performance_method.Text = Model.performance_method;
-            prt_package_name.Text = Model.package_name;
-            prt_package_code.Text = Model.package_code;
+            //prt_package_name.Text = Model.package_name;
+            //prt_package_code.Text = Model.package_code;
             BindingLabel(nameof(Model.admitted_code) + "_" + Model.admitted_code, "☒");
             if(Model.admitted_code == BfspDictionary.ADMITTED_CODE_IPD)
             {
@@ -308,6 +310,7 @@ namespace EMR
             prt_duration_using_room.Text = Model.duration_using_room;
 
             BindingLabel(nameof(Model.infected_case_code) + "_" + Model.infected_case_code, "☒");
+            BindingLabel(nameof(Model.equipment) + "_" + Model.equipment, "☒");
 
             prt_special_equipment.Text = Model.special_equipment;
             prt_implant.Text = Model.implant;
@@ -326,7 +329,8 @@ namespace EMR
             if(Model.position_patient_code == BfspDictionary.POSITION_PATIENT_CODE_OTH)
             {
                 prt_position_patient_specify.Text = Model.position_patient_specify;
-            } else if(Model.position_patient_code == BfspDictionary.POSITION_PATIENT_CODE_LAT)
+            } 
+            else if(Model.position_patient_code == BfspDictionary.POSITION_PATIENT_CODE_LAT)
             {
                 BindingLabel(nameof(Model.lateral_specify) + "_" + Model.lateral_specify, "☒");
             }
@@ -358,8 +362,8 @@ namespace EMR
             lbl_surgeon.Text = Model.surgeon;
             lbl_assistant_surgeon.Text = Model.assistant_surgeon;
             lbl_performance_method.Text = Model.performance_method;
-            lbl_package_name.Text = Model.package_name;
-            lbl_package_code.Text = Model.package_code;
+            //lbl_package_name.Text = Model.package_name;
+            //lbl_package_code.Text = Model.package_code;
            
             lbl_admitted_code.Text = Model.admitted_desc;
             if(Model.admitted_code == BfspDictionary.ADMITTED_CODE_IPD)
@@ -374,6 +378,10 @@ namespace EMR
             lbl_duration_using_room.Text = Model.duration_using_room;
             
             lbl_infected_case_code.Text = Model.infected_case_desc;
+            if (!string.IsNullOrEmpty(Model.equipment))
+            {
+                lbl_equipment.Text = BfspDictionary.EQUIPMENT_CASE[Model.equipment];
+            }
             lbl_special_equipment.Text = Model.special_equipment;
             lbl_implant.Text = Model.implant;
             lbl_special_consumable.Text = Model.special_consumable;
@@ -419,8 +427,8 @@ namespace EMR
             txt_surgeon.Value = Model.surgeon;
             txt_assistant_surgeon.Value = Model.assistant_surgeon;
             txt_performance_method.Value = Model.performance_method;
-            txt_package_name.Value = Model.package_name;
-            txt_package_code.Value = Model.package_code;
+            //txt_package_name.Value = Model.package_name;
+            //txt_package_code.Value = Model.package_code;
             
             BindingInputRadioButton(nameof(Model.admitted_code) + "_" + Model.admitted_code);
             if (rad_admitted_code_ipd.Checked)
@@ -437,6 +445,8 @@ namespace EMR
             
             txt_surgical_time.Text = Model.surgical_time;
             lbl_duration_using_room.Text = Model.duration_using_room;
+
+            BindingInputRadioButton(nameof(Model.equipment) + "_" + Model.equipment);
 
             BindingInputRadioButton(nameof(Model.infected_case_code) + "_" + Model.infected_case_code);
 
@@ -515,15 +525,15 @@ namespace EMR
                     {
                         case BfspDictionary.POSITION_PATIENT_CODE_LAT:
                             lateral_specify_wrapper.Visible = true;
-                            txt_position_patient_specify.Visible = false;
+                            position_patient_specify_wrapper.Visible = false;
                             break;
                         case BfspDictionary.POSITION_PATIENT_CODE_OTH:
-                            txt_position_patient_specify.Visible = true;
+                            position_patient_specify_wrapper.Visible = true;
                             lateral_specify_wrapper.Visible = false;
                             break;
                         default:
                             lateral_specify_wrapper.Visible = false;
-                            txt_position_patient_specify.Visible = false;
+                            position_patient_specify_wrapper.Visible = false;
                             break;
                     }
 
@@ -566,6 +576,15 @@ namespace EMR
                     }
                     break;
             }
+
+            Model = InitModel();
+            Model.status = DocumentStatus.FINAL;
+            Model.user_name = UserId;
+            BindingControlToModel();
+            string model = JsonConvert.SerializeObject(Model);
+            string script = string.Format("function f(){{ console.log({0});Sys.Application.remove_load(f);}}Sys.Application.add_load(f);", model);
+            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "console_log_model", script, true);
+
         }
         #region Validate
         protected void preoperative_diagnosis_ServerValidate(object source, ServerValidateEventArgs args)
@@ -668,6 +687,10 @@ namespace EMR
         {
             args.IsValid = rad_hair_removal_code_n.Checked || rad_hair_removal_code_y.Checked;
         }
+        protected void equipment_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_equipment_n.Checked || rad_equipment_n.Checked;
+        }
         #endregion
         public override void BindingControlToModel()
         {
@@ -675,8 +698,8 @@ namespace EMR
             Model.surgeon = txt_surgeon.Value;
             Model.assistant_surgeon = txt_assistant_surgeon.Value;
             Model.performance_method = txt_performance_method.Value;
-            Model.package_name = txt_package_name.Value;
-            Model.package_code = txt_package_code.Value;
+            //Model.package_name = txt_package_name.Value;
+            //Model.package_code = txt_package_code.Value;
             
             string admitted_code = FindHtmlInputRadioButton(nameof(Model.admitted_code), BfspDictionary.ADMITTED_CODE);
             if(!string.IsNullOrEmpty(admitted_code))
@@ -704,6 +727,13 @@ namespace EMR
                 Model.infected_case_code = infected_case_code;
                 Model.infected_case_desc = BfspDictionary.INFECTED_CASE[Model.infected_case_code];
             }
+
+            string equipment = FindHtmlInputRadioButton(nameof(Model.equipment), BfspDictionary.EQUIPMENT_CASE);
+            if (!string.IsNullOrEmpty(equipment))
+            {
+                Model.equipment = equipment;
+            }
+
             Model.special_equipment = txt_special_equipment.Value;
             Model.implant = txt_implant.Value;
             Model.special_consumable = txt_special_consumable.Value;

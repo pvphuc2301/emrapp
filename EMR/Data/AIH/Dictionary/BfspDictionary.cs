@@ -9,10 +9,12 @@ namespace EMR.Data.AIH.Dictionary
     public class BfspDictionary
     {
         public const string ADMITTED_CODE_DAY = "DAY";
+        public const string ADMITTED_CODE_END = "END";
         public const string ADMITTED_CODE_IPD = "IPD";
         public static Dictionary<string, string> ADMITTED_CODE = new Dictionary<string, string>()
         {
             { ADMITTED_CODE_DAY, "Khoa điều trị trong ngày/ Dayward" },
+            { ADMITTED_CODE_END, "Đơn vị Nội soi/ Endoscopy Unit" },
             { ADMITTED_CODE_IPD, "Khoa Nội trú, ghi rõ/ IPD, specify" }
         };
 
@@ -24,11 +26,21 @@ namespace EMR.Data.AIH.Dictionary
             { INFECTED_CASE_N, "Không / No" }
         };
 
+        public const string EQUIPMENT_Y = "Y";
+        public const string EQUIPMENT_N = "N";
+        public static Dictionary<string, string> EQUIPMENT_CASE = new Dictionary<string, string>()
+        {
+            { EQUIPMENT_Y, "Có/ Yes" },
+            { EQUIPMENT_N, "Không / No" }
+        };
+
+        public const string SURGICAL_EQUIPMENT_CODE_NO = "NO";
         public const string SURGICAL_EQUIPMENT_CODE_CAR = "CAR";
         public const string SURGICAL_EQUIPMENT_CODE_END = "END";
         public const string SURGICAL_EQUIPMENT_CODE_OTH = "OTH";
         public static Dictionary<string, string> SURGICAL_EQUIPMENT_CODE = new Dictionary<string, string>()
         {
+            { SURGICAL_EQUIPMENT_CODE_NO, "Không/ No" },
             { SURGICAL_EQUIPMENT_CODE_CAR, "C-arm" },
             { SURGICAL_EQUIPMENT_CODE_END, "Giàn nội soi/Endo cart" },
             { SURGICAL_EQUIPMENT_CODE_OTH, "Khác/Other" },

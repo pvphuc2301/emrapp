@@ -141,24 +141,6 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_performance_method;
 
         /// <summary>
-        /// prt_package_name control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_package_name;
-
-        /// <summary>
-        /// prt_package_code control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_package_code;
-
-        /// <summary>
         /// prt_admitted_code_day control.
         /// </summary>
         /// <remarks>
@@ -166,6 +148,15 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label prt_admitted_code_day;
+
+        /// <summary>
+        /// prt_admitted_code_end control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_admitted_code_end;
 
         /// <summary>
         /// prt_admitted_code_ipd control.
@@ -229,6 +220,24 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label prt_infected_case_code_n;
+
+        /// <summary>
+        /// prt_equipment_n control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_equipment_n;
+
+        /// <summary>
+        /// prt_equipment_y control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_equipment_y;
 
         /// <summary>
         /// prt_special_equipment control.
@@ -681,15 +690,6 @@ namespace EMR
         protected global::EMR.TextField txt_preoperative_diagnosis;
 
         /// <summary>
-        /// CustomValidator1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator1;
-
-        /// <summary>
         /// lbl_surgeon control.
         /// </summary>
         /// <remarks>
@@ -771,42 +771,6 @@ namespace EMR
         protected global::System.Web.UI.WebControls.CustomValidator CustomValidator4;
 
         /// <summary>
-        /// lbl_package_name control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_package_name;
-
-        /// <summary>
-        /// txt_package_name control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField txt_package_name;
-
-        /// <summary>
-        /// lbl_package_code control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lbl_package_code;
-
-        /// <summary>
-        /// txt_package_code control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::EMR.TextField txt_package_code;
-
-        /// <summary>
         /// lbl_admitted_code control.
         /// </summary>
         /// <remarks>
@@ -834,6 +798,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_admitted_code_day;
 
         /// <summary>
+        /// rad_admitted_code_end control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_admitted_code_end;
+
+        /// <summary>
         /// rad_admitted_code_ipd control.
         /// </summary>
         /// <remarks>
@@ -841,15 +814,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_admitted_code_ipd;
-
-        /// <summary>
-        /// CustomValidator5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator5;
 
         /// <summary>
         /// admitted_specify_wrapper control.
@@ -870,15 +834,6 @@ namespace EMR
         protected global::EMR.TextField txt_admitted_specify;
 
         /// <summary>
-        /// CustomValidator6 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator6;
-
-        /// <summary>
         /// lbl_performance_date_time control.
         /// </summary>
         /// <remarks>
@@ -895,15 +850,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadDateTimePicker dtpk_performance_date_time;
-
-        /// <summary>
-        /// CustomValidator7 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator7;
 
         /// <summary>
         /// lbl_surgical_time control.
@@ -978,13 +924,49 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_infected_case_code_n;
 
         /// <summary>
-        /// CustomValidator9 control.
+        /// lbl_equipment control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator9;
+        protected global::System.Web.UI.WebControls.Label lbl_equipment;
+
+        /// <summary>
+        /// equipment_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl equipment_wrapper;
+
+        /// <summary>
+        /// rad_equipment_n control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_equipment_n;
+
+        /// <summary>
+        /// rad_equipment_y control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_equipment_y;
+
+        /// <summary>
+        /// CustomValidator26 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator26;
 
         /// <summary>
         /// lbl_special_equipment control.
@@ -1014,15 +996,6 @@ namespace EMR
         protected global::EMR.TextField txt_special_equipment;
 
         /// <summary>
-        /// CustomValidator10 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator10;
-
-        /// <summary>
         /// lbl_implant control.
         /// </summary>
         /// <remarks>
@@ -1048,15 +1021,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.TextField txt_implant;
-
-        /// <summary>
-        /// CustomValidator11 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator11;
 
         /// <summary>
         /// lbl_special_consumable control.
@@ -1086,15 +1050,6 @@ namespace EMR
         protected global::EMR.TextField txt_special_consumable;
 
         /// <summary>
-        /// CustomValidator12 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator12;
-
-        /// <summary>
         /// lbl_frozen_section control.
         /// </summary>
         /// <remarks>
@@ -1122,15 +1077,6 @@ namespace EMR
         protected global::EMR.TextField txt_frozen_section;
 
         /// <summary>
-        /// CustomValidator13 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator13;
-
-        /// <summary>
         /// lbl_anatomical_pathology control.
         /// </summary>
         /// <remarks>
@@ -1156,15 +1102,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.TextField txt_anatomical_pathology;
-
-        /// <summary>
-        /// CustomValidator14 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator14;
 
         /// <summary>
         /// lbl_other_please_specify control.

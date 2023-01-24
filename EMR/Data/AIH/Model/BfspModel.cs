@@ -25,11 +25,11 @@ namespace EMR.Data.AIH.Model
         /// <summary>
         /// Package name
         /// </summary>
-        public string package_name { get; set; }
+        //public string package_name { get; set; }
         /// <summary>
         ///  Package Code
         /// </summary>
-        public string package_code { get; set; }
+        //public string package_code { get; set; }
         /// <summary>
         /// Dayward/IPD
         /// </summary>
@@ -75,6 +75,7 @@ namespace EMR.Data.AIH.Model
         /// <summary>
         /// Special Equipment
         /// </summary>
+        public string equipment { get; set; }
         public string special_equipment { get; set; }
         /// <summary>
         /// Implant
