@@ -232,33 +232,33 @@
                                         <div><span class="font-bold">4. Tầm soát bệnh lây nhiễm (dành cho những bệnh tạo thành dịch)</span></div>
                                         <div class="en" style="margin-left: 16px"><span class="font-bold">Communicable disease screening (for diseases that cause epidemics)</span></div>
                                         <div>
-                                            <table class="table-bordered" style="table-layout: fixed; width: 100%">
+                                            <table class="table-bordered" style="table-layout: fixed; width: 100%; ">
                                                 <tr>
                                                     <td style="width: 125px;" class="text-center">
-                                                        <div class="font-bold">Phân loại</div>
-                                                        <div class="en"><span>Category</span></div>
+                                                        <div class="font-bold" style="font-size: 10pt !important;">Phân loại</div>
+                                                        <div class="en" style="font-size: 9pt !important;"><span>Category</span></div>
                                                     </td>
                                                     <td class="text-center">
-                                                        <div class="font-bold">Tiêu chí</div>
-                                                        <div class="en">Criteria</div>
+                                                        <div style="font-size: 10pt !important" class="font-bold">Tiêu chí</div>
+                                                        <div class="en" style="font-size: 9pt !important;">Criteria</div>
                                                     </td>
-                                                    <td style="width: 50px;" class="text-center">
-                                                        <div class="font-bold">Có</div>
-                                                        <div class="en">Yes</div>
+                                                    <td style="width: 40px;" class="text-center">
+                                                        <div style="font-size: 10pt !important" class="font-bold">Có</div>
+                                                        <div class="en" style="font-size: 9pt !important;">Yes</div>
                                                     </td>
                                                     <td style="width: 55px;" class="text-center">
-                                                        <div class="font-bold">Không</div>
-                                                        <div class="en">No</div>
+                                                        <div style="font-size: 10pt !important" class="font-bold">Không</div>
+                                                        <div class="en" style="font-size: 9pt !important;">No</div>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td class="text-center">
-                                                        <div>Triệu chứng </div>
-                                                        <div class="en">Signs and symptoms</div>
+                                                        <div style="font-size: 10pt !important">Triệu chứng </div>
+                                                        <div class="en" style="font-size: 9pt !important;">Signs and symptoms</div>
                                                     </td>
                                                     <td class="p-1">
-                                                        <div>Sốt kèm ho, đau họng, nổi mẫn hoặc mệt mỏi, đau đầu….</div>
-                                                        <div class="en">Fever with cough, sore throat, rash or fatigue, headache….</div>
+                                                        <div style="font-size: 10pt !important">Sốt kèm ho, đau họng, nổi mẫn hoặc mệt mỏi, đau đầu….</div>
+                                                        <div class="en" style="font-size: 9pt !important;">Fever with cough, sore throat, rash or fatigue, headache….</div>
                                                     </td>
                                                     <td class="text-center">
                                                         <asp:Label runat="server" ID="prt_high_fever_true" />
@@ -268,10 +268,10 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-center" rowspan="2">Dịch tễ <br /><span class="en">Epidemiology</span></td>
+                                                    <td class="text-center" rowspan="2"><span style="font-size: 10pt !important">Dịch tễ</span> <br /><span class="en" style="font-size: 9pt !important;">Epidemiology</span></td>
                                                     <td class="p-1">
-                                                        <div>Người có yếu tố dịch tễ hay tiếp xúc với người đi từ vùng dịch trong vòng 15 ngày</div>
-                                                        <div class="en">People with epidemiological factors or in contact with people traveling from epidemic areas within 15 days</div>
+                                                        <div style="font-size: 10pt !important">Người có yếu tố dịch tễ hay tiếp xúc với người đi từ vùng dịch trong vòng 15 ngày</div>
+                                                        <div class="en" style="font-size: 9pt !important;">People with epidemiological factors or in contact with people traveling from epidemic areas within 15 days</div>
                                                     </td>
                                                     <td class="text-center">
                                                         <asp:Label runat="server" ID="prt_contact_infectious_disease_true" />
@@ -282,8 +282,8 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="p-1">
-                                                        <div>Tiếp xúc gần với người có từ 3 triệu chứng: sốt, ho, khó thở, mệt mỏi….</div>
-                                                        <div class="en">Close contact with someone with at least 3 symptoms of fever, cough, fatigue, etc.</div>
+                                                        <div style="font-size: 10pt !important">Tiếp xúc gần với người có từ 3 triệu chứng: sốt, ho, khó thở, mệt mỏi….</div>
+                                                        <div class="en" style="font-size: 9pt !important;">Close contact with someone with at least 3 symptoms of fever, cough, fatigue, etc.</div>
                                                     </td>
                                                     <td class="text-center">
                                                         <asp:Label runat="server" ID="prt_close_contact_true" />
@@ -294,12 +294,12 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="text-center">
-                                                        <div>Đánh giá </div>
-                                                        <div class="en">Assessment</div>
+                                                        <div style="font-size: 10pt !important">Đánh giá </div>
+                                                        <div class="en" style="font-size: 9pt !important;">Assessment</div>
                                                     </td>
                                                     <td class="p-1">
-                                                        <div>Có nguy cơ truyền nhiễm</div>
-                                                        <div class="en">Infectious risk</div>
+                                                        <div style="font-size: 10pt !important">Có nguy cơ truyền nhiễm</div>
+                                                        <div class="en" style="font-size: 9pt !important;">Infectious risk</div>
                                                     </td>
                                                     <td class="text-center">
                                                         <asp:Label runat="server" ID="prt_injectious_risk_true" />
@@ -311,14 +311,14 @@
                                             </table>
                                         </div>
                                         
-                                        <div style="margin-left: 28px" class="mt-1">
-                                            <div>a) Nếu <span class="font-bold">"CÓ"</span> yếu tố nguy cơ dịch tễ, mà không có triệu chứng, hướng dẫn khám bình thường.</div>
-                                            <div class="en" style="margin-left: 6px"><i>If <span class="font-bold">"YES"</span> epidemiological risk factors, no symptoms risk factors, transfer the patient to OPD clinics.</i></div>
-                                            <div>b) <span class="font-bold">"CÓ"</span> yếu tố nguy cơ dịch tễ và kèm ít nhất 01 triệu chứng, chuyển người bệnh xuống phòng khám sàng lọc cấp cứu</div>
-                                            <div class="en" style="margin-left: 6px"><i><span class="font-bold">"YES"</span> epidemiological risk factors and at least 01 symptom, transfer the patient to the screening clinic in the emergency department.</i></div>
-                                            <div>c) Nếu <span class="font-bold">"CÓ"</span> từ 03 triệu chứng, chuyển người bệnh xuống phòng khám sàng lọc cấp cứu.</div>
-                                            <div class="en" style="margin-left: 6px"><i>If <span class="font-bold">"YES"</span> 03 or more symptoms, transfer the patient to the screening clinic in the emergency department.</i></div>
-                                            <div>Nếu <span class="font-bold">"KHÔNG"</span> tiếp tục hoàn thành tiểu mục 5, 6, 7, 8/ <i class="text-primary">If <span class="font-bold">"NO"</span> complete part 5, 6, 7, 8 assessment.</i></div>
+                                        <div style="margin-left: 20px;" class="mt-1">
+                                            <div style="font-size: 10pt !important">a) Nếu <span class="font-bold">"CÓ"</span> yếu tố nguy cơ dịch tễ, mà không có triệu chứng, hướng dẫn khám bình thường.</div>
+                                            <div class="en" style="margin-left: 6px; font-size: 9pt !important"><i>If <span class="font-bold">"YES"</span> epidemiological risk factors, no symptoms risk factors, transfer the patient to OPD clinics.</i></div>
+                                            <div style="font-size: 10pt !important">b) <span class="font-bold">"CÓ"</span> yếu tố nguy cơ dịch tễ và kèm ít nhất 01 triệu chứng, chuyển người bệnh xuống phòng khám sàng lọc cấp cứu</div>
+                                            <div class="en" style="margin-left: 6px; font-size: 9pt !important"><i><span class="font-bold">"YES"</span> epidemiological risk factors and at least 01 symptom, transfer the patient to the screening clinic in the emergency department.</i></div>
+                                            <div style="font-size: 10pt !important">c) Nếu <span class="font-bold">"CÓ"</span> từ 03 triệu chứng, chuyển người bệnh xuống phòng khám sàng lọc cấp cứu.</div>
+                                            <div class="en" style="margin-left: 6px; font-size: 9pt !important"><i>If <span class="font-bold">"YES"</span> 03 or more symptoms, transfer the patient to the screening clinic in the emergency department.</i></div>
+                                            <div style="font-size: 10pt !important">Nếu <span class="font-bold">"KHÔNG"</span> tiếp tục hoàn thành tiểu mục 5, 6, 7, 8/ <i class="text-primary">If <span class="font-bold">"NO"</span> complete part 5, 6, 7, 8 assessment.</i></div>
                                         </div>
                                         
                                         <div><span class="font-bold">5. Đánh giá đau/ <span class="en">Pain assessment:</span></span></div>
@@ -1549,6 +1549,7 @@
                                                 <td>
                                                    <div> Sốt kèm ho, đau họng, nổi mẫn hoặc mệt mỏi, đau đầu….</div>
                                                     <div class="text-primary"> Fever with cough, sore throat, rash or fatigue, headache….</div>
+                                                </td>
                                                 <td>
                                                     <div class="custom-control custom-radio">
                                                         <input type="radio" 
@@ -1577,7 +1578,8 @@
                                                 <td>
                                                     <div> Người có yếu tố dịch tễ hay tiếp xúc với người đi từ vùng dịch trong vòng 15 ngày</div>
                                                     <div class="text-primary">People with epidemiological factors or in contact with people traveling from epidemic areas within 15 days</div>
-                                                <td>
+                                                </td>
+                                                    <td>
                                                     <div class="custom-control custom-radio">
                                                         <input type="radio" 
                                                                 runat="server" 
@@ -1604,7 +1606,8 @@
                                                 <td>
                                                     <div>Tiếp xúc gần với người có từ 3 triệu chứng: sốt, ho, khó thở, mệt mỏi….</div>
                                                     <div class="text-primary">Close contact with someone with at least 3 symptoms of fever, cough, fatigue, etc.</div>
-                                                <td>
+                                                </td>
+                                                    <td>
                                                     <div class="custom-control custom-radio">
                                                         <input type="radio" 
                                                                 runat="server" 
