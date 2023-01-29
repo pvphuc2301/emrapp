@@ -517,6 +517,66 @@
                                                 </div>
                                             </div>
 
+                                            <div>
+                                                <div class="btn btn-sm btn-primary mb-2" onclick="ShowPastMedicalHistoryRadWindow()">
+                                                    View Past Medical History
+                                                </div>
+                                                <telerik:RadCodeBlock runat="server">
+                                                    <script type="text/javascript">
+                                                        function ShowPastMedicalHistoryRadWindow() {
+                                                            var window = $find("rwndPastMedicalHistory");
+                                                            window.show();
+                                                        }
+                                                    </script>
+                                                </telerik:RadCodeBlock>
+                                                <telerik:RadWindow Modal="true" 
+                                                    CssClass="NoIconUrl"
+                                                    Width="720px"
+                                                    Height="500px"
+                                                    VisibleStatusbar="false" 
+                                                    Behaviors="Close,Move" 
+                                                    Opacity="1" 
+                                                    BackColor="#515e7b80" 
+                                                    ID="rwndPastMedicalHistory" 
+                                                    Title="Past Medical History" 
+                                                    runat="server">
+                                                    <ContentTemplate>
+                                                        <asp:UpdatePanel runat="server" ID="UpdatePanel4" UpdateMode="Conditional">
+                                                            <ContentTemplate>
+                                                        <telerik:RadGrid RenderMode="Lightweight" EnableAriaSupport="true" ID="rgdPastMedicalHistory" runat="server" AllowPaging="false" AllowSorting="false"
+                                                             OnNeedDataSource="rgdPastMedicalHistory_NeedDataSource" AllowFilteringByColumn="false"
+                                                            CellSpacing="0" GridLines="None">
+                                                            <MasterTableView AutoGenerateColumns="false" TableLayout="Fixed">
+                                                                <Columns>
+                                                                    <telerik:GridTemplateColumn>
+                                                                        <ItemTemplate>
+                                                                            <span><%# Convert.ToDateTime(Eval("actual_visit_date_time")).ToString("yyyy-MM-dd") %> (<%# Eval("visit_type") %>-<%# Eval("visit_code") %>)</span>
+                                                                        </ItemTemplate>
+                                                                    </telerik:GridTemplateColumn>
+                                                                </Columns>
+                                                                <NestedViewTemplate>
+                                                                    <p>
+
+                                                                    <span class="font-bold">Medical history: </span>
+                                                                    <%# Eval("medical_history") %>
+                                                                    </p>
+
+                                                                    <p>
+
+                                                                    <span class="font-bold">Diagnosis: </span>
+                                                                    <%# Eval("diagnosis") %>
+                                                                    </p>
+                                                                    </NestedViewTemplate>
+
+                                                                </MasterTableView>
+                                                            </telerik:RadGrid>
+                    
+                                                            </ContentTemplate>
+                                                        </asp:UpdatePanel>                                
+                                                    </ContentTemplate>
+                                                </telerik:RadWindow>
+                                            </div>
+
                                             <fieldset class="row mb-2">
                                                 <legend>
                                                     <label class="control-label">1. Bệnh sử hiện tại/ <span class="text-primary">Current Medical History:</span></label>

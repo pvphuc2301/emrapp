@@ -4,9 +4,14 @@ using EMR.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
+using Telerik.Web.UI;
 using Telerik.Web.UI.Map;
+using EMR.Library.Services;
+using System.Net.Http;
+using EMR.Library.Models;
 
 namespace EMR
 {
@@ -780,6 +785,13 @@ namespace EMR
                     }
                 }
             }
+        }
+
+        protected void rgdPastMedicalHistory_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
+        {
+            List<PastMedicalHistoryModel> DemographicSearchModel = WebApiServices.get_past_medical_histories(Location, varPID);
+
+            (sender as RadGrid).DataSource = DemographicSearchModel;
         }
     }
 }

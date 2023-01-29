@@ -418,6 +418,32 @@
                                                 </div>
                                             </div>
 
+                                            <div>
+                                                <div class="btn btn-primary" onclick="ShowPastMedicalHistoryRadWindow()">View Past Medical History</div>
+                                                <telerik:RadCodeBlock runat="server">
+                                                    <script type="text/javascript">
+                                                        function ShowPastMedicalHistoryRadWindow() {
+                                                            var window = $find("rwndPastMedicalHistory");
+                                                            window.show();
+                                                        }
+                                                    </script>
+                                                </telerik:RadCodeBlock>
+                                                <telerik:RadWindow Modal="true" 
+                                                    CssClass="NoIconUrl" 
+                                                    MinWidth="600px" 
+                                                    VisibleStatusbar="false" 
+                                                    Behaviors="Close,Move" 
+                                                    Opacity="1" 
+                                                    BackColor="#515e7b80" 
+                                                    ID="rwndPastMedicalHistory" 
+                                                    Title="Version History" 
+                                                    runat="server">
+                                                    <ContentTemplate>
+                                                        
+                                                    </ContentTemplate>
+                                                </telerik:RadWindow>
+                                            </div>
+
                                             <fieldset class="row mb-2">
                                                 <legend>
                                                     <label class="control-label">1. Bệnh sử hiện tại/ <span class="text-primary">Current Medical History:</span></label>
