@@ -19,6 +19,19 @@ namespace EMR
     {
         public override string form_url { get; set; } = "OPD/AdmissionRequest";
         public AdreModel Model { get; set; }
+        protected override Control DisplayLogHistory => lblLogHistory;
+        protected override Control SaveControl => btnSave;
+
+        protected override Control DeleteControl => btnDelete;
+
+        protected override Control AmendControl => btnAmend;
+
+        protected override Control PrintControl => btnPrint;
+
+        protected override Control CancelControl => btnCancel;
+
+        protected override Control CompleteControl => btnComplete;
+
         public override dynamic InitModel()
             => Model = new AdreModel(varDocID);
         public override dynamic GetModel()
@@ -82,25 +95,25 @@ namespace EMR
 
             return Visible;
         }
-        public override bool UpdateModel()
-        {
-            var response = EmrService<AdreModel>.Update(Model, Location);
+        //public override bool UpdateModel()
+        //{
+        //    var response = EmrService<AdreModel>.Update(Model, Location);
 
-            if (response.IsSuccessStatusCode)
-            {
-                var LogResponse = EmrService<AdreModel>.Log(Model, Location);
-                if (!LogResponse.IsSuccessStatusCode)
-                {
-                    Alert("Error", "Can not write log", "error");
-                }
-            }
-            else
-            {
-                Alert("Error", "Can not update data", "error");
-                return false;
-            }
-            return true;
-        }
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        var LogResponse = EmrService<AdreModel>.Log(Model, Location);
+        //        if (!LogResponse.IsSuccessStatusCode)
+        //        {
+        //            Alert("Error", "Can not write log", "error");
+        //        }
+        //    }
+        //    else
+        //    {
+        //        Alert("Error", "Can not update data", "error");
+        //        return false;
+        //    }
+        //    return true;
+        //}
         public override void BindingDataFormView()
         {
             //lbl_admitting_doctor.Visible = true;
@@ -287,10 +300,13 @@ namespace EMR
             Model.isolation_request = FindHtmlInputRadioButton(nameof(Model.isolation_request), AdreDictionary.ISOLATION_REQUEST);
             
             Model.admission_department_code = FindHtmlInputRadioButton(nameof(Model.admission_department_code), AdreDictionary.ADMISSION_DEPARTMENT);
-            Model.admission_department_desc = AdreDictionary.ADMISSION_DEPARTMENT[Model.admission_department_code];
-            if(Model.admission_department_code == AdreDictionary.ADMISSION_DEPARTMENT_OTH)
+            if(Model.admission_department_code != null)
             {
-                Model.admission_department_note = txt_admission_department_oth.Value;
+                Model.admission_department_desc = AdreDictionary.ADMISSION_DEPARTMENT[Model.admission_department_code];
+                if(Model.admission_department_code == AdreDictionary.ADMISSION_DEPARTMENT_OTH)
+                {
+                    Model.admission_department_note = txt_admission_department_oth.Value;
+                }
             }
 
             Model.primary_doctor = txt_primary_doctor.Value;

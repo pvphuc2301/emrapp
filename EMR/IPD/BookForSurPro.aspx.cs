@@ -1,16 +1,11 @@
-﻿using EmrLib.Session;
-using EMR.Data.AIH.Dictionary;
+﻿using EMR.Data.AIH.Dictionary;
 using EMR.Data.AIH.Model;
 using EMR.Data.Shared.Services;
-using EMR.Model;
-using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 using EmrLib.Utility;
@@ -21,8 +16,16 @@ namespace EMR
     {
         public override string form_url { get; set; } = "IPD/BookForSurPro";
         public BfspModel Model { get; set; }
-        public override dynamic InitModel()
-            => Model = new BfspModel(varDocID);
+
+        protected override Control SaveControl => btnSave;
+        protected override Control DeleteControl => btnDelete;
+        protected override Control AmendControl => btnAmend;
+        protected override Control PrintControl => btnPrint;
+        protected override Control CancelControl => btnCancel;
+        protected override Control DisplayLogHistory => lblLogHistory;
+        protected override Control CompleteControl => btnComplete;
+
+        public override dynamic InitModel() => Model = new BfspModel(varDocID);
         public override dynamic GetModel()
         {
             if(varDocIdLog == null)
@@ -154,26 +157,6 @@ namespace EMR
                 = !Visible;
             
             return Visible;
-        }
-        public override bool UpdateModel()
-        {
-            //_emrService = new EmrService<Bfsp>();
-            var response = EmrService<BfspModel>.Update(Model, Location);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var LogResponse = EmrService<BfspModel>.Log(Model, Location);
-                if (!LogResponse.IsSuccessStatusCode)
-                {
-                    Alert("Error", "Can not write log", "error");
-                }
-            }
-            else
-            {
-                Alert("Error", "Can not update data", "error");
-                return false;
-            }
-            return true;
         }
         //public override void PrintDocument(object sender, EventArgs e)
         //{
@@ -310,7 +293,7 @@ namespace EMR
             prt_duration_using_room.Text = Model.duration_using_room;
 
             BindingLabel(nameof(Model.infected_case_code) + "_" + Model.infected_case_code, "☒");
-            BindingLabel(nameof(Model.equipment) + "_" + Model.equipment, "☒");
+            BindingLabel(nameof(Model.equipment_code) + "_" + Model.equipment_code, "☒");
 
             prt_special_equipment.Text = Model.special_equipment;
             prt_implant.Text = Model.implant;
@@ -378,9 +361,9 @@ namespace EMR
             lbl_duration_using_room.Text = Model.duration_using_room;
             
             lbl_infected_case_code.Text = Model.infected_case_desc;
-            if (!string.IsNullOrEmpty(Model.equipment))
+            if (!string.IsNullOrEmpty(Model.equipment_code))
             {
-                lbl_equipment.Text = BfspDictionary.EQUIPMENT_CASE[Model.equipment];
+                lbl_equipment.Text = BfspDictionary.EQUIPMENT_CASE[Model.equipment_code];
             }
             lbl_special_equipment.Text = Model.special_equipment;
             lbl_implant.Text = Model.implant;
@@ -446,7 +429,7 @@ namespace EMR
             txt_surgical_time.Text = Model.surgical_time;
             lbl_duration_using_room.Text = Model.duration_using_room;
 
-            BindingInputRadioButton(nameof(Model.equipment) + "_" + Model.equipment);
+            BindingInputRadioButton(nameof(Model.equipment_code) + "_" + Model.equipment_code);
 
             BindingInputRadioButton(nameof(Model.infected_case_code) + "_" + Model.infected_case_code);
 
@@ -689,7 +672,7 @@ namespace EMR
         }
         protected void equipment_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            args.IsValid = rad_equipment_n.Checked || rad_equipment_n.Checked;
+            args.IsValid = rad_equipment_code_y.Checked || rad_equipment_code_n.Checked;
         }
         #endregion
         public override void BindingControlToModel()
@@ -728,10 +711,11 @@ namespace EMR
                 Model.infected_case_desc = BfspDictionary.INFECTED_CASE[Model.infected_case_code];
             }
 
-            string equipment = FindHtmlInputRadioButton(nameof(Model.equipment), BfspDictionary.EQUIPMENT_CASE);
-            if (!string.IsNullOrEmpty(equipment))
+            string equipment_code = FindHtmlInputRadioButton(nameof(Model.equipment_code), BfspDictionary.EQUIPMENT_CASE);
+            if (!string.IsNullOrEmpty(equipment_code))
             {
-                Model.equipment = equipment;
+                Model.equipment_code = equipment_code;
+                Model.equipment_desc = BfspDictionary.EQUIPMENT_CASE[Model.equipment_code];
             }
 
             Model.special_equipment = txt_special_equipment.Value;

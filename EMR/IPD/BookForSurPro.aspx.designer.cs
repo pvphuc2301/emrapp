@@ -222,22 +222,22 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_infected_case_code_n;
 
         /// <summary>
-        /// prt_equipment_n control.
+        /// prt_equipment_code_n control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_equipment_n;
+        protected global::System.Web.UI.WebControls.Label prt_equipment_code_n;
 
         /// <summary>
-        /// prt_equipment_y control.
+        /// prt_equipment_code_y control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_equipment_y;
+        protected global::System.Web.UI.WebControls.Label prt_equipment_code_y;
 
         /// <summary>
         /// prt_special_equipment control.
@@ -645,13 +645,13 @@ namespace EMR
         protected global::System.Web.UI.WebControls.LinkButton hlkLastestVersion;
 
         /// <summary>
-        /// rlblLogHistory control.
+        /// lblLogHistory control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadLabel rlblLogHistory;
+        protected global::System.Web.UI.WebControls.Label lblLogHistory;
 
         /// <summary>
         /// uplViewHistory control.
@@ -942,22 +942,22 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl equipment_wrapper;
 
         /// <summary>
-        /// rad_equipment_n control.
+        /// rad_equipment_code_n control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_equipment_n;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_equipment_code_n;
 
         /// <summary>
-        /// rad_equipment_y control.
+        /// rad_equipment_code_y control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_equipment_y;
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_equipment_code_y;
 
         /// <summary>
         /// CustomValidator26 control.

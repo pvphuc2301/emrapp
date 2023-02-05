@@ -390,7 +390,7 @@
                                     </div>
                                     <div class="alert alert-info d-flex align-items-center">
                                         <span class="mr-2"><i style="font-size: 24px;" class="fa fa-exclamation-circle"></i></span>
-                                        <telerik:RadLabel runat="server" ID="rlblLogHistory" />
+                                        <asp:Label runat="server" ID="lblLogHistory"></asp:Label>
                                         <asp:UpdatePanel runat="server" ID="uplViewHistory">
                                             <ContentTemplate>
                                                 <asp:LinkButton runat="server" ID="lbtnViewHistory" OnClick="ViewHistory" Text="[View History]"></asp:LinkButton>

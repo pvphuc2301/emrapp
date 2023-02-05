@@ -1,14 +1,8 @@
-﻿using EMR.Data.AIH.Model;
-using EMR.Data.Shared.Services;
-using EMR.UserControls;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -16,6 +10,7 @@ using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 using EMR.Model;
 using EmrLib.Session;
+using EMR.Classes;
 
 namespace EMR
 {
@@ -47,13 +42,20 @@ namespace EMR
 
         #region log history
         protected dynamic LastestVersion { get; set; }
-        protected dynamic rlblLogHistory { get; set; }
+        protected abstract Control DisplayLogHistory { get; }
         protected dynamic rgdLogHistory { get; set; }
         protected dynamic uplLogHistory { get; set; }
         protected dynamic rwndLogHistory { get; set; }
         #endregion
         //protected delegate dynamic GetDocument(Guid document_id, string location);
         //protected GetDocument get_document;
+        protected abstract Control CompleteControl { get; }
+        protected abstract Control SaveControl { get; }
+        protected abstract Control DeleteControl { get; }
+        protected abstract Control AmendControl { get; }
+        protected abstract Control PrintControl { get; }
+        protected abstract Control CancelControl { get; }
+        protected virtual Control PrintLanguageOption { get; }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!CheckSession())
@@ -82,14 +84,13 @@ namespace EMR
         }
         public void LoadLogHistoryText()
         {
-            rlblLogHistory = FindControl(nameof(rlblLogHistory)) ?? throw new NoNullAllowedException("cannot find control with ID " + nameof(rlblLogHistory));
-            if(rlblLogHistory != null)
-            {
-                string last_updated_date_time = WebHelpers.GetLogLastDateTime(ModelRef.created_date_time, ModelRef.modified_date_time);
-                string last_updated_doctor = WebHelpers.GetLogLastName(ModelRef.created_name_e, ModelRef.modified_name_e);
-                last_updated_date_time = WebHelpers.FormatDateTime(last_updated_date_time, "dd-MMM-yyyy HH:mm tt", "");
-                rlblLogHistory.Text = $"Last updated by <i>{last_updated_doctor}</i> on <b><i>{last_updated_date_time}</i></b>";
-            }
+            //rlblLogHistory = FindControl(nameof(rlblLogHistory)) ?? throw new NoNullAllowedException("cannot find control with ID " + nameof(rlblLogHistory));
+            if (DisplayLogHistory == null) return;
+
+            string last_updated_date_time = WebHelpers.GetLogLastDateTime(ModelRef.created_date_time, ModelRef.modified_date_time);
+            string last_updated_doctor = WebHelpers.GetLogLastName(ModelRef.created_name_e, ModelRef.modified_name_e);
+            last_updated_date_time = WebHelpers.FormatDateTime(last_updated_date_time, "dd-MMM-yyyy HH:mm tt", "");
+            (DisplayLogHistory as Label).Text = $"Last updated by <i>{last_updated_doctor}</i> on <b><i>{last_updated_date_time}</i></b>";
         }
         
         protected void ViewHistory(object sender, EventArgs e)
@@ -196,43 +197,43 @@ namespace EMR
         {
             bool IsSameCompanyCode = !IsLocationChanged;
 
-            LinkButton btnComplete = (LinkButton)FindControl("btnComplete");
-            Control btnSave = FindControl("btnSave");
-            Control btnDelete = FindControl("btnDelete");
-            Control btnAmend = FindControl("btnAmend");
-            Control btnPrint = FindControl("btnPrint");
-            Control btnCancel = FindControl("btnCancel");
+            //LinkButton btnComplete = (LinkButton)FindControl("btnComplete");
+            //Control btnSave = FindControl("btnSave");
+            //Control btnDelete = FindControl("btnDelete");
+            //Control btnAmend = FindControl("btnAmend");
+            //Control btnPrint = FindControl("btnPrint");
+            //Control btnCancel = FindControl("btnCancel");
 
-            HideControl(btnCancel);
+            HideControl(CancelControl);
 
             if (!IsSameCompanyCode || IsViewLog)
             {
-                HideControl(btnComplete, btnSave, btnDelete, btnAmend, btnPrint);
+                HideControl(CompleteControl, SaveControl, DeleteControl, AmendControl, PrintControl);
                 return;
             }
 
             if (ModelRef.status == DocumentStatus.FINAL)
             {
-                ShowControl(btnAmend, btnPrint);
-                HideControl(btnComplete, btnSave, btnDelete);
+                ShowControl(AmendControl, PrintControl);
+                HideControl(CompleteControl, SaveControl, DeleteControl);
             }
             else
             {
-                HideControl(btnAmend, btnPrint);
-                ShowControl(btnComplete, btnSave, btnDelete);
+                HideControl(AmendControl, PrintControl);
+                ShowControl(CompleteControl, SaveControl, DeleteControl);
             }
 
             switch (AccessAuthorize)
             {
                 case "View":
                     //Edit: quy?n view có th? print
-                    HideControl(btnAmend, btnComplete, btnSave, btnDelete);
+                    HideControl(AmendControl, CompleteControl, SaveControl, DeleteControl);
                     break;
             }
 
             if (GroupAccess == "ADM")
             {
-                ShowControl(btnDelete);
+                ShowControl(DeleteControl);
             }
         }
         public void BindingDataForm(ControlState state)
@@ -253,7 +254,7 @@ namespace EMR
         public abstract void SetDefaultModel();
         public abstract dynamic InitModel();
         public abstract dynamic GetModel();
-        public abstract bool UpdateModel();
+        //public abstract bool UpdateModel();
         public virtual void BindingDataFormEdit()
         {
             var amendReasonWraper = FindControl("amendReasonWraper");
@@ -267,15 +268,16 @@ namespace EMR
         public abstract void PostBackEventHandler();
         public abstract void BindingControlToModel();
         public abstract bool LoadFormControl(ControlState state);
+        
         public void PrintDocument(object sender, EventArgs e)
         {
-            dynamic rwndPrint = FindControl("rwndPrint");
+            //dynamic rwndPrint = FindControl("rwndPrint");
             //PrintSetup();
             ModelRef = GetModel();
             signature_name = ModelRef.modified_name_e;
             LoadPatient();
             BindingDataFormPrint();
-            if (rwndPrint != null)
+            if (PrintLanguageOption != null)
             {
                 string script = string.Format("function f(){{ window.select_print_language();Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "print_document", script, true);
@@ -297,14 +299,14 @@ namespace EMR
             else
             {
                 ModelRef = GetModel();
-                LinkButton btnComplete = (LinkButton)FindControl("btnComplete");
-                Control btnAmend = FindControl("btnAmend");
-                Control btnPrint = FindControl("btnPrint");
-                Control btnCancel = FindControl("btnCancel");
+                //LinkButton btnComplete = (LinkButton)FindControl("btnComplete");
+                //Control btnAmend = FindControl("btnAmend");
+                //Control btnPrint = FindControl("btnPrint");
+                //Control btnCancel = FindControl("btnCancel");
                 var amendReasonWraper = FindControl("amendReasonWraper");
 
-                HideControl(btnAmend, btnPrint);
-                ShowControl(btnComplete, btnCancel, amendReasonWraper);
+                HideControl(AmendControl, PrintControl);
+                ShowControl(CompleteControl, CancelControl, amendReasonWraper);
                 LoadFormControl(ControlState.Edit);
                 BindingDataFormEdit();
             }
@@ -318,33 +320,35 @@ namespace EMR
         }
         protected void CompleteDocument(object sender, EventArgs e)
         {
-            if (Page.IsValid)
+            if (!Page.IsValid) return;
+            try
             {
-                try
-                {
-                    //(sender as LinkButton).CssClass += " cursor-wait";
-                    ModelRef = InitModel();
-                    ModelRef.status = DocumentStatus.FINAL;
-                    ModelRef.user_name = UserId;
-                    BindingControlToModel();
-
-                    if (UpdateModel())
-                    {
-                        //
-                        SessionChecker.ClearSession(Location, Guid.Parse(varDocID));
-                        //string script = string.Format("function f(){{ alertify.set({ delay: 2000 }); alertify.success("Success log message"); Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "show_message", "function f(){{ alertify.set({ delay: 2000 }); alertify.success(\"Update Success\"); Sys.Application.remove_load(f);}}Sys.Application.add_load(f);", true);
-
-                        ModelRef = GetModel();
-                        Init_Page();
-                        LoadLogHistoryText();
-                        GrantPermissions();
-                    }
-                }
-                catch (Exception)
+                ModelRef = InitModel();
+                ModelRef.status = DocumentStatus.FINAL;
+                ModelRef.user_name = UserId;
+                BindingControlToModel();
+                WebServiceResponse response = WebService.Post(ModelRef.api + "/edit/" + Location, ModelRef);
+                if(response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
                     Alert("Error", "Unexpected error. Please contact IT support.", "error");
+                    return;
                 }
+
+                WebServiceResponse logResult = WebService.Post(ModelRef.api + "/log/" + Location + "/" + ModelRef.document_id, "");
+                if (logResult.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "show_message", "function f(){{ alertify.set({ delay: 2000 }); alertify.error(\"log error\"); Sys.Application.remove_load(f);}}Sys.Application.add_load(f);", true);
+                }
+                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "show_message", "function f(){{ alertify.set({ delay: 2000 }); alertify.success(\"Update Success\"); Sys.Application.remove_load(f);}}Sys.Application.add_load(f);", true);
+                SessionChecker.ClearSession(Location, Guid.Parse(varDocID));
+                ModelRef = GetModel();
+                Init_Page();
+                LoadLogHistoryText();
+                GrantPermissions();
+            }
+            catch (Exception)
+            {
+                Alert("Error", "Unexpected error. Please contact IT support.", "error");
             }
         }
         protected void SaveDocument(object sender, EventArgs e)
@@ -357,12 +361,20 @@ namespace EMR
                     ModelRef.status = DocumentStatus.DRAFT;
                     ModelRef.user_name = UserId;
                     BindingControlToModel();
-                    if (UpdateModel())
+                    WebServiceResponse response = WebService.Post(ModelRef.api + "/edit/" + Location, ModelRef);
+                    if (response.StatusCode != System.Net.HttpStatusCode.OK)
                     {
-                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "show_message", "function f(){{ alertify.set({ delay: 2000 }); alertify.success(\"Update Success\"); Sys.Application.remove_load(f);}}Sys.Application.add_load(f);", true);
-                        ModelRef = GetModel();
-                        LoadLogHistoryText();
+                        Alert("Error", "Unexpected error. Please contact IT support.", "error");
+                        return;
                     }
+                    WebServiceResponse logResult = WebService.Post(ModelRef.api + "/log/" + Location + "/" + ModelRef.document_id, "");
+                    if (logResult.StatusCode != System.Net.HttpStatusCode.OK)
+                    {
+                        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "show_message", "function f(){{ alertify.set({ delay: 2000 }); alertify.error(\"log error\"); Sys.Application.remove_load(f);}}Sys.Application.add_load(f);", true);
+                    }
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "show_message", "function f(){{ alertify.set({ delay: 2000 }); alertify.success(\"Update Success\"); Sys.Application.remove_load(f);}}Sys.Application.add_load(f);", true);
+                    ModelRef = GetModel();
+                    LoadLogHistoryText();
                 }
                 catch (Exception)
                 {
@@ -474,13 +486,13 @@ namespace EMR
         protected void CancelAmendDocument(object sender, EventArgs e)
         {
             ClearSessionDoc();
-            LinkButton btnComplete = (LinkButton)FindControl("btnComplete");
+            //LinkButton btnComplete = (LinkButton)FindControl("btnComplete");
             var amendReasonWraper = FindControl("amendReasonWraper");
-            Control btnAmend = FindControl("btnAmend");
-            Control btnPrint = FindControl("btnPrint");
-            Control btnCancel = FindControl("btnCancel");
-            HideControl(btnComplete, btnCancel, amendReasonWraper);
-            ShowControl(btnAmend, btnPrint);
+            //Control btnAmend = FindControl("btnAmend");
+            //Control btnPrint = FindControl("btnPrint");
+            //Control btnCancel = FindControl("btnCancel");
+            HideControl(CompleteControl, CancelControl, amendReasonWraper);
+            ShowControl(AmendControl, PrintControl);
 
             ModelRef = GetModel();
             BindingDataForm(ControlState.View);
@@ -511,7 +523,8 @@ namespace EMR
         }
         private void VisibleControl(bool visible, params dynamic[] controls)
         {
-            for (int i = 0; i < controls.Length; i++) controls[i].Visible = visible;
+            for (int i = 0; i < controls.Length; i++) 
+                controls[i].Visible = visible;
         }
         protected void BindingLabel(string LabelId, string value, string prefix = "prt")
         {

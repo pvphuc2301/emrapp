@@ -236,11 +236,11 @@
                                         <div class="line-height-1d15 mb-1" style="display: grid;grid-template-columns: 490px 100px 1fr">
                                             <div><span style="font-weight: bold">Các cấy ghép / vật tư / dụng cụ đặc biệt/ </span><span class="subtitle font-10">Implants/consumables/special equipment</span></div>
                                             <div style="display: grid;grid-template-columns: 15px 1fr">
-                                                <asp:Label runat="server" ID="prt_equipment_n" Text="❏" CssClass="line-height-1d2"></asp:Label>
+                                                <asp:Label runat="server" ID="prt_equipment_code_n" Text="❏" CssClass="line-height-1d2"></asp:Label>
                                                 <div>Không/ <span class="subtitle font-10">No</span></div>
                                             </div>
                                             <div style="display: grid;grid-template-columns: 15px 1fr">
-                                                <asp:Label runat="server" ID="prt_equipment_y" Text="❏" CssClass="line-height-1d2"></asp:Label>
+                                                <asp:Label runat="server" ID="prt_equipment_code_y" Text="❏" CssClass="line-height-1d2"></asp:Label>
                                                 <div>Có/ <span class="subtitle font-10">Yes</span></div>
                                             </div>
                                         </div>
@@ -534,7 +534,7 @@
                                     </div>
                                     <div class="alert alert-info d-flex align-items-center">
                                         <span class="mr-2"><i style="font-size: 24px;" class="fa fa-exclamation-circle"></i></span>
-                                        <telerik:RadLabel runat="server" ID="rlblLogHistory" />
+                                        <asp:Label runat="server" ID="lblLogHistory"></asp:Label>
                                         <asp:UpdatePanel runat="server" ID="uplViewHistory">
                                             <ContentTemplate>
                                                 <asp:LinkButton OnClick="ViewHistory" runat="server" ID="lbtnViewHistory" Text="[View History]"></asp:LinkButton>
@@ -689,12 +689,12 @@
                                     <asp:UpdatePanel runat="server" UpdateMode="Conditional">
                                         <ContentTemplate>
                                             <div class="custom-control custom-radio d-inline-block">
-                                                <input onchange="__doPostBack('equipment','')" type="radio" runat="server" id="rad_equipment_n" name="rad_equipment" class="custom-control-input" />
-                                                <label class="custom-control-label" for="rad_equipment_n">Không/ <span class="text-primary">No</span></label>
+                                                <input onchange="__doPostBack('equipment_code','')" type="radio" runat="server" id="rad_equipment_code_n" name="rad_equipment_code" class="custom-control-input" />
+                                                <label class="custom-control-label" for="rad_equipment_code_n">Không/ <span class="text-primary">No</span></label>
                                             </div>
                                             <div class="custom-control custom-radio d-inline-block">
-                                                <input onchange="__doPostBack('equipment','')" type="radio" runat="server" id="rad_equipment_y" name="rad_equipment" class="custom-control-input" />
-                                                <label class="custom-control-label" for="rad_equipment_y">Có/ <span class="text-primary">Yes</span></label>
+                                                <input onchange="__doPostBack('equipment_code','')" type="radio" runat="server" id="rad_equipment_code_y" name="rad_equipment_code" class="custom-control-input" />
+                                                <label class="custom-control-label" for="rad_equipment_code_y">Có/ <span class="text-primary">Yes</span></label>
                                             </div>
                                             <asp:CustomValidator ID="CustomValidator26" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="equipment_ServerValidate"></asp:CustomValidator>
                                         </ContentTemplate>
@@ -985,15 +985,8 @@
         var elem = window.parent.parent.document.getElementById("myProgress");
         progress(elem);
 
-        function beforeAsyncPostBack() {
-            var curtime = new Date();
-        }
-        function afterAsyncPostBack() {
-            setTimeout(function () {
-                if (document.getElementById("alertify-logs"))
-                document.getElementById("alertify-logs").classList.add("cssclsNoPrint")
-            }, 1000);
-        }
+        function beforeAsyncPostBack() { }
+        function afterAsyncPostBack() { }
         function print_document() {
             let print_page = document.querySelector("#print_page");
             print_page.style.display = "block";

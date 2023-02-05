@@ -423,6 +423,7 @@
     <Compile Include="Classes\WebHelpers.cs" />
     <Compile Include="Classes\MISClass.cs" />
     <Compile Include="Classes\TienIchWeb.cs" />
+    <Compile Include="Classes\WebService.cs" />
     <Compile Include="Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -562,6 +563,7 @@
     <Compile Include="IPD\BookForSurPro.aspx.designer.cs">
       <DependentUpon>BookForSurPro.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Model\PastMedicalHistoryModel.cs" />
     <Compile Include="OPD\AdmissionRequest.aspx.cs">
       <DependentUpon>AdmissionRequest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1366,10 +1368,6 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\EMR.Library\EMR.Library.csproj">
-      <Project>{97b788ab-4be0-44a7-b472-c200852a3cd5}</Project>
-      <Name>EMR.Library</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Emr.Utility\Emr.Utility.csproj">
       <Project>{1CDC3829-A634-4F14-AD9A-B4FC9B3736FF}</Project>
       <Name>Emr.Utility</Name>
@@ -1402,7 +1400,7 @@
           </servers>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

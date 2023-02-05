@@ -75,7 +75,8 @@ namespace EMR.Data.AIH.Model
         /// <summary>
         /// Special Equipment
         /// </summary>
-        public string equipment { get; set; }
+        public string equipment_code { get; set; }
+        public string equipment_desc { get; set; }
         public string special_equipment { get; set; }
         /// <summary>
         /// Implant

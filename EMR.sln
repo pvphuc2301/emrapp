@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Emr.Utility", "Emr.Utility\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmrLib", "EmrLib\EmrLib.csproj", "{D9B455B7-16C6-4723-A76D-A1B7B1E873D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EMR.Library", "EMR.Library\EMR.Library.csproj", "{97B788AB-4BE0-44A7-B472-C200852A3CD5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{D9B455B7-16C6-4723-A76D-A1B7B1E873D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9B455B7-16C6-4723-A76D-A1B7B1E873D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9B455B7-16C6-4723-A76D-A1B7B1E873D7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{97B788AB-4BE0-44A7-B472-C200852A3CD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{97B788AB-4BE0-44A7-B472-C200852A3CD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{97B788AB-4BE0-44A7-B472-C200852A3CD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{97B788AB-4BE0-44A7-B472-C200852A3CD5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
