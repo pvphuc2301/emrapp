@@ -690,6 +690,15 @@ namespace EMR
         protected global::EMR.TextField txt_preoperative_diagnosis;
 
         /// <summary>
+        /// CustomValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator1;
+
+        /// <summary>
         /// lbl_surgeon control.
         /// </summary>
         /// <remarks>
@@ -924,6 +933,15 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_infected_case_code_n;
 
         /// <summary>
+        /// CustomValidator9 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator9;
+
+        /// <summary>
         /// lbl_equipment control.
         /// </summary>
         /// <remarks>
@@ -1129,15 +1147,6 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.TextField txt_other_please_specify;
-
-        /// <summary>
-        /// CustomValidator15 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator CustomValidator15;
 
         /// <summary>
         /// lbl_surgical_equipment_code control.

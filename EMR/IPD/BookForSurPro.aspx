@@ -543,13 +543,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div>Chẩn đoán trước phẫu thuật/thủ thuật<span class="text-primary">Preoperative diagnosis:</span></div>
+                            <div>Chẩn đoán trước phẫu thuật/thủ thuật<span class="text-primary">Preoperative diagnosis:</span><span class="text-danger"> *</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <asp:Label runat="server" ID="lbl_preoperative_diagnosis" />
                                 <div>
                                     <aih:TextField runat="server" ID="txt_preoperative_diagnosis" />
-                                    <%--<asp:CustomValidator ID="CustomValidator1" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="preoperative_diagnosis_ServerValidate"></asp:CustomValidator>--%>
+                                    <asp:CustomValidator ID="CustomValidator1" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="preoperative_diagnosis_ServerValidate"></asp:CustomValidator>
                                 </div>
                             </div>
                             <div>Phẫu thuật viên chính/<span class="text-primary">Surgeon</span><span class="text-danger"> *</span></div>
@@ -661,7 +661,7 @@
                                         </asp:UpdatePanel>
                                 </div>
                             </div>
-                            <div>Mổ nhiểm khuẩn/ <span class="text-primary">Infected case</span></div>
+                            <div>Mổ nhiểm khuẩn/ <span class="text-primary">Infected case</span><span class="text-danger"> *</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <asp:Label runat="server" ID="lbl_infected_case_code" />
@@ -676,7 +676,7 @@
                                                 <input onchange="__doPostBack('infected_case_code','')" type="radio" runat="server" id="rad_infected_case_code_n" name="rad_infected_case_code" class="custom-control-input" />
                                                 <label class="custom-control-label" for="rad_infected_case_code_n">Không/ <span class="text-primary">No</span></label>
                                             </div>
-                                            <%--<asp:CustomValidator ID="CustomValidator9" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="infected_case_code_ServerValidate"></asp:CustomValidator>--%>
+                                            <asp:CustomValidator ID="CustomValidator9" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="infected_case_code_ServerValidate"></asp:CustomValidator>
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
                                 </div>
@@ -746,13 +746,13 @@
                                     <%--<asp:CustomValidator ID="CustomValidator14" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="anatomical_pathology_ServerValidate"></asp:CustomValidator>--%>
                                 </div>
                             </div>
-                            <div>Khác, xin nêu rõ/<span class="text-primary">Other, please specify:</span><span class="text-danger"> *</span></div>
+                            <div>Khác, xin nêu rõ/<span class="text-primary">Other, please specify:</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <asp:Label runat="server" ID="lbl_other_please_specify" />
                                 <div runat="server" id="other_please_specify_wrapper">
                                     <aih:TextField runat="server" ID="txt_other_please_specify" />
-                                    <asp:CustomValidator ID="CustomValidator15" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="other_please_specify_ServerValidate"></asp:CustomValidator>
+                                    <%--<asp:CustomValidator ID="CustomValidator15" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="other_please_specify_ServerValidate"></asp:CustomValidator>--%>
                                 </div>
                             </div>
                             <div>Thiết bị/ <span class="text-primary">Equipment</span><span class="text-danger"> *</span></div>

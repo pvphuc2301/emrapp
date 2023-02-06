@@ -69,7 +69,7 @@
         }
         #print_content {
             margin-left: 1.5cm !important;
-            line-height: initial !important;
+            line-height: 1.4 !important;
             margin: 0 1.6cm 0 2cm !important;
         }
         #print_header {
@@ -329,7 +329,7 @@
 
                         <tfoot class="report-footer">
                             <tr>
-                                <td class="report-footer-cell" runat="server" id="print_footer">
+                                <td class="report-footer-cell" runat="server" id="print_footer" style="height: 2cm; width: 210mm">
                                     <div style="margin-left: -18px"><img style="width: 210mm" src="../images/ExcellentCare.png" /></div>
                                     <div class="footer-info" style="padding: 0 18px">
                                         <div style="font-weight: bold;">BỆNH VIỆN QUỐC TẾ MỸ</div>
