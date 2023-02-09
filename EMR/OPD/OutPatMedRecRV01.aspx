@@ -550,7 +550,11 @@
                                                                 <Columns>
                                                                     <telerik:GridTemplateColumn>
                                                                         <ItemTemplate>
-                                                                            <span><%# Convert.ToDateTime(Eval("actual_visit_date_time")).ToString("yyyy-MM-dd") %> (<%# Eval("visit_type") %>-<%# Eval("visit_code") %>)</span>
+                                                                            <span>
+                                                                                <%# Convert.ToDateTime(Eval("actual_visit_date_time")).ToString("yyyy-MM-dd") %> 
+                                                                                (<%# Eval("visit_type") %>-<%# Eval("visit_code") %>)
+                                                                                <%# Eval("medical_history") %>
+                                                                            </span>
                                                                         </ItemTemplate>
                                                                     </telerik:GridTemplateColumn>
                                                                 </Columns>
