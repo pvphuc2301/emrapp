@@ -785,7 +785,7 @@ namespace EMR
 
         protected void rgdPastMedicalHistory_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            WebServiceResponse response = WebService.Get($"/api/omr/get-medical-history/{Location}/{varPID}");
+            WebServiceResponse response = WebService.Get($"api/omr/get-medical-history/{Location}/{varPID}");
             if(response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 (sender as RadGrid).DataSource = JsonConvert.DeserializeObject(response.Content);
