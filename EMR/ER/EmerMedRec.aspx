@@ -775,7 +775,7 @@
                                                 </div>
                                             </div>
 
-                                            <div><label class="control-label mb-1"><span class="font-bold">Chuẩn đoán xác định</span>/ <span class="text-primary">Diagnosis:</span></label></div>
+                                            <div><label class="control-label mb-1"><span class="font-bold">Chẩn đoán xác định</span>/ <span class="text-primary">Diagnosis:</span></label></div>
 
                                             <div class="dg-1 mb-2">
                                                 <div></div>
