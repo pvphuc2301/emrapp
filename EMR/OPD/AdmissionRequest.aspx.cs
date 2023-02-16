@@ -1,17 +1,13 @@
 ﻿using EMR.Data.AIH.Dictionary;
 using EMR.Data.AIH.Model;
 using EMR.Data.Shared.Services;
-using EMR.Model;
 using EmrLib.Utility;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
-using Telerik.Web.UI.Map;
 
 namespace EMR
 {
@@ -21,15 +17,10 @@ namespace EMR
         public AdreModel Model { get; set; }
         protected override Control DisplayLogHistory => lblLogHistory;
         protected override Control SaveControl => btnSave;
-
         protected override Control DeleteControl => btnDelete;
-
         protected override Control AmendControl => btnAmend;
-
         protected override Control PrintControl => btnPrint;
-
         protected override Control CancelControl => btnCancel;
-
         protected override Control CompleteControl => btnComplete;
 
         public override dynamic InitModel()
@@ -61,6 +52,7 @@ namespace EMR
             if (Logs.Count() == 1)
             {
                 Model.admitting_doctor = Convert.ToString(Session["UserName"]);
+                Model.time_of_admission = DateTime.Now;
             }
         }
         public override bool LoadFormControl(ControlState state)
@@ -151,7 +143,8 @@ namespace EMR
             //lbl_for_surgical_cases.Visible = true;
             //for_surgical_cases_wrapper.Visible = false;
             lbl_for_surgical_cases.Text = string.IsNullOrEmpty(Model.for_surgical_cases) ? "" : AdreDictionary.FOR_SURGICAL_CASES[Model.for_surgical_cases];
-            
+            name_of_expected_wrapper.Visible = rad_for_surgical_cases_y.Checked;
+
             //lbl_name_of_expected.Visible = true;
             //txt_name_of_expected.Visible = false;
             lbl_name_of_expected.Text = Model.name_of_expected;
@@ -191,6 +184,7 @@ namespace EMR
             }
             txt_primary_doctor.Value = Model.primary_doctor;
             BindingInputRadioButton(nameof(Model.for_surgical_cases) + "_" + Model.for_surgical_cases);
+            name_of_expected_wrapper.Visible = rad_for_surgical_cases_y.Checked;
             txt_name_of_expected.Value = Model.name_of_expected;
             //D. Thông tin khác/ Other information 
             BindingInputRadioButton(nameof(Model.other_information_code) + "_" + Model.other_information_code);
@@ -237,7 +231,10 @@ namespace EMR
                 prt_admission_department_other.Text = Model.admission_department_note;
             }
             prt_primary_doctor.Text = Model.primary_doctor;
+            
             BindingLabel(nameof(Model.for_surgical_cases) + "_" + Model.for_surgical_cases, "☒");
+            prt_name_of_expected_wrapper.Visible = prt_for_surgical_cases_y.Text == "☒";
+
             prt_name_of_expected.Text = Model.name_of_expected;
             BindingLabel(nameof(Model.other_information_code) + "_" + Model.other_information_code, "☒");
             if(prt_other_information_code_y.Text == "☒")
@@ -255,6 +252,16 @@ namespace EMR
         public override void PostBackEventHandler() {
             switch (Request["__EVENTTARGET"])
             {
+                case "for_surgical_cases":
+                    if (Request["__EVENTARGUMENT"] == "N")
+                    {
+                        name_of_expected_wrapper.Visible = false;
+                    }
+                    else if (Request["__EVENTARGUMENT"] == "Y")
+                    {
+                        name_of_expected_wrapper.Visible = true;
+                    }
+                    break;
                 case "other_information_code":
                     if(Request["__EVENTARGUMENT"] == "N")
                     {
@@ -326,5 +333,62 @@ namespace EMR
                 Model.special_request_specify = txt_special_request_specify.Value;
             }
         }
+
+        #region ServerValidate
+        protected void admitting_doctor_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_admitting_doctor.Text);
+        }
+        protected void time_of_admission_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = dtpk_time_of_admission.SelectedDate != null;
+        }
+        protected void diagnosis_on_admission_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_diagnosis_on_admission.Text);
+        }
+        protected void expected_duration_hospital_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_expected_duration_hospital.Text);
+        }
+        protected void isolation_request_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_isolation_request_n.Checked || rad_isolation_request_y.Checked;
+        }
+        protected void admission_department_code_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_admission_department_code_day.Checked 
+                || rad_admission_department_code_med.Checked
+                || rad_admission_department_code_sur.Checked
+                || rad_admission_department_code_obg.Checked
+                || rad_admission_department_code_icu.Checked
+                || rad_admission_department_code_ped.Checked
+                || rad_admission_department_code_del.Checked
+                || rad_admission_department_code_ope.Checked
+                || rad_admission_department_code_oth.Checked;
+        }
+        protected void primary_doctor_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_primary_doctor.Text);
+        }
+        protected void for_surgical_cases_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_for_surgical_cases_n.Checked || rad_for_surgical_cases_y.Checked;
+        }
+        protected void name_of_expected_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = !string.IsNullOrEmpty(txt_name_of_expected.Text);
+        }
+        protected void other_information_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_other_information_code_n.Checked ||
+                rad_other_information_code_y.Checked;
+        }
+        protected void special_request_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            args.IsValid = rad_special_request_code_n.Checked
+                || rad_special_request_code_y.Checked;
+        }
+        #endregion
     }
 }

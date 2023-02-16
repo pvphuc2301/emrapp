@@ -250,7 +250,7 @@
                                             </div>
                                         </div>
 
-                                        <div style="display: grid; grid-template-columns: 18px 1fr;">
+                                        <div runat="server" id="prt_name_of_expected_wrapper" style="display: grid; grid-template-columns: 18px 1fr;">
                                             <div></div>
                                             <div>
                                                 <div>
@@ -402,54 +402,71 @@
                             <div></div>
                             <div class="font-weight-bold">A. Thông tin người bệnh (Hoàn tất bởi nhân viên phụ trách nhập viện nhập viện)/ <span class="text-primary">Patient information (To be completed by the Admission officer)</span></div>
                             <div class="font-weight-bold">B. Thông tin y khoa (Hoàn tất bởi Bác sĩ chỉ định nhập viện)/ <span class="text-primary">Medical information (To be completed by the Admitting doctor)</span></div>
-                            <div>• BS chỉ định nhập viện/ <span class="text-primary">Admitting doctor</span></div>
+                            <div>• BS chỉ định nhập viện/ <span class="text-primary">Admitting doctor </span><span class="text-danger">*</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <div>
                                     <asp:Label runat="server" ID="lbl_admitting_doctor" />
                                     <webUI:TextField runat="server" ID="txt_admitting_doctor" />
+                                    <asp:CustomValidator ID="CustomValidator1" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="admitting_doctor_ServerValidate"></asp:CustomValidator>
                                 </div>
                             </div>
-                            <div>• Thời gian nhập viện/ <span class="text-primary">Time of admission</span></div>
-                            <div style="display: grid; grid-template-columns: 200px 1fr">
-                                <div></div>
-                                <div>
-                                    <asp:Label runat="server" ID="lbl_time_of_admission" />
-                                    <telerik:RadDateTimePicker Width="180px" ID="dtpk_time_of_admission" runat="server" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
-                                </div>
-                            </div>
-                            <div>• Chẩn đoán nhập viện/ <span class="text-primary">Diagnosis on admission</span></div>
+                            <%--  --%>
+                            <asp:UpdatePanel runat="server" UpdateMode="Conditional">
+                                <ContentTemplate>
+                                    <div>• Thời gian nhập viện/ <span class="text-primary">Time of admission </span><span class="text-danger">*</span></div>
+                                    <div style="display: grid; grid-template-columns: 200px 1fr">
+                                        <div></div>
+                                        <div>
+                                            <asp:Label runat="server" ID="lbl_time_of_admission" />
+                                            <telerik:RadDateTimePicker AutoPostBackControl="Both" Width="180px" ID="dtpk_time_of_admission" runat="server" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
+                                            <asp:CustomValidator ID="CustomValidator2" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="time_of_admission_ServerValidate"></asp:CustomValidator>
+                                        </div>
+                                    </div>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                            <%--  --%>
+                            <div>• Chẩn đoán nhập viện/ <span class="text-primary">Diagnosis on admission </span><span class="text-danger">*</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <div>
                                     <asp:Label runat="server" ID="lbl_diagnosis_on_admission" />
                                     <webUI:TextField runat="server" ID="txt_diagnosis_on_admission" />
+                                    <asp:CustomValidator ID="CustomValidator3" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="diagnosis_on_admission_ServerValidate"></asp:CustomValidator>
                                 </div>
                             </div>
-                            <div>• Thời gian điều trị dự kiến/ <span class="text-primary">Expected duration of hospitalization</span></div>
+                            <div>• Thời gian điều trị dự kiến/ <span class="text-primary">Expected duration of hospitalization </span><span class="text-danger">*</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <div>
                                     <asp:Label runat="server" ID="lbl_expected_duration_hospital" />
                                     <webUI:TextField runat="server" ID="txt_expected_duration_hospital" />
+                                    <asp:CustomValidator ID="CustomValidator4" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="expected_duration_hospital_ServerValidate"></asp:CustomValidator>
                                 </div>
                             </div>
-                            <div>• Yêu cầu sử dụng phòng cách ly / <span class="text-primary">Isolation request</span></div>
-                            <div style="display: grid; grid-template-columns: 200px 1fr">
-                                <div></div>
-                                <asp:Label runat="server" ID="lbl_isolation_request" />
-                                <div runat="server" id="isolation_request_wrapper">
-                                    <div class="custom-control custom-radio d-inline-block">
-                                        <input type="radio" onchange="radioButtonChange(this)" runat="server" id="rad_isolation_request_n" name="rad_isolation_request" class="custom-control-input" />
-                                        <label class="custom-control-label" for="rad_isolation_request_n">Không/ <span class="text-primary">No</span></label>
+                            <%--  --%>
+                            <div>• Yêu cầu sử dụng phòng cách ly / <span class="text-primary">Isolation request </span><span class="text-danger">*</span></div>
+                            <asp:UpdatePanel runat="server" UpdateMode="Conditional">
+                                <ContentTemplate>
+                                    <div style="display: grid; grid-template-columns: 200px 1fr">
+                                        <div></div>
+                                        <asp:Label runat="server" ID="lbl_isolation_request" />
+                                        <div runat="server" id="isolation_request_wrapper">
+                                            <div class="custom-control custom-radio d-inline-block">
+                                                <input onchange="__doPostBack('','')" type="radio" runat="server" id="rad_isolation_request_n" name="rad_isolation_request" class="custom-control-input" />
+                                                <label onchange="__doPostBack('','')" class="custom-control-label" for="rad_isolation_request_n">Không/ <span class="text-primary">No</span></label>
+                                            </div>
+                                            <div class="custom-control custom-radio d-inline-block">
+                                                <input onchange="radioButtonChange(this)" type="radio" runat="server" id="rad_isolation_request_y" name="rad_isolation_request" class="custom-control-input" />
+                                                <label class="custom-control-label" for="rad_isolation_request_y">Có/ <span class="text-primary">Yes</span></label>
+                                            </div>
+                                            <asp:CustomValidator ID="CustomValidator5" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="isolation_request_ServerValidate"></asp:CustomValidator>
+                                        </div>
                                     </div>
-                                    <div class="custom-control custom-radio d-inline-block">
-                                        <input onchange="radioButtonChange(this)" type="radio" runat="server" id="rad_isolation_request_y" name="rad_isolation_request" class="custom-control-input" />
-                                        <label class="custom-control-label" for="rad_isolation_request_y">Có/ <span class="text-primary">Yes</span></label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>• Khoa/ phòng nhận bệnh nhập viện/ <span class="text-primary">Admission department</span></div>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                            <%--  --%>
+                            <div>• Khoa/ phòng nhận bệnh nhập viện/ <span class="text-primary">Admission department </span><span class="text-danger">*</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <asp:Label runat="server" ID="lbl_admission_department" />
@@ -495,49 +512,61 @@
                                             <div runat="server" id="admission_department_other_wrapper">
                                                 <webUI:TextField runat="server" ID="txt_admission_department_oth" />
                                             </div>
+                                            <asp:CustomValidator ID="CustomValidator6" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="admission_department_code_ServerValidate"></asp:CustomValidator>
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
                                 </div>
                             </div>
 
-                            <div>• BS phụ trách điều trị nội trú/ <span class="text-primary">Primary doctor</span></div>
+                            <div>• BS phụ trách điều trị nội trú/ <span class="text-primary">Primary doctor </span><span class="text-danger">*</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <div>
                                     <asp:Label runat="server" ID="lbl_primary_doctor" />
                                     <webUI:TextField runat="server" ID="txt_primary_doctor" />
+                                    <asp:CustomValidator ID="CustomValidator7" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="primary_doctor_ServerValidate"></asp:CustomValidator>
                                 </div>
                             </div>
                             <div>
                                 (Trước khi hoàn tất chỉ định nhập viện cho NB, Bác sĩ chỉ định phải liên hệ, trao đổi với BS phụ trách điều trị nội trú để bàn giao, thống nhất kế hoạch chỉ định nhập viện cho NB/ <span class="text-primary">Before completing Admission Request for patient, the doctor who gives request must contact and discuss with attending doctor who is responsible for inpatient care to handover, concur admission plan for patient)</span>
                             </div>
-                            <div><span class="font-weight-bold">C. Chỉ định phẫu thuật</span>/ <span class="text-primary">For surgical cases</span></div>
-                            <div style="display: grid; grid-template-columns: 200px 1fr">
-                                <div></div>
-                                <asp:Label runat="server" ID="lbl_for_surgical_cases" />
-                                <div runat="server" id="for_surgical_cases_wrapper">
-                                    <div class="custom-control custom-radio d-inline-block">
-                                        <input type="radio" onchange="radioButtonChange(this)" runat="server" id="rad_for_surgical_cases_n" name="rad_for_surgical_cases" class="custom-control-input" />
-                                        <label class="custom-control-label" for="rad_for_surgical_cases_n">Không/ <span class="text-primary">No</span></label>
+                            <%-- C --%>
+                            <div><span class="font-weight-bold">C. Chỉ định phẫu thuật</span>/ <span class="text-primary">For surgical cases </span><span class="text-danger">*</span></div>
+                            <asp:UpdatePanel runat="server" UpdateMode="Conditional">
+                                <ContentTemplate>
+                                    <div style="display: grid; grid-template-columns: 200px 1fr">
+                                        <div></div>
+                                        <asp:Label runat="server" ID="lbl_for_surgical_cases" />
+                                        <div runat="server" id="for_surgical_cases_wrapper">
+                                            <div class="custom-control custom-radio d-inline-block">
+                                                <input onchange="__doPostBack('for_surgical_cases','N')" type="radio" runat="server" id="rad_for_surgical_cases_n" name="rad_for_surgical_cases" class="custom-control-input" />
+                                                <label class="custom-control-label" for="rad_for_surgical_cases_n">Không/ <span class="text-primary">No</span></label>
+                                            </div>
+                                            <div class="custom-control custom-radio d-inline-block">
+                                                <input onchange="__doPostBack('for_surgical_cases','Y')" type="radio" runat="server" id="rad_for_surgical_cases_y" name="rad_for_surgical_cases" class="custom-control-input" />
+                                                <label class="custom-control-label" for="rad_for_surgical_cases_y">Có/ <span class="text-primary">Yes</span></label>
+                                            </div>
+                                            <asp:CustomValidator ID="CustomValidator8" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="for_surgical_cases_ServerValidate"></asp:CustomValidator>
+                                        </div>
                                     </div>
-                                    <div class="custom-control custom-radio d-inline-block">
-                                        <input disabled-for="allergy_field" onchange="radioButtonChange(this)" type="radio" runat="server" id="rad_for_surgical_cases_y" name="rad_for_surgical_cases" class="custom-control-input" />
-                                        <label class="custom-control-label" for="rad_for_surgical_cases_y">Có/ <span class="text-primary">Yes</span></label>
+                                    <div runat="server" id="name_of_expected_wrapper">
+                                        <div>Tên phẫu thuật, thủ thuật dự kiến thực hiện/ <span class="text-primary">Name of expected surgery/procedure </span><span class="text-danger">*</span></div>
+                                        <div style="display: grid; grid-template-columns: 200px 1fr">
+                                            <div></div>
+                                            <div>
+                                                <asp:Label runat="server" ID="lbl_name_of_expected" />
+                                                <webUI:TextField runat="server" ID="txt_name_of_expected" />
+                                                <asp:CustomValidator ID="CustomValidator9" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="name_of_expected_ServerValidate"></asp:CustomValidator>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            (Nếu NB có chỉ định thực hiện phẫu thuật/ thủ thuật, vui lòng hoàn tất Phiếu đặt lịch phòng mổ/ <span class="text-primary">Please kindly complete "Booking for surgery/procedure" form if patient has surgery/procedure request order)</span>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div>Tên phẫu thuật, thủ thuật dự kiến thực hiện/ <span class="text-primary">Name of expected surgery/procedure</span></div>
-                            <div style="display: grid; grid-template-columns: 200px 1fr">
-                                <div></div>
-                                <div>
-                                    <asp:Label runat="server" ID="lbl_name_of_expected" />
-                                    <webUI:TextField runat="server" ID="txt_name_of_expected" />
-                                </div>
-                            </div>
-                            <div>
-                                (Nếu NB có chỉ định thực hiện phẫu thuật/ thủ thuật, vui lòng hoàn tất Phiếu đặt lịch phòng mổ/ <span class="text-primary">Please kindly complete "Booking for surgery/procedure" form if patient has surgery/procedure request order)</span>
-                            </div>
-                            <div><span class="font-weight-bold">D. Thông tin khác</span>/ <span class="text-primary">Other information</span></div>
+                                </ContentTemplate>
+                            </asp:UpdatePanel>
+                            <%-- D --%>
+                            <div><span class="font-weight-bold">D. Thông tin khác</span>/ <span class="text-primary">Other information </span><span class="text-danger">*</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <asp:Label runat="server" ID="lbl_other_information" />
@@ -555,11 +584,13 @@
                                             <div runat="server" id="other_information_specify_wrapper">
                                                 <webUI:TextField runat="server" ID="txt_other_information_specify" />
                                             </div>
+                                            <asp:CustomValidator ID="CustomValidator10" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="other_information_ServerValidate"></asp:CustomValidator>
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
                                 </div>
                             </div>
-                            <div><span class="font-weight-bold">E. Yêu cầu thêm</span>/ <span class="text-primary">Special request</span></div>
+                            <%-- E --%>
+                            <div><span class="font-weight-bold">E. Yêu cầu thêm</span>/ <span class="text-primary">Special request </span><span class="text-danger">*</span></div>
                             <div style="display: grid; grid-template-columns: 200px 1fr">
                                 <div></div>
                                 <asp:Label runat="server" ID="lbl_special_request" />
@@ -577,16 +608,19 @@
                                             <div runat="server" id="special_request_specify_wrapper">
                                                 <webUI:TextField runat="server" ID="txt_special_request_specify" />
                                             </div>
+                                            <asp:CustomValidator ID="CustomValidator11" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="special_request_ServerValidate"></asp:CustomValidator>
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
                                 </div>
                             </div>
+                            <%--  --%>
                             <div class="row mb-2">
                                 <div class="col-md-12">
                                     <div class="form-actions" style="display: flex; gap: 6px">
+                                        <asp:LinkButton OnClick="CompleteDocument" ValidationGroup="Group2" runat="server"  ID="btnComplete" CssClass="btn btn-primary">Complete</asp:LinkButton>
+                                        
                                         <asp:UpdatePanel runat="server" ID="UpdatePanel2">
                                             <ContentTemplate>
-                                                <asp:LinkButton OnClick="CompleteDocument" ValidationGroup="Group2" runat="server"  ID="btnComplete" CssClass="btn btn-primary">Complete</asp:LinkButton>
                                                 <asp:LinkButton OnClick="SaveDocument" ValidationGroup="Group1" ID="btnSave" runat="server" CssClass="btn btn-primary">Save</asp:LinkButton>
                                                 <asp:LinkButton OnClick="DeleteDocument" runat="server" ID="btnDelete" CssClass="btn btn-danger">Delete</asp:LinkButton>
                                             </ContentTemplate>
