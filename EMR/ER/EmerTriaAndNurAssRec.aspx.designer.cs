@@ -1275,13 +1275,13 @@ namespace EMR
         protected global::System.Web.UI.WebControls.LinkButton btnDelete;
 
         /// <summary>
-        /// RadWindow3 control.
+        /// rwndUserBlock control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadWindow RadWindow3;
+        protected global::Telerik.Web.UI.RadWindow rwndUserBlock;
 
         /// <summary>
         /// lblUserBlock control.

@@ -229,16 +229,14 @@
                                 </div>
                             </ContentTemplate>
                         </telerik:RadWindow>
-                        <telerik:RadWindow CssClass="NoIconUrl" RenderMode="Lightweight" ID="RadWindow3" Title="Warning" runat="server">
+                        <telerik:RadWindow RenderMode="Lightweight" Modal="true" ID="rwndUserBlock" Title="" IconUrl="/" runat="server" Width="500" Height="195" VisibleStatusbar="false" Behaviors="Close" Opacity="1">
                             <ContentTemplate>
-                                <div class="text-center">
-                                    <icon:ExclamationTriangle cssClass="text-danger" Size="80" runat="server" />
-                                    <h4 class="mt-4">Denied!</h4>
-                                    <label runat="server" id="lblUserBlock" />
-                                </div>
-
-                                <div class="d-grid no-block justify-content-end">
-                                    <%--<asp:LinkButton OnClick="btnDelete_Click" runat="server" ID="LinkButton1" CssClass="btn btn-danger">Delete</asp:LinkButton>--%>
+                                <div style="display: grid; grid-template-columns: 64px 1fr; gap: 6px">
+                                    <div><i class="fa fa-exclamation-triangle text-danger" style="font-size:64px;"></i></div>
+                                    <div>
+                                        <div class="text-danger">Denied!</div>
+                                        <label runat="server" id="lblUserBlock" />
+                                    </div>
                                 </div>
                             </ContentTemplate>
                         </telerik:RadWindow>
@@ -823,7 +821,12 @@
         function beforeAsyncPostBack() {
             var curtime = new Date();
         }
-
+        function ShowBlock(args) {
+            var rwndUserBlock = $find("<%=rwndUserBlock.ClientID %>");
+            var msg = document.getElementById("<%=lblUserBlock.ClientID %>");
+            msg.innerHTML = args;
+            rwndUserBlock.show();
+        }
         function afterAsyncPostBack() {
             setTimeout(function () {
                 if (document.getElementById("alertify-logs"))

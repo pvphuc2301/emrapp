@@ -946,13 +946,13 @@
                             <div class="row mb-2">
                                 <div class="col-md-12">
                                     <div class="form-actions" style="display: flex; gap: 6px">
-                                        <%--<asp:UpdatePanel runat="server" ID="UpdatePanel2">
+                                        <asp:UpdatePanel runat="server" ID="UpdatePanel2">
                                             <ContentTemplate>
+                                                <asp:LinkButton OnClick="CompleteDocument" ValidationGroup="Group2" runat="server"  ID="btnComplete" CssClass="btn btn-primary">Complete</asp:LinkButton>
+                                                <asp:LinkButton OnClick="SaveDocument" ValidationGroup="Group1" ID="btnSave" runat="server" CssClass="btn btn-primary">Save</asp:LinkButton>
+                                                <asp:LinkButton OnClick="DeleteDocument" runat="server" ID="btnDelete" CssClass="btn btn-danger">Delete</asp:LinkButton>
                                             </ContentTemplate>
-                                        </asp:UpdatePanel>--%>
-                                        <asp:LinkButton OnClick="CompleteDocument" ValidationGroup="Group2" runat="server"  ID="btnComplete" CssClass="btn btn-primary">Complete</asp:LinkButton>
-                                        <asp:LinkButton OnClick="SaveDocument" ValidationGroup="Group1" ID="btnSave" runat="server" CssClass="btn btn-primary">Save</asp:LinkButton>
-                                        <asp:LinkButton OnClientClick="window.parent.ConfirmDeleted(); return false" runat="server" ID="btnDelete" CssClass="btn btn-danger">Delete</asp:LinkButton>
+                                        </asp:UpdatePanel>
                                         <asp:LinkButton OnClick="AmendDocument" runat="server" ID="btnAmend" CssClass="btn btn-secondary">Amend</asp:LinkButton>
                                         <asp:UpdatePanel runat="server" ID="UpdatePanel1">
                                             <ContentTemplate>
