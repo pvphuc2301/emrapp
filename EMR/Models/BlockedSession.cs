@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EmrLib.Session
+namespace EMR.Models
 {
     public class BlockedSession
     {

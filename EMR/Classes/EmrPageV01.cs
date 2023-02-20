@@ -9,8 +9,9 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 using EMR.Model;
-using EmrLib.Session;
 using EMR.Classes;
+using System.Net.Http;
+using EMR.Models;
 
 namespace EMR
 {
@@ -290,25 +291,27 @@ namespace EMR
         }
         protected void AmendDocument(object sender, EventArgs e)
         {
-            var item = SessionChecker.FindBlockedSession(Location, Guid.Parse(varDocID), Guid.Parse(EmpId));
-            if (item != null)
+            var response = WebService.Get($"api/emr/check-session/{Location}/{varDocID}/{EmpId}");
+            
+            if(response.StatusCode == System.Net.HttpStatusCode.OK)
             {
-                string script = string.Format("function f(){{ window.parent.ShowBlock('This document is blocked by " + item.full_name_l + "');Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
-                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "block_document", script, true);
-            }
-            else
-            {
-                ModelRef = GetModel();
-                //LinkButton btnComplete = (LinkButton)FindControl("btnComplete");
-                //Control btnAmend = FindControl("btnAmend");
-                //Control btnPrint = FindControl("btnPrint");
-                //Control btnCancel = FindControl("btnCancel");
-                var amendReasonWraper = FindControl("amendReasonWraper");
+                EmrSession emrSession = JsonConvert.DeserializeObject<EmrSession>(response.Content);
 
-                HideControl(AmendControl, PrintControl);
-                ShowControl(CompleteControl, CancelControl, amendReasonWraper);
-                LoadFormControl(ControlState.Edit);
-                BindingDataFormEdit();
+                if (emrSession.Status)
+                {
+                    ModelRef = GetModel();
+                    var amendReasonWraper = FindControl("amendReasonWraper");
+
+                    HideControl(AmendControl, PrintControl);
+                    ShowControl(CompleteControl, CancelControl, amendReasonWraper);
+                    LoadFormControl(ControlState.Edit);
+                    BindingDataFormEdit();
+                }
+                else // currently blocked by other user
+                {
+                    string script = string.Format("function f(){{ window.parent.ShowBlock('This document is blocked by " + emrSession.Items.full_name_l + "');Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
+                    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "block_document", script, true);
+                }
             }
         }
         protected void DeleteDocument(object sender, EventArgs e)
@@ -333,7 +336,7 @@ namespace EMR
                 ModelRef.user_name = UserId;
                 BindingControlToModel();
                 WebServiceResponse response = WebService.Post(ModelRef.api + "/edit/" + Location, ModelRef);
-                if(response.StatusCode != System.Net.HttpStatusCode.OK)
+                if (response.StatusCode != System.Net.HttpStatusCode.OK)
                 {
                     Alert("Error", "Unexpected error. Please contact IT support.", "error");
                     return;
@@ -344,8 +347,16 @@ namespace EMR
                 {
                     ShowToastr(Page, "Save log fail!", "", type: "error");
                 }
+
                 ShowToastr(Page, "Update Success!", "", type: "success");
-                SessionChecker.ClearSession(Location, Guid.Parse(varDocID));
+
+                var clearSessionResponse = WebService.Post($"api/emr/clear-session/{Location}/{varDocID}", new StringContent("", System.Text.Encoding.UTF8, "application/json"));
+
+                if (clearSessionResponse.StatusCode != System.Net.HttpStatusCode.OK)
+                {
+                    ShowToastr(Page, "Can not clear session", "", type: "error");
+                }
+                
                 ModelRef = GetModel();
                 Init_Page();
                 LoadLogHistoryText();
@@ -504,10 +515,15 @@ namespace EMR
         }
         private void ClearSessionDoc()
         {
-            var response = SessionChecker.ClearSession(Location, Guid.Parse(varDocID));
-            if (response.IsSuccessStatusCode)
+            var clearSessionResponse = WebService.Post($"api/emr/clear-session/{Location}/{varDocID}", new StringContent("", System.Text.Encoding.UTF8, "application/json"));
+
+            if (clearSessionResponse.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "localStorage_removeItem", "window.localStorage.removeItem('document_id');", true);
+            }
+            else
+            {
+                ShowToastr(Page, "Can not clear session", "", type: "error");
             }
         }
         protected void RedirectToPatientSummary(object sender, EventArgs e)

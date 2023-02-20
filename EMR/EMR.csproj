@@ -564,7 +564,9 @@
     <Compile Include="IPD\BookForSurPro.aspx.designer.cs">
       <DependentUpon>BookForSurPro.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\BlockedSession.cs" />
     <Compile Include="Models\EmrApiModel.cs" />
+    <Compile Include="Models\EmrSession.cs" />
     <Compile Include="Models\NutritionalStatus.cs" />
     <Compile Include="Models\NutritionalStatusProvider.cs" />
     <Compile Include="Model\PastMedicalHistoryModel.cs" />
@@ -1400,7 +1402,7 @@
           </servers>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

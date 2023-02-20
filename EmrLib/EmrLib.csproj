@@ -54,9 +54,6 @@
     <Compile Include="Ris\ImagingEncode.cs" />
     <Compile Include="Ris\ImagingEncodeRequest.cs" />
     <Compile Include="Ris\ImagingEncodeResponse.cs" />
-    <Compile Include="Session\BlockedSession.cs" />
-    <Compile Include="Session\EmrSession.cs" />
-    <Compile Include="Session\SessionChecker.cs" />
     <Compile Include="Utility\EmrHelper.cs" />
     <Compile Include="Utility\WebControlHelper.cs" />
     <Compile Include="VitalSigns\VitalSignProvider.cs" />

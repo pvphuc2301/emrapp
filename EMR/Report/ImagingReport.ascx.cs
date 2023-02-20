@@ -112,7 +112,7 @@ namespace EMR
         }
         protected void lbRadRequestNo_Click(object sender, EventArgs e)
         {
-            ImagingEncodeService imagingEncodeService = new ImagingEncodeService(new WebService() { BaseAddress = "http://172.16.0.88:8081" });
+            ImagingEncodeService imagingEncodeService = new ImagingEncodeService(new WebService() { BaseAddress = System.Configuration.ConfigurationManager.AppSettings["RisPortal"] });
             
             var result = imagingEncodeService.GetImagingEncode(UserId, lbRadRequestNo.Text, varPID);
 
