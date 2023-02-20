@@ -1,19 +1,14 @@
-﻿using EMR.Model;
+﻿using EMR.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Specialized;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using System.Web;
-using System.Web.Script.Serialization;
 using System.Web.UI;
 using Telerik.Web.UI;
-using Telerik.Web.UI.Map;
 
 namespace EMR
 {
@@ -164,65 +159,17 @@ namespace EMR
         {
             string target = Request["__EVENTTARGET"];
             string args = Request["__EVENTARGUMENT"];
-            string document_id;
-            string patient_visit_id;
-            string page_url_arg;
-            NameValueCollection nameValueCollection;
-            string api;
-
+            
             switch (target)
             {
                 case "reload_treeview":
                     SelectDocument(args);
                     break;
                 case "document_log":
-                    //RunAsync("", args).GetAwaiter().GetResult();
-                    page_url_arg = args;
-                    nameValueCollection = HttpUtility.ParseQueryString(args);
-                    api = nameValueCollection["api"];
-                    document_id = nameValueCollection["docId"];
-                    document_log_id = nameValueCollection["docId"];
-
-                    string page_url = page_url_arg.Substring(0, page_url_arg.IndexOf("api") - 1);
-
-                    string url = MainContent.ContentUrl;
-
-                    dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
-                    DataTable db = new DataTable();
-                    
-                    if (res.Status == System.Net.HttpStatusCode.OK)
-                    {
-                        db = WebHelpers.GetJSONToDataTable(res.Data);
-                    }
-                    WebHelpers.loadRadGridHistoryLog(rgdLogHistory, db, out string signature_date, out string signature_name);
-                    //string url = 
-                    //PAGE_URL.Value = String.Join("", nameValueCollection.Cast<string>().Select(e => nameValueCollection[e]);
-                    PAGE_URL.Value = page_url;
+                    ShowDocumentLog(queryString: args);
                     break;
                 case "complete_document":
-                    try
-                    {
-                        nameValueCollection = HttpUtility.ParseQueryString(args);
-
-                        document_id = nameValueCollection["docId"];
-                        patient_visit_id = nameValueCollection["pvid"];
-
-                        RadTreeView1.Nodes.Clear();
-                        LoadRootNodes(RadTreeView1, TreeNodeExpandMode.ServerSideCallBack);
-
-                        RadTreeNode rtn1 = RadTreeView1.FindNodeByValue(patient_visit_id);
-                        PopulateNodeOnDemand(rtn1, TreeNodeExpandMode.ServerSideCallBack);
-                        var item = RadTreeView1.FindNodeByAttribute("docId", document_id);
-                        if (item != null)
-                        {
-                            item.Selected = true;
-                            MainContent.ContentUrl = args;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
+                    HandleCompleteDocument(queryString: args);
                     break;
                 case "delete_document":
                     hfdDeleteDocument.Value = args;
@@ -231,23 +178,91 @@ namespace EMR
 
                     break;
                 case "reload_complex_document":
-                    try
-                    {
-                        document_id = args.Substring(args.IndexOf("docId") + 6, 36);
-                        radGridComplexDoc.Rebind();
-                        var ComplexDocitem = radGridComplexDoc.MasterTableView.FindItemByKeyValue(nameof(document_id), document_id);
-                        if (ComplexDocitem != null && WebHelpers.CanOpenForm(Page, document_id, DocumentStatus.DRAFT, (string)Session["emp_id"], loc, locChanged, (string)Session["access_authorize"]))
-                        {
-                            ComplexDocitem.Selected = true;
-                            MainContent.ContentUrl = args;
-                        }
-                    }
-                    catch(Exception ex)
-                    {
-                        Console.WriteLine(ex.Message);
-                    }
+                    HandleReloadComplexDocument(queryString: args);
                     break;
 
+            }
+        }
+
+        private void ShowDocumentLog(string queryString)
+        {
+            NameValueCollection nameValueCollection = HttpUtility.ParseQueryString(queryString);
+            string api = nameValueCollection["api"];
+            string document_id = nameValueCollection["docId"];
+            document_log_id = nameValueCollection["docId"];
+            var result = EmrService.GetLogList(model: api, location: loc, documentId: document_id);
+            PAGE_URL.Value = queryString.Substring(0, queryString.IndexOf("api") - 1);
+            rgdLogHistory.DataSource = result.Items;
+            rgdLogHistory.DataBind();
+
+            //RunAsync("", args).GetAwaiter().GetResult();
+            //page_url_arg = args;
+
+            //string page_url = page_url_arg.Substring(0, page_url_arg.IndexOf("api") - 1);
+            //string url = MainContent.ContentUrl;
+
+            //var result = WebService.Get($"{api}/get-log-list/{loc}/{document_id}");
+
+            //dynamic res = WebHelpers.GetAPI($"{api}/get-log-list/{loc}/{document_id}");
+            //DataTable db = new DataTable();
+
+            //if (result.StatusCode == System.Net.HttpStatusCode.OK)
+            //{
+            //    //result.Content
+            //    db = WebHelpers.GetJSONToDataTable("");
+            //}
+
+            //WebHelpers.loadRadGridHistoryLog(rgdLogHistory, db, out string signature_date, out string signature_name);
+
+            //string url = 
+            //PAGE_URL.Value = String.Join("", nameValueCollection.Cast<string>().Select(e => nameValueCollection[e]);
+        }
+
+        private void HandleReloadComplexDocument(string queryString)
+        {
+            try
+            {
+                NameValueCollection nameValueCollection = HttpUtility.ParseQueryString(queryString);
+
+                string document_id = nameValueCollection["docId"];
+                radGridComplexDoc.Rebind();
+                var ComplexDocitem = radGridComplexDoc.MasterTableView.FindItemByKeyValue(nameof(document_id), document_id);
+                if (ComplexDocitem != null && WebHelpers.CanOpenForm(Page, document_id, DocumentStatus.DRAFT, (string)Session["emp_id"], loc, locChanged, (string)Session["access_authorize"]))
+                {
+                    ComplexDocitem.Selected = true;
+                    MainContent.ContentUrl = queryString;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void HandleCompleteDocument(string queryString)
+        {
+            try
+            {
+                NameValueCollection nameValueCollection = HttpUtility.ParseQueryString(queryString);
+
+                string document_id = nameValueCollection["docId"];
+                string patient_visit_id = nameValueCollection["pvid"];
+
+                RadTreeView1.Nodes.Clear();
+                LoadRootNodes(RadTreeView1, TreeNodeExpandMode.ServerSideCallBack);
+
+                RadTreeNode rtn1 = RadTreeView1.FindNodeByValue(patient_visit_id);
+                PopulateNodeOnDemand(rtn1, TreeNodeExpandMode.ServerSideCallBack);
+                var item = RadTreeView1.FindNodeByAttribute("docId", document_id);
+                if (item != null)
+                {
+                    item.Selected = true;
+                    MainContent.ContentUrl = queryString;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
 

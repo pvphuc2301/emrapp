@@ -1,6 +1,7 @@
 ﻿using EMR.Classes;
 using EMR.Data.AIH.Model;
 using EMR.Model;
+using EMR.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;

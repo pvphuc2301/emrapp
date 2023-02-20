@@ -55,52 +55,6 @@ namespace EMR
                 Model.hair_removal_diagram = BfspDictionary.HAIR_REMOVAL_DIAGRAM;
             }
         }
-        //protected void Page_Load(object sender, EventArgs e)
-        //{
-        //    if (!CheckSession())
-        //    {
-        //        return;
-        //    }
-        //    if (!IsPostBack)
-        //    {
-        //        InitModel();
-
-        //        IEnumerable<Bfsp> Logs = _emrService.GetLogs(Guid.Parse(varDocID), Location);
-        //        if (Logs.Count() == 1)
-        //        {
-        //            Model.hair_removal_diagram = BfspDictionary.HAIR_REMOVAL_DIAGRAM;
-        //        }
-
-        //        InitPage();
-
-        //        LastestVersion.Visible = varDocIdLog != null;
-        //        LoadLogHistoryText();
-
-        //        _patientService = new PatientService();
-        //        uc_patientInfo.Patient = _patientService.GetPatient(Guid.Parse(varPID));
-        //        IEnumerable<PatientVisitInfo> PatientVisit = _patientService.GetPatientVisit(Guid.Parse(varPVID), Location);
-        //        uc_patientInfo.PatientVisit = PatientVisit.FirstOrDefault();
-        //    }
-        //    else
-        //    {
-        //        PostBackEventHandler();
-        //    }
-        //}
-        //private void InitPage()
-        //{
-        //    LoadPermissions();
-            
-        //    amendReasonWraper.Visible = false;
-        //    if (Model.status == DocumentStatus.FINAL)
-        //    {
-        //        BindingDataForm(ControlState.View);
-        //        BindingDataFormPrint();
-        //    }
-        //    else
-        //    {
-        //        BindingDataForm(ControlState.Edit);
-        //    }
-        //}
         #region Binding Data
         public override bool LoadFormControl(ControlState state)
         {
@@ -158,113 +112,6 @@ namespace EMR
             
             return Visible;
         }
-        //public override void PrintDocument(object sender, EventArgs e)
-        //{
-        //    //dynamic rwndPrint = FindControl("rwndPrint");
-        //    //PrintSetup();
-        //    InitModel();
-        //    _patientService = new PatientService();
-        //    Patient = _patientService.GetPatient(Guid.Parse(varPID));
-        //    //if (rwndPrint != null)
-        //    //{
-        //    //    string script = string.Format("function f(){{ window.select_print_language();Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
-        //    //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "print_document", script, true);
-        //    //}
-        //    //else
-        //    //{
-        //    //    string script = string.Format("function f(){{ window.print_document();Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
-        //    //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "print_document", script, true);
-        //    //}
-        //    //ModelRef = InitModel();
-        //    //Patient = new PatientInfo(varPID);
-        //    //PatientVisit = new PatientVisitInfo(patient_visit_id, Location);
-        //    //BindingDataFormPrint();
-        //    string script = string.Format("function f(){{ window.print_document();Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
-        //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "print_document", script, true);
-        //}
-        //public override void CancelAmendDocument(object sender, EventArgs e)
-        //{
-        //    var response = SessionChecker.ClearSession(Location, Guid.Parse(varDocID));
-
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        btnCancel.Visible
-        //            = btnComplete.Visible
-        //            = false;
-        //        btnAmend.Visible
-        //            = btnPrint.Visible
-        //            = true;
-
-        //        InitModel();
-        //        InitPage();
-        //    }
-        //    else
-        //    {
-        //        string script = string.Format("function f(){{ window.parent.ShowBlock('Cannot clear session');Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
-        //        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "error", script, true);
-        //    }
-        //}
-        //public override void AmendDocument(object sender, EventArgs e)
-        //{
-        //    var item = SessionChecker.FindBlockedSession(Location, Guid.Parse(varDocID), Guid.Parse(EmpId));
-        //    if(item != null)
-        //    {
-        //        string script = string.Format("function f(){{ window.parent.ShowBlock('This document is blocked by " + item.full_name_l + "');Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
-        //        ScriptManager.RegisterStartupScript(Page, Page.GetType(), "block_document", script, true);
-        //    }
-        //    else
-        //    {
-        //        InitModel();
-        //        btnAmend.Visible
-        //            = btnPrint.Visible
-        //            = false;
-        //        btnComplete.Visible
-        //            = btnCancel.Visible
-        //            = amendReasonWraper.Visible
-        //            = true;
-
-        //        LoadFormControl(ControlState.Edit);
-        //        BindingDataFormEdit();
-        //    }
-        //}
-        //public override void DeleteDocument(object sender, EventArgs e)
-        //{
-        //    var args = JsonConvert.SerializeObject(new { document_id = varDocID, api = Bfsp._api, patient_visit_id = patient_visit_id });
-        //    string script = string.Format("function f(){{ window.parent.ConfirmDeleteDocument('{0}');Sys.Application.remove_load(f);}}Sys.Application.add_load(f);", args);
-        //    ScriptManager.RegisterStartupScript(Page, Page.GetType(), "confirm_delete_document", script, true);
-        //}
-        //public override void CompleteDocument(object sender, EventArgs e)
-        //{
-        //    if (Page.IsValid)
-        //    {
-        //        try
-        //        {
-        //            (sender as LinkButton).CssClass += "cursor-wait";
-        //            Model = new Bfsp(varDocID);
-        //            Model.status = DocumentStatus.FINAL;
-        //            Model.user_name = UserId;
-        //            BindingControlToModel();
-        //            UpdateModel();
-        //            InitPage();
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Console.WriteLine(ex.Message);
-        //            WebHelpers.SendError(Page, ex);
-        //        }
-        //    }
-        //}
-        //public override void SaveDocument(object sender, EventArgs e)
-        //{
-        //    if (Page.IsValid)
-        //    {
-        //        Model = new Bfsp(varDocID);
-        //        Model.status = DocumentStatus.DRAFT;
-        //        Model.user_name = UserId;
-        //        BindingControlToModel();
-        //        UpdateModel();
-        //    }
-        //}
         public override void BindingDataFormPrint()
         {
             Patient = PatientService.GetPatient(Guid.Parse(varPID));
@@ -559,15 +406,6 @@ namespace EMR
                     }
                     break;
             }
-
-            Model = InitModel();
-            Model.status = DocumentStatus.FINAL;
-            Model.user_name = UserId;
-            BindingControlToModel();
-            string model = JsonConvert.SerializeObject(Model);
-            string script = string.Format("function f(){{ console.log({0});Sys.Application.remove_load(f);}}Sys.Application.add_load(f);", model);
-            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "console_log_model", script, true);
-
         }
         #region Validate
         protected void preoperative_diagnosis_ServerValidate(object source, ServerValidateEventArgs args)

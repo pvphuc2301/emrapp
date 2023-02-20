@@ -2,19 +2,6 @@
 
 <%@ Register Src="~/UserControls/TextField.ascx" TagPrefix="aih" TagName="TextField" %>
 <%@ Register Src="~/UserControls/AmendReason.ascx" TagPrefix="aih" TagName="AmendReason" %>
-<%@ Register Src="~/UserControls/PopupModal.ascx" TagPrefix="webUI" TagName="PopupModal" %>
-<%@ Register Src="~/icons/ExclamationTriangle.ascx" TagPrefix="icon" TagName="ExclamationTriangle" %>
-<%@ Register Src="~/UserControls/PrintTemplate/Date.ascx" TagPrefix="webUI" TagName="Date" %>
-<%@ Register Src="~/UserControls/PrintTemplate/DateTime.ascx" TagPrefix="webUI" TagName="DateTime" %>
-<%@ Register Src="~/UserControls/PrintTemplate/Line.ascx" TagPrefix="aih" TagName="Line" %>
-<%@ Register Src="~/UserControls/Barcode.ascx" TagPrefix="webUI" TagName="Barcode" %>
-<%@ Register Src="~/UserControls/PrintTemplate/Label1.ascx" TagPrefix="webUI" TagName="Label1" %>
-<%@ Register Src="~/UserControls/PrintTemplate/Signature1.ascx" TagPrefix="webUI" TagName="Signature1" %>
-<%@ Register Src="~/UserControls/PrintTemplate/PatientLabel1.ascx" TagPrefix="aih" TagName="PatientLabel1" %>
-<%@ Register Src="~/UserControls/PrintTemplate/Label.ascx" TagPrefix="webUI" TagName="Label" %>
-<%@ Register Src="~/UserControls/PrintTemplate/Signature2.ascx" TagPrefix="aih" TagName="Signature2" %>
-<%@ Register Src="~/UserControls/PrintTemplate/PrtDate.ascx" TagPrefix="aih" TagName="PrtDate" %>
-<%@ Register Src="~/UserControls/PopupShowDelay.ascx" TagPrefix="webUI" TagName="PopupShowDelay" %>
 <%@ Register Src="~/UserControls/UserControlPatientInfo.ascx" TagPrefix="webUI" TagName="PatientInfo" %>
 
 <!DOCTYPE html>
@@ -23,11 +10,9 @@
     <title></title>
     <link href="../styles/style.css" rel="stylesheet" />
     <link href="../styles/myStyle.css" rel="stylesheet" />
-    <link href="../styles/sweetalert.min.css" rel="stylesheet" />
-    <link href="../styles/alertify.css" rel="stylesheet" />
     <link href="../styles/print-10.2022.css" rel="stylesheet" />
+    <link href="../styles/toastr.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" rel="stylesheet" />
     <style>
         @page {
             /*margin-left: 65px; 
@@ -36,11 +21,7 @@
 /*            margin-left: 1.8cm; 
 	        margin-right: 1.5cm;*/
         }
-        @media print {
-            .alertify-logs {
-                display: none !important;
-            }
-        }
+        
         .cursor-wait {
             pointer-events: none;
             background-color: #007bff;
@@ -477,20 +458,7 @@
                 </div>
             </ContentTemplate>
         </asp:UpdatePanel>
-        <%-- Select print language --%>
-        <%--<telerik:RadWindowManager RenderMode="Lightweight"  EnableShadow="true" Behaviors="Close,Move" ID="RadWindowManager" DestroyOnClose="true" RestrictionZoneID="RestrictionZone" Opacity="99" runat="server" Width="450" MaxHeight="400">
-            <Windows>
-                <telerik:RadWindow CssClass="NoIconUrl" Height="130px" VisibleStatusbar="false" Width="220px" RenderMode="Lightweight" ID="rwndPrint" Title="Chọn ngôn ngữ" runat="server">
-                    <ContentTemplate>
-                        <div class="text-center" style="margin-top: 20px">
-                            <asp:LinkButton runat="server" OnClientClick="printForm(true); return false;" ID="LinkButton1" CssClass="btn btn-secondary">Tiếng Việt</asp:LinkButton>
-                            <asp:LinkButton runat="server" OnClientClick="printForm(false); return false;" ID="LinkButton2" CssClass="btn btn-secondary">Song ngữ</asp:LinkButton>
-                        </div>
-                    </ContentTemplate>
-                </telerik:RadWindow>
-            </Windows>
-        </telerik:RadWindowManager>--%>
-
+        
         <div class="cssclsNoPrint">
             <ul class="breadcrumb" style="position: sticky; top: 0; left: 0; right: 0; margin-bottom: 0;border-bottom: 1px solid #ddd;border-radius:0;">
                 <li><asp:LinkButton runat="server" ID="btnHome" OnClick="RedirectToPatientSummary">Home</asp:LinkButton><span class="divider" style="margin-left: 4px;">/</span></li>
@@ -534,7 +502,7 @@
                                     </div>
                                     <div class="alert alert-info d-flex align-items-center">
                                         <span class="mr-2"><i style="font-size: 24px;" class="fa fa-exclamation-circle"></i></span>
-                                        <asp:Label runat="server" ID="lblLogHistory"></asp:Label>
+                                        <asp:Label runat="server" ID="lblLogHistory" CssClass="mr-1"></asp:Label>
                                         <asp:UpdatePanel runat="server" ID="uplViewHistory">
                                             <ContentTemplate>
                                                 <asp:LinkButton OnClick="ViewHistory" runat="server" ID="lbtnViewHistory" Text="[View History]"></asp:LinkButton>
@@ -943,25 +911,21 @@
                                 <div>Sơ đồ cắt tóc/cạo lông (xin đánh dấu những chỗ cần cắt tóc/cạo lông)/ <span class="text-primary">Hair removal diagram (please shade the areas to be prepared)</span></div>
                             </div>
 
-                            <div class="row mb-2">
-                                <div class="col-md-12">
-                                    <div class="form-actions" style="display: flex; gap: 6px">
-                                        <asp:UpdatePanel runat="server" ID="UpdatePanel2">
-                                            <ContentTemplate>
-                                                <asp:LinkButton OnClick="CompleteDocument" ValidationGroup="Group2" runat="server"  ID="btnComplete" CssClass="btn btn-primary">Complete</asp:LinkButton>
-                                                <asp:LinkButton OnClick="SaveDocument" ValidationGroup="Group1" ID="btnSave" runat="server" CssClass="btn btn-primary">Save</asp:LinkButton>
-                                                <asp:LinkButton OnClick="DeleteDocument" runat="server" ID="btnDelete" CssClass="btn btn-danger">Delete</asp:LinkButton>
-                                            </ContentTemplate>
-                                        </asp:UpdatePanel>
-                                        <asp:LinkButton OnClick="AmendDocument" runat="server" ID="btnAmend" CssClass="btn btn-secondary">Amend</asp:LinkButton>
-                                        <asp:UpdatePanel runat="server" ID="UpdatePanel1">
-                                            <ContentTemplate>
-                                                <asp:LinkButton runat="server" OnClick="PrintDocument" ID="btnPrint" CssClass="btn btn-secondary">Print</asp:LinkButton>
-                                            </ContentTemplate>
-                                        </asp:UpdatePanel>
-                                        <asp:LinkButton OnClick="CancelAmendDocument" runat="server"  ID="btnCancel" CssClass="btn btn-secondary">Cancel</asp:LinkButton>
-                                    </div>
-                                </div>
+                            <div class="mt-2 d-flex">
+                                <asp:LinkButton OnClick="CompleteDocument" ValidationGroup="Group2" runat="server"  ID="btnComplete" CssClass="btn btn-primary mr-2">Complete</asp:LinkButton>
+                                <asp:UpdatePanel runat="server" ID="UpdatePanel2">
+                                    <ContentTemplate>
+                                        <asp:LinkButton OnClick="SaveDocument" ValidationGroup="Group1" ID="btnSave" runat="server" CssClass="btn btn-primary mr-2">Save</asp:LinkButton>
+                                        <asp:LinkButton OnClick="DeleteDocument" runat="server" ID="btnDelete" CssClass="btn btn-danger mr-2">Delete</asp:LinkButton>
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
+                                <asp:LinkButton OnClick="AmendDocument" runat="server" ID="btnAmend" CssClass="btn btn-secondary mr-2">Amend</asp:LinkButton>
+                                <asp:UpdatePanel runat="server" ID="UpdatePanel1">
+                                    <ContentTemplate>
+                                        <asp:LinkButton runat="server" OnClick="PrintDocument" ID="btnPrint" CssClass="btn btn-secondary mr-2">Print</asp:LinkButton>
+                                    </ContentTemplate>
+                                </asp:UpdatePanel>
+                                <asp:LinkButton OnClick="CancelAmendDocument" runat="server"  ID="btnCancel" CssClass="btn btn-secondary">Cancel</asp:LinkButton>
                             </div>
                         </div>
                     </div>
@@ -973,9 +937,8 @@
     <script src="../scripts/bootstrap.min.js"></script>
     <script src="../scripts/myScript.js"></script>
     <script src="../scripts/contenteditable.min.js"></script>
-    <script src="../scripts/sweetalert.min.js"></script>
-    <script src="../scripts/alertify.js"></script>
     <script src="../scripts/image-editor.js"></script>
+    <script src="../scripts/toastr.min.js"></script>
     <script type="text/javascript">
         ImageEditor("hair_removal_diagram_data_base64");
         function show_window(rwndID) {

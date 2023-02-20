@@ -1,6 +1,7 @@
 ﻿using EMR.Classes;
 using EMR.Data.Shared.Services;
 using EMR.Model;
+using EMR.Services;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -478,24 +479,17 @@ namespace EMR.Other
         }
         private void AddDocument(string ModelID, string PVID, string model_url)
         {
-            dynamic response = WebHelpers.GetAPI(string.Format("api/emr/get-api/{0}/{1}", loc, ModelID));
-
-            if (response.Status == System.Net.HttpStatusCode.OK)
+           var data = EmrService.GetEmrApi(location: loc, modelId: ModelID);
+            if(data != null)
             {
-                //dynamic response2 = WebHelpers.GetAPI(string.Format("api/emr/get-api/{0}/{1}", DataHelpers._LOCATION, modelID));
-
-                //if (response2.Status == System.Net.HttpStatusCode.OK)
-                //{
-                dynamic data = JObject.Parse(response.Data);
-
-                string docId = Guid.NewGuid().ToString();
+                string newDocumentId = Guid.NewGuid().ToString();
 
                 dynamic response3;
 
                 if (data.api == "scoc")
                 {
                     string apiURL = $"api/emr/menu-doc-complex/{loc}/{varPID}";
-                    response = WebHelpers.GetAPI(apiURL);
+                    dynamic response = WebHelpers.GetAPI(apiURL);
 
                     DataTable mydataTable;
 
@@ -509,7 +503,7 @@ namespace EMR.Other
                             string url = $"../{model_url}?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={PVID}&modelId={ModelID}&docId={mydataTable.Rows[0].Field<string>("document_id")}";
 
                             string script = string.Format("function f(){{ window.parent.reload_complex_document(\"" + url + "\");Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
-                                ScriptManager.RegisterStartupScript(Page, Page.GetType(), "reload_complex_document", script, true);
+                            ScriptManager.RegisterStartupScript(Page, Page.GetType(), "reload_complex_document", script, true);
 
                             //Response.Redirect(url, false);
                         }
@@ -517,7 +511,7 @@ namespace EMR.Other
                         {
                             var objTemp = new
                             {
-                                document_id = docId,
+                                document_id = newDocumentId,
                                 patient_visit_id = PVID,
                                 model_id = ModelID,
                                 user_name = UserId,
@@ -533,10 +527,10 @@ namespace EMR.Other
 
                             if (response3.Status == System.Net.HttpStatusCode.OK)
                             {
-                                dynamic response4 = WebHelpers.PostAPI($"api/{data.api}/log/{loc}/{docId}");
+                                dynamic response4 = WebHelpers.PostAPI($"api/{data.api}/log/{loc}/{newDocumentId}");
                                 if (response4.Status == System.Net.HttpStatusCode.OK)
                                 {
-                                    string url = $"../{model_url}?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={PVID}&modelId={ModelID}&docId={docId}";
+                                    string url = $"../{model_url}?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={PVID}&modelId={ModelID}&docId={newDocumentId}";
                                     Response.Redirect(url, false);
                                 }
                             }
@@ -547,7 +541,7 @@ namespace EMR.Other
                 {
                     var objTemp = new
                     {
-                        document_id = docId,
+                        document_id = newDocumentId,
                         patient_visit_id = PVID,
                         model_id = ModelID,
                         user_name = UserId
@@ -557,10 +551,10 @@ namespace EMR.Other
 
                     if (response3.Status == System.Net.HttpStatusCode.OK)
                     {
-                        dynamic response4 = WebHelpers.PostAPI($"api/{data.api}/log/{loc}/{docId}");
+                        dynamic response4 = WebHelpers.PostAPI($"api/{data.api}/log/{loc}/{newDocumentId}");
                         if (response4.Status == System.Net.HttpStatusCode.OK)
                         {
-                            string url = $"../{model_url}?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={PVID}&modelId={ModelID}&docId={docId}";
+                            string url = $"../{model_url}?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={PVID}&modelId={ModelID}&docId={newDocumentId}";
 
                             string ContentUrl = "/";
                             #region ...
@@ -607,9 +601,9 @@ namespace EMR.Other
                                     break;
                             }
 
-                            url = ContentUrl + $"{data.url}?modelId={ModelID}&docId={docId}&pId={varPID}&vpId={varVPID}&pvid={patientVisitInfo.patient_visit_id}&loc={loc}";
+                            url = ContentUrl + $"{data.url}?modelId={ModelID}&docId={newDocumentId}&pId={varPID}&vpId={varVPID}&pvid={patientVisitInfo.patient_visit_id}&loc={loc}";
 
-                            if (WebHelpers.CanOpenForm(Page, docId, DocumentStatus.DRAFT, (string)Session["emp_id"], loc, locChanged, (string)Session["access_authorize"]))
+                            if (WebHelpers.CanOpenForm(Page, newDocumentId, DocumentStatus.DRAFT, (string)Session["emp_id"], loc, locChanged, (string)Session["access_authorize"]))
                             {
                                 string script = string.Format("function f(){{ window.parent.reload_treeview(\"" + url + "\");Sys.Application.remove_load(f);}}Sys.Application.add_load(f);");
                                 ScriptManager.RegisterStartupScript(Page, Page.GetType(), "reload_treeview", script, true);
@@ -619,7 +613,22 @@ namespace EMR.Other
                         }
                     }
                 }
+
             }
+            //dynamic response = WebHelpers.GetAPI(string.Format("api/emr/get-api/{0}/{1}", loc, ModelID));
+
+            //if (response.sta == System.Net.HttpStatusCode.OK)
+            //{
+            //    //dynamic response2 = WebHelpers.GetAPI(string.Format("api/emr/get-api/{0}/{1}", DataHelpers._LOCATION, modelID));
+
+            //    //if (response2.Status == System.Net.HttpStatusCode.OK)
+            //    //{
+            //    dynamic data = JObject.Parse(response.Data);
+
+            //    string docId = Guid.NewGuid().ToString();
+
+                
+            //}
         }
         protected void RadGridPatientProblem_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {

@@ -255,7 +255,6 @@
     <Content Include="OPD\OutPatIniNurAssRV03.aspx" />
     <Content Include="OPD\OutPatIniNurAssV20.aspx" />
     <Content Include="OPD\OutPatMedRecPedRV01.aspx" />
-    <Content Include="OPD\OutPatMedRecRV01.aspx" />
     <Content Include="Other\FormMenu.aspx" />
     <Content Include="Other\SessionEMR.aspx" />
     <Content Include="Other\Settings.aspx" />
@@ -345,12 +344,14 @@
     <Content Include="scripts\jquery-2.2.1.js" />
     <Content Include="scripts\jquery-2.2.1.min.js" />
     <Content Include="scripts\image-editor.js" />
+    <Content Include="scripts\toastr.min.js" />
     <Content Include="styles\alertify.css" />
     <Content Include="styles\css\fontawesome-all.css" />
     <Content Include="styles\print-10.2022.css" />
     <Content Include="styles\print.css" />
     <Content Include="styles\style-login.css" />
     <Content Include="styles\sweetalert.min.css" />
+    <Content Include="styles\toastr.min.css" />
     <Content Include="Test\CalculateAge.aspx" />
     <Content Include="Test\ImagingReportTest.aspx" />
     <Content Include="UserControls\UserControlPatientInfo.ascx" />
@@ -563,6 +564,9 @@
     <Compile Include="IPD\BookForSurPro.aspx.designer.cs">
       <DependentUpon>BookForSurPro.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmrApiModel.cs" />
+    <Compile Include="Models\NutritionalStatus.cs" />
+    <Compile Include="Models\NutritionalStatusProvider.cs" />
     <Compile Include="Model\PastMedicalHistoryModel.cs" />
     <Compile Include="OPD\AdmissionRequest.aspx.cs">
       <DependentUpon>AdmissionRequest.aspx</DependentUpon>
@@ -629,12 +633,6 @@
     </Compile>
     <Compile Include="OPD\OutPatMedRecPedRV01.aspx.designer.cs">
       <DependentUpon>OutPatMedRecPedRV01.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OPD\OutPatMedRecRV01.aspx.cs">
-      <DependentUpon>OutPatMedRecRV01.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="OPD\OutPatMedRecRV01.aspx.designer.cs">
-      <DependentUpon>OutPatMedRecRV01.aspx</DependentUpon>
     </Compile>
     <Compile Include="Other\FormMenu.aspx.cs">
       <DependentUpon>FormMenu.aspx</DependentUpon>
@@ -1085,6 +1083,8 @@
     <Compile Include="Report\TestTasb.aspx.designer.cs">
       <DependentUpon>TestTasb.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Services\Contracts\IEmrService.cs" />
+    <Compile Include="Services\EmrService.cs" />
     <Compile Include="Test\CalculateAge.aspx.cs">
       <DependentUpon>CalculateAge.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

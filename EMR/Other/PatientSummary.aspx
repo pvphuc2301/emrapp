@@ -264,9 +264,7 @@
             </ContentTemplate>
         </telerik:RadWindow>
         <%--  --%>
-        <telerik:RadNotification AutoCloseDelay="3000" RenderMode="Lightweight" ID="RadNotification1" runat="server" EnableRoundedCorners="true"
-                    EnableShadow="true" Text="Update success" OffsetX="-20" OffsetY="-20" VisibleTitlebar="false" Title="" TitleIcon="none" Width="300" Height="60">
-        </telerik:RadNotification>
+        <telerik:RadNotification AutoCloseDelay="3000" RenderMode="Lightweight" ID="RadNotification1" runat="server" EnableRoundedCorners="true" EnableShadow="true" Text="Update success" OffsetX="-20" OffsetY="-20" VisibleTitlebar="false" Title="" TitleIcon="none" Width="300" Height="60"></telerik:RadNotification>
     </form>
 
     <script src="../scripts/jquery-3.2.1.min.js"></script>

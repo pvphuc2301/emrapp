@@ -2,13 +2,11 @@
 using EMR.Data.AIH.Dictionary;
 using EMR.Data.AIH.Model;
 using EMR.Model;
+using EMR.Models;
+using EMR.Services;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
@@ -21,12 +19,15 @@ namespace EMR
         public OmrModel Model { get; set; }
         public override dynamic InitModel()
         {
-            //if (WebHelpers.IsDEVELOP())
+            LoadPatient();
+            Model = new OmrModel(varDocID, Location, varDocIdLog);
+
+            if (Model.Logs(Location)?.Rows.Count == 1)
             {
-                form_url = form_url + "RV01";
-                Response.Redirect(PAGE_URL);
+                Model.SetDefaultDocument(Location, PatientVisit.patient_visit_id);
             }
-            return Model = new OmrModel(varDocID, Location, varDocIdLog);
+
+            return Model;
         }
         public override void PostBackEventHandler()
         {
@@ -34,6 +35,20 @@ namespace EMR
             {
                 case "rad_treatment_code_change":
                     rad_treatment_code_change((string)Request["__EVENTARGUMENT"]);
+                    break;
+                case "risk_of_malnutrition_changed":
+                    bool risk_of_malnutrition = bool.Parse(Request["__EVENTARGUMENT"]);
+
+                    if (risk_of_malnutrition)
+                    {
+                        rad_nutrition_screening_code_y.Checked = true;
+                        nutrition_screening_desc_wrapper.Visible = false;
+                    }
+                    else
+                    {
+                        rad_nutrition_screening_code_n.Checked = true;
+                        nutrition_screening_desc_wrapper.Visible = true;
+                    }
                     break;
             }
         }
@@ -57,11 +72,16 @@ namespace EMR
         {
             try
             {
+                up_nutrition_screening.Visible = true;
+                lbl_nutrition_screening_code.Visible = false;
+                lbl_asessment_date_time.Visible = false;
+                dtpk_asessment_date_time.Visible = true;
                 btnVSFreeText.Visible = true;
+                btnUpdateNutritionScreening.Visible = true;
 
                 Patient = new PatientInfo(varPID);
                 txt_amend_reason.Text = "";
-
+                BindingRadDateTimePicker(dtpk_asessment_date_time, Model.asessment_date_time);
                 if (DataHelpers.CalculateAge(Patient.date_of_birth) >= 18)
                 {
                     habits_field.Visible = true;
@@ -157,6 +177,34 @@ namespace EMR
 
                 txt_laboratory_indications_results.Value = WebHelpers.TextToHtmlTag(Model.laboratory_indications_results);
                 txt_additional_investigation.Value = WebHelpers.TextToHtmlTag(Model.additional_investigation);
+
+                nutrition_screening_wrapper.Visible = false;
+                nutrition_screening_desc_wrapper.Visible = false;
+                if (!string.IsNullOrEmpty(Model.nutrition_screening))
+                {
+                    var nutrition_screening = NutritionalStatusProvider.ConvertToObject(Model.nutrition_screening);
+                    if (NutritionalStatusProvider.IsRiskofMalnutrition(nutrition_screening.total_score))
+                    {
+                        lbl_risk_of_malnutrition.Text = "Có nguy cơ thiếu dinh dưỡng (≥ 2)/ Risk of malnutrition";
+                        nutrition_screening_wrapper.Visible = true;
+                        if (Model.nutrition_screening_code == "N")
+                        {
+                            rad_nutrition_screening_code_n.Checked = true;
+                            nutrition_screening_desc_wrapper.Visible = true;
+                            txt_nutrition_screening_desc.Value = Model.nutrition_screening_desc;
+                        }
+                        else if (Model.nutrition_screening_code == "Y")
+                        {
+                            rad_nutrition_screening_code_y.Checked = true;
+                        }
+                    }
+                    else
+                    {
+                        lbl_risk_of_malnutrition.Text = "Không có nguy cơ thiếu dinh dưỡng (<2)/ No risk of malnutrition";
+                        nutrition_screening_wrapper.Visible = false;
+                    }
+                }
+
                 // V.Kết luận/ Conclusion:
                 //txtDiagnosis.Text = Model1.diagnosis;
                 txt_initial_diagnosis.Value = WebHelpers.TextToHtmlTag(Model.initial_diagnosis);
@@ -188,6 +236,12 @@ namespace EMR
         {
             try
             {
+                btnUpdateNutritionScreening.Visible = false;
+                up_nutrition_screening.Visible = false;
+                lbl_nutrition_screening_code.Visible = true;
+                dtpk_asessment_date_time.Visible = false;
+
+                lbl_asessment_date_time.Text = WebHelpers.FormatDateTime(Model.asessment_date_time, "HH:mm dd-MMM-yyyy", "—");
                 LoadBarCode();
                 btnVSFreeText.Visible = false;
                 //1
@@ -259,6 +313,30 @@ namespace EMR
                 //IV.
                 lbl_laboratory_indications_results.Text = WebHelpers.TextToHtmlTag(Model.laboratory_indications_results);
                 lbl_additional_investigation.Text = WebHelpers.TextToHtmlTag(Model.additional_investigation);
+
+                if (!string.IsNullOrEmpty(Model.nutrition_screening))
+                {
+                    var nutrition_screening = NutritionalStatusProvider.ConvertToObject(Model.nutrition_screening);
+                    if (NutritionalStatusProvider.IsRiskofMalnutrition(nutrition_screening.total_score))
+                    {
+                        lbl_risk_of_malnutrition.Text = "Có nguy cơ thiếu dinh dưỡng (≥ 2)/ Risk of malnutrition";
+                        nutrition_screening_wrapper.Visible = true;
+                        if (Model.nutrition_screening_code == "N")
+                        {
+                            lbl_nutrition_screening_code.Text = "Không, lý do/ No, reason: " + Model.nutrition_screening_desc;
+                        }
+                        else if (Model.nutrition_screening_code == "Y")
+                        {
+                            lbl_nutrition_screening_code.Text = "Có/ Yes";
+                        }
+                    }
+                    else
+                    {
+                        lbl_risk_of_malnutrition.Text = "Không có nguy cơ thiếu dinh dưỡng (<2)/ No risk of malnutrition";
+                        nutrition_screening_wrapper.Visible = false;
+                    }
+                }
+
                 //V
                 lbl_initial_diagnosis.Text = WebHelpers.TextToHtmlTag(Model.initial_diagnosis);
                 lbl_diagnosis.Text = WebHelpers.TextToHtmlTag(Model.diagnosis);
@@ -280,12 +358,21 @@ namespace EMR
         {
             try
             {
-                prt_fullname.Text = Patient.FullName + $" ({Patient.Title})";
-                prt_dob.Text = WebHelpers.FormatDateTime(Patient.date_of_birth) + " | " + Patient.Gender;
-                prt_vpid.Text = Patient.visible_patient_id;
+                prt_asessment_date.Text = WebHelpers.FormatDateTime(Model.asessment_date_time, "dd/MM/yyyy");
+                prt_asessment_time.Text = WebHelpers.FormatDateTime(Model.asessment_date_time, "HH:mm");
+
+                //prt_fullname.Text = Patient.FullName + $" ({Patient.Title})";
+                //prt_dob.Text = WebHelpers.FormatDateTime(Patient.date_of_birth) + " | " + Patient.Gender;
+                //prt_vpid.Text = Patient.visible_patient_id;
+
+                prt_patient_name.Text = Patient.FullName;
+                prt_dob.Text = WebHelpers.FormatDateTime(Patient.date_of_birth, "dd/MM/yyyy");
+                prt_gender.Text = Patient.Gender;
+                prt_pid.Text = Patient.visible_patient_id;
+
 
                 LoadBarCode();
-                
+
                 prt_day_of_visit.Text = WebHelpers.FormatDateTime(PatientVisit.actual_visit_date_time);
                 prt_chief_complaint.Text = WebHelpers.TextToHtmlTag(Model.chief_complain, false);
                 prt_medical_history.Text = WebHelpers.TextToHtmlTag(Model.medical_history, false);
@@ -337,7 +424,7 @@ namespace EMR
                     = prt_psy_consult_required_false.Text
                     = "❏";
                 BindingLabel(nameof(Model.psy_consult_required) + "_" + Model.psy_consult_required, "☒");
-                
+
                 prt_laboratory_indications_results.Text = WebHelpers.TextToHtmlTag(Model.laboratory_indications_results, false);
                 prt_additional_investigation.Text = WebHelpers.TextToHtmlTag(Model.additional_investigation, false);
                 prt_initial_diagnosis.Text = WebHelpers.TextToHtmlTag(Model.initial_diagnosis, false);
@@ -367,7 +454,7 @@ namespace EMR
                     = prt_spec_opinion_requested_false.Text
                     = "❏";
                 BindingLabel(nameof(Model.spec_opinion_requested) + "_" + Model.spec_opinion_requested, "☒");
-                
+
                 if (Model.spec_opinion_requested != null)
                 {
                     if (Model.spec_opinion_requested)
@@ -384,7 +471,37 @@ namespace EMR
                 prt_specific_education_required.Text = WebHelpers.TextToHtmlTag(Model.specific_education_required, false);
 
                 prt_next_appointment.Text = WebHelpers.TextToHtmlTag(Model.next_appointment, false);
+                prt_risk_of_malnutrition_true.Text
+                    = prt_risk_of_malnutrition_false.Text
+                    = prt_nutrition_screening_code_false.Text
+                    = prt_nutrition_screening_code_true.Text
+                    = "❏";
+                prt_nutrition_screening_wrapper.Visible = false;
+                if (!string.IsNullOrEmpty(Model.nutrition_screening))
+                {
+                    var nutrition_screening = NutritionalStatusProvider.ConvertToObject(Model.nutrition_screening);
+                    if (NutritionalStatusProvider.IsRiskofMalnutrition(nutrition_screening.total_score))
+                    {
+                        prt_risk_of_malnutrition_true.Text = "☒";
+                        prt_nutrition_screening_wrapper.Visible = true;
+                        if (Model.nutrition_screening_code == "N")
+                        {
+                            prt_nutrition_screening_code_false.Text = "☒";
+                            prt_nutrition_screening_desc.Text = Model.nutrition_screening_desc;
+                        }
+                        else if (Model.nutrition_screening_code == "Y")
+                        {
+                            prt_nutrition_screening_code_true.Text = "☒";
+                        }
+                    }
+                    else
+                    {
+                        prt_risk_of_malnutrition_false.Text = "☒";
+                    }
+                }
 
+                prt_printed_date.Text = DateTime.Now.ToString("dd/MM/yyyy");
+                prt_printed_time.Text = DateTime.Now.ToString("HH:mm");
                 uplPrintPage.Update();
             }
             catch (Exception ex)
@@ -429,6 +546,7 @@ namespace EMR
         {
             try
             {
+                Model.asessment_date_time = DataHelpers.ConvertSQLDateTime(dtpk_asessment_date_time.SelectedDate);
                 //I.
                 Model.chief_complain = txt_chief_complain.Value;
                 //II.
@@ -488,6 +606,17 @@ namespace EMR
                 //IV.
                 Model.laboratory_indications_results = txt_laboratory_indications_results.Value;
                 Model.additional_investigation = txt_additional_investigation.Value;
+
+                if (rad_nutrition_screening_code_y.Checked)
+                {
+                    Model.nutrition_screening_code = "Y";
+                }
+                else if (rad_nutrition_screening_code_n.Checked)
+                {
+                    Model.nutrition_screening_code = "N";
+                    Model.nutrition_screening_desc = txt_nutrition_screening_desc.Value;
+                }
+
                 //V.
                 Model.initial_diagnosis = txt_initial_diagnosis.Value;
                 Model.diagnosis = txt_diagnosis.Value;
@@ -560,9 +689,9 @@ namespace EMR
         }
         private void LoadBarCode()
         {
-            IBarcodeGenerator barcodeGenerator = new BarcodeGenerator();
-            BarCode.Controls.Clear();
-            BarCode.Controls.Add(barcodeGenerator.Generator(Patient.visible_patient_id));
+            //IBarcodeGenerator barcodeGenerator = new BarcodeGenerator();
+            //BarCode.Controls.Clear();
+            //BarCode.Controls.Add(barcodeGenerator.Generator(Patient.visible_patient_id));
         }
         protected void btnVSFreeText_Click(object sender, EventArgs e)
         {
@@ -577,6 +706,49 @@ namespace EMR
                  = txt_vs_blood_pressure.Disabled
                  = txt_vs_spO2.Disabled
                  = !cbVSFreeText.Checked;
+        }
+
+        protected void btnUpdateNutritionScreening_Click(object sender, EventArgs e)
+        {
+            Model = new OmrModel(varDocID, Location, varDocIdLog);
+            var result = WebHelpers.GetAPI($"api/emr/nutrition-status/{Location}/{varPVID}");
+            if (result.Status == System.Net.HttpStatusCode.OK)
+            {
+                var data = result.Data;
+                JObject resJson = JObject.Parse(data);
+                Model.nutrition_screening = resJson["nutritional_status"].ToString();
+
+                if (!string.IsNullOrEmpty(Model.nutrition_screening))
+                {
+                    var nutrition_screening = NutritionalStatusProvider.ConvertToObject(Model.nutrition_screening);
+                    if (NutritionalStatusProvider.IsRiskofMalnutrition(nutrition_screening.total_score))
+                    {
+                        lbl_risk_of_malnutrition.Text = "Có nguy cơ thiếu dinh dưỡng (≥ 2)/ Risk of malnutrition";
+                        nutrition_screening_wrapper.Visible = true;
+                        if (Model.nutrition_screening_code == "N")
+                        {
+                            rad_nutrition_screening_code_n.Checked = true;
+                            nutrition_screening_desc_wrapper.Visible = true;
+                            txt_nutrition_screening_desc.Value = Model.nutrition_screening_desc;
+                        }
+                        else if (Model.nutrition_screening_code == "Y")
+                        {
+                            rad_nutrition_screening_code_y.Checked = true;
+                        }
+                    }
+                    else
+                    {
+                        lbl_risk_of_malnutrition.Text = "Không có nguy cơ thiếu dinh dưỡng (<2)/ No risk of malnutrition";
+                        nutrition_screening_wrapper.Visible = false;
+                    }
+                }
+            }
+        }
+
+        protected void rgdPastMedicalHistory_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            EmrService.GetMedicalHistory(location: Location, patientId: varPID);
+            
         }
     }
 }

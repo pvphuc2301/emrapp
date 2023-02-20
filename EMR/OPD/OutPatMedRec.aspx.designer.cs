@@ -60,13 +60,22 @@ namespace EMR
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl print_header;
 
         /// <summary>
-        /// prt_fullname control.
+        /// print_content control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_fullname;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl print_content;
+
+        /// <summary>
+        /// prt_patient_name control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_patient_name;
 
         /// <summary>
         /// prt_dob control.
@@ -78,31 +87,40 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_dob;
 
         /// <summary>
-        /// BarCode control.
+        /// prt_gender control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.PlaceHolder BarCode;
+        protected global::System.Web.UI.WebControls.Label prt_gender;
 
         /// <summary>
-        /// prt_vpid control.
+        /// prt_pid control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label prt_vpid;
+        protected global::System.Web.UI.WebControls.Label prt_pid;
 
         /// <summary>
-        /// print_content control.
+        /// prt_asessment_time control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl print_content;
+        protected global::System.Web.UI.WebControls.Label prt_asessment_time;
+
+        /// <summary>
+        /// prt_asessment_date control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_asessment_date;
 
         /// <summary>
         /// prt_day_of_visit control.
@@ -321,6 +339,60 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_psy_consult_required_true;
 
         /// <summary>
+        /// prt_risk_of_malnutrition_false control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_risk_of_malnutrition_false;
+
+        /// <summary>
+        /// prt_risk_of_malnutrition_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_risk_of_malnutrition_true;
+
+        /// <summary>
+        /// prt_nutrition_screening_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl prt_nutrition_screening_wrapper;
+
+        /// <summary>
+        /// prt_nutrition_screening_code_true control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_nutrition_screening_code_true;
+
+        /// <summary>
+        /// prt_nutrition_screening_code_false control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_nutrition_screening_code_false;
+
+        /// <summary>
+        /// prt_nutrition_screening_desc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_nutrition_screening_desc;
+
+        /// <summary>
         /// prt_laboratory_indications_results control.
         /// </summary>
         /// <remarks>
@@ -465,6 +537,24 @@ namespace EMR
         protected global::System.Web.UI.WebControls.Label prt_next_appointment;
 
         /// <summary>
+        /// prt_printed_date control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_printed_date;
+
+        /// <summary>
+        /// prt_printed_time control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label prt_printed_time;
+
+        /// <summary>
         /// print_footer control.
         /// </summary>
         /// <remarks>
@@ -600,6 +690,24 @@ namespace EMR
         protected global::System.Web.UI.WebControls.LinkButton lbtnViewHistory;
 
         /// <summary>
+        /// lbl_asessment_date_time control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_asessment_date_time;
+
+        /// <summary>
+        /// dtpk_asessment_date_time control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDateTimePicker dtpk_asessment_date_time;
+
+        /// <summary>
         /// lbl_chief_complain control.
         /// </summary>
         /// <remarks>
@@ -634,6 +742,24 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadWindow rwndPastMedicalHistory;
+
+        /// <summary>
+        /// UpdatePanel4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel4;
+
+        /// <summary>
+        /// rgdPastMedicalHistory control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid rgdPastMedicalHistory;
 
         /// <summary>
         /// lbl_medical_history control.
@@ -1651,6 +1777,96 @@ namespace EMR
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::EMR.TextField txt_additional_investigation;
+
+        /// <summary>
+        /// UpdatePanel3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel UpdatePanel3;
+
+        /// <summary>
+        /// btnUpdateNutritionScreening control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnUpdateNutritionScreening;
+
+        /// <summary>
+        /// lbl_risk_of_malnutrition control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_risk_of_malnutrition;
+
+        /// <summary>
+        /// nutrition_screening_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl nutrition_screening_wrapper;
+
+        /// <summary>
+        /// lbl_nutrition_screening_code control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbl_nutrition_screening_code;
+
+        /// <summary>
+        /// up_nutrition_screening control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel up_nutrition_screening;
+
+        /// <summary>
+        /// rad_nutrition_screening_code_y control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_nutrition_screening_code_y;
+
+        /// <summary>
+        /// rad_nutrition_screening_code_n control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputRadioButton rad_nutrition_screening_code_n;
+
+        /// <summary>
+        /// nutrition_screening_desc_wrapper control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl nutrition_screening_desc_wrapper;
+
+        /// <summary>
+        /// txt_nutrition_screening_desc control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::EMR.TextField txt_nutrition_screening_desc;
 
         /// <summary>
         /// lbl_initial_diagnosis control.
