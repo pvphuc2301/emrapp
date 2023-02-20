@@ -174,7 +174,10 @@
                                             </div>
                                         </div>
 
-                                        <div class="line-height-1d5"><span style="font-weight: bold">Thời gian phẫu thuật/ thủ thuật (dự kiến)</span>/ <span class="subtitle font-10">Surgical/ Procedural time (expected): </span><asp:Label runat="server" ID="prt_performance_date_time"/></div>
+                                        <div class="line-height-1d5">
+                                            <span style="font-weight: bold">Thời gian phẫu thuật/ thủ thuật (dự kiến)</span>/ <span class="subtitle font-10">Surgical/ Procedural time (expected): </span>
+                                            <asp:Label runat="server" ID="prt_performance_date_time"/>
+                                        </div>
 
                                         <div class="line-height-1d5"><span style="font-weight: bold">Thời gian sử dụng phòng mổ/ phòng nội soi (dự kiến)</span>/ <span class="subtitle font-10">Duration of using OT/ Endoscopy room (expected):</span></div>
 

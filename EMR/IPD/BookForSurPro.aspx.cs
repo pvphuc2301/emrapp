@@ -114,6 +114,46 @@ namespace EMR
         }
         public override void BindingDataFormPrint()
         {
+            #region set default
+            prt_admitted_specify.Text
+                = prt_performance_date_time.Text
+                = prt_surgical_equipment_note.Text
+                = prt_position_patient_specify.Text
+                = prt_type_anaesthesia_note.Text
+                = prt_preoperative_preparation_note.Text
+                = prt_booking_date.Text
+                = prt_booking_time.Text
+                = "";
+            prt_admitted_code_day.Text
+                = prt_admitted_code_end.Text
+                = prt_admitted_code_ipd.Text
+                = prt_infected_case_code_y.Text
+                = prt_infected_case_code_n.Text
+                = prt_equipment_code_n.Text
+                = prt_equipment_code_y.Text
+                = prt_surgical_equipment_code_car.Text
+                = prt_surgical_equipment_code_end.Text
+                = prt_surgical_equipment_code_oth.Text
+                = prt_surgical_equipment_code_no.Text
+                = prt_position_patient_code_sup.Text
+                = prt_position_patient_code_pro.Text
+                = prt_position_patient_code_lit.Text
+                = prt_position_patient_code_lat.Text
+                = prt_lateral_specify_left.Text
+                = prt_lateral_specify_right.Text
+                = prt_position_patient_code_oth.Text
+                = prt_type_anaesthesia_code_gen.Text
+                = prt_type_anaesthesia_code_reg.Text
+                = prt_type_anaesthesia_code_oth.Text
+                = prt_preoperative_preparation_code_no.Text
+                = prt_preoperative_preparation_code_gic.Text
+                = prt_preoperative_preparation_code_cat.Text
+                = prt_preoperative_preparation_code_oth.Text
+                = prt_hair_removal_code_n.Text
+                = prt_hair_removal_code_y.Text
+                = "❏";
+            #endregion
+
             Patient = PatientService.GetPatient(Guid.Parse(varPID));
 
             prt_patient_name.Text = Patient.FullName;

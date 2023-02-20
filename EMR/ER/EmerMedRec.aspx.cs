@@ -384,7 +384,7 @@ namespace EMR.ER
                 txt_investigations_results.Value = Model.investigations_results;
                 //Chẩn đoán ban đầu/ Initial diagnosis
                 txt_initial_diagnosis.Value = Model.initial_diagnosis;
-                //Chuẩn đoán xác định/ Diagnosis
+                //Chẩn đoán xác định/ Diagnosis
                 txt_comfirmed_diagnosis.Value = Model.comfirmed_diagnosis;
                 //Chẩn đoán phân biệt/ Differential diagnosis
                 txt_diferential_diagnosis.Value = Model.diferential_diagnosis;

@@ -290,7 +290,6 @@ namespace EMR
         }
         protected void AmendDocument(object sender, EventArgs e)
         {
-            //ShowToastr(Page, "Amend Successfully!", "", type: "success"); return;
             var item = SessionChecker.FindBlockedSession(Location, Guid.Parse(varDocID), Guid.Parse(EmpId));
             if (item != null)
             {
@@ -323,9 +322,6 @@ namespace EMR
         {
             string script = string.Format("function f(){{ toastr['{0}']('{1}', '{2}');;Sys.Application.remove_load(f);}}Sys.Application.add_load(f);", type.ToLower(), message, title);
             ScriptManager.RegisterStartupScript(Page, Page.GetType(), "toastr_message", script, true);
-
-            //page.ClientScript.RegisterStartupScript(page.GetType(), "toastr_message",
-            //      String.Format("toastr[{0}]('{1}', '{2}');", type.ToLower(), message, title), addScriptTags: true);
         }
         protected void CompleteDocument(object sender, EventArgs e)
         {
@@ -346,9 +342,9 @@ namespace EMR
                 WebServiceResponse logResult = WebService.Post(ModelRef.api + "/log/" + Location + "/" + ModelRef.document_id, "");
                 if (logResult.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    ShowToastr(Page, "save log fail!", "", type: "error");
+                    ShowToastr(Page, "Save log fail!", "", type: "error");
                 }
-                ShowToastr(Page, "Completed Successfully!", "", type: "success");
+                ShowToastr(Page, "Update Success!", "", type: "success");
                 SessionChecker.ClearSession(Location, Guid.Parse(varDocID));
                 ModelRef = GetModel();
                 Init_Page();
@@ -379,9 +375,9 @@ namespace EMR
                     WebServiceResponse logResult = WebService.Post(ModelRef.api + "/log/" + Location + "/" + ModelRef.document_id, "");
                     if (logResult.StatusCode != System.Net.HttpStatusCode.OK)
                     {
-                        ShowToastr(Page, "save log fail!", "", type: "error");
+                        ShowToastr(Page, "Save log fail!", "", type: "error");
                     }
-                    ShowToastr(Page, "Completed Successfully!", "", type: "success");
+                    ShowToastr(Page, "Update Success!", "", type: "success");
                     ModelRef = GetModel();
                     LoadLogHistoryText();
                 }

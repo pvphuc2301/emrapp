@@ -115,7 +115,7 @@
                                         </div>
 
                                         <div class="d-grid" style="grid-template-columns: 220px 1fr">
-                                            <webUI:Label runat="server" Title="Các chuẩn đoán chính:" SubTitle="Significant diagnosis" />
+                                            <webUI:Label runat="server" Title="Các chẩn đoán chính:" SubTitle="Significant diagnosis" />
                                             <asp:Label CssClass="d-inline-block ml-2 align-top" runat="server" ID="prt_diagnosis" />
                                         </div>
 

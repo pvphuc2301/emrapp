@@ -212,6 +212,29 @@ namespace EMR
         }
         public override void BindingDataFormPrint()
         {
+            prt_admission_department_other.Text
+                = prt_other_information_specify.Text
+                = prt_special_request_specify.Text
+                = "";
+
+            prt_isolation_request_n.Text
+                = prt_isolation_request_y.Text
+                = prt_admission_department_code_day.Text
+                = prt_admission_department_code_med.Text
+                = prt_admission_department_code_sur.Text
+                = prt_admission_department_code_obg.Text
+                = prt_admission_department_code_icu.Text
+                = prt_admission_department_code_ped.Text
+                = prt_admission_department_code_del.Text
+                = prt_admission_department_code_ope.Text
+                = prt_admission_department_code_oth.Text
+                = prt_for_surgical_cases_n.Text
+                = prt_for_surgical_cases_y.Text
+                = prt_other_information_code_n.Text
+                = prt_other_information_code_y.Text
+                = prt_special_request_code_n.Text
+                = prt_special_request_code_y.Text
+                = "❏";
             //_patientService = new PatientService();
             Patient = PatientService.GetPatient(Guid.Parse(varPID));
 
