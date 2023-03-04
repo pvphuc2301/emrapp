@@ -355,7 +355,7 @@
                     <asp:Label ID="lbDoctor" runat="server" Font-Size="11pt"></asp:Label><br />
                     <label style="font-size:small; font-weight:normal; font-size: 8px">Vì lý do đảm bảo chất lượng thuốc, thuốc đã cấp phát chỉ được đổi trả trong ngày. (*) <br />
     To ensure medication quality, only medications that are dispensed within a day can be returned or exchanged. (*)<br />
-    (*) Thông tin tư vấn thuốc 24/7 và giải đáp các vấn đề liên quan đến thuốc đã cung ứng: 0935 295 818
+    (*) Thông tin tư vấn thuốc 24/7 và giải đáp các vấn đề liên quan đến thuốc đã cung ứng: 091 240 9578 <%--0935 295 818--%>
                     </label>
                     <br />
                     <asp:Label ID="lbPrintDate" runat="server" Font-Size="Smaller" Font-Bold="false" Visible="false"></asp:Label>
