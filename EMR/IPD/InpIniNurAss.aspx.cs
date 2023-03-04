@@ -42,13 +42,13 @@ namespace EMR
             loc = (string)Session["company_code"];
             locChanged = (string)Session["const_company_code"];
 
-            //if (WebHelpers.IsDEVELOP())
-            //{
-            //    PAGE_URL = $"/IPD/InpIniNurAssRV05.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
-            //    Response.Redirect(PAGE_URL, true);
-            //}
+            if (WebHelpers.IsDEVELOP())
+            {
+                PAGE_URL = $"/IPD/InpIniNurAssRV05.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+                Response.Redirect(PAGE_URL, true);
+            }
 
-            PAGE_URL = $"/IPD/InpIniNurAss.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
+            //PAGE_URL = $"/IPD/InpIniNurAss.aspx?loc={loc}&pId={varPID}&vpId={varVPID}&pvid={varPVID}&modelId={varModelID}&docId={varDocID}";
 
             if (!IsPostBack)
             {

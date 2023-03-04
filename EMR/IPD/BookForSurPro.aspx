@@ -916,14 +916,14 @@
 
                             <div class="mt-2 d-flex">
                                 <asp:LinkButton OnClick="CompleteDocument" ValidationGroup="Group2" runat="server"  ID="btnComplete" CssClass="btn btn-primary mr-2">Complete</asp:LinkButton>
-                                <asp:UpdatePanel runat="server" ID="UpdatePanel2">
+                                <asp:UpdatePanel runat="server" ID="UpdatePanel2" Class="d-inline-block">
                                     <ContentTemplate>
                                         <asp:LinkButton OnClick="SaveDocument" ValidationGroup="Group1" ID="btnSave" runat="server" CssClass="btn btn-primary mr-2">Save</asp:LinkButton>
                                         <asp:LinkButton OnClick="DeleteDocument" runat="server" ID="btnDelete" CssClass="btn btn-danger mr-2">Delete</asp:LinkButton>
                                     </ContentTemplate>
                                 </asp:UpdatePanel>
                                 <asp:LinkButton OnClick="AmendDocument" runat="server" ID="btnAmend" CssClass="btn btn-secondary mr-2">Amend</asp:LinkButton>
-                                <asp:UpdatePanel runat="server" ID="UpdatePanel1">
+                                <asp:UpdatePanel runat="server" ID="UpdatePanel1" Class="d-inline-block">
                                     <ContentTemplate>
                                         <asp:LinkButton runat="server" OnClick="PrintDocument" ID="btnPrint" CssClass="btn btn-secondary mr-2">Print</asp:LinkButton>
                                     </ContentTemplate>

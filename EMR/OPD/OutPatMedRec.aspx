@@ -1254,7 +1254,7 @@
                                 </div>
                                 <%--  --%>
                                 <div class="mt-2 d-flex">
-                                    <asp:UpdatePanel runat="server" ID="uplPrintDocument">
+                                    <asp:UpdatePanel runat="server" ID="uplPrintDocument" Class="d-inline-block">
                                         <ContentTemplate>
                                             <asp:LinkButton ValidationGroup="Group2" runat="server" OnClick="CompleteDocument" ID="btnComplete" CssClass="btn btn-primary mr-1">Complete</asp:LinkButton>
                                             <asp:LinkButton ValidationGroup="Group1" OnClick="SaveDocument" ID="btnSave" runat="server" CssClass="btn btn-primary mr-1">Save</asp:LinkButton>
@@ -1262,7 +1262,7 @@
                                         </ContentTemplate>
                                     </asp:UpdatePanel>
                                     <asp:LinkButton runat="server" OnClick="AmendDocument" ID="btnAmend" CssClass="btn btn-secondary mr-1">Amend</asp:LinkButton>
-                                    <asp:UpdatePanel runat="server" ID="UpdatePanel2">
+                                    <asp:UpdatePanel runat="server" Class="d-inline-block" ID="UpdatePanel2">
                                         <ContentTemplate>
                                             <asp:LinkButton runat="server" OnClick="PrintDocument" ID="btnPrint" CssClass="btn btn-secondary mr-1">Print</asp:LinkButton>
                                         </ContentTemplate>

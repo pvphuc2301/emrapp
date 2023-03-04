@@ -1,12 +1,10 @@
 ﻿using EMR.Data.AIH.Dictionary;
 using EMR.Data.AIH.Model;
 using EMR.Model;
-using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Data;
-using System.Diagnostics;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
