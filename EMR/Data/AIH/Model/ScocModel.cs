@@ -35,7 +35,7 @@ namespace EMR.Data.AIH.Model
 
         protected override void DefaultDocument()
         {
-            throw new NotImplementedException();
+
         }
     }
 }
