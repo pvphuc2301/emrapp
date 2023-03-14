@@ -442,6 +442,7 @@
     </Compile>
     <Compile Include="Data\AIH\Dictionary\AdreDictionary.cs" />
     <Compile Include="Data\AIH\Dictionary\BfspDictionary.cs" />
+    <Compile Include="Data\AIH\Dictionary\EmrDicItem.cs" />
     <Compile Include="Data\AIH\Dictionary\fEmrDictionary.cs" />
     <Compile Include="Data\AIH\Dictionary\IinaDictionary.cs" />
     <Compile Include="Data\AIH\Dictionary\MrfvDictionary.cs" />
@@ -1402,7 +1403,7 @@
           </servers>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

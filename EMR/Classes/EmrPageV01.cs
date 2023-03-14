@@ -12,6 +12,7 @@ using EMR.Model;
 using EMR.Classes;
 using System.Net.Http;
 using EMR.Models;
+using EMR.Data.AIH.Dictionary;
 
 namespace EMR
 {
@@ -760,6 +761,25 @@ namespace EMR
                 ((HtmlInputCheckBox)control).Checked = true;
             }
         }
+        public delegate void TaskCompletedCallBack(EmrDicItem item);
+        protected void BindingInputCheckBox(string CheckboxId, IEnumerable<EmrDicItem> Items, TaskCompletedCallBack callback, string key = "code", string Prefix = "cb")
+        {
+            if (Items != null && CheckboxId != null)
+            {
+                foreach (var item in Items)
+                {
+                    try
+                    {
+                        BindingInputCheckBox(CheckboxId + "_" + item.code, key, Prefix);
+                        callback(item);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+        }
         protected void BindingInputCheckBox(string CheckboxId, DataTable DataTable, Func<KeyValuePair<string, object>, int> callback, string key = "code", string Prefix = "cb")
         {
             if (DataTable != null && CheckboxId != null)
@@ -771,6 +791,23 @@ namespace EMR
                         string code = row.Field<dynamic>(key).ToLower();
                         BindingInputCheckBox(CheckboxId + "_" + code, key, Prefix);
                         callback(new KeyValuePair<string, object>(row.Field<dynamic>(key).ToLower(), row.Field<string>("desc").ToString()));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+        }
+        protected void BindingInputCheckBox(string CheckboxId, IEnumerable<EmrDicItem> Items, string key = "code", string Prefix = "cb")
+        {
+            if (Items != null && CheckboxId != null)
+            {
+                foreach (var item in Items)
+                {
+                    try
+                    {
+                        BindingInputCheckBox(CheckboxId + "_" + item.code, key, Prefix);
                     }
                     catch (Exception ex)
                     {

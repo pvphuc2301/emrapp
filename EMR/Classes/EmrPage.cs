@@ -700,13 +700,15 @@ namespace EMR
             }
             return null;
         }
-        public void BindingInputRadioButton(string ControlID, string Prefix = "rad")
+        public bool BindingInputRadioButton(string ControlID, string Prefix = "rad")
         {
             var control = FindControl(Prefix + "_" + ControlID);
             if (control != null)
             {
                 ((HtmlInputRadioButton)control).Checked = true;
+                return true;
             }
+            return false;
         }
 
         #region HtmlInputCheckBox

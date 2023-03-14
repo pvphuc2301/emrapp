@@ -3986,7 +3986,7 @@
                                                     </div>
                                                     <div class="alert alert-info d-flex align-items-center">
                                                         <span class="mr-2"><i style="font-size: 24px;" class="fa fa-exclamation-circle"></i></span>
-                                                        <telerik:RadLabel runat="server" ID="rlblLogHistory" />
+                                                        <asp:Label runat="server" ID="lblLogHistory" CssClass="mr-1"></asp:Label>
                                                         <asp:UpdatePanel runat="server" ID="uplViewHistory">
                                                             <ContentTemplate>
                                                                 <asp:LinkButton runat="server" ID="lbtnViewHistory" OnClick="ViewHistory" Text="[View History]"></asp:LinkButton>
@@ -3995,6 +3995,31 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="row mb-1">
+                                                <div class="col-md-12 gt-2-a">
+                                                    <label class="control-label mb-2">Ngày vào khoa/ <span class="text-primary">Date of arrival:</span></label>
+                                                    <telerik:RadDateTimePicker runat="server" ID="dtpk_arrival_date_time" Width="200px" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12 gt-2-a">
+                                                    <label class="control-label mb-2">Thời gian bắt đầu đánh giá/ <span class="text-primary">Time of assessment:</span></label>
+                                                    <asp:Label runat="server" ID="lbl_assess_date_time"></asp:Label>
+                                                    <telerik:RadDateTimePicker runat="server" ID="dtpk_assess_date_time" Width="200px" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
+                                                </div>
+                                            </div>
+
+                                             <div class="row">
+                                                <div class="col-md-12">
+                                                    <p>
+                                                        Phiếu đánh giá phải được hoàn tất trong vòng 24 giờ sau khi người bệnh nhập viện, đánh dấu √ vào những ô thích hợp. <br />
+                                                        <span class="text-primary">This form has to be completed within 24 hours of admission, tick √ on the appropriate boxes.</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+
 
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
@@ -4005,7 +4030,6 @@
                                             <div class="row mb-2">
                                                 <div class="col-md-12 gt-2-a">
                                                     <label class="control-label mb-2">Quốc gia cư trú/ <span class="text-primary">Country of residence:</span></label>
-
                                                     <asp:Label runat="server" ID="lbl_residence_desc"></asp:Label>
                                                     <div runat="server" id="residence_desc_wrapper">
                                                         <div class="custom-control custom-radio d-inline-block">
@@ -4091,7 +4115,7 @@
 
                                                         <div class="custom-control custom-radio d-inline-block">
                                                             <input type="radio" runat="server" id="rad_religion_code_ch" name="rad_religion_code" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="rad_religion_code_ch">Thiên chúa giáo</label>
+                                                            <label class="custom-control-label" for="rad_religion_code_ch">Thiên chúa giáo/ <span class="text-primary">Catholic</span></label>
                                                         </div>
 
                                                         <div class="custom-control custom-radio d-inline-block">
@@ -4136,7 +4160,7 @@
                                                 <div class="col-md-12 gt-2-a">
                                                     <label class="control-label d-inline-block">Nghề nghiệp/ <span class="text-primary">Occupation:</span></label>
                                                     <asp:Label runat="server" ID="lbl_occupation"></asp:Label>
-                                                    <div class="form-group d-inline-block w-n" runat="server" id="occupation_wrapper">
+                                                    <div class="form-group d-inline-block" runat="server" id="occupation_wrapper">
                                                         <webUI:TextField runat="server" ID="txt_occupation" />
                                                     </div>
                                                 </div>
@@ -4165,7 +4189,7 @@
                                                             </a>
                                                         </div>
 
-                                                        <div class="form-group living_status_note_field w-n d-inline-block">
+                                                        <div class="form-group living_status_note_field">
                                                             <webUI:TextField runat="server" ID="txt_living_status_note" />
                                                         </div>
                                                     </div>
@@ -4206,21 +4230,38 @@
                                                             </a>
                                                         </div>
 
-                                                        <div class="form-group w-n d-inline-block hospital_concern_other_field">
+                                                        <div class="form-group hospital_concern_other_field">
                                                             <webUI:TextField runat="server" ID="txt_hospital_concern_other" />
                                                         </div>
-
                                                     </div>
                                                 </div>
+                                            </div>
 
+                                            <div class="row mb-2">
+                                                <div class="col-md-12 gt-2-a">
+                                                    <label class="control-label mb-1 d-inline-block">Tên người liên lạc/ <span class="text-primary">Contact person’s name:</span></label>
+                                                    <asp:Label runat="server" ID="lbl_contact_name"></asp:Label>
+                                                    <div class="form-group" runat="server" id="contact_name_wrapper">
+                                                        <webUI:TextField runat="server" ID="txt_contact_name" />
+                                                    </div>
+                                                </div>
+                                            </div>
 
+                                            <div class="row mb-2">
+                                                <div class="col-md-12 gt-2-a">
+                                                    <label class="control-label mb-1 d-inline-block mr-2">Quan hệ/ <span class="text-primary">Relationship:</span></label>
+                                                    <asp:Label runat="server" ID="lbl_contact_relationship"></asp:Label>
+                                                    <div class="form-group" runat="server" id="contact_relationship_wrapper">
+                                                        <webUI:TextField runat="server" ID="txt_contact_relationship" />
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div class="row mb-2">
                                                 <div class="col-md-12 gt-2-a">
                                                     <label class="control-label mb-1 d-inline-block">Người đi cùng/ <span class="text-primary">Accompanied by:</span></label>
                                                     <asp:Label runat="server" ID="lbl_accompanied"></asp:Label>
-                                                    <div class="form-group w-n d-inline-block" runat="server" id="accompanied_wrapper">
+                                                    <div class="form-group" runat="server" id="accompanied_wrapper">
                                                         <webUI:TextField runat="server" ID="txt_accompanied" />
                                                     </div>
                                                 </div>
@@ -4230,7 +4271,7 @@
                                                 <div class="col-md-12 gt-2-a">
                                                     <label class="control-label mb-1 d-inline-block mr-2">Quan hệ/ <span class="text-primary">Relationship:</span></label>
                                                     <asp:Label runat="server" ID="lbl_relationship"></asp:Label>
-                                                    <div class="form-group w-n d-inline-block" runat="server" id="relationship_wrapper">
+                                                    <div class="form-group" runat="server" id="relationship_wrapper">
                                                         <webUI:TextField runat="server" ID="txt_relationship" />
                                                     </div>
                                                 </div>
@@ -4259,7 +4300,7 @@
 
                                                         <div class="custom-control custom-radio d-inline-block">
                                                             <input type="radio" runat="server" id="rad_admit_from_code_vd" name="rad_admit_from_code" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="rad_admit_from_code_vd">Bác sĩ hơp tác/ <span class="text-primary">Visiting Doctor</span></label>
+                                                            <label class="custom-control-label" for="rad_admit_from_code_vd">Bác sĩ hợp tác/ <span class="text-primary">Visiting Doctor</span></label>
                                                         </div>
 
                                                         <div class="custom-control custom-radio d-inline-block">
@@ -4276,30 +4317,40 @@
 
                                                     </div>
                                                 </div>
-
-
                                             </div>
 
-                                            <div class="row">
+                                            <div class="row mb-1">
                                                 <div class="col-md-12 gt-2-a">
-                                                    <label class="control-label mb-2">Tình trang khi đến</label>
+                                                    <label class="control-label mb-2">Tình trạng khi đến/ <span class="text-primary">Admission condition</span></label>
                                                     <asp:Label runat="server" ID="lbl_arrived"></asp:Label>
                                                     <div runat="server" id="arrived_wrapper">
+                                                        <asp:UpdatePanel ID="updatePanel1" runat="server" UpdateMode="Always">
+                                                            <ContentTemplate>
+                                                                <label class="custom-control custom-checkbox d-inline-block">
+                                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_arrived_w" />
+                                                                    <span class="custom-control-label">Tự đi được/ <span class="text-primary">Walking</span></span>
+                                                                </label>
 
-                                                        <label class="custom-control custom-checkbox d-inline-block">
-                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_arrived_code_w" />
-                                                            <span class="custom-control-label">Tự đi được/ <span class="text-primary">Walking</span></span>
-                                                        </label>
+                                                                <label class="custom-control custom-checkbox d-inline-block">
+                                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_arrived_s" />
+                                                                    <span class="custom-control-label">Bằng băng ca/ <span class="text-primary">Stretcher</span></span>
+                                                                </label>
 
-                                                        <label class="custom-control custom-checkbox d-inline-block">
-                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_arrived_code_s" />
-                                                            <span class="custom-control-label">Bằng băng ca/ <span class="text-primary">Stretcher</span></span>
-                                                        </label>
+                                                                <label class="custom-control custom-checkbox d-inline-block">
+                                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_arrived_wc" />
+                                                                    <span class="custom-control-label">Bằng xe lăn/ <span class="text-primary">Wheelchair</span></span>
+                                                                </label>
 
-                                                        <label class="custom-control custom-checkbox d-inline-block">
-                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_arrived_code_wc" />
-                                                            <span class="custom-control-label">Bằng xe lăn/ <span class="text-primary">Wheelchair</span></span>
-                                                        </label>
+                                                                <label class="custom-control custom-checkbox d-inline-block">
+                                                                    <input onchange="__doPostBack('arrived_o_change','')" type="checkbox" class="custom-control-input" runat="server" id="cb_arrived_o" />
+                                                                    <span class="custom-control-label">Khác/ <span class="text-primary">Other</span></span>
+                                                                </label>
+
+                                                                <div>
+                                                                    <webUI:TextField runat="server" ID="txt_arrived_other" />
+                                                                </div>
+                                                            </ContentTemplate>
+                                                        </asp:UpdatePanel>
                                                     </div>
                                                 </div>
 
@@ -4317,7 +4368,7 @@
 
                                             <div class="row mb-2">
                                                 <div class="col-md-12 gt-2-a">
-                                                    <label class="control-label">Lần nhập viện trước tại bệnh viện Quốc tế Mỹ</label>
+                                                    <label class="control-label">Lần nhập viện trước tại bệnh viện Quốc tế Mỹ/ <span class="text-primary">Previous admission at AIH</span></label>
                                                     <asp:Label CssClass="ml-2" runat="server" ID="lbl_previous_admission"></asp:Label>
                                                 </div>
                                             </div>
@@ -4380,21 +4431,25 @@
                                                     <label class="control-label mb-2">Lạm dụng chất kích thích/ <span class="text-primary">Substance abuse</span></label>
                                                     <asp:Label runat="server" ID="lbl_substance_abuse"></asp:Label>
                                                     <div runat="server" id="substance_abuse_wrapper">
-                                                        <label class="custom-control custom-checkbox d-inline-block">
-                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_substance_abuse_s" />
-                                                            <span class="custom-control-label">Hút thuốc/ <span class="text-primary">Smoking</span></span>
-                                                        </label>
-                                                        <label class="custom-control custom-checkbox d-inline-block">
-                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_substance_abuse_a" />
-                                                            <span class="custom-control-label">Rượu bia/ <span class="text-primary">Acohol</span></span>
-                                                        </label>
-                                                        <label class="custom-control custom-checkbox d-inline-block">
-                                                            <input type="checkbox" disabled-for="substance_abuse_other_field" class="custom-control-input" runat="server" id="cb_substance_abuse_oth" />
-                                                            <span class="custom-control-label">Khác/ <span class="text-primary">Other</span></span>
-                                                        </label>
-                                                        <div class="form-group substance_abuse_other_field d-inline-block w-n mb-2">
-                                                            <webUI:TextField runat="server" ID="txt_substance_abuse_other" />
-                                                        </div>
+                                                        <asp:UpdatePanel ID="updatePanel11" runat="server" UpdateMode="Always">
+                                                            <ContentTemplate>
+                                                                <label class="custom-control custom-checkbox d-inline-block">
+                                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_substance_abuse_s" />
+                                                                    <span class="custom-control-label">Hút thuốc/ <span class="text-primary">Smoking</span></span>
+                                                                </label>
+                                                                <label class="custom-control custom-checkbox d-inline-block">
+                                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_substance_abuse_a" />
+                                                                    <span class="custom-control-label">Rượu bia/ <span class="text-primary">Acohol</span></span>
+                                                                </label>
+                                                                <label class="custom-control custom-checkbox d-inline-block">
+                                                                    <input onchange="__doPostBack('substance_abuse_other_change','')" type="checkbox" class="custom-control-input" runat="server" id="cb_substance_abuse_oth" />
+                                                                    <span class="custom-control-label">Khác/ <span class="text-primary">Other</span></span>
+                                                                </label>
+                                                                <div class="form-group d-inline-block w-n mb-2" runat="server" id="substance_abuse_other_wrapper">
+                                                                    <webUI:TextField runat="server" ID="txt_substance_abuse_other" />
+                                                                </div>
+                                                            </ContentTemplate>
+                                                        </asp:UpdatePanel>
                                                     </div>
                                                 </div>
                                             </div>
@@ -4416,7 +4471,7 @@
                                                             </a>
                                                         </div>
                                                         <%--<asp:CustomValidator ID="CustomValidator12" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="previous_document_ServerValidate"></asp:CustomValidator>--%>
-                                                        <div class="form-group previous_document_note_field d-inline-block">
+                                                        <div class="form-group previous_document_note_field">
                                                             <webUI:TextField runat="server" ID="txt_previous_document_note" />
                                                         </div>
                                                     </div>
@@ -4476,42 +4531,76 @@
                                                 </div>
                                             </div>
 
-                                            <div class="row">
-                                                <div class="col-md-12 gt-2-a">
-                                                    <label class="control-label mb-2">Nhóm người bệnh đặc biệt/ <span class="text-primary">Special patient group</span></label>
-                                                    <asp:Label runat="server" ID="lbl_high_risk_patient"></asp:Label>
-                                                    <div runat="server" id="high_risk_patient_wrapper">
-                                                        <label class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_ch" />
-                                                            <span class="custom-control-label">Trẻ em (< hoặc 8 tuổi)/ <span class="text-primary">Children (<8 years old)</span></span>
-                                                        </label>
-                                                        <label class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_sdp" />
-                                                            <span class="custom-control-label">Những người bệnh tàn tật năng/ <span class="text-primary">Severely disabled patients</span></span>
-                                                        </label>
-                                                        <label class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_eld" />
-                                                            <span class="custom-control-label">Người cao tuổi (80 tuổi hoặc hơn)/ <span class="text-primary">Elderly people (80 years old or above)</span></span>
-                                                        </label>
-                                                        <label class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_hrf" />
-                                                            <span class="custom-control-label">Những người bệnh có nguy cơ té ngã cao/ <span class="text-primary">Patients with high risk of falls</span></span>
-                                                        </label>
-                                                        <label class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_ccp" />
-                                                            <span class="custom-control-label">Những người bệnh lú lẫn/hôn mê/ <span class="text-primary">Confused or comatose patients</span></span>
-                                                        </label>
-                                                        <label class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_res" />
-                                                            <span class="custom-control-label">Người bệnh bị kìm giữ/ <span class="text-primary">Restrained patients</span></span>
-                                                        </label>
-                                                        <label class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_hrt" />
-                                                            <span class="custom-control-label">Người bệnh đang điều trị có nguy cơ cao (như chạy thận nhân tạo, hóa trị liệu..)/ <span class="text-primary">Patients that receiving high-risk treatments (such as dialysis, chemotherapy…)</span></span>
-                                                        </label>
+                                            <asp:UpdatePanel ID="updatePanel12" runat="server" UpdateMode="Always">
+                                                <ContentTemplate>
+                                                    <div class="row">
+                                                        <div class="col-md-12 gt-2-a">
+                                                            <label class="control-label mb-2">Nhóm người bệnh đặc biệt/ <span class="text-primary">Special patient group</span></label>
+                                                            <asp:Label runat="server" ID="lbl_is_high_risk_patient"></asp:Label>
+                                                            <div runat="server" id="is_high_risk_patient_wrapper">
+                                                                <div class="custom-control custom-radio d-inline-block">
+                                                                    <input onchange="__doPostBack('is_high_risk_patient_change','')" type="radio" runat="server" id="rad_is_high_risk_patient_false" name="rad_is_high_risk_patient" class="custom-control-input" />
+                                                                    <label class="custom-control-label" for="rad_is_high_risk_patient_false">Không/ <span class="text-primary">No</span></label>
+                                                                </div>
+                                                                <div class="custom-control custom-radio d-inline-block">
+                                                                    <input onchange="__doPostBack('is_high_risk_patient_change','')" type="radio" runat="server" id="rad_is_high_risk_patient_true" name="rad_is_high_risk_patient" class="custom-control-input" />
+                                                                    <label class="custom-control-label" for="rad_is_high_risk_patient_true">Có, cụ thể/ <span class="text-primary">Yes, specify</span></label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12 gt-2-a" runat="server" id="is_high_risk_patient_true_wrapper">
+                                                            <div></div>
+                                                            <asp:Label runat="server" ID="lbl_high_risk_patient"></asp:Label>
+                                                            <div runat="server" id="high_risk_patient_wrapper">
+                                                                <label class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_hrt" />
+                                                                    <span class="custom-control-label">Người bệnh đang điều trị hóa trị liệu/ <span class="text-primary">Patients are receiving chemotherapy</span></span>
+                                                                </label>
+                                                                <label class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_eld" />
+                                                                    <span class="custom-control-label">Người cao tuổi (≥ 80 tuổi)/ <span class="text-primary">Elderlies (≥ 80 years)</span></span>
+                                                                </label>
+                                                                <label class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_wil" />
+                                                                    <span class="custom-control-label">Sản phụ đang chuyển dạ/ <span class="text-primary">Women in labor</span></span>
+                                                                </label>
+                                                                <label class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_ros" />
+                                                                    <span class="custom-control-label">Người bệnh có nguy cơ tự tử hoặc tự làm hại bản thân/ <span class="text-primary">Patients are at risk of suicide or seft-harm</span></span>
+                                                                </label>
+                                                                <%--<label class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_ch" />
+                                                                    <span class="custom-control-label">Trẻ em (< hoặc 8 tuổi)/ <span class="text-primary">Children (<8 years old)</span></span>
+                                                                </label>--%>
+                                                                <label class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_sdp" />
+                                                                    <span class="custom-control-label">Người bệnh tàn tật nặng/ <span class="text-primary">Severe disabled patients</span></span>
+                                                                </label>
+                                                                <label class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_ccp" />
+                                                                    <span class="custom-control-label">Người bệnh lú lẫn/hôn mê/ <span class="text-primary">Confused or comatose patients</span></span>
+                                                                </label>
+                                                                <label class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_psp" />
+                                                                    <span class="custom-control-label">Sản phụ có thai lưu/ sảy thai/ chấm dứt thai kỳ/ <span class="text-primary">Patient with stillbirth pregnancy/ abortion/ experiencing terminations in pregnancy</span></span>
+                                                                </label>
+                                                                <label class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_res" />
+                                                                    <span class="custom-control-label">Người bệnh bị kìm giữ/ <span class="text-primary">Restrained patients</span></span>
+                                                                </label>
+                                                                <label class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_hrf" />
+                                                                    <span class="custom-control-label">Người bệnh có tiền sử té ngã/ <span class="text-primary">Patient has a history of falls</span></span>
+                                                                </label>
+                                                                <label class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_high_risk_patient_isc" />
+                                                                    <span class="custom-control-label">Người bệnh suy giảm miễn dịch/ <span class="text-primary">Patients whose immune systems are compromised</span></span>
+                                                                </label>
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </div>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
 
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
@@ -4661,12 +4750,12 @@
                                                             <div runat="server" id="pro_cough_wrapper">
                                                                 <div class="custom-control custom-radio d-inline-block">
                                                                     <input type="radio" runat="server" id="rad_pro_cough_false" name="rad_pro_cough" class="custom-control-input" />
-                                                                    <label class="custom-control-label" for="rad_pro_cough_false">Không có đờm/ <span class="text-primary">Unproductive cough</span></label>
+                                                                    <label class="custom-control-label" for="rad_pro_cough_false">Không có đờm/ <span class="text-primary">Without phlegm</span></label>
                                                                 </div>
 
                                                                 <div class="custom-control custom-radio d-inline-block">
                                                                     <input type="radio" runat="server" id="rad_pro_cough_true" name="rad_pro_cough" class="custom-control-input" disabled-for="pro_cough_note_field" />
-                                                                    <label class="custom-control-label" for="rad_pro_cough_true">Có đờm (ghi rõ màu/ tính chất/ số lượng)/ <span class="text-primary">Productive (Specify color/ nature/ amount)</span></label>
+                                                                    <label class="custom-control-label" for="rad_pro_cough_true">Có đờm (ghi rõ màu/ tính chất/ số lượng)/ <span class="text-primary">With phlegm (specify the colour/ nature/amount)</span></label>
                                                                     <a href="javascript:void(0)" data-clear="rad_pro_cough" onclick="clear_radiobutton(this)">
                                                                         <icon:xsquare runat="server" ID="XSquare17" />
                                                                     </a>
@@ -4674,7 +4763,7 @@
 
                                                                 <%--<asp:CustomValidator ID="CustomValidator13" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="pro_cough_ServerValidate"></asp:CustomValidator>--%>
 
-                                                                <div class="form-group pro_cough_note_field d-inline-block w-n">
+                                                                <div class="form-group pro_cough_note_field d-inline-block">
                                                                     <webUI:TextField runat="server" ID="txt_pro_cough_note" />
                                                                 </div>
                                                             </div>
@@ -4695,7 +4784,6 @@
                                                             <input type="radio" runat="server" id="rad_pulse_code_r" name="rad_pulse_code" class="custom-control-input" />
                                                             <label class="custom-control-label" for="rad_pulse_code_r">Đều/ <span class="text-primary">Regular</span></label>
                                                         </div>
-
                                                         <div class="custom-control custom-radio d-inline-block">
                                                             <input type="radio" runat="server" id="rad_pulse_code_i" name="rad_pulse_code" class="custom-control-input" />
                                                             <label class="custom-control-label" for="rad_pulse_code_i">Không đều/ <span class="text-primary">Irregular</span></label>
@@ -4707,7 +4795,7 @@
                                                 </div>
 
                                                 <div class="col-md-12 gt-2-a mb-2">
-                                                    <label class="control-label mb-2 d-block">Tình trạng hiện có/ <span class="text-primary">Presence with</span></label>
+                                                    <label class="control-label mb-2 d-block">Tình trạng/ <span class="text-primary">Condition</span></label>
 
                                                     <asp:Label runat="server" ID="lbl_presence"></asp:Label>
                                                     <div runat="server" id="presence_wrapper" class="d-inline-block">
@@ -4717,7 +4805,7 @@
                                                         </label>
                                                         <label class="custom-control custom-checkbox d-inline-block">
                                                             <input type="checkbox" class="custom-control-input" runat="server" id="cb_presence_di" />
-                                                            <span class="custom-control-label">Chóng mặt/ <span class="text-primary">Dizzinness</span></span>
+                                                            <span class="custom-control-label">Chóng mặt/ <span class="text-primary">Dizziness</span></span>
                                                         </label>
                                                         <label class="custom-control custom-checkbox d-inline-block">
                                                             <input type="checkbox" class="custom-control-input" runat="server" id="cb_presence_ca" />
@@ -4748,8 +4836,14 @@
                                                         </label>
                                                         <label class="custom-control custom-checkbox d-inline-block">
                                                             <input type="checkbox" class="custom-control-input" runat="server" id="cb_extremities_cy" />
-                                                            <span class="custom-control-label">Xanh tái/ <span class="text-primary">Cyanosed</span></span>
+                                                            <span class="custom-control-label">Xanh tái/ <span class="text-primary">Cyanosis</span></span>
                                                         </label>
+                                                        <label class="custom-control custom-checkbox d-inline-block">
+                                                            <input onchange="_doPostBack('extremities_ot_change','')" type="checkbox" class="custom-control-input" runat="server" id="cb_extremities_ot" />
+                                                            <span class="custom-control-label">Khác, ghi rõ/ <span class="text-primary">Other, specify</span></span>
+                                                        </label>
+                                                        <webUI:TextField runat="server" ID="txt_extremities_specify" />
+                                                        
                                                     </div>
                                                 </div>
                                             </fieldset>
@@ -4758,11 +4852,14 @@
                                                 <legend>
                                                     <label class="control-label">4. Hệ thần kinh cảm giác/ <span class="text-primary">Neurosensory system</span></label>
                                                 </legend>
-
                                                 <div class="col-md-12 gt-2-a mb-2">
                                                     <label class="control-label mb-2 d-block">Định hướng được/ <span class="text-primary">Oriented</span></label>
                                                     <asp:Label runat="server" ID="lbl_oriented"></asp:Label>
                                                     <div class="d-inline-block" runat="server" id="oriented_wrapper">
+                                                        <label class="custom-control custom-checkbox d-inline-block">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_oriented_pla" />
+                                                            <span class="custom-control-label">Nơi/ <span class="text-primary">Place</span></span>
+                                                        </label>
                                                         <label class="custom-control custom-checkbox d-inline-block">
                                                             <input type="checkbox" class="custom-control-input" runat="server" id="cb_oriented_day" />
                                                             <span class="custom-control-label">Ngày/ <span class="text-primary">Day</span></span>
@@ -4776,12 +4873,8 @@
                                                             <span class="custom-control-label">Người/ <span class="text-primary">Person</span></span>
                                                         </label>
                                                         <label class="custom-control custom-checkbox d-inline-block">
-                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_oriented_pla" />
-                                                            <span class="custom-control-label">Nơi/ <span class="text-primary">Place</span></span>
-                                                        </label>
-                                                        <label class="custom-control custom-checkbox d-inline-block">
                                                             <input type="checkbox" class="custom-control-input" runat="server" id="cb_oriented_na" />
-                                                            <span class="custom-control-label">Không định hướng được/ <span class="text-primary">Not all all</span></span>
+                                                            <span class="custom-control-label">Không định hướng được/ <span class="text-primary">Disoriented</span></span>
                                                         </label>
                                                     </div>
                                                 </div>
@@ -4806,14 +4899,14 @@
                                                             <input type="checkbox" class="custom-control-input" runat="server" id="cb_mental_status_an" />
                                                             <span class="custom-control-label">Lo âu/ <span class="text-primary">Anxious</span></span>
                                                         </label>
-                                                        <label class="custom-control custom-checkbox d-inline-block">
+                                                        <%--<label class="custom-control custom-checkbox d-inline-block">
                                                             <input type="checkbox" class="custom-control-input" runat="server" id="cb_mental_status_fr" />
                                                             <span class="custom-control-label">Quấy/ <span class="text-primary">Fretful</span></span>
                                                         </label>
                                                         <label class="custom-control custom-checkbox d-inline-block">
                                                             <input type="checkbox" class="custom-control-input" runat="server" id="cb_mental_status_le" />
                                                             <span class="custom-control-label">Lơ mơ/ <span class="text-primary">Lethargic</span></span>
-                                                        </label>
+                                                        </label>--%>
                                                         <label class="custom-control custom-checkbox d-inline-block">
                                                             <input type="checkbox" class="custom-control-input" runat="server" id="cb_mental_status_de" />
                                                             <span class="custom-control-label">Trầm cảm/ <span class="text-primary">Depressed</span></span>
@@ -4823,7 +4916,7 @@
                                                             <span class="custom-control-label">Khác/ <span class="text-primary">Other</span></span>
                                                         </label>
 
-                                                        <div class="form-group mental_status_other_field w-n">
+                                                        <div class="form-group mental_status_other_field">
                                                             <webUI:TextField runat="server" ID="txt_mental_status_other" />
                                                         </div>
                                                     </div>
@@ -4845,7 +4938,7 @@
 
                                                         <div class="custom-control custom-radio d-inline-block">
                                                             <input type="radio" runat="server" id="rad_hearing_code_ha" name="rad_hearing_code" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="rad_hearing_code_ha">Dùng máy trợ thính (Trái/Phải)/ <span class="text-primary">Uses hearing aid (Left/Right)</span></label>
+                                                            <label class="custom-control-label" for="rad_hearing_code_ha">Dùng máy trợ thính (Trái/Phải)/ <span class="text-primary">Use hearing aids (Left/Right)</span></label>
                                                             <a href="javascript:void(0)" data-clear="rad_hearing_code" onclick="clear_radiobutton(this)">
                                                                 <icon:xsquare runat="server" ID="XSquare20" />
                                                             </a>
@@ -4874,13 +4967,13 @@
 
                                                         <div class="custom-control custom-radio d-inline-block">
                                                             <input type="radio" disabled-for="vision_other_field" runat="server" id="rad_vision_code_oth" name="rad_vision_code" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="rad_vision_code_oth">Khác/ <span class="text-primary">Other</span></label>
+                                                            <label class="custom-control-label" for="rad_vision_code_oth">Khác, ghi rõ/ <span class="text-primary">Other, specify</span></label>
                                                             <a href="javascript:void(0)" data-clear="rad_vision_code" onclick="clear_radiobutton(this)">
                                                                 <icon:xsquare runat="server" ID="XSquare21" />
                                                             </a>
                                                         </div>
 
-                                                        <div class="form-group vision_other_field w-n">
+                                                        <div class="form-group vision_other_field">
                                                             <webUI:TextField runat="server" ID="txt_vision_other" />
                                                         </div>
                                                     </div>
@@ -4906,27 +4999,25 @@
                                                         </div>
 
                                                         <div class="custom-control custom-radio d-inline-block">
-                                                            <input type="radio" runat="server" id="rad_speech_code_nc" name="rad_speech_code" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="rad_speech_code_nc">Không giao tiếp (Bất tỉnh or mê)/ <span class="text-primary">Non-communicative(Unconscious )</span></label>
-                                                        </div>
-
-                                                        <div class="custom-control custom-radio d-inline-block">
                                                             <input type="radio" runat="server" id="rad_speech_code_si" name="rad_speech_code" class="custom-control-input" />
                                                             <label class="custom-control-label" for="rad_speech_code_si">Khiếm ngôn/ <span class="text-primary">Speech impaired</span></label>
                                                         </div>
 
                                                         <div class="custom-control custom-radio d-inline-block">
                                                             <input type="radio" runat="server" id="rad_speech_code_nv" name="rad_speech_code" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="rad_speech_code_nv">Chưa biết nói/ <span class="text-primary">Non-verbal</span></label>
+                                                            <label class="custom-control-label" for="rad_speech_code_nv">Chưa biết nói/ <span class="text-primary">Speechless</span></label>
+                                                        </div>
+
+                                                        <div class="custom-control custom-radio d-inline-block">
+                                                            <input type="radio" runat="server" id="rad_speech_code_nc" name="rad_speech_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_speech_code_nc">Không giao tiếp (Bất tỉnh, mê)/ <span class="text-primary">Non-communicative (Unconscious)</span></label>
                                                             <a href="javascript:void(0)" data-clear="rad_speech_code" onclick="clear_radiobutton(this)">
                                                                 <icon:xsquare runat="server" ID="XSquare19" />
                                                             </a>
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </fieldset>
-
 
                                             <fieldset class="row mb-2">
                                                 <legend>
@@ -4955,20 +5046,19 @@
                                                         <div class="custom-control custom-radio d-inline-block">
                                                             <input type="radio" disabled-for="diet_other_field" runat="server" id="rad_diet_code_oth" name="rad_diet_code" class="custom-control-input" />
                                                             <label class="custom-control-label" for="rad_diet_code_oth">Khác/ <span class="text-primary">Other</span></label>
-
                                                             <a href="javascript:void(0)" data-clear="rad_diet_code" onclick="clear_radiobutton(this)">
                                                                 <icon:xsquare runat="server" ID="XSquare22" />
                                                             </a>
+                                                        </div>
 
-                                                            <div class="form-group w-n diet_other_field mt-2">
-                                                                <webUI:TextField runat="server" ID="txt_diet_other" />
-                                                            </div>
+                                                        <div class="form-group diet_other_field mt-1 mb-1">
+                                                            <webUI:TextField runat="server" ID="txt_diet_other" />
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-12 gt-2-a mb-2">
-                                                    <label class="control-label d-block">Tình trạng hiện có/ <span class="text-primary">Presence of</span></label>
+                                                    <label class="control-label d-block">Tình trạng hiện có/ <span class="text-primary">Current condition</span></label>
                                                     <div>
                                                         <div>
                                                             <asp:Label runat="server" ID="lbl_diet_pre_desc"></asp:Label>
@@ -4990,62 +5080,60 @@
                                                                 </a>
                                                             </div>
                                                         </div>
+                                                    </div>
+                                                </div>
 
-                                                        <div>
-                                                            <asp:Label runat="server" ID="lbl_ng_tube"></asp:Label>
+                                                <div class="col-md-12 gt-2-a mb-2">
+                                                    <label class="control-label d-block">Ống thông dạ dày/ <span class="text-primary">Nasogastric tube</span></label>
+                                                    <asp:Label runat="server" ID="lbl_ng_tube"></asp:Label>
 
-                                                            <div runat="server" id="ng_tube_wrapper">
-                                                                <div class="custom-control custom-radio d-inline-block">
-                                                                    <input type="radio" runat="server" id="rad_ng_tube_true" name="rad_ng_tube" class="custom-control-input" />
-                                                                    <label class="custom-control-label" for="rad_ng_tube_true">Ống thông/ <span class="text-primary">NG Tube</span></label>
-                                                                </div>
-
-                                                                <div class="custom-control custom-radio d-inline-block">
-                                                                    <input type="radio" runat="server" id="rad_ng_tube_false" name="rad_ng_tube" class="custom-control-input" />
-                                                                    <label class="custom-control-label" for="rad_ng_tube_false">Không/ <span class="text-primary">No</span></label>
-                                                                    <a href="javascript:void(0)" data-clear="rad_ng_tube" onclick="clear_radiobutton(this)">
-                                                                        <icon:xsquare runat="server" ID="XSquare24" />
-                                                                    </a>
-                                                                </div>
-
-                                                                <%--<asp:CustomValidator ID="CustomValidator9" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="ng_tube_ServerValidate"></asp:CustomValidator>--%>
-                                                            </div>
-
-                                                            <label class="custom-control custom-checkbox d-inline-block">
-                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_gastrostomy_true" />
-                                                                <span class="custom-control-label">Mở dạ dày/ <span class="text-primary">Gastrostomy</span></span>
-                                                            </label>
-
-                                                            <label class="custom-control custom-checkbox d-inline-block">
-                                                                <input type="checkbox" disabled-for="size_note_field" class="custom-control-input" runat="server" id="cb_size_true" />
-                                                                <span class="custom-control-label">Kích cỡ/ <span class="text-primary">Size</span></span>
-                                                            </label>
-
-                                                            <asp:Label runat="server" ID="lbl_size_note"></asp:Label>
-
-                                                            <div runat="server" id="size_note_wrapper" class="form-group w-s size_note_field d-inline-block">
-                                                                <webUI:TextField runat="server" ID="txt_size_note" />
-                                                            </div>
-
-                                                            <label class="control-label">Ngày đặt ống gần nhất/ <span class="text-primary">Last Date Changed</span></label>
-
-                                                            <asp:Label runat="server" ID="lbl_last_date_changed"></asp:Label>
-
-                                                            <div class="d-inline-block" runat="server" id="last_date_changed_wrapper">
-                                                                <telerik:RadDatePicker CssClass="ml-2" runat="server" ID="dpk_last_date_changed" Width="120px" />
-
-                                                                <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator4" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="dpk_last_date_changed" ErrorMessage="field is required"
-                                                                    ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>--%>
-                                                            </div>
+                                                    <div runat="server" id="ng_tube_wrapper">
+                                                        <div class="custom-control custom-radio d-inline-block">
+                                                            <input type="radio" runat="server" id="rad_ng_tube_true" name="rad_ng_tube" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_ng_tube_true">Có/ <span class="text-primary">Yes</span></label>
                                                         </div>
+                                                        <div class="custom-control custom-radio d-inline-block">
+                                                            <input type="radio" runat="server" id="rad_ng_tube_false" name="rad_ng_tube" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_ng_tube_false">Không/ <span class="text-primary">No</span></label>
+                                                            <a href="javascript:void(0)" data-clear="rad_ng_tube" onclick="clear_radiobutton(this)">
+                                                                <icon:xsquare runat="server" ID="XSquare24" />
+                                                            </a>
+                                                        </div>
+
+                                                        <label class="custom-control custom-checkbox d-inline-block">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_gastrostomy_true" />
+                                                            <span class="custom-control-label">Mở dạ dày/ <span class="text-primary">Gastrostomy</span></span>
+                                                        </label>
+
+                                                        <label class="custom-control custom-checkbox d-inline-block">
+                                                            <input type="checkbox" disabled-for="size_note_field" class="custom-control-input" runat="server" id="cb_size_true" />
+                                                            <span class="custom-control-label">Kích cỡ/ <span class="text-primary">Size</span></span>
+                                                        </label>
+
+                                                        <asp:Label runat="server" ID="lbl_size_note"></asp:Label>
+
+                                                        <div runat="server" id="size_note_wrapper" class="form-group w-s size_note_field d-inline-block">
+                                                            <webUI:TextField runat="server" ID="txt_size_note" />
+                                                        </div>
+
+                                                        <label class="control-label">Ngày đặt ống gần nhất/ <span class="text-primary">Last Date Changed</span></label>
+
+                                                        <asp:Label runat="server" ID="lbl_last_date_changed"></asp:Label>
+
+                                                        <div class="d-inline-block" runat="server" id="last_date_changed_wrapper">
+                                                            <telerik:RadDatePicker CssClass="ml-2" runat="server" ID="dpk_last_date_changed" Width="120px" />
+
+                                                            <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator4" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="dpk_last_date_changed" ErrorMessage="field is required"
+                                                                ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>--%>
+                                                        </div>
+                                                        <%--<asp:CustomValidator ID="CustomValidator9" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="ng_tube_ServerValidate"></asp:CustomValidator>--%>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-12 mb-2 gt-2-a">
                                                     <label class="control-label d-block">Thức ăn không ưa thích/ <span class="text-primary">Food dislikes</span></label>
-
                                                     <asp:Label runat="server" ID="lbl_food_dislike"></asp:Label>
-                                                    <div class="form-group" runat="server" id="food_dislike_wrapper">
+                                                    <div>
                                                         <webUI:TextField runat="server" ID="txt_food_dislike" />
                                                     </div>
                                                 </div>
@@ -5054,28 +5142,34 @@
                                                     <label class="control-label d-block">Bài tiết/ <span class="text-primary">Bowel elimination</span></label>
                                                     <asp:Label runat="server" ID="lbl_bowel_elimination_desc"></asp:Label>
                                                     <div class="d-inline-block" runat="server" id="bowel_elimination_code_wrapper">
-                                                        <div class="custom-control custom-radio mb-1 d-inline-block">
-                                                            <input type="radio" runat="server" id="rad_bowel_elimination_code_two" name="rad_bowel_elimination_code" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="rad_bowel_elimination_code_two">2 lần/ ngày <span class="text-primary">(2 times/day)</span></label>
-                                                        </div>
+                                                        <asp:UpdatePanel ID="updatePanel13" runat="server" UpdateMode="Always">
+                                                            <ContentTemplate>
+                                                                <div class="custom-control custom-radio mb-1 d-inline-block">
+                                                                    <input onchange="__doPostBack('bowel_elimination_change','')" type="radio" runat="server" id="rad_bowel_elimination_code_two" name="rad_bowel_elimination_code" class="custom-control-input" />
+                                                                    <label class="custom-control-label" for="rad_bowel_elimination_code_two">2 lần/ ngày <span class="text-primary">(2 times/day)</span></label>
+                                                                </div>
 
-                                                        <div class="custom-control custom-radio mb-1 d-inline-block">
-                                                            <input type="radio" runat="server" id="rad_bowel_elimination_code_one" name="rad_bowel_elimination_code" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="rad_bowel_elimination_code_one">1 lần/ ngày <span class="text-primary">(1 times/day)</span></label>
-                                                        </div>
+                                                                <div class="custom-control custom-radio mb-1 d-inline-block">
+                                                                    <input onchange="__doPostBack('bowel_elimination_change','')" type="radio" runat="server" id="rad_bowel_elimination_code_one" name="rad_bowel_elimination_code" class="custom-control-input" />
+                                                                    <label class="custom-control-label" for="rad_bowel_elimination_code_one">1 lần/ ngày <span class="text-primary">(1 times/day)</span></label>
+                                                                </div>
 
-                                                        <div class="custom-control custom-radio mb-1 d-inline-block">
-                                                            <input type="radio" runat="server" id="rad_bowel_elimination_code_eod" name="rad_bowel_elimination_code" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="rad_bowel_elimination_code_eod">Cách ngày/ <span class="text-primary">Every other day</span></label>
-                                                        </div>
+                                                                <div class="custom-control custom-radio mb-1 d-inline-block">
+                                                                    <input onchange="__doPostBack('bowel_elimination_change','')" type="radio" runat="server" id="rad_bowel_elimination_code_eod" name="rad_bowel_elimination_code" class="custom-control-input" />
+                                                                    <label class="custom-control-label" for="rad_bowel_elimination_code_eod">Cách ngày/ <span class="text-primary">Every other day</span></label>
+                                                                </div>
 
-                                                        <div class="custom-control custom-radio mb-1 d-inline-block">
-                                                            <input type="radio" runat="server" id="rad_bowel_elimination_code_oth" name="rad_bowel_elimination_code" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="rad_bowel_elimination_code_oth">Khác/ <span class="text-primary">Other</span></label>
-                                                            <a href="javascript:void(0)" data-clear="rad_bowel_elimination_code" onclick="clear_radiobutton(this)">
-                                                                <icon:xsquare runat="server" ID="XSquare27" />
-                                                            </a>
-                                                        </div>
+                                                                <div class="custom-control custom-radio mb-1 d-inline-block">
+                                                                    <input onchange="__doPostBack('bowel_elimination_change','')" type="radio" runat="server" id="rad_bowel_elimination_code_oth" name="rad_bowel_elimination_code" class="custom-control-input" />
+                                                                    <label class="custom-control-label" for="rad_bowel_elimination_code_oth">Khác, ghi rõ/ <span class="text-primary">Other, specify</span></label>
+                                                                    <a href="javascript:void(0)" data-clear="rad_bowel_elimination_code" onclick="clear_radiobutton(this)">
+                                                                        <icon:xsquare runat="server" ID="XSquare27" />
+                                                                    </a>
+                                                                </div>
+
+                                                                <webUI:TextField runat="server" ID="txt_bowel_elimination_specify" />
+                                                            </ContentTemplate>
+                                                        </asp:UpdatePanel>
                                                     </div>
                                                 </div>
 
@@ -5111,391 +5205,60 @@
 
                                                 <div class="col-md-12 gt-2-a">
                                                     <label class="control-label d-block">
-                                                        Tình trạng hiện có/ <span class="text-primary">Presence with
-                                                        </span>
+                                                        Tình trạng hiện có/ <span class="text-primary">Current condition</span>
                                                     </label>
-
                                                     <asp:Label runat="server" ID="lbl_gas_presence_desc"></asp:Label>
-
                                                     <div runat="server" id="gas_presence_code_wrapper">
-                                                        <div class="custom-control custom-radio mb-1 d-inline-block">
-                                                            <input type="radio" runat="server" id="rad_gas_presence_code_n" name="rad_gas_presence_code" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="rad_gas_presence_code_n">Bình thường/ <span class="text-primary">Normal</span></label>
-                                                        </div>
-
-                                                        <div class="custom-control custom-radio mb-1 d-inline-block">
-                                                            <input type="radio" runat="server" id="rad_gas_presence_code_i" name="rad_gas_presence_code" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="rad_gas_presence_code_i">Không kiểm soát/ <span class="text-primary">Incontinence</span></label>
-                                                        </div>
-
-                                                        <div class="custom-control custom-radio mb-1 d-inline-block">
-                                                            <input type="radio" runat="server" id="rad_gas_presence_code_s" name="rad_gas_presence_code" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="rad_gas_presence_code_s">Hậu môn nhân tạo/ <span class="text-primary">Stoma</span></label>
-                                                            <a href="javascript:void(0)" data-clear="rad_gas_presence_code" onclick="clear_radiobutton(this)">
-                                                                <icon:xsquare runat="server" ID="XSquare26" />
-                                                            </a>
-                                                        </div>
+                                                        <asp:UpdatePanel ID="updatePanel14" runat="server" UpdateMode="Always">
+                                                            <ContentTemplate>
+                                                                <div class="custom-control custom-radio mb-1 d-inline-block">
+                                                                    <input onchange="__doPostBack('gas_presence_code_change','')" type="radio" runat="server" id="rad_gas_presence_code_n" name="rad_gas_presence_code" class="custom-control-input" />
+                                                                    <label class="custom-control-label" for="rad_gas_presence_code_n">Bình thường/ <span class="text-primary">Normal</span></label>
+                                                                </div>
+                                                                <div class="custom-control custom-radio mb-1 d-inline-block">
+                                                                    <input onchange="__doPostBack('gas_presence_code_change','')" type="radio" runat="server" id="rad_gas_presence_code_i" name="rad_gas_presence_code" class="custom-control-input" />
+                                                                    <label class="custom-control-label" for="rad_gas_presence_code_i">Không kiểm soát/ <span class="text-primary">Incontinence</span></label>
+                                                                </div>
+                                                                <div class="custom-control custom-radio mb-1 d-inline-block">
+                                                                    <input onchange="__doPostBack('gas_presence_code_change','')" type="radio" runat="server" id="rad_gas_presence_code_s" name="rad_gas_presence_code" class="custom-control-input" />
+                                                                    <label class="custom-control-label" for="rad_gas_presence_code_s">Hậu môn nhân tạo/ <span class="text-primary">Artificial anus</span></label>
+                                                                    <a href="javascript:void(0)" data-clear="rad_gas_presence_code" onclick="clear_radiobutton(this)">
+                                                                        <icon:xsquare runat="server" ID="XSquare26" />
+                                                                    </a>
+                                                                </div>
+                                                                <webUI:TextField runat="server" ID="txt_gas_presence_note" />
+                                                            </ContentTemplate>
+                                                        </asp:UpdatePanel>
                                                     </div>
                                                 </div>
                                             </fieldset>
 
                                             <fieldset class="row mb-2">
                                                 <legend>
-                                                    <label class="control-label">6. Đánh giá dinh dưỡng ban đầu/ <span class="text-primary">Initial Nutrition Assessment</span></label>
-                                                </legend>
-                                                <div class="col-md-12">
-
-                                                    <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
-                                                        <ContentTemplate>
-
-                                                            <fieldset class="row mb-2">
-                                                                <legend>
-                                                                    <label class="control-label mb-2">Bảng 1: Khảo sát dinh dưỡng ban đầu/ <span class="text-primary">Table 1: Initial screening</span></label>
-                                                                </legend>
-                                                                <div class="col-md-12">
-                                                                    <label class="control-label">1. Chỉ số BMI < 20.5/ <span class="text-primary">Is BMI < 20.5?</span></label>
-                                                                    <asp:Label runat="server" ID="lbl_bmi_out_range"></asp:Label>
-                                                                    <div class="d-inline-block" runat="server" id="bmi_out_range_wrapper">
-                                                                        <div class="custom-control custom-radio mb-1 d-inline-block">
-                                                                            <input type="radio" onchange="__doPostBack('initial_screening_change', '')" runat="server" id="rad_bmi_out_range_true" name="rad_bmi_out_range" class="custom-control-input" />
-                                                                            <label class="custom-control-label" for="rad_bmi_out_range_true">Có/ <span class="text-primary">Yes</span></label>
-                                                                        </div>
-                                                                        <div class="custom-control custom-radio mb-1 d-inline-block">
-                                                                            <input type="radio" runat="server" id="rad_bmi_out_range_false" onchange="__doPostBack('initial_screening_change', '')" name="rad_bmi_out_range" class="custom-control-input" />
-                                                                            <label class="custom-control-label" for="rad_bmi_out_range_false">Không/ <span class="text-primary">No</span></label>
-                                                                            <a href="javascript:void(0)" data-clear="rad_bmi_out_range" onclick="clear_radiobutton(this)">
-                                                                                <icon:xsquare runat="server" ID="XSquare28" />
-                                                                            </a>
-                                                                            <%--<asp:CustomValidator ID="CustomValidator2" CssClass="text-danger" ValidationGroup="Group1" OnServerValidate="bmi_out_range_ServerValidate" Display="Dynamic" ErrorMessage="field is required" runat="server" />--%>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <label class="control-label">2. NB có sụt cân trong vòng 3 tháng gần đây không?/ <span class="text-primary">Has the patient lost weight within the last 3 months?</span></label>
-                                                                    <asp:Label runat="server" ID="lbl_loss_weight"></asp:Label>
-                                                                    <div runat="server" id="loss_weight_wrapper" class="d-inline-block">
-                                                                        <div class="custom-control custom-radio mb-1 d-inline-block">
-                                                                            <input type="radio" onchange="__doPostBack('initial_screening_change', '')" runat="server" id="rad_loss_weight_true" name="rad_loss_weight" class="custom-control-input" />
-                                                                            <label class="custom-control-label" for="rad_loss_weight_true">Có/ <span class="text-primary">Yes</span></label>
-                                                                        </div>
-                                                                        <div class="custom-control custom-radio mb-1 d-inline-block">
-                                                                            <input type="radio" runat="server" id="rad_loss_weight_false" onchange="__doPostBack('initial_screening_change', '')" name="rad_loss_weight" class="custom-control-input" />
-                                                                            <label class="custom-control-label" for="rad_loss_weight_false">Không/ <span class="text-primary">No</span></label>
-                                                                            <a href="javascript:void(0)" data-clear="rad_loss_weight" onclick="clear_radiobutton(this)">
-                                                                                <icon:xsquare runat="server" ID="XSquare29" />
-                                                                            </a>
-                                                                        </div>
-                                                                        <%--<asp:CustomValidator ID="CustomValidator8" ValidationGroup="Group1" runat="server" Display="Dynamic" ErrorMessage="field is required" CssClass="text-danger" OnServerValidate="loss_weight_ServerValidate"></asp:CustomValidator>--%>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <label class="control-label">3. NB có chán ăn trong 1 tuần qua không?/ <span class="text-primary">Has the patient had a reduced dietary intake in the last week?</span></label>
-                                                                    <asp:Label runat="server" ID="lbl_reduce_dietary"></asp:Label>
-                                                                    <div runat="server" id="reduce_dietary_wrapper" class="d-inline-block">
-                                                                        <div class="custom-control custom-radio mb-1 d-inline-block">
-                                                                            <input onchange="__doPostBack('initial_screening_change', '')" type="radio" runat="server" id="rad_reduce_dietary_true" name="rad_reduce_dietary" class="custom-control-input" />
-                                                                            <label class="custom-control-label" for="rad_reduce_dietary_true">Có/ <span class="text-primary">Yes</span></label>
-                                                                        </div>
-                                                                        <div class="custom-control custom-radio mb-1 d-inline-block">
-                                                                            <input type="radio" onchange="__doPostBack('initial_screening_change', '')" runat="server" id="rad_reduce_dietary_false" name="rad_reduce_dietary" class="custom-control-input" />
-                                                                            <label class="custom-control-label" for="rad_reduce_dietary_false">Không/ <span class="text-primary">No</span></label>
-                                                                            <a href="javascript:void(0)" data-clear="rad_reduce_dietary" onclick="clear_radiobutton(this)">
-                                                                                <icon:xsquare runat="server" ID="XSquare30" />
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    <label class="control-label">4. NB có bị bệnh gì nghiêm trọng không?/ <span class="text-primary">Is the patient severely ill?</span></label>
-                                                                    <asp:Label runat="server" ID="lbl_severely_ill"></asp:Label>
-                                                                    <div runat="server" id="severely_ill_wrapper" class="d-inline-block">
-                                                                        <div class="custom-control custom-radio mb-1 d-inline-block">
-                                                                            <input onchange="__doPostBack('initial_screening_change', '')" type="radio" runat="server" id="rad_severely_ill_true" name="rad_severely_ill" class="custom-control-input" />
-                                                                            <label class="custom-control-label" for="rad_severely_ill_true">Có/ <span class="text-primary">Yes</span></label>
-                                                                        </div>
-                                                                        <div class="custom-control custom-radio mb-1 d-inline-block">
-                                                                            <input onchange="__doPostBack('initial_screening_change', '')" type="radio" runat="server" id="rad_severely_ill_false" name="rad_severely_ill" class="custom-control-input" />
-                                                                            <label class="custom-control-label" for="rad_severely_ill_false">Không/ <span class="text-primary">No</span></label>
-                                                                            <a href="javascript:void(0)" data-clear="rad_severely_ill" onclick="clear_radiobutton(this)">
-                                                                                <icon:xsquare runat="server" ID="XSquare31" />
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-12">
-                                                                    Ghi chú: Thức ăn bao gồm ăn qua miệng và các đường khác (qua ống thông dạ dày hoặc dinh dưỡng qua đường TM)<br />
-                                                                    <span class="text-primary">Note: Food intake includes food taken by mouth, and other route (tube feeding or parenteral nutrition)</span><br />
-                                                                    - Nếu trả lời “có” cho bất kỳ câu hỏi nào ở bảng 1 thì vui lòng đánh giá tiếp ở bảng 2
-                                                                <br />
-                                                                    <span class="text-primary">The answer is ‘Yes’ to any question: go to the final screening in Table 2</span><br />
-                                                                    - Nếu trả lời “không” cho bất kỳ câu hỏi nào ở bảng 1 thì vui lòng đánh giá lại mỗi tuần.<br />
-                                                                    <span class="text-primary">The answer is ‘No’ to all questions: the patient is re-screened weekly
-                                                                </div>
-                                                            </fieldset>
-                                                            <asp:PlaceHolder runat="server" ID="final_screening_field">
-                                                                <fieldset class="row mb-2">
-                                                                    <legend>
-                                                                        <label class="control-label mb-2">Bảng 2: Khảo sát dinh dưỡng tiếp theo/ <span class="text-primary">Table 2: Final screening</span></label>
-                                                                    </legend>
-                                                                    <div class="col-md-12 mb-2">
-                                                                        <fieldset class="row">
-                                                                            <legend>
-                                                                                <label class="control-label mb-2"><span class="text-primary">Nutrition status</span></label>
-                                                                            </legend>
-                                                                            <div class="col-md-12 gt-2-a">
-                                                                                <label class="control-label mb-1 d-block">Điểm = 0/ <span class="text-primary">Score = 0</span></label>
-
-                                                                                <label class="custom-control custom-checkbox" runat="server">
-                                                                                    <input onchange="__doPostBack('nutrition_status_change', '0')" type="checkbox" class="custom-control-input" runat="server" id="cb_nutrition_normal_true" />
-                                                                                    <span class="custom-control-label">Tình trạng dinh dưỡng bình thường/ <span class="text-primary">Normal nutritional status</span></span>
-                                                                                </label>
-                                                                            </div>
-
-                                                                            <div class="col-md-12 gt-2-a">
-                                                                                <label class="control-label mb-1 d-block">Điểm = 1/ <span class="text-primary">Score = 1</span></label>
-                                                                                <asp:Label runat="server" ID="lbl_nutrition_score1"></asp:Label>
-
-                                                                                <div runat="server" id="nutrition_score1_wrapper">
-                                                                                    <label class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" class="custom-control-input" runat="server" onchange="__doPostBack('nutrition_status_change', '1')" id="cb_nutrition_score1_1" />
-                                                                                        <span class="custom-control-label">Sụt cân > 5% trong 3 tháng/ <span class="text-primary">Weight loss > 5% in 3 months</span></span>
-                                                                                    </label>
-
-                                                                                    <label class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" onchange="__doPostBack('nutrition_status_change', '1')" class="custom-control-input" runat="server" id="cb_nutrition_score1_2" />
-                                                                                        <span class="custom-control-label">Ăn ít 50%-75% so với nhu cầu ăn bình thường trong tuần qua/ <span class="text-primary">Food intake below 50 - 75% of normal requirement in preceding week</span></span>
-                                                                                    </label>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="col-md-12 gt-2-a">
-                                                                                <label class="control-label mb-1 d-block">Điểm = 2/ <span class="text-primary">Score = 2</span></label>
-                                                                                <asp:Label runat="server" ID="lbl_nutrition_score2"></asp:Label>
-                                                                                <div runat="server" id="nutrition_score2_wrapper">
-                                                                                    <label class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" onchange="__doPostBack('nutrition_status_change', '2')" class="custom-control-input" runat="server" id="cb_nutrition_score2_1" />
-                                                                                        <span class="custom-control-label">Sụt cân > 5% trong 2 tháng/ <span class="text-primary">Weight loss > 5% in 2 months</span></span>
-                                                                                    </label>
-                                                                                    <label class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" onchange="__doPostBack('nutrition_status_change', '2')" class="custom-control-input" runat="server" id="cb_nutrition_score2_2" />
-                                                                                        <span class="custom-control-label">BMI 18.5-20.5 và tổng trạng suy yếu/ <span class="text-primary">BMI 18.5 - 20.5 and impaired general condition</span></span>
-                                                                                    </label>
-                                                                                    <label class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" onchange="__doPostBack('nutrition_status_change', '2')" class="custom-control-input" runat="server" id="cb_nutrition_score2_3" />
-                                                                                        <span class="custom-control-label">Ăn ít 25%-50% so với nhu cầu ăn bình thường trong tuần qua/ <span class="text-primary">Food intake 25–50% of normal requirement in preceding week</span></span>
-                                                                                    </label>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="col-md-12 gt-2-a">
-                                                                                <label class="control-label mb-1 d-block">Điểm = 3/ <span class="text-primary">Score = 3</span></label>
-
-                                                                                <asp:Label runat="server" ID="lbl_nutrition_score3"></asp:Label>
-                                                                                <div runat="server" id="nutrition_score3_wrapper">
-                                                                                    <label class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" class="custom-control-input" onchange="__doPostBack('nutrition_status_change','')" runat="server" id="cb_nutrition_score3_1" />
-                                                                                        <span class="custom-control-label">Sụt cân > 5% trong 1 tháng/ <span class="text-primary">Weight loss > 5% in 1 month</span></span>
-                                                                                    </label>
-                                                                                    <label class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" class="custom-control-input" onchange="__doPostBack('nutrition_status_change', '')" runat="server" id="cb_nutrition_score3_2" />
-                                                                                        <span class="custom-control-label">BMI < 18.5 và tổng trạng suy yếu/ <span class="text-primary">BMI < 18.5 and impaired general condition</span></span>
-                                                                                    </label>
-                                                                                    <label class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" class="custom-control-input" onchange="__doPostBack('nutrition_status_change', '')" runat="server" id="cb_nutrition_score3_3" />
-                                                                                        <span class="custom-control-label">Ăn ít 0-25% so với nhu cầu ăn bình thường trong tuần qua/ <span class="text-primary">Food intake 0-25% of normal requirement in preceding week</span></span>
-                                                                                    </label>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="col-md-12 gt-2-a">
-                                                                                <label class="control-label mb-1 mr-2">
-                                                                                    Điểm/ <span class="text-primary">Score</span>
-                                                                                    <icon:Calculator runat="server" Width="16" Height="16" />
-                                                                                </label>
-                                                                                <asp:Label Text="—" runat="server" ID="nutrition_score"></asp:Label>
-                                                                            </div>
-                                                                        </fieldset>
-                                                                    </div>
-
-                                                                    <div class="col-md-12 mb-2">
-                                                                        <fieldset class="row">
-                                                                            <legend>
-                                                                                <label class="control-label mb-2"><span class="text-primary">Severity of disease</span></label>
-                                                                            </legend>
-                                                                            <div class="col-md-12 gt-2-a">
-                                                                                <label class="control-label mb-1 d-block">Điểm = 0/ <span class="text-primary">Score = 0</span></label>
-                                                                                <label class="custom-control custom-checkbox">
-                                                                                    <input type="checkbox" id="cb_normal_nutrition_req_true" class="custom-control-input" runat="server" />
-                                                                                    <span class="custom-control-label">Yêu cầu dinh dưỡng đặc biệt/ <span class="text-primary">Normal nutritional requirements</span></span>
-                                                                                </label>
-                                                                            </div>
-                                                                            <div class="col-md-12 gt-2-a">
-                                                                                <label class="control-label mb-1 d-block">Điểm = 1/ <span class="text-primary">Score = 1</span></label>
-                                                                                <asp:Label runat="server" ID="lbl_severity_score1"></asp:Label>
-                                                                                <div runat="server" id="severity_score1_wrapper">
-                                                                                    <label class="custom-control custom-checkbox">
-                                                                                        <input onchange="__doPostBack('severity_of_disease_change', '')" type="checkbox" class="custom-control-input" runat="server" id="cb_severity_score1_1" />
-                                                                                        <span class="custom-control-label">Gãy khớp háng/ <span class="text-primary">Hip fracture</span></span>
-                                                                                    </label>
-                                                                                    <label class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" class="custom-control-input" onchange="__doPostBack('severity_of_disease_change', '')" runat="server" id="cb_severity_score1_2" />
-                                                                                        <span class="custom-control-label">Bệnh mãn tính có kèm theo biến chứng/ <span class="text-primary">Chronic disease with complications</span></span>
-                                                                                    </label>
-                                                                                    <label class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" class="custom-control-input" onchange="__doPostBack('severity_of_disease_change', '')" runat="server" id="cb_severity_score1_3" />
-                                                                                        <span class="custom-control-label">Viêm phổi tắc nghẽn mãn tính/ <span class="text-primary">COPD</span></span>
-                                                                                    </label>
-                                                                                    <label class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" class="custom-control-input" onchange="__doPostBack('severity_of_disease_change', '')" runat="server" id="cb_severity_score1_4" />
-                                                                                        <span class="custom-control-label">NB yếu nhưng có thể di chuyển được/ <span class="text-primary">The patient is weak but can move out of bed</span></span>
-                                                                                    </label>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="col-md-12 gt-2-a">
-                                                                                <label class="control-label mb-1 d-block">Điểm = 2/ <span class="text-primary">Score = 2</span></label>
-                                                                                <asp:Label runat="server" ID="lbl_severity_score2"></asp:Label>
-                                                                                <div runat="server" id="severity_score2_wrapper">
-                                                                                    <label class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" class="custom-control-input" onchange="__doPostBack('severity_of_disease_change', '')" runat="server" id="cb_severity_score2_1" />
-                                                                                        <span class="custom-control-label">Có phẫu thuật ở bụng/ <span class="text-primary">Major abdominal surgery</span></span>
-                                                                                    </label>
-                                                                                    <label class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" onchange="__doPostBack('severity_of_disease_change', '')" class="custom-control-input" runat="server" id="cb_severity_score2_2" />
-                                                                                        <span class="custom-control-label">Đột quị/ <span class="text-primary">Stroke</span></span>
-                                                                                    </label>
-                                                                                    <label class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" onchange="__doPostBack('severity_of_disease_change', '')" class="custom-control-input" runat="server" id="cb_severity_score2_3" />
-                                                                                        <span class="custom-control-label">Viêm phổi nặng/ <span class="text-primary">Severe pneumonia</span></span>
-                                                                                    </label>
-                                                                                    <label class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" onchange="__doPostBack('severity_of_disease_change', '')" class="custom-control-input" runat="server" id="cb_severity_score2_4" />
-                                                                                        <span class="custom-control-label">Bệnh ác tính huyết học/ <span class="text-primary">Hematologic malignancy</span></span>
-                                                                                    </label>
-                                                                                    <label class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" onchange="__doPostBack('severity_of_disease_change', '')" class="custom-control-input" runat="server" id="cb_severity_score2_5" />
-                                                                                        <span class="custom-control-label">NB nằm liệt giường/ <span class="text-primary">The patient is bedridden</span></span>
-                                                                                    </label>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="col-md-12 gt-2-a">
-                                                                                <label class="control-label mb-1 d-block">Điểm = 3/ <span class="text-primary">Score = 3</span></label>
-                                                                                <asp:Label runat="server" ID="lbl_severity_score3"></asp:Label>
-                                                                                <div runat="server" id="severity_score3_wrapper">
-                                                                                    <label class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" class="custom-control-input" onchange="__doPostBack('severity_of_disease_change', '')" runat="server" id="cb_severity_score3_1" />
-                                                                                        <span class="custom-control-label">Chấn thương đầu/ <span class="text-primary">Head injury</span></span>
-                                                                                    </label>
-                                                                                    <label class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" class="custom-control-input" onchange="__doPostBack('severity_of_disease_change', '')" runat="server" id="cb_severity_score3_2" />
-                                                                                        <span class="custom-control-label">Ghép tủy xương/ <span class="text-primary">Bone marrow transplantation</span></span>
-                                                                                    </label>
-                                                                                    <label class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" class="custom-control-input" onchange="__doPostBack('severity_of_disease_change', '')" runat="server" id="cb_severity_score3_3" />
-                                                                                        <span class="custom-control-label">Bệnh nhân chăm sóc chuyên sâu (APACHE> 10)/ <span class="text-primary">Intensive care patients (APACHE > 10)</span></span>
-                                                                                    </label>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="col-md-12 gt-2-a">
-                                                                                <label class="control-label mb-1 mr-2">
-                                                                                    Điểm/ <span class="text-primary">Score</span>
-                                                                                    <icon:Calculator runat="server" Width="16" Height="16" />
-                                                                                </label>
-
-                                                                                <asp:Label Text="—" class="d-inline-block" runat="server" ID="severity_score"></asp:Label>
-                                                                            </div>
-
-                                                                        </fieldset>
-                                                                    </div>
-
-                                                                    <div class="col-md-12 mb-2">
-                                                                        <fieldset class="row">
-                                                                            <legend>
-                                                                                <label class="control-label mb-2"><span class="text-primary">Age</span></label>
-                                                                            </legend>
-                                                                            <div class="col-md-12  gt-2-a">
-                                                                                <label class="control-label mb-1 d-block">Điểm = 0/ <span class="text-primary">Score = 0</span></label>
-                                                                                <label class="custom-control custom-checkbox">
-                                                                                    <input type="checkbox" class="custom-control-input" id="cb_younger_70_true" runat="server" />
-                                                                                    <span class="custom-control-label">< 70 tuổi/ <span class="text-primary">< 70 years old</span></span>
-                                                                                </label>
-                                                                            </div>
-                                                                            <div class="col-md-12  gt-2-a">
-                                                                                <label class="control-label mb-1 d-block">Điểm = 1/ <span class="text-primary">Score = 1</span></label>
-                                                                                <label class="custom-control custom-checkbox">
-                                                                                    <input type="checkbox" class="custom-control-input" onchange="__doPostBack('age_change', '')" runat="server" id="cb_older_70_true" />
-                                                                                    <span class="custom-control-label">≥ 70 tuổi/ <span class="text-primary">≥ 70 years old</span></span>
-                                                                                </label>
-                                                                            </div>
-
-                                                                            <div class="col-md-12 gt-2-a">
-                                                                                <label class="control-label mb-1 mr-2">
-                                                                                    Điểm/ <span class="text-primary">Score</span>
-                                                                                    <icon:Calculator runat="server" Width="16" Height="16" />
-                                                                                </label>
-                                                                                <asp:Label runat="server" ID="age_score"></asp:Label>
-                                                                            </div>
-
-                                                                        </fieldset>
-                                                                    </div>
-
-                                                                    <div class="col-md-12">
-                                                                        <label class="control-label mb-1 mr-2">
-                                                                            TỔNG SỐ ĐIỂM/ <span class="text-primary">TOTAL SCORE</span>
-                                                                            <icon:Calculator runat="server" Width="16" Height="16" />
-                                                                        </label>
-                                                                        <asp:Label Text="—" runat="server" ID="total_nutri_score"></asp:Label>
-                                                                        <p>
-                                                                            *Ghi chú: Khi đánh giá điểm cho mỗi tiêu chí thì luôn luôn chọn điểm cao nhất. Sau đó Sau đó cộng tất cả các điểm số ở cuối để có điểm số cuối cùng<br />
-                                                                            <span class="text-primary">Notes: When assessing the score for each criterion, always choose the highest score. Then add up all scores at the end to get the final score</span><br />
-                                                                            - Nếu điểm <3: đánh giá lại Nb mỗi tuần/ <span class="text-primary">If score < 3: weekly re-screening of the patient</span><br />
-                                                                            - Nếu điểm ≥ 3: giới thiệu NB đến khám chuyên gia dinh dưỡng/ <span class="text-primary">If score ≥ 3: refer patients to the nutritionists</span>
-                                                                        </p>
-                                                                    </div>
-                                                                </fieldset>
-                                                            </asp:PlaceHolder>
-
-                                                        </ContentTemplate>
-                                                    </asp:UpdatePanel>
-
-                                                </div>
-                                            </fieldset>
-
-                                            <fieldset class="row mb-2">
-                                                <legend>
-                                                    <label class="control-label mb-2">7. Hệ tiết niệu sinh dục/ <span class="text-primary">Genitourinary system</span></label>
+                                                    <label class="control-label mb-2">6. Hệ tiết niệu sinh dục/ <span class="text-primary">Genitourinary system</span></label>
                                                 </legend>
 
                                                 <div class="col-md-12 gt-2-a">
                                                     <label class="control-label d-block">Tiểu/ <span class="text-primary">Urination</span></label>
                                                     <div>
-                                                        <div class="mb-2">
-                                                            <asp:Label runat="server" ID="lbl_urination"></asp:Label>
-                                                        </div>
-
+                                                        <asp:Label runat="server" ID="lbl_urination"></asp:Label>
                                                         <div class="mb-2" runat="server" id="urination_wrapper">
                                                             <label class="custom-control custom-checkbox mr-2 d-inline-block">
                                                                 <input type="checkbox" class="custom-control-input" runat="server" id="cb_urination_nm" />
-                                                                <span class="custom-control-label">Không có vấn đề/ <span class="text-primary">Normal</span></span>
+                                                                <span class="custom-control-label">Bình thường/ <span class="text-primary">Normal</span></span>
                                                             </label>
-
                                                             <label class="custom-control custom-checkbox mr-2 d-inline-block">
                                                                 <input type="checkbox" class="custom-control-input" runat="server" id="cb_urination_no" />
                                                                 <span class="custom-control-label">Tiểu đêm/ <span class="text-primary">Nocturia</span></span>
                                                             </label>
-
                                                             <%--<label class="custom-control custom-checkbox mr-2 d-inline-block">
                                                                 <input type="checkbox" class="custom-control-input" runat="server" id="cb_urination_fr" />
                                                                 <span class="custom-control-label">Thường xuyên/ <span class="text-primary">Frequency</span></span>
                                                             </label>--%>
-
                                                             <label class="custom-control custom-checkbox mr-2 d-inline-block">
                                                                 <input type="checkbox" class="custom-control-input" runat="server" id="cb_urination_dy" />
                                                                 <span class="custom-control-label">Khó tiểu/ <span class="text-primary">Dysuria</span></span>
                                                             </label>
-
                                                             <label class="custom-control custom-checkbox d-inline-block">
                                                                 <input type="checkbox" class="custom-control-input" runat="server" id="cb_urination_in" />
                                                                 <span class="custom-control-label">Không kiểm soát/ <span class="text-primary">Incontinece</span></span>
@@ -5558,117 +5321,86 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-12">
-                                                    <label class="control-label d-block">Đối với người bệnh nữ/ <span class="text-primary">For female patients only:</span></label>
-                                                </div>
-
-                                                <div class="col-md-12 gt-2-a">
-                                                    <div></div>
-                                                    <div>
-                                                        <label class="control-label d-block">Kinh nguyệt/ <span class="text-primary">Menstruation:</span></label>
-
-                                                        <asp:Label runat="server" ID="lbl_menstruation_code"></asp:Label>
-
-                                                        <div class="d-inline-block" runat="server" id="menstruation_code_wrapper">
-                                                            <div class="custom-control custom-radio mr-2 d-inline-block">
-                                                                <input disabled-for="final_screening" type="radio" runat="server" id="rad_menstruation_code_am" name="rad_menstruation_code" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_menstruation_code_am">Vô kinh/ <span class="text-primary">Amenorrhea</span></label>
-                                                            </div>
-
-                                                            <div class="custom-control custom-radio mr-2 d-inline-block">
-                                                                <input disabled-for="final_screening" type="radio" runat="server" id="rad_menstruation_code_me" name="rad_menstruation_code" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_menstruation_code_me">Mãn kinh/ <span class="text-primary">Menopause</span></label>
-                                                            </div>
-
-                                                            <div class="custom-control custom-radio mr-2 d-inline-block">
-                                                                <input disabled-for="final_screening" type="radio" runat="server" id="rad_menstruation_code_cy" name="rad_menstruation_code" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_menstruation_code_cy">Chu kỳ (ngày)/ <span class="text-primary">Cycle (day)</span></label>
-                                                            </div>
-
-                                                            <div class="form-group mr-2 w-s d-inline-block">
-                                                                <webUI:TextField runat="server" ID="txt_cycle_day" />
-                                                            </div>
-
-                                                            <label class="control-label mr-2">Ngày đầu của kỳ kinh cuối/ <span class="text-primary">Last menstrual period started:</span></label>
-
-                                                            <div class="form-group w-s mr-2 d-inline-block">
-                                                                <webUI:TextField runat="server" ID="txt_last_mens_period" />
-                                                            </div>
+                                                <div class="col-md-12" runat="server" id="female_patient_wrapper">
+                                                    <div><label class="control-label d-block">Đối với người bệnh nữ/ <span class="text-primary">For female patients only:</span></label></div>
+                                                    <label class="control-label d-block">Kinh nguyệt/ <span class="text-primary">Menstruation:</span></label>
+                                                    <asp:Label runat="server" ID="lbl_menstruation_code"></asp:Label>
+                                                    <div class="d-inline-block" runat="server" id="menstruation_code_wrapper">
+                                                        <div class="custom-control custom-radio mr-2 d-inline-block">
+                                                            <input disabled-for="final_screening" type="radio" runat="server" id="rad_menstruation_code_am" name="rad_menstruation_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_menstruation_code_am">Vô kinh/ <span class="text-primary">Amenorrhea</span></label>
                                                         </div>
-
-                                                        <label class="control-label d-block">Có thai/ <span class="text-primary">Pregnancy:</span></label>
-
-                                                        <div>
-                                                            <asp:Label runat="server" ID="lbl_not_pregnancy"></asp:Label>
+                                                        <div class="custom-control custom-radio mr-2 d-inline-block">
+                                                            <input disabled-for="final_screening" type="radio" runat="server" id="rad_menstruation_code_me" name="rad_menstruation_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_menstruation_code_me">Mãn kinh/ <span class="text-primary">Menopause</span></label>
                                                         </div>
-
-                                                        <div runat="server" id="not_pregnancy_wrapper">
-                                                            <label class="custom-control custom-checkbox mr-2 d-inline-block">
-                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_not_pregnancy_true" />
-                                                                <span class="custom-control-label">Không/ <span class="text-primary">No</span></span>
-                                                            </label>
-
-                                                            <label class="custom-control custom-checkbox mr-2 d-inline-block">
-                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_pre_pregnancy_true" />
-                                                                <span class="custom-control-label">Đã từng mang thai trước đây/ <span class="text-primary">Previous pregnancy</span></span>
-                                                            </label>
-
-                                                            <label class="control-label mr-2"><span class="text-primary">PARA</span></label>
-
-                                                            <div class="form-group w-s mr-2 d-inline-block">
-                                                                <webUI:TextField runat="server" ID="txt_para" />
-                                                            </div>
-
-                                                            <label class="custom-control custom-checkbox mr-2 d-inline-block">
-                                                                <input type="checkbox" class="custom-control-input" runat="server" id="cb_cur_pregnancy_True" />
-                                                                <span class="custom-control-label">Hiện đang mang thai/ <span class="text-primary">Current pregnancy</span></span>
-                                                            </label>
-
-                                                            <div class="form-group w-5 d-inline-block">
-                                                                <input id="txt_pregnancy_week" runat="server" class="form-control text-right" />
-                                                                <span class="append">tuần/ week</span>
-                                                            </div>
+                                                        <div class="custom-control custom-radio mr-2 d-inline-block">
+                                                            <input disabled-for="final_screening" type="radio" runat="server" id="rad_menstruation_code_cy" name="rad_menstruation_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_menstruation_code_cy">Chu kỳ (ngày)/ <span class="text-primary">Cycle (day)</span></label>
                                                         </div>
-
-                                                        <label class="control-label mb-1 d-block">Ngừa thai/ <span class="text-primary">Contraception</span></label>
-
-                                                        <div>
-                                                            <asp:Label runat="server" ID="lbl_contraception_code"></asp:Label>
+                                                        <div class="form-group mr-2 w-s d-inline-block">
+                                                            <webUI:TextField runat="server" ID="txt_cycle_day" />
                                                         </div>
+                                                        <label class="control-label mr-2">Ngày đầu của kỳ kinh cuối/ <span class="text-primary">Last menstrual period started:</span></label>
+                                                        <div class="form-group w-s mr-2 d-inline-block">
+                                                            <webUI:TextField runat="server" ID="txt_last_mens_period" />
+                                                        </div>
+                                                    </div>
 
-                                                        <div runat="server" id="contraception_code_wrapper">
-                                                            <div class="custom-control custom-radio mr-2 d-inline-block">
-                                                                <input disabled-for="final_screening" type="radio" runat="server" id="rad_contraception_code_no" name="rad_contraception_code" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_contraception_code_no">Không/ <span class="text-primary">No</span></label>
-                                                            </div>
+                                                    <label class="control-label d-block">Có thai/ <span class="text-primary">Pregnancy:</span></label>
+                                                    <div><asp:Label runat="server" ID="lbl_not_pregnancy"></asp:Label></div>
+                                                    <div runat="server" id="not_pregnancy_wrapper">
+                                                        <label class="custom-control custom-checkbox mr-2 d-inline-block">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_not_pregnancy_true" />
+                                                            <span class="custom-control-label">Không/ <span class="text-primary">No</span></span>
+                                                        </label>
+                                                        <label class="custom-control custom-checkbox mr-2 d-inline-block">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_pre_pregnancy_true" />
+                                                            <span class="custom-control-label">Đã từng mang thai trước đây/ <span class="text-primary">Previous pregnancy</span></span>
+                                                        </label>
+                                                        <label class="control-label mr-2"><span class="text-primary">PARA</span></label>
+                                                        <div class="form-group w-s mr-2 d-inline-block">
+                                                            <webUI:TextField runat="server" ID="txt_para" />
+                                                        </div>
+                                                        <label class="custom-control custom-checkbox mr-2 d-inline-block">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_cur_pregnancy_True" />
+                                                            <span class="custom-control-label">Hiện đang mang thai/ <span class="text-primary">Current pregnancy</span></span>
+                                                        </label>
+                                                        <div class="form-group w-5 d-inline-block">
+                                                            <input id="txt_pregnancy_week" runat="server" class="form-control text-right" />
+                                                            <span class="append">tuần/ weeks</span>
+                                                        </div>
+                                                    </div>
 
-                                                            <div class="custom-control custom-radio mr-2 d-inline-block">
-                                                                <input disabled-for="final_screening" type="radio" runat="server" id="rad_contraception_code_pill" name="rad_contraception_code" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_contraception_code_pill">Thuốc ngừa thai/ <span class="text-primary">Contraceptive pill</span></label>
-                                                            </div>
-
-                                                            <div class="custom-control custom-radio mr-2 d-inline-block">
-                                                                <input disabled-for="final_screening" type="radio" runat="server" id="rad_contraception_code_dev" name="rad_contraception_code" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_contraception_code_dev">Dụng cụ ngừa thai đặt trong tử cung/ <span class="text-primary">Intrauterine Device</span></label>
-                                                            </div>
-
-                                                            <div class="custom-control custom-radio mr-2 d-inline-block">
-                                                                <input disabled-for="final_screening" type="radio" runat="server" id="rad_contraception_code_oth" name="rad_contraception_code" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_contraception_code_oth">Khác/ <span class="text-primary">Other</span></label>
-                                                            </div>
-
-                                                            <div class="form-group w-5 d-inline-block">
-                                                                <webUI:TextField runat="server" ID="txt_contraception_other" />
-                                                            </div>
+                                                    <label class="control-label mb-1 d-block">Ngừa thai/ <span class="text-primary">Contraception</span></label>
+                                                    <div><asp:Label runat="server" ID="lbl_contraception_code"></asp:Label></div>
+                                                    <div runat="server" id="contraception_code_wrapper">
+                                                        <div class="custom-control custom-radio mr-2 d-inline-block">
+                                                            <input disabled-for="final_screening" type="radio" runat="server" id="rad_contraception_code_no" name="rad_contraception_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_contraception_code_no">Không/ <span class="text-primary">No</span></label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio mr-2 d-inline-block">
+                                                            <input disabled-for="final_screening" type="radio" runat="server" id="rad_contraception_code_pill" name="rad_contraception_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_contraception_code_pill">Thuốc ngừa thai/ <span class="text-primary">Contraceptive pill</span></label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio mr-2 d-inline-block">
+                                                            <input disabled-for="final_screening" type="radio" runat="server" id="rad_contraception_code_dev" name="rad_contraception_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_contraception_code_dev">Dụng cụ ngừa thai đặt trong tử cung/ <span class="text-primary">Intrauterine Device</span></label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio mr-2 d-inline-block">
+                                                            <input disabled-for="final_screening" type="radio" runat="server" id="rad_contraception_code_oth" name="rad_contraception_code" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="rad_contraception_code_oth">Khác/ <span class="text-primary">Other</span></label>
+                                                        </div>
+                                                        <div class="form-group w-5 d-inline-block">
+                                                            <webUI:TextField runat="server" ID="txt_contraception_other" />
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </fieldset>
 
                                             <fieldset class="row mb-2">
                                                 <legend>
-                                                    <label class="control-label mb-2">8. Hệ cơ xương khớp/ <span class="text-primary">Musculoskeletal System</span></label>
+                                                    <label class="control-label mb-2">7. Hệ cơ – xương khớp/ <span class="text-primary">Musculoskeletal system</span></label>
                                                 </legend>
                                                 <div class="col-md-12 gt-2-a">
                                                     <label class="control-label d-block">Tiền sử/ <span class="text-primary">History</span></label>
@@ -5696,80 +5428,61 @@
                                                             </label>
                                                         </div>
 
-                                                        <div>
-                                                            <asp:Label runat="server" ID="lbl_paralysis"></asp:Label>
-                                                        </div>
-
+                                                        <div><asp:Label runat="server" ID="lbl_paralysis"></asp:Label></div>
                                                         <div runat="server" class="mb-2" id="paralysis_wrapper">
                                                             <label class="custom-control custom-checkbox d-inline mr-2">
                                                                 <input type="checkbox" class="custom-control-input" runat="server" id="cb_paralysis_true" />
                                                                 <span class="custom-control-label">Liệt/ (1/2 người/2 chi/4 chi)/ <span class="text-primary">Paralysis (Hemi/Para/Tetra)</span></span>
                                                             </label>
-
                                                             <div class="form-group w-s mt-1 d-inline-block">
                                                                 <webUI:TextField runat="server" ID="txt_paralysis_note" />
                                                             </div>
                                                         </div>
 
-                                                        <div>
-                                                            <asp:Label runat="server" ID="lbl_amputation"></asp:Label>
-                                                        </div>
-
+                                                        <div><asp:Label runat="server" ID="lbl_amputation"></asp:Label></div>
                                                         <div runat="server" class="mb-2" id="amputation_wrapper">
                                                             <label class="custom-control custom-checkbox d-inline">
                                                                 <input type="checkbox" class="custom-control-input" runat="server" id="cb_amputation_true" />
                                                                 <span class="custom-control-label">Đoạn chi/ <span class="text-primary">Amputation</span></span>
                                                             </label>
-
                                                             <div class="form-group w-s d-inline-block">
                                                                 <webUI:TextField runat="server" ID="txt_amputation_note" />
                                                             </div>
                                                         </div>
 
-                                                        <div>
-                                                            <asp:Label runat="server" ID="lbl_contracture"></asp:Label>
-                                                        </div>
-
+                                                        <div><asp:Label runat="server" ID="lbl_contracture"></asp:Label></div>
                                                         <div runat="server" class="mb-2" id="contracture_wrapper">
                                                             <label class="custom-control custom-checkbox mb-1 d-inline mr-2">
                                                                 <input type="checkbox" class="custom-control-input" runat="server" id="cb_contracture_true" />
-                                                                <span class="custom-control-label">Cơ bắp co rút/ <span class="text-primary">Contracture</span></span>
-
+                                                                <span class="custom-control-label">Cơ bắp co rút/ <span class="text-primary">Muscle spasms</span></span>
                                                             </label>
-
                                                             <div class="form-group w-s d-inline-block">
                                                                 <webUI:TextField runat="server" ID="txt_contracture_note" />
                                                             </div>
                                                         </div>
 
-                                                        <div>
-                                                            <asp:Label runat="server" ID="lbl_prosthesis"></asp:Label>
-                                                        </div>
-
+                                                        <div><asp:Label runat="server" ID="lbl_prosthesis"></asp:Label></div>
                                                         <div runat="server" id="prosthesis_wrapper">
                                                             <label class="custom-control custom-checkbox mb-1 d-inline">
                                                                 <input type="checkbox" class="custom-control-input" runat="server" id="cb_prosthesis_true" />
                                                                 <span class="custom-control-label">Lắp bộ phận giả/ <span class="text-primary">Prosthesis</span></span>
                                                             </label>
-
                                                             <div class="form-group w-s d-inline-block">
                                                                 <webUI:TextField runat="server" ID="txt_prosthesis_note" />
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-
                                             </fieldset>
 
                                             <fieldset class="row mb-2">
                                                 <legend>
-                                                    <label class="control-label mb-2">9. Đau/ <span class="text-primary">Pain</span></label>
+                                                    <label class="control-label mb-2">8. Đánh giá đau/ <span class="text-primary">Pain assessment:</span></label>
                                                 </legend>
 
                                                 <div class="col-md-12 mb-2 gt-2-a">
                                                     <label class="control-label d-inline-block mr-2">Hiện đang đau/ <span class="text-primary">Currently in pain</span></label>
                                                     <asp:Label runat="server" ID="lbl_cur_in_pain"></asp:Label>
-
                                                     <div class="d-inline-block" runat="server" id="cur_in_pain_wrapper">
                                                         <div class="custom-control custom-radio d-inline-block mr-2">
                                                             <input type="radio" id="rad_cur_in_pain_false" runat="server" name="rad_cur_in_pain" class="custom-control-input" />
@@ -5781,7 +5494,7 @@
                                                         <div class="custom-control custom-radio d-inline-block">
                                                             <input type="radio" id="rad_cur_in_pain_true" runat="server" name="rad_cur_in_pain" class="custom-control-input" />
                                                             <label class="custom-control-label" for="rad_cur_in_pain_true">
-                                                                Có(báo bác sỹ)/ <span class="text-primary">Yes (inform doctor)</span>
+                                                               Có, báo bác sĩ<span class="text-primary">Yes,inform doctor</span>
                                                             </label>
 
                                                             <a href="javascript:void(0)" data-clear="rad_cur_in_pain" onclick="clear_radiobutton(this)">
@@ -5940,28 +5653,25 @@
                                                 <div class="col-md-12 mb-2 gt-2-a">
                                                     <label></label>
                                                     <img src="" id="pain_annotation_img" runat="server"  class="cssclsNoScreen" />
-                                                        <asp:HiddenField runat="server" ID="pain_annotation_base64" />
+                                                    <asp:HiddenField runat="server" ID="pain_annotation_base64" />
 
-                                                        <div class=""  style="width: 500px;">
-                                                            <div id="controllers">
-                                                                <span runat="server" class="controller btn btn-secondary" id="pain_annotation_undo">undo</span>
-                                                                <span runat="server" class="controller btn btn-secondary" id="pain_annotation_redo">redo</span>
-                                                                <div runat="server" id="pain_annotation_pencilWrapper"  class=" btn btn-secondary">
-                                                                    <svg id="pain_annotation_pencil" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                    </svg>
-                                                                </div>
-                                                                <%--<span class="controller btn btn-secondary" id="note">note</span>--%>
+                                                    <div class=""  style="width: 500px;">
+                                                        <div id="controllers">
+                                                            <span runat="server" class="controller btn btn-secondary" id="pain_annotation_undo">undo</span>
+                                                            <span runat="server" class="controller btn btn-secondary" id="pain_annotation_redo">redo</span>
+                                                            <div runat="server" id="pain_annotation_pencilWrapper"  class=" btn btn-secondary">
+                                                                <svg id="pain_annotation_pencil" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                </svg>
                                                             </div>
-                                                            <canvas id="pain_annotation_canvas" runat="server"></canvas>
                                                         </div>
+                                                        <canvas id="pain_annotation_canvas" runat="server"></canvas>
                                                     </div>
+                                                </div>
 
                                                 <div class="col-md-12 mb-2 gt-2-a">
                                                     <label class="control-label mb-1 mr-2">Sử dụng thuốc giảm đau/ <span class="text-primary">Using painkiller:</span></label>
-
                                                     <asp:Label runat="server" ID="lbl_using_pain_killer"></asp:Label>
-
                                                     <div runat="server" id="using_pain_killer_wrapper">
                                                         <div class="custom-control custom-radio d-inline-block mr-2" runat="server" id="sing_pain_killer_wrapper">
                                                             <input type="radio" id="rad_using_pain_killer_false" runat="server" name="rad_using_pain_killer" class="custom-control-input" />
@@ -5973,7 +5683,7 @@
                                                         <div class="custom-control custom-radio d-inline-block">
                                                             <input type="radio" id="rad_using_pain_killer_true" runat="server" name="rad_using_pain_killer" class="custom-control-input" />
                                                             <label class="custom-control-label" for="rad_using_pain_killer_true">
-                                                                Có(báo bác sỹ)/ <span class="text-primary">Yes (inform doctor)</span>
+                                                                Có (nếu có, báo cho BS điều trị đau)/ <span class="text-primary">Yes (if yes,  Inform the pain specialist)</span>
                                                             </label>
                                                             <a href="javascript:void(0)" data-clear="rad_using_pain_killer" onclick="clear_radiobutton(this)">
                                                                 <icon:xsquare runat="server" ID="XSquare44" />
@@ -5984,26 +5694,22 @@
                                                 </div>
 
                                                 <div class="col-md-12 mb-2 gt-2-a">
-                                                    <label class="control-label mb-1">Tên thuốc/ <span class="text-primary">Name of painkiller:</span></label>
+                                                    <label class="control-label mb-1">Tên thuốc/ <span class="text-primary">Name of painkillers:</span></label>
                                                     <asp:Label runat="server" ID="lbl_pain_killer_name"></asp:Label>
-                                                    <div class="form-group w-n mt-1 d-inline-block mb-2" runat="server" id="pain_killer_name_wrapper">
-                                                        <webUI:TextField runat="server" ID="txt_pain_killer_name" />
-                                                    </div>
+                                                    <webUI:TextField runat="server" ID="txt_pain_killer_name" />
                                                 </div>
 
                                                 <div class="col-md-12 mb-2 gt-2-a">
                                                     <label class="control-label mb-1">Nhận xét/ <span class="text-primary">Comments:</span></label>
                                                     <asp:Label runat="server" ID="lbl_pa_comment"></asp:Label>
-                                                    <div class="form-group" runat="server" id="pa_comment_wrapper">
-                                                        <webUI:TextField runat="server" ID="txt_pa_comment" />
-                                                    </div>
+                                                    <webUI:TextField runat="server" ID="txt_pa_comment" />
                                                 </div>
 
                                             </fieldset>
 
                                             <fieldset class="row mb-2">
                                                 <legend>
-                                                    <label class="control-label mb-2">10. Da & Nguy cơ loét tỳ đè/ <span class="text-primary">Skin & Pressure Sore Risk</span></label>
+                                                    <label class="control-label mb-2">9. Da & Nguy cơ loét tỳ đè/ <span class="text-primary">Skin & Pressure ulcer risk</span></label>
                                                 </legend>
 
                                                 <div class="col-md-12 mb-2 gt-2-a">
@@ -6049,10 +5755,12 @@
 
                                                 <div class="col-md-12 mb-2 gt-2-a">
                                                     <label class="control-label mb-2">Vết thương/ <span class="text-primary">Wounds</span></label>
-
                                                     <asp:Label runat="server" ID="lbl_wounds"></asp:Label>
-
                                                     <div runat="server" id="wounds_wrapper">
+                                                        <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox1" />
+                                                            <span class="custom-control-label">Không/ <span class="text-primary">No</span></span>
+                                                        </label>
                                                         <label class="custom-control custom-checkbox mb-1 d-inline">
                                                             <input type="checkbox" class="custom-control-input" runat="server" id="cb_wounds_1" />
                                                             <span class="custom-control-label">Máu tụ (1)/ <span class="text-primary">Haematoma</span></span>
@@ -6075,29 +5783,22 @@
                                                         </label>
                                                         <label class="custom-control custom-checkbox mb-1 d-inline">
                                                             <input type="checkbox" class="custom-control-input" runat="server" id="cb_wounds_6" />
-                                                            <span class="custom-control-label">Loét do tỳ đè (6)/ <span class="text-primary">Pressure sore</span></span>
+                                                            <span class="custom-control-label">Loét do tỳ đè (6)/ <span class="text-primary">Pressure ulcer</span></span>
                                                         </label>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-md-12 mb-2 gt-2-a">
-                                                    <label></label>
-                                                    <div>
-                                                        Biểu thị vùng da với chỉ số tương ứng trên sơ đồ cơ thể và mô tả vết thương dưới dây<br />
-                                                        <span class="text-primary">Indicate the location with the corresponding number in the body diagram and describe the wound below.</span><br />
-                                                        Chỉ rõ vùng của vết thương bằng chỉ số tương ứng (1-6) dưới đây<br />
-                                                        <span class="text-primary">Specify location of wound with the corresponding number (1-6) below</span>
-                                                    </div>
-                                                </div>
-
                                                 <div class="col-md-12 mb-2">
+                                                    <div>Biểu thị vùng da với chỉ số tương ứng trên sơ đồ cơ thể và mô tả vết thương dưới đây</div>
+                                                    <div><span class="text-primary">Indicate the location with the corresponding number in the body diagram and describe the wound below.</span></div>
                                                     <asp:UpdatePanel ID="updatePanel_skin_anno" runat="server" UpdateMode="Always">
                                                         <ContentTemplate>
                                                             <asp:GridView ShowHeaderWhenEmpty="true" ShowHeader="true" ID="grid_skin_anno" runat="server" CssClass="tb-responsive table-bordered" OnRowDeleting="grid_skin_anno_RowDeleting" AutoGenerateColumns="false">
                                                                 <Columns>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
-                                                                            <div class="w-s pt-2 pb-2">Vùng/ <span class="text-primary">Location</span></div>
+                                                                            <div class="w-s pt-2 pb-2">Vùng</div>
+                                                                            <div><span class="text-primary">Location</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <div class="form-group">
@@ -6107,13 +5808,13 @@
                                                                     </asp:TemplateField>
                                                                     <asp:TemplateField>
                                                                         <HeaderTemplate>
-                                                                            <div class="w-n">Loại vết thương và mô tả vết thương (vd: kích cỡ, độ sâu, màu…)/ <span class="text-primary">Wound type and description (i.e. size, depth, colour…)</span></div>
+                                                                            <div class="w-n">Loại vết thương và mô tả vết thương (vd: kích cỡ, độ sâu, màu…)</div>
+                                                                            <div><span class="text-primary">Type and description of wound (i.e. size, depth, colour…)</span></div>
                                                                         </HeaderTemplate>
                                                                         <ItemTemplate>
                                                                             <webUI:TextField Value='<%#Eval("type") %>' ID="type" runat="server" />
                                                                         </ItemTemplate>
                                                                     </asp:TemplateField>
-
                                                                     <asp:TemplateField>
                                                                         <ItemTemplate>
                                                                             <asp:LinkButton runat="server" CommandName="Delete" CssClass="btn btn-sm btn-outline-secondary" OnClientClick="return confirm('are you sure?')">
@@ -6140,106 +5841,85 @@
                                                 </div>
 
                                                 <div class="col-md-12 mb-2">
+                                                    <div>Chỉ rõ vùng của vết thương bằng chỉ số tương ứng (1-6) dưới đây</div>
+                                                    <div><span class="text-primary">Specify the location of wound with corresponding numbers (1-6) as below</span></div>
+
                                                     <img class="cssclsNoScreen" src="" id="skin_anno_data_img" runat="server" />
-                                                        <asp:HiddenField runat="server" ID="skin_anno_data_base64" />
-
-                                                        <div class=""  style="width: 500px;">
-                                                            <div id="controllers1">
-                                                                <span runat="server" class="controller btn btn-secondary" id="skin_anno_data_undo">undo</span>
-                                                                <span runat="server" class="controller btn btn-secondary" id="skin_anno_data_redo">redo</span>
-                                                                <div runat="server" id="skin_anno_data_pencil_wrapper"  class=" btn btn-secondary">
-                                                                    <svg id="skin_anno_data_pencil" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
-                    </svg>
-                                                                </div>
-                                                                <%--<span class="controller btn btn-secondary" id="note">note</span>--%>
+                                                    <asp:HiddenField runat="server" ID="skin_anno_data_base64" />
+                                                    <div class=""  style="width: 500px;">
+                                                        <div id="controllers1">
+                                                            <span runat="server" class="controller btn btn-secondary" id="skin_anno_data_undo">undo</span>
+                                                            <span runat="server" class="controller btn btn-secondary" id="skin_anno_data_redo">redo</span>
+                                                            <div runat="server" id="skin_anno_data_pencil_wrapper"  class=" btn btn-secondary">
+                                                                <svg id="skin_anno_data_pencil" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+                                                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                                                                </svg>
                                                             </div>
-                                                            <canvas id="skin_anno_data_canvas" runat="server"></canvas>
-                                                            <%--<div>
-                                                                <div style="display: flex; align-items: center;">
-                                                                    2
-                                                                    <webUI:TextField runat="server" ID="TextField1" />
-                                                                    <div class="btn btn-outline-secondary ml-1">
-                                                                        <icon:Trash runat="server" ID="Trash" />
-                                                                    </div>
-                                                                </div>
-                                                            </div>--%>
                                                         </div>
+                                                        <canvas id="skin_anno_data_canvas" runat="server"></canvas>
+                                                    </div>
                                                 </div>
-
-                                                <div class="col-md-12 mb-2"><img src="../images/2021-05-25_21-54-42.png" /></div>
 
                                                 <div class="col-md-12 mb-2">
                                                     Đánh giá nguy cơ loét tỳ đè được cải tiến thang Braden<br />
-                                                    <span class="text-primary">Pressure Sore risk assessment-Modified Braden</span><br />
+                                                    <span class="text-primary">Pressure ulcer risk assessment modified with Braden scale</span><br />
                                                     Hướng dẫn: So sánh tình trạng của người bệnh với mô tả phù hợp nhất của từng loại. Ghi điểm (bằng số) ở cột bên phải. Cộng lại ở bên dưới để tính.<br />
-                                                    <span class="text-primary">Guidance: Compare the patient’s condition to the most appropriate description for each category. Note the score (written as a number) at the right column. Add up at the bottom to receive the total score.</span>
+                                                    <span class="text-primary">Guidance: Compare patient condition with the most appropriate description. Note the score (written as a number) at the right column. Plus together at the bottom to receive the total score.</span>
                                                 </div>
+                                                <div class="col-md-12 mb-2"><img style="width: 100%" src="../images/2021-05-25_21-54-42.png" /></div>
                                                 <asp:UpdatePanel ID="UpdatePanel2" runat="server" UpdateMode="Conditional">
                                                     <ContentTemplate>
                                                         <div class="col-md-12 mb-2 gt-2-a">
                                                             <label class="control-label">Nhận thức giác quan/ <span class="text-primary">Sensory perception</span></label>
                                                             <asp:Label runat="server" ID="lbl_sensory_code"></asp:Label>
-                                                            <div runat="server" id="sensory_code_wrapper">
-                                                                <select onchange="__doPostBack('total_score_change', '')" runat="server" id="select_sensory_code" class="custom-select d-inline-block w-n mb-2">
-                                                                    <option></option>
-                                                                </select>
-                                                            </div>
+                                                            <select onchange="__doPostBack('total_score_change', '')" runat="server" id="select_sensory_code" class="custom-select d-inline-block w-n mb-2">
+                                                                <option></option>
+                                                            </select>
                                                         </div>
 
                                                         <div class="col-md-12 mb-2 gt-2-a">
                                                             <label class="control-label">Độ ẩm/ <span class="text-primary">Moisture</span></label>
                                                             <asp:Label runat="server" ID="lbl_moisture_code"></asp:Label>
-                                                            <div runat="server" id="moisture_code_wrapper">
-                                                                <select onchange="__doPostBack('total_score_change', '')" runat="server" id="select_moisture_code" class="custom-select d-inline-block w-n mb-2">
-                                                                    <option></option>
-                                                                </select>
-                                                            </div>
+                                                            <select onchange="__doPostBack('total_score_change', '')" runat="server" id="select_moisture_code" class="custom-select d-inline-block w-n mb-2">
+                                                                <option></option>
+                                                            </select>
                                                         </div>
 
                                                         <div class="col-md-12 mb-2 gt-2-a">
                                                             <label class="control-label">Vận động/ <span class="text-primary">Activity</span></label>
                                                             <asp:Label runat="server" ID="lbl_activity_code"></asp:Label>
-                                                            <div runat="server" id="activity_code_wrapper">
-                                                                <select onchange="__doPostBack('total_score_change', '')" runat="server" id="select_activity_code" class="custom-select d-inline-block w-n mb-2">
-                                                                    <option></option>
-                                                                </select>
-                                                            </div>
+                                                            <select onchange="__doPostBack('total_score_change', '')" runat="server" id="select_activity_code" class="custom-select d-inline-block w-n mb-2">
+                                                                <option></option>
+                                                            </select>
                                                         </div>
 
                                                         <div class="col-md-12 mb-2 gt-2-a">
                                                             <label class="control-label">Di chuyển/ <span class="text-primary">Mobility</span></label>
                                                             <asp:Label runat="server" ID="lbl_mobility_code"></asp:Label>
-                                                            <div runat="server" id="mobility_code_wrapper">
-                                                                <select onchange="__doPostBack('total_score_change', '')" runat="server" id="select_mobility_code" class="custom-select d-inline-block w-n mb-2">
-                                                                    <option></option>
-                                                                </select>
-                                                            </div>
+                                                            <select onchange="__doPostBack('total_score_change', '')" runat="server" id="select_mobility_code" class="custom-select d-inline-block w-n mb-2">
+                                                                <option></option>
+                                                            </select>
                                                         </div>
 
                                                         <div class="col-md-12 mb-2 gt-2-a">
                                                             <label class="control-label">Dinh dưỡng/ <span class="text-primary">Nutrition</span></label>
                                                             <asp:Label runat="server" ID="lbl_nutrition_code"></asp:Label>
-                                                            <div runat="server" id="nutrition_code_wrapper">
-                                                                <select onchange="__doPostBack('total_score_change', '')" runat="server" id="select_nutrition_code" class="custom-select d-inline-block w-n mb-2">
-                                                                    <option></option>
-                                                                </select>
-                                                            </div>
+                                                            <select onchange="__doPostBack('total_score_change', '')" runat="server" id="select_nutrition_code" class="custom-select d-inline-block w-n mb-2">
+                                                                <option></option>
+                                                            </select>
                                                         </div>
 
                                                         <div class="col-md-12 mb-2 gt-2-a">
                                                             <label class="control-label">Sự ma sát & trượt da/ <span class="text-primary">Friction & shear</span></label>
                                                             <asp:Label runat="server" ID="lbl_friction_code"></asp:Label>
-                                                            <div runat="server" id="friction_code_wrapper">
-                                                                <select onchange="__doPostBack('total_score_change', '')" runat="server" id="select_friction_code" class="custom-select d-inline-block w-n">
-                                                                    <option></option>
-                                                                </select>
-                                                            </div>
+                                                            <select onchange="__doPostBack('total_score_change', '')" runat="server" id="select_friction_code" class="custom-select d-inline-block w-n">
+                                                                <option></option>
+                                                            </select>
                                                         </div>
 
                                                         <div class="col-md-12 mb-2 gt-2-a">
                                                             <label class="control-label">
-                                                                Tổng số điểm/ <span class="text-primary">Total Score</span>
+                                                                Tổng số điểm/ <span class="text-primary">Total score</span>
                                                                 <icon:Calculator runat="server" Width="16" Height="16" />
                                                             </label>
                                                             <asp:Label Text="—" runat="server" ID="total_score"></asp:Label>
@@ -6253,29 +5933,23 @@
                                                 </asp:UpdatePanel>
 
                                                 <div class="col-md-12 gt-2-a">
-                                                    <label class="control-label">Cách phòng ngừa tương ứng với những nguy cơ xác định/ <span class="text-primary">Take preventive actions according to the identified risk</span></label>
+                                                    <label class="control-label">Cách phòng ngừa tương ứng với những nguy cơ xác định/ <span class="text-primary">Preventive actions according to the identified risks</span></label>
                                                     <asp:Label Text="—" runat="server" ID="lbl_preven_action"></asp:Label>
-                                                    <div class="form-group" runat="server" id="preven_action_wrapper">
-                                                        <webUI:TextField runat="server" ID="txt_preven_action" />
-                                                    </div>
+                                                    <webUI:TextField runat="server" ID="txt_preven_action" />
                                                 </div>
                                             </fieldset>
 
                                             <fieldset class="row mb-2">
                                                 <legend>
-                                                    <label class="control-label mb-2">11. Khả năng thực hiện những sinh hoạt hàng ngày/ <span class="text-primary">Ability to perform daily activities</span></label>
+                                                    <label class="control-label mb-2">10. Khả năng thực hiện những sinh hoạt hàng ngày/ <span class="text-primary">Ability to perform activities of daily living</span></label>
                                                 </legend>
                                                 <div class="col-md-12">
-                                                    <div runat="server" id="lbl_bathing_code" class="gt-2-a">
-                                                        <label>Tắm/ <span class="text-primary">Bathing:</span></label>
-                                                        <asp:Label Text="—" runat="server" ID="lbl_bathing_desc"></asp:Label>
-                                                    </div>
-
-                                                    <fieldset class="row mb-2" runat="server" id="bathing_code_wrapper">
+                                                    <fieldset>
                                                         <legend>
-                                                            <label class="control-label mb-1 ">Tắm/ <span class="text-primary">Bathing:</span></label>
+                                                            <label class="control-label mb-1">Tắm/ <span class="text-primary">Bathing:</span></label>
                                                         </legend>
-                                                        <div class="col-md-12">
+                                                        <asp:Label Text="—" runat="server" ID="lbl_bathing_desc"></asp:Label>
+                                                        <div runat="server" id="bathing_code_wrapper">
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_bathing_code_in" runat="server" name="rad_bathing_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_bathing_code_in">
@@ -6293,14 +5967,14 @@
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_bathing_code_ab" runat="server" name="rad_bathing_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_bathing_code_ab">
-                                                                    Hỗ trợ tắm tại giường/ <span class="text-primary">Assisted in bed</span>
+                                                                    Hỗ trợ tắm tại giường/ <span class="text-primary">Assisted bedside bathing</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_bathing_code_db" runat="server" name="rad_bathing_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_bathing_code_db">
-                                                                    Tự tắm tại giường/ <span class="text-primary">Dependent in bed</span>
+                                                                    Tự tắm tại giường/ <span class="text-primary">Bedside self-bathing</span>
                                                                 </label>
                                                                 <a href="javascript:void(0)" data-clear="rad_bathing_code" onclick="clearRadioButton(this)">
                                                                     <icon:xsquare runat="server" ID="XSquare1" />
@@ -6311,17 +5985,12 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div runat="server" id="lbl_oral_care_code" class="gt-2-a">
-                                                        <label>Chăm sóc răng miệng/ <span class="text-primary">Oral care:</span></label>
-                                                        <asp:Label Text="—" runat="server" ID="lbl_oral_care_desc"></asp:Label>
-                                                    </div>
-
-                                                    <fieldset class="row mb-2" runat="server" id="oral_care_code_wrapper">
+                                                    <fieldset>
                                                         <legend>
                                                             <label class="control-label mb-1 ">Chăm sóc răng miệng/ <span class="text-primary">Oral care:</span></label>
                                                         </legend>
-
-                                                        <div class="col-md-12">
+                                                        <asp:Label Text="—" runat="server" ID="lbl_oral_care_desc"></asp:Label>
+                                                        <div runat="server" id="oral_care_code_wrapper">
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_oral_care_code_oc" runat="server" name="rad_oral_care_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_oral_care_code_oc">
@@ -6332,16 +6001,15 @@
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_oral_care_code_pu" runat="server" name="rad_oral_care_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_oral_care_code_pu">
-                                                                    Chỉ chuẩn bị đồ dùng/ <span class="text-primary">Prepare utensils only</span>
+                                                                    Chỉ chuẩn bị đồ dùng/ <span class="text-primary">Oral care kit prepared only</span>
                                                                 </label>
                                                             </div>
-
 
                                                             <div class="d-inline-block mr-2">
                                                                 <div class="custom-control custom-radio d-inline-block mr-2">
                                                                     <input type="radio" id="rad_oral_care_code_ab" runat="server" name="rad_oral_care_code" class="custom-control-input" />
                                                                     <label class="custom-control-label" for="rad_oral_care_code_ab">
-                                                                        Hỗ trợ đánh răng/ <span class="text-primary">Assisted to brush teeth</span>
+                                                                        Hỗ trợ đánh răng/ <span class="text-primary">Assisted toothbrushing</span>
                                                                     </label>
                                                                 </div>
                                                                 <div class="form-group w-6 d-inline-block">
@@ -6350,13 +6018,13 @@
                                                                 </div>
                                                             </div>
 
-                                                            <div class="custom-control custom-radio d-inline-block mr-2">
+                                                            <%--<div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_oral_care_code_oth" runat="server" name="rad_oral_care_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_oral_care_code_oth">.</label>
                                                                 <a href="javascript:void(0)" data-clear="rad_oral_care_code" onclick="clearRadioButton(this)">
                                                                     <icon:xsquare runat="server" ID="XSquare3" />
                                                                 </a>
-                                                            </div>
+                                                            </div>--%>
 
                                                             <%--<div class="custom-control custom-radio d-inline-block">
                                                                 <input type="radio" id="rad_oral_care_code_db" runat="server" name="rad_oral_care_code" class="custom-control-input" />
@@ -6372,16 +6040,12 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div runat="server" id="lbl_dentures_code" class="gt-2-a">
-                                                        <label>Răng giả/ <span class="text-primary">Dentures:</span></label>
-                                                        <asp:Label Text="—" runat="server" ID="lbl_dentures_desc"></asp:Label>
-                                                    </div>
-
-                                                    <fieldset class="row mb-2" runat="server" id="dentures_code_wrapper">
+                                                    <fieldset>
                                                         <legend>
                                                             <label class="control-label mb-1 ">Răng giả/ <span class="text-primary">Dentures:</span></label>
                                                         </legend>
-                                                        <div class="col-md-12">
+                                                        <asp:Label Text="—" runat="server" ID="lbl_dentures_desc"></asp:Label>
+                                                        <div runat="server" id="dentures_code_wrapper">
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_dentures_code_n" runat="server" name="rad_dentures_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_dentures_code_n">
@@ -6392,14 +6056,14 @@
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_dentures_code_u" runat="server" name="rad_dentures_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_dentures_code_u">
-                                                                    Hàm trên/ <span class="text-primary">Upper</span>
+                                                                    Hàm trên/ <span class="text-primary">Maxilla</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_dentures_code_l" runat="server" name="rad_dentures_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_dentures_code_l">
-                                                                    Hàm dưới/ <span class="text-primary">Lower</span>
+                                                                    Hàm dưới/ <span class="text-primary">Mandible</span>
                                                                 </label>
                                                             </div>
 
@@ -6417,16 +6081,12 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div runat="server" id="lbl_toilet_use_code" class="gt-2-a">
-                                                        <label>Đi vệ sinh/ <span class="text-primary">Toilet use:</span></label>
-                                                        <asp:Label Text="—" runat="server" ID="lbl_toilet_use_desc"></asp:Label>
-                                                    </div>
-
-                                                    <fieldset class="row mb-2" runat="server" id="toilet_use_code_wrapper">
+                                                    <fieldset>
                                                         <legend>
                                                             <label class="control-label">Đi vệ sinh/ <span class="text-primary">Toilet use:</span></label>
                                                         </legend>
-                                                        <div class="col-md-12">
+                                                        <asp:Label Text="—" runat="server" ID="lbl_toilet_use_desc"></asp:Label>
+                                                        <div runat="server" id="toilet_use_code_wrapper">
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_toilet_use_code_in" runat="server" name="rad_toilet_use_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_toilet_use_code_in">
@@ -6437,7 +6097,7 @@
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_toilet_use_code_at" runat="server" name="rad_toilet_use_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_toilet_use_code_at">
-                                                                    Cần hỗ trợ khi đi vệ sinh/ <span class="text-primary">Assisted to the toilet</span>
+                                                                    Cần hỗ trợ khi đi vệ sinh/ <span class="text-primary">Assisted for the toilet use</span>
                                                                 </label>
                                                             </div>
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
@@ -6459,12 +6119,6 @@
                                                                 </label>
                                                             </div>
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
-                                                                <input type="radio" id="rad_toilet_use_code_uc" runat="server" name="rad_toilet_use_code" class="custom-control-input" />
-                                                                <label class="custom-control-label" for="rad_toilet_use_code_uc">
-                                                                    Ống thông tiểu đặt ngoài bàng quang/ <span class="text-primary">Urinary condom</span>
-                                                                </label>
-                                                            </div>
-                                                            <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_toilet_use_code_ca" runat="server" name="rad_toilet_use_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_toilet_use_code_ca">
                                                                     Ống thông tiểu/ <span class="text-primary">Urinary catheter</span>
@@ -6473,21 +6127,23 @@
                                                                     <icon:xsquare runat="server" ID="XSquare33" />
                                                                 </a>
                                                             </div>
+                                                            <div class="custom-control custom-radio d-inline-block mr-2">
+                                                                <input type="radio" id="rad_toilet_use_code_uc" runat="server" name="rad_toilet_use_code" class="custom-control-input" />
+                                                                <label class="custom-control-label" for="rad_toilet_use_code_uc">
+                                                                    Ống thông tiểu đặt ngoài bàng quang/ <span class="text-primary">Urethral catheter</span>
+                                                                </label>
+                                                            </div>
                                                         </div>
                                                     </fieldset>
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div runat="server" id="lbl_dressing_code" class="gt-2-a">
-                                                        <label>Trang phục/ <span class="text-primary">Dressing:</span></label>
-                                                        <asp:Label Text="—" runat="server" ID="lbl_dressing_desc"></asp:Label>
-                                                    </div>
-
-                                                    <fieldset class="row mb-2" runat="server" id="dressing_code_wrapper">
+                                                    <fieldset>
                                                         <legend>
                                                             <label class="control-label">Trang phục/ <span class="text-primary">Dressing:</span></label>
                                                         </legend>
-                                                        <div class="col-md-12">
+                                                        <asp:Label Text="—" runat="server" ID="lbl_dressing_desc"></asp:Label>
+                                                        <div runat="server" id="dressing_code_wrapper">
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_dressing_code_in" runat="server" name="rad_dressing_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_dressing_code_in">
@@ -6498,7 +6154,7 @@
                                                             <div class="custom-control custom-radio d-inline-block">
                                                                 <input type="radio" id="rad_dressing_code_wa" runat="server" name="rad_dressing_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_dressing_code_wa">
-                                                                    Cần hỗ trợ/ <span class="text-primary">With assistance</span>
+                                                                    Cần hỗ trợ/ <span class="text-primary">Assistance needed</span>
                                                                 </label>
                                                                 <a href="javascript:void(0)" data-clear="rad_dressing_code" onclick="clearRadioButton(this)">
                                                                     <icon:xsquare runat="server" ID="XSquare34" />
@@ -6509,16 +6165,12 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div runat="server" id="lbl_eating_code" class="gt-2-a">
-                                                        <label>Ăn/ Cho ăn/ <span class="text-primary">Eating/ Feeding:</span></label>
-                                                        <asp:Label Text="—" runat="server" ID="lbl_eating_desc"></asp:Label>
-                                                    </div>
-
-                                                    <fieldset class="row mb-2" runat="server" id="eating_code_wrapper">
+                                                    <fieldset>
                                                         <legend>
                                                             <label class="control-label">Ăn/ Cho ăn/ <span class="text-primary">Eating/ Feeding:</span></label>
                                                         </legend>
-                                                        <div class="col-md-12">
+                                                        <asp:Label Text="—" runat="server" ID="lbl_eating_desc"></asp:Label>
+                                                        <div runat="server" id="eating_code_wrapper">
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_eating_code_in" runat="server" name="rad_eating_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_eating_code_in">
@@ -6529,7 +6181,7 @@
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_eating_code_dp" runat="server" name="rad_eating_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_eating_code_dp">
-                                                                    Phụ thuộc về tư thế/ <span class="text-primary">Dependon position</span>
+                                                                    Phụ thuộc về tư thế/ <span class="text-primary">Depend on position</span>
                                                                 </label>
                                                             </div>
 
@@ -6555,27 +6207,23 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div runat="server" id="lbl_turning_bed_code" class="gt-2-a">
-                                                        <label>Xoay sở tư thế trên giường/ <span class="text-primary">Turning in bed:</span></label>
-                                                        <asp:Label Text="—" runat="server" ID="lbl_turning_bed_desc"></asp:Label>
-                                                    </div>
-
-                                                    <fieldset class="row mb-2" runat="server" id="turning_bed_code_wrapper">
+                                                    <fieldset>
                                                         <legend>
-                                                            <label class="control-label">Xoay sở tư thế trên giường/ <span class="text-primary">Turning in bed:</span></label>
+                                                            <label class="control-label">Xoay sở tư thế trên giường/ <span class="text-primary">Patient repositioning:</span></label>
                                                         </legend>
-                                                        <div class="col-md-12">
+                                                        <asp:Label Text="—" runat="server" ID="lbl_turning_bed_desc"></asp:Label>
+                                                        <div runat="server" id="turning_bed_code_wrapper">
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_turning_bed_code_in" runat="server" name="rad_turning_bed_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_turning_bed_code_in">
-                                                                    Tự làm/ <span class="text-primary">Independent</span>
+                                                                    Tự xoay trở/ <span class="text-primary">Independent</span>
                                                                 </label>
                                                             </div>
 
                                                             <div class="custom-control custom-radio d-inline-block">
                                                                 <input type="radio" id="rad_turning_bed_code_dn" runat="server" name="rad_turning_bed_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_turning_bed_code_dn">
-                                                                    Không tự xoay sở/ <span class="text-primary">Does not turn independently</span>
+                                                                    Không tự xoay sở/ <span class="text-primary">Unable to reposition</span>
                                                                 </label>
                                                                 <a href="javascript:void(0)" data-clear="rad_turning_bed_code" onclick="clearRadioButton(this)">
                                                                     <icon:xsquare runat="server" ID="XSquare36" />
@@ -6586,16 +6234,12 @@
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div runat="server" id="lbl_ambulation_code" class="gt-2-a">
-                                                        <label>Đi lại/ <span class="text-primary">Ambulation:</span></label>
-                                                        <asp:Label Text="—" runat="server" ID="lbl_ambulation_desc"></asp:Label>
-                                                    </div>
-
-                                                    <fieldset class="row mb-2" runat="server" id="ambulation_code_wrapper">
+                                                    <fieldset>
                                                         <legend>
                                                             <label class="control-label">Đi lại/ <span class="text-primary">Ambulation:</span></label>
                                                         </legend>
-                                                        <div class="col-md-12">
+                                                        <asp:Label Text="—" runat="server" ID="lbl_ambulation_desc"></asp:Label>
+                                                        <div runat="server" id="ambulation_code_wrapper">
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_ambulation_code_in" runat="server" name="rad_ambulation_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_ambulation_code_in">
@@ -6606,7 +6250,7 @@
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_ambulation_code_bf" runat="server" name="rad_ambulation_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_ambulation_code_bf">
-                                                                    Liệt giường/ <span class="text-primary">Bedfast</span>
+                                                                    Liệt giường/ <span class="text-primary">Bedridden</span>
                                                                 </label>
                                                             </div>
 
@@ -6620,25 +6264,20 @@
                                                                 </a>
                                                             </div>
 
-                                                        <div class="form-group ambulation_note_field w-n d-inline-block">
-                                                            <webUI:TextField runat="server" ID="txt_ambulation_note" />
-                                                        </div>
-
+                                                            <div class="form-group ambulation_note_field w-n d-inline-block">
+                                                                <webUI:TextField runat="server" ID="txt_ambulation_note" />
+                                                            </div>
                                                         </div>
                                                     </fieldset>
                                                 </div>
 
                                                 <div class="col-md-12">
-                                                    <div runat="server" id="lbl_sleep_code" class="gt-2-a">
-                                                        <label>Ngủ/ <span class="text-primary">Sleep:</span></label>
-                                                        <asp:Label Text="—" runat="server" ID="lbl_sleep_desc"></asp:Label>
-                                                    </div>
-
-                                                    <fieldset class="row mb-2" runat="server" id="sleep_code_wrapper">
+                                                    <fieldset>
                                                         <legend>
                                                             <label class="control-label">Ngủ/ <span class="text-primary">Sleep:</span></label>
                                                         </legend>
-                                                        <div class="col-md-12">
+                                                        <asp:Label Text="—" runat="server" ID="lbl_sleep_desc"></asp:Label>
+                                                        <div runat="server" id="sleep_code_wrapper">
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_sleep_code_nm" runat="server" name="rad_sleep_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_sleep_code_nm">
@@ -6648,57 +6287,46 @@
                                                             <div class="custom-control custom-radio d-inline-block mr-2">
                                                                 <input type="radio" id="rad_sleep_code_ae" runat="server" name="rad_sleep_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_sleep_code_ae">
-                                                                    Thức sớm/ <span class="text-primary">Awake early</span>
+                                                                    Thức sớm/ <span class="text-primary">Wake up early</span>
                                                                 </label>
                                                             </div>
                                                             <div class="custom-control custom-radio d-inline-block  mr-2">
                                                                 <input type="radio" id="rad_sleep_code_pfa" runat="server" name="rad_sleep_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_sleep_code_pfa">
-                                                                    Khó ngủ/ <span class="text-primary">Problem to fall asleep</span>
+                                                                    Khó ngủ/ <span class="text-primary">Sleep disturbances</span>
                                                                 </label>
                                                             </div>
                                                             <div class="custom-control custom-radio d-inline-block">
                                                                 <input type="radio" id="rad_sleep_code_pst" runat="server" name="rad_sleep_code" class="custom-control-input" />
                                                                 <label class="custom-control-label" for="rad_sleep_code_pst">
-                                                                    Khó ngủ say/ <span class="text-primary">Problem to sleep through</span>
+                                                                    Khó ngủ say/ <span class="text-primary">Insomnia</span>
                                                                 </label>
                                                                 <a href="javascript:void(0)" data-clear="rad_sleep_code" onclick="clearRadioButton(this)">
                                                                     <icon:xsquare runat="server" ID="XSquare38" />
                                                                 </a>
                                                             </div>
                                                         </div>
+                                                        <label class="control-label mb-1">Thuốc đã sử dụng/ <span class="text-primary">Medication used:</span></label>
+                                                        <asp:Label runat="server" ID="lbl_medication_used"></asp:Label>
+                                                        <webUI:TextField runat="server" ID="txt_medication_used" />
                                                     </fieldset>
                                                 </div>
-
-                                                <div class="col-md-12 gt-2-a">
-                                                    <label class="control-label mb-1">Thuốc đã sử dụng/ <span class="text-primary">Medication used:</span></label>
-                                                    <asp:Label runat="server" ID="lbl_medication_used"></asp:Label>
-                                                    <div class="form-group" runat="server" id="medication_used_wrapper">
-                                                        <webUI:TextField runat="server" ID="txt_medication_used" />
-                                                    </div>
-                                                </div>
-
                                             </fieldset>
 
                                             <asp:UpdatePanel ID="UpdatePanel3" runat="server" UpdateMode="Conditional">
                                                 <ContentTemplate>
                                                     <fieldset class="row mb-2">
                                                         <legend>
-                                                            <label class="control-label mb-2">12. Đánh giá nguy cơ té ngã sử dụng Bảng Morse Scale/ <span class="text-primary">High risk of fall assessment using Morse Scale</span></label>
+                                                            <label class="control-label mb-2">1. Đánh giá nguy cơ té ngã sử dụng Bảng Morse Scale/ <span class="text-primary">Fall risk assessment with Morse Scale</span></label>
                                                         </legend>
 
                                                         <div class="col-md-12 mb-2">
-                                                            <div runat="server" id="lbl_fall_history_code" class="gt-2-a">
-                                                                <label>Tiền sử té ngã (bao gồm lần nhập viện hiện tại và trong 12 tháng gần đây)/ <span class="text-primary">History of fall (include current admission and last 12 months)</span></label>
-                                                                <asp:Label Text="—" runat="server" ID="lbl_fall_history_desc"></asp:Label>
-                                                            </div>
-
-                                                            <fieldset class="row mb-2" runat="server" id="fall_history_code_wrapper">
+                                                            <fieldset>
                                                                 <legend>
-                                                                    <label>Tiền sử té ngã (bao gồm lần nhập viện hiện tại và trong 12 tháng gần đây)/ <span class="text-primary">History of fall (include current admission and last 12 months)</span></label>
+                                                                    <label>1.Tiền sử té ngã (bao gồm lần nhập viện hiện tại và trong 12 tháng gần đây)/ <span class="text-primary">History of fall (include current admission and last 12 months)</span></label>
                                                                 </legend>
-
-                                                                <div class="col-md-12">
+                                                                <asp:Label Text="—" runat="server" ID="lbl_fall_history_desc"></asp:Label>
+                                                                <div runat="server" id="fall_history_code_wrapper">
                                                                     <div class="custom-control custom-radio mr-2 d-inline-block">
                                                                         <input onchange="__doPostBack('fr_total_score_change', '')" type="radio" id="rad_fall_history_code_25" runat="server" name="rad_fall_history_code" class="custom-control-input" />
                                                                         <label class="custom-control-label" for="rad_fall_history_code_25">
@@ -6719,16 +6347,12 @@
                                                         </div>
 
                                                         <div class="col-md-12 mb-2">
-                                                            <div runat="server" id="lbl_secon_diagnosis_code" class="gt-2-a">
-                                                                <label>2. Có từ 2 bệnh lý trở lên, ví dụ: bệnh tiểu đường kết hợp với bệnh cao huyết áp,v.v… và/ hoặc đang dùng một trong các loại thuốc thuộc nhóm: thuốc ngủ, thuốc lợi tiểu, thuốc hạ huyết áp, thuốc chống trầm cảm, chống động kinh, thuốc nhuận tràng, thuốc gây nghiện, thuốc kháng đông *<span class="text-primary">Has a secondary Diagnostic e.g. with co morbidities-diabetic, hypertension, etc…and/ or has any administrated medication of Hypnotics, Barbiturates; antihypertension, Phenothiazines Antidepressants; Anti-convulsants, Laxatives,Diuretics, Narcotics, Anticoagulant *</span></label>
-                                                                <asp:Label Text="—" runat="server" ID="lbl_secon_diagnosis_desc"></asp:Label>
-                                                            </div>
-
-                                                            <fieldset class="row mb-2" runat="server" id="secon_diagnosis_code_wrapper">
+                                                            <fieldset>
                                                                 <legend>
                                                                     <label>2. Có từ 2 bệnh lý trở lên, ví dụ: bệnh tiểu đường kết hợp với bệnh cao huyết áp,v.v… và/ hoặc đang dùng một trong các loại thuốc thuộc nhóm: thuốc ngủ, thuốc lợi tiểu, thuốc hạ huyết áp, thuốc chống trầm cảm, chống động kinh, thuốc nhuận tràng, thuốc gây nghiện, thuốc kháng đông *<span class="text-primary">Has a secondary Diagnostic e.g. with co morbidities-diabetic, hypertension, etc…and/ or has any administrated medication of Hypnotics, Barbiturates; antihypertension, Phenothiazines Antidepressants; Anti-convulsants, Laxatives,Diuretics, Narcotics, Anticoagulant *</span></label>
                                                                 </legend>
-                                                                <div class="col-md-12">
+                                                                <asp:Label Text="—" runat="server" ID="lbl_secon_diagnosis_desc"></asp:Label>
+                                                                <div runat="server" id="secon_diagnosis_code_wrapper">
                                                                     <div class="custom-control custom-radio mr-2 d-inline-block">
                                                                         <input onchange="__doPostBack('fr_total_score_change', '')" type="radio" id="rad_secon_diagnosis_code_15" runat="server" name="rad_secon_diagnosis_code" class="custom-control-input" />
                                                                         <label class="custom-control-label" for="rad_secon_diagnosis_code_15">
@@ -6749,16 +6373,12 @@
                                                         </div>
 
                                                         <div class="col-md-12 mb-2">
-                                                            <div runat="server" id="lbl_ambula_aids_code" class="gt-2-a">
-                                                                <label>Khả năng di chuyển/ <span class="text-primary">Ambulatory ability</span></label>
-                                                                <asp:Label Text="—" runat="server" ID="lbl_ambula_aids_desc"></asp:Label>
-                                                            </div>
-
-                                                            <fieldset class="row mb-2" runat="server" id="ambula_aids_code_wrapper">
+                                                            <fieldset>
                                                                 <legend>
                                                                     <label>Khả năng di chuyển/ <span class="text-primary">Ambulatory ability</span></label>
                                                                 </legend>
-                                                                <div class="col-md-12">
+                                                                <asp:Label Text="—" runat="server" ID="lbl_ambula_aids_desc"></asp:Label>
+                                                                <div runat="server" id="ambula_aids_code_wrapper">
                                                                     <div class="custom-control custom-radio">
                                                                         <input onchange="__doPostBack('fr_total_score_change', '')" type="radio" id="rad_ambula_aids_code_30" runat="server" name="rad_ambula_aids_code" class="custom-control-input" />
                                                                         <label class="custom-control-label" for="rad_ambula_aids_code_30">
@@ -6785,16 +6405,12 @@
                                                         </div>
 
                                                         <div class="col-md-12 mb-2">
-                                                            <div runat="server" id="lbl_intra_therapy_code" class="gt-2-a">
-                                                                <label>Liệu pháp tiêm tĩnh mạch/ có khóa heparin <span class="text-primary"> Intravenous therapy/Heparin lock</span></label>
-                                                                <asp:Label Text="—" runat="server" ID="lbl_intra_therapy_desc"></asp:Label>
-                                                            </div>
-
-                                                            <fieldset class="row mb-2" runat="server" id="intra_therapy_code_wrapper">
+                                                            <fieldset>
                                                                 <legend>
                                                                     <label>Liệu pháp tiêm tĩnh mạch/ có khóa heparin <span class="text-primary"> Intravenous therapy/Heparin lock</span></label>
                                                                 </legend>
-                                                                <div class="col-md-12">
+                                                                <asp:Label Text="—" runat="server" ID="lbl_intra_therapy_desc"></asp:Label>
+                                                                <div runat="server" id="intra_therapy_code_wrapper">
                                                                     <div class="custom-control custom-radio d-inline-block mr-2">
                                                                         <input onchange="__doPostBack('fr_total_score_change', '')" type="radio" id="rad_intra_therapy_code_20" runat="server" name="rad_intra_therapy_code" class="custom-control-input" />
                                                                         <label class="custom-control-label" for="rad_intra_therapy_code_20">
@@ -6815,16 +6431,12 @@
                                                         </div>
 
                                                         <div class="col-md-12 mb-2">
-                                                            <div runat="server" id="lbl_gait_trans_code" class="gt-2-a">
-                                                                <label>Dáng đi/ di chuyển/ <span class="text-primary">Gait/ transferring</span></label>
-                                                                <asp:Label Text="—" runat="server" ID="lbl_gait_trans_desc"></asp:Label>
-                                                            </div>
-
-                                                            <fieldset class="row mb-2" runat="server" id="gait_trans_code_wrapper">
+                                                            <fieldset>
                                                                 <legend>
                                                                     <label class="control-label">Dáng đi/ di chuyển/ <span class="text-primary">Gait/ movement</span></label>
                                                                 </legend>
-                                                                <div class="col-md-12">
+                                                                <asp:Label Text="—" runat="server" ID="lbl_gait_trans_desc"></asp:Label>
+                                                                <div runat="server" id="gait_trans_code_wrapper">
                                                                     <div class="custom-control custom-radio">
                                                                         <input onchange="__doPostBack('fr_total_score_change', '')" type="radio" id="rad_gait_trans_code_20" runat="server" name="rad_gait_trans_code" class="custom-control-input" />
                                                                         <label class="custom-control-label" for="rad_gait_trans_code_20">
@@ -6851,16 +6463,12 @@
                                                         </div>
 
                                                         <div class="col-md-12 mb-2">
-                                                            <div runat="server" id="lbl_fr_mental_status_code" class="gt-2-a">
-                                                                <label>Trạng thái tâm thần/ <span class="text-primary">Mental status</span></label>
-                                                                <asp:Label Text="—" runat="server" ID="lbl_fr_mental_status_desc"></asp:Label>
-                                                            </div>
-
-                                                            <fieldset class="row mb-2" runat="server" id="fr_mental_status_code_wrapper">
+                                                            <fieldset>
                                                                 <legend>
                                                                     <label class="control-label">Trạng thái tâm thần/ <span class="text-primary">Mental status</span></label>
                                                                 </legend>
-                                                                <div class="col-md-12">
+                                                                <asp:Label Text="—" runat="server" ID="lbl_fr_mental_status_desc"></asp:Label>
+                                                                <div runat="server" id="fr_mental_status_code_wrapper">
                                                                     <div class="custom-control custom-radio">
                                                                         <input onchange="__doPostBack('fr_total_score_change', '')" type="radio" id="rad_fr_mental_status_code_15" runat="server" name="rad_fr_mental_status_code" class="custom-control-input" />
                                                                         <label class="custom-control-label" for="rad_fr_mental_status_code_15">
@@ -6897,7 +6505,7 @@
                                             </asp:UpdatePanel>
 
                                             <div class="col-md-12 mb-2">
-                                                <label class="control-label mb-1 h4">IV. KẾ HOẠCH XUẤT VIỆN/ <span class="text-primary">DISCHARGE PLAN</span></label>
+                                                <label class="control-label mb-1 h4">IV. KẾ HOẠCH XUẤT VIỆN/ <span class="text-primary">DISCHARGE PLANING</span></label>
                                                 <div>Đánh giá lại và mời hội chẩn nếu tình trạng sức khỏe của người bệnh thay đổi. Nếu cần, chuyển bệnh đến khoa thích hợp. Nếu có nghi vấn, thảo luận với bác sĩ phụ trách.</div>
                                                 <div><span class="text-primary">Reassessment and consultation if patient’s health condition is changed. If need, refer the patient to the relevant department. If in doubt, discuss with a doctor in charge</span></div>
                                             </div>
@@ -7240,12 +6848,8 @@
 
                                             <div class="col-md-12 gt-2-a mb-2">
                                                 <label></label>
-
                                                 <asp:Label runat="server" ID="lbl_dis_planning"></asp:Label>
-
-                                                <div class="form-group" runat="server" id="dis_planning_wrapper">
-                                                    <webUI:TextField runat="server" ID="txt_dis_planning" />
-                                                </div>
+                                                <webUI:TextField runat="server" ID="txt_dis_planning" />
                                             </div>
 
                                             <div class="col-md-12">
@@ -7254,319 +6858,331 @@
 
                                             <div class="col-md-12 gt-2-a mb-2">
                                                 <label></label>
-
-                                                <%--<asp:Label runat="server" ID="Label1"></asp:Label>--%>
-
-                                                <div class="form-group" runat="server" id="Div1">
-                                                    <webUI:TextField runat="server" ID="TextField1" />
-                                                </div>
+                                                <asp:Label runat="server" ID="lbl_reassessment"></asp:Label>
+                                                <webUI:TextField runat="server" ID="txt_reassessment" />
                                             </div>
 
                                             <div class="font-bold">V. HƯỚNG DẪN NGƯỜI BỆNH VỀ NHỮNG TIỆN NGHI TRONG PHÒNG VÀ CÁC DỊCH VỤ/ <span class="text-primary">PATIENT GUIDES TO ROOM FACILITIES AND SERVICES</span></div>
+                                            
                                             <div class="font-bold">Hướng dẫn/ <span class="text-primary">Instructions provided to</span></div>
-                                            <div>
-                                                <div class="custom-control custom-radio d-inline-block">
-                                                    <input type="radio" id="Radio1" runat="server" name="rad_stairs_climb_home" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_stairs_climb_home_true">
-                                                        Người bệnh/ <span class="text-primary">Patient</span>
+                                            <asp:UpdatePanel ID="UpdatePanel10" runat="server" UpdateMode="Conditional">
+                                                <ContentTemplate>
+                                                    <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_instructions_provided_to_pat" />
+                                                        <span class="custom-control-label">Người bệnh/ <span class="text-primary">Patient</span></span>
                                                     </label>
-                                                </div>
-                                                <div class="custom-control custom-radio d-inline-block">
-                                                    <input type="radio" id="Radio2" runat="server" name="rad_stairs_climb_home" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_stairs_climb_home_true">
-                                                        Thân nhân/ <span class="text-primary">Relative</span>
+                                                    <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_instructions_provided_to_rel" />
+                                                        <span class="custom-control-label">Thân nhân/ <span class="text-primary">Relative</span></span>
                                                     </label>
-                                                </div>
-                                                <div class="custom-control custom-radio d-inline-block">
-                                                    <input type="radio" id="Radio3" runat="server" name="rad_stairs_climb_home" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_stairs_climb_home_true">
-                                                        Khác/ <span class="text-primary">Other</span>
+                                                    <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                        <input onchange="__doPostBack('instructions_provided_to_oth_change','')" type="checkbox" class="custom-control-input" runat="server" id="cb_instructions_provided_to_oth" />
+                                                        <span class="custom-control-label">Khác/ <span class="text-primary">Other</span></span>
                                                     </label>
-                                                </div>
-                                                <div class="custom-control custom-radio d-inline-block">
-                                                    <input type="radio" id="Radio4" runat="server" name="rad_stairs_climb_home" class="custom-control-input" />
-                                                    <label class="custom-control-label" for="rad_stairs_climb_home_true">
-                                                        Không áp dụng/ <span class="text-primary">Not applicable</span>
+                                                    <div class="form-group d-inline-block" runat="server" id="instructions_provided_to_oth_wrapper">
+                                                        <webUI:TextField Width="320px" runat="server" ID="txt_instructions_provided_to_oth" />
+                                                    </div>
+                                                    <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                        <input type="checkbox" class="custom-control-input" runat="server" id="cb_instructions_provided_to_nap" />
+                                                        <span class="custom-control-label">Không áp dụng/ <span class="text-primary">Not applicable</span></span>
                                                     </label>
-                                                </div>
-                                            </div>
+                                                    <asp:CustomValidator ID="CustomValidator1" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="instructions_provided_to_ServerValidate"></asp:CustomValidator>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
 
                                             <div class="font-bold">1. Nhân viên/ <span class="text-primary">Personnel</span></div>
                                             <div class="mb-1">
                                                 <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox1" />
+                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_personnel_sta" />
                                                     <span class="custom-control-label">Giới thiệu với ĐD phụ trách và nhân viên khác/ <span class="text-primary">Introduction to a nurse in charge and other staff</span></span>
                                                 </label>
                                                 <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox2" />
+                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_personnel_pat" />
                                                     <span class="custom-control-label">Giới thiệu với NB khác/ <span class="text-primary">Introduction to other patients</span></span>
                                                 </label>
+                                                <asp:CustomValidator ID="CustomValidator2" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="personnel_ServerValidate"></asp:CustomValidator>
                                             </div>
 
                                             <div class="font-bold">2. Tiện nghi vật chất/ <span class="text-primary">Physical facilities</span></div>
-
                                             <div>
                                                 <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox3" />
+                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_physical_facilities_bel" />
                                                     <span class="custom-control-label">Vị trí giường/ <span class="text-primary">Bed location</span></span>
                                                 </label>
                                                 <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox4" />
+                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_physical_facilities_bat" />
                                                     <span class="custom-control-label">Phòng tắm/nhà vệ sinh/ <span class="text-primary">Bathroom/toilet</span></span>
                                                 </label>
                                                 <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox5" />
+                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_physical_facilities_tel" />
                                                     <span class="custom-control-label">Sử dụng tivi/ <span class="text-primary">Use of television</span></span>
                                                 </label>
                                                 <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox6" />
+                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_physical_facilities_tep" />
                                                     <span class="custom-control-label">Sử dụng điện thoại/ <span class="text-primary">Use of telephone</span></span>
                                                 </label>
                                                 <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox7" />
+                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_physical_facilities_ncs" />
                                                     <span class="custom-control-label">Hệ thống gọi điều dưỡng/ <span class="text-primary">Nurse call system</span></span>
                                                 </label>
                                                 <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox8" />
+                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_physical_facilities_mco" />
                                                     <span class="custom-control-label">Trạm điều dưỡng và quầy chính/ <span class="text-primary">Nurse station and main counter</span></span>
                                                 </label>
+                                                <asp:CustomValidator ID="CustomValidator3" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="physical_facilities_ServerValidate"></asp:CustomValidator>
+
                                             </div>
 
                                             <div class="font-bold">3. Chính sách và quy trình/ <span class="text-primary">Policies and procedure</span></div>
-
                                             <div>
                                                 <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox9" />
+                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_policies_and_procedure_vih" />
                                                     <span class="custom-control-label">Khách thăm bệnh, giờ thăm/ <span class="text-primary">Visitors and visiting hours</span></span>
                                                 </label>
                                                 <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox10" />
+                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_policies_and_procedure_pcc" />
                                                     <span class="custom-control-label">Thẻ chăm bệnh/ <span class="text-primary">Patient care card</span></span>
                                                 </label>
                                                 <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox11" />
+                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_policies_and_procedure_pun" />
                                                     <span class="custom-control-label">Đồng phục người bệnh/ <span class="text-primary">Patient uniform</span></span>
                                                 </label>
                                                 <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox12" />
+                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_policies_and_procedure_mse" />
                                                     <span class="custom-control-label">Dịch vụ ăn uống/ <span class="text-primary">Meal service</span></span>
                                                 </label>
                                                 
                                                 <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox13" />
+                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_policies_and_procedure_ppp" />
                                                     <span class="custom-control-label">Quy trình trước và sau phẫu thuật, nếu có/ <span class="text-primary">Pre and postoperative procedures (if available)</span></span>
                                                 </label>
                                                 
                                                 <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox14" />
+                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_policies_and_procedure_wcn" />
                                                     <span class="custom-control-label">Số liên lạc với khoa/phòng/ <span class="text-primary">Ward contact number</span></span>
                                                 </label>
+                                                <asp:CustomValidator ID="CustomValidator4" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="policies_and_procedure_ServerValidate"></asp:CustomValidator>
+
                                             </div>
 
                                             <div class="font-bold">4. Biện pháp an toàn/ <span class="text-primary">Safety precautions</span></div>
-
                                             <div>
                                                 <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox15" />
+                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_safety_precautions_lfe" />
                                                     <span class="custom-control-label">Vị trí cửa thoát hiểm/ <span class="text-primary">Location of fire exits</span></span>
                                                 </label>
                                                 
                                                 <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox16" />
+                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_safety_precautions_fpr" />
                                                     <span class="custom-control-label">Biện pháp phòng ngừa té ngã/ <span class="text-primary">Fall precaution</span></span>
                                                 </label>
                                                 
                                                 <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox17" />
+                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_safety_precautions_iwb" />
                                                     <span class="custom-control-label">Sử dụng vòng đeo tay nhận diện/ <span class="text-primary">Use of an identification wrist band</span></span>
                                                 </label>
                                                 
                                                 <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox18" />
+                                                    <input type="checkbox" class="custom-control-input" runat="server" id="cb_safety_precautions_nsh" />
                                                     <span class="custom-control-label">Nguy cơ cháy-Không hút thuốc trong phạm vi bệnh viện/ <span class="text-primary">Fire risk – No smoking hospital</span></span>
                                                 </label>
+                                                <asp:CustomValidator ID="CustomValidator5" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="safety_precautions_ServerValidate"></asp:CustomValidator>
+
                                             </div>
 
                                             <div class="font-bold">5. Tư trang/ vật dụng cá nhân/ <span class="text-primary">Valuables/Belongings</span></div>
+
                                             <div>Răng giả/ <span class="text-primary">Dentures</span></div>
+                                            <asp:UpdatePanel ID="UpdatePanel7" runat="server" UpdateMode="Conditional">
+                                                <ContentTemplate>
+                                                    <div class="custom-control custom-radio d-inline-block">
+                                                        <input onchange="__doPostBack('vb_dentures_change','NO')" type="radio" id="rad_vb_dentures_no" runat="server" name="rad_vb_dentures" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_vb_dentures_no">
+                                                            Không/ <span class="text-primary">No</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio d-inline-block">
+                                                        <input onchange="__doPostBack('vb_dentures_change','YES')" type="radio" id="rad_vb_dentures_yes" runat="server" name="rad_vb_dentures" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_vb_dentures_yes">
+                                                            Có/ <span class="text-primary">Yes</span>
+                                                        </label>
+                                                    </div>
+                                                    <div runat="server" class="d-inline-block" id="vb_dentures_wrapper">
+                                                        <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_vb_dentures_wpa" />
+                                                            <span class="custom-control-label">NB giữ/ <span class="text-primary">With patient</span></span>
+                                                        </label>
+                                                
+                                                        <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_vb_dentures_wre" />
+                                                            <span class="custom-control-label">Thân nhân giữ/ <span class="text-primary">With relative</span></span>
+                                                        </label>
 
-                                            <div>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox19" />
-                                                    <span class="custom-control-label">Không/ <span class="text-primary">No</span></span>
-                                                </label>
-                                                
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox20" />
-                                                    <span class="custom-control-label">Có/ <span class="text-primary">Yes</span></span>
-                                                </label>
-                                                
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox21" />
-                                                    <span class="custom-control-label">NB giữ/ <span class="text-primary">With patient</span></span>
-                                                </label>
-                                                
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox22" />
-                                                    <span class="custom-control-label">Thân nhân giữ/ <span class="text-primary">With relative</span></span>
-                                                </label>
+                                                        Ghi rõ:
 
-                                                Ghi rõ:
-
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox23" />
-                                                    <span class="custom-control-label">Hàm trên/ <span class="text-primary">Maxilla</span></span>
-                                                </label>
+                                                        <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_vb_dentures_max" />
+                                                            <span class="custom-control-label">Hàm trên/ <span class="text-primary">Maxilla</span></span>
+                                                        </label>
                                                 
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox24" />
-                                                    <span class="custom-control-label">Hàm dưới/ <span class="text-primary">Mandible</span></span>
-                                                </label>
+                                                        <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_vb_dentures_man" />
+                                                            <span class="custom-control-label">Hàm dưới/ <span class="text-primary">Mandible</span></span>
+                                                        </label>
                                                 
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox25" />
-                                                    <span class="custom-control-label">Từng phần/ <span class="text-primary">Partial</span></span>
-                                                </label>
-                                            </div>
-
+                                                        <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_vb_dentures_par" />
+                                                            <span class="custom-control-label">Từng phần/ <span class="text-primary">Partial</span></span>
+                                                        </label>
+                                                    </div>
+                                                    <asp:CustomValidator ID="CustomValidator6" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="vb_dentures_ServerValidate"></asp:CustomValidator>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
+                                            
                                             <div>Máy trợ thính/ <span class="text-primary">Hearing aid</span></div>
-                                            <div>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox26" />
-                                                    <span class="custom-control-label">Không/ <span class="text-primary">No</span></span>
-                                                </label>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox27" />
-                                                    <span class="custom-control-label">Có/ <span class="text-primary">Yes</span></span>
-                                                </label>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox28" />
-                                                    <span class="custom-control-label">NB giữ/ <span class="text-primary">With patient</span></span>
-                                                </label>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox29" />
-                                                    <span class="custom-control-label">Thân nhân giữ/ <span class="text-primary">With relative</span></span>
-                                                </label>
-                                                Ghi rõ:
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox30" />
-                                                    <span class="custom-control-label">Trái/ <span class="text-primary">Left</span></span>
-                                                </label>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox31" />
-                                                    <span class="custom-control-label">Phải/ <span class="text-primary">Right</span></span>
-                                                </label>
-                                            </div>
+                                            <asp:UpdatePanel ID="UpdatePanel4" runat="server" UpdateMode="Conditional">
+                                                <ContentTemplate>
+                                                    <div class="custom-control custom-radio d-inline-block">
+                                                        <input onchange="__doPostBack('vb_hearing_aid_change','NO')" type="radio" id="rad_vb_hearing_aid_no" runat="server" name="rad_vb_hearing_aid" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_vb_hearing_aid_no">
+                                                            Không/ <span class="text-primary">No</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio d-inline-block">
+                                                        <input onchange="__doPostBack('vb_hearing_aid_change','YES')" type="radio" id="rad_vb_hearing_aid_yes" runat="server" name="rad_vb_hearing_aid" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_vb_hearing_aid_yes">
+                                                            Có/ <span class="text-primary">Yes</span>
+                                                        </label>
+                                                    </div>
+                                                    <div runat="server" id="vb_hearing_aid_wrapper" class="d-inline-block">
+                                                        <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_vb_hearing_aid_wpa" />
+                                                            <span class="custom-control-label">NB giữ/ <span class="text-primary">With patient</span></span>
+                                                        </label>
+                                                        <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_vb_hearing_aid_wre" />
+                                                            <span class="custom-control-label">Thân nhân giữ/ <span class="text-primary">With relative</span></span>
+                                                        </label>
+                                                        Ghi rõ:
+                                                        <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_vb_hearing_aid_lef" />
+                                                            <span class="custom-control-label">Trái/ <span class="text-primary">Left</span></span>
+                                                        </label>
+                                                        <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_vb_hearing_aid_rig" />
+                                                            <span class="custom-control-label">Phải/ <span class="text-primary">Right</span></span>
+                                                        </label>
+                                                    </div>
+                                                    <asp:CustomValidator ID="CustomValidator7" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="vb_hearing_aid_ServerValidate"></asp:CustomValidator>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
 
                                             <div>Mắt kính/ <span class="text-primary">Eyeglasses</span></div>
-                                            <div>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox32" />
-                                                    <span class="custom-control-label">Không/ <span class="text-primary">No</span></span>
-                                                </label>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox33" />
-                                                    <span class="custom-control-label">Có/ <span class="text-primary">Yes</span></span>
-                                                </label>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox34" />
-                                                    <span class="custom-control-label">NB giữ/ <span class="text-primary">With patient</span></span>
-                                                </label>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox35" />
-                                                    <span class="custom-control-label">Thân nhân giữ/ <span class="text-primary">With relative</span></span>
-                                                </label>
-                                                Ghi rõ:
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox36" />
-                                                    <span class="custom-control-label">Trái/ <span class="text-primary">Left</span></span>
-                                                </label>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox37" />
-                                                    <span class="custom-control-label">Phải/ <span class="text-primary">Right</span></span>
-                                                </label>
-                                            </div>
+                                            <asp:UpdatePanel ID="UpdatePanel5" runat="server" UpdateMode="Conditional">
+                                                <ContentTemplate>
+                                                    <div class="custom-control custom-radio d-inline-block">
+                                                        <input onchange="__doPostBack('vb_eyeglasses_change','NO')" type="radio" id="rad_vb_eyeglasses_no" runat="server" name="rad_vb_eyeglasses" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_vb_eyeglasses_no">
+                                                            Không/ <span class="text-primary">No</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio d-inline-block">
+                                                        <input onchange="__doPostBack('vb_eyeglasses_change','YES')" type="radio" id="rad_vb_eyeglasses_yes" runat="server" name="rad_vb_eyeglasses" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_vb_eyeglasses_yes">
+                                                            Có/ <span class="text-primary">Yes</span>
+                                                        </label>
+                                                    </div>
+                                                    <div runat="server" id="vb_eyeglasses_wrapper" class="d-inline-block">
+                                                        <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_vb_eyeglasses_wpa" />
+                                                            <span class="custom-control-label">NB giữ/ <span class="text-primary">With patient</span></span>
+                                                        </label>
+                                                        <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_vb_eyeglasses_wre" />
+                                                            <span class="custom-control-label">Thân nhân giữ/ <span class="text-primary">With relative</span></span>
+                                                        </label>
+                                                    </div>
+                                                    <asp:CustomValidator ID="CustomValidator8" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="vb_eyeglasses_ServerValidate"></asp:CustomValidator>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
 
                                             <div>Kính sát tròng/ <span class="text-primary">Contact lenses</span></div>
-
-                                            <div>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox38" />
-                                                    <span class="custom-control-label">Không/ <span class="text-primary">No</span></span>
-                                                </label>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox39" />
-                                                    <span class="custom-control-label">Có/ <span class="text-primary">Yes</span></span>
-                                                </label>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox40" />
-                                                    <span class="custom-control-label">NB giữ/ <span class="text-primary">With patient</span></span>
-                                                </label>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox41" />
-                                                    <span class="custom-control-label">Thân nhân giữ/ <span class="text-primary">With relative</span></span>
-                                                </label>
-                                                Ghi rõ:
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox42" />
-                                                    <span class="custom-control-label">Trái/ <span class="text-primary">Left</span></span>
-                                                </label>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox43" />
-                                                    <span class="custom-control-label">Phải/ <span class="text-primary">Right</span></span>
-                                                </label>
-                                            </div>
+                                            <asp:UpdatePanel ID="UpdatePanel6" runat="server" UpdateMode="Conditional">
+                                                <ContentTemplate>
+                                                    <div class="custom-control custom-radio d-inline-block">
+                                                        <input onchange="__doPostBack('vb_contact_lenses_change','NO')" type="radio" id="rad_vb_contact_lenses_no" runat="server" name="rad_vb_contact_lenses" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_vb_contact_lenses_no">
+                                                            Không/ <span class="text-primary">No</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio d-inline-block">
+                                                        <input onchange="__doPostBack('vb_contact_lenses_change','YES')" type="radio" id="rad_vb_contact_lenses_yes" runat="server" name="rad_vb_contact_lenses" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_vb_contact_lenses_yes">
+                                                            Có/ <span class="text-primary">Yes</span>
+                                                        </label>
+                                                    </div>
+                                                    <div runat="server" id="vb_contact_lenses_wrapper" class="d-inline-block">
+                                                        <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_vb_contact_lenses_wpa" />
+                                                            <span class="custom-control-label">NB giữ/ <span class="text-primary">With patient</span></span>
+                                                        </label>
+                                                        <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_vb_contact_lenses_wre" />
+                                                            <span class="custom-control-label">Thân nhân giữ/ <span class="text-primary">With relative</span></span>
+                                                        </label>
+                                                    </div>
+                                                    <asp:CustomValidator ID="CustomValidator9" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="vb_contact_lenses_ServerValidate"></asp:CustomValidator>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
 
                                             <div>Tiền mặt/nữ trang/ <span class="text-primary">Cash/ Jewelry</span></div>
-
-                                            <div>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox44" />
-                                                    <span class="custom-control-label">Không/ <span class="text-primary">No</span></span>
-                                                </label>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox45" />
-                                                    <span class="custom-control-label">Có/ <span class="text-primary">Yes</span></span>
-                                                </label>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox46" />
-                                                    <span class="custom-control-label">NB giữ/ <span class="text-primary">With patient</span></span>
-                                                </label>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox47" />
-                                                    <span class="custom-control-label">Thân nhân giữ/ <span class="text-primary">With relative</span></span>
-                                                </label>
-                                                <label class="custom-control custom-checkbox mb-1 d-inline">
-                                                    <input type="checkbox" class="custom-control-input" runat="server" id="Checkbox49" />
-                                                    <span class="custom-control-label">Trong tủ đầu giường phòng/ <span class="text-primary">In the hospital safety box</span></span>
-                                                </label>
-                                            </div>
+                                            <asp:UpdatePanel ID="UpdatePanel9" runat="server" UpdateMode="Conditional">
+                                                <ContentTemplate>
+                                                    <div class="custom-control custom-radio d-inline-block">
+                                                        <input onchange="__doPostBack('vb_cash_jewelry_change','NO')" type="radio" id="rad_vb_cash_jewelry_no" runat="server" name="rad_vb_cash_jewelry" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_vb_cash_jewelry_no">
+                                                            Không/ <span class="text-primary">No</span>
+                                                        </label>
+                                                    </div>
+                                                    <div class="custom-control custom-radio d-inline-block">
+                                                        <input onchange="__doPostBack('vb_cash_jewelry_change','YES')" type="radio" id="rad_vb_cash_jewelry_yes" runat="server" name="rad_vb_cash_jewelry" class="custom-control-input" />
+                                                        <label class="custom-control-label" for="rad_vb_cash_jewelry_yes">
+                                                            Có/ <span class="text-primary">Yes</span>
+                                                        </label>
+                                                    </div>
+                                                    <div runat="server" id="vb_cash_jewelry_wrapper" class="d-inline-block">
+                                                        <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_vb_cash_jewelry_wpa" />
+                                                            <span class="custom-control-label">NB giữ/ <span class="text-primary">With patient</span></span>
+                                                        </label>
+                                                        <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_vb_cash_jewelry_wre" />
+                                                            <span class="custom-control-label">Thân nhân giữ/ <span class="text-primary">With relative</span></span>
+                                                        </label>
+                                                        <label class="custom-control custom-checkbox mb-1 d-inline">
+                                                            <input type="checkbox" class="custom-control-input" runat="server" id="cb_vb_cash_jewelry_hsb" />
+                                                            <span class="custom-control-label">Trong tủ đầu giường phòng/ <span class="text-primary">In the hospital safety box</span></span>
+                                                        </label>
+                                                    </div>
+                                                    <asp:CustomValidator ID="CustomValidator10" ValidationGroup="Group2" runat="server" Display="Dynamic" ErrorMessage="Field is required" CssClass="text-danger" OnServerValidate="vb_cash_jewelry_ServerValidate"></asp:CustomValidator>
+                                                </ContentTemplate>
+                                            </asp:UpdatePanel>
 
                                             <div>Khác (ghi rõ)/ <span class="text-primary">Other (specify)</span></div>
                                             <div>
-                                                <webUI:TextField runat="server" ID="TextField2" />
+                                                <webUI:TextField runat="server" ID="txt_vb_other" />
                                             </div>
 
                                             <div>Tôi hiểu rõ rằng nếu Tôi và người bệnh/ thân nhân muốn giữ bên mình bất cứ đồ vật nào có giá trị hoặc tiền mặt trong thời gian nằm viện, Tôi sẽ không quy bất cứ trách nhiệm nào liên quan đến việc mất mát hoặc hư tổn nào cho những vật có giá trị/tiền mặt này cho Bệnh viện quốc tế Mỹ.</div>
                                             <div><span class="text-primary">I clearly understand that if I and the patient/ families desire to keep any valuables or cash during hospitalization, I shall not impute the responsibility to AIH in the event of loss or damage of valuables/ cash.</span></div>
 
-                                            <div class="col-md-12 gt-2-a mb-2">
+                                            <%--<div class="col-md-12 gt-2-a mb-2">
                                                 <label></label>
                                                 <asp:Label runat="server" ID="lbl_dis_management"></asp:Label>
                                                 <div class="form-group" runat="server" id="dis_management_wrapper">
                                                     <webUI:TextField runat="server" ID="txt_dis_management" />
                                                 </div>
-                                            </div>
-
-                                            <div class="col-md-12 mb-2 gt-2-a">
-                                                <label class="control-label mb-1 mr-2">Ngày giờ/ <span class="text-primary">Date & Time:</span></label>
-                                                <asp:Label runat="server" ID="lbl_assess_date_time"></asp:Label>
-                                                <div class="form-group d-inline-block" runat="server" id="assess_date_time_wrapper">
-                                                    <telerik:RadDateTimePicker runat="server" ID="dtpk_assess_date_time" Width="200px" TimeView-TimeFormat="HH:mm" DateInput-DisplayDateFormat="MM/dd/yyyy HH:mm" DateInput-DateFormat="MM/dd/yyyy HH:mm"/>
-                                                    <%--<asp:RequiredFieldValidator ID="RequiredFieldValidator1" Display="Dynamic" ValidationGroup="Group1" runat="server" ControlToValidate="dtpk_assess_date_time" ErrorMessage="field is required"
-                                                        ForeColor="Red" SetFocusOnError="true"></asp:RequiredFieldValidator>--%>
-                                                </div>
-                                            </div>
+                                            </div>--%>
 
                                             <div class="row mb-2">
                                                 <div class="col-md-12">
@@ -7588,6 +7204,7 @@
                                                                 <asp:LinkButton runat="server" OnClick="PrintDocument" ID="btnPrint" CssClass="btn btn-secondary">Print</asp:LinkButton>
                                                             </ContentTemplate>
                                                         </asp:UpdatePanel>
+                                                        <asp:LinkButton runat="server" OnClick="PrintDocument" ID="LinkButton1" CssClass="btn btn-secondary">Print</asp:LinkButton>
                                                         <asp:LinkButton runat="server" OnClick="CancelAmendDocument" ID="btnCancel" CssClass="btn btn-secondary">Cancel</asp:LinkButton>
                                                     </div>
                                                 </div>
